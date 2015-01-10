@@ -1,0 +1,5 @@
+﻿1, 2, 3, 4, 5, 6, 7, 8, 9 en 0 zijn getallen.
+Een letter is een kleine letter of een hoofdletter.
+A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y en z zijn kleine letters.
+A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y en Z zijn hoofdletters.
+Zwart, blauw, bruin, groen, grijs, oranje, roze, paars, rood, wit en geel zijn kleuren.

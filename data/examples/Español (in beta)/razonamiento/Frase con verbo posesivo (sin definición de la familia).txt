@@ -1,0 +1,4 @@
+Alfonso tiene un hijo, llamado Pablo.
+Juan es el padre y Ana es la madre de Pedro, José y Luisa.
+Pedro tiene un padre, llamado Juan.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

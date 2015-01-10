@@ -1,0 +1,87 @@
+﻿#
+#	File:		tower of Hanoi.txt
+#	Scope:		Used by the Thinknowlogy application
+#	Purpose:	To demonstrate programming in natural language.
+#	Version:	Thinknowlogy 2014r2a (George Boole)
+#----------------------------------------------------------------------------
+#	Thinknowlogy is grammar-based software,
+#	designed to utilize Natural Laws of Intelligence in grammar,
+#	in order to create intelligence through natural language in software,
+#	which is demonstrated by:
+#	* Programming in natural language;
+#	* Reasoning in natural language:
+#		- drawing conclusions (more advanced than scientific solutions),
+#		- making assumptions (with self-adjusting level of uncertainty),
+#		- asking questions (about gaps in the knowledge),
+#		- detecting conflicts in the knowledge;
+#	* Building semantics autonomously (no vocabularies):
+#		- detecting some cases of semantic ambiguity;
+#	* Multilingualism, proving: Natural Laws of Intelligence are universal.
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2014, Menno Mafait
+#
+#	Your additions, modifications, suggestions and bug reports
+#	are welcome at http://mafait.org
+#----------------------------------------------------------------------------
+#	This program is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 2 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License along
+#	with this program; if not, write to the Free Software Foundation, Inc.,
+#	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	A summary of the "tower of Hanoi" puzzle:
+#----------------------------------------------------------------------------
+#	The Tower of Hanoi (also called the Tower of Brahma or Lucas' Tower,
+#	and sometimes pluralised) is a mathematical game or puzzle. It consists
+#	of three rods, and a number of disks of different sizes which can slide
+#	onto any rod. The puzzle starts with the disks in a neat stack in
+#	ascending order of size on one rod, the smallest at the top, thus
+#	making a conical shape.
+#
+#	The objective of the puzzle is to move the entire stack to another rod
+#	obeying the following rules:
+#
+#	- Only one disk may be moved at a time.
+#	- Each move consists of taking the upper disk from one of the rods and
+#	  sliding it onto another rod, on top of the other disks that may
+#	  already be present on that rod.
+#	- No disk may be placed on top of a smaller disk.
+#----------------------------------------------------------------------------
+#	See for the full text: http://en.wikipedia.org/wiki/Tower_of_Hanoi
+#----------------------------------------------------------------------------
+
+# Define the moves.
+A move is between-start-and-swap, between-start-and-goal, between-swap-and-goal, done-between-start-and-swap, done-between-start-and-goal or done-between-swap-and-goal.
+
+# Show the moves.
+If the move is done-between-start-and-swap or the move is done-between-start-and-goal or the move is done-between-swap-and-goal then show "* start pole:\t~!'start pole'<a>`~.\n* swap pole:\t~!'swap pole'<a>`~.\n* goal pole:\t~!'goal pole'<a>`~.\n\n".
+
+# The rules for moving the discs.
+If the move is between-swap-and-goal then if the swap pole is assigned and the goal pole is not assigned or the swap pole is assigned and the head of the swap pole is smaller than the head of the goal pole then move the head of the swap pole to the goal pole, the move is done-between-swap-and-goal and show "Moved a disc from swap to goal:\n" else move the head of the goal pole to the swap pole, the move is done-between-swap-and-goal and show "Moved a disc from goal to swap:\n".
+If the move is between-start-and-goal then if the start pole is assigned and the goal pole is not assigned or the start pole is assigned and the head of the start pole is smaller than the head of the goal pole then move the head of the start pole to the goal pole, the move is done-between-start-and-goal and show "Moved a disc from start to goal:\n" else move the head of the goal pole to the start pole, the move is done-between-start-and-goal and show "Moved a disc from goal to start:\n".
+If the move is between-start-and-swap then if the start pole is assigned and the swap pole is not assigned or the start pole is assigned and the head of the start pole is smaller than the head of the swap pole then move the head of the start pole to the swap pole, the move is done-between-start-and-swap and show "Moved a disc from start to swap:\n" else move the head of the swap pole to the start pole, the move is done-between-start-and-swap and show "Moved a disc from swap to start:\n".
+
+# Before each new move, the order is set in which the rules must be executed.
+If the execution-order is odd-first then if the move is not assigned or the move is done-between-swap-and-goal then the move is between-start-and-goal else if the move is done-between-start-and-goal then the move is between-start-and-swap else the move is between-swap-and-goal.
+If the execution-order is even-first then if the move is not assigned or the move is done-between-swap-and-goal then the move is between-start-and-swap else if the move is done-between-start-and-swap then the move is between-start-and-goal else the move is between-swap-and-goal.
+
+# At the start, determine the order in which the rules must be executed.
+If the start pole is assigned, the swap pole is not assigned and the goal pole is not assigned then if the number of the start pole is odd then the execution-order is odd-first and show "\nThe number of discs is odd. So, the rule order is: Move first from start to goal, then from start to swap.\n\n" else the execution-order is even-first and show "\nThe number of discs is even. So, the rule order is: Move first from start to swap, then from start to goal.\n\n".
+
+# Define the end.
+If the move is assigned, the start pole is not assigned, the swap pole is not assigned and the goal pole is assigned then the move is clear, the execution-order is clear and show "Done.\nTo start the puzzle again: \"Clear your mind.\" or \"Restart.\", and then 'Read the file \"English/programming/tower of Hanoi\"'.".
+
+# Now add an odd or even number of discs in reverse order,
+# the biggest first (e.g. D or E), and the smallest (A) on top, like:
+# - For an even number of discs:	Add D, C, B and A to the start pole.
+# - For an odd number of discs:	Add E, D, C, B and A to the start pole.

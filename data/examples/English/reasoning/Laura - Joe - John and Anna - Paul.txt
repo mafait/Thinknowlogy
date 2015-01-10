@@ -1,0 +1,6 @@
+﻿Read the file "English/reasoning/family definition".
+Laura is a daughter.
+Joe is a son.
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Paul is a son.
+# Remember to clear this knowledge before reading another example.

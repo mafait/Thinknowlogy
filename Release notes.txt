@@ -1,0 +1,3 @@
+﻿Changes in Thinknowlogy 2014r2a (George Boole) compared to Thinknowlogy 2014r2 (Deeper Thought):
+- Bug fixes;
+- Added "The only option left" conclusion to answer questions.

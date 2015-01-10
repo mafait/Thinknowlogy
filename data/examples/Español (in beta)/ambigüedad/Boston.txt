@@ -1,0 +1,6 @@
+﻿#Boston es una ciudad de los Estados Unidos.
+Boston es una ciudad de Estados Unidos.
+#Boston es una ciudad en el Reino Unido.
+Boston es una ciudad de Reino Unido.
+Mostrar información sobre Boston.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

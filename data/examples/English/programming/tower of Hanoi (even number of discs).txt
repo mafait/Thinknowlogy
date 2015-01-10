@@ -1,0 +1,2 @@
+﻿Read the file "English/programming/tower of Hanoi".
+Add D, C, B and A to the start pole.

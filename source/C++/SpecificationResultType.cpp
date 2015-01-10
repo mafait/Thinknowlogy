@@ -1,0 +1,132 @@
+/*
+ *	Class:		SpecificationResultType
+ *	Purpose:	To return specification item variables of a function
+ *	Version:	Thinknowlogy 2014r2a (George Boole)
+ *
+ *************************************************************************/
+/*
+ *	Thinknowlogy is grammar-based software,
+ *	designed to utilize Natural Laws of Intelligence in grammar,
+ *	in order to create intelligence through natural language in software,
+ *	which is demonstrated by:
+ *	- Programming in natural language;
+ *	- Reasoning in natural language:
+ *		- drawing conclusions (more advanced than scientific solutions),
+ *		- making assumptions (with self-adjusting level of uncertainty),
+ *		- asking questions (about gaps in the knowledge),
+ *		- detecting conflicts in the knowledge;
+ *	- Building semantics autonomously (no vocabularies):
+ *		- detecting some cases of semantic ambiguity;
+ *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
+ *
+ *************************************************************************/
+/*
+ *	Copyright (C) 2009-2014, Menno Mafait
+ *	Your additions, modifications, suggestions and bug reports
+ *	are welcome at http://mafait.org
+ *
+ *************************************************************************/
+/*
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ *************************************************************************/
+
+#include "Item.h"
+#include "JustificationItem.h"
+
+class SpecificationResultType
+	{
+	friend class AdminAssumption;
+	friend class AdminAuthorization;
+	friend class AdminConclusion;
+	friend class AdminImperative;
+	friend class AdminLanguage;
+	friend class AdminItem;
+	friend class AdminSolve;
+	friend class AdminSpecification;
+	friend class JustificationItem;
+	friend class JustificationList;
+	friend class SpecificationItem;
+	friend class SpecificationList;
+	friend class WordAssignment;
+	friend class WordItem;
+	friend class WordQuestion;
+	friend class WordSpecification;
+	friend class WordWrite;
+	friend class WordWriteWords;
+	protected:
+	// Protected variables
+
+	ResultType result;
+
+	bool hasPerformedRecalculation;
+	bool isCorrectArticle;
+	bool isFirstRelatedSpecification;
+	bool isLastRelatedSpecification;
+
+	unsigned short assignmentOrderNr;
+	unsigned short assignmentParameter;
+	unsigned short assumptionLevel;
+	unsigned short combinedAssumptionLevel;
+
+	JustificationItem *createdJustificationItem;
+
+	SpecificationItem *adjustedQuestionSpecificationItem;
+	SpecificationItem *createdSpecificationItem;
+	SpecificationItem *foundSpecificationItem;
+	SpecificationItem *relatedSpecificationItem;
+	SpecificationItem *replacedAssignmentItem;
+
+	WordItem *compoundGeneralizationWordItem;
+
+	protected:
+	// Constructor / deconstructor
+
+	SpecificationResultType()
+		{
+		result = RESULT_OK;
+
+		hasPerformedRecalculation = false;
+		isCorrectArticle = false;
+		isFirstRelatedSpecification = false;
+		isLastRelatedSpecification = false;
+
+		assignmentOrderNr = NO_ORDER_NR;
+		assignmentParameter = NO_ASSIGNMENT_PARAMETER;
+		assumptionLevel = NO_ASSIGNMENT_LEVEL;
+		combinedAssumptionLevel = NO_ASSIGNMENT_LEVEL;
+
+		createdJustificationItem = NULL;
+
+		adjustedQuestionSpecificationItem = NULL;
+		createdSpecificationItem = NULL;
+		foundSpecificationItem = NULL;
+		relatedSpecificationItem = NULL;
+		replacedAssignmentItem = NULL;
+
+		compoundGeneralizationWordItem = NULL;
+		}
+	};
+
+/*************************************************************************
+ *
+ *	"Even when I walk
+ *	through the darkest valley,
+ *	I will not be afraid,
+ *	for you are close beside me.
+ *	Your rod and your staff
+ *	protect and conform me." (Psalm 23:4)
+ *
+ *************************************************************************/

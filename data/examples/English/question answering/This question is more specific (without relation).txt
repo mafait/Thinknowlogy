@@ -1,0 +1,5 @@
+﻿Read the file "English/reasoning/family definition".
+Is John a baker or a butcher?
+Is John a baker?
+Is John a butcher?
+# Remember to clear this knowledge before reading another example.

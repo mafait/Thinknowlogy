@@ -1,0 +1,101 @@
+﻿#
+#	File:		greeting.txt
+#	Scope:		Used by the Thinknowlogy application
+#	Purpose:	To demonstrate programming in natural language.
+#	Version:	Thinknowlogy 2014r2a (George Boole)
+#----------------------------------------------------------------------------
+#	Thinknowlogy is grammar-based software,
+#	designed to utilize Natural Laws of Intelligence in grammar,
+#	in order to create intelligence through natural language in software,
+#	which is demonstrated by:
+#	* Programming in natural language;
+#	* Reasoning in natural language:
+#		- drawing conclusions (more advanced than scientific solutions),
+#		- making assumptions (with self-adjusting level of uncertainty),
+#		- asking questions (about gaps in the knowledge),
+#		- detecting conflicts in the knowledge;
+#	* Building semantics autonomously (no vocabularies):
+#		- detecting some cases of semantic ambiguity;
+#	* Multilingualism, proving: Natural Laws of Intelligence are universal.
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2014, Menno Mafait
+#
+#	Your additions, modifications, suggestions and bug reports
+#	are welcome at http://mafait.org
+#----------------------------------------------------------------------------
+#	This program is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 2 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License along
+#	with this program; if not, write to the Free Software Foundation, Inc.,
+#	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#----------------------------------------------------------------------------
+
+# Show the greeting and cleanup to avoid interference with the next greeting
+If the greeting is started then show "\n~!'greeting'<a>\"~ ~!'salutation'<a>\"~ ~!'name'<a>`~.\n\n", the age is clear, the gender is clear, the greeting is clear, the marital status is clear, the name is clear, the salutation is clear and the time is clear.
+
+# Determine the salutation for a male.
+If the greeting is started and the gender is male then if the age is assigned and the age is less than 12 then the salutation is "Master" else the salutation is "Mr.".
+
+# Determine the salutation for a female.
+If the greeting is started and the gender is female then if the marital status is married then the salutation is "Mrs." else if the age is assigned and the age is less than 12 then the salutation is "Little Miss" else the salutation is "Miss".
+
+# Determine the greeting according the time of the day.
+If the greeting is started and the time is assigned then if the time is earlier than "06:00" then the greeting is "Good night" else if the time is earlier than "12:00" then the greeting is "Good morning" else if the time is earlier than "18:00" then the greeting is "Good afternoon" else the greeting is "Good evening".
+
+
+# Now do your trick.
+
+#---------------------
+# Little Miss Robinson
+#---------------------
+The name is Robinson.
+The gender is female.
+The age is 6.
+# The marital status is single.	# Obvious for a child and not relevant
+The time is "07:30".
+The greeting is started.
+#-------------
+# Master Adams
+#-------------
+The name is Adams.
+The gender is male.
+The age is 8.
+# The marital status is single.	# Obvious for a child and not relevant
+The time is "10:00".
+The greeting is started.
+#----------------
+# Miss Piggy
+#----------------
+The name is Piggy.
+The gender is female.
+The age is 25.
+The marital status is single.
+The time is "17:00".
+The greeting is started.
+#----------------
+# Mrs. Jones
+#----------------
+The name is Jones.
+The gender is female.
+The age is 29.
+The marital status is married.
+The time is "18:30".
+The greeting is started.
+#----------------
+# Mr. Smith
+#----------------
+The name is Smith.
+The gender is male.
+The age is 32.
+# The marital status is single.	# Not relevant
+The time is "01:30".
+The greeting is started.
+# Remember to clear this knowledge before reading another example.

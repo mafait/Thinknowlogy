@@ -1,0 +1,5 @@
+﻿Lees het bestand "Nederlands/redeneren/gezinsdefinitie".
+Is Jan een bakker of een slager?
+Is Jan een bakker?
+Is Jan een slager?
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

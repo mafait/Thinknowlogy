@@ -1,0 +1,32 @@
+﻿# Read the user-interface and grammar languages
+~English
+~Español (in beta)
+~Nederlands
+
+# Copyright text
+#Show the copyright.
+Mostrar los derechos-de-autor.
+#Toon het auteursrecht.
+
+# Intro text
+#Show the intro.
+Mostrar la intro.
+#Toon de intro.
+
+# Read the available users in available languages
+Read the file "data/startup/English/users".
+Lea el archivo "data/startup/Español (in beta)/usuarios".
+Lees het bestand "data/startup/Nederlands/gebruikers".
+
+# Read common knowledge in available languages
+Read the file "data/startup/English/common knowledge".
+Lea el archivo "data/startup/Español (in beta)/conocimiento común".
+Lees het bestand "data/startup/Nederlands/algemene kennis".
+
+# Login
+##C++#Login as Expert.
+##Java#Login as Guest.
+#C++#Inicie-la-sesión como Experto.
+#Java#Inicie-la-sesión como Invitado.
+##C++#Aanmelden als Expert.
+##Java#Aanmelden als Gast.

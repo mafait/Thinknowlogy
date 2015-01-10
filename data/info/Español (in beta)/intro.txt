@@ -1,0 +1,30 @@
+﻿Mostrar "------------------------------------------------------------------------------".
+Mostrar " Thinknowlogy es un software basado en la gramática,".
+Mostrar " diseñada para utilizar las leyes naturales de la Inteligencia en la gramática,".
+Mostrar " con el fin de crear inteligencia a través de lenguaje natural en el software,".
+Mostrar " lo que se demuestra por:".
+Mostrar " * Programación en lenguaje natural;".
+Mostrar " * Razonamiento en lenguaje natural:".
+Mostrar "   - sacar conclusiones (más avanzada que las soluciones científicas),".
+Mostrar "   - hacer suposiciones (con el nivel de ajuste automático de la incertidumbre),".
+Mostrar "   - haciendo preguntas (acerca de las brechas en el conocimiento),".
+Mostrar "   - detección de conflictos en el conocimiento;".
+Mostrar " * Construir de forma autónoma la semántica (no hay vocabularios):".
+Mostrar "   - detectar algunos casos de ambigüedad semántica;".
+Mostrar " * El multilingüismo, probando: Leyes Naturales de la Inteligencia son universales.".
+Mostrar "------------------------------------------------------------------------------".
+#C++#Mostrar " Ayudar.\t\t\t\t\t\t* Mostrar más info ayuda".
+#C++#Mostrar " \~{nombre del idioma}\t\t\t\t\t* Cambiar el idioma".
+#C++#Mostrar " Lea el archivo \"Español/ambigüedad/Boston\".\t\t* Detección de ambigüedad".
+#C++#Mostrar " Lea el archivo \"Español/ambigüedad/presidentes de EUA\".* Detección de ambigüedad".
+#C++#Mostrar " Lea el archivo \"Español/programación/Conecta 4\".\t* Juego Conecta 4".
+#C++#Mostrar " Lea el archivo \"Español/programación/saludo\".\t\t* Saludo".
+#C++#Mostrar " Lea el archivo \"Español/programación/Torres de Hanói\".\t* Solución de rompecabezas".
+#C++#Mostrar " Lea el archivo \"Español/razonamiento/familia/familia\".\t* Razonamiento".
+#Java#Mostrar " Utilice el botón <ambigüedad>		para aprender acerca de la detección de la ambigüedad".
+#Java#Mostrar " Utilice el botón <programación>	para aprender acerca de la programación en lenguaje natural".
+#Java#Mostrar " Utilice el botón <razonamiento>	para aprender sobre el razonamiento en el lenguaje natural".
+#Java#Mostrar "------------------------------------------------------------------------------".
+Mostrar " Idiomas de gramática disponibles:	~!`idioma-de-gramática`<s>'~.".
+Mostrar " Idiomas de la interfaz disponibles:	~!`idioma-de-la-interfaz`<s>'~.".
+Mostrar "------------------------------------------------------------------------------".

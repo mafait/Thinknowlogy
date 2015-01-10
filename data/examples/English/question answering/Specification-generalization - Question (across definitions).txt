@@ -1,0 +1,3 @@
+﻿Is a a color?
+Is a a number?
+# Remember to clear this knowledge before reading another example.

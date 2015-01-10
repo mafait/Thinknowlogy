@@ -1,0 +1,4 @@
+﻿Mostrar " This program is distributed in the hope that it will be useful,".
+Mostrar " but WITHOUT ANY WARRANTY; without even the implied warranty of".
+Mostrar " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the".
+Mostrar " GNU General Public License for more details.".

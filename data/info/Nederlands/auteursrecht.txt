@@ -1,0 +1,4 @@
+﻿Toon " Copyright (C) 2009-2014, Menno Mafait".
+Toon " Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details type \"Toon de".
+Toon " garantie.\". This is free software, and you are welcome to redistribute it".
+Toon " under certain conditions; type \"Toon de GPLv2-licentie.\" for details.".

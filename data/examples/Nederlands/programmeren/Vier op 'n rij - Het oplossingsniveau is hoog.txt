@@ -1,0 +1,4 @@
+﻿Lees het bestand "Nederlands/programmeren/Vier op 'n rij".
+Het oplossingsniveau is hoog.
+Mijn zet is D.
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

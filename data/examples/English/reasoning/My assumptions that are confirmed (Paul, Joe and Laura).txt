@@ -1,0 +1,10 @@
+﻿Read the file "English/reasoning/family definition".
+Paul is a son of John and Anna.
+Joe is a son of John and Anna.
+Laura is a daughter of John and Anna.
+Paul is a person.
+Joe is a child of John and Anna.
+Laura is a child.
+Laura is a child of John and Anna.
+Paul is a child of John and Anna.
+# Remember to clear this knowledge before reading another example.

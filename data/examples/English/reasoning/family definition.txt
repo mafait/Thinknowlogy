@@ -1,0 +1,75 @@
+﻿#
+#	File:		family definition.txt
+#	Scope:		Used by the Thinknowlogy application
+#	Purpose:	To demonstrate automated reasoning in natural language:
+#			Self-generated conclusions, assumptions and questions
+#			and the detection of conflicts and semantic ambiguity
+#	Version:	Thinknowlogy 2014r2a (George Boole)
+#----------------------------------------------------------------------------
+#	Thinknowlogy is grammar-based software,
+#	designed to utilize Natural Laws of Intelligence in grammar,
+#	in order to create intelligence through natural language in software,
+#	which is demonstrated by:
+#	* Programming in natural language;
+#	* Reasoning in natural language:
+#		- drawing conclusions (more advanced than scientific solutions),
+#		- making assumptions (with self-adjusting level of uncertainty),
+#		- asking questions (about gaps in the knowledge),
+#		- detecting conflicts in the knowledge;
+#	* Building semantics autonomously (no vocabularies):
+#		- detecting some cases of semantic ambiguity;
+#	* Multilingualism, proving: Natural Laws of Intelligence are universal.
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2014, Menno Mafait
+#
+#	Your additions, modifications, suggestions and bug reports
+#	are welcome at http://mafait.org
+#----------------------------------------------------------------------------
+#	This program is free software: you can redistribute it and/or modify
+#	it under the terms of the GNU General Public License as published by
+#	the Free Software Foundation, either version 2 of the License, or
+#	(at your option) any later version.
+#
+#	This program is distributed in the hope that it will be useful,
+#	but WITHOUT ANY WARRANTY; without even the implied warranty of
+#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#	GNU General Public License for more details.
+#
+#	You should have received a copy of the GNU General Public License along
+#	with this program; if not, write to the Free Software Foundation, Inc.,
+#	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#----------------------------------------------------------------------------
+
+# The definition of a family.
+Every person is a man or a woman.
+Every woman is feminine.
+Every man is masculine.
+Every family has parents and children.
+Every parent is a father or a mother.
+Every child is a son or a daughter.
+Every father is a man.
+Every mother is a woman.
+Every girl is feminine.
+Every boy is masculine.
+Every son is a boy or a man.
+Every daughter is a girl or a woman.
+#C++## Now type sentences like these:
+#C++##
+#C++## John is the father and Anna is the mother of Paul, Joe and Laura.
+#C++## Paul is a son.			Paul is a man.
+#C++## Joe is a son.			Joe is a man.
+#C++## Laura is a daughter.		Laura is a woman.
+#C++## John is a father.		John is a parent.
+#C++## Anna is a mother.		Anna is a parent.
+#C++## Show information about John.	Show information about Anna.
+#C++## Show information about Paul.	Show information about Laura.
+#C++## Show information about parents.	Show information about children.
+#C++## Paul is a son of John and Anna.
+#C++## Joe is a son of John and Anna.
+#C++## Laura is a daughter of John and Anna.
+#C++##
+#C++## See the text on the buttons of the family screenshots
+#C++## (in subfolder: screenshots) for more examples.
+#C++##
+# Try the sentences in all kind of combinations and in different order.
+# Use "Clear your mind.", "Undo." or "Restart." for a retry.

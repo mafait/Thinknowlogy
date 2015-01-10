@@ -1,0 +1,17 @@
+﻿# In 1989 George H. W. Bush was inaugurated as president of the United States.
+George Bush is the president of the United States.
+# In 1993 Bill Clinton was inaugurated as president of the United States.
+Bill Clinton is the president of the United States.
+Show information about the presidents.
+# In 1997 Bill Clinton was re-inaugurated as president of the United States.
+Bill Clinton is the president of the United States.
+# In 2001 George W. Bush - a son of George H. W. Bush - was inaugurated as president of the United States.
+George Bush is the president of the United States.
+Show information about the presidents.
+# In 2005 George W. Bush was re-inaugurated as president of the United States.
+George Bush is the president of the United States.
+# In 2009 Barack Obama was inaugurated as president as president of the United States.
+Barack Obama is the president of the United States.
+Show information about the presidents.
+# In 2013 ...
+# Remember to clear this knowledge before reading another example.
