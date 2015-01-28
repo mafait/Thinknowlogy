@@ -2,47 +2,26 @@
  *	Class:			AdminSolve
  *	Supports class:	AdminItem
  *	Purpose:		Trying to solve (= to assign) words according to the
-					given selections
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *					given selections
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "AdminItem.h"
@@ -620,7 +599,7 @@ class AdminSolve
 						}
 					}
 				while( !hasFoundScoringAssignment_ &&
-				( currentAssignmentItem = currentAssignmentItem->nextNonQuestionAssignmentItem() ) != NULL );
+				( currentAssignmentItem = currentAssignmentItem->nextSelectedSpecificationItem() ) != NULL );
 				}
 			}
 		else
@@ -664,7 +643,7 @@ class AdminSolve
 							}
 						}
 					while( !hasFoundScoringAssignment_ &&
-					( currentAssignmentItem = currentAssignmentItem->nextNonQuestionAssignmentItem() ) != NULL );
+					( currentAssignmentItem = currentAssignmentItem->nextSelectedSpecificationItem() ) != NULL );
 					}
 				}
 			else
@@ -690,7 +669,7 @@ class AdminSolve
 			if( ( currentSpecificationItem = specificationWordItem->firstNonQuestionSpecificationItem() ) != NULL )
 				{
 				do	{
-					foundAssignmentItem = specificationWordItem->firstAssignmentItem( true, false, false, false, isPossessive, NO_QUESTION_PARAMETER, currentSpecificationItem->relationContextNr(), currentSpecificationItem->specificationWordItem() );
+					foundAssignmentItem = specificationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, isPossessive, currentSpecificationItem->relationContextNr(), currentSpecificationItem->specificationWordItem() );
 					isSatisfiedScore = ( isNegative == ( foundAssignmentItem == NULL || foundAssignmentItem->isNegative() ) );
 
 					if( findScoringAssignment( isPossessive, isSatisfiedScore, currentSpecificationItem->relationContextNr(), generalizationWordItem, currentSpecificationItem->specificationWordItem() ) == RESULT_OK )
@@ -701,7 +680,7 @@ class AdminSolve
 					else
 						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a scoring assignment" );
 					}
-				while( ( currentSpecificationItem = currentSpecificationItem->nextNonQuestionSpecificationItem() ) != NULL );
+				while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
 				}
 			}
 		else
@@ -1013,7 +992,7 @@ class AdminSolve
 										}
 									}
 
-								isInverted = ( predefinedNounSolveMethodWordItem->firstAssignmentItem( true, false, false, false, false, NO_QUESTION_PARAMETER, NO_CONTEXT_NR, adminItem_->predefinedAdjectiveInvertedWordItem() ) != NULL );
+								isInverted = ( predefinedNounSolveMethodWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, adminItem_->predefinedAdjectiveInvertedWordItem() ) != NULL );
 
 								if( ( specificationResult = predefinedNounSolveStrategyWordItem->getAssignmentWordParameter() ).result == RESULT_OK )
 									{
@@ -1051,13 +1030,14 @@ class AdminSolve
 																			{
 																			if( solveWordItem->firstNonQuestionActiveAssignmentItem() != NULL )	// Word has active assignments
 																				{
-																				isInverted = ( predefinedNounSolveMethodWordItem->firstAssignmentItem( true, false, false, false, false, NO_QUESTION_PARAMETER, NO_CONTEXT_NR, adminItem_->predefinedAdjectiveInvertedWordItem() ) != NULL );
+																				isInverted = ( predefinedNounSolveMethodWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, adminItem_->predefinedAdjectiveInvertedWordItem() ) != NULL );
 
 																				if( !isInverted &&
 																				commonVariables_->currentAssignmentLevel < solveLevel_ )
 																					{
 																					if( adminItem_->scoreList->deleteScores() == RESULT_OK )
-																						solveLevel_ = commonVariables_->currentAssignmentLevel;		// Don't solve any deeper when there is a winning score
+																						// Don't solve any deeper if there is a winning score
+																						solveLevel_ = commonVariables_->currentAssignmentLevel;
 																					else
 																						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the scores with an assignment level higher than ", commonVariables_->currentAssignmentLevel );
 																					}
@@ -1397,8 +1377,6 @@ class AdminSolve
 	};
 
 /*************************************************************************
- *
  *	"Give thanks to the God of gods.
  *	His faithful love endures forever." (Psalm 136:2)
- *
  *************************************************************************/

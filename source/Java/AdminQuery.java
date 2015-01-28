@@ -2,46 +2,25 @@
  *	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class AdminQuery
@@ -61,12 +40,14 @@ class AdminQuery
 
 	private void clearQuerySelections()
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			adminItem_.wordList.clearQuerySelectionsInWordList();
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				adminItem_.adminListArray[adminListNr].clearQuerySelectionsInList();
 			}
 		}
@@ -136,12 +117,14 @@ class AdminQuery
 		CommonVariables.nReplacedQueryItems = 0;
 		CommonVariables.nDeletedQueryItems = 0;
 
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			adminItem_.wordList.countQueryInWordList();
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				adminItem_.adminListArray[adminListNr].countQueryInList();
 			}
 
@@ -174,15 +157,17 @@ class AdminQuery
 
 	private byte showQueryResult( boolean showOnlyWords, boolean showOnlyWordReferences, boolean showOnlyStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, ( queryWordTypeNr == Constants.WORD_TYPE_UNDEFINED ? CommonVariables.matchingWordTypeNr : queryWordTypeNr ), queryWidth ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to show the query result in my word list" );
 			}
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].showQueryResultInList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to show the query result" );
@@ -340,15 +325,17 @@ class AdminQuery
 
 	private byte itemQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to query item numbers in my word list" );
 			}
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].itemQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to query item numbers in" );
@@ -360,15 +347,17 @@ class AdminQuery
 
 	private byte listQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, StringBuffer queryListStringBuffer )
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListStringBuffer ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to query my word list" );
 			}
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].listQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListStringBuffer ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to do a list query module" );
@@ -380,15 +369,17 @@ class AdminQuery
 
 	private byte wordTypeQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, short queryWordTypeNr )
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to query word types in my word list" );
 			}
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].wordTypeQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to word types" );
@@ -400,15 +391,17 @@ class AdminQuery
 
 	private byte parameterQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, int queryParameter )
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to query parameters in my word list" );
 			}
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].parameterQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to parameters" );
@@ -420,7 +413,8 @@ class AdminQuery
 
 	private byte wordQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String wordNameString )
 		{
-		if( adminItem_.wordList != null )		// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to query the words in my word list" );
@@ -431,15 +425,17 @@ class AdminQuery
 
 	private byte wordReferenceQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String wordReferenceNameString )
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to query word references in my word list" );
 			}
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].wordReferenceQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to query word references" );
@@ -451,15 +447,17 @@ class AdminQuery
 
 	private byte stringQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String queryString )
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to query strings in my word list" );
 			}
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].stringQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to query strings" );
@@ -1206,8 +1204,6 @@ class AdminQuery
 	};
 
 /*************************************************************************
- *
  *	"Honor the Lord, you heavenly beings;
  *	honor the Lord for his glory and strength." (Psalm 29:1)
- *
  *************************************************************************/

@@ -2,46 +2,25 @@
  *	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		To read and analyze sentences
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "AdminItem.h"
@@ -236,8 +215,8 @@ class AdminReadSentence
 
 	ResultType addReadSpecification( bool isAction, bool isNewStart, unsigned short selectionLevel, unsigned short selectionListNr )
 		{
+		bool hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords;
 		bool isConditional = ( isConditional_ || selectionListNr != NO_LIST_NR );
-		bool isUserSpecificationExclusivelyFeminineOrMasculine;
 		unsigned short imperativeParameter = NO_IMPERATIVE_PARAMETER;
 		unsigned short specificationWordParameter = NO_WORD_PARAMETER;
 		ReadItem *currentGeneralizationReadItem = startGeneralizationWordReadItem_;
@@ -263,13 +242,11 @@ class AdminReadSentence
 					adminItem_->initializeAdminContextVariables();
 					adminItem_->initializeAdminSpecificationVariables();
 
-					isUserSpecificationExclusivelyFeminineOrMasculine = ( !hasFoundNeutralSpecificationWord_ &&
+					hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords = ( ( hasFoundFeminineSpecificationWord_ &&
+																					!hasFoundMasculineSpecificationWord_ ) ||
 
-																		( ( hasFoundFeminineSpecificationWord_ &&
-																		!hasFoundMasculineSpecificationWord_ ) ||
-
-																		( !hasFoundFeminineSpecificationWord_ &&
-																		hasFoundMasculineSpecificationWord_ ) ) );
+																					( !hasFoundFeminineSpecificationWord_ &&
+																					hasFoundMasculineSpecificationWord_ ) );
 
 					do	{
 						switch( currentGeneralizationReadItem->grammarParameter )
@@ -279,7 +256,7 @@ class AdminReadSentence
 								// Don't insert a break statement
 
 							case GRAMMAR_GENERALIZATION_WORD:
-								if( adminItem_->addUserSpecifications( isAction, isAssignment_, isConditional, isInactiveAssignment_, isArchivedAssignment_, isEveryGeneralization_, isExclusiveSpecification_, isNegative_, isNewStart, isPartOf_, isPossessive_, isSpecificationGeneralization_, isUniqueRelation_, isUserSpecificationExclusivelyFeminineOrMasculine, assumptionLevel_, prepositionParameter_, questionParameter_, selectionLevel, selectionListNr, imperativeParameter, specificationWordParameter, generalizationContextNr_, specificationContextNr_, currentGeneralizationReadItem, startSpecificationWordReadItem_, endSpecificationWordReadItem_, startRelationWordReadItem_, endRelationReadItem_ ) != RESULT_OK )
+								if( adminItem_->addUserSpecifications( isAction, isAssignment_, isConditional, isInactiveAssignment_, isArchivedAssignment_, isEveryGeneralization_, isExclusiveSpecification_, isNegative_, isNewStart, isPartOf_, isPossessive_, isSpecificationGeneralization_, isUniqueRelation_, hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, assumptionLevel_, prepositionParameter_, questionParameter_, selectionLevel, selectionListNr, imperativeParameter, specificationWordParameter, generalizationContextNr_, specificationContextNr_, currentGeneralizationReadItem, startSpecificationWordReadItem_, endSpecificationWordReadItem_, startRelationWordReadItem_, endRelationReadItem_ ) != RESULT_OK )
 									return myWordItem_->addErrorInItem( adminItem_->adminListChar( selectionListNr ), functionNameString, moduleNameString_, "I failed to add the read user specifications" );
 							}
 						}
@@ -306,7 +283,7 @@ class AdminReadSentence
 			{
 			// Do for all words
 			do	{
-				if( currentWordItem->checkSpecificationsForReplacedJustifications() == RESULT_OK )
+				if( currentWordItem->checkSpecificationsForReplacedOrDeletedJustifications() == RESULT_OK )
 					{
 					if( currentWordItem->checkJustificationsForReplacedSpecifications() == RESULT_OK )
 						{
@@ -861,10 +838,12 @@ class AdminReadSentence
 									}
 								while( !adminItem_->hasRequestedRestart() &&
 								!commonVariables_->hasShownWarning &&
-								adminItem_->firstActiveReadItem() != NULL &&				// Still read items available
+								// Still read items available
+								adminItem_->firstActiveReadItem() != NULL &&
 
 								( !specificationReadItem->isVirtualListPreposition() ||
-								specificationWordParameter > NO_WORD_PARAMETER ) &&		// Loop shouldn't end when virtual list prepositions are used to e.g. show justification reports
+								// Loop shouldn't end if virtual list prepositions are used to e.g. show justification reports
+								specificationWordParameter > NO_WORD_PARAMETER ) &&
 
 								specificationReadItem != endSpecificationWordReadItem_ &&
 								( specificationReadItem = specificationReadItem->nextReadItem() ) != NULL );
@@ -952,6 +931,7 @@ class AdminReadSentence
 		endRelationReadItem_ = NULL;
 
 		commonVariables_->isUserQuestion = false;
+
 		commonVariables_->nUserGeneralizationWords = 0;
 		commonVariables_->nUserSpecificationWords = 0;
 		commonVariables_->nUserRelationWords = 0;
@@ -1153,16 +1133,15 @@ class AdminReadSentence
 								{
 								currentReadWordItem->isUserSpecificationWord = true;
 
-								if( currentReadWordItem->isFeminineOrMasculineWord() )
+								if( currentReadWordItem->isFeminineWord() )
+									hasFoundFeminineSpecificationWord_ = true;
+								else
 									{
-									if( currentReadWordItem->isFeminineWord() )
-										hasFoundFeminineSpecificationWord_ = true;
-
 									if( currentReadWordItem->isMasculineWord() )
 										hasFoundMasculineSpecificationWord_ = true;
+									else
+										hasFoundNeutralSpecificationWord_ = true;
 									}
-								else
-									hasFoundNeutralSpecificationWord_ = true;
 								}
 
 							previousSpecificationWordOrderNr = currentWordOrderNr;
@@ -1314,9 +1293,19 @@ class AdminReadSentence
 		return isExclusiveSpecification_;
 		}
 
-	bool isUserSentencePossessive()
+	bool isPossessive()
 		{
 		return isPossessive_;
+		}
+
+	bool isUserSentenceMixOfFeminineAndMasculineSpecificationWords()
+		{
+		return ( hasFoundFeminineSpecificationWord_ &&
+
+				( hasFoundMasculineSpecificationWord_ ||
+				hasFoundNeutralSpecificationWord_ ) &&
+
+				commonVariables_->nUserSpecificationWords > 1 );
 		}
 
 	ResultType processReadSentence( char *readSentenceString )
@@ -1360,8 +1349,8 @@ class AdminReadSentence
 										if( checkForStructuralIntegrity() == RESULT_OK )
 											{
 											// Not fully implemented yet
-/*											if( storeChangesInFutureDataBase() != RESULT_OK )
-												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to store the sentence in a future database" );
+/*											if( storeChangesInFutureDatabase() != RESULT_OK )
+												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to store the changes in a future database" );
 */											}
 										else
 											return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check for structural integrity" );
@@ -1480,11 +1469,9 @@ class AdminReadSentence
 	};
 
 /*************************************************************************
- *
  *	"You have turned my mourning into joyful dancing.
  *	You have taken away my clothes of mourning and
  *	clothed me with joy,
  *	that I might sing praises to you and not be silent.
  *	O Lord my God, I will give you thanks forever!" (Psalm 30:11-12)
- *
  *************************************************************************/

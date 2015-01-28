@@ -2,46 +2,25 @@
  *	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "ContextItem.cpp"
@@ -50,21 +29,6 @@
 class ContextList : private List
 	{
 	friend class WordItem;
-
-	// Private deconstructor functions
-
-	void deleteContextList( ContextItem *searchItem )
-		{
-		ContextItem *deleteItem;
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextContextItem();
-			delete deleteItem;
-			}
-		}
-
 
 	protected:
 	// Constructor / deconstructor
@@ -76,9 +40,33 @@ class ContextList : private List
 
 	~ContextList()
 		{
-		deleteContextList( firstActiveContextItem() );
-		deleteContextList( (ContextItem *)firstReplacedItem() );
-		deleteContextList( (ContextItem *)firstDeletedItem() );
+		ContextItem *deleteItem;
+		ContextItem *searchItem = firstActiveContextItem();
+
+		while( searchItem != NULL )
+			{
+			deleteItem = searchItem;
+			searchItem = searchItem->nextContextItem();
+			delete deleteItem;
+			}
+
+		searchItem = (ContextItem *)firstReplacedItem();
+
+		while( searchItem != NULL )
+			{
+			deleteItem = searchItem;
+			searchItem = searchItem->nextContextItem();
+			delete deleteItem;
+			}
+
+		searchItem = (ContextItem *)firstDeletedItem();
+
+		while( searchItem != NULL )
+			{
+			deleteItem = searchItem;
+			searchItem = searchItem->nextContextItem();
+			delete deleteItem;
+			}
 		}
 
 
@@ -251,27 +239,6 @@ class ContextList : private List
 		return NO_CONTEXT_NR;
 		}
 
-	unsigned int contextSentenceNr( unsigned int contextNr, WordItem *specificationWordItem )
-		{
-		ContextItem *searchItem = firstActiveContextItem();
-
-		// In case of a pronoun context, the specification word item will be undefined
-
-		if( contextNr > NO_CONTEXT_NR )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->contextNr() == contextNr &&
-				searchItem->specificationWordItem() == specificationWordItem )
-					return searchItem->originalSentenceNr();
-
-				searchItem = searchItem->nextContextItem();
-				}
-			}
-
-		return NO_SENTENCE_NR;
-		}
-
 	unsigned int highestContextNr()
 		{
 		unsigned int highestContextNr = NO_CONTEXT_NR;
@@ -306,7 +273,7 @@ class ContextList : private List
 						{
 						if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 							{
-							if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isQuestion, contextWordTypeNr, specificationWordTypeNr, contextNr, specificationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
+							if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isQuestion, contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
 								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active context item" );
 							}
 						else
@@ -346,17 +313,17 @@ class ContextList : private List
 		return RESULT_OK;
 		}
 /*
-	ResultType storeChangesInFutureDataBase()
+	ResultType storeChangesInFutureDatabase()
 		{
 		// Not fully implemented yet
 		ContextItem *searchItem = firstActiveContextItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDataBase";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
 		while( searchItem != NULL )
 			{
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem->storeContextItemInFutureDataBase() != RESULT_OK )
+				if( searchItem->storeContextItemInFutureDatabase() != RESULT_OK )
 					return addError( functionNameString, NULL, NULL, "I failed to store a context item in the database" );
 				}
 
@@ -369,7 +336,7 @@ class ContextList : private List
 			{
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem->storeContextItemInFutureDataBase() != RESULT_OK )
+				if( searchItem->storeContextItemInFutureDatabase() != RESULT_OK )
 					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced context item in the database" );
 				}
 
@@ -421,11 +388,9 @@ class ContextList : private List
 	};
 
 /*************************************************************************
- *
  *	"O Lord my God, you have performed many wonders for us.
  *	Your plans for us are too numerous to list.
  *	You have no equal.
  *	I have tried to recite all your wonderful deeds,
  *	I would never come to the end of them." (Psalm 40:5)
- *
  *************************************************************************/

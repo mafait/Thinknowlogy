@@ -2,24 +2,9 @@
 #	File:		English.txt
 #	Scope:		Used by the Thinknowlogy application
 #	Purpose:	To define the interface texts in English
-#	Version:	Thinknowlogy 2014r2a (George Boole)
+#	Version:	Thinknowlogy 2014r2b (Laws of Thought)
 #----------------------------------------------------------------------------
-#	Thinknowlogy is grammar-based software,
-#	designed to utilize Natural Laws of Intelligence in grammar,
-#	in order to create intelligence through natural language in software,
-#	which is demonstrated by:
-#	* Programming in natural language;
-#	* Reasoning in natural language:
-#		- drawing conclusions (more advanced than scientific solutions),
-#		- making assumptions (with self-adjusting level of uncertainty),
-#		- asking questions (about gaps in the knowledge),
-#		- detecting conflicts in the knowledge;
-#	* Building semantics autonomously (no vocabularies):
-#		- detecting some cases of semantic ambiguity;
-#	* Multilingualism, proving: Natural Laws of Intelligence are universal.
-#----------------------------------------------------------------------------
-#	Copyright (C) 2009-2014, Menno Mafait
-#
+#	Copyright (C) 2009-2015, Menno Mafait
 #	Your additions, modifications, suggestions and bug reports
 #	are welcome at http://mafait.org
 #----------------------------------------------------------------------------
@@ -69,20 +54,19 @@
 :210		"Read the file "English/ambiguity/Boston"."
 :211		"Read the file "English/ambiguity/US presidents"."
 :212		"Read the file "English/programming/Connect-Four"."
-:213		"Read the file "English/programming/greeting"."
-:214		"Read the file "English/programming/tower of Hanoi"."
-:215		"Read the file "English/reasoning/family definition"."
-:218		"<ambiguity>"
-:219		"<programming>"
-:220		"<reasoning>"
-:221		"<definitions>"
-:222		"<conflicts>"
-:223		"<justifications>"
-:224		"<questions>"
-:225		"<show info>"
-:226		"<back>"
-:227		"Help."
-:228		"<change language>"
+:213		"Read the file "English/programming/tower of Hanoi"."
+:214		"Read the file "English/reasoning/family definition"."
+:216		"<ambiguity>"
+:217		"<programming>"
+:218		"<reasoning>"
+:219		"<definitions>"
+:220		"<conflicts>"
+:221		"<justifications>"
+:222		"<questions>"
+:223		"<show info>"
+:224		"<back>"
+:225		"Help."
+:226		"<change language>"
 
 # Java console (programming/Connect-Four submenu)
 :300		"My set is A."

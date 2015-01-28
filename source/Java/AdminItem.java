@@ -3,46 +3,25 @@
  *	Parent class:	WordItem
  *	Grand parent:	Item
  *	Purpose:		To process tasks at administration level
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class AdminItem extends WordItem
@@ -296,12 +275,12 @@ class AdminItem extends WordItem
 		return startErrorInItem( 1, null, null, "The admin assumption module isn't created yet" );
 		}
 
-	protected SpecificationResultType addSelfGeneratedSpecification( boolean isAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isUniqueUserRelation, boolean isForcingNewJustification, boolean isSkipAdditionalConclusionOrAskQuestion, short assumptionLevel, short assumptionJustificationTypeNr, short conclusionJustificationTypeNr, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem )
+	protected SpecificationResultType addSelfGeneratedSpecification( boolean isAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isForcingNewJustification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isUniqueUserRelation, boolean isSkipAdditionalConclusionOrAskQuestion, boolean isSpecificationGeneralization, short assumptionLevel, short assumptionJustificationTypeNr, short conclusionJustificationTypeNr, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 
 		if( adminAssumption_ != null )
-			return adminAssumption_.addSelfGeneratedSpecification( isAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isUniqueUserRelation, isForcingNewJustification, isSkipAdditionalConclusionOrAskQuestion, assumptionLevel, assumptionJustificationTypeNr, conclusionJustificationTypeNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, anotherSecondarySpecificationItem, generalizationWordItem, specificationWordItem, relationWordItem );
+			return adminAssumption_.addSelfGeneratedSpecification( isAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isForcingNewJustification, isNegative, isPartOf, isPossessive, isUniqueUserRelation, isSkipAdditionalConclusionOrAskQuestion, isSpecificationGeneralization, assumptionLevel, assumptionJustificationTypeNr, conclusionJustificationTypeNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, anotherSecondarySpecificationItem, generalizationWordItem, specificationWordItem, relationWordItem );
 
 		specificationResult.result = startErrorInItem( 1, null, null, "The admin assumption module isn't created yet" );
 		return specificationResult;
@@ -392,7 +371,7 @@ class AdminItem extends WordItem
 		if( adminCleanup_ != null )
 			return adminCleanup_.hasFoundAnyChangeDuringThisSentence();
 
-		return true;	// Default when admin cleanup module isn't created yet
+		return true;	// Default if admin cleanup module isn't created yet
 		}
 
 	protected boolean wasUndoOrRedo()
@@ -400,7 +379,7 @@ class AdminItem extends WordItem
 		if( adminCleanup_ != null )
 			return adminCleanup_.wasUndoOrRedo();
 
-		return true;	// Default when admin cleanup module isn't created yet
+		return true;	// Default if admin cleanup module isn't created yet
 		}
 
 	protected int highestSentenceNr()
@@ -563,6 +542,22 @@ class AdminItem extends WordItem
 		return specificationResult;
 		}
 
+	protected SpecificationItem createdFeminineOrMasculineSpecificationItem()
+		{
+		if( adminConclusion_ != null )
+			return adminConclusion_.createdFeminineOrMasculineSpecificationItem();
+
+		return null;
+		}
+
+	protected SpecificationItem foundFeminineOrMasculineSpecificationItem()
+		{
+		if( adminConclusion_ != null )
+			return adminConclusion_.foundFeminineOrMasculineSpecificationItem();
+
+		return null;
+		}
+
 
 	// Protected context methods
 
@@ -593,27 +588,27 @@ class AdminItem extends WordItem
 		return contextResult;
 		}
 
-	protected ContextResultType getRelationContext( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, short questionParameter, short specificationWordTypeNr, short relationWordTypeNr, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem )
+	protected ContextResultType getRelationContext( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, boolean isSelfGeneratedAssumption, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem )
 		{
 		ContextResultType contextResult = new ContextResultType();
 
 		if( adminContext_ != null ||
 		// Create supporting module
 		( adminContext_ = new AdminContext( this, this ) ) != null )
-			return adminContext_.getRelationContext( isAssignment, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, questionParameter, specificationWordTypeNr, relationWordTypeNr, relationContextNr, generalizationWordItem, specificationWordItem, relationWordItem );
+			return adminContext_.getRelationContext( isAssignment, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, isSelfGeneratedAssumption, relationContextNr, generalizationWordItem, specificationWordItem, relationWordItem );
 
 		contextResult.result = startErrorInItem( 1, null, null, "The admin context module isn't created yet" );
 		return contextResult;
 		}
 
-	protected ContextResultType getRelationContext( boolean isAssignment, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isUserSentence, short questionParameter, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, ReadItem startRelationReadItem )
+	protected ContextResultType getRelationContext( boolean isAssignment, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isQuestion, boolean isUserSentence, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, ReadItem startRelationReadItem )
 		{
 		ContextResultType contextResult = new ContextResultType();
 
 		if( adminContext_ != null ||
 		// Create supporting module
 		( adminContext_ = new AdminContext( this, this ) ) != null )
-			return adminContext_.getRelationContext( isAssignment, isExclusiveSpecification, isNegative, isPossessive, isUserSentence, questionParameter, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, startRelationReadItem );
+			return adminContext_.getRelationContext( isAssignment, isExclusiveSpecification, isNegative, isPossessive, isQuestion, isUserSentence, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, startRelationReadItem );
 
 		contextResult.result = startErrorInItem( 1, null, null, "The admin context module isn't created yet" );
 		return contextResult;
@@ -622,25 +617,25 @@ class AdminItem extends WordItem
 
 	// Protected database connection methods
 /*
-	protected byte storeSentenceInFutureDataBase()
+	protected byte storeSentenceInFutureDatabase()
 		{
 		// Not fully implemented yet
 		if( fileList != null )
-			return fileList.storeChangesInFutureDataBase();
+			return fileList.storeChangesInFutureDatabase();
 
 		// Read list and score list aren't stored, because these are temporary lists
 
 		if( wordList != null )
-			return wordList.storeChangesInFutureDataBase();
+			return wordList.storeChangesInFutureDatabase();
 
 		if( conditionList != null )
-			return conditionList.storeChangesInFutureDataBase();
+			return conditionList.storeChangesInFutureDatabase();
 
 		if( actionList != null )
-			return actionList.storeChangesInFutureDataBase();
+			return actionList.storeChangesInFutureDatabase();
 
 		if( alternativeList != null )
-			return alternativeList.storeChangesInFutureDataBase();
+			return alternativeList.storeChangesInFutureDatabase();
 
 		return Constants.RESULT_OK;
 		}
@@ -680,7 +675,9 @@ class AdminItem extends WordItem
 
 	protected byte createGrammarLanguage( String languageNameString )
 		{
-		if( adminLanguage_ != null )
+		if( adminLanguage_ != null ||
+		// Create supporting module
+		( adminLanguage_ = new AdminLanguage( this, this ) ) != null )
 			return adminLanguage_.createGrammarLanguage( languageNameString );
 
 		return startErrorInItem( 1, null, null, "The admin language module isn't created yet" );
@@ -778,17 +775,6 @@ class AdminItem extends WordItem
 			return readList.isImperativeSentence();
 
 		return false;
-		}
-
-	protected ReadResultType createReadWord( short wordOrderNr, short wordTypeNr, String textString, WordItem readWordItem )
-		{
-		ReadResultType readResult = new ReadResultType();
-
-		if( adminReadCreateWords_ != null )
-			return adminReadCreateWords_.createReadWord( wordOrderNr, wordTypeNr, 0, textString, readWordItem );
-
-		readResult.result = startErrorInItem( 1, null, null, "The admin read create words module isn't created yet" );
-		return readResult;
 		}
 
 	protected ReadResultType createReadWords( String grammarString )
@@ -990,10 +976,18 @@ class AdminItem extends WordItem
 		return false;
 		}
 
-	protected boolean isUserSentencePossessive()
+	protected boolean isPossessiveUserSpecification()
 		{
 		if( adminReadSentence_ != null )
-			return adminReadSentence_.isUserSentencePossessive();
+			return adminReadSentence_.isPossessive();
+
+		return false;
+		}
+
+	protected boolean isUserSentenceMixOfFeminineAndMasculineSpecificationWords()
+		{
+		if( adminReadSentence_ != null )
+			return adminReadSentence_.isUserSentenceMixOfFeminineAndMasculineSpecificationWords();
 
 		return false;
 		}
@@ -1133,18 +1127,10 @@ class AdminItem extends WordItem
 			adminSpecification_.initializeAdminSpecificationVariables();
 		}
 
-	protected int mostRecentRelationContextNr()
+	protected byte addUserSpecifications( boolean isAction, boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isNewStart, boolean isPartOf, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueRelation, boolean hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, short assumptionLevel, short prepositionParameter, short questionParameter, short selectionLevel, short selectionListNr, short imperativeParameter, short specificationWordParameter, int generalizationContextNr, int specificationContextNr, ReadItem generalizationWordItem, ReadItem startSpecificationReadItem, ReadItem endSpecificationReadItem, ReadItem startRelationReadItem, ReadItem endRelationReadItem )
 		{
 		if( adminSpecification_ != null )
-			return adminSpecification_.mostRecentRelationContextNr();
-
-		return Constants.NO_CONTEXT_NR;
-		}
-
-	protected byte addUserSpecifications( boolean isAction, boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isNewStart, boolean isPartOf, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueRelation, boolean isUserSpecificationExclusivelyFeminineOrMasculine, short assumptionLevel, short prepositionParameter, short questionParameter, short selectionLevel, short selectionListNr, short imperativeParameter, short specificationWordParameter, int generalizationContextNr, int specificationContextNr, ReadItem generalizationWordItem, ReadItem startSpecificationReadItem, ReadItem endSpecificationReadItem, ReadItem startRelationReadItem, ReadItem endRelationReadItem )
-		{
-		if( adminSpecification_ != null )
-			return adminSpecification_.addUserSpecifications( isAction, isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isNewStart, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueRelation, isUserSpecificationExclusivelyFeminineOrMasculine, assumptionLevel, prepositionParameter, questionParameter, selectionLevel, selectionListNr, imperativeParameter, specificationWordParameter, generalizationContextNr, specificationContextNr, generalizationWordItem, startSpecificationReadItem, endSpecificationReadItem, startRelationReadItem, endRelationReadItem );
+			return adminSpecification_.addUserSpecifications( isAction, isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isNewStart, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueRelation, hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, assumptionLevel, prepositionParameter, questionParameter, selectionLevel, selectionListNr, imperativeParameter, specificationWordParameter, generalizationContextNr, specificationContextNr, generalizationWordItem, startSpecificationReadItem, endSpecificationReadItem, startRelationReadItem, endRelationReadItem );
 
 		return startErrorInItem( 1, null, null, "The admin specification module isn't created yet" );
 		}
@@ -1178,7 +1164,7 @@ class AdminItem extends WordItem
 		return specificationResult;
 		}
 
-	protected SpecificationResultType addSpecificationWithAuthorization( boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSelection, boolean isSpecificationGeneralization, boolean isUniqueRelation, boolean isUserSpecificationExclusivelyFeminineOrMasculine, boolean isValueSpecification, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
+	protected SpecificationResultType addSpecificationWithAuthorization( boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSelection, boolean isSpecificationGeneralization, boolean isUniqueRelation, boolean hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, boolean isValueSpecification, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 
@@ -1186,14 +1172,14 @@ class AdminItem extends WordItem
 		specificationWordItem == predefinedNounInterfaceLanguageWordItem() )
 			{
 			if( adminLanguage_ != null )
-				return adminLanguage_.addSpecificationWithAuthorization( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueRelation, isUserSpecificationExclusivelyFeminineOrMasculine, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, generalizationWordItem, specificationWordItem, relationWordItem, specificationString );
+				return adminLanguage_.addSpecificationWithAuthorization( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueRelation, hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, generalizationWordItem, specificationWordItem, relationWordItem, specificationString );
 
 			startErrorInItem( 1, null, null, "The admin language module isn't created yet" );
 			}
 		else
 			{
 			if( adminAuthorization_ != null )
-				return adminAuthorization_.addSpecificationWithAuthorization( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueRelation, isUserSpecificationExclusivelyFeminineOrMasculine, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, generalizationWordItem, specificationWordItem, relationWordItem, specificationString );
+				return adminAuthorization_.addSpecificationWithAuthorization( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueRelation, hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, generalizationWordItem, specificationWordItem, relationWordItem, specificationString );
 
 			startErrorInItem( 1, null, null, "The admin authorization module isn't created yet" );
 			}
@@ -1306,18 +1292,19 @@ class AdminItem extends WordItem
 		if( CommonVariables.result != Constants.RESULT_SYSTEM_ERROR )
 			{
 			readAndExecute();
-			CommonVariables.result = Constants.RESULT_OK;	// Ignore Constants.RESULT_ERROR. Application will only exit on system error
+			// Ignore Constants.RESULT_ERROR. Application will only exit on system error
+			CommonVariables.result = Constants.RESULT_OK;
+			// Application will not exit on a normal error
+			return Constants.RESULT_OK;
 			}
 
-		return CommonVariables.result;
+		return Constants.RESULT_SYSTEM_ERROR;
 		}
 	};
 
 /*************************************************************************
- *
  *	"Listen to me, all you in the distant lands!
  *	Pay attention, you who are far away!
  *	The Lord called me before my birth;
  *	from within the womb he called me by name." (Psalm 49:1)
- *
  *************************************************************************/

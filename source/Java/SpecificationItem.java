@@ -2,46 +2,25 @@
  *	Class:			SpecificationItem
  *	Purpose:		To store info about the specification structure
  *					of a word
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class SpecificationItem extends Item
@@ -122,6 +101,21 @@ class SpecificationItem extends Item
 
 	// Private specification methods
 
+	private boolean hasExclusiveSpecificationSubstitutionAssumption()
+		{
+		JustificationItem searchItem = firstJustificationItem_;
+
+		while( searchItem != null )
+			{
+			if( searchItem.isExclusiveSpecificationSubstitutionAssumption() )
+				return true;
+
+			searchItem = searchItem.attachedJustificationItem();
+			}
+
+		return false;
+		}
+
 	private SpecificationResultType calculateAssumptionLevel( boolean isNeedingRecalculation )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
@@ -180,7 +174,8 @@ class SpecificationItem extends Item
 						( nJustificationRelationWords == nSpecificationRelationWords ||
 
 						( assumptionLevel_ == Constants.NO_ASSUMPTION_LEVEL &&
-						lastCheckedAssumptionLevelItemNr_ == CommonVariables.currentItemNr ) ) )	// To avoid looping: calculation A, calculation B, calculation A, etc.
+						// To avoid looping: calculation A, calculation B, calculation A, etc.
+						lastCheckedAssumptionLevelItemNr_ == CommonVariables.currentItemNr ) ) )
 							lowestAssumptionLevel = highestAssumptionLevel;
 						}
 					while( CommonVariables.result == Constants.RESULT_OK &&
@@ -197,6 +192,7 @@ class SpecificationItem extends Item
 								assumptionLevel_ = lowestAssumptionLevel;
 
 								if( assumptionLevel_ > Constants.NO_ASSUMPTION_LEVEL )
+									// Clear sentence write buffer if assumption level is changed
 									lastWrittenSentenceStringBuffer = null;
 								}
 							}
@@ -289,6 +285,7 @@ class SpecificationItem extends Item
 		hasAlreadyBeenWrittenAsConflict = false;
 
 		replacingSpecificationItem = null;
+
 		lastWrittenSentenceStringBuffer = null;
 		lastWrittenSentenceWithOneSpecificationOnlyStringBuffer = null;
 		}
@@ -306,7 +303,7 @@ class SpecificationItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status when not active
+			if( !isActiveItem() )	// Show status if not active
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -327,7 +324,7 @@ class SpecificationItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status when not active
+			if( !isActiveItem() )	// Show status if not active
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -660,11 +657,6 @@ class SpecificationItem extends Item
 		return null;
 		}
 
-	protected SpecificationItem nextNonQuestionAssignmentItem()
-		{
-		return getAssignmentItem( false, false, false );
-		}
-
 
 	// Protected question methods
 
@@ -716,6 +708,8 @@ class SpecificationItem extends Item
 	protected void markAsGeneralizationAssignment()
 		{
 		isGeneralizationAssignment_ = true;
+
+		// Clear sentence write buffer
 		lastWrittenSentenceStringBuffer = null;
 		}
 
@@ -804,13 +798,16 @@ class SpecificationItem extends Item
 		return false;
 		}
 
-	protected boolean hasFoundJustification( JustificationItem searchJustificationItem )
+	protected boolean hasFoundJustification( boolean isIncludingReplacingJustification, JustificationItem searchJustificationItem )
 		{
 		JustificationItem searchItem = firstJustificationItem_;
 
 		while( searchItem != null )
 			{
-			if( searchItem == searchJustificationItem )
+			if( searchItem == searchJustificationItem ||
+
+			( isIncludingReplacingJustification &&
+			searchItem.replacingJustificationItem == searchJustificationItem ) )
 				return true;
 
 			searchItem = searchItem.attachedJustificationItem();
@@ -932,7 +929,7 @@ class SpecificationItem extends Item
 					foundWordItem = specificationWordItem_;
 				}
 			while( !hasFoundUnwrittenWord &&
-			( currentSpecificationItem = currentSpecificationItem.nextSpecificationItemWithSameQuestionParameter( isIncludingAnsweredQuestions ) ) != null );
+			( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isIncludingAnsweredQuestions ) ) != null );
 
 			return ( foundWordItem == null ? true : ( isDefiniteArticleParameter( articleParameter ) ? foundWordItem.isCorrectDefiniteArticle( isFeminineWord, isMasculineWord, articleParameter, specificationWordTypeNr_ ) : foundWordItem.isCorrectIndefiniteArticle( isFeminineWord, isMasculineWord, articleParameter, specificationWordTypeNr_ ) ) );
 			}
@@ -976,9 +973,9 @@ class SpecificationItem extends Item
 
 	protected boolean isHiddenSpecification()
 		{
-		return ( isSelfGeneratedAssumption() &&
-				specificationWordItem_ != null &&
-				specificationWordItem_.isCollectedWithItself() );
+		return ( !isNegative_ &&
+				isSelfGeneratedAssumption() &&
+				isSpecificationWordCollectedWithItself() );
 		}
 
 	protected boolean isNegative()
@@ -1114,6 +1111,12 @@ class SpecificationItem extends Item
 				myWordItem().nContextWordsInAllWords( relationContextNr_, specificationWordItem_ ) > 1 );
 		}
 
+	protected boolean isSpecificationWordCollectedWithItself()
+		{
+		return ( specificationWordItem_ != null &&
+				specificationWordItem_.isCollectedWithItself() );
+		}
+
 	protected boolean isUniqueRelation()
 		{
 		return isUniqueRelation_;
@@ -1239,13 +1242,10 @@ class SpecificationItem extends Item
 				isQuestion() ) );
 		}
 
-	protected boolean isRelatedSpecification( boolean isCheckingRelationContext, boolean isCheckingSelfGeneratedAssumption, boolean isIgnoringExclusive, boolean isIgnoringNegative, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean _isSelfGeneratedAssumption, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr )
+	protected boolean isRelatedSpecification( boolean isCheckingRelationContext, boolean isIgnoringExclusive, boolean isIgnoringNegative, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr )
 		{
 		return ( ( isIgnoringExclusive ||
 				isExclusiveSpecification_ == isExclusiveSpecification ) &&
-
-				( !isCheckingSelfGeneratedAssumption ||
-				isSelfGeneratedAssumption() == _isSelfGeneratedAssumption ) &&
 
 				( isIgnoringNegative ||
 				isNegative_ == isNegative ) &&
@@ -1255,7 +1255,9 @@ class SpecificationItem extends Item
 				generalizationContextNr_ == generalizationContextNr &&
 				specificationContextNr_ == specificationContextNr &&
 
-				( !isCheckingRelationContext ||
+				( ( !isCheckingRelationContext &&
+				!isHiddenSpecification() ) ||
+
 				relationContextNr_ == relationContextNr ) );
 		}
 
@@ -1349,10 +1351,47 @@ class SpecificationItem extends Item
 				nInvolvedSpecificationWords++;
 				}
 
-			searchItem = searchItem.nextSpecificationItemWithSameQuestionParameter();
+			searchItem = searchItem.nextSelectedQuestionParameterSpecificationItem();
 			}
 
 		return nInvolvedSpecificationWords;
+		}
+
+	protected byte addFeminineOrMasculineContext( WordItem contextWordItem )
+		{
+		int relationContextNr;
+		WordItem specificationWordItem;
+		JustificationItem searchItem = firstJustificationItem_;
+		SpecificationItem primarySpecificationItem;
+
+		if( contextWordItem != null )
+			{
+			while( searchItem != null )
+				{
+				if( searchItem.isSpecificationSubstitutionAssumption() &&
+				( primarySpecificationItem = searchItem.primarySpecificationItem() ) != null )
+					{
+					if( primarySpecificationItem.hasCurrentActiveSentenceNr() &&
+					( relationContextNr = primarySpecificationItem.relationContextNr() ) > Constants.NO_CONTEXT_NR &&
+					( specificationWordItem = primarySpecificationItem.specificationWordItem() ) != null )
+						{
+						if( specificationWordItem.isFeminineOrMasculineWord() &&
+						// If context doesn't exist
+						!contextWordItem.hasContextInWord( relationContextNr, specificationWordItem ) )
+							{
+							if( contextWordItem.addContext( false, primarySpecificationItem.relationWordTypeNr(), primarySpecificationItem.specificationWordTypeNr(), relationContextNr, specificationWordItem ) != Constants.RESULT_OK )
+								return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to add a context" );
+							}
+						}
+					}
+
+				searchItem = searchItem.attachedJustificationItem();
+				}
+			}
+		else
+			return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The given context word item is undefined" );
+
+		return Constants.RESULT_OK;
 		}
 
 	protected byte attachJustificationToSpecification( JustificationItem attachJustificationItem )
@@ -1478,6 +1517,8 @@ class SpecificationItem extends Item
 			{
 			isConcludedAssumption_ = true;
 			assumptionLevel_ = Constants.NO_ASSUMPTION_LEVEL;
+
+			// Clear sentence write buffer to lose the uncertainty word
 			lastWrittenSentenceStringBuffer = null;
 			}
 		else
@@ -1517,13 +1558,13 @@ class SpecificationItem extends Item
 				if( markAsConcludedAssumption( true ) == Constants.RESULT_OK )
 					isAdjustedSpecification = true;
 				else
-					return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to mark myself as concluded assumption" );
+					return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to mark myself as a concluded assumption" );
 				}
 			else
 				{
 				if( !specificationResult.hasPerformedRecalculation &&
 
-				// Avoid corrected assumption to be concluded when collected with itself
+				// Avoid corrected assumption to be concluded if collected with itself
 				( isCorrectedAssumption_ ||
 				specificationCollectionNr_ == Constants.NO_COLLECTION_NR ||
 				!myWordItem().hasCorrectedAssumptionByKnowledge() ) )
@@ -1542,29 +1583,25 @@ class SpecificationItem extends Item
 								{
 								if( markAsConcludedAssumption( true ) == Constants.RESULT_OK )
 									{
-									if( hasSpecificationCompoundCollection() )
+									if( ( specificationResult = myWordItem().findRelatedSpecification( false, this ) ).result == Constants.RESULT_OK )
 										{
-										if( ( specificationResult = myWordItem().findRelatedSpecification( false, false, this ) ).result == Constants.RESULT_OK )
-											{
-											if( specificationResult.relatedSpecificationItem == null ||
-											specificationResult.relatedSpecificationItem.isConcludedAssumption() )
-												isAdjustedSpecification = true;
-											}
-										else
-											return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find out if a search specification is related" );
+										if( specificationResult.relatedSpecificationItem == null ||
+										specificationResult.relatedSpecificationItem.isConcludedAssumption() )
+											isAdjustedSpecification = true;
 										}
 									else
-										isAdjustedSpecification = true;
+										return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find out if a search specification is related" );
 									}
 								else
 									return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "After recalculation, I failed to mark myself as concluded assumption" );
 								}
 							else
 								{
-								// Skip early anouncement of adjusted assumption
-								if( specificationResult.assumptionLevel < previousAssumptionLevel ||
-								relationContextNr_ == Constants.NO_CONTEXT_NR ||
-								myWordItem().nContextWordsInAllWords( relationContextNr_, specificationWordItem_ ) == CommonVariables.nUserRelationWords )
+								if( specificationResult.assumptionLevel < previousAssumptionLevel &&
+								myWordItem().isUserGeneralizationWord &&
+
+								( relationContextNr_ == Constants.NO_CONTEXT_NR ||
+								!hasExclusiveSpecificationSubstitutionAssumption() ) )
 									isAdjustedSpecification = true;
 								}
 							}
@@ -1603,6 +1640,22 @@ class SpecificationItem extends Item
 		return firstJustificationItem_;
 		}
 
+	protected JustificationItem olderGeneralizationAssumptionBySpecificationJustificationItem()
+		{
+		JustificationItem searchItem = firstJustificationItem_;
+
+		while( searchItem != null )
+			{
+			if( searchItem.isOlderItem() &&
+			searchItem.isGeneralizationAssumption() )
+				return searchItem;
+
+			searchItem = searchItem.attachedJustificationItem();
+			}
+
+		return null;
+		}
+
 	protected JustificationItem oppositePossessiveConditionalSpecificationAssumptionJustificationItem( SpecificationItem secondarySpecificationItem )
 		{
 		JustificationItem searchItem = firstJustificationItem_;
@@ -1622,31 +1675,35 @@ class SpecificationItem extends Item
 		return null;
 		}
 
-	protected JustificationItem olderGeneralizationAssumptionBySpecificationJustificationItem()
+	protected JustificationItem possessiveReversibleAssumptionJustificationItem( SpecificationItem secondarySpecificationItem )
 		{
 		JustificationItem searchItem = firstJustificationItem_;
 
-		while( searchItem != null )
+		if( secondarySpecificationItem != null )
 			{
-			if( searchItem.isOlderItem() &&
-			searchItem.isGeneralizationAssumption() )
-				return searchItem;
+			while( searchItem != null )
+				{
+				if( searchItem.isPossessiveReversibleAssumption() &&
+				searchItem.secondarySpecificationItem() == secondarySpecificationItem )
+					return searchItem;
 
-			searchItem = searchItem.attachedJustificationItem();
+				searchItem = searchItem.attachedJustificationItem();
+				}
 			}
 
 		return null;
 		}
 
-	protected JustificationItem primarySpecificationJustificationItem( SpecificationItem primarySpecificationItem )
+	protected JustificationItem primaryOrSecondarySpecificationJustificationItem( SpecificationItem referenceSpecificationItem )
 		{
 		JustificationItem searchItem = firstJustificationItem_;
 
-		if( primarySpecificationItem != null )
+		if( referenceSpecificationItem != null )
 			{
 			while( searchItem != null )
 				{
-				if( searchItem.primarySpecificationItem() == primarySpecificationItem )
+				if( searchItem.primarySpecificationItem() == referenceSpecificationItem ||
+				searchItem.secondarySpecificationItem() == referenceSpecificationItem )
 					return searchItem;
 
 				searchItem = searchItem.attachedJustificationItem();
@@ -1730,17 +1787,12 @@ class SpecificationItem extends Item
 		return ( isAssignment() ? getAssignmentItem( false, false, isQuestion() ) : getSpecificationItem( false, false, isQuestion() ) );
 		}
 
-	protected SpecificationItem nextNonQuestionSpecificationItem()
-		{
-		return ( isAssignment() ? getAssignmentItem( false, false, false ) : getSpecificationItem( false, false, false ) );
-		}
-
-	protected SpecificationItem nextSpecificationItemWithSameQuestionParameter()
+	protected SpecificationItem nextSelectedQuestionParameterSpecificationItem()
 		{
 		return ( isAssignment() ? getAssignmentItem( false, false, questionParameter_ ) : getSpecificationItem( false, false, questionParameter_ ) );
 		}
 
-	protected SpecificationItem nextSpecificationItemWithSameQuestionParameter( boolean isIncludingAnsweredQuestions )
+	protected SpecificationItem nextSelectedQuestionParameterSpecificationItem( boolean isIncludingAnsweredQuestions )
 		{
 		return ( isAssignment() ? getAssignmentItem( isIncludingAnsweredQuestions, false, questionParameter_ ) : getSpecificationItem( isIncludingAnsweredQuestions, false, questionParameter_ ) );
 		}
@@ -1756,7 +1808,7 @@ class SpecificationItem extends Item
 			searchItem.isSelfGenerated() )
 				return searchItem;
 
-			searchItem = searchItem.nextSpecificationItemWithSameQuestionParameter( true );
+			searchItem = searchItem.nextSelectedQuestionParameterSpecificationItem( true );
 			}
 
 		return null;
@@ -1813,8 +1865,6 @@ class SpecificationItem extends Item
 	};
 
 /*************************************************************************
- *
  *	"All he does is just and good,
  *	and all his commandments are trustworthy." (Psalm 111:7)
- *
  *************************************************************************/

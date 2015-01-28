@@ -1,47 +1,26 @@
 /*
  *	Class:			WordCleanup
  *	Supports class:	WordItem
- *	Purpose:		To cleanup unnecessary items
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Purpose:		To cleanup obsolete items
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class WordCleanup
@@ -88,9 +67,8 @@ class WordCleanup
 			}
 		}
 
-	protected void getHighestInUseSentenceNr( boolean isIncludingDeletedItems, boolean isIncludingLanguageAssignments, boolean isIncludingTemporaryLists, int highestSentenceNr )
+	protected void getHighestInUseSentenceNr( boolean isIncludingDeletedItems, boolean isIncludingLanguageAssignments, boolean isIncludingTemporaryLists, boolean isLanguageWord, int highestSentenceNr )
 		{
-		boolean isGrammarLanguage = myWordItem_.isLanguageWord();
 		short wordListNr = 0;
 
 		while( wordListNr < Constants.NUMBER_OF_WORD_LISTS &&
@@ -98,10 +76,18 @@ class WordCleanup
 			{
 			if( myWordItem_.wordListArray[wordListNr] != null &&
 
-			( !isGrammarLanguage ||
-			isIncludingLanguageAssignments ||
+			( !isLanguageWord ||
+
+			( ( isIncludingLanguageAssignments ||
 			wordListNr != Constants.WORD_ASSIGNMENT_LIST ) &&
 
+			// To increase performance, skip organizing grammar and interface lists after startup
+			( CommonVariables.isSystemStartingUp ||
+
+			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) ) &&
+
+			// Skip temporary lists
 			( isIncludingTemporaryLists ||
 			!myWordItem_.wordListArray[wordListNr].isTemporaryList() ) )
 				myWordItem_.wordListArray[wordListNr].getHighestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
@@ -110,20 +96,36 @@ class WordCleanup
 			}
 		}
 
-	protected void setCurrentItemNr()
+	protected void setCurrentItemNr( boolean isLanguageWord )
 		{
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
+			if( myWordItem_.wordListArray[wordListNr] != null &&
+
+			( !isLanguageWord ||
+
+			// To increase performance, skip organizing grammar and interface lists after startup
+			( CommonVariables.isSystemStartingUp ||
+
+			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
 				myWordItem_.wordListArray[wordListNr].setCurrentItemNrInList();
 			}
 		}
 
-	protected byte decrementItemNrRange( int decrementSentenceNr, int decrementItemNr, int decrementOffset )
+	protected byte decrementItemNrRange( boolean isLanguageWord, int decrementSentenceNr, int decrementItemNr, int decrementOffset )
 		{
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
+			if( myWordItem_.wordListArray[wordListNr] != null &&
+
+			( !isLanguageWord ||
+
+			// To increase performance, skip organizing grammar and interface lists after startup
+			( CommonVariables.isSystemStartingUp ||
+
+			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].decrementItemNrRangeInList( decrementSentenceNr, decrementItemNr, decrementOffset ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to decrement item number range" );
@@ -133,11 +135,19 @@ class WordCleanup
 		return Constants.RESULT_OK;
 		}
 
-	protected byte decrementSentenceNrs( int startSentenceNr )
+	protected byte decrementSentenceNrs( boolean isLanguageWord, int startSentenceNr )
 		{
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
+			if( myWordItem_.wordListArray[wordListNr] != null &&
+
+			( !isLanguageWord ||
+
+			// To increase performance, skip organizing grammar and interface lists after startup
+			( CommonVariables.isSystemStartingUp ||
+
+			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].decrementSentenceNrsInList( startSentenceNr ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
@@ -147,11 +157,19 @@ class WordCleanup
 		return Constants.RESULT_OK;
 		}
 
-	protected byte deleteSentences( boolean isAvailableForRollback, int lowestSentenceNr )
+	protected byte deleteSentences( boolean isAvailableForRollback, boolean isLanguageWord, int lowestSentenceNr )
 		{
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
+			if( myWordItem_.wordListArray[wordListNr] != null &&
+
+			( !isLanguageWord ||
+
+			// To increase performance, skip organizing grammar and interface lists after startup
+			( CommonVariables.isSystemStartingUp ||
+
+			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].deleteSentencesInList( isAvailableForRollback, lowestSentenceNr ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to delete sentences in one of my lists" );
@@ -161,14 +179,36 @@ class WordCleanup
 		return Constants.RESULT_OK;
 		}
 
-	protected byte removeFirstRangeOfDeletedItems()
+	protected byte redoCurrentSentence()
+		{
+		for( short wordListNr : Constants.WordLists )
+			{
+			if( myWordItem_.wordListArray[wordListNr] != null )
+				{
+				if( myWordItem_.wordListArray[wordListNr].redoCurrentSentenceInList() != Constants.RESULT_OK )
+					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to redo the current sentence" );
+				}
+			}
+
+		return Constants.RESULT_OK;
+		}
+
+	protected byte removeFirstRangeOfDeletedItems( boolean isLanguageWord )
 		{
 		short wordListNr = 0;
 
 		while( wordListNr < Constants.NUMBER_OF_WORD_LISTS &&
 		CommonVariables.nDeletedItems == 0 )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
+			if( myWordItem_.wordListArray[wordListNr] != null &&
+
+			( !isLanguageWord ||
+
+			// To increase performance, skip organizing grammar and interface lists after startup
+			( CommonVariables.isSystemStartingUp ||
+
+			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].removeFirstRangeOfDeletedItemsInList() != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to remove the first deleted items" );
@@ -207,26 +247,10 @@ class WordCleanup
 
 		return Constants.RESULT_OK;
 		}
-
-	protected byte redoCurrentSentence()
-		{
-		for( short wordListNr : Constants.WordLists )
-			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
-				{
-				if( myWordItem_.wordListArray[wordListNr].redoCurrentSentenceInList() != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to redo the current sentence" );
-				}
-			}
-
-		return Constants.RESULT_OK;
-		}
 	};
 
 /*************************************************************************
- *
  *	"He has paid a full ransom for his people.
  *	He has guaranteed his convenant with them forever.
  *	What a holy, awe-inspiring name he has!" (Psalm 111:9)
- *
  *************************************************************************/

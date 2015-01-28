@@ -1,47 +1,26 @@
 /*
  *	Class:		Console
  *	Purpose:	To create the GUI and to process the events
- *	Version:	Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 import java.awt.Component;
@@ -79,7 +58,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static boolean hasSelectedAmbiguityBoston_;
 	private static boolean hasSelectedAmbiguityPresidents_;
 	private static boolean hasSelectedProgrammingConnect4_;
-	private static boolean hasSelectedProgrammingGreeting_;
 	private static boolean hasSelectedProgrammingTowerOfHanoi_;
 	private static boolean hasSelectedReasoningACarHasAnEngine;
 	private static boolean hasSelectedReasoningJohnWasTheFatherOfPaul_;
@@ -87,14 +65,17 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static boolean hasSelectedReasoningFamily_;
 
 	private static boolean isActionPerformed_;
+	private static boolean isStopCorrecting_;
 	private static boolean isStopResizing_;
 
 	private static short currentSubMenu_;
 	private static short nSubMenuButtons_;
 
 	private static int currentFrameHeight_;
-	private static int currentPreferredOutputScrollPaneSize_;
+	private static int heightCorrection_;
+	private static int previousPreferredOutputScrollPaneSize_;
 	private static int titleBarHeight_;
+	private static int wantedPreferredOutputScrollPaneSize_;
 	private static int windowBottomHeight_;
 
 	private static String inputString_;
@@ -133,7 +114,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	private static JButton mainMenuProgrammingSubMenuButton_;
 	private static JButton mainMenuReadTheFileProgrammingConnect4Button_;
-	private static JButton mainMenuReadTheFileProgrammingGreetingButton_;
 	private static JButton mainMenuReadTheFileProgrammingTowerOfHanoiButton_;
 
 	private static JButton mainMenuReasoningSubMenuButton_;
@@ -224,16 +204,12 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			mainMenuReadTheFileProgrammingConnect4Button_.setEnabled( hasSelectedProgrammingConnect4_ ? false : isEnableNormalButtons );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_CONNECT4, mainMenuReadTheFileProgrammingConnect4Button_ );
 
-			mainMenuReadTheFileProgrammingGreetingButton_.setEnabled( hasSelectedProgrammingGreeting_ ? false : isEnableNormalButtons );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_GREETING, mainMenuReadTheFileProgrammingGreetingButton_ );
-
 			mainMenuReadTheFileProgrammingTowerOfHanoiButton_.setEnabled( hasSelectedProgrammingTowerOfHanoi_ ? false : isEnableNormalButtons );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_TOWER_OF_HANOI, mainMenuReadTheFileProgrammingTowerOfHanoiButton_ );
 			}
 		else
 			{
 			mainMenuReadTheFileProgrammingConnect4Button_.setVisible( false );
-			mainMenuReadTheFileProgrammingGreetingButton_.setVisible( false );
 			mainMenuReadTheFileProgrammingTowerOfHanoiButton_.setVisible( false );
 			}
 
@@ -307,8 +283,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		inputField_.setEnabled( isEnableNormalButtons && Presentation.isExpertUser() );
 		inputField_.requestFocus();
-
-		resizeFrame();
 		}
 
 	private static void goToEndOfOutputDocument()
@@ -325,7 +299,8 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	private static void resizeFrame()
 		{
-		int buttonPaneSize = ( titleBarHeight_ + upperMenuPanel_.getHeight() + mainMenuPanel_.getHeight() + subMenuPanel_.getHeight() + Constants.CONSOLE_BUTTON_PANE_HEIGHT + windowBottomHeight_ );
+		int difference;
+		int buttonPaneSize = ( titleBarHeight_ + mainMenuPanel_.getHeight() + subMenuPanel_.getHeight() + windowBottomHeight_ + heightCorrection_ + ( 2 * Constants.CONSOLE_BUTTON_PANE_HEIGHT ) );
 		int preferredOutputScrollPaneSize = ( currentFrameHeight_ - buttonPaneSize );
 
 		if( !isStopResizing_ &&
@@ -334,8 +309,12 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		subMenuButtonArray_[nSubMenuButtons_].isVisible() )
 			nSubMenuButtons_++;
 
-		if( currentPreferredOutputScrollPaneSize_ == preferredOutputScrollPaneSize )
+		difference = preferredOutputScrollPaneSize - wantedPreferredOutputScrollPaneSize_;
+
+		if( difference == 0 )
 			{
+			isStopCorrecting_ = true;
+
 			if( nSubMenuButtons_ > 1 &&
 			outputScrollPane_.getHeight() < buttonPaneSize )
 				{
@@ -345,13 +324,35 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			}
 		else
 			{
-			currentPreferredOutputScrollPaneSize_ = preferredOutputScrollPaneSize;
-			outputScrollPane_.setPreferredSize( new Dimension( 0, preferredOutputScrollPaneSize ) );
-			goToEndOfOutputDocument();
+			if( isActionPerformed_ )
+				{
+				wantedPreferredOutputScrollPaneSize_ = preferredOutputScrollPaneSize;
+				goToEndOfOutputDocument();
+				}
+			else
+				{
+				if( difference > 0 )
+					{
+					if( difference > 9 )
+						wantedPreferredOutputScrollPaneSize_ += ( difference / 5 );
+					else
+						wantedPreferredOutputScrollPaneSize_++;
+					}
+				else
+					{
+					if( !isStopCorrecting_ &&
+					heightCorrection_ < Constants.CONSOLE_BUTTON_PANE_HEIGHT &&
+					previousPreferredOutputScrollPaneSize_ > preferredOutputScrollPaneSize )
+						heightCorrection_++;
+					}
+
+				previousPreferredOutputScrollPaneSize_ = preferredOutputScrollPaneSize;
+				}
 			}
 
 		mainMenuPanel_.setPreferredSize( new Dimension( 0, ( Constants.CONSOLE_BUTTON_PANE_HEIGHT + mainMenuHelpButton_.getY() ) ) );
 		subMenuPanel_.setPreferredSize( new Dimension( 0, ( Constants.CONSOLE_BUTTON_PANE_HEIGHT + ( nSubMenuButtons_ > 0 && nSubMenuButtons_ <= Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS ? subMenuButtonArray_[nSubMenuButtons_ - 1].getY() : 0 ) ) ) );
+		outputScrollPane_.setPreferredSize( new Dimension( 0, preferredOutputScrollPaneSize ) );
 		subMenuPanel_.revalidate();
 		}
 
@@ -408,7 +409,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_PROGRAMMING_SUBMENU, mainMenuProgrammingSubMenuButton_ );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_CONNECT4, mainMenuReadTheFileProgrammingConnect4Button_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_GREETING, mainMenuReadTheFileProgrammingGreetingButton_ );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_TOWER_OF_HANOI, mainMenuReadTheFileProgrammingTowerOfHanoiButton_ );
 
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_REASONING_SUBMENU, mainMenuReasoningSubMenuButton_ );
@@ -622,6 +622,15 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		upperMenuMoreExamplesButton_.setVisible( isVisible );
 		}
 
+	private static void showConnectFourInterferenceNotification()
+		{
+		JTextArea errorTextArea = new JTextArea( "\n\tThe Connect-Four playing rules are still present in the system.\n\tThey may interfere with the current action. My advice:\n\tClear the Connect-Four playing rules from the system first,\n\tby using \"Clear your mind.\" or \"Restart.\". Then select this action again." );
+		errorTextArea.setEditable( false );
+		JScrollPane errorScrollPane = new JScrollPane( errorTextArea );
+		errorScrollPane.setPreferredSize( new Dimension( Constants.CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_WIDTH, Constants.CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_HEIGHT ) );
+		JOptionPane.showMessageDialog( null, errorScrollPane, Constants.CONSOLE_CONNECT_FOUR_INTERFERENCE_MESSAGE_STRING, JOptionPane.ERROR_MESSAGE );			
+		}
+
 	private static String getInputString()
 		{
 		inputString_ = null;
@@ -731,9 +740,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		mainMenuReadTheFileProgrammingConnect4Button_ = new JButton();
 		mainMenuReadTheFileProgrammingConnect4Button_.addActionListener( this );
 
-		mainMenuReadTheFileProgrammingGreetingButton_ = new JButton();
-		mainMenuReadTheFileProgrammingGreetingButton_.addActionListener( this );
-
 		mainMenuReadTheFileProgrammingTowerOfHanoiButton_ = new JButton();
 		mainMenuReadTheFileProgrammingTowerOfHanoiButton_.addActionListener( this );
 
@@ -832,7 +838,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		mainMenuPanel_.add( mainMenuProgrammingSubMenuButton_ );
 		mainMenuPanel_.add( mainMenuReadTheFileProgrammingConnect4Button_ );
-		mainMenuPanel_.add( mainMenuReadTheFileProgrammingGreetingButton_ );
 		mainMenuPanel_.add( mainMenuReadTheFileProgrammingTowerOfHanoiButton_ );
 
 		mainMenuPanel_.add( mainMenuReasoningSubMenuButton_ );
@@ -878,7 +883,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		hasSelectedAmbiguityPresidents_ = false;
 
 		hasSelectedProgrammingConnect4_ = false;
-		hasSelectedProgrammingGreeting_ = false;
 		hasSelectedProgrammingTowerOfHanoi_ = false;
 
 		hasSelectedReasoningACarHasAnEngine = false;
@@ -887,13 +891,17 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		hasSelectedReasoningFamily_ = false;
 
 		isActionPerformed_ = false;
+//		isStopCorrecting_ = false;
 		isStopResizing_ = false;
 
 		currentSubMenu_ = Constants.CONSOLE_SUBMENU_INIT;
 		nSubMenuButtons_ = 0;
 
 //		currentFrameHeight_ = 0;
+		heightCorrection_ = 0;
+		previousPreferredOutputScrollPaneSize_ = 0;
 		titleBarHeight_ = titleBarHeight;
+		wantedPreferredOutputScrollPaneSize_ = 0;
 		windowBottomHeight_ = windowBottomHeight;
 
 		errorHeaderString_ = null;
@@ -919,7 +927,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	protected static void writeText( String textString )
 		{
-
 		if( textString != null )
 			{
 			// Show text in output area
@@ -1002,7 +1009,8 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		// Prepare password field
 		inputField_.setVisible( false );
 		passwordField_.setVisible( true );
-		passwordField_.setText( Constants.EMPTY_STRING );	// Clear previous password
+		// Clear previous password
+		passwordField_.setText( Constants.EMPTY_STRING );
 		passwordField_.requestFocus();
 
 		inputString_ = getInputString();
@@ -1108,7 +1116,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 								hasSelectedAmbiguityPresidents_ = false;
 
 								hasSelectedProgrammingConnect4_ = false;
-								hasSelectedProgrammingGreeting_ = false;
 								hasSelectedProgrammingTowerOfHanoi_ = false;
 
 								hasSelectedReasoningACarHasAnEngine = false;
@@ -1131,13 +1138,17 @@ class Console extends JPanel implements ActionListener, ComponentListener
 									{
 									if( actionSource == upperMenuMoreExamplesButton_ )
 										{
+										if( hasSelectedProgrammingConnect4_ )
+											showConnectFourInterferenceNotification();
+
 										if( ( currentDirectory = fileChooser_.getCurrentDirectory() ) != null )
 											{
 											if( currentInterfaceLanguageWordItem_ != null &&
 											( currentDirectoryString = currentDirectory.toString() ) != null &&
 											( currentLanguageString = currentInterfaceLanguageWordItem_.anyWordTypeString() ) != null )
 												{
-												if( currentDirectoryString.indexOf( currentLanguageString ) < 0 )		// No file selected yet with current language 
+												// No file selected yet with current language
+												if( currentDirectoryString.indexOf( currentLanguageString ) < 0 ) 
 													// Select current language in file chooser
 													fileChooser_ = new JFileChooser( CommonVariables.currentPathStringBuffer + Constants.FILE_EXAMPLES_DIRECTORY_NAME_STRING + currentLanguageString );
 												}
@@ -1151,7 +1162,8 @@ class Console extends JPanel implements ActionListener, ComponentListener
 													inputString_ = Presentation.convertDiacriticalText( currentInterfaceLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START ) ) + selectedFilePath + Presentation.convertDiacriticalText( currentInterfaceLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) );
 												}
 											}
-										else	// When canceled
+										else
+											// If canceled
 											enableMenus( true, true );
 										}
 									else
@@ -1192,111 +1204,108 @@ class Console extends JPanel implements ActionListener, ComponentListener
 															}
 														else
 															{
-															if( actionSource == mainMenuReadTheFileProgrammingGreetingButton_ )
+															if( actionSource == mainMenuReadTheFileProgrammingTowerOfHanoiButton_ )
 																{
-																hasSelectedProgrammingGreeting_ = true;
-																setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_PROGRAMMING_GREETING );
+																if( hasSelectedProgrammingConnect4_ )
+																	showConnectFourInterferenceNotification();
+
+																hasSelectedProgrammingTowerOfHanoi_ = true;
+																setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI );
 																inputString_ = actionCommandString;
 																}
 															else
 																{
-																if( actionSource == mainMenuReadTheFileProgrammingTowerOfHanoiButton_ )
+																if( actionSource == mainMenuReasoningSubMenuButton_ )
 																	{
-																	hasSelectedProgrammingTowerOfHanoi_ = true;
-																	setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI );
-																	inputString_ = actionCommandString;
+																	setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING );
+																	enableMenus( true, true );
 																	}
 																else
 																	{
-																	if( actionSource == mainMenuReasoningSubMenuButton_ )
+																	if( actionSource == mainMenuACarHasAnEngineButton_ )
 																		{
-																		setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING );
-																		enableMenus( true, true );
+																		hasSelectedReasoningACarHasAnEngine = true;
+																		inputString_ = actionCommandString;
 																		}
 																	else
 																		{
-																		if( actionSource == mainMenuACarHasAnEngineButton_ )
+																		if( actionSource == mainMenuJohnWasTheFatherOfPaulButton_ )
 																			{
-																			hasSelectedReasoningACarHasAnEngine = true;
+																			hasSelectedReasoningJohnWasTheFatherOfPaul_ = true;
 																			inputString_ = actionCommandString;
 																			}
 																		else
 																			{
-																			if( actionSource == mainMenuJohnWasTheFatherOfPaulButton_ )
+																			if( actionSource == mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_ )
 																				{
-																				hasSelectedReasoningJohnWasTheFatherOfPaul_ = true;
+																				hasSelectedReasoningReadTheFileOnlyOptionLeftBoat_ = true;
 																				inputString_ = actionCommandString;
 																				}
 																			else
 																				{
-																				if( actionSource == mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_ )
+																				if( actionSource == mainMenuReadTheFileReasoningFamilyButton_ )
 																					{
-																					hasSelectedReasoningReadTheFileOnlyOptionLeftBoat_ = true;
+																					if( hasSelectedProgrammingConnect4_ )
+																						showConnectFourInterferenceNotification();
+
+																					hasSelectedReasoningFamily_ = true;
+																					setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
 																					inputString_ = actionCommandString;
 																					}
 																				else
 																					{
-																					if( actionSource == mainMenuReadTheFileReasoningFamilyButton_ )
+																					if( actionSource == mainMenuFamilyDefinitionsSubMenuButton_ )
 																						{
-																						hasSelectedReasoningFamily_ = true;
 																						setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
-																						inputString_ = actionCommandString;
+																						enableMenus( true, true );
 																						}
 																					else
 																						{
-																						if( actionSource == mainMenuFamilyDefinitionsSubMenuButton_ )
+																						if( actionSource == mainMenuFamilyConflictsSubMenuButton_ )
 																							{
-																							setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
+																							setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS );
 																							enableMenus( true, true );
 																							}
 																						else
 																							{
-																							if( actionSource == mainMenuFamilyConflictsSubMenuButton_ )
+																							if( actionSource == mainMenuFamilyJustificationSubMenuButton_ )
 																								{
-																								setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS );
+																								setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT );
 																								enableMenus( true, true );
 																								}
 																							else
 																								{
-																								if( actionSource == mainMenuFamilyJustificationSubMenuButton_ )
+																								if( actionSource == mainMenuFamilyQuestionsSubMenuButton_ )
 																									{
-																									setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT );
+																									setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS );
 																									enableMenus( true, true );
 																									}
 																								else
 																									{
-																									if( actionSource == mainMenuFamilyQuestionsSubMenuButton_ )
+																									if( actionSource == mainMenuFamilyShowInformationSubMenuButton_ )
 																										{
-																										setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS );
+																										setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION );
 																										enableMenus( true, true );
 																										}
 																									else
 																										{
-																										if( actionSource == mainMenuFamilyShowInformationSubMenuButton_ )
+																										if( actionSource == mainMenuBackButton_ )
 																											{
-																											setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION );
+																											setSubMenuVisible( false, ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION ? Constants.CONSOLE_SUBMENU_REASONING : Constants.CONSOLE_SUBMENU_INIT ) );
 																											enableMenus( true, true );
 																											}
 																										else
 																											{
-																											if( actionSource == mainMenuBackButton_ )
+																											if( actionSource == mainMenuChangeLanguageButton_ )
 																												{
-																												setSubMenuVisible( false, ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION ? Constants.CONSOLE_SUBMENU_REASONING : Constants.CONSOLE_SUBMENU_INIT ) );
+																												setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
 																												enableMenus( true, true );
 																												}
 																											else
 																												{
-																												if( actionSource == mainMenuChangeLanguageButton_ )
-																													{
-																													setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
-																													enableMenus( true, true );
-																													}
-																												else
-																													{
-																													if( actionSource == mainMenuHelpButton_ )
-																														setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_HELP );
-																														inputString_ = actionCommandString;
-																													}
+																												if( actionSource == mainMenuHelpButton_ )
+																													setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_HELP );
+																													inputString_ = actionCommandString;
 																												}
 																											}
 																										}
@@ -1353,10 +1362,8 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	};
 
 /*************************************************************************
- *
  *	"I will love the Lord because he hears my voice
  *	and my prayer for mercy.
  *	Because he bends down to listen,
  *	I will pray as long as I breath!" (Psalm 116:1-2)
- *
  *************************************************************************/

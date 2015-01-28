@@ -1,46 +1,25 @@
 /*
  *	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class Item
@@ -85,7 +64,8 @@ class Item
 		String wordTypeString = null;
 
 		if( myList_ != null &&
-		!myList_.isAdminList() &&	// Don't show my word string when the item is in an admin list
+		// Don't show my word string if the item is in an admin list
+		!myList_.isAdminList() &&
 		myWordItem_ != null &&
 		( wordTypeString = myWordItem_.wordTypeString( true, queryWordTypeNr ) ) == null )
 			wordTypeString = myWordItem_.anyWordTypeString();
@@ -279,7 +259,7 @@ class Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status when not active
+			if( !isActiveItem() )	// Show status if not active
 				CommonVariables.queryStringBuffer.append( statusChar_ );
 
 			CommonVariables.hasFoundQuery = true;
@@ -309,7 +289,7 @@ class Item
 		String userNameString = ( myWordItem_ == null ? null : myWordItem_.userNameString( userNr_ ) );
 		CommonVariables.queryStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
 
-		if( !isActiveItem() )	// Show status when not active
+		if( !isActiveItem() )	// Show status if not active
 			CommonVariables.queryStringBuffer.append( statusChar_ );
 
 		if( myWordString != null )
@@ -712,7 +692,6 @@ class Item
 		{
 		return ( justificationTypeNr == Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_BACK_FIRED_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION ||
@@ -840,7 +819,6 @@ class Item
 		{
 		switch( justificationTypeNr )
 			{
-			case Constants.JUSTIFICATION_TYPE_BACK_FIRED_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
@@ -858,12 +836,10 @@ class Item
 	};
 
 /*************************************************************************
- *
  *	"Give thanks to him who made the heavenly lights-
  *		His faithful love endures forever.
  *	the sun to rule the day
  *		His faithful love endures forever.
  *	and the moon and stars to rule the night.
  *		His faithful love endures forever." (Psalm 136:7-9)
- *
  *************************************************************************/

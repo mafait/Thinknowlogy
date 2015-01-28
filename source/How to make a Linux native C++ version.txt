@@ -7,9 +7,9 @@ sudo apt-get install build-essential
 sudo apt-get install libncurses5-dev
 
 Go to the C++ source folder:
-cd Thinknowlogy2014r2/source/C++
+cd Thinknowlogy2014r2b/source/C++
 
-Uncomment line 54 in Presentation.cpp file:
+Uncomment line 33 in Presentation.cpp file:
 #include "conio.h"
 
 Now make the application:

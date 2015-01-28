@@ -2,46 +2,25 @@
  *	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "CollectionItem.cpp"
@@ -52,29 +31,12 @@ class CollectionList : private List
 	friend class WordCollection;
 	friend class WordItem;
 
-
-	// Private deconstructor functions
-
-	void deleteCollectionsInList( CollectionItem *searchItem )
-		{
-		CollectionItem *deleteItem;
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextCollectionItem();
-			delete deleteItem;
-			}
-		}
-
-
 	// Private functions
 
 	CollectionItem *firstActiveCollectionItem()
 		{
 		return (CollectionItem *)firstActiveItem();
 		}
-
 
 	protected:
 	// Constructor / deconstructor
@@ -86,9 +48,33 @@ class CollectionList : private List
 
 	~CollectionList()
 		{
-		deleteCollectionsInList( firstActiveCollectionItem() );
-		deleteCollectionsInList( (CollectionItem *)firstReplacedItem() );
-		deleteCollectionsInList( (CollectionItem *)firstDeletedItem() );
+		CollectionItem *deleteItem;
+		CollectionItem *searchItem = firstActiveCollectionItem();
+
+		while( searchItem != NULL )
+			{
+			deleteItem = searchItem;
+			searchItem = searchItem->nextCollectionItem();
+			delete deleteItem;
+			}
+
+		searchItem = (CollectionItem *)firstReplacedItem();
+
+		while( searchItem != NULL )
+			{
+			deleteItem = searchItem;
+			searchItem = searchItem->nextCollectionItem();
+			delete deleteItem;
+			}
+
+		searchItem = (CollectionItem *)firstDeletedItem();
+
+		while( searchItem != NULL )
+			{
+			deleteItem = searchItem;
+			searchItem = searchItem->nextCollectionItem();
+			delete deleteItem;
+			}
 		}
 
 
@@ -448,17 +434,17 @@ class CollectionList : private List
 		return RESULT_OK;
 		}
 /*
-	ResultType storeChangesInFutureDataBase()
+	ResultType storeChangesInFutureDatabase()
 		{
 		// Not fully implemented yet
 		CollectionItem *searchItem = firstActiveCollectionItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDataBase";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
 		while( searchItem != NULL )
 			{
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem->storeCollectionItemInFutureDataBase() != RESULT_OK )
+				if( searchItem->storeCollectionItemInFutureDatabase() != RESULT_OK )
 					return addError( functionNameString, NULL, NULL, "I failed to store a collection item in the database" );
 				}
 
@@ -471,7 +457,7 @@ class CollectionList : private List
 			{
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem->storeCollectionItemInFutureDataBase() != RESULT_OK )
+				if( searchItem->storeCollectionItemInFutureDatabase() != RESULT_OK )
 					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced collection item in the database" );
 				}
 
@@ -520,12 +506,12 @@ class CollectionList : private List
 		{
 		CollectionItem *searchItem = firstActiveCollectionItem();
 
-		if( compoundCollectionNr > NO_COLLECTION_NR )
+		if( compoundCollectionNr > NO_COLLECTION_NR &&
+		notThisCommonWordItem != NULL )
 			{
 			while( searchItem != NULL )
 				{
-				if( searchItem->isCompoundGeneralization() &&
-				searchItem->collectionNr() == compoundCollectionNr &&
+				if( searchItem->collectionNr() == compoundCollectionNr &&
 				searchItem->commonWordItem() != notThisCommonWordItem )
 					return searchItem->collectionWordItem();
 
@@ -572,11 +558,24 @@ class CollectionList : private List
 
 		return NULL;
 		}
+
+	WordItem *feminineCollectionWordItem()
+		{
+		CollectionItem *searchItem = firstActiveCollectionItem();
+
+		while( searchItem != NULL )
+			{
+			if( searchItem->hasFeminineCollectionWord() )
+				return searchItem->collectionWordItem();
+
+			searchItem = searchItem->nextCollectionItem();
+			}
+
+		return NULL;
+		}
 	};
 
 /*************************************************************************
- *
  *	"Give thanks to the Lords of lords.
  *	His faithful love endures forever." (Psalm 136:3)
- *
  *************************************************************************/

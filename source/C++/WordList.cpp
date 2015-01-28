@@ -2,46 +2,25 @@
  *	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #ifndef WORDLIST
@@ -57,22 +36,6 @@ class WordList : private List
 	friend class AdminReadCreateWords;
 	friend class AdminReadSentence;
 	friend class AdminSolve;
-
-
-	// Private deconstructor functions
-
-	void deleteWordList( WordItem *searchItem )
-		{
-		WordItem *deleteItem;
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextWordItem();
-			delete deleteItem;
-			}
-		}
-
 
 	// Private cleanup functions
 
@@ -373,9 +336,33 @@ class WordList : private List
 
 	~WordList()
 		{
-		deleteWordList( firstActiveWordItem() );
-		deleteWordList( firstReplacedWordItem() );
-		deleteWordList( firstDeletedWordItem() );
+		WordItem *deleteItem;
+		WordItem *searchItem = firstActiveWordItem();
+
+		while( searchItem != NULL )
+			{
+			deleteItem = searchItem;
+			searchItem = searchItem->nextWordItem();
+			delete deleteItem;
+			}
+
+		searchItem = firstReplacedWordItem();
+
+		while( searchItem != NULL )
+			{
+			deleteItem = searchItem;
+			searchItem = searchItem->nextWordItem();
+			delete deleteItem;
+			}
+
+		searchItem = firstDeletedWordItem();
+
+		while( searchItem != NULL )
+			{
+			deleteItem = searchItem;
+			searchItem = searchItem->nextWordItem();
+			delete deleteItem;
+			}
 		}
 
 
@@ -392,7 +379,7 @@ class WordList : private List
 			searchItem = searchItem->nextWordItem();
 			}
 
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 
@@ -439,74 +426,64 @@ class WordList : private List
 		return highestSentenceNr;
 		}
 
-	ResultType deleteSentencesInWordList( bool isAvailableForRollback, unsigned int lowestSentenceNr )
+	ResultType decrementItemNrRangeInWordList( unsigned int decrementSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset )
 		{
-		if( deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr, firstReplacedWordItem() ) == RESULT_OK )
-				return deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr, firstDeletedWordItem() );
-			}
+		if( decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, firstActiveWordItem() ) == RESULT_OK &&
+		decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, firstReplacedWordItem() ) == RESULT_OK )
+			return decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, firstDeletedWordItem() );
 
-		return RESULT_OK;
-		}
-
-	ResultType rollbackDeletedRedoInfoInWordList()
-		{
-		if( rollbackDeletedRedoInfoInWordList( firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( rollbackDeletedRedoInfoInWordList( firstReplacedWordItem() ) == RESULT_OK )
-				return rollbackDeletedRedoInfoInWordList( firstDeletedWordItem() );
-			}
-
-		return RESULT_OK;
-		}
-
-	ResultType removeFirstRangeOfDeletedItemsInWordList()
-		{
-		if( removeFirstRangeOfDeletedItemsInWordList( firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( removeFirstRangeOfDeletedItemsInWordList( firstReplacedWordItem() ) == RESULT_OK )
-				return removeFirstRangeOfDeletedItemsInWordList( firstDeletedWordItem() );
-			}
-
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 	ResultType decrementSentenceNrsInWordList( unsigned int startSentenceNr )
 		{
-		if( decrementSentenceNrsInWordList( startSentenceNr, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( decrementSentenceNrsInWordList( startSentenceNr, firstReplacedWordItem() ) == RESULT_OK )
-				return decrementSentenceNrsInWordList( startSentenceNr, firstDeletedWordItem() );
-			}
+		if( decrementSentenceNrsInWordList( startSentenceNr, firstActiveWordItem() ) == RESULT_OK &&
+		decrementSentenceNrsInWordList( startSentenceNr, firstReplacedWordItem() ) == RESULT_OK )
+			return decrementSentenceNrsInWordList( startSentenceNr, firstDeletedWordItem() );
 
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
-	ResultType decrementItemNrRangeInWordList( unsigned int decrementSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset )
+	ResultType deleteSentencesInWordList( bool isAvailableForRollback, unsigned int lowestSentenceNr )
 		{
-		if( decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, firstReplacedWordItem() ) == RESULT_OK )
-				return decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, firstDeletedWordItem() );
-			}
+		if( deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr, firstActiveWordItem() ) == RESULT_OK &&
+		deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr, firstReplacedWordItem() ) == RESULT_OK )
+			return deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr, firstDeletedWordItem() );
 
-		return RESULT_OK;
+		return commonVariables()->result;
+		}
+
+	ResultType removeFirstRangeOfDeletedItemsInWordList()
+		{
+		if( removeFirstRangeOfDeletedItemsInWordList( firstActiveWordItem() ) == RESULT_OK &&
+		removeFirstRangeOfDeletedItemsInWordList( firstReplacedWordItem() ) == RESULT_OK )
+			return removeFirstRangeOfDeletedItemsInWordList( firstDeletedWordItem() );
+
+		return commonVariables()->result;
+		}
+
+	ResultType rollbackDeletedRedoInfoInWordList()
+		{
+		if( rollbackDeletedRedoInfoInWordList( firstActiveWordItem() ) == RESULT_OK &&
+		rollbackDeletedRedoInfoInWordList( firstReplacedWordItem() ) == RESULT_OK )
+			return rollbackDeletedRedoInfoInWordList( firstDeletedWordItem() );
+
+		return commonVariables()->result;
 		}
 
 
 	// Protected database connection functions
 /*
-	ResultType storeChangesInFutureDataBase()
+	ResultType storeChangesInFutureDatabase()
 		{
 		// Not fully implemented yet
 		WordItem *searchItem = firstActiveWordItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDataBase";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
 		while( searchItem != NULL )
 			{
 			// Do for all active words
-			if( searchItem->storeWordItemInFutureDataBase() != RESULT_OK )
+			if( searchItem->storeWordItemInFutureDatabase() != RESULT_OK )
 				return addError( functionNameString, NULL, NULL, "I failed to store a word item in the database" );
 
 			searchItem = searchItem->nextWordItem();
@@ -518,7 +495,7 @@ class WordList : private List
 			{
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem->storeWordItemInFutureDataBase() != RESULT_OK )
+				if( searchItem->storeWordItemInFutureDatabase() != RESULT_OK )
 					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced word item in the database" );
 				}
 
@@ -547,97 +524,75 @@ class WordList : private List
 
 	ResultType wordQueryInWordList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *wordNameString )
 		{
-		if( wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString, firstReplacedWordItem() ) == RESULT_OK )
-				return wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString, firstDeletedWordItem() );
-			}
+		if( wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString, firstActiveWordItem() ) == RESULT_OK &&
+		wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString, firstReplacedWordItem() ) == RESULT_OK )
+			return wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString, firstDeletedWordItem() );
 
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 	ResultType itemQueryInWordList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
-		if( itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, firstReplacedWordItem() ) == RESULT_OK )
-				return itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, firstDeletedWordItem() );
-			}
+		if( itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, firstActiveWordItem() ) == RESULT_OK &&
+		itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, firstReplacedWordItem() ) == RESULT_OK )
+			return itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, firstDeletedWordItem() );
 
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 	ResultType listQueryInWordList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *queryListString )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "listQueryInWordList";
+		if( listQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString ) == RESULT_OK &&
+		listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString, firstActiveWordItem() ) == RESULT_OK &&
+		listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString, firstReplacedWordItem() ) == RESULT_OK )
+			return listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString, firstDeletedWordItem() );
 
-		if( listQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString ) == RESULT_OK )
-			{
-			if( listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString, firstActiveWordItem() ) == RESULT_OK )
-				{
-				if( listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString, firstReplacedWordItem() ) == RESULT_OK )
-					return listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString, firstDeletedWordItem() );
-				}
-			}
-		else
-			return addError( functionNameString, NULL, NULL, "I failed to query my own list" );
-
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 	ResultType wordTypeQueryInWordList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned short queryWordTypeNr )
 		{
-		if( wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr, firstReplacedWordItem() ) == RESULT_OK )
-				return wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr, firstDeletedWordItem() );
-			}
+		if( wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr, firstActiveWordItem() ) == RESULT_OK &&
+		wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr, firstReplacedWordItem() ) == RESULT_OK )
+			return wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr, firstDeletedWordItem() );
 
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 	ResultType parameterQueryInWordList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned int queryParameter )
 		{
-		if( parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter, firstReplacedWordItem() ) == RESULT_OK )
-				return parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter, firstDeletedWordItem() );
-			}
+		if( parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter, firstActiveWordItem() ) == RESULT_OK &&
+		parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter, firstReplacedWordItem() ) == RESULT_OK )
+			return parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter, firstDeletedWordItem() );
 
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 	ResultType wordReferenceQueryInWordList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *wordReferenceNameString )
 		{
-		if( wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString, firstReplacedWordItem() ) == RESULT_OK )
-				return wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString, firstDeletedWordItem() );
-			}
+		if( wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString, firstActiveWordItem() ) == RESULT_OK &&
+		wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString, firstReplacedWordItem() ) == RESULT_OK )
+			return wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString, firstDeletedWordItem() );
 
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 	ResultType stringQueryInWordList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *queryString )
 		{
-		if( stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString, firstReplacedWordItem() ) == RESULT_OK )
-				return stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString, firstDeletedWordItem() );
-			}
+		if( stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString, firstActiveWordItem() ) == RESULT_OK &&
+		stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString, firstReplacedWordItem() ) == RESULT_OK )
+			return stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString, firstDeletedWordItem() );
 
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 	ResultType showQueryResultInWordList( bool showOnlyWords, bool showOnlyWordReferences, bool showOnlyStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
 		{
-		if( showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstActiveWordItem() ) == RESULT_OK )
-			{
-			if( showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstReplacedWordItem() ) == RESULT_OK )
-				return showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstDeletedWordItem() );
-			}
+		if( showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstActiveWordItem() ) == RESULT_OK &&
+		showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstReplacedWordItem() ) == RESULT_OK )
+			return showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstDeletedWordItem() );
 
-		return RESULT_OK;
+		return commonVariables()->result;
 		}
 
 
@@ -669,9 +624,7 @@ class WordList : private List
 #endif
 
 /*************************************************************************
- *
  *	"They share freely and give generously to those in need.
  *	Their good deeds will be remembered forever.
  *	They will have influence and honor." (Psalm 112:9)
- *
  *************************************************************************/

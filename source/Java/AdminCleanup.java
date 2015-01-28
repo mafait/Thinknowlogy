@@ -1,47 +1,26 @@
 /*
  *	Class:			AdminCleanup
  *	Supports class:	AdminItem
- *	Purpose:		To cleanup unnecessary items
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Purpose:		To cleanup obsolete items
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class AdminCleanup
@@ -77,13 +56,15 @@ class AdminCleanup
 
 		CommonVariables.highestInUseSentenceNr = Constants.NO_SENTENCE_NR;
 
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			adminItem_.wordList.getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingLanguageAssignments, isIncludingTemporaryLists, highestSentenceNr );
 
+		// Admin lists
 		while( CommonVariables.highestInUseSentenceNr < highestSentenceNr &&
 		adminListNr < Constants.NUMBER_OF_ADMIN_LISTS )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null &&	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null &&
 
 			( isIncludingTemporaryLists ||
 			!adminItem_.adminListArray[adminListNr].isTemporaryList() ) )
@@ -91,26 +72,6 @@ class AdminCleanup
 
 			adminListNr++;
 			}
-		}
-
-	private byte decrementSentenceNrs( int startSentenceNr )
-		{
-		if( adminItem_.wordList != null )							// Inside words
-			{
-			if( adminItem_.wordList.decrementSentenceNrsInWordList( startSentenceNr ) != Constants.RESULT_OK )
-				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in my word list" );
-			}
-
-		for( short adminListNr : Constants.AdminLists )
-			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
-				{
-				if( adminItem_.adminListArray[adminListNr].decrementSentenceNrsInList( startSentenceNr ) != Constants.RESULT_OK )
-					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
-				}
-			}
-
-		return Constants.RESULT_OK;
 		}
 
 	private byte decrementCurrentSentenceNr()
@@ -144,7 +105,8 @@ class AdminCleanup
 		CommonVariables.currentItemNr > startDecrementItemNr )
 			CommonVariables.currentItemNr -= decrementOffset;
 
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.decrementItemNrRangeInWordList( decrementSentenceNr, startDecrementItemNr, decrementOffset ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to decrement item number range in my word list" );
@@ -152,10 +114,33 @@ class AdminCleanup
 
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			// Admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].decrementItemNrRangeInList( decrementSentenceNr, startDecrementItemNr, decrementOffset ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to decrement item number range" );
+				}
+			}
+
+		return Constants.RESULT_OK;
+		}
+
+	private byte decrementSentenceNrs( int startSentenceNr )
+		{
+		// In words
+		if( adminItem_.wordList != null )
+			{
+			if( adminItem_.wordList.decrementSentenceNrsInWordList( startSentenceNr ) != Constants.RESULT_OK )
+				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in my word list" );
+			}
+
+		for( short adminListNr : Constants.AdminLists )
+			{
+			// Admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
+				{
+				if( adminItem_.adminListArray[adminListNr].decrementSentenceNrsInList( startSentenceNr ) != Constants.RESULT_OK )
+					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
 				}
 			}
 
@@ -247,95 +232,15 @@ class AdminCleanup
 		return Constants.RESULT_OK;
 		}
 
-	private byte rollbackDeletedRedoInfo()
-		{
-		if( adminItem_.wordList != null )							// Inside words
-			{
-			if( adminItem_.wordList.rollbackDeletedRedoInfoInWordList() != Constants.RESULT_OK )
-				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the current redo info of my words in my word list" );
-			}
-
-		for( short adminListNr : Constants.AdminLists )
-			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
-				adminItem_.adminListArray[adminListNr].rollbackDeletedRedoInfoInList();
-			}
-
-		return Constants.RESULT_OK;
-		}
-
-	private byte removeFirstRangeOfDeletedItems()
-		{
-		short adminListNr = 0;
-
-		CommonVariables.nDeletedItems = 0;
-		CommonVariables.removeSentenceNr = Constants.NO_SENTENCE_NR;
-		CommonVariables.removeStartItemNr = Constants.NO_ITEM_NR;
-
-		if( adminItem_.wordList != null )							// Inside words
-			{
-			if( adminItem_.wordList.removeFirstRangeOfDeletedItemsInWordList() != Constants.RESULT_OK )
-				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to remove the first deleted items in my word list" );
-			}
-
-		while( adminListNr < Constants.NUMBER_OF_ADMIN_LISTS &&
-		CommonVariables.nDeletedItems == 0 )
-			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
-				{
-				if( adminItem_.adminListArray[adminListNr].removeFirstRangeOfDeletedItemsInList() != Constants.RESULT_OK )
-					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to remove the first deleted items" );
-				}
-
-			adminListNr++;
-			}
-
-		return Constants.RESULT_OK;
-		}
-
-	private byte undoCurrentSentence()
-		{
-		if( undoCurrentSentenceInAllWords() == Constants.RESULT_OK )			// Inside words
-			{
-			for( short adminListNr : Constants.AdminLists )
-				{
-				if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
-					{
-					if( adminItem_.adminListArray[adminListNr].undoCurrentSentenceInList() != Constants.RESULT_OK )
-						return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to undo the current sentence" );
-					}
-				}
-			}
-		else
-			return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to undo the current sentence in my word list" );
-
-		return Constants.RESULT_OK;
-		}
-
-	private byte undoCurrentSentenceInAllWords()
-		{
-		WordItem currentWordItem;
-
-		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
-			{
-			// Do for all words
-			do	currentWordItem.undoCurrentSentence();
-			while( CommonVariables.result == Constants.RESULT_OK &&
-			( currentWordItem = currentWordItem.nextWordItem() ) != null );
-			}
-		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The first word item is undefined" );
-
-		return Constants.RESULT_OK;
-		}
-
 	private byte redoCurrentSentence()
 		{
-		if( redoCurrentSentenceInAllWords() == Constants.RESULT_OK )			// Inside words
+		// In words
+		if( redoCurrentSentenceInAllWords() == Constants.RESULT_OK )
 			{
+			// Admin lists
 			for( short adminListNr : Constants.AdminLists )
 				{
-				if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+				if( adminItem_.adminListArray[adminListNr] != null )
 					{
 					if( adminItem_.adminListArray[adminListNr].redoCurrentSentenceInList() != Constants.RESULT_OK )
 						return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to redo the current sentence" );
@@ -356,6 +261,94 @@ class AdminCleanup
 			{
 			// Do for all words
 			do	currentWordItem.redoCurrentSentence();
+			while( CommonVariables.result == Constants.RESULT_OK &&
+			( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+		else
+			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The first word item is undefined" );
+
+		return Constants.RESULT_OK;
+		}
+
+	private byte removeFirstRangeOfDeletedItems()
+		{
+		short adminListNr = 0;
+
+		CommonVariables.nDeletedItems = 0;
+		CommonVariables.removeSentenceNr = Constants.NO_SENTENCE_NR;
+		CommonVariables.removeStartItemNr = Constants.NO_ITEM_NR;
+
+		// In words
+		if( adminItem_.wordList != null )
+			{
+			if( adminItem_.wordList.removeFirstRangeOfDeletedItemsInWordList() != Constants.RESULT_OK )
+				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to remove the first deleted items in my word list" );
+			}
+
+		// Admin lists
+		while( adminListNr < Constants.NUMBER_OF_ADMIN_LISTS &&
+		CommonVariables.nDeletedItems == 0 )
+			{
+			if( adminItem_.adminListArray[adminListNr] != null )
+				{
+				if( adminItem_.adminListArray[adminListNr].removeFirstRangeOfDeletedItemsInList() != Constants.RESULT_OK )
+					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to remove the first deleted items" );
+				}
+
+			adminListNr++;
+			}
+
+		return Constants.RESULT_OK;
+		}
+
+	private byte rollbackDeletedRedoInfo()
+		{
+		// In words
+		if( adminItem_.wordList != null )
+			{
+			if( adminItem_.wordList.rollbackDeletedRedoInfoInWordList() != Constants.RESULT_OK )
+				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the current redo info of my words in my word list" );
+			}
+
+		// Admin lists
+		for( short adminListNr : Constants.AdminLists )
+			{
+			if( adminItem_.adminListArray[adminListNr] != null )
+				adminItem_.adminListArray[adminListNr].rollbackDeletedRedoInfoInList();
+			}
+
+		return Constants.RESULT_OK;
+		}
+
+	private byte undoCurrentSentence()
+		{
+		// In words
+		if( undoCurrentSentenceInAllWords() == Constants.RESULT_OK )
+			{
+			// Admin lists
+			for( short adminListNr : Constants.AdminLists )
+				{
+				if( adminItem_.adminListArray[adminListNr] != null )
+					{
+					if( adminItem_.adminListArray[adminListNr].undoCurrentSentenceInList() != Constants.RESULT_OK )
+						return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to undo the current sentence" );
+					}
+				}
+			}
+		else
+			return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to undo the current sentence in my word list" );
+
+		return Constants.RESULT_OK;
+		}
+
+	private byte undoCurrentSentenceInAllWords()
+		{
+		WordItem currentWordItem;
+
+		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
+			{
+			// Do for all words
+			do	currentWordItem.undoCurrentSentence();
 			while( CommonVariables.result == Constants.RESULT_OK &&
 			( currentWordItem = currentWordItem.nextWordItem() ) != null );
 			}
@@ -422,12 +415,14 @@ class AdminCleanup
 
 	protected void deleteRollbackInfo()
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			adminItem_.wordList.deleteRollbackInfoInWordList();
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				adminItem_.adminListArray[adminListNr].deleteRollbackInfoInList();
 			}
 		}
@@ -436,12 +431,14 @@ class AdminCleanup
 		{
 		CommonVariables.currentItemNr = Constants.NO_ITEM_NR;
 
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			adminItem_.wordList.setCurrentItemNrInWordList();
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				adminItem_.adminListArray[adminListNr].setCurrentItemNrInList();
 			}
 		}
@@ -466,12 +463,14 @@ class AdminCleanup
 		int tempSentenceNr;
 		int highestSentenceNr = Constants.NO_SENTENCE_NR;
 
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			highestSentenceNr = adminItem_.wordList.highestSentenceNrInWordList();
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null &&	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null &&
 			( tempSentenceNr = adminItem_.adminListArray[adminListNr].highestSentenceNrInList() ) > highestSentenceNr )
 				highestSentenceNr = tempSentenceNr;
 			}
@@ -659,15 +658,17 @@ class AdminCleanup
 
 	protected byte deleteSentences( boolean isAvailableForRollback, int lowestSentenceNr )
 		{
-		if( adminItem_.wordList != null )							// Inside words
+		// In words
+		if( adminItem_.wordList != null )
 			{
 			if( adminItem_.wordList.deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete sentences in my word list" );
 			}
 
+		// Admin lists
 		for( short adminListNr : Constants.AdminLists )
 			{
-			if( adminItem_.adminListArray[adminListNr] != null )	// Inside admin lists
+			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].deleteSentencesInList( isAvailableForRollback, lowestSentenceNr ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to delete sentences in a list" );
@@ -682,7 +683,7 @@ class AdminCleanup
 
 	protected byte undoLastSentence()
 		{
-		boolean skipUndo = false;
+		boolean isSkippingUndo = false;
 
 		if( CommonVariables.currentSentenceNr > Constants.NO_SENTENCE_NR )
 			{
@@ -699,7 +700,7 @@ class AdminCleanup
 						{
 						if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_IMPERATIVE_NOTIFICATION_UNDO_SENTENCE_OF_ANOTHER_USER ) == Constants.RESULT_OK )
 							{
-							skipUndo = true;
+							isSkippingUndo = true;
 							isDontIncrementCurrentSentenceNr_ = true;
 							}
 						else
@@ -707,7 +708,7 @@ class AdminCleanup
 						}
 					}
 
-				if( !skipUndo )
+				if( !isSkippingUndo )
 					{
 					// Roll-back Undo sentence. Handle it as a command, not as a sentence
 					rollbackDeletedRedoInfo();
@@ -771,10 +772,8 @@ class AdminCleanup
 	};
 
 /*************************************************************************
- *
  *	"How great is the Lord,
  *	how deserving of praise,
  *	in the city of our God,
  *	which sits on his holy mountain!" (Psalm 48:1)
- *
  *************************************************************************/

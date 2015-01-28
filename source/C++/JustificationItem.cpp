@@ -3,46 +3,25 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "SpecificationItem.cpp"
@@ -85,6 +64,11 @@
 
 
 	// Protected virtual functions
+
+	bool JustificationItem::hasFoundWordType( unsigned short queryWordTypeNr )
+		{
+		return ( justificationTypeNr_ == queryWordTypeNr );
+		}
 
 	bool JustificationItem::hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
@@ -132,11 +116,6 @@
 			case JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
 				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
 				strcat( commonVariables()->queryString, "isOppositePossessiveConditionalSpecificationAssumption" );
-				break;
-
-			case JUSTIFICATION_TYPE_BACK_FIRED_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isBackFiredPossessiveConditionalSpecificationAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
@@ -411,28 +390,9 @@
 		return false;
 		}
 
-	bool JustificationItem::hasSecondaryAssignment()
-		{
-		return ( secondarySpecificationItem_ != NULL &&
-				secondarySpecificationItem_->isAssignment() );
-		}
-
 	bool JustificationItem::hasSecondarySpecification()
 		{
 		return ( secondarySpecificationItem_ != NULL );
-		}
-
-	bool JustificationItem::hasSecondarySpecificationWithMultipleRelationContext()
-		{
-		return ( secondarySpecificationItem_ != NULL &&
-				secondarySpecificationItem_->hasRelationContext() &&
-				myWordItem()->nContextWordsInAllWords( secondarySpecificationItem_->relationContextNr(), secondarySpecificationItem_->specificationWordItem() ) > 1 );
-		}
-
-	bool JustificationItem::hasSecondaryUserSpecification()
-		{
-		return ( secondarySpecificationItem_ != NULL &&
-				secondarySpecificationItem_->isUserSpecification() );
 		}
 
 	bool JustificationItem::isAssumptionJustification()
@@ -443,11 +403,6 @@
 	bool JustificationItem::isConclusionJustification()
 		{
 		return isConclusion( justificationTypeNr_ );
-		}
-
-	bool JustificationItem::isBackFiredPossessiveConditionalSpecificationAssumption()
-		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_BACK_FIRED_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION );
 		}
 
 	bool JustificationItem::isExclusiveSpecificationSubstitutionAssumption()
@@ -476,6 +431,11 @@
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION );
 		}
 
+	bool JustificationItem::isPossessiveReversibleAssumption()
+		{
+		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION );
+		}
+
 	bool JustificationItem::isSpecificationSubstitutionAssumption()
 		{
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION );
@@ -496,6 +456,12 @@
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION );
 		}
 
+	bool JustificationItem::isPossessiveReversibleAssumptionOrConclusion()
+		{
+		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION ||
+				justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION );
+		}
+
 	bool JustificationItem::isQuestionJustification()
 		{
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION );
@@ -513,12 +479,27 @@
 
 	unsigned int JustificationItem::nJustificationContextRelations( unsigned int relationContextNr, unsigned int nSpecificationRelationWords )
 		{
+		unsigned int primaryRelationContextNr;
+		unsigned int secondaryRelationContextNr;
+
 		if( relationContextNr > NO_CONTEXT_NR )
 			{
+			if( primarySpecificationItem_ != NULL &&
+			( primaryRelationContextNr = primarySpecificationItem_->relationContextNr() ) > NO_CONTEXT_NR )
+				return myWordItem()->nContextWordsInAllWords( primaryRelationContextNr, primarySpecificationItem_->specificationWordItem() );
+
 			if( secondarySpecificationItem_ != NULL &&
-			secondarySpecificationItem_->hasRelationContext() &&
-			myWordItem()->isContextSimilarInAllWords( secondarySpecificationItem_->relationContextNr(), relationContextNr ) )
-				return nSpecificationRelationWords;
+			( secondaryRelationContextNr = secondarySpecificationItem_->relationContextNr() ) > NO_CONTEXT_NR )
+				{
+				if( anotherPrimarySpecificationItem_ == NULL )
+					{
+					if( secondaryRelationContextNr == relationContextNr ||
+					myWordItem()->isContextSimilarInAllWords( secondaryRelationContextNr, relationContextNr ) )
+						return nSpecificationRelationWords;
+					}
+				else
+					return myWordItem()->nContextWordsInAllWords( secondaryRelationContextNr, secondarySpecificationItem_->specificationWordItem() );
+				}
 
 			return 1;
 			}
@@ -717,7 +698,8 @@
 		( specificationResult = primarySpecificationItem_->getAssumptionLevel() ).result == RESULT_OK )
 			combinedAssumptionLevel += specificationResult.assumptionLevel;
 
-		if( anotherPrimarySpecificationItem_ != NULL &&
+		if( commonVariables()->result == RESULT_OK &&
+		anotherPrimarySpecificationItem_ != NULL &&
 		( specificationResult = anotherPrimarySpecificationItem_->getAssumptionLevel() ).result == RESULT_OK )
 			combinedAssumptionLevel += specificationResult.assumptionLevel;
 
@@ -739,13 +721,13 @@
 		return attachedJustificationItem_;
 		}
 
-	JustificationItem *JustificationItem::attachedPredecessorOfOldJustificationItem( JustificationItem *oldJustificationItem )
+	JustificationItem *JustificationItem::attachedPredecessorOfOldJustificationItem( JustificationItem *obsoleteJustificationItem )
 		{
 		JustificationItem *searchItem = this;
 
 		while( searchItem != NULL )
 			{
-			if( searchItem->attachedJustificationItem_ == oldJustificationItem )
+			if( searchItem->attachedJustificationItem_ == obsoleteJustificationItem )
 				return searchItem;
 
 			searchItem = searchItem->attachedJustificationItem_;
@@ -754,7 +736,7 @@
 		return NULL;
 /*
 		// Recursive alternative:
-		return ( attachedJustificationItem_ == NULL ? NULL : attachedJustificationItem_ == oldJustificationItem ? this : attachedJustificationItem_->attachedPredecessorOfOldJustificationItem( oldJustificationItem ) );
+		return ( attachedJustificationItem_ == NULL ? NULL : attachedJustificationItem_ == obsoleteJustificationItem ? this : attachedJustificationItem_->attachedPredecessorOfOldJustificationItem( obsoleteJustificationItem ) );
 */		}
 
 	JustificationItem *JustificationItem::nextJustificationItem()
@@ -904,8 +886,6 @@
 		}
 
 /*************************************************************************
- *
  *	"The voice of the Lord is powerful;
  *	the voice of the Lord is majestic." (Psalm 29:4)
- *
  *************************************************************************/

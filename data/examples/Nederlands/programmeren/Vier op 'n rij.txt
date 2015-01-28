@@ -2,24 +2,9 @@
 #	File:		Vier op 'n rij.txt
 #	Scope:		Used by the Thinknowlogy application
 #	Purpose:	To demonstrate programming in natural language.
-#	Version:	Thinknowlogy 2014r2a (George Boole)
+#	Version:	Thinknowlogy 2014r2b (Laws of Thought)
 #----------------------------------------------------------------------------
-#	Thinknowlogy is op grammatica gebaseerde software,
-#	ontworpen om de Natuurwetten van Intelligentie in grammatica te benutten,
-#	om op die manier - via natuurlijke taal - intelligentie te creëren in software,
-#	wat gedemonstreerd wordt door:
-#	* Programmeren in natuurlijke taal;
-#	* Redeneren in natuurlijke taal:
-#		- het trekken van conclusies (geavanceerder dan wetenschappelijke oplossingen),
-#		- het doen van aannames (met zelfregulerend onzekerheidsniveau),
-#		- het stellen van vragen (over hiaten in de kennis),
-#		- het detecteren van conflicten in de kennis;
-#	* Zelfstandig opbouwen van semantiek (geen woordenlijsten):
-#		- het detecteren van enkele gevallen van semantische ambiguïteit;
-#	* Meertaligheid, bewijst dat Natuurwetten van Intelligentie universeel zijn.
-#----------------------------------------------------------------------------
-#	Copyright (C) 2009-2014, Menno Mafait
-#
+#	Copyright (C) 2009-2015, Menno Mafait
 #	Your additions, modifications, suggestions and bug reports
 #	are welcome at http://mafait.org
 #----------------------------------------------------------------------------

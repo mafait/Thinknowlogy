@@ -2,46 +2,25 @@
  *	Class:			AdminContext
  *	Supports class:	AdminItem
  *	Purpose:		To create context structures
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class AdminContext
@@ -50,58 +29,12 @@ class AdminContext
 
 	private boolean hasFoundUserSpecification_;
 
-	private int relationContextNr_;
-
 	private AdminItem adminItem_;
 	private WordItem myWordItem_;
 	private String moduleNameString_;
 
 
 	// Private methods
-
-	private static int contextNrInUserGeneralizationWord( WordItem generalizationWordItem, WordItem specificationWordItem )
-		{
-		ContextItem foundContextItem;
-		WordItem currentWordItem;
-
-		if( generalizationWordItem != null &&
-		specificationWordItem != null &&
-		( currentWordItem = CommonVariables.firstWordItem ) != null )
-			{
-			// Do for all words
-			do	{
-				if( currentWordItem.isUserGeneralizationWord &&
-				currentWordItem != generalizationWordItem &&
-				( foundContextItem = currentWordItem.contextItemInWord( specificationWordItem ) ) != null )
-					return foundContextItem.contextNr();
-				}
-			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
-			}
-
-		return Constants.NO_CONTEXT_NR;
-		}
-
-	private static int contextNrInUserRelationWord( WordItem relationWordItem, WordItem specificationWordItem )
-		{
-		ContextItem foundContextItem;
-		WordItem currentWordItem;
-
-		if( relationWordItem != null &&
-		specificationWordItem != null &&
-		( currentWordItem = CommonVariables.firstWordItem ) != null )
-			{
-			// Do for all words
-			do	{
-				if( currentWordItem.isUserRelationWord &&
-				currentWordItem != relationWordItem &&
-				( foundContextItem = currentWordItem.contextItemInWord( specificationWordItem ) ) != null )
-					return foundContextItem.contextNr();
-				}
-			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
-			}
-
-		return Constants.NO_CONTEXT_NR;
-		}
 
 	private ContextResultType findPossessiveReversibleConclusionRelationContextOfInvolvedWords( boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, int nContextRelations, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
@@ -124,7 +57,7 @@ class AdminContext
 						do	{
 							if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
 								{
-								if( ( currentSpecificationItem = currentGeneralizationWordItem.firstSelectedSpecificationItem( false, false, false, false ) ) != null )
+								if( ( currentSpecificationItem = currentGeneralizationWordItem.firstNonQuestionSpecificationItem() ) != null )
 									{
 									do	{
 										if( currentSpecificationItem.hasRelationContext() &&
@@ -133,7 +66,8 @@ class AdminContext
 											{
 											currentRelationContextNr = currentSpecificationItem.relationContextNr();
 											nContextWords = myWordItem_.nContextWordsInAllWords( currentRelationContextNr, specificationWordItem );
-											hasFoundAllRelationWords = ( nContextWords + 1 == nContextRelations );		// This relation word will be the last one
+											// This relation word will be the last one
+											hasFoundAllRelationWords = ( nContextWords + 1 == nContextRelations );
 
 											if( currentSpecificationItem.isPossessiveReversibleConclusion() )
 												{
@@ -189,47 +123,7 @@ class AdminContext
 		return contextResult;
 		}
 
-	private byte getRelationContext( boolean isNegative, boolean isPossessive, short questionParameter, WordItem generalizationWordItem, WordItem specificationWordItem )
-		{
-		ContextItem foundContextItem;
-		SpecificationItem foundSpecificationItem;
-		WordItem foundContextWordItem;
-
-		relationContextNr_ = Constants.NO_CONTEXT_NR;
-
-		if( generalizationWordItem != null )
-			{
-			if( specificationWordItem != null )
-				{
-				if( ( foundContextItem = contextItemInAllWords( specificationWordItem ) ) != null )
-					{
-					if( ( foundContextWordItem = foundContextItem.myWordItem() ) != null )
-						{
-						// Find specification with found context word as relation word
-						if( ( foundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isNegative, isPossessive, questionParameter, specificationWordItem, foundContextWordItem ) ) == null )
-							{
-							if( ( foundSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, true, isNegative, isPossessive, questionParameter, specificationWordItem ) ) != null )
-								// No such specification found. Get the relation context of a similar specification.
-								relationContextNr_ = foundSpecificationItem.relationContextNr();
-							}
-						else
-							// Specification found. Take the found relation context.
-							relationContextNr_ = foundContextItem.contextNr();
-						}
-					else
-						return myWordItem_.startErrorInItem( 1, moduleNameString_, "The word of the found context item is undefined" );
-					}
-				}
-			else
-				return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
-			}
-		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
-
-		return Constants.RESULT_OK;
-		}
-
-	private static ContextItem contextItemInAllWords( WordItem specificationWordItem )
+	private static ContextItem firstContextItemInAllWords( boolean isUserGeneralizationWord, WordItem specificationWordItem )
 		{
 		ContextItem foundContextItem;
 		WordItem currentWordItem;
@@ -239,7 +133,13 @@ class AdminContext
 			{
 			// Do for all words
 			do	{
-				if( ( foundContextItem = currentWordItem.contextItemInWord( specificationWordItem ) ) != null )
+				if( ( ( isUserGeneralizationWord &&
+				currentWordItem.isUserGeneralizationWord ) ||
+
+				( !isUserGeneralizationWord &&
+				currentWordItem.isUserRelationWord ) ) &&
+
+				( foundContextItem = currentWordItem.contextItemInWord( specificationWordItem ) ) != null )
 					return foundContextItem;
 				}
 			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
@@ -256,8 +156,6 @@ class AdminContext
 		String errorString = null;
 
 		hasFoundUserSpecification_ = false;
-
-		relationContextNr_ = Constants.NO_CONTEXT_NR;
 
 		adminItem_ = adminItem;
 		myWordItem_ = myWordItem;
@@ -319,13 +217,14 @@ class AdminContext
 			if( ( contextResult.contextNr = contextWordItem.contextNrInWord( null ) ) == Constants.NO_CONTEXT_NR )
 				{
 				if( ( contextResult.contextNr = highestContextNr() ) < Constants.MAX_CONTEXT_NR )
+					// Create new context number
 					contextResult.contextNr++;
 				else
 					myWordItem_.startSystemErrorInItem( 1, moduleNameString_, "Context number overflow" );
 				}
 
 			if( contextWordItem.addContext( false, contextWordTypeNr, Constants.WORD_TYPE_UNDEFINED, contextResult.contextNr, null ) != Constants.RESULT_OK )
-				myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a context to word \"" + contextWordItem.anyWordTypeString() + "\"" );
+				myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a pronoun context to word \"" + contextWordItem.anyWordTypeString() + "\"" );
 			}
 		else
 			myWordItem_.startErrorInItem( 1, moduleNameString_, "The read word of the read ahead item is undefined" );
@@ -334,15 +233,15 @@ class AdminContext
 		return contextResult;
 		}
 
-	protected ContextResultType getRelationContext( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, short questionParameter, short specificationWordTypeNr, short relationWordTypeNr, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem )
+	protected ContextResultType getRelationContext( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, boolean isSelfGeneratedAssumption, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem )
 		{
 		ContextResultType contextResult = new ContextResultType();
-		boolean hasRelationContextCollection;
 		boolean isSpecificationCollectedWithItself;
-		boolean hasFoundContext = false;
-		int oldRelationContextNr;
-		SpecificationItem existingSpecificationItem;
-		SpecificationItem reversedExistingSpecificationItem = null;
+		int foundRelationContextNr;
+		ContextItem foundContextItem;
+		SpecificationItem foundSpecificationItem;
+		SpecificationItem existingSpecificationItem = null;
+		SpecificationItem selfGeneratedSpecificationItem = null;
 		WordItem foundRelationWordItem = null;
 
 		if( generalizationWordItem != null )
@@ -351,89 +250,96 @@ class AdminContext
 				{
 				if( relationWordItem != null )
 					{
-					hasRelationContextCollection = ( myWordItem_.collectionNrInAllWords( relationContextNr ) > Constants.NO_COLLECTION_NR );
 					isSpecificationCollectedWithItself = specificationWordItem.isCollectedWithItself();
 
+					// Try to find relation context with same number of relation words as in the user sentence
 					if( ( contextResult.contextNr = relationWordItem.contextNrInWord( CommonVariables.nUserRelationWords, specificationWordItem ) ) == Constants.NO_CONTEXT_NR )
 						{
-						existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, questionParameter, specificationWordItem );
+						existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isAssignment, isArchivedAssignment, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem );
 
-						if( isSpecificationCollectedWithItself ||
-						existingSpecificationItem == null ||
-						existingSpecificationItem.isOlderItem() ||
-						relationWordItem.hasContextInWord( contextResult.contextNr, specificationWordItem ) )
-							contextResult.contextNr = relationWordItem.contextNrInWord( specificationWordItem );
+						if( ( foundRelationContextNr = relationWordItem.contextNrInWord( specificationWordItem ) ) > Constants.NO_CONTEXT_NR )
+							{
+							if( !isSelfGeneratedAssumption ||
+							existingSpecificationItem == null ||
+							!existingSpecificationItem.hasRelationContext() )
+								contextResult.contextNr = foundRelationContextNr;
+							else
+								{
+								if( generalizationWordItem.hasConfirmedSpecification() )
+									{
+									selfGeneratedSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( true, isNegative, isPossessive, !isSelfGeneratedAssumption, specificationWordItem );
+
+									contextResult.contextNr = ( selfGeneratedSpecificationItem == null ||
+																selfGeneratedSpecificationItem.relationContextNr() == foundRelationContextNr ? existingSpecificationItem.relationContextNr() : foundRelationContextNr );
+									}
+								}
+							}
 						}
-					else
-						hasFoundContext = true;
 
 					if( contextResult.contextNr == Constants.NO_CONTEXT_NR )
 						{
-						if( getRelationContext( isNegative, isPossessive, questionParameter, generalizationWordItem, specificationWordItem ) == Constants.RESULT_OK )
+						foundRelationContextNr = Constants.NO_CONTEXT_NR;
+
+						if( ( foundContextItem = firstContextItemInAllWords( generalizationWordItem.isUserGeneralizationWord, specificationWordItem ) ) != null )
 							{
-							if( relationContextNr_ == Constants.NO_CONTEXT_NR )
-								{
-								if( relationWordItem.isUserGeneralizationWord )
-									contextResult.contextNr = contextNrInUserGeneralizationWord( relationWordItem, specificationWordItem );
-								else
-									{
-									if( relationWordItem.isUserRelationWord )
-										contextResult.contextNr = contextNrInUserRelationWord( relationWordItem, specificationWordItem );
-									}
-								}
+							// Find specification with found context word as relation word
+							foundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( true, true, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, specificationWordItem );
+
+							if( foundSpecificationItem != null &&
+							!foundSpecificationItem.hasRelationContext() )
+								foundSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem );
+
+							if( foundSpecificationItem != null )
+								// No such specification found. Get the relation context of a similar specification
+								foundRelationContextNr = foundSpecificationItem.relationContextNr();
 							else
+								// Take the found relation context
+								foundRelationContextNr = foundContextItem.contextNr();
+							}
+
+						if( foundRelationContextNr > Constants.NO_CONTEXT_NR )
+							{
+							// If cross-collected afterwards
+							if( existingSpecificationItem != null )
 								{
-								if( ( existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, questionParameter, specificationWordItem ) ) != null )
-									foundRelationWordItem = existingSpecificationItem.relationWordItem();
+								foundRelationWordItem = existingSpecificationItem.relationWordItem();
 
-								if( existingSpecificationItem != null )
+								if( !hasFoundUserSpecification_ &&
+								!isSpecificationCollectedWithItself &&
+								generalizationWordItem.isUserGeneralizationWord &&
+
+								( foundRelationWordItem == null ||
+								foundRelationWordItem.firstUserSpecificationItem( isNegative, !isPossessive, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, specificationWordItem ) != null ) )
+									hasFoundUserSpecification_ = true;
+
+								if( hasFoundUserSpecification_ ||
+								generalizationWordItem.hasConfirmedSpecification() )
 									{
-									if( !hasFoundUserSpecification_ &&
-									!isSpecificationCollectedWithItself &&
-
-									generalizationWordItem.isUserGeneralizationWord &&
-
-									( foundRelationWordItem == null ||
-									foundRelationWordItem.firstUserSpecificationItem( isNegative, !isPossessive, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, specificationWordItem ) != null ) )
-										hasFoundUserSpecification_ = true;
-									}
-
-								// Cross-collected afterwards
-								if( existingSpecificationItem != null &&
-
-								( hasFoundUserSpecification_ ||
-								generalizationWordItem.hasConfirmedSpecification() ) )
-									{
-									if( foundRelationWordItem != null )
-										reversedExistingSpecificationItem = foundRelationWordItem.firstAssignmentOrSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, isNegative, !isPossessive, questionParameter, specificationWordItem );
-
-									if( existingSpecificationItem.hasCurrentCreationSentenceNr() ||
-
-									( reversedExistingSpecificationItem != null &&
-									reversedExistingSpecificationItem.hasCurrentCreationSentenceNr() ) )
+									if( existingSpecificationItem.isSelfGeneratedAssumption() )
 										contextResult.contextNr = existingSpecificationItem.relationContextNr();
 									}
 								else
-									contextResult.contextNr = relationContextNr_;
-								}
+									{
+									// Skip exclusive generalization
+									if( !isAssignment &&
 
-							if( !hasRelationContextCollection &&
-							contextResult.contextNr > Constants.NO_CONTEXT_NR &&
-							!relationWordItem.hasContextInWord( contextResult.contextNr, specificationWordItem ) )
-								// Create new context number
-								contextResult.contextNr = Constants.NO_CONTEXT_NR;
+									( isSpecificationCollectedWithItself ||
+									// Skip on difference in assumption / conclusion
+									existingSpecificationItem.isSelfGeneratedAssumption() == isSelfGeneratedAssumption ) )
+										contextResult.contextNr = foundRelationContextNr;
+									}
+								}
 							}
-						else
-							myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the relation context" );
 						}
 					else
 						{
 						if( isAssignment &&
-						!hasRelationContextCollection &&
+						// Has no relation context collection
+						myWordItem_.collectionNrInAllWords( relationContextNr ) == Constants.NO_COLLECTION_NR &&
 						// Check if assignment already exists
-						generalizationWordItem.firstAssignmentItem( ( !isInactiveAssignment && !isArchivedAssignment ), isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, questionParameter, contextResult.contextNr, specificationWordItem ) == null &&
+						generalizationWordItem.firstNonQuestionAssignmentItem( ( !isInactiveAssignment && !isArchivedAssignment ), isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, contextResult.contextNr, specificationWordItem ) == null &&
 						// Check also recently replaced assignments
-						generalizationWordItem.firstRecentlyReplacedAssignmentItem( isNegative, isPossessive, questionParameter, contextResult.contextNr, specificationWordItem ) == null )
+						generalizationWordItem.firstRecentlyReplacedAssignmentItem( isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, contextResult.contextNr, specificationWordItem ) == null )
 							{
 							// Dynamic semantic ambiguity
 							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_I_NOTICED_SEMANTIC_AMBIGUITY_START, relationWordItem.anyWordTypeString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_DYNAMIC_SEMANTIC_AMBIGUITY_END ) == Constants.RESULT_OK )
@@ -445,54 +351,13 @@ class AdminContext
 							else
 								myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
 							}
-						else
-							{
-							if( generalizationWordItem.isUserGeneralizationWord )
-								{
-								if( !hasFoundContext )
-									{
-									if( getRelationContext( isNegative, isPossessive, questionParameter, generalizationWordItem, specificationWordItem ) == Constants.RESULT_OK )
-										{
-										if( relationContextNr_ > Constants.NO_CONTEXT_NR )
-											contextResult.contextNr = relationContextNr_;
-										}
-									else
-										myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the relation context" );
-									}
-								}
-							else
-								{
-								if( contextResult.contextNr > Constants.NO_CONTEXT_NR &&
-								( oldRelationContextNr = contextNrInUserGeneralizationWord( relationWordItem, specificationWordItem ) ) > Constants.NO_CONTEXT_NR )
-									{
-									if( isSpecificationCollectedWithItself )
-										{
-										if( contextResult.contextNr == contextNrInUserGeneralizationWord( generalizationWordItem, specificationWordItem ) )
-											contextResult.contextNr = oldRelationContextNr;
-										}
-									else
-										{
-										// In case the context number doesn't exists for current sentence
-										if( !myWordItem_.isCurrentContextInAllWords( contextResult.contextNr, specificationWordItem ) )
-											{
-											if( ( contextResult.contextNr = highestContextNr() ) < Constants.MAX_CONTEXT_NR )
-												{
-												if( myWordItem_.copyContextInAllWords( relationWordTypeNr, specificationWordTypeNr, oldRelationContextNr, ++contextResult.contextNr, specificationWordItem ) != Constants.RESULT_OK )
-													myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to copy the old context in all words" );
-												}
-											else
-												myWordItem_.startSystemErrorInItem( 1, moduleNameString_, "Context number overflow" );
-											}
-										}
-									}
-								}
-							}
 						}
 
 					if( CommonVariables.result == Constants.RESULT_OK &&
-					contextResult.contextNr == Constants.NO_CONTEXT_NR )		// No context found yet
+					contextResult.contextNr == Constants.NO_CONTEXT_NR )
 						{
 						if( ( contextResult.contextNr = highestContextNr() ) < Constants.MAX_CONTEXT_NR )
+							// Create new context number
 							contextResult.contextNr++;
 						else
 							myWordItem_.startSystemErrorInItem( 1, moduleNameString_, "Context number overflow" );
@@ -511,14 +376,13 @@ class AdminContext
 		return contextResult;
 		}
 
-	protected ContextResultType getRelationContext( boolean isAssignment, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isUserSentence, short questionParameter, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, ReadItem startRelationReadItem )
+	protected ContextResultType getRelationContext( boolean isAssignment, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isQuestion, boolean isUserSentence, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, ReadItem startRelationReadItem )
 		{
 		ContextResultType contextResult = new ContextResultType();
 		boolean hasFoundMatchingSpecificationCollection;
 		boolean hasFoundRelationContext;
 		boolean hasFoundRelationWordInThisList;
 		boolean hasSameNumberOrMoreRelationWords;
-		boolean isQuestion = ( questionParameter > Constants.NO_QUESTION_PARAMETER );
 		boolean isSkippingThisContext = false;
 		int currentRelationContextNr;
 		int foundRelationContextNr;
@@ -558,12 +422,11 @@ class AdminContext
 
 										// The context that was found, is may be found by specification collection instead of specification word.
 										// So, do the same check with context without specification collection.
-										hasFoundMatchingSpecificationCollection = ( !isQuestion &&
-																					!currentRelationWordItem.hasContextInWord( currentRelationContextNr, specificationWordItem ) );
+										hasFoundMatchingSpecificationCollection = !currentRelationWordItem.hasContextInWord( currentRelationContextNr, specificationWordItem );
 
 										// Do for all words, either in the current relation list or outside this list
 										do	{
-											foundSpecificationItem = ( isUserSentence ? null : generalizationWordItem.firstActiveAssignmentOrSpecificationItem( true, isNegative, isPossessive, questionParameter, specificationWordItem ) );
+											foundSpecificationItem = ( isUserSentence ? null : generalizationWordItem.firstActiveAssignmentOrSpecificationItem( true, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) );
 
 											if( foundSpecificationItem == null ||
 											!foundSpecificationItem.isSelfGeneratedConclusion() ||
@@ -602,9 +465,9 @@ class AdminContext
 							}
 
 						if( CommonVariables.result == Constants.RESULT_OK &&
-						questionParameter == Constants.NO_QUESTION_PARAMETER &&
+						!isQuestion &&
 						contextResult.contextNr == Constants.NO_CONTEXT_NR &&
-						( foundSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( true, true, isNegative, isPossessive, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) ) != null )
+						( foundSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( true, isNegative, isPossessive, isPossessive, specificationWordItem ) ) != null )
 							{
 							if( ( foundRelationContextNr = foundSpecificationItem.relationContextNr() ) > Constants.NO_CONTEXT_NR )
 								{
@@ -638,11 +501,12 @@ class AdminContext
 														myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
 													}
 												}
-											else	// Try to find the relation context of a possessive reversible conclusion
+											else
 												{
 												if( hasSameNumberOrMoreRelationWords ||
 												specificationWordItem.isCollectedWithItself() )
 													{
+													// Try to find the relation context of a possessive reversible conclusion
 													if( ( contextResult = findPossessiveReversibleConclusionRelationContextOfInvolvedWords( isExclusiveSpecification, isNegative, isPossessive, nContextRelations, contextResult.contextNr, relationWordItem, specificationWordItem ) ).result != Constants.RESULT_OK )
 														myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a possessive reversible conclusion relation context of involved words" );
 													}
@@ -654,9 +518,10 @@ class AdminContext
 							}
 
 						if( CommonVariables.result == Constants.RESULT_OK &&
-						contextResult.contextNr == Constants.NO_CONTEXT_NR )		// No context found yet
+						contextResult.contextNr == Constants.NO_CONTEXT_NR )
 							{
 							if( ( contextResult.contextNr = highestContextNr() ) < Constants.MAX_CONTEXT_NR )
+								// Create new context number
 								contextResult.contextNr++;
 							else
 								myWordItem_.startSystemErrorInItem( 1, moduleNameString_, "Context number overflow" );
@@ -678,9 +543,7 @@ class AdminContext
 	};
 
 /*************************************************************************
- *
  *	"Praise the Lord!
  *	How joyful are those who fear the Lord
  *	and delight in obeying his commands." (Psalm 112:1)
- *
  *************************************************************************/

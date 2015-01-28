@@ -1,47 +1,26 @@
 /*
  *	Class:			ListCleanup
  *	Supports class:	List
- *	Purpose:		To cleanup unnecessary items in the lists
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Purpose:		To cleanup obsolete items in the lists
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class ListCleanup
@@ -219,11 +198,22 @@ class ListCleanup
 
 	protected void setCurrentItemNr()
 		{
-		setCurrentItemNr( myList_.firstActiveItem() );
-		setCurrentItemNr( myList_.firstInactiveItem() );
-		setCurrentItemNr( myList_.firstArchivedItem() );
-		setCurrentItemNr( myList_.firstReplacedItem() );
-		setCurrentItemNr( myList_.firstDeletedItem() );
+		Item searchItem;
+
+		if( ( searchItem = myList_.firstActiveItem() ) != null )
+			setCurrentItemNr( searchItem );
+
+		if( ( searchItem = myList_.firstInactiveItem() ) != null )
+			setCurrentItemNr( searchItem );
+
+		if( ( searchItem = myList_.firstArchivedItem() ) != null )
+			setCurrentItemNr( searchItem );
+
+		if( ( searchItem = myList_.firstReplacedItem() ) != null )
+			setCurrentItemNr( searchItem );
+
+		if( ( searchItem = myList_.firstDeletedItem() ) != null )
+			setCurrentItemNr( searchItem );
 		}
 
 	protected void deleteRollbackInfo()
@@ -243,19 +233,27 @@ class ListCleanup
 	protected int highestInUseSentenceNrInList( boolean isIncludingDeletedItems, int highestSentenceNr )
 		{
 		int tempSentenceNr;
-		int highestInUseSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_.firstActiveItem() );
+		int highestInUseSentenceNr = Constants.NO_SENTENCE_NR;
+		Item searchItem;
 
-		if( ( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_.firstInactiveItem() ) ) > highestInUseSentenceNr )
+		if( ( searchItem = myList_.firstActiveItem() ) != null )
+			highestInUseSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem );
+
+		if( ( searchItem = myList_.firstInactiveItem() ) != null &&
+		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
 			highestInUseSentenceNr = tempSentenceNr;
 
-		if( ( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_.firstArchivedItem() ) ) > highestInUseSentenceNr )
+		if( ( searchItem = myList_.firstArchivedItem() ) != null &&
+		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
 			highestInUseSentenceNr = tempSentenceNr;
 
-		if( ( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_.firstReplacedItem() ) ) > highestInUseSentenceNr )
+		if( ( searchItem = myList_.firstReplacedItem() ) != null &&
+		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
 			highestInUseSentenceNr = tempSentenceNr;
 
 		if( isIncludingDeletedItems &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_.firstDeletedItem() ) ) > highestInUseSentenceNr )
+		( searchItem = myList_.firstDeletedItem() ) != null &&
+		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
 			highestInUseSentenceNr = tempSentenceNr;
 
 		return highestInUseSentenceNr;
@@ -263,28 +261,39 @@ class ListCleanup
 
 	protected byte decrementSentenceNrs( int startSentenceNr )
 		{
+		Item searchItem;
+
 		if( startSentenceNr > Constants.NO_SENTENCE_NR )
 			{
-			if( decrementSentenceNrs( startSentenceNr, myList_.firstActiveItem() ) == Constants.RESULT_OK )
-				{
-				if( decrementSentenceNrs( startSentenceNr, myList_.firstInactiveItem() ) == Constants.RESULT_OK )
-					{
-					if( decrementSentenceNrs( startSentenceNr, myList_.firstArchivedItem() ) == Constants.RESULT_OK )
-						{
-						if( decrementSentenceNrs( startSentenceNr, myList_.firstReplacedItem() ) == Constants.RESULT_OK )
-							return decrementSentenceNrs( startSentenceNr, myList_.firstDeletedItem() );
-						}
-					}
-				}
+			if( ( searchItem = myList_.firstActiveItem() ) != null )
+				decrementSentenceNrs( startSentenceNr, searchItem );
+
+			if( CommonVariables.result == Constants.RESULT_OK &&
+			( searchItem = myList_.firstInactiveItem() ) != null )
+				decrementSentenceNrs( startSentenceNr, searchItem );
+
+			if( CommonVariables.result == Constants.RESULT_OK &&
+			( searchItem = myList_.firstArchivedItem() ) != null )
+				decrementSentenceNrs( startSentenceNr, searchItem );
+
+			if( CommonVariables.result == Constants.RESULT_OK &&
+			( searchItem = myList_.firstReplacedItem() ) != null )
+				decrementSentenceNrs( startSentenceNr, searchItem );
+
+			if( CommonVariables.result == Constants.RESULT_OK &&
+			( searchItem = myList_.firstDeletedItem() ) != null )
+				decrementSentenceNrs( startSentenceNr, searchItem );
 			}
 		else
 			return myList_.startError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "The given start sentence number is undefined" );
 
-		return Constants.RESULT_OK;
+		return CommonVariables.result;
 		}
 
 	protected byte decrementItemNrRange( int decrementSentenceNr, int startDecrementItemNr, int decrementOffset )
 		{
+		Item searchItem;
+
 		if( decrementSentenceNr >= Constants.NO_SENTENCE_NR &&
 		decrementSentenceNr < Constants.MAX_SENTENCE_NR )
 			{
@@ -292,17 +301,24 @@ class ListCleanup
 				{
 				if( decrementOffset > 0 )
 					{
-					if( decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_.firstActiveItem() ) == Constants.RESULT_OK )
-						{
-						if( decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_.firstInactiveItem() ) == Constants.RESULT_OK )
-							{
-							if( decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_.firstArchivedItem() ) == Constants.RESULT_OK )
-								{
-								if( decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_.firstReplacedItem() ) == Constants.RESULT_OK )
-									return decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_.firstDeletedItem() );
-								}
-							}
-						}
+					if( ( searchItem = myList_.firstActiveItem() ) != null )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+					if( CommonVariables.result == Constants.RESULT_OK &&
+					( searchItem = myList_.firstInactiveItem() ) != null )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+					if( CommonVariables.result == Constants.RESULT_OK &&
+					( searchItem = myList_.firstArchivedItem() ) != null )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+					if( CommonVariables.result == Constants.RESULT_OK &&
+					( searchItem = myList_.firstReplacedItem() ) != null )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+					if( CommonVariables.result == Constants.RESULT_OK &&
+					( searchItem = myList_.firstDeletedItem() ) != null )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 					}
 				else
 					return myList_.startError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "The given decrement offset is undefined" );
@@ -313,6 +329,7 @@ class ListCleanup
 		else
 			return myList_.startError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "The given decrement sentence number is undefined" );
 
+		// Clear error to be able to restart after justification error
 		return Constants.RESULT_OK;
 		}
 
@@ -749,10 +766,8 @@ class ListCleanup
 	};
 
 /*************************************************************************
- *
  *	"The winds blows, and we are gone -
  *	as though we had never been here.
  *	But the love of the Lord remains forever
  *	with those who fear him." (Psalm 103:16-17)
- *
  *************************************************************************/

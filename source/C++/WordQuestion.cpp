@@ -2,46 +2,25 @@
  *	Class:			WordQuestion
  *	Supports class:	WordItem
  *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "Presentation.cpp"
@@ -104,16 +83,16 @@ class WordQuestion
 			specificationWordItem = questionSpecificationItem->specificationWordItem();
 
 			// Find correct answer
-			if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
+			if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
 				{
 				// Find answer with different relation context
-				if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem ) ) == NULL )
+				if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem ) ) == NULL )
 					{
 					// Find negative answer
-					if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isAssignment, !isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
+					if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, !isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
 						{
 						// Find opposite possessive answer
-						if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isAssignment, isNegative, !isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
+						if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isNegative, !isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
 							isNegativeAnswer = true;
 						}
 					else
@@ -245,7 +224,7 @@ class WordQuestion
 								if( questionSpecificationItem->isSpecificationGeneralization() &&
 								( currentSpecificationWordItem = currentSpecificationItem->specificationWordItem() ) != NULL )
 									{
-									if( currentSpecificationWordItem->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, true, true, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) != NULL )
+									if( currentSpecificationWordItem->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, true, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) != NULL )
 										{
 										hasFoundDeeperPositiveAnswer_ = true;
 										hasFoundSpecificationGeneralizationAnswer_ = true;
@@ -268,7 +247,6 @@ class WordQuestion
 	ResultType findAlternativeAnswerToQuestionInOtherWords( bool hasFoundSpecificationGeneralizationAnswer, SpecificationItem *questionSpecificationItem )
 		{
 		bool isAssignment;
-		bool isInactiveAssignment;
 		bool isArchivedAssignment;
 		bool isNegative;
 		bool isPossessive;
@@ -284,7 +262,6 @@ class WordQuestion
 		if( questionSpecificationItem != NULL )
 			{
 			isAssignment = questionSpecificationItem->isAssignment();
-			isInactiveAssignment = questionSpecificationItem->isInactiveAssignment();
 			isArchivedAssignment = questionSpecificationItem->isArchivedAssignment();
 			isNegative = questionSpecificationItem->isNegative();
 			isPossessive = questionSpecificationItem->isPossessive();
@@ -299,7 +276,7 @@ class WordQuestion
 				// Do for all words for an alternative answer
 				do	{
 					if( currentWordItem != myWordItem_ &&
-					( foundSpecificationItem = currentWordItem->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
+					( foundSpecificationItem = currentWordItem->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isArchivedAssignment, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
 						{
 						if( hasFoundSpecificationGeneralizationAnswer ||
 						foundSpecificationItem->isRelatedSpecification( isNegative, isPossessive, generalizationWordTypeNr ) )
@@ -536,7 +513,7 @@ class WordQuestion
 
 				// First mark related question parts as answered
 				do	{
-					if( ( specificationResult = myWordItem_->findRelatedSpecification( false, false, questionSpecificationItem ) ).result == RESULT_OK )
+					if( ( specificationResult = myWordItem_->findRelatedSpecification( false, questionSpecificationItem ) ).result == RESULT_OK )
 						{
 						if( ( foundRelatedSpecificationItem = specificationResult.relatedSpecificationItem ) != NULL )
 							{
@@ -752,7 +729,7 @@ class WordQuestion
 		return RESULT_OK;
 		}
 
-	SpecificationResultType findQuestionToBeAdjustedByCompoundCollection( bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCompoundCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
+	SpecificationResultType findQuestionToBeAdjustedByCompoundCollection( bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCompoundCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		SpecificationResultType specificationResult;
 		JustificationItem *firstJustificationItem;
@@ -770,7 +747,7 @@ class WordQuestion
 					do	{
 						if( ( currentCollectionWordItem = currentWordItem->collectionWordItem( specificationCompoundCollectionNr, specificationWordItem ) ) != NULL )
 							{
-							if( ( specificationResult.adjustedQuestionSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, true, true, isNegative, isPossessive, questionParameter, specificationCompoundCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, currentCollectionWordItem ) ) != NULL )
+							if( ( specificationResult.adjustedQuestionSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, true, true, isNegative, isPossessive, questionParameter, specificationCompoundCollectionNr, relationContextNr, currentCollectionWordItem ) ) != NULL )
 								{
 								if( myWordItem_->replaceOrDeleteSpecification( specificationResult.adjustedQuestionSpecificationItem, NULL ) == RESULT_OK )
 									{
@@ -806,8 +783,6 @@ class WordQuestion
 	};
 
 /*************************************************************************
- *
  *	"I will sing a new song to you, O God!
  *	I will sing your praises with a ten-stringed harp." (Psalm 144:9)
- *
  *************************************************************************/

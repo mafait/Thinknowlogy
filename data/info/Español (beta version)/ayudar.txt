@@ -1,0 +1,39 @@
+﻿Mostrar "------------------------------------------------------------------------------".
+#C++#Mostrar " \~{nombre del idioma}\t\t\t\t* Cambiar el idioma".
+#C++#Mostrar " Lea el archivo \"Español/ambigüedad/Boston\".\t\t* Detección de ambigüedad".
+#C++#Mostrar " Lea el archivo \"Español/ambigüedad/presidentes de EUA\".* Detección de ambigüedad".
+#C++#Mostrar " Lea el archivo \"Español/programación/Conecta 4\".\t* Juego Conecta 4".
+#C++#Mostrar " Lea el archivo \"Español/programación/saludo\".\t\t* Saludo".
+#C++#Mostrar " Lea el archivo \"Español/programación/Torres de Hanói\".\t* Solución de rompecabezas".
+#C++#Mostrar " Lea el archivo \"Español/razonamiento/familia/familia\".\t* Razonamiento".
+#Java#Mostrar " Utilice el botón <ambigüedad>		para aprender acerca de la detección de la ambigüedad".
+#Java#Mostrar " Utilice el botón <programación>	para aprender acerca de la programación en lenguaje natural".
+#Java#Mostrar " Utilice el botón <razonamiento>	para aprender sobre el razonamiento en el lenguaje natural".
+Mostrar "------------------------------------------------------------------------------".
+Mostrar " Ejemplos de oraciones imperativas disponibles:".
+Mostrar "------------------------------------------------------------------------------".
+Mostrar " Lea el archivo \"{nombre de archivo}\".\t* Leer un archivo".
+Mostrar " Ayudar.				* Muestra esta información de ayuda".
+Mostrar " Deshacer.				* Deshacer la última frase".
+Mostrar " Rehacer.				* Rehacer una sentencia sin hacer".
+Mostrar " Despejar la mente.			* Olvídese de los conocimientos previos".
+Mostrar " Reanudar.				* Reinicie el programa".
+#Mostrar " Mostrar información sobre los idioma de gramática.".
+Mostrar " Mostrar información sobre los idioma-de-gramática.".
+#Mostrar " Mostrar información sobre los idioma de la interfaz.".
+Mostrar " Mostrar información sobre los idioma-de-la-interfaz.".
+Mostrar " Mostrar información sobre las listas.".
+#Mostrar " Mostrar información sobre los tipos de palabra.".
+Mostrar " Mostrar información sobre los tipos-de-palabra.".
+Mostrar " Mostrar los comandos-de-consulta.".
+Mostrar " Mostrar los derechos-de-autor.".
+Mostrar " Mostrar la licencia-GPLv2.".
+Mostrar " Mostrar la garantía.".
+Mostrar "------------------------------------------------------------------------------".
+#C++#Mostrar " Archivos de ejemplo:\t* carpeta: Thinknowlogy2014r2b/data/examples/Español/".
+#Java#Mostrar " Archivos de ejemplo:\t* Utilice botón <más ejemplos>".
+#Java#Mostrar "		    o ver carpeta: Thinknowlogy2014r2b/data/examples/Español/".
+Mostrar " Fundamental:		* carpeta: Thinknowlogy2014r2b/documents/".
+Mostrar " Proyecto:		* carpeta: Thinknowlogy2014r2b/documents/design/".
+Mostrar " Imágenes:		* carpeta: Thinknowlogy2014r2b/screenshots/".
+Mostrar "------------------------------------------------------------------------------".

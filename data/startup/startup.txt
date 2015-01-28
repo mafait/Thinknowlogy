@@ -1,6 +1,6 @@
 ﻿# Read the user-interface and grammar languages
 ~English
-~Español (in beta)
+~Español (beta version)
 ~Nederlands
 
 # Copyright text
@@ -15,12 +15,12 @@ Show the intro.
 
 # Read the available users in available languages
 Read the file "data/startup/English/users".
-Lea el archivo "data/startup/Español (in beta)/usuarios".
+Lea el archivo "data/startup/Español (beta version)/usuarios".
 Lees het bestand "data/startup/Nederlands/gebruikers".
 
 # Read common knowledge in available languages
 Read the file "data/startup/English/common knowledge".
-Lea el archivo "data/startup/Español (in beta)/conocimiento común".
+Lea el archivo "data/startup/Español (beta version)/conocimiento común".
 Lees het bestand "data/startup/Nederlands/algemene kennis".
 
 # Login

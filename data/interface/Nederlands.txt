@@ -2,24 +2,9 @@
 #	File:		Nederlands.txt
 #	Scope:		Used by the Thinknowlogy application
 #	Purpose:	To define the interface texts in Dutch
-#	Version:	Thinknowlogy 2014r2a (George Boole)
+#	Version:	Thinknowlogy 2014r2b (Laws of Thought)
 #----------------------------------------------------------------------------
-#	Thinknowlogy is op grammatica gebaseerde software,
-#	ontworpen om de Natuurwetten van Intelligentie in grammatica te benutten,
-#	om op die manier - via natuurlijke taal - intelligentie te creëren in software,
-#	wat gedemonstreerd wordt door:
-#	* Programmeren in natuurlijke taal;
-#	* Redeneren in natuurlijke taal:
-#		- het trekken van conclusies (geavanceerder dan wetenschappelijke oplossingen),
-#		- het doen van aannames (met zelfregulerend onzekerheidsniveau),
-#		- het stellen van vragen (over hiaten in de kennis),
-#		- het detecteren van conflicten in de kennis;
-#	* Zelfstandig opbouwen van semantiek (geen woordenlijsten):
-#		- het detecteren van enkele gevallen van semantische ambiguïteit;
-#	* Meertaligheid, bewijst dat Natuurwetten van Intelligentie universeel zijn.
-#----------------------------------------------------------------------------
-#	Copyright (C) 2009-2014, Menno Mafait
-#
+#	Copyright (C) 2009-2015, Menno Mafait
 #	Your additions, modifications, suggestions and bug reports
 #	are welcome at http://mafait.org
 #----------------------------------------------------------------------------
@@ -69,20 +54,19 @@
 :210		"Lees het bestand "Nederlands/ambiguiteit/Boston"."
 :211		"Lees het bestand "Nederlands/ambiguiteit/presidenten van de VS"."
 :212		"Lees het bestand "Nederlands/programmeren/Vier op 'n rij"."
-:213		"Lees het bestand "Nederlands/programmeren/groeten"."
-:214		"Lees het bestand "Nederlands/programmeren/toren van Hanoi"."
-:215		"Lees het bestand "Nederlands/redeneren/gezinsdefinitie"."
-:218		"<ambiguïteit>"
-:219		"<programmeren>"
-:220		"<redeneren>"
-:221		"<definities>"
-:222		"<conflicten>"
-:223		"<verantwoording>"
-:224		"<vragen>"
-:225		"<toon info>"
-:226		"<terug>"
-:227		"Help."
-:228		"<wijzig taal>"
+:213		"Lees het bestand "Nederlands/programmeren/toren van Hanoi"."
+:214		"Lees het bestand "Nederlands/redeneren/gezinsdefinitie"."
+:216		"<ambiguïteit>"
+:217		"<programmeren>"
+:218		"<redeneren>"
+:219		"<definities>"
+:220		"<conflicten>"
+:221		"<verantwoording>"
+:222		"<vragen>"
+:223		"<toon info>"
+:224		"<terug>"
+:225		"Help."
+:226		"<wijzig taal>"
 
 # Java console (programmeren/Vier op 'n rij submenu)
 :300		"Mijn zet is A."

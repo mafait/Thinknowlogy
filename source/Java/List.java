@@ -1,46 +1,25 @@
 /*
  *	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class List
@@ -81,14 +60,6 @@ class List
 			}
 
 		return true;
-		}
-
-	private byte checkForUsage( Item unusedItem )
-		{
-		if( unusedItem != null )
-			return unusedItem.checkForUsage();
-
-		return startError( 1, null, myWordItem_.anyWordTypeString(), "The given unused item is undefined" );
 		}
 
 	private static Item tailOfList( Item searchItem )
@@ -187,48 +158,63 @@ class List
 
 	protected void deleteTemporaryList()
 		{
-		Item searchItem = tailOfList( deletedList_ );
+		Item searchItem = deletedList_;
 
-		// Move replaced list to deleted list
-		if( searchItem == null )
+		if( replacedList_ != null )
 			{
-			deletedList_ = replacedList_;
-			searchItem = tailOfList( replacedList_ );
+			// Move replaced list to deleted list
+			if( deletedList_ == null )
+				deletedList_ = replacedList_;
+			else
+				{
+				searchItem = tailOfList( searchItem );
+				searchItem.nextItem = replacedList_;
+				}
+
+			replacedList_ = null;
 			}
-		else
-			searchItem.nextItem = replacedList_;
 
-		replacedList_ = null;
-
-		// Move archived list to deleted list
-		if( searchItem == null )
+		if( archivedList_ != null )
 			{
-			deletedList_ = archivedList_;
-			searchItem = tailOfList( archivedList_ );
+			// Move archived list to deleted list
+			if( deletedList_ == null )
+				deletedList_ = archivedList_;
+			else
+				{
+				searchItem = tailOfList( searchItem );
+				searchItem.nextItem = archivedList_;
+				}
+
+			archivedList_ = null;
 			}
-		else
-			searchItem.nextItem = archivedList_;
 
-		archivedList_ = null;
-
-		// Move inactive list to deleted list
-		if( searchItem == null )
+		if( inactiveList_ != null )
 			{
-			deletedList_ = inactiveList_;
-			searchItem = tailOfList( inactiveList_ );
+			// Move inactive list to deleted list
+			if( deletedList_ == null )
+				deletedList_ = inactiveList_;
+			else
+				{
+				searchItem = tailOfList( searchItem );
+				searchItem.nextItem = inactiveList_;
+				}
+
+			inactiveList_ = null;
 			}
-		else
-			searchItem.nextItem = inactiveList_;
 
-		inactiveList_ = null;
+		if( activeList_ != null )
+			{
+			// Move active list to deleted list
+			if( deletedList_ == null )
+				deletedList_ = activeList_;
+			else
+				{
+				searchItem = tailOfList( searchItem );
+				searchItem.nextItem = activeList_;
+				}
 
-		// Move active list to deleted list
-		if( searchItem == null )
-			deletedList_ = activeList_;
-		else
-			searchItem.nextItem = activeList_;
-
-		activeList_ = null;
+			activeList_ = null;
+			}
 		}
 
 	protected boolean hasItems()
@@ -666,7 +652,7 @@ class List
 					else
 						previousRemoveItem.nextItem = removeItem.nextItem;	// Disconnect deleted list from item
 
-					if( checkForUsage( removeItem ) == Constants.RESULT_OK )
+					if( removeItem.checkForUsage() == Constants.RESULT_OK )
 						{
 						removeItem.nextItem = null;							// Disconnect item from the deleted list
 						removeItem = ( previousRemoveItem == null ? deletedList_ : previousRemoveItem.nextItem );
@@ -952,8 +938,6 @@ class List
 	};
 
 /*************************************************************************
- *
  *	"But he rescues the poor from trouble
  *	and increases their families like flocks of sheep." (Psalm 107:41)
- *
  *************************************************************************/

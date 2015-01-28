@@ -2,46 +2,25 @@
  *	Class:			ListQuery
  *	Supports class:	List
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class ListQuery
@@ -390,101 +369,147 @@ class ListQuery
 
 	protected void clearQuerySelections()
 		{
-		clearQuerySelections( myList_.firstActiveItem() );
-		clearQuerySelections( myList_.firstInactiveItem() );
-		clearQuerySelections( myList_.firstArchivedItem() );
-		clearQuerySelections( myList_.firstReplacedItem() );
-		clearQuerySelections( myList_.firstDeletedItem() );
+		Item searchItem;
+
+		if( ( searchItem = myList_.firstActiveItem() ) != null )
+			clearQuerySelections( searchItem );
+
+		if( ( searchItem = myList_.firstInactiveItem() ) != null )
+			clearQuerySelections( searchItem );
+
+		if( ( searchItem = myList_.firstArchivedItem() ) != null )
+			clearQuerySelections( searchItem );
+
+		if( ( searchItem = myList_.firstReplacedItem() ) != null )
+			clearQuerySelections( searchItem );
+
+		if( ( searchItem = myList_.firstDeletedItem() ) != null )
+			clearQuerySelections( searchItem );
 		}
 
 	protected void itemQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
 		{
-		if( isSelectActiveItems )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, myList_.firstActiveItem() );
+		Item searchItem;
 
-		if( isSelectInactiveItems )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, myList_.firstInactiveItem() );
+		if( isSelectActiveItems &&
+		( searchItem = myList_.firstActiveItem() ) != null )
+			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectArchivedItems )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, myList_.firstArchivedItem() );
+		if( isSelectInactiveItems &&
+		( searchItem = myList_.firstInactiveItem() ) != null )
+			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectReplacedItems )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, myList_.firstReplacedItem() );
+		if( isSelectArchivedItems &&
+		( searchItem = myList_.firstArchivedItem() ) != null )
+			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectDeletedItems )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, myList_.firstDeletedItem() );
+		if( isSelectReplacedItems &&
+		( searchItem = myList_.firstReplacedItem() ) != null )
+			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+
+		if( isSelectDeletedItems &&
+		( searchItem = myList_.firstDeletedItem() ) != null )
+			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 		}
 
 	protected void listQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems )
 		{
-		if( isSelectActiveItems )
-			listQuery( isSelectOnFind, myList_.firstActiveItem() );
+		Item searchItem;
 
-		if( isSelectInactiveItems )
-			listQuery( isSelectOnFind, myList_.firstInactiveItem() );
+		if( isSelectActiveItems &&
+		( searchItem = myList_.firstActiveItem() ) != null )
+			listQuery( isSelectOnFind, searchItem );
 
-		if( isSelectArchivedItems )
-			listQuery( isSelectOnFind, myList_.firstArchivedItem() );
+		if( isSelectInactiveItems &&
+		( searchItem = myList_.firstInactiveItem() ) != null )
+			listQuery( isSelectOnFind, searchItem );
 
-		if( isSelectReplacedItems )
-			listQuery( isSelectOnFind, myList_.firstReplacedItem() );
+		if( isSelectArchivedItems &&
+		( searchItem = myList_.firstArchivedItem() ) != null )
+			listQuery( isSelectOnFind, searchItem );
 
-		if( isSelectDeletedItems )
-			listQuery( isSelectOnFind, myList_.firstDeletedItem() );
+		if( isSelectReplacedItems &&
+		( searchItem = myList_.firstReplacedItem() ) != null )
+			listQuery( isSelectOnFind, searchItem );
+
+		if( isSelectDeletedItems &&
+		( searchItem = myList_.firstDeletedItem() ) != null )
+			listQuery( isSelectOnFind, searchItem );
 		}
 
 	protected void wordTypeQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, short queryWordTypeNr )
 		{
-		if( isSelectActiveItems )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, myList_.firstActiveItem() );
+		Item searchItem;
 
-		if( isSelectInactiveItems )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, myList_.firstInactiveItem() );
+		if( isSelectActiveItems &&
+		( searchItem = myList_.firstActiveItem() ) != null )
+			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectArchivedItems )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, myList_.firstArchivedItem() );
+		if( isSelectInactiveItems &&
+		( searchItem = myList_.firstInactiveItem() ) != null )
+			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectReplacedItems )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, myList_.firstReplacedItem() );
+		if( isSelectArchivedItems &&
+		( searchItem = myList_.firstArchivedItem() ) != null )
+			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectDeletedItems )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, myList_.firstDeletedItem() );
+		if( isSelectReplacedItems &&
+		( searchItem = myList_.firstReplacedItem() ) != null )
+			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+
+		if( isSelectDeletedItems &&
+		( searchItem = myList_.firstDeletedItem() ) != null )
+			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
 		}
 
 	protected void parameterQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, int queryParameter )
 		{
-		if( isSelectActiveItems )
-			parameterQuery( isSelectOnFind, queryParameter, myList_.firstActiveItem() );
+		Item searchItem;
 
-		if( isSelectInactiveItems )
-			parameterQuery( isSelectOnFind, queryParameter, myList_.firstInactiveItem() );
+		if( isSelectActiveItems &&
+		( searchItem = myList_.firstActiveItem() ) != null )
+			parameterQuery( isSelectOnFind, queryParameter, searchItem );
 
-		if( isSelectArchivedItems )
-			parameterQuery( isSelectOnFind, queryParameter, myList_.firstArchivedItem() );
+		if( isSelectInactiveItems &&
+		( searchItem = myList_.firstInactiveItem() ) != null )
+			parameterQuery( isSelectOnFind, queryParameter, searchItem );
 
-		if( isSelectReplacedItems )
-			parameterQuery( isSelectOnFind, queryParameter, myList_.firstReplacedItem() );
+		if( isSelectArchivedItems &&
+		( searchItem = myList_.firstArchivedItem() ) != null )
+			parameterQuery( isSelectOnFind, queryParameter, searchItem );
 
-		if( isSelectDeletedItems )
-			parameterQuery( isSelectOnFind, queryParameter, myList_.firstDeletedItem() );
+		if( isSelectReplacedItems &&
+		( searchItem = myList_.firstReplacedItem() ) != null )
+			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+
+		if( isSelectDeletedItems &&
+		( searchItem = myList_.firstDeletedItem() ) != null )
+			parameterQuery( isSelectOnFind, queryParameter, searchItem );
 		}
 
 	protected void wordQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems )
 		{
-		if( isSelectActiveItems )
-			wordQuery( isSelectOnFind, myList_.firstActiveItem() );
+		Item searchItem;
 
-		if( isSelectInactiveItems )
-			wordQuery( isSelectOnFind, myList_.firstInactiveItem() );
+		if( isSelectActiveItems &&
+		( searchItem = myList_.firstActiveItem() ) != null )
+			wordQuery( isSelectOnFind, searchItem );
 
-		if( isSelectArchivedItems )
-			wordQuery( isSelectOnFind, myList_.firstArchivedItem() );
+		if( isSelectInactiveItems &&
+		( searchItem = myList_.firstInactiveItem() ) != null )
+			wordQuery( isSelectOnFind, searchItem );
 
-		if( isSelectReplacedItems )
-			wordQuery( isSelectOnFind, myList_.firstReplacedItem() );
+		if( isSelectArchivedItems &&
+		( searchItem = myList_.firstArchivedItem() ) != null )
+			wordQuery( isSelectOnFind, searchItem );
 
-		if( isSelectDeletedItems )
-			wordQuery( isSelectOnFind, myList_.firstDeletedItem() );
+		if( isSelectReplacedItems &&
+		( searchItem = myList_.firstReplacedItem() ) != null )
+			wordQuery( isSelectOnFind, searchItem );
+
+		if( isSelectDeletedItems &&
+		( searchItem = myList_.firstDeletedItem() ) != null )
+			wordQuery( isSelectOnFind, searchItem );
 		}
 
 	protected ReferenceResultType compareStrings( String searchString, String sourceString )
@@ -543,7 +568,8 @@ class ListQuery
 												myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to compare the remaining strings" );
 											}
 										else
-											sourceStringPosition++;					// Skip source characters when not equal
+											// Skip source characters if not equal
+											sourceStringPosition++;
 										}
 									}
 								else
@@ -585,106 +611,94 @@ class ListQuery
 
 	protected byte wordReferenceQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String wordReferenceNameString )
 		{
-		if( isSelectActiveItems )
-			{
-			if( wordReferenceQuery( isSelectOnFind, wordReferenceNameString, myList_.firstActiveItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to check the word references of an active word" );
-			}
+		Item searchItem;
 
-		if( isSelectInactiveItems )
-			{
-			if( wordReferenceQuery( isSelectOnFind, wordReferenceNameString, myList_.firstInactiveItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to check the word references of an inactive word" );
-			}
+		if( isSelectActiveItems &&
+		( searchItem = myList_.firstActiveItem() ) != null )
+			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
 
-		if( isSelectArchivedItems )
-			{
-			if( wordReferenceQuery( isSelectOnFind, wordReferenceNameString, myList_.firstArchivedItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to check the word references of an archived word" );
-			}
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectInactiveItems &&
+		( searchItem = myList_.firstInactiveItem() ) != null )
+			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
 
-		if( isSelectReplacedItems )
-			{
-			if( wordReferenceQuery( isSelectOnFind, wordReferenceNameString, myList_.firstReplacedItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to check the word references of a replaced word" );
-			}
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectArchivedItems &&
+		( searchItem = myList_.firstArchivedItem() ) != null )
+			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
 
-		if( isSelectDeletedItems )
-			{
-			if( wordReferenceQuery( isSelectOnFind, wordReferenceNameString, myList_.firstDeletedItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to check the word references of a deleted word" );
-			}
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectReplacedItems &&
+		( searchItem = myList_.firstReplacedItem() ) != null )
+			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
 
-		return Constants.RESULT_OK;
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectDeletedItems &&
+		( searchItem = myList_.firstDeletedItem() ) != null )
+			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+
+		return CommonVariables.result;
 		}
 
 	protected byte stringQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String wordString )
 		{
-		if( isSelectActiveItems )
-			{
-			if( stringQuery( isSelectOnFind, wordString, myList_.firstActiveItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to string query an active word" );
-			}
+		Item searchItem;
 
-		if( isSelectInactiveItems )
-			{
-			if( stringQuery( isSelectOnFind, wordString, myList_.firstInactiveItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to string query an inactive word" );
-			}
+		if( isSelectActiveItems &&
+		( searchItem = myList_.firstActiveItem() ) != null )
+			stringQuery( isSelectOnFind, wordString, searchItem );
 
-		if( isSelectArchivedItems )
-			{
-			if( stringQuery( isSelectOnFind, wordString, myList_.firstArchivedItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to string query an archived word" );
-			}
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectInactiveItems &&
+		( searchItem = myList_.firstInactiveItem() ) != null )
+			stringQuery( isSelectOnFind, wordString, searchItem );
 
-		if( isSelectReplacedItems )
-			{
-			if( stringQuery( isSelectOnFind, wordString, myList_.firstReplacedItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to string query a replaced word" );
-			}
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectArchivedItems &&
+		( searchItem = myList_.firstArchivedItem() ) != null )
+			stringQuery( isSelectOnFind, wordString, searchItem );
 
-		if( isSelectDeletedItems )
-			{
-			if( stringQuery( isSelectOnFind, wordString, myList_.firstDeletedItem() ) != Constants.RESULT_OK )
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to string query a deleted word" );
-			}
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectReplacedItems &&
+		( searchItem = myList_.firstReplacedItem() ) != null )
+			stringQuery( isSelectOnFind, wordString, searchItem );
 
-		return Constants.RESULT_OK;
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectDeletedItems &&
+		( searchItem = myList_.firstDeletedItem() ) != null )
+			stringQuery( isSelectOnFind, wordString, searchItem );
+
+		return CommonVariables.result;
 		}
 
 	protected byte showQueryResult( boolean showOnlyWords, boolean showOnlyWordReferences, boolean showOnlyStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
 		{
-		if( showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, myList_.firstActiveItem() ) == Constants.RESULT_OK )
-			{
-			if( showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, myList_.firstInactiveItem() ) == Constants.RESULT_OK )
-				{
-				if( showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, myList_.firstArchivedItem() ) == Constants.RESULT_OK )
-					{
-					if( showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, myList_.firstReplacedItem() ) == Constants.RESULT_OK )
-						{
-						if( showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, myList_.firstDeletedItem() ) != Constants.RESULT_OK )
-							return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to show the query result of a deleted word" );
-						}
-					else
-						return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to show the query result of a replaced word" );
-					}
-				else
-					return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to show the query result of an archived word" );
-				}
-			else
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to show the query result of an inactive word" );
-			}
-		else
-			return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to show the query result of an active word" );
+		Item searchItem;
 
-		return Constants.RESULT_OK;
+		if( ( searchItem = myList_.firstActiveItem() ) != null )
+			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = myList_.firstInactiveItem() ) != null )
+			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = myList_.firstArchivedItem() ) != null )
+			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = myList_.firstReplacedItem() ) != null )
+			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = myList_.firstDeletedItem() ) != null )
+			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+
+		return CommonVariables.result;
 		}
 	};
 
 /*************************************************************************
- *
  *	"Your name, O Lord, endures forever;
  *	your name, O Lord, is known to every generation." (Psalm 135:13)
- *
  *************************************************************************/

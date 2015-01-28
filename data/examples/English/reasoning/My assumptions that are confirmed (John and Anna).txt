@@ -2,6 +2,6 @@
 John is the father and Anna is the mother of Paul, Joe and Laura.
 John is a parent of Paul, Joe and Laura.
 Anna is a parent of Paul, Joe and Laura.
-John is part of a family.
-Anna is part of a family.
+John is a person.
+Anna is a person.
 # Remember to clear this knowledge before reading another example.

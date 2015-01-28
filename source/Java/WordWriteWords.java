@@ -2,46 +2,25 @@
  *	Class:			WordWriteWords
  *	Supports class:	WordItem
  *	Purpose:		To write the words of the sentences
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class WordWriteWords
@@ -93,6 +72,7 @@ class WordWriteWords
 	private byte checkAssumptionLevel( SpecificationItem writeSpecificationItem )
 		{
 		SpecificationResultType specificationResult;
+		short previousAssumptionLevel;
 
 		assumptionLevel_ = Constants.NO_ASSUMPTION_LEVEL;
 
@@ -109,10 +89,15 @@ class WordWriteWords
 						assumptionLevel_ = specificationResult.assumptionLevel;
 					else
 						{
-						if( specificationResult.assumptionLevel > Constants.NO_ASSUMPTION_LEVEL )
+						if( ( previousAssumptionLevel = specificationResult.assumptionLevel ) > Constants.NO_ASSUMPTION_LEVEL )
 							{
 							if( ( specificationResult = writeSpecificationItem.recalculateAssumptionLevel() ).result == Constants.RESULT_OK )
-								assumptionLevel_ = specificationResult.assumptionLevel;
+								{
+								if( specificationResult.assumptionLevel == previousAssumptionLevel )
+									assumptionLevel_ = specificationResult.assumptionLevel;
+								else
+									return myWordItem_.startErrorInWord( 1, moduleNameString_, "The assumption level of the given write specification item has changed during the process, but it isn't recalculated. So, this specification may have a recalculation or update issue" );
+								}
 							else
 								return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to recalculate the assumption level" );
 							}
@@ -313,7 +298,7 @@ class WordWriteWords
 						}
 					}
 				while( writeWordString_ == null &&
-				( currentSpecificationItem = currentSpecificationItem.nextSpecificationItemWithSameQuestionParameter( isAnsweredQuestion ) ) != null );
+				( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != null );
 				}
 
 			if( !hasFoundSpecificationWord_ &&
@@ -942,13 +927,14 @@ class WordWriteWords
 								if( isSpecificationGeneralization )
 									hasFoundSpecificationGeneralizationVerb_ = true;
 
-								if( !isExclusiveSpecification ||
-								isArchivedAssignment ||
+								if( isArchivedAssignment ||
+								!isExclusiveSpecification ||
+								isQuestion ||
 								!writeSpecificationItem.hasGeneralizationCollection() )
 									writeWordString_ = predefinedWordString;
 								else
 									{
-									if( myWordItem_.firstAssignmentItem( false, true, true, isNegative, isPossessive, writeSpecificationItem.questionParameter(), relationContextNr, specificationWordItem ) == null )
+									if( myWordItem_.firstNonQuestionAssignmentItem( false, true, true, isNegative, isPossessive, relationContextNr, specificationWordItem ) == null )
 										writeWordString_ = predefinedWordString;
 									else
 										{
@@ -1187,8 +1173,6 @@ class WordWriteWords
 	};
 
 /*************************************************************************
- *
  *	"Your word is a lamp to guide my feet
  *	and a light for my path." (Psalm 119:105)
- *
  *************************************************************************/

@@ -1,47 +1,26 @@
 /*
  *	Class:			ListCleanup
  *	Supports class:	List
- *	Purpose:		To cleanup unnecessary items in the lists
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Purpose:		To cleanup obsolete items in the lists
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "List.h"
@@ -239,11 +218,22 @@ class ListCleanup
 
 	void setCurrentItemNr()
 		{
-		setCurrentItemNr( myList_->firstActiveItem() );
-		setCurrentItemNr( myList_->firstInactiveItem() );
-		setCurrentItemNr( myList_->firstArchivedItem() );
-		setCurrentItemNr( myList_->firstReplacedItem() );
-		setCurrentItemNr( myList_->firstDeletedItem() );
+		Item *searchItem;
+
+		if( ( searchItem = myList_->firstActiveItem() ) != NULL )
+			setCurrentItemNr( searchItem );
+
+		if( ( searchItem = myList_->firstInactiveItem() ) != NULL )
+			setCurrentItemNr( searchItem );
+
+		if( ( searchItem = myList_->firstArchivedItem() ) != NULL )
+			setCurrentItemNr( searchItem );
+
+		if( ( searchItem = myList_->firstReplacedItem() ) != NULL )
+			setCurrentItemNr( searchItem );
+
+		if( ( searchItem = myList_->firstDeletedItem() ) != NULL )
+			setCurrentItemNr( searchItem );
 		}
 
 	void deleteRollbackInfo()
@@ -263,19 +253,27 @@ class ListCleanup
 	unsigned int highestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr )
 		{
 		unsigned int tempSentenceNr;
-		unsigned int highestInUseSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_->firstActiveItem() );
+		unsigned int highestInUseSentenceNr = NO_SENTENCE_NR;
+		Item *searchItem;
 
-		if( ( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_->firstInactiveItem() ) ) > highestInUseSentenceNr )
+		if( ( searchItem = myList_->firstActiveItem() ) != NULL )
+			highestInUseSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem );
+
+		if( ( searchItem = myList_->firstInactiveItem() ) != NULL &&
+		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
 			highestInUseSentenceNr = tempSentenceNr;
 
-		if( ( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_->firstArchivedItem() ) ) > highestInUseSentenceNr )
+		if( ( searchItem = myList_->firstArchivedItem() ) != NULL &&
+		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
 			highestInUseSentenceNr = tempSentenceNr;
 
-		if( ( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_->firstReplacedItem() ) ) > highestInUseSentenceNr )
+		if( ( searchItem = myList_->firstReplacedItem() ) != NULL &&
+		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
 			highestInUseSentenceNr = tempSentenceNr;
 
 		if( isIncludingDeletedItems &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, myList_->firstDeletedItem() ) ) > highestInUseSentenceNr )
+		( searchItem = myList_->firstDeletedItem() ) != NULL &&
+		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
 			highestInUseSentenceNr = tempSentenceNr;
 
 		return highestInUseSentenceNr;
@@ -283,30 +281,39 @@ class ListCleanup
 
 	ResultType decrementSentenceNrs( unsigned int startSentenceNr )
 		{
+		Item *searchItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrs";
 
 		if( startSentenceNr > NO_SENTENCE_NR )
 			{
-			if( decrementSentenceNrs( startSentenceNr, myList_->firstActiveItem() ) == RESULT_OK )
-				{
-				if( decrementSentenceNrs( startSentenceNr, myList_->firstInactiveItem() ) == RESULT_OK )
-					{
-					if( decrementSentenceNrs( startSentenceNr, myList_->firstArchivedItem() ) == RESULT_OK )
-						{
-						if( decrementSentenceNrs( startSentenceNr, myList_->firstReplacedItem() ) == RESULT_OK )
-							return decrementSentenceNrs( startSentenceNr, myList_->firstDeletedItem() );
-						}
-					}
-				}
+			if( ( searchItem = myList_->firstActiveItem() ) != NULL )
+				decrementSentenceNrs( startSentenceNr, searchItem );
+
+			if( commonVariables_->result == RESULT_OK &&
+			( searchItem = myList_->firstInactiveItem() ) != NULL )
+				decrementSentenceNrs( startSentenceNr, searchItem );
+
+			if( commonVariables_->result == RESULT_OK &&
+			( searchItem = myList_->firstArchivedItem() ) != NULL )
+				decrementSentenceNrs( startSentenceNr, searchItem );
+
+			if( commonVariables_->result == RESULT_OK &&
+			( searchItem = myList_->firstReplacedItem() ) != NULL )
+				decrementSentenceNrs( startSentenceNr, searchItem );
+
+			if( commonVariables_->result == RESULT_OK &&
+			( searchItem = myList_->firstDeletedItem() ) != NULL )
+				decrementSentenceNrs( startSentenceNr, searchItem );
 			}
 		else
 			return myList_->startError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "The given start sentence number is undefined" );
 
-		return RESULT_OK;
+		return commonVariables_->result;
 		}
 
 	ResultType decrementItemNrRange( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset )
 		{
+		Item *searchItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRange";
 
 		if( decrementSentenceNr >= NO_SENTENCE_NR &&
@@ -316,17 +323,24 @@ class ListCleanup
 				{
 				if( decrementOffset > 0 )
 					{
-					if( decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_->firstActiveItem() ) == RESULT_OK )
-						{
-						if( decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_->firstInactiveItem() ) == RESULT_OK )
-							{
-							if( decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_->firstArchivedItem() ) == RESULT_OK )
-								{
-								if( decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_->firstReplacedItem() ) == RESULT_OK )
-									return decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, myList_->firstDeletedItem() );
-								}
-							}
-						}
+					if( ( searchItem = myList_->firstActiveItem() ) != NULL )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+					if( commonVariables_->result == RESULT_OK &&
+					( searchItem = myList_->firstInactiveItem() ) != NULL )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+					if( commonVariables_->result == RESULT_OK &&
+					( searchItem = myList_->firstArchivedItem() ) != NULL )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+					if( commonVariables_->result == RESULT_OK &&
+					( searchItem = myList_->firstReplacedItem() ) != NULL )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+					if( commonVariables_->result == RESULT_OK &&
+					( searchItem = myList_->firstDeletedItem() ) != NULL )
+						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 					}
 				else
 					return myList_->startError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "The given decrement offset is undefined" );
@@ -337,6 +351,7 @@ class ListCleanup
 		else
 			return myList_->startError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "The given decrement sentence number is undefined" );
 
+		// Clear error to be able to restart after justification error
 		return RESULT_OK;
 		}
 
@@ -777,10 +792,8 @@ class ListCleanup
 	};
 
 /*************************************************************************
- *
  *	"The winds blows, and we are gone -
  *	as though we had never been here.
  *	But the love of the Lord remains forever
  *	with those who fear him." (Psalm 103:16-17)
- *
  *************************************************************************/

@@ -2,46 +2,25 @@
  *	Class:			WordItem
  *	Parent class:	Item
  *	Purpose:		To store and process word information
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "ContextList.cpp"
@@ -251,19 +230,21 @@
 	ResultType WordItem::checkSpecificationForUsageInWord( SpecificationItem *unusedSpecificationItem )
 		{
 		if( assignmentList != NULL &&
-		assignmentList->checkSpecificationItemForUsage( false, false, unusedSpecificationItem ) == RESULT_OK &&
-		assignmentList->checkSpecificationItemForUsage( true, false, unusedSpecificationItem ) == RESULT_OK )
-			assignmentList->checkSpecificationItemForUsage( false, true, unusedSpecificationItem );
+		assignmentList->checkSpecificationItemForUsage( false, false, false, unusedSpecificationItem ) == RESULT_OK &&
+		assignmentList->checkSpecificationItemForUsage( false, true, false, unusedSpecificationItem ) == RESULT_OK &&
+		assignmentList->checkSpecificationItemForUsage( false, true, false, unusedSpecificationItem ) == RESULT_OK )
+			assignmentList->checkSpecificationItemForUsage( false, false, true, unusedSpecificationItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		specificationList != NULL )
-			specificationList->checkSpecificationItemForUsage( false, false, unusedSpecificationItem );
+		specificationList != NULL &&
+		specificationList->checkSpecificationItemForUsage( false, false, false, unusedSpecificationItem ) == RESULT_OK )
+			specificationList->checkSpecificationItemForUsage( false, false, true, unusedSpecificationItem );
 
 		if( commonVariables_->result == RESULT_OK &&
 		justificationList != NULL )
 			justificationList->checkSpecificationItemForUsage( unusedSpecificationItem );
 
-		return RESULT_OK;
+		return commonVariables_->result;
 		}
 
 
@@ -550,7 +531,7 @@
 		commonVariables_->adminAlternativeList != NULL )
 			commonVariables_->adminAlternativeList->checkWordItemForUsage( this );
 
-		return RESULT_OK;
+		return commonVariables_->result;
 		}
 
 	char *WordItem::toString( unsigned short queryWordTypeNr )
@@ -753,9 +734,10 @@
 		return ( wordParameter_ == WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_LOGIN );
 		}
 
-	bool WordItem::isVerbImperativeShow()
+	bool WordItem::isVerbImperativeReadOrShow()
 		{
-		return ( wordParameter_ == WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_SHOW );
+		return ( wordParameter_ == WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_READ ||
+				wordParameter_ == WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_SHOW );
 		}
 
 	bool WordItem::isPredefinedWord()
@@ -1067,10 +1049,18 @@
 		return specificationResult;
 		}
 
+	SpecificationItem *WordItem::firstActiveAssignmentItem( unsigned short questionParameter )
+		{
+		if( assignmentList != NULL )
+			return assignmentList->firstAssignmentItem( false, false, false, questionParameter );
+
+		return NULL;
+		}
+
 	SpecificationItem *WordItem::firstActiveNumeralAssignmentItem()
 		{
 		if( assignmentList != NULL )
-			return assignmentList->firstNumeralAssignmentItem( false, false, false );
+			return assignmentList->firstActiveNumeralAssignmentItem();
 
 		return NULL;
 		}
@@ -1078,7 +1068,7 @@
 	SpecificationItem *WordItem::firstActiveStringAssignmentItem()
 		{
 		if( assignmentList != NULL )
-			return assignmentList->firstStringAssignmentItem( false, false, false );
+			return assignmentList->firstActiveStringAssignmentItem();
 
 		return NULL;
 		}
@@ -1094,23 +1084,15 @@
 	SpecificationItem *WordItem::lastActiveNonQuestionAssignmentItem()
 		{
 		if( assignmentList != NULL )
-			return assignmentList->lastAssignmentItem( false, false, false, false );
+			return assignmentList->lastActiveNonQuestionAssignmentItem();
 
 		return NULL;
 		}
 
-	SpecificationItem *WordItem::firstActiveAssignmentItem( unsigned short questionParameter )
+	SpecificationItem *WordItem::firstActiveNonQuestionAssignmentItem( bool isDifferentRelationContext, bool isPossessive, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		if( assignmentList != NULL )
-			return assignmentList->firstAssignmentItem( false, false, false, questionParameter );
-
-		return NULL;
-		}
-
-	SpecificationItem *WordItem::firstActiveAssignmentItem( bool isDifferentRelationContext, bool isPossessive, unsigned short questionParameter, unsigned int relationContextNr, WordItem *specificationWordItem )
-		{
-		if( assignmentList != NULL )
-			return assignmentList->firstActiveAssignmentItem( isDifferentRelationContext, isPossessive, questionParameter, relationContextNr, specificationWordItem );
+			return assignmentList->firstActiveNonQuestionAssignmentItem( isDifferentRelationContext, isPossessive, relationContextNr, specificationWordItem );
 
 		return NULL;
 		}
@@ -1136,27 +1118,6 @@
 		return foundSpecificationItem;
 		}
 
-	SpecificationItem *WordItem::firstAssignmentItem( bool isIncludingActiveAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int relationContextNr, WordItem *specificationWordItem )
-		{
-		SpecificationItem *foundSpecificationItem = NULL;
-
-		if( assignmentList != NULL )
-			{
-			if( isIncludingActiveAssignments )
-				foundSpecificationItem = assignmentList->firstAssignmentItem( false, false, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
-
-			if( isIncludingInactiveAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstAssignmentItem( true, false, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
-
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == NULL )
-				return assignmentList->firstAssignmentItem( false, true, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
-			}
-
-		return foundSpecificationItem;
-		}
-
 	SpecificationItem *WordItem::firstAssignmentItem( bool isIncludingActiveAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short questionParameter, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		SpecificationItem *foundSpecificationItem = NULL;
@@ -1173,6 +1134,27 @@
 			if( isIncludingArchivedAssignments &&
 			foundSpecificationItem == NULL )
 				return assignmentList->firstAssignmentItem( false, true, isNegative, isPossessive, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem );
+			}
+
+		return foundSpecificationItem;
+		}
+
+	SpecificationItem *WordItem::firstNonQuestionAssignmentItem( bool isIncludingActiveAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned int relationContextNr, WordItem *specificationWordItem )
+		{
+		SpecificationItem *foundSpecificationItem = NULL;
+
+		if( assignmentList != NULL )
+			{
+			if( isIncludingActiveAssignments )
+				foundSpecificationItem = assignmentList->firstAssignmentItem( false, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
+
+			if( isIncludingInactiveAssignments &&
+			foundSpecificationItem == NULL )
+				foundSpecificationItem = assignmentList->firstAssignmentItem( true, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
+
+			if( isIncludingArchivedAssignments &&
+			foundSpecificationItem == NULL )
+				return assignmentList->firstAssignmentItem( false, true, isNegative, isPossessive, relationContextNr, specificationWordItem );
 			}
 
 		return foundSpecificationItem;
@@ -1221,13 +1203,13 @@
 	void WordItem::getHighestInUseSentenceNrInWord( bool isIncludingDeletedItems, bool isIncludingLanguageAssignments, bool isIncludingTemporaryLists, unsigned int highestSentenceNr )
 		{
 		if( wordCleanup_ != NULL )
-			wordCleanup_->getHighestInUseSentenceNr( isIncludingDeletedItems, isIncludingLanguageAssignments, isIncludingTemporaryLists, highestSentenceNr );
+			wordCleanup_->getHighestInUseSentenceNr( isIncludingDeletedItems, isIncludingLanguageAssignments, isIncludingTemporaryLists, isLanguageWord_, highestSentenceNr );
 		}
 
 	void WordItem::setCurrentItemNrInWord()
 		{
 		if( wordCleanup_ != NULL )
-			wordCleanup_->setCurrentItemNr();
+			wordCleanup_->setCurrentItemNr( isLanguageWord_ );
 		}
 
 	unsigned int WordItem::highestSentenceNr()
@@ -1245,12 +1227,12 @@
 		return highestSentenceNr;
 		}
 
-	ResultType WordItem::deleteSentencesInWord( bool isAvailableForRollback, unsigned int lowestSentenceNr )
+	ResultType WordItem::decrementItemNrRangeInWord( unsigned int startSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentencesInWord";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRangeInWord";
 
 		if( wordCleanup_ != NULL )
-			return wordCleanup_->deleteSentences( isAvailableForRollback, lowestSentenceNr );
+			return wordCleanup_->decrementItemNrRange( isLanguageWord_, startSentenceNr, decrementItemNr, decrementOffset );
 
 		return startErrorInWord( functionNameString, NULL, "The admin word item cannot have a word cleanup module" );
 		}
@@ -1260,17 +1242,27 @@
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrsInWord";
 
 		if( wordCleanup_ != NULL )
-			return wordCleanup_->decrementSentenceNrs( startSentenceNr );
+			return wordCleanup_->decrementSentenceNrs( isLanguageWord_, startSentenceNr );
 
 		return startErrorInWord( functionNameString, NULL, "The admin word item cannot have a word cleanup module" );
 		}
 
-	ResultType WordItem::decrementItemNrRangeInWord( unsigned int startSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset )
+	ResultType WordItem::deleteSentencesInWord( bool isAvailableForRollback, unsigned int lowestSentenceNr )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRangeInWord";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentencesInWord";
 
 		if( wordCleanup_ != NULL )
-			return wordCleanup_->decrementItemNrRange( startSentenceNr, decrementItemNr, decrementOffset );
+			return wordCleanup_->deleteSentences( isAvailableForRollback, isLanguageWord_, lowestSentenceNr );
+
+		return startErrorInWord( functionNameString, NULL, "The admin word item cannot have a word cleanup module" );
+		}
+
+	ResultType WordItem::redoCurrentSentence()
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentence";
+
+		if( wordCleanup_ != NULL )
+			return wordCleanup_->redoCurrentSentence();
 
 		return startErrorInWord( functionNameString, NULL, "The admin word item cannot have a word cleanup module" );
 		}
@@ -1280,7 +1272,7 @@
 		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItems";
 
 		if( wordCleanup_ != NULL )
-			return wordCleanup_->removeFirstRangeOfDeletedItems();
+			return wordCleanup_->removeFirstRangeOfDeletedItems( isLanguageWord_ );
 
 		return startErrorInWord( functionNameString, NULL, "The admin word item cannot have a word cleanup module" );
 		}
@@ -1301,16 +1293,6 @@
 
 		if( wordCleanup_ != NULL )
 			return wordCleanup_->undoCurrentSentence();
-
-		return startErrorInWord( functionNameString, NULL, "The admin word item cannot have a word cleanup module" );
-		}
-
-	ResultType WordItem::redoCurrentSentence()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentence";
-
-		if( wordCleanup_ != NULL )
-			return wordCleanup_->redoCurrentSentence();
 
 		return startErrorInWord( functionNameString, NULL, "The admin word item cannot have a word cleanup module" );
 		}
@@ -1350,7 +1332,8 @@
 
 	bool WordItem::isCollectedWithItself()
 		{
-		if( collectionList != NULL )
+		if( collectionList != NULL &&
+		isNoun() )
 			return collectionList->isCollectedWithItself();
 
 		return false;
@@ -1616,6 +1599,14 @@
 		return NULL;
 		}
 
+	WordItem *WordItem::feminineCollectionWordItem()
+		{
+		if( collectionList != NULL )
+			return collectionList->feminineCollectionWordItem();
+
+		return NULL;
+		}
+
 
 	// Protected context functions
 
@@ -1665,39 +1656,13 @@
 		return false;
 		}
 
-	bool WordItem::isCurrentContextInAllWords( unsigned int contextNr, WordItem *specificationWordItem )
-		{
-		unsigned int tempSentenceNr;
-		unsigned int currentSentenceNr = commonVariables_->currentSentenceNr;
-		WordItem *currentWordItem;
-
-		// In case of a pronoun context, the specification word item will be undefined
-
-		if( contextNr > NO_CONTEXT_NR &&
-		( currentWordItem = commonVariables_->firstWordItem ) != NULL )
-			{
-			// Do for all words
-			do	{
-				if( ( tempSentenceNr = currentWordItem->contextSentenceNr( contextNr, specificationWordItem ) ) > NO_SENTENCE_NR )
-					{
-					if( tempSentenceNr != currentSentenceNr )
-						return false;
-					}
-				}
-			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-
-			return true;
-			}
-
-		return false;
-		}
-
 	bool WordItem::isContextSimilarInAllWords( unsigned int firstContextNr, unsigned int secondContextNr )
 		{
 		WordItem *currentWordItem;
 
 		if( firstContextNr > NO_CONTEXT_NR &&
 		secondContextNr > NO_CONTEXT_NR &&
+		firstContextNr != secondContextNr &&
 		( currentWordItem = commonVariables_->firstWordItem ) != NULL )
 			{
 			// Do for all words
@@ -1761,14 +1726,6 @@
 		return NO_CONTEXT_NR;
 		}
 
-	unsigned int WordItem::contextSentenceNr( unsigned int contextNr, WordItem *specificationWordItem )
-		{
-		if( contextList != NULL )
-			return contextList->contextSentenceNr( contextNr, specificationWordItem );
-
-		return NO_SENTENCE_NR;
-		}
-
 	unsigned int WordItem::highestContextNrInWord()
 		{
 		if( contextList != NULL )
@@ -1819,31 +1776,6 @@
 		return startErrorInWord( functionNameString, NULL, "The admin word item cannot have context" );
 		}
 
-	ResultType WordItem::copyContextInAllWords( unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int oldContextNr, unsigned int newContextNr, WordItem *specificationWordItem )
-		{
-		WordItem *currentWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "copyContextInAllWords";
-
-		// In case of a pronoun context, the specification word item will be undefined
-
-		if( oldContextNr > NO_CONTEXT_NR &&
-		newContextNr > NO_CONTEXT_NR &&
-		( currentWordItem = commonVariables_->firstWordItem ) != NULL )
-			{
-			// Do for all words
-			do	{
-				if( currentWordItem->hasContextInWord( oldContextNr, specificationWordItem ) )
-					{
-					if( currentWordItem->addContext( false, contextWordTypeNr, specificationWordTypeNr, newContextNr, specificationWordItem ) != RESULT_OK )
-						return addErrorInWord( functionNameString, NULL, "I failed to copy a context in word \"", currentWordItem->anyWordTypeString(), "\"" );
-					}
-				}
-			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-			}
-
-		return RESULT_OK;
-		}
-
 	ContextItem *WordItem::firstActiveContextItem()
 		{
 		if( contextList != NULL )
@@ -1891,38 +1823,38 @@
 
 	// Protected database connection functions
 /*
-	ResultType WordItem::storeWordItemInFutureDataBase()
+	ResultType WordItem::storeWordItemInFutureDatabase()
 		{
 		// Not fully implemented yet
 		if( assignmentList != NULL )
-			return assignmentList->storeChangesInFutureDataBase();
+			return assignmentList->storeChangesInFutureDatabase();
 
 		if( collectionList != NULL )
-			return collectionList->storeChangesInFutureDataBase();
+			return collectionList->storeChangesInFutureDatabase();
 
 		if( contextList != NULL )
-			return contextList->storeChangesInFutureDataBase();
+			return contextList->storeChangesInFutureDatabase();
 
 		if( generalizationList != NULL )
-			return generalizationList->storeChangesInFutureDataBase();
+			return generalizationList->storeChangesInFutureDatabase();
 
 		if( grammarList != NULL )
-			return grammarList->storeChangesInFutureDataBase();
+			return grammarList->storeChangesInFutureDatabase();
 
 		if( interfaceList != NULL )
-			return interfaceList->storeChangesInFutureDataBase();
+			return interfaceList->storeChangesInFutureDatabase();
 
 		if( justificationList != NULL )
-			return justificationList->storeChangesInFutureDataBase();
+			return justificationList->storeChangesInFutureDatabase();
 
 		if( multipleWordList != NULL )
-			return multipleWordList->storeChangesInFutureDataBase();
+			return multipleWordList->storeChangesInFutureDatabase();
 
 		if( specificationList != NULL )
-			return specificationList->storeChangesInFutureDataBase();
+			return specificationList->storeChangesInFutureDatabase();
 
 		if( wordTypeList != NULL )
-			return wordTypeList->storeChangesInFutureDataBase();
+			return wordTypeList->storeChangesInFutureDatabase();
 
 		// Write list isn't stored, because it is a temporary list
 
@@ -2237,7 +2169,7 @@
 		return justificationResult;
 		}
 
-	JustificationResultType WordItem::copyJustification( bool isForcingNewJustification, SpecificationItem *newPrimarySpecificationItem, JustificationItem *newAttachedJustificationItem, JustificationItem *originalJustificationItem )
+	JustificationResultType WordItem::copyJustification( bool isForcingNewJustification, SpecificationItem *newPrimarySpecificationItem, SpecificationItem *newSecondarySpecificationItem, JustificationItem *newAttachedJustificationItem, JustificationItem *originalJustificationItem )
 		{
 		JustificationResultType justificationResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "copyJustification";
@@ -2245,7 +2177,7 @@
 		if( !isAdminWord() )
 			{
 			if( justificationList != NULL )
-				return justificationList->copyJustification( isForcingNewJustification, newPrimarySpecificationItem, newAttachedJustificationItem, originalJustificationItem );
+				return justificationList->copyJustification( isForcingNewJustification, newPrimarySpecificationItem, newSecondarySpecificationItem, newAttachedJustificationItem, originalJustificationItem );
 
 			justificationResult.result = startErrorInWord( functionNameString, NULL, "The justification list isn't created yet" );
 			}
@@ -2308,29 +2240,25 @@
 					{
 					do	{
 						if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) != NULL )
-							{
-							if( currentGeneralizationWordItem->checkSpecificationForUsageInWord( unusedSpecificationItem ) != RESULT_OK )
-								return addErrorInWord( functionNameString, NULL, "I failed to check the specifications in generalization word \"", currentGeneralizationWordItem->anyWordTypeString(), "\" for its usage" );
-							}
+							currentGeneralizationWordItem->checkSpecificationForUsageInWord( unusedSpecificationItem );
 						else
 							return startErrorInWord( functionNameString, NULL, "I found an undefined generalization word" );
 						}
-					while( ( currentGeneralizationItem = currentGeneralizationItem->nextGeneralizationItem() ) != NULL );
+					while( commonVariables_->result == RESULT_OK &&
+					( currentGeneralizationItem = currentGeneralizationItem->nextGeneralizationItem() ) != NULL );
 					}
 				}
-			else
-				return addErrorInWord( functionNameString, NULL, "I failed to check my specifications" );
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType WordItem::replaceJustification( bool hasConfirmedSpecification, JustificationItem *oldJustificationItem, JustificationItem *replacingJustificationItem, SpecificationItem *involvedSpecificationItem )
+	ResultType WordItem::replaceJustification( bool hasConfirmedSpecification, JustificationItem *obsoleteJustificationItem, JustificationItem *replacingJustificationItem, SpecificationItem *involvedSpecificationItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "replaceJustification";
 
 		if( justificationList != NULL )
-			return justificationList->replaceJustification( hasConfirmedSpecification, false, false, oldJustificationItem, replacingJustificationItem, involvedSpecificationItem, NULL );
+			return justificationList->replaceJustification( hasConfirmedSpecification, false, false, obsoleteJustificationItem, replacingJustificationItem, involvedSpecificationItem, NULL );
 
 		return startErrorInWord( functionNameString, NULL, "The justification list isn't created yet" );
 		}
@@ -2357,13 +2285,15 @@
 
 	ResultType WordItem::updateSpecificationsInJustificationInWord( bool hasConfirmedSpecificationInMainWord, SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem )
 		{
-		if( justificationList != NULL )
+		if( justificationList != NULL &&
+		justificationList->updateSpecificationsInJustifications( hasConfirmedSpecificationInMainWord, true, obsoleteSpecificationItem, replacingSpecificationItem ) == RESULT_OK )
 			{
-			if( justificationList->updateSpecificationsInJustifications( hasConfirmedSpecificationInMainWord, true, obsoleteSpecificationItem, replacingSpecificationItem ) == RESULT_OK )
+			if( obsoleteSpecificationItem != NULL &&
+			obsoleteSpecificationItem->isDeletedItem() )
 				return justificationList->updateSpecificationsInJustifications( hasConfirmedSpecificationInMainWord, false, obsoleteSpecificationItem, replacingSpecificationItem );
 			}
 
-		return RESULT_OK;
+		return commonVariables_->result;
 		}
 
 	ResultType WordItem::writeRelatedJustificationSpecifications( unsigned short justificationTypeNr, unsigned int specificationCollectionNr )
@@ -2374,14 +2304,6 @@
 			return justificationList->writeRelatedJustificationSpecifications( justificationTypeNr, specificationCollectionNr );
 
 		return startErrorInWord( functionNameString, NULL, "The justification list isn't created yet" );
-		}
-
-	JustificationItem *WordItem::generalizationAssumptionJustificationItem( SpecificationItem *secondarySpecificationItem )
-		{
-		if( justificationList != NULL )
-			return justificationList->generalizationAssumptionJustificationItem( secondarySpecificationItem );
-
-		return NULL;
 		}
 
 	JustificationItem *WordItem::negativeAssumptionOrConclusionJustificationItem( SpecificationItem *anotherPrimarySpecificationItem )
@@ -2408,10 +2330,10 @@
 		return NULL;
 		}
 
-	JustificationItem *WordItem::questionJustificationItem( SpecificationItem *secondarySpecificationItem )
+	JustificationItem *WordItem::secondarySpecificationJustificationItem( unsigned short justificationTypeNr, SpecificationItem *secondarySpecificationItem )
 		{
 		if( justificationList != NULL )
-			return justificationList->questionJustificationItem( secondarySpecificationItem );
+			return justificationList->secondarySpecificationJustificationItem( justificationTypeNr, secondarySpecificationItem );
 
 		return NULL;
 		}
@@ -2697,13 +2619,13 @@
 		return startErrorInWord( functionNameString, NULL, "My word question module isn't created yet" );
 		}
 
-	SpecificationResultType WordItem::findQuestionToBeAdjustedByCompoundCollection( bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCompoundCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
+	SpecificationResultType WordItem::findQuestionToBeAdjustedByCompoundCollection( bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCompoundCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		SpecificationResultType specificationResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findQuestionToBeAdjustedByCompoundCollection";
 
 		if( wordQuestion_ != NULL )
-			return wordQuestion_->findQuestionToBeAdjustedByCompoundCollection( isNegative, isPossessive, questionParameter, specificationCompoundCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+			return wordQuestion_->findQuestionToBeAdjustedByCompoundCollection( isNegative, isPossessive, questionParameter, specificationCompoundCollectionNr, relationContextNr, specificationWordItem );
 
 		specificationResult.result = startErrorInWord( functionNameString, NULL, "My word question module isn't created yet" );
 		return specificationResult;
@@ -2719,25 +2641,25 @@
 		if( commonVariables_->adminScoreList != NULL )
 			{
 			if( commonVariables_->adminScoreList->checkSelectionItemForUsage( unusedSelectionItem ) != RESULT_OK )
-				return addErrorInWord( functionNameString, NULL, "The admin score list isn't created yet" );
+				return addErrorInWord( functionNameString, NULL, "I failed to check the admin score list for selection item usage" );
 			}
 
 		if( commonVariables_->adminConditionList != NULL )
 			{
 			if( commonVariables_->adminConditionList->checkSelectionItemForUsage( unusedSelectionItem ) != RESULT_OK )
-				return addErrorInWord( functionNameString, NULL, "The admin condition list isn't created yet" );
+				return addErrorInWord( functionNameString, NULL, "I failed to check the admin condition list for selection item usage" );
 			}
 
 		if( commonVariables_->adminActionList != NULL )
 			{
 			if( commonVariables_->adminActionList->checkSelectionItemForUsage( unusedSelectionItem ) != RESULT_OK )
-				return addErrorInWord( functionNameString, NULL, "The admin action list isn't created yet" );
+				return addErrorInWord( functionNameString, NULL, "I failed to check the admin action list for selection item usage" );
 			}
 
 		if( commonVariables_->adminAlternativeList != NULL )
 			{
 			if( commonVariables_->adminAlternativeList->checkSelectionItemForUsage( unusedSelectionItem ) != RESULT_OK )
-				return addErrorInWord( functionNameString, NULL, "The admin alternative list isn't created yet" );
+				return addErrorInWord( functionNameString, NULL, "I failed to check the admin alternative list for selection item usage" );
 			}
 
 		return RESULT_OK;
@@ -2790,14 +2712,6 @@
 		return false;
 		}
 
-	bool WordItem::hasConfirmedSpecificationButNoRelation()
-		{
-		if( wordSpecification_ != NULL )
-			return wordSpecification_->hasConfirmedSpecificationButNoRelation();
-
-		return false;
-		}
-
 	bool WordItem::hasCorrectedAssumption()
 		{
 		if( wordSpecification_ != NULL )
@@ -2846,21 +2760,34 @@
 
 	bool WordItem::isJustificationInUse( JustificationItem *unusedJustificationItem )
 		{
+		bool isIncludingReplacedItems = ( unusedJustificationItem != NULL &&
+										unusedJustificationItem->isReplacedItem() );
+
 		if( assignmentList != NULL )
 			{
-			if( assignmentList->isJustificationInUse( false, false, unusedJustificationItem ) )
+			if( assignmentList->isJustificationInUse( false, false, false, unusedJustificationItem ) )
 				return true;
 
-			if( assignmentList->isJustificationInUse( true, false, unusedJustificationItem ) )
+			if( assignmentList->isJustificationInUse( true, false, false, unusedJustificationItem ) )
 				return true;
 
-			if( assignmentList->isJustificationInUse( false, true, unusedJustificationItem ) )
+			if( assignmentList->isJustificationInUse( false, true, false, unusedJustificationItem ) )
+				return true;
+
+			if( isIncludingReplacedItems &&
+			assignmentList->isJustificationInUse( false, false, true, unusedJustificationItem ) )
 				return true;
 			}
 
-		if( specificationList != NULL &&
-		specificationList->isJustificationInUse( false, false, unusedJustificationItem ) )
-			return true;
+		if( specificationList != NULL )
+			{
+			if( specificationList->isJustificationInUse( false, false, false, unusedJustificationItem ) )
+				return true;
+
+			if( isIncludingReplacedItems &&
+			specificationList->isJustificationInUse( false, false, true, unusedJustificationItem ) )
+				return true;
+			}
 
 		return false;
 		}
@@ -2884,7 +2811,7 @@
 		specificationList != NULL )
 			return specificationList->changeJustificationOfNegativeAssumptions( false, false, secondarySpecificationItem );
 
-		return RESULT_OK;
+		return commonVariables_->result;
 		}
 
 	ResultType WordItem::checkForSpecificationConflict( bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem, char *specificationString )
@@ -2900,24 +2827,27 @@
 	ResultType WordItem::checkJustificationForUsageInWord( JustificationItem *unusedJustificationItem )
 		{
 		if( assignmentList != NULL &&
-		assignmentList->checkJustificationForUsage( false, false, unusedJustificationItem ) == RESULT_OK &&
-		assignmentList->checkJustificationForUsage( true, false, unusedJustificationItem ) == RESULT_OK )
-			assignmentList->checkJustificationForUsage( false, true, unusedJustificationItem );
+		assignmentList->checkJustificationForUsage( false, false, false, unusedJustificationItem ) == RESULT_OK &&
+		assignmentList->checkJustificationForUsage( true, false, false, unusedJustificationItem ) == RESULT_OK &&
+		assignmentList->checkJustificationForUsage( false, true, false, unusedJustificationItem ) == RESULT_OK )
+			assignmentList->checkJustificationForUsage( false, false, true, unusedJustificationItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		specificationList != NULL )
-			specificationList->checkJustificationForUsage( false, false, unusedJustificationItem );
+		specificationList != NULL &&
+		specificationList->checkJustificationForUsage( false, false, false, unusedJustificationItem ) == RESULT_OK )
+			specificationList->checkJustificationForUsage( false, false, true, unusedJustificationItem );
 
 		if( commonVariables_->result == RESULT_OK &&
 		justificationList != NULL )
 			justificationList->checkJustificationForUsage( unusedJustificationItem );
 
+		// Clear error to be able to restart after justification error
 		return RESULT_OK;
 		}
 
-	ResultType WordItem::checkSpecificationsForReplacedJustifications()
+	ResultType WordItem::checkSpecificationsForReplacedOrDeletedJustifications()
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkSpecificationsForReplacedJustifications";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "checkSpecificationsForReplacedOrDeletedJustifications";
 
 		if( assignmentList != NULL )
 			{
@@ -2965,7 +2895,7 @@
 		specificationList != NULL )
 			return specificationList->collectGeneralizationsOrSpecifications( false, false, isExclusiveSpecification, isGeneralizationCollection, isQuestion, collectionNr );
 
-		return RESULT_OK;
+		return commonVariables_->result;
 		}
 
 	ResultType WordItem::confirmSpecificationButNoRelation( SpecificationItem *confirmedSpecificationItem, SpecificationItem *confirmationSpecificationItem )
@@ -2979,21 +2909,21 @@
 		specificationList != NULL )
 			specificationList->confirmSpecificationButNoRelation( false, false, confirmedSpecificationItem, confirmationSpecificationItem );
 
-		return RESULT_OK;
+		return commonVariables_->result;
 		}
 
-	ResultType WordItem::recalculateAssumptions( bool isOnlyRecalculateSpecificationsWithoutSpecificationCollection )
+	ResultType WordItem::recalculateAssumptions()
 		{
 		if( assignmentList != NULL &&
-		assignmentList->recalculateAssumptions( false, false, isOnlyRecalculateSpecificationsWithoutSpecificationCollection ) == RESULT_OK &&
-		assignmentList->recalculateAssumptions( true, false, isOnlyRecalculateSpecificationsWithoutSpecificationCollection ) == RESULT_OK )
-			assignmentList->recalculateAssumptions( false, true, isOnlyRecalculateSpecificationsWithoutSpecificationCollection );
+		assignmentList->recalculateAssumptions( false, false ) == RESULT_OK &&
+		assignmentList->recalculateAssumptions( true, false ) == RESULT_OK )
+			assignmentList->recalculateAssumptions( false, true );
 
 		if( commonVariables_->result == RESULT_OK &&
 		specificationList != NULL )
-			return specificationList->recalculateAssumptions( false, false, isOnlyRecalculateSpecificationsWithoutSpecificationCollection );
+			return specificationList->recalculateAssumptions( false, false );
 
-		return RESULT_OK;
+		return commonVariables_->result;
 		}
 
 	ResultType WordItem::replaceOlderSpecificationByConcludedAssumption( unsigned int oldRelationContextNr, SpecificationItem *replacingSpecificationItem )
@@ -3029,18 +2959,29 @@
 		return startErrorInWord( functionNameString, NULL, "The given obsolete specification item is undefined" );
 		}
 
-	ResultType WordItem::updateJustificationInSpecifications( bool hasConfirmedSpecification, bool isExclusiveSpecification, bool isExclusiveGeneralization, JustificationItem *oldJustificationItem, JustificationItem *replacingJustificationItem )
+	ResultType WordItem::updateJustificationInSpecifications( bool hasConfirmedSpecification, bool isExclusiveSpecification, bool isExclusiveGeneralization, JustificationItem *obsoleteJustificationItem, JustificationItem *replacingJustificationItem )
 		{
+		bool isIncludingReplacedItems = ( obsoleteJustificationItem != NULL &&
+										obsoleteJustificationItem->hasCurrentCreationSentenceNr() );
+
 		if( assignmentList != NULL &&
-		assignmentList->updateJustificationInSpecifications( hasConfirmedSpecification, false, false, isExclusiveSpecification, isExclusiveGeneralization, oldJustificationItem, replacingJustificationItem ) == RESULT_OK &&
-		assignmentList->updateJustificationInSpecifications( hasConfirmedSpecification, true, false, isExclusiveSpecification, isExclusiveGeneralization, oldJustificationItem, replacingJustificationItem ) == RESULT_OK )
-			assignmentList->updateJustificationInSpecifications( hasConfirmedSpecification, false, true, isExclusiveSpecification, isExclusiveGeneralization, oldJustificationItem, replacingJustificationItem );
+		assignmentList->updateJustificationInSpecifications( hasConfirmedSpecification, false, false, false, isExclusiveSpecification, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == RESULT_OK &&
+		assignmentList->updateJustificationInSpecifications( hasConfirmedSpecification, true, false, false, isExclusiveSpecification, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == RESULT_OK &&
+		assignmentList->updateJustificationInSpecifications( hasConfirmedSpecification, false, true, false, isExclusiveSpecification, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == RESULT_OK )
+			{
+			if( isIncludingReplacedItems )
+				assignmentList->updateJustificationInSpecifications( hasConfirmedSpecification, false, false, true, isExclusiveSpecification, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem );
+			}
 
 		if( commonVariables_->result == RESULT_OK &&
-		specificationList != NULL )
-			return specificationList->updateJustificationInSpecifications( hasConfirmedSpecification, false, false, isExclusiveSpecification, isExclusiveGeneralization, oldJustificationItem, replacingJustificationItem );
+		specificationList != NULL &&
+		specificationList->updateJustificationInSpecifications( hasConfirmedSpecification, false, false, false, isExclusiveSpecification, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == RESULT_OK )
+			{
+			if( isIncludingReplacedItems )
+				return specificationList->updateJustificationInSpecifications( hasConfirmedSpecification, false, false, true, isExclusiveSpecification, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem );
+			}
 
-		return RESULT_OK;
+		return commonVariables_->result;
 		}
 
 	ResultType WordItem::updateSpecificationsInJustificationsOfInvolvedWords( SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem )
@@ -3074,7 +3015,7 @@
 		return RESULT_OK;
 		}
 
-	SpecificationResultType WordItem::addSpecification( bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueRelation, bool isUserSpecificationExclusivelyFeminineOrMasculine, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, void *changeKey )
+	SpecificationResultType WordItem::addSpecification( bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueRelation, bool hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, bool isUserSentenceMixOfFeminineAndMasculineSpecificationWords, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, void *changeKey )
 		{
 		SpecificationResultType specificationResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addSpecification";
@@ -3087,7 +3028,7 @@
 				if( wordSpecification_ != NULL ||
 				// Create supporting module
 				( wordSpecification_ = new WordSpecification( commonVariables_, this ) ) != NULL )
-					return wordSpecification_->addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueRelation, isUserSpecificationExclusivelyFeminineOrMasculine, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString );
+					return wordSpecification_->addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueRelation, hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, isUserSentenceMixOfFeminineAndMasculineSpecificationWords, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString );
 
 				startErrorInWord( functionNameString, NULL, "I failed to create my word specification module" );
 				}
@@ -3178,25 +3119,25 @@
 		return specificationResult;
 		}
 
-	SpecificationResultType WordItem::findRelatedSpecification( bool isCheckingRelationContext, bool isCheckingSelfGeneratedAssumption, SpecificationItem *searchSpecificationItem )
+	SpecificationResultType WordItem::findRelatedSpecification( bool isCheckingRelationContext, SpecificationItem *searchSpecificationItem )
 		{
 		SpecificationResultType specificationResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findRelatedSpecification";
 
 		if( wordSpecification_ != NULL )
-			return wordSpecification_->findRelatedSpecification( isCheckingRelationContext, isCheckingSelfGeneratedAssumption, searchSpecificationItem );
+			return wordSpecification_->findRelatedSpecification( isCheckingRelationContext, searchSpecificationItem );
 
 		specificationResult.result = startErrorInWord( functionNameString, NULL, "My word specification module isn't created yet" );
 		return specificationResult;
 		}
 
-	SpecificationResultType WordItem::findRelatedSpecification( bool isIgnoringNegative, bool isIncludingAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isExclusiveSpecification, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem, char *specificationString )
+	SpecificationResultType WordItem::findRelatedSpecification( bool isIgnoringNegative, bool isIncludingAssignments, bool isIncludingArchivedAssignments, bool isExclusiveSpecification, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem, char *specificationString )
 		{
 		SpecificationResultType specificationResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findRelatedSpecification";
 
 		if( wordSpecification_ != NULL )
-			return wordSpecification_->findRelatedSpecification( false, false, isIgnoringNegative, isIncludingAssignments, isIncludingInactiveAssignments, isIncludingArchivedAssignments, isExclusiveSpecification, isNegative, isPossessive, questionParameter, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem, specificationString );
+			return wordSpecification_->findRelatedSpecification( false, false, isIgnoringNegative, isIncludingAssignments, isIncludingArchivedAssignments, isExclusiveSpecification, isNegative, isPossessive, questionParameter, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem, specificationString );
 
 		specificationResult.result = startErrorInWord( functionNameString, NULL, "My word specification module isn't created yet" );
 		return specificationResult;
@@ -3207,61 +3148,54 @@
 		SpecificationItem *foundSpecificationItem = NULL;
 
 		if( assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( false, false, isNegative, isPossessive, questionParameter, specificationWordItem, relationWordItem ) ) == NULL )
-			{
-			if( ( foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( true, false, isNegative, isPossessive, questionParameter, specificationWordItem, relationWordItem ) ) == NULL )
-				foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( false, true, isNegative, isPossessive, questionParameter, specificationWordItem, relationWordItem );
-			}
+		( foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, questionParameter, specificationWordItem, relationWordItem ) ) == NULL )
+			foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( true, isNegative, isPossessive, questionParameter, specificationWordItem, relationWordItem );
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->bestMatchingRelationContextNrSpecificationItem( false, false, isNegative, isPossessive, questionParameter, specificationWordItem, relationWordItem );
+			return specificationList->bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, questionParameter, specificationWordItem, relationWordItem );
 
 		return foundSpecificationItem;
 		}
 
-	SpecificationItem *WordItem::bestMatchingRelationContextNrSpecificationItem( bool isIncludingAnsweredQuestions, bool isIncludingAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int relationContextNr, WordItem *specificationWordItem )
+	SpecificationItem *WordItem::bestMatchingRelationContextNrSpecificationItem( bool isIncludingAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		SpecificationItem *foundSpecificationItem = NULL;
 
 		if( isIncludingAssignments &&
 		assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem ) ) == NULL )
+		( foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem ) ) == NULL )
 			{
-			if( isIncludingInactiveAssignments )
-				foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( isIncludingAnsweredQuestions, true, false, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
-
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( isIncludingAnsweredQuestions, false, true, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
+			if( isIncludingArchivedAssignments )
+				foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( true, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
 			}
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->bestMatchingRelationContextNrSpecificationItem( isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
+			return specificationList->bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
 
 		return foundSpecificationItem;
 		}
 
-	SpecificationItem *WordItem::bestMatchingRelationContextNrSpecificationItem( bool isAllowingEmptyContextResult, bool isIncludingAnsweredQuestions, bool isIncludingAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
+	SpecificationItem *WordItem::bestMatchingRelationContextNrSpecificationItem( bool isAllowingEmptyContextResult, bool isIncludingAnsweredQuestions, bool isIncludingAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		SpecificationItem *foundSpecificationItem = NULL;
 
 		if( isIncludingAssignments &&
 		assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyContextResult, isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, questionParameter, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
+		( foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyContextResult, isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == NULL )
 			{
 			if( isIncludingInactiveAssignments )
-				foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyContextResult, isIncludingAnsweredQuestions, true, false, isNegative, isPossessive, questionParameter, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+				foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyContextResult, isIncludingAnsweredQuestions, true, false, isNegative, isPossessive, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
 
 			if( isIncludingArchivedAssignments &&
 			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyContextResult, isIncludingAnsweredQuestions, false, true, isNegative, isPossessive, questionParameter, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+				foundSpecificationItem = assignmentList->bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyContextResult, isIncludingAnsweredQuestions, false, true, isNegative, isPossessive, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
 			}
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyContextResult, isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, questionParameter, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+			return specificationList->bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyContextResult, isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
 
 		return foundSpecificationItem;
 		}
@@ -3280,11 +3214,11 @@
 
 		if( isIncludingAssignments &&
 		assignmentList != NULL )
-			foundSpecificationItem = assignmentList->firstSpecificationItem( false, false, isNegative, isPossessive, questionParameter, specificationWordItem );
+			foundSpecificationItem = assignmentList->firstSpecificationItem( false, isNegative, isPossessive, questionParameter, specificationWordItem );
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->firstSpecificationItem( false, false, isNegative, isPossessive, questionParameter, specificationWordItem );
+			return specificationList->firstSpecificationItem( false, isNegative, isPossessive, questionParameter, specificationWordItem );
 
 		return foundSpecificationItem;
 		}
@@ -3295,11 +3229,11 @@
 
 		if( isIncludingAssignments &&
 		assignmentList != NULL )
-			foundSpecificationItem = assignmentList->firstSpecificationItem( false, false, false, isExclusiveSpecification, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, specificationWordItem );
+			foundSpecificationItem = assignmentList->firstSpecificationItem( isExclusiveSpecification, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, specificationWordItem );
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->firstSpecificationItem( false, false, false, isExclusiveSpecification, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, specificationWordItem );
+			return specificationList->firstSpecificationItem( isExclusiveSpecification, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, specificationWordItem );
 
 		return foundSpecificationItem;
 		}
@@ -3320,49 +3254,39 @@
 		return foundSpecificationItem;
 		}
 
-	SpecificationItem *WordItem::firstAssignmentOrSpecificationItem( bool isIncludingAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, WordItem *specificationWordItem )
+	SpecificationItem *WordItem::firstAssignmentOrSpecificationItem( bool isIncludingAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, WordItem *specificationWordItem )
 		{
 		SpecificationItem *foundSpecificationItem = NULL;
 
 		if( isIncludingAssignments &&
 		assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->firstSpecificationItem( false, false, isNegative, isPossessive, questionParameter, specificationWordItem ) ) == NULL )
+		( foundSpecificationItem = assignmentList->firstSpecificationItem( false, isNegative, isPossessive, questionParameter, specificationWordItem ) ) == NULL )
 			{
-			if( isIncludingInactiveAssignments )
-				foundSpecificationItem = assignmentList->firstSpecificationItem( true, false, isNegative, isPossessive, questionParameter, specificationWordItem );
-
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstSpecificationItem( false, true, isNegative, isPossessive, questionParameter, specificationWordItem );
+			if( isIncludingArchivedAssignments )
+				foundSpecificationItem = assignmentList->firstSpecificationItem( true, isNegative, isPossessive, questionParameter, specificationWordItem );
 			}
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->firstSpecificationItem( false, false, isNegative, isPossessive, questionParameter, specificationWordItem );
+			return specificationList->firstSpecificationItem( false, isNegative, isPossessive, questionParameter, specificationWordItem );
 
 		return foundSpecificationItem;
 		}
 
-	SpecificationItem *WordItem::firstAssignmentOrSpecificationItem( bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
+	SpecificationItem *WordItem::firstAssignmentOrSpecificationItem( bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		SpecificationItem *foundSpecificationItem = NULL;
 
-		if( assignmentList != NULL )
+		if( assignmentList != NULL &&
+		( foundSpecificationItem = assignmentList->firstSpecificationItem( false, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
 			{
-			foundSpecificationItem = assignmentList->firstSpecificationItem( false, false, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
-
-			if( isIncludingInactiveAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstSpecificationItem( true, false, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
-
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstSpecificationItem( false, true, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+			if( isIncludingArchivedAssignments )
+				foundSpecificationItem = assignmentList->firstSpecificationItem( true, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
 			}
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->firstSpecificationItem( false, false, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+			return specificationList->firstSpecificationItem( false, isNegative, isPossessive, questionParameter, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
 
 		return foundSpecificationItem;
 		}
@@ -3391,27 +3315,23 @@
 		return NULL;
 		}
 
-	SpecificationItem *WordItem::firstNonQuestionAssignmentOrSpecificationItem( bool isAllowingEmptyContextResult, bool isIncludingActiveAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
+	SpecificationItem *WordItem::firstNonQuestionAssignmentOrSpecificationItem( bool isAllowingEmptyContextResult, bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		SpecificationItem *foundSpecificationItem = NULL;
 
 		if( assignmentList != NULL )
 			{
 			if( isIncludingActiveAssignments )
-				foundSpecificationItem = assignmentList->firstNonQuestionAssignmentOrSpecificationItem( isAllowingEmptyContextResult, false, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
-
-			if( isIncludingInactiveAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstNonQuestionAssignmentOrSpecificationItem( isAllowingEmptyContextResult, true, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+				foundSpecificationItem = assignmentList->firstNonQuestionAssignmentOrSpecificationItem( isAllowingEmptyContextResult, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
 
 			if( isIncludingArchivedAssignments &&
 			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstNonQuestionAssignmentOrSpecificationItem( isAllowingEmptyContextResult, false, true, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+				foundSpecificationItem = assignmentList->firstNonQuestionAssignmentOrSpecificationItem( isAllowingEmptyContextResult, true, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
 			}
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->firstNonQuestionAssignmentOrSpecificationItem( isAllowingEmptyContextResult, false, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+			return specificationList->firstNonQuestionAssignmentOrSpecificationItem( isAllowingEmptyContextResult, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
 
 		return foundSpecificationItem;
 		}
@@ -3421,40 +3341,22 @@
 		SpecificationItem *foundSpecificationItem = NULL;
 
 		if( assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->firstRecentlyAnsweredQuestionSpecificationItem( false, false, questionParameter ) ) == NULL )
-			{
-			if( ( foundSpecificationItem = assignmentList->firstRecentlyAnsweredQuestionSpecificationItem( true, false, questionParameter ) ) == NULL )
-				foundSpecificationItem = assignmentList->firstRecentlyAnsweredQuestionSpecificationItem( false, true, questionParameter );
-			}
+		( foundSpecificationItem = assignmentList->firstRecentlyAnsweredQuestionSpecificationItem( false, questionParameter ) ) == NULL )
+			foundSpecificationItem = assignmentList->firstRecentlyAnsweredQuestionSpecificationItem( true, questionParameter );
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return foundSpecificationItem = specificationList->firstRecentlyAnsweredQuestionSpecificationItem( false, false, questionParameter );
+			return foundSpecificationItem = specificationList->firstRecentlyAnsweredQuestionSpecificationItem( false, questionParameter );
 
 		return foundSpecificationItem;
 		}
 
-	SpecificationItem *WordItem::firstRelationSpecificationItem( bool isIncludingAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, WordItem *specificationWordItem )
+	SpecificationItem *WordItem::firstRelationSpecificationItem( bool isNegative, bool isPossessive, unsigned short questionParameter, WordItem *specificationWordItem )
 		{
-		SpecificationItem *foundSpecificationItem = NULL;
+		if( specificationList != NULL )
+			return specificationList->firstRelationSpecificationItem( isNegative, isPossessive, questionParameter, specificationWordItem );
 
-		if( isIncludingAssignments &&
-		assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->firstRelationSpecificationItem( true, false, false, isNegative, isPossessive, questionParameter, specificationWordItem ) ) == NULL )
-			{
-			if( isIncludingInactiveAssignments )
-				foundSpecificationItem = assignmentList->firstRelationSpecificationItem( true, true, false, isNegative, isPossessive, questionParameter, specificationWordItem );
-
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstRelationSpecificationItem( true, false, true, isNegative, isPossessive, questionParameter, specificationWordItem );
-			}
-
-		if( foundSpecificationItem == NULL &&
-		specificationList != NULL )
-			return specificationList->firstRelationSpecificationItem( true, false, false, isNegative, isPossessive, questionParameter, specificationWordItem );
-
-		return foundSpecificationItem;
+		return NULL;
 		}
 
 	SpecificationItem *WordItem::firstSelectedSpecificationItem( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isQuestion )
@@ -3507,70 +3409,54 @@
 		return NULL;
 		}
 
-	SpecificationItem *WordItem::firstSelfGeneratedCheckSpecificationItem( bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGeneratedAssumption, unsigned short questionParameter, WordItem *specificationWordItem )
+	SpecificationItem *WordItem::firstSelfGeneratedCheckSpecificationItem( bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGeneratedAssumption, WordItem *specificationWordItem )
 		{
 		SpecificationItem *foundSpecificationItem = NULL;
 
 		if( assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( false, false, isNegative, isPossessive, isSelfGeneratedAssumption, questionParameter, specificationWordItem ) ) == NULL )
+		( foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( false, isNegative, isPossessive, isSelfGeneratedAssumption, specificationWordItem ) ) == NULL )
 			{
-			if( isIncludingInactiveAssignments )
-				foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( true, false, isNegative, isPossessive, isSelfGeneratedAssumption, questionParameter, specificationWordItem );
-
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( false, true, isNegative, isPossessive, isSelfGeneratedAssumption, questionParameter, specificationWordItem );
+			if( isIncludingArchivedAssignments )
+				foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( true, isNegative, isPossessive, isSelfGeneratedAssumption, specificationWordItem );
 			}
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->firstSelfGeneratedCheckSpecificationItem( false, false, isNegative, isPossessive, isSelfGeneratedAssumption, questionParameter, specificationWordItem );
+			return specificationList->firstSelfGeneratedCheckSpecificationItem( false, isNegative, isPossessive, isSelfGeneratedAssumption, specificationWordItem );
 
 		return foundSpecificationItem;
 		}
 
-	SpecificationItem *WordItem::firstSelfGeneratedCheckSpecificationItem( bool isAllowingEmptyContextResult, bool isIncludingAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short questionParameter, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem )
+	SpecificationItem *WordItem::firstSelfGeneratedCheckSpecificationItem( bool isAllowingEmptyContextResult, bool isIncludingAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short questionParameter, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		SpecificationItem *foundSpecificationItem = NULL;
 
 		if( isIncludingAssignments &&
 		assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyContextResult, false, false, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == NULL )
+		( foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyContextResult, false, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == NULL )
 			{
-			if( isIncludingInactiveAssignments )
-				foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyContextResult, true, false, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
-
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyContextResult, false, true, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
+			if( isIncludingArchivedAssignments )
+				foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyContextResult, true, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
 			}
 
 		if( foundSpecificationItem == NULL &&
 		specificationList != NULL )
-			return specificationList->firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyContextResult, false, false, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
+			return specificationList->firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyContextResult, false, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
 
 		return foundSpecificationItem;
 		}
 
-	SpecificationItem *WordItem::firstSelfGeneratedCheckSpecificationItem( bool isIncludingAnsweredQuestions, bool isIncludingAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short questionParameter, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, WordItem *specificationWordItem )
+	SpecificationItem *WordItem::firstSelfGeneratedCheckSpecificationItem( bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short questionParameter, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, WordItem *specificationWordItem )
 		{
 		SpecificationItem *moreRecentSpecificationItem;
 		SpecificationItem *foundSpecificationItem = NULL;
 
-		if( isIncludingAssignments &&
-		assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( isIncludingAnsweredQuestions, false, false, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationWordTypeNr, specificationCollectionNr, specificationWordItem ) ) == NULL )
-			{
-			if( isIncludingInactiveAssignments )
-				foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( isIncludingAnsweredQuestions, true, false, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationWordTypeNr, specificationCollectionNr, specificationWordItem );
-
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( isIncludingAnsweredQuestions, false, true, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationWordTypeNr, specificationCollectionNr, specificationWordItem );
-			}
+		if( assignmentList != NULL &&
+		( foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( true, false, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationWordTypeNr, specificationCollectionNr, specificationWordItem ) ) == NULL )
+			foundSpecificationItem = assignmentList->firstSelfGeneratedCheckSpecificationItem( true, true, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationWordTypeNr, specificationCollectionNr, specificationWordItem );
 
 		if( specificationList != NULL &&
-		( moreRecentSpecificationItem = specificationList->firstSelfGeneratedCheckSpecificationItem( isIncludingAnsweredQuestions, false, false, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationWordTypeNr, specificationCollectionNr, specificationWordItem ) ) != NULL )
+		( moreRecentSpecificationItem = specificationList->firstSelfGeneratedCheckSpecificationItem( true, false, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationWordTypeNr, specificationCollectionNr, specificationWordItem ) ) != NULL )
 			{
 			if( foundSpecificationItem == NULL ||
 
@@ -3609,40 +3495,17 @@
 		return foundSpecificationItem;
 		}
 
-	SpecificationItem *WordItem::justificationSpecificationItem( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, JustificationItem *findJustificationItem )
-		{
-		if( isAssignment )
-			{
-			if( assignmentList != NULL )
-				return assignmentList->justificationSpecificationItem( isInactiveAssignment, isArchivedAssignment, findJustificationItem );
-			}
-		else
-			{
-			if( specificationList != NULL )
-				return specificationList->justificationSpecificationItem( false, false, findJustificationItem );
-			}
-
-		return NULL;
-		}
-
-	SpecificationItem *WordItem::sameQuestionSpecificationItem( bool isIncludingAnsweredQuestions, bool isIncludingAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isSelfGenerated, unsigned short questionParameter )
+	SpecificationItem *WordItem::sameUserQuestionSpecificationItem( unsigned short questionParameter )
 		{
 		SpecificationItem *foundSpecificationItem = NULL;
 
-		if( isIncludingAssignments &&
-		assignmentList != NULL &&
-		( foundSpecificationItem = assignmentList->sameQuestionSpecificationItem( isIncludingAnsweredQuestions, false, false, isSelfGenerated, questionParameter ) ) == NULL )
-			{
-			if( isIncludingInactiveAssignments )
-				foundSpecificationItem = assignmentList->sameQuestionSpecificationItem( isIncludingAnsweredQuestions, true, false, isSelfGenerated, questionParameter );
+		if( assignmentList != NULL &&
+		( foundSpecificationItem = assignmentList->sameUserQuestionSpecificationItem( false, questionParameter ) ) == NULL )
+			foundSpecificationItem = assignmentList->sameUserQuestionSpecificationItem( true, questionParameter );
 
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == NULL )
-				foundSpecificationItem = assignmentList->sameQuestionSpecificationItem( isIncludingAnsweredQuestions, false, true, isSelfGenerated, questionParameter );
-			}
-
-		if( specificationList != NULL )
-			return specificationList->sameQuestionSpecificationItem( isIncludingAnsweredQuestions, false, false, isSelfGenerated, questionParameter );
+		if( foundSpecificationItem == NULL &&
+		specificationList != NULL )
+			return specificationList->sameUserQuestionSpecificationItem( false, questionParameter );
 
 		return foundSpecificationItem;
 		}
@@ -3956,7 +3819,7 @@
 			return wordResult;
 			}
 
-		return wordType_->addWordType( isMultipleWord, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordLength, wordTypeString );
+		return wordType_->addWordType( isLanguageWord_, isMultipleWord, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordLength, wordTypeString );
 		}
 
 	WordResultType WordItem::findWordType( bool isForcingToCheckAllLanguages, unsigned short wordTypeNr, char *wordTypeString )
@@ -4082,7 +3945,7 @@
 		if( wordWrite_ != NULL ||
 		// Create supporting module
 		( wordWrite_ = new WordWrite( commonVariables_, this ) ) != NULL )
-			return wordWrite_->writeSelectedRelationInfo( isAssignment, isInactiveAssignment, isArchivedAssignment, isQuestion, writeWordItem );
+			return wordWrite_->writeSelectedRelationInfo( isAssignment, isInactiveAssignment, isArchivedAssignment, isLanguageWord_, isQuestion, writeWordItem );
 
 		return startErrorInWord( functionNameString, NULL, "I failed to create my word write module" );
 		}
@@ -4144,8 +4007,6 @@
 		}
 
 /*************************************************************************
- *
  *	"Fear of the Lord is the foundation of true wisdom.
  *	All who obey his commandments will grow in wisdom." (Psalm 111:10)
- *
  *************************************************************************/

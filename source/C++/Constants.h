@@ -1,46 +1,25 @@
 ﻿/*
  *	Class:			Constants
  *	Purpose:		Header file to define constants
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #ifndef CONSTANTS
@@ -52,7 +31,7 @@
 
 	// Version constants
 	#define PRODUCT_NAME										"Thinknowlogy"
-	#define VERSION_NAME										"2014r2a (George Boole)"
+	#define VERSION_NAME										"2014r2b (Laws of Thought)"
 
 	// Character constants
 	#define	NULL_CHAR											'\0'
@@ -333,30 +312,30 @@
 	// Justification types
 	#define	JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION									0
 	#define	JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION		1
-	#define	JUSTIFICATION_TYPE_BACK_FIRED_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION	2
-	#define	JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION				3
-	#define	JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION			4
-	#define	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION						5
-	#define	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION								6
-	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION									7
-	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION								8
-	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION								9
-	#define	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION											10
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION			11
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION						12
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION				13
-	#define	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION									14
+	#define	JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION				2
+	#define	JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION			3
+	#define	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION						4
+	#define	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION								5
 
-	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION									15
-	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION								16
-	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION								17
-	#define	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION											18
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION			19
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION						20
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION				21
-	#define	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION									22
+	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION									6
+	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION								7
+	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION								8
+	#define	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION											9
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION			10
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION						11
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION				12
+	#define	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION									13
 
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION							23
+	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION									14
+	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION								15
+	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION								16
+	#define	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION											17
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION			18
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION						19
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION				20
+	#define	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION									21
+
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION							22
 
 
 	// Word types
@@ -793,8 +772,6 @@
 #endif
 
 /*************************************************************************
- *
  *	"He will bless those who fear the Lord,
  *	both great and lowly." (Psalm 115:13)
- *
  *************************************************************************/

@@ -1,0 +1,5 @@
+﻿Lea el archivo "Español (beta version)/razonamiento/definición de familia".
+#Suela no es una madre.
+Suela es no madre.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+Suela es la madre de Pablo, José y Luisa.

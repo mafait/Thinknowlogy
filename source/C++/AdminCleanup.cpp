@@ -1,47 +1,26 @@
 /*
  *	Class:			AdminCleanup
  *	Supports class:	AdminItem
- *	Purpose:		To cleanup unnecessary items
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Purpose:		To cleanup obsolete items
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "AdminItem.h"
@@ -85,13 +64,15 @@ class AdminCleanup
 
 		commonVariables_->highestInUseSentenceNr = NO_SENTENCE_NR;
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			adminItem_->wordList->getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingLanguageAssignments, isIncludingTemporaryLists, highestSentenceNr );
 
+		// Admin lists
 		while( commonVariables_->highestInUseSentenceNr < highestSentenceNr &&
 		adminListNr < NUMBER_OF_ADMIN_LISTS )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL &&	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL &&
 
 			( isIncludingTemporaryLists ||
 			!adminItem_->adminListArray[adminListNr]->isTemporaryList() ) )
@@ -99,28 +80,6 @@ class AdminCleanup
 
 			adminListNr++;
 			}
-		}
-
-	ResultType decrementSentenceNrs( unsigned int startSentenceNr )
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrs";
-
-		if( adminItem_->wordList != NULL )							// Inside words
-			{
-			if( adminItem_->wordList->decrementSentenceNrsInWordList( startSentenceNr ) != RESULT_OK )
-				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in my word list" );
-			}
-
-		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
-				{
-				if( adminItem_->adminListArray[adminListNr]->decrementSentenceNrsInList( startSentenceNr ) != RESULT_OK )
-					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
-				}
-			}
-
-		return RESULT_OK;
 		}
 
 	ResultType decrementCurrentSentenceNr()
@@ -157,7 +116,8 @@ class AdminCleanup
 		commonVariables_->currentItemNr > startDecrementItemNr )
 			commonVariables_->currentItemNr -= decrementOffset;
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->decrementItemNrRangeInWordList( decrementSentenceNr, startDecrementItemNr, decrementOffset ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to decrement item number range in my word list" );
@@ -165,10 +125,35 @@ class AdminCleanup
 
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			// Admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->decrementItemNrRangeInList( decrementSentenceNr, startDecrementItemNr, decrementOffset ) != RESULT_OK )
 					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to decrement item number range" );
+				}
+			}
+
+		return RESULT_OK;
+		}
+
+	ResultType decrementSentenceNrs( unsigned int startSentenceNr )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrs";
+
+		// In words
+		if( adminItem_->wordList != NULL )
+			{
+			if( adminItem_->wordList->decrementSentenceNrsInWordList( startSentenceNr ) != RESULT_OK )
+				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in my word list" );
+			}
+
+		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
+			{
+			// Admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
+				{
+				if( adminItem_->adminListArray[adminListNr]->decrementSentenceNrsInList( startSentenceNr ) != RESULT_OK )
+					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
 				}
 			}
 
@@ -262,103 +247,17 @@ class AdminCleanup
 		return RESULT_OK;
 		}
 
-	ResultType rollbackDeletedRedoInfo()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "rollbackDeletedRedoInfo";
-
-		if( adminItem_->wordList != NULL )							// Inside words
-			{
-			if( adminItem_->wordList->rollbackDeletedRedoInfoInWordList() != RESULT_OK )
-				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the current redo info of my words in my word list" );
-			}
-
-		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
-				adminItem_->adminListArray[adminListNr]->rollbackDeletedRedoInfoInList();
-			}
-
-		return RESULT_OK;
-		}
-
-	ResultType removeFirstRangeOfDeletedItems()
-		{
-		unsigned short adminListNr = 0;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItems";
-
-		commonVariables_->nDeletedItems = 0;
-		commonVariables_->removeSentenceNr = NO_SENTENCE_NR;
-		commonVariables_->removeStartItemNr = NO_ITEM_NR;
-
-		if( adminItem_->wordList != NULL )							// Inside words
-			{
-			if( adminItem_->wordList->removeFirstRangeOfDeletedItemsInWordList() != RESULT_OK )
-				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the first deleted items in my word list" );
-			}
-
-		while( adminListNr < NUMBER_OF_ADMIN_LISTS &&
-		commonVariables_->nDeletedItems == 0 )
-			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
-				{
-				if( adminItem_->adminListArray[adminListNr]->removeFirstRangeOfDeletedItemsInList() != RESULT_OK )
-					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to remove the first deleted items" );
-				}
-
-			adminListNr++;
-			}
-
-		return RESULT_OK;
-		}
-
-	ResultType undoCurrentSentence()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentence";
-
-		if( undoCurrentSentenceInAllWords() == RESULT_OK )			// Inside words
-			{
-			for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-				{
-				if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
-					{
-					if( adminItem_->adminListArray[adminListNr]->undoCurrentSentenceInList() != RESULT_OK )
-						return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to undo the current sentence" );
-					}
-				}
-			}
-		else
-			return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to undo the current sentence in my word list" );
-
-		return RESULT_OK;
-		}
-
-	ResultType undoCurrentSentenceInAllWords()
-		{
-		WordItem *currentWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentenceInAllWords";
-
-		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
-			{
-			// Do for all words
-			do	currentWordItem->undoCurrentSentence();
-			while( commonVariables_->result == RESULT_OK &&
-			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-			}
-		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The first word item is undefined" );
-
-		return RESULT_OK;
-		}
-
 	ResultType redoCurrentSentence()
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentence";
 
-		if( redoCurrentSentenceInAllWords() == RESULT_OK )			// Inside words
+		// In words
+		if( redoCurrentSentenceInAllWords() == RESULT_OK )
 			{
+			// Admin lists
 			for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 				{
-				if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+				if( adminItem_->adminListArray[adminListNr] != NULL )
 					{
 					if( adminItem_->adminListArray[adminListNr]->redoCurrentSentenceInList() != RESULT_OK )
 						return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to redo the current sentence" );
@@ -380,6 +279,100 @@ class AdminCleanup
 			{
 			// Do for all words
 			do	currentWordItem->redoCurrentSentence();
+			while( commonVariables_->result == RESULT_OK &&
+			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			}
+		else
+			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The first word item is undefined" );
+
+		return RESULT_OK;
+		}
+
+	ResultType removeFirstRangeOfDeletedItems()
+		{
+		unsigned short adminListNr = 0;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItems";
+
+		commonVariables_->nDeletedItems = 0;
+		commonVariables_->removeSentenceNr = NO_SENTENCE_NR;
+		commonVariables_->removeStartItemNr = NO_ITEM_NR;
+
+		// In words
+		if( adminItem_->wordList != NULL )
+			{
+			if( adminItem_->wordList->removeFirstRangeOfDeletedItemsInWordList() != RESULT_OK )
+				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the first deleted items in my word list" );
+			}
+
+		// Admin lists
+		while( adminListNr < NUMBER_OF_ADMIN_LISTS &&
+		commonVariables_->nDeletedItems == 0 )
+			{
+			if( adminItem_->adminListArray[adminListNr] != NULL )
+				{
+				if( adminItem_->adminListArray[adminListNr]->removeFirstRangeOfDeletedItemsInList() != RESULT_OK )
+					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to remove the first deleted items" );
+				}
+
+			adminListNr++;
+			}
+
+		return RESULT_OK;
+		}
+
+	ResultType rollbackDeletedRedoInfo()
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "rollbackDeletedRedoInfo";
+
+		// In words
+		if( adminItem_->wordList != NULL )
+			{
+			if( adminItem_->wordList->rollbackDeletedRedoInfoInWordList() != RESULT_OK )
+				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the current redo info of my words in my word list" );
+			}
+
+		// Admin lists
+		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
+			{
+			if( adminItem_->adminListArray[adminListNr] != NULL )
+				adminItem_->adminListArray[adminListNr]->rollbackDeletedRedoInfoInList();
+			}
+
+		return RESULT_OK;
+		}
+
+	ResultType undoCurrentSentence()
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentence";
+
+		// In words
+		if( undoCurrentSentenceInAllWords() == RESULT_OK )
+			{
+			// Admin lists
+			for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
+				{
+				if( adminItem_->adminListArray[adminListNr] != NULL )
+					{
+					if( adminItem_->adminListArray[adminListNr]->undoCurrentSentenceInList() != RESULT_OK )
+						return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to undo the current sentence" );
+					}
+				}
+			}
+		else
+			return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to undo the current sentence in my word list" );
+
+		return RESULT_OK;
+		}
+
+	ResultType undoCurrentSentenceInAllWords()
+		{
+		WordItem *currentWordItem;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentenceInAllWords";
+
+		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+			{
+			// Do for all words
+			do	currentWordItem->undoCurrentSentence();
 			while( commonVariables_->result == RESULT_OK &&
 			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 			}
@@ -454,12 +447,14 @@ class AdminCleanup
 
 	void deleteRollbackInfo()
 		{
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			adminItem_->wordList->deleteRollbackInfoInWordList();
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				adminItem_->adminListArray[adminListNr]->deleteRollbackInfoInList();
 			}
 		}
@@ -468,12 +463,14 @@ class AdminCleanup
 		{
 		commonVariables_->currentItemNr = NO_ITEM_NR;
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			adminItem_->wordList->setCurrentItemNrInWordList();
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				adminItem_->adminListArray[adminListNr]->setCurrentItemNrInList();
 			}
 		}
@@ -498,12 +495,14 @@ class AdminCleanup
 		unsigned int tempSentenceNr;
 		unsigned int highestSentenceNr = NO_SENTENCE_NR;
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			highestSentenceNr = adminItem_->wordList->highestSentenceNrInWordList();
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL &&	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL &&
 			( tempSentenceNr = adminItem_->adminListArray[adminListNr]->highestSentenceNrInList() ) > highestSentenceNr )
 				highestSentenceNr = tempSentenceNr;
 			}
@@ -697,15 +696,17 @@ class AdminCleanup
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentences";
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete sentences in my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->deleteSentencesInList( isAvailableForRollback, lowestSentenceNr ) != RESULT_OK )
 					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to delete sentences in a list" );
@@ -720,7 +721,7 @@ class AdminCleanup
 
 	ResultType undoLastSentence()
 		{
-		bool skipUndo = false;
+		bool isSkippingUndo = false;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "undoLastSentence";
 
 		if( commonVariables_->currentSentenceNr > NO_SENTENCE_NR )
@@ -738,7 +739,7 @@ class AdminCleanup
 						{
 						if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_UNDO_SENTENCE_OF_ANOTHER_USER ) == RESULT_OK )
 							{
-							skipUndo = true;
+							isSkippingUndo = true;
 							isDontIncrementCurrentSentenceNr_ = true;
 							}
 						else
@@ -746,7 +747,7 @@ class AdminCleanup
 						}
 					}
 
-				if( !skipUndo )
+				if( !isSkippingUndo )
 					{
 					// Roll-back Undo sentence. Handle it as a command, not as a sentence
 					rollbackDeletedRedoInfo();
@@ -812,10 +813,8 @@ class AdminCleanup
 	};
 
 /*************************************************************************
- *
  *	"How great is the Lord,
  *	how deserving of praise,
  *	in the city of our God,
  *	which sits on his holy mountain!" (Psalm 48:1)
- *
  *************************************************************************/

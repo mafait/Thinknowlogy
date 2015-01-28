@@ -2,46 +2,25 @@
  *	Class:			WordAssignment
  *	Supports class:	WordItem
  *	Purpose:		To assign specifications
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "GeneralizationItem.cpp"
@@ -75,7 +54,7 @@ class WordAssignment
 		return RESULT_OK;
 		}
 
-	ResultType inactivateOrArchiveCurrentGeneralizationAssignments( bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int relationContextNr, WordItem *specificationWordItem )
+	ResultType inactivateOrArchiveCurrentGeneralizationAssignments( bool isNegative, bool isPossessive, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		GeneralizationItem *currentGeneralizationItem;
 		SpecificationItem *foundActiveAssignmentItem = NULL;
@@ -96,10 +75,10 @@ class WordAssignment
 							{
 							if( foundActiveAssignmentItem == NULL &&
 							currentGeneralizationWordItem != myWordItem_ )		// Skip my word for activate assignments, because this is the one to be assigned
-								foundActiveAssignmentItem = currentGeneralizationWordItem->firstAssignmentItem( true, false, false, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
+								foundActiveAssignmentItem = currentGeneralizationWordItem->firstNonQuestionAssignmentItem( true, false, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
 
 							if( foundInactiveAssignmentItem == NULL )		// Allow to find an inactive assignment in my word
-								foundInactiveAssignmentItem = currentGeneralizationWordItem->firstAssignmentItem( false, true, false, isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem );
+								foundInactiveAssignmentItem = currentGeneralizationWordItem->firstNonQuestionAssignmentItem( false, true, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
 							}
 						else
 							return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I found an undefined generalization word" );
@@ -110,7 +89,8 @@ class WordAssignment
 					( currentGeneralizationItem = currentGeneralizationItem->nextSpecificationGeneralizationItem() ) != NULL );
 					}
 
-				if( foundActiveAssignmentItem != NULL )		// Only archive an inactive assignment when an active assignment is being inactivated
+				// Only archive an inactive assignment if an active assignment is being inactivated
+				if( foundActiveAssignmentItem != NULL )
 					{
 					if( foundActiveAssignmentItem->hasGeneralizationCollection() )
 						{
@@ -161,13 +141,13 @@ class WordAssignment
 		SpecificationItem *relatedSpecificationItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "inactivateAssignment";
 
-		if( ( foundAssignmentItem = myWordItem_->firstActiveAssignmentItem( isAmbiguousRelationContext, isPossessive, NO_QUESTION_PARAMETER, relationContextNr, specificationWordItem ) ) == NULL )
+		if( ( foundAssignmentItem = myWordItem_->firstActiveNonQuestionAssignmentItem( isAmbiguousRelationContext, isPossessive, relationContextNr, specificationWordItem ) ) == NULL )
 			{
 			if( relationContextNr == NO_CONTEXT_NR )
 				{
 				if( isExclusiveSpecification )
 					{
-					if( ( specificationResult = myWordItem_->findRelatedSpecification( true, true, false, false, isExclusiveSpecification, false, isPossessive, NO_QUESTION_PARAMETER, specificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem, specificationString ) ).result == RESULT_OK )
+					if( ( specificationResult = myWordItem_->findRelatedSpecification( true, true, false, isExclusiveSpecification, false, isPossessive, NO_QUESTION_PARAMETER, specificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem, specificationString ) ).result == RESULT_OK )
 						{
 						relatedSpecificationItem = specificationResult.relatedSpecificationItem;
 
@@ -249,8 +229,9 @@ class WordAssignment
 				if( foundAssignmentItem->assumptionLevel() != assumptionLevel )
 					hasDifferentAssumptionLevel = true;
 
-				if( foundAssignmentItem->isInactiveAssignment() != isInactiveAssignment ||	// Ambiguous when has different tense (time)
-				foundAssignmentItem->isArchivedAssignment() != isArchivedAssignment )		// (active, inactive or archive)
+				// Ambiguous if assignment has different tense (time): active, inactive or archived.
+				if( foundAssignmentItem->isInactiveAssignment() != isInactiveAssignment ||
+				foundAssignmentItem->isArchivedAssignment() != isArchivedAssignment )
 					isAmbiguous = true;
 				}
 
@@ -316,7 +297,7 @@ class WordAssignment
 		return specificationResult;
 		}
 
-	SpecificationResultType assignSpecificationByValue( unsigned short questionParameter, JustificationItem *firstJustificationItem, WordItem *specificationWordItem )
+	SpecificationResultType assignSpecificationByValue( JustificationItem *firstJustificationItem, WordItem *specificationWordItem )
 		{
 		SpecificationResultType specificationResult;
 		SpecificationItem *currentAssignmentItem;
@@ -324,14 +305,14 @@ class WordAssignment
 
 		if( specificationWordItem != NULL )
 			{
-			if( ( currentAssignmentItem = specificationWordItem->firstActiveAssignmentItem( questionParameter ) ) != NULL )
+			if( ( currentAssignmentItem = specificationWordItem->firstNonQuestionActiveAssignmentItem() ) != NULL )
 				{
 				do	{
 					if( ( specificationResult = assignSpecification( false, currentAssignmentItem->isInactiveAssignment(), currentAssignmentItem->isArchivedAssignment(), currentAssignmentItem->isEveryGeneralization(), currentAssignmentItem->isExclusiveSpecification(), currentAssignmentItem->isGeneralizationAssignment(), currentAssignmentItem->isNegative(), currentAssignmentItem->isPartOf(), currentAssignmentItem->isPossessive(), currentAssignmentItem->isSpecificationGeneralization(), currentAssignmentItem->isUniqueRelation(), currentAssignmentItem->assumptionLevel(), currentAssignmentItem->prepositionParameter(), currentAssignmentItem->questionParameter(), currentAssignmentItem->generalizationWordTypeNr(), currentAssignmentItem->specificationWordTypeNr(), currentAssignmentItem->relationWordTypeNr(), currentAssignmentItem->generalizationCollectionNr(), currentAssignmentItem->specificationCollectionNr(), currentAssignmentItem->generalizationContextNr(), currentAssignmentItem->specificationContextNr(), currentAssignmentItem->relationContextNr(), NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, currentAssignmentItem->nContextRelations(), firstJustificationItem, currentAssignmentItem->specificationWordItem(), currentAssignmentItem->specificationString() ) ).result != RESULT_OK )
 						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to assign specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 					}
 				while( commonVariables_->result == RESULT_OK &&
-				( currentAssignmentItem = currentAssignmentItem->nextSpecificationItemWithSameQuestionParameter() ) != NULL );
+				( currentAssignmentItem = currentAssignmentItem->nextSelectedSpecificationItem() ) != NULL );
 				}
 			}
 		else
@@ -492,7 +473,7 @@ class WordAssignment
 							specificationResult.assignmentOrderNr = specificationNr;
 						}
 					while( specificationResult.assignmentOrderNr == NO_ORDER_NR &&
-					( currentSpecificationItem = currentSpecificationItem->nextSpecificationItemWithSameQuestionParameter() ) != NULL );
+					( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
 					}
 				}
 			}
@@ -546,11 +527,11 @@ class WordAssignment
 		else
 			{
 			// Find the specification of the assignment
-			if( ( foundSpecificationItem = myWordItem_->firstAssignmentOrSpecificationItem( false, false, false, ( isArchivedAssignment ? isNegative : false ), isPossessive, questionParameter, specificationWordItem ) ) != NULL )
+			if( ( foundSpecificationItem = myWordItem_->firstAssignmentOrSpecificationItem( false, false, ( isArchivedAssignment ? isNegative : false ), isPossessive, questionParameter, specificationWordItem ) ) != NULL )
 				{
 				if( foundSpecificationItem->hasExclusiveGeneralizationCollection() )
 					{
-					if( inactivateOrArchiveCurrentGeneralizationAssignments( isNegative, isPossessive, questionParameter, relationContextNr, specificationWordItem ) != RESULT_OK )
+					if( inactivateOrArchiveCurrentGeneralizationAssignments( isNegative, isPossessive, relationContextNr, specificationWordItem ) != RESULT_OK )
 						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate or archive current generalization assignments" );
 					}
 
@@ -558,7 +539,7 @@ class WordAssignment
 					{
 					if( foundSpecificationItem->isValueSpecification() )
 						{
-						if( ( specificationResult = assignSpecificationByValue( questionParameter, firstJustificationItem, specificationWordItem ) ).result != RESULT_OK )
+						if( ( specificationResult = assignSpecificationByValue( firstJustificationItem, specificationWordItem ) ).result != RESULT_OK )
 							myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to assign the value of a specification word" );
 						}
 					else
@@ -588,8 +569,6 @@ class WordAssignment
 	};
 
 /*************************************************************************
- *
  *	"The Lord has made the heavens his throne;
  *	from there he rules over everything." (Psalm 103:19)
- *
  *************************************************************************/

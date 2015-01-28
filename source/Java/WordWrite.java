@@ -2,46 +2,25 @@
  *	Class:			WordWrite
  *	Supports class:	WordItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize natural laws of intelligence contained in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural laws of intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class WordWrite
@@ -150,9 +129,8 @@ class WordWrite
 		return Constants.RESULT_OK;
 		}
 
-	protected byte writeSelectedRelationInfo( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isQuestion, WordItem writeWordItem )
+	protected byte writeSelectedRelationInfo( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isLanguageWord, boolean isQuestion, WordItem writeWordItem )
 		{
-		boolean isGrammarLanguage = myWordItem_.isLanguageWord();
 		short currentGrammarLanguageNr = CommonVariables.currentGrammarLanguageNr;
 		SpecificationResultType specificationResult;
 		SpecificationItem foundAssignmentItem;
@@ -163,7 +141,7 @@ class WordWrite
 			if( ( currentSpecificationItem = myWordItem_.firstSelectedSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, isQuestion ) ) != null )
 				{
 				do	{
-					if( ( isGrammarLanguage ||
+					if( ( isLanguageWord ||
 					currentSpecificationItem.grammarLanguageNr() == currentGrammarLanguageNr ) &&
 
 					writeWordItem.hasContextInWord( currentSpecificationItem.relationContextNr(), currentSpecificationItem.specificationWordItem() ) )
@@ -236,7 +214,7 @@ class WordWrite
 
 		if( writeSpecificationItem != null )
 			{
-			if( ( specificationResult = myWordItem_.findRelatedSpecification( true, writeSpecificationItem.isSelfGeneratedConclusion(), writeSpecificationItem ) ).result == Constants.RESULT_OK )
+			if( ( specificationResult = myWordItem_.findRelatedSpecification( true, writeSpecificationItem ) ).result == Constants.RESULT_OK )
 				{
 				isFirstRelatedSpecification = specificationResult.isFirstRelatedSpecification;
 				foundRelatedSpecificationItem = specificationResult.relatedSpecificationItem;
@@ -310,7 +288,8 @@ class WordWrite
 					isWritingSentenceWithOneSpecificationOnly = ( isWritingCurrentSpecificationWordOnly &&
 																writeSpecificationItem.lastWrittenSentenceWithOneSpecificationOnlyStringBuffer != null );
 
-					// To increase performance, use the last written sentence if still up-to-date
+					// To increase performance,
+					// use the last written sentence if still up-to-date
 					if( answerParameter == Constants.NO_ANSWER_PARAMETER &&
 					writeSpecificationItem.lastWrittenSentenceStringBuffer != null &&
 
@@ -342,7 +321,7 @@ class WordWrite
 							{
 							if( myWordItem_.selectGrammarToWriteSentence( isWritingCurrentSpecificationWordOnly, answerParameter, Constants.NO_GRAMMAR_LEVEL, currentGrammarLanguageWordItem.startOfGrammarItem(), writeSpecificationItem ) == Constants.RESULT_OK )
 								{
-								// Under certain conditions, the last written sentence will be stored, to be re-used again when needed
+								// Under certain conditions, the last written sentence will be stored, to be re-used again if needed
 								if( answerParameter == Constants.NO_ANSWER_PARAMETER &&
 								!writeSpecificationItem.hasHiddenSpecificationWord() &&
 								CommonVariables.writeSentenceStringBuffer != null &&
@@ -437,10 +416,8 @@ class WordWrite
 	};
 
 /*************************************************************************
- *
  *	"Tremble, O earth, at the presence of the Lord,
  *	at the presence of the God of Jacob.
  *	He turned the rock into a pool of water;
  *	yes, a spring of water flowed from solid rock." (Psalm 114:7-8)
- *
  *************************************************************************/

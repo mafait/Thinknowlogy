@@ -1,46 +1,25 @@
 /*
  *	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "List.h"
@@ -53,7 +32,8 @@
 		char *wordTypeString = NULL;
 
 		if( myList_ != NULL &&
-		!myList_->isAdminList() &&	// Don't show my word string when the item is in an admin list
+		// Don't show my word string if the item is in an admin list
+		!myList_->isAdminList() &&
 		myWordItem_ != NULL &&
 		( wordTypeString = myWordItem_->wordTypeString( true, queryWordTypeNr ) ) == NULL )
 			wordTypeString = myWordItem_->anyWordTypeString();
@@ -393,7 +373,7 @@
 			if( commonVariables_->hasFoundQuery )
 				strcat( commonVariables_->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status when not active
+			if( !isActiveItem() )	// Show status if not active
 				strcat( commonVariables_->queryString, statusString );
 
 			commonVariables_->hasFoundQuery = true;
@@ -420,7 +400,7 @@
 		statusString[0] = statusChar_;
 		strcpy( commonVariables_->queryString, EMPTY_STRING );
 
-		if( !isActiveItem() )	// Show status when not active
+		if( !isActiveItem() )	// Show status if not active
 			strcat( commonVariables_->queryString, statusString );
 
 		if( myWordString != NULL )
@@ -910,7 +890,6 @@
 		{
 		return ( justificationTypeNr == JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_BACK_FIRED_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION ||
@@ -1038,7 +1017,6 @@
 		{
 		switch( justificationTypeNr )
 			{
-			case JUSTIFICATION_TYPE_BACK_FIRED_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
 			case JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION:
 			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
 			case JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
@@ -1055,12 +1033,10 @@
 		}
 
 /*************************************************************************
- *
  *	"Give thanks to him who made the heavenly lights-
  *		His faithful love endures forever.
  *	the sun to rule the day
  *		His faithful love endures forever.
  *	and the moon and stars to rule the night.
  *		His faithful love endures forever." (Psalm 136:7-9)
- *
  *************************************************************************/

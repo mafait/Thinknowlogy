@@ -1,53 +1,32 @@
 ﻿/*
  *	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class Constants
 	{
 	// Version constants
 	protected static final String	PRODUCT_NAME =											"Thinknowlogy";
-	protected static final String	VERSION_NAME =											"2014r2a (George Boole)";
+	protected static final String	VERSION_NAME =											"2014r2b (Laws of Thought)";
 
 	// Character constants
 	protected static final char		BACK_SPACE_CHAR =										'\b';
@@ -57,12 +36,14 @@ class Constants
 	protected static final char		TAB_CHAR =												'\t';
 
 	// Console constants
-	protected static final short	CONSOLE_SLEEP_TIME =									20;		// in milliseconds
+	protected static final short	CONSOLE_SLEEP_TIME =									10;		// in milliseconds
 
 	protected static final short	CONSOLE_BORDER_SIZE =									4;		// in pixels
 	protected static final short	CONSOLE_BUTTON_PANE_HEIGHT =							35;		// in pixels
 	protected static final short	CONSOLE_ERROR_PANE_HEIGHT =								400;	// in pixels
 	protected static final short	CONSOLE_ERROR_PANE_WIDTH =								600;	// in pixels
+	protected static final short	CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_HEIGHT =			100;	// in pixels
+	protected static final short	CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_WIDTH =			600;	// in pixels
 	protected static final short	CONSOLE_MAXIMUM_FRAME_WIDTH_AT_STARTUP =				1280;	// in pixels
 	protected static final short	CONSOLE_TOP_BOTTOM_SPACE =								75;		// in pixels (space between top of screen and top of GUI and between bottom of GUI and bottom of screen)
 	protected static final short	CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS =					50; 
@@ -86,6 +67,8 @@ class Constants
 	protected static final String	CONSOLE_MONO_SPACED_FONT =								"Courier New";
 //	protected static final String	CONSOLE_MONO_SPACED_FONT =								"Lucida Console";
 
+	protected static final String	CONSOLE_CONNECT_FOUR_INTERFERENCE_MESSAGE_STRING =		"Notification";
+
 	// File constants
 	protected static final String	FILE_EXAMPLES_DIRECTORY_NAME_STRING =					"data/examples/";
 	protected static final String	FILE_GRAMMAR_DIRECTORY_NAME_STRING =					"data/grammar/";
@@ -98,7 +81,6 @@ class Constants
 	protected static final String	FILE_DEVELOPMENT_DIRECTORY_NAME_STRING =				"Release/";
 
 	protected static final String	FILE_STARTUP_NAME_STRING =								"startup";
-//	protected static final String	FILE_STARTUP_NAME_STRING =								"startup-nl";
 
 	protected static final String	FILE_EXTENSION_STRING =									".txt";
 	protected static final String	FILE_UTF_8_ENCODING_STRING =							"UTF-8";
@@ -368,30 +350,30 @@ class Constants
 	// Justification types
 	protected static final short	JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION =										0;
 	protected static final short	JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION =		1;
-	protected static final short	JUSTIFICATION_TYPE_BACK_FIRED_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION =		2;
-	protected static final short	JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =				3;
-	protected static final short	JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION =			4;
-	protected static final short	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION =						5;
-	protected static final short	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =									6;
-	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION =									7;
-	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION =								8;
-	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION =									9;
-	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION =											10;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION =			11;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =							12;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION =					13;
-	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION =										14;
+	protected static final short	JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =				2;
+	protected static final short	JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION =			3;
+	protected static final short	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION =						4;
+	protected static final short	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =									5;
 
-	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION =									15;
-	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION =								16;
-	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION =									17;
-	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION =											18;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION =			19;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION =							20;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION =					21;
-	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION =										22;
+	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION =									6;
+	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION =								7;
+	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION =									8;
+	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION =											9;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION =			10;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =							11;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION =					12;
+	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION =										13;
 
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =							23;
+	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION =									14;
+	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION =								15;
+	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION =									16;
+	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION =											17;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION =			18;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION =							19;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION =					20;
+	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION =										21;
+
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =							22;
 
 
 	//	Word types
@@ -704,21 +686,20 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_BOSTON =							210;
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_PRESIDENTS =						211;
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_CONNECT4 =						212;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_GREETING =						213;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_TOWER_OF_HANOI =					214;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_REASONING_FAMILY =							215;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_AMBIGUITY_SUBMENU =											218;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_PROGRAMMING_SUBMENU =										219;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_REASONING_SUBMENU =											220;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SUBMENU =											221;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_CONFLICT_SUBMENU =									222;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_JUSTIFICATION_REPORT_SUBMENU =						223;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_QUESTION_SUBMENU =									224;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SHOW_INFO_SUBMENU =									225;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_TOWER_OF_HANOI =					213;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_REASONING_FAMILY =							214;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_AMBIGUITY_SUBMENU =											216;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_PROGRAMMING_SUBMENU =										217;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_REASONING_SUBMENU =											218;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SUBMENU =											219;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_CONFLICT_SUBMENU =									220;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_JUSTIFICATION_REPORT_SUBMENU =						221;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_QUESTION_SUBMENU =									222;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SHOW_INFO_SUBMENU =									223;
 
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_BACK =														226;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_HELP =														227;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE =											228;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_BACK =														224;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_HELP =														225;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE =											226;
 
 	// Console (programming/connect4 sub-menu)
 	protected static final short	INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_MY_SET_IS_A =									300;
@@ -1006,8 +987,6 @@ class Constants
 	};
 
 /*************************************************************************
- *
  *	"He will bless those who fear the Lord,
  *	both great and lowly." (Psalm 115:13)
- *
  *************************************************************************/

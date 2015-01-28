@@ -8,10 +8,18 @@ Show " * Reasoning in natural language:".
 Show "   - drawing conclusions (more advanced than scientific solutions),".
 Show "   - making assumptions (with self-adjusting level of uncertainty),".
 Show "   - asking questions (about gaps in the knowledge),".
-Show "   - detecting conflicts in the knowledge;".
-Show " * Building semantics autonomously (no vocabularies):".
+Show "   - detecting conflicts in the knowledge,".
 Show "   - detecting some cases of semantic ambiguity;".
 Show " * Multilingualism, proving: Natural Laws of Intelligence are universal.".
+Show "------------------------------------------------------------------------------".
+Show " According to the evolution theory, there is no systematic relationship".
+Show " between reasoning and language, while the biblical worldview assumes".
+Show " that reasoning and language are closely related. Being based on the".
+Show " biblical worldview, only Thinknowlogy is able to process the meaning".
+#C++#Show " of words like definite article \"the\", conjunction \"or\", possessive".
+#C++#Show " verb \"has / have\" and past tense verbs \"was / were\" and \"had\".".
+#Java#Show " of words like definite article “the”, conjunction “or”, possessive".
+#Java#Show " verb “has / have” and past tense verbs “was / were” and “had”.".
 Show "------------------------------------------------------------------------------".
 #C++#Show " Help.\t\t\t\t\t\t\t* Show more help info".
 #C++#Show " \~{languageName}\t\t\t\t\t* Change language".
@@ -21,10 +29,9 @@ Show "--------------------------------------------------------------------------
 #C++#Show " Read the file \"English/programming/greeting\".\t\t* Greeting (salutation)".
 #C++#Show " Read the file \"English/programming/tower of Hanoi\".\t* Solving a puzzle".
 #C++#Show " Read the file \"English/reasoning/family\".\t\t* Reasoning".
-#Java#Show " Use button <ambiguity>		to learn about detecting ambiguity".
-#Java#Show " Use button <programming>	to learn about programming in natural language".
-#Java#Show " Use button <reasoning>		to learn about reasoning in natural language".
-#Java#Show "------------------------------------------------------------------------------".
-Show " Available grammar languages:	~!`grammar language`<s>'~.".
-Show " Available interface languages:	~!`interface language`<s>'~.".
+#Java#Show " Use button <ambiguity> to learn about detection of ambiguity.".
+#Java#Show " Use button <programming> to learn about programming in natural language.".
+#Java#Show " Use button <reasoning> to learn about reasoning in natural language.".
+Show "------------------------------------------------------------------------------".
+Show " Available languages: ~!`grammar language`<s>'~.".
 Show "------------------------------------------------------------------------------".

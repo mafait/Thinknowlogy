@@ -2,6 +2,6 @@
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 Jan is een ouder van Paul, Johan en Laura.
 Anna is een ouder van Paul, Johan en Laura.
-Jan is deel van een gezin.
-Anna is deel van een gezin.
+Jan is een persoon.
+Anna is een persoon.
 # Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

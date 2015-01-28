@@ -2,46 +2,25 @@
  *	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 #include "AdminItem.h"
@@ -68,12 +47,14 @@ class AdminQuery
 
 	void clearQuerySelections()
 		{
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			adminItem_->wordList->clearQuerySelectionsInWordList();
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				adminItem_->adminListArray[adminListNr]->clearQuerySelectionsInList();
 			}
 		}
@@ -143,12 +124,14 @@ class AdminQuery
 		commonVariables_->nReplacedQueryItems = 0;
 		commonVariables_->nDeletedQueryItems = 0;
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			adminItem_->wordList->countQueryInWordList();
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				adminItem_->adminListArray[adminListNr]->countQueryInList();
 			}
 
@@ -185,15 +168,17 @@ class AdminQuery
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "showQueryResult";
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, ( queryWordTypeNr == WORD_TYPE_UNDEFINED ? commonVariables_->matchingWordTypeNr : queryWordTypeNr ), queryWidth ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to show the query result in my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->showQueryResultInList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) != RESULT_OK )
 					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to show the query result" );
@@ -352,15 +337,17 @@ class AdminQuery
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "itemQuery";
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query item numbers in my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->itemQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != RESULT_OK )
 					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to query item numbers in" );
@@ -374,15 +361,17 @@ class AdminQuery
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "listQuery";
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->listQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString ) != RESULT_OK )
 					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to do a list query module" );
@@ -396,15 +385,17 @@ class AdminQuery
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordTypeQuery";
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query word types in my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->wordTypeQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr ) != RESULT_OK )
 					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to word types" );
@@ -418,15 +409,17 @@ class AdminQuery
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "parameterQuery";
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query parameters in my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->parameterQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter ) != RESULT_OK )
 					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to parameters" );
@@ -440,7 +433,8 @@ class AdminQuery
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordQuery";
 
-		if( adminItem_->wordList != NULL )		// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query the words in my word list" );
@@ -453,15 +447,17 @@ class AdminQuery
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQuery";
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query word references in my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->wordReferenceQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString ) != RESULT_OK )
 					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to query word references" );
@@ -475,15 +471,17 @@ class AdminQuery
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "stringQuery";
 
-		if( adminItem_->wordList != NULL )							// Inside words
+		// In words
+		if( adminItem_->wordList != NULL )
 			{
 			if( adminItem_->wordList->stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString ) != RESULT_OK )
 				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query strings in my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )	// Inside admin lists
+			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->stringQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString ) != RESULT_OK )
 					return myWordItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to query strings" );
@@ -1245,8 +1243,6 @@ class AdminQuery
 	};
 
 /*************************************************************************
- *
  *	"Honor the Lord, you heavenly beings;
  *	honor the Lord for his glory and strength." (Psalm 29:1)
- *
  *************************************************************************/

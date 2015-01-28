@@ -1,3 +1,5 @@
-﻿Changes in Thinknowlogy 2014r2a (George Boole) compared to Thinknowlogy 2014r2 (Deeper Thought):
+﻿Changes in Thinknowlogy 2014r2b (Laws of Thought) compared to Thinknowlogy 2014r2 (Deepest Thought):
 - Bug fixes;
+- Improved performance;
+- Improved reasoning;
 - Added "The only option left" conclusion to answer questions.

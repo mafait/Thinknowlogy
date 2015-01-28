@@ -2,46 +2,25 @@
  *	Class:			AdminWriteSpecification
  *	Supports class:	AdminItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2014r2a (George Boole)
- *
+ *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
  *************************************************************************/
-/*
- *	Thinknowlogy is grammar-based software,
- *	designed to utilize Natural Laws of Intelligence in grammar,
- *	in order to create intelligence through natural language in software,
- *	which is demonstrated by:
- *	- Programming in natural language;
- *	- Reasoning in natural language:
- *		- drawing conclusions (more advanced than scientific solutions),
- *		- making assumptions (with self-adjusting level of uncertainty),
- *		- asking questions (about gaps in the knowledge),
- *		- detecting conflicts in the knowledge;
- *	- Building semantics autonomously (no vocabularies):
- *		- detecting some cases of semantic ambiguity;
- *	- Multilingualism, proving: Natural Laws of Intelligence are universal.
- *
- *************************************************************************/
-/*
- *	Copyright (C) 2009-2014, Menno Mafait
+/*	Copyright (C) 2009-2015, Menno Mafait
  *	Your additions, modifications, suggestions and bug reports
  *	are welcome at http://mafait.org
- *
  *************************************************************************/
-/*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 of the License, or
- *  (at your option) any later version.
+/*	This program is free software: you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation, either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
+ *	You should have received a copy of the GNU General Public License along
+ *	with this program; if not, write to the Free Software Foundation, Inc.,
+ *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
 class AdminWriteSpecification
@@ -159,19 +138,14 @@ class AdminWriteSpecification
 												{
 												// Skip generalization conjunctions. Example: "John has 2 sons and a daughter."
 												if( currentReadItem.isGeneralizationSpecification() ||
-
 												// Skip linked conjunctions. Example: "Guest is a user and has no password."
 												currentReadItem.isLinkedGeneralizationConjunction() ||
-
 												// Skip grammar conjunctions
 												currentReadItem.isSentenceConjunction() ||
-
 												// Skip extra comma in sentence that isn't written. See grammar file for: '( symbolComma )'
 												currentReadItem.isSymbol() ||
-
 												// Skip text until it is implemented
 												currentReadItem.isText() ||
-
 												// Skip if an article or adjective has a different parameter
 												( adminItem_.hasFoundDifferentParameter() &&
 
@@ -228,6 +202,7 @@ class AdminWriteSpecification
 		boolean isForcingResponseNotBeingFirstSpecification;
 		boolean isHiddenExclusiveSpecificationSubstitutionAssumption;
 		boolean isPossessive;
+		boolean isProperName;
 		boolean isSelfGenerated;
 		boolean isSelfGeneratedAssumption;
 		boolean isWritingCurrentSpecificationWordOnly;
@@ -244,6 +219,7 @@ class AdminWriteSpecification
 
 		if( writeWordItem != null )
 			{
+			isProperName = writeWordItem.isProperName();
 			userSpecificationCollectionNr = writeWordItem.userSpecificationCollectionNr();
 
 			if( ( currentSpecificationItem = writeWordItem.firstSelectedSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, ( isWritingUserQuestions || isWritingSelfGeneratedQuestions ) ) ) != null )
@@ -257,6 +233,7 @@ class AdminWriteSpecification
 					isSelfGeneratedAssumption = currentSpecificationItem.isSelfGeneratedAssumption();
 
 					currentSpecificationCollectionNr = currentSpecificationItem.specificationCollectionNr();
+
 					firstJustificationItem = currentSpecificationItem.firstJustificationItem();
 					specificationWordItem = currentSpecificationItem.specificationWordItem();
 
@@ -266,40 +243,35 @@ class AdminWriteSpecification
 					isCurrentSpecificationCollectedWithItself = ( specificationWordItem != null &&
 																specificationWordItem.isCollectedWithItself() );
 
-					firstRelationSpecificationItem = writeWordItem.firstRelationSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, currentSpecificationItem.isNegative(), isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem );
+					firstRelationSpecificationItem = null;
 
-					if( firstJustificationItem != null &&
+					if( !isWritingJustification &&
+					!currentSpecificationItem.hasRelationContext() &&
+					currentSpecificationItem.isSelfGeneratedAssumption() )
+						firstRelationSpecificationItem = writeWordItem.firstRelationSpecificationItem( currentSpecificationItem.isNegative(), isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem );
+
+					if( isProperName &&
+					firstJustificationItem != null &&
 					specificationWordItem != null &&
 
+					( ( isCurrentSpecificationCollectedWithItself &&
+
+					// Hide opposite possessive conditional specification assumption (with a specification word that is collected with itself)
+					( firstJustificationItem.isOppositePossessiveConditionalSpecificationAssumption() ||
+
+					// Hide possessive reversible assumption or conclusion (with a specification word that is collected with itself)
+					( firstJustificationItem.isPossessiveReversibleAssumptionOrConclusion() &&
+					!currentSpecificationItem.hasSpecificationCompoundCollection() &&
+					myWordItem_.nContextWordsInAllWords( currentSpecificationItem.relationContextNr(), specificationWordItem ) == 1 ) ) ) ||
+
 					// Hide exclusive specification substitution assumption
-					( ( firstJustificationItem.isExclusiveSpecificationSubstitutionAssumption() &&
+					( firstJustificationItem.isExclusiveSpecificationSubstitutionAssumption() &&
 
 					( ( isCurrentSpecificationCollectedWithItself &&
 					!firstJustificationItem.hasHiddenPrimarySpecification() ) ||
 
-					( !isWritingJustification &&
-					!currentSpecificationItem.hasRelationContext() &&
-					firstRelationSpecificationItem != null &&
-					firstRelationSpecificationItem.assumptionLevel() <= currentSpecificationItem.assumptionLevel() ) ) ) ||
-
-					// Hide extra possessive reversible conclusion with only one relation context
-					( isCurrentSpecificationCollectedWithItself &&
-					firstJustificationItem.isPossessiveReversibleConclusion() &&
-					firstJustificationItem.orderNr > Constants.NO_ORDER_NR &&
-
-					( firstJustificationItem.hasSecondaryAssignment() ||
-
-					( !isPossessive &&
-					firstJustificationItem.hasSecondaryUserSpecification() ) ) &&
-
-					myWordItem_.nContextWordsInAllWords( currentSpecificationItem.relationContextNr(), specificationWordItem ) == 1 &&
-
-					// Uncertainty starts with more than one relation word
-					( CommonVariables.nUserRelationWords > 1 ||
-
-					// Justification of older sentence has multiple relation context
-					( firstJustificationItem.isOlderItem() &&
-					firstJustificationItem.hasSecondarySpecificationWithMultipleRelationContext() ) ) ) ) )
+					( firstRelationSpecificationItem != null &&
+					firstRelationSpecificationItem.assumptionLevel() <= currentSpecificationItem.assumptionLevel() ) ) ) ) )
 						isHiddenExclusiveSpecificationSubstitutionAssumption = true;
 
 					// Filter on self-generated specifications
@@ -607,54 +579,51 @@ class AdminWriteSpecification
 			do	{
 				if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
 					{
-					if( currentGeneralizationItem.isRelation() )
+					// Respond with active related specifications
+					if( currentGeneralizationWordItem.writeSelectedRelationInfo( false, false, false, false, writeWordItem ) == Constants.RESULT_OK )
 						{
-						// Respond with active related specifications
-						if( currentGeneralizationWordItem.writeSelectedRelationInfo( false, false, false, false, writeWordItem ) == Constants.RESULT_OK )
+						// Respond with active related specification questions
+						if( currentGeneralizationWordItem.writeSelectedRelationInfo( false, false, false, true, writeWordItem ) == Constants.RESULT_OK )
 							{
-							// Respond with active related specification questions
-							if( currentGeneralizationWordItem.writeSelectedRelationInfo( false, false, false, true, writeWordItem ) == Constants.RESULT_OK )
+							// Respond with active related assignments
+							if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, false, false, false, writeWordItem ) == Constants.RESULT_OK )
 								{
-								// Respond with active related assignments
-								if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, false, false, false, writeWordItem ) == Constants.RESULT_OK )
+								// Respond with active related assignment questions
+								if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, false, false, true, writeWordItem ) == Constants.RESULT_OK )
 									{
-									// Respond with active related assignment questions
-									if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, false, false, true, writeWordItem ) == Constants.RESULT_OK )
+									// Respond with inactive related assignments
+									if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, true, false, false, writeWordItem ) == Constants.RESULT_OK )
 										{
-										// Respond with inactive related assignments
-										if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, true, false, false, writeWordItem ) == Constants.RESULT_OK )
+										// Respond with inactive related assignment questions
+										if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, true, false, true, writeWordItem ) == Constants.RESULT_OK )
 											{
-											// Respond with inactive related assignment questions
-											if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, true, false, true, writeWordItem ) == Constants.RESULT_OK )
+											// Respond with archive related assignments
+											if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, false, true, false, writeWordItem ) == Constants.RESULT_OK )
 												{
-												// Respond with archive related assignments
-												if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, false, true, false, writeWordItem ) == Constants.RESULT_OK )
-													{
-													// Respond with archive related assignment questions
-													if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, false, true, true, writeWordItem ) != Constants.RESULT_OK )
-														return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write archive related assignment questions" );
-													}
-												else
-													return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write archive related assignment" );
+												// Respond with archive related assignment questions
+												if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, false, true, true, writeWordItem ) != Constants.RESULT_OK )
+													return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write archive related assignment questions" );
 												}
 											else
-												return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write inactive related assignment questions" );
+												return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write archive related assignment" );
 											}
 										else
-											return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related assignments" );
+											return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write inactive related assignment questions" );
 										}
 									else
-										return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related assignment assignments" );
+										return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related assignments" );
 									}
 								else
-									return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related assignments" );
+									return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related assignment assignments" );
 								}
 							else
-								return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related specification questions" );
+								return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related assignments" );
 							}
 						else
-							return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related specifications" );
+							return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related specification questions" );
 						}
+					else
+						return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related specifications" );
 					}
 				else
 					return myWordItem_.startErrorInItem( 1, moduleNameString_, "I found an undefined generalization word" );
@@ -825,6 +794,7 @@ class AdminWriteSpecification
 	protected byte writeSelfGeneratedInfo( boolean isWritingSelfGeneratedConclusions, boolean isWritingSelfGeneratedAssumptions, boolean isWritingSelfGeneratedQuestions )
 		{
 		WordItem currentWordItem;
+
 		isFirstSelfGeneratedAssumption_ = true;
 		isFirstSelfGeneratedConclusion_ = true;
 		isFirstSelfGeneratedQuestion_ = true;
@@ -914,8 +884,6 @@ class AdminWriteSpecification
 	};
 
 /*************************************************************************
- *
  *	"Give thanks to the Lord, for he is good!
  *	His faithful love endures forever." (Psalm 107:1)
- *
  *************************************************************************/
