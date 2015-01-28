@@ -9,8 +9,7 @@ which is demonstrated by:
 	- drawing conclusions (more advanced than scientific solutions),
 	- making assumptions (with self-adjusting level of uncertainty),
 	- asking questions (about gaps in the knowledge),
-	- detecting conflicts in the knowledge;
- * Building semantics autonomously (no vocabularies):
+	- detecting conflicts in the knowledge,
 	- detecting some cases of semantic ambiguity;
  * Multilingualism, proving: Natural Laws of Intelligence are universal.
 
@@ -24,7 +23,7 @@ How to start:
 - The example files can be found in the examples subfolder.
 
 -----------------------
-Thinknowlogy2014r2a.jar
+Thinknowlogy2014r2b.jar
 -----------------------
 - The GUI (Graphical User Interface) has handy buttons to guide you;
 - This software uses Java. So, go to Java Runtime Environment (http://java.com/)
