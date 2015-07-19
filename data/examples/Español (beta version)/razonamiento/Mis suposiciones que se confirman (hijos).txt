@@ -1,6 +1,0 @@
-﻿Lea el archivo "Español (beta version)/razonamiento/definición de familia".
-Juan es el padre y Ana es la madre de Pedro, José y Luisa.
-Pedro es hijo de Juan y Ana.
-José es hijo de Juan y Ana.
-Luisa es hija de Juan y Ana.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.

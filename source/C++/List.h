@@ -1,11 +1,11 @@
 /*
  *	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@
 #ifndef LIST
 #define LIST 1
 
-#include <limits.h>
 #include <stdlib.h>
 #include "Item.h"
 
@@ -40,7 +39,6 @@ class List
 	friend class AdminCleanup;
 	friend class AdminQuery;
 	friend class Item;
-	friend class JustificationList;
 	friend class ListCleanup;
 	friend class ListQuery;
 	friend class SpecificationItem;
@@ -83,7 +81,7 @@ class List
 	// Constructor / deconstructor
 
 	List();
-	virtual ~List();	// Virtual deconstructor
+	virtual ~List();
 
 
 	// Protected error functions
@@ -121,8 +119,8 @@ class List
 
 	ResultType addItemToList( char statusChar, Item *newItem );
 
-	ResultType activateItem( bool isSkipTest, Item *activateItem );
-	ResultType inactivateItem( bool isSkipTest, Item *inactivateItem );
+	ResultType activateItem( Item *activateItem );
+	ResultType inactivateItem( Item *inactivateItem );
 	ResultType archiveItem( Item *archiveItem );
 	ResultType replaceItem( Item *replaceItem );
 	ResultType deleteItem( bool isAvailableForRollback, Item *deleteItem );
@@ -177,7 +175,7 @@ class List
 	ResultType wordQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems );
 	ResultType wordReferenceQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *wordReferenceNameString );
 	ResultType stringQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *queryString );
-	ResultType showQueryResultInList( bool showOnlyWords, bool showOnlyWordReferences, bool showOnlyStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth );
+	ResultType showQueryResultInList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth );
 	};
 #endif
 

@@ -1,4 +1,0 @@
-﻿Iedere ouder is een vader of een moeder.
-Iedere vader is een man.
-Iedere moeder is een vrouw.
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

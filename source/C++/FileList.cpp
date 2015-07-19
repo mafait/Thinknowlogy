@@ -2,11 +2,11 @@
  *	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@
 class FileList : private List
 	{
 	friend class AdminImperative;
-	friend class AdminReadSentence;
 	friend class AdminItem;
 	friend class AdminReadFile;
 
@@ -136,6 +135,12 @@ class FileList : private List
 			delete deleteItem;
 			}
 
+		if( firstInactiveItem() != NULL )
+			fprintf( stderr, "\nError: Class FileList has inactive items." );
+
+		if( firstArchivedItem() )
+			fprintf( stderr, "\nError: Class FileList has archived items." );
+
 		searchItem = (FileItem *)firstReplacedItem();
 
 		while( searchItem != NULL )
@@ -158,7 +163,7 @@ class FileList : private List
 
 	// Protected functions
 
-	bool showLine()
+	bool isShowingLine()
 		{
 		FileItem *searchItem = firstActiveFileItem();
 
@@ -180,7 +185,8 @@ class FileList : private List
 
 		if( currentFileItem != NULL )
 			{
-			if( currentFileItem == closeFileItem )	// Check to be sure to close the right file
+			// Check to be sure to close the right file
+			if( currentFileItem == closeFileItem )
 				{
 					if( currentFileItem->readFile() != NULL )
 						{
@@ -202,7 +208,6 @@ class FileList : private List
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		FileItem *searchItem = firstActiveFileItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
@@ -233,7 +238,7 @@ class FileList : private List
 		return RESULT_OK;
 		}
 */
-	FileResultType openFile( bool isAddingSubPath, bool isInfoFile, bool reportErrorIfFileDoesNotExist, const char *defaultSubPathString, const char *fileNameString )
+	FileResultType openFile( bool isAddingSubPath, bool isInfoFile, bool isReportingErrorIfFileDoesNotExist, const char *defaultSubPathString, const char *fileNameString )
 		{
 		FileResultType fileResult;
 		FILE *readFile;
@@ -247,7 +252,8 @@ class FileList : private List
 				if( strlen( fileNameString ) > 0 )
 					{
 					if( isAddingSubPath &&
-					fileNameString[0] != SYMBOL_SLASH &&		// Skip absolute path
+					// Skip absolute path
+					fileNameString[0] != SYMBOL_SLASH &&
 					fileNameString[0] != SYMBOL_BACK_SLASH &&
 					!doesFileNameContainSubPath( fileNameString, defaultSubPathString ) )
 						strcat( readFileNameString, defaultSubPathString );
@@ -269,7 +275,7 @@ class FileList : private List
 						}
 					else
 						{
-						if( reportErrorIfFileDoesNotExist )
+						if( isReportingErrorIfFileDoesNotExist )
 							startError( functionNameString, NULL, NULL, "I couldn't open file for reading: \"", readFileNameString, "\"" );
 						}
 					}
@@ -284,12 +290,6 @@ class FileList : private List
 
 		fileResult.result = commonVariables()->result;
 		return fileResult;
-		}
-
-	char *currentReadFileNameString()
-		{
-		FileItem *currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == NULL ? NULL : currentFileItem->readFileNameString() );
 		}
 
 	FILE *currentReadFile()

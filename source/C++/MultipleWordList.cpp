@@ -2,11 +2,11 @@
  *	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ class MultipleWordList : private List
 		return (MultipleWordItem *)firstActiveItem();
 		}
 
-	bool foundMultipleWordItem( unsigned short wordTypeNr, WordItem *multipleWordItem )
+	bool hasFoundMultipleWordItem( unsigned short wordTypeNr, WordItem *multipleWordItem )
 		{
 		MultipleWordItem *searchItem = firstActiveMultipleWordItem();
 
@@ -74,6 +74,12 @@ class MultipleWordList : private List
 			delete deleteItem;
 			}
 
+		if( firstInactiveItem() != NULL )
+			fprintf( stderr, "\nError: Class MultipleWordList has inactive items." );
+
+		if( firstArchivedItem() )
+			fprintf( stderr, "\nError: Class MultipleWordList has archived items." );
+
 		searchItem = (MultipleWordItem *)firstReplacedItem();
 
 		while( searchItem != NULL )
@@ -96,8 +102,9 @@ class MultipleWordList : private List
 
 	// Protected functions
 
-	bool isMultipleNounWordStartingWith( char *sentenceString )
+	unsigned short matchingMultipleSingularNounWordParts( char *sentenceString )
 		{
+		unsigned short currentLanguageNr = commonVariables()->currentLanguageNr;
 		MultipleWordItem *searchItem = firstActiveMultipleWordItem();
 		WordItem *multipleWordItem;
 		char *multipleWordString;
@@ -107,12 +114,13 @@ class MultipleWordList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->isSingularNoun() &&
+				searchItem->wordTypeLanguageNr() == currentLanguageNr &&
 				( multipleWordItem = searchItem->multipleWordItem() ) != NULL )
 					{
 					if( ( multipleWordString = multipleWordItem->singularNounString() ) != NULL )
 						{
 						if( strncmp( sentenceString, multipleWordString, strlen( multipleWordString ) ) == 0 )
-							return true;
+							return searchItem->nWordParts();
 						}
 					}
 
@@ -120,7 +128,7 @@ class MultipleWordList : private List
 				}
 			}
 
-		return false;
+		return 0;
 		}
 
 	ResultType checkWordItemForUsage( WordItem *unusedWordItem )
@@ -144,7 +152,7 @@ class MultipleWordList : private List
 		return RESULT_OK;
 		}
 
-	ResultType addMultipleWord( unsigned short wordTypeNr, WordItem *multipleWordItem )
+	ResultType addMultipleWord( unsigned short nWordParts, unsigned short wordTypeNr, WordItem *multipleWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addMultipleWord";
 
@@ -155,9 +163,9 @@ class MultipleWordList : private List
 				{
 				if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 					{
-					if( !foundMultipleWordItem( wordTypeNr, multipleWordItem ) )
+					if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
 						{
-						if( addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( wordTypeNr, multipleWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
+						if( addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, commonVariables()->currentLanguageNr, wordTypeNr, multipleWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
 							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active multiple word item" );
 						}
 					}
@@ -175,7 +183,6 @@ class MultipleWordList : private List
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		MultipleWordItem *searchItem = firstActiveMultipleWordItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 

@@ -2,11 +2,11 @@
  *	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -111,7 +111,7 @@ class GrammarList : private List
 		firstWordEndingGrammarItem_ = NULL;
 		startOfGrammarItem_ = NULL;
 
-		initializeListVariables( WORD_GRAMMAR_LANGUAGE_LIST_SYMBOL, "GrammarList", commonVariables, myWordItem );
+		initializeListVariables( WORD_GRAMMAR_LIST_SYMBOL, "GrammarList", commonVariables, myWordItem );
 		}
 
 	~GrammarList()
@@ -125,6 +125,12 @@ class GrammarList : private List
 			searchItem = searchItem->nextGrammarItem();
 			delete deleteItem;
 			}
+
+		if( firstInactiveItem() != NULL )
+			fprintf( stderr, "\nError: Class GrammarList has inactive items." );
+
+		if( firstArchivedItem() )
+			fprintf( stderr, "\nError: Class GrammarList has archived items." );
 
 		searchItem = (GrammarItem *)firstReplacedItem();
 
@@ -189,25 +195,6 @@ class GrammarList : private List
 	bool isCheckingGrammarNeeded()
 		{
 		return isCheckingGrammarNeeded_;
-		}
-
-	unsigned short guideByGrammarStringWordTypeNr( char *guideByGrammarString )
-		{
-		GrammarItem *searchItem = firstActiveGrammarItem();
-
-		if( guideByGrammarString != NULL )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->guideByGrammarString != NULL &&
-				strcmp( guideByGrammarString, searchItem->guideByGrammarString ) == 0 )
-					return searchItem->grammarWordTypeNr();
-
-				searchItem = searchItem->nextGrammarItem();
-				}
-			}
-
-		return WORD_TYPE_UNDEFINED;
 		}
 
 	GrammarResultType checkOnWordEnding( unsigned short grammarParameter, size_t originalWordStringLength, char *originalWordString )
@@ -318,7 +305,7 @@ class GrammarList : private List
 						searchItem = searchItem->nextGrammarItem();
 					}
 				else
-					startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I found a grammar word without grammar string" );
+					startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I've found a grammar word without grammar string" );
 				}
 			}
 		else
@@ -404,7 +391,7 @@ class GrammarList : private List
 					if( isIdentical &&
 					currentGrammarItem == NULL &&
 					duplicateGrammarItem == NULL )
-						startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I found a duplicate grammar definition" );
+						startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I've found a duplicate grammar definition" );
 					}
 				while( commonVariables()->result == RESULT_OK &&
 				( duplicateDefinitionGrammarItem = duplicateDefinitionGrammarItem->nextDefinitionGrammarItem ) != NULL );
@@ -556,7 +543,6 @@ class GrammarList : private List
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		GrammarItem *searchItem = firstActiveGrammarItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 

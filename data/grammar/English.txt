@@ -1,28 +1,11 @@
-﻿#
-#	File:		English.txt
-#	Scope:		Used by the Thinknowlogy application
+﻿#----------------------------------------------------------------------------
 #	Purpose:	To define the grammar for the English language
-#	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+#	Version:	Thinknowlogy 2015r1beta (Corazón)
 #----------------------------------------------------------------------------
 #	Copyright (C) 2009-2015, Menno Mafait
-#	Your additions, modifications, suggestions and bug reports
+#	Your suggestions, modifications and bug reports
 #	are welcome at http://mafait.org
 #----------------------------------------------------------------------------
-#	This program is free software: you can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation, either version 2 of the License, or
-#	(at your option) any later version.
-#
-#	This program is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
-#
-#	You should have received a copy of the GNU General Public License along
-#	with this program; if not, write to the Free Software Foundation, Inc.,
-#	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-#----------------------------------------------------------------------------
-
 
 #----------- Word definitions -----------
 
@@ -66,36 +49,37 @@
 @6		:609	$adjective-No												no
 @6		:610	$adjective-Called											called
 #@6		:611	$adjective-Called
-@6		:612	$adjective-Every											every
-#@6		:613	$adjective-Every
-@6		:614	$adjective-past-tense										previous
-#@6		:615	$adjective-past-tense
-@6		:616	$adjective-present-tense									current
-#@6		:617	$adjective-present-tense
-@6		:618	$adjective-New												new
-#@6		:619	$adjective-New
-#@6		:620	$adjective-future-tense										next
-#@6		:621	$adjective-future-tense
-@6		:622	$adjective-Odd-or-Even		"adjective (odd/even)"			odd
-@6		:623	$adjective-Odd-or-Even		"adjective (odd/even)"			even
-@6		:624	$adjective-comparison		"adjective (comparison)"		earlier
-@6		:625	$adjective-comparison		"adjective (comparison)"		less
-@6		:626	$adjective-comparison		"adjective (comparison)"		lower
-@6		:627	$adjective-comparison		"adjective (comparison)"		smaller
-@6		:628	$adjective-comparison		"adjective (comparison)"		equal
-@6		:629	$adjective-comparison		"adjective (comparison)"		same
-@6		:630	$adjective-comparison		"adjective (comparison)"		bigger
-@6		:631	$adjective-comparison		"adjective (comparison)"		higher
-@6		:632	$adjective-comparison		"adjective (comparison)"		larger
-@6		:633	$adjective-comparison		"adjective (comparison)"		later
-@6		:634	$adjective-comparison		"adjective (comparison)"		more
+#@6		:612	$adjective-Called
+@6		:613	$adjective-Every											every
+#@6		:614	$adjective-Every
+@6		:615	$adjective-past-tense										previous
+#@6		:616	$adjective-past-tense
+@6		:617	$adjective-present-tense									current
+#@6		:618	$adjective-present-tense
+@6		:619	$adjective-New												new
+#@6		:620	$adjective-New
+#@6		:621	$adjective-future-tense										next
+#@6		:622	$adjective-future-tense
+@6		:623	$adjective-Odd-or-Even		"adjective (odd/even)"			odd
+@6		:624	$adjective-Odd-or-Even		"adjective (odd/even)"			even
+@6		:625	$adjective-comparison		"adjective (comparison)"		earlier
+@6		:626	$adjective-comparison		"adjective (comparison)"		less
+@6		:627	$adjective-comparison		"adjective (comparison)"		lower
+@6		:628	$adjective-comparison		"adjective (comparison)"		smaller
+@6		:629	$adjective-comparison		"adjective (comparison)"		equal
+@6		:630	$adjective-comparison		"adjective (comparison)"		same
+@6		:631	$adjective-comparison		"adjective (comparison)"		bigger
+@6		:632	$adjective-comparison		"adjective (comparison)"		higher
+@6		:633	$adjective-comparison		"adjective (comparison)"		larger
+@6		:634	$adjective-comparison		"adjective (comparison)"		later
+@6		:635	$adjective-comparison		"adjective (comparison)"		more
 
 
 #--- Adverbs ---
 @7		:0		$adverb
 @7		:700	$adverb-Anymore												anymore
 @7		:701	$adverb-As													as
-@7		:702	$adverb-uncertainty			"adverb (uncertainty)"			may-be
+@7		:702	$adverb-uncertainty			"adverb (uncertainty)"			maybe
 @7		:703	$adverb-uncertainty			"adverb (uncertainty)"			possibly
 @7		:704	$adverb-uncertainty			"adverb (uncertainty)"			probably
 @7		:705	$adverb-Not													not
@@ -135,21 +119,21 @@
 
 
 #--- Singular nouns ---
-@11		:0	$noun-singular					"singular noun"
+@11		:0		$noun-singular					"singular noun"
 @11		:1100	$noun-singular												developer
 @11		:1101	$noun-singular												expert
 @11		:1102	$noun-singular												file
-@11		:1103	$noun-singular												grammar language
-@11		:1104	$noun-singular												interface language
-@11		:1105	$noun-singular												justification report
-@11		:1106	$noun-singular												head
-@11		:1107	$noun-singular												tail
-@11		:1108	$noun-singular												mind
-@11		:1109	$noun-singular												number
-@11		:1110	$noun-singular												password
-@11		:1111	$noun-singular												solve level
-@11		:1112	$noun-singular												solve method
-@11		:1113	$noun-singular												solve strategy
+@11		:1103	$noun-singular												justification report
+@11		:1104	$noun-singular												head
+@11		:1105	$noun-singular												tail
+@11		:1106	$noun-singular												language
+@11		:1107	$noun-singular												mind
+@11		:1108	$noun-singular												number
+@11		:1109	$noun-singular												password
+@11		:1110	$noun-singular												solve level
+@11		:1111	$noun-singular												solve method
+@11		:1112	$noun-singular												solve strategy
+@11		:1113	$noun-singular												startup language
 @11		:1115	$noun-singular												user
 @11		:1116	$noun-singular-Information									information
 @11		:1117	$noun-singular-Part											part
@@ -235,11 +219,10 @@
 #--- Prepositions ---
 @21		:0		$preposition
 @21		:2100	$preposition												about
-@21		:2101	$preposition												for
-@21		:2102	$preposition												from
-@21		:2103	$preposition												in
-@21		:2104	$preposition												to
-@21		:2105	$preposition-Of												of
+@21		:2101	$preposition												from
+@21		:2102	$preposition												in
+@21		:2103	$preposition												to
+@21		:2104	$preposition-Of												of
 
 
 #--- Singular verbs ---
@@ -296,15 +279,15 @@
 
 
 #--- Masculine proper name endings ---
-#@0		:3001	$s
+#@0		:3001	$?
 
 
 #--- Feminine singular noun endings ---
-#@0		:3002	$a
+#@0		:3002	$?
 
 
 #--- Masculine singular noun endings ---
-#@0		:3003	$0
+#@0		:3003	$?
 
 
 #--- Plural noun endings ---
@@ -436,8 +419,7 @@
 		$singular-structure-specification-article									[ adverb-Not ] article-indefinite
 		$singular-structure-specification-noun										[ adjective-past-tense | adjective-New ] single-singular-specification-noun
 
-		$singular-structure-specification-noun-with-mandatory-article				singular-structure-specification-article singular-structure-specification-noun
-		$possessive-singular-structure-specification-noun-with-mandatory-article	{ adjective-No | article-indefinite } singular-structure-specification-noun
+		$singular-structure-specification-noun-with-mandatory-article				[ adverb-Not ] article-indefinite singular-structure-specification-noun
 		$singular-structure-specification-noun-with-optional-article				[ adjective-No | singular-structure-specification-article ] singular-structure-specification-noun
 		$comma-separated-singular-structure-specification-nouns						symbol-comma singular-structure-specification-noun-with-optional-article [ comma-separated-singular-structure-specification-nouns ]
 		$singular-collective-structure-specification-nouns							singular-structure-specification-noun-with-mandatory-article [ comma-separated-singular-structure-specification-nouns ] conjunction-collective singular-structure-specification-noun-with-optional-article
@@ -452,22 +434,20 @@
 		$comma-separated-plural-assignment-specification-nouns						symbol-comma plural-assignment-specification-noun [ comma-separated-plural-assignment-specification-nouns ]
 		$more-plural-assignment-specification-nouns									[ comma-separated-plural-assignment-specification-nouns ] conjunction-collective plural-assignment-specification-noun
 		$plural-assignment-specification-nouns										plural-assignment-specification-noun [ more-plural-assignment-specification-nouns ]
-		$plural-structure-specification-noun										[ adjective-No | numeral ] plural-specification-noun
 
-		$structure-specification-noun												{ singular-structure-specification-noun-with-mandatory-article | plural-structure-specification-noun }
-		$possessive-structure-specification-noun									{ possessive-singular-structure-specification-noun-with-mandatory-article | plural-structure-specification-noun }
-
+		$structure-specification-noun												{ singular-structure-specification-noun-with-mandatory-article | possessive-plural-structure-specification-noun }
 		$comma-separated-structure-specification-nouns								symbol-comma structure-specification-noun [ comma-separated-structure-specification-nouns ]
 		$more-collective-structure-specification-nouns								[ comma-separated-structure-specification-nouns ] conjunction-collective structure-specification-noun
-
-		$comma-separated-possessive-structure-specification-nouns					symbol-comma possessive-structure-specification-noun [ comma-separated-possessive-structure-specification-nouns ]
-		$more-collective-possessive-structure-specification-nouns					[ comma-separated-possessive-structure-specification-nouns ] conjunction-collective possessive-structure-specification-noun
-
 		$collective-structure-specification-nouns									structure-specification-noun [ more-collective-structure-specification-nouns ]
 		$more-exclusive-structure-specification-nouns								[ comma-separated-structure-specification-nouns ] exclusive-specification-conjunction structure-specification-noun
-
 		$structure-specification-nouns												structure-specification-noun [ more-collective-structure-specification-nouns | more-exclusive-structure-specification-nouns ]
-		$possessive-structure-specification-nouns									possessive-structure-specification-noun [ more-collective-possessive-structure-specification-nouns | more-exclusive-structure-specification-nouns ]
+
+		$possessive-singular-structure-specification-noun-with-mandatory-article	{ adjective-No | article-indefinite } singular-structure-specification-noun
+		$possessive-plural-structure-specification-noun								[ adjective-No | numeral ] plural-specification-noun
+		$possessive-structure-specification-noun									{ possessive-singular-structure-specification-noun-with-mandatory-article | possessive-plural-structure-specification-noun }
+		$comma-separated-possessive-structure-specification-nouns					symbol-comma possessive-structure-specification-noun [ comma-separated-possessive-structure-specification-nouns ]
+		$more-collective-possessive-structure-specification-nouns					[ comma-separated-possessive-structure-specification-nouns ] conjunction-collective possessive-structure-specification-noun
+		$possessive-structure-specification-nouns									possessive-structure-specification-noun [ more-collective-possessive-structure-specification-nouns ]
 
 :6022	$specification-pronoun														[ adverb-Not ] { possessive-pronoun-singular | possessive-pronoun-plural }
 		$comma-separated-specification-pronouns										symbol-comma specification-pronoun [ comma-separated-specification-pronouns ]
@@ -517,7 +497,7 @@
 
 		$preposition-word															{ preposition | preposition-Of }
 
-		$specification-assignment-relation-noun										[ article-definite | adverb-Not article-definite ] { single-plural-specification-relation-noun | single-singular-specification-relation-noun }
+		$specification-assignment-relation-noun										[ article-definite ] { single-plural-specification-relation-noun | single-singular-specification-relation-noun }
 
 :6030	$preposition-assignment-relation											preposition-word { specification-relation-proper-name | specification-assignment-relation-noun }
 :6030	$preposition-assignment-relations											preposition-word specification-relation-proper-names
@@ -550,12 +530,13 @@
 		$collective-generalization-proper-names										generalization-proper-name [ comma-separated-generalization-proper-names ] conjunction-collective generalization-proper-name
 
 		$singular-proper-name-generalization-assignment								generalization-proper-name singular-verb proper-name-assignment-specification
-
 		$comma-separated-singular-proper-names-generalization-assignment			symbol-comma singular-proper-name-generalization-assignment [ comma-separated-singular-proper-names-generalization-assignment ]
 		$more-singular-proper-name-generalization-assignments						[ comma-separated-singular-proper-names-generalization-assignment ] conjunction-collective singular-proper-name-generalization-assignment
 
 		$singular-proper-name-generalization-structure								generalization-proper-name { singular-possessive-verb | singular-possessive-conditional-verb } possessive-structure-specification-nouns [ possessive-relations ] [ adverb-Anymore ]
-		$singular-proper-name-generalization-structure								generalization-proper-name { singular-verb | singular-conditional-verb } [ Part-Of ] { structure-specification-nouns | exclusive-specification-adjectives } [ adverb-Anymore | preposition-structure-relations ]
+		$singular-proper-name-generalization-structure								generalization-proper-name { singular-verb | singular-conditional-verb } [ Part-Of ] { structure-specification-nouns | exclusive-specification-adjectives } [ preposition-structure-relations ]
+
+
 		$linked-singular-proper-name-generalization-structure						{ singular-verb | singular-conditional-verb | singular-possessive-verb | singular-possessive-conditional-verb } possessive-structure-specification-nouns
 		$comma-singular-separated-proper-names-generalization-structure				symbol-comma { singular-proper-name-generalization-structure | linked-singular-proper-name-generalization-structure } [ comma-singular-separated-proper-names-generalization-structure ]
 		$more-singular-proper-name-generalization-structures						[ comma-singular-separated-proper-names-generalization-structure ] { linked-generalization-conjunction linked-singular-proper-name-generalization-structure | conjunction-collective singular-proper-name-generalization-structure }
@@ -595,7 +576,7 @@
 :6000	$structure-specification-generalization										plural-structure-specification plural-specification-generalization-verb [ adverb-uncertainty ] { plural-generalization-noun | Part-Of singular-structure-noun-generalization }
 :6000	$structure-specification-generalization										singular-structure-specification singular-specification-generalization-verb [ adverb-uncertainty ] [ Part-Of ] singular-structure-noun-generalization
 
-:6000	$structure-specification-generalization-question							plural-specification-generalization-question-verb plural-structure-specification [ adverb-uncertainty ] { plural-generalization-noun | Part-Of singular-structure-noun-generalization } [ preposition-structure-relations ]
+:6000	$structure-specification-generalization-question							plural-specification-generalization-question-verb plural-structure-specification [ adverb-uncertainty ] { plural-generalization-noun | Part-Of singular-structure-noun-generalization }
 :6000	$structure-specification-generalization-question							singular-specification-generalization-question-verb singular-structure-specification [ adverb-uncertainty ] [ Part-Of ] singular-structure-noun-generalization
 
 
@@ -603,18 +584,19 @@
 
 # Examples of an imperative:
 # - Help.
-# - Show the copyright.
-# - Solve the game.
-:5100	$imperative																	verb-imperative [ singular-noun-assignment-specification | plural-assignment-specification | execution-text ]
-
-# Examples of an imperative:
 # - Login as Guest.
-# - Read the file "English/programming/Connect-Four".
+# - Solve the game.
+# - Show the copyright.
+# - Show "Hello world".
 # - Show info about John.
 # - Show info about the lists.
+:5100	$imperative																	verb-imperative [ singular-noun-assignment-specification | plural-assignment-specification | Information preposition-assignment-relation | As specification-proper-name | execution-text ]
+
+# Examples of an imperative:
+# - Read the file "English/programming/Connect-Four".
 # - Add D, C, B and A to the start pole.
 # - Move the head of the start pole to the swap pole.
-:5100	$imperative																	verb-imperative [ singular-noun-assignment-specification | plural-assignment-specification | Information ] { preposition-assignment-relation | As specification-proper-name | execution-text } [ preposition-assignment-relation ]
+:5100	$imperative																	verb-imperative singular-noun-assignment-specification preposition-assignment-relation [ preposition-assignment-relation ]
 
 :5200	$answer-Yes-or-No															interjection
 

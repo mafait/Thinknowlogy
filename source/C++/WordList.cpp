@@ -2,11 +2,11 @@
  *	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -34,7 +34,6 @@ class WordList : private List
 	friend class AdminItem;
 	friend class AdminQuery;
 	friend class AdminReadCreateWords;
-	friend class AdminReadSentence;
 	friend class AdminSolve;
 
 	// Private cleanup functions
@@ -48,12 +47,12 @@ class WordList : private List
 			}
 		}
 
-	void getHighestInUseSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingLanguageAssignments, bool isIncludingTemporaryLists, unsigned int highestSentenceNr, WordItem *searchItem )
+	void getHighestInUseSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr, WordItem *searchItem )
 		{
 		while( searchItem != NULL &&
 		commonVariables()->highestInUseSentenceNr < highestSentenceNr )
 			{
-			searchItem->getHighestInUseSentenceNrInWord( isIncludingDeletedItems, isIncludingLanguageAssignments, isIncludingTemporaryLists, highestSentenceNr );
+			searchItem->getHighestInUseSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr );
 			searchItem = searchItem->nextWordItem();
 			}
 		}
@@ -292,13 +291,13 @@ class WordList : private List
 		return RESULT_OK;
 		}
 
-	ResultType showQueryResultInWordList( bool showOnlyWords, bool showOnlyWordReferences, bool showOnlyStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, WordItem *searchItem )
+	ResultType showQueryResultInWordList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, WordItem *searchItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "showQueryResultInWordList";
 
 		while( searchItem != NULL )
 			{
-			if( searchItem->showQueryResultInWord( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) == RESULT_OK )
+			if( searchItem->showQueryResultInWord( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) == RESULT_OK )
 				searchItem = searchItem->nextWordItem();
 			else
 				return addError( functionNameString, NULL, NULL, "I failed to show the query result in a word" );
@@ -346,6 +345,12 @@ class WordList : private List
 			delete deleteItem;
 			}
 
+		if( firstInactiveItem() != NULL )
+			fprintf( stderr, "\nError: Class WordList has inactive items." );
+
+		if( firstArchivedItem() )
+			fprintf( stderr, "\nError: Class WordList has archived items." );
+
 		searchItem = firstReplacedWordItem();
 
 		while( searchItem != NULL )
@@ -391,17 +396,17 @@ class WordList : private List
 		deleteRollbackInfoInWordList( firstReplacedWordItem() );
 		}
 
-	void getHighestInUseSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingLanguageAssignments, bool isIncludingTemporaryLists, unsigned int highestSentenceNr )
+	void getHighestInUseSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr )
 		{
-		getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingLanguageAssignments, isIncludingTemporaryLists, highestSentenceNr, firstActiveWordItem() );
+		getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, firstActiveWordItem() );
 
 		if( commonVariables()->highestInUseSentenceNr < highestSentenceNr )
 			{
-			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingLanguageAssignments, isIncludingTemporaryLists, highestSentenceNr, firstReplacedWordItem() );
+			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, firstReplacedWordItem() );
 
 			if( isIncludingDeletedItems &&
 			commonVariables()->highestInUseSentenceNr < highestSentenceNr )
-				getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingLanguageAssignments, isIncludingTemporaryLists, highestSentenceNr, firstDeletedWordItem() );
+				getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, firstDeletedWordItem() );
 			}
 		}
 
@@ -476,7 +481,6 @@ class WordList : private List
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		WordItem *searchItem = firstActiveWordItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
@@ -586,11 +590,11 @@ class WordList : private List
 		return commonVariables()->result;
 		}
 
-	ResultType showQueryResultInWordList( bool showOnlyWords, bool showOnlyWordReferences, bool showOnlyStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
+	ResultType showQueryResultInWordList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
 		{
-		if( showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstActiveWordItem() ) == RESULT_OK &&
-		showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstReplacedWordItem() ) == RESULT_OK )
-			return showQueryResultInWordList( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstDeletedWordItem() );
+		if( showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstActiveWordItem() ) == RESULT_OK &&
+		showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstReplacedWordItem() ) == RESULT_OK )
+			return showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstDeletedWordItem() );
 
 		return commonVariables()->result;
 		}

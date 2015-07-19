@@ -1,28 +1,11 @@
-﻿#
-#	File:		Nederlands.txt
-#	Scope:		Used by the Thinknowlogy application
+﻿#----------------------------------------------------------------------------
 #	Purpose:	To define the grammar for the Dutch language
-#	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+#	Version:	Thinknowlogy 2015r1beta (Corazón)
 #----------------------------------------------------------------------------
 #	Copyright (C) 2009-2015, Menno Mafait
-#	Your additions, modifications, suggestions and bug reports
+#	Your suggestions, modifications and bug reports
 #	are welcome at http://mafait.org
 #----------------------------------------------------------------------------
-#	This program is free software: you can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation, either version 2 of the License, or
-#	(at your option) any later version.
-#
-#	This program is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
-#
-#	You should have received a copy of the GNU General Public License along
-#	with this program; if not, write to the Free Software Foundation, Inc.,
-#	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-#----------------------------------------------------------------------------
-
 
 #----------- Woord definities -----------
 
@@ -65,30 +48,31 @@
 @6		:608	$adjective																	mannelijk
 @6		:609	$adjective-No																geen
 @6		:610	$adjective-Called															genaamd
-#@6		:611	$adjective-Called															genaamd
-@6		:612	$adjective-Every			"bijvoeglijk naamwoord (ieder/iedere)"			ieder
-@6		:613	$adjective-Every			"bijvoeglijk naamwoord (ieder/iedere)"			iedere
-@6		:614	$adjective-past-tense		"bijvoeglijk naamwoord (verleden tijd)"			vorig
-@6		:615	$adjective-past-tense		"bijvoeglijk naamwoord (verleden tijd)"			vorige
-@6		:616	$adjective-present-tense	"bijvoeglijk naamwoord (tegenwoordige tijd)"	huidig
-@6		:617	$adjective-present-tense	"bijvoeglijk naamwoord (tegenwoordige tijd)"	huidige
-@6		:618	$adjective-New				"bijvoeglijk naamwoord (nieuw)"					nieuw
-@6		:619	$adjective-New				"bijvoeglijk naamwoord (nieuw)"					nieuwe
-#@6		:620	$adjective-future-tense		"bijvoeglijk naamwoord (toekomende tijd)"		volgend
-#@6		:621	$adjective-future-tense		"bijvoeglijk naamwoord (toekomende tijd)"		volgende
-@6		:622	$adjective-Odd-or-Even		"bijvoeglijk naamwoord (even/oneven)"			oneven
-@6		:623	$adjective-Odd-or-Even		"bijvoeglijk naamwoord (even/oneven)"			even
-@6		:624	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			eerder
-@6		:625	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			minder
-@6		:626	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			lager
-@6		:627	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			kleiner
-@6		:628	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			gelijk
-@6		:629	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			hetzelfde
-@6		:630	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			groter
-@6		:631	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			hoger
-#@6		:632	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			(groter)
-@6		:633	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			later
-@6		:634	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			meer
+#@6		:611	$adjective-Called
+#@6		:612	$adjective-Called
+@6		:613	$adjective-Every			"bijvoeglijk naamwoord (ieder/iedere)"			ieder
+@6		:614	$adjective-Every			"bijvoeglijk naamwoord (ieder/iedere)"			iedere
+@6		:615	$adjective-past-tense		"bijvoeglijk naamwoord (verleden tijd)"			vorig
+@6		:616	$adjective-past-tense		"bijvoeglijk naamwoord (verleden tijd)"			vorige
+@6		:617	$adjective-present-tense	"bijvoeglijk naamwoord (tegenwoordige tijd)"	huidig
+@6		:618	$adjective-present-tense	"bijvoeglijk naamwoord (tegenwoordige tijd)"	huidige
+@6		:619	$adjective-New				"bijvoeglijk naamwoord (nieuw)"					nieuw
+@6		:620	$adjective-New				"bijvoeglijk naamwoord (nieuw)"					nieuwe
+#@6		:621	$adjective-future-tense		"bijvoeglijk naamwoord (toekomende tijd)"		volgend
+#@6		:622	$adjective-future-tense		"bijvoeglijk naamwoord (toekomende tijd)"		volgende
+@6		:623	$adjective-Odd-or-Even		"bijvoeglijk naamwoord (even/oneven)"			oneven
+@6		:624	$adjective-Odd-or-Even		"bijvoeglijk naamwoord (even/oneven)"			even
+@6		:625	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			eerder
+@6		:626	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			minder
+@6		:627	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			lager
+@6		:628	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			kleiner
+@6		:629	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			gelijk
+@6		:630	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			hetzelfde
+@6		:631	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			groter
+@6		:632	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			hoger
+#@6		:633	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			(groter)
+@6		:634	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			later
+@6		:635	$adjective-comparison		"bijvoeglijk naamwoord (vergelijking)"			meer
 
 
 #--- Bijwoorden ---
@@ -139,17 +123,17 @@
 @11		:1100	$noun-singular																ontwikkelaar
 @11		:1101	$noun-singular																expert
 @11		:1102	$noun-singular																bestand
-@11		:1103	$noun-singular																grammatica-taal
-@11		:1104	$noun-singular																interface-taal
-@11		:1105	$noun-singular																verantwoordingsrapportage
-@11		:1106	$noun-singular																top
-@11		:1107	$noun-singular																staart
-@11		:1108	$noun-singular																geheugen
-@11		:1109	$noun-singular																getal
-@11		:1110	$noun-singular																wachtwoord
-@11		:1111	$noun-singular																oplossingsniveau
-@11		:1112	$noun-singular																oplossingsmethode
-@11		:1113	$noun-singular																oplossingsstrategie
+@11		:1103	$noun-singular																verantwoordingsrapportage
+@11		:1104	$noun-singular																top
+@11		:1105	$noun-singular																staart
+@11		:1106	$noun-singular																taal
+@11		:1107	$noun-singular																geheugen
+@11		:1108	$noun-singular																getal
+@11		:1109	$noun-singular																wachtwoord
+@11		:1110	$noun-singular																oplossingsniveau
+@11		:1111	$noun-singular																oplossingsmethode
+@11		:1112	$noun-singular																oplossingsstrategie
+@11		:1113	$noun-singular																opstarttaal
 @11		:1115	$noun-singular																gebruiker
 @11		:1116	$noun-singular-Information													informatie
 @11		:1117	$noun-singular-Part															deel
@@ -179,7 +163,7 @@
 
 @15		:0		$possessive-determiner-singular				"bezittelijk voornaamwoord (enkelvoud)"
 @15		:1300	$possessive-determiner-singular												mijn
-@15		:1301	$possessive-determiner-singular												je jouw
+#@15	:1301	$possessive-determiner-singular												je jouw
 @15		:1302	$possessive-determiner-singular												uw
 @15		:1303	$possessive-determiner-singular												zijn
 @15		:1304	$possessive-determiner-singular												haar
@@ -214,8 +198,8 @@
 #@18	:1706	$personal-pronoun-plural-objective											hen
 
 @19		:0		$possessive-determiner-plural				"bezittelijk voornaamwoord (meervoud)"
-@19		:1700	$possessive-determiner-plural												ons onze
-@19		:1701	$possessive-determiner-plural												ons onze
+#@19	:1700	$possessive-determiner-plural												ons onze
+#@19	:1701	$possessive-determiner-plural												ons onze
 @19		:1702	$possessive-determiner-plural												jullie
 @19		:1703	$possessive-determiner-plural												jullie
 @19		:1704	$possessive-determiner-plural												jullie
@@ -235,11 +219,10 @@
 #--- Voorzetsels ---
 @21		:0		$preposition					"voorzetsel"
 @21		:2100	$preposition																over
-@21		:2101	$preposition																voor
-@21		:2102	$preposition																aan
-@21		:2103	$preposition																in
-@21		:2104	$preposition																naar
-@21		:2105	$preposition-Of																van
+@21		:2101	$preposition																aan
+@21		:2102	$preposition																in
+@21		:2103	$preposition																naar
+@21		:2104	$preposition-Of																van
 
 
 #--- Enkelvoudige werkwoorden ---
@@ -345,6 +328,9 @@
 @0		:3004	$alen																		aal
 #@0		:3004	$ezen																		ees
 @0		:3004	$omen																		oom
+@0		:3004	$onen																		oon
+@0		:3004	$oren																		oor
+@0		:3004	$oten																		oot
 @0		:3004	$uizen																		uis
 @0		:3004	$kinderen																	kind
 
@@ -564,7 +550,7 @@
 		$more-singular-proper-name-generalization-assignments						[ comma-separated-singular-proper-names-generalization-assignment ] conjunction-collective singular-proper-name-generalization-assignment
 
 		$singular-proper-name-generalization-structure								generalization-proper-name { singular-possessive-verb | singular-possessive-conditional-verb } structure-specification-nouns [ possessive-relations ] [ adverb-Anymore ]
-		$singular-proper-name-generalization-structure								generalization-proper-name { singular-verb | singular-conditional-verb } [ Part-Of ] { structure-specification-nouns | exclusive-specification-adjectives } [ adverb-Anymore | preposition-structure-relations ]
+		$singular-proper-name-generalization-structure								generalization-proper-name { singular-verb | singular-conditional-verb } [ Part-Of ] { structure-specification-nouns | exclusive-specification-adjectives } [ preposition-structure-relations ]
 		$linked-singular-proper-name-generalization-structure						{ singular-verb | singular-conditional-verb | singular-possessive-verb | singular-possessive-conditional-verb } structure-specification-nouns
 		$comma-singular-separated-proper-names-generalization-structure				symbol-comma { singular-proper-name-generalization-structure | linked-singular-proper-name-generalization-structure } [ comma-singular-separated-proper-names-generalization-structure ]
 		$more-singular-proper-name-generalization-structures						[ comma-singular-separated-proper-names-generalization-structure ] { linked-generalization-conjunction linked-singular-proper-name-generalization-structure | conjunction-collective singular-proper-name-generalization-structure }
@@ -606,27 +592,27 @@
 :6000	$structure-specification-generalization										plural-structure-specification plural-specification-generalization-verb [ adverb-uncertainty ] { plural-generalization-noun | Part-Of singular-structure-noun-generalization }
 :6000	$structure-specification-generalization										singular-structure-specification singular-specification-generalization-verb [ adverb-uncertainty ] [ Part-Of ] singular-structure-noun-generalization
 
-:6000	$structure-specification-generalization-question							plural-specification-generalization-question-verb plural-structure-specification [ adverb-uncertainty ] { plural-generalization-noun | Part-Of singular-structure-noun-generalization } [ preposition-structure-relations ]
+:6000	$structure-specification-generalization-question							plural-specification-generalization-question-verb plural-structure-specification [ adverb-uncertainty ] { plural-generalization-noun | Part-Of singular-structure-noun-generalization }
 :6000	$structure-specification-generalization-question							singular-specification-generalization-question-verb singular-structure-specification [ adverb-uncertainty ] [ Part-Of ] singular-structure-noun-generalization
-
 
 
 #-----------
 
-# Imperatief-voorbeelden:
+# Voorbeelden van gebiedende wijs:
 # - Help.
+# - Aanmelden als Guest.
 # - Los-op het spel.
 # - Toon het auteursrecht.
-:5100	$imperative																	verb-imperative [ singular-noun-assignment-specification | plural-assignment-specification | execution-text ]
-
-# Imperatief-voorbeelden:
-# - Aanmelden als Guest.
-# - Lees het bestand "Nederlands/programmeren/Vier op 'n rij".
+# - Toon "Hallo wereld".
 # - Toon info over Jan.
 # - Toon info over de lijsten.
+:5100	$imperative																	verb-imperative [ singular-noun-assignment-specification | plural-assignment-specification | Information preposition-assignment-relation | As specification-proper-name | execution-text ]
+
+# Voorbeelden van gebiedende wijs:
+# - Lees het bestand "Nederlands/programmeren/Vier op 'n rij".
 # - Voeg-toe D, C, B en A aan de startpaal.
 # - Verplaats de kop van de wisselpaal naar de doelpaal.
-:5100	$imperative																	verb-imperative [ singular-noun-assignment-specification | plural-assignment-specification | Information ] { preposition-assignment-relation | As specification-proper-name | execution-text } [ preposition-assignment-relation ]
+:5100	$imperative																	verb-imperative singular-noun-assignment-specification preposition-assignment-relation [ preposition-assignment-relation ]
 
 :5200	$answer-Yes-or-No															interjection
 

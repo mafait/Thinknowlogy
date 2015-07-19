@@ -2,11 +2,11 @@
  *	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -39,12 +39,10 @@ class CollectionItem extends Item
 	private WordItem commonWordItem_;
 	private WordItem compoundGeneralizationWordItem_;
 
-	private String collectionString_;
-
 
 	// Constructor / deconstructor
 
-	protected CollectionItem( boolean isExclusiveSpecification, short collectionOrderNr, short collectionWordTypeNr, short commonWordTypeNr, int collectionNr, WordItem collectionWordItem, WordItem commonWordItem, WordItem compoundGeneralizationWordItem, String collectionString, List myList, WordItem myWordItem )
+	protected CollectionItem( boolean isExclusiveSpecification, short collectionOrderNr, short collectionWordTypeNr, short commonWordTypeNr, int collectionNr, WordItem collectionWordItem, WordItem commonWordItem, WordItem compoundGeneralizationWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
@@ -61,30 +59,10 @@ class CollectionItem extends Item
 		collectionWordItem_ = collectionWordItem;
 		commonWordItem_ = commonWordItem;
 		compoundGeneralizationWordItem_ = compoundGeneralizationWordItem;
-
-		collectionString_ = collectionString;
 		}
 
 
 	// Protected virtual methods
-
-	protected void showString( boolean isReturnQueryToPosition )
-		{
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
-
-		if( collectionString_ != null )
-			{
-			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
-
-			if( !isActiveItem() )	// Show status if not active
-				CommonVariables.queryStringBuffer.append( statusChar() );
-
-			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( collectionString_ );
-			}
-		}
 
 	protected void showWordReferences( boolean isReturnQueryToPosition )
 		{
@@ -99,7 +77,8 @@ class CollectionItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -113,7 +92,8 @@ class CollectionItem extends Item
 			CommonVariables.queryStringBuffer.length() > 0 )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -127,7 +107,8 @@ class CollectionItem extends Item
 			CommonVariables.queryStringBuffer.length() > 0 )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -240,19 +221,16 @@ class CollectionItem extends Item
 				CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
-		if( collectionString_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "collectionString:" + Constants.QUERY_STRING_START_CHAR + collectionString_ + Constants.QUERY_STRING_END_CHAR );
-
 		return CommonVariables.queryStringBuffer;
 		}
 
 
 	// Protected methods
 
-	protected boolean hasFeminineCollectionWord()
+	protected boolean hasFemaleCollectionWord()
 		{
 		return ( collectionWordItem_ != null &&
-				collectionWordItem_.isFeminineWord() );
+				collectionWordItem_.isFemale() );
 		}
 
 	protected boolean isCompoundGeneralization()
@@ -280,6 +258,11 @@ class CollectionItem extends Item
 		return collectionWordTypeNr_;
 		}
 
+	protected short commonWordTypeNr()
+		{
+		return commonWordTypeNr_;
+		}
+
 	protected int collectionNr()
 		{
 		return collectionNr_;
@@ -303,11 +286,6 @@ class CollectionItem extends Item
 	protected CollectionItem nextCollectionItem()
 		{
 		return (CollectionItem)nextItem;
-		}
-
-	protected String collectionString()
-		{
-		return collectionString_;
 		}
 	};
 

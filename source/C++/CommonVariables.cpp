@@ -1,11 +1,11 @@
 /*
  *	Class:			CommonVariables
  *	Purpose:		To hold the common variables
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ class CommonVariables
 	friend class AdminReadFile;
 	friend class AdminReadGrammar;
 	friend class AdminReadSentence;
+	friend class AdminReasoning;
 	friend class AdminSelection;
 	friend class AdminSolve;
 	friend class AdminSpecification;
@@ -106,20 +107,19 @@ class CommonVariables
 	bool hasShownWarning;
 
 	bool isAssignmentChanged;
+	bool isDontIncrementCurrentSentenceNr;
 	bool isFirstAnswerToQuestion;
 	bool isQuestionAlreadyAnswered;
-	bool isSystemStartingUp;
 	bool isUserQuestion;
 
 	ResultType result;
 
 	unsigned short currentAssignmentLevel;
-	unsigned short currentGrammarLanguageNr;
+	unsigned short currentLanguageNr;
 	unsigned short currentUserNr;
 	unsigned short currentWriteLevel;
 
 	unsigned short matchingWordTypeNr;
-	unsigned short queryWordTypeNr;
 
 	unsigned int nDeletedItems;
 	unsigned int nActiveQueryItems;
@@ -133,7 +133,6 @@ class CommonVariables
 	unsigned int nUserRelationWords;
 
 	unsigned int currentSentenceNr;
-	unsigned int firstUserSentenceNr;
 	unsigned int highestInUseSentenceNr;
 	unsigned int removeSentenceNr;
 
@@ -148,10 +147,10 @@ class CommonVariables
 	SelectionList *adminActionList;
 	SelectionList *adminAlternativeList;
 
-	WordItem *currentGrammarLanguageWordItem;
-	WordItem *currentInterfaceLanguageWordItem;
+	WordItem *currentLanguageWordItem;
 	WordItem *firstWordItem;
-	WordItem *predefinedNounGrammarLanguageWordItem;
+	WordItem *lastPredefinedWordItem;
+	WordItem *predefinedNounLanguageWordItem;
 	WordItem *predefinedNounUserWordItem;
 
 	char queryString[MAX_SENTENCE_STRING_LENGTH];
@@ -171,20 +170,19 @@ class CommonVariables
 		hasShownWarning = false;
 
 		isAssignmentChanged = false;
+		isDontIncrementCurrentSentenceNr = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
-		isSystemStartingUp = true;
 		isUserQuestion = false;
 
 		result = RESULT_OK;
 
 		currentAssignmentLevel = NO_ASSIGNMENT_LEVEL;
-		currentGrammarLanguageNr = NO_LANGUAGE_NR;
+		currentLanguageNr = NO_LANGUAGE_NR;
 		currentUserNr = NO_USER_NR;
 		currentWriteLevel = NO_WRITE_LEVEL;
 
 		matchingWordTypeNr = WORD_TYPE_UNDEFINED;
-		queryWordTypeNr = WORD_TYPE_UNDEFINED;
 
 		nDeletedItems = 0;
 		nActiveQueryItems = 0;
@@ -197,8 +195,8 @@ class CommonVariables
 		nUserSpecificationWords = 0;
 		nUserRelationWords = 0;
 
-		currentSentenceNr = 1;	// First sentence
-		firstUserSentenceNr = NO_SENTENCE_NR;
+		// First sentence
+		currentSentenceNr = 1;
 		highestInUseSentenceNr = NO_SENTENCE_NR;
 		removeSentenceNr = NO_SENTENCE_NR;
 
@@ -213,10 +211,10 @@ class CommonVariables
 		adminActionList = NULL;
 		adminAlternativeList = NULL;
 
-		currentGrammarLanguageWordItem = NULL;
-		currentInterfaceLanguageWordItem = NULL;
+		currentLanguageWordItem = NULL;
 		firstWordItem = NULL;
-		predefinedNounGrammarLanguageWordItem = NULL;
+		lastPredefinedWordItem = NULL;
+		predefinedNounLanguageWordItem = NULL;
 		predefinedNounUserWordItem = NULL;
 
 		strcpy( queryString, EMPTY_STRING );

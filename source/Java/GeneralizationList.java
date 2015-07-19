@@ -2,11 +2,11 @@
  *	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ class GeneralizationList extends List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte createGeneralization( boolean isRelation, short specificationWordTypeNr, short generalizationWordTypeNr, WordItem generalizationWordItem )
+	protected byte createGeneralizationItem( boolean isRelation, short specificationWordTypeNr, short generalizationWordTypeNr, WordItem generalizationWordItem )
 		{
 		if( generalizationWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
 		generalizationWordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
@@ -100,7 +100,6 @@ class GeneralizationList extends List
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		GeneralizationItem searchItem = firstActiveGeneralizationItem();
 
 		while( searchItem != null )
@@ -135,11 +134,11 @@ class GeneralizationList extends List
 		return (GeneralizationItem)firstActiveItem();
 		}
 
-	protected GeneralizationItem firstGeneralizationItem( boolean isRelation )
+	protected GeneralizationItem firstGeneralizationItem( boolean isOnlySelectingNoun, boolean isRelation )
 		{
 		GeneralizationItem firstGeneralizationItem = firstActiveGeneralizationItem();
 
-		return ( firstGeneralizationItem == null ? null : firstGeneralizationItem.getGeneralizationItem( true, isRelation ) );
+		return ( firstGeneralizationItem == null ? null : firstGeneralizationItem.getGeneralizationItem( true, isOnlySelectingNoun, isRelation ) );
 		}
 	};
 

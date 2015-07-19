@@ -2,11 +2,11 @@
  *	Class:			WordWriteSentence
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ class WordWriteSentence
 	// Private constructible variables
 
 	private boolean hasFoundWordToWrite_;
-	private boolean isSkipClearWriteLevel_;
+	private boolean isSkippingClearWriteLevel_;
 
 	private WordItem myWordItem_;
 	private String moduleNameString_;
@@ -42,7 +42,7 @@ class WordWriteSentence
 		if( clearSpecificationItem != null )
 			{
 			if( clearSpecificationItem.hasGeneralizationContext() &&
-			( currentWordItem = CommonVariables.firstWordItem ) != null )
+			( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 				{
 				// Do for all words
 				do	currentWordItem.clearGeneralizationContextWriteLevelInWord( currentWriteLevel, clearSpecificationItem.generalizationContextNr() );
@@ -50,7 +50,7 @@ class WordWriteSentence
 				}
 
 			if( clearSpecificationItem.hasSpecificationContext() &&
-			( currentWordItem = CommonVariables.firstWordItem ) != null )
+			( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 				{
 				// Do for all words
 				do	currentWordItem.clearSpecificationContextWriteLevelInWord( currentWriteLevel, clearSpecificationItem.specificationContextNr() );
@@ -58,7 +58,7 @@ class WordWriteSentence
 				}
 
 			if( clearSpecificationItem.hasRelationContext() &&
-			( currentWordItem = CommonVariables.firstWordItem ) != null )
+			( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 				{
 				// Do for all words
 				do	currentWordItem.clearRelationContextWriteLevelInWord( currentWriteLevel, clearSpecificationItem.relationContextNr() );
@@ -118,7 +118,8 @@ class WordWriteSentence
 							( !isWritingCurrentSpecificationWordOnly &&
 							currentSpecificationItem.isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) ) )
 								{
-								if( ( currentSpecificationWordItem = currentSpecificationItem.specificationWordItem() ) == null )		// Specification string
+								// Specification string
+								if( ( currentSpecificationWordItem = currentSpecificationItem.specificationWordItem() ) == null )
 									currentSpecificationItem.clearSpecificationStringWriteLevel( currentWriteLevel );
 								else
 									currentSpecificationWordItem.clearSpecificationWriteLevel( currentWriteLevel );
@@ -126,8 +127,6 @@ class WordWriteSentence
 							}
 						while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != null );
 						}
-					else
-						return myWordItem_.startErrorInWord( 1, moduleNameString_, "I couldn't find any specification" );
 					}
 				else
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to clear the current write level of the current specification item" );
@@ -189,8 +188,10 @@ class WordWriteSentence
 
 	private WriteItem firstWriteItem()
 		{
-		if( myWordItem_.writeList != null )
-			return myWordItem_.writeList.firstActiveWriteItem();
+		WriteList writeList;
+
+		if( ( writeList = myWordItem_.writeList ) != null )
+			return writeList.firstActiveWriteItem();
 
 		return null;
 		}
@@ -203,7 +204,7 @@ class WordWriteSentence
 		String errorString = null;
 
 		hasFoundWordToWrite_ = false;
-		isSkipClearWriteLevel_ = false;
+		isSkippingClearWriteLevel_ = false;
 
 		myWordItem_ = myWordItem;
 		moduleNameString_ = this.getClass().getName();
@@ -226,14 +227,14 @@ class WordWriteSentence
 
 	// Protected methods
 
-	protected byte selectGrammarToWriteSentence( boolean isIntegrityCheck, boolean isWritingCurrentSpecificationWordOnly, short answerParameter, short grammarLevel, GrammarItem selectedGrammarItem, SpecificationItem writeSpecificationItem )
+	protected byte selectGrammarToWriteSentence( boolean isWritingCurrentSpecificationWordOnly, short answerParameter, short grammarLevel, GrammarItem selectedGrammarItem, SpecificationItem writeSpecificationItem )
 		{
 		WriteResultType writeResult;
 		boolean isChoice;
 		boolean isOption;
-		boolean stillSuccessful;
-		boolean skipThisChoiceOrOptionPart;
-		boolean skipNextChoiceOrOptionParts;
+		boolean isSkippingThisChoiceOrOptionPart;
+		boolean isSkippingNextChoiceOrOptionParts;
+		boolean isStillSuccessful;
 		short startWriteLevel = CommonVariables.currentWriteLevel;
 		int startWordPosition = ( CommonVariables.writeSentenceStringBuffer == null ? 0 : CommonVariables.writeSentenceStringBuffer.length() );
 		GrammarItem definitionGrammarItem = selectedGrammarItem;
@@ -247,9 +248,10 @@ class WordWriteSentence
 				{
 				if( writeSpecificationItem != null )
 					{
-					if( grammarLevel == Constants.NO_GRAMMAR_LEVEL )	// Init
+					// Initialize
+					if( grammarLevel == Constants.NO_GRAMMAR_LEVEL )
 						{
-						isSkipClearWriteLevel_ = false;
+						isSkippingClearWriteLevel_ = false;
 						CommonVariables.currentWriteLevel = Constants.NO_WRITE_LEVEL;
 
 						CommonVariables.writeSentenceStringBuffer = null;
@@ -261,27 +263,29 @@ class WordWriteSentence
 					do	{
 						if( definitionGrammarItem.isDefinitionStart() )
 							{
-							if( definitionGrammarItem.isNewStart() )	// Grammar word
+							// Grammar word
+							if( definitionGrammarItem.isNewStart() )
 								{
 								if( ( writeResult = myWordItem_.writeWordsToSentence( isWritingCurrentSpecificationWordOnly, answerParameter, definitionGrammarItem, writeSpecificationItem ) ).result == Constants.RESULT_OK )
 									{
 									if( writeResult.hasFoundWordToWrite )
 										hasFoundWordToWrite_ = true;
 
-									isSkipClearWriteLevel_ = writeResult.isSkipClearWriteLevel;
+									isSkippingClearWriteLevel_ = writeResult.isSkippingClearWriteLevel;
 									}
 								else
 									return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a word to a sentence" );
 								}
-							else										// Grammar definition
+							else
 								{
+								// Grammar definition
 								if( ( selectedGrammarItem = definitionGrammarItem.nextGrammarItem() ) != null )
 									{
 									isChoice = false;
 									isOption = false;
-									stillSuccessful = true;
-									skipThisChoiceOrOptionPart = false;
-									skipNextChoiceOrOptionParts = false;
+									isStillSuccessful = true;
+									isSkippingThisChoiceOrOptionPart = false;
+									isSkippingNextChoiceOrOptionParts = false;
 
 									do	{
 										if( selectedGrammarItem.isNewStart() )
@@ -299,15 +303,16 @@ class WordWriteSentence
 													currentWriteItem = currentWriteItem.nextWriteItem();
 
 												if( isChoice ||
-												isOption )	// End of old choice or option - new one starts
+												// End of old choice or option - new one starts
+												isOption )
 													{
-													skipThisChoiceOrOptionPart = false;
+													isSkippingThisChoiceOrOptionPart = false;
 
 													if( hasFoundWordToWrite_ )
-														skipNextChoiceOrOptionParts = true;
+														isSkippingNextChoiceOrOptionParts = true;
 													else
 														{
-														if( stillSuccessful &&
+														if( isStillSuccessful &&
 														currentWriteItem != null &&
 														currentWriteItem.isSkipped )
 															currentWriteItem.isSkipped = false;
@@ -315,7 +320,7 @@ class WordWriteSentence
 
 													if( currentWriteItem == null )
 														{
-														if( createWriteWord( ( !stillSuccessful || skipNextChoiceOrOptionParts ), grammarLevel, selectedGrammarItem ) != Constants.RESULT_OK )
+														if( createWriteWord( ( !isStillSuccessful || isSkippingNextChoiceOrOptionParts ), grammarLevel, selectedGrammarItem ) != Constants.RESULT_OK )
 															return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to create a write word" );
 														}
 													else
@@ -339,11 +344,11 @@ class WordWriteSentence
 													else
 														isOption = true;
 
-													skipThisChoiceOrOptionPart = false;
+													isSkippingThisChoiceOrOptionPart = false;
 
 													if( currentWriteItem == null )
 														{
-														if( createWriteWord( !stillSuccessful, grammarLevel, selectedGrammarItem ) != Constants.RESULT_OK )
+														if( createWriteWord( !isStillSuccessful, grammarLevel, selectedGrammarItem ) != Constants.RESULT_OK )
 															return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to create a start write word" );
 														}
 													else
@@ -361,17 +366,18 @@ class WordWriteSentence
 												}
 											}
 
-										if( stillSuccessful &&
-										!skipThisChoiceOrOptionPart &&
-										!skipNextChoiceOrOptionParts &&
+										if( isStillSuccessful &&
+										!isSkippingThisChoiceOrOptionPart &&
+										!isSkippingNextChoiceOrOptionParts &&
 										!selectedGrammarItem.isSkipOptionForWriting() )
 											{
 											if( grammarLevel + 1 < Constants.MAX_GRAMMAR_LEVEL )
 												{
-												if( selectGrammarToWriteSentence( isIntegrityCheck, isWritingCurrentSpecificationWordOnly, answerParameter, (short)( grammarLevel + 1 ), selectedGrammarItem.definitionGrammarItem, writeSpecificationItem ) == Constants.RESULT_OK )
+												if( selectGrammarToWriteSentence( isWritingCurrentSpecificationWordOnly, answerParameter, (short)( grammarLevel + 1 ), selectedGrammarItem.definitionGrammarItem, writeSpecificationItem ) == Constants.RESULT_OK )
 													{
 													if( !hasFoundWordToWrite_ )
-														skipThisChoiceOrOptionPart = true;	// Failed, try next part
+														// Failed, try next part
+														isSkippingThisChoiceOrOptionPart = true;
 													}
 												else
 													return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to select the grammar for writing a sentence at grammar level reached: #" + ( grammarLevel + 1 ) );
@@ -383,8 +389,8 @@ class WordWriteSentence
 										if( selectedGrammarItem.isChoiceEnd ||
 										selectedGrammarItem.isOptionEnd )
 											{
-											skipThisChoiceOrOptionPart = false;
-											skipNextChoiceOrOptionParts = false;
+											isSkippingThisChoiceOrOptionPart = false;
+											isSkippingNextChoiceOrOptionParts = false;
 
 											if( selectedGrammarItem.isChoiceEnd )
 												isChoice = false;
@@ -392,7 +398,7 @@ class WordWriteSentence
 												{
 												isOption = false;
 
-												if( stillSuccessful )
+												if( isStillSuccessful )
 													hasFoundWordToWrite_ = true;
 												}
 											}
@@ -402,20 +408,18 @@ class WordWriteSentence
 										if( !isChoice &&
 										!isOption &&
 										!hasFoundWordToWrite_ )
-											stillSuccessful = false;
+											isStillSuccessful = false;
 										}
 									while( selectedGrammarItem != null &&
 									!selectedGrammarItem.isDefinitionStart() );
 
-									if( !hasFoundWordToWrite_ )
+									if( !hasFoundWordToWrite_ &&
+									!isSkippingClearWriteLevel_ &&
+									CommonVariables.writeSentenceStringBuffer != null &&
+									CommonVariables.writeSentenceStringBuffer.length() > startWordPosition )
 										{
-										if( !isSkipClearWriteLevel_ &&
-										CommonVariables.writeSentenceStringBuffer != null &&
-										CommonVariables.writeSentenceStringBuffer.length() > startWordPosition )
-											{
-											if( cleanupWriteInfo( isWritingCurrentSpecificationWordOnly, startWriteLevel, startWordPosition, writeSpecificationItem ) != Constants.RESULT_OK )
-												return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to cleanup the write info" );
-											}
+										if( cleanupWriteInfo( isWritingCurrentSpecificationWordOnly, startWriteLevel, startWordPosition, writeSpecificationItem ) != Constants.RESULT_OK )
+											return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to cleanup the write info" );
 										}
 									}
 								else

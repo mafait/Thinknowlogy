@@ -2,11 +2,11 @@
  *	Class:			ListQuery
  *	Supports class:	List
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -262,7 +262,7 @@ class ListQuery
 		return RESULT_OK;
 		}
 
-	ResultType showQueryResult( bool showOnlyWords, bool showOnlyWordReferences, bool showOnlyStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, Item *queryItem )
+	ResultType showQueryResult( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, Item *queryItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "showQueryResult";
 
@@ -270,15 +270,15 @@ class ListQuery
 			{
 			if( queryItem->isSelectedByQuery )
 				{
-				if( showOnlyWords )
+				if( isOnlyShowingWords )
 					queryItem->showWords( isReturnQueryToPosition, queryWordTypeNr );
 				else
 					{
-					if( showOnlyWordReferences )
+					if( isOnlyShowingWordReferences )
 						queryItem->showWordReferences( isReturnQueryToPosition );
 					else
 						{
-						if( showOnlyStrings )
+						if( isOnlyShowingStrings )
 							queryItem->showString( isReturnQueryToPosition );
 						else
 							{
@@ -307,13 +307,11 @@ class ListQuery
 		myList_ = myList;
 		strcpy( moduleNameString_, "ListQuery" );
 
-		if( commonVariables_ != NULL )
-			{
+		if( commonVariables_ == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+
 		if( myList_ == NULL )
 			strcpy( errorString, "The given my list is undefined" );
-			}
-		else
-			strcpy( errorString, "The given common variables is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
@@ -579,7 +577,8 @@ class ListQuery
 													searchStringPosition++;
 													}
 												else
-													referenceResult.hasFoundMatchingStrings = true;	// Reset indicator
+													// Reset indicator
+													referenceResult.hasFoundMatchingStrings = true;
 
 												sourceStringPosition++;
 												}
@@ -592,7 +591,8 @@ class ListQuery
 										}
 									}
 								else
-									sourceStringPosition = strlen( sourceString );	// Empty source string after asterisk
+									// Empty source string after asterisk
+									sourceStringPosition = strlen( sourceString );
 								}
 							else
 								referenceResult.hasFoundMatchingStrings = false;
@@ -607,7 +607,8 @@ class ListQuery
 							// Check search string for extra asterisks
 							while( searchStringPosition < strlen( searchString ) &&
 							searchString[searchStringPosition] == SYMBOL_ASTERISK )
-								searchStringPosition++;		// Skip extra asterisks
+								// Skip extra asterisks
+								searchStringPosition++;
 							}
 
 						if( searchStringPosition < strlen( searchString ) ||
@@ -690,28 +691,28 @@ class ListQuery
 		return commonVariables_->result;
 		}
 
-	ResultType showQueryResult( bool showOnlyWords, bool showOnlyWordReferences, bool showOnlyStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
+	ResultType showQueryResult( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
 		{
 		Item *searchItem;
 
 		if( ( searchItem = myList_->firstActiveItem() ) != NULL )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		return commonVariables_->result;
 		}

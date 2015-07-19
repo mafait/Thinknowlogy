@@ -1,11 +1,11 @@
 /*
  *	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -87,6 +87,7 @@
 		{
 		if( listCleanup_ != NULL )
 			delete listCleanup_;
+
 		if( listQuery_ != NULL )
 			delete listQuery_;
 		}
@@ -166,26 +167,25 @@
 		commonVariables_ = commonVariables;
 		myWordItem_ = myWordItem;
 
-		if( myWordItem_ != NULL )
-			{
-			if( commonVariables_ != NULL )
-				{
-				// Always create the list cleanup module
-				if( ( listCleanup_ = new ListCleanup( commonVariables_, this ) ) != NULL )
-					{
-					if( classNameString != NULL )
-						strcpy( classNameString_, classNameString );
-					else
-						strcpy( errorString, "The given class name string is undefined" );
-					}
-				else
-					strcpy( errorString, "My list cleanup module isn't created yet" );
-				}
-			else
-				strcpy( errorString, "The given common variables is undefined" );
-			}
-		else
+		if( commonVariables_ == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+
+		if( myWordItem_ == NULL )
 			strcpy( errorString, "The given my word is undefined" );
+
+		if( classNameString == NULL )
+			strcpy( errorString, "The given my word is undefined" );
+		else
+			{
+			if( classNameString != NULL )
+				strcpy( classNameString_, classNameString );
+			else
+				strcpy( errorString, "The given class name string is undefined" );
+			}
+
+		// Always create the list cleanup module
+		if( ( listCleanup_ = new ListCleanup( commonVariables_, this ) ) == NULL )
+			strcpy( errorString, "I failed to create my list cleanup module" );
 
 		if( strlen( errorString ) > 0 )
 			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL ? NULL : myWordItem_->anyWordTypeString() ), errorString );
@@ -404,12 +404,15 @@
 						}
 
 					if( searchItem == NULL ||
-					searchItem->creationSentenceNr() != newItem->creationSentenceNr() ||	// Check on duplicates
-					searchItem->itemNr() != newItem->itemNr() )								// for integrity
+					// Check on duplicates
+					searchItem->creationSentenceNr() != newItem->creationSentenceNr() ||
+					// for integrity
+					searchItem->itemNr() != newItem->itemNr() )
 						{
 						newItem->previousItem = previousSearchItem;
 
-						if( previousSearchItem == NULL )	// First item in list
+						// First item in list
+						if( previousSearchItem == NULL )
 							{
 							switch( statusChar )
 								{
@@ -467,7 +470,7 @@
 							}
 						}
 					else
-						return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I found an active item with the same identification" );
+						return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I've found an active item with the same identification" );
 					}
 				else
 					return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given new item seems to be a part of a list" );
@@ -481,7 +484,7 @@
 		return RESULT_OK;
 		}
 
-	ResultType List::activateItem( bool isSkipTest, Item *activateItem )
+	ResultType List::activateItem( Item *activateItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "activateItem";
 
@@ -489,10 +492,7 @@
 			{
 			if( activateItem->statusChar() != QUERY_ACTIVE_CHAR )
 				{
-				if( isSkipTest ||
-				!activateItem->hasActiveSentenceNr() ||
-				activateItem->hasCurrentActiveSentenceNr() ||
-				activateItem->hasCurrentInactiveSentenceNr() )
+				if( activateItem->creationSentenceNr() == activateItem->activeSentenceNr() )
 					{
 					if( removeItemFromList( activateItem ) == RESULT_OK )
 						{
@@ -520,7 +520,7 @@
 		return RESULT_OK;
 		}
 
-	ResultType List::inactivateItem( bool isSkipTest, Item *inactivateItem )
+	ResultType List::inactivateItem( Item *inactivateItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "inactivateItem";
 
@@ -531,10 +531,8 @@
 				if( isAssignmentList() ||
 				isReadList() )
 					{
-					if( isSkipTest ||
-					!inactivateItem->hasInactiveSentenceNr() ||
-					inactivateItem->hasCurrentActiveSentenceNr() ||
-					inactivateItem->hasCurrentInactiveSentenceNr() )
+					if( !inactivateItem->hasInactiveSentenceNr() ||
+					inactivateItem->creationSentenceNr() == inactivateItem->activeSentenceNr() )
 						{
 						if( removeItemFromList( inactivateItem ) == RESULT_OK )
 							{
@@ -682,27 +680,33 @@
 		commonVariables_->removeSentenceNr == 0 &&
 		commonVariables_->removeStartItemNr == 0 )
 			{
-			while( removeItem != NULL &&										// Skip items that must be kept for rollback
-			removeItem->isAvailableForRollbackAfterDelete )						// and items of current sentence (if wanted)
+			// Skip items that must be kept for rollback
+			while( removeItem != NULL &&
+			// and items of current sentence (if wanted)
+			removeItem->isAvailableForRollbackAfterDelete )
 				{
 				previousRemoveItem = removeItem;
 				removeItem = removeItem->nextItem;
 				}
 
-			if( removeItem != NULL )											// Found items to remove
+			// Found items to remove
+			if( removeItem != NULL )
 				{
 				commonVariables_->removeSentenceNr = removeItem->creationSentenceNr();
 				commonVariables_->removeStartItemNr = removeItem->itemNr();
 
 				do	{
 					if( previousRemoveItem == NULL )
-						deletedList_ = deletedList_->nextItem;					// Disconnect deleted list from item
+						// Disconnect deleted list from item
+						deletedList_ = deletedList_->nextItem;
 					else
-						previousRemoveItem->nextItem = removeItem->nextItem;	// Disconnect deleted list from item
+						// Disconnect deleted list from item
+						previousRemoveItem->nextItem = removeItem->nextItem;
 
 					if( removeItem->checkForUsage() == RESULT_OK )
 						{
-						removeItem->nextItem = NULL;							// Disconnect item from the deleted list
+						// Disconnect item from the deleted list
+						removeItem->nextItem = NULL;
 						delete removeItem;
 						removeItem = ( previousRemoveItem == NULL ? deletedList_ : previousRemoveItem->nextItem );
 						commonVariables_->nDeletedItems++;
@@ -711,8 +715,10 @@
 						return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to check an item for its usage" );
 					}
 				while( removeItem != NULL &&
-				removeItem->creationSentenceNr() == commonVariables_->removeSentenceNr &&							// Same sentence number
-				removeItem->itemNr() == commonVariables_->removeStartItemNr + commonVariables_->nDeletedItems );	// Ascending item number
+				// Same sentence number
+				removeItem->creationSentenceNr() == commonVariables_->removeSentenceNr &&
+				// Ascending item number
+				removeItem->itemNr() == commonVariables_->removeStartItemNr + commonVariables_->nDeletedItems );
 				}
 			}
 		else
@@ -729,7 +735,8 @@
 			{
 			if( removeItem->myList() == this )
 				{
-				if( removeItem->previousItem == NULL )		// First item in list
+				// First item in list
+				if( removeItem->previousItem == NULL )
 					{
 					switch( removeItem->statusChar() )
 						{
@@ -768,7 +775,8 @@
 						removeItem->nextItem->previousItem = removeItem->previousItem;
 					}
 
-				nextListItem_ = removeItem->nextItem;		// Remember next item
+				// Remember next item
+				nextListItem_ = removeItem->nextItem;
 
 				// Disconnect item from the list
 				removeItem->previousItem = NULL;
@@ -998,14 +1006,14 @@
 		return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to create my list query module" );
 		}
 
-	ResultType List::showQueryResultInList( bool showOnlyWords, bool showOnlyWordReferences, bool showOnlyStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
+	ResultType List::showQueryResultInList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "showQueryResultInList";
-
 		if( listQuery_ != NULL )
-			return listQuery_->showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth );
+			return listQuery_->showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth );
 
-		return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "My list query module isn't created yet" );
+		// In case the first query doesn't include admin lists,
+		// the admin list query module isn't created yet
+		return RESULT_OK;
 		}
 
 /*************************************************************************

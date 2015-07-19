@@ -2,11 +2,11 @@
  *	Class:			WordQuestion
  *	Supports class:	WordItem
  *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -83,16 +83,16 @@ class WordQuestion
 			specificationWordItem = questionSpecificationItem->specificationWordItem();
 
 			// Find correct answer
-			if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
+			if( ( answerSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
 				{
 				// Find answer with different relation context
-				if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem ) ) == NULL )
+				if( ( answerSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem ) ) == NULL )
 					{
 					// Find negative answer
-					if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, !isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
+					if( ( answerSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, isAssignment, isAssignment, !isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
 						{
 						// Find opposite possessive answer
-						if( ( answerSpecificationItem = myWordItem_->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isAssignment, isNegative, !isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
+						if( ( answerSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, isAssignment, isAssignment, isNegative, !isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
 							isNegativeAnswer = true;
 						}
 					else
@@ -114,12 +114,13 @@ class WordQuestion
 				answerSpecificationItem->isExclusiveSpecification() ) ||
 
 				answerSpecificationItem->specificationWordItem() != specificationWordItem )
-					isNegativeAnswer = true;	// Has different specification word
+					// Has different specification word
+					isNegativeAnswer = true;
 				else
 					{
 					// Only confirm the answer with 'yes' if the answer is at least as reliable as the question
 					if( !isExclusiveSpecification &&
-					// If a structure question is mapped to an assignment question, the answer is negative
+					// If a specification question is mapped to an assignment question, the answer is negative
 					answerSpecificationItem->isRelatedQuestion( isExclusiveSpecification, specificationCollectionNr, relationContextNr ) )
 						{
 						if( ( specificationResult = questionSpecificationItem->getAssumptionLevel() ).result == RESULT_OK )
@@ -130,7 +131,7 @@ class WordQuestion
 								{
 								answerAssumptionLevel = specificationResult.assumptionLevel;
 
-								if( questionAssumptionLevel >= answerAssumptionLevel )
+								if( answerAssumptionLevel <= questionAssumptionLevel )
 									isPositiveAnswer = true;
 								}
 							else
@@ -155,9 +156,11 @@ class WordQuestion
 				}
 
 			if( answerSpecificationItem != NULL &&
-			answerSpecificationItem->isOlderItem() )	// Ignore suggestive assumptions
+			// Ignore suggestive assumptions
+			answerSpecificationItem->isOlderItem() &&
+			!answerSpecificationItem->isHiddenSpecification() )
 				{
-				if( writeAnswerToQuestion( false, isNegativeAnswer, isPositiveAnswer, isUncertainAboutRelation, answerSpecificationItem ) != RESULT_OK )
+				if( writeAnswerToQuestion( isNegativeAnswer, isPositiveAnswer, isUncertainAboutRelation, answerSpecificationItem ) != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
 				}
 			}
@@ -201,33 +204,36 @@ class WordQuestion
 				specificationWordItem = questionSpecificationItem->specificationWordItem();
 
 				do	{
-					if( currentSpecificationItem->isSpecificationGeneralization() )
+					if( currentSpecificationItem->isOlderItem() )
 						{
-						if( writeAnswerToQuestion( false, true, false, false, currentSpecificationItem ) == RESULT_OK )
-							hasFoundSpecificationGeneralizationAnswer_ = true;
-						else
-							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
-						}
-					else
-						{
-						if( relationContextNr == NO_CONTEXT_NR ||
-						uncertainAboutAnswerRelationSpecificationItem_ == NULL )
+						if( currentSpecificationItem->isSpecificationGeneralization() )
 							{
-							if( hasFoundSpecificationGeneralizationAnswer_ ||
-							currentSpecificationItem->isRelatedSpecification( isNegative, isPossessive, generalizationCollectionNr, specificationCollectionNr, relationContextNr ) )
-								{
-								if( writeAnswerToQuestion( false, true, false, false, currentSpecificationItem ) != RESULT_OK )
-									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
-								}
+							if( writeAnswerToQuestion( true, false, false, currentSpecificationItem ) == RESULT_OK )
+								hasFoundSpecificationGeneralizationAnswer_ = true;
 							else
+								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
+							}
+						else
+							{
+							if( relationContextNr == NO_CONTEXT_NR ||
+							uncertainAboutAnswerRelationSpecificationItem_ == NULL )
 								{
-								if( questionSpecificationItem->isSpecificationGeneralization() &&
-								( currentSpecificationWordItem = currentSpecificationItem->specificationWordItem() ) != NULL )
+								if( hasFoundSpecificationGeneralizationAnswer_ ||
+								currentSpecificationItem->isRelatedSpecification( isNegative, isPossessive, generalizationCollectionNr, specificationCollectionNr, relationContextNr ) )
 									{
-									if( currentSpecificationWordItem->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, true, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) != NULL )
+									if( writeAnswerToQuestion( true, false, false, currentSpecificationItem ) != RESULT_OK )
+										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
+									}
+								else
+									{
+									if( questionSpecificationItem->isSpecificationGeneralization() &&
+									( currentSpecificationWordItem = currentSpecificationItem->specificationWordItem() ) != NULL )
 										{
-										hasFoundDeeperPositiveAnswer_ = true;
-										hasFoundSpecificationGeneralizationAnswer_ = true;
+										if( currentSpecificationWordItem->bestMatchingSpecificationWordSpecificationItem( false, isAssignment, true, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) != NULL )
+											{
+											hasFoundDeeperPositiveAnswer_ = true;
+											hasFoundSpecificationGeneralizationAnswer_ = true;
+											}
 										}
 									}
 								}
@@ -271,15 +277,17 @@ class WordQuestion
 			relationContextNr = questionSpecificationItem->relationContextNr();
 			specificationWordItem = questionSpecificationItem->specificationWordItem();
 
-			if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+			if( ( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
 				{
 				// Do for all words for an alternative answer
 				do	{
 					if( currentWordItem != myWordItem_ &&
-					( foundSpecificationItem = currentWordItem->firstNonQuestionAssignmentOrSpecificationItem( false, isAssignment, isArchivedAssignment, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
+					( foundSpecificationItem = currentWordItem->bestMatchingSpecificationWordSpecificationItem( false, isAssignment, isArchivedAssignment, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
 						{
 						if( hasFoundSpecificationGeneralizationAnswer ||
-						foundSpecificationItem->isRelatedSpecification( isNegative, isPossessive, generalizationWordTypeNr ) )
+
+						( foundSpecificationItem->isRelatedSpecification( isNegative, isPossessive, generalizationWordTypeNr ) &&
+						!foundSpecificationItem->isHiddenSpecification() ) )
 							{
 							if( currentWordItem->writeAnswerToQuestion( !hasFoundDeeperPositiveAnswer_, hasFoundDeeperPositiveAnswer_, false, foundSpecificationItem ) != RESULT_OK )
 								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
@@ -350,8 +358,9 @@ class WordQuestion
 							else
 								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification" );
 							}
-						else	// A specification exists, but it isn't a question
+						else
 							{
+							// A specification exists, but it isn't a question
 							if( uncertainAboutAnswerRelationSpecificationItem_ != NULL )
 								{
 								if( myWordItem_->writeSelectedSpecification( true, true, false, false, NO_ANSWER_PARAMETER, uncertainAboutAnswerRelationSpecificationItem_ ) == RESULT_OK )
@@ -451,7 +460,7 @@ class WordQuestion
 				{
 				if( questionSpecificationItem->isAssignment() )
 					{
-					if( ( specificationResult = myWordItem_->copySpecification( questionSpecificationItem->isInactiveAssignment(), questionSpecificationItem->isArchivedAssignment(), true, questionSpecificationItem->isExclusiveSpecification(), questionSpecificationItem->assignmentLevel(), questionSpecificationItem->generalizationCollectionNr(), questionSpecificationItem->specificationCollectionNr(), questionSpecificationItem->relationContextNr(), questionSpecificationItem->firstJustificationItem(), questionSpecificationItem ) ).result == RESULT_OK )
+					if( ( specificationResult = myWordItem_->copySpecificationItem( questionSpecificationItem->isInactiveAssignment(), questionSpecificationItem->isArchivedAssignment(), true, questionSpecificationItem->isExclusiveSpecification(), questionSpecificationItem->assignmentLevel(), questionSpecificationItem->generalizationCollectionNr(), questionSpecificationItem->specificationCollectionNr(), questionSpecificationItem->relationContextNr(), questionSpecificationItem->firstJustificationItem(), questionSpecificationItem ) ).result == RESULT_OK )
 						{
 						if( ( answeredQuestionSpecificationItem = specificationResult.createdSpecificationItem ) != NULL )
 							{
@@ -470,7 +479,7 @@ class WordQuestion
 
 				if( questionSpecificationItem != NULL )
 					{
-					if( ( specificationResult = myWordItem_->copySpecification( questionSpecificationItem->isInactiveAssignment(), questionSpecificationItem->isArchivedAssignment(), true, questionSpecificationItem->isExclusiveSpecification(), questionSpecificationItem->assignmentLevel(), questionSpecificationItem->generalizationCollectionNr(), questionSpecificationItem->specificationCollectionNr(), questionSpecificationItem->relationContextNr(), questionSpecificationItem->firstJustificationItem(), questionSpecificationItem ) ).result == RESULT_OK )
+					if( ( specificationResult = myWordItem_->copySpecificationItem( questionSpecificationItem->isInactiveAssignment(), questionSpecificationItem->isArchivedAssignment(), true, questionSpecificationItem->isExclusiveSpecification(), questionSpecificationItem->assignmentLevel(), questionSpecificationItem->generalizationCollectionNr(), questionSpecificationItem->specificationCollectionNr(), questionSpecificationItem->relationContextNr(), questionSpecificationItem->firstJustificationItem(), questionSpecificationItem ) ).result == RESULT_OK )
 						{
 						if( ( answeredQuestionSpecificationItem = specificationResult.createdSpecificationItem ) != NULL )
 							{
@@ -498,7 +507,7 @@ class WordQuestion
 	ResultType markQuestionAsAnswered( bool isShowingAnsweredQuestion, SpecificationItem *questionSpecificationItem )
 		{
 		SpecificationResultType specificationResult;
-		SpecificationItem *foundRelatedSpecificationItem;
+		SpecificationItem *relatedSpecificationItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "markQuestionAsAnswered";
 
 		if( questionSpecificationItem != NULL )
@@ -515,19 +524,19 @@ class WordQuestion
 				do	{
 					if( ( specificationResult = myWordItem_->findRelatedSpecification( false, questionSpecificationItem ) ).result == RESULT_OK )
 						{
-						if( ( foundRelatedSpecificationItem = specificationResult.relatedSpecificationItem ) != NULL )
+						if( ( relatedSpecificationItem = specificationResult.relatedSpecificationItem ) != NULL )
 							{
-							if( markQuestionAsAnswered( foundRelatedSpecificationItem ) != RESULT_OK )
+							if( markQuestionAsAnswered( relatedSpecificationItem ) != RESULT_OK )
 								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a related question as been answered" );
 							}
 						}
 					else
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a related answered question part" );
 					}
-				while( foundRelatedSpecificationItem != NULL );
+				while( relatedSpecificationItem != NULL );
 
 				// Now mark the given question part as answered
-				if( markQuestionAsAnswered( questionSpecificationItem->updatedSpecificationItem() ) != RESULT_OK )
+				if( markQuestionAsAnswered( questionSpecificationItem ) != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a question as been answered" );
 				}
 			else
@@ -576,13 +585,11 @@ class WordQuestion
 		myWordItem_ = myWordItem;
 		strcpy( moduleNameString_, "WordQuestion" );
 
-		if( commonVariables_ != NULL )
-			{
+		if( commonVariables_ == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+
 		if( myWordItem_ == NULL )
 			strcpy( errorString, "The given my word is undefined" );
-			}
-		else
-			strcpy( errorString, "The given common variables is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
@@ -649,79 +656,87 @@ class WordQuestion
 		return RESULT_OK;
 		}
 
-	ResultType writeAnswerToQuestion( bool isAlternativeAnswerToQuestionInOtherWord, bool isNegativeAnswer, bool isPositiveAnswer, bool isUncertainAboutRelation, SpecificationItem *answerSpecificationItem )
+	ResultType writeAnswerToQuestion( bool isNegativeAnswer, bool isPositiveAnswer, bool isUncertainAboutRelation, SpecificationItem *answerSpecificationItem )
 		{
 		unsigned short answerParameter;
-		WordItem *currentGrammarLanguageWordItem = commonVariables_->currentGrammarLanguageWordItem;
+		WordItem *currentLanguageWordItem = commonVariables_->currentLanguageWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeAnswerToQuestion";
 
 		if( answerSpecificationItem != NULL )
 			{
-			if( !answerSpecificationItem->hasAlreadyBeenWrittenAsAnswer )
+			if( answerSpecificationItem->isOlderItem() )
 				{
-				if( isPositiveAnswer )
+				if( !answerSpecificationItem->hasAlreadyBeenWrittenAsAnswer )
 					{
-					if( currentGrammarLanguageWordItem != NULL )
+					if( !answerSpecificationItem->isHiddenSpecification() )
 						{
-						if( myWordItem_->selectGrammarToWriteSentence( false, WORD_PARAMETER_INTERJECTION_YES, NO_GRAMMAR_LEVEL, currentGrammarLanguageWordItem->startOfGrammarItem(), answerSpecificationItem ) == RESULT_OK )
-							answerSpecificationItem->hasAlreadyBeenWrittenAsAnswer = true;
+						if( isPositiveAnswer )
+							{
+							if( currentLanguageWordItem != NULL )
+								{
+								if( myWordItem_->selectGrammarToWriteSentence( false, WORD_PARAMETER_INTERJECTION_YES, NO_GRAMMAR_LEVEL, currentLanguageWordItem->startOfGrammarItem(), answerSpecificationItem ) == RESULT_OK )
+									answerSpecificationItem->hasAlreadyBeenWrittenAsAnswer = true;
+								else
+									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to select the grammar for an answer" );
+								}
+							else
+								return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The current language word item is undefined" );
+							}
 						else
-							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to select the grammar for an answer" );
+							{
+							// Neutral or negative answer
+							if( isUncertainAboutRelation )
+								{
+								if( uncertainAboutAnswerRelationSpecificationItem_ == NULL )
+									uncertainAboutAnswerRelationSpecificationItem_ = answerSpecificationItem;
+								else
+									return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The uncertain about relation specification item is already assigned" );
+								}
+							else
+								{
+								answerParameter = ( isNegativeAnswer &&
+													commonVariables_->isFirstAnswerToQuestion ? WORD_PARAMETER_INTERJECTION_NO : NO_ANSWER_PARAMETER );
+
+								if( myWordItem_->writeSelectedSpecification( true, true, false, answerSpecificationItem->isNegative(), answerParameter, answerSpecificationItem ) == RESULT_OK )
+									answerSpecificationItem->hasAlreadyBeenWrittenAsAnswer = true;
+								else
+									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a selected answer to a question" );
+								}
+							}
+
+						if( !isUncertainAboutRelation &&
+						strlen( commonVariables_->writeSentenceString ) > 0 )
+							{
+							// Show notification 'My answer:'
+							if( ( commonVariables_->hasShownMessage &&
+							commonVariables_->isFirstAnswerToQuestion ) ||
+
+							// Show notification 'I am not sure, but:'
+							( !isPositiveAnswer &&
+							answerSpecificationItem->hasAssumptionLevel() ) )
+								{
+								if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( answerSpecificationItem->hasAssumptionLevel() ? INTERFACE_LISTING_I_AM_NOT_SURE_BUT : INTERFACE_LISTING_MY_ANSWER ) ) != RESULT_OK )
+									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a listing header" );
+								}
+
+							if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) == RESULT_OK )
+								{
+								if( isNegativeAnswer )
+									isNegativeAnswer_ = true;
+
+								commonVariables_->hasFoundAnswerToQuestion = true;
+								commonVariables_->isFirstAnswerToQuestion = false;
+								}
+							else
+								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
+							}
 						}
 					else
-						return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The current language word item is undefined" );
-					}
-				else	// Neutral or negative answer
-					{
-					if( isUncertainAboutRelation )
-						{
-						if( uncertainAboutAnswerRelationSpecificationItem_ == NULL )
-							uncertainAboutAnswerRelationSpecificationItem_ = answerSpecificationItem;
-						else
-							return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The uncertain about relation specification item is already assigned" );
-						}
-					else
-						{
-						answerParameter = ( isNegativeAnswer &&
-											commonVariables_->isFirstAnswerToQuestion ? WORD_PARAMETER_INTERJECTION_NO : NO_ANSWER_PARAMETER );
-
-						if( myWordItem_->writeSelectedSpecification( true, true, false, answerSpecificationItem->isNegative(), answerParameter, answerSpecificationItem ) == RESULT_OK )
-							answerSpecificationItem->hasAlreadyBeenWrittenAsAnswer = true;
-						else
-							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a selected answer to a question" );
-						}
-					}
-
-				if( !isUncertainAboutRelation &&
-				strlen( commonVariables_->writeSentenceString ) > 0 &&
-
-				( !isAlternativeAnswerToQuestionInOtherWord ||
-				!answerSpecificationItem->isHiddenSpecification() ) )
-					{
-					// Show notification "My answer:"
-					if( ( commonVariables_->hasShownMessage &&
-					commonVariables_->isFirstAnswerToQuestion ) ||
-
-					// Show notification "I am not sure, but:"
-					( !isPositiveAnswer &&
-					answerSpecificationItem->hasAssumptionLevel() ) )
-						{
-						if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( answerSpecificationItem->hasAssumptionLevel() ? INTERFACE_LISTING_I_AM_NOT_SURE_BUT : INTERFACE_LISTING_MY_ANSWER ) ) != RESULT_OK )
-							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a listing header" );
-						}
-
-					if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) == RESULT_OK )
-						{
-						if( isNegativeAnswer )
-							isNegativeAnswer_ = true;
-
-						commonVariables_->hasFoundAnswerToQuestion = true;
-						commonVariables_->isFirstAnswerToQuestion = false;
-						}
-					else
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
+						return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given answer specification item is hidden" );
 					}
 				}
+			else
+				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given answer specification item isn't old" );
 			}
 		else
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given answer specification item is undefined" );
@@ -732,7 +747,6 @@ class WordQuestion
 	SpecificationResultType findQuestionToBeAdjustedByCompoundCollection( bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCompoundCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		SpecificationResultType specificationResult;
-		JustificationItem *firstJustificationItem;
 		WordItem *currentCollectionWordItem;
 		WordItem *currentWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findQuestionToBeAdjustedByCompoundCollection";
@@ -741,7 +755,7 @@ class WordQuestion
 			{
 			if( specificationCompoundCollectionNr > NO_COLLECTION_NR )
 				{
-				if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+				if( ( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
 					{
 					// Do for all words
 					do	{
@@ -749,18 +763,7 @@ class WordQuestion
 							{
 							if( ( specificationResult.adjustedQuestionSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, true, true, isNegative, isPossessive, questionParameter, specificationCompoundCollectionNr, relationContextNr, currentCollectionWordItem ) ) != NULL )
 								{
-								if( myWordItem_->replaceOrDeleteSpecification( specificationResult.adjustedQuestionSpecificationItem, NULL ) == RESULT_OK )
-									{
-									if( ( firstJustificationItem = specificationResult.adjustedQuestionSpecificationItem->firstJustificationItem() ) != NULL )
-										{
-										if( !myWordItem_->isJustificationInUse( firstJustificationItem ) )
-											{
-											if( myWordItem_->replaceOrDeleteJustification( firstJustificationItem ) != RESULT_OK )
-												myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to delete an obsolete justification item" );
-											}
-										}
-									}
-								else
+								if( myWordItem_->replaceOrDeleteSpecification( specificationResult.adjustedQuestionSpecificationItem, NULL ) != RESULT_OK )
 									myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace or delete a question part" );
 								}
 							}

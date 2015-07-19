@@ -2,11 +2,11 @@
  *	Class:			WordCleanup
  *	Supports class:	WordItem
  *	Purpose:		To cleanup obsolete items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ class WordCleanup
 			}
 		}
 
-	protected void getHighestInUseSentenceNr( boolean isIncludingDeletedItems, boolean isIncludingLanguageAssignments, boolean isIncludingTemporaryLists, boolean isLanguageWord, int highestSentenceNr )
+	protected void getHighestInUseSentenceNr( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, boolean isLanguageWord, int highestSentenceNr )
 		{
 		short wordListNr = 0;
 
@@ -78,14 +78,9 @@ class WordCleanup
 
 			( !isLanguageWord ||
 
-			( ( isIncludingLanguageAssignments ||
-			wordListNr != Constants.WORD_ASSIGNMENT_LIST ) &&
-
-			// To increase performance, skip organizing grammar and interface lists after startup
-			( CommonVariables.isSystemStartingUp ||
-
-			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
-			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) ) &&
+			// To increase performance, skip organizing grammar and interface lists
+			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LIST ) ) &&
 
 			// Skip temporary lists
 			( isIncludingTemporaryLists ||
@@ -104,11 +99,9 @@ class WordCleanup
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists after startup
-			( CommonVariables.isSystemStartingUp ||
-
-			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
-			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
+			// To increase performance, skip organizing grammar and interface lists
+			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				myWordItem_.wordListArray[wordListNr].setCurrentItemNrInList();
 			}
 		}
@@ -121,11 +114,9 @@ class WordCleanup
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists after startup
-			( CommonVariables.isSystemStartingUp ||
-
-			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
-			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
+			// To increase performance, skip organizing grammar and interface lists
+			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].decrementItemNrRangeInList( decrementSentenceNr, decrementItemNr, decrementOffset ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to decrement item number range" );
@@ -143,11 +134,9 @@ class WordCleanup
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists after startup
-			( CommonVariables.isSystemStartingUp ||
-
-			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
-			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
+			// To increase performance, skip organizing grammar and interface lists
+			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].decrementSentenceNrsInList( startSentenceNr ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
@@ -165,11 +154,9 @@ class WordCleanup
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists after startup
-			( CommonVariables.isSystemStartingUp ||
-
-			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
-			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
+			// To increase performance, skip organizing grammar and interface lists
+			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].deleteSentencesInList( isAvailableForRollback, lowestSentenceNr ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to delete sentences in one of my lists" );
@@ -204,11 +191,9 @@ class WordCleanup
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists after startup
-			( CommonVariables.isSystemStartingUp ||
-
-			( wordListNr != Constants.WORD_GRAMMAR_LANGUAGE_LIST &&
-			wordListNr != Constants.WORD_INTERFACE_LANGUAGE_LIST ) ) ) )
+			// To increase performance, skip organizing grammar and interface lists
+			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].removeFirstRangeOfDeletedItemsInList() != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to remove the first deleted items" );

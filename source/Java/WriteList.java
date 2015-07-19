@@ -2,11 +2,11 @@
  *	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ class WriteList extends List
 	};
 
 /*************************************************************************
- *	"God says, "At the time I have planned,
+ *	"God says, "At the time I've planned,
  *	I will bring justice against the wicked.
  *	When the earth quackes and its people live in turmoil,
  *	I am the one that keeps its foundations firm." (Psalm 75:2-3)

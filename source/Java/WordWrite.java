@@ -2,11 +2,11 @@
  *	Class:			WordWrite
  *	Supports class:	WordItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -131,7 +131,7 @@ class WordWrite
 
 	protected byte writeSelectedRelationInfo( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isLanguageWord, boolean isQuestion, WordItem writeWordItem )
 		{
-		short currentGrammarLanguageNr = CommonVariables.currentGrammarLanguageNr;
+		short currentLanguageNr = CommonVariables.currentLanguageNr;
 		SpecificationResultType specificationResult;
 		SpecificationItem foundAssignmentItem;
 		SpecificationItem currentSpecificationItem = null;
@@ -142,7 +142,7 @@ class WordWrite
 				{
 				do	{
 					if( ( isLanguageWord ||
-					currentSpecificationItem.grammarLanguageNr() == currentGrammarLanguageNr ) &&
+					currentSpecificationItem.languageNr() == currentLanguageNr ) &&
 
 					writeWordItem.hasContextInWord( currentSpecificationItem.relationContextNr(), currentSpecificationItem.specificationWordItem() ) )
 						{
@@ -195,47 +195,58 @@ class WordWrite
 		boolean hasRelationContext;
 		boolean hasSpecificationCompoundCollection;
 		boolean isAssignment;
-		boolean isFirstRelatedSpecification;
 		boolean isPossessive;
 		boolean isOlderItem;
+		boolean isQuestion;
 		boolean isSpecificationGeneralization;
 		boolean isWritingSentenceWithOneSpecificationOnly;
 		boolean hasAssignment = false;
 		boolean isCombinedSpecification = false;
 		boolean isCombinedOldAndNewSpecification = false;
+		boolean isFirstRelatedSpecification = false;
 		boolean isLastCompoundSpecification = false;
+		boolean isLastRelatedSpecification = false;
 		boolean isSelfGeneratedDefinitionConclusion = false;
 		int relationContextNr;
-		SpecificationItem foundRelatedSpecificationItem;
+		SpecificationItem relatedSpecificationItem = null;
 		WordItem specificationWordItem;
-		WordItem currentGrammarLanguageWordItem = CommonVariables.currentGrammarLanguageWordItem;
+		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
 
 		CommonVariables.writeSentenceStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
 
 		if( writeSpecificationItem != null )
 			{
-			if( ( specificationResult = myWordItem_.findRelatedSpecification( true, writeSpecificationItem ) ).result == Constants.RESULT_OK )
+			if( !writeSpecificationItem.isHiddenSpecification() )
 				{
-				isFirstRelatedSpecification = specificationResult.isFirstRelatedSpecification;
-				foundRelatedSpecificationItem = specificationResult.relatedSpecificationItem;
+				// Skip specification string
+				if( ( specificationWordItem = writeSpecificationItem.specificationWordItem() ) != null )
+					{
+					if( ( specificationResult = myWordItem_.findRelatedSpecification( true, writeSpecificationItem ) ).result == Constants.RESULT_OK )
+						{
+						isFirstRelatedSpecification = specificationResult.isFirstRelatedSpecification;
+						isLastRelatedSpecification = specificationResult.isLastRelatedSpecification;
+						relatedSpecificationItem = specificationResult.relatedSpecificationItem;
+						}
+					else
+						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find a related specification" );
+					}
 
 				hasRelationContext = writeSpecificationItem.hasRelationContext();
 				hasSpecificationCompoundCollection = writeSpecificationItem.hasSpecificationCompoundCollection();
 				isAssignment = writeSpecificationItem.isAssignment();
 				isPossessive = writeSpecificationItem.isPossessive();
 				isOlderItem = writeSpecificationItem.isOlderItem();
+				isQuestion = writeSpecificationItem.isQuestion();
 				isSpecificationGeneralization = writeSpecificationItem.isSpecificationGeneralization();
 
 				relationContextNr = writeSpecificationItem.relationContextNr();
-
-				specificationWordItem = writeSpecificationItem.specificationWordItem();
 
 				if( !isAssignment &&
 				myWordItem_.firstAssignmentItem( true, true, true, isPossessive, writeSpecificationItem.questionParameter(), relationContextNr, specificationWordItem ) != null )
 					hasAssignment = true;
 
-				if( foundRelatedSpecificationItem != null &&
-				foundRelatedSpecificationItem.isOlderItem() )
+				if( relatedSpecificationItem != null &&
+				relatedSpecificationItem.isOlderItem() )
 					{
 					if( !hasAssignment &&
 					!hasSpecificationCompoundCollection &&
@@ -248,7 +259,7 @@ class WordWrite
 
 				if( hasSpecificationCompoundCollection &&
 				!isFirstRelatedSpecification &&
-				specificationResult.isLastRelatedSpecification )
+				isLastRelatedSpecification )
 					isLastCompoundSpecification = true;
 
 				if( !isSpecificationGeneralization &&
@@ -279,98 +290,110 @@ class WordWrite
 				( isCombinedOldAndNewSpecification ||
 				isFirstRelatedSpecification ||
 				isForcingResponseNotBeingFirstSpecification ||
-				foundRelatedSpecificationItem == null ||
+				relatedSpecificationItem == null ||
 
 				( !isAdjustedAssumption &&
-				!writeSpecificationItem.isQuestion() &&
-				writeSpecificationItem.assumptionLevel() != foundRelatedSpecificationItem.assumptionLevel() ) ) ) )
+				!isQuestion &&
+				writeSpecificationItem.assumptionLevel() != relatedSpecificationItem.assumptionLevel() ) ) ) )
 					{
 					isWritingSentenceWithOneSpecificationOnly = ( isWritingCurrentSpecificationWordOnly &&
 																writeSpecificationItem.lastWrittenSentenceWithOneSpecificationOnlyStringBuffer != null );
 
-					// To increase performance,
-					// use the last written sentence if still up-to-date
-					if( answerParameter == Constants.NO_ANSWER_PARAMETER &&
+					// In order to increase performance, use the last written sentence if still up-to-date
+					if( !isAdjustedAssumption &&
+					answerParameter == Constants.NO_ANSWER_PARAMETER &&
 					writeSpecificationItem.lastWrittenSentenceStringBuffer != null &&
 
-					( isWritingSentenceWithOneSpecificationOnly ||
-					writeSpecificationItem.isUserQuestion() ||
-
-					( myWordItem_.isUserGeneralizationWord &&
-					writeSpecificationItem.isSelfGeneratedAssumption() &&
-					!myWordItem_.hasContextCurrentlyBeenUpdatedInAllWords( relationContextNr, specificationWordItem ) ) ||
+					( isQuestion ||
+					isWritingSentenceWithOneSpecificationOnly ||
 
 					// No relation context
 					( !hasRelationContext &&
 
 					( !isWritingCurrentSpecificationWordOnly ||
-					writeSpecificationItem.hasExclusiveSpecificationCollection() ) ) ||
+					myWordItem_.isUserGeneralizationWord ) ) ||
 
 					// Relation context
 					( hasRelationContext &&
 
-					( ( isOlderItem &&
+					( ( ( isOlderItem ||
+					myWordItem_.isUserGeneralizationWord ) &&
+
 					!myWordItem_.hasContextCurrentlyBeenUpdatedInAllWords( relationContextNr, specificationWordItem ) ) ||
 
-					( !isWritingCurrentSpecificationWordOnly &&
-					myWordItem_.nContextWordsInAllWords( relationContextNr, specificationWordItem ) == 1 ) ) ) ) )
+					myWordItem_.nContextWordsInAllWords( relationContextNr, specificationWordItem ) == 1 ) ) ) )
+						// Use the last written sentence
 						CommonVariables.writeSentenceStringBuffer = new StringBuffer( isWritingSentenceWithOneSpecificationOnly ? writeSpecificationItem.lastWrittenSentenceWithOneSpecificationOnlyStringBuffer : writeSpecificationItem.lastWrittenSentenceStringBuffer );
 					else
 						{
-						if( currentGrammarLanguageWordItem != null )
+						// In order to increase performance, use the last written sentence of a related specification
+						if( !isFirstRelatedSpecification &&
+						!isWritingCurrentSpecificationWordOnly &&
+						answerParameter == Constants.NO_ANSWER_PARAMETER &&
+						writeSpecificationItem.isOlderItem() &&
+						relatedSpecificationItem != null &&
+						relatedSpecificationItem.lastWrittenSentenceStringBuffer != null )
+							// Use the last written sentence of a related specification
+							CommonVariables.writeSentenceStringBuffer = relatedSpecificationItem.lastWrittenSentenceStringBuffer;
+						else
 							{
-							if( myWordItem_.selectGrammarToWriteSentence( isWritingCurrentSpecificationWordOnly, answerParameter, Constants.NO_GRAMMAR_LEVEL, currentGrammarLanguageWordItem.startOfGrammarItem(), writeSpecificationItem ) == Constants.RESULT_OK )
+							if( currentLanguageWordItem != null )
 								{
-								// Under certain conditions, the last written sentence will be stored, to be re-used again if needed
-								if( answerParameter == Constants.NO_ANSWER_PARAMETER &&
-								!writeSpecificationItem.hasHiddenSpecificationWord() &&
-								CommonVariables.writeSentenceStringBuffer != null &&
-
-								// Any "part of" specification
-								( writeSpecificationItem.isPartOf() ||
-
-								// Any user question
-								writeSpecificationItem.isUserQuestion() ||
-
-								// Any non-exclusive non-specification-generalization specification
-								( !isSpecificationGeneralization &&
-								!writeSpecificationItem.isExclusiveSpecification() &&
-								!writeSpecificationItem.isNegative() ) ||
-
-								( !hasRelationContext &&
-
-								// Any older self-generated specification without relation context
-								( ( isOlderItem &&
-								!writeSpecificationItem.isNegative() &&
-								writeSpecificationItem.isSelfGenerated() ) ||
-
-								// Any user specification
-								( !isAssignment &&
-								writeSpecificationItem.isUserSpecification() ) ) ) ||
-
-								// Any generalization assignment with relation context
-								( hasRelationContext &&
-								!writeSpecificationItem.isGeneralizationAssignment() ) ) )
+								if( myWordItem_.selectGrammarToWriteSentence( isWritingCurrentSpecificationWordOnly, answerParameter, Constants.NO_GRAMMAR_LEVEL, currentLanguageWordItem.startOfGrammarItem(), writeSpecificationItem ) == Constants.RESULT_OK )
 									{
-									if( !isWritingCurrentSpecificationWordOnly )
-										writeSpecificationItem.lastWrittenSentenceStringBuffer = new StringBuffer( CommonVariables.writeSentenceStringBuffer );
+									// Under certain conditions, the last written sentence will be stored, in order to be re-used if needed
+									if( answerParameter == Constants.NO_ANSWER_PARAMETER &&
+									// Skip hidden specification word type
+									!writeSpecificationItem.hasHiddenSpecificationWordType() &&
+									CommonVariables.writeSentenceStringBuffer != null &&
 
-									if( isWritingCurrentSpecificationWordOnly &&
-									writeSpecificationItem.lastWrittenSentenceWithOneSpecificationOnlyStringBuffer == null &&
-									writeSpecificationItem.nInvolvedSpecificationWords( true, false ) > 1 )
-										writeSpecificationItem.lastWrittenSentenceWithOneSpecificationOnlyStringBuffer = new StringBuffer( CommonVariables.writeSentenceStringBuffer );
+									// Any 'part of' specification
+									( writeSpecificationItem.isPartOf() ||
+
+									// Any user question
+									writeSpecificationItem.isUserQuestion() ||
+
+									// Any non-exclusive non-specification-generalization specification
+									( !isSpecificationGeneralization &&
+									!writeSpecificationItem.isExclusiveSpecification() &&
+									!writeSpecificationItem.isNegative() ) ||
+
+									( !hasRelationContext &&
+
+									// Any older self-generated specification without relation context
+									( ( isOlderItem &&
+									!writeSpecificationItem.isNegative() &&
+									writeSpecificationItem.isSelfGenerated() ) ||
+
+									// Any user specification
+									( !isAssignment &&
+									writeSpecificationItem.isUserSpecification() ) ) ) ||
+
+									// Any non-generalization assignment with relation context
+									( hasRelationContext &&
+									!writeSpecificationItem.isGeneralizationAssignment() ) ) )
+										{
+										if( isWritingCurrentSpecificationWordOnly )
+											{
+											if( writeSpecificationItem.lastWrittenSentenceWithOneSpecificationOnlyStringBuffer == null &&
+											writeSpecificationItem.nInvolvedSpecificationWords( true, false ) > 1 )
+												writeSpecificationItem.lastWrittenSentenceWithOneSpecificationOnlyStringBuffer = new StringBuffer( CommonVariables.writeSentenceStringBuffer );
+											}
+										else
+											writeSpecificationItem.lastWrittenSentenceStringBuffer = new StringBuffer( CommonVariables.writeSentenceStringBuffer );
+										}
 									}
+								else
+									return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to select the grammar to write a sentence" );
 								}
 							else
-								return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to select the grammar to write a sentence" );
+								return myWordItem_.startErrorInWord( 1, moduleNameString_, "The current language word item is undefined" );
 							}
-						else
-							return myWordItem_.startErrorInWord( 1, moduleNameString_, "The current language word item is undefined" );
 						}
 					}
 				}
 			else
-				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find a related specification" );
+				return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given write specification item is hidden" );
 			}
 		else
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given write specification item is undefined" );
@@ -381,19 +404,32 @@ class WordWrite
 	protected byte writeUpdatedSpecification( boolean isAdjustedSpecification, boolean isCorrectedAssumptionByKnowledge, boolean isCorrectedAssumptionByOppositeQuestion, SpecificationItem writeSpecificationItem )
 		{
 		boolean isExclusiveSpecification;
+		boolean wasHiddenSpecification;
 
 		if( writeSpecificationItem != null )
 			{
 			isExclusiveSpecification = writeSpecificationItem.isExclusiveSpecification();
+
+			wasHiddenSpecification = ( writeSpecificationItem.isSpecificationWordCollectedWithItself() &&
+										writeSpecificationItem.hasSpecificationNonCompoundCollection() &&
+										writeSpecificationItem.lastWrittenSentenceStringBuffer == null );
 
 			if( writeSelectedSpecification( true, true, isExclusiveSpecification, false, false, Constants.NO_ANSWER_PARAMETER, writeSpecificationItem ) == Constants.RESULT_OK )
 				{
 				if( CommonVariables.writeSentenceStringBuffer != null &&
 				CommonVariables.writeSentenceStringBuffer.length() > 0 )
 					{
-					if( Presentation.writeInterfaceText( true, Constants.PRESENTATION_PROMPT_NOTIFICATION, ( isCorrectedAssumptionByKnowledge ? Constants.INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_KNOWLEDGE : ( isCorrectedAssumptionByOppositeQuestion ? Constants.INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_QUESTION : ( isAdjustedSpecification ? ( writeSpecificationItem.isQuestion() ? Constants.INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS : ( writeSpecificationItem.isConcludedAssumption() ? Constants.INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED : Constants.INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED ) ) : ( writeSpecificationItem.isSelfGenerated() ? Constants.INTERFACE_LISTING_MY_QUESTIONS_THAT_ARE_ANSWERED : Constants.INTERFACE_LISTING_YOUR_QUESTIONS_THAT_ARE_ANSWERED ) ) ) ) ) == Constants.RESULT_OK )
+					if( Presentation.writeInterfaceText( true, Constants.PRESENTATION_PROMPT_NOTIFICATION, ( isCorrectedAssumptionByKnowledge ? Constants.INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_KNOWLEDGE : ( isCorrectedAssumptionByOppositeQuestion ? Constants.INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_QUESTION : ( isAdjustedSpecification ? ( writeSpecificationItem.isQuestion() ? Constants.INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS : ( writeSpecificationItem.isConcludedAssumption() ? ( wasHiddenSpecification ? Constants.INTERFACE_LISTING_MY_HIDDEN_ASSUMPTIONS_THAT_ARE_CONCLUDED : Constants.INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED ) : Constants.INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED ) ) : ( writeSpecificationItem.isSelfGenerated() ? Constants.INTERFACE_LISTING_MY_QUESTIONS_THAT_ARE_ANSWERED : Constants.INTERFACE_LISTING_YOUR_QUESTIONS_THAT_ARE_ANSWERED ) ) ) ) ) == Constants.RESULT_OK )
 						{
-						if( Presentation.writeDiacriticalText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writeSentenceStringBuffer.toString() ) != Constants.RESULT_OK )
+						if( Presentation.writeDiacriticalText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writeSentenceStringBuffer.toString() ) == Constants.RESULT_OK )
+							{
+							if( !isCorrectedAssumptionByOppositeQuestion )
+								{
+								if( myWordItem_.recalculateAssumptionsInAllTouchedWords() != Constants.RESULT_OK )
+									return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to recalculate the assumptions in all words" );
+								}
+							}
+						else
 							return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a sentence" );
 						}
 					else

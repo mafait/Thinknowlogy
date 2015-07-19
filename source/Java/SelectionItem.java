@@ -2,11 +2,11 @@
  *	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ class SelectionItem extends Item
 	private boolean isNegative_;
 	private boolean isPossessive_;
 	private boolean isSpecificationGeneralization_;
-	private boolean isUniqueRelation_;
+	private boolean isUniqueUserRelation_;
 	private boolean isValueSpecification_;
 
 	private short assumptionLevel_;
@@ -74,7 +74,7 @@ class SelectionItem extends Item
 
 	// Constructor / deconstructor
 
-	protected SelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeParameter, short prepositionParameter, short specificationWordParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString, List myList, WordItem myWordItem )
+	protected SelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeParameter, short prepositionParameter, short specificationWordParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
@@ -96,7 +96,7 @@ class SelectionItem extends Item
 		isNegative_ = isNegative;
 		isPossessive_ = isPossessive;
 		isSpecificationGeneralization_ = isSpecificationGeneralization;
-		isUniqueRelation_ = isUniqueRelation;
+		isUniqueUserRelation_ = isUniqueUserRelation;
 		isValueSpecification_ = isValueSpecification;
 
 		assumptionLevel_ = assumptionLevel;
@@ -141,7 +141,8 @@ class SelectionItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -162,7 +163,8 @@ class SelectionItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -176,7 +178,8 @@ class SelectionItem extends Item
 			CommonVariables.queryStringBuffer.length() > 0 )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -190,7 +193,8 @@ class SelectionItem extends Item
 			CommonVariables.queryStringBuffer.length() > 0 )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -335,8 +339,8 @@ class SelectionItem extends Item
 		if( isSpecificationGeneralization_ )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationGeneralization" );
 
-		if( isUniqueRelation_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUniqueRelation" );
+		if( isUniqueUserRelation_ )
+			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUniqueUserRelation" );
 
 		if( isValueSpecification_ )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isValueSpecification" );
@@ -460,9 +464,9 @@ class SelectionItem extends Item
 		return isSpecificationGeneralization_;
 		}
 
-	protected boolean isUniqueRelation()
+	protected boolean isUniqueUserRelation()
 		{
-		return isUniqueRelation_;
+		return isUniqueUserRelation_;
 		}
 
 	protected boolean isValueSpecification()

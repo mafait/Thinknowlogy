@@ -1,11 +1,11 @@
 /*
  *	Class:		Presentation
  *	Purpose:	To format the information presented to the user
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class Presentation
 	private static boolean hasReadLine_;
 	private static boolean isExpertUser_;
 	private static boolean isFirstTimeAfterReadingFile_;
-	private static boolean showExtraPromptLine_;
+	private static boolean isShowingExtraPromptLine_;
 	private static boolean wasPreviousPromptGuidedByGrammarInput_;
 
 	private static short lastUsedPromptTypeNr_;
@@ -69,7 +69,7 @@ class Presentation
 
 	private static void showStatus( boolean isPassword, short interfaceParameter )
 		{
-		String newStatusString = ( CommonVariables.currentInterfaceLanguageWordItem == null ? Constants.NO_INTERFACE_LANGUAGE_AVAILABLE : CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter ) );
+		String newStatusString = ( CommonVariables.currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND : CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter ) );
 		
 		if( newStatusString == null )
 			clearStatus();
@@ -86,7 +86,7 @@ class Presentation
 			}
 		}
 
-	private static byte writeText( boolean forceEmptyString, boolean isFirstCharacterToUpperCase, boolean returnToPosition, short promptTypeNr, int leftWidth, int rightWidth, int printStringLength, String promptString, String writeString )
+	private static byte writeText( boolean isForcingEmptyString, boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, int leftWidth, int rightWidth, int printStringLength, String promptString, String writeString )
 		{
 		boolean startNewLine = false;
 		int wordPosition;
@@ -97,14 +97,14 @@ class Presentation
 
 		if( writeString != null )
 			{
-			if( forceEmptyString ||
+			if( isForcingEmptyString ||
 			printStringLength > 0 ||
 			leftWidth > Constants.NO_CENTER_WIDTH ||
 			rightWidth > Constants.NO_CENTER_WIDTH )
 				{
 				if( currentPosition_ > 0 &&
 
-				( returnToPosition ||
+				( isReturningToPosition ||
 				isFirstTimeAfterReadingFile_ ) )
 					returnOutputToPosition( false );
 
@@ -120,7 +120,7 @@ class Presentation
 				if( isFirstCharacterToUpperCase &&
 				firstLetterPosition < printStringLength &&
 
-				( !returnToPosition ||
+				( !isReturningToPosition ||
 				currentPosition_ == 0 ) &&
 
 				( promptTypeNr == Constants.PRESENTATION_PROMPT_WRITE ||
@@ -133,7 +133,7 @@ class Presentation
 					{
 					promptString = getPromptString( promptTypeNr );
 
-					if( forceEmptyString &&
+					if( isForcingEmptyString &&
 					printStringLength == 0 &&
 					promptString != null )
 						{
@@ -250,7 +250,7 @@ class Presentation
 		return CommonVariables.result;
 		}
 
-	private static byte writeText( boolean forceEmptyString, boolean isFirstCharacterToUpperCase, boolean returnToPosition, short promptTypeNr, int queryWidth, String promptString, String textString )
+	private static byte writeText( boolean isForcingEmptyString, boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, int queryWidth, String promptString, String textString )
 		{
 		int widthDifference;
 		int leftWidth = Constants.NO_CENTER_WIDTH;
@@ -259,7 +259,7 @@ class Presentation
 
 		if( textString != null )
 			{
-			if( forceEmptyString ||
+			if( isForcingEmptyString ||
 			textString.length() > 0 ||
 			queryWidth > Constants.NO_CENTER_WIDTH )
 				{
@@ -283,7 +283,7 @@ class Presentation
 					rightWidth = ( widthDifference - leftWidth );
 					}
 
-					if( writeText( forceEmptyString, isFirstCharacterToUpperCase, returnToPosition, promptTypeNr, leftWidth, rightWidth, textStringLength, promptString, textString ) == Constants.RESULT_OK )
+					if( writeText( isForcingEmptyString, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, leftWidth, rightWidth, textStringLength, promptString, textString ) == Constants.RESULT_OK )
 					lastUsedPromptTypeNr_ = promptTypeNr;
 				else
 					showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the string" );
@@ -329,12 +329,12 @@ class Presentation
 
 	// Constructor initialization
 
-	protected static void init()
+	protected static void initialize()
 		{
 		hasReadLine_ = false;
 		isExpertUser_ = false;
 		isFirstTimeAfterReadingFile_ = false;
-		showExtraPromptLine_ = false;
+		isShowingExtraPromptLine_ = false;
 		wasPreviousPromptGuidedByGrammarInput_ = false;
 
 		currentPosition_ = 0;
@@ -373,7 +373,7 @@ class Presentation
 
 	protected static void startProgress( int startProgress, int maxProgress, short interfaceParameter1, short shortNumber, short interfaceParameter2 )
 		{
-		Console.startProgress( startProgress, maxProgress, ( CommonVariables.currentInterfaceLanguageWordItem == null ? Constants.NO_INTERFACE_LANGUAGE_AVAILABLE : CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter1 ) + shortNumber + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter2 ) + "  " + Constants.QUERY_ITEM_START_STRING + CommonVariables.currentSentenceNr + ( CommonVariables.currentItemNr == Constants.NO_SENTENCE_NR ? Constants.EMPTY_STRING : Constants.QUERY_SEPARATOR_STRING + CommonVariables.currentItemNr ) + Constants.QUERY_ITEM_END_CHAR ) );
+		Console.startProgress( startProgress, maxProgress, ( CommonVariables.currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND : CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + shortNumber + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + "  " + Constants.QUERY_ITEM_START_STRING + CommonVariables.currentSentenceNr + ( CommonVariables.currentItemNr == Constants.NO_SENTENCE_NR ? Constants.EMPTY_STRING : Constants.QUERY_SEPARATOR_STRING + CommonVariables.currentItemNr ) + Constants.QUERY_ITEM_END_CHAR ) );
 		}
 
 	protected static void showError( char methodListChar, String classNameString, String subclassNameString, String wordNameString, int methodLevel, String errorString )
@@ -490,10 +490,10 @@ class Presentation
 		return textStringBuffer.toString();
 		}
 
-	protected static byte writeText( boolean returnToPosition, short promptTypeNr, int queryWidth, StringBuffer textStringBuffer )
+	protected static byte writeText( boolean isReturningToPosition, short promptTypeNr, int queryWidth, StringBuffer textStringBuffer )
 		{
 		if( textStringBuffer != null )
-			return writeText( false, true, returnToPosition, promptTypeNr, queryWidth, null, textStringBuffer.toString() );
+			return writeText( false, true, isReturningToPosition, promptTypeNr, queryWidth, null, textStringBuffer.toString() );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given text string buffer is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
@@ -505,7 +505,7 @@ class Presentation
 		return writeDiacriticalText( true, true, promptTypeNr, diacriticalTextString );
 		}
 
-	protected static byte writeDiacriticalText( boolean isFirstCharacterToUpperCase, boolean returnToPosition, short promptTypeNr, String textString )
+	protected static byte writeDiacriticalText( boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, String textString )
 		{
 		boolean hasFoundNewLine = false;
 		int position = 0;
@@ -514,7 +514,7 @@ class Presentation
 
 		if( textString != null )
 			{
-			showExtraPromptLine_ = true;
+			isShowingExtraPromptLine_ = true;
 
 			if( textString.charAt( 0 ) == Constants.SYMBOL_DOUBLE_QUOTE )
 				position++;
@@ -549,7 +549,7 @@ class Presentation
 				textString.charAt( position ) != Constants.SYMBOL_DOUBLE_QUOTE &&
 				textString.charAt( position ) == Constants.QUERY_CHAR ) )
 					{
-					if( writeText( false, isFirstCharacterToUpperCase, returnToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) == Constants.RESULT_OK )
+					if( writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) == Constants.RESULT_OK )
 						{
 						hasFoundNewLine = false;
 						textStringBuffer = new StringBuffer();
@@ -562,7 +562,7 @@ class Presentation
 			if( CommonVariables.result == Constants.RESULT_OK &&
 			textStringBuffer.length() > 0 )
 				{
-				if( writeText( false, isFirstCharacterToUpperCase, returnToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) != Constants.RESULT_OK )
+				if( writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) != Constants.RESULT_OK )
 					showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the last characters" );
 				}
 			}
@@ -575,20 +575,20 @@ class Presentation
 		return CommonVariables.result;
 		}
 
-	protected static byte writeInterfaceText( boolean checkForDuplicateInterfaceParameter, short promptTypeNr, short interfaceParameter )
+	protected static byte writeInterfaceText( boolean isCheckingForDuplicateInterfaceParameter, short promptTypeNr, short interfaceParameter )
 		{
-		return writeInterfaceText( checkForDuplicateInterfaceParameter, true, promptTypeNr, interfaceParameter );
+		return writeInterfaceText( isCheckingForDuplicateInterfaceParameter, true, promptTypeNr, interfaceParameter );
 		}
 
-	protected static byte writeInterfaceText( boolean checkForDuplicateInterfaceParameter, boolean returnToPosition, short promptTypeNr, short interfaceParameter )
+	protected static byte writeInterfaceText( boolean isCheckingForDuplicateInterfaceParameter, boolean isReturningToPosition, short promptTypeNr, short interfaceParameter )
 		{
-		if( CommonVariables.currentInterfaceLanguageWordItem != null )
+		if( CommonVariables.currentLanguageWordItem != null )
 			{
-			if( !checkForDuplicateInterfaceParameter ||
+			if( !isCheckingForDuplicateInterfaceParameter ||
 			interfaceParameter != lastShownInterfaceParameter_ )
 				{
 				lastShownInterfaceParameter_ = interfaceParameter;
-				return writeDiacriticalText( true, returnToPosition, promptTypeNr, CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter ) );
+				return writeDiacriticalText( true, isReturningToPosition, promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter ) );
 				}
 			}
 		else
@@ -602,8 +602,8 @@ class Presentation
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, int intNumber, short interfaceParameter2 )
 		{
-		if( CommonVariables.currentInterfaceLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter2 ) );
+		if( CommonVariables.currentLanguageWordItem != null )
+			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
@@ -612,8 +612,8 @@ class Presentation
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, int intNumber1, short interfaceParameter2, int intNumber2, short interfaceParameter3 )
 		{
-		if( CommonVariables.currentInterfaceLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber1 + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter2 ) + intNumber2 + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter3 ) );
+		if( CommonVariables.currentLanguageWordItem != null )
+			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber1 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + intNumber2 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
@@ -622,8 +622,8 @@ class Presentation
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, int intNumber, short interfaceParameter2, String textString, short interfaceParameter3 )
 		{
-		if( CommonVariables.currentInterfaceLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter2 ) + textString + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter3 ) );
+		if( CommonVariables.currentLanguageWordItem != null )
+			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + textString + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
@@ -632,23 +632,23 @@ class Presentation
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, int intNumber1, short interfaceParameter2, int intNumber2, short interfaceParameter3, String textString, short interfaceParameter4 )
 		{
-		if( CommonVariables.currentInterfaceLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber1 + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter2 ) + intNumber2 + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter3 ) + textString + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter4 ) );
+		if( CommonVariables.currentLanguageWordItem != null )
+			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber1 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + intNumber2 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) + textString + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter4 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
 		return CommonVariables.result;
 		}
 
-	protected static byte writeInterfaceText( boolean checkForDuplicateInterfaceParameter, short promptTypeNr, short interfaceParameter1, String textString, short interfaceParameter2 )
+	protected static byte writeInterfaceText( boolean isCheckingForDuplicateInterfaceParameter, short promptTypeNr, short interfaceParameter1, String textString, short interfaceParameter2 )
 		{
-		if( CommonVariables.currentInterfaceLanguageWordItem != null )
+		if( CommonVariables.currentLanguageWordItem != null )
 			{
-			if( !checkForDuplicateInterfaceParameter ||
+			if( !isCheckingForDuplicateInterfaceParameter ||
 			interfaceParameter1 != lastShownInterfaceParameter_ )
 				{
 				lastShownInterfaceParameter_ = interfaceParameter1;
-				return writeDiacriticalText( promptTypeNr, CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter1 ) + textString + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter2 ) );
+				return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) );
 				}
 			}
 		else
@@ -662,8 +662,8 @@ class Presentation
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString1, short interfaceParameter2, String textString2, short interfaceParameter3 )
 		{
-		if( CommonVariables.currentInterfaceLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter1 ) + textString1 + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter2 ) + textString2 + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter3 ) );
+		if( CommonVariables.currentLanguageWordItem != null )
+			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString1 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + textString2 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
@@ -672,8 +672,8 @@ class Presentation
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString1, short interfaceParameter2, String textString2, short interfaceParameter3, String textString3, short interfaceParameter4 )
 		{
-		if( CommonVariables.currentInterfaceLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter1 ) + textString1 + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter2 ) + textString2 + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter3 ) + textString3 + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter4 ) );
+		if( CommonVariables.currentLanguageWordItem != null )
+			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString1 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + textString2 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) + textString3 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter4 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
@@ -682,8 +682,8 @@ class Presentation
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString, short interfaceParameter2, int intNumber, short interfaceParameter3 )
 		{
-		if( CommonVariables.currentInterfaceLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter1 ) + textString + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter2 ) + intNumber + CommonVariables.currentInterfaceLanguageWordItem.interfaceString( interfaceParameter3 ) );
+		if( CommonVariables.currentLanguageWordItem != null )
+			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + intNumber + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
@@ -723,10 +723,10 @@ class Presentation
 			if( currentPosition_ > 0 )
 				returnOutputToPosition( true );
 
-			if( showExtraPromptLine_ )
+			if( isShowingExtraPromptLine_ )
 				{
 				if( writeText( false, true, true, lastUsedPromptTypeNr_, Constants.NO_CENTER_WIDTH, null, Constants.NEW_LINE_STRING ) == Constants.RESULT_OK )
-					showExtraPromptLine_ = false;
+					isShowingExtraPromptLine_ = false;
 				else
 					showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the line" );
 				}

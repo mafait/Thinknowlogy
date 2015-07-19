@@ -2,11 +2,11 @@
  *	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ class InterfaceList : private List
 
 	InterfaceList( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
-		initializeListVariables( WORD_INTERFACE_LANGUAGE_LIST_SYMBOL, "InterfaceList", commonVariables, myWordItem );
+		initializeListVariables( WORD_INTERFACE_LIST_SYMBOL, "InterfaceList", commonVariables, myWordItem );
 		}
 
 	~InterfaceList()
@@ -50,6 +50,12 @@ class InterfaceList : private List
 			searchItem = searchItem->nextInterfaceItem();
 			delete deleteItem;
 			}
+
+		if( firstInactiveItem() != NULL )
+			fprintf( stderr, "\nError: Class InterfaceList has inactive items." );
+
+		if( firstArchivedItem() )
+			fprintf( stderr, "\nError: Class InterfaceList has archived items." );
 
 		searchItem = (InterfaceItem *)firstReplacedItem();
 
@@ -98,7 +104,7 @@ class InterfaceList : private List
 							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to compare two interface strings" );
 						}
 					else
-						return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I found an undefined interface string" );
+						return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I've found an undefined interface string" );
 					}
 				else
 					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given interface parameter already exists" );
@@ -127,7 +133,6 @@ class InterfaceList : private List
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		InterfaceItem *searchItem = firstActiveInterfaceItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 

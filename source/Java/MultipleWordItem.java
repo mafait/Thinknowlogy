@@ -2,11 +2,11 @@
  *	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ class MultipleWordItem extends Item
 	{
 	// Private loadable variables
 
+	private short nWordParts_;
+	private short wordTypeLanguageNr_;
 	private short wordTypeNr_;
 
 	private WordItem multipleWordItem_;
@@ -34,12 +36,14 @@ class MultipleWordItem extends Item
 
 	// Constructor / deconstructor
 
-	protected MultipleWordItem( short wordTypeNr, WordItem multipleWordItem, List myList, WordItem myWordItem )
+	protected MultipleWordItem( short nWordParts, short wordTypeLanguageNr, short wordTypeNr, WordItem multipleWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
 		// Private loadable variables
 
+		nWordParts_ = nWordParts;
+		wordTypeLanguageNr_ = wordTypeLanguageNr;
 		wordTypeNr_ = wordTypeNr;
 
 		multipleWordItem_ = multipleWordItem;
@@ -64,7 +68,8 @@ class MultipleWordItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -101,8 +106,14 @@ class MultipleWordItem extends Item
 		{
 		String wordString;
 		String wordTypeString = myWordItem().wordTypeNameString( wordTypeNr_ );
+		String languageNameString = myWordItem().languageNameString( wordTypeLanguageNr_ );
 
 		baseToStringBuffer( queryWordTypeNr );
+
+		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nWordParts:" + nWordParts_ );
+
+		if( wordTypeLanguageNr_ > Constants.NO_LANGUAGE_NR )
+			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordTypeLanguageNr:" + ( languageNameString == null ? wordTypeLanguageNr_ : languageNameString ) );
 
 		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "multipleWordType:" + ( wordTypeString == null ? Constants.EMPTY_STRING : wordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + wordTypeNr_ );
 
@@ -123,6 +134,16 @@ class MultipleWordItem extends Item
 	protected boolean isSingularNoun()
 		{
 		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR );
+		}
+
+	protected short nWordParts()
+		{
+		return nWordParts_;
+		}
+
+	protected short wordTypeLanguageNr()
+		{
+		return wordTypeLanguageNr_;
 		}
 
 	protected short wordTypeNr()

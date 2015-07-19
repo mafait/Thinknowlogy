@@ -4,11 +4,11 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -40,7 +40,6 @@ class GeneralizationItem : private Item
 	friend class WordAssignment;
 	friend class WordCollection;
 	friend class WordItem;
-	friend class WordSpecification;
 
 	// Private loadable variables
 
@@ -87,7 +86,8 @@ class GeneralizationItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -178,23 +178,21 @@ class GeneralizationItem : private Item
 		return generalizationWordTypeNr_;
 		}
 
-	unsigned short specificationWordTypeNr()
-		{
-		return specificationWordTypeNr_;
-		}
-
 	WordItem *generalizationWordItem()
 		{
 		return generalizationWordItem_;
 		}
 
-	GeneralizationItem *getGeneralizationItem( bool isIncludingThisItem, bool isRelation )
+	GeneralizationItem *getGeneralizationItem( bool isIncludingThisItem, bool isOnlySelectingNoun, bool isRelation )
 		{
 		GeneralizationItem *searchItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
 
 		while( searchItem != NULL )
 			{
-			if( searchItem->isRelation_ == isRelation )
+			if( searchItem->isRelation_ == isRelation &&
+
+			( !isOnlySelectingNoun ||
+			isSingularOrPluralNoun( searchItem->generalizationWordTypeNr_ ) ) )
 				return searchItem;
 
 			searchItem = searchItem->nextGeneralizationItem();
@@ -208,19 +206,19 @@ class GeneralizationItem : private Item
 		return (GeneralizationItem *)nextItem;
 		}
 
-	GeneralizationItem *nextGeneralizationItem( bool isRelation )
+	GeneralizationItem *nextNounSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, isRelation );
+		return getGeneralizationItem( false, true, false );
 		}
 
 	GeneralizationItem *nextSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false );
+		return getGeneralizationItem( false, false, false );
 		}
 
 	GeneralizationItem *nextRelationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, true );
+		return getGeneralizationItem( false, false, true );
 		}
 	};
 #endif

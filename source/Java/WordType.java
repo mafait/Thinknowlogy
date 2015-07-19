@@ -2,11 +2,11 @@
  *	Class:			WordType
  *	Supports class:	WordItem
  *	Purpose:		To create word type structures
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -39,16 +39,16 @@ class WordType
 	private byte checkOnFeminineAndMasculineWordEnding( boolean isSingularNoun, String wordString )
 		{
 		GrammarResultType grammarResult = new GrammarResultType();
-		WordItem currentGrammarLanguageWordItem;
+		WordItem currentLanguageWordItem;
 
 		hasFeminineWordEnding_ = false;
 		hasMasculineWordEnding_ = false;
 
 		if( wordString != null )
 			{
-			if( ( currentGrammarLanguageWordItem = CommonVariables.currentGrammarLanguageWordItem ) != null )
+			if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) != null )
 				{
-				if( ( grammarResult = currentGrammarLanguageWordItem.checkOnWordEnding( ( isSingularNoun ? Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING : Constants.WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result == Constants.RESULT_OK )
+				if( ( grammarResult = currentLanguageWordItem.checkOnWordEnding( ( isSingularNoun ? Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING : Constants.WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result == Constants.RESULT_OK )
 					{
 					if( grammarResult.hasFoundWordEnding )
 						{
@@ -62,7 +62,7 @@ class WordType
 						}
 					else
 						{
-						if( ( grammarResult = currentGrammarLanguageWordItem.checkOnWordEnding( ( isSingularNoun ? Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING : Constants.WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result == Constants.RESULT_OK )
+						if( ( grammarResult = currentLanguageWordItem.checkOnWordEnding( ( isSingularNoun ? Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING : Constants.WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result == Constants.RESULT_OK )
 							{
 							if( grammarResult.hasFoundWordEnding )
 								{
@@ -83,7 +83,7 @@ class WordType
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to check on feminine word ending" );
 				}
 			else
-				return myWordItem_.startErrorInWord( 1, moduleNameString_, "The current grammar language word item is undefined" );
+				return myWordItem_.startErrorInWord( 1, moduleNameString_, "The current language word item is undefined" );
 			}
 		else
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given word string is undefined" );
@@ -164,7 +164,7 @@ class WordType
 
 				if( CommonVariables.result == Constants.RESULT_OK )
 					{
-					if( ( wordResult = myWordItem_.wordTypeList.createWordTypeItem( hasFeminineWordEnding_, hasMasculineWordEnding_, isMultipleWord, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordLength, wordTypeString ) ).result != Constants.RESULT_OK )
+					if( ( wordResult = myWordItem_.wordTypeList.createWordTypeItem( ( hasFeminineWordEnding_ && !isMultipleWord ), hasMasculineWordEnding_, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordLength, wordTypeString ) ).result != Constants.RESULT_OK )
 						myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to create a word type item" );
 					}
 				}
@@ -191,7 +191,8 @@ class WordType
 				if( ( currentWordTypeItem = myWordItem_.activeWordTypeItem( isForcingToCheckAllLanguages, wordTypeNr ) ) != null )
 					{
 					do	{
-						if( ( currentWordTypeString = currentWordTypeItem.itemString() ) != null )		// Skip hidden word type
+						// Skip hidden word type
+						if( ( currentWordTypeString = currentWordTypeItem.itemString() ) != null )
 							{
 							if( ( currentWordTypeStringLength = currentWordTypeString.length() ) > 0 )
 								{
@@ -212,10 +213,10 @@ class WordType
 					}
 				}
 			else
-				myWordItem_.startErrorInWord( 1, moduleNameString_, "The given search word string is empty" );
+				myWordItem_.startErrorInWord( 1, moduleNameString_, "The given word type string is empty" );
 			}
 		else
-			myWordItem_.startErrorInWord( 1, moduleNameString_, "The given search word string is undefined" );
+			myWordItem_.startErrorInWord( 1, moduleNameString_, "The given word type string is undefined" );
 
 		wordResult.result = CommonVariables.result;
 		return wordResult;

@@ -2,11 +2,11 @@
  *	Class:			AdminSelection
  *	Supports class:	AdminItem
  *	Purpose:		To process selections
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -36,7 +36,6 @@ class AdminSelection
 
 	AdminItem *adminItem_;
 	CommonVariables *commonVariables_;
-	WordItem *myWordItem_;
 	char moduleNameString_[FUNCTION_NAME_LENGTH];
 
 
@@ -44,41 +43,46 @@ class AdminSelection
 
 	ResultType removeDuplicateSelection()
 		{
+		SelectionList *actionList;
+		SelectionList *alternativeList;
+		SelectionList *conditionList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "removeDuplicateSelection";
 
-		if( adminItem_->conditionList != NULL )
+		if( ( conditionList = adminItem_->conditionList ) != NULL )
 			{
-			if( adminItem_->actionList != NULL )
+			if( ( actionList = adminItem_->actionList ) != NULL )
 				{
-				if( adminItem_->conditionList->deleteActiveItemsWithCurrentSentenceNr() == RESULT_OK )
+				if( conditionList->deleteActiveItemsWithCurrentSentenceNr() == RESULT_OK )
 					{
-					if( adminItem_->actionList->deleteActiveItemsWithCurrentSentenceNr() == RESULT_OK )
+					if( actionList->deleteActiveItemsWithCurrentSentenceNr() == RESULT_OK )
 						{
-						if( adminItem_->alternativeList != NULL )
+						if( ( alternativeList = adminItem_->alternativeList ) != NULL )
 							{
-							if( adminItem_->alternativeList->deleteActiveItemsWithCurrentSentenceNr() != RESULT_OK )
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the alternative of a selection" );
+							if( alternativeList->deleteActiveItemsWithCurrentSentenceNr() != RESULT_OK )
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the alternative of a selection" );
 							}
 						}
 					else
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the action of a selection" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the action of a selection" );
 					}
 				else
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the condition of a selection" );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the condition of a selection" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The action list isn't created yet" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The action list isn't created yet" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The condition list isn't created yet" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The condition list isn't created yet" );
 
 		return RESULT_OK;
 		}
 
 	SelectionItem *firstCondition()
 		{
-		if( adminItem_->conditionList != NULL )
-			return adminItem_->conditionList->firstActiveSelectionItem();
+		SelectionList *conditionList;
+
+		if( ( conditionList = adminItem_->conditionList ) != NULL )
+			return conditionList->firstActiveSelectionItem();
 
 		return NULL;
 		}
@@ -87,7 +91,7 @@ class AdminSelection
 	protected:
 	// Constructor / deconstructor
 
-	AdminSelection( AdminItem *adminItem, CommonVariables *commonVariables, WordItem *myWordItem )
+	AdminSelection( AdminItem *adminItem, CommonVariables *commonVariables )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
@@ -95,26 +99,18 @@ class AdminSelection
 
 		adminItem_ = adminItem;
 		commonVariables_ = commonVariables;
-		myWordItem_ = myWordItem;
 		strcpy( moduleNameString_, "AdminSelection" );
 
-		if( commonVariables_ != NULL )
-			{
-		if( adminItem_ != NULL )
-			{
-			if( myWordItem_ == NULL )
-				strcpy( errorString, "The given my word is undefined" );
-			}
-		else
-			strcpy( errorString, "The given admin is undefined" );
-			}
-		else
+		if( commonVariables_ == NULL )
 			strcpy( errorString, "The given common variables is undefined" );
+
+		if( adminItem_ == NULL )
+			strcpy( errorString, "The given admin is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
-			if( myWordItem_ != NULL )
-				myWordItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+			if( adminItem_ != NULL )
+				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -132,57 +128,60 @@ class AdminSelection
 		SelectionResultType selectionResult;
 		bool hasFoundDuplicateSelection = false;
 		unsigned int duplicateConditionSentenceNr;
+		SelectionList *actionList;
+		SelectionList *alternativeList;
+		SelectionList *conditionList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkForDuplicateSelection";
 
-		if( adminItem_->conditionList != NULL )
+		if( ( conditionList = adminItem_->conditionList ) != NULL )
 			{
-			if( adminItem_->actionList != NULL )
+			if( ( actionList = adminItem_->actionList ) != NULL )
 				{
-				if( ( selectionResult = adminItem_->conditionList->checkDuplicateCondition() ).result == RESULT_OK )
+				if( ( selectionResult = conditionList->checkDuplicateCondition() ).result == RESULT_OK )
 					{
 					if( ( duplicateConditionSentenceNr = selectionResult.duplicateConditionSentenceNr ) > NO_SENTENCE_NR )
 						{
-						if( ( selectionResult = adminItem_->actionList->checkDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result == RESULT_OK )
+						if( ( selectionResult = actionList->checkDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result == RESULT_OK )
 							{
 							if( selectionResult.hasFoundDuplicateSelection )
 								{
-								if( adminItem_->alternativeList == NULL )
+								if( ( alternativeList = adminItem_->alternativeList ) == NULL )
 									hasFoundDuplicateSelection = true;
 								else
 									{
-									if( ( selectionResult = adminItem_->alternativeList->checkDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result == RESULT_OK )
+									if( ( selectionResult = alternativeList->checkDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result == RESULT_OK )
 										{
 										if( selectionResult.hasFoundDuplicateSelection )
 											hasFoundDuplicateSelection = true;
 										}
 									else
-										return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check if the alternative selection part is duplicate" );
+										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check if the alternative selection part is duplicate" );
 									}
 								}
 
 							if( hasFoundDuplicateSelection )
 								{
 								if( removeDuplicateSelection() != RESULT_OK )
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove a duplicate selection" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove a duplicate selection" );
 								}
 							}
 						else
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check if the action selection part is duplicate" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check if the action selection part is duplicate" );
 						}
 					}
 				else
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check if the condition selection part is duplicate" );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check if the condition selection part is duplicate" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The action list isn't created yet" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The action list isn't created yet" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The condition list isn't created yet" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The condition list isn't created yet" );
 
 		return RESULT_OK;
 		}
 
-	ResultType createSelectionPart( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short selectionListNr, unsigned short imperativeParameter, unsigned short prepositionParameter, unsigned short specificationWordParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
+	ResultType createSelectionPart( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short selectionListNr, unsigned short imperativeParameter, unsigned short prepositionParameter, unsigned short specificationWordParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
 		{
 		SelectionResultType selectionResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createSelectionPart";
@@ -196,22 +195,22 @@ class AdminSelection
 					if( adminItem_->conditionList == NULL )
 						{
 						// Create list
-						if( ( adminItem_->conditionList = new SelectionList( ADMIN_CONDITION_LIST_SYMBOL, commonVariables_, myWordItem_ ) ) != NULL )
+						if( ( adminItem_->conditionList = new SelectionList( ADMIN_CONDITION_LIST_SYMBOL, commonVariables_, adminItem_ ) ) != NULL )
 							{
 							commonVariables_->adminConditionList = adminItem_->conditionList;
 							adminItem_->adminListArray[ADMIN_CONDITION_LIST] = adminItem_->conditionList;
 							}
 						else
-							return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create an admin condition list" );
+							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create an admin condition list" );
 						}
 
-					if( ( selectionResult = adminItem_->conditionList->createSelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result == RESULT_OK )
+					if( ( selectionResult = adminItem_->conditionList->createSelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result == RESULT_OK )
 						{
 						if( firstSelectionItem_ == NULL )
 							firstSelectionItem_ = selectionResult.lastCreatedSelectionItem;
 						}
 					else
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin condition list" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin condition list" );
 
 					break;
 
@@ -219,22 +218,22 @@ class AdminSelection
 					if( adminItem_->actionList == NULL )
 						{
 						// Create list
-						if( ( adminItem_->actionList = new SelectionList( ADMIN_ACTION_LIST_SYMBOL, commonVariables_, myWordItem_ ) ) != NULL )
+						if( ( adminItem_->actionList = new SelectionList( ADMIN_ACTION_LIST_SYMBOL, commonVariables_, adminItem_ ) ) != NULL )
 							{
 							commonVariables_->adminActionList = adminItem_->actionList;
 							adminItem_->adminListArray[ADMIN_ACTION_LIST] = adminItem_->actionList;
 							}
 						else
-							return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create an admin action list" );
+							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create an admin action list" );
 						}
 
-					if( ( selectionResult = adminItem_->actionList->createSelectionItem( false, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result == RESULT_OK )
+					if( ( selectionResult = adminItem_->actionList->createSelectionItem( false, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result == RESULT_OK )
 						{
 						if( firstSelectionItem_ == NULL )
 							firstSelectionItem_ = selectionResult.lastCreatedSelectionItem;
 						}
 					else
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin action list" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin action list" );
 
 					break;
 
@@ -242,31 +241,31 @@ class AdminSelection
 					if( adminItem_->alternativeList == NULL )
 						{
 						// Create list
-						if( ( adminItem_->alternativeList = new SelectionList( ADMIN_ALTERNATIVE_LIST_SYMBOL, commonVariables_, myWordItem_ ) ) != NULL )
+						if( ( adminItem_->alternativeList = new SelectionList( ADMIN_ALTERNATIVE_LIST_SYMBOL, commonVariables_, adminItem_ ) ) != NULL )
 							{
 							commonVariables_->adminAlternativeList = adminItem_->alternativeList;
 							adminItem_->adminListArray[ADMIN_ALTERNATIVE_LIST] = adminItem_->alternativeList;
 							}
 						else
-							return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create an admin alternative list" );
+							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create an admin alternative list" );
 						}
 
-					if( ( selectionResult = adminItem_->alternativeList->createSelectionItem( false, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result == RESULT_OK )
+					if( ( selectionResult = adminItem_->alternativeList->createSelectionItem( false, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result == RESULT_OK )
 						{
 						if( firstSelectionItem_ == NULL )
 							firstSelectionItem_ = selectionResult.lastCreatedSelectionItem;
 						}
 					else
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin alternative list" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin alternative list" );
 
 					break;
 
 				default:
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given list number is invalid: ", selectionListNr );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given list number is invalid: ", selectionListNr );
 				}
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word or specification string is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word or specification string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -274,13 +273,13 @@ class AdminSelection
 	ResultType executeSelection( unsigned int endSolveProgress, SelectionItem *actionSelectionItem )
 		{
 		SelectionResultType selectionResult;
+		bool hasDoneLastExecution;
+		bool isInitializeVariables;
 		bool isNewStart;
 		bool isSatisfied;
 		bool isWaitingForNewStart;
 		bool isWaitingForNewLevel;
-		bool waitForExecution;
-		bool doneLastExecution;
-		bool isInitializeVariables;
+		bool isWaitingForExecution;
 		unsigned short executionLevel;
 		unsigned short executionListNr;
 		unsigned short selectionLevel;
@@ -289,10 +288,12 @@ class AdminSelection
 		WordItem *conditionWordItem;
 		SelectionItem *conditionSelectionItem;
 		SelectionItem *executionSelectionItem;
+		SelectionList *actionList;
+		SelectionList *alternativeList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "executeSelection";
 
 		do	{
-			doneLastExecution = false;
+			hasDoneLastExecution = false;
 			commonVariables_->isAssignmentChanged = false;
 
 			if( ( conditionSelectionItem = firstCondition() ) != NULL )
@@ -300,7 +301,7 @@ class AdminSelection
 				isSatisfied = false;
 				isWaitingForNewStart = false;
 				isWaitingForNewLevel = false;
-				waitForExecution = false;
+				isWaitingForExecution = false;
 				executionLevel = conditionSelectionItem->selectionLevel();
 				executionSentenceNr = conditionSelectionItem->activeSentenceNr();
 
@@ -313,13 +314,13 @@ class AdminSelection
 
 						if( isSatisfied )
 							{
-							if( adminItem_->actionList != NULL )
-								executionSelectionItem = adminItem_->actionList->executionStartEntry( executionLevel, executionSentenceNr );
+							if( ( actionList = adminItem_->actionList ) != NULL )
+								executionSelectionItem = actionList->executionStartEntry( executionLevel, executionSentenceNr );
 							}
 						else
 							{
-							if( adminItem_->alternativeList != NULL )
-								executionSelectionItem = adminItem_->alternativeList->executionStartEntry( executionLevel, executionSentenceNr );
+							if( ( alternativeList = adminItem_->alternativeList ) != NULL )
+								executionSelectionItem = alternativeList->executionStartEntry( executionLevel, executionSentenceNr );
 							}
 
 						if( executionSelectionItem != NULL )
@@ -330,25 +331,26 @@ class AdminSelection
 								if( adminItem_->executeImperative( isInitializeVariables, executionListNr, executionSelectionItem->imperativeParameter(), executionSelectionItem->specificationWordParameter(), executionSelectionItem->specificationWordTypeNr(), endSolveProgress, executionSelectionItem->specificationString(), executionSelectionItem->generalizationWordItem(), executionSelectionItem->specificationWordItem(), NULL, NULL, executionSelectionItem, actionSelectionItem ) == RESULT_OK )
 									isInitializeVariables = false;
 								else
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to execute an imperative" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to execute an imperative" );
 								}
 							while( !adminItem_->hasRequestedRestart() &&
 							!commonVariables_->hasShownWarning &&
 							( executionSelectionItem = executionSelectionItem->nextExecutionItem( executionLevel, executionSentenceNr ) ) != NULL );
 							}
 
-						if( conditionSelectionItem != NULL )	// Found new condition
+						// Found new condition
+						if( conditionSelectionItem != NULL )
 							{
 							isSatisfied = false;
 							isWaitingForNewStart = false;
 							isWaitingForNewLevel = false;
-							waitForExecution = false;
+							isWaitingForExecution = false;
 							executionLevel = conditionSelectionItem->selectionLevel();
 							}
 						}
 
 					if( conditionSelectionItem == NULL )
-						doneLastExecution = true;
+						hasDoneLastExecution = true;
 					else
 						{
 						isNewStart = conditionSelectionItem->isNewStart();
@@ -356,32 +358,37 @@ class AdminSelection
 
 						if( isNewStart &&
 						isWaitingForNewStart &&
-						executionLevel == selectionLevel )	// Found new start
+						// Found new start
+						executionLevel == selectionLevel )
 							isWaitingForNewStart = false;
 
 						if( isWaitingForNewLevel &&
-						executionLevel != selectionLevel )	// Found new level
+						// Found new level
+						executionLevel != selectionLevel )
 							isWaitingForNewLevel = false;
 
 						if( !isWaitingForNewStart &&
 						!isWaitingForNewLevel &&
-						!waitForExecution )
+						!isWaitingForExecution )
 							{
 							if( !isNewStart &&
 							!isSatisfied &&
 							executionLevel == selectionLevel )
-								isWaitingForNewStart = true;	// Skip checking of this condition part and wait for a new start to come on this level
+								// Skip checking of this condition part and wait for a new start to come on this level
+								isWaitingForNewStart = true;
 							else
 								{
 								if( isNewStart &&
 								isSatisfied &&
 								executionLevel == selectionLevel )
-									isWaitingForNewLevel = true;		// Skip checking of this condition part and wait for a new level to come
+									// Skip checking of this condition part and wait for a new level to come
+									isWaitingForNewLevel = true;
 								else
 									{
 									if( executionLevel != selectionLevel &&
 									isSatisfied != conditionSelectionItem->isAction() )
-										waitForExecution = true;	// Skip checking of this condition and wait for the next condition sentence number to come
+										// Skip checking of this condition and wait for the next condition sentence number to come
+										isWaitingForExecution = true;
 									else
 										{
 										conditionWordItem = conditionSelectionItem->generalizationWordItem();
@@ -395,10 +402,10 @@ class AdminSelection
 												executionSentenceNr = conditionSelectionItem->activeSentenceNr();
 												}
 											else
-												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the condition of word \"", conditionWordItem->anyWordTypeString(), "\"" );
+												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the condition of word \"", conditionWordItem->anyWordTypeString(), "\"" );
 											}
 										else
-											return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I found an undefined condition word" );
+											return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I've found an undefined condition word" );
 										}
 									}
 								}
@@ -407,7 +414,7 @@ class AdminSelection
 						conditionSelectionItem = conditionSelectionItem->nextSelectionItem();
 						}
 					}
-				while( !doneLastExecution &&
+				while( !hasDoneLastExecution &&
 				!adminItem_->hasRequestedRestart() &&
 				!commonVariables_->hasShownWarning );
 				}
@@ -419,7 +426,7 @@ class AdminSelection
 
 		if( commonVariables_->isAssignmentChanged &&
 		nSelectionExecutions == MAX_SELECTION_EXECUTIONS )
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "There is probably an endless loop in the selections" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "There is probably an endless loop in the selections" );
 
 		return RESULT_OK;
 		}

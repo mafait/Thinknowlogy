@@ -2,11 +2,11 @@
  *	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -43,16 +43,12 @@ class CollectionItem : private Item
 	WordItem *commonWordItem_;
 	WordItem *compoundGeneralizationWordItem_;
 
-	char *collectionString_;
-
 
 	protected:
 	// Constructor / deconstructor
 
-	CollectionItem( bool isExclusiveSpecification, unsigned short collectionOrderNr, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem, char *collectionString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	CollectionItem( bool isExclusiveSpecification, unsigned short collectionOrderNr, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
-		size_t collectionStringLength;
-
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "CollectionItem", commonVariables, myList, myWordItem );
 
 		// Private loadable variables
@@ -68,49 +64,10 @@ class CollectionItem : private Item
 		collectionWordItem_ = collectionWordItem;
 		commonWordItem_ = commonWordItem;
 		compoundGeneralizationWordItem_ = compoundGeneralizationWordItem;
-
-		collectionString_ = NULL;
-
-		if( collectionString != NULL )
-			{
-			if( ( collectionStringLength = strlen( collectionString ) ) < MAX_SENTENCE_STRING_LENGTH )
-				{
-				if( ( collectionString_ = new char[collectionStringLength + 1] ) != NULL )
-					strcpy( collectionString_, collectionString );
-				else
-					startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create a collection string" );
-				}
-			else
-				startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given collection string is too long" );
-			}
-		}
-
-	~CollectionItem()
-		{
-		if( collectionString_ != NULL )
-			delete collectionString_;
 		}
 
 
 	// Protected virtual functions
-
-	virtual void showString( bool isReturnQueryToPosition )
-		{
-		char statusString[2] = SPACE_STRING;
-		statusString[0] = statusChar();
-
-		if( collectionString_ != NULL )
-			{
-			if( commonVariables()->hasFoundQuery )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
-
-			if( !isActiveItem() )	// Show status if not active
-				strcat( commonVariables()->queryString, statusString );
-
-			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, collectionString_ );
-			}
-		}
 
 	virtual void showWordReferences( bool isReturnQueryToPosition )
 		{
@@ -124,7 +81,8 @@ class CollectionItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -138,7 +96,8 @@ class CollectionItem : private Item
 			strlen( commonVariables()->queryString ) > 0 )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -152,7 +111,8 @@ class CollectionItem : private Item
 			strlen( commonVariables()->queryString ) > 0 )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -297,22 +257,16 @@ class CollectionItem : private Item
 				}
 			}
 
-		if( collectionString_ != NULL )
-			{
-			sprintf( tempString, "%ccollectionString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, collectionString_, QUERY_STRING_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
-			}
-
 		return commonVariables()->queryString;
 		}
 
 
 	// Protected functions
 
-	bool hasFeminineCollectionWord()
+	bool hasFemaleCollectionWord()
 		{
 		return ( collectionWordItem_ != NULL &&
-				collectionWordItem_->isFeminineWord() );
+				collectionWordItem_->isFemale() );
 		}
 
 	bool isCompoundGeneralization()
@@ -340,6 +294,11 @@ class CollectionItem : private Item
 		return collectionWordTypeNr_;
 		}
 
+	unsigned short commonWordTypeNr()
+		{
+		return commonWordTypeNr_;
+		}
+
 	unsigned int collectionNr()
 		{
 		return collectionNr_;
@@ -363,11 +322,6 @@ class CollectionItem : private Item
 	CollectionItem *nextCollectionItem()
 		{
 		return (CollectionItem *)nextItem;
-		}
-
-	char *collectionString()
-		{
-		return collectionString_;
 		}
 	};
 

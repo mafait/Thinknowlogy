@@ -1,0 +1,4 @@
+﻿Leer el archivo "Español/razonamiento/definición de familia".
+María no es una madre.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+María es una madre.

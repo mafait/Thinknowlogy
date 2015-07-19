@@ -2,9 +2,9 @@
 John is the father and Anna is the mother of Paul, Joe and Laura.
 Is John a mother?
 Is John the mother of Paul?
-Is John the father of Pete?
-George is the father of Pete.
-Is John the father of Pete?
+Is John the father of Adam?
+George is the father of Adam.
+Is John the father of Adam?
 Is George the father of Paul?
 Bill is a father.
 Is Bill the father of Paul?

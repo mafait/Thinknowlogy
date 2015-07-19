@@ -2,11 +2,11 @@
  *	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -27,14 +27,12 @@ class ReadList extends List
 	{
 	// Private constructible variables
 
-	private short lastCreatedWordOrderNr_;
 	private short lastActivatedWordOrderNr_;
 
 	// Constructor / deconstructor
 
 	protected ReadList( WordItem myWordItem )
 		{
-		lastCreatedWordOrderNr_ = Constants.NO_ORDER_NR;
 		lastActivatedWordOrderNr_ = Constants.NO_ORDER_NR;
 
 		initializeListVariables( Constants.ADMIN_READ_LIST_SYMBOL, myWordItem );
@@ -83,25 +81,31 @@ class ReadList extends List
 		ReadItem searchItem = firstActiveReadItem();
 		WordItem readWordItem;
 
-		while( searchItem != null )
+		if( sentenceString != null )
 			{
-			if( searchItem.wordOrderNr() == wordOrderNr &&
-			( readWordItem = searchItem.readWordItem() ) != null )
+			while( searchItem != null )
 				{
-				if( readWordItem.isMultipleWord() &&
-				!readWordItem.isMultipleNounWordStartingWith( sentenceString ) )
+				if( searchItem.wordOrderNr() == wordOrderNr &&
+				( readWordItem = searchItem.readWordItem() ) != null )
 					{
-					if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
-						searchItem = nextReadListItem();
+					if( readWordItem.isMultipleWord() &&
+					// No matching multiple word parts
+					readWordItem.matchingMultipleSingularNounWordParts( sentenceString ) == 0 )
+						{
+						if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
+							searchItem = nextReadListItem();
+						else
+							return addError( 1, null, null, "I failed to delete an active read item" );
+						}
 					else
-						return addError( 1, null, null, "I failed to delete an active read item" );
+						searchItem = searchItem.nextReadItem();
 					}
 				else
 					searchItem = searchItem.nextReadItem();
 				}
-			else
-				searchItem = searchItem.nextReadItem();
 			}
+		else
+			return startError( 1, null, null, "The given sentence string is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -109,63 +113,9 @@ class ReadList extends List
 
 	// Protected methods
 
-	protected void initForParsingReadWords()
+	protected void clearLastActivatedWordOrderNr()
 		{
 		lastActivatedWordOrderNr_ = Constants.NO_ORDER_NR;
-		}
-
-	protected boolean isImperativeSentence()
-		{
-		short previousWordOrderNr = Constants.NO_ORDER_NR;
-		int nWords = 0;
-		String readWordString;
-		ReadItem startItem = null;
-		ReadItem searchItem = firstActiveReadItem();
-
-		CommonVariables.writeSentenceStringBuffer = new StringBuffer();
-
-		while( searchItem != null )
-			{
-			if( ( nWords > 0 ||
-			searchItem.isSpecificationWord() ) &&				// Trigger
-
-			searchItem.wordOrderNr() > previousWordOrderNr )	// First appearance of new word
-				{
-				nWords++;
-				previousWordOrderNr = searchItem.wordOrderNr();
-
-				if( startItem == null )
-					startItem = searchItem;
-				}
-
-			searchItem = searchItem.nextReadItem();
-			}
-
-		if( nWords > 2 )	// Start creation of imperative sentence
-			{
-			previousWordOrderNr = Constants.NO_ORDER_NR;
-			searchItem = startItem;
-			CommonVariables.writeSentenceStringBuffer = new StringBuffer();
-
-			while( searchItem != null )
-				{
-				if( searchItem.wordOrderNr() > previousWordOrderNr &&
-				searchItem.readWordItem() != null &&	// Skip text
-				( readWordString = searchItem.readWordTypeString() ) != null )
-					{
-					if( previousWordOrderNr > Constants.NO_ORDER_NR &&
-					searchItem.grammarParameter != Constants.GRAMMAR_SENTENCE )	// End of string (colon, question mark, etc)
-						CommonVariables.writeSentenceStringBuffer.append( Constants.SPACE_STRING );
-
-					previousWordOrderNr = searchItem.wordOrderNr();
-					CommonVariables.writeSentenceStringBuffer.append( readWordString );
-					}
-
-				searchItem = searchItem.nextReadItem();
-				}
-			}
-
-		return ( nWords > 2 );
 		}
 
 	protected boolean hasFoundReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, String readString, WordItem readWordItem )
@@ -194,24 +144,63 @@ class ReadList extends List
 		return false;
 		}
 
-	protected boolean hasPassedGrammarIntegrityCheck()
+	protected boolean isImperativeSentence()
 		{
+		short previousWordOrderNr = Constants.NO_ORDER_NR;
+		int nWords = 0;
+		String readWordString;
+		ReadItem startItem = null;
 		ReadItem searchItem = firstActiveReadItem();
+
+		CommonVariables.writeSentenceStringBuffer = new StringBuffer();
 
 		while( searchItem != null )
 			{
-			if( !searchItem.hasWordPassedGrammarIntegrityCheck )
-				return false;
+			if( ( nWords > 0 ||
+			// Trigger
+			searchItem.isSpecificationWord() ) &&
+
+			// First appearance of new word
+			searchItem.wordOrderNr() > previousWordOrderNr )
+				{
+				nWords++;
+				previousWordOrderNr = searchItem.wordOrderNr();
+
+				if( startItem == null )
+					startItem = searchItem;
+				}
 
 			searchItem = searchItem.nextReadItem();
 			}
 
-		return true;
-		}
+		// Start creation of imperative sentence
+		if( nWords > 2 )
+			{
+			previousWordOrderNr = Constants.NO_ORDER_NR;
+			searchItem = startItem;
+			CommonVariables.writeSentenceStringBuffer = new StringBuffer();
 
-	protected short lastCreatedWordOrderNr()
-		{
-		return lastCreatedWordOrderNr_;
+			while( searchItem != null )
+				{
+				if( searchItem.wordOrderNr() > previousWordOrderNr &&
+				// Skip text
+				searchItem.readWordItem() != null &&
+				( readWordString = searchItem.readWordTypeString() ) != null )
+					{
+					if( previousWordOrderNr > Constants.NO_ORDER_NR &&
+					// End of string (colon, question mark, etc)
+					searchItem.grammarParameter != Constants.GRAMMAR_SENTENCE )
+						CommonVariables.writeSentenceStringBuffer.append( Constants.SPACE_STRING );
+
+					previousWordOrderNr = searchItem.wordOrderNr();
+					CommonVariables.writeSentenceStringBuffer.append( readWordString );
+					}
+
+				searchItem = searchItem.nextReadItem();
+				}
+			}
+
+		return ( nWords > 2 );
 		}
 
 	protected ReadResultType createReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String readString, WordItem readWordItem )
@@ -225,9 +214,7 @@ class ReadList extends List
 				{
 				if( ( readResult.createdReadItem = new ReadItem( wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, this, myWordItem() ) ) != null )
 					{
-					if( addItemToList( Constants.QUERY_ACTIVE_CHAR, readResult.createdReadItem ) == Constants.RESULT_OK )
-						lastCreatedWordOrderNr_ = wordOrderNr;
-					else
+					if( addItemToList( Constants.QUERY_ACTIVE_CHAR, readResult.createdReadItem ) != Constants.RESULT_OK )
 						addError( 1, null, null, "I failed to add an active read item" );
 					}
 				else
@@ -266,7 +253,7 @@ class ReadList extends List
 			readResult.hasFoundMoreInterpretations = true;
 			lastActivatedWordOrderNr_ = inactiveReadItem.wordOrderNr();
 
-			if( activateItem( false, inactiveReadItem ) != Constants.RESULT_OK )
+			if( activateItem( inactiveReadItem ) != Constants.RESULT_OK )
 				addError( 1, null, null, "I failed to active an inactive item" );
 			}
 
@@ -316,7 +303,8 @@ class ReadList extends List
 		ReadItem activeReadItem;
 		ReadItem currentReadItem = firstActiveReadItem();
 
-		if( currentWordOrderNr > Constants.NO_ORDER_NR )	// Find current word position
+		// Find current word position
+		if( currentWordOrderNr > Constants.NO_ORDER_NR )
 			{
 			while( currentReadItem != null &&
 			currentReadItem.wordOrderNr() <= currentWordOrderNr )
@@ -337,7 +325,7 @@ class ReadList extends List
 						while( CommonVariables.result == Constants.RESULT_OK &&
 						activeReadItem != currentReadItem )
 							{
-							if( inactivateItem( false, activeReadItem ) == Constants.RESULT_OK )
+							if( inactivateItem( activeReadItem ) == Constants.RESULT_OK )
 								activeReadItem = nextReadListItem();
 							else
 								addError( 1, null, null, "I failed to inactive an active item" );
@@ -350,7 +338,8 @@ class ReadList extends List
 			while( CommonVariables.result == Constants.RESULT_OK &&
 			!readResult.hasFoundMatchingWordType &&
 			currentReadItem != null &&
-			currentReadItem.wordOrderNr() == currentWordOrderNr + 1 &&		// Only check this word position
+			// Only check this word position
+			currentReadItem.wordOrderNr() == currentWordOrderNr + 1 &&
 			currentReadItem.wordOrderNr() > lastActivatedWordOrderNr_ );
 			}
 
@@ -367,7 +356,7 @@ class ReadList extends List
 			if( !searchItem.isPreposition() &&
 			searchItem.wordOrderNr() > wordOrderNr )
 				{
-				if( activateItem( false, searchItem ) == Constants.RESULT_OK )
+				if( activateItem( searchItem ) == Constants.RESULT_OK )
 					searchItem = nextReadListItem();
 				else
 					return addError( 1, null, null, "I failed to activate an inactive item" );
@@ -439,7 +428,6 @@ class ReadList extends List
 									{
 									searchItem.isMarkedBySetGrammarParameter = false;
 									searchItem.grammarParameter = definitionGrammarItem.grammarParameter();
-
 									searchItem.definitionGrammarItem = definitionGrammarItem;
 
 									if( searchItem.readString == null &&

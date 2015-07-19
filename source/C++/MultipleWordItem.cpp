@@ -2,11 +2,11 @@
  *	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -31,6 +31,8 @@ class MultipleWordItem : private Item
 
 	// Private loadable variables
 
+	unsigned short nWordParts_;
+	unsigned short wordTypeLanguageNr_;
 	unsigned short wordTypeNr_;
 
 	WordItem *multipleWordItem_;
@@ -39,12 +41,14 @@ class MultipleWordItem : private Item
 	protected:
 	// Constructor / deconstructor
 
-	MultipleWordItem( unsigned short wordTypeNr, WordItem *multipleWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	MultipleWordItem( unsigned short nWordParts, unsigned short wordTypeLanguageNr, unsigned short wordTypeNr, WordItem *multipleWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "MultipleWordItem", commonVariables, myList, myWordItem );
 
 		// Private loadable variables
 
+		nWordParts_ = nWordParts;
+		wordTypeLanguageNr_ = wordTypeLanguageNr;
 		wordTypeNr_ = wordTypeNr;
 
 		multipleWordItem_ = multipleWordItem;
@@ -68,7 +72,8 @@ class MultipleWordItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -106,8 +111,22 @@ class MultipleWordItem : private Item
 		{
 		char *wordString;
 		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
+		char *languageNameString = myWordItem()->languageNameString( wordTypeLanguageNr_ );
 
 		Item::toString( queryWordTypeNr );
+
+		sprintf( tempString, "%cnWordParts:%u", QUERY_SEPARATOR_CHAR, nWordParts_ );
+		strcat( commonVariables()->queryString, tempString );
+
+		if( wordTypeLanguageNr_ > NO_LANGUAGE_NR )
+			{
+			if( languageNameString == NULL )
+				sprintf( tempString, "%cwordTypeLanguageNr:%u", QUERY_SEPARATOR_CHAR, wordTypeLanguageNr_ );
+			else
+				sprintf( tempString, "%cwordTypeLanguageNr:%s", QUERY_SEPARATOR_CHAR, languageNameString );
+
+			strcat( commonVariables()->queryString, tempString );
+			}
 
 		if( wordTypeString == NULL )
 			sprintf( tempString, "%cwordType:%c%u", QUERY_SEPARATOR_CHAR, QUERY_WORD_TYPE_CHAR, wordTypeNr_ );
@@ -137,6 +156,16 @@ class MultipleWordItem : private Item
 	bool isSingularNoun()
 		{
 		return ( wordTypeNr_ == WORD_TYPE_NOUN_SINGULAR );
+		}
+
+	unsigned short nWordParts()
+		{
+		return nWordParts_;
+		}
+
+	unsigned short wordTypeLanguageNr()
+		{
+		return wordTypeLanguageNr_;
 		}
 
 	unsigned short wordTypeNr()

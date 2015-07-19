@@ -2,11 +2,11 @@
  *	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ class ContextItem extends Item
 	{
 	// Private loadable variables
 
-	private boolean isQuestion_;
+	private boolean isCompoundCollectionCollectedWithItself_;
 
 	private short contextWordTypeNr_;
 	private short specificationWordTypeNr_;
@@ -39,13 +39,13 @@ class ContextItem extends Item
 
 	// Constructor / deconstructor
 
-	protected ContextItem( boolean isQuestion, short contextWordTypeNr, short specificationWordTypeNr, int contextNr, WordItem specificationWordItem, List myList, WordItem myWordItem )
+	protected ContextItem( boolean isCompoundCollectionCollectedWithItself, short contextWordTypeNr, short specificationWordTypeNr, int contextNr, WordItem specificationWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
 		// Private loadable variables
 
-		isQuestion_ = isQuestion;
+		isCompoundCollectionCollectedWithItself_ = isCompoundCollectionCollectedWithItself;
 
 		contextWordTypeNr_ = contextWordTypeNr;
 		specificationWordTypeNr_ = specificationWordTypeNr;
@@ -71,7 +71,8 @@ class ContextItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -120,10 +121,10 @@ class ContextItem extends Item
 		String specificationWordTypeString = myWordItem().wordTypeNameString( specificationWordTypeNr_ );
 		baseToStringBuffer( queryWordTypeNr );
 
-		if( isQuestion_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isQuestion" );
-
 		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "contextWordType:" + ( contextWordTypeString == null ? Constants.EMPTY_STRING : contextWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + contextWordTypeNr_ );
+
+		if( isCompoundCollectionCollectedWithItself_ )
+			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isCompoundCollectionCollectedWithItself" );
 
 		if( contextNr_ > Constants.NO_CONTEXT_NR )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "contextNr:" + contextNr_ );
@@ -145,9 +146,9 @@ class ContextItem extends Item
 
 	// Protected methods
 
-	protected boolean isQuestion()
+	protected boolean isCompoundCollectionCollectedWithItself()
 		{
-		return isQuestion_;
+		return isCompoundCollectionCollectedWithItself_;
 		}
 
 	protected short contextWordTypeNr()

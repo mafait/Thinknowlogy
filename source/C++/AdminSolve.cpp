@@ -3,11 +3,11 @@
  *	Supports class:	AdminItem
  *	Purpose:		Trying to solve (= to assign) words according to the
  *					given selections
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -63,7 +63,6 @@ class AdminSolve
 
 	AdminItem *adminItem_;
 	CommonVariables *commonVariables_;
-	WordItem *myWordItem_;
 	char moduleNameString_[FUNCTION_NAME_LENGTH];
 
 
@@ -124,14 +123,14 @@ class AdminSolve
 						else
 							{
 							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, specificationWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != RESULT_OK )
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 							}
 						}
 					}
 				}
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -151,7 +150,7 @@ class AdminSolve
 		return commonVariables_->result;
 		}
 
-	ResultType backTrackConditionScorePaths( bool isAddScores, bool isInverted, bool duplicatesAllowed, bool prepareSort, unsigned short executionLevel, unsigned short solveStrategyParameter, unsigned int conditionSentenceNr )
+	ResultType backTrackConditionScorePaths( bool isAddingScores, bool isInverted, bool isAllowingDuplicates, bool isPreparingSort, unsigned short executionLevel, unsigned short solveStrategyParameter, unsigned int conditionSentenceNr )
 		{
 		bool isNewStart;
 		bool isWaitingForNewLevel;
@@ -163,11 +162,13 @@ class AdminSolve
 		unsigned short unhandledSelectionLevel;
 		SelectionItem *conditionSelectionItem;
 		SelectionItem *previousConditionSelectionItem;
+		ScoreList *scoreList;
+		SelectionList *conditionList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "backTrackConditionScorePaths";
 
-		if( adminItem_->conditionList != NULL )
+		if( ( conditionList = adminItem_->conditionList ) != NULL )
 			{
-			adminItem_->conditionList->clearConditionChecksForSolving( MAX_LEVEL, conditionSentenceNr );
+			conditionList->clearConditionChecksForSolving( MAX_LEVEL, conditionSentenceNr );
 
 			do	{
 				isWaitingForNewLevel = false;
@@ -177,9 +178,9 @@ class AdminSolve
 				unhandledSelectionLevel = MAX_LEVEL;
 				previousConditionSelectionItem = NULL;
 
-				if( ( conditionSelectionItem = adminItem_->conditionList->firstConditionSelectionItem( conditionSentenceNr ) ) != NULL )
+				if( ( conditionSelectionItem = conditionList->firstConditionSelectionItem( conditionSentenceNr ) ) != NULL )
 					{
-					if( isAddScores )
+					if( isAddingScores )
 						{
 						oldSatisfiedScore_ = NO_SCORE;
 						newSatisfiedScore_ = NO_SCORE;
@@ -200,11 +201,13 @@ class AdminSolve
 						else
 							{
 							if( isNewStart &&
-							previousConditionSelectionItem != NULL )											// Not first start item
+							// Not first start item
+							previousConditionSelectionItem != NULL )
 								{
 								isWaitingForNewStart = false;
 
-								if( selectionLevel == previousSelectionLevel )			// Second brance on the same level
+								// Second brance on the same level
+								if( selectionLevel == previousSelectionLevel )
 									{
 									if( !isWaitingForNewLevel )
 										{
@@ -212,10 +215,12 @@ class AdminSolve
 											{
 											handledSelectionLevel = selectionLevel;
 
-											if( previousConditionSelectionItem->isConditionCheckedForSolving )	// This is a new brance
+											// This is a new brance
+											if( previousConditionSelectionItem->isConditionCheckedForSolving )
 												conditionSelectionItem->isConditionCheckedForSolving = true;
-											else						// The previous brance was a new brance and this one is unhandled
+											else
 												{
+												// The previous brance was a new brance and this one is unhandled
 												isWaitingForNewLevel = true;
 												unhandledSelectionLevel = selectionLevel;
 												previousConditionSelectionItem->isConditionCheckedForSolving = true;
@@ -225,20 +230,22 @@ class AdminSolve
 											{
 											isWaitingForNewLevel = true;
 
-											if( unhandledSelectionLevel == MAX_LEVEL )	// This brance isn't handled yet
+											// This brance isn't handled yet
+											if( unhandledSelectionLevel == MAX_LEVEL )
 												unhandledSelectionLevel = selectionLevel;
 											}
 										}
 									}
-								else									// New start on a new level
+								else
+									// New start on a new level
 									isWaitingForNewLevel = false;
 								}
 
 							if( !isWaitingForNewLevel &&
 							!isWaitingForNewStart )
 								{
-								if( calculateScorePaths( isInverted, duplicatesAllowed, prepareSort, solveStrategyParameter, conditionSelectionItem ) != RESULT_OK )
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to calculate the score paths" );
+								if( calculateScorePaths( isInverted, isAllowingDuplicates, isPreparingSort, solveStrategyParameter, conditionSelectionItem ) != RESULT_OK )
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to calculate the score paths" );
 								}
 							}
 
@@ -255,11 +262,13 @@ class AdminSolve
 						// so start again with the handled brances (by clearing their checks) until all paths are handled
 						if( unhandledSelectionLevel < MAX_LEVEL &&
 						handledSelectionLevel < unhandledSelectionLevel )
-							adminItem_->conditionList->clearConditionChecksForSolving( unhandledSelectionLevel, conditionSentenceNr );
+							conditionList->clearConditionChecksForSolving( unhandledSelectionLevel, conditionSentenceNr );
 
-						if( isAddScores )
+						if( isAddingScores )
 							{
-							if( adminItem_->scoreList == NULL ||
+							scoreList = adminItem_->scoreList;
+
+							if( scoreList == NULL ||
 							( oldSatisfiedScore_ == NO_SCORE &&
 							newSatisfiedScore_ == NO_SCORE &&
 							oldDissatisfiedScore_ == NO_SCORE &&
@@ -271,31 +280,31 @@ class AdminSolve
 								hasFoundScore = false;
 							else
 								{
-								if( adminItem_->scoreList->checkScores( isInverted, solveStrategyParameter, oldSatisfiedScore_, newSatisfiedScore_, oldDissatisfiedScore_, newDissatisfiedScore_, oldNotBlockingScore_, newNotBlockingScore_, oldBlockingScore_, newBlockingScore_ ) == RESULT_OK )
-									hasFoundScore = adminItem_->scoreList->hasFoundScore();
+								if( scoreList->checkScores( isInverted, solveStrategyParameter, oldSatisfiedScore_, newSatisfiedScore_, oldDissatisfiedScore_, newDissatisfiedScore_, oldNotBlockingScore_, newNotBlockingScore_, oldBlockingScore_, newBlockingScore_ ) == RESULT_OK )
+									hasFoundScore = scoreList->hasFoundScore();
 								else
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the scores" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the scores" );
 								}
 
 							if( !hasFoundScore &&
-							duplicatesAllowed &&
+							isAllowingDuplicates &&
 							commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL )
 								{
 								if( createScore( ( commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL ), oldSatisfiedScore_, newSatisfiedScore_, oldDissatisfiedScore_, newDissatisfiedScore_, oldNotBlockingScore_, newNotBlockingScore_, oldBlockingScore_, newBlockingScore_, NULL ) != RESULT_OK )
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create an empty solve score" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create an empty solve score" );
 								}
 							}
 						}
 					else
-						return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't reach the given execution level ", executionLevel, ". The highest reached level was ", handledSelectionLevel );
+						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't reach the given execution level ", executionLevel, ". The highest reached level was ", handledSelectionLevel );
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't get the first item of the condition with sentence number ", conditionSentenceNr );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't get the first item of the condition with sentence number ", conditionSentenceNr );
 				}
 			while( unhandledSelectionLevel < MAX_LEVEL );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The condition list isn't created yet" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The condition list isn't created yet" );
 
 		return RESULT_OK;
 		}
@@ -305,28 +314,30 @@ class AdminSolve
 		SelectionResultType selectionResult;
 		SelectionItem *originalExecutionSelectionItem = currentExecutionSelectionItem_;
 		WordItem *specificationWordItem;
+		SelectionList *actionList;
+		SelectionList *alternativeList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "canWordBeSolved";
 
 		canWordBeSolved_ = false;
 
 		if( isAction )
 			{
-			if( adminItem_->actionList != NULL )
+			if( ( actionList = adminItem_->actionList ) != NULL )
 				{
-				if( ( selectionResult = adminItem_->actionList->findFirstExecutionItem( solveWordItem ) ).result == RESULT_OK )
+				if( ( selectionResult = actionList->findFirstExecutionItem( solveWordItem ) ).result == RESULT_OK )
 					currentExecutionSelectionItem_ = selectionResult.firstExecutionItem;
 				else
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the first action execution selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the first action execution selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
 				}
 			}
 		else
 			{
-			if( adminItem_->alternativeList != NULL )
+			if( ( alternativeList = adminItem_->alternativeList ) != NULL )
 				{
-				if( ( selectionResult = adminItem_->alternativeList->findFirstExecutionItem( solveWordItem ) ).result == RESULT_OK )
+				if( ( selectionResult = alternativeList->findFirstExecutionItem( solveWordItem ) ).result == RESULT_OK )
 					currentExecutionSelectionItem_ = selectionResult.firstExecutionItem;
 				else
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the first alternative execution selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the first alternative execution selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
 				}
 			}
 
@@ -340,7 +351,7 @@ class AdminSolve
 						if( currentExecutionSelectionItem_->isValueSpecification() )
 							{
 							if( canWordBeSolved( specificationWordItem ) != RESULT_OK )
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if value specification word \"", specificationWordItem->anyWordTypeString(), "\" can be solved" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if value specification word \"", specificationWordItem->anyWordTypeString(), "\" can be solved" );
 							}
 						else
 							{
@@ -348,21 +359,41 @@ class AdminSolve
 								canWordBeSolved_ = true;
 							}
 						}
-					else	// Word has active assignments
+					else
+						// Word has active assignments
 						canWordBeSolved_ = true;
 
 					if( currentExecutionSelectionItem_->findNextExecutionSelectionItem( solveWordItem ) == RESULT_OK )
 						currentExecutionSelectionItem_ = currentExecutionSelectionItem_->nextExecutionItem();
 					else
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the next execution selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the next execution selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the current execution selection item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the current execution selection item is undefined" );
 				}
 			while( !canWordBeSolved_ );
 			}
 
 		currentExecutionSelectionItem_ = originalExecutionSelectionItem;
+
+		return RESULT_OK;
+		}
+
+	ResultType canWordBeSolved( WordItem *solveWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "canWordBeSolved";
+
+		if( canWordBeSolved( true, solveWordItem ) == RESULT_OK )
+			{
+			if( !canWordBeSolved_ &&
+			!commonVariables_->hasShownWarning )
+				{
+				if( canWordBeSolved( false, solveWordItem ) != RESULT_OK )
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if a word can be solved by an alternative action" );
+				}
+			}
+		else
+			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if a word can be solved by an action" );
 
 		return RESULT_OK;
 		}
@@ -395,24 +426,27 @@ class AdminSolve
 					isNegative = conditionSelectionItem->isNegative();
 					relationWordItem = conditionSelectionItem->relationWordItem();
 
-					if( conditionSelectionItem->isFirstComparisonPart() )			// First part
+					// First part
+					if( conditionSelectionItem->isFirstComparisonPart() )
 						{
 						if( getComparisonAssignment( false, specificationWordItem, relationWordItem ) == RESULT_OK )
 							{
-							isConditionSatisfied_ = true;	// Allow the second part of the comparison to be checked
+							// Allow the second part of the comparison to be checked
+							isConditionSatisfied_ = true;
 
 							firstComparisonAssignmentItem_ = comparisonAssignmentItem_;
 							secondComparisonAssignmentItem_ = NULL;
 							}
 						else
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed get the first comparison assignment" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed get the first comparison assignment" );
 						}
 					else
 						{
 						isNumeralRelation = conditionSelectionItem->isNumeralRelation();
 
 						if( !isNumeralRelation &&
-						conditionSelectionItem->specificationString() == NULL )		// Second part
+						// Second part
+						conditionSelectionItem->specificationString() == NULL )
 							{
 							if( getComparisonAssignment( false, specificationWordItem, relationWordItem ) == RESULT_OK )
 								{
@@ -425,10 +459,11 @@ class AdminSolve
 								secondString = ( secondSpecificationWordItem == NULL ? NULL : secondSpecificationWordItem->anyWordTypeString() );
 								}
 							else
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed get a comparison assignment" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed get a comparison assignment" );
 							}
-						else	// Numeral or specification string
+						else
 							{
+							// Numeral or specification string
 							if( getComparisonAssignment( isNumeralRelation, specificationWordItem, relationWordItem ) == RESULT_OK )
 								{
 								if( comparisonAssignmentItem_ != NULL )
@@ -438,7 +473,7 @@ class AdminSolve
 								secondString = ( isNumeralRelation ? ( relationWordItem == NULL ? NULL : relationWordItem->anyWordTypeString() ) : conditionSelectionItem->specificationString() );
 								}
 							else
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed get the first comparison assignment" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed get the first comparison assignment" );
 							}
 
 						if( firstString == NULL ||
@@ -469,19 +504,19 @@ class AdminSolve
 								if( generalizationWordItem->isAdjectiveComparisonMore() )
 									isConditionSatisfied_ = ( comparisonResult > 0 ? !isNegative : isNegative );
 								else
-									return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "Word \"", generalizationWordItem->anyWordTypeString(), "\" isn't comparison word" );
+									return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "Word \"", generalizationWordItem->anyWordTypeString(), "\" isn't comparison word" );
 								}
 							}
 						}
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the given condition selection item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the given condition selection item is undefined" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given condition selection item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given condition selection item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -507,7 +542,7 @@ class AdminSolve
 					isNegative = conditionSelectionItem->isNegative();
 					relationContextNr = conditionSelectionItem->relationContextNr();
 
-					if( ( relationWordItem = myWordItem_->contextWordItemInAllWords( relationContextNr, specificationWordItem, NULL ) ) != NULL )
+					if( ( relationWordItem = adminItem_->contextWordItemInAllWords( relationContextNr, specificationWordItem, NULL ) ) != NULL )
 						{
 						if( specificationWordItem->isNounNumber() )
 							{
@@ -520,26 +555,26 @@ class AdminSolve
 								if( generalizationWordItem->isAdjectiveEven() )
 									isConditionSatisfied_ = ( nAssignments % 2 == 0 ? !isNegative : isNegative );
 								else
-									return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "Word \"", generalizationWordItem->anyWordTypeString(), "\" isn't about odd or even" );
+									return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "Word \"", generalizationWordItem->anyWordTypeString(), "\" isn't about odd or even" );
 								}
 							}
 						else
 							{
 							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, relationWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != RESULT_OK )
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 							}
 						}
 					else
-						return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find the relation word" );
+						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find the relation word" );
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the given condition selection item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the given condition selection item is undefined" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given condition selection item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given condition selection item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -551,17 +586,17 @@ class AdminSolve
 		if( adminItem_->scoreList == NULL )
 			{
 			// Create list
-			if( ( adminItem_->scoreList = new ScoreList( commonVariables_, myWordItem_ ) ) != NULL )
+			if( ( adminItem_->scoreList = new ScoreList( commonVariables_, adminItem_ ) ) != NULL )
 				{
 				commonVariables_->adminScoreList = adminItem_->scoreList;
 				adminItem_->adminListArray[ADMIN_SCORE_LIST] = adminItem_->scoreList;
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create the admin solve score list" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create the admin solve score list" );
 			}
 
 		if( adminItem_->scoreList->createScoreItem( isChecked, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem ) != RESULT_OK )
-			return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a score item" );
+			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a score item" );
 
 		return RESULT_OK;
 		}
@@ -603,7 +638,7 @@ class AdminSolve
 				}
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -647,10 +682,10 @@ class AdminSolve
 					}
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -678,21 +713,21 @@ class AdminSolve
 							isConditionSatisfied_ = false;
 						}
 					else
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a scoring assignment" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a scoring assignment" );
 					}
 				while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
 				}
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 
 		return RESULT_OK;
 		}
 
-	ResultType calculateScorePaths( bool isInverted, bool duplicatesAllowed, bool prepareSort, unsigned short solveStrategyParameter, SelectionItem *referenceSelectionItem )
+	ResultType calculateScorePaths( bool isInverted, bool isAllowingDuplicates, bool isPreparingSort, unsigned short solveStrategyParameter, SelectionItem *referenceSelectionItem )
 		{
-		bool addLocalScores;
-		bool originalfoundpossibility;
+		bool isAddLocalScores;
+		bool isOriginalFoundPossibility;
 		bool hasFoundScore = false;
 		unsigned int localOldSatisfiedScore;
 		unsigned int localNewSatisfiedScore;
@@ -712,6 +747,7 @@ class AdminSolve
 		unsigned int newBlockingScore = newBlockingScore_;
 		WordItem *generalizationWordItem;
 		WordItem *specificationWordItem;
+		ScoreList *scoreList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "calculateScorePaths";
 
 		if( referenceSelectionItem != NULL )
@@ -729,7 +765,7 @@ class AdminSolve
 
 				if( checkCondition( referenceSelectionItem ).result == RESULT_OK )
 					{
-					addLocalScores = true;
+					isAddLocalScores = true;
 
 					localOldSatisfiedScore = oldSatisfiedScore_;
 					localNewSatisfiedScore = newSatisfiedScore_;
@@ -756,19 +792,20 @@ class AdminSolve
 							{
 							if( !referenceSelectionItem->isNegative() )
 								{
-								if( generalizationWordItem->firstNonQuestionActiveAssignmentItem() == NULL )		// Word has no active assignments
+								// Word has no active assignments
+								if( generalizationWordItem->firstNonQuestionActiveAssignmentItem() == NULL )
 									{
-									originalfoundpossibility = hasFoundPossibility_;
+									isOriginalFoundPossibility = hasFoundPossibility_;
 
-									if( adminItem_->findPossibilityToSolveWord( false, isInverted, duplicatesAllowed, prepareSort, solveStrategyParameter, generalizationWordItem ) == RESULT_OK )
+									if( adminItem_->findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == RESULT_OK )
 										{
 										if( hasFoundPossibility_ )
-											addLocalScores = false;
+											isAddLocalScores = false;
 										else
-											hasFoundPossibility_ = originalfoundpossibility;
+											hasFoundPossibility_ = isOriginalFoundPossibility;
 										}
 									else
-										return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a possibility to solve condition word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a possibility to solve condition word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 									}
 								}
 							}
@@ -778,35 +815,38 @@ class AdminSolve
 								{
 								if( !referenceSelectionItem->isNegative() &&
 								!specificationWordItem->isWordCheckedForSolving &&
-								generalizationWordItem->firstNonQuestionActiveAssignmentItem() == NULL )	// Word has no active assignments
+								// Word has no active assignments
+								generalizationWordItem->firstNonQuestionActiveAssignmentItem() == NULL )
 									{
 									if( canWordBeSolved( specificationWordItem ) == RESULT_OK )
 										{
 										if( canWordBeSolved_ )
 											{
-											originalfoundpossibility = hasFoundPossibility_;
+											isOriginalFoundPossibility = hasFoundPossibility_;
 
-											if( adminItem_->findPossibilityToSolveWord( false, isInverted, duplicatesAllowed, prepareSort, solveStrategyParameter, generalizationWordItem ) == RESULT_OK )
+											if( adminItem_->findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == RESULT_OK )
 												{
 												if( hasFoundPossibility_ )
-													addLocalScores = false;
+													isAddLocalScores = false;
 												else
-													hasFoundPossibility_ = originalfoundpossibility;
+													hasFoundPossibility_ = isOriginalFoundPossibility;
 												}
 											else
-												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a possibility to solve condition word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a possibility to solve condition word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 											}
 										else
 											{
-											if( duplicatesAllowed ||
-											adminItem_->scoreList == NULL )
+											scoreList = adminItem_->scoreList;
+
+											if( isAllowingDuplicates ||
+											scoreList == NULL )
 												hasFoundScore = false;
 											else
 												{
-												if( adminItem_->scoreList->findScore( prepareSort, referenceSelectionItem ) == RESULT_OK )
-													hasFoundScore = adminItem_->scoreList->hasFoundScore();
+												if( scoreList->findScore( isPreparingSort, referenceSelectionItem ) == RESULT_OK )
+													hasFoundScore = scoreList->hasFoundScore();
 												else
-													return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a score item" );
+													return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a score item" );
 												}
 
 											if( !hasFoundScore )
@@ -814,21 +854,21 @@ class AdminSolve
 												if( createScore( ( commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL ), NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, referenceSelectionItem ) == RESULT_OK )
 													hasFoundPossibility_ = true;
 												else
-													return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create an empty solve score" );
+													return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create an empty solve score" );
 												}
 											}
 										}
 									else
-										return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if specification word \"", specificationWordItem->anyWordTypeString(), "\" can be solved" );
+										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if specification word \"", specificationWordItem->anyWordTypeString(), "\" can be solved" );
 									}
 								}
 							else
-								return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the given score item is undefined" );
+								return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the given score item is undefined" );
 							}
 						}
 
 					if( !commonVariables_->hasShownWarning &&
-					addLocalScores )
+					isAddLocalScores )
 						{
 						oldSatisfiedScore_ += localOldSatisfiedScore;
 						newSatisfiedScore_ += localNewSatisfiedScore;
@@ -841,13 +881,13 @@ class AdminSolve
 						}
 					}
 				else
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the condition of the item with sentence number ", referenceSelectionItem->activeSentenceNr(), " and item number ", referenceSelectionItem->itemNr() );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the condition of the item with sentence number ", referenceSelectionItem->activeSentenceNr(), " and item number ", referenceSelectionItem->itemNr() );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The generalization word of the given score item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The generalization word of the given score item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given reference selection item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given reference selection item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -856,7 +896,7 @@ class AdminSolve
 	protected:
 	// Constructor / deconstructor
 
-	AdminSolve( AdminItem *adminItem, CommonVariables *commonVariables, WordItem *myWordItem )
+	AdminSolve( AdminItem *adminItem, CommonVariables *commonVariables )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
@@ -885,26 +925,18 @@ class AdminSolve
 
 		adminItem_ = adminItem;
 		commonVariables_ = commonVariables;
-		myWordItem_ = myWordItem;
 		strcpy( moduleNameString_, "AdminSolve" );
 
-		if( commonVariables_ != NULL )
-			{
-		if( adminItem_ != NULL )
-			{
-			if( myWordItem_ == NULL )
-				strcpy( errorString, "The given my word is undefined" );
-			}
-		else
-			strcpy( errorString, "The given admin is undefined" );
-			}
-		else
+		if( commonVariables_ == NULL )
 			strcpy( errorString, "The given common variables is undefined" );
+
+		if( adminItem_ == NULL )
+			strcpy( errorString, "The given admin is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
-			if( myWordItem_ != NULL )
-				myWordItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+			if( adminItem_ != NULL )
+				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -922,21 +954,96 @@ class AdminSolve
 		currentSolveProgress_ = 0;
 		}
 
-	ResultType canWordBeSolved( WordItem *solveWordItem )
+	ResultType findPossibilityToSolveWord( bool isAddingScores, bool isAllowingDuplicates, bool isInverted, bool isPreparingSort, unsigned short solveStrategyParameter, WordItem *solveWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "canWordBeSolved";
+		SelectionResultType selectionResult;
+		SelectionItem *originalExecutionSelectionItem;
+		SelectionList *actionList;
+		SelectionList *alternativeList;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "findPossibilityToSolveWord";
 
-		if( canWordBeSolved( true, solveWordItem ) == RESULT_OK )
+		hasFoundPossibility_ = false;
+
+		if( solveWordItem != NULL )
 			{
-			if( !canWordBeSolved_ &&
-			!commonVariables_->hasShownWarning )
+			if( !solveWordItem->isWordCheckedForSolving )
 				{
-				if( canWordBeSolved( false, solveWordItem ) != RESULT_OK )
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if a word can be solved by an alternative action" );
+				if( canWordBeSolved( true, solveWordItem ) == RESULT_OK )
+					{
+					solveWordItem->isWordCheckedForSolving = true;
+
+					if( canWordBeSolved_ &&
+					( actionList = adminItem_->actionList ) != NULL )
+						{
+						originalExecutionSelectionItem = currentExecutionSelectionItem_;
+
+						if( ( selectionResult = actionList->findFirstExecutionItem( solveWordItem ) ).result == RESULT_OK )
+							{
+							if( ( currentExecutionSelectionItem_ = selectionResult.firstExecutionItem ) != NULL )
+								{
+								do	{
+									if( backTrackConditionScorePaths( isAddingScores, isInverted, isAllowingDuplicates, isPreparingSort, currentExecutionSelectionItem_->selectionLevel(), solveStrategyParameter, currentExecutionSelectionItem_->activeSentenceNr() ) == RESULT_OK )
+										{
+										if( currentExecutionSelectionItem_->findNextExecutionSelectionItem( solveWordItem ) != RESULT_OK )
+											return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the next action selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
+										}
+									else
+										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to back-fire the condition score paths for the action with sentence number ", currentExecutionSelectionItem_->activeSentenceNr() );
+									}
+								while( ( currentExecutionSelectionItem_ = currentExecutionSelectionItem_->nextExecutionItem() ) != NULL );
+								}
+
+							currentExecutionSelectionItem_ = originalExecutionSelectionItem;
+							}
+						else
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the first action selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
+						}
+
+					if( !commonVariables_->hasShownWarning )
+						{
+						if( canWordBeSolved( false, solveWordItem ) == RESULT_OK )
+							{
+							if( canWordBeSolved_ &&
+							( alternativeList = adminItem_->alternativeList ) != NULL )
+								{
+								originalExecutionSelectionItem = currentExecutionSelectionItem_;
+
+								if( ( selectionResult = alternativeList->findFirstExecutionItem( solveWordItem ) ).result == RESULT_OK )
+									{
+									if( ( currentExecutionSelectionItem_ = selectionResult.firstExecutionItem ) != NULL )
+										{
+										do	{
+											if( backTrackConditionScorePaths( isAddingScores, isInverted, isAllowingDuplicates, isPreparingSort, currentExecutionSelectionItem_->selectionLevel(), solveStrategyParameter, currentExecutionSelectionItem_->activeSentenceNr() ) == RESULT_OK )
+												{
+												if( currentExecutionSelectionItem_->findNextExecutionSelectionItem( solveWordItem ) != RESULT_OK )
+													return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the next alternative item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
+												}
+											else
+												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to back-fire the condition score paths for the alternative with sentence number ", currentExecutionSelectionItem_->activeSentenceNr() );
+											}
+										while( ( currentExecutionSelectionItem_ = currentExecutionSelectionItem_->nextExecutionItem() ) != NULL );
+										}
+
+									currentExecutionSelectionItem_ = originalExecutionSelectionItem;
+									}
+								else
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the first alternative item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
+								}
+
+							solveWordItem->isWordCheckedForSolving = false;
+							}
+						else
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if the given word \"", solveWordItem->anyWordTypeString(), "\" can be solved by alternative" );
+						}
+					}
+				else
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if the given word \"", solveWordItem->anyWordTypeString(), "\" can be solved by action" );
 				}
+			else
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given solve word \"", solveWordItem->anyWordTypeString(), "\" is already checked" );
 			}
 		else
-			return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if a word can be solved by an action" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given solve word is undefined" );
 
 		return RESULT_OK;
 		}
@@ -954,6 +1061,8 @@ class AdminSolve
 		WordItem *predefinedNounSolveLevelWordItem;
 		WordItem *predefinedNounSolveMethodWordItem;
 		WordItem *predefinedNounSolveStrategyWordItem;
+		ScoreList *scoreList;
+		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "solveWord";
 
 		if( solveWordItem != NULL )
@@ -971,11 +1080,12 @@ class AdminSolve
 							if( ( specificationResult = predefinedNounSolveLevelWordItem->getAssignmentOrderNr() ).result == RESULT_OK )
 								solveLevel_ = specificationResult.assignmentOrderNr;
 							else
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the solve level" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the solve level" );
 							}
 						}
 
-					if( solveWordItem->firstNonQuestionActiveAssignmentItem() == NULL )	// Word has no active assignments
+					// Word has no active assignments
+					if( solveWordItem->firstNonQuestionActiveAssignmentItem() == NULL )
 						{
 						if( commonVariables_->currentAssignmentLevel <= solveLevel_ )
 							{
@@ -985,10 +1095,11 @@ class AdminSolve
 									{
 									clearAllWordSolveChecksInAllWords();
 
-									if( adminItem_->scoreList != NULL )
+									if( ( scoreList = adminItem_->scoreList ) != NULL )
 										{
-										if( adminItem_->scoreList->deleteScores() != RESULT_OK )	// Make sure no scores are left at the start
-											return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the admin score list" );
+										// Make sure no scores are left at the start
+										if( scoreList->deleteScores() != RESULT_OK )
+											return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the admin score list" );
 										}
 									}
 
@@ -996,29 +1107,30 @@ class AdminSolve
 
 								if( ( specificationResult = predefinedNounSolveStrategyWordItem->getAssignmentWordParameter() ).result == RESULT_OK )
 									{
-									if( findPossibilityToSolveWord( true, isInverted, ( commonVariables_->currentAssignmentLevel == solveLevel_ ), ( commonVariables_->currentAssignmentLevel + 1 < solveLevel_ ), specificationResult.assignmentParameter, solveWordItem ) == RESULT_OK )
+									if( findPossibilityToSolveWord( true, ( commonVariables_->currentAssignmentLevel == solveLevel_ ), isInverted, ( commonVariables_->currentAssignmentLevel + 1 < solveLevel_ ), specificationResult.assignmentParameter, solveWordItem ) == RESULT_OK )
 										{
 										if( hasFoundPossibility_ )
 											{
 											if( commonVariables_->currentAssignmentLevel < solveLevel_ )
 												{
-												if( adminItem_->scoreList != NULL )
+												if( ( scoreList = adminItem_->scoreList ) != NULL )
 													{
-													nPossibilities = adminItem_->scoreList->nPossibilities();
+													nPossibilities = scoreList->nPossibilities();
 													solveProgressStep = ( ( endSolveProgress - currentSolveProgress_ ) / nPossibilities );
 
 													if( solveLevel_ > 1 )
 														commonVariables_->presentation->startProgress( currentSolveProgress_, MAX_PROGRESS, INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START, solveLevel_, INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END );
 
-													if( adminItem_->wordList != NULL )
+													if( ( wordList = adminItem_->wordList ) != NULL )
 														{
-														if( ( possibilityItem = adminItem_->scoreList->firstPossibility() ) != NULL )
+														if( ( possibilityItem = scoreList->firstPossibility() ) != NULL )
 															{
 															do	{
-																if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )	// Copy solve action of NO_ASSIGNMENT_LEVEL to higher levels
+																// Copy solve action of NO_ASSIGNMENT_LEVEL to higher levels
+																if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
 																	actionSelectionItem = possibilityItem->scoreReference();
 
-																if( adminItem_->wordList->createNewAssignmentLevelInWordList() == RESULT_OK )
+																if( wordList->createNewAssignmentLevelInWordList() == RESULT_OK )
 																	{
 																	commonVariables_->currentAssignmentLevel++;
 
@@ -1028,18 +1140,19 @@ class AdminSolve
 
 																		if( adminItem_->executeSelection( ( currentSolveProgress_ + solveProgressStep / 2L ), actionSelectionItem ) == RESULT_OK )
 																			{
-																			if( solveWordItem->firstNonQuestionActiveAssignmentItem() != NULL )	// Word has active assignments
+																			// Word has active assignments
+																			if( solveWordItem->firstNonQuestionActiveAssignmentItem() != NULL )
 																				{
 																				isInverted = ( predefinedNounSolveMethodWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, adminItem_->predefinedAdjectiveInvertedWordItem() ) != NULL );
 
 																				if( !isInverted &&
 																				commonVariables_->currentAssignmentLevel < solveLevel_ )
 																					{
-																					if( adminItem_->scoreList->deleteScores() == RESULT_OK )
+																					if( scoreList->deleteScores() == RESULT_OK )
 																						// Don't solve any deeper if there is a winning score
 																						solveLevel_ = commonVariables_->currentAssignmentLevel;
 																					else
-																						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the scores with an assignment level higher than ", commonVariables_->currentAssignmentLevel );
+																						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the scores with an assignment level higher than ", commonVariables_->currentAssignmentLevel );
 																					}
 
 																				// Create winning or losing score
@@ -1051,17 +1164,17 @@ class AdminSolve
 																						commonVariables_->presentation->showProgress( currentSolveProgress_ );
 																					}
 																				else
-																					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a winning or losing score of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+																					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a winning or losing score of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
 																				}
 																			else
 																				{
 																				if( solveWord( tempEndSolveProgress, solveWordItem, actionSelectionItem ) == RESULT_OK )
 																					{
 																					if( commonVariables_->currentAssignmentLevel == 1 )
-																						adminItem_->scoreList->changeAction( actionSelectionItem );
+																						scoreList->changeAction( actionSelectionItem );
 																					}
 																				else
-																					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+																					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
 																				}
 
 																			if( deleteAssignmentLevelInAllWords() == RESULT_OK )
@@ -1073,45 +1186,44 @@ class AdminSolve
 																					{
 																					if( possibilityItem != NULL &&
 																					possibilityNumber == nPossibilities )
-																						return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I found more possibility items than number of possibilities" );
+																						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I've found more possibility items than number of possibilities" );
 																					}
 																				else
 																					{
 																					if( possibilityItem == NULL )
-																						return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't get the next possibility item before the number of possibilities is reached" );
+																						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't get the next possibility item before the number of possibilities is reached" );
 																					}
 																				}
 																			else
-																				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the assignments of level ", commonVariables_->currentAssignmentLevel );
+																				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the assignments of level ", commonVariables_->currentAssignmentLevel );
 																			}
 																		else
-																			return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to execute a selection during the solving of word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+																			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to execute a selection during the solving of word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
 																		}
 																	else
-																		return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a selection specifcation at assignment level: ", commonVariables_->currentAssignmentLevel );
+																		return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a selection specifcation at assignment level: ", commonVariables_->currentAssignmentLevel );
 																	}
 																else
-																	return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a new assignment level: ", commonVariables_->currentAssignmentLevel );
+																	return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a new assignment level: ", commonVariables_->currentAssignmentLevel );
 																}
 															while( possibilityItem != NULL );
 
-															if( adminItem_->scoreList != NULL &&
-
-															( nPossibilities > 1 ||
-															commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL ) )	// Higher level has possibilities
+															if( nPossibilities > 1 ||
+															// Higher level has possibilities
+															commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL )
 																{
-																if( adminItem_->scoreList->deleteScores() != RESULT_OK )
-																	return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the scores with assignment level ", commonVariables_->currentAssignmentLevel );
+																if( scoreList->deleteScores() != RESULT_OK )
+																	return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the scores with assignment level ", commonVariables_->currentAssignmentLevel );
 																}
 															}
 														else
-															return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to get the first possibility item at assignment level ", commonVariables_->currentAssignmentLevel );
+															return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to get the first possibility item at assignment level ", commonVariables_->currentAssignmentLevel );
 														}
 													else
-														return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The word list isn't created yet" );
+														return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The word list isn't created yet" );
 													}
 												else
-													return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The solve scores list isn't created yet at assignment level ", commonVariables_->currentAssignmentLevel );
+													return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The solve scores list isn't created yet at assignment level ", commonVariables_->currentAssignmentLevel );
 												}
 											else
 												{
@@ -1125,166 +1237,70 @@ class AdminSolve
 												{
 												commonVariables_->presentation->clearProgress();
 
-												if( adminItem_->scoreList != NULL )
+												if( ( scoreList = adminItem_->scoreList ) != NULL )
 													{
 													if( ( specificationResult = predefinedNounSolveStrategyWordItem->getAssignmentWordParameter() ).result == RESULT_OK )
 														{
-														if( ( selectionResult = adminItem_->scoreList->getBestAction( specificationResult.assignmentParameter ) ).result == RESULT_OK )
+														if( ( selectionResult = scoreList->getBestAction( specificationResult.assignmentParameter ) ).result == RESULT_OK )
 															{
 															if( ( actionSelectionItem = selectionResult.bestActionItem ) != NULL )
 																{
 																if( adminItem_->assignSelectionSpecification( actionSelectionItem ) == RESULT_OK )
 																	{
 																	if( adminItem_->assignSpecification( predefinedNounSolveMethodWordItem, adminItem_->predefinedAdjectiveDoneWordItem() ) != RESULT_OK )
-																		return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign the done flag to the solve method at assignment level ", commonVariables_->currentAssignmentLevel );
+																		return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign the done flag to the solve method at assignment level ", commonVariables_->currentAssignmentLevel );
 																	}
 																else
-																	return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a selection specification at assignment level ", commonVariables_->currentAssignmentLevel );
+																	return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a selection specification at assignment level ", commonVariables_->currentAssignmentLevel );
 																}
 															else
-																return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't get the best action selection item" );
+																return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't get the best action selection item" );
 															}
 														else
-															return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the best action of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+															return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the best action of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
 														}
 													else
-														return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", commonVariables_->currentAssignmentLevel );
+														return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", commonVariables_->currentAssignmentLevel );
 													}
 												else
-													return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The solve scores list isn't created yet" );
+													return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The solve scores list isn't created yet" );
 												}
 											}
 										else
 											{
 											if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
 												{
-												if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_COULD_FIND_SOLVE_INFO_START, solveWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_COULD_FIND_SOLVE_INFO_END ) != RESULT_OK )
-													return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+												if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_START, solveWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_END ) != RESULT_OK )
+													return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 												}
 											}
 										}
 									else
-										return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a possibility to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a possibility to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
 									}
 								else
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", commonVariables_->currentAssignmentLevel );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", commonVariables_->currentAssignmentLevel );
 								}
 							else
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level ", commonVariables_->currentAssignmentLevel );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level ", commonVariables_->currentAssignmentLevel );
 							}
 						else
-							return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given assignment level of ", commonVariables_->currentAssignmentLevel, " is higher than the given solve level ", solveLevel_ );
+							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given assignment level of ", commonVariables_->currentAssignmentLevel, " is higher than the given solve level ", solveLevel_ );
 						}
 					else
 						{
 						if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_WORD_ALREADY_SOLVED_START, solveWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_WORD_ALREADY_SOLVED_END ) != RESULT_OK )
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 						}
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined solve strategy noun word item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined solve strategy noun word item is undefined" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined solve-method noun word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined solve-method noun word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given solve word is undefined" );
-
-		return RESULT_OK;
-		}
-
-	ResultType findPossibilityToSolveWord( bool isAddScores, bool isInverted, bool duplicatesAllowed, bool prepareSort, unsigned short solveStrategyParameter, WordItem *solveWordItem )
-		{
-		SelectionResultType selectionResult;
-		SelectionItem *originalExecutionSelectionItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findPossibilityToSolveWord";
-
-		hasFoundPossibility_ = false;
-
-		if( solveWordItem != NULL )
-			{
-			if( !solveWordItem->isWordCheckedForSolving )
-				{
-				if( canWordBeSolved( true, solveWordItem ) == RESULT_OK )
-					{
-					solveWordItem->isWordCheckedForSolving = true;
-
-					if( canWordBeSolved_ &&
-					adminItem_->actionList != NULL )
-						{
-						originalExecutionSelectionItem = currentExecutionSelectionItem_;
-
-						if( ( selectionResult = adminItem_->actionList->findFirstExecutionItem( solveWordItem ) ).result == RESULT_OK )
-							{
-							if( ( currentExecutionSelectionItem_ = selectionResult.firstExecutionItem ) != NULL )
-								{
-								do	{
-									if( backTrackConditionScorePaths( isAddScores, isInverted, duplicatesAllowed, prepareSort, currentExecutionSelectionItem_->selectionLevel(), solveStrategyParameter, currentExecutionSelectionItem_->activeSentenceNr() ) == RESULT_OK )
-										{
-										if( currentExecutionSelectionItem_->findNextExecutionSelectionItem( solveWordItem ) == RESULT_OK )
-											currentExecutionSelectionItem_ = currentExecutionSelectionItem_->nextExecutionItem();
-										else
-											return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the next action selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
-										}
-									else
-										return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to back-fire the condition score paths for the action with sentence number ", currentExecutionSelectionItem_->activeSentenceNr() );
-									}
-								while( currentExecutionSelectionItem_ != NULL );
-								}
-
-							currentExecutionSelectionItem_ = originalExecutionSelectionItem;
-							}
-						else
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the first action selection item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
-						}
-
-					if( !commonVariables_->hasShownWarning )
-						{
-						if( canWordBeSolved( false, solveWordItem ) == RESULT_OK )
-							{
-							if( canWordBeSolved_ &&
-							adminItem_->alternativeList != NULL )
-								{
-								originalExecutionSelectionItem = currentExecutionSelectionItem_;
-
-								if( ( selectionResult = adminItem_->alternativeList->findFirstExecutionItem( solveWordItem ) ).result == RESULT_OK )
-									{
-									if( ( currentExecutionSelectionItem_ = selectionResult.firstExecutionItem ) != NULL )
-										{
-										do	{
-											if( backTrackConditionScorePaths( isAddScores, isInverted, duplicatesAllowed, prepareSort, currentExecutionSelectionItem_->selectionLevel(), solveStrategyParameter, currentExecutionSelectionItem_->activeSentenceNr() ) == RESULT_OK )
-												{
-												if( currentExecutionSelectionItem_->findNextExecutionSelectionItem( solveWordItem ) == RESULT_OK )
-													currentExecutionSelectionItem_ = currentExecutionSelectionItem_->nextExecutionItem();
-												else
-													return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the next alternative item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
-												}
-											else
-												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to back-fire the condition score paths for the alternative with sentence number ", currentExecutionSelectionItem_->activeSentenceNr() );
-											}
-										while( currentExecutionSelectionItem_ != NULL );
-										}
-
-									currentExecutionSelectionItem_ = originalExecutionSelectionItem;
-									}
-								else
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the first alternative item with solve word \"", solveWordItem->anyWordTypeString(), "\"" );
-								}
-
-							solveWordItem->isWordCheckedForSolving = false;
-							}
-						else
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if the given word \"", solveWordItem->anyWordTypeString(), "\" can be solved by alternative" );
-						}
-					}
-				else
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if the given word \"", solveWordItem->anyWordTypeString(), "\" can be solved by action" );
-				}
-			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given solve word \"", solveWordItem->anyWordTypeString(), "\" is already checked" );
-			}
-		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given solve word is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given solve word is undefined" );
 
 		return RESULT_OK;
 		}
@@ -1313,17 +1329,19 @@ class AdminSolve
 						{
 						if( specificationWordItem->isAdjectiveClear() )
 							{
+							// Adjective "clear"
 							if( findScoringAssignment( !isNegative, generalizationWordItem ) == RESULT_OK )
 								isConditionSatisfied_ = ( hasFoundScoringAssignment_ ? isNegative : !isNegative );
 							else
-								myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a scoring assignment" );
+								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a scoring assignment" );
 							}
-						else	// Is Assigned
+						else
 							{
+							// Adjective "assigned"
 							if( findScoringAssignment( isNegative, generalizationWordItem ) == RESULT_OK )
 								isConditionSatisfied_ = ( hasFoundScoringAssignment_ ? !isNegative : isNegative );
 							else
-								myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a scoring assignment" );
+								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a scoring assignment" );
 							}
 						}
 					else
@@ -1331,21 +1349,21 @@ class AdminSolve
 						if( generalizationWordItem->isAdjectiveComparison() )
 							{
 							if( checkComparison( conditionSelectionItem ) != RESULT_OK )
-								myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check a comparison" );
+								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check a comparison" );
 							}
 						else
 							{
 							if( generalizationWordItem->isAdjectiveOddOrEven() )
 								{
 								if( checkForOddOrEven( conditionSelectionItem ) != RESULT_OK )
-									myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check for odd or even" );
+									adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check for odd or even" );
 								}
 							else
 								{
 								if( conditionSelectionItem->isValueSpecification() )
 									{
 									if( checkConditionByValue( isNegative, isPossessive, generalizationWordItem, specificationWordItem ) != RESULT_OK )
-										myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the condition of a specification by value" );
+										adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the condition of a specification by value" );
 									}
 								else
 									{
@@ -1355,20 +1373,20 @@ class AdminSolve
 											isConditionSatisfied_ = true;
 										}
 									else
-										myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a scoring assignment" );
+										adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a scoring assignment" );
 									}
 								}
 							}
 						}
 					}
 				else
-					myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the given condition selection item is undefined" );
+					adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word of the given condition selection item is undefined" );
 				}
 			else
-				myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
+				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
 			}
 		else
-			myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given condition selection item is undefined" );
+			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given condition selection item is undefined" );
 
 		selectionResult.isConditionSatisfied = isConditionSatisfied_;
 		selectionResult.result = commonVariables_->result;

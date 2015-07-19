@@ -1,0 +1,5 @@
+Un gato es un mamífero.
+Un perro es un mamífero.
+Una ballena es un mamífero.
+Mostrar información sobre los mamíferos.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

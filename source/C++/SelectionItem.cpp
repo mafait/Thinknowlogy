@@ -2,11 +2,11 @@
  *	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ class SelectionItem : private Item
 	bool isNegative_;
 	bool isPossessive_;
 	bool isSpecificationGeneralization_;
-	bool isUniqueRelation_;
+	bool isUniqueUserRelation_;
 	bool isValueSpecification_;
 
 	unsigned short assumptionLevel_;
@@ -86,7 +86,7 @@ class SelectionItem : private Item
 
 	// Constructor / deconstructor
 
-	SelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeParameter, unsigned short prepositionParameter, unsigned short specificationWordParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	SelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeParameter, unsigned short prepositionParameter, unsigned short specificationWordParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		size_t specificationStringLength;
 
@@ -110,7 +110,7 @@ class SelectionItem : private Item
 		isNegative_ = isNegative;
 		isPossessive_ = isPossessive;
 		isSpecificationGeneralization_ = isSpecificationGeneralization;
-		isUniqueRelation_ = isUniqueRelation;
+		isUniqueUserRelation_ = isUniqueUserRelation;
 		isValueSpecification_ = isValueSpecification;
 
 		assumptionLevel_ = assumptionLevel;
@@ -174,7 +174,8 @@ class SelectionItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -194,7 +195,8 @@ class SelectionItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -208,7 +210,8 @@ class SelectionItem : private Item
 			strlen( commonVariables()->queryString ) > 0 )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -222,7 +225,8 @@ class SelectionItem : private Item
 			strlen( commonVariables()->queryString ) > 0 )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -396,10 +400,10 @@ class SelectionItem : private Item
 			strcat( commonVariables()->queryString, "isSpecificationGeneralization" );
 			}
 
-		if( isUniqueRelation_ )
+		if( isUniqueUserRelation_ )
 			{
 			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isUniqueRelation" );
+			strcat( commonVariables()->queryString, "isUniqueUserRelation" );
 			}
 
 		if( isValueSpecification_ )
@@ -587,9 +591,9 @@ class SelectionItem : private Item
 		return isSpecificationGeneralization_;
 		}
 
-	bool isUniqueRelation()
+	bool isUniqueUserRelation()
 		{
-		return isUniqueRelation_;
+		return isUniqueUserRelation_;
 		}
 
 	bool isValueSpecification()

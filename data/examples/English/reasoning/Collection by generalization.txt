@@ -1,4 +1,0 @@
-﻿Every parent is a father or a mother.
-Every father is a man.
-Every mother is a woman.
-# Remember to clear this knowledge before reading another example.

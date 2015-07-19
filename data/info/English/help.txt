@@ -27,10 +27,10 @@ Show " Show the copyright.".
 Show " Show the GPLv2-license.".
 Show " Show the warranty.".
 Show "------------------------------------------------------------------------------".
-#C++#Show " Example files:	* folder: Thinknowlogy2014r2b/data/examples/English/".
+#C++#Show " Example files:	* folder: Thinknowlogy2015r1beta/data/examples/English/".
 #Java#Show " Example files:	* Use button <more examples> or see".
-#Java#Show "		  folder: Thinknowlogy2014r2b/data/examples/English/".
-Show " Fundamental:	* folder: Thinknowlogy2014r2b/documents/".
-Show " Design:	* folder: Thinknowlogy2014r2b/documents/design/".
-Show " Screenshots:	* folder: Thinknowlogy2014r2b/screenshots/".
+#Java#Show "		  folder: Thinknowlogy2015r1beta/data/examples/English/".
+Show " Fundamental:	* folder: Thinknowlogy2015r1beta/documents/".
+Show " Design:	* folder: Thinknowlogy2015r1beta/documents/design/".
+Show " Screenshots:	* folder: Thinknowlogy2015r1beta/screenshots/English/".
 Show "------------------------------------------------------------------------------".

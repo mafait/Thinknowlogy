@@ -2,11 +2,11 @@
  *	Class:			WordAssignment
  *	Supports class:	WordItem
  *	Purpose:		To assign specifications
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -66,14 +66,16 @@ class WordAssignment
 						if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
 							{
 							if( foundActiveAssignmentItem == null &&
-							currentGeneralizationWordItem != myWordItem_ )		// Skip my word for activate assignments, because this is the one to be assigned
+							// Skip my word for activate assignments, because this is the one to be assigned
+							currentGeneralizationWordItem != myWordItem_ )
 								foundActiveAssignmentItem = currentGeneralizationWordItem.firstNonQuestionAssignmentItem( true, false, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
 
-							if( foundInactiveAssignmentItem == null )		// Allow to find an inactive assignment in my word
+							// Allow to find an inactive assignment in my word
+							if( foundInactiveAssignmentItem == null )
 								foundInactiveAssignmentItem = currentGeneralizationWordItem.firstNonQuestionAssignmentItem( false, true, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
 							}
 						else
-							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I found an undefined generalization word" );
+							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an undefined generalization word" );
 						}
 					while( ( foundActiveAssignmentItem == null ||
 					foundInactiveAssignmentItem == null ) &&
@@ -100,24 +102,24 @@ class WordAssignment
 												return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to archive an inactive assignment" );
 											}
 										else
-											return myWordItem_.startErrorInWord( 1, moduleNameString_, "I found an inactive assignment without generalization word item" );
+											return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an inactive assignment without generalization word item" );
 										}
 									else
-										return myWordItem_.startErrorInWord( 1, moduleNameString_, "I found an inactive assignment without generalization collection number" );
+										return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an inactive assignment without generalization collection number" );
 									}
 								}
 							else
 								return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to inactivate an active assignment" );
 							}
 						else
-							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I found an active assignment without generalization word item" );
+							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an active assignment without generalization word item" );
 						}
 					else
-						return myWordItem_.startErrorInWord( 1, moduleNameString_, "I found an active assignment without generalization collection number" );
+						return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an active assignment without generalization collection number" );
 					}
 				}
 			else
-				return myWordItem_.startErrorInWord( 1, moduleNameString_, "Processing a noun value specification isn't implemented yet" );
+				return myWordItem_.startErrorInWord( 1, moduleNameString_, "Inactivating or archiving a noun value specification isn't implemented yet" );
 			}
 		else
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given specification word item is undefined" );
@@ -125,7 +127,7 @@ class WordAssignment
 		return Constants.RESULT_OK;
 		}
 
-	private byte inactivateAssignment( boolean isAmbiguousRelationContext, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isSelfGenerated, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, WordItem specificationWordItem, String specificationString )
+	private byte inactivateAssignment( boolean isAmbiguousRelationContext, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isSelfGenerated, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, WordItem specificationWordItem )
 		{
 		SpecificationResultType specificationResult;
 		SpecificationItem foundAssignmentItem;
@@ -138,15 +140,17 @@ class WordAssignment
 				{
 				if( isExclusiveSpecification )
 					{
-					if( ( specificationResult = myWordItem_.findRelatedSpecification( true, true, false, isExclusiveSpecification, false, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationCollectionNr, generalizationContextNr, specificationContextNr, Constants.NO_CONTEXT_NR, specificationWordItem, specificationString ) ).result == Constants.RESULT_OK )
+					if( ( specificationResult = myWordItem_.findRelatedSpecification( true, true, false, isExclusiveSpecification, false, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationCollectionNr, generalizationContextNr, specificationContextNr, Constants.NO_CONTEXT_NR, specificationWordItem ) ).result == Constants.RESULT_OK )
 						{
 						relatedSpecificationItem = specificationResult.relatedSpecificationItem;
 
 						if( relatedSpecificationItem != null &&
-						relatedSpecificationItem.isAssignment() &&		// Skip specification
+						// Skip specification
+						relatedSpecificationItem.isAssignment() &&
 
 						( ( !isNegative &&
-						!isSelfGenerated ) ||							// Only option left
+						// Only option left
+						!isSelfGenerated ) ||
 
 						!relatedSpecificationItem.isNegative() ) )
 							{
@@ -158,8 +162,9 @@ class WordAssignment
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find a related assignment" );
 					}
 				}
-			else	// With relation context
+			else
 				{
+				// With relation context
 				if( ( foundActiveAssignmentItem = myWordItem_.firstAssignmentItem( true, false, false, isNegative, isPossessive, isSelfGenerated, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, specificationWordItem ) ) != null )
 					{
 					if( ( foundAssignmentItem = myWordItem_.firstAssignmentItem( false, true, false, isNegative, isPossessive, isSelfGenerated, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, specificationWordItem ) ) != null )
@@ -179,7 +184,7 @@ class WordAssignment
 			{
 			if( isAmbiguousRelationContext ||
 
-			( !foundAssignmentItem.isUniqueRelation() &&
+			( !foundAssignmentItem.isUniqueUserRelation() &&
 			foundAssignmentItem.isNegative() != isNegative ) )
 				{
 				if( inactivateActiveAssignment( foundAssignmentItem ) != Constants.RESULT_OK )
@@ -190,7 +195,7 @@ class WordAssignment
 		return Constants.RESULT_OK;
 		}
 
-	private SpecificationResultType assignSpecification( boolean isAmbiguousRelationContext, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isGeneralizationAssignment, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueRelation, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationCollectionNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString )
+	private SpecificationResultType assignSpecification( boolean isAmbiguousRelationContext, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isGeneralizationAssignment, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationCollectionNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 		boolean hasDifferentAssumptionLevel = false;
@@ -202,7 +207,7 @@ class WordAssignment
 
 		if( !isQuestion )
 			{
-			if( inactivateAssignment( isAmbiguousRelationContext, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem, specificationString ) != Constants.RESULT_OK )
+			if( inactivateAssignment( isAmbiguousRelationContext, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) != Constants.RESULT_OK )
 				myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to inactivate an assignment" );
 			}
 
@@ -210,12 +215,15 @@ class WordAssignment
 			{
 			if( ( foundAssignmentItem = myWordItem_.firstAssignmentItem( true, true, true, isNegative, isPossessive, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem ) ) == null )
 				{
-				if( isSelfGenerated )	// Found no self-generated assignment. Now try to find a confirmed assignment.
+				// Found no self-generated assignment. Now try to find a confirmed assignment
+				if( isSelfGenerated )
 					foundAssignmentItem = myWordItem_.firstAssignmentItem( true, true, true, isNegative, isPossessive, false, questionParameter, relationContextNr, specificationWordItem );
 				}
 
 			if( foundAssignmentItem != null )
 				{
+				specificationResult.foundSpecificationItem = foundAssignmentItem;
+
 				if( foundAssignmentItem.assumptionLevel() != assumptionLevel )
 					hasDifferentAssumptionLevel = true;
 
@@ -231,7 +239,7 @@ class WordAssignment
 			( !isSelfGenerated &&
 			hasDifferentAssumptionLevel ) )
 				{
-				if( ( specificationResult = myWordItem_.createSpecification( true, isInactiveAssignment, isArchivedAssignment, false, false, false, false, isEveryGeneralization, isExclusiveSpecification, isGeneralizationAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueRelation, false, CommonVariables.currentAssignmentLevel, assumptionLevel, CommonVariables.currentGrammarLanguageNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationCollectionNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, null ) ).result == Constants.RESULT_OK )
+				if( ( specificationResult = myWordItem_.createSpecificationItem( true, isInactiveAssignment, isArchivedAssignment, false, false, false, false, isEveryGeneralization, isExclusiveSpecification, isGeneralizationAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, false, CommonVariables.currentAssignmentLevel, assumptionLevel, CommonVariables.currentLanguageNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationCollectionNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, null ) ).result == Constants.RESULT_OK )
 					{
 					if( ( createdAssignmentItem = specificationResult.createdSpecificationItem ) != null )
 						{
@@ -297,7 +305,7 @@ class WordAssignment
 			if( ( currentAssignmentItem = specificationWordItem.firstNonQuestionActiveAssignmentItem() ) != null )
 				{
 				do	{
-					if( ( specificationResult = assignSpecification( false, currentAssignmentItem.isInactiveAssignment(), currentAssignmentItem.isArchivedAssignment(), currentAssignmentItem.isEveryGeneralization(), currentAssignmentItem.isExclusiveSpecification(), currentAssignmentItem.isGeneralizationAssignment(), currentAssignmentItem.isNegative(), currentAssignmentItem.isPartOf(), currentAssignmentItem.isPossessive(), currentAssignmentItem.isSpecificationGeneralization(), currentAssignmentItem.isUniqueRelation(), currentAssignmentItem.assumptionLevel(), currentAssignmentItem.prepositionParameter(), currentAssignmentItem.questionParameter(), currentAssignmentItem.generalizationWordTypeNr(), currentAssignmentItem.specificationWordTypeNr(), currentAssignmentItem.relationWordTypeNr(), currentAssignmentItem.generalizationCollectionNr(), currentAssignmentItem.specificationCollectionNr(), currentAssignmentItem.generalizationContextNr(), currentAssignmentItem.specificationContextNr(), currentAssignmentItem.relationContextNr(), Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, currentAssignmentItem.nContextRelations(), firstJustificationItem, currentAssignmentItem.specificationWordItem(), currentAssignmentItem.specificationString() ) ).result != Constants.RESULT_OK )
+					if( ( specificationResult = assignSpecification( false, currentAssignmentItem.isInactiveAssignment(), currentAssignmentItem.isArchivedAssignment(), currentAssignmentItem.isEveryGeneralization(), currentAssignmentItem.isExclusiveSpecification(), currentAssignmentItem.isGeneralizationAssignment(), currentAssignmentItem.isNegative(), currentAssignmentItem.isPartOf(), currentAssignmentItem.isPossessive(), currentAssignmentItem.isSpecificationGeneralization(), currentAssignmentItem.isUniqueUserRelation(), currentAssignmentItem.assumptionLevel(), currentAssignmentItem.prepositionParameter(), currentAssignmentItem.questionParameter(), currentAssignmentItem.generalizationWordTypeNr(), currentAssignmentItem.specificationWordTypeNr(), currentAssignmentItem.relationWordTypeNr(), currentAssignmentItem.generalizationCollectionNr(), currentAssignmentItem.specificationCollectionNr(), currentAssignmentItem.generalizationContextNr(), currentAssignmentItem.specificationContextNr(), currentAssignmentItem.relationContextNr(), Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, currentAssignmentItem.nContextRelations(), firstJustificationItem, currentAssignmentItem.specificationWordItem(), currentAssignmentItem.specificationString() ) ).result != Constants.RESULT_OK )
 						myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to assign specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
 					}
 				while( CommonVariables.result == Constants.RESULT_OK &&
@@ -341,11 +349,13 @@ class WordAssignment
 
 	protected byte createNewAssignmentLevel()
 		{
+		SpecificationList assignmentList;
+
 		if( !myWordItem_.isAdminWord() )
 			{
-			if( myWordItem_.assignmentList != null )
+			if( ( assignmentList = myWordItem_.assignmentList ) != null )
 				{
-				if( myWordItem_.assignmentList.createNewAssignmentLevel() != Constants.RESULT_OK )
+				if( assignmentList.createNewAssignmentLevel() != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to create assignment level " + ( CommonVariables.currentAssignmentLevel + 1 ) );
 				}
 			}
@@ -357,37 +367,18 @@ class WordAssignment
 
 	protected byte inactivateActiveAssignment( SpecificationItem activeAssignmentItem )
 		{
-		SpecificationResultType specificationResult;
-		SpecificationItem replacingAssignmentItem;
+		SpecificationList assignmentList;
 
 		if( activeAssignmentItem != null )
 			{
 			if( activeAssignmentItem.isActiveAssignment() )
 				{
-				if( myWordItem_.assignmentList != null )
+				if( ( assignmentList = myWordItem_.assignmentList ) != null )
 					{
-					if( activeAssignmentItem.hasInactiveSentenceNr() )		// Has been inactive before
-						{
-						if( ( specificationResult = myWordItem_.copySpecification( true, false, activeAssignmentItem.isAnsweredQuestion(), activeAssignmentItem.isExclusiveSpecification(), activeAssignmentItem.assignmentLevel(), activeAssignmentItem.generalizationCollectionNr(), activeAssignmentItem.specificationCollectionNr(), activeAssignmentItem.relationContextNr(), activeAssignmentItem.firstJustificationItem(), activeAssignmentItem ) ).result == Constants.RESULT_OK )
-							{
-							if( ( replacingAssignmentItem = specificationResult.createdSpecificationItem ) != null )
-								{
-								if( myWordItem_.replaceOrDeleteSpecification( activeAssignmentItem, replacingAssignmentItem ) != Constants.RESULT_OK )
-									return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to replace or delete the given active assignment" );
-								}
-							else
-								return myWordItem_.startErrorInWord( 1, moduleNameString_, "The last created assignment item is undefined" );
-							}
-						else
-							return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to copy an active assignment item to an inactive assignment item" );
-						}
+					if( assignmentList.inactivateItem( activeAssignmentItem ) == Constants.RESULT_OK )
+						activeAssignmentItem.markAsGeneralizationAssignment();
 					else
-						{
-						if( myWordItem_.assignmentList.inactivateItem( false, activeAssignmentItem ) == Constants.RESULT_OK )
-							activeAssignmentItem.markAsGeneralizationAssignment();
-						else
-							return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to inactivate an active assignment" );
-						}
+						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to inactivate an active assignment" );
 					}
 				else
 					return myWordItem_.startErrorInWord( 1, moduleNameString_, "The assignment list isn't created yet" );
@@ -403,16 +394,18 @@ class WordAssignment
 
 	protected byte archiveInactiveAssignment( SpecificationItem inactiveAssignmentItem )
 		{
+		SpecificationList assignmentList;
+
 		if( inactiveAssignmentItem != null )
 			{
 			if( inactiveAssignmentItem.isInactiveAssignment() )
 				{
-				if( myWordItem_.assignmentList != null )
+				if( ( assignmentList = myWordItem_.assignmentList ) != null )
 					{
-					if( myWordItem_.assignmentList.archiveItem( inactiveAssignmentItem ) == Constants.RESULT_OK )
+					if( assignmentList.archiveItem( inactiveAssignmentItem ) == Constants.RESULT_OK )
 						inactiveAssignmentItem.markAsGeneralizationAssignment();
 					else
-						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to archive an inactive assignment" );
+						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to archive the given inactive assignment item" );
 					}
 				else
 					return myWordItem_.startErrorInWord( 1, moduleNameString_, "The assignment list isn't created yet" );
@@ -453,7 +446,7 @@ class WordAssignment
 				}
 			}
 		else
-			myWordItem_.startErrorInWord( 1, moduleNameString_, "I have more than one assignments at assignment level " + CommonVariables.currentAssignmentLevel );
+			myWordItem_.startErrorInWord( 1, moduleNameString_, "I've more than one assignments at assignment level " + CommonVariables.currentAssignmentLevel );
 
 		specificationResult.result = CommonVariables.result;
 		return specificationResult;
@@ -472,17 +465,17 @@ class WordAssignment
 				if( ( specificationWordItem = assignmentItem.specificationWordItem() ) != null )
 					specificationResult.assignmentParameter = specificationWordItem.wordParameter();
 				else
-					myWordItem_.startErrorInWord( 1, moduleNameString_, "I found an undefined assignment word at assignment level " + CommonVariables.currentAssignmentLevel );
+					myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an undefined assignment word at assignment level " + CommonVariables.currentAssignmentLevel );
 				}
 			}
 		else
-			myWordItem_.startErrorInWord( 1, moduleNameString_, "I have more than one assignments at assignment level " + CommonVariables.currentAssignmentLevel );
+			myWordItem_.startErrorInWord( 1, moduleNameString_, "I've more than one assignments at assignment level " + CommonVariables.currentAssignmentLevel );
 
 		specificationResult.result = CommonVariables.result;
 		return specificationResult;
 		}
 
-	protected SpecificationResultType assignSpecification( boolean isAmbiguousRelationContext, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueRelation, short assumptionLevel, short prepositionParameter, short questionParameter, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString )
+	protected SpecificationResultType assignSpecification( boolean isAmbiguousRelationContext, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, short assumptionLevel, short prepositionParameter, short questionParameter, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 		SpecificationItem foundSpecificationItem;
@@ -500,7 +493,7 @@ class WordAssignment
 		else
 			{
 			// Find the specification of the assignment
-			if( ( foundSpecificationItem = myWordItem_.firstAssignmentOrSpecificationItem( false, false, ( isArchivedAssignment ? isNegative : false ), isPossessive, questionParameter, specificationWordItem ) ) != null )
+			if( ( foundSpecificationItem = myWordItem_.firstSpecificationItem( isPossessive, questionParameter, specificationWordItem ) ) != null )
 				{
 				if( foundSpecificationItem.hasExclusiveGeneralizationCollection() )
 					{
@@ -517,7 +510,7 @@ class WordAssignment
 						}
 					else
 						{
-						if( ( specificationResult = assignSpecification( isAmbiguousRelationContext, isInactiveAssignment, isArchivedAssignment, foundSpecificationItem.isEveryGeneralization(), foundSpecificationItem.isExclusiveSpecification(), ( foundSpecificationItem.isExclusiveSpecification() && foundSpecificationItem.isGeneralizationProperName() ), isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueRelation, assumptionLevel, prepositionParameter, questionParameter, foundSpecificationItem.generalizationWordTypeNr(), foundSpecificationItem.specificationWordTypeNr(), relationWordTypeNr, foundSpecificationItem.generalizationCollectionNr(), foundSpecificationItem.specificationCollectionNr(), generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString ) ).result != Constants.RESULT_OK )
+						if( ( specificationResult = assignSpecification( isAmbiguousRelationContext, isInactiveAssignment, isArchivedAssignment, foundSpecificationItem.isEveryGeneralization(), foundSpecificationItem.isExclusiveSpecification(), ( foundSpecificationItem.isExclusiveSpecification() && foundSpecificationItem.isGeneralizationProperName() ), isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, foundSpecificationItem.generalizationWordTypeNr(), foundSpecificationItem.specificationWordTypeNr(), relationWordTypeNr, foundSpecificationItem.generalizationCollectionNr(), foundSpecificationItem.specificationCollectionNr(), generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString ) ).result != Constants.RESULT_OK )
 							{
 							if( specificationWordItem == null )
 								myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to assign specification string \"" + specificationString + "\"" );

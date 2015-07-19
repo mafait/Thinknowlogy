@@ -1,11 +1,11 @@
 /*
  *	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -259,7 +259,8 @@ class Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar_ );
 
 			CommonVariables.hasFoundQuery = true;
@@ -289,7 +290,8 @@ class Item
 		String userNameString = ( myWordItem_ == null ? null : myWordItem_.userNameString( userNr_ ) );
 		CommonVariables.queryStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
 
-		if( !isActiveItem() )	// Show status if not active
+		// Show status if not active
+		if( !isActiveItem() )
 			CommonVariables.queryStringBuffer.append( statusChar_ );
 
 		if( myWordString != null )
@@ -302,7 +304,8 @@ class Item
 		if( isAvailableForRollbackAfterDelete )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isAvailableForRollbackAfterDelete" );
 /*
-		if( isSelectedByQuery )		// Don't show: Always true during query
+		// Don't show: Always true during query
+		if( isSelectedByQuery )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSelectedByQuery" );
 */
 		if( isArchivedItem() ||
@@ -310,9 +313,7 @@ class Item
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "previousStatusChar:" + previousStatusChar );
 
 		if( userNr_ > Constants.NO_USER_NR )
-			{
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "user:" + ( userNameString == null ? userNr_ : userNameString ) );
-			}
 
 		if( originalSentenceNr_ > Constants.NO_SENTENCE_NR &&
 		originalSentenceNr_ != creationSentenceNr_ )
@@ -418,7 +419,7 @@ class Item
 		myWordItem_ = myWordItem;
 
 		if( myWordItem_ == null )
-			startSystemErrorInItem( 1, null, null, "The given my word is undefined" );
+			startSystemErrorInItem( 1, null, "The given my word is undefined" );
 		}
 
 	protected void initializeItemVariables( int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, List myList, WordItem myWordItem )
@@ -440,13 +441,13 @@ class Item
 
 		itemNr_ = ++CommonVariables.currentItemNr;
 
-		if( myList_ != null )
+		if( myWordItem_ != null )
 			{
-			if( myWordItem_ == null )
-				startSystemErrorInItem( 1, null, null, "The given my word is undefined" );
+			if( myList_ == null )
+				startSystemErrorInItem( 1, null, myWordItem_.anyWordTypeString(), "The given my list is undefined" );
 			}
 		else
-			startSystemErrorInItem( 1, null, null, "The given my list is undefined" );
+			startSystemErrorInItem( 1, null, null, "The given my word is undefined" );
 		}
 
 	protected boolean hasActiveSentenceNr()
@@ -462,11 +463,6 @@ class Item
 	protected boolean hasArchivedSentenceNr()
 		{
 		return ( archivedSentenceNr_ > Constants.NO_SENTENCE_NR );
-		}
-
-	protected boolean hasReplacedSentenceNr()
-		{
-		return ( replacedSentenceNr_ > Constants.NO_SENTENCE_NR );
 		}
 
 	protected boolean hasCurrentCreationSentenceNr()
@@ -553,11 +549,6 @@ class Item
 	protected boolean wasInactiveBefore()
 		{
 		return ( previousStatusChar == Constants.QUERY_INACTIVE_CHAR );
-		}
-
-	protected short userNr()
-		{
-		return userNr_;
 		}
 
 	protected int activeSentenceNr()
@@ -777,7 +768,7 @@ class Item
 				articleParameter == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE );
 		}
 
-	protected boolean isReasoningWordType( short wordTypeNr )
+	protected boolean isGeneralizationReasoningWordType( short wordTypeNr )
 		{
 		return ( wordTypeNr == Constants.WORD_TYPE_PROPER_NAME ||
 				isSingularOrPluralNoun( wordTypeNr ) );
@@ -815,19 +806,34 @@ class Item
 		return false;
 		}
 
-	protected short assumptionGrade( short justificationTypeNr )
+	protected short assumptionGrade( boolean hasAnotherPrimarySpecification, boolean hasFeminineOrMasculineProperNameEnding, boolean hasPossessivePrimarySpecification, boolean hasPrimaryQuestionSpecification, short justificationTypeNr )
 		{
 		switch( justificationTypeNr )
 			{
 			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION:
-			case Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
-			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION:
-			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION:
 				return 0;
+
+			case Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
+			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+				return (short)( hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
+
+			case Constants.JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION:
+				return (short)( hasAnotherPrimarySpecification ? 2 : 1 );
+
+			case Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
+				return (short)( hasFeminineOrMasculineProperNameEnding ? 1 : 0 );
+
+			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
+				return (short)( hasPossessivePrimarySpecification ? 1 : 0 );
+
+			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
+				return (short)( hasPrimaryQuestionSpecification ? 1 : 0 );
+
+			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+				return (short)( hasAnotherPrimarySpecification ? 1 : 0 );
 
 			default:
 				return 1;

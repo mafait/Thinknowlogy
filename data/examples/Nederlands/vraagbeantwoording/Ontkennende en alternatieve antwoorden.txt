@@ -2,9 +2,9 @@
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 Is Jan een moeder?
 Is Jan de moeder van Paul?
-Is Jan de vader van Peter?
-Sjors is de vader van Peter.
-Is Jan de vader van Peter?
+Is Jan de vader van André?
+Sjors is de vader van André.
+Is Jan de vader van André?
 Is Sjors de vader van Paul?
 Willem is een vader.
 Is Willem de vader van Paul?

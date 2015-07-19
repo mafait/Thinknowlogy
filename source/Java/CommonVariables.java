@@ -1,11 +1,11 @@
 /*
  *	Class:		CommonVariables
  *	Purpose:	To hold the common variables
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -31,20 +31,19 @@ class CommonVariables
 	protected static boolean hasShownWarning;
 
 	protected static boolean isAssignmentChanged;
+	protected static boolean isDontIncrementCurrentSentenceNr;
 	protected static boolean isFirstAnswerToQuestion;
 	protected static boolean isQuestionAlreadyAnswered;
-	protected static boolean isSystemStartingUp;
 	protected static boolean isUserQuestion;
 
 	protected static byte result;
 
 	protected static short currentAssignmentLevel;
-	protected static short currentGrammarLanguageNr;
+	protected static short currentLanguageNr;
 	protected static short currentUserNr;
 	protected static short currentWriteLevel;
 
 	protected static short matchingWordTypeNr;
-	protected static short queryWordTypeNr;
 
 	protected static int nDeletedItems;
 	protected static int nActiveQueryItems;
@@ -58,7 +57,6 @@ class CommonVariables
 	protected static int nUserRelationWords;
 
 	protected static int currentSentenceNr;
-	protected static int firstUserSentenceNr;
 	protected static int highestInUseSentenceNr;
 	protected static int removeSentenceNr;
 
@@ -71,10 +69,10 @@ class CommonVariables
 	protected static SelectionList adminActionList;
 	protected static SelectionList adminAlternativeList;
 
-	protected static WordItem currentGrammarLanguageWordItem;
-	protected static WordItem currentInterfaceLanguageWordItem;
+	protected static WordItem currentLanguageWordItem;
 	protected static WordItem firstWordItem;
-	protected static WordItem predefinedNounGrammarLanguageWordItem;
+	protected static WordItem lastPredefinedWordItem;
+	protected static WordItem predefinedNounLanguageWordItem;
 	protected static WordItem predefinedNounUserWordItem;
 
 	protected static StringBuffer interfaceLanguageStringBuffer;
@@ -86,7 +84,7 @@ class CommonVariables
 
 	// Protected methods
 
-	protected static void init()
+	protected static void initialize()
 		{
 		hasFoundAnswerToQuestion = false;
 		hasFoundQuery = false;
@@ -95,18 +93,17 @@ class CommonVariables
 		hasShownWarning = false;
 
 		isAssignmentChanged = false;
+		isDontIncrementCurrentSentenceNr = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
-		isSystemStartingUp = true;
 		isUserQuestion = false;
 
 		result = Constants.RESULT_OK;
 
 		matchingWordTypeNr = Constants.WORD_TYPE_UNDEFINED;
-		queryWordTypeNr = Constants.WORD_TYPE_UNDEFINED;
 
 		currentAssignmentLevel = Constants.NO_ASSIGNMENT_LEVEL;
-		currentGrammarLanguageNr = Constants.NO_LANGUAGE_NR;
+		currentLanguageNr = Constants.NO_LANGUAGE_NR;
 		currentUserNr = Constants.NO_USER_NR;
 		currentWriteLevel = Constants.NO_WRITE_LEVEL;
 
@@ -121,8 +118,8 @@ class CommonVariables
 		nUserSpecificationWords = 0;
 		nUserRelationWords = 0;
 
-		currentSentenceNr = 1;		// First sentence
-		firstUserSentenceNr = Constants.NO_SENTENCE_NR;
+		// First sentence
+		currentSentenceNr = 1;
 		highestInUseSentenceNr = Constants.NO_SENTENCE_NR;
 		removeSentenceNr = Constants.NO_SENTENCE_NR;
 
@@ -135,10 +132,10 @@ class CommonVariables
 		adminActionList = null;
 		adminAlternativeList = null;
 
-		currentGrammarLanguageWordItem = null;
-		currentInterfaceLanguageWordItem = null;
+		currentLanguageWordItem = null;
 		firstWordItem = null;
-		predefinedNounGrammarLanguageWordItem = null;
+		lastPredefinedWordItem = null;
+		predefinedNounLanguageWordItem = null;
 		predefinedNounUserWordItem = null;
 
 		interfaceLanguageStringBuffer = null;

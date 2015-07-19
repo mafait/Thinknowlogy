@@ -1,26 +1,10 @@
-﻿#
-#	File:		Nederlands.txt
-#	Scope:		Used by the Thinknowlogy application
+﻿#----------------------------------------------------------------------------
 #	Purpose:	To define the interface texts in Dutch
-#	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+#	Version:	Thinknowlogy 2015r1beta (Corazón)
 #----------------------------------------------------------------------------
 #	Copyright (C) 2009-2015, Menno Mafait
-#	Your additions, modifications, suggestions and bug reports
+#	Your suggestions, modifications and bug reports
 #	are welcome at http://mafait.org
-#----------------------------------------------------------------------------
-#	This program is free software: you can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation, either version 2 of the License, or
-#	(at your option) any later version.
-#
-#	This program is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
-#
-#	You should have received a copy of the GNU General Public License along
-#	with this program; if not, write to the Free Software Foundation, Inc.,
-#	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #----------------------------------------------------------------------------
 
 # Console (algemeen)
@@ -29,11 +13,9 @@
 :102		"Laat u leiden door de menuknoppen en knoppen met een voorgedefinieerde zin. Of voer een zin in conform de geïmplementeerde grammatica."
 :103		"Wachtend op invoer"
 :104		"Wachtend op beveiligde invoer"
-:105		"Wacht a.u.b. op uitvoer... "
-#:106		"Welkom "
-:107		"U bent al inlogt als "
-:108		"."
-:109		"De gebruikersnaam of het wachtwoord is niet correct."
+:105		"U bent al inlogt als "
+:106		"."
+:107		"De gebruikersnaam of het wachtwoord is niet correct."
 
 # Console (status en voortgang)
 :110		"Ik ben bezig met het uitvoeren van selecties ("
@@ -48,7 +30,9 @@
 :124		"Aanmelden als Expert."
 :129		"<meer voorbeelden>"
 :130		"Lees het bestand \""
+:131		"Lees het testbestand "
 :132		"\"."
+:133		"Regressie"
 
 # Java console (hoofdmenu)
 :210		"Lees het bestand "Nederlands/ambiguiteit/Boston"."
@@ -67,6 +51,12 @@
 :224		"<terug>"
 :225		"Help."
 :226		"<wijzig taal>"
+:227		"<wijzig lettertype>"
+:228		"<wijzig tekengrootte>"
+
+# Java console (tekengrootte)
+:230		"<verklein tekengrootte>"
+:231		"<vergroot tekengrootte>"
 
 # Java console (programmeren/Vier op 'n rij submenu)
 :300		"Mijn zet is A."
@@ -117,15 +107,21 @@
 :521		"Paul heeft 2 ouders, genaamd Jan en Anna."
 :522		"Johan heeft 2 ouders, genaamd Jan en Anna."
 :523		"Laura heeft 2 ouders, genaamd Jan en Anna."
+:524		"Paul is een kind van Jan en Anna."
+:525		"Johan is een kind van Jan en Anna."
+:526		"Laura is een kind van Jan en Anna."
 
-:524		"Jan is een man."
-:525		"Anna is een vrouw."
-:526		"Paul is een man."
-:527		"Johan is een man."
-:528		"Laura is een vrouw."
-:529		"Paul is een jongen."
-:530		"Johan is een jongen."
-:531		"Laura is een meisje."
+:527		"Jan is een man."
+:528		"Anna is een vrouw."
+:529		"Paul is een man."
+:530		"Johan is een man."
+:531		"Laura is een vrouw."
+:532		"Paul is een kind."
+:533		"Johan is een kind."
+:534		"Laura is een kind."
+:535		"Paul is een jongen."
+:536		"Johan is een jongen."
+:537		"Laura is een meisje."
 
 # Java console (redeneren/gezin conflict submenu)
 :540		"Jan is een vrouw."
@@ -135,18 +131,18 @@
 :544		"Johan is een moeder."
 
 # Java console (redeneren/gezin verantwoordingsrapportage submenu)
-:550		"Toon de verantwoordingsrapportage voor gezin."
-:551		"Toon de verantwoordingsrapportage voor ouder."
-:552		"Toon de verantwoordingsrapportage voor kind."
-:553		"Toon de verantwoordingsrapportage voor vader."
-:554		"Toon de verantwoordingsrapportage voor moeder."
-:555		"Toon de verantwoordingsrapportage voor zoon."
-:556		"Toon de verantwoordingsrapportage voor dochter."
-:557		"Toon de verantwoordingsrapportage voor Jan."
-:558		"Toon de verantwoordingsrapportage voor Anna."
-:559		"Toon de verantwoordingsrapportage voor Paul."
-:560		"Toon de verantwoordingsrapportage voor Johan."
-:561		"Toon de verantwoordingsrapportage voor Laura."
+:550		"Toon de verantwoordingsrapportage over gezin."
+:551		"Toon de verantwoordingsrapportage over ouder."
+:552		"Toon de verantwoordingsrapportage over kind."
+:553		"Toon de verantwoordingsrapportage over vader."
+:554		"Toon de verantwoordingsrapportage over moeder."
+:555		"Toon de verantwoordingsrapportage over zoon."
+:556		"Toon de verantwoordingsrapportage over dochter."
+:557		"Toon de verantwoordingsrapportage over Jan."
+:558		"Toon de verantwoordingsrapportage over Anna."
+:559		"Toon de verantwoordingsrapportage over Paul."
+:560		"Toon de verantwoordingsrapportage over Johan."
+:561		"Toon de verantwoordingsrapportage over Laura."
 
 # Java console (redeneren/gezin vraag submenu)
 :570		"Is Jan een vader?"
@@ -175,15 +171,14 @@
 :591		"Toon informatie over Laura."
 
 # Java console (help submenu)
-:900		"Toon informatie over de grammatica-talen."
-:901		"Toon informatie over de interface-talen."
-:902		"Toon informatie over de lijsten."
-:903		"Toon informatie over de gebruikers."
-:904		"Toon informatie over de woordtypes."
-:905		"Toon de opvraag-opdrachten."
-:906		"Toon het auteursrecht."
-:907		"Toon de GPLv2-licentie."
-:908		"Toon de garantie."
+:900		"Toon informatie over de talen."
+:901		"Toon informatie over de lijsten."
+:902		"Toon informatie over de gebruikers."
+:903		"Toon informatie over de woordtypes."
+:904		"Toon de opvraag-opdrachten."
+:905		"Toon het auteursrecht."
+:906		"Toon de GPLv2-licentie."
+:907		"Toon de garantie."
 
 # Grammatica
 :1000		"Grammatica definitie \""
@@ -225,23 +220,22 @@
 
 # Gebiedende wijs (opmerkingen)
 :1200		"Mijn geheugen is gewist."
-:1201		"De vorige zin is van een andere gebruiker."
-:1202		"Er zijn geen zinnen meer die ongedaan gemaakt kunnen worden."
-:1203		"Er zijn geen zinnen die hersteld kunnen worden."
-:1204		"Ik heb zinsnummer "
-:1205		" ongedaan gemaakt."
-:1206		"Ik heb zinsnummer "
-:1207		" hersteld."
-:1208		"Ik heb geen "
+:1201		"Er zijn geen zinnen die ongedaan gemaakt kunnen worden."
+:1202		"Er zijn geen zinnen die hersteld kunnen worden."
+:1203		"Ik heb zinsnummer "
+:1204		" ongedaan gemaakt."
+:1205		"Ik heb zinsnummer "
+:1206		" hersteld."
+:1207		"Ik heb geen "
 
 # Gebiedende wijs (waarschuwingen)
-:1210		"Ik heb geen informatie over "
+:1210		"Ik kon geen selectie vinden dat informatie bevat voor het oplossen van de/het "
 :1211		"."
 :1212		"Ik weet niet hoe ik gebiedende wijs werkwoord \""
 :1213		"\" moet uitvoeren."
 :1214		"Ik weet niet wat ik met het/de gegeven relatie(s) moet doen."
 :1215		"Ik weet niet welk bestand ik moet lezen."
-:1216		"Ik kon geen selectie vinden dat informatie bevat voor het oplossen van de/het "
+:1216		"Ik heb geen informatie over "
 :1217		"."
 :1218		"Er dient (nog) een lijst te worden gespecificeerd voor deze gebiedende wijs."
 :1219		"Ik vond een voorzetsel dat niet bij deze actie gebruikt kan worden."
@@ -272,15 +266,16 @@
 :1414		"\nMijn veronderstellingen:"
 :1415		"\nMijn veronderstellingen die aangepast zijn:"
 :1416		"\nMijn veronderstellingen die geconcludeerd zijn:"
-:1417		"\nMijn vragen:"
-:1418		"\nMijn aangepaste vragen:"
-:1419		"\nMijn antwoord:"
-:1420		"\nIk weet alleen:"
-:1421		"\nIk weet het niet zeker, maar:"
-:1422		"\nSpecificaties:"
-:1423		"\nSpecificatie vragen:"
-:1424		"\nGerelateerde informatie:"
-:1425		"\nGerelateerde vragen:"
+:1417		"\nMijn verborgen veronderstellingen die geconcludeerd zijn:"
+:1418		"\nMijn vragen:"
+:1419		"\nMijn aangepaste vragen:"
+:1420		"\nMijn antwoord:"
+:1421		"\nIk weet alleen:"
+:1422		"\nIk weet het niet zeker, maar:"
+:1423		"\nSpecificaties:"
+:1424		"\nSpecificatie vragen:"
+:1425		"\nGerelateerde informatie:"
+:1426		"\nGerelateerde vragen:"
 
 # Opsomming (oude informatie)
 :1430		"\nU hebt de specificatie bevestigd - maar geen relatie(s) - van mijn eerdere veronderstelling(en):"
@@ -328,6 +323,8 @@
 :1613		"Het bepaald lidwoord dat u gebruikte, komt niet overeen met zelfstandig naamwoord \""
 :1614		"Het onbepaald lidwoord dat u gebruikte, komt niet overeen met zelfstandig naamwoord \""
 :1615		"\"."
+:1616		"\nU heeft meervoudige zelfstandige naamwoord \""
+:1617		"\" ingevoerd, dat onbekend was voor mij."
 
 # Zin (waarschuwingen)
 :1620		"Ik begrijp deze zin niet. Zorg er a.u.b. voor dat u een zin invoert dat voldoet aan mijn beperkte grammatica-definitie."

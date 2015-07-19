@@ -1,5 +1,5 @@
 ﻿Read the file "English/reasoning/family definition".
-Andy has a son, called Pete.
+George has a son, called Adam.
 John is the father and Anna is the mother of Paul, Joe and Laura.
 Paul has a father, called John.
 # Remember to clear this knowledge before reading another example.

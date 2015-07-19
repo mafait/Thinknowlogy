@@ -2,11 +2,11 @@
  *	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class InterfaceList extends List
 
 	protected InterfaceList( WordItem myWordItem )
 		{
-		initializeListVariables( Constants.WORD_INTERFACE_LANGUAGE_LIST_SYMBOL, myWordItem );
+		initializeListVariables( Constants.WORD_INTERFACE_LIST_SYMBOL, myWordItem );
 		}
 
 
@@ -59,7 +59,7 @@ class InterfaceList extends List
 							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to compare two interface strings" );
 						}
 					else
-						return startError( 1, null, myWordItem().anyWordTypeString(), "I found an undefined interface string" );
+						return startError( 1, null, myWordItem().anyWordTypeString(), "I've found an undefined interface string" );
 					}
 				else
 					return startError( 1, null, myWordItem().anyWordTypeString(), "The given interface parameter already exists" );
@@ -86,7 +86,6 @@ class InterfaceList extends List
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		InterfaceItem searchItem = firstActiveInterfaceItem();
 
 		while( searchItem != null )

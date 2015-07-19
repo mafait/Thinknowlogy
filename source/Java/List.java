@@ -1,11 +1,11 @@
 /*
  *	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -368,12 +368,15 @@ class List
 						}
 
 					if( searchItem == null ||
-					searchItem.creationSentenceNr() != newItem.creationSentenceNr() ||	// Check on duplicates
-					searchItem.itemNr() != newItem.itemNr() )								// for integrity
+					// Check on duplicates
+					searchItem.creationSentenceNr() != newItem.creationSentenceNr() ||
+					// for integrity
+					searchItem.itemNr() != newItem.itemNr() )
 						{
 						newItem.previousItem = previousSearchItem;
 
-						if( previousSearchItem == null )	// First item in list
+						// First item in list
+						if( previousSearchItem == null )
 							{
 							switch( statusChar )
 								{
@@ -431,7 +434,7 @@ class List
 							}
 						}
 					else
-						return startError( 1, null, myWordItem_.anyWordTypeString(), "I found an active item with the same identification" );
+						return startError( 1, null, myWordItem_.anyWordTypeString(), "I've found an active item with the same identification" );
 					}
 				else
 					return startError( 1, null, myWordItem_.anyWordTypeString(), "The given new item seems to be a part of a list" );
@@ -445,16 +448,13 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte activateItem( boolean isSkipTest, Item activateItem )
+	protected byte activateItem( Item activateItem )
 		{
 		if( activateItem != null )
 			{
 			if( activateItem.statusChar() != Constants.QUERY_ACTIVE_CHAR )
 				{
-				if( isSkipTest ||
-				!activateItem.hasActiveSentenceNr() ||
-				activateItem.hasCurrentActiveSentenceNr() ||
-				activateItem.hasCurrentInactiveSentenceNr() )
+				if( activateItem.creationSentenceNr() == activateItem.activeSentenceNr() )
 					{
 					if( removeItemFromList( activateItem ) == Constants.RESULT_OK )
 						{
@@ -482,7 +482,7 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte inactivateItem( boolean isSkipTest, Item inactivateItem )
+	protected byte inactivateItem( Item inactivateItem )
 		{
 		if( inactivateItem != null )
 			{
@@ -491,10 +491,8 @@ class List
 				if( isAssignmentList() ||
 				isReadList() )
 					{
-					if( isSkipTest ||
-					!inactivateItem.hasInactiveSentenceNr() ||
-					inactivateItem.hasCurrentActiveSentenceNr() ||
-					inactivateItem.hasCurrentInactiveSentenceNr() )
+					if( !inactivateItem.hasInactiveSentenceNr() ||
+					inactivateItem.creationSentenceNr() == inactivateItem.activeSentenceNr() )
 						{
 						if( removeItemFromList( inactivateItem ) == Constants.RESULT_OK )
 							{
@@ -634,27 +632,33 @@ class List
 		CommonVariables.removeSentenceNr == 0 &&
 		CommonVariables.removeStartItemNr == 0 )
 			{
-			while( removeItem != null &&										// Skip items that must be kept for rollback
-			removeItem.isAvailableForRollbackAfterDelete )						// and items of current sentence (if wanted)
+			// Skip items that must be kept for rollback
+			while( removeItem != null &&
+			// and items of current sentence (if wanted)
+			removeItem.isAvailableForRollbackAfterDelete )
 				{
 				previousRemoveItem = removeItem;
 				removeItem = removeItem.nextItem;
 				}
 
-			if( removeItem != null )											// Found items to remove
+			// Found items to remove
+			if( removeItem != null )
 				{
 				CommonVariables.removeSentenceNr = removeItem.creationSentenceNr();
 				CommonVariables.removeStartItemNr = removeItem.itemNr();
 
 				do	{
 					if( previousRemoveItem == null )
-						deletedList_ = deletedList_.nextItem;					// Disconnect deleted list from item
+						// Disconnect deleted list from item
+						deletedList_ = deletedList_.nextItem;
 					else
-						previousRemoveItem.nextItem = removeItem.nextItem;	// Disconnect deleted list from item
+						// Disconnect deleted list from item
+						previousRemoveItem.nextItem = removeItem.nextItem;
 
 					if( removeItem.checkForUsage() == Constants.RESULT_OK )
 						{
-						removeItem.nextItem = null;							// Disconnect item from the deleted list
+						// Disconnect item from the deleted list
+						removeItem.nextItem = null;
 						removeItem = ( previousRemoveItem == null ? deletedList_ : previousRemoveItem.nextItem );
 						CommonVariables.nDeletedItems++;
 						}
@@ -662,8 +666,10 @@ class List
 						return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to check an item for its usage" );
 					}
 				while( removeItem != null &&
-				removeItem.creationSentenceNr() == CommonVariables.removeSentenceNr &&							// Same sentence number
-				removeItem.itemNr() == CommonVariables.removeStartItemNr + CommonVariables.nDeletedItems );	// Ascending item number
+				// Same sentence number
+				removeItem.creationSentenceNr() == CommonVariables.removeSentenceNr &&
+				// Ascending item number
+				removeItem.itemNr() == CommonVariables.removeStartItemNr + CommonVariables.nDeletedItems );
 				}
 			}
 		else
@@ -678,7 +684,8 @@ class List
 			{
 			if( removeItem.myList() == this )
 				{
-				if( removeItem.previousItem == null )		// First item in list
+				// First item in list
+				if( removeItem.previousItem == null )
 					{
 					switch( removeItem.statusChar() )
 						{
@@ -717,7 +724,8 @@ class List
 						removeItem.nextItem.previousItem = removeItem.previousItem;
 					}
 
-				nextListItem_ = removeItem.nextItem;		// Remember next item
+				// Remember next item
+				nextListItem_ = removeItem.nextItem;
 
 				// Disconnect item from the list
 				removeItem.previousItem = null;
@@ -928,12 +936,14 @@ class List
 		return startError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list query module" );
 		}
 
-	protected byte showQueryResultInList( boolean showOnlyWords, boolean showOnlyWordReferences, boolean showOnlyStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
+	protected byte showQueryResultInList( boolean isOnlyShowingWords, boolean isOnlyShowingWordReferences, boolean isOnlyShowingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
 		{
 		if( listQuery_ != null )
-			return listQuery_.showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth );
+			return listQuery_.showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth );
 
-		return startError( 1, null, myWordItem_.anyWordTypeString(), "My list query module isn't created yet" );
+		// In case the first query doesn't include admin lists,
+		// the admin list query module isn't created yet
+		return Constants.RESULT_OK;
 		}
 	};
 

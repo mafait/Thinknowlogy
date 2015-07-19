@@ -1,8 +1,0 @@
-﻿# Usuario predeterminado.
-#Invitado es un usuario y no tiene contraseña.
-Invitado es un usuario y tiene no contraseña.
-
-# Si un usuario se le permite introducir texto libre en la versión de Java.
-#Experto es un usuario y no tiene contraseña.
-Experto es un usuario y tiene no contraseña.
-Experto es un experto.

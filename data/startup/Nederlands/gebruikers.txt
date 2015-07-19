@@ -1,6 +1,6 @@
-﻿# Standaard gebruiker.
-Gast is een gebruiker en heeft geen wachtwoord.
-
-# Gebruiker die vrije tekst mag invoeren in de Java-versie.
+﻿# Gebruiker die vrije tekst mag invoeren.
 Expert is een gebruiker en heeft geen wachtwoord.
 Expert is een expert.
+
+# Standaard gebruiker.
+#Java#Gast is een gebruiker en heeft geen wachtwoord.

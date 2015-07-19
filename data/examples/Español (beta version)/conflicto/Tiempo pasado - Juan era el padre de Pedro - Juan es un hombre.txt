@@ -1,4 +1,0 @@
-﻿Lea el archivo "Español (beta version)/razonamiento/definición de familia".
-Juan era el padre de Pedro.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
-Juan es un hombre.

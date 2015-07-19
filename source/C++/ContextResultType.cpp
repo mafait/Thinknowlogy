@@ -1,11 +1,11 @@
 /*
  *	Class:			ContextResultType
  *	Purpose:		To return context variables of a function
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
  *************************************************************************/
 
 #include "Constants.h"
+#include "SpecificationItem.cpp"
 
 class ContextResultType
 	{
@@ -40,7 +41,8 @@ class ContextResultType
 	bool isExclusiveContext;
 
 	unsigned int contextNr;
-	unsigned int replaceContextNr;
+
+	SpecificationItem *conclusionSpecificationItem;
 
 	protected:
 	// Constructor / deconstructor
@@ -53,13 +55,14 @@ class ContextResultType
 		isExclusiveContext = false;
 
 		contextNr = NO_CONTEXT_NR;
-		replaceContextNr = NO_CONTEXT_NR;
+
+		conclusionSpecificationItem = NULL;
 		}
 	};
 
 /*************************************************************************
  *	"The Lord is my shepherd;
- *	I have all that I need.
+ *	I've all that I need.
  *	He lets me rest in green meadows;
  *	he leads me beside peaceful steams." (Psalm 23:1-2)
  *************************************************************************/

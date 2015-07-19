@@ -4,11 +4,11 @@
  *	Purpose:		To collect (associate, combine) words in the knowledge structure
  *					that belong together (which implies differentiating
  *					words that doesn't belong together)
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -38,7 +38,6 @@ class AdminCollection
 
 	AdminItem *adminItem_;
 	CommonVariables *commonVariables_;
-	WordItem *myWordItem_;
 	char moduleNameString_[FUNCTION_NAME_LENGTH];
 
 
@@ -63,7 +62,8 @@ class AdminCollection
 					do	{
 						if( ( foundCollectionOrderNr = currentWordItem->collectionOrderNr( collectionNr, collectionWordItem, commonWordItem ) ) > NO_ORDER_NR )
 							{
-							if( ++nWords == 2 )		// Found existing collection pair
+							// Found existing collection pair
+							if( ++nWords == 2 )
 								existingPairCollectionOrderNr_ = foundCollectionOrderNr;
 							}
 						}
@@ -71,13 +71,13 @@ class AdminCollection
 					( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The first word item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The first word item is undefined" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given collection word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given collection word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given collection number is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given collection number is undefined" );
 
 		return RESULT_OK;
 		}
@@ -108,55 +108,55 @@ class AdminCollection
 									hasFoundCollection = true;
 								}
 							else
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if word \"", previousGeneralizationWordItem->anyWordTypeString(), "\" is collected with word \"", newGeneralizationWordItem->anyWordTypeString(), "\"" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if word \"", previousGeneralizationWordItem->anyWordTypeString(), "\" is collected with word \"", newGeneralizationWordItem->anyWordTypeString(), "\"" );
 							}
 
 						if( !hasFoundCollection )
 							{
-							if( ( collectionResult = previousGeneralizationWordItem->addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, newGeneralizationWordItem, newCommonWordItem, NULL, NULL ) ).result == RESULT_OK )
+							if( ( collectionResult = previousGeneralizationWordItem->addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, newGeneralizationWordItem, newCommonWordItem, NULL ) ).result == RESULT_OK )
 								{
 								if( collectionNr == NO_COLLECTION_NR )
 									collectionNr = collectionResult.createdCollectionNr;
 
-								if( newGeneralizationWordItem->addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, previousGeneralizationWordItem, newCommonWordItem, NULL, NULL ).result == RESULT_OK )
+								if( newGeneralizationWordItem->addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, previousGeneralizationWordItem, newCommonWordItem, NULL ).result == RESULT_OK )
 									{
 									if( previousGeneralizationWordItem->collectGeneralizationsOrSpecifications( isExclusiveGeneralization, true, false, collectionNr ) == RESULT_OK )
 										{
 										if( newCommonWordItem != previousCommonWordItem )
 											{
-											if( previousGeneralizationWordItem->addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, newGeneralizationWordItem, previousCommonWordItem, NULL, NULL ).result == RESULT_OK )
+											if( previousGeneralizationWordItem->addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, newGeneralizationWordItem, previousCommonWordItem, NULL ).result == RESULT_OK )
 												{
-												if( newGeneralizationWordItem->addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, previousGeneralizationWordItem, previousCommonWordItem, NULL, NULL ).result != RESULT_OK )
-													return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", newGeneralizationWordItem->anyWordTypeString(), "\" with word \"", previousGeneralizationWordItem->anyWordTypeString(), "\"" );
+												if( newGeneralizationWordItem->addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, previousGeneralizationWordItem, previousCommonWordItem, NULL ).result != RESULT_OK )
+													return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", newGeneralizationWordItem->anyWordTypeString(), "\" with word \"", previousGeneralizationWordItem->anyWordTypeString(), "\"" );
 												}
 											else
-												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", previousGeneralizationWordItem->anyWordTypeString(), "\" with word \"", newGeneralizationWordItem->anyWordTypeString(), "\"" );
+												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", previousGeneralizationWordItem->anyWordTypeString(), "\" with word \"", newGeneralizationWordItem->anyWordTypeString(), "\"" );
 											}
 
 										if( newGeneralizationWordItem->collectGeneralizationsOrSpecifications( isExclusiveGeneralization, true, false, collectionNr ) != RESULT_OK )
-											return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect generalizations and specifications in the new generalization word" );
+											return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect generalizations and specifications in the new generalization word" );
 										}
 									else
-										return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect the generalizations and specifications in the previous generalization word" );
+										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect the generalizations and specifications in the previous generalization word" );
 									}
 								else
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", newGeneralizationWordItem->anyWordTypeString(), "\" with word \"", previousGeneralizationWordItem->anyWordTypeString(), "\"" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", newGeneralizationWordItem->anyWordTypeString(), "\" with word \"", previousGeneralizationWordItem->anyWordTypeString(), "\"" );
 								}
 							else
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", previousGeneralizationWordItem->anyWordTypeString(), "\" with word \"", newGeneralizationWordItem->anyWordTypeString(), "\"" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", previousGeneralizationWordItem->anyWordTypeString(), "\" with word \"", newGeneralizationWordItem->anyWordTypeString(), "\"" );
 							}
 						}
 					else
-						return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given new common word item is undefined" );
+						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given new common word item is undefined" );
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous and new generalization word items are the same word" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous and new generalization word items are the same word" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given new generalization word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given new generalization word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous generalization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous generalization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -165,7 +165,7 @@ class AdminCollection
 	protected:
 	// Deconstructor / deconstructor
 
-	AdminCollection( AdminItem *adminItem, CommonVariables *commonVariables, WordItem *myWordItem )
+	AdminCollection( AdminItem *adminItem, CommonVariables *commonVariables )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
@@ -173,26 +173,18 @@ class AdminCollection
 
 		adminItem_ = adminItem;
 		commonVariables_ = commonVariables;
-		myWordItem_ = myWordItem;
 		strcpy( moduleNameString_, "AdminCollection" );
 
-		if( commonVariables_ != NULL )
-			{
-		if( adminItem_ != NULL )
-			{
-			if( myWordItem_ == NULL )
-				strcpy( errorString, "The given my word is undefined" );
-			}
-		else
-			strcpy( errorString, "The given admin is undefined" );
-			}
-		else
+		if( commonVariables_ == NULL )
 			strcpy( errorString, "The given common variables is undefined" );
+
+		if( adminItem_ == NULL )
+			strcpy( errorString, "The given admin is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
-			if( myWordItem_ != NULL )
-				myWordItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+			if( adminItem_ != NULL )
+				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -227,13 +219,16 @@ class AdminCollection
 								{
 								if( ( collectionNr = currentSpecificationWordItem->collectionNr( specificationWordTypeNr, generalizationWordItem ) ) == NO_COLLECTION_NR )
 									{
-									if( ( collectionNr = previousSpecificationWordItem->collectionNr( specificationWordTypeNr ) ) == NO_COLLECTION_NR )
+									if( ( specificationWordTypeNr != WORD_TYPE_NOUN_PLURAL ||
+									generalizationWordTypeNr != WORD_TYPE_NOUN_SINGULAR ) &&
+
+									( collectionNr = previousSpecificationWordItem->collectionNr( specificationWordTypeNr ) ) == NO_COLLECTION_NR )
 										collectionNr = currentSpecificationWordItem->collectionNr( specificationWordTypeNr );
 									}
 								}
 							}
 						else
-							collectionNr = myWordItem_->collectionNrByCompoundGeneralizationWordInAllWords( specificationWordTypeNr, compoundGeneralizationWordItem );
+							collectionNr = adminItem_->collectionNrByCompoundGeneralizationWordInAllWords( specificationWordTypeNr, compoundGeneralizationWordItem );
 
 						if( collectionNr > NO_COLLECTION_NR )
 							{
@@ -241,20 +236,23 @@ class AdminCollection
 								{
 								if( existingPairCollectionOrderNr_ > NO_ORDER_NR )
 									{
-									if( ( collectionOrderNr = myWordItem_->highestCollectionOrderNrInAllWords( collectionNr ) ) > 1 )
+									if( ( collectionOrderNr = adminItem_->highestCollectionOrderNrInAllWords( collectionNr ) ) > 1 )
 										{
-										if( existingPairCollectionOrderNr_ < collectionOrderNr - 1 )	// "- 1" because collections come in pairs
+										// "- 1" because collections come in pairs
+										if( existingPairCollectionOrderNr_ < collectionOrderNr - 1 )
 											collectionNr = NO_COLLECTION_NR;
 										}
 									}
 								}
 							else
-								myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the collection in all words" );
+								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the collection in all words" );
 							}
 
 						if( commonVariables_->result == RESULT_OK &&
 						!isPossessive &&
-						collectionNr > NO_COLLECTION_NR )
+						collectionNr > NO_COLLECTION_NR &&
+						// Skip if collected with itself
+						previousSpecificationWordItem != generalizationWordItem )
 							{
 							if( ( collectionResult = previousSpecificationWordItem->findCollection( true, currentSpecificationWordItem, generalizationWordItem ) ).result == RESULT_OK )
 								{
@@ -262,7 +260,7 @@ class AdminCollection
 									hasFoundCollection = true;
 								}
 							else
-								myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if word \"", currentSpecificationWordItem->anyWordTypeString(), "\" is collected with word \"", previousSpecificationWordItem->anyWordTypeString(), "\"" );
+								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if word \"", currentSpecificationWordItem->anyWordTypeString(), "\" is collected with word \"", previousSpecificationWordItem->anyWordTypeString(), "\"" );
 							}
 
 						if( commonVariables_->result == RESULT_OK &&
@@ -270,38 +268,38 @@ class AdminCollection
 							{
 							if( collectionOrderNr < MAX_ORDER_NR - 2 )
 								{
-								if( ( collectionResult = previousSpecificationWordItem->addCollection( isExclusiveSpecification, isSpecificationGeneralization, specificationWordTypeNr, generalizationWordTypeNr, collectionNr, currentSpecificationWordItem, generalizationWordItem, compoundGeneralizationWordItem, NULL ) ).result == RESULT_OK )
+								if( ( collectionResult = previousSpecificationWordItem->addCollection( isExclusiveSpecification, isSpecificationGeneralization, specificationWordTypeNr, generalizationWordTypeNr, collectionNr, currentSpecificationWordItem, generalizationWordItem, compoundGeneralizationWordItem ) ).result == RESULT_OK )
 									{
 									if( collectionNr == NO_COLLECTION_NR )
 										collectionNr = collectionResult.createdCollectionNr;
 
-									if( currentSpecificationWordItem->addCollection( isExclusiveSpecification, isSpecificationGeneralization, specificationWordTypeNr, generalizationWordTypeNr, collectionNr, previousSpecificationWordItem, generalizationWordItem, compoundGeneralizationWordItem, NULL ).result != RESULT_OK )
-										myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", currentSpecificationWordItem->anyWordTypeString(), "\" with word \"", previousSpecificationWordItem->anyWordTypeString(), "\"" );
+									if( currentSpecificationWordItem->addCollection( isExclusiveSpecification, isSpecificationGeneralization, specificationWordTypeNr, generalizationWordTypeNr, collectionNr, previousSpecificationWordItem, generalizationWordItem, compoundGeneralizationWordItem ).result != RESULT_OK )
+										adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", currentSpecificationWordItem->anyWordTypeString(), "\" with word \"", previousSpecificationWordItem->anyWordTypeString(), "\"" );
 									}
 								else
-									myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", previousSpecificationWordItem->anyWordTypeString(), "\" with word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
+									adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", previousSpecificationWordItem->anyWordTypeString(), "\" with word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 								}
 							else
-								myWordItem_->startSystemErrorInItem( functionNameString, moduleNameString_, "Collection order number overflow" );
+								adminItem_->startSystemErrorInItem( functionNameString, moduleNameString_, "Collection order number overflow" );
 							}
 
 						if( commonVariables_->result == RESULT_OK )
 							{
 							if( generalizationWordItem->collectGeneralizationsOrSpecifications( isExclusiveSpecification, false, isQuestion, collectionNr ) != RESULT_OK )
-								myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect generalizations and specifications in the given generalization word" );
+								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect generalizations and specifications in the given generalization word" );
 							}
 						}
 					else
-						myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous and current specification words are the same word" );
+						adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous and current specification words are the same word" );
 					}
 				else
-					myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given current specification word item is undefined" );
+					adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given current specification word item is undefined" );
 				}
 			else
-				myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous specification word item is undefined" );
+				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous specification word item is undefined" );
 			}
 		else
-			myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		collectionResult.result = commonVariables_->result;
 		return collectionResult;
@@ -325,10 +323,10 @@ class AdminCollection
 			if( specificationWordItem != NULL )
 				{
 				isNeedingAuthorizationForChanges = specificationWordItem->isNeedingAuthorizationForChanges();
-				isSpecificationCollectedWithItself = specificationWordItem->isCollectedWithItself();
+				isSpecificationCollectedWithItself = specificationWordItem->isNounWordCollectedWithItself();
 
 				if( specificationCollectionNr == NO_COLLECTION_NR )
-					specificationCollectionNr = specificationWordItem->collectionNr( specificationWordTypeNr );
+					specificationCollectionNr = specificationWordItem->compoundCollectionNr( specificationWordTypeNr );
 
 				if( ( currentGeneralizationWordItem = commonVariables_->firstWordItem ) != NULL )
 					{
@@ -349,7 +347,7 @@ class AdminCollection
 										!isSpecificationCollectedWithItself &&
 
 										( isNeedingAuthorizationForChanges ||
-										foundSpecificationItem->isAssignment() ) )
+										foundSpecificationItem->isActiveAssignment() ) )
 											isExclusiveGeneralization = true;
 
 										if( previousGeneralizationWordItem != NULL )
@@ -357,7 +355,7 @@ class AdminCollection
 											if( collectGeneralizationWords( isExclusiveGeneralization, generalizationWordTypeNr, specificationWordTypeNr, previousGeneralizationWordItem, generalizationWordItem, previousSpecificationWordItem, specificationWordItem ) == RESULT_OK )
 												hasCollectedGeneralizationWords = true;
 											else
-												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect generalization words \"", previousGeneralizationWordItem->anyWordTypeString(), "\" and \"", generalizationWordItem->anyWordTypeString(), "\"" );
+												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect generalization words \"", previousGeneralizationWordItem->anyWordTypeString(), "\" and \"", generalizationWordItem->anyWordTypeString(), "\"" );
 											}
 
 										previousGeneralizationWordItem = currentGeneralizationWordItem;
@@ -365,7 +363,7 @@ class AdminCollection
 										}
 									}
 								else
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a generalization item" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a generalization item" );
 								}
 							}
 						}
@@ -376,55 +374,17 @@ class AdminCollection
 					previousGeneralizationWordItem != NULL )
 						{
 						if( collectGeneralizationWords( isExclusiveGeneralization, generalizationWordTypeNr, specificationWordTypeNr, previousGeneralizationWordItem, generalizationWordItem, previousSpecificationWordItem, specificationWordItem ) != RESULT_OK )
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect generalization words \"", previousGeneralizationWordItem->anyWordTypeString(), "\" and \"", generalizationWordItem->anyWordTypeString(), "\"" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect generalization words \"", previousGeneralizationWordItem->anyWordTypeString(), "\" and \"", generalizationWordItem->anyWordTypeString(), "\"" );
 						}
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find any generalization word" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find any generalization word" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
-
-		return RESULT_OK;
-		}
-
-	ResultType collectSpecificationStrings( bool isExclusiveSpecification, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, WordItem *generalizationWordItem, char *previousSpecificationString, char *currentSpecificationString )
-		{
-		CollectionResultType collectionResult;
-		unsigned int collectionNr;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "collectSpecificationStrings";
-
-		if( generalizationWordItem != NULL )
-			{
-			if( previousSpecificationString != NULL )
-				{
-				if( currentSpecificationString != NULL )
-					{
-					if( ( collectionNr = generalizationWordItem->collectionNr( specificationWordTypeNr, NULL ) ) == NO_COLLECTION_NR )
-						{
-						if( ( collectionResult = generalizationWordItem->addCollection( isExclusiveSpecification, false, specificationWordTypeNr, generalizationWordTypeNr, collectionNr, NULL, NULL, NULL, previousSpecificationString ) ).result == RESULT_OK )
-							{
-							if( collectionNr == NO_COLLECTION_NR )
-								collectionNr = collectionResult.createdCollectionNr;
-							}
-						else
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect the previous specification string \"", previousSpecificationString, "\" in generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
-						}
-
-					if( generalizationWordItem->addCollection( isExclusiveSpecification, false, specificationWordTypeNr, generalizationWordTypeNr, collectionNr, NULL, NULL, NULL, currentSpecificationString ).result != RESULT_OK )
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect the current specification string \"", currentSpecificationString, "\" in generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
-					}
-				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given current specification string item is undefined" );
-				}
-			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous specification string item is undefined" );
-			}
-		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -453,31 +413,31 @@ class AdminCollection
 								hasFoundCollection = true;
 							}
 						else
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if word \"", previousRelationWordItem->anyWordTypeString(), "\" is collected with word \"", currentRelationWordItem->anyWordTypeString(), "\"" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find out if word \"", previousRelationWordItem->anyWordTypeString(), "\" is collected with word \"", currentRelationWordItem->anyWordTypeString(), "\"" );
 						}
 
 					if( !hasFoundCollection )
 						{
-						if( ( collectionResult = previousRelationWordItem->addCollection( isExclusiveSpecification, false, relationWordTypeNr, commonWordTypeNr, collectionNr, currentRelationWordItem, commonWordItem, NULL, NULL ) ).result == RESULT_OK )
+						if( ( collectionResult = previousRelationWordItem->addCollection( isExclusiveSpecification, false, relationWordTypeNr, commonWordTypeNr, collectionNr, currentRelationWordItem, commonWordItem, NULL ) ).result == RESULT_OK )
 							{
 							if( collectionNr == NO_COLLECTION_NR )
 								collectionNr = collectionResult.createdCollectionNr;
 
-							if( currentRelationWordItem->addCollection( isExclusiveSpecification, false, relationWordTypeNr, commonWordTypeNr, collectionNr, previousRelationWordItem, commonWordItem, NULL, NULL ).result != RESULT_OK )
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", currentRelationWordItem->anyWordTypeString(), "\" with word \"", previousRelationWordItem->anyWordTypeString(), "\"" );
+							if( currentRelationWordItem->addCollection( isExclusiveSpecification, false, relationWordTypeNr, commonWordTypeNr, collectionNr, previousRelationWordItem, commonWordItem, NULL ).result != RESULT_OK )
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", currentRelationWordItem->anyWordTypeString(), "\" with word \"", previousRelationWordItem->anyWordTypeString(), "\"" );
 							}
 						else
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", previousRelationWordItem->anyWordTypeString(), "\" with word \"", currentRelationWordItem->anyWordTypeString(), "\"" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to collect word \"", previousRelationWordItem->anyWordTypeString(), "\" with word \"", currentRelationWordItem->anyWordTypeString(), "\"" );
 						}
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous and current relation words are the same word" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous and current relation words are the same word" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given current relation word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given current relation word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous relation word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given previous relation word item is undefined" );
 
 		return RESULT_OK;
 		}

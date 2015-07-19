@@ -8,3 +8,4 @@ The option is not 5.
 The option is not 7.
 The option is not 8.
 The option is not 9.
+# Remember to clear this knowledge before reading another example.

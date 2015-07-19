@@ -2,11 +2,11 @@
  *	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -57,6 +57,12 @@ class CollectionList : private List
 			searchItem = searchItem->nextCollectionItem();
 			delete deleteItem;
 			}
+
+		if( firstInactiveItem() != NULL )
+			fprintf( stderr, "\nError: Class CollectionList has inactive items." );
+
+		if( firstArchivedItem() )
+			fprintf( stderr, "\nError: Class CollectionList has archived items." );
 
 		searchItem = (CollectionItem *)firstReplacedItem();
 
@@ -158,39 +164,6 @@ class CollectionList : private List
 		return false;
 		}
 
-	bool isCollectedWithItself()
-		{
-		CollectionItem *searchItem = firstActiveCollectionItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->commonWordItem() == myWordItem() )
-				return true;
-
-			searchItem = searchItem->nextCollectionItem();
-			}
-
-		return false;
-		}
-
-	bool isExclusiveCollection( unsigned int collectionNr )
-		{
-		CollectionItem *searchItem = firstActiveCollectionItem();
-
-		if( collectionNr > NO_COLLECTION_NR )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->collectionNr() == collectionNr )
-					return searchItem->isExclusiveSpecification();
-
-				searchItem = searchItem->nextCollectionItem();
-				}
-			}
-
-		return false;
-		}
-
 	bool isCompoundCollection( unsigned int collectionNr )
 		{
 		CollectionItem *searchItem = firstActiveCollectionItem();
@@ -222,6 +195,25 @@ class CollectionList : private List
 				if( searchItem->isCompoundGeneralization() &&
 				searchItem->collectionNr() == collectionNr &&
 				searchItem->commonWordItem() == commonWordItem )
+					return true;
+
+				searchItem = searchItem->nextCollectionItem();
+				}
+			}
+
+		return false;
+		}
+
+	bool isNonCompoundCollection( unsigned int collectionNr )
+		{
+		CollectionItem *searchItem = firstActiveCollectionItem();
+
+		if( collectionNr > NO_COLLECTION_NR )
+			{
+			while( searchItem != NULL )
+				{
+				if( !searchItem->isCompoundGeneralization() &&
+				searchItem->collectionNr() == collectionNr )
 					return true;
 
 				searchItem = searchItem->nextCollectionItem();
@@ -413,7 +405,7 @@ class CollectionList : private List
 		return RESULT_OK;
 		}
 
-	ResultType createCollectionItem( bool isExclusiveSpecification, unsigned short collectionOrderNr, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem, char *collectionString )
+	ResultType createCollectionItem( bool isExclusiveSpecification, unsigned short collectionOrderNr, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createCollectionItem";
 
@@ -422,7 +414,7 @@ class CollectionList : private List
 			{
 			if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 				{
-				if( addItemToList( QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, collectionString, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
+				if( addItemToList( QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
 					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active collection item" );
 				}
 			else
@@ -436,7 +428,6 @@ class CollectionList : private List
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		CollectionItem *searchItem = firstActiveCollectionItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
@@ -565,7 +556,7 @@ class CollectionList : private List
 
 		while( searchItem != NULL )
 			{
-			if( searchItem->hasFeminineCollectionWord() )
+			if( searchItem->hasFemaleCollectionWord() )
 				return searchItem->collectionWordItem();
 
 			searchItem = searchItem->nextCollectionItem();

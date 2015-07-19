@@ -3,11 +3,11 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the interface messages
  *					in a certain language that can be shown to the user
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -88,7 +88,8 @@ class InterfaceItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;

@@ -2,11 +2,11 @@
  *	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,30 @@
 
 class ContextList extends List
 	{
+	// Private methods
+
+	private boolean hasContext( boolean isCompoundCollectionCollectedWithItself, int contextNr, WordItem specificationWordItem )
+		{
+		ContextItem searchItem = firstActiveContextItem();
+
+		// In case of a pronoun context, the given specification word item will be undefined
+
+		if( contextNr > Constants.NO_CONTEXT_NR )
+			{
+			while( searchItem != null )
+				{
+				if( searchItem.contextNr() == contextNr &&
+				searchItem.specificationWordItem() == specificationWordItem &&
+				searchItem.isCompoundCollectionCollectedWithItself() == isCompoundCollectionCollectedWithItself )
+					return true;
+
+				searchItem = searchItem.nextContextItem();
+				}
+			}
+
+		return false;
+		}
+
 	// Constructor / deconstructor
 
 	protected ContextList( WordItem myWordItem )
@@ -105,7 +129,7 @@ class ContextList extends List
 		{
 		ContextItem searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
 		if( contextNr > Constants.NO_CONTEXT_NR )
 			{
@@ -126,7 +150,7 @@ class ContextList extends List
 		{
 		ContextItem searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
 		if( contextNr > Constants.NO_CONTEXT_NR )
 			{
@@ -168,7 +192,7 @@ class ContextList extends List
 		{
 		ContextItem searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
 		while( searchItem != null )
 			{
@@ -181,22 +205,19 @@ class ContextList extends List
 		return Constants.NO_CONTEXT_NR;
 		}
 
-	protected int contextNr( int nContextWords, WordItem specificationWordItem )
+	protected int contextNr( boolean isCompoundCollectionCollectedWithItself, WordItem specificationWordItem )
 		{
 		ContextItem searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
-		if( nContextWords > 0 )
+		while( searchItem != null )
 			{
-			while( searchItem != null )
-				{
-				if( searchItem.specificationWordItem() == specificationWordItem &&
-				myWordItem().nContextWordsInAllWords( searchItem.contextNr(), specificationWordItem ) == nContextWords )
-					return searchItem.contextNr();
+			if( searchItem.specificationWordItem() == specificationWordItem &&
+			searchItem.isCompoundCollectionCollectedWithItself() == isCompoundCollectionCollectedWithItself )
+				return searchItem.contextNr();
 
-				searchItem = searchItem.nextContextItem();
-				}
+			searchItem = searchItem.nextContextItem();
 			}
 
 		return Constants.NO_CONTEXT_NR;
@@ -218,11 +239,11 @@ class ContextList extends List
 		return highestContextNr;
 		}
 
-	protected byte addContext( boolean isQuestion, short contextWordTypeNr, short specificationWordTypeNr, int contextNr, WordItem specificationWordItem )
+	protected byte addContext( boolean isCompoundCollectionCollectedWithItself, short contextWordTypeNr, short specificationWordTypeNr, int contextNr, WordItem specificationWordItem )
 		{
 		if( contextNr > Constants.NO_CONTEXT_NR )
 			{
-			if( !hasContext( contextNr, specificationWordItem ) )
+			if( !hasContext( isCompoundCollectionCollectedWithItself, contextNr, specificationWordItem ) )
 				{
 				if( contextWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
 				contextWordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
@@ -234,7 +255,7 @@ class ContextList extends List
 						{
 						if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
 							{
-							if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ContextItem( isQuestion, contextWordTypeNr, ( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ? Constants.WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+							if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionCollectedWithItself, contextWordTypeNr, ( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ? Constants.WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
 								return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to add an active context item" );
 							}
 						else
@@ -275,7 +296,6 @@ class ContextList extends List
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		ContextItem searchItem = firstActiveContextItem();
 
 		while( searchItem != null )
@@ -328,11 +348,33 @@ class ContextList extends List
 		return null;
 		}
 
+	protected ContextItem contextItem( boolean isCompoundCollectionCollectedWithItself, int nContextWords, WordItem specificationWordItem )
+		{
+		ContextItem searchItem = firstActiveContextItem();
+
+		// In case of a pronoun context, the given specification word item will be undefined
+
+		if( nContextWords > 0 )
+			{
+			while( searchItem != null )
+				{
+				if( searchItem.specificationWordItem() == specificationWordItem &&
+				searchItem.isCompoundCollectionCollectedWithItself() == isCompoundCollectionCollectedWithItself &&
+				myWordItem().nContextWordsInAllWords( searchItem.contextNr(), specificationWordItem ) == nContextWords )
+					return searchItem;
+
+				searchItem = searchItem.nextContextItem();
+				}
+			}
+
+		return null;
+		}
+
 	protected ContextItem contextItem( WordItem specificationWordItem )
 		{
 		ContextItem searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
 		while( searchItem != null )
 			{
@@ -350,6 +392,6 @@ class ContextList extends List
  *	"O Lord my God, you have performed many wonders for us.
  *	Your plans for us are too numerous to list.
  *	You have no equal.
- *	I have tried to recite all your wonderful deeds,
+ *	I've tried to recite all your wonderful deeds,
  *	I would never come to the end of them." (Psalm 40:5)
  *************************************************************************/

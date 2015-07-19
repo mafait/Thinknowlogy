@@ -2,11 +2,11 @@
  *	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@
 
 class ContextItem : private Item
 	{
-	friend class AdminAssumption;
 	friend class AdminContext;
 	friend class AdminSpecification;
 	friend class ContextList;
@@ -37,7 +36,7 @@ class ContextItem : private Item
 
 	// Private loadable variables
 
-	bool isQuestion_;
+	bool isCompoundCollectionCollectedWithItself_;
 
 	unsigned short contextWordTypeNr_;
 	unsigned short specificationWordTypeNr_;
@@ -50,13 +49,13 @@ class ContextItem : private Item
 	protected:
 	// Constructor / deconstructor
 
-	ContextItem( bool isQuestion, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	ContextItem( bool isCompoundCollectionCollectedWithItself, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ContextItem", commonVariables, myList, myWordItem );
 
 		// Private loadable variables
 
-		isQuestion_ = isQuestion;
+		isCompoundCollectionCollectedWithItself_ = isCompoundCollectionCollectedWithItself;
 
 		contextWordTypeNr_ = contextWordTypeNr;
 		specificationWordTypeNr_ = specificationWordTypeNr;
@@ -81,7 +80,8 @@ class ContextItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -131,18 +131,18 @@ class ContextItem : private Item
 		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
 		Item::toString( queryWordTypeNr );
 
-		if( isQuestion_ )
-			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isQuestion" );
-			}
-
 		if( contextWordTypeString == NULL )
 			sprintf( tempString, "%ccontextWordType:%c%u", QUERY_SEPARATOR_CHAR, QUERY_WORD_TYPE_CHAR, contextWordTypeNr_ );
 		else
 			sprintf( tempString, "%ccontextWordType:%s%c%u", QUERY_SEPARATOR_CHAR, contextWordTypeString, QUERY_WORD_TYPE_CHAR, contextWordTypeNr_ );
 
 		strcat( commonVariables()->queryString, tempString );
+
+		if( isCompoundCollectionCollectedWithItself_ )
+			{
+			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
+			strcat( commonVariables()->queryString, "isCompoundCollectionCollectedWithItself" );
+			}
 
 		if( contextNr_ > NO_CONTEXT_NR )
 			{
@@ -178,9 +178,9 @@ class ContextItem : private Item
 
 	// Protected functions
 
-	bool isQuestion()
+	bool isCompoundCollectionCollectedWithItself()
 		{
-		return isQuestion_;
+		return isCompoundCollectionCollectedWithItself_;
 		}
 
 	unsigned short contextWordTypeNr()

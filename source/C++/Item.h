@@ -1,11 +1,11 @@
 /*
  *	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -96,10 +96,7 @@ class Item
 	// Constructor / deconstructor
 
 	Item();
-//	virtual ~Item() {};		// Some compilers need this empty virtual deconstructor to be defined
-							// Uncomment this line on compiler warning:
-							// "Deleting object of polymorphic class type '...Item' which has non-virtual destructor might cause undefined behaviour"
-
+	virtual ~Item() {};
 
 	// Protected error functions
 
@@ -178,13 +175,14 @@ class Item
 	void clearArchivedSentenceNr();
 	void clearReplacedSentenceNr();
 
-	void initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem );	// Strictly for initialization of AdminItem
+	// Strictly for initialization of AdminItem
+	void initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem );
+
 	void initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem );
 
 	bool hasActiveSentenceNr();
 	bool hasInactiveSentenceNr();
 	bool hasArchivedSentenceNr();
-	bool hasReplacedSentenceNr();
 
 	bool hasCurrentCreationSentenceNr();
 
@@ -207,8 +205,6 @@ class Item
 
 	bool wasActiveBefore();
 	bool wasInactiveBefore();
-
-	unsigned short userNr();
 
 	unsigned int activeSentenceNr();
 	unsigned int inactiveSentenceNr();
@@ -251,14 +247,14 @@ class Item
 	bool isFeminineArticleParameter( unsigned short articleParameter );
 	bool isMasculineArticleParameter( unsigned short articleParameter );
 
-	bool isReasoningWordType( unsigned short wordTypeNr );
+	bool isGeneralizationReasoningWordType( unsigned short wordTypeNr );
 
 	bool isSingularOrPluralNoun( unsigned short wordTypeNr );
 	bool isStartingWithPhoneticVowel( char *textString );
 
 	bool isMatchingWordType( unsigned short firstWordTypeNr, unsigned short secondWordTypeNr );
 
-	unsigned short assumptionGrade( unsigned short justificationTypeNr );
+	unsigned short assumptionGrade( bool hasAnotherPrimarySpecification, bool hasFeminineOrMasculineProperNameEnding, bool hasPossessivePrimarySpecification, bool hasPrimaryQuestionSpecification, unsigned short justificationTypeNr );
 	};
 #endif
 

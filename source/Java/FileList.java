@@ -2,11 +2,11 @@
  *	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ class FileList extends List
 
 	// Protected methods
 
-	protected boolean showLine()
+	protected boolean isShowingLine()
 		{
 		FileItem searchItem = firstActiveFileItem();
 
@@ -108,7 +108,8 @@ class FileList extends List
 
 		if( currentFileItem != null )
 			{
-			if( currentFileItem == closeFileItem )	// Check to be sure to close the right file
+			// Check to be sure to close the right file
+			if( currentFileItem == closeFileItem )
 				{
 				try	{
 					if( currentFileItem.readFile() != null )
@@ -136,7 +137,6 @@ class FileList extends List
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		FileItem searchItem = firstActiveFileItem();
 
 		while( searchItem != null )
@@ -166,7 +166,7 @@ class FileList extends List
 		return Constants.RESULT_OK;
 		}
 */
-	protected FileResultType openFile( boolean isAddingSubPath, boolean isInfoFile, boolean reportErrorIfFileDoesNotExist, String defaultSubPathString, String fileNameString )
+	protected FileResultType openFile( boolean isAddingSubPath, boolean isInfoFile, boolean isReportingErrorIfFileDoesNotExist, String defaultSubPathString, String fileNameString )
 		{
 		FileResultType fileResult = new FileResultType();
 		BufferedReader readFile = null;
@@ -178,14 +178,16 @@ class FileList extends List
 				{
 				if( fileNameString.length() > 0 )
 					{
-					if( fileNameString.charAt( 0 ) != Constants.SYMBOL_SLASH &&		// Skip absolute path
+					// Skip absolute path
+					if( fileNameString.charAt( 0 ) != Constants.SYMBOL_SLASH &&
 					fileNameString.charAt( 0 ) != Constants.SYMBOL_BACK_SLASH &&
 					fileNameString.indexOf( Constants.DOUBLE_COLON_STRING ) < 0 )
 						{
 						readFileNameStringBuffer.append( CommonVariables.currentPathStringBuffer );
 
 						if( isAddingSubPath &&
-						fileNameString.indexOf( defaultSubPathString ) < 0 )		// File name doesn't contains sub-path
+						// File name doesn't contains sub-path
+						fileNameString.indexOf( defaultSubPathString ) < 0 )
 							{
 							readFileNameStringBuffer.append( defaultSubPathString );
 							}
@@ -210,12 +212,13 @@ class FileList extends List
 						}
 					catch( IOException exception )
 						{
-						if( reportErrorIfFileDoesNotExist )
+						if( isReportingErrorIfFileDoesNotExist )
 							{
-							if( fileNameString.indexOf( Constants.FILE_STARTUP_NAME_STRING ) < 0 )
-										startError( 1, null, null, "I couldn't open file for reading: \"" + readFileNameStringBuffer + "\"" );
+							// The startup file is the first file to be read when this Java application is still packed in a Zip file
+							if( fileNameString.equals( Constants.FILE_STARTUP_NAME_STRING ) )
+								startSystemError( 1, null, null, "Probably you are trying to start this Java application still being packed in a Zip file. You need to unpack the Zip file to start this Java application" );
 							else
-								startError( 1, null, null, "Probably you are trying to start this Java application still being packed in a Zip file. You need to unpack the Zip file to start this Java application" );
+										startError( 1, null, null, "I couldn't open file for reading: \"" + readFileNameStringBuffer + "\"" );
 							}
 						}
 					}
@@ -230,12 +233,6 @@ class FileList extends List
 
 		fileResult.result = CommonVariables.result;
 		return fileResult;
-		}
-
-	protected String currentReadFileNameString()
-		{
-		FileItem currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == null ? null : currentFileItem.readFileNameString() );
 		}
 
 	protected BufferedReader currentReadFile()

@@ -2,11 +2,11 @@
  *	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -31,8 +31,10 @@ class WordTypeItem : private Item
 	{
 	friend class AdminCleanup;
 	friend class AdminReadCreateWords;
+	friend class AdminReadGrammar;
 	friend class AdminReadSentence;
 	friend class WordItem;
+	friend class WordSpecification;
 	friend class WordType;
 	friend class WordTypeList;
 
@@ -40,14 +42,13 @@ class WordTypeItem : private Item
 
 	bool hasFeminineWordEnding_;
 	bool hasMasculineWordEnding_;
-	bool isMultipleWord_;
 	bool isProperNamePrecededByDefiniteArticle_;
 
 	unsigned short adjectiveParameter_;
 	unsigned short definiteArticleParameter_;
 	unsigned short indefiniteArticleParameter_;
-	unsigned short wordTypeNr_;
 	unsigned short wordTypeLanguageNr_;
+	unsigned short wordTypeNr_;
 
 
 	// Private constructible variables
@@ -65,8 +66,8 @@ class WordTypeItem : private Item
 
 	bool hasIndefinitePhoneticVowelArticle( unsigned short indefiniteArticleParameter )
 		{
-		unsigned short oppositeIndefiniteArticleParameter = NO_INDEFINITE_ARTICLE_PARAMETER;
-		WordItem *oppositeIndefiniteArticleWordItem;
+		unsigned short phoneticVowelIndefiniteArticleParameter = NO_INDEFINITE_ARTICLE_PARAMETER;
+		WordItem *phoneticVowelIndefiniteArticleWordItem;
 
 		switch( indefiniteArticleParameter )
 			{
@@ -79,25 +80,26 @@ class WordTypeItem : private Item
 
 			// Plural article
 			case WORD_PARAMETER_ARTICLE_INDEFINITE_PLURAL_FEMININE:
-				oppositeIndefiniteArticleParameter = WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_FEMININE;
+				phoneticVowelIndefiniteArticleParameter = WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_FEMININE;
 				break;
 
 			case WORD_PARAMETER_ARTICLE_INDEFINITE_PLURAL_MASCULINE:
-				oppositeIndefiniteArticleParameter = WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_MASCULINE;
+				phoneticVowelIndefiniteArticleParameter = WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_MASCULINE;
 				break;
 
 			// Singular article
 			case WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_FEMININE:
-				oppositeIndefiniteArticleParameter = WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_FEMININE;
+				phoneticVowelIndefiniteArticleParameter = WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_FEMININE;
 				break;
 
 			case WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE:
-				oppositeIndefiniteArticleParameter = WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_MASCULINE;
+				phoneticVowelIndefiniteArticleParameter = WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_MASCULINE;
 				break;
 			}
 
-		if( ( oppositeIndefiniteArticleWordItem = myWordItem()->predefinedWordItem( oppositeIndefiniteArticleParameter ) ) != NULL )
-			return oppositeIndefiniteArticleWordItem->hasWordType( WORD_TYPE_ARTICLE );
+		if( phoneticVowelIndefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER &&
+		( phoneticVowelIndefiniteArticleWordItem = myWordItem()->predefinedWordItem( phoneticVowelIndefiniteArticleParameter ) ) != NULL )
+			return phoneticVowelIndefiniteArticleWordItem->hasWordType( WORD_TYPE_ARTICLE );
 
 		return false;
 		}
@@ -210,7 +212,7 @@ class WordTypeItem : private Item
 	protected:
 	// Constructor / deconstructor
 
-	WordTypeItem( bool hasFeminineWordEnding, bool hasMasculineWordEnding, bool isMultipleWord, bool isProperNamePrecededByDefiniteArticle, unsigned short adjectiveParameter, unsigned short definiteArticleParameter, unsigned short indefiniteArticleParameter, unsigned short wordTypeLanguageNr, unsigned short wordTypeNr, size_t wordTypeStringLength, char *_wordTypeString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	WordTypeItem( bool hasFeminineWordEnding, bool hasMasculineWordEnding, bool isProperNamePrecededByDefiniteArticle, unsigned short adjectiveParameter, unsigned short definiteArticleParameter, unsigned short indefiniteArticleParameter, unsigned short wordTypeLanguageNr, unsigned short wordTypeNr, size_t wordTypeStringLength, char *_wordTypeString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "WordTypeItem", commonVariables, myList, myWordItem );
 
@@ -218,14 +220,13 @@ class WordTypeItem : private Item
 
 		hasFeminineWordEnding_ = hasFeminineWordEnding;
 		hasMasculineWordEnding_ = hasMasculineWordEnding;
-		isMultipleWord_ = isMultipleWord;
 		isProperNamePrecededByDefiniteArticle_ = isProperNamePrecededByDefiniteArticle;
 
 		adjectiveParameter_ = adjectiveParameter;
 		definiteArticleParameter_ = definiteArticleParameter;
 		indefiniteArticleParameter_ = indefiniteArticleParameter;
-		wordTypeNr_ = wordTypeNr;
 		wordTypeLanguageNr_ = wordTypeLanguageNr;
+		wordTypeNr_ = wordTypeNr;
 
 		// Private constructible variables
 
@@ -290,7 +291,8 @@ class WordTypeItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -338,16 +340,16 @@ class WordTypeItem : private Item
 		{
 		char *wordString;
 		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
-		char *languageNameString = myWordItem()->grammarLanguageNameString( wordTypeLanguageNr_ );
+		char *languageNameString = myWordItem()->languageNameString( wordTypeLanguageNr_ );
 
 		Item::toString( queryWordTypeNr );
 
 		if( wordTypeLanguageNr_ > NO_LANGUAGE_NR )
 			{
 			if( languageNameString == NULL )
-				sprintf( tempString, "%cgrammarLanguage:%u", QUERY_SEPARATOR_CHAR, wordTypeLanguageNr_ );
+				sprintf( tempString, "%cwordTypeLanguageNr:%u", QUERY_SEPARATOR_CHAR, wordTypeLanguageNr_ );
 			else
-				sprintf( tempString, "%cgrammarLanguage:%s", QUERY_SEPARATOR_CHAR, languageNameString );
+				sprintf( tempString, "%cwordTypeLanguageNr:%s", QUERY_SEPARATOR_CHAR, languageNameString );
 
 			strcat( commonVariables()->queryString, tempString );
 			}
@@ -368,12 +370,6 @@ class WordTypeItem : private Item
 			{
 			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
 			strcat( commonVariables()->queryString, "hasMasculineWordEnding" );
-			}
-
-		if( isMultipleWord_ )
-			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isMultipleWord" );
 			}
 
 		if( isProperNamePrecededByDefiniteArticle_ )
@@ -437,14 +433,16 @@ class WordTypeItem : private Item
 			relationWriteLevel_ = NO_WRITE_LEVEL;
 		}
 
-	bool hasFeminineWordEnding()
+	bool hasFeminineProperNameEnding()
 		{
-		return hasFeminineWordEnding_;
+		return ( hasFeminineWordEnding_ &&
+				wordTypeNr_ == WORD_TYPE_PROPER_NAME );
 		}
 
-	bool hasMasculineWordEnding()
+	bool hasMasculineProperNameEnding()
 		{
-		return hasMasculineWordEnding_;
+		return ( hasMasculineWordEnding_ &&
+				wordTypeNr_ == WORD_TYPE_PROPER_NAME );
 		}
 
 	bool hasFeminineDefiniteArticleParameter()
@@ -489,35 +487,40 @@ class WordTypeItem : private Item
 				definiteArticleParameter_ == definiteArticleParameter );
 		}
 
-	bool isCorrectIndefiniteArticle( bool isCheckForEqualParameters, unsigned short indefiniteArticleParameter )
+	bool isCorrectIndefiniteArticle( bool isCheckingForEqualParameters, unsigned short indefiniteArticleParameter )
 		{
-		bool doesStringStartWithVowel;
+		bool isStringStartingWithVowel;
 		bool isVowelIndefiniteArticle;
 		bool hasIndefiniteArticleParameter = ( indefiniteArticleParameter_ > NO_INDEFINITE_ARTICLE_PARAMETER );
 
-		if( isCheckForEqualParameters &&
+		if( isCheckingForEqualParameters &&
 		indefiniteArticleParameter_ == indefiniteArticleParameter )
 			return true;
 
 		// If undefined, fall back to a simple phonetic vowel rule
 		if( hasIndefinitePhoneticVowelArticle( hasIndefiniteArticleParameter ? indefiniteArticleParameter_ : indefiniteArticleParameter ) )
 			{
-			doesStringStartWithVowel = isStartingWithPhoneticVowel( itemString() );
+			isStringStartingWithVowel = isStartingWithPhoneticVowel( itemString() );
 			isVowelIndefiniteArticle = isIndefiniteArticlePhoneticVowelParameter( indefiniteArticleParameter );
 
-			return ( ( !doesStringStartWithVowel &&		// 'a'
+			return ( ( !isStringStartingWithVowel &&	// 'a'
 					!isVowelIndefiniteArticle ) ||
 
-					( doesStringStartWithVowel &&		// 'an'
+					( isStringStartingWithVowel &&		// 'an'
 					isVowelIndefiniteArticle ) );
 			}
 
-		return ( hasIndefiniteArticleParameter ? !isCheckForEqualParameters : true );
-		}
+		if( hasIndefiniteArticleParameter )
+			return !isCheckingForEqualParameters;
 
-	bool isMultipleWord()
-		{
-		return isMultipleWord_;
+		return ( ( definiteArticleParameter_ != WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE &&
+				definiteArticleParameter_ != WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE ) ||
+
+				( ( definiteArticleParameter_ == WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE &&
+				indefiniteArticleParameter == WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_FEMININE ) ||
+
+				( definiteArticleParameter_ == WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE &&
+				indefiniteArticleParameter == WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE ) ) );
 		}
 
 	bool isProperNamePrecededByDefiniteArticle( unsigned short definiteArticleParameter )
@@ -553,20 +556,21 @@ class WordTypeItem : private Item
 
 	bool isDefiniteArticle()
 		{
-		return ( wordTypeNr_ == WORD_TYPE_ARTICLE &&	// Filter on articles, because nouns also have a definiteArticleParameter
+		// Filter on articles, because nouns also have a definiteArticleParameter
+		return ( wordTypeNr_ == WORD_TYPE_ARTICLE &&
 				isDefiniteArticleParameter( definiteArticleParameter_ ) );
 		}
 
 	bool isIndefiniteArticle()
 		{
-		return ( wordTypeNr_ == WORD_TYPE_ARTICLE &&	// Filter on articles, because nouns also have an indefiniteArticleParameter
+		// Filter on articles, because nouns also have an indefiniteArticleParameter
+		return ( wordTypeNr_ == WORD_TYPE_ARTICLE &&
 				isIndefiniteArticleParameter( indefiniteArticleParameter_ ) );
 		}
 
-	bool isNoun()
+	bool isSingularOrPluralNounWordType()
 		{
-		return ( wordTypeNr_ == WORD_TYPE_NOUN_SINGULAR ||
-				wordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
+		return isSingularOrPluralNoun( wordTypeNr_ );
 		}
 
 	bool isSingularNoun()
@@ -786,7 +790,7 @@ class WordTypeItem : private Item
 		WordTypeItem *nextCurrentLanguageWordTypeItem = nextWordTypeItem();
 
 		return ( nextCurrentLanguageWordTypeItem != NULL &&
-				nextCurrentLanguageWordTypeItem->wordTypeLanguageNr() == commonVariables()->currentGrammarLanguageNr ? nextCurrentLanguageWordTypeItem : NULL );
+				nextCurrentLanguageWordTypeItem->wordTypeLanguageNr() == commonVariables()->currentLanguageNr ? nextCurrentLanguageWordTypeItem : NULL );
 		}
 
 	WordTypeItem *nextWordTypeItem( unsigned short wordTypeNr )

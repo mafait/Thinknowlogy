@@ -2,11 +2,11 @@
  *	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ class ReadItem : private Item
 	protected:
 	// Protected constructible variables
 
-	bool hasWordPassedGrammarIntegrityCheck;
+	bool hasWordPassedIntegrityCheckOfStoredUserSentence;
 	bool isMarkedBySetGrammarParameter;
 	bool isUnusedReadItem;
 
@@ -81,7 +81,7 @@ class ReadItem : private Item
 
 		// Protected constructible variables
 
-		hasWordPassedGrammarIntegrityCheck = false;
+		hasWordPassedIntegrityCheckOfStoredUserSentence = false;
 		isMarkedBySetGrammarParameter = false;
 		isUnusedReadItem = false;
 
@@ -131,7 +131,8 @@ class ReadItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -151,7 +152,8 @@ class ReadItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
@@ -251,10 +253,10 @@ class ReadItem : private Item
 			strcat( commonVariables()->queryString, "isUnusedReadItem" );
 			}
 
-		if( hasWordPassedGrammarIntegrityCheck )
+		if( hasWordPassedIntegrityCheckOfStoredUserSentence )
 			{
 			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "hasWordPassedGrammarIntegrityCheck" );
+			strcat( commonVariables()->queryString, "hasWordPassedIntegrityCheckOfStoredUserSentence" );
 			}
 
 		if( isMarkedBySetGrammarParameter )
@@ -347,17 +349,12 @@ class ReadItem : private Item
 		return ( wordTypeNr_ == WORD_TYPE_NUMERAL );
 		}
 
-	bool isAdjective()
-		{
-		return ( wordTypeNr_ == WORD_TYPE_ADJECTIVE );
-		}
-
 	bool isArticle()
 		{
 		return ( wordTypeNr_ == WORD_TYPE_ARTICLE );
 		}
 
-	bool isNoun()
+	bool isSingularOrPluralNounWordType()
 		{
 		return isSingularOrPluralNoun( wordTypeNr_ );
 		}
@@ -372,7 +369,7 @@ class ReadItem : private Item
 		return ( wordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
 		}
 
-	bool isMatchingWordTypeNr( unsigned short wordTypeNr )
+	bool isMatchingReadWordTypeNr( unsigned short wordTypeNr )
 		{
 		return isMatchingWordType( wordTypeNr_, wordTypeNr );
 		}
@@ -460,23 +457,18 @@ class ReadItem : private Item
 				wordParameter_ == WORD_PARAMETER_PREPOSITION_OF );
 		}
 
-	bool isPrepositionIn()
-		{
-		return ( wordParameter_ == WORD_PARAMETER_PREPOSITION_IN );
-		}
-
 	bool isNegative()
 		{
 		return ( wordParameter_ == WORD_PARAMETER_ADJECTIVE_NO ||
 				wordParameter_ == WORD_PARAMETER_ADVERB_NOT );
 		}
 
-	bool isJustificationReportNoun()
+	bool isNounJustificationReport()
 		{
 		return ( wordParameter_ == WORD_PARAMETER_NOUN_JUSTIFICATION_REPORT );
 		}
 
-	bool isInformationNoun()
+	bool isNounInformation()
 		{
 		return ( wordParameter_ == WORD_PARAMETER_NOUN_INFORMATION );
 		}
@@ -533,19 +525,9 @@ class ReadItem : private Item
 
 	bool isRelationWord()
 		{
-		return ( wordTypeNr_ != WORD_TYPE_ARTICLE &&	// To avoid triggering on the article before a proper name preceded-by-defined-article
+		// To avoid triggering on the article before a proper name preceded-by-defined-article
+		return ( wordTypeNr_ != WORD_TYPE_ARTICLE &&
 				grammarParameter == GRAMMAR_RELATION_WORD );
-		}
-
-	bool isGeneralizationPart()
-		{
-		return ( grammarParameter == GRAMMAR_GENERALIZATION_PART ||
-				grammarParameter == GRAMMAR_GENERALIZATION_ASSIGNMENT );
-		}
-
-	bool isGeneralizationSpecification()
-		{
-		return ( grammarParameter == GRAMMAR_GENERALIZATION_SPECIFICATION );
 		}
 
 	bool isLinkedGeneralizationConjunction()

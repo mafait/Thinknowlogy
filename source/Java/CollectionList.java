@@ -2,11 +2,11 @@
  *	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -120,39 +120,6 @@ class CollectionList extends List
 		return false;
 		}
 
-	protected boolean isCollectedWithItself()
-		{
-		CollectionItem searchItem = firstActiveCollectionItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.commonWordItem() == myWordItem() )
-				return true;
-
-			searchItem = searchItem.nextCollectionItem();
-			}
-
-		return false;
-		}
-
-	protected boolean isExclusiveCollection( int collectionNr )
-		{
-		CollectionItem searchItem = firstActiveCollectionItem();
-
-		if( collectionNr > Constants.NO_COLLECTION_NR )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.collectionNr() == collectionNr )
-					return searchItem.isExclusiveSpecification();
-
-				searchItem = searchItem.nextCollectionItem();
-				}
-			}
-
-		return false;
-		}
-
 	protected boolean isCompoundCollection( int collectionNr )
 		{
 		CollectionItem searchItem = firstActiveCollectionItem();
@@ -184,6 +151,25 @@ class CollectionList extends List
 				if( searchItem.isCompoundGeneralization() &&
 				searchItem.collectionNr() == collectionNr &&
 				searchItem.commonWordItem() == commonWordItem )
+					return true;
+
+				searchItem = searchItem.nextCollectionItem();
+				}
+			}
+
+		return false;
+		}
+
+	protected boolean isNonCompoundCollection( int collectionNr )
+		{
+		CollectionItem searchItem = firstActiveCollectionItem();
+
+		if( collectionNr > Constants.NO_COLLECTION_NR )
+			{
+			while( searchItem != null )
+				{
+				if( !searchItem.isCompoundGeneralization() &&
+				searchItem.collectionNr() == collectionNr )
 					return true;
 
 				searchItem = searchItem.nextCollectionItem();
@@ -374,14 +360,14 @@ class CollectionList extends List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte createCollectionItem( boolean isExclusiveSpecification, short collectionOrderNr, short collectionWordTypeNr, short commonWordTypeNr, int collectionNr, WordItem collectionWordItem, WordItem commonWordItem, WordItem compoundGeneralizationWordItem, String collectionString )
+	protected byte createCollectionItem( boolean isExclusiveSpecification, short collectionOrderNr, short collectionWordTypeNr, short commonWordTypeNr, int collectionNr, WordItem collectionWordItem, WordItem commonWordItem, WordItem compoundGeneralizationWordItem )
 		{
 		if( collectionWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
 		collectionWordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
 			{
 			if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
 				{
-				if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, collectionString, this, myWordItem() ) ) != Constants.RESULT_OK )
+				if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
 					return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to add an active collection item" );
 				}
 			else
@@ -395,7 +381,6 @@ class CollectionList extends List
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		CollectionItem searchItem = firstActiveCollectionItem();
 
 		while( searchItem != null )
@@ -522,7 +507,7 @@ class CollectionList extends List
 
 		while( searchItem != null )
 			{
-			if( searchItem.hasFeminineCollectionWord() )
+			if( searchItem.hasFemaleCollectionWord() )
 				return searchItem.collectionWordItem();
 
 			searchItem = searchItem.nextCollectionItem();

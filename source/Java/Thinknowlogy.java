@@ -1,11 +1,11 @@
 /*
  *	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -99,12 +99,13 @@ class Thinknowlogy
 		{
 		byte result = Constants.RESULT_OK;
 		boolean hasRequestedRestart = false;
+		String startupLanguageNameString = null;
 		AdminItem adminItem;
 
 		do	{
 			// Start the administrator
 			Console.restart( titleBarHeight_, windowBottomHeight_ );
-			adminItem = new AdminItem( CommonVariables.currentGrammarLanguageNr );
+			adminItem = new AdminItem( startupLanguageNameString );
 
 			// Interact with the administrator
 			// until a restart or a system error occurs
@@ -114,6 +115,9 @@ class Thinknowlogy
 				}
 			while( result == Constants.RESULT_OK &&
 			!hasRequestedRestart );
+
+			if( result == Constants.RESULT_OK )
+				startupLanguageNameString = new String( adminItem.currentLanguageNameString() );
 			}
 		while( result == Constants.RESULT_OK &&
 		hasRequestedRestart );

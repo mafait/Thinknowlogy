@@ -2,11 +2,11 @@
  *	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ class ReadItem extends Item
 
 	// Protected constructible variables
 
-	protected boolean hasWordPassedGrammarIntegrityCheck;
+	protected boolean hasWordPassedIntegrityCheckOfStoredUserSentence;
 	protected boolean isMarkedBySetGrammarParameter;
 	protected boolean isUnusedReadItem;
 
@@ -68,7 +68,7 @@ class ReadItem extends Item
 
 		// Protected constructible variables
 
-		hasWordPassedGrammarIntegrityCheck = false;
+		hasWordPassedIntegrityCheckOfStoredUserSentence = false;
 		isMarkedBySetGrammarParameter = false;
 		isUnusedReadItem = false;
 
@@ -96,7 +96,8 @@ class ReadItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -117,7 +118,8 @@ class ReadItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -212,8 +214,8 @@ class ReadItem extends Item
 		if( isUnusedReadItem )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUnusedReadItem" );
 
-		if( hasWordPassedGrammarIntegrityCheck )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasWordPassedGrammarIntegrityCheck" );
+		if( hasWordPassedIntegrityCheckOfStoredUserSentence )
+			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasWordPassedIntegrityCheckOfStoredUserSentence" );
 
 		if( isMarkedBySetGrammarParameter )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isMarkedBySetGrammarParameter" );
@@ -278,17 +280,12 @@ class ReadItem extends Item
 		return ( wordTypeNr_ == Constants.WORD_TYPE_NUMERAL );
 		}
 
-	protected boolean isAdjective()
-		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_ADJECTIVE );
-		}
-
 	protected boolean isArticle()
 		{
 		return ( wordTypeNr_ == Constants.WORD_TYPE_ARTICLE );
 		}
 
-	protected boolean isNoun()
+	protected boolean isSingularOrPluralNounWordType()
 		{
 		return isSingularOrPluralNoun( wordTypeNr_ );
 		}
@@ -303,7 +300,7 @@ class ReadItem extends Item
 		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
-	protected boolean isMatchingWordTypeNr( short wordTypeNr )
+	protected boolean isMatchingReadWordTypeNr( short wordTypeNr )
 		{
 		return isMatchingWordType( wordTypeNr_, wordTypeNr );
 		}
@@ -391,23 +388,18 @@ class ReadItem extends Item
 				wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_OF );
 		}
 
-	protected boolean isPrepositionIn()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_IN );
-		}
-
 	protected boolean isNegative()
 		{
 		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_NO ||
 				wordParameter_ == Constants.WORD_PARAMETER_ADVERB_NOT );
 		}
 
-	protected boolean isJustificationReportNoun()
+	protected boolean isNounJustificationReport()
 		{
 		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_JUSTIFICATION_REPORT );
 		}
 
-	protected boolean isInformationNoun()
+	protected boolean isNounInformation()
 		{
 		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_INFORMATION );
 		}
@@ -464,19 +456,9 @@ class ReadItem extends Item
 
 	protected boolean isRelationWord()
 		{
-		return ( wordTypeNr_ != Constants.WORD_TYPE_ARTICLE &&	// To avoid triggering on the article before a proper name preceded-by-defined-article
+		// To avoid triggering on the article before a proper name preceded-by-defined-article
+		return ( wordTypeNr_ != Constants.WORD_TYPE_ARTICLE &&
 				grammarParameter == Constants.GRAMMAR_RELATION_WORD );
-		}
-
-	protected boolean isGeneralizationPart()
-		{
-		return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_PART ||
-				grammarParameter == Constants.GRAMMAR_GENERALIZATION_ASSIGNMENT );
-		}
-
-	protected boolean isGeneralizationSpecification()
-		{
-		return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_SPECIFICATION );
 		}
 
 	protected boolean isLinkedGeneralizationConjunction()

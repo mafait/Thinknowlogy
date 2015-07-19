@@ -1,26 +1,10 @@
-﻿#
-#	File:		English.txt
-#	Scope:		Used by the Thinknowlogy application
+﻿#----------------------------------------------------------------------------
 #	Purpose:	To define the interface texts in English
-#	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+#	Version:	Thinknowlogy 2015r1beta (Corazón)
 #----------------------------------------------------------------------------
 #	Copyright (C) 2009-2015, Menno Mafait
-#	Your additions, modifications, suggestions and bug reports
+#	Your suggestions, modifications and bug reports
 #	are welcome at http://mafait.org
-#----------------------------------------------------------------------------
-#	This program is free software: you can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation, either version 2 of the License, or
-#	(at your option) any later version.
-#
-#	This program is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
-#
-#	You should have received a copy of the GNU General Public License along
-#	with this program; if not, write to the Free Software Foundation, Inc.,
-#	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #----------------------------------------------------------------------------
 
 # Console (common)
@@ -29,11 +13,9 @@
 :102		"Allow me to guide you by menu buttons and buttons with a predefined sentence, or enter a sentence conform the implemented grammar."
 :103		"Waiting for input"
 :104		"Waiting for secure input"
-:105		"Please wait for output... "
-#:106		"Welcome "
-:107		"You are already logged in as "
-:108		"."
-:109		"The username or its password is not correct."
+:105		"You are already logged in as "
+:106		"."
+:107		"The username or its password is not correct."
 
 # Console (status and progress)
 :110		"I am executing selections ("
@@ -48,7 +30,9 @@
 :124		"Login as Expert."
 :129		"<more examples>"
 :130		"Read the file \""
+:131		"Read the test file "
 :132		"\"."
+:133		"Regression"
 
 # Java console (main menu)
 :210		"Read the file "English/ambiguity/Boston"."
@@ -67,6 +51,12 @@
 :224		"<back>"
 :225		"Help."
 :226		"<change language>"
+:227		"<change font>"
+:228		"<change font size>"
+
+# Java console (font size)
+:230		"<decrease font size>"
+:231		"<increase font size>"
 
 # Java console (programming/Connect-Four submenu)
 :300		"My set is A."
@@ -117,15 +107,21 @@
 :521		"Paul has 2 parents, called John and Anna."
 :522		"Joe has 2 parents, called John and Anna."
 :523		"Laura has 2 parents, called John and Anna."
+:524		"Paul is a child of John and Anna."
+:525		"Joe is a child of John and Anna."
+:526		"Laura is a child of John and Anna."
 
-:524		"John is a man."
-:525		"Anna is a woman."
-:526		"Paul is a man."
-:527		"Joe is a man."
-:528		"Laura is a woman."
-:529		"Paul is a boy."
-:530		"Joe is a boy."
-:531		"Laura is a girl."
+:527		"John is a man."
+:528		"Anna is a woman."
+:529		"Paul is a man."
+:530		"Joe is a man."
+:531		"Laura is a woman."
+:532		"Paul is a child."
+:533		"Joe is a child."
+:534		"Laura is a child."
+:535		"Paul is a boy."
+:536		"Joe is a boy."
+:537		"Laura is a girl."
 
 # Java console (reasoning/family conflict submenu)
 :540		"John is a woman."
@@ -135,18 +131,18 @@
 :544		"Joe is a mother."
 
 # Java console (reasoning/family justification report submenu)
-:550		"Show the justification report for family."
-:551		"Show the justification report for parent."
-:552		"Show the justification report for child."
-:553		"Show the justification report for father."
-:554		"Show the justification report for mother."
-:555		"Show the justification report for son."
-:556		"Show the justification report for daughter."
-:557		"Show the justification report for John."
-:558		"Show the justification report for Anna."
-:559		"Show the justification report for Paul."
-:560		"Show the justification report for Joe."
-:561		"Show the justification report for Laura."
+:550		"Show the justification report about family."
+:551		"Show the justification report about parent."
+:552		"Show the justification report about child."
+:553		"Show the justification report about father."
+:554		"Show the justification report about mother."
+:555		"Show the justification report about son."
+:556		"Show the justification report about daughter."
+:557		"Show the justification report about John."
+:558		"Show the justification report about Anna."
+:559		"Show the justification report about Paul."
+:560		"Show the justification report about Joe."
+:561		"Show the justification report about Laura."
 
 # Java console (reasoning/family question submenu)
 :570		"Is John a father?"
@@ -175,15 +171,14 @@
 :591		"Show information about Laura."
 
 # Java console (help submenu)
-:900		"Show information about the grammar languages."
-:901		"Show information about the interface languages."
-:902		"Show information about the lists."
-:903		"Show information about the users."
-:904		"Show information about the word types."
-:905		"Show the query commands."
-:906		"Show the copyright."
-:907		"Show the GPLv2-license."
-:908		"Show the warranty."
+:900		"Show information about the languages."
+:901		"Show information about the lists."
+:902		"Show information about the users."
+:903		"Show information about the word types."
+:904		"Show the query commands."
+:905		"Show the copyright."
+:906		"Show the GPLv2-license."
+:907		"Show the warranty."
 
 # Grammar
 :1000		"Grammar definition \""
@@ -225,23 +220,22 @@
 
 # Imperative (notifications)
 :1200		"My mind is clear."
-:1201		"The previous sentence belongs to another user."
-:1202		"There are no sentences left to undo."
-:1203		"There are no sentences to redo."
-:1204		"I have undone sentence number "
-:1205		"."
-:1206		"I have redone the undone sentence number "
-:1207		"."
-:1208		"I have no "
+:1201		"There are no sentences to undo."
+:1202		"There are no sentences to redo."
+:1203		"I have undone sentence number "
+:1204		"."
+:1205		"I have redone the undone sentence number "
+:1206		"."
+:1207		"I have no "
 
 # Imperative (warnings)
-:1210		"I have no information about "
+:1210		"I could not find any selection containing information how to solve the "
 :1211		"."
 :1212		"I don't know how to execute imperative verb \""
 :1213		"\"."
 :1214		"I don't know what to do with the given relation(s)."
 :1215		"I don't know which file to read."
-:1216		"I could not find any selection containing information how to solve the "
+:1216		"I have no information about "
 :1217		"."
 :1218		"This imperative needs a(nother) list to be specified."
 :1219		"I found a preposition word that is not used for this action."
@@ -272,15 +266,16 @@
 :1414		"\nMy assumptions:"
 :1415		"\nMy assumptions that are adjusted:"
 :1416		"\nMy assumptions that are concluded:"
-:1417		"\nMy questions:"
-:1418		"\nMy adjusted questions:"
-:1419		"\nMy answer:"
-:1420		"\nI only know:"
-:1421		"\nI am not sure, but:"
-:1422		"\nSpecifications:"
-:1423		"\nSpecification questions:"
-:1424		"\nRelated information:"
-:1425		"\nRelated questions:"
+:1417		"\nMy hidden assumptions that are concluded:"
+:1418		"\nMy questions:"
+:1419		"\nMy adjusted questions:"
+:1420		"\nMy answer:"
+:1421		"\nI only know:"
+:1422		"\nI am not sure, but:"
+:1423		"\nSpecifications:"
+:1424		"\nSpecification questions:"
+:1425		"\nRelated information:"
+:1426		"\nRelated questions:"
 
 # Listing (old information)
 :1430		"\nYou have confirmed the specification - but no relation(s) - of my earlier assumption(s):"
@@ -328,6 +323,8 @@
 :1613		"The definite article you used, doesn't match with noun \""
 :1614		"The indefinite article you used, doesn't match with noun \""
 :1615		"\"."
+:1616		"\nYou have entered plural noun \""
+:1617		"\", which was unknown to me."
 
 # Sentence (warnings)
 :1620		"I don't understand this sentence. Please make sure to enter a sentence conform my limited grammar definition."

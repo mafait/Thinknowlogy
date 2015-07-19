@@ -1,11 +1,11 @@
 /*
  *	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -373,7 +373,8 @@
 			if( commonVariables_->hasFoundQuery )
 				strcat( commonVariables_->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				strcat( commonVariables_->queryString, statusString );
 
 			commonVariables_->hasFoundQuery = true;
@@ -400,7 +401,8 @@
 		statusString[0] = statusChar_;
 		strcpy( commonVariables_->queryString, EMPTY_STRING );
 
-		if( !isActiveItem() )	// Show status if not active
+		// Show status if not active
+		if( !isActiveItem() )
 			strcat( commonVariables_->queryString, statusString );
 
 		if( myWordString != NULL )
@@ -421,7 +423,8 @@
 			strcat( commonVariables_->queryString, "isAvailableForRollbackAfterDelete" );
 			}
 /*
-		if( isSelectedByQuery )		// Don't show: Always true during query
+		// Don't show: Always true during query
+		if( isSelectedByQuery )
 			{
 			strcat( commonVariables_->queryString, QUERY_SEPARATOR_STRING );
 			strcat( commonVariables_->queryString, "isSelectedByQuery" );
@@ -556,6 +559,8 @@
 	// Strictly for initialization of AdminItem
 	void Item::initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem )
 		{
+		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+
 		// Private constructible variables
 
 //		AdminItem has no constructible variables to be initialized
@@ -566,24 +571,30 @@
 //		AdminItem has no myList_;
 		myWordItem_ = myWordItem;
 
-		if( myWordItem_ != NULL )
-			{
-			if( commonVariables_ != NULL )
-				{
-				if( classNameString != NULL )
-					strcpy( classNameString_, classNameString );
-				else
-					startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given class name string is undefined" );
-				}
-			else
-				startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given common variables is undefined" );
-			}
+		if( commonVariables_ == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+
+		if( myWordItem_ == NULL )
+			strcpy( errorString, "The given my word is undefined" );
+
+		if( classNameString == NULL )
+			strcpy( errorString, "The given my word is undefined" );
 		else
-			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given my word is undefined" );
+			{
+			if( classNameString != NULL )
+				strcpy( classNameString_, classNameString );
+			else
+				strcpy( errorString, "The given class name string is undefined" );
+			}
+
+		if( strlen( errorString ) > 0 )
+			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL ? NULL : myWordItem_->anyWordTypeString() ), errorString );
 		}
 
 	void Item::initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
+		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+
 		// Private loadable variables
 
 		commonVariables_ = commonVariables;
@@ -592,7 +603,9 @@
 
 		// Private constructible variables
 
-		if( commonVariables_ != NULL )
+		if( commonVariables_ == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+		else
 			{
 		userNr_ = commonVariables_->currentUserNr;
 
@@ -607,25 +620,24 @@
 		itemNr_ = ++commonVariables_->currentItemNr;
 			}
 
-		if( myList_ != NULL )
-			{
-			if( myWordItem_ != NULL )
-				{
-				if( commonVariables_ != NULL )
-					{
-					if( classNameString != NULL )
-						strcpy( classNameString_, classNameString );
-					else
-						startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given class name string is undefined" );
-					}
-				else
-					startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given common variables is undefined" );
-				}
-			else
-				startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given my word is undefined" );
-			}
+		if( myList_ == NULL )
+			strcpy( errorString, "The given my list is undefined" );
+
+		if( myWordItem_ == NULL )
+			strcpy( errorString, "The given my word is undefined" );
+
+		if( classNameString == NULL )
+			strcpy( errorString, "The given my word is undefined" );
 		else
-			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given my list is undefined" );
+			{
+			if( classNameString != NULL )
+				strcpy( classNameString_, classNameString );
+			else
+				strcpy( errorString, "The given class name string is undefined" );
+			}
+
+		if( strlen( errorString ) > 0 )
+			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL ? NULL : myWordItem_->anyWordTypeString() ), errorString );
 		}
 
 	bool Item::hasActiveSentenceNr()
@@ -641,11 +653,6 @@
 	bool Item::hasArchivedSentenceNr()
 		{
 		return ( archivedSentenceNr_ > NO_SENTENCE_NR );
-		}
-
-	bool Item::hasReplacedSentenceNr()
-		{
-		return ( replacedSentenceNr_ > NO_SENTENCE_NR );
 		}
 
 	bool Item::hasCurrentCreationSentenceNr()
@@ -732,11 +739,6 @@
 	bool Item::wasInactiveBefore()
 		{
 		return ( previousStatusChar == QUERY_INACTIVE_CHAR );
-		}
-
-	unsigned short Item::userNr()
-		{
-		return userNr_;
 		}
 
 	unsigned int Item::activeSentenceNr()
@@ -975,7 +977,7 @@
 				articleParameter == WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE );
 		}
 
-	bool Item::isReasoningWordType( unsigned short wordTypeNr )
+	bool Item::isGeneralizationReasoningWordType( unsigned short wordTypeNr )
 		{
 		return ( wordTypeNr == WORD_TYPE_PROPER_NAME ||
 				isSingularOrPluralNoun( wordTypeNr ) );
@@ -1013,19 +1015,34 @@
 		return false;
 		}
 
-	unsigned short Item::assumptionGrade( unsigned short justificationTypeNr )
+	unsigned short Item::assumptionGrade( bool hasAnotherPrimarySpecification, bool hasFeminineOrMasculineProperNameEnding, bool hasPossessivePrimarySpecification, bool hasPrimaryQuestionSpecification, unsigned short justificationTypeNr )
 		{
 		switch( justificationTypeNr )
 			{
 			case JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION:
-			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
 			case JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
-			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
 			case JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION:
-			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
 			case JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION:
 				return 0;
+
+			case JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
+			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+				return ( hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
+
+			case JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION:
+				return ( hasAnotherPrimarySpecification ? 2 : 1 );
+
+			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
+				return ( hasFeminineOrMasculineProperNameEnding ? 1 : 0 );
+
+			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
+				return ( hasPossessivePrimarySpecification ? 1 : 0 );
+
+			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
+				return ( hasPrimaryQuestionSpecification ? 1 : 0 );
+
+			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+				return ( hasAnotherPrimarySpecification ? 1 : 0 );
 
 			default:
 				return 1;

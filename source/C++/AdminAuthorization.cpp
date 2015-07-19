@@ -2,11 +2,11 @@
  *	Class:			AdminAuthorization
  *	Supports class:	AdminItem
  *	Purpose:		To handle authorization
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ class AdminAuthorization
 	bool hasUserPasswordAssigned_;
 	bool hasUserEnteredCorrectPassword_;
 
-	unsigned int loginSentenceNr_;
+	unsigned int firstSentenceNrOfCurrentUser_;
 
 	SpecificationItem *passwordAssignmentItem_;
 
@@ -46,7 +46,6 @@ class AdminAuthorization
 
 	AdminItem *adminItem_;
 	CommonVariables *commonVariables_;
-	WordItem *myWordItem_;
 	char moduleNameString_[FUNCTION_NAME_LENGTH];
 
 
@@ -76,19 +75,19 @@ class AdminAuthorization
 									foundUserWordItem_ = currentGeneralizationWordItem;
 								}
 							else
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the user name" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the user name" );
 							}
 						else
-							return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "I found an undefined generalization word" );
+							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I've found an undefined generalization word" );
 						}
 					while( ( currentGeneralizationItem = currentGeneralizationItem->nextSpecificationGeneralizationItem() ) != NULL );
 					}
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined user noun word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined user noun word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given user name string is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given user name string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -111,43 +110,46 @@ class AdminAuthorization
 					if( ( passwordAssignmentItem_ = specificationResult.foundSpecificationItem ) == NULL )
 						{
 						// No assignment found. So, check for explict negative password specification
-						if( userWordItem->firstNonQuestionAssignmentOrSpecificationItem( false, false, false, true, true, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, predefinedNounPasswordWordItem ) != NULL )
+						if( userWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, false, true, true, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, predefinedNounPasswordWordItem ) != NULL )
 							hasUserPasswordAssigned_ = false;
 						}
 					}
 				else
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the password assignment" );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the password assignment" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined password noun word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined password noun word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given user word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given user word item is undefined" );
 
 		return RESULT_OK;
 		}
 
 	ResultType checkPassword( char *enteredPasswordString )
 		{
+		WordItem *passwordSpecificationWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkPassword";
-		hasUserEnteredCorrectPassword_ = false;		// Fail safe
+
+		// Fail safe
+		hasUserEnteredCorrectPassword_ = false;
 
 		if( enteredPasswordString != NULL )
 			{
 			if( passwordAssignmentItem_ != NULL )
 				{
-				if( passwordAssignmentItem_->specificationWordItem() != NULL )
+				if( ( passwordSpecificationWordItem = passwordAssignmentItem_->specificationWordItem() ) != NULL )
 					{
 
-					if( passwordAssignmentItem_->specificationWordItem()->isCorrectHiddenWordType( passwordAssignmentItem_->specificationWordTypeNr(), enteredPasswordString, this ) )
+					if( passwordSpecificationWordItem->isCorrectHiddenWordType( passwordAssignmentItem_->specificationWordTypeNr(), enteredPasswordString, this ) )
 						hasUserEnteredCorrectPassword_ = true;
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The password assignment specification item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The password assignment specification item is undefined" );
 				}
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given password string is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given password string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -156,14 +158,14 @@ class AdminAuthorization
 	protected:
 	// Constructor / deconstructor
 
-	AdminAuthorization( AdminItem *adminItem, CommonVariables *commonVariables, WordItem *myWordItem )
+	AdminAuthorization( AdminItem *adminItem, CommonVariables *commonVariables )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		hasUserPasswordAssigned_ = true;
 		hasUserEnteredCorrectPassword_ = false;
 
-		loginSentenceNr_ = NO_SENTENCE_NR;
+		firstSentenceNrOfCurrentUser_ = NO_SENTENCE_NR;
 
 		passwordAssignmentItem_ = NULL;
 		currentUserWordItem_ = NULL;
@@ -171,26 +173,18 @@ class AdminAuthorization
 
 		adminItem_ = adminItem;
 		commonVariables_ = commonVariables;
-		myWordItem_ = myWordItem;
 		strcpy( moduleNameString_, "AdminAuthorization" );
 
-		if( commonVariables_ != NULL )
-			{
-		if( adminItem_ != NULL )
-			{
-			if( myWordItem_ == NULL )
-				strcpy( errorString, "The given my word is undefined" );
-			}
-		else
-			strcpy( errorString, "The given admin is undefined" );
-			}
-		else
+		if( commonVariables_ == NULL )
 			strcpy( errorString, "The given common variables is undefined" );
+
+		if( adminItem_ == NULL )
+			strcpy( errorString, "The given admin is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
-			if( myWordItem_ != NULL )
-				myWordItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+			if( adminItem_ != NULL )
+				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -203,9 +197,9 @@ class AdminAuthorization
 
 	// Protected functions
 
-	unsigned int firstUserSentenceNr()
+	unsigned int firstSentenceNrOfCurrentUser()
 		{
-		return ( loginSentenceNr_ + 1 );
+		return ( firstSentenceNrOfCurrentUser_ + 1 );
 		}
 
 	ResultType authorizeWord( WordItem *authorizationWordItem )
@@ -217,19 +211,21 @@ class AdminAuthorization
 			if( adminItem_->isSystemStartingUp() )
 				{
 				if( authorizationWordItem->assignChangePermissions( this ) != RESULT_OK )
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign my authorization permissions to a word" );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign my authorization permissions to a word" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "You are not authorized to authorize the given word" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "You are not authorized to authorize the given word" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given authorization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given authorization word item is undefined" );
 
 		return RESULT_OK;
 		}
 
 	ResultType login( WordItem *specificationWordItem )
 		{
+		GeneralizationItem *currentGeneralizationItem;
+		WordItem *currentGeneralizationWordItem;
 		WordItem *predefinedNounPasswordWordItem;
 		WordItem *predefinedNounUserWordItem;
 		char readUserNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
@@ -246,10 +242,32 @@ class AdminAuthorization
 			{
 			if( ( predefinedNounPasswordWordItem = adminItem_->predefinedNounPasswordWordItem() ) != NULL )
 				{
-				if( specificationWordItem == NULL )		// No user name is given
+				// No user name is given
+				if( specificationWordItem == NULL &&
+				// Get first user without password
+				( currentGeneralizationItem = predefinedNounPasswordWordItem->firstSpecificationGeneralizationItem() ) != NULL )
 					{
+					do	{
+						if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) != NULL )
+							{
+							// Select first user in the current language
+							if( currentGeneralizationWordItem->hasWordType( WORD_TYPE_PROPER_NAME ) )
+								specificationWordItem = currentGeneralizationWordItem;
+							}
+						else
+							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I've found an undefined generalization word" );
+						}
+					while( specificationWordItem == NULL &&
+					( currentGeneralizationItem = currentGeneralizationItem->nextSpecificationGeneralizationItem() ) != NULL );
+					}
+
+				// No user name is given,
+				// and no user without password is found
+				if( specificationWordItem == NULL )
+					{
+					// Ask user name
 					if( adminItem_->getUserInput( false, true, false, predefinedNounUserWordItem->singularNounString(), readUserNameString ) != RESULT_OK )
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read to user name" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read to user name" );
 					}
 				else
 					strcat( readUserNameString, specificationWordItem->anyWordTypeString() );
@@ -257,38 +275,40 @@ class AdminAuthorization
 				if( strlen( readUserNameString ) > 0 )
 					{
 					if( findUserWord( readUserNameString ) != RESULT_OK )
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the user" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the user" );
 					}
 
 				if( foundUserWordItem_ != NULL &&
 				foundUserWordItem_ == currentUserWordItem_ )
 					{
 					if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START, readUserNameString, INTERFACE_CONSOLE_LOGIN_END ) != RESULT_OK )
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
 					}
 				else
 					{
 					if( foundUserWordItem_ != NULL )
 						{
 						if( checkUserForPasswordAssignment( foundUserWordItem_ ) != RESULT_OK )
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the user for password assignment" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the user for password assignment" );
 						}
 
 					if( foundUserWordItem_ != NULL &&
 					!hasUserPasswordAssigned_ )
-						hasUserEnteredCorrectPassword_ = true;		// User has no password
+						// User has no password
+						hasUserEnteredCorrectPassword_ = true;
 					else
 						{
 						if( adminItem_->getUserInput( true, true, false, predefinedNounPasswordWordItem->singularNounString(), readPasswordString ) == RESULT_OK )
 							{
-							if( foundUserWordItem_ != NULL )	// Only check password if user was found
+							// Only check password if user was found
+							if( foundUserWordItem_ != NULL )
 								{
 								if( checkPassword( readPasswordString ) != RESULT_OK )
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the user and password" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the user and password" );
 								}
 							}
 						else
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read to password" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read to password" );
 						}
 
 					if( hasUserEnteredCorrectPassword_ &&
@@ -297,39 +317,35 @@ class AdminAuthorization
 
 						if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_UNDEFINED, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, foundUserWordItem_, predefinedNounUserWordItem, NULL ).result == RESULT_OK )
 							{
+							firstSentenceNrOfCurrentUser_ = commonVariables_->currentSentenceNr;
 							currentUserWordItem_ = foundUserWordItem_;
-							loginSentenceNr_ = commonVariables_->currentSentenceNr;
-							commonVariables_->firstUserSentenceNr = loginSentenceNr_;
 							commonVariables_->currentUserNr = predefinedNounUserWordItem->getUserNr( foundUserWordItem_ );
-/*
-							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_CONSOLE_LOGIN_WELCOME, readUserNameString, INTERFACE_CONSOLE_LOGIN_END ) != RESULT_OK )
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
-*/							}
+							}
 						else
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign the user" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign the user" );
 						}
 					else
 						{
 						if( !adminItem_->isSystemStartingUp() )
 							{
 							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_CONSOLE_LOGIN_FAILED ) != RESULT_OK )
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
 							}
 						else
-							return myWordItem_->startSystemErrorInItem( functionNameString, moduleNameString_, "The user name or it's password isn't correct" );
+							return adminItem_->startSystemErrorInItem( functionNameString, moduleNameString_, "The user name or it's password isn't correct" );
 						}
 					}
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined password noun word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined password noun word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined user noun word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The predefined user noun word item is undefined" );
 
 		return RESULT_OK;
 		}
 
-	SpecificationResultType addSpecificationWithAuthorization( bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueRelation, bool hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
+	SpecificationResultType addSpecificationWithAuthorization( bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
 		{
 		SpecificationResultType specificationResult;
 		WordItem *predefinedVerbLoginWordItem;
@@ -341,55 +357,55 @@ class AdminAuthorization
 				{
 				if( generalizationWordItem->isNounPassword() ||
 				specificationWordItem->isNounExpert() ||
-				specificationWordItem->isNounUser() ||
-				generalizationWordItem->isVerbImperativeLogin() )
+				specificationWordItem->isNounUser() )
 					{
 					if( generalizationWordItem->isNounPassword() )
 						{
 						if( specificationWordItem->hideWordType( specificationWordTypeNr, this ) != RESULT_OK )
-							myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to hide a password" );
+							adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to hide a password" );
 						}
 					else
 						{
 						if( !isNegative &&
 						specificationWordItem->isNounUser() &&
 						questionParameter == NO_QUESTION_PARAMETER &&
-						( predefinedVerbLoginWordItem = adminItem_->predefinedVerbLoginWordItem() ) != NULL )		// Create a login for this user
+						// Create a login for this user
+						( predefinedVerbLoginWordItem = adminItem_->predefinedVerbLoginWordItem() ) != NULL )
 							{
-							if( ( specificationResult = predefinedVerbLoginWordItem->addSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_VERB_SINGULAR, generalizationWordTypeNr, WORD_TYPE_UNDEFINED, specificationCollectionNr, NO_CONTEXT_NR, generalizationContextNr, NO_CONTEXT_NR, nContextRelations, firstJustificationItem, generalizationWordItem, NULL, NULL, this ) ).result != RESULT_OK )
-								myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a specification with authorization" );
+							if( ( specificationResult = predefinedVerbLoginWordItem->addSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_VERB_SINGULAR, generalizationWordTypeNr, WORD_TYPE_UNDEFINED, specificationCollectionNr, NO_CONTEXT_NR, generalizationContextNr, NO_CONTEXT_NR, nContextRelations, firstJustificationItem, generalizationWordItem, NULL, NULL, this ) ).result != RESULT_OK )
+								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a specification with authorization" );
 							}
 						}
 					}
 
 				if( commonVariables_->result == RESULT_OK )
 					{
-					if( ( specificationResult = generalizationWordItem->addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueRelation, hasUserSentenceExclusivelyFeminineOrMasculineSpecificationWords, adminItem_->isUserSentenceMixOfFeminineAndMasculineSpecificationWords(), isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, this ) ).result != RESULT_OK )
-						myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a specification with authorization" );
+					if( ( specificationResult = generalizationWordItem->addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, this ) ).result != RESULT_OK )
+						adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a specification with authorization" );
 					}
 				}
 			else
-				myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		specificationResult.result = commonVariables_->result;
 		return specificationResult;
 		}
 
-	SpecificationResultType assignSpecificationWithAuthorization( bool isAmbiguousRelationContext, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, char *specificationString )
+	SpecificationResultType assignSpecificationWithAuthorization( bool isAmbiguousRelationContext, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, char *specificationString )
 		{
 		SpecificationResultType specificationResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "assignSpecificationWithAuthorization";
 
 		if( generalizationWordItem != NULL )
 			{
-			if( ( specificationResult = generalizationWordItem->assignSpecification( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueRelation, assumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, this ) ).result != RESULT_OK )
-				myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a specification with authorization" );
+			if( ( specificationResult = generalizationWordItem->assignSpecification( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, this ) ).result != RESULT_OK )
+				adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a specification with authorization" );
 			}
 		else
-			myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		specificationResult.result = commonVariables_->result;
 		return specificationResult;

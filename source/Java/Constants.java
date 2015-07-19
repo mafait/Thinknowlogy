@@ -1,11 +1,11 @@
 ﻿/*
  *	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class Constants
 	{
 	// Version constants
 	protected static final String	PRODUCT_NAME =											"Thinknowlogy";
-	protected static final String	VERSION_NAME =											"2014r2b (Laws of Thought)";
+	protected static final String	VERSION_NAME =											"2015r1beta (Corazón)";
 
 	// Character constants
 	protected static final char		BACK_SPACE_CHAR =										'\b';
@@ -61,11 +61,19 @@ class Constants
 	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS =			10;
 	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION =		11;
 	protected static final short	CONSOLE_SUBMENU_CHANGE_LANGUAGE =						12;
-	protected static final short	CONSOLE_SUBMENU_HELP =									13;
+	protected static final short	CONSOLE_SUBMENU_CHANGE_FONT =							13;
+	protected static final short	CONSOLE_SUBMENU_HELP =									14;
 
-	protected static final short	CONSOLE_FONT_SIZE =										13;
-	protected static final String	CONSOLE_MONO_SPACED_FONT =								"Courier New";
-//	protected static final String	CONSOLE_MONO_SPACED_FONT =								"Lucida Console";
+	protected static final short	CONSOLE_DEFAULT_FONT_SIZE =								13;
+	protected static final short	CONSOLE_MINIMUM_FONT_SIZE =								8;
+	protected static final short	CONSOLE_MAXIMUM_FONT_SIZE =								64;
+	protected static final String	CONSOLE_FONT_ARIEL =									"Ariel";
+	protected static final String	CONSOLE_FONT_COURIER =									"Courier";
+	protected static final String	CONSOLE_FONT_COURIER_NEW =								"Courier New";
+	protected static final String	CONSOLE_FONT_MICROSOFT_SANS_SERIF =						"Microsoft Sans Serif";
+	protected static final String	CONSOLE_FONT_MONOSPACED =								"monospaced";
+	protected static final String	CONSOLE_FONT_TIMES_NEW_ROMAN =							"Times New Roman";
+	protected static final String	CONSOLE_FONT_VERDANA =									"Verdana";
 
 	protected static final String	CONSOLE_CONNECT_FOUR_INTERFERENCE_MESSAGE_STRING =		"Notification";
 
@@ -299,9 +307,9 @@ class Constants
 	protected static final short	WORD_ASSIGNMENT_LIST =									0;		// SpecificationItem
 	protected static final short	WORD_COLLECTION_LIST =									1;
 	protected static final short	WORD_GENERALIZATION_LIST =								2;
-	protected static final short	WORD_INTERFACE_LANGUAGE_LIST =							3;
+	protected static final short	WORD_INTERFACE_LIST =									3;
 	protected static final short	WORD_JUSTIFICATION_LIST =								4;
-	protected static final short	WORD_GRAMMAR_LANGUAGE_LIST =							5;
+	protected static final short	WORD_GRAMMAR_LIST =										5;
 	protected static final short	WORD_MULTIPLE_WORD_LIST =								6;
 	protected static final short	WORD_WRITE_LIST =										7;
 	protected static final short	WORD_SPECIFICATION_LIST =								8;
@@ -312,9 +320,9 @@ class Constants
 	protected static final short	WordLists[] = {	WORD_ASSIGNMENT_LIST,							// SpecificationItem
 													WORD_COLLECTION_LIST,
 													WORD_GENERALIZATION_LIST,
-													WORD_INTERFACE_LANGUAGE_LIST,
+													WORD_INTERFACE_LIST,
 													WORD_JUSTIFICATION_LIST,
-													WORD_GRAMMAR_LANGUAGE_LIST,
+													WORD_GRAMMAR_LIST,
 													WORD_MULTIPLE_WORD_LIST,
 													WORD_WRITE_LIST,
 													WORD_SPECIFICATION_LIST,
@@ -324,9 +332,9 @@ class Constants
 	protected static final char		WORD_ASSIGNMENT_LIST_SYMBOL =							'a';	// SpecificationItem
 	protected static final char		WORD_COLLECTION_LIST_SYMBOL =							'c';
 	protected static final char		WORD_GENERALIZATION_LIST_SYMBOL =						'g';
-	protected static final char		WORD_INTERFACE_LANGUAGE_LIST_SYMBOL =					'i';
+	protected static final char		WORD_INTERFACE_LIST_SYMBOL =							'i';
 	protected static final char		WORD_JUSTIFICATION_LIST_SYMBOL =						'j';
-	protected static final char		WORD_GRAMMAR_LANGUAGE_LIST_SYMBOL =						'l';
+	protected static final char		WORD_GRAMMAR_LIST_SYMBOL =								'l';
 	protected static final char		WORD_MULTIPLE_WORD_LIST_SYMBOL =						'm';
 	protected static final char		WORD_WRITE_LIST_SYMBOL =								'r';
 	protected static final char		WORD_SPECIFICATION_LIST_SYMBOL =						's';
@@ -348,32 +356,32 @@ class Constants
 
 
 	// Justification types
-	protected static final short	JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION =										0;
-	protected static final short	JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION =		1;
-	protected static final short	JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =				2;
-	protected static final short	JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION =			3;
-	protected static final short	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION =						4;
-	protected static final short	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =									5;
+	protected static final short	JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION =									0;
+	protected static final short	JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION =	1;
+	protected static final short	JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =			2;
+	protected static final short	JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION =		3;
+	protected static final short	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION =					4;
+	protected static final short	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =								5;
 
-	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION =									6;
-	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION =								7;
-	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION =									8;
-	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION =											9;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION =			10;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =							11;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION =					12;
-	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION =										13;
+	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION =								6;
+	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION =							7;
+	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION =								8;
+	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION =										9;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION =		10;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =						11;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION =				12;
+	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION =									13;
 
-	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION =									14;
-	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION =								15;
-	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION =									16;
-	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION =											17;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION =			18;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION =							19;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION =					20;
-	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION =										21;
+	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION =								14;
+	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION =							15;
+	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION =								16;
+	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION =										17;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION =		18;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION =						19;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION =				20;
+	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION =									21;
 
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =							22;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =						22;
 
 
 	//	Word types
@@ -464,35 +472,36 @@ class Constants
 	protected static final short	WORD_PARAMETER_ADJECTIVE_MASCULINE =									608;
 	protected static final short	WORD_PARAMETER_ADJECTIVE_NO =											609;
 	protected static final short	WORD_PARAMETER_ADJECTIVE_CALLED_PLURAL =								610;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR =								611;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL =								612;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_EVERY_FEMININE_MASCULINE =						613;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_PREVIOUS_NEUTRAL =								614;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_PREVIOUS_FEMININE_MASCULINE =					615;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_CURRENT_NEUTRAL =								616;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_CURRENT_FEMININE_MASCULINE =					617;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_NEW_NEUTRAL =									618;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_NEW_FEMININE_MASCULINE =						619;
-//	protected static final short	WORD_PARAMETER_ADJECTIVE_NEXT_NEUTRAL =									620;
-//	protected static final short	WORD_PARAMETER_ADJECTIVE_NEXT_FEMININE_MASCULINE =						621;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_ODD =											622;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_EVEN =											623;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_EARLIER =										624;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_LESS =											625;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_LOWER =										626;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_SMALLER =										627;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_EQUAL =										628;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_SAME =											629;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_BIGGER =										630;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_HIGHER =										631;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_LARGER =										632;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_LATER =										633;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_MORE =											634;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_FEMININE =						611;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_MASCULINE =					612;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL =								613;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_EVERY_FEMININE_MASCULINE =						614;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_PREVIOUS_NEUTRAL =								615;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_PREVIOUS_FEMININE_MASCULINE =					616;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_CURRENT_NEUTRAL =								617;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_CURRENT_FEMININE_MASCULINE =					618;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_NEW_NEUTRAL =									619;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_NEW_FEMININE_MASCULINE =						620;
+//	protected static final short	WORD_PARAMETER_ADJECTIVE_NEXT_NEUTRAL =									621;
+//	protected static final short	WORD_PARAMETER_ADJECTIVE_NEXT_FEMININE_MASCULINE =						622;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_ODD =											623;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_EVEN =											624;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_EARLIER =										625;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_LESS =											626;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_LOWER =										627;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_SMALLER =										628;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_EQUAL =										629;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_SAME =											630;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_BIGGER =										631;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_HIGHER =										632;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_LARGER =										633;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_LATER =										634;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_MORE =											635;
 
 	//	Adverbs
 	protected static final short	WORD_PARAMETER_ADVERB_ANYMORE =											700;
 	protected static final short	WORD_PARAMETER_ADVERB_AS =												701;
-	protected static final short	WORD_PARAMETER_ADVERB_ASSUMPTION_MAY_BE =								702;
+	protected static final short	WORD_PARAMETER_ADVERB_ASSUMPTION_MAYBE =								702;
 	protected static final short	WORD_PARAMETER_ADVERB_ASSUMPTION_POSSIBLY =								703;
 	protected static final short	WORD_PARAMETER_ADVERB_ASSUMPTION_PROBABLY =								704;
 	protected static final short	WORD_PARAMETER_ADVERB_NOT =												705;
@@ -528,17 +537,17 @@ class Constants
 	protected static final short	WORD_PARAMETER_NOUN_DEVELOPER =											1100;
 	protected static final short	WORD_PARAMETER_NOUN_EXPERT =											1101;
 	protected static final short	WORD_PARAMETER_NOUN_FILE =												1102;
-	protected static final short	WORD_PARAMETER_NOUN_GRAMMAR_LANGUAGE =									1103;
-	protected static final short	WORD_PARAMETER_NOUN_INTERFACE_LANGUAGE =								1104;
-	protected static final short	WORD_PARAMETER_NOUN_JUSTIFICATION_REPORT =								1105;
-	protected static final short	WORD_PARAMETER_NOUN_HEAD =												1106;
-	protected static final short	WORD_PARAMETER_NOUN_TAIL =												1107;
-	protected static final short	WORD_PARAMETER_NOUN_MIND =												1108;
-	protected static final short	WORD_PARAMETER_NOUN_NUMBER =											1109;
-	protected static final short	WORD_PARAMETER_NOUN_PASSWORD =											1110;
-	protected static final short	WORD_PARAMETER_NOUN_SOLVE_LEVEL =										1111;
-	protected static final short	WORD_PARAMETER_NOUN_SOLVE_METHOD =										1112;
-	protected static final short	WORD_PARAMETER_NOUN_SOLVE_STRATEGY =									1113;
+	protected static final short	WORD_PARAMETER_NOUN_JUSTIFICATION_REPORT =								1103;
+	protected static final short	WORD_PARAMETER_NOUN_HEAD =												1104;
+	protected static final short	WORD_PARAMETER_NOUN_TAIL =												1105;
+	protected static final short	WORD_PARAMETER_NOUN_LANGUAGE =											1106;
+	protected static final short	WORD_PARAMETER_NOUN_MIND =												1107;
+	protected static final short	WORD_PARAMETER_NOUN_NUMBER =											1108;
+	protected static final short	WORD_PARAMETER_NOUN_PASSWORD =											1109;
+	protected static final short	WORD_PARAMETER_NOUN_SOLVE_LEVEL =										1110;
+	protected static final short	WORD_PARAMETER_NOUN_SOLVE_METHOD =										1111;
+	protected static final short	WORD_PARAMETER_NOUN_SOLVE_STRATEGY =									1112;
+	protected static final short	WORD_PARAMETER_NOUN_STARTUP_LANGUAGE =									1113;
 	protected static final short	WORD_PARAMETER_NOUN_USER =												1115;
 	protected static final short	WORD_PARAMETER_NOUN_INFORMATION =										1116;
 	protected static final short	WORD_PARAMETER_NOUN_PART =												1117;
@@ -563,11 +572,10 @@ class Constants
 
 	//	Prepositions
 	protected static final short	WORD_PARAMETER_PREPOSITION_ABOUT =										2100;
-	protected static final short	WORD_PARAMETER_PREPOSITION_FOR =										2101;
-	protected static final short	WORD_PARAMETER_PREPOSITION_FROM =										2102;
-	protected static final short	WORD_PARAMETER_PREPOSITION_IN =											2103;
-	protected static final short	WORD_PARAMETER_PREPOSITION_TO =											2104;
-	protected static final short	WORD_PARAMETER_PREPOSITION_OF =											2105;
+	protected static final short	WORD_PARAMETER_PREPOSITION_FROM =										2101;
+	protected static final short	WORD_PARAMETER_PREPOSITION_IN =											2102;
+	protected static final short	WORD_PARAMETER_PREPOSITION_TO =											2103;
+	protected static final short	WORD_PARAMETER_PREPOSITION_OF =											2104;
 
 	//	Singular verbs
 	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IS =										2200;
@@ -648,24 +656,23 @@ class Constants
 
 	// ERROR STRING CONSTANTS
 
-	protected static final String	NO_GRAMMAR_NAME_FOUND_STRING =															"{no grammar name found}";
+	protected static final String	NO_LANGUAGE_NAME_FOUND_STRING =															"{no language name found}";
 	protected static final String	NO_USER_NAME_FOUND_STRING =																"{no user name found}";
 
 
 	// INTERFACE CONSTANTS
 
 	protected static final String	INTERFACE_STRING_NOT_AVAILABLE =														"<interface string not available>";
-	protected static final String	NO_INTERFACE_LANGUAGE_AVAILABLE =														"<no interface language available>";
+	protected static final String	NO_LANGUAGE_WORD_FOUND =																"<no language word found>";
 
 	// Console (common)
 	protected static final short	INTERFACE_CONSOLE_START_MESSAGE_GUEST =													101;
 	protected static final short	INTERFACE_CONSOLE_START_MESSAGE_EXPERT =												102;
 	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_INPUT =													103;
 	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_SECURE_INPUT =											104;
-//	protected static final short	INTERFACE_CONSOLE_LOGIN_WELCOME =														106;
-	protected static final short	INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START =												107;
-	protected static final short	INTERFACE_CONSOLE_LOGIN_END =															108;
-	protected static final short	INTERFACE_CONSOLE_LOGIN_FAILED =														109;
+	protected static final short	INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START =												105;
+	protected static final short	INTERFACE_CONSOLE_LOGIN_END =															106;
+	protected static final short	INTERFACE_CONSOLE_LOGIN_FAILED =														107;
 
 	// Console (status and progress)
 	protected static final short	INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START =										110;
@@ -700,6 +707,11 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_BACK =														224;
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_HELP =														225;
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE =											226;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT =												227;
+
+	// Console (font size)
+	protected static final short	INTERFACE_CONSOLE_FONT_SIZE_DECREASE =													230;
+	protected static final short	INTERFACE_CONSOLE_FONT_SIZE_INCREASE =													231;
 
 	// Console (programming/connect4 sub-menu)
 	protected static final short	INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_MY_SET_IS_A =									300;
@@ -750,15 +762,21 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_HAS_2_PARENT_CALLED_JOHN_AND_ANN =				521;
 	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_HAS_2_PARENT_CALLED_JOHN_AND_ANN =				522;
 	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_HAS_2_PARENT_CALLED_JOHN_AND_ANN =				523;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_CHILD_OF_JOHN_AND_ANN =					524;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_CHILD_OF_JOHN_AND_ANN =						525;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_CHILD_OF_JOHN_AND_ANN =					526;
 
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_MAN =										524;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_WOMAN =										525;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_MAN =										526;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_MAN =										527;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_WOMAN =									528;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_BOY =										529;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_BOY =										530;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_GIRL =									531;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_MAN =										527;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_WOMAN =										528;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_MAN =										529;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_MAN =										530;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_WOMAN =									531;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_CHILD =									532;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_CHILD =										533;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_CHILD =									534;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_BOY =										535;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_BOY =										536;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_GIRL =									537;
 
 	// Console (reasoning/family conflict sub-menu)
 	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_JOHN_IS_A_WOMAN =							540;
@@ -808,15 +826,14 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_LAURA =						591;
 
 	// Console (help sub-menu)
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_GRAMMAR_LANGUAGES =							900;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_INTERFACE_LANGUAGES =						901;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_LISTS =										902;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_USERS =										903;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_WORD_TYPES =									904;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_QUERY_COMMANDS =										905;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_COPYRIGHT =												906;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_GPLv2_LICENSE =											907;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_WARRANTY =												908;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_LANGUAGES =									900;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_LISTS =										901;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_USERS =										902;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_WORD_TYPES =									903;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_QUERY_COMMANDS =										904;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_COPYRIGHT =												905;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_GPLv2_LICENSE =											906;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_WARRANTY =												907;
 
 	// Grammar
 	protected static final short	INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_START =										1000;
@@ -858,27 +875,25 @@ class Constants
 
 	// Imperative (notifications)
 	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_MY_MIND_IS_CLEAR =									1200;
-	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_UNDO_SENTENCE_OF_ANOTHER_USER =						1201;
-	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_NO_SENTENCES_LEFT_TO_UNDO =							1202;
-	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_NO_SENTENCES_TO_REDO =								1203;
-	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_UNDONE_SENTENCE_NR_START =						1204;
-	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_UNDONE_SENTENCE_NR_END =						1205;
-	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_START =						1206;
-	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_END =						1207;
-	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_NO =											1208;
+	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_NO_SENTENCES_TO_UNDO =								1201;
+	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_NO_SENTENCES_TO_REDO =								1202;
+	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_UNDONE_SENTENCE_NR_START =						1203;
+	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_UNDONE_SENTENCE_NR_END =						1204;
+	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_START =						1205;
+	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_END =						1206;
+	protected static final short	INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_NO =											1207;
 
 	// Imperative (warnings)
-	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_DONT_HAVE_ANY_INFO_ABOUT_START =							1210;
-	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_DONT_HAVE_ANY_INFO_ABOUT_END =							1211;
+	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_START =		1210;
+	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_END =			1211;
 	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START =			1212;
 	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END =			1213;
 	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_TO_DO_WITH_RELATION =							1214;
 	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_WHICH_FILE_TO_READ =							1215;
-	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_COULD_FIND_SOLVE_INFO_START =							1216;
-	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_COULD_FIND_SOLVE_INFO_END =								1217;
+	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_START =								1216;
+	protected static final short	INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_END =									1217;
 	protected static final short	INTERFACE_IMPERATIVE_WARNING_NEEDS_A_LIST_TO_BE_SPECIFIED =								1218;
 	protected static final short	INTERFACE_IMPERATIVE_WARNING_PREPOSITION_NOT_USED_FOR_THIS_ACTION =						1219;
-
 	protected static final short	INTERFACE_IMPERATIVE_WARNING_WORD_ALREADY_SOLVED_START =								1220;
 	protected static final short	INTERFACE_IMPERATIVE_WARNING_WORD_ALREADY_SOLVED_END =									1221;
 
@@ -906,15 +921,16 @@ class Constants
 	protected static final short	INTERFACE_LISTING_MY_ASSUMPTIONS =														1414;
 	protected static final short	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED =									1415;
 	protected static final short	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED =									1416;
-	protected static final short	INTERFACE_LISTING_MY_QUESTIONS =														1417;
-	protected static final short	INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS =												1418;
-	protected static final short	INTERFACE_LISTING_MY_ANSWER =															1419;
-	protected static final short	INTERFACE_LISTING_I_ONLY_KNOW =															1420;
-	protected static final short	INTERFACE_LISTING_I_AM_NOT_SURE_BUT =													1421;
-	protected static final short	INTERFACE_LISTING_SPECIFICATIONS =														1422;
-	protected static final short	INTERFACE_LISTING_SPECIFICATION_QUESTIONS =												1423;
-	protected static final short	INTERFACE_LISTING_RELATED_INFORMATION =													1424;
-	protected static final short	INTERFACE_LISTING_RELATED_QUESTIONS =													1425;
+	protected static final short	INTERFACE_LISTING_MY_HIDDEN_ASSUMPTIONS_THAT_ARE_CONCLUDED =							1417;
+	protected static final short	INTERFACE_LISTING_MY_QUESTIONS =														1418;
+	protected static final short	INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS =												1419;
+	protected static final short	INTERFACE_LISTING_MY_ANSWER =															1420;
+	protected static final short	INTERFACE_LISTING_I_ONLY_KNOW =															1421;
+	protected static final short	INTERFACE_LISTING_I_AM_NOT_SURE_BUT =													1422;
+	protected static final short	INTERFACE_LISTING_SPECIFICATIONS =														1423;
+	protected static final short	INTERFACE_LISTING_SPECIFICATION_QUESTIONS =												1424;
+	protected static final short	INTERFACE_LISTING_RELATED_INFORMATION =													1425;
+	protected static final short	INTERFACE_LISTING_RELATED_QUESTIONS =													1426;
 
 	// Listing (old information)
 	protected static final short	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION =							1430;
@@ -962,6 +978,8 @@ class Constants
 	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_DEFINITE_ARTICLE_WITH_NOUN_START =			1613;
 	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_INDEFINITE_ARTICLE_WITH_NOUN_START =		1614;
 	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END =		1615;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_START =		1616;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_END =		1617;
 
 	// Sentence (warnings)
 	protected static final short	INTERFACE_SENTENCE_WARNING_NOT_CONFORM_GRAMMAR =										1620;

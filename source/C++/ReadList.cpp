@@ -2,11 +2,11 @@
  *	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -38,7 +38,6 @@ class ReadList : private List
 
 	// Private constructible variables
 
-	unsigned short lastCreatedWordOrderNr_;
 	unsigned short lastActivatedWordOrderNr_;
 
 	protected:
@@ -46,7 +45,6 @@ class ReadList : private List
 
 	ReadList( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
-		lastCreatedWordOrderNr_ = NO_ORDER_NR;
 		lastActivatedWordOrderNr_ = NO_ORDER_NR;
 
 		initializeListVariables( ADMIN_READ_LIST_SYMBOL, "ReadList", commonVariables, myWordItem );
@@ -72,6 +70,9 @@ class ReadList : private List
 			searchItem = searchItem->nextReadItem();
 			delete deleteItem;
 			}
+
+		if( firstArchivedItem() )
+			fprintf( stderr, "\nError: Class ReadList has archived items." );
 
 		searchItem = (ReadItem *)firstReplacedItem();
 
@@ -137,25 +138,31 @@ class ReadList : private List
 		WordItem *readWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteInvalidPartOfMultipleWordReadItems";
 
-		while( searchItem != NULL )
+		if( sentenceString != NULL )
 			{
-			if( searchItem->wordOrderNr() == wordOrderNr &&
-			( readWordItem = searchItem->readWordItem() ) != NULL )
+			while( searchItem != NULL )
 				{
-				if( readWordItem->isMultipleWord() &&
-				!readWordItem->isMultipleNounWordStartingWith( sentenceString ) )
+				if( searchItem->wordOrderNr() == wordOrderNr &&
+				( readWordItem = searchItem->readWordItem() ) != NULL )
 					{
-					if( deleteItem( false, searchItem ) == RESULT_OK )
-						searchItem = nextReadListItem();
+					if( readWordItem->isMultipleWord() &&
+					// No matching multiple word parts
+					readWordItem->matchingMultipleSingularNounWordParts( sentenceString ) == 0 )
+						{
+						if( deleteItem( false, searchItem ) == RESULT_OK )
+							searchItem = nextReadListItem();
+						else
+							return addError( functionNameString, NULL, NULL, "I failed to delete an active read item" );
+						}
 					else
-						return addError( functionNameString, NULL, NULL, "I failed to delete an active read item" );
+						searchItem = searchItem->nextReadItem();
 					}
 				else
 					searchItem = searchItem->nextReadItem();
 				}
-			else
-				searchItem = searchItem->nextReadItem();
 			}
+		else
+			return startError( functionNameString, NULL, NULL, "The given sentence string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -163,62 +170,9 @@ class ReadList : private List
 
 	// Protected functions
 
-	void initForParsingReadWords()
+	void clearLastActivatedWordOrderNr()
 		{
 		lastActivatedWordOrderNr_ = NO_ORDER_NR;
-		}
-
-	bool isImperativeSentence()
-		{
-		unsigned short previousWordOrderNr = NO_ORDER_NR;
-		unsigned int nWords = 0;
-		char *readWordString;
-		ReadItem *startItem = NULL;
-		ReadItem *searchItem = firstActiveReadItem();
-
-		strcpy( commonVariables()->writeSentenceString, EMPTY_STRING );
-
-		while( searchItem != NULL )
-			{
-			if( ( nWords > 0 ||
-			searchItem->isSpecificationWord() ) &&				// Trigger
-
-			searchItem->wordOrderNr() > previousWordOrderNr )	// First appearance of new word
-				{
-				nWords++;
-				previousWordOrderNr = searchItem->wordOrderNr();
-
-				if( startItem == NULL )
-					startItem = searchItem;
-				}
-
-			searchItem = searchItem->nextReadItem();
-			}
-
-		if( nWords > 2 )	// Start creation of imperative sentence
-			{
-			previousWordOrderNr = NO_ORDER_NR;
-			searchItem = startItem;
-
-			while( searchItem != NULL )
-				{
-				if( searchItem->wordOrderNr() > previousWordOrderNr &&
-				searchItem->readWordItem() != NULL &&	// Skip text
-				( readWordString = searchItem->readWordTypeString() ) != NULL )
-					{
-					if( previousWordOrderNr > NO_ORDER_NR &&
-					searchItem->grammarParameter != GRAMMAR_SENTENCE )	// End of string (colon, question mark, etc)
-						strcat( commonVariables()->writeSentenceString, SPACE_STRING );
-
-					previousWordOrderNr = searchItem->wordOrderNr();
-					strcat( commonVariables()->writeSentenceString, readWordString );
-					}
-
-				searchItem = searchItem->nextReadItem();
-				}
-			}
-
-		return ( nWords > 2 );
 		}
 
 	bool hasFoundReadItem( unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, char *readString, WordItem *readWordItem )
@@ -247,24 +201,62 @@ class ReadList : private List
 		return false;
 		}
 
-	bool hasPassedGrammarIntegrityCheck()
+	bool isImperativeSentence()
 		{
+		unsigned short previousWordOrderNr = NO_ORDER_NR;
+		unsigned int nWords = 0;
+		char *readWordString;
+		ReadItem *startItem = NULL;
 		ReadItem *searchItem = firstActiveReadItem();
+
+		strcpy( commonVariables()->writeSentenceString, EMPTY_STRING );
 
 		while( searchItem != NULL )
 			{
-			if( !searchItem->hasWordPassedGrammarIntegrityCheck )
-				return false;
+			if( ( nWords > 0 ||
+			// Trigger
+			searchItem->isSpecificationWord() ) &&
+
+			// First appearance of new word
+			searchItem->wordOrderNr() > previousWordOrderNr )
+				{
+				nWords++;
+				previousWordOrderNr = searchItem->wordOrderNr();
+
+				if( startItem == NULL )
+					startItem = searchItem;
+				}
 
 			searchItem = searchItem->nextReadItem();
 			}
 
-		return true;
-		}
+		// Start creation of imperative sentence
+		if( nWords > 2 )
+			{
+			previousWordOrderNr = NO_ORDER_NR;
+			searchItem = startItem;
 
-	unsigned short lastCreatedWordOrderNr()
-		{
-		return lastCreatedWordOrderNr_;
+			while( searchItem != NULL )
+				{
+				if( searchItem->wordOrderNr() > previousWordOrderNr &&
+				// Skip text
+				searchItem->readWordItem() != NULL &&
+				( readWordString = searchItem->readWordTypeString() ) != NULL )
+					{
+					if( previousWordOrderNr > NO_ORDER_NR &&
+					// End of string (colon, question mark, etc)
+					searchItem->grammarParameter != GRAMMAR_SENTENCE )
+						strcat( commonVariables()->writeSentenceString, SPACE_STRING );
+
+					previousWordOrderNr = searchItem->wordOrderNr();
+					strcat( commonVariables()->writeSentenceString, readWordString );
+					}
+
+				searchItem = searchItem->nextReadItem();
+				}
+			}
+
+		return ( nWords > 2 );
 		}
 
 	ReadResultType createReadItem( unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, size_t readStringLength, char *readString, WordItem *readWordItem )
@@ -279,9 +271,7 @@ class ReadList : private List
 				{
 				if( ( readResult.createdReadItem = new ReadItem( wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, commonVariables(), this, myWordItem() ) ) != NULL )
 					{
-					if( addItemToList( QUERY_ACTIVE_CHAR, readResult.createdReadItem ) == RESULT_OK )
-						lastCreatedWordOrderNr_ = wordOrderNr;
-					else
+					if( addItemToList( QUERY_ACTIVE_CHAR, readResult.createdReadItem ) != RESULT_OK )
 						addError( functionNameString, NULL, NULL, "I failed to add an active read item" );
 					}
 				else
@@ -321,7 +311,7 @@ class ReadList : private List
 			readResult.hasFoundMoreInterpretations = true;
 			lastActivatedWordOrderNr_ = inactiveReadItem->wordOrderNr();
 
-			if( activateItem( false, inactiveReadItem ) != RESULT_OK )
+			if( activateItem( inactiveReadItem ) != RESULT_OK )
 				addError( functionNameString, NULL, NULL, "I failed to active an inactive item" );
 			}
 
@@ -373,7 +363,8 @@ class ReadList : private List
 		ReadItem *currentReadItem = firstActiveReadItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "selectMatchingWordType";
 
-		if( currentWordOrderNr > NO_ORDER_NR )	// Find current word position
+		// Find current word position
+		if( currentWordOrderNr > NO_ORDER_NR )
 			{
 			while( currentReadItem != NULL &&
 			currentReadItem->wordOrderNr() <= currentWordOrderNr )
@@ -394,7 +385,7 @@ class ReadList : private List
 						while( commonVariables()->result == RESULT_OK &&
 						activeReadItem != currentReadItem )
 							{
-							if( inactivateItem( false, activeReadItem ) == RESULT_OK )
+							if( inactivateItem( activeReadItem ) == RESULT_OK )
 								activeReadItem = nextReadListItem();
 							else
 								addError( functionNameString, NULL, NULL, "I failed to inactive an active item" );
@@ -407,7 +398,8 @@ class ReadList : private List
 			while( commonVariables()->result == RESULT_OK &&
 			!readResult.hasFoundMatchingWordType &&
 			currentReadItem != NULL &&
-			currentReadItem->wordOrderNr() == currentWordOrderNr + 1 &&		// Only check this word position
+			// Only check this word position
+			currentReadItem->wordOrderNr() == currentWordOrderNr + 1 &&
 			currentReadItem->wordOrderNr() > lastActivatedWordOrderNr_ );
 			}
 
@@ -425,7 +417,7 @@ class ReadList : private List
 			if( !searchItem->isPreposition() &&
 			searchItem->wordOrderNr() > wordOrderNr )
 				{
-				if( activateItem( false, searchItem ) == RESULT_OK )
+				if( activateItem( searchItem ) == RESULT_OK )
 					searchItem = nextReadListItem();
 				else
 					return addError( functionNameString, NULL, NULL, "I failed to activate an inactive item" );
@@ -500,7 +492,6 @@ class ReadList : private List
 									{
 									searchItem->isMarkedBySetGrammarParameter = false;
 									searchItem->grammarParameter = definitionGrammarItem->grammarParameter();
-
 									searchItem->definitionGrammarItem = definitionGrammarItem;
 
 									if( searchItem->readString == NULL &&

@@ -2,11 +2,11 @@
  *	Class:			WordCollection
  *	Supports class:	WordItem
  *	Purpose:		To create collection structures
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -60,13 +60,11 @@ class WordCollection
 		myWordItem_ = myWordItem;
 		strcpy( moduleNameString_, "WordCollection" );
 
-		if( commonVariables_ != NULL )
-			{
+		if( commonVariables_ == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+
 		if( myWordItem_ == NULL )
 			strcpy( errorString, "The given my word is undefined" );
-			}
-		else
-			strcpy( errorString, "The given common variables is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
@@ -84,7 +82,7 @@ class WordCollection
 
 	// Protected functions
 
-	CollectionResultType addCollection( bool isExclusiveSpecification, bool isSpecificationGeneralization, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem, char *collectionString )
+	CollectionResultType addCollection( bool isExclusiveSpecification, bool isSpecificationGeneralization, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem )
 		{
 		CollectionResultType collectionResult;
 		bool hasFoundCollection = false;
@@ -98,88 +96,86 @@ class WordCollection
 
 		if( !myWordItem_->isAdminWord() )
 			{
-			if( collectionString == NULL )
+			if( collectionWordItem != NULL )
 				{
-				if( collectionWordItem != NULL )
+				if( commonWordItem != NULL )
 					{
-					if( commonWordItem != NULL )
+					if( collectionWordItem != myWordItem_ )
 						{
-						if( collectionWordItem != myWordItem_ )
+						if( collectionWordTypeNr == WORD_TYPE_NOUN_PLURAL )
+							collectionWordTypeNr = WORD_TYPE_NOUN_SINGULAR;
+
+						if( myWordItem_->hasWordType( collectionWordTypeNr ) )
 							{
-							if( collectionWordTypeNr == WORD_TYPE_NOUN_PLURAL )
-								collectionWordTypeNr = WORD_TYPE_NOUN_SINGULAR;
-
-							if( myWordItem_->hasWordType( collectionWordTypeNr ) )
+							if( collectionWordItem->hasWordType( collectionWordTypeNr ) )
 								{
-								if( collectionWordItem->hasWordType( collectionWordTypeNr ) )
+								if( collectionNr == NO_COLLECTION_NR )
 									{
-									if( collectionNr == NO_COLLECTION_NR )
-										{
-										if( ( collectionNr = myWordItem_->highestCollectionNrInAllWords() ) < MAX_COLLECTION_NR )
-											collectionResult.createdCollectionNr = ++collectionNr;
-										else
-											myWordItem_->startSystemErrorInWord( functionNameString, moduleNameString_, "Collection number overflow" );
-										}
+									if( ( collectionNr = myWordItem_->highestCollectionNrInAllWords() ) < MAX_COLLECTION_NR )
+										collectionResult.createdCollectionNr = ++collectionNr;
+									else
+										myWordItem_->startSystemErrorInWord( functionNameString, moduleNameString_, "Collection number overflow" );
+									}
 
-									if( ( foundCollectionNr = myWordItem_->collectionNr( collectionWordTypeNr, commonWordItem ) ) > NO_COLLECTION_NR )
+								foundCollectionNr = myWordItem_->collectionNr( collectionWordTypeNr, commonWordItem );
+
+								if( foundCollectionNr > NO_COLLECTION_NR &&
+								foundCollectionNr != collectionNr )
+									{
+									if( isSpecificationGeneralization )
+										isDuplicateCollection = true;
+									else
 										{
-										if( foundCollectionNr != collectionNr )
-											{
-											if( isSpecificationGeneralization )
-												isDuplicateCollection = true;
-											else
-												{
-												// Detected semantic ambiguity of the specification word
-												if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START, commonWordItem->wordTypeString( true, commonWordTypeNr ), INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD, myWordItem_->wordTypeString( true, foundCollectionWordTypeNr ), INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END ) == RESULT_OK )
-													collectionResult.isAmbiguousCollection = true;
-												else
-													myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about ambiguity" );
-												}
-											}
+										// Detected semantic ambiguity of the specification word
+										if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START, commonWordItem->wordTypeString( true, commonWordTypeNr ), INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD, myWordItem_->wordTypeString( true, foundCollectionWordTypeNr ), INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END ) == RESULT_OK )
+											collectionResult.isAmbiguousCollection = true;
+										else
+											myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about ambiguity" );
 										}
 									}
-								else
-									myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The collection word item doesn't have the requested word type number: ", collectionWordTypeNr );
+
+								if( commonVariables_->result == RESULT_OK &&
+								!isDuplicateCollection )
+									{
+									if( myWordItem_->collectionList == NULL )
+										{
+										// Create list
+										if( ( myWordItem_->collectionList = new CollectionList( commonVariables_, myWordItem_ ) ) != NULL )
+											myWordItem_->wordListArray[WORD_COLLECTION_LIST] = myWordItem_->collectionList;
+										else
+											myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I failed to create a collection list" );
+										}
+									else
+										{
+										if( collectionResult.createdCollectionNr == NO_COLLECTION_NR  )
+											// Check if collection already exists
+											hasFoundCollection = myWordItem_->collectionList->hasCollection( collectionNr, collectionWordItem, commonWordItem );
+										}
+
+									if( commonVariables_->result == RESULT_OK &&
+									!hasFoundCollection )
+										{
+										if( ( collectionOrderNr = myWordItem_->highestCollectionOrderNrInAllWords( collectionNr ) ) < MAX_ORDER_NR - 1 )
+											myWordItem_->collectionList->createCollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem );
+										else
+											myWordItem_->startSystemErrorInWord( functionNameString, moduleNameString_, "Collection order number overflow" );
+										}
+									}
 								}
 							else
-								myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I don't have the requested word type number: ", collectionWordTypeNr );
+								myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The collection word item doesn't have the requested word type number: ", collectionWordTypeNr );
 							}
 						else
-							myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given collected word is the same as my word" );
+							myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I don't have the requested word type number: ", collectionWordTypeNr );
 						}
 					else
-						myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given common word is undefined" );
+						myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given collected word is the same as my word" );
 					}
 				else
-					myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given collected word is undefined" );
+					myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given common word is undefined" );
 				}
-
-			if( commonVariables_->result == RESULT_OK &&
-			!isDuplicateCollection )
-				{
-				if( myWordItem_->collectionList == NULL )
-					{
-					// Create list
-					if( ( myWordItem_->collectionList = new CollectionList( commonVariables_, myWordItem_ ) ) != NULL )
-						myWordItem_->wordListArray[WORD_COLLECTION_LIST] = myWordItem_->collectionList;
-					else
-						myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I failed to create a collection list" );
-					}
-				else
-					// Check if collection already exists
-					hasFoundCollection = myWordItem_->collectionList->hasCollection( collectionNr, collectionWordItem, commonWordItem );
-
-				if( !hasFoundCollection )
-					{
-					if( ( collectionOrderNr = myWordItem_->highestCollectionOrderNrInAllWords( collectionNr ) ) < MAX_ORDER_NR - 1 )
-						{
-						if( commonVariables_->result == RESULT_OK )
-							myWordItem_->collectionList->createCollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, collectionString );
-						}
-					else
-						myWordItem_->startSystemErrorInWord( functionNameString, moduleNameString_, "Collection order number overflow" );
-					}
-				}
+			else
+				myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given collected word is undefined" );
 			}
 		else
 			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The admin word item cannot have collections" );
@@ -205,9 +201,9 @@ class WordCollection
 					{
 					if( collectionWordItem != myWordItem_ )
 						{
-						if( myWordItem_->isNoun() )
+						if( myWordItem_->isSingularOrPluralNoun( collectionWordTypeNr ) )
 							{
-							if( collectionWordItem->isNoun() )
+							if( myWordItem_->isSingularOrPluralNoun( commonWordTypeNr ) )
 								{
 								if( ( currentSpecificationItem = myWordItem_->firstNonQuestionSpecificationItem() ) != NULL )
 									{
@@ -228,9 +224,9 @@ class WordCollection
 														{
 														if( !collectionResult.isCollected )
 															{
-															if( ( collectionResult = foundCollectionWordItem_->addCollection( isExclusiveSpecification, false, collectionWordTypeNr, commonWordTypeNr, NO_COLLECTION_NR, collectionWordItem, myWordItem_, NULL, NULL ) ).result == RESULT_OK )
+															if( ( collectionResult = foundCollectionWordItem_->addCollection( isExclusiveSpecification, false, collectionWordTypeNr, commonWordTypeNr, NO_COLLECTION_NR, collectionWordItem, myWordItem_, NULL ) ).result == RESULT_OK )
 																{
-																if( collectionWordItem->addCollection( isExclusiveSpecification, false, collectionWordTypeNr, commonWordTypeNr, collectionResult.createdCollectionNr, foundCollectionWordItem_, myWordItem_, NULL, NULL ).result == RESULT_OK )
+																if( collectionWordItem->addCollection( isExclusiveSpecification, false, collectionWordTypeNr, commonWordTypeNr, collectionResult.createdCollectionNr, foundCollectionWordItem_, myWordItem_, NULL ).result == RESULT_OK )
 																	{
 																	hasCreatedCollection_ = true;
 																	foundCollectionWordItem_ = NULL;
@@ -254,10 +250,10 @@ class WordCollection
 									}
 								}
 							else
-								myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given collected word isn't a noun" );
+								myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given common word type isn't a noun" );
 							}
 						else
-							myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I am not a noun" );
+							myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given collected word type isn't a noun" );
 						}
 					else
 						myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given collected word item is the same as my word" );
@@ -276,7 +272,7 @@ class WordCollection
 		return collectionResult;
 		}
 
-	CollectionResultType addCollectionByGeneralization( bool isExclusiveSpecification, bool isExclusiveGeneralization, bool isQuestion, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, WordItem *generalizationWordItem, WordItem *collectionWordItem )
+	ResultType addCollectionByGeneralization( bool isExclusiveSpecification, bool isExclusiveGeneralization, bool isQuestion, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, WordItem *generalizationWordItem, WordItem *collectionWordItem )
 		{
 		CollectionResultType collectionResult;
 		unsigned int collectionNr;
@@ -291,14 +287,13 @@ class WordCollection
 			{
 			if( !hasCreatedCollection_ &&
 			foundGeneralizationWordItem_ == NULL &&
-			( currentGeneralizationItem = myWordItem_->firstGeneralizationItem() ) != NULL )
+			( currentGeneralizationItem = myWordItem_->firstNounSpecificationGeneralizationItem() ) != NULL )
 				{
 				do	{
 					if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) != NULL )
 						{
 						if( currentGeneralizationWordItem != collectionWordItem &&
-						currentGeneralizationWordItem != generalizationWordItem &&
-						currentGeneralizationWordItem->isNoun() )
+						currentGeneralizationWordItem != generalizationWordItem )
 							{
 							if( ( collectionResult = currentGeneralizationWordItem->addCollectionByExclusiveSpecification( isExclusiveSpecification, collectionWordTypeNr, commonWordTypeNr, generalizationWordItem, collectionWordItem ) ).result == RESULT_OK )
 								{
@@ -309,26 +304,24 @@ class WordCollection
 									{
 									// Collect by generalization
 									if( foundGeneralizationWordItem->collectGeneralizationsOrSpecifications( isExclusiveGeneralization, false, isQuestion, collectionNr ) != RESULT_OK )
-										myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to collect generalizations and specifications in word \"", foundGeneralizationWordItem->anyWordTypeString(), "\"" );
+										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to collect generalizations and specifications in word \"", foundGeneralizationWordItem->anyWordTypeString(), "\"" );
 									}
 								}
 							else
-								myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to add a specification collection by exclusive specification in word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
+								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to add a specification collection by exclusive specification in word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
 							}
 						}
 					else
-						myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I found an undefined generalization word" );
+						return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I've found an undefined generalization word" );
 					}
-				while( commonVariables_->result == RESULT_OK &&
-				collectionResult.foundGeneralizationWordItem == NULL &&
-				( currentGeneralizationItem = currentGeneralizationItem->nextGeneralizationItem() ) != NULL );
+				while( collectionResult.foundGeneralizationWordItem == NULL &&
+				( currentGeneralizationItem = currentGeneralizationItem->nextNounSpecificationGeneralizationItem() ) != NULL );
 				}
 			}
 		else
-			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given collection word item is undefined" );
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given collection word item is undefined" );
 
-		collectionResult.result = commonVariables_->result;
-		return collectionResult;
+		return RESULT_OK;
 		}
 	};
 

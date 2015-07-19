@@ -3,11 +3,11 @@
  *	Supports class:	AdminItem
  *	Purpose:		Trying to solve (= to assign) words according to the
  *					given selections
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -53,7 +53,6 @@ class AdminSolve
 	private SpecificationItem secondComparisonAssignmentItem_;
 
 	private AdminItem adminItem_;
-	private WordItem myWordItem_;
 	private String moduleNameString_;
 
 
@@ -112,14 +111,14 @@ class AdminSolve
 						else
 							{
 							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, specificationWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != Constants.RESULT_OK )
-								return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
 							}
 						}
 					}
 				}
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -139,7 +138,7 @@ class AdminSolve
 		return CommonVariables.result;
 		}
 
-	private byte backTrackConditionScorePaths( boolean isAddScores, boolean isInverted, boolean duplicatesAllowed, boolean prepareSort, short executionLevel, short solveStrategyParameter, int conditionSentenceNr )
+	private byte backTrackConditionScorePaths( boolean isAddingScores, boolean isInverted, boolean isAllowingDuplicates, boolean isPreparingSort, short executionLevel, short solveStrategyParameter, int conditionSentenceNr )
 		{
 		boolean isNewStart;
 		boolean isWaitingForNewLevel;
@@ -151,10 +150,12 @@ class AdminSolve
 		short unhandledSelectionLevel;
 		SelectionItem conditionSelectionItem;
 		SelectionItem previousConditionSelectionItem;
+		ScoreList scoreList;
+		SelectionList conditionList;
 
-		if( adminItem_.conditionList != null )
+		if( ( conditionList = adminItem_.conditionList ) != null )
 			{
-			adminItem_.conditionList.clearConditionChecksForSolving( Constants.MAX_LEVEL, conditionSentenceNr );
+			conditionList.clearConditionChecksForSolving( Constants.MAX_LEVEL, conditionSentenceNr );
 
 			do	{
 				isWaitingForNewLevel = false;
@@ -164,9 +165,9 @@ class AdminSolve
 				unhandledSelectionLevel = Constants.MAX_LEVEL;
 				previousConditionSelectionItem = null;
 
-				if( ( conditionSelectionItem = adminItem_.conditionList.firstConditionSelectionItem( conditionSentenceNr ) ) != null )
+				if( ( conditionSelectionItem = conditionList.firstConditionSelectionItem( conditionSentenceNr ) ) != null )
 					{
-					if( isAddScores )
+					if( isAddingScores )
 						{
 						oldSatisfiedScore_ = Constants.NO_SCORE;
 						newSatisfiedScore_ = Constants.NO_SCORE;
@@ -187,11 +188,13 @@ class AdminSolve
 						else
 							{
 							if( isNewStart &&
-							previousConditionSelectionItem != null )											// Not first start item
+							// Not first start item
+							previousConditionSelectionItem != null )
 								{
 								isWaitingForNewStart = false;
 
-								if( selectionLevel == previousSelectionLevel )			// Second brance on the same level
+								// Second brance on the same level
+								if( selectionLevel == previousSelectionLevel )
 									{
 									if( !isWaitingForNewLevel )
 										{
@@ -199,10 +202,12 @@ class AdminSolve
 											{
 											handledSelectionLevel = selectionLevel;
 
-											if( previousConditionSelectionItem.isConditionCheckedForSolving )	// This is a new brance
+											// This is a new brance
+											if( previousConditionSelectionItem.isConditionCheckedForSolving )
 												conditionSelectionItem.isConditionCheckedForSolving = true;
-											else						// The previous brance was a new brance and this one is unhandled
+											else
 												{
+												// The previous brance was a new brance and this one is unhandled
 												isWaitingForNewLevel = true;
 												unhandledSelectionLevel = selectionLevel;
 												previousConditionSelectionItem.isConditionCheckedForSolving = true;
@@ -212,20 +217,22 @@ class AdminSolve
 											{
 											isWaitingForNewLevel = true;
 
-											if( unhandledSelectionLevel == Constants.MAX_LEVEL )	// This brance isn't handled yet
+											// This brance isn't handled yet
+											if( unhandledSelectionLevel == Constants.MAX_LEVEL )
 												unhandledSelectionLevel = selectionLevel;
 											}
 										}
 									}
-								else									// New start on a new level
+								else
+									// New start on a new level
 									isWaitingForNewLevel = false;
 								}
 
 							if( !isWaitingForNewLevel &&
 							!isWaitingForNewStart )
 								{
-								if( calculateScorePaths( isInverted, duplicatesAllowed, prepareSort, solveStrategyParameter, conditionSelectionItem ) != Constants.RESULT_OK )
-									return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to calculate the score paths" );
+								if( calculateScorePaths( isInverted, isAllowingDuplicates, isPreparingSort, solveStrategyParameter, conditionSelectionItem ) != Constants.RESULT_OK )
+									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to calculate the score paths" );
 								}
 							}
 
@@ -242,11 +249,13 @@ class AdminSolve
 						// so start again with the handled brances (by clearing their checks) until all paths are handled
 						if( unhandledSelectionLevel < Constants.MAX_LEVEL &&
 						handledSelectionLevel < unhandledSelectionLevel )
-							adminItem_.conditionList.clearConditionChecksForSolving( unhandledSelectionLevel, conditionSentenceNr );
+							conditionList.clearConditionChecksForSolving( unhandledSelectionLevel, conditionSentenceNr );
 
-						if( isAddScores )
+						if( isAddingScores )
 							{
-							if( adminItem_.scoreList == null ||
+							scoreList = adminItem_.scoreList;
+
+							if( scoreList == null ||
 							( oldSatisfiedScore_ == Constants.NO_SCORE &&
 							newSatisfiedScore_ == Constants.NO_SCORE &&
 							oldDissatisfiedScore_ == Constants.NO_SCORE &&
@@ -258,31 +267,31 @@ class AdminSolve
 								hasFoundScore = false;
 							else
 								{
-								if( adminItem_.scoreList.checkScores( isInverted, solveStrategyParameter, oldSatisfiedScore_, newSatisfiedScore_, oldDissatisfiedScore_, newDissatisfiedScore_, oldNotBlockingScore_, newNotBlockingScore_, oldBlockingScore_, newBlockingScore_ ) == Constants.RESULT_OK )
-									hasFoundScore = adminItem_.scoreList.hasFoundScore();
+								if( scoreList.checkScores( isInverted, solveStrategyParameter, oldSatisfiedScore_, newSatisfiedScore_, oldDissatisfiedScore_, newDissatisfiedScore_, oldNotBlockingScore_, newNotBlockingScore_, oldBlockingScore_, newBlockingScore_ ) == Constants.RESULT_OK )
+									hasFoundScore = scoreList.hasFoundScore();
 								else
-									return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to check the scores" );
+									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check the scores" );
 								}
 
 							if( !hasFoundScore &&
-							duplicatesAllowed &&
+							isAllowingDuplicates &&
 							CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL )
 								{
 								if( createScore( ( CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL ), oldSatisfiedScore_, newSatisfiedScore_, oldDissatisfiedScore_, newDissatisfiedScore_, oldNotBlockingScore_, newNotBlockingScore_, oldBlockingScore_, newBlockingScore_, null ) != Constants.RESULT_OK )
-									return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to create an empty solve score" );
+									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to create an empty solve score" );
 								}
 							}
 						}
 					else
-						return myWordItem_.startErrorInItem( 1, moduleNameString_, "I couldn't reach the given execution level " + executionLevel + ". The highest reached level was " + handledSelectionLevel );
+						return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't reach the given execution level " + executionLevel + ". The highest reached level was " + handledSelectionLevel );
 					}
 				else
-					return myWordItem_.startErrorInItem( 1, moduleNameString_, "I couldn't get the first item of the condition with sentence number " + conditionSentenceNr );
+					return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't get the first item of the condition with sentence number " + conditionSentenceNr );
 				}
 			while( unhandledSelectionLevel < Constants.MAX_LEVEL );
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The condition list isn't created yet" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The condition list isn't created yet" );
 
 		return Constants.RESULT_OK;
 		}
@@ -292,27 +301,29 @@ class AdminSolve
 		SelectionResultType selectionResult;
 		SelectionItem originalExecutionSelectionItem = currentExecutionSelectionItem_;
 		WordItem specificationWordItem;
+		SelectionList actionList;
+		SelectionList alternativeList;
 
 		canWordBeSolved_ = false;
 
 		if( isAction )
 			{
-			if( adminItem_.actionList != null )
+			if( ( actionList = adminItem_.actionList ) != null )
 				{
-				if( ( selectionResult = adminItem_.actionList.findFirstExecutionItem( solveWordItem ) ).result == Constants.RESULT_OK )
+				if( ( selectionResult = actionList.findFirstExecutionItem( solveWordItem ) ).result == Constants.RESULT_OK )
 					currentExecutionSelectionItem_ = selectionResult.firstExecutionItem;
 				else
-					return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the first action execution selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
+					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the first action execution selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
 				}
 			}
 		else
 			{
-			if( adminItem_.alternativeList != null )
+			if( ( alternativeList = adminItem_.alternativeList ) != null )
 				{
-				if( ( selectionResult = adminItem_.alternativeList.findFirstExecutionItem( solveWordItem ) ).result == Constants.RESULT_OK )
+				if( ( selectionResult = alternativeList.findFirstExecutionItem( solveWordItem ) ).result == Constants.RESULT_OK )
 					currentExecutionSelectionItem_ = selectionResult.firstExecutionItem;
 				else
-					return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the first alternative execution selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
+					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the first alternative execution selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
 				}
 			}
 
@@ -326,7 +337,7 @@ class AdminSolve
 						if( currentExecutionSelectionItem_.isValueSpecification() )
 							{
 							if( canWordBeSolved( specificationWordItem ) != Constants.RESULT_OK )
-								return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if value specification word \"" + specificationWordItem.anyWordTypeString() + "\" can be solved" );
+								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if value specification word \"" + specificationWordItem.anyWordTypeString() + "\" can be solved" );
 							}
 						else
 							{
@@ -334,16 +345,17 @@ class AdminSolve
 								canWordBeSolved_ = true;
 							}
 						}
-					else	// Word has active assignments
+					else
+						// Word has active assignments
 						canWordBeSolved_ = true;
 
 					if( currentExecutionSelectionItem_.findNextExecutionSelectionItem( solveWordItem ) == Constants.RESULT_OK )
 						currentExecutionSelectionItem_ = currentExecutionSelectionItem_.nextExecutionItem();
 					else
-						return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the next execution selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
+						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the next execution selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
 					}
 				else
-					return myWordItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the current execution selection item is undefined" );
+					return adminItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the current execution selection item is undefined" );
 				}
 			while( !canWordBeSolved_ );
 			}
@@ -353,7 +365,24 @@ class AdminSolve
 		return Constants.RESULT_OK;
 		}
 
-	protected byte checkComparison( SelectionItem conditionSelectionItem )
+	private byte canWordBeSolved( WordItem solveWordItem )
+		{
+		if( canWordBeSolved( true, solveWordItem ) == Constants.RESULT_OK )
+			{
+			if( !canWordBeSolved_ &&
+			!CommonVariables.hasShownWarning )
+				{
+				if( canWordBeSolved( false, solveWordItem ) != Constants.RESULT_OK )
+					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if a word can be solved by an alternative action" );
+				}
+			}
+		else
+			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if a word can be solved by an action" );
+
+		return Constants.RESULT_OK;
+		}
+
+	private byte checkComparison( SelectionItem conditionSelectionItem )
 		{
 		boolean isNegative;
 		boolean isNumeralRelation;
@@ -380,24 +409,27 @@ class AdminSolve
 					isNegative = conditionSelectionItem.isNegative();
 					relationWordItem = conditionSelectionItem.relationWordItem();
 
-					if( conditionSelectionItem.isFirstComparisonPart() )			// First part
+					// First part
+					if( conditionSelectionItem.isFirstComparisonPart() )
 						{
 						if( getComparisonAssignment( false, specificationWordItem, relationWordItem ) == Constants.RESULT_OK )
 							{
-							isConditionSatisfied_ = true;	// Allow the second part of the comparison to be checked
+							// Allow the second part of the comparison to be checked
+							isConditionSatisfied_ = true;
 
 							firstComparisonAssignmentItem_ = comparisonAssignmentItem_;
 							secondComparisonAssignmentItem_ = null;
 							}
 						else
-							return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed get the first comparison assignment" );
+							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed get the first comparison assignment" );
 						}
 					else
 						{
 						isNumeralRelation = conditionSelectionItem.isNumeralRelation();
 
 						if( !isNumeralRelation &&
-						conditionSelectionItem.specificationString() == null )		// Second part
+						// Second part
+						conditionSelectionItem.specificationString() == null )
 							{
 							if( getComparisonAssignment( false, specificationWordItem, relationWordItem ) == Constants.RESULT_OK )
 								{
@@ -410,10 +442,11 @@ class AdminSolve
 								secondString = ( secondSpecificationWordItem == null ? null : secondSpecificationWordItem.anyWordTypeString() );
 								}
 							else
-								return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed get a comparison assignment" );
+								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed get a comparison assignment" );
 							}
-						else	// Numeral or specification string
+						else
 							{
+							// Numeral or specification string
 							if( getComparisonAssignment( isNumeralRelation, specificationWordItem, relationWordItem ) == Constants.RESULT_OK )
 								{
 								if( comparisonAssignmentItem_ != null )
@@ -423,7 +456,7 @@ class AdminSolve
 								secondString = ( isNumeralRelation ? ( relationWordItem == null ? null : relationWordItem.anyWordTypeString() ) : conditionSelectionItem.specificationString() );
 								}
 							else
-								return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed get the first comparison assignment" );
+								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed get the first comparison assignment" );
 							}
 
 						if( firstString == null ||
@@ -454,24 +487,24 @@ class AdminSolve
 								if( generalizationWordItem.isAdjectiveComparisonMore() )
 									isConditionSatisfied_ = ( comparisonResult > 0 ? !isNegative : isNegative );
 								else
-									return myWordItem_.startErrorInItem( 1, moduleNameString_, "Word \"" + generalizationWordItem.anyWordTypeString() + "\" isn't comparison word" );
+									return adminItem_.startErrorInItem( 1, moduleNameString_, "Word \"" + generalizationWordItem.anyWordTypeString() + "\" isn't comparison word" );
 								}
 							}
 						}
 					}
 				else
-					return myWordItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the given condition selection item is undefined" );
+					return adminItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the given condition selection item is undefined" );
 				}
 			else
-				return myWordItem_.startErrorInItem( 1, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
+				return adminItem_.startErrorInItem( 1, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given condition selection item is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given condition selection item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
-	protected byte checkForOddOrEven( SelectionItem conditionSelectionItem )
+	private byte checkForOddOrEven( SelectionItem conditionSelectionItem )
 		{
 		boolean isNegative;
 		int nAssignments;
@@ -491,7 +524,7 @@ class AdminSolve
 					isNegative = conditionSelectionItem.isNegative();
 					relationContextNr = conditionSelectionItem.relationContextNr();
 
-					if( ( relationWordItem = myWordItem_.contextWordItemInAllWords( relationContextNr, specificationWordItem, null ) ) != null )
+					if( ( relationWordItem = adminItem_.contextWordItemInAllWords( relationContextNr, specificationWordItem, null ) ) != null )
 						{
 						if( specificationWordItem.isNounNumber() )
 							{
@@ -504,26 +537,26 @@ class AdminSolve
 								if( generalizationWordItem.isAdjectiveEven() )
 									isConditionSatisfied_ = ( nAssignments % 2 == 0 ? !isNegative : isNegative );
 								else
-									return myWordItem_.startErrorInItem( 1, moduleNameString_, "Word \"" + generalizationWordItem.anyWordTypeString() + "\" isn't about odd or even" );
+									return adminItem_.startErrorInItem( 1, moduleNameString_, "Word \"" + generalizationWordItem.anyWordTypeString() + "\" isn't about odd or even" );
 								}
 							}
 						else
 							{
 							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, relationWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != Constants.RESULT_OK )
-								return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
 							}
 						}
 					else
-						return myWordItem_.startErrorInItem( 1, moduleNameString_, "I couldn't find the relation word" );
+						return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't find the relation word" );
 					}
 				else
-					return myWordItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the given condition selection item is undefined" );
+					return adminItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the given condition selection item is undefined" );
 				}
 			else
-				return myWordItem_.startErrorInItem( 1, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
+				return adminItem_.startErrorInItem( 1, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given condition selection item is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given condition selection item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -533,17 +566,17 @@ class AdminSolve
 		if( adminItem_.scoreList == null )
 			{
 			// Create list
-			if( ( adminItem_.scoreList = new ScoreList( myWordItem_ ) ) != null )
+			if( ( adminItem_.scoreList = new ScoreList( adminItem_ ) ) != null )
 				{
 				CommonVariables.adminScoreList = adminItem_.scoreList;
 				adminItem_.adminListArray[Constants.ADMIN_SCORE_LIST] = adminItem_.scoreList;
 				}
 			else
-				return myWordItem_.startErrorInItem( 1, moduleNameString_, "I failed to create the admin solve score list" );
+				return adminItem_.startErrorInItem( 1, moduleNameString_, "I failed to create the admin solve score list" );
 			}
 
 		if( adminItem_.scoreList.createScoreItem( isChecked, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem ) != Constants.RESULT_OK )
-			return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to create a score item" );
+			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to create a score item" );
 
 		return Constants.RESULT_OK;
 		}
@@ -584,7 +617,7 @@ class AdminSolve
 				}
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -627,10 +660,10 @@ class AdminSolve
 					}
 				}
 			else
-				return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -657,21 +690,21 @@ class AdminSolve
 							isConditionSatisfied_ = false;
 						}
 					else
-						return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a scoring assignment" );
+						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a scoring assignment" );
 					}
 				while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedSpecificationItem() ) != null );
 				}
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
-	private byte calculateScorePaths( boolean isInverted, boolean duplicatesAllowed, boolean prepareSort, short solveStrategyParameter, SelectionItem referenceSelectionItem )
+	private byte calculateScorePaths( boolean isInverted, boolean isAllowingDuplicates, boolean isPreparingSort, short solveStrategyParameter, SelectionItem referenceSelectionItem )
 		{
-		boolean addLocalScores;
-		boolean originalfoundpossibility;
+		boolean isAddLocalScores;
+		boolean isOriginalFoundPossibility;
 		boolean hasFoundScore = false;
 		int localOldSatisfiedScore;
 		int localNewSatisfiedScore;
@@ -691,6 +724,7 @@ class AdminSolve
 		int newBlockingScore = newBlockingScore_;
 		WordItem generalizationWordItem;
 		WordItem specificationWordItem;
+		ScoreList scoreList;
 
 		if( referenceSelectionItem != null )
 			{
@@ -707,7 +741,7 @@ class AdminSolve
 
 				if( checkCondition( referenceSelectionItem ).result == Constants.RESULT_OK )
 					{
-					addLocalScores = true;
+					isAddLocalScores = true;
 
 					localOldSatisfiedScore = oldSatisfiedScore_;
 					localNewSatisfiedScore = newSatisfiedScore_;
@@ -734,19 +768,20 @@ class AdminSolve
 							{
 							if( !referenceSelectionItem.isNegative() )
 								{
-								if( generalizationWordItem.firstNonQuestionActiveAssignmentItem() == null )		// Word has no active assignments
+								// Word has no active assignments
+								if( generalizationWordItem.firstNonQuestionActiveAssignmentItem() == null )
 									{
-									originalfoundpossibility = hasFoundPossibility_;
+									isOriginalFoundPossibility = hasFoundPossibility_;
 
-									if( adminItem_.findPossibilityToSolveWord( false, isInverted, duplicatesAllowed, prepareSort, solveStrategyParameter, generalizationWordItem ) == Constants.RESULT_OK )
+									if( adminItem_.findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == Constants.RESULT_OK )
 										{
 										if( hasFoundPossibility_ )
-											addLocalScores = false;
+											isAddLocalScores = false;
 										else
-											hasFoundPossibility_ = originalfoundpossibility;
+											hasFoundPossibility_ = isOriginalFoundPossibility;
 										}
 									else
-										return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a possibility to solve condition word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a possibility to solve condition word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 									}
 								}
 							}
@@ -756,35 +791,38 @@ class AdminSolve
 								{
 								if( !referenceSelectionItem.isNegative() &&
 								!specificationWordItem.isWordCheckedForSolving &&
-								generalizationWordItem.firstNonQuestionActiveAssignmentItem() == null )	// Word has no active assignments
+								// Word has no active assignments
+								generalizationWordItem.firstNonQuestionActiveAssignmentItem() == null )
 									{
 									if( canWordBeSolved( specificationWordItem ) == Constants.RESULT_OK )
 										{
 										if( canWordBeSolved_ )
 											{
-											originalfoundpossibility = hasFoundPossibility_;
+											isOriginalFoundPossibility = hasFoundPossibility_;
 
-											if( adminItem_.findPossibilityToSolveWord( false, isInverted, duplicatesAllowed, prepareSort, solveStrategyParameter, generalizationWordItem ) == Constants.RESULT_OK )
+											if( adminItem_.findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == Constants.RESULT_OK )
 												{
 												if( hasFoundPossibility_ )
-													addLocalScores = false;
+													isAddLocalScores = false;
 												else
-													hasFoundPossibility_ = originalfoundpossibility;
+													hasFoundPossibility_ = isOriginalFoundPossibility;
 												}
 											else
-												return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a possibility to solve condition word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a possibility to solve condition word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 											}
 										else
 											{
-											if( duplicatesAllowed ||
-											adminItem_.scoreList == null )
+											scoreList = adminItem_.scoreList;
+
+											if( isAllowingDuplicates ||
+											scoreList == null )
 												hasFoundScore = false;
 											else
 												{
-												if( adminItem_.scoreList.findScore( prepareSort, referenceSelectionItem ) == Constants.RESULT_OK )
-													hasFoundScore = adminItem_.scoreList.hasFoundScore();
+												if( scoreList.findScore( isPreparingSort, referenceSelectionItem ) == Constants.RESULT_OK )
+													hasFoundScore = scoreList.hasFoundScore();
 												else
-													return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a score item" );
+													return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a score item" );
 												}
 
 											if( !hasFoundScore )
@@ -792,21 +830,21 @@ class AdminSolve
 												if( createScore( ( CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL ), Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, referenceSelectionItem ) == Constants.RESULT_OK )
 													hasFoundPossibility_ = true;
 												else
-													return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to create an empty solve score" );
+													return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to create an empty solve score" );
 												}
 											}
 										}
 									else
-										return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if specification word \"" + specificationWordItem.anyWordTypeString() + "\" can be solved" );
+										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if specification word \"" + specificationWordItem.anyWordTypeString() + "\" can be solved" );
 									}
 								}
 							else
-								return myWordItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the given score item is undefined" );
+								return adminItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the given score item is undefined" );
 							}
 						}
 
 					if( !CommonVariables.hasShownWarning &&
-					addLocalScores )
+					isAddLocalScores )
 						{
 						oldSatisfiedScore_ += localOldSatisfiedScore;
 						newSatisfiedScore_ += localNewSatisfiedScore;
@@ -819,13 +857,13 @@ class AdminSolve
 						}
 					}
 				else
-					return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to check the condition of the item with sentence number " + referenceSelectionItem.activeSentenceNr() + " and item number " + referenceSelectionItem.itemNr() );
+					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check the condition of the item with sentence number " + referenceSelectionItem.activeSentenceNr() + " and item number " + referenceSelectionItem.itemNr() );
 				}
 			else
-				return myWordItem_.startErrorInItem( 1, moduleNameString_, "The generalization word of the given score item is undefined" );
+				return adminItem_.startErrorInItem( 1, moduleNameString_, "The generalization word of the given score item is undefined" );
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given reference selection item is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given reference selection item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -833,7 +871,7 @@ class AdminSolve
 
 	// Constructor / deconstructor
 
-	protected AdminSolve( AdminItem adminItem, WordItem myWordItem )
+	protected AdminSolve( AdminItem adminItem )
 		{
 		String errorString = null;
 
@@ -861,21 +899,15 @@ class AdminSolve
 		secondComparisonAssignmentItem_ = null;
 
 		adminItem_ = adminItem;
-		myWordItem_ = myWordItem;
 		moduleNameString_ = this.getClass().getName();
 
-		if( adminItem_ != null )
-			{
-			if( myWordItem_ == null )
-				errorString = "The given my word is undefined";
-			}
-		else
+		if( adminItem_ == null )
 			errorString = "The given admin is undefined";
 
 		if( errorString != null )
 			{
-			if( myWordItem_ != null )
-				myWordItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
+			if( adminItem_ != null )
+				adminItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -892,19 +924,95 @@ class AdminSolve
 		currentSolveProgress_ = 0;
 		}
 
-	protected byte canWordBeSolved( WordItem solveWordItem )
+	protected byte findPossibilityToSolveWord( boolean isAddingScores, boolean isAllowingDuplicates, boolean isInverted, boolean isPreparingSort, short solveStrategyParameter, WordItem solveWordItem )
 		{
-		if( canWordBeSolved( true, solveWordItem ) == Constants.RESULT_OK )
+		SelectionResultType selectionResult;
+		SelectionItem originalExecutionSelectionItem;
+		SelectionList actionList;
+		SelectionList alternativeList;
+
+		hasFoundPossibility_ = false;
+
+		if( solveWordItem != null )
 			{
-			if( !canWordBeSolved_ &&
-			!CommonVariables.hasShownWarning )
+			if( !solveWordItem.isWordCheckedForSolving )
 				{
-				if( canWordBeSolved( false, solveWordItem ) != Constants.RESULT_OK )
-					return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if a word can be solved by an alternative action" );
+				if( canWordBeSolved( true, solveWordItem ) == Constants.RESULT_OK )
+					{
+					solveWordItem.isWordCheckedForSolving = true;
+
+					if( canWordBeSolved_ &&
+					( actionList = adminItem_.actionList ) != null )
+						{
+						originalExecutionSelectionItem = currentExecutionSelectionItem_;
+
+						if( ( selectionResult = actionList.findFirstExecutionItem( solveWordItem ) ).result == Constants.RESULT_OK )
+							{
+							if( ( currentExecutionSelectionItem_ = selectionResult.firstExecutionItem ) != null )
+								{
+								do	{
+									if( backTrackConditionScorePaths( isAddingScores, isInverted, isAllowingDuplicates, isPreparingSort, currentExecutionSelectionItem_.selectionLevel(), solveStrategyParameter, currentExecutionSelectionItem_.activeSentenceNr() ) == Constants.RESULT_OK )
+										{
+										if( currentExecutionSelectionItem_.findNextExecutionSelectionItem( solveWordItem ) != Constants.RESULT_OK )
+											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the next action selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
+										}
+									else
+										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to back-fire the condition score paths for the action with sentence number " + currentExecutionSelectionItem_.activeSentenceNr() );
+									}
+								while( ( currentExecutionSelectionItem_ = currentExecutionSelectionItem_.nextExecutionItem() ) != null );
+								}
+
+							currentExecutionSelectionItem_ = originalExecutionSelectionItem;
+							}
+						else
+							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the first action selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
+						}
+
+					if( !CommonVariables.hasShownWarning )
+						{
+						if( canWordBeSolved( false, solveWordItem ) == Constants.RESULT_OK )
+							{
+							if( canWordBeSolved_ &&
+							( alternativeList = adminItem_.alternativeList ) != null )
+								{
+								originalExecutionSelectionItem = currentExecutionSelectionItem_;
+
+								if( ( selectionResult = alternativeList.findFirstExecutionItem( solveWordItem ) ).result == Constants.RESULT_OK )
+									{
+									if( ( currentExecutionSelectionItem_ = selectionResult.firstExecutionItem ) != null )
+										{
+										do	{
+											if( backTrackConditionScorePaths( isAddingScores, isInverted, isAllowingDuplicates, isPreparingSort, currentExecutionSelectionItem_.selectionLevel(), solveStrategyParameter, currentExecutionSelectionItem_.activeSentenceNr() ) == Constants.RESULT_OK )
+												{
+												if( currentExecutionSelectionItem_.findNextExecutionSelectionItem( solveWordItem ) != Constants.RESULT_OK )
+													return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the next alternative item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
+												}
+											else
+												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to back-fire the condition score paths for the alternative with sentence number " + currentExecutionSelectionItem_.activeSentenceNr() );
+											}
+										while( ( currentExecutionSelectionItem_ = currentExecutionSelectionItem_.nextExecutionItem() ) != null );
+										}
+
+									currentExecutionSelectionItem_ = originalExecutionSelectionItem;
+									}
+								else
+									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the first alternative item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
+								}
+
+							solveWordItem.isWordCheckedForSolving = false;
+							}
+						else
+							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if the given word \"" + solveWordItem.anyWordTypeString() + "\" can be solved by alternative" );
+						}
+					}
+				else
+					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if the given word \"" + solveWordItem.anyWordTypeString() + "\" can be solved by action" );
 				}
+			else
+				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given solve word \"" + solveWordItem.anyWordTypeString() + "\" is already checked" );
 			}
 		else
-			return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if a word can be solved by an action" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given solve word is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -922,6 +1030,8 @@ class AdminSolve
 		WordItem predefinedNounSolveLevelWordItem;
 		WordItem predefinedNounSolveMethodWordItem;
 		WordItem predefinedNounSolveStrategyWordItem;
+		ScoreList scoreList;
+		WordList wordList;
 
 		if( solveWordItem != null )
 			{
@@ -938,11 +1048,12 @@ class AdminSolve
 							if( ( specificationResult = predefinedNounSolveLevelWordItem.getAssignmentOrderNr() ).result == Constants.RESULT_OK )
 								solveLevel_ = specificationResult.assignmentOrderNr;
 							else
-								return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the solve level" );
+								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the solve level" );
 							}
 						}
 
-					if( solveWordItem.firstNonQuestionActiveAssignmentItem() == null )	// Word has no active assignments
+					// Word has no active assignments
+					if( solveWordItem.firstNonQuestionActiveAssignmentItem() == null )
 						{
 						if( CommonVariables.currentAssignmentLevel <= solveLevel_ )
 							{
@@ -952,10 +1063,11 @@ class AdminSolve
 									{
 									clearAllWordSolveChecksInAllWords();
 
-									if( adminItem_.scoreList != null )
+									if( ( scoreList = adminItem_.scoreList ) != null )
 										{
-										if( adminItem_.scoreList.deleteScores() != Constants.RESULT_OK )	// Make sure no scores are left at the start
-											return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the admin score list" );
+										// Make sure no scores are left at the start
+										if( scoreList.deleteScores() != Constants.RESULT_OK )
+											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the admin score list" );
 										}
 									}
 
@@ -963,29 +1075,30 @@ class AdminSolve
 
 								if( ( specificationResult = predefinedNounSolveStrategyWordItem.getAssignmentWordParameter() ).result == Constants.RESULT_OK )
 									{
-									if( findPossibilityToSolveWord( true, isInverted, ( CommonVariables.currentAssignmentLevel == solveLevel_ ), ( CommonVariables.currentAssignmentLevel + 1 < solveLevel_ ), specificationResult.assignmentParameter, solveWordItem ) == Constants.RESULT_OK )
+									if( findPossibilityToSolveWord( true, ( CommonVariables.currentAssignmentLevel == solveLevel_ ), isInverted, ( CommonVariables.currentAssignmentLevel + 1 < solveLevel_ ), specificationResult.assignmentParameter, solveWordItem ) == Constants.RESULT_OK )
 										{
 										if( hasFoundPossibility_ )
 											{
 											if( CommonVariables.currentAssignmentLevel < solveLevel_ )
 												{
-												if( adminItem_.scoreList != null )
+												if( ( scoreList = adminItem_.scoreList ) != null )
 													{
-													nPossibilities = adminItem_.scoreList.nPossibilities();
+													nPossibilities = scoreList.nPossibilities();
 													solveProgressStep = ( ( endSolveProgress - currentSolveProgress_ ) / nPossibilities );
 
 													if( solveLevel_ > 1 )
 														Presentation.startProgress( currentSolveProgress_, Constants.MAX_PROGRESS, Constants.INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START, solveLevel_, Constants.INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END );
 
-													if( adminItem_.wordList != null )
+													if( ( wordList = adminItem_.wordList ) != null )
 														{
-														if( ( possibilityItem = adminItem_.scoreList.firstPossibility() ) != null )
+														if( ( possibilityItem = scoreList.firstPossibility() ) != null )
 															{
 															do	{
-																if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )	// Copy solve action of Constants.NO_ASSIGNMENT_LEVEL to higher levels
+																// Copy solve action of Constants.NO_ASSIGNMENT_LEVEL to higher levels
+																if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
 																	actionSelectionItem = possibilityItem.scoreReference();
 
-																if( adminItem_.wordList.createNewAssignmentLevelInWordList() == Constants.RESULT_OK )
+																if( wordList.createNewAssignmentLevelInWordList() == Constants.RESULT_OK )
 																	{
 																	CommonVariables.currentAssignmentLevel++;
 
@@ -995,18 +1108,19 @@ class AdminSolve
 
 																		if( adminItem_.executeSelection( (int)( currentSolveProgress_ + solveProgressStep / 2L ), actionSelectionItem ) == Constants.RESULT_OK )
 																			{
-																			if( solveWordItem.firstNonQuestionActiveAssignmentItem() != null )	// Word has active assignments
+																			// Word has active assignments
+																			if( solveWordItem.firstNonQuestionActiveAssignmentItem() != null )
 																				{
 																				isInverted = ( predefinedNounSolveMethodWordItem.firstNonQuestionAssignmentItem( true, false, false, false, false, Constants.NO_CONTEXT_NR, adminItem_.predefinedAdjectiveInvertedWordItem() ) != null );
 
 																				if( !isInverted &&
 																				CommonVariables.currentAssignmentLevel < solveLevel_ )
 																					{
-																					if( adminItem_.scoreList.deleteScores() == Constants.RESULT_OK )
+																					if( scoreList.deleteScores() == Constants.RESULT_OK )
 																						// Don't solve any deeper if there is a winning score
 																						solveLevel_ = CommonVariables.currentAssignmentLevel;
 																					else
-																						return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the scores with an assignment level higher than " + CommonVariables.currentAssignmentLevel );
+																						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the scores with an assignment level higher than " + CommonVariables.currentAssignmentLevel );
 																					}
 
 																				// Create winning or losing score
@@ -1018,17 +1132,17 @@ class AdminSolve
 																						Presentation.showProgress( currentSolveProgress_ );
 																					}
 																				else
-																					return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to create a winning or losing score of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+																					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to create a winning or losing score of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
 																				}
 																			else
 																				{
 																				if( solveWord( tempEndSolveProgress, solveWordItem, actionSelectionItem ) == Constants.RESULT_OK )
 																					{
 																					if( CommonVariables.currentAssignmentLevel == 1 )
-																						adminItem_.scoreList.changeAction( actionSelectionItem );
+																						scoreList.changeAction( actionSelectionItem );
 																					}
 																				else
-																					return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+																					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
 																				}
 
 																			if( deleteAssignmentLevelInAllWords() == Constants.RESULT_OK )
@@ -1040,45 +1154,44 @@ class AdminSolve
 																					{
 																					if( possibilityItem != null &&
 																					possibilityNumber == nPossibilities )
-																						return myWordItem_.startErrorInItem( 1, moduleNameString_, "I found more possibility items than number of possibilities" );
+																						return adminItem_.startErrorInItem( 1, moduleNameString_, "I've found more possibility items than number of possibilities" );
 																					}
 																				else
 																					{
 																					if( possibilityItem == null )
-																						return myWordItem_.startErrorInItem( 1, moduleNameString_, "I couldn't get the next possibility item before the number of possibilities is reached" );
+																						return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't get the next possibility item before the number of possibilities is reached" );
 																					}
 																				}
 																			else
-																				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the assignments of level " + CommonVariables.currentAssignmentLevel );
+																				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the assignments of level " + CommonVariables.currentAssignmentLevel );
 																			}
 																		else
-																			return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute a selection during the solving of word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+																			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute a selection during the solving of word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
 																		}
 																	else
-																		return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign a selection specifcation at assignment level: " + CommonVariables.currentAssignmentLevel );
+																		return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign a selection specifcation at assignment level: " + CommonVariables.currentAssignmentLevel );
 																	}
 																else
-																	return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to create a new assignment level: " + CommonVariables.currentAssignmentLevel );
+																	return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to create a new assignment level: " + CommonVariables.currentAssignmentLevel );
 																}
 															while( possibilityItem != null );
 
-															if( adminItem_.scoreList != null &&
-
-															( nPossibilities > 1 ||
-															CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL ) )	// Higher level has possibilities
+															if( nPossibilities > 1 ||
+															// Higher level has possibilities
+															CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL )
 																{
-																if( adminItem_.scoreList.deleteScores() != Constants.RESULT_OK )
-																	return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the scores with assignment level " + CommonVariables.currentAssignmentLevel );
+																if( scoreList.deleteScores() != Constants.RESULT_OK )
+																	return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the scores with assignment level " + CommonVariables.currentAssignmentLevel );
 																}
 															}
 														else
-															return myWordItem_.startErrorInItem( 1, moduleNameString_, "I failed to get the first possibility item at assignment level " + CommonVariables.currentAssignmentLevel );
+															return adminItem_.startErrorInItem( 1, moduleNameString_, "I failed to get the first possibility item at assignment level " + CommonVariables.currentAssignmentLevel );
 														}
 													else
-														return myWordItem_.startErrorInItem( 1, moduleNameString_, "The word list isn't created yet" );
+														return adminItem_.startErrorInItem( 1, moduleNameString_, "The word list isn't created yet" );
 													}
 												else
-													return myWordItem_.startErrorInItem( 1, moduleNameString_, "The solve scores list isn't created yet at assignment level " + CommonVariables.currentAssignmentLevel );
+													return adminItem_.startErrorInItem( 1, moduleNameString_, "The solve scores list isn't created yet at assignment level " + CommonVariables.currentAssignmentLevel );
 												}
 											else
 												{
@@ -1092,165 +1205,70 @@ class AdminSolve
 												{
 												Presentation.clearProgress();
 
-												if( adminItem_.scoreList != null )
+												if( ( scoreList = adminItem_.scoreList ) != null )
 													{
 													if( ( specificationResult = predefinedNounSolveStrategyWordItem.getAssignmentWordParameter() ).result == Constants.RESULT_OK )
 														{
-														if( ( selectionResult = adminItem_.scoreList.getBestAction( specificationResult.assignmentParameter ) ).result == Constants.RESULT_OK )
+														if( ( selectionResult = scoreList.getBestAction( specificationResult.assignmentParameter ) ).result == Constants.RESULT_OK )
 															{
 															if( ( actionSelectionItem = selectionResult.bestActionItem ) != null )
 																{
 																if( adminItem_.assignSelectionSpecification( actionSelectionItem ) == Constants.RESULT_OK )
 																	{
 																	if( adminItem_.assignSpecification( predefinedNounSolveMethodWordItem, adminItem_.predefinedAdjectiveDoneWordItem() ) != Constants.RESULT_OK )
-																		return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the done flag to the solve method at assignment level " + CommonVariables.currentAssignmentLevel );
+																		return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the done flag to the solve method at assignment level " + CommonVariables.currentAssignmentLevel );
 																	}
 																else
-																	return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign a selection specification at assignment level " + CommonVariables.currentAssignmentLevel );
+																	return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign a selection specification at assignment level " + CommonVariables.currentAssignmentLevel );
 																}
 															else
-																return myWordItem_.startErrorInItem( 1, moduleNameString_, "I couldn't get the best action selection item" );
+																return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't get the best action selection item" );
 															}
 														else
-															return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the best action of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+															return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the best action of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
 														}
 													else
-														return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the solve strategy at assignment level " + CommonVariables.currentAssignmentLevel );
+														return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the solve strategy at assignment level " + CommonVariables.currentAssignmentLevel );
 													}
 												else
-													return myWordItem_.startErrorInItem( 1, moduleNameString_, "The solve scores list isn't created yet" );
+													return adminItem_.startErrorInItem( 1, moduleNameString_, "The solve scores list isn't created yet" );
 												}
 											}
 										else
 											{
 											if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
 												{
-												if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_COULD_FIND_SOLVE_INFO_START, solveWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_COULD_FIND_SOLVE_INFO_END ) != Constants.RESULT_OK )
-													return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+												if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_START, solveWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_END ) != Constants.RESULT_OK )
+													return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
 												}
 											}
 										}
 									else
-										return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a possibility to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a possibility to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
 									}
 								else
-									return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the solve strategy at assignment level " + CommonVariables.currentAssignmentLevel );
+									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get the solve strategy at assignment level " + CommonVariables.currentAssignmentLevel );
 								}
 							else
-								return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level " + CommonVariables.currentAssignmentLevel );
+								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level " + CommonVariables.currentAssignmentLevel );
 							}
 						else
-							return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given assignment level of " + CommonVariables.currentAssignmentLevel + " is higher than the given solve level " + solveLevel_ );
+							return adminItem_.startErrorInItem( 1, moduleNameString_, "The given assignment level of " + CommonVariables.currentAssignmentLevel + " is higher than the given solve level " + solveLevel_ );
 						}
 					else
 						{
 						if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_WORD_ALREADY_SOLVED_START, solveWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_WORD_ALREADY_SOLVED_END ) != Constants.RESULT_OK )
-							return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
 						}
 					}
 				else
-					return myWordItem_.startErrorInItem( 1, moduleNameString_, "The predefined solve strategy noun word item is undefined" );
+					return adminItem_.startErrorInItem( 1, moduleNameString_, "The predefined solve strategy noun word item is undefined" );
 				}
 			else
-				return myWordItem_.startErrorInItem( 1, moduleNameString_, "The predefined solve-method noun word item is undefined" );
+				return adminItem_.startErrorInItem( 1, moduleNameString_, "The predefined solve-method noun word item is undefined" );
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given solve word is undefined" );
-
-		return Constants.RESULT_OK;
-		}
-
-	protected byte findPossibilityToSolveWord( boolean isAddScores, boolean isInverted, boolean duplicatesAllowed, boolean prepareSort, short solveStrategyParameter, WordItem solveWordItem )
-		{
-		SelectionResultType selectionResult;
-		SelectionItem originalExecutionSelectionItem;
-
-		hasFoundPossibility_ = false;
-
-		if( solveWordItem != null )
-			{
-			if( !solveWordItem.isWordCheckedForSolving )
-				{
-				if( canWordBeSolved( true, solveWordItem ) == Constants.RESULT_OK )
-					{
-					solveWordItem.isWordCheckedForSolving = true;
-
-					if( canWordBeSolved_ &&
-					adminItem_.actionList != null )
-						{
-						originalExecutionSelectionItem = currentExecutionSelectionItem_;
-
-						if( ( selectionResult = adminItem_.actionList.findFirstExecutionItem( solveWordItem ) ).result == Constants.RESULT_OK )
-							{
-							if( ( currentExecutionSelectionItem_ = selectionResult.firstExecutionItem ) != null )
-								{
-								do	{
-									if( backTrackConditionScorePaths( isAddScores, isInverted, duplicatesAllowed, prepareSort, currentExecutionSelectionItem_.selectionLevel(), solveStrategyParameter, currentExecutionSelectionItem_.activeSentenceNr() ) == Constants.RESULT_OK )
-										{
-										if( currentExecutionSelectionItem_.findNextExecutionSelectionItem( solveWordItem ) == Constants.RESULT_OK )
-											currentExecutionSelectionItem_ = currentExecutionSelectionItem_.nextExecutionItem();
-										else
-											return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the next action selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
-										}
-									else
-										return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to back-fire the condition score paths for the action with sentence number " + currentExecutionSelectionItem_.activeSentenceNr() );
-									}
-								while( currentExecutionSelectionItem_ != null );
-								}
-
-							currentExecutionSelectionItem_ = originalExecutionSelectionItem;
-							}
-						else
-							return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the first action selection item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
-						}
-
-					if( !CommonVariables.hasShownWarning )
-						{
-						if( canWordBeSolved( false, solveWordItem ) == Constants.RESULT_OK )
-							{
-							if( canWordBeSolved_ &&
-							adminItem_.alternativeList != null )
-								{
-								originalExecutionSelectionItem = currentExecutionSelectionItem_;
-
-								if( ( selectionResult = adminItem_.alternativeList.findFirstExecutionItem( solveWordItem ) ).result == Constants.RESULT_OK )
-									{
-									if( ( currentExecutionSelectionItem_ = selectionResult.firstExecutionItem ) != null )
-										{
-										do	{
-											if( backTrackConditionScorePaths( isAddScores, isInverted, duplicatesAllowed, prepareSort, currentExecutionSelectionItem_.selectionLevel(), solveStrategyParameter, currentExecutionSelectionItem_.activeSentenceNr() ) == Constants.RESULT_OK )
-												{
-												if( currentExecutionSelectionItem_.findNextExecutionSelectionItem( solveWordItem ) == Constants.RESULT_OK )
-													currentExecutionSelectionItem_ = currentExecutionSelectionItem_.nextExecutionItem();
-												else
-													return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the next alternative item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
-												}
-											else
-												return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to back-fire the condition score paths for the alternative with sentence number " + currentExecutionSelectionItem_.activeSentenceNr() );
-											}
-										while( currentExecutionSelectionItem_ != null );
-										}
-
-									currentExecutionSelectionItem_ = originalExecutionSelectionItem;
-									}
-								else
-									return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the first alternative item with solve word \"" + solveWordItem.anyWordTypeString() + "\"" );
-								}
-
-							solveWordItem.isWordCheckedForSolving = false;
-							}
-						else
-							return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if the given word \"" + solveWordItem.anyWordTypeString() + "\" can be solved by alternative" );
-						}
-					}
-				else
-					return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if the given word \"" + solveWordItem.anyWordTypeString() + "\" can be solved by action" );
-				}
-			else
-				return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given solve word \"" + solveWordItem.anyWordTypeString() + "\" is already checked" );
-			}
-		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given solve word is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given solve word is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -1278,17 +1296,19 @@ class AdminSolve
 						{
 						if( specificationWordItem.isAdjectiveClear() )
 							{
+							// Adjective "clear"
 							if( findScoringAssignment( !isNegative, generalizationWordItem ) == Constants.RESULT_OK )
 								isConditionSatisfied_ = ( hasFoundScoringAssignment_ ? isNegative : !isNegative );
 							else
-								myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a scoring assignment" );
+								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a scoring assignment" );
 							}
-						else	// Is Assigned
+						else
 							{
+							// Adjective "assigned"
 							if( findScoringAssignment( isNegative, generalizationWordItem ) == Constants.RESULT_OK )
 								isConditionSatisfied_ = ( hasFoundScoringAssignment_ ? !isNegative : isNegative );
 							else
-								myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a scoring assignment" );
+								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a scoring assignment" );
 							}
 						}
 					else
@@ -1296,21 +1316,21 @@ class AdminSolve
 						if( generalizationWordItem.isAdjectiveComparison() )
 							{
 							if( checkComparison( conditionSelectionItem ) != Constants.RESULT_OK )
-								myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to check a comparison" );
+								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check a comparison" );
 							}
 						else
 							{
 							if( generalizationWordItem.isAdjectiveOddOrEven() )
 								{
 								if( checkForOddOrEven( conditionSelectionItem ) != Constants.RESULT_OK )
-									myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to check for odd or even" );
+									adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check for odd or even" );
 								}
 							else
 								{
 								if( conditionSelectionItem.isValueSpecification() )
 									{
 									if( checkConditionByValue( isNegative, isPossessive, generalizationWordItem, specificationWordItem ) != Constants.RESULT_OK )
-										myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to check the condition of a specification by value" );
+										adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check the condition of a specification by value" );
 									}
 								else
 									{
@@ -1320,20 +1340,20 @@ class AdminSolve
 											isConditionSatisfied_ = true;
 										}
 									else
-										myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a scoring assignment" );
+										adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a scoring assignment" );
 									}
 								}
 							}
 						}
 					}
 				else
-					myWordItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the given condition selection item is undefined" );
+					adminItem_.startErrorInItem( 1, moduleNameString_, "The specification word of the given condition selection item is undefined" );
 				}
 			else
-				myWordItem_.startErrorInItem( 1, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
+				adminItem_.startErrorInItem( 1, moduleNameString_, "The generalization word of the given condition selection item is undefined" );
 			}
 		else
-			myWordItem_.startErrorInItem( 1, moduleNameString_, "The given condition selection item is undefined" );
+			adminItem_.startErrorInItem( 1, moduleNameString_, "The given condition selection item is undefined" );
 
 		selectionResult.isConditionSatisfied = isConditionSatisfied_;
 		selectionResult.result = CommonVariables.result;

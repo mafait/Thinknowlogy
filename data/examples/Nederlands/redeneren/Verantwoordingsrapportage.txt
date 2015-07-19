@@ -1,15 +1,15 @@
 ﻿Lees het bestand "Nederlands/redeneren/gezinsdefinitie".
-Toon de verantwoordingsrapportage voor gezin.
-Toon de verantwoordingsrapportage voor ouders.
-Toon de verantwoordingsrapportage voor kinderen.
-Toon de verantwoordingsrapportage voor vader.
-Toon de verantwoordingsrapportage voor moeder.
-Toon de verantwoordingsrapportage voor zoon.
-Toon de verantwoordingsrapportage voor dochter.
+Toon de verantwoordingsrapportage over gezin.
+Toon de verantwoordingsrapportage over ouders.
+Toon de verantwoordingsrapportage over kinderen.
+Toon de verantwoordingsrapportage over vader.
+Toon de verantwoordingsrapportage over moeder.
+Toon de verantwoordingsrapportage over zoon.
+Toon de verantwoordingsrapportage over dochter.
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
-Toon de verantwoordingsrapportage voor Jan.
-Toon de verantwoordingsrapportage voor Anna.
-Toon de verantwoordingsrapportage voor Paul.
-Toon de verantwoordingsrapportage voor Johan.
-Toon de verantwoordingsrapportage voor Laura.
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Anna.
+Toon de verantwoordingsrapportage over Paul.
+Toon de verantwoordingsrapportage over Johan.
+Toon de verantwoordingsrapportage over Laura.
 # Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

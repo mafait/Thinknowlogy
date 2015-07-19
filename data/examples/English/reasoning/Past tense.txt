@@ -1,3 +1,3 @@
 ﻿Read the file "English/reasoning/family definition".
-John was the father of Paul.
+James was the father of Michael.
 # Remember to clear this knowledge before reading another example.

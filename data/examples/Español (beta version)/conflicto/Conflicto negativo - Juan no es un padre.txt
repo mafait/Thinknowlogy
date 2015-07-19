@@ -1,5 +1,0 @@
-﻿Lea el archivo "Español (beta version)/razonamiento/definición de familia".
-Juan es el padre de Pedro, José y Luisa.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
-#Juan no es un padre.
-Juan es no un padre.

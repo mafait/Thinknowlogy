@@ -2,11 +2,11 @@
  *	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,14 +29,13 @@ class WordTypeItem extends Item
 
 	private boolean hasFeminineWordEnding_;
 	private boolean hasMasculineWordEnding_;
-	private boolean isMultipleWord_;
 	private boolean isProperNamePrecededByDefiniteArticle_;
 
 	private short adjectiveParameter_;
 	private short definiteArticleParameter_;
 	private short indefiniteArticleParameter_;
-	private short wordTypeNr_;
 	private short wordTypeLanguageNr_;
+	private short wordTypeNr_;
 
 
 	// Private constructible variables
@@ -54,8 +53,8 @@ class WordTypeItem extends Item
 
 	private boolean hasIndefinitePhoneticVowelArticle( short indefiniteArticleParameter )
 		{
-		short oppositeIndefiniteArticleParameter = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
-		WordItem oppositeIndefiniteArticleWordItem;
+		short phoneticVowelIndefiniteArticleParameter = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
+		WordItem phoneticVowelIndefiniteArticleWordItem;
 
 		switch( indefiniteArticleParameter )
 			{
@@ -68,25 +67,26 @@ class WordTypeItem extends Item
 
 			// Plural article
 			case Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PLURAL_FEMININE:
-				oppositeIndefiniteArticleParameter = Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_FEMININE;
+				phoneticVowelIndefiniteArticleParameter = Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_FEMININE;
 				break;
 
 			case Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PLURAL_MASCULINE:
-				oppositeIndefiniteArticleParameter = Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_MASCULINE;
+				phoneticVowelIndefiniteArticleParameter = Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_MASCULINE;
 				break;
 
 			// Singular article
 			case Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_FEMININE:
-				oppositeIndefiniteArticleParameter = Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_FEMININE;
+				phoneticVowelIndefiniteArticleParameter = Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_FEMININE;
 				break;
 
 			case Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE:
-				oppositeIndefiniteArticleParameter = Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_MASCULINE;
+				phoneticVowelIndefiniteArticleParameter = Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_MASCULINE;
 				break;
 			}
 
-		if( ( oppositeIndefiniteArticleWordItem = myWordItem().predefinedWordItem( oppositeIndefiniteArticleParameter ) ) != null )
-			return oppositeIndefiniteArticleWordItem.hasWordType( Constants.WORD_TYPE_ARTICLE );
+		if( phoneticVowelIndefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER &&
+		( phoneticVowelIndefiniteArticleWordItem = myWordItem().predefinedWordItem( phoneticVowelIndefiniteArticleParameter ) ) != null )
+			return phoneticVowelIndefiniteArticleWordItem.hasWordType( Constants.WORD_TYPE_ARTICLE );
 
 		return false;
 		}
@@ -195,7 +195,7 @@ class WordTypeItem extends Item
 
 	// Constructor / deconstructor
 
-	protected WordTypeItem( boolean hasFeminineWordEnding, boolean hasMasculineWordEnding, boolean isMultipleWord, boolean isProperNamePrecededByDefiniteArticle, short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, short wordTypeLanguageNr, short wordTypeNr, int wordTypeStringLength, String _wordTypeString, List myList, WordItem myWordItem )
+	protected WordTypeItem( boolean hasFeminineWordEnding, boolean hasMasculineWordEnding, boolean isProperNamePrecededByDefiniteArticle, short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, short wordTypeLanguageNr, short wordTypeNr, int wordTypeStringLength, String _wordTypeString, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
@@ -203,14 +203,13 @@ class WordTypeItem extends Item
 
 		hasFeminineWordEnding_ = hasFeminineWordEnding;
 		hasMasculineWordEnding_ = hasMasculineWordEnding;
-		isMultipleWord_ = isMultipleWord;
 		isProperNamePrecededByDefiniteArticle_ = isProperNamePrecededByDefiniteArticle;
 
 		adjectiveParameter_ = adjectiveParameter;
 		definiteArticleParameter_ = definiteArticleParameter;
 		indefiniteArticleParameter_ = indefiniteArticleParameter;
-		wordTypeNr_ = wordTypeNr;
 		wordTypeLanguageNr_ = wordTypeLanguageNr;
+		wordTypeNr_ = wordTypeNr;
 
 		// Private constructible variables
 
@@ -250,7 +249,8 @@ class WordTypeItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -298,14 +298,12 @@ class WordTypeItem extends Item
 		{
 		String wordString;
 		String wordTypeString = myWordItem().wordTypeNameString( wordTypeNr_ );
-		String languageNameString = myWordItem().grammarLanguageNameString( wordTypeLanguageNr_ );
+		String languageNameString = myWordItem().languageNameString( wordTypeLanguageNr_ );
 
 		baseToStringBuffer( queryWordTypeNr );
 
 		if( wordTypeLanguageNr_ > Constants.NO_LANGUAGE_NR )
-			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarLanguage:" + ( languageNameString == null ? wordTypeLanguageNr_ : languageNameString ) );
-			}
+			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordTypeLanguageNr:" + ( languageNameString == null ? wordTypeLanguageNr_ : languageNameString ) );
 
 		if( hideKey_ != null )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isHidden" );
@@ -315,9 +313,6 @@ class WordTypeItem extends Item
 
 		if( hasMasculineWordEnding_ )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasMasculineWordEnding" );
-
-		if( isMultipleWord_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isMultipleWord" );
 
 		if( isProperNamePrecededByDefiniteArticle_ )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isProperNamePrecededByDefiniteArticle" );
@@ -360,14 +355,16 @@ class WordTypeItem extends Item
 			relationWriteLevel_ = Constants.NO_WRITE_LEVEL;
 		}
 
-	protected boolean hasFeminineWordEnding()
+	protected boolean hasFeminineProperNameEnding()
 		{
-		return hasFeminineWordEnding_;
+		return ( hasFeminineWordEnding_ &&
+				wordTypeNr_ == Constants.WORD_TYPE_PROPER_NAME );
 		}
 
-	protected boolean hasMasculineWordEnding()
+	protected boolean hasMasculineProperNameEnding()
 		{
-		return hasMasculineWordEnding_;
+		return ( hasMasculineWordEnding_ &&
+				wordTypeNr_ == Constants.WORD_TYPE_PROPER_NAME );
 		}
 
 	protected boolean hasFeminineDefiniteArticleParameter()
@@ -412,35 +409,40 @@ class WordTypeItem extends Item
 				definiteArticleParameter_ == definiteArticleParameter );
 		}
 
-	protected boolean isCorrectIndefiniteArticle( boolean isCheckForEqualParameters, short indefiniteArticleParameter )
+	protected boolean isCorrectIndefiniteArticle( boolean isCheckingForEqualParameters, short indefiniteArticleParameter )
 		{
-		boolean doesStringStartWithVowel;
+		boolean isStringStartingWithVowel;
 		boolean isVowelIndefiniteArticle;
 		boolean hasIndefiniteArticleParameter = ( indefiniteArticleParameter_ > Constants.NO_INDEFINITE_ARTICLE_PARAMETER );
 
-		if( isCheckForEqualParameters &&
+		if( isCheckingForEqualParameters &&
 		indefiniteArticleParameter_ == indefiniteArticleParameter )
 			return true;
 
 		// If undefined, fall back to a simple phonetic vowel rule
 		if( hasIndefinitePhoneticVowelArticle( hasIndefiniteArticleParameter ? indefiniteArticleParameter_ : indefiniteArticleParameter ) )
 			{
-			doesStringStartWithVowel = isStartingWithPhoneticVowel( itemString() );
+			isStringStartingWithVowel = isStartingWithPhoneticVowel( itemString() );
 			isVowelIndefiniteArticle = isIndefiniteArticlePhoneticVowelParameter( indefiniteArticleParameter );
 
-			return ( ( !doesStringStartWithVowel &&		// 'a'
+			return ( ( !isStringStartingWithVowel &&	// 'a'
 					!isVowelIndefiniteArticle ) ||
 
-					( doesStringStartWithVowel &&		// 'an'
+					( isStringStartingWithVowel &&		// 'an'
 					isVowelIndefiniteArticle ) );
 			}
 
-		return ( hasIndefiniteArticleParameter ? !isCheckForEqualParameters : true );
-		}
+		if( hasIndefiniteArticleParameter )
+			return !isCheckingForEqualParameters;
 
-	protected boolean isMultipleWord()
-		{
-		return isMultipleWord_;
+		return ( ( definiteArticleParameter_ != Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE &&
+				definiteArticleParameter_ != Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE ) ||
+
+				( ( definiteArticleParameter_ == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE &&
+				indefiniteArticleParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_FEMININE ) ||
+
+				( definiteArticleParameter_ == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE &&
+				indefiniteArticleParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE ) ) );
 		}
 
 	protected boolean isProperNamePrecededByDefiniteArticle( short definiteArticleParameter )
@@ -476,20 +478,21 @@ class WordTypeItem extends Item
 
 	protected boolean isDefiniteArticle()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_ARTICLE &&	// Filter on articles, because nouns also have a definiteArticleParameter
+		// Filter on articles, because nouns also have a definiteArticleParameter
+		return ( wordTypeNr_ == Constants.WORD_TYPE_ARTICLE &&
 				isDefiniteArticleParameter( definiteArticleParameter_ ) );
 		}
 
 	protected boolean isIndefiniteArticle()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_ARTICLE &&	// Filter on articles, because nouns also have an indefiniteArticleParameter
+		// Filter on articles, because nouns also have an indefiniteArticleParameter
+		return ( wordTypeNr_ == Constants.WORD_TYPE_ARTICLE &&
 				isIndefiniteArticleParameter( indefiniteArticleParameter_ ) );
 		}
 
-	protected boolean isNoun()
+	protected boolean isSingularOrPluralNounWordType()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR ||
-				wordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
+		return isSingularOrPluralNoun( wordTypeNr_ );
 		}
 
 	protected boolean isSingularNoun()
@@ -684,7 +687,7 @@ class WordTypeItem extends Item
 		WordTypeItem nextCurrentLanguageWordTypeItem = nextWordTypeItem();
 
 		return ( nextCurrentLanguageWordTypeItem != null &&
-				nextCurrentLanguageWordTypeItem.wordTypeLanguageNr() == CommonVariables.currentGrammarLanguageNr ? nextCurrentLanguageWordTypeItem : null );
+				nextCurrentLanguageWordTypeItem.wordTypeLanguageNr() == CommonVariables.currentLanguageNr ? nextCurrentLanguageWordTypeItem : null );
 		}
 
 	protected WordTypeItem nextWordTypeItem( short wordTypeNr )

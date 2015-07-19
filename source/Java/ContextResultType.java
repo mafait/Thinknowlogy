@@ -1,11 +1,11 @@
 /*
  *	Class:			ContextResultType
  *	Purpose:		To return context variables of a method
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,8 @@ class ContextResultType
 	protected boolean isExclusiveContext;
 
 	protected int contextNr;
-	protected int replaceContextNr;
+
+	protected SpecificationItem conclusionSpecificationItem;
 
 	// Constructor / deconstructor
 
@@ -44,13 +45,14 @@ class ContextResultType
 		isExclusiveContext = false;
 
 		contextNr = Constants.NO_CONTEXT_NR;
-		replaceContextNr = Constants.NO_CONTEXT_NR;
+
+		conclusionSpecificationItem = null;
 		}
 	};
 
 /*************************************************************************
  *	"The Lord is my shepherd;
- *	I have all that I need.
+ *	I've all that I need.
  *	He lets me rest in green meadows;
  *	he leads me beside peaceful steams." (Psalm 23:1-2)
  *************************************************************************/

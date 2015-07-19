@@ -1,6 +1,6 @@
-﻿# Default user.
-Guest is a user and has no password.
-
-# User who is allowed to enter free text in the Java version.
+﻿# User who is allowed to enter free text.
 Expert is a user and has no password.
 Expert is an expert.
+
+# Default user.
+#Java#Guest is a user and has no password.

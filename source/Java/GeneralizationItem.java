@@ -4,11 +4,11 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -72,7 +72,8 @@ class GeneralizationItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-			if( !isActiveItem() )	// Show status if not active
+			// Show status if not active
+			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
@@ -145,23 +146,21 @@ class GeneralizationItem extends Item
 		return generalizationWordTypeNr_;
 		}
 
-	protected short specificationWordTypeNr()
-		{
-		return specificationWordTypeNr_;
-		}
-
 	protected WordItem generalizationWordItem()
 		{
 		return generalizationWordItem_;
 		}
 
-	protected GeneralizationItem getGeneralizationItem( boolean isIncludingThisItem, boolean isRelation )
+	protected GeneralizationItem getGeneralizationItem( boolean isIncludingThisItem, boolean isOnlySelectingNoun, boolean isRelation )
 		{
 		GeneralizationItem searchItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
 
 		while( searchItem != null )
 			{
-			if( searchItem.isRelation_ == isRelation )
+			if( searchItem.isRelation_ == isRelation &&
+
+			( !isOnlySelectingNoun ||
+			isSingularOrPluralNoun( searchItem.generalizationWordTypeNr_ ) ) )
 				return searchItem;
 
 			searchItem = searchItem.nextGeneralizationItem();
@@ -175,19 +174,19 @@ class GeneralizationItem extends Item
 		return (GeneralizationItem)nextItem;
 		}
 
-	protected GeneralizationItem nextGeneralizationItem( boolean isRelation )
+	protected GeneralizationItem nextNounSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, isRelation );
+		return getGeneralizationItem( false, true, false );
 		}
 
 	protected GeneralizationItem nextSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false );
+		return getGeneralizationItem( false, false, false );
 		}
 
 	protected GeneralizationItem nextRelationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, true );
+		return getGeneralizationItem( false, false, true );
 		}
 	};
 

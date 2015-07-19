@@ -2,11 +2,11 @@
  *	Class:			ListQuery
  *	Supports class:	List
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -254,21 +254,21 @@ class ListQuery
 		return Constants.RESULT_OK;
 		}
 
-	private byte showQueryResult( boolean showOnlyWords, boolean showOnlyWordReferences, boolean showOnlyStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth, Item queryItem )
+	private byte showQueryResult( boolean isOnlyShowingWords, boolean isOnlyShowingWordReferences, boolean isOnlyShowingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth, Item queryItem )
 		{
 		while( queryItem != null )
 			{
 			if( queryItem.isSelectedByQuery )
 				{
-				if( showOnlyWords )
+				if( isOnlyShowingWords )
 					queryItem.showWords( isReturnQueryToPosition, queryWordTypeNr );
 				else
 					{
-					if( showOnlyWordReferences )
+					if( isOnlyShowingWordReferences )
 						queryItem.showWordReferences( isReturnQueryToPosition );
 					else
 						{
-						if( showOnlyStrings )
+						if( isOnlyShowingStrings )
 							queryItem.showString( isReturnQueryToPosition );
 						else
 							{
@@ -560,7 +560,8 @@ class ListQuery
 													searchStringPosition++;
 													}
 												else
-													referenceResult.hasFoundMatchingStrings = true;	// Reset indicator
+													// Reset indicator
+													referenceResult.hasFoundMatchingStrings = true;
 
 												sourceStringPosition++;
 												}
@@ -573,7 +574,8 @@ class ListQuery
 										}
 									}
 								else
-									sourceStringPosition = sourceString.length();	// Empty source string after asterisk
+									// Empty source string after asterisk
+									sourceStringPosition = sourceString.length();
 								}
 							else
 								referenceResult.hasFoundMatchingStrings = false;
@@ -588,7 +590,8 @@ class ListQuery
 							// Check search string for extra asterisks
 							while( searchStringPosition < searchString.length() &&
 							searchString.charAt( searchStringPosition ) == Constants.SYMBOL_ASTERISK )
-								searchStringPosition++;		// Skip extra asterisks
+								// Skip extra asterisks
+								searchStringPosition++;
 							}
 
 						if( searchStringPosition < searchString.length() ||
@@ -671,28 +674,28 @@ class ListQuery
 		return CommonVariables.result;
 		}
 
-	protected byte showQueryResult( boolean showOnlyWords, boolean showOnlyWordReferences, boolean showOnlyStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
+	protected byte showQueryResult( boolean isOnlyShowingWords, boolean isOnlyShowingWordReferences, boolean isOnlyShowingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
 		{
 		Item searchItem;
 
 		if( ( searchItem = myList_.firstActiveItem() ) != null )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			showQueryResult( showOnlyWords, showOnlyWordReferences, showOnlyStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		return CommonVariables.result;
 		}

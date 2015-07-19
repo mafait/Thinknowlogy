@@ -2,11 +2,11 @@
  *	Class:			WordType
  *	Supports class:	WordItem
  *	Purpose:		To create word type structures
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -34,7 +34,8 @@ class WordType
 	bool hasFeminineWordEnding_;
 	bool hasMasculineWordEnding_;
 
-	char wordItemNameString_[MAX_SENTENCE_STRING_LENGTH];		// This variable is returned by a function. So, it must be "static".
+	// This string is returned by a function. So, it must be "static".
+	char wordItemNameString_[MAX_SENTENCE_STRING_LENGTH];
 
 	CommonVariables *commonVariables_;
 	WordItem *myWordItem_;
@@ -46,7 +47,7 @@ class WordType
 	ResultType checkOnFeminineAndMasculineWordEnding( bool isSingularNoun, char *wordString )
 		{
 		GrammarResultType grammarResult;
-		WordItem *currentGrammarLanguageWordItem;
+		WordItem *currentLanguageWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkOnFeminineAndMasculineWordEnding";
 
 		hasFeminineWordEnding_ = false;
@@ -54,9 +55,9 @@ class WordType
 
 		if( wordString != NULL )
 			{
-			if( ( currentGrammarLanguageWordItem = commonVariables_->currentGrammarLanguageWordItem ) != NULL )
+			if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 				{
-				if( ( grammarResult = currentGrammarLanguageWordItem->checkOnWordEnding( ( isSingularNoun ? WORD_FEMININE_SINGULAR_NOUN_ENDING : WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
+				if( ( grammarResult = currentLanguageWordItem->checkOnWordEnding( ( isSingularNoun ? WORD_FEMININE_SINGULAR_NOUN_ENDING : WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
 					{
 					if( grammarResult.hasFoundWordEnding )
 						{
@@ -70,7 +71,7 @@ class WordType
 						}
 					else
 						{
-						if( ( grammarResult = currentGrammarLanguageWordItem->checkOnWordEnding( ( isSingularNoun ? WORD_MASCULINE_SINGULAR_NOUN_ENDING : WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
+						if( ( grammarResult = currentLanguageWordItem->checkOnWordEnding( ( isSingularNoun ? WORD_MASCULINE_SINGULAR_NOUN_ENDING : WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
 							{
 							if( grammarResult.hasFoundWordEnding )
 								{
@@ -91,7 +92,7 @@ class WordType
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check on feminine word ending" );
 				}
 			else
-				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The current grammar language word item is undefined" );
+				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The current language word item is undefined" );
 			}
 		else
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given word string is undefined" );
@@ -116,13 +117,11 @@ class WordType
 		myWordItem_ = myWordItem;
 		strcpy( moduleNameString_, "WordType" );
 
-		if( commonVariables_ != NULL )
-			{
+		if( commonVariables_ == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+
 		if( myWordItem_ == NULL )
 			strcpy( errorString, "The given my word is undefined" );
-			}
-		else
-			strcpy( errorString, "The given common variables is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
@@ -183,7 +182,7 @@ class WordType
 
 				if( commonVariables_->result == RESULT_OK )
 					{
-					if( ( wordResult = myWordItem_->wordTypeList->createWordTypeItem( hasFeminineWordEnding_, hasMasculineWordEnding_, isMultipleWord, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordLength, wordTypeString ) ).result != RESULT_OK )
+					if( ( wordResult = myWordItem_->wordTypeList->createWordTypeItem( ( hasFeminineWordEnding_ && !isMultipleWord ), hasMasculineWordEnding_, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordLength, wordTypeString ) ).result != RESULT_OK )
 						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to create a word type item" );
 					}
 				}
@@ -211,7 +210,8 @@ class WordType
 				if( ( currentWordTypeItem = myWordItem_->activeWordTypeItem( isForcingToCheckAllLanguages, wordTypeNr ) ) != NULL )
 					{
 					do	{
-						if( ( currentWordTypeString = currentWordTypeItem->itemString() ) != NULL )		// Skip hidden word type
+						// Skip hidden word type
+						if( ( currentWordTypeString = currentWordTypeItem->itemString() ) != NULL )
 							{
 							if( ( currentWordTypeStringLength = strlen( currentWordTypeString ) ) > 0 )
 								{
@@ -232,10 +232,10 @@ class WordType
 					}
 				}
 			else
-				myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given search word string is empty" );
+				myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given word type string is empty" );
 			}
 		else
-			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given search word string is undefined" );
+			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given word type string is undefined" );
 
 		wordResult.result = commonVariables_->result;
 		return wordResult;

@@ -1,0 +1,4 @@
+﻿Leer el archivo "Español/razonamiento/definición de familia".
+Pablo es el hijo de Juan.
+¿Es Juan un padre?
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

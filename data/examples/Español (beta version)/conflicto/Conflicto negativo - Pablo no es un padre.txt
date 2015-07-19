@@ -1,5 +1,0 @@
-﻿Lea el archivo "Español (beta version)/razonamiento/definición de familia".
-Pablo es un padre.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
-#Pablo no es un padre.
-Pablo es no padre.

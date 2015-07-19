@@ -2,11 +2,11 @@
  *	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class MultipleWordList extends List
 		return (MultipleWordItem)firstActiveItem();
 		}
 
-	private boolean foundMultipleWordItem( short wordTypeNr, WordItem multipleWordItem )
+	private boolean hasFoundMultipleWordItem( short wordTypeNr, WordItem multipleWordItem )
 		{
 		MultipleWordItem searchItem = firstActiveMultipleWordItem();
 
@@ -58,8 +58,9 @@ class MultipleWordList extends List
 
 	// Protected methods
 
-	protected boolean isMultipleNounWordStartingWith( String sentenceString )
+	protected short matchingMultipleSingularNounWordParts( String sentenceString )
 		{
+		short currentLanguageNr = CommonVariables.currentLanguageNr;
 		MultipleWordItem searchItem = firstActiveMultipleWordItem();
 		WordItem multipleWordItem;
 		String multipleWordString;
@@ -69,12 +70,13 @@ class MultipleWordList extends List
 			while( searchItem != null )
 				{
 				if( searchItem.isSingularNoun() &&
+				searchItem.wordTypeLanguageNr() == currentLanguageNr &&
 				( multipleWordItem = searchItem.multipleWordItem() ) != null )
 					{
 					if( ( multipleWordString = multipleWordItem.singularNounString() ) != null )
 						{
 						if( sentenceString.startsWith( multipleWordString ) )
-							return true;
+							return searchItem.nWordParts();
 						}
 					}
 
@@ -82,7 +84,7 @@ class MultipleWordList extends List
 				}
 			}
 
-		return false;
+		return 0;
 		}
 
 	protected byte checkWordItemForUsage( WordItem unusedWordItem )
@@ -105,7 +107,7 @@ class MultipleWordList extends List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte addMultipleWord( short wordTypeNr, WordItem multipleWordItem )
+	protected byte addMultipleWord( short nWordParts, short wordTypeNr, WordItem multipleWordItem )
 		{
 		if( wordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
 		wordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
@@ -114,9 +116,9 @@ class MultipleWordList extends List
 				{
 				if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
 					{
-					if( !foundMultipleWordItem( wordTypeNr, multipleWordItem ) )
+					if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
 						{
-						if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+						if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, CommonVariables.currentLanguageNr, wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
 							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to add an active multiple word item" );
 						}
 					}
@@ -134,7 +136,6 @@ class MultipleWordList extends List
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		MultipleWordItem searchItem = firstActiveMultipleWordItem();
 
 		while( searchItem != null )

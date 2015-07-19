@@ -2,11 +2,11 @@
  *	Class:			WordWriteWords
  *	Supports class:	WordItem
  *	Purpose:		To write the words of the sentences
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -40,21 +40,23 @@ class WordWriteWords
 	bool hasFoundSingleSpecificationWord_;
 	bool hasFoundSpecificationGeneralizationVerb_;
 
-	bool isSkipClearWriteLevel_;
+	bool isSkippingClearWriteLevel_;
 	bool isSpecificationWaitingForConjunction_;
 	bool isRelationWaitingForConjunction_;
 	bool isUnknownPluralOfNoun_;
 
-	unsigned short assumptionLevel_;
-
+	size_t lastNumeralWordPosition_;
 	size_t generalizationStartWordPosition_;
 	size_t specificationStartWordPosition_;
 
 	SpecificationItem *lastFoundSpecificationItem_;
+	SpecificationItem *singularNounSpecificationItem_;
 
 	WordItem *lastFoundRelationWordItem_;
 
 	char *writeWordString_;
+	// This string is returned by a function. So, it must be "static".
+	char nContextRelationsString_[MAX_SENTENCE_STRING_LENGTH];
 
 	char lastSpecificationString_[MAX_SENTENCE_STRING_LENGTH];
 	char previousSpecificationString_[MAX_SENTENCE_STRING_LENGTH];
@@ -65,60 +67,6 @@ class WordWriteWords
 
 
 	// Private functions
-
-	bool isSpecificationReasoningWordType( unsigned short specificationWordTypeNr )
-		{
-		return ( specificationWordTypeNr == WORD_TYPE_NUMERAL ||
-				specificationWordTypeNr == WORD_TYPE_LETTER_SMALL ||
-				specificationWordTypeNr == WORD_TYPE_LETTER_CAPITAL ||
-				specificationWordTypeNr == WORD_TYPE_NOUN_SINGULAR ||
-				specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL );
-		}
-
-	ResultType checkAssumptionLevel( SpecificationItem *writeSpecificationItem )
-		{
-		SpecificationResultType specificationResult;
-		unsigned short previousAssumptionLevel;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkAssumptionLevel";
-
-		assumptionLevel_ = NO_ASSUMPTION_LEVEL;
-
-		if( writeSpecificationItem != NULL )
-			{
-			if( !writeSpecificationItem->isSelfGeneratedQuestion() &&
-
-			( writeSpecificationItem->hasAssumptionLevel() ||
-			writeSpecificationItem->isSelfGeneratedAssumption() ) )
-				{
-				if( ( specificationResult = writeSpecificationItem->getAssumptionLevel() ).result == RESULT_OK )
-					{
-					if( specificationResult.hasPerformedRecalculation )
-						assumptionLevel_ = specificationResult.assumptionLevel;
-					else
-						{
-						if( ( previousAssumptionLevel = specificationResult.assumptionLevel ) > NO_ASSUMPTION_LEVEL )
-							{
-							if( ( specificationResult = writeSpecificationItem->recalculateAssumptionLevel() ).result == RESULT_OK )
-								{
-								if( specificationResult.assumptionLevel == previousAssumptionLevel )
-									assumptionLevel_ = specificationResult.assumptionLevel;
-								else
-									return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The assumption level of the given write specification item has changed during the process, but it isn't recalculated. So, this specification may have a recalculation or update issue" );
-								}
-							else
-								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to recalculate the assumption level" );
-							}
-						}
-					}
-				else
-					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to get the assumption level" );
-				}
-			}
-		else
-			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given write specification item is undefined" );
-
-		return RESULT_OK;
-		}
 
 	ResultType writeGeneralizationWordToSentence( bool isPluralSpecificationGeneralization, unsigned short grammarWordTypeNr )
 		{
@@ -165,20 +113,20 @@ class WordWriteWords
 		bool hasFoundUnwrittenWordType = false;
 		bool isNumberOfRelations = false;
 		unsigned short assumptionLevel;
-		unsigned short specificationWordTypeNr;
+		unsigned short currentSpecificationWordTypeNr;
 		unsigned short writeWordTypeNr = grammarWordTypeNr;
-		unsigned int nContextRelations;
 		unsigned int specificationCollectionNr;
+		unsigned int nContextRelations;
+		unsigned int currentRelationContextNr;
 		unsigned int generalizationContextNr;
 		unsigned int specificationContextNr;
 		unsigned int relationContextNr;
 		SpecificationItem *currentSpecificationItem;
 		WordItem *currentSpecificationWordItem;
 		WordItem *lastFoundSpecificationWordItem;
-		char nContextRelationsString[MAX_SENTENCE_STRING_LENGTH];
+		char *specificationWordString;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeSpecificationWordToSentence";
 
-		hasFoundSpecificationWord_ = false;
 		hasFoundSingleSpecificationWord_ = false;
 		isUnknownPluralOfNoun_ = false;
 
@@ -196,7 +144,6 @@ class WordWriteWords
 				isSelfGenerated = writeSpecificationItem->isSelfGenerated();
 
 				assumptionLevel = writeSpecificationItem->assumptionLevel();
-				specificationWordTypeNr = writeSpecificationItem->specificationWordTypeNr();
 
 				specificationCollectionNr = writeSpecificationItem->specificationCollectionNr();
 				generalizationContextNr = writeSpecificationItem->generalizationContextNr();
@@ -227,67 +174,79 @@ class WordWriteWords
 										{
 										hasFoundAllSpecificationWords_ = true;
 										hasFoundAllSpecificationWordsBeforeConjunction_ = false;
-										isSkipClearWriteLevel_ = false;
+										isSkippingClearWriteLevel_ = false;
 										}
 									}
 								else
 									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark specification string \"", currentSpecificationItem->specificationString(), "\" as written" );
 								}
 							}
-						else	// Specification word
+						else
 							{
-							if( ( nContextRelations = currentSpecificationItem->nContextRelations() ) == 0 )
+							// Specification word
+							currentSpecificationWordTypeNr = currentSpecificationItem->specificationWordTypeNr();
+
+							if( !currentSpecificationWordItem->isSpecificationWordTypeAlreadyWritten( currentSpecificationWordTypeNr ) )
 								{
-								if( isPossessive &&
-								specificationStartWordPosition_ == 0 &&		// To avoid looping in numbers
-								currentSpecificationItem->hasRelationContext() &&
-								isSpecificationReasoningWordType( grammarWordTypeNr ) )
-									nContextRelations = myWordItem_->nContextWordsInAllWords( currentSpecificationItem->relationContextNr(), currentSpecificationWordItem );
-								}
-
-							if( ( nContextRelations == 0 &&
-							specificationWordTypeNr == grammarWordTypeNr ) ||
-
-							( nContextRelations == 1 &&
-							isWordTypeSingularNoun ) ||
-
-							( nContextRelations > 1 &&
-
-							( isWordTypeNumeral ||
-							isWordTypePluralNoun ) ) )
-								{
-								if( ( writeWordString_ = currentSpecificationWordItem->activeWordTypeString( grammarWordTypeNr ) ) == NULL )
+								// Number of relation words of user specification item
+								if( ( nContextRelations = currentSpecificationItem->nContextRelations() ) == 0 )
 									{
-									if( isWordTypeNumeral )
+									// Calculated number of relation words of a self-generated possessive specification
+									if( isPossessive &&
+									( currentRelationContextNr = currentSpecificationItem->relationContextNr() ) > NO_CONTEXT_NR )
+										nContextRelations = myWordItem_->nContextWordsInAllWords( currentRelationContextNr, currentSpecificationWordItem );
+									}
+
+								// No relation word
+								if( ( nContextRelations == 0 &&
+								grammarWordTypeNr == currentSpecificationWordTypeNr ) ||
+
+								// One relation word
+								( nContextRelations == 1 &&
+								isWordTypeSingularNoun ) ||
+
+								// Multiple relation words
+								( nContextRelations > 1 &&
+
+								( isWordTypeNumeral ||
+								isWordTypePluralNoun ) ) )
+									{
+									if( ( specificationWordString = currentSpecificationWordItem->activeWordTypeString( grammarWordTypeNr ) ) == NULL )
 										{
-										if( specificationStartWordPosition_ == 0 )		// To avoid looping in numbers
+										if( isWordTypeNumeral )
 											{
-											// The word 'number' needs to be converted to the number of relations
-											isNumberOfRelations = true;
-											sprintf( nContextRelationsString, "%u", nContextRelations );
-											writeWordString_ = nContextRelationsString;
+											// To avoid looping in numbers
+											if( lastNumeralWordPosition_ == 0 )
+												{
+												// The word 'number' needs to be converted to the number of relation words
+												isNumberOfRelations = true;
+												lastNumeralWordPosition_ = specificationStartWordPosition_;
+												sprintf( nContextRelationsString_, "%u", nContextRelations );
+												writeWordString_ = nContextRelationsString_;
+												}
+											}
+										else
+											{
+											if( isWordTypePluralNoun )
+												{
+												if( ( writeWordString_ = currentSpecificationWordItem->singularNounString() ) != NULL )
+													{
+													// The plural noun is unknown, but the singular is known. So, force a singular noun, but with a remark
+													// Force as singular noun
+													isUnknownPluralOfNoun_ = true;
+													writeWordTypeNr = WORD_TYPE_NOUN_SINGULAR;
+													}
+												}
+											else
+												// Must be hidden word type
+												writeWordString_ = currentSpecificationWordItem->anyWordTypeString();
 											}
 										}
 									else
-										{
-										if( isWordTypePluralNoun &&
-										( writeWordString_ = currentSpecificationWordItem->singularNounString() ) != NULL )
-											// The plural noun is unknown, but the singular is known. So, force a singular noun, but with a remark
-											isUnknownPluralOfNoun_ = true;		// Force as singular noun
-										else	// Must be hidden word type
-											writeWordString_ = currentSpecificationWordItem->anyWordTypeString();
-										}
-									}
+										writeWordString_ = specificationWordString;
 
-								if( !isNumberOfRelations &&
-								writeWordString_ != NULL )
-									{
-									if( isUnknownPluralOfNoun_ )
-										writeWordTypeNr = WORD_TYPE_NOUN_SINGULAR;
-
-									if( currentSpecificationWordItem->isSpecificationWordTypeAlreadyWritten( writeWordTypeNr ) )
-										writeWordString_ = NULL;
-									else
+									if( !isNumberOfRelations &&
+									writeWordString_ != NULL )
 										{
 										if( currentSpecificationWordItem->markSpecificationWordTypeAsWritten( writeWordTypeNr ) == RESULT_OK )
 											{
@@ -297,12 +256,20 @@ class WordWriteWords
 											if( hasFoundAllSpecificationWordsBeforeConjunction_ )
 												{
 												hasFoundAllSpecificationWords_ = true;
-												isSkipClearWriteLevel_ = false;
+												isSkippingClearWriteLevel_ = false;
 												}
 											}
 										else
 											return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\" as written" );
 										}
+									}
+								else
+									{
+									if( isPossessive &&
+									isWordTypePluralNoun &&
+									nContextRelations == 0 &&
+									currentSpecificationWordTypeNr == WORD_TYPE_NOUN_SINGULAR )
+										singularNounSpecificationItem_ = currentSpecificationItem;
 									}
 								}
 							}
@@ -326,11 +293,14 @@ class WordWriteWords
 						isSpecificationWaitingForConjunction_ = true;
 
 						if( !isSpecificationGeneralization )
-							isSkipClearWriteLevel_ = true;
+							isSkippingClearWriteLevel_ = true;
+
+						lastNumeralWordPosition_ = 0;
 
 						strcpy( commonVariables_->writeSentenceString, previousSpecificationString_ );
 
-						if( ( lastFoundSpecificationWordItem = lastFoundSpecificationItem_->specificationWordItem() ) == NULL )		// Specification string
+						// Specification string
+						if( ( lastFoundSpecificationWordItem = lastFoundSpecificationItem_->specificationWordItem() ) == NULL )
 							lastFoundSpecificationItem_->clearSpecificationStringWriteLevel( NO_WRITE_LEVEL );
 						else
 							lastFoundSpecificationWordItem->clearSpecificationWriteLevel( NO_WRITE_LEVEL );
@@ -354,7 +324,8 @@ class WordWriteWords
 
 	ResultType writeRelationContextWordToSentence( unsigned short grammarWordTypeNr, SpecificationItem *writeSpecificationItem )
 		{
-		WordItem *currentRelationWordItem = NULL;		// Start to search first word in function contextWordInAllWords
+		// Start to search first word in function contextWordInAllWords
+		WordItem *currentRelationWordItem = NULL;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeRelationContextWordToSentence";
 
 		writeWordString_ = NULL;
@@ -384,7 +355,8 @@ class WordWriteWords
 			if( currentRelationWordItem != NULL &&
 			lastFoundRelationWordItem_ != NULL &&
 			lastFoundRelationWordItem_ != currentRelationWordItem &&
-			writeSpecificationItem->relationWordItem( currentRelationWordItem ) == NULL )	// Look ahead: This is the last relation word of the relation context
+			// Look ahead: This is the last relation word of the relation context
+			writeSpecificationItem->relationWordItem( currentRelationWordItem ) == NULL )
 				{
 				isRelationWaitingForConjunction_ = true;
 				writeWordString_ = NULL;
@@ -397,6 +369,37 @@ class WordWriteWords
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given write specification item is undefined" );
 
 		return RESULT_OK;
+		}
+
+	SpecificationResultType checkAssumptionLevel( SpecificationItem *writeSpecificationItem )
+		{
+		SpecificationResultType specificationResult;
+		unsigned short previousAssumptionLevel;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "checkAssumptionLevel";
+
+		if( writeSpecificationItem != NULL )
+			{
+			if( ( specificationResult = writeSpecificationItem->getAssumptionLevel() ).result == RESULT_OK )
+				{
+				if( ( previousAssumptionLevel = specificationResult.assumptionLevel ) > NO_ASSUMPTION_LEVEL )
+					{
+					if( ( specificationResult = writeSpecificationItem->recalculateAssumptionLevel() ).result == RESULT_OK )
+						{
+						if( specificationResult.assumptionLevel != previousAssumptionLevel )
+							myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The assumption level of the given write specification item has changed during the process, but it isn't recalculated. So, this specification may have a recalculation or update issue" );
+						}
+					else
+						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to recalculate the assumption level" );
+					}
+				}
+			else
+				myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to get the assumption level" );
+			}
+		else
+			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given write specification item is undefined" );
+
+		specificationResult.result = commonVariables_->result;
+		return specificationResult;
 		}
 
 
@@ -415,16 +418,18 @@ class WordWriteWords
 		hasFoundSingleSpecificationWord_ = false;
 		hasFoundSpecificationGeneralizationVerb_ = false;
 
-		isSkipClearWriteLevel_ = false;
+		isSkippingClearWriteLevel_ = false;
 		isSpecificationWaitingForConjunction_ = false;
 		isRelationWaitingForConjunction_ = false;
 		isUnknownPluralOfNoun_ = false;
 
-		assumptionLevel_ = NO_ASSUMPTION_LEVEL;
+		lastNumeralWordPosition_ = 0;
 		generalizationStartWordPosition_ = 0;
 		specificationStartWordPosition_ = 0;
 
 		lastFoundSpecificationItem_ = NULL;
+		singularNounSpecificationItem_ = NULL;
+
 		lastFoundRelationWordItem_ = NULL;
 		writeWordString_ = NULL;
 
@@ -435,13 +440,11 @@ class WordWriteWords
 		myWordItem_ = myWordItem;
 		strcpy( moduleNameString_, "WordWriteWords" );
 
-		if( commonVariables_ != NULL )
-			{
+		if( commonVariables_ == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+
 		if( myWordItem_ == NULL )
 			strcpy( errorString, "The given my word is undefined" );
-			}
-		else
-			strcpy( errorString, "The given common variables is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
@@ -469,21 +472,24 @@ class WordWriteWords
 		hasFoundSingleSpecificationWord_ = false;
 		hasFoundSpecificationGeneralizationVerb_ = false;
 
-		isSkipClearWriteLevel_ = false;
+		isSkippingClearWriteLevel_ = false;
 		isSpecificationWaitingForConjunction_ = false;
 		isRelationWaitingForConjunction_ = false;
 		isUnknownPluralOfNoun_ = false;
 
-		assumptionLevel_ = NO_ASSUMPTION_LEVEL;
+		lastNumeralWordPosition_ = 0;
 		generalizationStartWordPosition_ = 0;
 		specificationStartWordPosition_ = 0;
 
 		lastFoundSpecificationItem_ = NULL;
+		singularNounSpecificationItem_ = NULL;
+
 		lastFoundRelationWordItem_ = NULL;
 		writeWordString_ = NULL;
 
 		strcpy( lastSpecificationString_, EMPTY_STRING );
 		strcpy( previousSpecificationString_, EMPTY_STRING );
+		strcpy( nContextRelationsString_, EMPTY_STRING );
 		}
 
 	void initializeWordWriteWordsSpecificationVariables( bool isQuestion, size_t startWordPosition )
@@ -505,32 +511,34 @@ class WordWriteWords
 
 	WriteResultType writeWordsToSentence( bool isWritingCurrentSpecificationWordOnly, unsigned short answerParameter, GrammarItem *definitionGrammarItem, SpecificationItem *writeSpecificationItem )
 		{
+		SpecificationResultType specificationResult;
 		WriteResultType writeResult;
 		bool hasRelationContext;
 		bool isAssignment;
 		bool isActiveAssignment;
 		bool isInactiveAssignment;
 		bool isArchivedAssignment;
-		bool isCheckFeminineAndMasculineWord;
 		bool isConditional;
 		bool isExclusiveSpecification;
+		bool isGeneralization;
+		bool isGeneralizationNoun;
+		bool isGeneralizationProperName;
 		bool isNegative;
 		bool isPartOf;
 		bool isPossessive;
 		bool isQuestion;
-		bool isGeneralization;
-		bool isSpecification;
 		bool isRelation;
-		bool isUniqueRelation;
+		bool isSelfGeneratedAssumption;
+		bool isSelfGeneratedQuestion;
+		bool isSpecification;
 		bool isSpecificationGeneralization;
+		bool isSpecificationNoun;
+		bool isUniqueUserRelation;
 		bool isWordTypeNumeral;
 		bool isWordTypeSingularNoun;
 		bool isWordTypePluralNoun;
-		bool isInsertSeparator = true;
-		bool isGeneralizationFeminineWord = false;
-		bool isGeneralizationMasculineWord = false;
-		bool isSpecificationFeminineWord = false;
-		bool isSpecificationMasculineWord = false;
+		bool isInsertingSeparator = true;
+		unsigned short assumptionLevel;
 		unsigned short definitionGrammarParameter;
 		unsigned short definitionGrammarWordTypeNr;
 		unsigned short generalizationWordTypeNr;
@@ -540,6 +548,7 @@ class WordWriteWords
 		unsigned int pronounContextNr = NO_CONTEXT_NR;
 		WordItem *predefinedWordItem;
 		WordItem *pronounWordItem;
+		WordItem *relationWordItem;
 		WordItem *specificationWordItem;
 		char *predefinedWordString = NULL;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeWordsToSentence";
@@ -549,6 +558,7 @@ class WordWriteWords
 		isUnknownPluralOfNoun_ = false;
 
 		writeWordString_ = NULL;
+		strcpy( nContextRelationsString_, EMPTY_STRING );
 
 		if( definitionGrammarItem != NULL )
 			{
@@ -565,12 +575,17 @@ class WordWriteWords
 
 					isConditional = writeSpecificationItem->isConditional();
 					isExclusiveSpecification = writeSpecificationItem->isExclusiveSpecification();
+					isGeneralizationNoun = writeSpecificationItem->isGeneralizationNoun();
+					isGeneralizationProperName = writeSpecificationItem->isGeneralizationProperName();
 					isNegative = writeSpecificationItem->isNegative();
 					isPartOf = writeSpecificationItem->isPartOf();
 					isPossessive = writeSpecificationItem->isPossessive();
 					isQuestion = writeSpecificationItem->isQuestion();
+					isSelfGeneratedAssumption = writeSpecificationItem->isSelfGeneratedAssumption();
+					isSelfGeneratedQuestion = writeSpecificationItem->isSelfGeneratedQuestion();
 					isSpecificationGeneralization = writeSpecificationItem->isSpecificationGeneralization();
-					isUniqueRelation = writeSpecificationItem->isUniqueRelation();
+					isSpecificationNoun = writeSpecificationItem->isSpecificationNoun();
+					isUniqueUserRelation = writeSpecificationItem->isUniqueUserRelation();
 
 					isGeneralization = ( generalizationStartWordPosition_ == 0 &&
 
@@ -587,6 +602,7 @@ class WordWriteWords
 					isSpecification = ( !isGeneralization &&
 										!isRelation );
 
+					assumptionLevel = writeSpecificationItem->assumptionLevel();
 					definitionGrammarParameter = definitionGrammarItem->grammarParameter();
 					definitionGrammarWordTypeNr = definitionGrammarItem->grammarWordTypeNr();
 					generalizationWordTypeNr = writeSpecificationItem->generalizationWordTypeNr();
@@ -595,28 +611,11 @@ class WordWriteWords
 					specificationContextNr = writeSpecificationItem->specificationContextNr();
 					relationContextNr = writeSpecificationItem->relationContextNr();
 
+					specificationWordItem = writeSpecificationItem->specificationWordItem();
+
 					if( definitionGrammarParameter > NO_GRAMMAR_PARAMETER &&
 					( predefinedWordItem = myWordItem_->predefinedWordItem( definitionGrammarParameter ) ) != NULL )
 						predefinedWordString = predefinedWordItem->wordTypeString( true, definitionGrammarWordTypeNr );
-
-					isCheckFeminineAndMasculineWord = ( !isExclusiveSpecification &&
-														!isPossessive &&
-														!isQuestion );
-
-					if( isCheckFeminineAndMasculineWord )
-						{
-						isGeneralizationFeminineWord = myWordItem_->isFeminineWord();
-						isGeneralizationMasculineWord = myWordItem_->isMasculineWord();
-						}
-
-					if( ( specificationWordItem = writeSpecificationItem->specificationWordItem() ) != NULL )
-						{
-						if( isCheckFeminineAndMasculineWord )
-							{
-							isSpecificationFeminineWord = specificationWordItem->isFeminineWord();
-							isSpecificationMasculineWord = specificationWordItem->isMasculineWord();
-							}
-						}
 
 					switch( definitionGrammarParameter )
 						{
@@ -625,7 +624,7 @@ class WordWriteWords
 						case WORD_PARAMETER_SYMBOL_COLON:
 						case WORD_PARAMETER_SYMBOL_QUESTION_MARK:
 						case WORD_PARAMETER_SYMBOL_QUESTION_MARK_INVERTED:
-							isInsertSeparator = false;
+							isInsertingSeparator = false;
 							writeWordString_ = predefinedWordString;
 							break;
 
@@ -634,29 +633,61 @@ class WordWriteWords
 							break;	// Skip these words
 
 						// Ambiguity
-						case WORD_PARAMETER_CONJUNCTION_DUTCH_ALS:		// Typically for Dutch: in zowel ... als ...
+						// Typically for Dutch: in zowel ... als ...
+						case WORD_PARAMETER_CONJUNCTION_DUTCH_ALS:
 							isRelationWaitingForConjunction_ = false;
 							isSpecificationWaitingForConjunction_ = false;
 
 							// Don't insert a break statement here
 
-						case WORD_PARAMETER_NUMERAL_BOTH:				// Typically for English: in both ... and ...
-						case WORD_PARAMETER_CONJUNCTION_DUTCH_ZOWEL:	// Typically for Dutch: in zowel ... als ...
+						// Typically for English: in both ... and ...
+						case WORD_PARAMETER_NUMERAL_BOTH:
+						// Typically for Dutch: in zowel ... als ...
+						case WORD_PARAMETER_CONJUNCTION_DUTCH_ZOWEL:
 							if( writeSpecificationItem->isSpecificationWithStaticAmiguity() )
 								writeWordString_ = predefinedWordString;
 
 							break;
 
 						// Adjectives
-						case WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR:
 						case WORD_PARAMETER_ADJECTIVE_CALLED_PLURAL:
-							writeWordString_ = predefinedWordString;
+							if( hasRelationContext )
+								writeWordString_ = predefinedWordString;
+
+							break;
+
+						case WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_FEMININE:
+							if( hasRelationContext &&
+							myWordItem_->nContextWordsInAllWords( relationContextNr, specificationWordItem ) == 1 )
+								{
+								if( ( relationWordItem = writeSpecificationItem->relationWordItem() ) != NULL )
+									writeWordString_ = predefinedWordString;
+								else
+									myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't find any relation word" );
+								}
+
+							break;
+
+						case WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_MASCULINE:
+							if( hasRelationContext &&
+							myWordItem_->nContextWordsInAllWords( relationContextNr, specificationWordItem ) == 1 )
+								{
+								if( ( relationWordItem = writeSpecificationItem->relationWordItem() ) != NULL )
+									{
+									if( relationWordItem->isMale() ||
+									!relationWordItem->hasFeminineProperNameEnding() )
+										writeWordString_ = predefinedWordString;
+									}
+								else
+									myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't find any relation word" );
+								}
+
 							break;
 
 						case WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL:
 						case WORD_PARAMETER_ADJECTIVE_EVERY_FEMININE_MASCULINE:
-							if( writeSpecificationItem->isEveryGeneralization() &&
-							!writeSpecificationItem->isSelfGeneratedAssumption() &&
+							if( !isSelfGeneratedAssumption &&
+							writeSpecificationItem->isEveryGeneralization() &&
 							myWordItem_->isCorrectAdjective( definitionGrammarParameter, generalizationWordTypeNr ) )
 								writeWordString_ = predefinedWordString;
 
@@ -688,7 +719,8 @@ class WordWriteWords
 						case WORD_PARAMETER_ADJECTIVE_NEW_NEUTRAL:
 						case WORD_PARAMETER_ADJECTIVE_NEW_FEMININE_MASCULINE:
 							if( isActiveAssignment &&
-							writeSpecificationItem->hasCurrentActiveSentenceNr() &&		// Only show the word "new" during the current sentence
+							// Only show the word "new" during the current sentence
+							writeSpecificationItem->hasCurrentActiveSentenceNr() &&
 							writeSpecificationItem->isGeneralizationAssignment() )
 								writeWordString_ = predefinedWordString;
 
@@ -701,7 +733,7 @@ class WordWriteWords
 						// Adverbs
 						case WORD_PARAMETER_ADVERB_ANYMORE:
 							if( isNegative &&
-							isUniqueRelation )
+							isUniqueUserRelation )
 								writeWordString_ = predefinedWordString;
 
 							break;
@@ -709,36 +741,63 @@ class WordWriteWords
 						case WORD_PARAMETER_ADVERB_AS:
 							break;	// Skip these words
 
-						case WORD_PARAMETER_ADVERB_ASSUMPTION_MAY_BE:
-							if( checkAssumptionLevel( writeSpecificationItem ) == RESULT_OK )
+						case WORD_PARAMETER_ADVERB_ASSUMPTION_MAYBE:
+							if( isSelfGeneratedAssumption )
 								{
-								if( assumptionLevel_ >= NUMBER_OF_ASSUMPTION_LEVELS )
-									writeWordString_ = predefinedWordString;
+								if( ( specificationResult = checkAssumptionLevel( writeSpecificationItem ) ).result == RESULT_OK )
+									assumptionLevel = specificationResult.assumptionLevel;
+								else
+									myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the assumption level for 'maybe'" );
 								}
 							else
-								myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the assumption level for 'may-be'" );
+								{
+								if( isSelfGeneratedQuestion )
+									// Self-generated question shouldn't show its assumption level
+									assumptionLevel = NO_ASSUMPTION_LEVEL;
+								}
+
+							if( assumptionLevel >= NUMBER_OF_ASSUMPTION_LEVELS )
+								writeWordString_ = predefinedWordString;
 
 							break;
 
 						case WORD_PARAMETER_ADVERB_ASSUMPTION_POSSIBLY:
-							if( checkAssumptionLevel( writeSpecificationItem ) == RESULT_OK )
+							if( isSelfGeneratedAssumption )
 								{
-								if( assumptionLevel_ == 2 )
-									writeWordString_ = predefinedWordString;
+								if( ( specificationResult = checkAssumptionLevel( writeSpecificationItem ) ).result == RESULT_OK )
+									assumptionLevel = specificationResult.assumptionLevel;
+								else
+									myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the assumption level for 'possibly'" );
 								}
 							else
-								myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the assumption level for 'possibly'" );
+								{
+								if( isSelfGeneratedQuestion )
+									// Self-generated question shouldn't show its assumption level
+									assumptionLevel = NO_ASSUMPTION_LEVEL;
+								}
+
+							if( assumptionLevel == 2 )
+								writeWordString_ = predefinedWordString;
 
 							break;
 
 						case WORD_PARAMETER_ADVERB_ASSUMPTION_PROBABLY:
-							if( checkAssumptionLevel( writeSpecificationItem ) == RESULT_OK )
+							if( isSelfGeneratedAssumption )
 								{
-								if( assumptionLevel_ == 1 )
-									writeWordString_ = predefinedWordString;
+								if( ( specificationResult = checkAssumptionLevel( writeSpecificationItem ) ).result == RESULT_OK )
+									assumptionLevel = specificationResult.assumptionLevel;
+								else
+									myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the assumption level for 'probably'" );
 								}
 							else
-								myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the assumption level for 'probably'" );
+								{
+								if( isSelfGeneratedQuestion )
+									// Self-generated question shouldn't show its assumption level
+									assumptionLevel = NO_ASSUMPTION_LEVEL;
+								}
+
+							if( assumptionLevel == 1 )
+								writeWordString_ = predefinedWordString;
 
 							break;
 
@@ -765,13 +824,18 @@ class WordWriteWords
 
 							// Generalization noun
 							( ( isGeneralization &&
-							writeSpecificationItem->isGeneralizationNoun() &&
-							myWordItem_->isCorrectIndefiniteArticle( isGeneralizationFeminineWord, isGeneralizationMasculineWord, definitionGrammarParameter, generalizationWordTypeNr ) ) ||
+							isGeneralizationNoun &&
+							myWordItem_->isCorrectIndefiniteArticle( definitionGrammarParameter, generalizationWordTypeNr ) ) ||
 
 							// Specification nouns
 							( isSpecification &&
-							writeSpecificationItem->isSpecificationNoun() &&
-							writeSpecificationItem->isCorrectSpecificationArticle( isSpecificationFeminineWord, isSpecificationMasculineWord, definitionGrammarParameter ) ) ) )
+							isSpecificationNoun &&
+
+							( ( singularNounSpecificationItem_ == NULL &&
+							writeSpecificationItem->isCorrectSpecificationArticle( definitionGrammarParameter ) ) ||
+
+							( singularNounSpecificationItem_ != NULL &&
+							singularNounSpecificationItem_->isCorrectSpecificationArticle( definitionGrammarParameter ) ) ) ) ) )
 								writeWordString_ = predefinedWordString;
 
 							break;
@@ -785,22 +849,22 @@ class WordWriteWords
 							if( ( isAssignment &&
 
 							( !isArchivedAssignment ||
-							isUniqueRelation ) &&
+							isUniqueUserRelation ) &&
 
 							// Generalization noun
 							( ( isGeneralization &&
-							writeSpecificationItem->isGeneralizationNoun() &&
-							myWordItem_->isCorrectDefiniteArticle( isGeneralizationFeminineWord, isGeneralizationMasculineWord, definitionGrammarParameter, generalizationWordTypeNr ) ) ||
+							isGeneralizationNoun &&
+							myWordItem_->isCorrectDefiniteArticle( definitionGrammarParameter, generalizationWordTypeNr ) ) ||
 
 							// Specification nouns
 							( isSpecification &&
-							writeSpecificationItem->isGeneralizationProperName() &&
-							writeSpecificationItem->isSpecificationNoun() &&
-							writeSpecificationItem->isCorrectSpecificationArticle( isSpecificationFeminineWord, isSpecificationMasculineWord, definitionGrammarParameter ) ) ) ) ||
+							isGeneralizationProperName &&
+							isSpecificationNoun &&
+							writeSpecificationItem->isCorrectSpecificationArticle( definitionGrammarParameter ) ) ) ) ||
 
 							// Generalization proper name preceded-by-defined-article
 							( isGeneralization &&
-							writeSpecificationItem->isGeneralizationProperName() &&
+							isGeneralizationProperName &&
 							myWordItem_->isProperNamePrecededByDefiniteArticle( definitionGrammarParameter ) ) ||
 
 							// Relation proper names preceded-by-defined-article
@@ -892,7 +956,6 @@ class WordWriteWords
 							break;
 
 						case WORD_PARAMETER_PREPOSITION_ABOUT:
-						case WORD_PARAMETER_PREPOSITION_FOR:
 						case WORD_PARAMETER_PREPOSITION_FROM:
 						case WORD_PARAMETER_PREPOSITION_IN:
 						case WORD_PARAMETER_PREPOSITION_TO:
@@ -909,19 +972,24 @@ class WordWriteWords
 							if( !isConditional &&
 							!isPossessive &&
 
-							( !isAssignment ||		// Specification
+							( !isAssignment ||
 							isActiveAssignment ) &&
 
-							( isQuestion ||
-							hasFoundAllSpecificationWords_ ||
-							!isSpecificationGeneralization ) )
+							( ( isQuestion &&
+							!hasFoundAllSpecificationWords_ ) ||
+
+							( !isQuestion &&
+
+							( hasFoundAllSpecificationWords_ ||
+							!isSpecificationGeneralization ) ) ) )
 								{
 								writeWordString_ = predefinedWordString;
 
 								if( isQuestion )
 									{
 									hasFoundQuestionVerb_ = true;
-									isInsertSeparator = false;		// Specific for Spanish
+									// Typically for Spanish
+									isInsertingSeparator = false;
 									}
 
 								if( isSpecificationGeneralization )
@@ -941,7 +1009,8 @@ class WordWriteWords
 								if( isQuestion )
 									{
 									hasFoundQuestionVerb_ = true;
-									isInsertSeparator = false;		// Specific for Spanish
+									// Typically for Spanish
+									isInsertingSeparator = false;
 									}
 
 								if( isSpecificationGeneralization )
@@ -958,7 +1027,7 @@ class WordWriteWords
 										writeWordString_ = predefinedWordString;
 									else
 										{
-										// Force current tense, because the word 'previous' is used
+										// Force current tense, because the word "previous" is used
 										if( ( predefinedWordItem = myWordItem_->predefinedWordItem( definitionGrammarParameter == WORD_PARAMETER_SINGULAR_VERB_WAS ? WORD_PARAMETER_SINGULAR_VERB_IS : WORD_PARAMETER_PLURAL_VERB_ARE ) ) != NULL )
 											{
 											if( ( writeWordString_ = predefinedWordItem->wordTypeString( true, definitionGrammarWordTypeNr ) ) == NULL )
@@ -996,7 +1065,8 @@ class WordWriteWords
 								if( isQuestion )
 									{
 									hasFoundQuestionVerb_ = true;
-									isInsertSeparator = false;		// Specific for Spanish
+									// Typically for Spanish
+									isInsertingSeparator = false;
 									}
 
 								if( isSpecificationGeneralization )
@@ -1024,7 +1094,8 @@ class WordWriteWords
 								if( isQuestion )
 									{
 									hasFoundQuestionVerb_ = true;
-									isInsertSeparator = false;		// Specific for Spanish
+									// Typically for Spanish
+									isInsertingSeparator = false;
 									}
 
 								if( isSpecificationGeneralization )
@@ -1070,17 +1141,17 @@ class WordWriteWords
 						case WORD_PARAMETER_NOUN_DEVELOPER:
 						case WORD_PARAMETER_NOUN_EXPERT:
 						case WORD_PARAMETER_NOUN_FILE:
-						case WORD_PARAMETER_NOUN_GRAMMAR_LANGUAGE:
-						case WORD_PARAMETER_NOUN_INTERFACE_LANGUAGE:
 						case WORD_PARAMETER_NOUN_JUSTIFICATION_REPORT:
 						case WORD_PARAMETER_NOUN_HEAD:
 						case WORD_PARAMETER_NOUN_TAIL:
+						case WORD_PARAMETER_NOUN_LANGUAGE:
 						case WORD_PARAMETER_NOUN_MIND:
 						case WORD_PARAMETER_NOUN_NUMBER:
 						case WORD_PARAMETER_NOUN_PASSWORD:
 						case WORD_PARAMETER_NOUN_SOLVE_LEVEL:
 						case WORD_PARAMETER_NOUN_SOLVE_METHOD:
 						case WORD_PARAMETER_NOUN_SOLVE_STRATEGY:
+						case WORD_PARAMETER_NOUN_STARTUP_LANGUAGE:
 						case WORD_PARAMETER_NOUN_USER:
 							if( ( !isQuestion ||
 							hasFoundQuestionVerb_ ) &&
@@ -1094,7 +1165,7 @@ class WordWriteWords
 									if( generalizationWordTypeNr == definitionGrammarWordTypeNr )
 										{
 										// Generalization
-										if( writeGeneralizationWordToSentence( ( !isPartOf && isSpecificationGeneralization && !hasFoundSingleSpecificationWord_ ), definitionGrammarWordTypeNr ) != RESULT_OK )
+										if( writeGeneralizationWordToSentence( ( isSpecificationGeneralization && !isPartOf && !hasFoundSingleSpecificationWord_ ), definitionGrammarWordTypeNr ) != RESULT_OK )
 											myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the generalization word to the sentence" );
 										}
 									}
@@ -1108,6 +1179,7 @@ class WordWriteWords
 
 										if( isWordTypeNumeral ||
 										isWordTypePluralNoun ||
+										isWordTypeSingularNoun ||
 										// Matching specification word type
 										writeSpecificationItem->specificationWordTypeNr() == definitionGrammarWordTypeNr )
 											{
@@ -1144,9 +1216,9 @@ class WordWriteWords
 								strcpy( commonVariables_->writeSentenceString, writeWordString_ );
 							else
 								{
-								isSkipClearWriteLevel_ = false;
+								isSkippingClearWriteLevel_ = false;
 
-								if( isInsertSeparator )
+								if( isInsertingSeparator )
 									strcat( commonVariables_->writeSentenceString, SPACE_STRING );
 
 								strcat( commonVariables_->writeSentenceString, writeWordString_ );
@@ -1154,14 +1226,14 @@ class WordWriteWords
 
 							if( isUnknownPluralOfNoun_ )
 								{
-								if( commonVariables_->currentInterfaceLanguageWordItem != NULL )
+								if( commonVariables_->currentLanguageWordItem != NULL )
 									{
-									strcat( commonVariables_->writeSentenceString, commonVariables_->currentInterfaceLanguageWordItem->interfaceString( INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_START ) );
+									strcat( commonVariables_->writeSentenceString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_START ) );
 									strcat( commonVariables_->writeSentenceString, writeWordString_ );
-									strcat( commonVariables_->writeSentenceString, commonVariables_->currentInterfaceLanguageWordItem->interfaceString( INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_ENDING ) );
+									strcat( commonVariables_->writeSentenceString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_ENDING ) );
 									}
 								else
-									myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The current interface language word item is undefined" );
+									myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The current language word item is undefined" );
 								}
 
 							if( hasFoundGeneralizationWord_ )
@@ -1172,7 +1244,7 @@ class WordWriteWords
 									{
 									specificationStartWordPosition_ = strlen( commonVariables_->writeSentenceString );
 
-									// To recovery an unsuccessful specification match
+									// Recover an unsuccessful grammar path
 									strcpy( previousSpecificationString_, lastSpecificationString_ );
 									strcpy( lastSpecificationString_, commonVariables_->writeSentenceString );
 									}
@@ -1190,7 +1262,7 @@ class WordWriteWords
 			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given definition grammar item is undefined" );
 
 		writeResult.hasFoundWordToWrite = ( writeWordString_ != NULL );
-		writeResult.isSkipClearWriteLevel = isSkipClearWriteLevel_;
+		writeResult.isSkippingClearWriteLevel = isSkippingClearWriteLevel_;
 		writeResult.result = commonVariables_->result;
 		return writeResult;
 		}

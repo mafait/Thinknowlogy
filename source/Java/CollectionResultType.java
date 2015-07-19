@@ -1,11 +1,11 @@
 /*
  *	Class:			CollectionResultType
  *	Purpose:		To return word type variables of a method
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@ class CollectionResultType
 	protected boolean isCollected;
 
 	protected int createdCollectionNr;
-	protected int foundRelationContextNr;
 
 	protected WordItem foundGeneralizationWordItem;
 
@@ -46,7 +45,6 @@ class CollectionResultType
 		isCollected = false;
 
 		createdCollectionNr = Constants.NO_COLLECTION_NR;
-		foundRelationContextNr = Constants.NO_CONTEXT_NR;
 
 		foundGeneralizationWordItem = null;
 		}

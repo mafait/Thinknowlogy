@@ -1,5 +1,0 @@
-﻿Lea el archivo "Español (beta version)/razonamiento/definición de familia".
-Juan es el padre y Ana es la madre de Pedro, José y Luisa.
-Ana es una persona.
-Luisa es parte de una familia.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.

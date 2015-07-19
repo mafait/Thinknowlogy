@@ -2,11 +2,11 @@
  *	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ class GrammarList extends List
 		firstWordEndingGrammarItem_ = null;
 		startOfGrammarItem_ = null;
 
-		initializeListVariables( Constants.WORD_GRAMMAR_LANGUAGE_LIST_SYMBOL, myWordItem );
+		initializeListVariables( Constants.WORD_GRAMMAR_LIST_SYMBOL, myWordItem );
 		}
 
 
@@ -145,25 +145,6 @@ class GrammarList extends List
 	protected boolean isCheckingGrammarNeeded()
 		{
 		return isCheckingGrammarNeeded_;
-		}
-
-	protected short guideByGrammarStringWordTypeNr( String guideByGrammarString )
-		{
-		GrammarItem searchItem = firstActiveGrammarItem();
-
-		if( guideByGrammarString != null )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.guideByGrammarString != null &&
-				guideByGrammarString.equals( searchItem.guideByGrammarString ) )
-					return searchItem.grammarWordTypeNr();
-
-				searchItem = searchItem.nextGrammarItem();
-				}
-			}
-
-		return Constants.WORD_TYPE_UNDEFINED;
 		}
 
 	protected GrammarResultType checkOnWordEnding( short grammarParameter, int originalWordStringLength, String originalWordString )
@@ -271,7 +252,7 @@ class GrammarList extends List
 						searchItem = searchItem.nextGrammarItem();
 					}
 				else
-					startError( 1, null, myWordItem().anyWordTypeString(), "I found a grammar word without grammar string" );
+					startError( 1, null, myWordItem().anyWordTypeString(), "I've found a grammar word without grammar string" );
 				}
 			}
 		else
@@ -356,7 +337,7 @@ class GrammarList extends List
 					if( isIdentical &&
 					currentGrammarItem == null &&
 					duplicateGrammarItem == null )
-						startError( 1, null, myWordItem().anyWordTypeString(), "I found a duplicate grammar definition" );
+						startError( 1, null, myWordItem().anyWordTypeString(), "I've found a duplicate grammar definition" );
 					}
 				while( CommonVariables.result == Constants.RESULT_OK &&
 				( duplicateDefinitionGrammarItem = duplicateDefinitionGrammarItem.nextDefinitionGrammarItem ) != null );
@@ -501,7 +482,6 @@ class GrammarList extends List
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		GrammarItem searchItem = firstActiveGrammarItem();
 
 		while( searchItem != null )

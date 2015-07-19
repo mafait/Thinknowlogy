@@ -1,6 +1,6 @@
 ﻿Lees het bestand "Nederlands/redeneren/gezinsdefinitie".
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
-Sjors is de vader van Peter.
+Sjors is de vader van André.
 Is Jan een vader?
 Is Jan de vader van Paul?
 Is Jan de vader van Johan?

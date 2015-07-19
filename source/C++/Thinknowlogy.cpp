@@ -1,11 +1,11 @@
 /*
  *	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:	Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -22,11 +22,14 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#ifdef _MSC_VER			// MS Visual Studio
-#include <iostream>		// Defines 'system'
+// MS Visual Studio
+#ifdef _MSC_VER
+// Defines 'system'
+#include <iostream>
 #endif
 #ifdef linux
-#include <stdlib.h>		// Necessary to make a Linux native C++ version
+// Necessary to make a Linux native C++ version
+#include <stdlib.h>
 #endif
 #include "AdminItem.h"
 
@@ -34,11 +37,12 @@ int main()
 	{
 	ResultType result = RESULT_OK;
 	bool isRestart = false;
+	char startupLanguageNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 	AdminItem *adminItem = NULL;
 
 	do	{
 		// Start the administrator
-		if( ( adminItem = new AdminItem() ) != NULL )
+		if( ( adminItem = new AdminItem( startupLanguageNameString ) ) != NULL )
 			{
 			// Interact with the administrator
 			// until a restart or a system error occurs
@@ -48,6 +52,9 @@ int main()
 				}
 			while( result == RESULT_OK &&
 			!isRestart );
+
+			if( result == RESULT_OK )
+				strcpy( startupLanguageNameString, adminItem->currentLanguageNameString() );
 
 			delete adminItem;
 			}
@@ -63,10 +70,13 @@ int main()
 	// Don't close the console application on startup error,
 	// because the user needs to read the error
 	if( result != RESULT_OK )
-#ifdef _MSC_VER				// MS Visual Studio
-		system( "pause" );	// If your compiler has problems with this statement, try the next line or remove these few lines
+		// MS Visual Studio
+#ifdef _MSC_VER
+		// If your compiler has problems with this statement, try the next line or remove these few lines
+		system( "pause" );
 #else
-		while( true );		// Bad alternative
+		// Bad alternative
+		while( true );
 #endif
 
 	return result;
@@ -75,7 +85,7 @@ int main()
 /*************************************************************************
  *	"Because the Sovereign Lord helps me,
  *	I will not be disgraced.
- *	Therefore, I have set my face like a stone,
+ *	Therefore, I've set my face like a stone,
  *	determined to do his will.
  *	And I know that I will not be put to shame." (Psalm 50:7)
  *************************************************************************/

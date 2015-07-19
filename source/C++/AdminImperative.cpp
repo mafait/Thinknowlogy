@@ -2,11 +2,11 @@
  *	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -36,13 +36,12 @@ class AdminImperative
 	// Private constructible variables
 
 	bool hasFoundVirtualListAction_;
-	bool isRestart_;
+	bool hasRequestedRestart_;
 
 	SpecificationItem *foundVirtualListAssignmentItem_;
 
 	AdminItem *adminItem_;
 	CommonVariables *commonVariables_;
-	WordItem *myWordItem_;
 	char moduleNameString_[FUNCTION_NAME_LENGTH];
 
 
@@ -65,7 +64,7 @@ class AdminImperative
 					if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
 						{
 						if( adminItem_->writeTextWithPossibleQueryCommands( PRESENTATION_PROMPT_INFO, executionString ) != RESULT_OK )
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write the execution string" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write the execution string" );
 						}
 					}
 				else
@@ -76,7 +75,7 @@ class AdminImperative
 						{
 						case WORD_PARAMETER_NOUN_JUSTIFICATION_REPORT:
 							if( adminItem_->writeJustificationReport( specificationWordItem ) != RESULT_OK )
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write justification for a word" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write justification for a word" );
 
 							break;
 
@@ -91,18 +90,18 @@ class AdminImperative
 									( singularNounString = specificationWordItem->singularNounString() ) != NULL )
 										{
 										if( adminItem_->readInfoFile( false, singularNounString ).result != RESULT_OK )
-											return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read the info file with a singular noun word" );
+											return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read the info file with a singular noun word" );
 										}
 
 									// Try to show all knowledge about this specification
-									if( adminItem_->writeInfoAboutWord( false, true, true, true, true, true, true, true, NULL, specificationWordItem ) != RESULT_OK )
-										return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write info about a word" );
+									if( adminItem_->writeInfoAboutWord( false, true, true, true, true, true, true, true, specificationWordItem ) != RESULT_OK )
+										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write info about a word" );
 									}
 								else
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read the info file" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read the info file" );
 								}
 							else
-								return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word item is undefined" );
+								return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The specification word item is undefined" );
 						}
 
 					if( !commonVariables_->hasShownMessage &&
@@ -113,15 +112,15 @@ class AdminImperative
 							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_NO ) == RESULT_OK )
 								{
 								if( commonVariables_->presentation->writeDiacriticalText( false, false, PRESENTATION_PROMPT_NOTIFICATION, commonVariables_->writeSentenceString ) != RESULT_OK )
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write a sentence" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write a sentence" );
 								}
 							else
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
 							}
 						else
 							{
-							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_HAVE_ANY_INFO_ABOUT_START, specificationWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_HAVE_ANY_INFO_ABOUT_END ) != RESULT_OK )
-								return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_START, specificationWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_END ) != RESULT_OK )
+								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 							}
 						}
 					}
@@ -129,11 +128,11 @@ class AdminImperative
 			else
 				{
 				if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != RESULT_OK )
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 				}
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -144,16 +143,16 @@ class AdminImperative
 
 		if( generalizationWordItem != NULL )
 			{
-			if( generalizationWordItem->addSpecification( true, false, false, false, false, false, false, false, false, false, isSelection, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, WORD_TYPE_UNDEFINED, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, specificationWordItem, NULL, NULL, NULL ).result == RESULT_OK )
+			if( generalizationWordItem->addSpecification( true, false, false, false, false, false, false, false, false, false, isSelection, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, WORD_TYPE_UNDEFINED, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, specificationWordItem, NULL, NULL, NULL ).result == RESULT_OK )
 				{
 				if( generalizationWordItem->assignSpecification( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_UNDEFINED, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, specificationWordItem, NULL, NULL ).result != RESULT_OK )
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a virtual list word" );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a virtual list word" );
 				}
 			else
-				return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a virtual list word" );
+				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a virtual list specification" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -176,12 +175,12 @@ class AdminImperative
 							!specificationWordItem->isNounTail() )
 								{
 								if( addWordToVirtualList( false, relationWordTypeNr, specificationWordTypeNr, relationWordItem, specificationWordItem ) != RESULT_OK )
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a word to a virtual list" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a word to a virtual list" );
 								}
 							else
 								{
 								if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != RESULT_OK )
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
 								}
 
 							break;
@@ -199,7 +198,7 @@ class AdminImperative
 										else
 											{
 											if( relationWordItem->inactivateActiveAssignment( foundVirtualListAssignmentItem_ ) != RESULT_OK )
-												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to dectivate the head of a virtual list" );
+												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to dectivate the head of a virtual list" );
 											}
 										}
 									else
@@ -213,7 +212,7 @@ class AdminImperative
 											else
 												{
 												if( relationWordItem->inactivateActiveAssignment( foundVirtualListAssignmentItem_ ) != RESULT_OK )
-													return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to dectivate the tail of a virtual list" );
+													return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to dectivate the tail of a virtual list" );
 												}
 											}
 										}
@@ -228,7 +227,7 @@ class AdminImperative
 										else
 											{
 											if( relationWordItem->inactivateActiveAssignment( foundVirtualListAssignmentItem_ ) != RESULT_OK )
-												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to dectivate the word in a virtual list" );
+												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to dectivate the word in a virtual list" );
 											}
 										}
 
@@ -240,20 +239,20 @@ class AdminImperative
 										if( !hasFoundVirtualListAction_ )
 											{
 											if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_NEEDS_A_LIST_TO_BE_SPECIFIED ) != RESULT_OK )
-												return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
 											}
 										}
 									else
 										{
 										if( addWordToVirtualList( false, foundVirtualListAssignmentItem_->generalizationWordTypeNr(), foundVirtualListAssignmentItem_->specificationWordTypeNr(), relationWordItem, foundVirtualListAssignmentItem_->specificationWordItem() ) != RESULT_OK )
-											return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a word to a virtual list" );
+											return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a word to a virtual list" );
 										}
 
 									break;
 
 								default:
 									if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_PREPOSITION_NOT_USED_FOR_THIS_ACTION ) != RESULT_OK )
-										return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the preposition parameter" );
+										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the preposition parameter" );
 								}
 
 							break;
@@ -274,23 +273,23 @@ class AdminImperative
 							if( foundVirtualListAssignmentItem_ != NULL )
 								{
 								if( relationWordItem->inactivateActiveAssignment( foundVirtualListAssignmentItem_ ) != RESULT_OK )
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to dectivate the head of a virtual list" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to dectivate the head of a virtual list" );
 								}
 
 							break;
 
 						default:
-							return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given imperative parameter isn't a virtual list action" );
+							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given imperative parameter isn't a virtual list action" );
 						}
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given relation word item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given relation word item is undefined" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -317,7 +316,7 @@ class AdminImperative
 							( relationWordItem = currentReadItem->readWordItem() ) != NULL )
 								{
 								if( executeVirtualListImperative( imperativeParameter, prepositionParameter, specificationWordTypeNr, currentReadItem->wordTypeNr(), generalizationWordItem, specificationWordItem, relationWordItem ) != RESULT_OK )
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to execute a virtual list imperative" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to execute a virtual list imperative" );
 								}
 							}
 						}
@@ -327,17 +326,17 @@ class AdminImperative
 				else
 					{
 					if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_NEEDS_A_LIST_TO_BE_SPECIFIED ) != RESULT_OK )
-						return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
 					}
 				}
 			else
 				{
 				if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != RESULT_OK )
-					return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
 				}
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -356,19 +355,19 @@ class AdminImperative
 					if( ( relationWordItem = executionSelectionItem->relationWordItem() ) != NULL )
 						{
 						if( executeVirtualListImperative( imperativeParameter, executionSelectionItem->prepositionParameter(), specificationWordTypeNr, executionSelectionItem->relationWordTypeNr(), generalizationWordItem, specificationWordItem, relationWordItem ) != RESULT_OK )
-							return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to execute a virtual list imperative" );
+							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to execute a virtual list imperative" );
 						}
 					else
-						return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given execution selection item has no relation word item" );
+						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given execution selection item has no relation word item" );
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given execution selection item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given execution selection item is undefined" );
 				}
 			else
-				return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -377,37 +376,29 @@ class AdminImperative
 	protected:
 	// Constructor / deconstructor
 
-	AdminImperative( AdminItem *adminItem, CommonVariables *commonVariables, WordItem *myWordItem )
+	AdminImperative( AdminItem *adminItem, CommonVariables *commonVariables )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		hasFoundVirtualListAction_ = false;
-		isRestart_ = false;
+		hasRequestedRestart_ = false;
 
 		foundVirtualListAssignmentItem_ = NULL;
 
 		adminItem_ = adminItem;
 		commonVariables_ = commonVariables;
-		myWordItem_ = myWordItem;
 		strcpy( moduleNameString_, "AdminImperative" );
 
-		if( commonVariables_ != NULL )
-			{
-		if( adminItem_ != NULL )
-			{
-			if( myWordItem_ == NULL )
-				strcpy( errorString, "The given my word is undefined" );
-			}
-		else
-			strcpy( errorString, "The given admin is undefined" );
-			}
-		else
+		if( commonVariables_ == NULL )
 			strcpy( errorString, "The given common variables is undefined" );
+
+		if( adminItem_ == NULL )
+			strcpy( errorString, "The given admin is undefined" );
 
 		if( strlen( errorString ) > 0 )
 			{
-			if( myWordItem_ != NULL )
-				myWordItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+			if( adminItem_ != NULL )
+				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -422,12 +413,12 @@ class AdminImperative
 
 	bool hasRequestedRestart()
 		{
-		return isRestart_;
+		return hasRequestedRestart_;
 		}
 
 	ResultType executeImperative( bool isInitializeVariables, unsigned short executionListNr, unsigned short imperativeParameter, unsigned short specificationWordParameter, unsigned short specificationWordTypeNr, unsigned int endSolveProgress, char *executionString, WordItem *generalizationWordItem, WordItem *specificationWordItem, ReadItem *startRelationWordReadItem, ReadItem *endRelationReadItem, SelectionItem *executionSelectionItem, SelectionItem *actionSelectionItem )
 		{
-		bool showRelationWarning = false;
+		bool isShowingRelationWarning = false;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "executeImperative";
 
 		if( isInitializeVariables )
@@ -438,9 +429,10 @@ class AdminImperative
 
 		switch( imperativeParameter )
 			{
-			case NO_IMPERATIVE_PARAMETER:	// Selection
+			// Selection
+			case NO_IMPERATIVE_PARAMETER:
 				if( adminItem_->assignSelectionSpecification( executionSelectionItem ) != RESULT_OK )
-					return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to assign an imperative selection specification at assignment level ", commonVariables_->currentAssignmentLevel );
+					return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to assign an imperative selection specification at assignment level ", commonVariables_->currentAssignmentLevel );
 
 				break;
 
@@ -450,12 +442,12 @@ class AdminImperative
 				if( executionSelectionItem == NULL )
 					{
 					if( executeVirtualListImperative( imperativeParameter, specificationWordTypeNr, generalizationWordItem, specificationWordItem, startRelationWordReadItem, endRelationReadItem ) != RESULT_OK )
-						return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to execute a virtual list imperative" );
+						return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to execute a virtual list imperative" );
 					}
 				else
 					{
 					if( executeVirtualListSelectionImperative( imperativeParameter, specificationWordTypeNr, generalizationWordItem, specificationWordItem, executionSelectionItem ) != RESULT_OK )
-						return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to execute a selection virtual list imperative" );
+						return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to execute a selection virtual list imperative" );
 					}
 
 				break;
@@ -468,26 +460,26 @@ class AdminImperative
 						switch( specificationWordParameter )
 							{
 							case WORD_PARAMETER_NOUN_MIND:
-								if( adminItem_->deleteSentences( false, adminItem_->firstUserSentenceNr() ) == RESULT_OK )
+								if( adminItem_->deleteSentences( false, adminItem_->firstSentenceNrOfCurrentUser() ) == RESULT_OK )
 									{
 									if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_MY_MIND_IS_CLEAR ) != RESULT_OK )
-										return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to write an interface notification about clearing my mind" );
+										return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to write an interface notification about clearing my mind" );
 									}
 								else
-									return myWordItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the previous sentences" );
+									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the previous sentences" );
 
 								break;
 
 							default:
 								if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != RESULT_OK )
-									return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to write an interface warning about clearing" );
+									return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to write an interface warning about clearing" );
 							}
 						}
 					else
-						showRelationWarning = true;
+						isShowingRelationWarning = true;
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 				break;
 
@@ -497,13 +489,13 @@ class AdminImperative
 					if( startRelationWordReadItem == NULL )
 						{
 						if( adminItem_->readInfoFile( true, generalizationWordItem->anyWordTypeString() ).result != RESULT_OK )
-							return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to read the info help file" );
+							return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to read the info help file" );
 						}
 					else
-						showRelationWarning = true;
+						isShowingRelationWarning = true;
 					}
 				else
-					return myWordItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 				break;
 
@@ -511,10 +503,10 @@ class AdminImperative
 				if( startRelationWordReadItem == NULL )
 					{
 					if( adminItem_->login( specificationWordItem ) != RESULT_OK )
-						return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to login" );
+						return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to login" );
 					}
 				else
-					showRelationWarning = true;
+					isShowingRelationWarning = true;
 
 				break;
 
@@ -525,19 +517,19 @@ class AdminImperative
 						{
 						case WORD_PARAMETER_NOUN_FILE:
 							if( adminItem_->readExampleFile( executionString ) != RESULT_OK )
-								return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to read an example file" );
+								return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to read an example file" );
 
 							break;
 
 						default:
 							if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-								return myWordItem_->startErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I don't know how to perform imperative 'read'. Unknown specification parameter: ", specificationWordParameter );
+								return adminItem_->startErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I don't know how to perform imperative 'read'. Unknown specification parameter: ", specificationWordParameter );
 
-							return myWordItem_->startErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I don't know how to perform imperative 'read'. Unknown specification parameter: ", specificationWordParameter, " at assignment level ", commonVariables_->currentAssignmentLevel );
+							return adminItem_->startErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I don't know how to perform imperative 'read'. Unknown specification parameter: ", specificationWordParameter, " at assignment level ", commonVariables_->currentAssignmentLevel );
 						}
 					}
 				else
-					showRelationWarning = true;
+					isShowingRelationWarning = true;
 
 				break;
 
@@ -545,7 +537,7 @@ class AdminImperative
 				if( adminItem_->undoLastSentence() == RESULT_OK )
 					adminItem_->dontDeletedRollbackInfo();
 				else
-					return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to undo the last sentence" );
+					return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to undo the last sentence" );
 
 				break;
 
@@ -553,17 +545,17 @@ class AdminImperative
 				if( adminItem_->redoLastUndoneSentence() == RESULT_OK )
 					adminItem_->dontDeletedRollbackInfo();
 				else
-					return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to redo the last undone sentence" );
+					return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to redo the last undone sentence" );
 
 				break;
 
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_RESTART:
-				isRestart_ = true;
+				hasRequestedRestart_ = true;
 				break;
 
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_SHOW:
 				if( executeImperativeShow( specificationWordParameter, specificationWordTypeNr, generalizationWordItem, specificationWordItem, executionString ) != RESULT_OK )
-					return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to execute the show imperative" );
+					return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to execute the show imperative" );
 
 				break;
 
@@ -578,27 +570,27 @@ class AdminImperative
 					adminItem_->clearCurrentSolveProgress();
 
 					if( adminItem_->solveWord( endSolveProgress, specificationWordItem, actionSelectionItem ) != RESULT_OK )
-						return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to solve a word at assignment level ", commonVariables_->currentAssignmentLevel );
+						return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to solve a word at assignment level ", commonVariables_->currentAssignmentLevel );
 					}
 				else
 					{
 					if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != RESULT_OK )
-						return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to write an interface warning about solving" );
+						return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to write an interface warning about solving" );
 					}
 
 				break;
 
 			default:
 				if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-					return myWordItem_->startErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I don't know how to execute the imperative with word parameter: ", imperativeParameter );
+					return adminItem_->startErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I don't know how to execute the imperative with word parameter: ", imperativeParameter );
 
-				return myWordItem_->startErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I don't know how to execute the imperative with word parameter: ", imperativeParameter, ", at assignment level ", commonVariables_->currentAssignmentLevel );
+				return adminItem_->startErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I don't know how to execute the imperative with word parameter: ", imperativeParameter, ", at assignment level ", commonVariables_->currentAssignmentLevel );
 			}
 
-		if( showRelationWarning )
+		if( isShowingRelationWarning )
 			{
 			if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_TO_DO_WITH_RELATION ) != RESULT_OK )
-				return myWordItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to write an interface warning" );
+				return adminItem_->addErrorInItem( adminItem_->adminListChar( executionListNr ), functionNameString, moduleNameString_, "I failed to write an interface warning" );
 			}
 
 		return RESULT_OK;

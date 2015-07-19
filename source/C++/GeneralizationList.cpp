@@ -2,11 +2,11 @@
  *	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -49,6 +49,12 @@ class GeneralizationList : private List
 			searchItem = searchItem->nextGeneralizationItem();
 			delete deleteItem;
 			}
+
+		if( firstInactiveItem() != NULL )
+			fprintf( stderr, "\nError: Class GeneralizationList has inactive items." );
+
+		if( firstArchivedItem() )
+			fprintf( stderr, "\nError: Class GeneralizationList has archived items." );
 
 		searchItem = (GeneralizationItem *)firstReplacedItem();
 
@@ -118,9 +124,9 @@ class GeneralizationList : private List
 		return RESULT_OK;
 		}
 
-	ResultType createGeneralization( bool isRelation, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem )
+	ResultType createGeneralizationItem( bool isRelation, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createGeneralization";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "createGeneralizationItem";
 
 		if( generalizationWordTypeNr > WORD_TYPE_UNDEFINED &&
 		generalizationWordTypeNr < NUMBER_OF_WORD_TYPES )
@@ -141,7 +147,6 @@ class GeneralizationList : private List
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		GeneralizationItem *searchItem = firstActiveGeneralizationItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
@@ -177,11 +182,11 @@ class GeneralizationList : private List
 		return (GeneralizationItem *)firstActiveItem();
 		}
 
-	GeneralizationItem *firstGeneralizationItem( bool isRelation )
+	GeneralizationItem *firstGeneralizationItem( bool isOnlySelectingNoun, bool isRelation )
 		{
 		GeneralizationItem *firstGeneralizationItem = firstActiveGeneralizationItem();
 
-		return ( firstGeneralizationItem == NULL ? NULL : firstGeneralizationItem->getGeneralizationItem( true, isRelation ) );
+		return ( firstGeneralizationItem == NULL ? NULL : firstGeneralizationItem->getGeneralizationItem( true, isOnlySelectingNoun, isRelation ) );
 		}
 	};
 

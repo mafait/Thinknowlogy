@@ -2,11 +2,11 @@
  *	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the lines from knowledge files
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -28,10 +28,7 @@ class AdminReadFile
 	{
 	// Private constructible variables
 
-	private int previousSentenceNr_;
-
 	private AdminItem adminItem_;
-	private WordItem myWordItem_;
 	private String moduleNameString_;
 
 
@@ -44,11 +41,11 @@ class AdminReadFile
 				grammarChar == Constants.GRAMMAR_WORD_DEFINITION_CHAR );
 		}
 
-	private boolean showLine()
+	private boolean isShowingLine()
 		{
 		if( !adminItem_.isSystemStartingUp() &&
 		adminItem_.fileList != null )
-			return adminItem_.fileList.showLine();
+			return adminItem_.fileList.isShowingLine();
 
 		return false;
 		}
@@ -56,15 +53,16 @@ class AdminReadFile
 	private FileResultType openFile( boolean isAddingSubPath, boolean isInfoFile, boolean isReportingErrorIfFileDoesNotExist, String defaultSubpathString, String fileNameString )
 		{
 		FileResultType fileResult = new FileResultType();
+		FileList fileList;
 
-		if( adminItem_.fileList != null )
-			return adminItem_.fileList.openFile( isAddingSubPath, isInfoFile, isReportingErrorIfFileDoesNotExist, defaultSubpathString, fileNameString );
+		if( ( fileList = adminItem_.fileList ) != null )
+			return fileList.openFile( isAddingSubPath, isInfoFile, isReportingErrorIfFileDoesNotExist, defaultSubpathString, fileNameString );
 
-		fileResult.result = myWordItem_.startErrorInItem( 1, moduleNameString_, "The file list isn't created yet" );
+		fileResult.result = adminItem_.startErrorInItem( 1, moduleNameString_, "The file list isn't created yet" );
 		return fileResult;
 		}
 
-	private byte readLanguageFile( boolean isGrammarLanguage, String languageNameString )
+	private byte readLanguageFile( boolean isGrammarFile, String languageNameString )
 		{
 		FileResultType fileResult = new FileResultType();
 		byte originalResult;
@@ -74,165 +72,145 @@ class AdminReadFile
 			{
 			Console.showProgressStatus( languageNameString );
 
-			if( ( fileResult = openFile( true, false, false, ( isGrammarLanguage ? Constants.FILE_GRAMMAR_DIRECTORY_NAME_STRING : Constants.FILE_INTERFACE_DIRECTORY_NAME_STRING ), languageNameString ) ).result == Constants.RESULT_OK )
+			if( ( fileResult = openFile( true, false, false, ( isGrammarFile ? Constants.FILE_GRAMMAR_DIRECTORY_NAME_STRING : Constants.FILE_INTERFACE_DIRECTORY_NAME_STRING ), languageNameString ) ).result == Constants.RESULT_OK )
 				{
 				if( ( openedLanguageFileItem = fileResult.createdFileItem ) != null )
 					{
-					if( isGrammarLanguage )
-						{
-						if( adminItem_.createGrammarLanguage( languageNameString ) != Constants.RESULT_OK )
-							myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to create grammar language: \"" + languageNameString + "\"" );
-						}
-					else
-						{
-						if( adminItem_.createInterfaceLanguage( languageNameString ) != Constants.RESULT_OK )
-							myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to create interface language: \"" + languageNameString + "\"" );
-						}
-
-					if( CommonVariables.result == Constants.RESULT_OK )
+					if( adminItem_.createLanguage( languageNameString ) == Constants.RESULT_OK )
 						{
 						if( readAndExecute() != Constants.RESULT_OK )
-							myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to read and execute the opened language file" );
+							adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read and execute the opened language file" );
 
 						originalResult = CommonVariables.result;
 
 						if( closeCurrentFileItem( openedLanguageFileItem ) != Constants.RESULT_OK )
-							myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to close the language file item" );
+							adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to close the language file item" );
 
 						if( originalResult != Constants.RESULT_OK )
 							CommonVariables.result = originalResult;
 						}
+					else
+						adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to create language: \"" + languageNameString + "\"" );
 					Console.clearProgress();
 					}
 				else
-					return myWordItem_.startErrorInItem( 1, moduleNameString_, ( isGrammarLanguage ? "I couldn't open the grammar file: \"" : "I couldn't open the interface file: \"" ) + languageNameString + "\"" );
+					return adminItem_.startErrorInItem( 1, moduleNameString_, ( isGrammarFile ? "I couldn't open the grammar file: \"" : "I couldn't open the interface file: \"" ) + languageNameString + "\"" );
 				}
 			else
-				return myWordItem_.addErrorInItem( 1, moduleNameString_, ( isGrammarLanguage ? "I failed to open the grammar file: \"" : "I failed to open the interface file: \"" ) + languageNameString + "\"" );
+				return adminItem_.addErrorInItem( 1, moduleNameString_, ( isGrammarFile ? "I failed to open the grammar file: \"" : "I failed to open the interface file: \"" ) + languageNameString + "\"" );
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given language name is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given language name is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
 	private byte checkCurrentSentenceNr()
 		{
-		if( CommonVariables.currentSentenceNr < Constants.MAX_SENTENCE_NR )
+		if( CommonVariables.isDontIncrementCurrentSentenceNr )
 			{
-			if( adminItem_.isDontIncrementCurrentSentenceNr() )
-				{
-				adminItem_.clearDontIncrementCurrentSentenceNr();
-				previousSentenceNr_--;	// No increment is done. So, the previous sentence number should be one less
-				}
-			else
-				{
-				if( CommonVariables.currentSentenceNr + 1 >= adminItem_.firstUserSentenceNr() )	// Is my sentence
-					{
-					CommonVariables.currentSentenceNr++;
-					adminItem_.setCurrentItemNr();		// Necessary after increment of current sentence number
-					}
-				else
-					return myWordItem_.startSystemErrorInItem( 1, moduleNameString_, "Integrity violation! The next sentence is already used by another user" );
-				}
+			CommonVariables.isDontIncrementCurrentSentenceNr = false;
 
-			if( CommonVariables.currentSentenceNr > Constants.NO_SENTENCE_NR &&
-			CommonVariables.currentSentenceNr <= adminItem_.highestSentenceNr() )
-				{
-				if( adminItem_.deleteSentences( true, CommonVariables.currentSentenceNr ) != Constants.RESULT_OK )
-					return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the current redo info" );
-				}
+			if( adminItem_.deleteSentences( true, CommonVariables.currentSentenceNr ) != Constants.RESULT_OK )
+				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the current redo info" );
 			}
 		else
-			return myWordItem_.startSystemErrorInItem( 1, moduleNameString_, "Sentence number overflow! I can't except anymore input" );
+			{
+			if( CommonVariables.currentSentenceNr < Constants.MAX_SENTENCE_NR )
+				{
+				CommonVariables.currentSentenceNr++;
+				// Necessary after changing current sentence number
+				adminItem_.setCurrentItemNr();
+				}
+			else
+				return adminItem_.startSystemErrorInItem( 1, moduleNameString_, "Sentence number overflow! I can't except anymore input" );
+			}
 
 		return Constants.RESULT_OK;
 		}
 
 	private byte executeLine( StringBuffer readStringBuffer )
 		{
-		byte originalResult;
 		boolean hasSwitchedLanguage = false;
-
-		previousSentenceNr_ = Constants.MAX_SENTENCE_NR;
 
 		if( readStringBuffer != null )
 			{
-			if( readStringBuffer.length() > 0 &&		// Skip empty line
-			readStringBuffer.charAt( 0 ) != Constants.COMMENT_CHAR )		// and comment line
+			// Skip empty line
+			if( readStringBuffer.length() > 0 &&
+			// and comment line
+			readStringBuffer.charAt( 0 ) != Constants.COMMENT_CHAR )
 				{
 				CommonVariables.hasShownMessage = false;
 				CommonVariables.isAssignmentChanged = false;
 
 				if( adminItem_.cleanupDeletedItems() == Constants.RESULT_OK )
 					{
-					previousSentenceNr_ = CommonVariables.currentSentenceNr;
-
-					if( readStringBuffer.charAt( 0 ) == Constants.QUERY_CHAR )					// Guide-by-grammar, grammar/interface language or query
+					// Guide-by-grammar, grammar/language or query
+					if( readStringBuffer.charAt( 0 ) == Constants.QUERY_CHAR )
 						{
-						if( readStringBuffer.length() == 1 )					// Guide-by-grammar
+						// Guide-by-grammar
+						if( readStringBuffer.length() == 1 )
 							{
 							if( checkCurrentSentenceNr() == Constants.RESULT_OK )
 								{
 								if( adminItem_.processReadSentence( null ) != Constants.RESULT_OK )
-									myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to process a read sentence" );
+									adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to process a read sentence" );
 								}
 							else
-								myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to check to current sentence number" );
+								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check to current sentence number" );
 							}
 						else
 							{
-							if( Character.isLetter( readStringBuffer.charAt( 1 ) ) )				// Grammar/interface language
+							// Grammar/language
+							if( Character.isLetter( readStringBuffer.charAt( 1 ) ) )
 								{
-								if( adminItem_.isSystemStartingUp() )	// Read grammar and/or interface language file
+								if( adminItem_.isSystemStartingUp() )
 									{
-									// First try to read the user-interface language file
-									if( readLanguageFile( false, readStringBuffer.substring( 1 ) ) == Constants.RESULT_OK )
-										{
-										// Now, try to read the grammar language file
-										if( readLanguageFile( true, readStringBuffer.substring( 1 ) ) != Constants.RESULT_OK )
-											myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to read a grammar file" );
-										}
-									else
-										myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to read an interface file" );
+									if( readGrammarFileAndUserInterfaceFile( readStringBuffer.substring( 1 ) ) != Constants.RESULT_OK )
+										adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read the language" );
 									}
-								else									// Change interface language
+								else
 									{
-									if( adminItem_.assignGrammarAndInterfaceLanguage( readStringBuffer.substring( 1 ) ) == Constants.RESULT_OK )
+									// Change language
+									if( adminItem_.assignLanguage( readStringBuffer.substring( 1 ) ) == Constants.RESULT_OK )
 										hasSwitchedLanguage = true;
 									else
-										myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the grammar and interface language" );
+										adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the language" );
 									}
 								}
 							else
 								{
-								if( readStringBuffer.charAt( 0 ) == Constants.QUERY_CHAR )		// Query
+								// Query
+								if( readStringBuffer.charAt( 0 ) == Constants.QUERY_CHAR )
 									{
 									adminItem_.initializeQueryStringPosition();
 
 									if( adminItem_.executeQuery( false, true, true, Constants.PRESENTATION_PROMPT_QUERY, readStringBuffer.toString() ) != Constants.RESULT_OK )
-										myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute query: \"" + readStringBuffer + "\"" );
+										adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute query: \"" + readStringBuffer + "\"" );
 									}
 								}
 							}
 						}
-					else												// Sentence or grammar definition
+					else
 						{
+						// Sentence or grammar definition
 						if( checkCurrentSentenceNr() == Constants.RESULT_OK )
 							{
-							if( isGrammarChar( readStringBuffer.charAt( 0 ) ) )		// Grammar definition
+							// Grammar definition
+							if( isGrammarChar( readStringBuffer.charAt( 0 ) ) )
 								{
 								if( adminItem_.addGrammar( readStringBuffer.toString() ) != Constants.RESULT_OK )
-									myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to add grammar: \"" + readStringBuffer + "\"" );
+									adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add grammar: \"" + readStringBuffer + "\"" );
 								}
-							else										// Sentence
+							else
 								{
+								// Sentence
 								if( adminItem_.processReadSentence( readStringBuffer.toString() ) != Constants.RESULT_OK )
-									myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to process a read sentence" );
+									adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to process a read sentence" );
 								}
 							}
 						else
-							myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to check to current sentence number" );
+							adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check to current sentence number" );
 						}
 
 					if( CommonVariables.result != Constants.RESULT_SYSTEM_ERROR &&
@@ -240,69 +218,97 @@ class AdminReadFile
 						{
 						if( CommonVariables.result == Constants.RESULT_OK &&
 						!hasSwitchedLanguage &&
-						adminItem_.hasFoundAnyChangeDuringThisSentence() &&
+						!CommonVariables.hasShownWarning &&
+						adminItem_.hasFoundAnyChangeMadeByThisSentence() &&
 
-						( adminItem_.wasUndoOrRedo() ||				// Execute selections after Undo or Redo
-						!CommonVariables.hasShownMessage ) &&
-						!CommonVariables.hasShownWarning )
+						// Execute selections after Undo or Redo
+						( adminItem_.wasUndoOrRedo() ||
+						!CommonVariables.hasShownMessage ) )
 							{
 							if( adminItem_.executeSelections() != Constants.RESULT_OK )
-								myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute selections after reading the sentence" );
+								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute selections after reading the sentence" );
 							}
 
 						if( CommonVariables.result == Constants.RESULT_OK &&
 						!hasSwitchedLanguage &&
-						!adminItem_.hasFoundAnyChangeDuringThisSentence() &&
+						!adminItem_.hasFoundAnyChangeMadeByThisSentence() &&
 						!adminItem_.isSystemStartingUp() &&
 						!CommonVariables.hasShownMessage &&
 						!CommonVariables.hasShownWarning )
 							{
 							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != Constants.RESULT_OK )
-								myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
+								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
 							}
 
 						if( CommonVariables.result == Constants.RESULT_OK )
 							{
 							if( adminItem_.deleteAllTemporaryLists() != Constants.RESULT_OK )
-								myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete all temporary lists" );
-							}
-
-						if( ( CommonVariables.hasShownWarning ||
-						CommonVariables.result != Constants.RESULT_OK ) &&
-
-						CommonVariables.currentSentenceNr == previousSentenceNr_ + 1 )	// This sentence has items
-							{
-							originalResult = CommonVariables.result;		// Remember original result
-							CommonVariables.result = Constants.RESULT_OK;			// Clear current result
-
-							// Deleted current redo info. After this, 'Redo' isn't possible
-							if( adminItem_.deleteSentences( false, CommonVariables.currentSentenceNr ) != Constants.RESULT_OK )
-								myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the current redo information" );
-
-							if( originalResult != Constants.RESULT_OK )
-								CommonVariables.result = originalResult;	// Restore original result
+								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete all temporary lists" );
 							}
 						}
 					}
 				else
-					return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to cleanup the deleted items" );
+					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to cleanup the deleted items" );
 				}
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The given read string buffer is undefined" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given read string buffer is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
 	private byte closeCurrentFileItem( FileItem closeFileItem )
 		{
-		if( adminItem_.fileList != null )
+		FileList fileList;
+		if( ( fileList = adminItem_.fileList ) != null )
 			{
-			if( adminItem_.fileList.closeCurrentFile( closeFileItem ) != Constants.RESULT_OK )
-				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to close a file" );
+			if( fileList.closeCurrentFile( closeFileItem ) != Constants.RESULT_OK )
+				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to close a file" );
 			}
 		else
-			return myWordItem_.startErrorInItem( 1, moduleNameString_, "The file list isn't created yet" );
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The file list isn't created yet" );
+
+		return Constants.RESULT_OK;
+		}
+
+	private byte readGrammarFileAndUserInterfaceFile( String readLanguageNameString )
+		{
+		String startupLanguageNameString = adminItem_.startupLanguageNameString;
+		WordItem currentLanguageWordItem;
+		WordItem predefinedNounStartupLanguageWordItem;
+
+		if( readLanguageNameString != null )
+			{
+			// Read the user-interface file
+			if( readLanguageFile( false, readLanguageNameString ) == Constants.RESULT_OK )
+				{
+				// Read the grammar file
+				if( readLanguageFile( true, readLanguageNameString ) == Constants.RESULT_OK )
+					{
+					if( startupLanguageNameString != null &&
+					( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) != null &&
+					( predefinedNounStartupLanguageWordItem = adminItem_.predefinedNounStartupLanguageWordItem() ) != null )
+						{
+						if( predefinedNounStartupLanguageWordItem.addSpecification( false, false, false, false, false, true, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_NOUN_SINGULAR, Constants.WORD_TYPE_PROPER_NAME, Constants.WORD_TYPE_UNDEFINED, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, currentLanguageWordItem, null, null, null ).result == Constants.RESULT_OK )
+							{
+							if( startupLanguageNameString.equals( currentLanguageWordItem.anyWordTypeString() ) )
+								{
+								if( predefinedNounStartupLanguageWordItem.assignSpecification( false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_UNDEFINED, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, 0, null, currentLanguageWordItem, null, null ).result != Constants.RESULT_OK )
+									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the predefined noun startup language word" );
+								}
+							}
+						else
+							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a predefined noun startup language specification" );
+						}
+					}
+				else
+					adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read a grammar file" );
+				}
+			else
+				adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read an interface file" );
+			}
+		else
+			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given read language name string is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -310,28 +316,20 @@ class AdminReadFile
 
 	// Constructor / deconstructor
 
-	protected AdminReadFile( AdminItem adminItem, WordItem myWordItem )
+	protected AdminReadFile( AdminItem adminItem )
 		{
 		String errorString = null;
 
-		previousSentenceNr_ = Constants.MAX_SENTENCE_NR;
-
 		adminItem_ = adminItem;
-		myWordItem_ = myWordItem;
 		moduleNameString_ = this.getClass().getName();
 
-		if( adminItem_ != null )
-			{
-			if( myWordItem_ == null )
-				errorString = "The given my word is undefined";
-			}
-		else
+		if( adminItem_ == null )
 			errorString = "The given admin is undefined";
 
 		if( errorString != null )
 			{
-			if( myWordItem_ != null )
-				myWordItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
+			if( adminItem_ != null )
+				adminItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -352,10 +350,10 @@ class AdminReadFile
 		if( adminItem_.fileList == null )
 			{
 			// Create list
-			if( ( adminItem_.fileList = new FileList( myWordItem_ ) ) != null )
+			if( ( adminItem_.fileList = new FileList( adminItem_ ) ) != null )
 				adminItem_.adminListArray[Constants.ADMIN_FILE_LIST] = adminItem_.fileList;
 			else
-				return myWordItem_.startErrorInItem( 1, moduleNameString_, "I failed to create an admin file list" );
+				return adminItem_.startErrorInItem( 1, moduleNameString_, "I failed to create an admin file list" );
 			}
 
 		if( ( fileResult = openFile( true, false, true, Constants.FILE_STARTUP_DIRECTORY_NAME_STRING, Constants.FILE_STARTUP_NAME_STRING ) ).result == Constants.RESULT_OK )
@@ -363,24 +361,19 @@ class AdminReadFile
 			if( ( openedStartupFileItem = fileResult.createdFileItem ) != null )
 				{
 				if( readAndExecute() != Constants.RESULT_OK )
-					myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to read and execute the opened startup file" );
+					adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read and execute the opened startup file" );
 
 				originalResult = CommonVariables.result;
 
-				if( closeCurrentFileItem( openedStartupFileItem ) == Constants.RESULT_OK )
-					{
-					if( CommonVariables.currentUserNr == Constants.NO_USER_NR )
-						return myWordItem_.startErrorInItem( 1, moduleNameString_, "No user is logged in" );
-					}
-				else
-					myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to close the startup file item" );
+				if( closeCurrentFileItem( openedStartupFileItem ) != Constants.RESULT_OK )
+					adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to close the startup file item" );
 
 				if( originalResult != Constants.RESULT_OK )
 					CommonVariables.result = originalResult;
 				}
 			}
 		else
-			return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to open an startup file" );
+			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to open an startup file" );
 
 		return Constants.RESULT_OK;
 		}
@@ -401,12 +394,12 @@ class AdminReadFile
 				if( ( openedExampleFileItem = fileResult.createdFileItem ) != null )
 					{
 					if( readAndExecute() != Constants.RESULT_OK )
-						myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to read and execute the opened example file" );
+						adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read and execute the opened example file" );
 
 					originalResult = CommonVariables.result;
 
 					if( closeCurrentFileItem( openedExampleFileItem ) != Constants.RESULT_OK )
-						myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to close the example file item" );
+						adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to close the example file item" );
 
 					if( originalResult != Constants.RESULT_OK )
 						CommonVariables.result = originalResult;
@@ -414,12 +407,12 @@ class AdminReadFile
 				Console.clearProgress();
 				}
 			else
-				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to open an example file" );
+				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to open an example file" );
 			}
 		else
 			{
 			if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_WHICH_FILE_TO_READ ) != Constants.RESULT_OK )
-				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
 			}
 
 		return Constants.RESULT_OK;
@@ -435,7 +428,7 @@ class AdminReadFile
 			isLineExecuted = false;
 			readStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
 
-			if( readLine( false, isFirstLine, false, false, false, false, ( adminItem_.isDontIncrementCurrentSentenceNr() ? CommonVariables.currentSentenceNr : CommonVariables.currentSentenceNr + 1 ), adminItem_.currentUserName(), readStringBuffer ) == Constants.RESULT_OK )
+			if( readLine( false, isFirstLine, false, false, false, false, ( CommonVariables.isDontIncrementCurrentSentenceNr ? CommonVariables.currentSentenceNr : CommonVariables.currentSentenceNr + 1 ), adminItem_.currentUserName(), readStringBuffer ) == Constants.RESULT_OK )
 				{
 				if( Presentation.hasReadLine() )
 					{
@@ -445,11 +438,11 @@ class AdminReadFile
 						isLineExecuted = true;
 						}
 					else
-						return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute the read line" );
+						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute the read line" );
 					}
 				}
 			else
-				return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to read a line" );
+				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read a line" );
 			}
 		while( CommonVariables.result == Constants.RESULT_OK &&
 		isLineExecuted &&
@@ -478,8 +471,8 @@ class AdminReadFile
 			promptStringBuffer.append( promptUserNameString );
 			}
 
-		if( Presentation.readLine( isClearInputField, adminItem_.isExpertUser(), isFirstLine, isGuideByGrammarPrompt, isPassword, isQuestion, isText, showLine(), promptStringBuffer.toString(), readStringBuffer, ( adminItem_.fileList == null ? null : adminItem_.fileList.currentReadFile() ) ) != Constants.RESULT_OK )
-			return myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to read a line from a file or from input" );
+		if( Presentation.readLine( isClearInputField, adminItem_.isExpertUser(), isFirstLine, isGuideByGrammarPrompt, isPassword, isQuestion, isText, isShowingLine(), promptStringBuffer.toString(), readStringBuffer, ( adminItem_.fileList == null ? null : adminItem_.fileList.currentReadFile() ) ) != Constants.RESULT_OK )
+			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read a line from a file or from input" );
 
 		return Constants.RESULT_OK;
 		}
@@ -489,35 +482,35 @@ class AdminReadFile
 		FileResultType fileResult = new FileResultType();
 		byte originalResult;
 		FileItem openedInfoFileItem;
-		WordItem currentGrammarLanguageWordItem = CommonVariables.currentGrammarLanguageWordItem;
+		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
 		StringBuffer infoPathStringBuffer = new StringBuffer( Constants.FILE_INFO_DIRECTORY_NAME_STRING );
 
 		if( infoFileNameString != null )
 			{
-			if( currentGrammarLanguageWordItem != null )
-				infoPathStringBuffer.append( currentGrammarLanguageWordItem.anyWordTypeString() + Constants.SYMBOL_SLASH );
+			if( currentLanguageWordItem != null )
+				infoPathStringBuffer.append( currentLanguageWordItem.anyWordTypeString() + Constants.SYMBOL_SLASH );
 
 			if( ( fileResult = openFile( true, true, isReportingErrorIfFileDoesNotExist, infoPathStringBuffer.toString(), infoFileNameString ) ).result == Constants.RESULT_OK )
 				{
 				if( ( openedInfoFileItem = fileResult.createdFileItem ) != null )
 					{
 					if( readAndExecute() != Constants.RESULT_OK )
-						myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to read and execute the opened info file" );
+						adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read and execute the opened info file" );
 
 					originalResult = CommonVariables.result;
 
 					if( closeCurrentFileItem( openedInfoFileItem ) != Constants.RESULT_OK )
-						myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to close the info file item" );
+						adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to close the info file item" );
 
 					if( originalResult != Constants.RESULT_OK )
 						CommonVariables.result = originalResult;
 					}
 				}
 			else
-				myWordItem_.addErrorInItem( 1, moduleNameString_, "I failed to open the info file" );
+				adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to open the info file" );
 			}
 		else
-			myWordItem_.startErrorInItem( 1, moduleNameString_, "The given info file name string is undefined" );
+			adminItem_.startErrorInItem( 1, moduleNameString_, "The given info file name string is undefined" );
 
 		fileResult.result = CommonVariables.result;
 		return fileResult;

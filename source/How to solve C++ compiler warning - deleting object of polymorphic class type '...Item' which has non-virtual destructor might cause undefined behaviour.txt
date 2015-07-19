@@ -1,4 +1,0 @@
-Uncomment line 99 in Item.h:
-//	virtual ~Item() {};		// Some compilers need this empty virtual deconstructor to be defined
-							// Uncomment this line on compiler warning:
-							// "Deleting object of polymorphic class type '...Item' which has non-virtual destructor might cause undefined behaviour"

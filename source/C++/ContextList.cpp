@@ -2,11 +2,11 @@
  *	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2014r2b (Laws of Thought)
+ *	Version:		Thinknowlogy 2015r1beta (Corazón)
  *************************************************************************/
 /*	Copyright (C) 2009-2015, Menno Mafait
- *	Your additions, modifications, suggestions and bug reports
- *	are welcome at http://mafait.org
+ *	Your suggestions, modifications and bug reports are welcome at
+ *	http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -30,6 +30,30 @@ class ContextList : private List
 	{
 	friend class WordItem;
 
+	// Private functions
+
+	bool hasContext( bool isCompoundCollectionCollectedWithItself, unsigned int contextNr, WordItem *specificationWordItem )
+		{
+		ContextItem *searchItem = firstActiveContextItem();
+
+		// In case of a pronoun context, the given specification word item will be undefined
+
+		if( contextNr > NO_CONTEXT_NR )
+			{
+			while( searchItem != NULL )
+				{
+				if( searchItem->contextNr() == contextNr &&
+				searchItem->specificationWordItem() == specificationWordItem &&
+				searchItem->isCompoundCollectionCollectedWithItself() == isCompoundCollectionCollectedWithItself )
+					return true;
+
+				searchItem = searchItem->nextContextItem();
+				}
+			}
+
+		return false;
+		}
+
 	protected:
 	// Constructor / deconstructor
 
@@ -49,6 +73,12 @@ class ContextList : private List
 			searchItem = searchItem->nextContextItem();
 			delete deleteItem;
 			}
+
+		if( firstInactiveItem() != NULL )
+			fprintf( stderr, "\nError: Class ContextList has inactive items." );
+
+		if( firstArchivedItem() )
+			fprintf( stderr, "\nError: Class ContextList has archived items." );
 
 		searchItem = (ContextItem *)firstReplacedItem();
 
@@ -142,7 +172,7 @@ class ContextList : private List
 		{
 		ContextItem *searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
 		if( contextNr > NO_CONTEXT_NR )
 			{
@@ -163,7 +193,7 @@ class ContextList : private List
 		{
 		ContextItem *searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
 		if( contextNr > NO_CONTEXT_NR )
 			{
@@ -205,7 +235,7 @@ class ContextList : private List
 		{
 		ContextItem *searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
 		while( searchItem != NULL )
 			{
@@ -218,22 +248,19 @@ class ContextList : private List
 		return NO_CONTEXT_NR;
 		}
 
-	unsigned int contextNr( unsigned int nContextWords, WordItem *specificationWordItem )
+	unsigned int contextNr( bool isCompoundCollectionCollectedWithItself, WordItem *specificationWordItem )
 		{
 		ContextItem *searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
-		if( nContextWords > 0 )
+		while( searchItem != NULL )
 			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->specificationWordItem() == specificationWordItem &&
-				myWordItem()->nContextWordsInAllWords( searchItem->contextNr(), specificationWordItem ) == nContextWords )
-					return searchItem->contextNr();
+			if( searchItem->specificationWordItem() == specificationWordItem &&
+			searchItem->isCompoundCollectionCollectedWithItself() == isCompoundCollectionCollectedWithItself )
+				return searchItem->contextNr();
 
-				searchItem = searchItem->nextContextItem();
-				}
+			searchItem = searchItem->nextContextItem();
 			}
 
 		return NO_CONTEXT_NR;
@@ -255,13 +282,13 @@ class ContextList : private List
 		return highestContextNr;
 		}
 
-	ResultType addContext( bool isQuestion, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem )
+	ResultType addContext( bool isCompoundCollectionCollectedWithItself, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addContext";
 
 		if( contextNr > NO_CONTEXT_NR )
 			{
-			if( !hasContext( contextNr, specificationWordItem ) )
+			if( !hasContext( isCompoundCollectionCollectedWithItself, contextNr, specificationWordItem ) )
 				{
 				if( contextWordTypeNr > WORD_TYPE_UNDEFINED &&
 				contextWordTypeNr < NUMBER_OF_WORD_TYPES )
@@ -273,7 +300,7 @@ class ContextList : private List
 						{
 						if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 							{
-							if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isQuestion, contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
+							if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionCollectedWithItself, contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
 								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active context item" );
 							}
 						else
@@ -315,7 +342,6 @@ class ContextList : private List
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		// Not fully implemented yet
 		ContextItem *searchItem = firstActiveContextItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
@@ -369,11 +395,33 @@ class ContextList : private List
 		return NULL;
 		}
 
+	ContextItem *contextItem( bool isCompoundCollectionCollectedWithItself, unsigned int nContextWords, WordItem *specificationWordItem )
+		{
+		ContextItem *searchItem = firstActiveContextItem();
+
+		// In case of a pronoun context, the given specification word item will be undefined
+
+		if( nContextWords > 0 )
+			{
+			while( searchItem != NULL )
+				{
+				if( searchItem->specificationWordItem() == specificationWordItem &&
+				searchItem->isCompoundCollectionCollectedWithItself() == isCompoundCollectionCollectedWithItself &&
+				myWordItem()->nContextWordsInAllWords( searchItem->contextNr(), specificationWordItem ) == nContextWords )
+					return searchItem;
+
+				searchItem = searchItem->nextContextItem();
+				}
+			}
+
+		return NULL;
+		}
+
 	ContextItem *contextItem( WordItem *specificationWordItem )
 		{
 		ContextItem *searchItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the specification word item will be undefined
+		// In case of a pronoun context, the given specification word item will be undefined
 
 		while( searchItem != NULL )
 			{
@@ -391,6 +439,6 @@ class ContextList : private List
  *	"O Lord my God, you have performed many wonders for us.
  *	Your plans for us are too numerous to list.
  *	You have no equal.
- *	I have tried to recite all your wonderful deeds,
+ *	I've tried to recite all your wonderful deeds,
  *	I would never come to the end of them." (Psalm 40:5)
  *************************************************************************/

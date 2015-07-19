@@ -1,11 +1,11 @@
-﻿Build started 28-1-2015 9:45:37.
+﻿Build started 18-7-2015 21:27:22.
      1>Project "E:\Thinknowlogy\source\C++_release\Thinknowlogy_release.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Release\Thinknowlogy_release.lastbuildstate".
        InitializeBuildStatus:
          Creating "Release\Thinknowlogy_release.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W4 /WX- /O2 /Oi /Os /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /wd4996 /analyze- /errorReport:prompt AdminAssumption.cpp AdminAuthorization.cpp AdminCleanup.cpp AdminCollection.cpp AdminConclusion.cpp AdminContext.cpp AdminImperative.cpp AdminItem.cpp AdminLanguage.cpp AdminQuery.cpp AdminReadCreateWords.cpp AdminReadFile.cpp AdminReadGrammar.cpp AdminReadSentence.cpp AdminSelection.cpp AdminSolve.cpp AdminSpecification.cpp AdminWriteJustification.cpp AdminWriteSpecification.cpp CollectionItem.cpp CollectionList.cpp CollectionResultType.cpp CommonVariables.cpp ContextItem.cpp ContextList.cpp ContextResultType.cpp FileItem.cpp FileList.cpp GeneralizationItem.cpp GeneralizationList.cpp GrammarItem.cpp GrammarList.cpp InterfaceItem.cpp InterfaceList.cpp Item.cpp JustificationItem.cpp JustificationList.cpp JustificationResultType.cpp List.cpp ListCleanup.cpp ListQuery.cpp MultipleWordItem.cpp MultipleWordList.cpp Presentation.cpp ReadItem.cpp ReadList.cpp ReadResultType.cpp ReferenceResultType.cpp ScoreItem.cpp ScoreList.cpp SelectionItem.cpp SelectionList.cpp SelectionResultType.cpp SpecificationItem.cpp SpecificationList.cpp SpecificationResultType.cpp Thinknowlogy.cpp WordAssignment.cpp WordCleanup.cpp WordCollection.cpp WordItem.cpp WordList.cpp WordQuestion.cpp WordResultType.cpp WordSpecification.cpp WordType.cpp WordTypeItem.cpp WordTypeList.cpp WordWrite.cpp WordWriteSentence.cpp WordWriteWords.cpp WriteItem.cpp WriteList.cpp WriteResultType.cpp
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W4 /WX- /O2 /Oi /Os /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /wd4996 /analyze- /errorReport:prompt AdminAssumption.cpp AdminAuthorization.cpp AdminCleanup.cpp AdminCollection.cpp AdminConclusion.cpp AdminContext.cpp AdminImperative.cpp AdminItem.cpp AdminLanguage.cpp AdminQuery.cpp AdminReadCreateWords.cpp AdminReadFile.cpp AdminReadGrammar.cpp AdminReadSentence.cpp AdminReasoning.cpp AdminSelection.cpp AdminSolve.cpp AdminSpecification.cpp AdminWriteJustification.cpp AdminWriteSpecification.cpp CollectionItem.cpp CollectionList.cpp CollectionResultType.cpp CommonVariables.cpp ContextItem.cpp ContextList.cpp ContextResultType.cpp FileItem.cpp FileList.cpp GeneralizationItem.cpp GeneralizationList.cpp GrammarItem.cpp GrammarList.cpp InterfaceItem.cpp InterfaceList.cpp Item.cpp JustificationItem.cpp JustificationList.cpp JustificationResultType.cpp List.cpp ListCleanup.cpp ListQuery.cpp MultipleWordItem.cpp MultipleWordList.cpp Presentation.cpp ReadItem.cpp ReadList.cpp ReadResultType.cpp ReferenceResultType.cpp ScoreItem.cpp ScoreList.cpp SelectionItem.cpp SelectionList.cpp SelectionResultType.cpp SpecificationItem.cpp SpecificationList.cpp SpecificationResultType.cpp Thinknowlogy.cpp WordAssignment.cpp WordCleanup.cpp WordCollection.cpp WordItem.cpp WordList.cpp WordQuestion.cpp WordResultType.cpp WordSpecification.cpp WordType.cpp WordTypeItem.cpp WordTypeList.cpp WordWrite.cpp WordWriteSentence.cpp WordWriteWords.cpp WriteItem.cpp WriteList.cpp WriteResultType.cpp
          AdminAssumption.cpp
          AdminAuthorization.cpp
          AdminCleanup.cpp
@@ -13,23 +13,23 @@
          AdminConclusion.cpp
          AdminContext.cpp
          AdminImperative.cpp
-     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
          AdminItem.cpp
-     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(106): warning C4100: 'nextSortItem' : unreferenced formal parameter
          AdminLanguage.cpp
          AdminQuery.cpp
          AdminReadCreateWords.cpp
          AdminReadFile.cpp
-     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(106): warning C4100: 'nextSortItem' : unreferenced formal parameter
          AdminReadGrammar.cpp
          AdminReadSentence.cpp
+         AdminReasoning.cpp
          AdminSelection.cpp
          AdminSolve.cpp
          AdminSpecification.cpp
          AdminWriteJustification.cpp
          AdminWriteSpecification.cpp
-         CollectionItem.cpp
          Compiling...
+         CollectionItem.cpp
          CollectionList.cpp
          CollectionResultType.cpp
          CommonVariables.cpp
@@ -37,9 +37,9 @@
          ContextList.cpp
          ContextResultType.cpp
          FileItem.cpp
-     1>FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>FileItem.cpp(106): warning C4100: 'nextSortItem' : unreferenced formal parameter
          FileList.cpp
-     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(106): warning C4100: 'nextSortItem' : unreferenced formal parameter
          GeneralizationItem.cpp
          GeneralizationList.cpp
          GrammarItem.cpp
@@ -58,9 +58,9 @@
          JustificationList.cpp
          JustificationResultType.cpp
          List.cpp
-     1>List.cpp(150): warning C4100: 'referenceWordItem' : unreferenced formal parameter
-         ListCleanup.cpp
+     1>List.cpp(151): warning C4100: 'referenceWordItem' : unreferenced formal parameter
          Compiling...
+         ListCleanup.cpp
          ListQuery.cpp
          MultipleWordItem.cpp
          MultipleWordList.cpp
@@ -80,10 +80,10 @@
          Thinknowlogy.cpp
          WordAssignment.cpp
          WordCleanup.cpp
-         WordCollection.cpp
          Compiling...
+         WordCollection.cpp
          WordItem.cpp
-     1>WordItem.cpp(476): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>WordItem.cpp(493): warning C4100: 'nextSortItem' : unreferenced formal parameter
          WordList.cpp
          WordQuestion.cpp
          WordResultType.cpp
@@ -112,6 +112,7 @@
          Release\AdminReadFile.obj
          Release\AdminReadGrammar.obj
          Release\AdminReadSentence.obj
+         Release\AdminReasoning.obj
          Release\AdminSelection.obj
          Release\AdminSolve.obj
          Release\AdminSpecification.obj
@@ -184,4 +185,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:15.85
+Time Elapsed 00:00:15.64
