@@ -1,4 +1,0 @@
-﻿Boston is a city in the United States.
-Boston is a city in the United Kingdom.
-Show information about Boston.
-# Remember to clear this knowledge before reading another example.

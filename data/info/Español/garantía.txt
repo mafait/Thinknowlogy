@@ -1,4 +1,0 @@
-﻿Mostrar " Este programa se distribuye con la esperanza de que sea útil, pero".
-Mostrar " SIN NINGUNA GARANTÍA, incluso sin la garantía MERCANTIL implícita".
-Mostrar " o sin garantizar la CONVENIENCIA PARA UN PROPÓSITO PARTICULAR.".
-Mostrar " Véase la Licencia Pública General de GNU para más detalles.".

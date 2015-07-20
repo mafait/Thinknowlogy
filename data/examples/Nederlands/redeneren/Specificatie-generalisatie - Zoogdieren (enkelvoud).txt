@@ -1,5 +1,0 @@
-﻿Een kat is een zoogdier.
-Een hond is een zoogdier.
-Een walvis is een zoogdier.
-Toon informatie over zoogdieren.
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

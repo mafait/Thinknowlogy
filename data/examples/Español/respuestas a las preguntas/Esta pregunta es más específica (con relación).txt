@@ -1,8 +1,0 @@
-﻿Leer el archivo "Español/razonamiento/definición de familia".
-¿Es Juan un padre?
-¿Es Juan el padre de Pablo?
-¿Es Ana un padre o una madre?
-¿Es Ana una madre?
-Ana es una madre.
-¿Es Ana la madre de Pablo?
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
