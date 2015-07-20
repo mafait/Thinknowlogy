@@ -1,4 +1,0 @@
-﻿Read the file "English/reasoning/family definition".
-Paul is the son of John.
-Is John a father?
-# Remember to clear this knowledge before reading another example.

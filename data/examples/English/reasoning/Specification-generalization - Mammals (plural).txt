@@ -1,5 +1,0 @@
-﻿Cats are mammals.
-Dogs are mammals.
-Whales are mammals.
-Show information about mammals.
-# Remember to clear this knowledge before reading another example.

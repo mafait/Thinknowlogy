@@ -1,4 +1,0 @@
-﻿Leer el archivo "Español/razonamiento/definición de familia".
-José es hijo de Juan y Ana.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
-José es una madre.

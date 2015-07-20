@@ -1,5 +1,0 @@
-﻿Leer el archivo "Español/razonamiento/definición de familia".
-Jorge tiene un hijo, llamado Alfonso.
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-Pablo tiene un padre, llamado Juan.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
