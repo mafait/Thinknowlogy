@@ -1,0 +1,4 @@
+﻿Lees het bestand "Nederlands/redeneren/gezinsdefinitie".
+Johan is een zoon van Jan en Anna.
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
+Johan is een moeder.

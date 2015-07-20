@@ -1,0 +1,4 @@
+﻿Toon " Dit Programma is verspreid met de hoop dat het nuttig zal zijn,".
+Toon " maar ZONDER EENDER WELKE GARANTIE; zelfs zonder de impliciete".
+Toon " garantie van VERKOOPBAARHEID of GESCHIKTHEID VOOR EEN BEPAALD".
+Toon " DOEL. Zie de GNU Algemene Publieke Licentie voor meer details.".

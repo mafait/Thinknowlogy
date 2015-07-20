@@ -1,0 +1,33 @@
+﻿Show "------------------------------------------------------------------------------".
+Show " Total number of word type items:	~#<w>~,	(all languages included).".
+Show "------------------------------------------------------------------------------".
+Show " * Active word type items:			~!#<w>~.".
+Show "   (@1)  Symbols:					~!#<w>@1~.".
+Show "   (@2)  Numerals:					~!#<w>@2~.".
+Show "   (@3)  Small letters:					~!#<w>@3~.".
+Show "   (@4)  Capital letters:				~!#<w>@4~.".
+Show "   (@5)  Proper names:					~!#<w>@5~.".
+Show "   (@6)  Adjectives:					~!#<w>@6~.".
+Show "   (@7)  Adverbs:					~!#<w>@7~.".
+Show "   (@8)  Answer words:					~!#<w>@8~.".
+Show "   (@9)  Articles:					~!#<w>@9~.".
+Show "   (@10) Conjunctions:					~!#<w>@10~.".
+Show "   (@11) Singular nouns:				~!#<w>@11~.".
+Show "   (@12) Plural nouns:					~!#<w>@12~.".
+Show "   (@13) Personal pronoun singular (subjective):	~!#<w>@13~.".
+Show "   (@14) Personal pronoun singular (objective):		~!#<w>@14~.".
+Show "   (@15) Possessive determiner singular:		~!#<w>@15~.".
+Show "   (@16) Possessive pronoun singular:			~!#<w>@16~.".
+Show "   (@17) Personal pronoun plural (subjective):		~!#<w>@17~.".
+Show "   (@18) Personal pronoun plural (objective):		~!#<w>@18~.".
+Show "   (@19) Possessive determiner plural:			~!#<w>@19~.".
+Show "   (@20) Possessive pronoun plural:			~!#<w>@20~.".
+Show "   (@21) Prepositions:					~!#<w>@21~.".
+Show "   (@22) Singular verbs:				~!#<w>@22~.".
+Show "   (@23) Plural verbs:					~!#<w>@23~.".
+Show "   (@24) Selection words:				~!#<w>@24~.".
+Show " * Inactive word type items:			~*#<w>~.".
+Show " * Archived word type items:			~$#<w>~.".
+Show " * Replaced word type items:			~%#<w>~.".
+Show " * Deleted word type items:			~&#<w>~.".
+Show "------------------------------------------------------------------------------".

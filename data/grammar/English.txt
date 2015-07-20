@@ -1,0 +1,644 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To define the grammar for the English language
+#	Version:	Thinknowlogy 2015r1beta (Corazón)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2015, Menno Mafait
+#	Your suggestions, modifications and bug reports
+#	are welcome at http://mafait.org
+#----------------------------------------------------------------------------
+
+#----------- Word definitions -----------
+
+@0		:0		$undefined
+
+#--- Symbols ---
+@1		:0		$symbol
+@1		:100	$symbol-comma												,
+@1		:101	$symbol-colon												.
+@1		:102	$symbol-exclamation-mark									!
+#@1		:103	$symbol-exclamation-mark-inverted							¡
+@1		:104	$symbol-question-mark										?
+#@1		:105	$symbol-question-mark-inverted								¿
+
+
+#--- Numerals ---
+@2		:0		$numeral
+@2		:200	$numeral-Both												both
+
+
+#--- Letters ---
+@3		:0		$letter-small				"small letter"
+@4		:0		$letter-capital				"capital letter"	
+
+
+#--- Proper names ---
+@5		:0		$proper-name				"proper name"
+
+
+#--- Adjectives ---
+@6		:0		$adjective
+@6		:600	$adjective													assigned
+@6		:601	$adjective													busy
+@6		:602	$adjective													clear
+@6		:603	$adjective													done
+@6		:604	$adjective													defensive
+@6		:605	$adjective													exclusive
+@6		:606	$adjective													inverted
+@6		:607	$adjective													feminine
+@6		:608	$adjective													masculine
+@6		:609	$adjective-No												no
+@6		:610	$adjective-Called											called
+#@6		:611	$adjective-Called
+#@6		:612	$adjective-Called
+@6		:613	$adjective-Every											every
+#@6		:614	$adjective-Every
+@6		:615	$adjective-past-tense										previous
+#@6		:616	$adjective-past-tense
+@6		:617	$adjective-present-tense									current
+#@6		:618	$adjective-present-tense
+@6		:619	$adjective-New												new
+#@6		:620	$adjective-New
+#@6		:621	$adjective-future-tense										next
+#@6		:622	$adjective-future-tense
+@6		:623	$adjective-Odd-or-Even		"adjective (odd/even)"			odd
+@6		:624	$adjective-Odd-or-Even		"adjective (odd/even)"			even
+@6		:625	$adjective-comparison		"adjective (comparison)"		earlier
+@6		:626	$adjective-comparison		"adjective (comparison)"		less
+@6		:627	$adjective-comparison		"adjective (comparison)"		lower
+@6		:628	$adjective-comparison		"adjective (comparison)"		smaller
+@6		:629	$adjective-comparison		"adjective (comparison)"		equal
+@6		:630	$adjective-comparison		"adjective (comparison)"		same
+@6		:631	$adjective-comparison		"adjective (comparison)"		bigger
+@6		:632	$adjective-comparison		"adjective (comparison)"		higher
+@6		:633	$adjective-comparison		"adjective (comparison)"		larger
+@6		:634	$adjective-comparison		"adjective (comparison)"		later
+@6		:635	$adjective-comparison		"adjective (comparison)"		more
+
+
+#--- Adverbs ---
+@7		:0		$adverb
+@7		:700	$adverb-Anymore												anymore
+@7		:701	$adverb-As													as
+@7		:702	$adverb-uncertainty			"adverb (uncertainty)"			maybe
+@7		:703	$adverb-uncertainty			"adverb (uncertainty)"			possibly
+@7		:704	$adverb-uncertainty			"adverb (uncertainty)"			probably
+@7		:705	$adverb-Not													not
+
+
+#--- Interjections ---
+@8		:0		$interjection
+@8		:800	$interjection												yes
+@8		:801	$interjection												no
+
+
+#--- Articles ---
+@9		:0		$article
+@9		:900	$article-indefinite			"indefinite article"			an
+#@9		:901	$article-indefinite
+#@9		:902	$article-indefinite
+#@9		:903	$article-indefinite
+@9		:904	$article-indefinite			"indefinite article"			a
+#@9		:905	$article-indefinite
+#@9		:906	$article-indefinite
+#@9		:907	$article-indefinite
+@9		:908	$article-definite			"definite article"				the
+#@9		:909	$article-definite
+#@9		:910	$article-definite
+#@9		:911	$article-definite
+#@9		:912	$article-definite
+#@9		:913	$article-definite
+
+
+#--- Conjunctions ---
+@10		:0		$conjunction
+@10		:1000	$conjunction-collective										and
+@10		:1001	$conjunction-exclusive										or
+@10		:1002	$conjunction-Than											than
+#@10	:1003	$conjunction-Zowel			(Dutch)
+#@10	:1004	$conjunction-Als			(Dutch)
+
+
+#--- Singular nouns ---
+@11		:0		$noun-singular					"singular noun"
+@11		:1100	$noun-singular												developer
+@11		:1101	$noun-singular												expert
+@11		:1102	$noun-singular												file
+@11		:1103	$noun-singular												justification report
+@11		:1104	$noun-singular												head
+@11		:1105	$noun-singular												tail
+@11		:1106	$noun-singular												language
+@11		:1107	$noun-singular												mind
+@11		:1108	$noun-singular												number
+@11		:1109	$noun-singular												password
+@11		:1110	$noun-singular												solve level
+@11		:1111	$noun-singular												solve method
+@11		:1112	$noun-singular												solve strategy
+@11		:1113	$noun-singular												startup language
+@11		:1115	$noun-singular												user
+@11		:1116	$noun-singular-Information									information
+@11		:1117	$noun-singular-Part											part
+@11		:1118	$noun-singular-Value										value
+
+
+#--- Plural nouns ---
+@12		:0		$noun-plural				"plural noun"
+
+
+#--- Singular pronouns ---
+@13		:0		$personal-pronoun-singular-subjective	"personal pronoun (subjective, singular)"
+#@13	:1300	$personal-pronoun-singular-subjective						I
+#@13	:1301	$personal-pronoun-singular-subjective						you
+#@13	:1302	$personal-pronoun-singular-subjective						you
+#@13	:1303	$personal-pronoun-singular-subjective						he
+#@13	:1304	$personal-pronoun-singular-subjective						she
+#@13	:1305	$personal-pronoun-singular-subjective						it
+
+@14		:0		$personal-pronoun-singular-objective	"personal pronoun (objective, singular)"
+#@14	:1300	$personal-pronoun-singular-objective						me
+#@14	:1301	$personal-pronoun-singular-objective						you
+#@14	:1302	$personal-pronoun-singular-objective						you
+#@14	:1303	$personal-pronoun-singular-objective						him
+#@14	:1304	$personal-pronoun-singular-objective						her
+#@14	:1305	$personal-pronoun-singular-objective						it
+
+@15		:0		$possessive-determiner-singular			"possessive determiner (singular)"
+@15		:1300	$possessive-determiner-singular								my
+@15		:1301	$possessive-determiner-singular								your
+@15		:1302	$possessive-determiner-singular								your
+@15		:1303	$possessive-determiner-singular								his
+@15		:1304	$possessive-determiner-singular								her
+@15		:1305	$possessive-determiner-singular								its
+
+@16		:0		$possessive-pronoun-singular			"possessive pronoun (singular)"
+@16		:1300	$possessive-pronoun-singular								mine
+@16		:1301	$possessive-pronoun-singular								yours
+@16		:1302	$possessive-pronoun-singular								yours
+@16		:1303	$possessive-pronoun-singular								his
+@16		:1304	$possessive-pronoun-singular								hers
+@16		:1305	$possessive-pronoun-singular								its
+
+
+#--- Plural pronouns ---
+@17		:0		$personal-pronoun-plural-subjective		"personal pronoun (subjective, plural)"
+#@17	:1700	$personal-pronoun-plural-subjective							we
+#@17	:1701	$personal-pronoun-plural-subjective							we
+#@17	:1702	$personal-pronoun-plural-subjective							you
+#@17	:1703	$personal-pronoun-plural-subjective							you
+#@17	:1704	$personal-pronoun-plural-subjective							you
+#@17	:1705	$personal-pronoun-plural-subjective							they
+#@17	:1706	$personal-pronoun-plural-subjective							they
+
+@18		:0		$personal-pronoun-plural-objective		"personal pronoun (objective, plural)"
+#@18	:1700	$personal-pronoun-plural-objective							us
+#@18	:1701	$personal-pronoun-plural-objective							us
+#@18	:1702	$personal-pronoun-plural-objective							you
+#@18	:1703	$personal-pronoun-plural-objective							you
+#@18	:1704	$personal-pronoun-plural-objective							you
+#@18	:1705	$personal-pronoun-plural-objective							them
+#@18	:1706	$personal-pronoun-plural-objective							them
+
+@19		:0		$possessive-determiner-plural			"possessive determiner (plural)"
+@19		:1700	$possessive-determiner-plural								our
+@19		:1701	$possessive-determiner-plural								our
+@19		:1702	$possessive-determiner-plural								your
+@19		:1703	$possessive-determiner-plural								your
+@19		:1704	$possessive-determiner-plural								your
+@19		:1705	$possessive-determiner-plural								their
+@19		:1706	$possessive-determiner-plural								their
+
+@20		:0		$possessive-pronoun-plural				"possessive pronoun (plural)"
+@20		:1700	$possessive-pronoun-plural									ours
+@20		:1701	$possessive-pronoun-plural									ours
+@20		:1702	$possessive-pronoun-plural									yours
+@20		:1703	$possessive-pronoun-plural									yours
+@20		:1704	$possessive-pronoun-plural									yours
+@20		:1705	$possessive-pronoun-plural									theirs
+@20		:1706	$possessive-pronoun-plural									theirs
+
+
+#--- Prepositions ---
+@21		:0		$preposition
+@21		:2100	$preposition												about
+@21		:2101	$preposition												from
+@21		:2102	$preposition												in
+@21		:2103	$preposition												to
+@21		:2104	$preposition-Of												of
+
+
+#--- Singular verbs ---
+@22		:0		$verb-singular					"singular verb"
+@22		:2200	$verb-singular-present-tense	"singular verb"				is
+@22		:2201	$verb-singular-past-tense		"singular verb"				was
+@22		:2202	$verb-singular-conditional									can-be
+@22		:2203	$verb-singular-possessive-present-tense						has
+@22		:2204	$verb-singular-possessive-past-tense						had
+@22		:2205	$verb-singular-possessive-conditional						can-have
+@22		:2206	$verb-imperative				"imperative verb"			add
+@22		:2207	$verb-imperative				"imperative verb"			move
+@22		:2208	$verb-imperative				"imperative verb"			remove
+@22		:2209	$verb-imperative				"imperative verb"			clear
+@22		:2210	$verb-imperative				"imperative verb"			help
+@22		:2211	$verb-imperative				"imperative verb"			login
+@22		:2212	$verb-imperative				"imperative verb"			read
+@22		:2213	$verb-imperative				"imperative verb"			redo
+@22		:2214	$verb-imperative				"imperative verb"			restart
+@22		:2215	$verb-imperative				"imperative verb"			show
+@22		:2216	$verb-imperative				"imperative verb"			solve
+@22		:2217	$verb-imperative				"imperative verb"			undo
+
+
+#--- Plural verbs ---
+@23		:0		$verb-plural					"plural verb"
+@23		:2300	$verb-plural-present-tense		"plural verb"				are
+@23		:2301	$verb-plural-past-tense			"plural verb"				were
+@23		:2302	$verb-plural-conditional									can-be
+@23		:2303	$verb-plural-possessive-present-tense						have
+@23		:2304	$verb-plural-possessive-past-tense							had
+@23		:2305	$verb-plural-possessive-conditional							can-have
+
+
+#--- Selection words ---
+@24		:0		$selection
+@24		:2400	$selection-If												if
+@24		:2401	$selection-Then												then
+@24		:2402	$selection-Else												else
+
+
+#--- Text ---
+@25		:0		$text
+
+
+#--- Feminine proper name endings ---
+@0		:3000	$a
+@0		:3000	$ee
+@0		:3000	$ée
+@0		:3000	$ian
+@0		:3000	$lyn
+@0		:3000	$nn
+@0		:3000	$oan
+
+
+#--- Masculine proper name endings ---
+#@0		:3001	$?
+
+
+#--- Feminine singular noun endings ---
+#@0		:3002	$?
+
+
+#--- Masculine singular noun endings ---
+#@0		:3003	$?
+
+
+#--- Plural noun endings ---
+@0		:3004	$ren
+@0		:3004	$sen
+@0		:3004	$ds															d
+@0		:3004	$gs															g
+@0		:3004	$ls															l
+@0		:3004	$ms															m
+@0		:3004	$ns															n
+@0		:3004	$ts															t
+@0		:3004	$ies														y
+@0		:3004	$ers														er
+@0		:3004	$ges														ge
+@0		:3004	$les														le
+@0		:3004	$ors														or
+@0		:3004	$pes														pe
+@0		:3004	$res														re
+@0		:3004	$tes														te
+@0		:3004	$i															us
+@0		:3004	$uses														us
+@0		:3004	$alas														ala
+@0		:3004	$men														man
+@0		:3004	$fish														fish
+@0		:3004	$mice														mouse
+
+
+#----------- Grammar definitions ---------------
+
+# [ .. ]      = option
+# [ .. | .. ] = multiple options
+# { .. | .. } = choice
+# ( .. )      = optional for reading, will not be used for writing
+
+
+#--- Special verbs ---
+:6120	$singular-verb																{ verb-singular-present-tense | verb-singular-past-tense } [ adverb-uncertainty ]
+:6120	$singular-conditional-verb													verb-singular-conditional
+:6120	$plural-verb																{ verb-plural-present-tense | verb-plural-past-tense } [ adverb-uncertainty ]
+:6120	$plural-conditional-verb													verb-plural-conditional
+
+:6120	$singular-possessive-verb													{ verb-singular-possessive-present-tense | verb-singular-possessive-past-tense } [ adverb-uncertainty ]
+:6120	$singular-possessive-conditional-verb										verb-singular-possessive-conditional
+:6120	$plural-possessive-verb														{ verb-plural-possessive-present-tense | verb-plural-possessive-past-tense } [ adverb-uncertainty ]
+:6120	$plural-possessive-conditional-verb											verb-plural-possessive-conditional
+
+:6121	$singular-question-verb														{ verb-singular-present-tense | verb-singular-past-tense }
+:6121	$plural-question-verb														{ verb-plural-present-tense | verb-plural-past-tense }
+
+:6122	$singular-specification-generalization-verb									{ verb-singular-present-tense | verb-singular-past-tense }
+:6122	$plural-specification-generalization-verb									{ verb-plural-present-tense | verb-plural-past-tense }
+
+:6123	$singular-specification-generalization-question-verb						{ verb-singular-present-tense | verb-singular-past-tense }
+:6123	$plural-specification-generalization-question-verb							{ verb-plural-present-tense | verb-plural-past-tense }
+
+
+#--- Special conjunctions ---
+:6110	$comma-conjunction															symbol-comma
+:6110	$collective-sentence-conjunction											conjunction-collective
+:6110	$exclusive-sentence-conjunction												conjunction-exclusive
+
+
+#--- Special articles ---
+		$assignment-possessive-determiner											{ possessive-determiner-singular | possessive-determiner-plural }
+:6100	$generalization-assignment-article											{ assignment-possessive-determiner | article-definite }
+:6101	$specification-assignment-definite-article									article-definite
+:6101	$specification-assignment-possessive-determiner								assignment-possessive-determiner
+:6102	$relation-assignment-article												{ assignment-possessive-determiner | article-definite }
+
+
+#-----------
+
+:6023	$exclusive-specification-conjunction										( symbol-comma ) conjunction-exclusive
+
+:6022	$As																			adverb-As
+:6022	$Information																noun-singular-Information
+
+:6022	$specification-numeral														[ adverb-Not ] numeral
+		$comma-separated-specification-numerals										symbol-comma specification-numeral [ comma-separated-specification-numerals ]
+
+		$more-collective-specification-numerals										[ comma-separated-specification-numerals ] conjunction-collective specification-numeral
+		$collective-specification-numerals											specification-numeral [ more-collective-specification-numerals ]
+
+		$more-exclusive-specification-numerals										[ comma-separated-specification-numerals ] exclusive-specification-conjunction specification-numeral
+		$exclusive-specification-numerals											specification-numeral [ more-exclusive-specification-numerals ]
+
+:6022	$specification-small-letter													[ adverb-Not ] letter-small
+		$comma-separated-specification-small-letters								symbol-comma specification-small-letter [ comma-separated-specification-small-letters ]
+		$collective-specification-small-letters										specification-small-letter [ comma-separated-specification-small-letters ] conjunction-collective specification-small-letter
+
+		$more-exclusive-specification-small-letters									[ comma-separated-specification-small-letters ] exclusive-specification-conjunction specification-small-letter
+		$exclusive-specification-small-letters										specification-small-letter [ more-exclusive-specification-small-letters ]
+
+:6022	$specification-capital-letter												[ adverb-Not ] letter-capital
+		$comma-separated-specification-capital-letters								symbol-comma specification-capital-letter [ comma-separated-specification-capital-letters ]
+		$collective-specification-capital-letters									specification-capital-letter [ comma-separated-specification-capital-letters ] conjunction-collective specification-capital-letter
+
+		$more-exclusive-specification-capital-letters								[ comma-separated-specification-capital-letters ] exclusive-specification-conjunction specification-capital-letter
+		$exclusive-specification-capital-letters									specification-capital-letter [ more-exclusive-specification-capital-letters ]
+
+:6022	$specification-adjective													[ adverb-Not ] adjective
+		$comma-separated-specification-adjectives									symbol-comma specification-adjective [ comma-separated-specification-adjectives ]
+		$collective-specification-adjectives										specification-adjective [ comma-separated-specification-adjectives ] conjunction-collective specification-adjective
+
+		$more-exclusive-specification-adjectives									[ comma-separated-specification-adjectives ] exclusive-specification-conjunction specification-adjective
+		$exclusive-specification-adjectives											specification-adjective [ more-exclusive-specification-adjectives ]
+
+		$multiple-word-singular-noun												noun-singular ( multiple-word-singular-noun )
+
+:6022	$single-singular-specification-noun											multiple-word-singular-noun
+:6022	$Value																		noun-singular-Value
+
+		$specification-noun-assignment-article										[ adverb-Not ] { specification-assignment-possessive-determiner | article-indefinite | specification-assignment-definite-article }
+		$singular-noun-assignment-specification-noun								[ adjective-past-tense | adjective-present-tense | Value preposition-Of relation-assignment-article ] single-singular-specification-noun
+		$singular-noun-assignment-specification-noun-with-mandatory-article			specification-noun-assignment-article singular-noun-assignment-specification-noun
+		$singular-noun-assignment-specification-noun-with-optional-article			[ specification-noun-assignment-article ] singular-noun-assignment-specification-noun
+		$comma-separated-singular-noun-assignment-specification-nouns				symbol-comma singular-noun-assignment-specification-noun-with-optional-article [ comma-separated-singular-noun-assignment-specification-nouns ]
+		$more-singular-noun-assignment-specification-nouns							[ comma-separated-singular-noun-assignment-specification-nouns ] conjunction-collective singular-noun-assignment-specification-noun-with-optional-article
+		$singular-noun-assignment-specification-nouns								singular-noun-assignment-specification-noun-with-mandatory-article [ more-singular-noun-assignment-specification-nouns ]
+	
+		$specification-proper-name-assignment-article								[ adverb-Not ] { specification-assignment-possessive-determiner | specification-assignment-definite-article }
+		$singular-proper-name-assignment-specification-noun							[ adjective-past-tense | adjective-present-tense | Value preposition-Of relation-assignment-article ] single-singular-specification-noun
+		$singular-proper-name-assignment-specification-noun-with-mandatory-article	specification-proper-name-assignment-article singular-proper-name-assignment-specification-noun
+		$singular-proper-name-assignment-specification-noun-with-optional-article	[ specification-proper-name-assignment-article ] singular-proper-name-assignment-specification-noun
+		$comma-separated-singular-proper-name-assignment-specification-nouns		symbol-comma singular-proper-name-assignment-specification-noun-with-optional-article [ comma-separated-singular-proper-name-assignment-specification-nouns ]
+		$more-singular-proper-name-assignment-specification-nouns					[ comma-separated-singular-proper-name-assignment-specification-nouns ] conjunction-collective singular-proper-name-assignment-specification-noun-with-optional-article
+		$singular-proper-name-assignment-specification-nouns						singular-proper-name-assignment-specification-noun-with-mandatory-article [ more-singular-proper-name-assignment-specification-nouns ]
+
+		$singular-structure-specification-article									[ adverb-Not ] article-indefinite
+		$singular-structure-specification-noun										[ adjective-past-tense | adjective-New ] single-singular-specification-noun
+
+		$singular-structure-specification-noun-with-mandatory-article				[ adverb-Not ] article-indefinite singular-structure-specification-noun
+		$singular-structure-specification-noun-with-optional-article				[ adjective-No | singular-structure-specification-article ] singular-structure-specification-noun
+		$comma-separated-singular-structure-specification-nouns						symbol-comma singular-structure-specification-noun-with-optional-article [ comma-separated-singular-structure-specification-nouns ]
+		$singular-collective-structure-specification-nouns							singular-structure-specification-noun-with-mandatory-article [ comma-separated-singular-structure-specification-nouns ] conjunction-collective singular-structure-specification-noun-with-optional-article
+
+		$more-singular-exclusive-structure-specification-nouns						[ comma-separated-singular-structure-specification-nouns ] exclusive-specification-conjunction singular-structure-specification-noun-with-optional-article
+		$singular-exclusive-structure-specification-nouns							singular-structure-specification-noun-with-mandatory-article [ more-singular-exclusive-structure-specification-nouns ]
+
+		$multiple-word-plural-noun													( multiple-word-singular-noun ) noun-plural
+
+:6022	$plural-specification-noun													multiple-word-plural-noun
+		$plural-assignment-specification-noun										[ specification-noun-assignment-article ] plural-specification-noun
+		$comma-separated-plural-assignment-specification-nouns						symbol-comma plural-assignment-specification-noun [ comma-separated-plural-assignment-specification-nouns ]
+		$more-plural-assignment-specification-nouns									[ comma-separated-plural-assignment-specification-nouns ] conjunction-collective plural-assignment-specification-noun
+		$plural-assignment-specification-nouns										plural-assignment-specification-noun [ more-plural-assignment-specification-nouns ]
+
+		$structure-specification-noun												{ singular-structure-specification-noun-with-mandatory-article | possessive-plural-structure-specification-noun }
+		$comma-separated-structure-specification-nouns								symbol-comma structure-specification-noun [ comma-separated-structure-specification-nouns ]
+		$more-collective-structure-specification-nouns								[ comma-separated-structure-specification-nouns ] conjunction-collective structure-specification-noun
+		$collective-structure-specification-nouns									structure-specification-noun [ more-collective-structure-specification-nouns ]
+		$more-exclusive-structure-specification-nouns								[ comma-separated-structure-specification-nouns ] exclusive-specification-conjunction structure-specification-noun
+		$structure-specification-nouns												structure-specification-noun [ more-collective-structure-specification-nouns | more-exclusive-structure-specification-nouns ]
+
+		$possessive-singular-structure-specification-noun-with-mandatory-article	{ adjective-No | article-indefinite } singular-structure-specification-noun
+		$possessive-plural-structure-specification-noun								[ adjective-No | numeral ] plural-specification-noun
+		$possessive-structure-specification-noun									{ possessive-singular-structure-specification-noun-with-mandatory-article | possessive-plural-structure-specification-noun }
+		$comma-separated-possessive-structure-specification-nouns					symbol-comma possessive-structure-specification-noun [ comma-separated-possessive-structure-specification-nouns ]
+		$more-collective-possessive-structure-specification-nouns					[ comma-separated-possessive-structure-specification-nouns ] conjunction-collective possessive-structure-specification-noun
+		$possessive-structure-specification-nouns									possessive-structure-specification-noun [ more-collective-possessive-structure-specification-nouns ]
+
+:6022	$specification-pronoun														[ adverb-Not ] { possessive-pronoun-singular | possessive-pronoun-plural }
+		$comma-separated-specification-pronouns										symbol-comma specification-pronoun [ comma-separated-specification-pronouns ]
+		$collective-specification-pronouns											specification-pronoun [ comma-separated-specification-pronouns ] conjunction-collective specification-pronoun
+
+		$more-exclusive-specification-pronouns										[ comma-separated-specification-pronouns ] exclusive-specification-conjunction specification-pronoun
+		$exclusive-specification-pronouns											specification-pronoun [ more-exclusive-specification-pronouns ]
+
+		$multiple-word-proper-name													proper-name ( multiple-word-proper-name )
+
+:6022	$specification-proper-name													[ adverb-Not ] [ article-definite ] multiple-word-proper-name
+		$comma-separated-specification-proper-names									symbol-comma specification-proper-name [ comma-separated-specification-proper-names ]
+		$collective-specification-proper-names										specification-proper-name [ comma-separated-specification-proper-names ] conjunction-collective specification-proper-name
+
+		$more-exclusive-specification-proper-names									[ comma-separated-specification-proper-names ] exclusive-specification-conjunction specification-proper-name
+		$exclusive-specification-proper-names										specification-proper-name [ more-exclusive-specification-proper-names ]
+
+:6022	$specification-text															text
+		$comma-separated-specification-texts										symbol-comma specification-text [ comma-separated-specification-texts ]
+		$more-exclusive-specification-texts											[ comma-separated-specification-texts ] exclusive-specification-conjunction specification-text
+		$exclusive-specification-texts												specification-text [ more-exclusive-specification-texts ]
+
+:6021	$singular-noun-assignment-specification										{ singular-noun-assignment-specification-nouns | collective-specification-proper-names | specification-proper-name | collective-specification-numerals | specification-numeral | collective-specification-small-letters | specification-small-letter | collective-specification-capital-letters | specification-capital-letter | collective-specification-adjectives | specification-adjective | collective-specification-pronouns | specification-pronoun | specification-text }
+:6021	$singular-proper-name-assignment-specification								{ singular-proper-name-assignment-specification-nouns | collective-specification-numerals | specification-numeral | collective-specification-small-letters | specification-small-letter | collective-specification-capital-letters | specification-capital-letter | collective-specification-adjectives | specification-adjective | collective-specification-pronouns | specification-pronoun | specification-text }
+:6021	$plural-assignment-specification											{ plural-assignment-specification-nouns | collective-specification-numerals | collective-specification-small-letters | collective-specification-capital-letters | collective-specification-adjectives | collective-specification-pronouns }
+
+:6021	$noun-assignment-specification												{ collective-specification-adjectives | singular-noun-assignment-specification-nouns | plural-assignment-specification-nouns }
+:6021	$proper-name-assignment-specification										{ collective-specification-adjectives | singular-proper-name-assignment-specification-nouns | plural-assignment-specification-nouns }
+
+:6020	$singular-structure-specification											{ singular-exclusive-structure-specification-nouns | exclusive-specification-proper-names | exclusive-specification-numerals | exclusive-specification-small-letters | exclusive-specification-capital-letters | exclusive-specification-adjectives | exclusive-specification-pronouns | exclusive-specification-texts }
+:6020	$plural-structure-specification												{ collective-structure-specification-nouns | singular-collective-structure-specification-nouns | collective-specification-proper-names | collective-specification-numerals | collective-specification-small-letters | collective-specification-capital-letters | collective-specification-adjectives | collective-specification-pronouns }
+
+:6020	$singular-condition-noun-specification										specification-noun-assignment-article single-singular-specification-noun
+
+
+#-----------
+
+:6031	$relation-numeral															numeral
+
+:6031	$single-singular-specification-relation-noun								multiple-word-singular-noun
+:6031	$single-plural-specification-relation-noun									multiple-word-plural-noun
+
+:6031	$specification-relation-proper-name											[ article-definite ] multiple-word-proper-name
+		$comma-separated-specification-relation-proper-names						symbol-comma specification-relation-proper-name [ comma-separated-specification-relation-proper-names ]
+		$more-specification-relation-proper-names									[ comma-separated-specification-relation-proper-names ] conjunction-collective specification-relation-proper-name
+		$specification-relation-proper-names										specification-relation-proper-name [ more-specification-relation-proper-names ]
+
+		$preposition-word															{ preposition | preposition-Of }
+
+		$specification-assignment-relation-noun										[ article-definite ] { single-plural-specification-relation-noun | single-singular-specification-relation-noun }
+
+:6030	$preposition-assignment-relation											preposition-word { specification-relation-proper-name | specification-assignment-relation-noun }
+:6030	$preposition-assignment-relations											preposition-word specification-relation-proper-names
+:6030	$preposition-structure-relations											preposition-word [ numeral-Both ] specification-relation-proper-names
+:6030	$possessive-relations														[ symbol-comma ] adjective-Called specification-relation-proper-names
+
+:6040	$execution-text																text
+
+
+#-----------
+
+:6012	$linked-generalization-conjunction											conjunction-collective
+
+:6011	$singular-generalization-noun												multiple-word-singular-noun
+:6011	$plural-generalization-noun													multiple-word-plural-noun
+:6011	$generalization-proper-name													[ article-definite ] multiple-word-proper-name
+:6011	$generalization-Odd-or-Even													adjective-Odd-or-Even
+:6011	$generalization-comparison													adjective-comparison
+
+:6010	$generalization-noun-singular-assignment									generalization-assignment-article singular-generalization-noun
+:6010	$generalization-noun-plural-assignment										generalization-assignment-article plural-generalization-noun
+
+:6010	$singular-structure-noun-generalization										{ adjective-Every | article-indefinite } singular-generalization-noun
+
+:6010	$generalization-singular-verb-Odd-or-Even									singular-verb [ adverb-Not ] generalization-Odd-or-Even
+:6010	$generalization-singular-verb-comparison									singular-verb [ adverb-Not ] generalization-comparison conjunction-Than
+
+		$Part-Of																	noun-singular-Part preposition-Of
+		$comma-separated-generalization-proper-names								symbol-comma generalization-proper-name [ comma-separated-generalization-proper-names ]
+		$collective-generalization-proper-names										generalization-proper-name [ comma-separated-generalization-proper-names ] conjunction-collective generalization-proper-name
+
+		$singular-proper-name-generalization-assignment								generalization-proper-name singular-verb proper-name-assignment-specification
+		$comma-separated-singular-proper-names-generalization-assignment			symbol-comma singular-proper-name-generalization-assignment [ comma-separated-singular-proper-names-generalization-assignment ]
+		$more-singular-proper-name-generalization-assignments						[ comma-separated-singular-proper-names-generalization-assignment ] conjunction-collective singular-proper-name-generalization-assignment
+
+		$singular-proper-name-generalization-structure								generalization-proper-name { singular-possessive-verb | singular-possessive-conditional-verb } possessive-structure-specification-nouns [ possessive-relations ] [ adverb-Anymore ]
+		$singular-proper-name-generalization-structure								generalization-proper-name { singular-verb | singular-conditional-verb } [ Part-Of ] { structure-specification-nouns | exclusive-specification-adjectives } [ preposition-structure-relations ]
+
+
+		$linked-singular-proper-name-generalization-structure						{ singular-verb | singular-conditional-verb | singular-possessive-verb | singular-possessive-conditional-verb } possessive-structure-specification-nouns
+		$comma-singular-separated-proper-names-generalization-structure				symbol-comma { singular-proper-name-generalization-structure | linked-singular-proper-name-generalization-structure } [ comma-singular-separated-proper-names-generalization-structure ]
+		$more-singular-proper-name-generalization-structures						[ comma-singular-separated-proper-names-generalization-structure ] { linked-generalization-conjunction linked-singular-proper-name-generalization-structure | conjunction-collective singular-proper-name-generalization-structure }
+
+
+#-----------
+
+# Condition examples:
+# - (if) the age is less than 12 (then)
+# - (if) the time is earlier than "12:00" (then)
+# - (if) the number of the start pole is odd (then)
+# - (if) the head of the start pole is smaller than the head of the swap pole (then)
+:6000	$condition-generalization-specification										singular-condition-noun-specification generalization-singular-verb-comparison { relation-numeral | execution-text }
+:6000	$condition-generalization-specification										singular-condition-noun-specification preposition-assignment-relation { generalization-singular-verb-Odd-or-Even | generalization-singular-verb-comparison singular-condition-noun-specification preposition-assignment-relation | generalization-singular-verb-comparison text }
+:6000	$condition-generalization-specification										generalization-proper-name singular-verb singular-proper-name-assignment-specification
+:6000	$condition-generalization-specification										generalization-noun-singular-assignment singular-verb singular-noun-assignment-specification
+
+#-----------
+
+:6000	$assignment-generalization-specification									singular-proper-name-generalization-assignment [ more-singular-proper-name-generalization-assignments | preposition-assignment-relations ]
+:6000	$assignment-generalization-specification									generalization-noun-plural-assignment { plural-verb plural-assignment-specification | plural-possessive-verb noun-assignment-specification }
+:6000	$assignment-generalization-specification									generalization-noun-singular-assignment { singular-verb singular-noun-assignment-specification | singular-possessive-verb noun-assignment-specification }
+
+:6000	$assignment-generalization-specification-question							singular-question-verb generalization-proper-name [ adverb-uncertainty ] proper-name-assignment-specification [ preposition-assignment-relations ]
+:6000	$assignment-generalization-specification-question							singular-question-verb generalization-noun-singular-assignment { singular-structure-specification | singular-noun-assignment-specification }
+
+:6000	$structure-generalization-specification										singular-proper-name-generalization-structure [ more-singular-proper-name-generalization-structures ]
+:6000	$structure-generalization-specification										plural-generalization-noun { plural-possessive-verb | plural-possessive-conditional-verb } possessive-structure-specification-nouns [ possessive-relations ]
+:6000	$structure-generalization-specification										plural-generalization-noun { plural-verb | plural-conditional-verb } plural-structure-specification
+:6000	$structure-generalization-specification										singular-structure-noun-generalization { singular-possessive-verb | singular-possessive-conditional-verb } possessive-structure-specification-nouns
+:6000	$structure-generalization-specification										singular-structure-noun-generalization { singular-verb | singular-conditional-verb } singular-structure-specification
+
+:6000	$structure-generalization-specification-question							plural-question-verb collective-generalization-proper-names plural-specification-noun [ preposition-structure-relations ]
+:6000	$structure-generalization-specification-question							singular-question-verb generalization-proper-name [ adverb-uncertainty ] structure-specification-nouns [ preposition-structure-relations ]
+:6000	$structure-generalization-specification-question							singular-question-verb singular-structure-noun-generalization singular-structure-specification
+
+:6000	$structure-specification-generalization										plural-structure-specification plural-specification-generalization-verb [ adverb-uncertainty ] { plural-generalization-noun | Part-Of singular-structure-noun-generalization }
+:6000	$structure-specification-generalization										singular-structure-specification singular-specification-generalization-verb [ adverb-uncertainty ] [ Part-Of ] singular-structure-noun-generalization
+
+:6000	$structure-specification-generalization-question							plural-specification-generalization-question-verb plural-structure-specification [ adverb-uncertainty ] { plural-generalization-noun | Part-Of singular-structure-noun-generalization }
+:6000	$structure-specification-generalization-question							singular-specification-generalization-question-verb singular-structure-specification [ adverb-uncertainty ] [ Part-Of ] singular-structure-noun-generalization
+
+
+#-----------
+
+# Examples of an imperative:
+# - Help.
+# - Login as Guest.
+# - Solve the game.
+# - Show the copyright.
+# - Show "Hello world".
+# - Show info about John.
+# - Show info about the lists.
+:5100	$imperative																	verb-imperative [ singular-noun-assignment-specification | plural-assignment-specification | Information preposition-assignment-relation | As specification-proper-name | execution-text ]
+
+# Examples of an imperative:
+# - Read the file "English/programming/Connect-Four".
+# - Add D, C, B and A to the start pole.
+# - Move the head of the start pole to the swap pole.
+:5100	$imperative																	verb-imperative singular-noun-assignment-specification preposition-assignment-relation [ preposition-assignment-relation ]
+
+:5200	$answer-Yes-or-No															interjection
+
+
+#-----------
+
+		$execution																	{ assignment-generalization-specification | imperative }
+		$comma-separated-executions													comma-conjunction execution [ comma-separated-executions ]
+		$more-executions															[ comma-separated-executions ] collective-sentence-conjunction execution
+
+		$statement																	{ assignment-generalization-specification | structure-generalization-specification | structure-specification-generalization | imperative }
+		$comma-separated-statements													comma-conjunction statement [ comma-separated-statements ]
+		$more-statements															[ comma-separated-statements ] collective-sentence-conjunction statement
+
+		$question																	{ assignment-generalization-specification-question | structure-generalization-specification-question | structure-specification-generalization-question }
+		$comma-separated-questions													comma-conjunction question [ comma-separated-questions ]
+		$more-questions																[ comma-separated-questions ] { collective-sentence-conjunction | exclusive-sentence-conjunction } question
+
+		$comma-separated-conditions													comma-conjunction condition-generalization-specification [ comma-separated-conditions ]
+		$more-conditions															[ comma-separated-conditions ] collective-sentence-conjunction condition-generalization-specification
+		$condition																	condition-generalization-specification [ more-conditions ] [ exclusive-sentence-conjunction condition-list ]
+
+		$condition-list																condition [ more-conditions ]
+		$execution-list																execution [ more-executions ]
+		$statement-list																[ answer-Yes-or-No symbol-comma ] statement [ more-statements ]
+		$question-list																question [ more-questions ]
+
+		$selection-execution														execution-list [ selection-Else { selection-list | execution-list } ]
+
+:5000	$selection-list																selection-If condition-list selection-Then { selection-list | selection-execution }
+
+
+#-----------
+
+:4000	$sentence				"question"											question-list symbol-question-mark
+:4000	$sentence				"selection"											selection-list [ symbol-colon ]
+:4000	$sentence				"statement"											statement-list [ symbol-colon | symbol-exclamation-mark ]
+
+
+#----------- Assignments and specifications -----------
+
+Every solve method can-be inverted.
+Every solve method can-be busy or done.
+
+Every solve strategy is defensive or exclusive.

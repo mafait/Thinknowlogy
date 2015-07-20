@@ -1,0 +1,4 @@
+﻿Lees het bestand "Nederlands/redeneren/gezinsdefinitie".
+Is Jan de moeder van Paul?
+Is Jan de vader van Paul?
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

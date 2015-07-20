@@ -1,0 +1,4 @@
+﻿Leer el archivo "Español/razonamiento/definición de familia".
+Pedro es un padre.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+Pedro no es un padre.

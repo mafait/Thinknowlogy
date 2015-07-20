@@ -1,0 +1,5 @@
+﻿A cat is a mammal.
+A dog is a mammal.
+A whale is a mammal.
+Show information about mammals.
+# Remember to clear this knowledge before reading another example.

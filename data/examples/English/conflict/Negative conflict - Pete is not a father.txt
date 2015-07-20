@@ -1,0 +1,4 @@
+﻿Read the file "English/reasoning/family definition".
+Pete is a father.
+# Remember to clear this knowledge before reading another example.
+Pete is not a father.

@@ -1,0 +1,36 @@
+﻿Show "------------------------------------------------------------------------------".
+Show " The available query commands are:				Examples:".
+Show "------------------------------------------------------------------------------".
+Show " \~(sentenceNr)		item identification			\~(123)".
+Show " \~(sentenceNr,itemNr)	item identification			\~(123,1)".
+Show " \~(,itemNr)		item identification			\~(,3)".
+Show " \~[sentenceNr]		reference to item identification	\~[123]".
+Show " \~[sentenceNr,itemNr]	reference to item identification	\~[123,1]".
+Show " \~[,itemNr]		reference to item identification	\~[,3]".
+Show " \~<adminListChar>	administrator list			\~<W>".
+Show " \~<wordListChar>	word list				\~<w>".
+Show " \~<listCharlistChar>	multiple lists				\~<Xas>".
+Show " \~'word'		word					\~'English'".
+Show " \~`wordReference`	reference to word			\~`English`".
+Show " \~\"textString\"		text string				\~\"sentence\"".
+Show "------------------------------------------------------------------------------".
+Show " Both wild cards '?' and '*' can be used in:".
+Show "			* words					\~'Engl?sh'".
+Show "			* references to a word			\~`Eng*sh`".
+Show "			* text strings				\~\"gr?m*\"".
+Show "------------------------------------------------------------------------------".
+Show " Empty item specification will show all items			\~()".
+Show " Empty list specification will show all items			\~<>".
+Show "------------------------------------------------------------------------------".
+Show " Adding '#' gives count functionality				\~#(123)".
+Show " Concatenation of queries gives 'AND' functionality		\~(123)<s>".
+Show "------------------------------------------------------------------------------".
+Show " Adding ' at the end will show only words			\~(123)'".
+Show " Adding ` at the end shows only word references			\~(123)`".
+Show " Adding \" at the end will show only text strings		\~(123)\"".
+Show " Adding '' shows only words on new line				\~(123)''".
+Show " Adding `` shows only word references on new line		\~(123)``".
+Show " Adding \"\" shows only text strings on new line			\~(123)\"\"".
+Show "------------------------------------------------------------------------------".
+Show " In files '\~' will mark the end of a query			...\~#<W>\~...".
+Show "------------------------------------------------------------------------------".

@@ -1,0 +1,9 @@
+﻿Is a a small letter?
+Is A a capital letter?
+Is g a small letter?
+Is G a capital letter?
+Is y a capital letter?
+Is Y a small letter?
+Is a a letter?
+Is Q a letter?
+# Remember to clear this knowledge before reading another example.

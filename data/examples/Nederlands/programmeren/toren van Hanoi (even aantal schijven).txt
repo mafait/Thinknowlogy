@@ -1,0 +1,2 @@
+﻿Lees het bestand "Nederlands/programmeren/toren van Hanoi".
+Voeg-toe D, C, B en A aan de startpaal.

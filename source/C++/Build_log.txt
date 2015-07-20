@@ -1,0 +1,188 @@
+﻿Build started 18-7-2015 21:27:22.
+     1>Project "E:\Thinknowlogy\source\C++_release\Thinknowlogy_release.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Release\Thinknowlogy_release.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "Release\Thinknowlogy_release.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W4 /WX- /O2 /Oi /Os /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /wd4996 /analyze- /errorReport:prompt AdminAssumption.cpp AdminAuthorization.cpp AdminCleanup.cpp AdminCollection.cpp AdminConclusion.cpp AdminContext.cpp AdminImperative.cpp AdminItem.cpp AdminLanguage.cpp AdminQuery.cpp AdminReadCreateWords.cpp AdminReadFile.cpp AdminReadGrammar.cpp AdminReadSentence.cpp AdminReasoning.cpp AdminSelection.cpp AdminSolve.cpp AdminSpecification.cpp AdminWriteJustification.cpp AdminWriteSpecification.cpp CollectionItem.cpp CollectionList.cpp CollectionResultType.cpp CommonVariables.cpp ContextItem.cpp ContextList.cpp ContextResultType.cpp FileItem.cpp FileList.cpp GeneralizationItem.cpp GeneralizationList.cpp GrammarItem.cpp GrammarList.cpp InterfaceItem.cpp InterfaceList.cpp Item.cpp JustificationItem.cpp JustificationList.cpp JustificationResultType.cpp List.cpp ListCleanup.cpp ListQuery.cpp MultipleWordItem.cpp MultipleWordList.cpp Presentation.cpp ReadItem.cpp ReadList.cpp ReadResultType.cpp ReferenceResultType.cpp ScoreItem.cpp ScoreList.cpp SelectionItem.cpp SelectionList.cpp SelectionResultType.cpp SpecificationItem.cpp SpecificationList.cpp SpecificationResultType.cpp Thinknowlogy.cpp WordAssignment.cpp WordCleanup.cpp WordCollection.cpp WordItem.cpp WordList.cpp WordQuestion.cpp WordResultType.cpp WordSpecification.cpp WordType.cpp WordTypeItem.cpp WordTypeList.cpp WordWrite.cpp WordWriteSentence.cpp WordWriteWords.cpp WriteItem.cpp WriteList.cpp WriteResultType.cpp
+         AdminAssumption.cpp
+         AdminAuthorization.cpp
+         AdminCleanup.cpp
+         AdminCollection.cpp
+         AdminConclusion.cpp
+         AdminContext.cpp
+         AdminImperative.cpp
+         AdminItem.cpp
+     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(106): warning C4100: 'nextSortItem' : unreferenced formal parameter
+         AdminLanguage.cpp
+         AdminQuery.cpp
+         AdminReadCreateWords.cpp
+         AdminReadFile.cpp
+     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(106): warning C4100: 'nextSortItem' : unreferenced formal parameter
+         AdminReadGrammar.cpp
+         AdminReadSentence.cpp
+         AdminReasoning.cpp
+         AdminSelection.cpp
+         AdminSolve.cpp
+         AdminSpecification.cpp
+         AdminWriteJustification.cpp
+         AdminWriteSpecification.cpp
+         Compiling...
+         CollectionItem.cpp
+         CollectionList.cpp
+         CollectionResultType.cpp
+         CommonVariables.cpp
+         ContextItem.cpp
+         ContextList.cpp
+         ContextResultType.cpp
+         FileItem.cpp
+     1>FileItem.cpp(106): warning C4100: 'nextSortItem' : unreferenced formal parameter
+         FileList.cpp
+     1>e:\thinknowlogy\source\c++_release\FileItem.cpp(106): warning C4100: 'nextSortItem' : unreferenced formal parameter
+         GeneralizationItem.cpp
+         GeneralizationList.cpp
+         GrammarItem.cpp
+         GrammarList.cpp
+         InterfaceItem.cpp
+         InterfaceList.cpp
+         Item.cpp
+     1>Item.cpp(317): warning C4100: 'isReturnQueryToPosition' : unreferenced formal parameter
+     1>Item.cpp(322): warning C4100: 'isReturnQueryToPosition' : unreferenced formal parameter
+     1>Item.cpp(334): warning C4100: 'queryParameter' : unreferenced formal parameter
+     1>Item.cpp(340): warning C4100: 'queryWordTypeNr' : unreferenced formal parameter
+     1>Item.cpp(346): warning C4100: 'queryItemNr' : unreferenced formal parameter
+     1>Item.cpp(346): warning C4100: 'querySentenceNr' : unreferenced formal parameter
+     1>Item.cpp(352): warning C4100: 'queryString' : unreferenced formal parameter
+         JustificationItem.cpp
+         JustificationList.cpp
+         JustificationResultType.cpp
+         List.cpp
+     1>List.cpp(151): warning C4100: 'referenceWordItem' : unreferenced formal parameter
+         Compiling...
+         ListCleanup.cpp
+         ListQuery.cpp
+         MultipleWordItem.cpp
+         MultipleWordList.cpp
+         Presentation.cpp
+         ReadItem.cpp
+         ReadList.cpp
+         ReadResultType.cpp
+         ReferenceResultType.cpp
+         ScoreItem.cpp
+         ScoreList.cpp
+         SelectionItem.cpp
+         SelectionList.cpp
+         SelectionResultType.cpp
+         SpecificationItem.cpp
+         SpecificationList.cpp
+         SpecificationResultType.cpp
+         Thinknowlogy.cpp
+         WordAssignment.cpp
+         WordCleanup.cpp
+         Compiling...
+         WordCollection.cpp
+         WordItem.cpp
+     1>WordItem.cpp(493): warning C4100: 'nextSortItem' : unreferenced formal parameter
+         WordList.cpp
+         WordQuestion.cpp
+         WordResultType.cpp
+         WordSpecification.cpp
+         WordType.cpp
+         WordTypeItem.cpp
+         WordTypeList.cpp
+         WordWrite.cpp
+         WordWriteSentence.cpp
+         WordWriteWords.cpp
+         WriteItem.cpp
+         WriteList.cpp
+         WriteResultType.cpp
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Thinknowlogy\Release\For experts only - please use the Java version.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\For experts only - please use the Java version.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"E:\Thinknowlogy\Release\For experts only - please use the Java version.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Thinknowlogy\Release\For experts only - please use the Java version.lib" /MACHINE:X86 Release\AdminAssumption.obj
+         Release\AdminAuthorization.obj
+         Release\AdminCleanup.obj
+         Release\AdminCollection.obj
+         Release\AdminConclusion.obj
+         Release\AdminContext.obj
+         Release\AdminImperative.obj
+         Release\AdminItem.obj
+         Release\AdminLanguage.obj
+         Release\AdminQuery.obj
+         Release\AdminReadCreateWords.obj
+         Release\AdminReadFile.obj
+         Release\AdminReadGrammar.obj
+         Release\AdminReadSentence.obj
+         Release\AdminReasoning.obj
+         Release\AdminSelection.obj
+         Release\AdminSolve.obj
+         Release\AdminSpecification.obj
+         Release\AdminWriteJustification.obj
+         Release\AdminWriteSpecification.obj
+         Release\CollectionItem.obj
+         Release\CollectionList.obj
+         Release\CollectionResultType.obj
+         Release\CommonVariables.obj
+         Release\ContextItem.obj
+         Release\ContextList.obj
+         Release\ContextResultType.obj
+         Release\FileItem.obj
+         Release\FileList.obj
+         Release\GeneralizationItem.obj
+         Release\GeneralizationList.obj
+         Release\GrammarItem.obj
+         Release\GrammarList.obj
+         Release\InterfaceItem.obj
+         Release\InterfaceList.obj
+         Release\Item.obj
+         Release\JustificationItem.obj
+         Release\JustificationList.obj
+         Release\JustificationResultType.obj
+         Release\List.obj
+         Release\ListCleanup.obj
+         Release\ListQuery.obj
+         Release\MultipleWordItem.obj
+         Release\MultipleWordList.obj
+         Release\Presentation.obj
+         Release\ReadItem.obj
+         Release\ReadList.obj
+         Release\ReadResultType.obj
+         Release\ReferenceResultType.obj
+         Release\ScoreItem.obj
+         Release\ScoreList.obj
+         Release\SelectionItem.obj
+         Release\SelectionList.obj
+         Release\SelectionResultType.obj
+         Release\SpecificationItem.obj
+         Release\SpecificationList.obj
+         Release\SpecificationResultType.obj
+         Release\Thinknowlogy.obj
+         Release\WordAssignment.obj
+         Release\WordCleanup.obj
+         Release\WordCollection.obj
+         Release\WordItem.obj
+         Release\WordList.obj
+         Release\WordQuestion.obj
+         Release\WordResultType.obj
+         Release\WordSpecification.obj
+         Release\WordType.obj
+         Release\WordTypeItem.obj
+         Release\WordTypeList.obj
+         Release\WordWrite.obj
+         Release\WordWriteSentence.obj
+         Release\WordWriteWords.obj
+         Release\WriteItem.obj
+         Release\WriteList.obj
+         Release\WriteResultType.obj
+         Generating code
+         Finished generating code
+         Thinknowlogy_release.vcxproj -> E:\Thinknowlogy\Release\For experts only - please use the Java version.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"E:\Thinknowlogy\Release\For experts only - please use the Java version.exe;#1" /manifest "Release\For experts only - please use the Java version.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         Deleting file "Release\Thinknowlogy_release.unsuccessfulbuild".
+         Touching "Release\Thinknowlogy_release.lastbuildstate".
+     1>Done Building Project "E:\Thinknowlogy\source\C++_release\Thinknowlogy_release.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:15.64

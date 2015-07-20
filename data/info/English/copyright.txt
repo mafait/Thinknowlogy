@@ -1,0 +1,4 @@
+﻿Show " Copyright (C) 2009-2015, Menno Mafait".
+Show " Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details type \"Show the".
+Show " warranty.\". This is free software, and you are welcome to redistribute it".
+Show " under certain conditions; type \"Show the GPLv2-license.\" for details.".
