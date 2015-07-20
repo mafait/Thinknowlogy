@@ -1,0 +1,33 @@
+﻿Toon "------------------------------------------------------------------------------".
+Toon " Totaal aantal woordtype items:			~#<w>~, (alle talen inbegrepen).".
+Toon "------------------------------------------------------------------------------".
+Toon " * Actieve woordtype items:				~!#<w>~.".
+Toon "   (@1)  Symbolen:						~!#<w>@1~.".
+Toon "   (@2)  Cijfers/telwoorden:					~!#<w>@2~.".
+Toon "   (@3)  Kleine letters:					~!#<w>@3~.".
+Toon "   (@4)  Hoofdletters:						~!#<w>@4~.".
+Toon "   (@5)  Eigennamen:						~!#<w>@5~.".
+Toon "   (@6)  Bijvoeglijk naamwoorden:				~!#<w>@6~.".
+Toon "   (@7)  Bijwoorden:						~!#<w>@7~.".
+Toon "   (@8)  Antwoorden:						~!#<w>@8~.".
+Toon "   (@9)  Lidwoorden:						~!#<w>@9~.".
+Toon "   (@10) Voegwoorden:						~!#<w>@10~.".
+Toon "   (@11) Enkelvoudige zelfstandig naamwoorden:			~!#<w>@11~.".
+Toon "   (@12) Meervoudige zelfstandig naamwoorden:			~!#<w>@12~.".
+Toon "   (@13) Persoonlijk voornaamwoord enkelvoud (subjectief):	~!#<w>@13~.".
+Toon "   (@14) Persoonlijk voornaamwoord enkelvoud (objectief):	~!#<w>@14~.".
+Toon "   (@15) Bezittelijk voornaamwoord enkelvoud:			~!#<w>@15~.".
+Toon "   (@16) Bezittelijk voornaamwoord enkelvoud (na voorzetsel):	~!#<w>@16~.".
+Toon "   (@17) Persoonlijk voornaamwoord meervoud (subjectief):	~!#<w>@17~.".
+Toon "   (@18) Persoonlijk voornaamwoord meervoud (objectief):	~!#<w>@18~.".
+Toon "   (@19) Bezittelijk voornaamwoord meervoud:			~!#<w>@19~.".
+Toon "   (@20) Bezittelijk voornaamwoord meervoud (na voorzetsel):	~!#<w>@20~.".
+Toon "   (@21) Voorzetsels:						~!#<w>@21~.".
+Toon "   (@22) Enkelvoudige werkwoorden:				~!#<w>@22~.".
+Toon "   (@23) Meervoudige werkwoorden:				~!#<w>@23~.".
+Toon "   (@24) Selectie woorden:					~!#<w>@24~.".
+Toon " * Inactieve woordtype items:				~*#<w>~.".
+Toon " * Gearchiveerde woordtype items:			~$#<w>~.".
+Toon " * Vervangen woordtype items:				~%#<w>~.".
+Toon " * Verwijderde woordtype items:				~&#<w>~.".
+Toon "------------------------------------------------------------------------------".

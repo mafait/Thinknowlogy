@@ -1,0 +1,14 @@
+﻿# In the year 2000 George W. Bush was elected as president of the United States.
+George Bush is de president van de Verenigde Staten.
+# Eight years later Obama was elected as president.
+Barack Obama is de president van de Verenigde Staten.
+Toon de verantwoordingsrapportage over de Verenigde Staten.
+De Verenigde Staten heeft een vorige president, genaamd George Bush.
+Toon de verantwoordingsrapportage over de Verenigde Staten.
+De Verenigde Staten heeft een president, genaamd Barack Obama.
+Toon informatie over de presidenten.
+Toon informatie over George Bush.
+Toon informatie over Barack Obama.
+# Er bestaat geen verantwoordingsrapportage, omdat de conclusies bevestigd zijn
+Toon informatie over de Verenigde Staten.
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

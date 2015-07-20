@@ -1,0 +1,115 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To demonstrate programming in natural language.
+#	Version:	Thinknowlogy 2015r1beta (Corazón)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2015, Menno Mafait
+#	Your suggestions, modifications and bug reports
+#	are welcome at http://mafait.org
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	A summary of the Connect-Four game:
+#----------------------------------------------------------------------------
+#	Connect Four (also known as Captain's Mistress, Four Up, Plot Four,
+#	Find Four, Fourplay, Four in a Row and Four in a Line) is a two-player
+#	game in which the players first choose a color and then take turns
+#	dropping colored discs from the top into a seven-column,
+#	six-row vertically-suspended grid.
+#	The pieces fall straight down, occupying the next available space
+#	within the column. The object of the game is to connect four of one's
+#	own discs of the same color next to each other vertically,
+#	horizontally, or diagonally before your opponent.
+#----------------------------------------------------------------------------
+#	See for the full text: http://en.wikipedia.org/wiki/Connect_four
+#----------------------------------------------------------------------------
+
+# Initial definitions.
+A turn is yours or mine.
+A set is A, B, C, D, E, F or G.
+A solve level is low or high.
+
+# Solve the problem.
+If the set is assigned and the turn is assigned then if the solve method is not busy, the solve method is not done and the game is not draw then the set is clear and solve the game else the set is clear and the solve method is not done.
+
+# Invert the solve method.
+If the set is assigned and the turn is assigned then if the solve method is not busy or the solve method is not done then if the solve method is inverted then the solve method is not inverted else the solve method is inverted.
+
+# Show the turn.
+If the turn is assigned then if the solve method is not done or the solve method is done, the game is assigned and the game is not invalid then if the turn is yours then show "\nIt's your turn.\n\n".
+
+# Alternate the turn.
+If the set is assigned, the turn is assigned and the game is not assigned then if the solve method is not busy or the solve method is not done then if the turn is yours then the turn is mine else show "\nI selected: ~!'set'<a>`~.\n" and the turn is yours.
+
+# Check for a draw game.
+If the set is not assigned, the game is not assigned, A6 is assigned, B6 is assigned, C6 is assigned, D6 is assigned, E6 is assigned, F6 is assigned and G6 is assigned then the game is draw, the turn is clear and show "The game is draw.\n\n".
+
+# Game over...
+If the set is assigned, the game is assigned, the game is not draw and the game is not invalid then if the turn is mine then show "\nMy winning set: ~!'set'<a>`~.\n", the set is clear and the turn is clear else show "\nCongratulations!\n", the set is clear and the turn is clear.
+
+# Reset an invalid set.
+If the set is invalid then the set is clear.
+
+# Show the playing board.
+If the turn is assigned, the set is not invalid, the game is not yours and the solve method is not done then show "\n\t|~!1'A6'<a>`~|~!1'B6'<a>`~|~!1'C6'<a>`~|~!1'D6'<a>`~|~!1'E6'<a>`~|~!1'F6'<a>`~|~!1'G6'<a>`~|\n\t|~!1'A5'<a>`~|~!1'B5'<a>`~|~!1'C5'<a>`~|~!1'D5'<a>`~|~!1'E5'<a>`~|~!1'F5'<a>`~|~!1'G5'<a>`~|\n\t|~!1'A4'<a>`~|~!1'B4'<a>`~|~!1'C4'<a>`~|~!1'D4'<a>`~|~!1'E4'<a>`~|~!1'F4'<a>`~|~!1'G4'<a>`~|\n\t|~!1'A3'<a>`~|~!1'B3'<a>`~|~!1'C3'<a>`~|~!1'D3'<a>`~|~!1'E3'<a>`~|~!1'F3'<a>`~|~!1'G3'<a>`~|\n\t|~!1'A2'<a>`~|~!1'B2'<a>`~|~!1'C2'<a>`~|~!1'D2'<a>`~|~!1'E2'<a>`~|~!1'F2'<a>`~|~!1'G2'<a>`~|\n\t|~!1'A1'<a>`~|~!1'B1'<a>`~|~!1'C1'<a>`~|~!1'D1'<a>`~|~!1'E1'<a>`~|~!1'F1'<a>`~|~!1'G1'<a>`~|\nset->\t-A-B-C-D-E-F-G-\n".
+If the turn is not assigned, the set is not assigned, the game is assigned and the game is not invalid then show "\n\t|~!1'A6'<a>`~|~!1'B6'<a>`~|~!1'C6'<a>`~|~!1'D6'<a>`~|~!1'E6'<a>`~|~!1'F6'<a>`~|~!1'G6'<a>`~|\n\t|~!1'A5'<a>`~|~!1'B5'<a>`~|~!1'C5'<a>`~|~!1'D5'<a>`~|~!1'E5'<a>`~|~!1'F5'<a>`~|~!1'G5'<a>`~|\n\t|~!1'A4'<a>`~|~!1'B4'<a>`~|~!1'C4'<a>`~|~!1'D4'<a>`~|~!1'E4'<a>`~|~!1'F4'<a>`~|~!1'G4'<a>`~|\n\t|~!1'A3'<a>`~|~!1'B3'<a>`~|~!1'C3'<a>`~|~!1'D3'<a>`~|~!1'E3'<a>`~|~!1'F3'<a>`~|~!1'G3'<a>`~|\n\t|~!1'A2'<a>`~|~!1'B2'<a>`~|~!1'C2'<a>`~|~!1'D2'<a>`~|~!1'E2'<a>`~|~!1'F2'<a>`~|~!1'G2'<a>`~|\n\t|~!1'A1'<a>`~|~!1'B1'<a>`~|~!1'C1'<a>`~|~!1'D1'<a>`~|~!1'E1'<a>`~|~!1'F1'<a>`~|~!1'G1'<a>`~|\nset->\t-A-B-C-D-E-F-G-\n\nThis game is ~!'game'<a>`~.\n\nTo play again: Type 'Clear your mind.' or 'Restart.', and then 'Read the file \"English/programming/Connect-Four\".'.\n\n", the set is clear and the turn is clear.
+
+# The definition of horizontal possibilities to win the game.
+# (In the future a stronger grammar will be implemented to reduce the next sentences to only one sentence that describes a horizontal winning game.)
+
+If the turn is assigned and the game is not assigned then if A1 is the value of the turn, B1 is the value of the turn, C1 is the value of the turn and D1 is the value of the turn or B1 is the value of the turn, C1 is the value of the turn, D1 is the value of the turn and E1 is the value of the turn or C1 is the value of the turn, D1 is the value of the turn, E1 is the value of the turn and F1 is the value of the turn or D1 is the value of the turn, E1 is the value of the turn, F1 is the value of the turn and G1 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A2 is the value of the turn, B2 is the value of the turn, C2 is the value of the turn and D2 is the value of the turn or B2 is the value of the turn, C2 is the value of the turn, D2 is the value of the turn and E2 is the value of the turn or C2 is the value of the turn, D2 is the value of the turn, E2 is the value of the turn and F2 is the value of the turn or D2 is the value of the turn, E2 is the value of the turn, F2 is the value of the turn and G2 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A3 is the value of the turn, B3 is the value of the turn, C3 is the value of the turn and D3 is the value of the turn or B3 is the value of the turn, C3 is the value of the turn, D3 is the value of the turn and E3 is the value of the turn or C3 is the value of the turn, D3 is the value of the turn, E3 is the value of the turn and F3 is the value of the turn or D3 is the value of the turn, E3 is the value of the turn, F3 is the value of the turn and G3 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A4 is the value of the turn, B4 is the value of the turn, C4 is the value of the turn and D4 is the value of the turn or B4 is the value of the turn, C4 is the value of the turn, D4 is the value of the turn and E4 is the value of the turn or C4 is the value of the turn, D4 is the value of the turn, E4 is the value of the turn and F4 is the value of the turn or D4 is the value of the turn, E4 is the value of the turn, F4 is the value of the turn and G4 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A5 is the value of the turn, B5 is the value of the turn, C5 is the value of the turn and D5 is the value of the turn or B5 is the value of the turn, C5 is the value of the turn, D5 is the value of the turn and E5 is the value of the turn or C5 is the value of the turn, D5 is the value of the turn, E5 is the value of the turn and F5 is the value of the turn or D5 is the value of the turn, E5 is the value of the turn, F5 is the value of the turn and G5 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A6 is the value of the turn, B6 is the value of the turn, C6 is the value of the turn and D6 is the value of the turn or B6 is the value of the turn, C6 is the value of the turn, D6 is the value of the turn and E6 is the value of the turn or C6 is the value of the turn, D6 is the value of the turn, E6 is the value of the turn and F6 is the value of the turn or D6 is the value of the turn, E6 is the value of the turn, F6 is the value of the turn and G6 is the value of the turn then the game is the value of the turn.
+
+# The definition of vertical possibilities to win the game.
+# (In the future a stronger grammar will be implemented to reduce the next sentences to only one sentence that describes a vertical winning game.)
+
+If the turn is assigned and the game is not assigned then if A1 is the value of the turn, A2 is the value of the turn, A3 is the value of the turn and A4 is the value of the turn or A2 is the value of the turn, A3 is the value of the turn, A4 is the value of the turn and A5 is the value of the turn or A3 is the value of the turn, A4 is the value of the turn, A5 is the value of the turn and A6 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if B1 is the value of the turn, B2 is the value of the turn, B3 is the value of the turn and B4 is the value of the turn or B2 is the value of the turn, B3 is the value of the turn, B4 is the value of the turn and B5 is the value of the turn or B3 is the value of the turn, B4 is the value of the turn, B5 is the value of the turn and B6 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if C1 is the value of the turn, C2 is the value of the turn, C3 is the value of the turn and C4 is the value of the turn or C2 is the value of the turn, C3 is the value of the turn, C4 is the value of the turn and C5 is the value of the turn or C3 is the value of the turn, C4 is the value of the turn, C5 is the value of the turn and C6 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if D1 is the value of the turn, D2 is the value of the turn, D3 is the value of the turn and D4 is the value of the turn or D2 is the value of the turn, D3 is the value of the turn, D4 is the value of the turn and D5 is the value of the turn or D3 is the value of the turn, D4 is the value of the turn, D5 is the value of the turn and D6 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if E1 is the value of the turn, E2 is the value of the turn, E3 is the value of the turn and E4 is the value of the turn or E2 is the value of the turn, E3 is the value of the turn, E4 is the value of the turn and E5 is the value of the turn or E3 is the value of the turn, E4 is the value of the turn, E5 is the value of the turn and E6 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if F1 is the value of the turn, F2 is the value of the turn, F3 is the value of the turn and F4 is the value of the turn or F2 is the value of the turn, F3 is the value of the turn, F4 is the value of the turn and F5 is the value of the turn or F3 is the value of the turn, F4 is the value of the turn, F5 is the value of the turn and F6 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if G1 is the value of the turn, G2 is the value of the turn, G3 is the value of the turn and G4 is the value of the turn or G2 is the value of the turn, G3 is the value of the turn, G4 is the value of the turn and G5 is the value of the turn or G3 is the value of the turn, G4 is the value of the turn, G5 is the value of the turn and G6 is the value of the turn then the game is the value of the turn.
+
+# The definition of diagonal possibilities to win the game.
+# (In the future a stronger grammar will be implemented to reduce the next sentences to only one sentence that describes a diagonal winning game.)
+
+If the turn is assigned and the game is not assigned then if A1 is the value of the turn, B2 is the value of the turn, C3 is the value of the turn and D4 is the value of the turn or B1 is the value of the turn, C2 is the value of the turn, D3 is the value of the turn and E4 is the value of the turn or C1 is the value of the turn, D2 is the value of the turn, E3 is the value of the turn and F4 is the value of the turn or D1 is the value of the turn, E2 is the value of the turn, F3 is the value of the turn and G4 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A2 is the value of the turn, B3 is the value of the turn, C4 is the value of the turn and D5 is the value of the turn or B2 is the value of the turn, C3 is the value of the turn, D4 is the value of the turn and E5 is the value of the turn or C2 is the value of the turn, D3 is the value of the turn, E4 is the value of the turn and F5 is the value of the turn or D2 is the value of the turn, E3 is the value of the turn, F4 is the value of the turn and G5 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A3 is the value of the turn, B4 is the value of the turn, C5 is the value of the turn and D6 is the value of the turn or B3 is the value of the turn, C4 is the value of the turn, D5 is the value of the turn and E6 is the value of the turn or C3 is the value of the turn, D4 is the value of the turn, E5 is the value of the turn and F6 is the value of the turn or D3 is the value of the turn, E4 is the value of the turn, F5 is the value of the turn and G6 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A4 is the value of the turn, B3 is the value of the turn, C2 is the value of the turn and D1 is the value of the turn or B4 is the value of the turn, C3 is the value of the turn, D2 is the value of the turn and E1 is the value of the turn or C4 is the value of the turn, D3 is the value of the turn, E2 is the value of the turn and F1 is the value of the turn or D4 is the value of the turn, E3 is the value of the turn, F2 is the value of the turn and G1 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A5 is the value of the turn, B4 is the value of the turn, C3 is the value of the turn and D2 is the value of the turn or B5 is the value of the turn, C4 is the value of the turn, D3 is the value of the turn and E2 is the value of the turn or C5 is the value of the turn, D4 is the value of the turn, E3 is the value of the turn and F2 is the value of the turn or D5 is the value of the turn, E4 is the value of the turn, F3 is the value of the turn and G2 is the value of the turn then the game is the value of the turn.
+If the turn is assigned and the game is not assigned then if A6 is the value of the turn, B5 is the value of the turn, C4 is the value of the turn and D3 is the value of the turn or B6 is the value of the turn, C5 is the value of the turn, D4 is the value of the turn and E3 is the value of the turn or C6 is the value of the turn, D5 is the value of the turn, E4 is the value of the turn and F3 is the value of the turn or D6 is the value of the turn, E5 is the value of the turn, F4 is the value of the turn and G3 is the value of the turn then the game is the value of the turn.
+
+# The counter will be put into the chosen column and will 'fall' into the lowest free cell.
+If the set is A and the game is not assigned then if A1 is not assigned then A1 is the value of the turn else if A2 is not assigned then A2 is the value of the turn else if A3 is not assigned then A3 is the value of the turn else if A4 is not assigned then A4 is the value of the turn else if A5 is not assigned then A5 is the value of the turn else if A6 is not assigned then A6 is the value of the turn else show "\nSorry, column ~!'set'<a>`~ is full.\n" and the set is invalid.
+If the set is B and the game is not assigned then if B1 is not assigned then B1 is the value of the turn else if B2 is not assigned then B2 is the value of the turn else if B3 is not assigned then B3 is the value of the turn else if B4 is not assigned then B4 is the value of the turn else if B5 is not assigned then B5 is the value of the turn else if B6 is not assigned then B6 is the value of the turn else show "\nSorry, column ~!'set'<a>`~ is full.\n" and the set is invalid.
+If the set is C and the game is not assigned then if C1 is not assigned then C1 is the value of the turn else if C2 is not assigned then C2 is the value of the turn else if C3 is not assigned then C3 is the value of the turn else if C4 is not assigned then C4 is the value of the turn else if C5 is not assigned then C5 is the value of the turn else if C6 is not assigned then C6 is the value of the turn else show "\nSorry, column ~!'set'<a>`~ is full.\n" and the set is invalid.
+If the set is D and the game is not assigned then if D1 is not assigned then D1 is the value of the turn else if D2 is not assigned then D2 is the value of the turn else if D3 is not assigned then D3 is the value of the turn else if D4 is not assigned then D4 is the value of the turn else if D5 is not assigned then D5 is the value of the turn else if D6 is not assigned then D6 is the value of the turn else show "\nSorry, column ~!'set'<a>`~ is full.\n" and the set is invalid.
+If the set is E and the game is not assigned then if E1 is not assigned then E1 is the value of the turn else if E2 is not assigned then E2 is the value of the turn else if E3 is not assigned then E3 is the value of the turn else if E4 is not assigned then E4 is the value of the turn else if E5 is not assigned then E5 is the value of the turn else if E6 is not assigned then E6 is the value of the turn else show "\nSorry, column ~!'set'<a>`~ is full.\n" and the set is invalid.
+If the set is F and the game is not assigned then if F1 is not assigned then F1 is the value of the turn else if F2 is not assigned then F2 is the value of the turn else if F3 is not assigned then F3 is the value of the turn else if F4 is not assigned then F4 is the value of the turn else if F5 is not assigned then F5 is the value of the turn else if F6 is not assigned then F6 is the value of the turn else show "\nSorry, column ~!'set'<a>`~ is full.\n" and the set is invalid.
+If the set is G and the game is not assigned then if G1 is not assigned then G1 is the value of the turn else if G2 is not assigned then G2 is the value of the turn else if G3 is not assigned then G3 is the value of the turn else if G4 is not assigned then G4 is the value of the turn else if G5 is not assigned then G5 is the value of the turn else if G6 is not assigned then G6 is the value of the turn else show "\nSorry, column ~!'set'<a>`~ is full.\n" and the set is invalid.
+
+# Check for game over.
+If the game is assigned, the game is not invalid and the set is assigned then show "\nSorry, the game is already over.\n\nTo play again: Type 'Clear your mind.' or 'Restart.', and then 'Read the file \"English/programming/Connect-Four\".'.\n\n", the set is clear, the turn is clear and the game is invalid.
+
+# Warning: No solve level.
+If the solve level is not assigned and the turn is assigned then show "Warning: The solve level has no value. Please assign the solve level.\n", the set is invalid and the turn is clear.
+
+# Game configuration.
+#The solve method is not busy.
+#The solve method is not done.
+The solve method is inverted.
+The solve strategy is exclusive.
+The solve level is low.
+
+# Actual start of the game.
+The turn is yours.
+#C++## Type for a set for example:	My set is A.
+#C++## Type for an advanced game:	The solve level is high.
+#C++## Return to beginners level:	The solve level is low.
+#C++## Info about the set:		Show information about the set.
+#Java## If the playing board looks compressed, please change the font using button <change font>.

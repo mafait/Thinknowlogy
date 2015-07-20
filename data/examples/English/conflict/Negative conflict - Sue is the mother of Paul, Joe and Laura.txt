@@ -1,0 +1,4 @@
+﻿Read the file "English/reasoning/family definition".
+Sue is not a mother.
+# Remember to clear this knowledge before reading another example.
+Sue is the mother of Paul, Joe and Laura.

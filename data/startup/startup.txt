@@ -1,0 +1,22 @@
+﻿# Read the grammar languages and the user-interface texts
+~English
+~Español
+~Nederlands
+
+# Read the available users in available languages
+Read the file "data/startup/English/users".
+Leer el archivo "data/startup/Español/usuarios".
+Lees het bestand "data/startup/Nederlands/gebruikers".
+
+# Read common knowledge in available languages
+Read the file "data/startup/English/common knowledge".
+Leer el archivo "data/startup/Español/conocimiento común".
+Lees het bestand "data/startup/Nederlands/algemene kennis".
+
+# Show copyright text and intro text
+If the intro text is started then if the startup language is not assigned or the startup language is English then the intro text is clear, show the copyright and show the intro.
+The intro text is started.
+Si el texto de introducción es inicia entonces si el idioma de inicio es Español entonces el texto de introducción es clara, mostrar los derechos de autor y mostrar la intro.
+El texto de introducción es inicia.
+Als de intro tekst is gestart dan als de opstarttaal is Nederlands dan de intro tekst is leeg, toon het auteursrecht en toon de intro.
+De intro tekst is gestart.

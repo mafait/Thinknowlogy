@@ -1,0 +1,4 @@
+﻿Read the file "English/reasoning/family definition".
+Joe is a son of John and Anna.
+# Remember to clear this knowledge before reading another example.
+Joe is a mother.

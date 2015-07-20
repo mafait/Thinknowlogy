@@ -1,0 +1,7 @@
+﻿Leer el archivo "Español/razonamiento/definición de familia".
+Juan es un padre.
+Ana es una madre.
+Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+Pablo es un hijo.
+Pablo es hijo de Juan y Ana.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

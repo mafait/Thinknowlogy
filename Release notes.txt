@@ -1,0 +1,8 @@
+﻿Changes in Thinknowlogy 2015r1beta (Corazón) compared to Thinknowlogy 2014r2 (Deepest Thought):
+- Bug fixes;
+- Improved performance;
+- Improved reasoning;
+- Added ability to change font and font size;
+- Added language selection of intro text after restart;
+- Added "The only option left" conclusion to answer questions;
+- Adding Spanish grammar almost completed.

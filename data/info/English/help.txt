@@ -1,0 +1,36 @@
+﻿Show "------------------------------------------------------------------------------".
+#C++#Show " \~{languageName}\t\t\t\t\t* Change language".
+#C++#Show " Read the file \"English/ambiguity/Boston\".\t\t* Detecting ambiguity".
+#C++#Show " Read the file \"English/ambiguity/US presidents\".\t* Detecting ambiguity".
+#C++#Show " Read the file \"English/programming/Connect-Four\".\t* Game Connect-Four".
+#C++#Show " Read the file \"English/programming/greeting\".\t\t* Greeting (salutation)".
+#C++#Show " Read the file \"English/programming/tower of Hanoi\".\t* Solving a puzzle".
+#C++#Show " Read the file \"English/reasoning/family\".\t\t* Reasoning".
+#Java#Show " Use button <ambiguity>		to learn about detecting ambiguity".
+#Java#Show " Use button <programming>	to learn about programming in natural language".
+#Java#Show " Use button <reasoning>		to learn about reasoning in natural language".
+Show "------------------------------------------------------------------------------".
+Show " Examples of available imperative sentences:".
+Show "------------------------------------------------------------------------------".
+Show " Read the file \"{filename}\".\t* Read a file".
+Show " Help.\t\t\t\t* Show this help information".
+Show " Undo.\t\t\t\t* Undo the last sentence".
+Show " Redo.\t\t\t\t* Redo an undone sentence".
+Show " Clear your mind.\t\t* Forget previous knowledge".
+Show " Restart.\t\t\t* Restart this program".
+Show " Show info about the grammar languages.".
+Show " Show info about the interface languages.".
+Show " Show info about the lists.".
+Show " Show info about the word types.".
+Show " Show the query commands.".
+Show " Show the copyright.".
+Show " Show the GPLv2-license.".
+Show " Show the warranty.".
+Show "------------------------------------------------------------------------------".
+#C++#Show " Example files:	* folder: Thinknowlogy2015r1beta/data/examples/English/".
+#Java#Show " Example files:	* Use button <more examples> or see".
+#Java#Show "		  folder: Thinknowlogy2015r1beta/data/examples/English/".
+Show " Fundamental:	* folder: Thinknowlogy2015r1beta/documents/".
+Show " Design:	* folder: Thinknowlogy2015r1beta/documents/design/".
+Show " Screenshots:	* folder: Thinknowlogy2015r1beta/screenshots/English/".
+Show "------------------------------------------------------------------------------".

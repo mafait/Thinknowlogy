@@ -1,0 +1,4 @@
+Een persoon is een man of een vrouw.
+Anne is een persoon.
+Anne is geen vrouw.
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

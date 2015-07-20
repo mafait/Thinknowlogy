@@ -1,0 +1,5 @@
+﻿De vader is juist.
+Het vader is onjuist.
+Het paard is juist.
+De paard is onjuist.
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

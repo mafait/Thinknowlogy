@@ -1,0 +1,3 @@
+﻿A boat is a rowing boat, a sailboat or a motorboat.
+The boat is not a sailboat and not a motorboat.
+# Remember to clear this knowledge before reading another example.

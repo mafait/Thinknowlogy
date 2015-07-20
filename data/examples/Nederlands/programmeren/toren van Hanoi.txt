@@ -1,0 +1,53 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To demonstrate programming in natural language
+#	Version:	Thinknowlogy 2015r1beta (Corazón)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2015, Menno Mafait
+#	Your suggestions, modifications and bug reports
+#	are welcome at http://mafait.org
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	Een samenvatting van de "toren van Hanoi" puzzel:
+#----------------------------------------------------------------------------
+#	De Torens van Hanoi is een spel of puzzel met een aantal schijven.
+#	Het spel bestaat uit een plankje met daarop drie stokjes. Bij aanvang
+#	van het spel is op een van de stokjes een piramidevormige toren van
+#	schijven met een gat in het midden geplaatst. Elke schijf heeft een
+#	verschillende diameter en de schijven zijn zo geplaatst dat de kleinste
+#	bovenop en de grootste onderop ligt.
+#	
+#	Het doel van het spel is om de complete toren van schijven te
+#	verplaatsen naar een ander stokje, waarbij de volgende regels in acht
+#	genomen dienen te worden:
+#	- er mag slechts 1 schijf tegelijk worden verplaatst;
+#	- nooit mag een grotere schijf op een kleinere rusten.
+#----------------------------------------------------------------------------
+#	Zie voor de volle text: http://nl.wikipedia.org/wiki/Torens_van_Hanoi
+#----------------------------------------------------------------------------
+
+# Defineer de zetten.
+Een zet is tussen-start-en-wissel, tussen-start-en-doel, tussen-wissel-en-doel, klaar-tussen-start-en-wissel, klaar-tussen-start-en-doel of klaar-tussen-wissel-en-doel.
+
+# Toon de zetten.
+Als de zet is klaar-tussen-start-en-wissel of de zet is klaar-tussen-start-en-doel of de zet klaar-tussen-wissel-en-doel is dan toon "* startpaal:\t~!'startpaal'<a>`~.\n* wisselpaal:\t~!'wisselpaal'<a>`~.\n* doelpaal:\t~!'doelpaal'<a>`~.\n\n".
+
+# De regels voor het verplaatsen van de schijven.
+Als de zet is tussen-wissel-en-doel dan als de wisselpaal toegewezen is en de doelpaal niet toegewezen is of de wisselpaal toegewezen is en de top van de wisselpaal is kleiner dan de top van de doelpaal dan verplaats de top van de wisselpaal naar de doelpaal, de zet is klaar-tussen-wissel-en-doel en toon "Een schijf verplaatst van wissel naar doel:\n" anders verplaats de top van de doelpaal naar de wisselpaal, de zet is klaar-tussen-wissel-en-doel en toon "Een schijf verplaatst van doel naar wissel:\n".
+Als de zet is tussen-start-en-doel dan als de startpaal toegewezen is en de doelpaal niet toegewezen is of de startpaal toegewezen is en de top van de startpaal is kleiner dan de top van de doelpaal dan verplaats de top van de startpaal naar de doelpaal, de zet is klaar-tussen-start-en-doel en toon "Een schijf verplaatst van start naar doel:\n" anders verplaats de top van de doelpaal naar de startpaal, de zet is klaar-tussen-start-en-doel en toon "Een schijf verplaatst van doel naar start:\n".
+Als de zet is tussen-start-en-wissel dan als de startpaal toegewezen is en de wisselpaal niet toegewezen is of de startpaal toegewezen is en de top van de startpaal is kleiner dan de top van de wisselpaal dan verplaats de top van de startpaal naar de wisselpaal, de zet is klaar-tussen-start-en-wissel en toon "Een schijf verplaatst van start naar wissel:\n" anders verplaats de top van de wisselpaal naar de startpaal, de zet is klaar-tussen-start-en-wissel en toon "Een schijf verplaatst van wissel naar start:\n".
+
+# Vóór elke nieuwe verplaatsing moet de volgorde worden bepaald waarin de regels uitgevoerd moeten worden.
+Als de uitvoeringsvolgorde is oneven-eerst dan als de zet niet toegewezen is of de zet is klaar-tussen-wissel-en-doel dan de zet is tussen-start-en-doel anders als de zet is klaar-tussen-start-en-doel dan de zet is tussen-start-en-wissel anders de zet is tussen-wissel-en-doel.
+Als de uitvoeringsvolgorde is even-eerst dan als de zet niet toegewezen is of de zet is klaar-tussen-wissel-en-doel dan de zet is tussen-start-en-wissel anders als de zet is klaar-tussen-start-en-wissel dan de zet is tussen-start-en-doel anders de zet is tussen-wissel-en-doel.
+
+# Bepaal aan het begin de volgorde waarin de regels uitgevoerd moeten worden.
+Als de startpaal toegewezen is, de wisselpaal niet toegewezen is en de doelpaal niet toegewezen is dan als het getal van de startpaal is oneven dan de uitvoeringsvolgorde is oneven-eerst en toon "\nHet aantal schijven is oneven. Dus de uitvoeringsvolgorde is: Verplaats eerst van start naar doel, dan van start naar wissel.\n\n" anders de uitvoeringsvolgorde is even-eerst en toon "\nHet aantal schijven is even. Dus de uitvoeringsvolgorde is: Verplaats eerst van start naar wissel, dan van start naar goal.\n\n".
+
+# Definieer het einde.
+Als de zet toegewezen is, de startpaal niet toegewezen is, de wisselpaal niet toegewezen is en de doelpaal toegewezen is dan de zet is leeg, de uitvoeringsvolgorde is leeg en toon "Klaar.\nOm de puzzel nogmaals te starten: 'Wis je geheugen.' of 'Herstart.', en dan 'Lees het bestand \"Nederlands/programmeren/toren van Hanoi\"'.".
+
+# Voeg nu een even of oneven aantal schijven in omgekeerde volgorde toe,
+# de grootste eerst (bv. D of E), en de kleinste (A) als laatste, zoals:
+# - Voor een even aantal schijven:	Voeg-toe D, C, B en A aan de startpaal.
+# - Voor een oneven aantal schijven:	Voeg-toe E, D, C, B en A aan de startpaal.
