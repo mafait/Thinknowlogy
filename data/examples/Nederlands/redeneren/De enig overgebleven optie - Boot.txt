@@ -1,3 +1,0 @@
-﻿Een boot is een roeiboot, een zeilboot of een motorboot.
-De boot is geen zeilboot en geen motorboot.
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

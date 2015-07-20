@@ -1,5 +1,0 @@
-﻿Leer el archivo "Español/razonamiento/definición de familia".
-¿Es Juan padre de Pablo?
-¿Es Juan padre de José?
-¿Es Juan un padre?
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.

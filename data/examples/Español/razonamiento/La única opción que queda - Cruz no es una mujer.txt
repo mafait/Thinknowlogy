@@ -1,4 +1,0 @@
-Una persona es un hombre o una mujer.
-Cruz es una persona.
-Cruz no es una mujer.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.

@@ -1,6 +1,0 @@
-﻿# Usuario que se le permite introducir texto libre.
-Experto es un usuario y no tiene contraseña.
-Experto es un experto.
-
-# Usuario estándar.
-#Java#Invitado es un usuario y no tiene contraseña.
