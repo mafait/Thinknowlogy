@@ -1,0 +1,9 @@
+﻿Leer el archivo "Español/razonamiento/definición de familia".
+Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+Pablo tiene un padre, llamado Juan.
+Pablo tiene una madre, llamada Ana.
+José tiene un padre, llamado Juan.
+José tiene una madre, llamada Ana.
+Luisa tiene un padre, llamado Juan.
+Luisa tiene una madre, llamada Ana.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

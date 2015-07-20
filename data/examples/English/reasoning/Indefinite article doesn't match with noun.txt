@@ -1,0 +1,7 @@
+﻿A horse is correct.
+An horse is incorrect.
+An house is incorrect.
+An article is correct.
+A article is incorrect.
+A animal is incorrect.
+# Remember to clear this knowledge before reading another example.

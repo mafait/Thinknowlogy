@@ -1,0 +1,2 @@
+﻿¿Es 1 un número?
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

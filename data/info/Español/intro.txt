@@ -1,0 +1,37 @@
+﻿Mostrar "------------------------------------------------------------------------------".
+Mostrar " Thinknowlogy es un software experimental, basado en la gramática,".
+Mostrar " diseñado para utilizar las Leyes Naturales de la Inteligencia en la gramática,".
+Mostrar " con el fin de crear la inteligencia - a través del lenguaje natural - en software,".
+Mostrar " lo que se demuestra por:".
+Mostrar " * Programación en lenguaje natural;".
+Mostrar " * Razonamiento en lenguaje natural:".
+Mostrar "   - sacar conclusiones (más avanzada que las soluciones científicas),".
+Mostrar "   - hacer suposiciones (con el nivel de ajuste automático de la incertidumbre),".
+Mostrar "   - haciendo preguntas (acerca de las brechas en el conocimiento),".
+Mostrar "   - detección de conflictos y algunos casos de ambigüedad semántica;".
+Mostrar " * El multilingüismo, probando: Leyes Naturales de la Inteligencia son universales.".
+Mostrar "------------------------------------------------------------------------------".
+Mostrar " Según la teoría de la evolución, la inteligencia y el lenguaje habrían evolucionado".
+Mostrar " de forma independiente el uno del otro. Por lo tanto, la teoría de la evolución no".
+Mostrar " admite una relación sistemática entre el razonamiento y el lenguaje. Sin embargo,".
+Mostrar " la cosmovisión bíblica asume que el razonamiento y el lenguaje están estrechamente".
+Mostrar " relacionados. Al estar basado en la cosmovisión bíblica, sólo Thinknowlogy es capaz".
+#C++#Mostrar " de procesar la semántica de palabras como artículos definidos, conjunción \"o\",".
+#C++#Mostrar " verbos posesivos \"tener\" y los verbos en pasado \"era\" y \"tenido\".".
+#Java#Mostrar " de procesar la semántica de palabras como artículos definidos, conjunción “o”,".
+#Java#Mostrar " verbos posesivos “tener” y los verbos en pasado “era” y “tenido”.".
+Mostrar "------------------------------------------------------------------------------".
+#C++#Mostrar " Ayudar.\t\t\t\t\t\t* Mostrar más info ayuda".
+#C++#Mostrar " \~{nombre del idioma}\t\t\t\t\t* Cambiar el idioma".
+#C++#Mostrar " Leer el archivo \"Español/ambigüedad/Boston\".\t\t* Detección de ambigüedad".
+#C++#Mostrar " Leer el archivo \"Español/ambigüedad/presidentes de EUA\".* Detección de ambigüedad".
+#C++#Mostrar " Leer el archivo \"Español/programación/Conecta 4\".\t* Juego Conecta 4".
+#C++#Mostrar " Leer el archivo \"Español/programación/saludo\".\t\t* Saludo".
+#C++#Mostrar " Leer el archivo \"Español/programación/Torres de Hanói\".\t* Solución de rompecabezas".
+#C++#Mostrar " Leer el archivo \"Español/razonamiento/familia/familia\".\t* Razonamiento".
+#Java#Mostrar " Utilice el botón <ambigüedad> para aprender acerca de la detección de la ambigüedad.".
+#Java#Mostrar " Utilice el botón <programación> para aprender acerca de la programación en lenguaje natural.".
+#Java#Mostrar " Utilice el botón <razonamiento> para aprender acerca de razonamiento en lenguaje natural.".
+Mostrar "------------------------------------------------------------------------------".
+Mostrar " Idiomas disponibles: ~!`idioma`<s>'~.".
+Mostrar "------------------------------------------------------------------------------".

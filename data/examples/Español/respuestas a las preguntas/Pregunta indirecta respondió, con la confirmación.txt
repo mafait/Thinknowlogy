@@ -1,0 +1,5 @@
+﻿Leer el archivo "Español/razonamiento/definición de familia".
+Pablo tiene una madre, llamada Ana.
+Pablo es un hombre.
+Pablo es un hijo.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

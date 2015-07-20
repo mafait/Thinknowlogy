@@ -1,0 +1,4 @@
+﻿Lees het bestand "Nederlands/redeneren/gezinsdefinitie".
+Anne is een vader of een moeder.
+Anne is een vader.
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

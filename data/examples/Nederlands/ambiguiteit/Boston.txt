@@ -1,0 +1,4 @@
+﻿Boston is een stad in de Verenigde Staten.
+Boston is een stad in het Verenigd Koninkrijk.
+Toon informatie over Boston.
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
