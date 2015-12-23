@@ -1,0 +1,28 @@
+﻿< Ja, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y en z zijn kleine letters.
+< 
+< Ja, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y en Z zijn hoofdletters.
+< 
+* 
+* U hebt eerder een gelijksoortige vraag gesteld:
+< Is a een kleine letter?
+* 
+* Mijn antwoord:
+< Ja, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y en z zijn kleine letters.
+< 
+* 
+* U hebt eerder een gelijksoortige vraag gesteld:
+< Is A een hoofdletter?
+* 
+* Mijn antwoord:
+< Ja, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y en Z zijn hoofdletters.
+< 
+< Nee, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y en Z zijn hoofdletters. (geleerd van gebruiker Admin)
+< A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y en z zijn kleine letters. (geleerd van gebruiker Admin)
+< 
+< Nee, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y en z zijn kleine letters. (geleerd van gebruiker Admin)
+< A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y en Z zijn hoofdletters. (geleerd van gebruiker Admin)
+< 
+< Ja, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y en z zijn kleine letters.
+< 
+< Ja, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y en Z zijn hoofdletters.
+< 

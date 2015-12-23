@@ -1,0 +1,4 @@
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+Juan era el padre de Pablo.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+Juan es un hombre.

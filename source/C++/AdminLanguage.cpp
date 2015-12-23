@@ -2,11 +2,10 @@
  *	Class:			AdminLanguage
  *	Supports class:	AdminItem
  *	Purpose:		To create and assign the languages
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -51,13 +50,13 @@ class AdminLanguage
 			{
 			// Initially the language name words are not linked
 			// to the language defintion word. So, search in all words.
-			if( ( wordResult = adminItem_->findWordTypeInAllWords( false, WORD_TYPE_PROPER_NAME, languageNameString, NULL ) ).result == RESULT_OK )
+			if( ( wordResult = adminItem_->findWordTypeInAllWords( true, WORD_TYPE_PROPER_NAME, languageNameString, NULL ) ).result == RESULT_OK )
 				foundLanguageWordItem_ = wordResult.foundWordItem;
 			else
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a language word" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a language word" );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given language name string is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given language name string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -85,7 +84,7 @@ class AdminLanguage
 		if( strlen( errorString ) > 0 )
 			{
 			if( adminItem_ != NULL )
-				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+				adminItem_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -105,10 +104,10 @@ class AdminLanguage
 		if( authorizationWordItem != NULL )
 			{
 			if( authorizationWordItem->assignChangePermissions( this ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign my language change permissions to a word" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign my language change permissions to a word" );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given authorization word item is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given authorization word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -140,27 +139,27 @@ class AdminLanguage
 							if( commonVariables_->predefinedNounLanguageWordItem != NULL )
 								{
 								if( createLanguageSpecification( commonVariables_->predefinedNounLanguageWordItem ) != RESULT_OK )
-									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a language specification" );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a language specification" );
 								}
 							}
 						else
-							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to authorize the created language word" );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to authorize the created language word" );
 						}
 					else
-						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The last created word item is undefined" );
+						return adminItem_->startError( functionNameString, moduleNameString_, "The last created word item is undefined" );
 					}
 				else
 					{
 					// Restore old language
 					commonVariables_->currentLanguageNr--;
-					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a language word" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a language word" );
 					}
 				}
 			else
 				commonVariables_->currentLanguageWordItem = foundLanguageWordItem_;
 			}
 		else
-			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the language" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find the language" );
 
 		return RESULT_OK;
 		}
@@ -177,16 +176,16 @@ class AdminLanguage
 				if( languageNounWordItem != NULL )
 					{
 					if( adminItem_->addSpecification( true, false, false, false, false, false, false, false, false, false, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_ASSUMPTION_LEVEL, WORD_TYPE_PROPER_NAME, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_UNDEFINED, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NULL, currentLanguageWordItem, languageNounWordItem, NULL, NULL ).result != RESULT_OK )
-						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a new language specification" );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a new language specification" );
 					}
 				else
-					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given language noun word item is undefined" );
+					return adminItem_->startError( functionNameString, moduleNameString_, "The given language noun word item is undefined" );
 				}
 			else
-				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given language word isn't a language word" );
+				return adminItem_->startError( functionNameString, moduleNameString_, "The given language word isn't a language word" );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The current language word item is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -202,10 +201,10 @@ class AdminLanguage
 			commonVariables_->currentLanguageWordItem = languageWordItem;
 
 			if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_UNDEFINED, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, commonVariables_->currentLanguageWordItem, commonVariables_->predefinedNounLanguageWordItem, NULL ).result != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign the language with authorization" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language with authorization" );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find the requested language" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find the requested language" );
 
 		return RESULT_OK;
 		}
@@ -230,36 +229,36 @@ class AdminLanguage
 					if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_UNDEFINED, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, foundLanguageWordItem_, commonVariables_->predefinedNounLanguageWordItem, NULL ).result == RESULT_OK )
 						commonVariables_->currentLanguageWordItem = foundLanguageWordItem_;
 					else
-						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign the language" );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
 					}
 
 				if( !hasFoundLanguage )
-					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given name isn't a grammar nor an language" );
+					return adminItem_->startError( functionNameString, moduleNameString_, "The given name isn't a grammar nor an language" );
 				}
 			else
 				{
 				if( !adminItem_->isSystemStartingUp() )
-					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find the requested language" );
+					return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find the requested language" );
 				}
 			}
 		else
-			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find the language" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find the language" );
 
 		return RESULT_OK;
 		}
 
-	SpecificationResultType addSpecificationWithAuthorization( bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
+	SpecificationResultType addSpecificationWithAuthorization( bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int copiedRelationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
 		{
 		SpecificationResultType specificationResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addSpecificationWithAuthorization";
 
 		if( generalizationWordItem != NULL )
 			{
-			if( ( specificationResult = generalizationWordItem->addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, this ) ).result != RESULT_OK )
-				adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a specification with authorization" );
+			if( ( specificationResult = generalizationWordItem->addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, copiedRelationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, this ) ).result != RESULT_OK )
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a specification with authorization" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		specificationResult.result = commonVariables_->result;
 		return specificationResult;
@@ -273,10 +272,10 @@ class AdminLanguage
 		if( generalizationWordItem != NULL )
 			{
 			if( ( specificationResult = generalizationWordItem->assignSpecification( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, this ) ).result != RESULT_OK )
-				adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to assign a specification with authorization" );
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a specification with authorization" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		specificationResult.result = commonVariables_->result;
 		return specificationResult;

@@ -1,6 +1,0 @@
-﻿Lees het bestand "Nederlands/redeneren/gezinsdefinitie".
-Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
-Is Paul een meisje, een vrouw, een jongen of een man?
-Is Johan een zoon of een dochter?
-Is Laura een meisje of een vrouw?
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

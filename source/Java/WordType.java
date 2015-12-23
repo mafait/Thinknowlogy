@@ -2,11 +2,10 @@
  *	Class:			WordType
  *	Supports class:	WordItem
  *	Purpose:		To create word type structures
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -176,7 +175,7 @@ class WordType
 		return wordResult;
 		}
 
-	protected WordResultType findWordType( boolean isForcingToCheckAllLanguages, short wordTypeNr, String wordTypeString )
+	protected WordResultType findWordType( boolean isCheckingAllLanguages, short wordTypeNr, String wordTypeString )
 		{
 		WordResultType wordResult = new WordResultType();
 		int currentWordTypeStringLength;
@@ -188,7 +187,7 @@ class WordType
 			{
 			if( ( wordTypeStringLength = wordTypeString.length() ) > 0 )
 				{
-				if( ( currentWordTypeItem = myWordItem_.activeWordTypeItem( isForcingToCheckAllLanguages, wordTypeNr ) ) != null )
+				if( ( currentWordTypeItem = myWordItem_.activeWordTypeItem( isCheckingAllLanguages, wordTypeNr ) ) != null )
 					{
 					do	{
 						// Skip hidden word type
@@ -222,7 +221,7 @@ class WordType
 		return wordResult;
 		}
 
-	protected WordResultType findWordTypeInAllWords( boolean isForcingToCheckAllLanguages, short wordTypeNr, String wordTypeString, WordItem previousWordItem )
+	protected WordResultType findWordTypeInAllWords( boolean isCheckingAllLanguages, short wordTypeNr, String wordTypeString, WordItem previousWordItem )
 		{
 		WordResultType wordResult = new WordResultType();
 		WordItem currentWordItem;
@@ -230,7 +229,7 @@ class WordType
 		if( ( currentWordItem = ( previousWordItem == null ? CommonVariables.firstWordItem : previousWordItem.nextWordItem() ) ) != null )
 			{
 			do	{
-				if( ( wordResult = currentWordItem.findWordType( isForcingToCheckAllLanguages, wordTypeNr, wordTypeString ) ).result != Constants.RESULT_OK )
+				if( ( wordResult = currentWordItem.findWordType( isCheckingAllLanguages, wordTypeNr, wordTypeString ) ).result != Constants.RESULT_OK )
 					myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find a word type in word \"" + currentWordItem.anyWordTypeString() + "\"" );
 				}
 			while( wordResult.foundWordItem == null &&

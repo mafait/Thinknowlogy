@@ -23,7 +23,14 @@ Mostrar " Especificación del elemento vacío mostrará todos los artículos		\~
 Mostrar " La especificación de lista vacía mostrará todos los artículos		\~<>".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Adición de '#' da funcionalidad conteo					\~#(123)".
+Mostrar " Adición de '+' sólo selecciona elementos activos			\~+(123)".
+Mostrar " Adición de '=' sólo selecciona elementos inactivos			\~=(123)".
+Mostrar " Adición de '$' sólo selecciona elementos archivados			\~$(123)".
+Mostrar " Adición de '%' sólo selecciona elementos sustituidos			\~%(123)".
+Mostrar " Adición de '&' sólo selecciona elementos eliminados			\~&(123)".
 Mostrar " Concatenación de consultas da 'AND' funcionalidad			\~(123)<s>".
+Mostrar " Adición de '*' también selecciona elementos de justificación adjuntos	\~*'Luisa'<s>`hija`".
+Mostrar " Adición de '**' también selecciona especificaciones de justificación	\~**'Luisa'<s>`hija`".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Adición de ' al final sólo mostrará las palabras			\~(123)'".
 Mostrar " Adición de ` al final sólo muestra las referencias de palabras		\~(123)`".

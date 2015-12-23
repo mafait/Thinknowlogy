@@ -1,0 +1,65 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A parent is probably a person.
+< A father is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< A son is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< John has a son, called Joe.
+< Anna has a son, called Joe.
+* 
+* My assumptions:
+< Joe is probably a person.
+< Joe is probably a child of John and Anna.
+< Joe is probably part of a family.
+< Joe is probably not a girl and not a woman.
+< Joe is probably not a daughter.
+< Joe has probably 2 parents, called John and Anna.
+< Joe has possibly a mother, called Anna.
+< John has probably a child, called Joe.
+< John is probably a parent of Joe.
+< John is probably part of a family.
+< John is possibly a person.
+< Anna has probably a child, called Joe.
+< Anna is probably a parent of Joe.
+< Anna is probably part of a family.
+< Anna is possibly a person.
+< Anna is possibly a woman.
+< Anna is maybe not a man.
+< Anna is possibly a mother of Joe.
+< Anna is maybe not a father.
+* 
+* My questions:
+< Is Joe a boy or a man?
+< Is John a man or a woman?
+< Is John a father or a mother?
+< 
+! 
+! This sentence is not accepted, because it is in conflict with:
+< Joe is a son of John and Anna.
+< Joe is probably not a daughter.
+< Joe is probably not a girl and not a woman.
+< 

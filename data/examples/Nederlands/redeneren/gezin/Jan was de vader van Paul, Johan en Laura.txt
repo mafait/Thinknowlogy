@@ -1,0 +1,4 @@
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
+Jan was de vader van Paul, Johan en Laura.
+Anna is de moeder van Paul, Johan en Laura.
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.

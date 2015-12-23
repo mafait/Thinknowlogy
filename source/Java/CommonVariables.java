@@ -1,11 +1,10 @@
 /*
  *	Class:		CommonVariables
  *	Purpose:	To hold the common variables
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -26,7 +25,7 @@ class CommonVariables
 	{
 	protected static boolean hasFoundAnswerToQuestion;
 	protected static boolean hasFoundQuery;
-	protected static boolean hasRecalculatedRelationWord;
+	protected static boolean hasShownArticleNotification;
 	protected static boolean hasShownMessage;
 	protected static boolean hasShownWarning;
 
@@ -34,7 +33,6 @@ class CommonVariables
 	protected static boolean isDontIncrementCurrentSentenceNr;
 	protected static boolean isFirstAnswerToQuestion;
 	protected static boolean isQuestionAlreadyAnswered;
-	protected static boolean isUserQuestion;
 
 	protected static byte result;
 
@@ -77,6 +75,8 @@ class CommonVariables
 
 	protected static StringBuffer interfaceLanguageStringBuffer;
 	protected static StringBuffer queryStringBuffer;
+
+	protected static StringBuffer learnedFromUserStringBuffer;
 	protected static StringBuffer writeSentenceStringBuffer;
 
 	protected static StringBuffer currentPathStringBuffer;
@@ -88,7 +88,7 @@ class CommonVariables
 		{
 		hasFoundAnswerToQuestion = false;
 		hasFoundQuery = false;
-		hasRecalculatedRelationWord = false;
+		hasShownArticleNotification = false;
 		hasShownMessage = false;
 		hasShownWarning = false;
 
@@ -96,7 +96,6 @@ class CommonVariables
 		isDontIncrementCurrentSentenceNr = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
-		isUserQuestion = false;
 
 		result = Constants.RESULT_OK;
 
@@ -140,6 +139,8 @@ class CommonVariables
 
 		interfaceLanguageStringBuffer = null;
 		queryStringBuffer = null;
+
+		learnedFromUserStringBuffer = null;
 		writeSentenceStringBuffer = null;
 
 		// Don't initialize 'currentPathStringBuffer' there. 

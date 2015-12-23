@@ -2,11 +2,10 @@
  *	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -51,7 +50,7 @@ class ScoreList extends List
 				}
 			}
 		else
-			return startError( 1, null, null, "The given score item is undefined" );
+			return startError( 1, null, "The given score item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -78,7 +77,7 @@ class ScoreList extends List
 				}
 			}
 		else
-			return startError( 1, null, null, "The given score item is undefined" );
+			return startError( 1, null, "The given score item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -155,7 +154,7 @@ class ScoreList extends List
 							isLowerNotBlockingScore ) ) ) );
 			}
 		else
-			return startError( 1, null, null, "The given solve strategy parameter isn't implemented" );
+			return startError( 1, null, "The given solve strategy parameter isn't implemented" );
 
 		return Constants.RESULT_OK;
 		}
@@ -234,7 +233,7 @@ class ScoreList extends List
 				}
 			}
 		else
-			return startError( 1, null, null, "The given action selection item is undefined" );
+			return startError( 1, null, "The given action selection item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -248,13 +247,13 @@ class ScoreList extends List
 			while( searchItem != null )
 				{
 				if( searchItem.referenceSelectionItem == unusedSelectionItem )
-					return startError( 1, null, null, "The reference selection item is still in use" );
+					return startError( 1, null, "The reference selection item is still in use" );
 
 				searchItem = searchItem.nextScoreItem();
 				}
 			}
 		else
-			return startError( 1, null, null, "The given unused justification item is undefined" );
+			return startError( 1, null, "The given unused justification item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -285,7 +284,7 @@ class ScoreList extends List
 				}
 			}
 		else
-			return startError( 1, null, null, "The given score item is undefined" );
+			return startError( 1, null, "The given score item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -302,7 +301,7 @@ class ScoreList extends List
 				if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
 					searchItem = nextScoreListItem();
 				else
-					return addError( 1, null, null, "I failed to delete an active item" );
+					return addError( 1, null, "I failed to delete an active item" );
 				}
 			else
 				searchItem = searchItem.nextScoreItem();
@@ -378,7 +377,7 @@ class ScoreList extends List
 									}
 								}
 							else
-								return addError( 1, null, null, "I failed to get the best score" );
+								return addError( 1, null, "I failed to get the best score" );
 							}
 						}
 					}
@@ -387,7 +386,7 @@ class ScoreList extends List
 				}
 			}
 		else
-			return startError( 1, null, null, "None of the given scores has a value parameter" );
+			return startError( 1, null, "None of the given scores has a value parameter" );
 
 		return Constants.RESULT_OK;
 		}
@@ -397,15 +396,15 @@ class ScoreList extends List
 		if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
 			{
 			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, CommonVariables.currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-				return addError( 1, null, null, "I failed to add an active score item" );
+				return addError( 1, null, "I failed to add an active score item" );
 			}
 		else
-			return startError( 1, null, null, "The current item number is undefined" );
+			return startError( 1, null, "The current item number is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
-	protected SelectionResultType getBestAction( short solveStrategyParameter )
+	protected SelectionResultType getBestAction( boolean isTesting, short solveStrategyParameter )
 		{
 		SelectionResultType selectionResult = new SelectionResultType();
 		boolean isCummulate = false;
@@ -495,7 +494,7 @@ class ScoreList extends List
 										}
 									}
 								else
-									addError( 1, null, null, "I failed to get the best local score" );
+									addError( 1, null, "I failed to get the best local score" );
 								}
 							}
 						}
@@ -509,7 +508,7 @@ class ScoreList extends List
 				if( hasEqualScore_ )
 					{
 					if( getBestScore( false, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) != Constants.RESULT_OK )
-						addError( 1, null, null, "I failed to get the best score" );
+						addError( 1, null, "I failed to get the best score" );
 					}
 				else
 					// Get highest number of winning scores, else if equal: Get lowest number of losing scores
@@ -541,14 +540,14 @@ class ScoreList extends List
 								{
 								// Previous best action
 								if( disableAction( true, selectionResult.bestActionItem ) != Constants.RESULT_OK )
-									addError( 1, null, null, "I failed to disable the best action" );
+									addError( 1, null, "I failed to disable the best action" );
 								}
 
 							if( CommonVariables.result == Constants.RESULT_OK )
 								{
 								// Current action
 								if( markAction( searchItem.referenceSelectionItem ) != Constants.RESULT_OK )
-									addError( 1, null, null, "I failed to mark an action" );
+									addError( 1, null, "I failed to mark an action" );
 								}
 							}
 
@@ -565,13 +564,13 @@ class ScoreList extends List
 									// Found the same best score with different action
 									isCummulate = true;
 								else
-									addError( 1, null, null, "I failed to mark an action" );
+									addError( 1, null, "I failed to mark an action" );
 								}
 							else
 								{
 								// Previous best action
 								if( disableAction( false, searchItem.referenceSelectionItem ) != Constants.RESULT_OK )
-									addError( 1, null, null, "I failed to disable an action" );
+									addError( 1, null, "I failed to disable an action" );
 								}
 							}
 						}
@@ -672,28 +671,28 @@ class ScoreList extends List
 																localNewBlockingScore += localSearchItem.newBlockingScore;
 																}
 															else
-																startSystemError( 1, null, null, "Overflow of the new blocking cummulate score" );
+																startSystemError( 1, null, "Overflow of the new blocking cummulate score" );
 															}
 														else
-															startSystemError( 1, null, null, "Overflow of the old blocking cummulate score" );
+															startSystemError( 1, null, "Overflow of the old blocking cummulate score" );
 														}
 													else
-														startSystemError( 1, null, null, "Overflow of the new not-blocking cummulate score" );
+														startSystemError( 1, null, "Overflow of the new not-blocking cummulate score" );
 													}
 												else
-													startSystemError( 1, null, null, "Overflow of the old not-blocking cummulate score" );
+													startSystemError( 1, null, "Overflow of the old not-blocking cummulate score" );
 												}
 											else
-												startSystemError( 1, null, null, "Overflow of the new dissatisfied cummulate score" );
+												startSystemError( 1, null, "Overflow of the new dissatisfied cummulate score" );
 											}
 										else
-											startSystemError( 1, null, null, "Overflow of the old dissatisfied cummulate score" );
+											startSystemError( 1, null, "Overflow of the old dissatisfied cummulate score" );
 										}
 									else
-										startSystemError( 1, null, null, "Overflow of the new satisfied cummulate score" );
+										startSystemError( 1, null, "Overflow of the new satisfied cummulate score" );
 									}
 								else
-									startSystemError( 1, null, null, "Overflow of the old satisfied cummulate score" );
+									startSystemError( 1, null, "Overflow of the old satisfied cummulate score" );
 								}
 							}
 
@@ -721,14 +720,14 @@ class ScoreList extends List
 									{
 									// Previous best action
 									if( disableAction( true, selectionResult.bestActionItem ) != Constants.RESULT_OK )
-										addError( 1, null, null, "I failed to disable the best action" );
+										addError( 1, null, "I failed to disable the best action" );
 									}
 
 								if( CommonVariables.result == Constants.RESULT_OK )
 									{
 									// Current action
 									if( markAction( searchItem.referenceSelectionItem ) != Constants.RESULT_OK )
-										addError( 1, null, null, "I failed to mark an action" );
+										addError( 1, null, "I failed to mark an action" );
 									}
 								}
 
@@ -744,25 +743,27 @@ class ScoreList extends List
 									if( markAction( searchItem.referenceSelectionItem ) == Constants.RESULT_OK )
 										nRandomEntries++;
 									else
-										addError( 1, null, null, "I failed to mark an action" );
+										addError( 1, null, "I failed to mark an action" );
 									}
 								else
 									{
 									// Previous best action
 									if( disableAction( false, searchItem.referenceSelectionItem ) != Constants.RESULT_OK )
-										addError( 1, null, null, "I failed to disable an action" );
+										addError( 1, null, "I failed to disable an action" );
 									}
 								}
 							}
 						}
 					else
-						addError( 1, null, null, "I failed to get the best local score" );
+						addError( 1, null, "I failed to get the best local score" );
 					}
 
 				searchItem = searchItem.nextScoreItem();
 				}
 
 			if( CommonVariables.result == Constants.RESULT_OK &&
+			// Skip random during testing. It would create different test results
+			!isTesting &&
 			// Found more than one the same best cummulate score with different action
 			nRandomEntries > 1 )
 				{

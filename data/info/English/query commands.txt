@@ -23,7 +23,14 @@ Show " Empty item specification will show all items			\~()".
 Show " Empty list specification will show all items			\~<>".
 Show "------------------------------------------------------------------------------".
 Show " Adding '#' gives count functionality				\~#(123)".
+Show " Adding '+' only selects active items				\~+(123)".
+Show " Adding '=' only selects inactive items				\~=(123)".
+Show " Adding '$' only selects archived items				\~$(123)".
+Show " Adding '%' only selects replaced items				\~%(123)".
+Show " Adding '&' only selects deleted items				\~&(123)".
 Show " Concatenation of queries gives 'AND' functionality		\~(123)<s>".
+Show " Adding '*' also selects attached justification items		\~*'Laura'<s>`daughter`".
+Show " Adding '**' also selects justification specifications		\~**'Laura'<s>`daughter`".
 Show "------------------------------------------------------------------------------".
 Show " Adding ' at the end will show only words			\~(123)'".
 Show " Adding ` at the end shows only word references			\~(123)`".

@@ -17,9 +17,9 @@ How to start:
 - The application comes in two interface types: Java GUI and textual console interface;
 - The source code of both versions (Java as well as C++) is included;
 - Both applications have the same functionality, but the Java GUI comes with demo buttons;
-- The example files can be found in the examples subfolder.
+- The example files can be found in the data/examples subfolder.
 
-Thinknowlogy2015r1beta.jar:
+Thinknowlogy2015r1.jar:
 - This is a Java application. It can be started by double-clicking on the file;
 - The GUI (Graphical User Interface) has handy buttons to guide you;
 - This software uses Java. So, go to Java Runtime Environment (http://java.com/)
@@ -31,9 +31,9 @@ For experts only - please use the Java version.exe:
 - See the included screenshots for guidance about the implemented grammar.
 - The C++ executable is build from the C++ source files using Micosoft Visual C++ 2010 Express SP1;
   (see the included build log for the settings);
-- It is tested under Windows XP SP3, and under Linux (Ubuntu 15.04) using Wine;
-- However, the C++ executable has issues with special characters.
-  I am focusing on the Java implementation. The C++ version is only a bonus.
+- It is tested under Windows XP SP3, and under Linux (Ubuntu 15.10) using Wine;
+- However, the C++ executable has issues with special (Spanish) characters.
+  My focus is on the Java implementation. The C++ version is only a bonus.
 
 How to create a Linux Native C++ executable:
   In subfolder "source" you will find a text file that describes how a

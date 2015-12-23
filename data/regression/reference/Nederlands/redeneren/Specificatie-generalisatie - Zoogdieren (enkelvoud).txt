@@ -1,0 +1,17 @@
+﻿* 
+* Mijn conclusies:
+< Een kat en een hond zijn zoogdier [meervoud van 'zoogdier' is onbekend].
+< 
+* 
+* Mijn conclusies:
+< Een walvis, een kat en een hond zijn zoogdier [meervoud van 'zoogdier' is onbekend].
+< 
+* 
+* Mijn conclusies:
+< Een walvis, een kat en een hond zijn zoogdieren.
+< 
+< Specificaties:
+< Een walvis is een zoogdier.
+< Een hond is een zoogdier.
+< Een kat is een zoogdier.
+< 

@@ -1,0 +1,17 @@
+﻿* 
+* Mis conclusiones:
+< Gatos y perros son mamíferos.
+< 
+* 
+* Mis conclusiones:
+< Ballenas, gatos y perros son mamíferos.
+< 
+* 
+* Mis conclusiones:
+< Ballenas, gatos y perros son mamíferos.
+< 
+< Especificaciones:
+< Ballenas son mamíferos.
+< Perros son mamíferos.
+< Gatos son mamíferos.
+< 

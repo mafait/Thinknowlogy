@@ -2,11 +2,10 @@
  *	Class:			WordQuestion
  *	Supports class:	WordItem
  *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -151,7 +150,7 @@ class WordQuestion
 					{
 					// Ambiguity: Missing relation context
 					if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_QUESTION_MISSING_RELATION ) != RESULT_OK )
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about ambiguity" );
+						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the 'ambiguous question missing relation' interface notification" );
 					}
 				}
 
@@ -356,7 +355,7 @@ class WordQuestion
 								commonVariables_->hasFoundAnswerToQuestion = true;
 								}
 							else
-								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the 'I don't know anything about word' interface notification" );
 							}
 						else
 							{
@@ -369,7 +368,7 @@ class WordQuestion
 										{
 										if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_LISTING_I_ONLY_KNOW ) == RESULT_OK )
 											{
-											if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) != RESULT_OK )
+											if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
 												return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
 											}
 										else
@@ -400,7 +399,7 @@ class WordQuestion
 		{
 		bool isAnswerPossessive;
 		bool isAnswerNegative;
-		bool isAssignmentQuestionMarkedAsAnswered;
+		bool isShowingAnsweredQuestion;
 		unsigned int answerGeneralizationCollectionNr;
 		unsigned int answerSpecificationCollectionNr;
 		SpecificationItem *currentQuestionSpecificationItem;
@@ -426,9 +425,9 @@ class WordQuestion
 						if( currentQuestionSpecificationItem->isOlderItem() &&
 						currentQuestionSpecificationItem->isRelatedSpecification( isAnswerNegative, isAnswerPossessive, answerGeneralizationCollectionNr, answerSpecificationCollectionNr, compoundSpecificationCollectionNr, answerSpecificationWordItem ) )
 							{
-							isAssignmentQuestionMarkedAsAnswered = ( isAssignment ? false : ( myWordItem_->firstAnsweredQuestionAssignmentItem( isArchivedAssignment, currentQuestionSpecificationItem->isNegative(), currentQuestionSpecificationItem->isPossessive(), currentQuestionSpecificationItem->questionParameter(), currentQuestionSpecificationItem->relationContextNr(), currentQuestionSpecificationItem->specificationWordItem() ) != NULL ) );
+							isShowingAnsweredQuestion = ( isAssignment ? true : ( myWordItem_->firstAnsweredQuestionAssignmentItem( isArchivedAssignment, currentQuestionSpecificationItem->isNegative(), currentQuestionSpecificationItem->isPossessive(), currentQuestionSpecificationItem->questionParameter(), currentQuestionSpecificationItem->relationContextNr(), currentQuestionSpecificationItem->specificationWordItem() ) == NULL ) );
 
-							if( markQuestionAsAnswered( !isAssignmentQuestionMarkedAsAnswered, currentQuestionSpecificationItem ) == RESULT_OK )
+							if( markQuestionAsAnswered( isShowingAnsweredQuestion, currentQuestionSpecificationItem ) == RESULT_OK )
 								currentQuestionSpecificationItem = myWordItem_->firstSelectedSpecificationItem( isAssignment, false, isArchivedAssignment, true );
 							else
 								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a related question as been answered" );
@@ -466,7 +465,7 @@ class WordQuestion
 							{
 							if( myWordItem_->replaceOrDeleteSpecification( questionSpecificationItem, answeredQuestionSpecificationItem ) == RESULT_OK )
 								// Get the specification of this assignment question
-								questionSpecificationItem = myWordItem_->firstSpecificationItem( questionSpecificationItem->isPossessive(), questionSpecificationItem->questionParameter(), questionSpecificationItem->specificationWordItem() );
+								questionSpecificationItem = myWordItem_->firstSpecificationItem( questionSpecificationItem->isPossessive(), questionSpecificationItem->isSpecificationGeneralization(), questionSpecificationItem->questionParameter(), questionSpecificationItem->specificationWordItem() );
 							else
 								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace an answered question assignment" );
 							}
@@ -516,7 +515,7 @@ class WordQuestion
 				{
 				if( isShowingAnsweredQuestion )
 					{
-					if( myWordItem_->writeUpdatedSpecification( false, false, false, questionSpecificationItem ) != RESULT_OK )
+					if( myWordItem_->writeUpdatedSpecification( false, false, false, false, questionSpecificationItem ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the answered question" );
 					}
 
@@ -650,7 +649,7 @@ class WordQuestion
 				if( findAnswerToNewUserQuestion( questionSpecificationItem ) != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find an answer to a question" );
 				}
-			while( ( questionSpecificationItem = ( questionSpecificationItem->isDeletedItem() ? firstActiveNewUserQuestion() : questionSpecificationItem->nextNewUserQuestion() ) ) != NULL );
+			while( ( questionSpecificationItem = ( questionSpecificationItem->isReplacedOrDeletedItem() ? firstActiveNewUserQuestion() : questionSpecificationItem->nextNewUserQuestion() ) ) != NULL );
 			}
 
 		return RESULT_OK;
@@ -719,7 +718,7 @@ class WordQuestion
 									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a listing header" );
 								}
 
-							if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) == RESULT_OK )
+							if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) == RESULT_OK )
 								{
 								if( isNegativeAnswer )
 									isNegativeAnswer_ = true;
@@ -744,9 +743,10 @@ class WordQuestion
 		return RESULT_OK;
 		}
 
-	SpecificationResultType findQuestionToBeAdjustedByCompoundCollection( bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCompoundCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem )
+	SpecificationResultType findQuestionToBeAdjustedByCompoundCollection( bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCompoundCollectionNr, unsigned int relationContextNr, SpecificationItem *replacingSpecificationItem, WordItem *specificationWordItem )
 		{
 		SpecificationResultType specificationResult;
+		SpecificationItem *adjustedQuestionSpecificationItem;
 		WordItem *currentCollectionWordItem;
 		WordItem *currentWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findQuestionToBeAdjustedByCompoundCollection";
@@ -761,10 +761,15 @@ class WordQuestion
 					do	{
 						if( ( currentCollectionWordItem = currentWordItem->collectionWordItem( specificationCompoundCollectionNr, specificationWordItem ) ) != NULL )
 							{
-							if( ( specificationResult.adjustedQuestionSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, true, true, isNegative, isPossessive, questionParameter, specificationCompoundCollectionNr, relationContextNr, currentCollectionWordItem ) ) != NULL )
+							if( ( adjustedQuestionSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, true, true, isNegative, isPossessive, questionParameter, specificationCompoundCollectionNr, relationContextNr, currentCollectionWordItem ) ) != NULL )
 								{
-								if( myWordItem_->replaceOrDeleteSpecification( specificationResult.adjustedQuestionSpecificationItem, NULL ) != RESULT_OK )
-									myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace or delete a question part" );
+								if( adjustedQuestionSpecificationItem->isOlderItem() )
+									{
+									if( myWordItem_->replaceOrDeleteSpecification( adjustedQuestionSpecificationItem, replacingSpecificationItem ) == RESULT_OK )
+										specificationResult.adjustedQuestionSpecificationItem = adjustedQuestionSpecificationItem;
+									else
+										myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace or delete a question part" );
+									}
 								}
 							}
 						}

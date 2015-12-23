@@ -2,11 +2,10 @@
  *	Class:			AdminLanguage
  *	Supports class:	AdminItem
  *	Purpose:		To create and assign the languages
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -45,13 +44,13 @@ class AdminLanguage
 			{
 			// Initially the language name words are not linked
 			// to the language defintion word. So, search in all words.
-			if( ( wordResult = adminItem_.findWordTypeInAllWords( false, Constants.WORD_TYPE_PROPER_NAME, languageNameString.toString(), null ) ).result == Constants.RESULT_OK )
+			if( ( wordResult = adminItem_.findWordTypeInAllWords( true, Constants.WORD_TYPE_PROPER_NAME, languageNameString.toString(), null ) ).result == Constants.RESULT_OK )
 				foundLanguageWordItem_ = wordResult.foundWordItem;
 			else
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a language word" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to find a language word" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given language name string is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given language name string is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -76,7 +75,7 @@ class AdminLanguage
 		if( errorString != null )
 			{
 			if( adminItem_ != null )
-				adminItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
+				adminItem_.startSystemError( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -93,10 +92,10 @@ class AdminLanguage
 		if( authorizationWordItem != null )
 			{
 			if( authorizationWordItem.assignChangePermissions( languageKey_ ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign my language change permissions to a word" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to assign my language change permissions to a word" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given authorization word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given authorization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -126,27 +125,27 @@ class AdminLanguage
 							if( CommonVariables.predefinedNounLanguageWordItem != null )
 								{
 								if( createLanguageSpecification( CommonVariables.predefinedNounLanguageWordItem ) != Constants.RESULT_OK )
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to create a language specification" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to create a language specification" );
 								}
 							}
 						else
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to authorize the created language word" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to authorize the created language word" );
 						}
 					else
-						return adminItem_.startErrorInItem( 1, moduleNameString_, "The last created word item is undefined" );
+						return adminItem_.startError( 1, moduleNameString_, "The last created word item is undefined" );
 					}
 				else
 					{
 					// Restore old language
 					CommonVariables.currentLanguageNr--;
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a language word" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to add a language word" );
 					}
 				}
 			else
 				CommonVariables.currentLanguageWordItem = foundLanguageWordItem_;
 			}
 		else
-			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the language" );
+			return adminItem_.addError( 1, moduleNameString_, "I failed to find the language" );
 
 		return Constants.RESULT_OK;
 		}
@@ -162,16 +161,16 @@ class AdminLanguage
 				if( languageNounWordItem != null )
 					{
 					if( adminItem_.addSpecification( true, false, false, false, false, false, false, false, false, false, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.NO_ASSUMPTION_LEVEL, Constants.WORD_TYPE_PROPER_NAME, Constants.WORD_TYPE_NOUN_SINGULAR, Constants.WORD_TYPE_UNDEFINED, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, null, currentLanguageWordItem, languageNounWordItem, null, null ).result != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a new language specification" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to add a new language specification" );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given language noun word item is undefined" );
+					return adminItem_.startError( 1, moduleNameString_, "The given language noun word item is undefined" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given language word isn't a language word" );
+				return adminItem_.startError( 1, moduleNameString_, "The given language word isn't a language word" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The current language word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -186,10 +185,10 @@ class AdminLanguage
 			CommonVariables.currentLanguageWordItem = languageWordItem;
 
 			if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_UNDEFINED, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, 0, null, CommonVariables.currentLanguageWordItem, CommonVariables.predefinedNounLanguageWordItem, null ).result != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the language with authorization" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to assign the language with authorization" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't find the requested language" );
+			return adminItem_.startError( 1, moduleNameString_, "I couldn't find the requested language" );
 
 		return Constants.RESULT_OK;
 		}
@@ -213,35 +212,35 @@ class AdminLanguage
 					if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_UNDEFINED, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, 0, null, foundLanguageWordItem_, CommonVariables.predefinedNounLanguageWordItem, null ).result == Constants.RESULT_OK )
 						CommonVariables.currentLanguageWordItem = foundLanguageWordItem_;
 					else
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the language" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to assign the language" );
 					}
 
 				if( !hasFoundLanguage )
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given name isn't a grammar nor an language" );
+					return adminItem_.startError( 1, moduleNameString_, "The given name isn't a grammar nor an language" );
 				}
 			else
 				{
 				if( !adminItem_.isSystemStartingUp() )
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't find the requested language" );
+					return adminItem_.startError( 1, moduleNameString_, "I couldn't find the requested language" );
 				}
 			}
 		else
-			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the language" );
+			return adminItem_.addError( 1, moduleNameString_, "I failed to find the language" );
 
 		return Constants.RESULT_OK;
 		}
 
-	protected SpecificationResultType addSpecificationWithAuthorization( boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSelection, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
+	protected SpecificationResultType addSpecificationWithAuthorization( boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSelection, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int copiedRelationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 
 		if( generalizationWordItem != null )
 			{
-			if( ( specificationResult = generalizationWordItem.addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, languageKey_ ) ).result != Constants.RESULT_OK )
-				adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a specification with authorization" );
+			if( ( specificationResult = generalizationWordItem.addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, copiedRelationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, languageKey_ ) ).result != Constants.RESULT_OK )
+				adminItem_.addError( 1, moduleNameString_, "I failed to add a specification with authorization" );
 			}
 		else
-			adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		specificationResult.result = CommonVariables.result;
 		return specificationResult;
@@ -254,10 +253,10 @@ class AdminLanguage
 		if( generalizationWordItem != null )
 			{
 			if( ( specificationResult = generalizationWordItem.assignSpecification( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, languageKey_ ) ).result != Constants.RESULT_OK )
-				adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign a specification with authorization" );
+				adminItem_.addError( 1, moduleNameString_, "I failed to assign a specification with authorization" );
 			}
 		else
-			adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		specificationResult.result = CommonVariables.result;
 		return specificationResult;

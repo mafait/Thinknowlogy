@@ -1,0 +1,151 @@
+﻿
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | |j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: C.
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+* 
+* Uw informatie:
+< Een zet kan-zijn G, F, E, D, C, B of A.
+< Een zet kan-zijn ongeldig.
+< Mijn zet was D.
+< De zet was C.
+< 
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: D.
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | |m| | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: C.
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | | | | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: G.
+
+	| | | | | | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | | |
+	| | |m|j| | |m|
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | | | | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | |j|m| | | |
+	| | |m|j| | | |
+	| | |m|j| | |m|
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: C.
+
+	| | | | | | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+	| | |j|m| | | |
+	| | |m|j| | | |
+	| | |m|j| | |m|
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | | | | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+	| | |j|m| | | |
+	| | |m|j| | | |
+	|j| |m|j| | |m|
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: G.
+
+	| | | | | | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+	| | |j|m| | | |
+	| | |m|j| | |m|
+	|j| |m|j| | |m|
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+* 
+* Uw informatie:
+< Een zet kan-zijn G, F, E, D, C, B of A.
+< Een zet kan-zijn ongeldig.
+< Mijn zet was A, C en D.
+< De zet was G, C en D.
+< 

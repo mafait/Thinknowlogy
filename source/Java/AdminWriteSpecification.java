@@ -2,11 +2,10 @@
  *	Class:			AdminWriteSpecification
  *	Supports class:	AdminItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -45,21 +44,13 @@ class AdminWriteSpecification
 		{
 		ReadItem currentReadItem = adminItem_.firstActiveReadItem();
 		String readWordTypeString;
-		String writeString;
 
 		do	{
 			if( !currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence &&
 			( readWordTypeString = currentReadItem.readWordTypeString() ) != null )
 				{
-				writeString = ( readWordTypeString + " (position: " + currentReadItem.wordOrderNr() + ", word type: " + adminItem_.wordTypeNameString( currentReadItem.wordTypeNr() ) + ", word parameter: " + currentReadItem.wordParameter() + ", grammar parameter: " + currentReadItem.grammarParameter + ")" );
-
-				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_JUSTIFICATION_SENTENCE_START ) == Constants.RESULT_OK )
-					{
-					if( Presentation.writeDiacriticalText( false, false, Constants.PRESENTATION_PROMPT_WARNING, writeString ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write a justification sentence" );
-					}
-				else
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write the justification sentence start string" );
+				if( Presentation.writeDiacriticalText( Constants.PRESENTATION_PROMPT_WARNING_INDENTED, ( readWordTypeString + " (position: " + currentReadItem.wordOrderNr() + ", word type: " + adminItem_.wordTypeNameString( currentReadItem.wordTypeNr() ) + ", word parameter: " + currentReadItem.wordParameter() + ", grammar parameter: " + currentReadItem.grammarParameter + ")" ) ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write a justification sentence" );
 				}
 			}
 		while( ( currentReadItem = currentReadItem.nextReadItem() ) != null );
@@ -70,33 +61,36 @@ class AdminWriteSpecification
 	private byte writeSpecification( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isWritingCurrentSentenceOnly, boolean isWritingJustification, boolean isWritingUserSpecifications, boolean isWritingSelfGeneratedConclusions, boolean isWritingSelfGeneratedAssumptions, boolean isWritingUserQuestions, boolean isWritingSelfGeneratedQuestions, WordItem writeWordItem )
 		{
 		boolean isForcingResponseNotBeingFirstSpecification;
-		boolean isHiddenSingleRelationPossessiveReversibleConclusion;
+		boolean isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion;
 		boolean isSelfGenerated;
 		boolean hasFoundAnyChangeMadeByThisSentence = adminItem_.hasFoundAnyChangeMadeByThisSentence();
 		boolean hasHeaderBeenWritten = false;
 		SpecificationItem currentSpecificationItem;
-
-		CommonVariables.writeSentenceStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
+		WordItem relationWordItem;
 
 		if( writeWordItem != null )
 			{
 			if( ( currentSpecificationItem = writeWordItem.firstSelectedSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, ( isWritingUserQuestions || isWritingSelfGeneratedQuestions ) ) ) != null )
 				{
 				do	{
-					isHiddenSingleRelationPossessiveReversibleConclusion = false;
+					isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = false;
 
 					isSelfGenerated = currentSpecificationItem.isSelfGenerated();
 
-					if( !isArchivedAssignment &&
-					currentSpecificationItem.isSpecificationWordCollectedWithItself() &&
+					if( currentSpecificationItem.isSpecificationWordCollectedWithItself() &&
 					currentSpecificationItem.isPossessiveReversibleConclusion() &&
-					!currentSpecificationItem.hasSpecificationCompoundCollection() &&
-					!writeWordItem.isMale() &&
+					currentSpecificationItem.hasSpecificationNonCompoundCollection() &&
 					adminItem_.nContextWordsInAllWords( currentSpecificationItem.relationContextNr(), currentSpecificationItem.specificationWordItem() ) == 1 )
-						isHiddenSingleRelationPossessiveReversibleConclusion = true;
+						{
+						relationWordItem = currentSpecificationItem.relationWordItem();
+
+						if( relationWordItem != null &&
+						relationWordItem.isMale() )
+							isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = true;
+						}
 
 					// Skip hidden specifications
-					if( !isHiddenSingleRelationPossessiveReversibleConclusion &&
+					if( !isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion &&
 					!currentSpecificationItem.isHiddenSpecification() &&
 
 					// Conclusions
@@ -194,33 +188,33 @@ class AdminWriteSpecification
 									if( Presentation.writeInterfaceText( true, Constants.PRESENTATION_PROMPT_NOTIFICATION, ( isSelfGenerated ? ( isWritingSelfGeneratedConclusions ? Constants.INTERFACE_LISTING_MY_CONCLUSIONS : ( isWritingSelfGeneratedAssumptions ? Constants.INTERFACE_LISTING_MY_ASSUMPTIONS : Constants.INTERFACE_LISTING_MY_QUESTIONS ) ) : ( isWritingUserSpecifications ? ( isSelfGenerated ? Constants.INTERFACE_LISTING_MY_INFORMATION : Constants.INTERFACE_LISTING_YOUR_INFORMATION ) : Constants.INTERFACE_LISTING_YOUR_QUESTIONS ) ) ) == Constants.RESULT_OK )
 										hasHeaderBeenWritten = false;
 									else
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write my conclusions header" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to write my conclusions header" );
 									}
 
 								if( isWritingJustification )
 									{
 									if( isSelfGenerated )
 										{
-											if( adminItem_.writeJustificationSpecification( CommonVariables.writeSentenceStringBuffer.toString(), currentSpecificationItem ) != Constants.RESULT_OK )
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write a justification line" );
+										if( adminItem_.writeJustificationSpecification( currentSpecificationItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to write a justification line" );
 										}
 									}
 								else
 									{
-									if( Presentation.writeDiacriticalText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writeSentenceStringBuffer.toString() ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write a sentence" );
+									if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writeSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to write a sentence" );
 									}
 								}
 							}
 						else
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write a selected specification" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write a selected specification" );
 						}
 					}
 				while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedSpecificationItem() ) != null );
 				}
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given write word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given write word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -238,16 +232,16 @@ class AdminWriteSpecification
 					{
 					// Archived assignments
 					if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, isWritingJustification, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, writeWordItem ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write self-generated archived assignments" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write self-generated archived assignments" );
 					}
 				else
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write self-generated past-tense assignments" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write self-generated past-tense assignments" );
 				}
 			else
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write self-generated current-tense assignments" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write self-generated current-tense assignments" );
 			}
 		else
-			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write self-generated specifications" );
+			return adminItem_.addError( 1, moduleNameString_, "I failed to write self-generated specifications" );
 
 		return Constants.RESULT_OK;
 		}
@@ -265,16 +259,16 @@ class AdminWriteSpecification
 					{
 					// Archived assignments
 					if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, false, false, false, true, false, writeWordItem ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user questions with archived assignments" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write user questions with archived assignments" );
 					}
 				else
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user questions with past-tense assignments" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write user questions with past-tense assignments" );
 				}
 			else
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user questions with current-tense assignments" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write user questions with current-tense assignments" );
 			}
 		else
-			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user questions without assignments" );
+			return adminItem_.addError( 1, moduleNameString_, "I failed to write user questions without assignments" );
 
 		return Constants.RESULT_OK;
 		}
@@ -292,16 +286,16 @@ class AdminWriteSpecification
 					{
 					// Archived assignments
 					if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user-entered archived assignments" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered archived assignments" );
 					}
 				else
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user-entered past-tense assignments" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered past-tense assignments" );
 				}
 			else
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user-entered current-tense assignments" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered current-tense assignments" );
 			}
 		else
-			return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user-entered specifications" );
+			return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered specifications" );
 
 		return Constants.RESULT_OK;
 		}
@@ -311,7 +305,7 @@ class AdminWriteSpecification
 		GeneralizationItem currentGeneralizationItem;
 		WordItem currentGeneralizationWordItem;
 
-		if( ( currentGeneralizationItem = writeWordItem.firstSpecificationGeneralizationItem() ) != null )
+		if( ( currentGeneralizationItem = writeWordItem.firstSpecificationGeneralizationItem( false ) ) != null )
 			{
 			do	{
 				if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
@@ -339,31 +333,31 @@ class AdminWriteSpecification
 												{
 												// Respond with archive assignment questions
 												if( currentGeneralizationWordItem.writeSelectedSpecificationInfo( true, false, true, true, writeWordItem ) != Constants.RESULT_OK )
-													return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write archive assignment questions" );
+													return adminItem_.addError( 1, moduleNameString_, "I failed to write archive assignment questions" );
 												}
 											else
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write archived assignments" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to write archived assignments" );
 											}
 										else
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write inactive assignment questions" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to write inactive assignment questions" );
 										}
 									else
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write inactive assignments" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to write inactive assignments" );
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active assignment questions" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to write active assignment questions" );
 								}
 							else
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active assignments" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write active assignments" );
 							}
 						else
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active specification questions" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write active specification questions" );
 						}
 					else
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active specifications" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write active specifications" );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "I've found an undefined generalization word" );
+					return adminItem_.startError( 1, moduleNameString_, "I have found an undefined generalization word" );
 				}
 			while( ( currentGeneralizationItem = currentGeneralizationItem.nextSpecificationGeneralizationItem() ) != null );
 			}
@@ -404,31 +398,31 @@ class AdminWriteSpecification
 												{
 												// Respond with archive related assignment questions
 												if( currentGeneralizationWordItem.writeSelectedRelationInfo( true, false, true, true, writeWordItem ) != Constants.RESULT_OK )
-													return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write archive related assignment questions" );
+													return adminItem_.addError( 1, moduleNameString_, "I failed to write archive related assignment questions" );
 												}
 											else
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write archive related assignment" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to write archive related assignment" );
 											}
 										else
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write inactive related assignment questions" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to write inactive related assignment questions" );
 										}
 									else
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related assignments" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to write active related assignments" );
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related assignment assignments" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to write active related assignment assignments" );
 								}
 							else
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related assignments" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write active related assignments" );
 							}
 						else
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related specification questions" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write active related specification questions" );
 						}
 					else
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write active related specifications" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write active related specifications" );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "I've found an undefined generalization word" );
+					return adminItem_.startError( 1, moduleNameString_, "I have found an undefined generalization word" );
 				}
 			while( ( currentGeneralizationItem = currentGeneralizationItem.nextRelationGeneralizationItem() ) != null );
 			}
@@ -460,7 +454,7 @@ class AdminWriteSpecification
 		if( errorString != null )
 			{
 			if( adminItem_ != null )
-				adminItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
+				adminItem_.startSystemError( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -490,7 +484,7 @@ class AdminWriteSpecification
 		if( CommonVariables.isQuestionAlreadyAnswered )
 			{
 			if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_QUESTION_IS_ALREADY_ANSWERED ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'question is already answered' interface notification" );
 			}
 
 		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
@@ -500,21 +494,20 @@ class AdminWriteSpecification
 				if( currentWordItem.isWordTouchedDuringCurrentSentence )
 					{
 					if( currentWordItem.findAnswerToNewUserQuestion() != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find an answer to new questions of the user about word \"" + currentWordItem.anyWordTypeString() + "\"" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to find an answer to new questions of the user about word \"" + currentWordItem.anyWordTypeString() + "\"" );
 					}
 				}
 			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 
-			if( CommonVariables.isUserQuestion &&
-			!CommonVariables.hasFoundAnswerToQuestion &&
+			if( !CommonVariables.hasFoundAnswerToQuestion &&
 			!CommonVariables.isQuestionAlreadyAnswered )
 				{
 				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_QUESTION_I_DONT_KNOW_THE_ANSWER_TO_THIS_QUESTION ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'I don't know the answer to this question' interface notification" );
 				}
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The first word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The first word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -535,9 +528,7 @@ class AdminWriteSpecification
 			if( currentReadItem != null )
 				{
 				do	{
-					if( !currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence &&
-					// Skip hidden word types
-					currentReadItem.readWordTypeString() != null )
+					if( !currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence )
 						haveAllWordsPassed = false;
 
 					if( currentReadItem.isPluralQuestionVerb() )
@@ -548,19 +539,21 @@ class AdminWriteSpecification
 				}
 
 			if( !haveAllWordsPassed &&
-			// Skip plural questions
+			// Skip plural questions until implemented
 			!hasFoundPluralQuestionVerb )
 				{
 				if( readSentenceString != null &&
-				adminItem_.isSystemStartingUp() )
+
+				( adminItem_.isTesting() ||
+				adminItem_.isSystemStartingUp() ) )
 					{
 					if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, Constants.EMPTY_STRING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START, readSentenceString, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS : Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE ) ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
 					}
 				else
 					{
 					if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, Constants.EMPTY_STRING, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS : Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE ) ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
 					}
 
 				if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ )
@@ -571,16 +564,16 @@ class AdminWriteSpecification
 						CommonVariables.writeSentenceStringBuffer.length() > 0 )
 							{
 							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START, CommonVariables.writeSentenceStringBuffer.toString(), Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END ) != Constants.RESULT_OK )
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
 							}
 						}
 					else
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to show the words that didn't pass" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to show the words that didn't pass" );
 					}
 
 				if( adminItem_.isSystemStartingUp() &&
 				CommonVariables.hasShownWarning )
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "An integrity error occurred during startup" );
+					return adminItem_.startError( 1, moduleNameString_, "An integrity error occurred during startup" );
 				}
 			}
 
@@ -590,23 +583,20 @@ class AdminWriteSpecification
 	protected byte markWordsPassingIntegrityCheckOfStoredUserSentence( SpecificationItem userSpecificationItem )
 		{
 		ReadResultType readResult = new ReadResultType();
-		boolean hasFoundWord;
-		short currentOrderNr;
 		short lastFoundWordOrderNr = Constants.NO_ORDER_NR;
 		int writeSentenceStringBufferLength;
 		int readWordTypeStringLength;
 		int wordPosition = 0;
 		String readWordTypeString;
 		ReadItem currentReadItem;
-		ReadItem startOfCurentOrderNrReadItem;
 		ReadItem startNewSpecificationReadItem = null;
 		WordItem generalizationWordItem;
 
 		if( userSpecificationItem != null )
 			{
-			if( ( generalizationWordItem = userSpecificationItem.generalizationWordItem() ) != null )
+			if( ( currentReadItem = adminItem_.firstActiveReadItem() ) != null )
 				{
-				if( ( currentReadItem = adminItem_.firstActiveReadItem() ) != null )
+				if( ( generalizationWordItem = userSpecificationItem.generalizationWordItem() ) != null )
 					{
 					if( generalizationWordItem.writeSelectedSpecification( false, userSpecificationItem ) == Constants.RESULT_OK )
 						{
@@ -615,105 +605,89 @@ class AdminWriteSpecification
 							{
 							do	{
 								do	{
-									// Skip hidden word types
-									if( ( readWordTypeString = currentReadItem.readWordTypeString() ) != null )
+									if( ( readWordTypeString = currentReadItem.readWordTypeString() ) == null )
+										// Hidden word type
+										currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence = true;
+									else
 										{
 										readWordTypeStringLength = readWordTypeString.length();
 
 										if( ( readResult = adminItem_.readWordFromString( false, false, wordPosition, readWordTypeStringLength, CommonVariables.writeSentenceStringBuffer.toString() ) ).result == Constants.RESULT_OK )
 											{
-											if( readResult.wordLength > 0 )
+											if( readResult.wordLength > 0 &&
+											!currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence )
 												{
-												hasFoundWord = false;
-												currentOrderNr = currentReadItem.wordOrderNr();
-												startOfCurentOrderNrReadItem = currentReadItem;
+												if( readWordTypeStringLength == readResult.wordLength &&
+												CommonVariables.writeSentenceStringBuffer.substring( wordPosition ).startsWith( readWordTypeString ) )
+													{
+													hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = true;
+													currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence = true;
 
-												do	{
-													if( !hasFoundWord )
+													if( lastFoundWordOrderNr == Constants.NO_ORDER_NR ||
+													lastFoundWordOrderNr + 1 == currentReadItem.wordOrderNr() )
 														{
-														if( !currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence &&
-														readWordTypeStringLength == readResult.wordLength &&
-														CommonVariables.writeSentenceStringBuffer.substring( wordPosition ).startsWith( readWordTypeString ) )
-															{
-															hasFoundWord = true;
-															hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = true;
-															currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence = true;
-
-															if( lastFoundWordOrderNr == Constants.NO_ORDER_NR ||
-															lastFoundWordOrderNr + 1 == currentReadItem.wordOrderNr() )
-																{
-																wordPosition = readResult.nextWordPosition;
-																lastFoundWordOrderNr = currentReadItem.wordOrderNr();
-																startNewSpecificationReadItem = currentReadItem.nextReadItem();
-																}
-															}
-														else
-															{
-															// Skip on linked conjunctions. Example: "Guest is a user and has no password."
-															if( currentReadItem.isLinkedGeneralizationConjunction() ||
-
-															// Skip on grammar conjunctions. Example: "Guest is a user and has no password."
-															currentReadItem.isSentenceConjunction() ||
-
-															// Skip on extra comma in sentence that isn't written. See grammar file for: '( symbolComma )'
-															currentReadItem.isSymbol() ||
-
-															// Skip text until it is implemented
-															currentReadItem.isText() ||
-
-															// Skip if indefinite article doesn't match with noun.
-															// In that case, a warning will be shown.
-															( currentReadItem.isArticle() &&
-
-															( adminItem_.hasFoundDifferentParameter() ||
-															// And skip when an indefinite article is missing (because of a plural noun)
-															currentReadItem.grammarParameter == Constants.GRAMMAR_GENERALIZATION_SPECIFICATION ) ) )
-																// Skip until implemented
-																currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence = true;
-															}
+														wordPosition = readResult.nextWordPosition;
+														lastFoundWordOrderNr = currentReadItem.wordOrderNr();
+														startNewSpecificationReadItem = currentReadItem.nextReadItem();
 														}
-
-													currentReadItem = currentReadItem.nextReadItem();
 													}
-												while( currentReadItem != null &&
-												currentReadItem.wordOrderNr() == currentOrderNr );
+												else
+													{
+													// Skip on linked conjunctions.
+													// Example: "Guest is a user and has no password."
+													if( currentReadItem.isLinkedGeneralizationConjunction() ||
 
-												if( !hasFoundWord &&
-												startNewSpecificationReadItem == null )
-												startNewSpecificationReadItem = startOfCurentOrderNrReadItem;
+													// Skip on grammar conjunctions.
+													// Example: "Guest is a user and has no password."
+													currentReadItem.isSentenceConjunction() ||
+
+													// Skip on extra comma in sentence that isn't written.
+													// See grammar file for: '( symbolComma )'
+													currentReadItem.isSymbol() ||
+
+													// Skip text until it is implemented
+													currentReadItem.isText() ||
+
+													// Skip if indefinite article doesn't match with noun.
+													// In that case, a warning will be shown.
+													( currentReadItem.isArticle() &&
+
+													( adminItem_.hasFoundDifferentParameter() ||
+													CommonVariables.hasShownArticleNotification ||
+													// And skip when an indefinite article is missing (because of a plural noun)
+													currentReadItem.grammarParameter == Constants.GRAMMAR_GENERALIZATION_SPECIFICATION ) ) )
+														// Skip until implemented
+														currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence = true;
+
+													if( startNewSpecificationReadItem == null )
+														startNewSpecificationReadItem = currentReadItem;
+													}
 												}
 											}
 										else
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read a word from the written string" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to read a word from the written string" );
 										}
-									else
-										currentReadItem = currentReadItem.nextReadItem();
 									}
 								while( readResult.wordLength > 0 &&
-								currentReadItem != null );
+								( currentReadItem = currentReadItem.nextReadItem() ) != null );
 
-								if( startNewSpecificationReadItem != null &&
-								currentReadItem == null )
-									{
-									currentReadItem = startNewSpecificationReadItem;
-									wordPosition = readResult.nextWordPosition;
-									}
+								wordPosition = readResult.nextWordPosition;
+								currentReadItem = startNewSpecificationReadItem;
 								}
-							while( currentReadItem != null &&
-							readResult.nextWordPosition < writeSentenceStringBufferLength );
+							while( readResult.nextWordPosition < writeSentenceStringBufferLength );
 							}
 						}
 					else
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write the user specification of generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write the user specification of generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't find any read words" );
+					return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given user specification item is undefined" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The generalization word of the given user specification item is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "I couldn't find any read words" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given user specification item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given user specification item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -733,13 +707,13 @@ class AdminWriteSpecification
 				if( currentWordItem.isWordTouchedDuringCurrentSentence )
 					{
 					if( writeInfoAboutWord( true, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, false, false, currentWordItem ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write info about word \"" + currentWordItem.anyWordTypeString() + "\"" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write info about word \"" + currentWordItem.anyWordTypeString() + "\"" );
 					}
 				}
 			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The first word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The first word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -749,19 +723,19 @@ class AdminWriteSpecification
 		if( isWritingSelfGeneratedConclusions )
 			{
 			if( writeSelfGeneratedSpecification( isWritingCurrentSentenceOnly, isWritingJustification, true, false, false, writeWordItem ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write self-generated conclusions" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write self-generated conclusions" );
 			}
 
 		if( isWritingSelfGeneratedAssumptions )
 			{
 			if( writeSelfGeneratedSpecification( isWritingCurrentSentenceOnly, isWritingJustification, false, true, false, writeWordItem ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write self-generated assumptions" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write self-generated assumptions" );
 			}
 
 		if( isWritingSelfGeneratedQuestions )
 			{
 			if( writeSelfGeneratedSpecification( isWritingCurrentSentenceOnly, isWritingJustification, false, false, true, writeWordItem ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write self-generated questions" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write self-generated questions" );
 			}
 
 		return Constants.RESULT_OK;
@@ -772,13 +746,13 @@ class AdminWriteSpecification
 		if( isWritingUserSpecifications )
 			{
 			if( writeUserSpecifications( isWritingCurrentSentenceOnly, writeWordItem ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user specifications" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write user specifications" );
 			}
 
 		if( isWritingUserQuestions )
 			{
 			if( writeUserQuestions( isWritingCurrentSentenceOnly, writeWordItem ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write user questions" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write user questions" );
 			}
 
 		if( isWritingSelfGeneratedConclusions ||
@@ -786,19 +760,20 @@ class AdminWriteSpecification
 		isWritingSelfGeneratedQuestions )
 			{
 			if( writeSelfGeneratedInfo( isWritingCurrentSentenceOnly, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, isWritingSelfGeneratedQuestions, writeWordItem ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write the self-generated info" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write the self-generated info" );
 			}
 
-		if( isWritingSpecificationInfo )
+		if( isWritingSpecificationInfo &&
+		!writeWordItem.isNounWordCollectedWithItself() )
 			{
 			if( writeSelectedSpecificationInfo( writeWordItem ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write selected specification info" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write selected specification info" );
 			}
 
 		if( isWritingRelatedInfo )
 			{
 			if( writeSelectedRelationInfo( writeWordItem ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write selected related info" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write selected related info" );
 			}
 
 		return Constants.RESULT_OK;

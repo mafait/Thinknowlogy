@@ -9,29 +9,31 @@ Show "   - drawing conclusions (more advanced than scientific solutions),".
 Show "   - making assumptions (with self-adjusting level of uncertainty),".
 Show "   - asking questions (about gaps in the knowledge),".
 Show "   - detecting conflicts and some cases of semantic ambiguity;".
-Show " * Multilingualism, proving: Natural Laws of Intelligence are universal.".
+Show " * Multilingualism, proving: Natural languages have one common origin.".
 Show "------------------------------------------------------------------------------".
-Show " According to the evolution theory, intelligence and language would have".
-Show " evolved independently of each other. Therefore, the evolution theory doesn't".
-Show " support a systematic relationship between reasoning and language. However,".
-Show " the biblical world view assumes that reasoning and language are closely".
-Show " related. Being based on the biblical world view, only Thinknowlogy is able".
-#C++#Show " to process the meaning of words like definite article \"the\", conjunction".
-#C++#Show " \"or\", possessive verb \"has/have\" and past tense verbs \"was/were\" and \"had\".".
-#Java#Show " to process the meaning of words like definite article “the”, conjunction".
-#Java#Show " “or”, possessive verb “has/have” and past tense verbs “was/were” and “had”.".
+Show " Despite 160 years of research, the theory of evolution still hasn't been".
+Show " supported by concrete evidence in regard to the origin of intelligence and".
+Show " language. Let alone, to the integration of both. According to the biblical".
+Show " world view, God has created laws of nature, including laws of intelligence.".
+Show " Being based on the laws of intelligence, only Thinknowlogy implements the".
+#C++#Show " natural meaning (intelligent function) of words like definite article \"the\",".
+#C++#Show " conjunction \"or\", possessive verb \"have\" and past tense verbs \"were\" and".
+#C++#Show " \"had\". I defy anyone to beat this system: http://mafait.org/challenge/".
+#Java#Show " natural meaning (intelligent function) of words like definite article “the”,".
+#Java#Show " conjunction “or”, possessive verb “have” and past tense verbs “were” and".
+#Java#Show " “had”. I defy anyone to beat this reasoner: http://mafait.org/challenge/".
 Show "------------------------------------------------------------------------------".
 #C++#Show " Help.\t\t\t\t\t\t\t* Show more help info".
 #C++#Show " \~{languageName}\t\t\t\t\t* Change language".
 #C++#Show " Read the file \"English/ambiguity/Boston\".\t\t* Detecting ambiguity".
 #C++#Show " Read the file \"English/ambiguity/US presidents\".\t* Detecting ambiguity".
 #C++#Show " Read the file \"English/programming/Connect-Four\".\t* Game Connect-Four".
-#C++#Show " Read the file \"English/programming/greeting\".\t\t* Greeting (salutation)".
-#C++#Show " Read the file \"English/programming/tower of Hanoi\".\t* Solving a puzzle".
-#C++#Show " Read the file \"English/reasoning/family\".\t\t* Reasoning".
+#C++#Show " Read the file \"English/programming/Greeting\".\t\t* Greeting (salutation)".
+#C++#Show " Read the file \"English/programming/tower of Hanoi\".\t* Solve a puzzle".
+#C++#Show " Read the file \"English/reasoning/family definition\".\t* Reasoning".
 #Java#Show " Use button <ambiguity> to learn about detection of ambiguity.".
 #Java#Show " Use button <programming> to learn about programming in natural language.".
 #Java#Show " Use button <reasoning> to learn about reasoning in natural language.".
 Show "------------------------------------------------------------------------------".
-Show " Available languages: ~!`language`<s>'~.".
+Show " Available languages: ~+`language`<s>'~.".
 Show "------------------------------------------------------------------------------".

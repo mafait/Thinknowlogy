@@ -1,11 +1,10 @@
 /*
  *	Class:			WordResultType
  *	Purpose:		To return word variables of a function
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -23,9 +22,8 @@
  *************************************************************************/
 
 #include "Item.h"
-// Class declarations needed by some compilers
+// Some compilers need these class declarations
 class WordTypeItem;
-class WordItem;
 
 class WordResultType
 	{
@@ -37,6 +35,7 @@ class WordResultType
 	friend class AdminReadSentence;
 	friend class WordItem;
 	friend class WordList;
+	friend class WordSpecification;
 	friend class WordType;
 	friend class WordTypeItem;
 	friend class WordTypeList;

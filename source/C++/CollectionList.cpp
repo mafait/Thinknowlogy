@@ -2,11 +2,10 @@
  *	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -164,6 +163,25 @@ class CollectionList : private List
 		return false;
 		}
 
+	bool isCollectionCollectedWithItself( unsigned int collectionNr )
+		{
+		CollectionItem *searchItem = firstActiveCollectionItem();
+
+		if( collectionNr > NO_COLLECTION_NR )
+			{
+			while( searchItem != NULL )
+				{
+				if( searchItem->collectionNr() == collectionNr &&
+				searchItem->collectionWordItem() == searchItem->commonWordItem() )
+					return true;
+
+				searchItem = searchItem->nextCollectionItem();
+				}
+			}
+
+		return false;
+		}
+
 	bool isCompoundCollection( unsigned int collectionNr )
 		{
 		CollectionItem *searchItem = firstActiveCollectionItem();
@@ -299,6 +317,26 @@ class CollectionList : private List
 		return NO_COLLECTION_NR;
 		}
 
+	unsigned int lastCompoundCollectionNr( unsigned short collectionWordTypeNr )
+		{
+		unsigned int foundCompoundCollectionNr = NO_COLLECTION_NR;
+		CollectionItem *searchItem = firstActiveCollectionItem();
+
+		if( collectionWordTypeNr > WORD_TYPE_UNDEFINED )
+			{
+			while( searchItem != NULL )
+				{
+				if( searchItem->isCompoundGeneralization() &&
+				searchItem->isMatchingCollectionWordTypeNr( collectionWordTypeNr ) )
+					foundCompoundCollectionNr = searchItem->collectionNr();
+
+				searchItem = searchItem->nextCollectionItem();
+				}
+			}
+
+		return foundCompoundCollectionNr;
+		}
+
 	unsigned int nonCompoundCollectionNr( unsigned short collectionWordTypeNr )
 		{
 		CollectionItem *searchItem = firstActiveCollectionItem();
@@ -388,19 +426,19 @@ class CollectionList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->collectionWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The collected word item is still in use" );
+					return startError( functionNameString, NULL, "The collected word item is still in use" );
 
 				if( searchItem->commonWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The common word item is still in use" );
+					return startError( functionNameString, NULL, "The common word item is still in use" );
 
 				if( searchItem->compoundGeneralizationWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The compound word item is still in use" );
+					return startError( functionNameString, NULL, "The compound word item is still in use" );
 
 				searchItem = searchItem->nextCollectionItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unused word item is undefined" );
+			return startError( functionNameString, NULL, "The given unused word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -415,13 +453,13 @@ class CollectionList : private List
 			if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 				{
 				if( addItemToList( QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active collection item" );
+					return addError( functionNameString, NULL, "I failed to add an active collection item" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current item number is undefined" );
+				return startError( functionNameString, NULL, "The current item number is undefined" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given collected word type number is undefined or out of bounds" );
+			return startError( functionNameString, NULL, "The given collected word type number is undefined or out of bounds" );
 
 		return RESULT_OK;
 		}
@@ -436,7 +474,7 @@ class CollectionList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeCollectionItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store a collection item in the database" );
+					return addError( functionNameString, NULL, "I failed to store a collection item in the database" );
 				}
 
 			searchItem = searchItem->nextCollectionItem();
@@ -449,7 +487,7 @@ class CollectionList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeCollectionItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced collection item in the database" );
+					return addError( functionNameString, NULL, "I failed to modify a replaced collection item in the database" );
 				}
 
 			searchItem = searchItem->nextCollectionItem();
@@ -484,10 +522,10 @@ class CollectionList : private List
 					}
 				}
 			else
-				startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given common word is undefined" );
+				startError( functionNameString, NULL, "The given common word is undefined" );
 			}
 		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given collected word is undefined" );
+			startError( functionNameString, NULL, "The given collected word is undefined" );
 
 		collectionResult.result = commonVariables()->result;
 		return collectionResult;

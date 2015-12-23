@@ -1,0 +1,4 @@
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
+Peter is een vader.
+# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
+Peter is geen vader.

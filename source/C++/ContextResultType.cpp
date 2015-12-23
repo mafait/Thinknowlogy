@@ -1,11 +1,10 @@
 /*
  *	Class:			ContextResultType
  *	Purpose:		To return context variables of a function
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -41,6 +40,7 @@ class ContextResultType
 	bool isExclusiveContext;
 
 	unsigned int contextNr;
+	unsigned int copiedRelationContextNr;
 
 	SpecificationItem *conclusionSpecificationItem;
 
@@ -55,6 +55,7 @@ class ContextResultType
 		isExclusiveContext = false;
 
 		contextNr = NO_CONTEXT_NR;
+		copiedRelationContextNr = NO_CONTEXT_NR;
 
 		conclusionSpecificationItem = NULL;
 		}
@@ -62,7 +63,7 @@ class ContextResultType
 
 /*************************************************************************
  *	"The Lord is my shepherd;
- *	I've all that I need.
+ *	I have all that I need.
  *	He lets me rest in green meadows;
  *	he leads me beside peaceful steams." (Psalm 23:1-2)
  *************************************************************************/

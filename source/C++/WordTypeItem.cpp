@@ -2,11 +2,10 @@
  *	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,6 +28,7 @@
 
 class WordTypeItem : private Item
 	{
+	friend class AdminAuthorization;
 	friend class AdminCleanup;
 	friend class AdminReadCreateWords;
 	friend class AdminReadGrammar;
@@ -127,18 +127,18 @@ class WordTypeItem : private Item
 					{
 					if( adjectiveParameter_ != adjectiveParameter )
 						{
-						if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == RESULT_OK )
+						if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == RESULT_OK )
 							wordResult.hasFoundDifferentParameter = true;
 						else
-							addErrorInItem( functionNameString, NULL, itemString(), "I failed to write an interface notification" );
+							addError( functionNameString, NULL, itemString(), "I failed to write an interface notification about the use of a different adjective" );
 						}
 					}
 				}
 			else
-				startErrorInItem( functionNameString, NULL, itemString(), "I am not a singular noun" );
+				startError( functionNameString, NULL, itemString(), "I am not a singular noun" );
 			}
 		else
-			startErrorInItem( functionNameString, NULL, itemString(), "The given adjective parameter is not an adjective parameter" );
+			startError( functionNameString, NULL, itemString(), "The given adjective parameter is not an adjective parameter" );
 
 		wordResult.result = commonVariables()->result;
 		return wordResult;
@@ -159,50 +159,18 @@ class WordTypeItem : private Item
 					{
 					if( definiteArticleParameter_ != definiteArticleParameter )
 						{
-						if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_DEFINITE_ARTICLE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == RESULT_OK )
+						if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == RESULT_OK )
 							wordResult.hasFoundDifferentParameter = true;
 						else
-							addErrorInItem( functionNameString, NULL, itemString(), "I failed to write an interface notification" );
+							addError( functionNameString, NULL, itemString(), "I failed to write an interface notification about the use of a different defnite article" );
 						}
 					}
 				}
 			else
-				startErrorInItem( functionNameString, NULL, itemString(), "I am not a singular noun" );
+				startError( functionNameString, NULL, itemString(), "I am not a singular noun" );
 			}
 		else
-			startErrorInItem( functionNameString, NULL, itemString(), "The given definite article parameter is not a definite article parameter" );
-
-		wordResult.result = commonVariables()->result;
-		return wordResult;
-		}
-
-	WordResultType setIndefiniteArticleParameter( unsigned short indefiniteArticleParameter )
-		{
-		WordResultType wordResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "setIndefiniteArticleParameter";
-
-		if( isIndefiniteArticleParameter( indefiniteArticleParameter ) )
-			{
-			if( isSingularNoun() )
-				{
-				if( indefiniteArticleParameter_ == NO_INDEFINITE_ARTICLE_PARAMETER )
-					indefiniteArticleParameter_ = indefiniteArticleParameter;
-				else
-					{
-					if( indefiniteArticleParameter_ != indefiniteArticleParameter )
-						{
-						if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_INDEFINITE_ARTICLE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == RESULT_OK )
-							wordResult.hasFoundDifferentParameter = true;
-						else
-							addErrorInItem( functionNameString, NULL, itemString(), "I failed to write an interface notification" );
-						}
-					}
-				}
-			else
-				startErrorInItem( functionNameString, NULL, itemString(), "I am not a singular noun" );
-			}
-		else
-			startErrorInItem( functionNameString, NULL, itemString(), "The given indefinite article parameter is not an indefinite article parameter" );
+			startError( functionNameString, NULL, itemString(), "The given definite article parameter is not a definite article parameter" );
 
 		wordResult.result = commonVariables()->result;
 		return wordResult;
@@ -248,8 +216,8 @@ class WordTypeItem : private Item
 						{
 						if( ( wordTypeString_ = new char[wordTypeStringLength + 1] ) != NULL )
 							{
-							strncpy( wordTypeString_, _wordTypeString, wordTypeStringLength );
-							wordTypeString_[wordTypeStringLength] = NULL_CHAR;
+							strcpy( wordTypeString_, EMPTY_STRING );
+							strncat( wordTypeString_, _wordTypeString, wordTypeStringLength );
 
 							if( isupper( _wordTypeString[0] ) &&
 							wordTypeNr != WORD_TYPE_LETTER_CAPITAL &&
@@ -257,19 +225,19 @@ class WordTypeItem : private Item
 								wordTypeString_[0] = (char)tolower( wordTypeString_[0] );
 							}
 						else
-							startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the word type string" );
+							startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the word type string" );
 						}
 					else
-						startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given word type is too long" );
+						startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given word type is too long" );
 					}
 				else
-					startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given word type string length is undefined" );
+					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given word type string length is undefined" );
 				}
 			else
-				startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given word type string is empty" );
+				startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given word type string is empty" );
 			}
 		else
-			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given word type string is undefined" );
+			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given word type string is undefined" );
 		}
 
 	~WordTypeItem()
@@ -433,16 +401,14 @@ class WordTypeItem : private Item
 			relationWriteLevel_ = NO_WRITE_LEVEL;
 		}
 
-	bool hasFeminineProperNameEnding()
+	bool hasFeminineWordEnding()
 		{
-		return ( hasFeminineWordEnding_ &&
-				wordTypeNr_ == WORD_TYPE_PROPER_NAME );
+		return hasFeminineWordEnding_;
 		}
 
-	bool hasMasculineProperNameEnding()
+	bool hasMasculineWordEnding()
 		{
-		return ( hasMasculineWordEnding_ &&
-				wordTypeNr_ == WORD_TYPE_PROPER_NAME );
+		return hasMasculineWordEnding_;
 		}
 
 	bool hasFeminineDefiniteArticleParameter()
@@ -497,6 +463,7 @@ class WordTypeItem : private Item
 		indefiniteArticleParameter_ == indefiniteArticleParameter )
 			return true;
 
+		// Typically for English ('a' or 'an')
 		// If undefined, fall back to a simple phonetic vowel rule
 		if( hasIndefinitePhoneticVowelArticle( hasIndefiniteArticleParameter ? indefiniteArticleParameter_ : indefiniteArticleParameter ) )
 			{
@@ -529,9 +496,10 @@ class WordTypeItem : private Item
 				isCorrectDefiniteArticle( definiteArticleParameter ) );
 		}
 
-	bool isCorrectHiddenWordType( char *compareString, void *hideKey )
+	bool isCorrectHiddenWordType( unsigned short wordTypeNr, char *compareString, void *hideKey )
 		{
-		if( hideKey_ == hideKey &&
+		if( wordTypeNr_ == wordTypeNr &&
+		hideKey_ == hideKey &&
 		compareString != NULL &&
 		strcmp( wordTypeString_, compareString ) == 0 )
 			return true;
@@ -542,6 +510,16 @@ class WordTypeItem : private Item
 	bool isAdjective()
 		{
 		return ( wordTypeNr_ == WORD_TYPE_ADJECTIVE );
+		}
+
+	bool isAdverb()
+		{
+		return ( wordTypeNr_ == WORD_TYPE_ADVERB );
+		}
+
+	bool isAnswer()
+		{
+		return ( wordTypeNr_ == WORD_TYPE_ANSWER );
 		}
 
 	bool isArticle()
@@ -673,16 +651,16 @@ class WordTypeItem : private Item
 					if( ( wordTypeString_ = new char[newWordTypeStringLength + 1] ) != NULL )
 						strcpy( wordTypeString_, newWordTypeString );
 					else
-						return startErrorInItem( functionNameString, NULL, itemString(), "I failed to create the word type string" );
+						return startError( functionNameString, NULL, itemString(), "I failed to create the word type string" );
 					}
 				else
-					return startErrorInItem( functionNameString, NULL, itemString(), "The given word type is too long" );
+					return startError( functionNameString, NULL, itemString(), "The given word type is too long" );
 				}
 			else
-				return startErrorInItem( functionNameString, NULL, itemString(), "The given new word type string is empty" );
+				return startError( functionNameString, NULL, itemString(), "The given new word type string is empty" );
 			}
 		else
-			return startErrorInItem( functionNameString, NULL, itemString(), "The given new word type string is undefined" );
+			return startError( functionNameString, NULL, itemString(), "The given new word type string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -696,10 +674,10 @@ class WordTypeItem : private Item
 			if( generalizationWriteLevel_ == NO_WRITE_LEVEL )
 				generalizationWriteLevel_ = ++commonVariables()->currentWriteLevel;
 			else
-				return startErrorInItem( functionNameString, NULL, itemString(), "My write level is already assigned" );
+				return startError( functionNameString, NULL, itemString(), "My write level is already assigned" );
 			}
 		else
-			return startSystemErrorInItem( functionNameString, NULL, itemString(), "Current write word level overflow" );
+			return startSystemError( functionNameString, NULL, itemString(), "Current write word level overflow" );
 
 		return RESULT_OK;
 		}
@@ -713,10 +691,10 @@ class WordTypeItem : private Item
 			if( specificationWriteLevel_ == NO_WRITE_LEVEL )
 				specificationWriteLevel_ = ++commonVariables()->currentWriteLevel;
 			else
-				return startErrorInItem( functionNameString, NULL, itemString(), "My write level is already assigned" );
+				return startError( functionNameString, NULL, itemString(), "My write level is already assigned" );
 			}
 		else
-			return startSystemErrorInItem( functionNameString, NULL, itemString(), "Current write word level overflow" );
+			return startSystemError( functionNameString, NULL, itemString(), "Current write word level overflow" );
 
 		return RESULT_OK;
 		}
@@ -730,10 +708,10 @@ class WordTypeItem : private Item
 			if( relationWriteLevel_ == NO_WRITE_LEVEL )
 				relationWriteLevel_ = ++commonVariables()->currentWriteLevel;
 			else
-				return startErrorInItem( functionNameString, NULL, itemString(), "My write level is already assigned" );
+				return startError( functionNameString, NULL, itemString(), "My write level is already assigned" );
 			}
 		else
-			return startSystemErrorInItem( functionNameString, NULL, itemString(), "Current write word level overflow" );
+			return startSystemError( functionNameString, NULL, itemString(), "Current write word level overflow" );
 
 		return RESULT_OK;
 		}
@@ -745,9 +723,46 @@ class WordTypeItem : private Item
 		if( hideKey_ == NULL )
 			hideKey_ = hideKey;
 		else
-			return startErrorInItem( functionNameString, NULL, itemString(), "This word type is already hidden" );
+			return startError( functionNameString, NULL, itemString(), "This word type is already hidden" );
 
 		return RESULT_OK;
+		}
+
+	WordResultType setIndefiniteArticleParameter( unsigned short indefiniteArticleParameter )
+		{
+		WordResultType wordResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "setIndefiniteArticleParameter";
+
+		if( indefiniteArticleParameter == NO_INDEFINITE_ARTICLE_PARAMETER )
+			indefiniteArticleParameter_ = NO_INDEFINITE_ARTICLE_PARAMETER;
+		else
+			{
+			if( isIndefiniteArticleParameter( indefiniteArticleParameter ) )
+				{
+				if( isSingularNoun() )
+					{
+					if( indefiniteArticleParameter_ == NO_INDEFINITE_ARTICLE_PARAMETER )
+						indefiniteArticleParameter_ = indefiniteArticleParameter;
+					else
+						{
+						if( indefiniteArticleParameter_ != indefiniteArticleParameter )
+							{
+							if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == RESULT_OK )
+								wordResult.hasFoundDifferentParameter = true;
+							else
+								addError( functionNameString, NULL, itemString(), "I failed to write an interface notification about the use of an indefinite article" );
+							}
+						}
+					}
+				else
+					startError( functionNameString, NULL, itemString(), "I am not a singular noun" );
+				}
+			else
+				startError( functionNameString, NULL, itemString(), "The given indefinite article parameter is not an indefinite article parameter" );
+			}
+
+		wordResult.result = commonVariables()->result;
+		return wordResult;
 		}
 
 	WordResultType setParameter( unsigned short adjectiveParameter, unsigned short definiteArticleParameter, unsigned short indefiniteArticleParameter )
@@ -758,21 +773,21 @@ class WordTypeItem : private Item
 		if( adjectiveParameter > NO_ADJECTIVE_PARAMETER )
 			{
 			if( ( wordResult = setAdjectiveParameter( adjectiveParameter ) ).result != RESULT_OK )
-				addErrorInItem( functionNameString, NULL, itemString(), "I failed to set my adjective parameter" );
+				addError( functionNameString, NULL, itemString(), "I failed to set my adjective parameter" );
 			}
 		else
 			{
 			if( definiteArticleParameter > NO_DEFINITE_ARTICLE_PARAMETER )
 				{
 				if( ( wordResult = setDefiniteArticleParameter( definiteArticleParameter ) ).result != RESULT_OK )
-					addErrorInItem( functionNameString, NULL, itemString(), "I failed to set my definite article parameter" );
+					addError( functionNameString, NULL, itemString(), "I failed to set my definite article parameter" );
 				}
 			else
 				{
 				if( indefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER )
 					{
 					if( ( wordResult = setIndefiniteArticleParameter( indefiniteArticleParameter ) ).result != RESULT_OK )
-						addErrorInItem( functionNameString, NULL, itemString(), "I failed to set the indefinite article parameter of a singular noun" );
+						addError( functionNameString, NULL, itemString(), "I failed to set the indefinite article parameter of a singular noun" );
 					}
 				}
 			}

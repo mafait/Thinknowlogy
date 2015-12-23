@@ -1,0 +1,6 @@
+﻿< Nee, zwart, blauw, bruin, groen, grijs, oranje, roze, paars, rood, wit en geel zijn kleuren. (geleerd van gebruiker Admin)
+< A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y en z zijn kleine letters. (geleerd van gebruiker Admin)
+< 
+< Nee, 1, 2, 3, 4, 5, 6, 7, 8, 9 en 0 zijn getallen. (geleerd van gebruiker Admin)
+< A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y en z zijn kleine letters. (geleerd van gebruiker Admin)
+< 

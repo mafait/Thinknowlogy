@@ -2,11 +2,10 @@
  *	Class:			SpecificationItem
  *	Purpose:		To store info about the specification structure
  *					of a word
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -101,21 +100,6 @@ class SpecificationItem extends Item
 
 	// Private specification methods
 
-	private boolean hasExclusiveSpecificationSubstitutionAssumption()
-		{
-		JustificationItem searchItem = firstJustificationItem_;
-
-		while( searchItem != null )
-			{
-			if( searchItem.isExclusiveSpecificationSubstitutionAssumption() )
-				return true;
-
-			searchItem = searchItem.attachedJustificationItem();
-			}
-
-		return false;
-		}
-
 	private SpecificationResultType calculateAssumptionLevel( boolean isNeedingRecalculation )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
@@ -156,11 +140,11 @@ class SpecificationItem extends Item
 											if( tempAssumptionLevel < Constants.MAX_LEVEL )
 												highestAssumptionLevel = (short)tempAssumptionLevel;
 											else
-												startSystemErrorInItem( 1, null, myWordItem().anyWordTypeString(), "Assumption level overflow" );
+												startSystemError( 1, null, "Assumption level overflow" );
 											}
 										}
 									else
-										addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to get the combined assumption level" );
+										addError( 1, null, "I failed to get the combined assumption level" );
 									}
 								}
 							while( CommonVariables.result == Constants.RESULT_OK &&
@@ -201,7 +185,7 @@ class SpecificationItem extends Item
 					}
 				}
 			else
-				startErrorInItem( 1, null, "There is probably an endless loop in the assumption level calculation of my specification, because the number of iterations is: " + nAssumptionLevelRecalculations_ );
+				startError( 1, null, "There is probably an endless loop in the assumption level calculation of my specification, because the number of iterations is: " + nAssumptionLevelRecalculations_ );
 			}
 
 		specificationResult.assumptionLevel = assumptionLevel_;
@@ -291,6 +275,21 @@ class SpecificationItem extends Item
 
 
 	// Protected virtual methods
+
+	protected void selectingAttachedJustifications( boolean isSelectingJustificationSpecifications )
+		{
+		JustificationItem searchItem = firstJustificationItem_;
+
+		while( searchItem != null )
+			{
+			searchItem.isSelectedByQuery = true;
+
+			if( isSelectingJustificationSpecifications )
+				searchItem.selectingJustificationSpecifications();
+
+			searchItem = searchItem.attachedJustificationItem();
+			}
+		}
 
 	protected void showString( boolean isReturnQueryToPosition )
 		{
@@ -404,7 +403,7 @@ class SpecificationItem extends Item
 		if( specificationWordItem_ != null )
 			{
 			if( ( referenceResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find a matching word reference string for the specification word" );
+				addError( 1, null, "I failed to find a matching word reference string for the specification word" );
 			}
 
 		return referenceResult;
@@ -542,6 +541,12 @@ class SpecificationItem extends Item
 		return ( myList().isAssignmentList() );
 		}
 
+	protected boolean isUserAssignment()
+		{
+		return ( isAssignment() &&
+				isUserSpecification() );
+		}
+
 	protected boolean isActiveAssignment()
 		{
 		return ( isAssignment() &&
@@ -624,16 +629,11 @@ class SpecificationItem extends Item
 
 	protected SpecificationItem getAssignmentItem( boolean isIncludingAnsweredQuestions, boolean isIncludingThisItem, short questionParameter )
 		{
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
 		SpecificationItem searchItem = ( isIncludingThisItem ? ( assignmentLevel_ == CommonVariables.currentAssignmentLevel ? this : null ) : nextAssignmentItemWithCurrentLevel() );
 
 		while( searchItem != null )
 			{
 			if( searchItem.questionParameter_ == questionParameter &&
-
-			( isLanguageWord_ ||
-			// Skip other languages
-			searchItem.languageNr_ == currentLanguageNr ) &&
 
 			( isIncludingAnsweredQuestions ||
 			// Skip answered questions
@@ -764,21 +764,6 @@ class SpecificationItem extends Item
 		while( searchItem != null )
 			{
 			if( searchItem.isDeletedItem() )
-				return true;
-
-			searchItem = searchItem.attachedJustificationItem();
-			}
-
-		return false;
-		}
-
-	protected boolean hasFoundJustificationWithReplacedPrimarySpecification()
-		{
-		JustificationItem searchItem = firstJustificationItem_;
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasReplacedPrimarySpecification() )
 				return true;
 
 			searchItem = searchItem.attachedJustificationItem();
@@ -990,7 +975,17 @@ class SpecificationItem extends Item
 				// Possessive specification without male relation context
 				( isPossessive_ &&
 				relationContextNr_ > Constants.NO_CONTEXT_NR &&
+				specificationWordItem_ != null &&
+				specificationWordItem_.compoundCollectionNr( specificationWordTypeNr_ ) > Constants.NO_COLLECTION_NR &&
 				!myWordItem().hasContextMaleWordInAllWords( relationContextNr_, specificationWordItem_ ) ) ) );
+		}
+
+	protected boolean wasHiddenSpecification()
+		{
+		return ( lastWrittenSentenceStringBuffer == null &&
+				isSpecificationWordCollectedWithItself() &&
+				hasRelationContext() &&
+				hasSpecificationNonCompoundCollection() );
 		}
 
 	protected boolean isNegative()
@@ -1048,6 +1043,24 @@ class SpecificationItem extends Item
 			return true;
 
 		return myWordItem().isContextSubsetInAllWords( relationContextNr_, relationContextNr );
+		}
+
+	protected boolean hasPrimarySpecificationJustification( SpecificationItem primarySpecificationItem )
+		{
+		JustificationItem searchItem = firstJustificationItem_;
+
+		if( primarySpecificationItem != null )
+			{
+			while( searchItem != null )
+				{
+				if( searchItem.primarySpecificationItem() == primarySpecificationItem )
+					return true;
+
+				searchItem = searchItem.attachedJustificationItem();
+				}
+			}
+
+		return false;
 		}
 
 	protected boolean isSelfGeneratedAssumption()
@@ -1234,13 +1247,13 @@ class SpecificationItem extends Item
 				isPossessive_ == isPossessive &&
 				generalizationCollectionNr_ == generalizationCollectionNr &&
 
-				( specificationCollectionNr_ == specificationCollectionNr ||
+				( ( specificationCollectionNr_ > Constants.NO_COLLECTION_NR &&
+				specificationCollectionNr_ == specificationCollectionNr ) ||
 
 				( compoundSpecificationCollectionNr > Constants.NO_COLLECTION_NR &&
-				specificationCollectionNr_ == compoundSpecificationCollectionNr ) ) &&
 
-				( hasSpecificationCollection() ||
-				specificationWordItem_ == specificationWordItem ) );
+				( specificationCollectionNr_ == compoundSpecificationCollectionNr ||
+				specificationWordItem_ == specificationWordItem ) ) ) );
 		}
 
 	protected boolean isRelatedSpecification( boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isSelfGeneratedSpecification, short assumptionLevel, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr )
@@ -1345,7 +1358,7 @@ class SpecificationItem extends Item
 		return nContextRelations_;
 		}
 
-	protected int nInvolvedSpecificationWords( boolean isCheckingForSameCreationSentenceNr, boolean isCheckingForUserSpecificationWords )
+	protected int nInvolvedSpecificationWords( boolean isCheckingForUserSpecificationWords )
 		{
 		boolean isSelfGeneratedSpecification = isSelfGenerated();
 		int _creationSentenceNr = creationSentenceNr();
@@ -1356,9 +1369,7 @@ class SpecificationItem extends Item
 			{
 			if( searchItem == this ||
 
-			( ( !isCheckingForSameCreationSentenceNr ||
-			searchItem.creationSentenceNr() == _creationSentenceNr ) &&
-
+			( searchItem.creationSentenceNr() == _creationSentenceNr &&
 			searchItem.isRelatedSpecification( isExclusiveSpecification_, isNegative_, isPossessive_, isSelfGeneratedSpecification, assumptionLevel_, specificationCollectionNr_, generalizationContextNr_, specificationContextNr_, relationContextNr_ ) ) )
 				{
 				if( isCheckingForUserSpecificationWords &&
@@ -1392,14 +1403,14 @@ class SpecificationItem extends Item
 							{
 							if( changeFirstJustification( attachJustificationItem ) == Constants.RESULT_OK )
 								{
-								if( !firstJustificationItem.isDeletedItem() )
+								if( !myWordItem().hasCorrectedAssumptionByKnowledge() )
 									{
 									if( attachJustificationItem.attachJustification( firstJustificationItem, this ) != Constants.RESULT_OK )
-										return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to attach the first justification item of myself, to the given attached justification item" );
+										return addError( 1, null, "I failed to attach the first justification item of myself, to the given attached justification item" );
 									}
 								}
 							else
-								return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to change my first justification item" );
+								return addError( 1, null, "I failed to change my first justification item" );
 							}
 						else
 							{
@@ -1410,29 +1421,29 @@ class SpecificationItem extends Item
 									if( attachJustificationItem.attachJustification( firstJustificationItem, createdSpecificationItem ) == Constants.RESULT_OK )
 										{
 										if( myWordItem().replaceOrDeleteSpecification( this, createdSpecificationItem ) != Constants.RESULT_OK )
-											return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to replace or delete a specification" );
+											return addError( 1, null, "I failed to replace or delete a specification" );
 										}
 									else
-										return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to attach the first justification item of the created specification item, to the given attached justification item of the created specification item" );
+										return addError( 1, null, "I failed to attach the first justification item of the created specification item, to the given attached justification item of the created specification item" );
 									}
 								else
-									return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I couldn't create a specification" );
+									return startError( 1, null, "I couldn't create a specification" );
 								}
 							else
-								return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to create a copy of myself with a different first justification item" );
+								return addError( 1, null, "I failed to create a copy of myself with a different first justification item" );
 							}
 						}
 					else
-						return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I've no justification items" );
+						return startError( 1, null, "I have no justification items" );
 					}
 				else
-					return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I am replaced or deleted" );
+					return startError( 1, null, "I am replaced or deleted" );
 				}
 			else
-				return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The given attached justification item isn't active" );
+				return startError( 1, null, "The given attached justification item isn't active" );
 			}
 		else
-			return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The given attached justification item is undefined" );
+			return startError( 1, null, "The given attached justification item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -1446,13 +1457,13 @@ class SpecificationItem extends Item
 				if( hasCurrentCreationSentenceNr() )
 					firstJustificationItem_ = replacingJustificationItem;
 				else
-					return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "It isn't allowed to change an older item afterwards" );
+					return startError( 1, null, "It isn't allowed to change an older item afterwards" );
 				}
 			else
-				return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The given replacing justification item isn't active" );
+				return startError( 1, null, "The given replacing justification item isn't active" );
 			}
 		else
-			return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The given replacing justification item is undefined" );
+			return startError( 1, null, "The given replacing justification item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -1471,21 +1482,21 @@ class SpecificationItem extends Item
 					if( generalizationCollectionNr_ == Constants.NO_COLLECTION_NR )
 						generalizationCollectionNr_ = collectionNr;
 					else
-						return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The generalization is already collected" );
+						return startError( 1, null, "The generalization is already collected" );
 					}
 				else
 					{
 					if( specificationCollectionNr_ == Constants.NO_COLLECTION_NR )
 						specificationCollectionNr_ = collectionNr;
 					else
-						return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The specification is already collected" );
+						return startError( 1, null, "The specification is already collected" );
 					}
 				}
 			else
-				return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "It isn't allowed to change an older item afterwards" );
+				return startError( 1, null, "It isn't allowed to change an older item afterwards" );
 			}
 		else
-			return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The given collection number is undefined" );
+			return startError( 1, null, "The given collection number is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -1501,7 +1512,7 @@ class SpecificationItem extends Item
 			lastWrittenSentenceStringBuffer = null;
 			}
 		else
-			return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I am not a self-generated assumption" );
+			return startError( 1, null, "I am not a self-generated assumption" );
 
 		return Constants.RESULT_OK;
 		}
@@ -1513,10 +1524,10 @@ class SpecificationItem extends Item
 			if( specificationStringWriteLevel_ == Constants.NO_WRITE_LEVEL )
 				specificationStringWriteLevel_ = ++CommonVariables.currentWriteLevel;
 			else
-				return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "My write level is already assigned" );
+				return startError( 1, null, "My write level is already assigned" );
 			}
 		else
-			return startSystemErrorInItem( 1, null, myWordItem().anyWordTypeString(), "Current write word level overflow" );
+			return startSystemError( 1, null, "Current write word level overflow" );
 
 		return Constants.RESULT_OK;
 		}
@@ -1537,7 +1548,7 @@ class SpecificationItem extends Item
 				if( markAsConcludedAssumption() == Constants.RESULT_OK )
 					isAdjustedSpecification = true;
 				else
-					return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to mark myself as a concluded assumption" );
+					return addError( 1, null, "I failed to mark myself as a concluded assumption" );
 				}
 			else
 				{
@@ -1559,44 +1570,33 @@ class SpecificationItem extends Item
 							if( specificationResult.assumptionLevel == Constants.NO_ASSUMPTION_LEVEL )
 								{
 								if( markAsConcludedAssumption() == Constants.RESULT_OK )
-									{
-									if( ( specificationResult = myWordItem().findRelatedSpecification( false, this ) ).result == Constants.RESULT_OK )
-										{
-										if( specificationResult.relatedSpecificationItem == null ||
-										specificationResult.relatedSpecificationItem.isConcludedAssumption() )
-											isAdjustedSpecification = true;
-										}
-									else
-										return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find out if a search specification is related" );
-									}
+									isAdjustedSpecification = true;
 								else
-									return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "After recalculation, I failed to mark myself as concluded assumption" );
+									return addError( 1, null, "After recalculation, I failed to mark myself as concluded assumption" );
 								}
 							else
 								{
-								if( specificationResult.assumptionLevel < previousAssumptionLevel &&
-								myWordItem().isUserGeneralizationWord &&
-
-								( relationContextNr_ == Constants.NO_CONTEXT_NR ||
-								!hasExclusiveSpecificationSubstitutionAssumption() ) )
+								if( !isPossessive_ &&
+								specificationResult.assumptionLevel < previousAssumptionLevel &&
+								myWordItem().isUserGeneralizationWord )
 									isAdjustedSpecification = true;
 								}
 							}
 						}
 					else
-						return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to recalculate the assumption level" );
+						return addError( 1, null, "I failed to recalculate the assumption level" );
 					}
 				}
 
 			if( isAdjustedSpecification )
 				{
 				// Write adjusted specification
-				if( myWordItem().writeUpdatedSpecification( true, false, false, this ) != Constants.RESULT_OK )
-					return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to write an adjusted specification" );
+				if( myWordItem().writeUpdatedSpecification( true, false, false, false, this ) != Constants.RESULT_OK )
+					return addError( 1, null, "I failed to write an adjusted specification" );
 				}
 			}
 		else
-			return addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to get the assumption level" );
+			return addError( 1, null, "I failed to get the assumption level" );
 
 		return Constants.RESULT_OK;
 		}
@@ -1692,24 +1692,6 @@ class SpecificationItem extends Item
 		return null;
 		}
 
-	protected JustificationItem primarySpecificationJustificationItem( SpecificationItem primarySpecificationItem )
-		{
-		JustificationItem searchItem = firstJustificationItem_;
-
-		if( primarySpecificationItem != null )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.primarySpecificationItem() == primarySpecificationItem )
-					return searchItem;
-
-				searchItem = searchItem.attachedJustificationItem();
-				}
-			}
-
-		return null;
-		}
-
 	protected JustificationItem primaryOrSecondarySpecificationJustificationItem( SpecificationItem referenceSpecificationItem )
 		{
 		JustificationItem searchItem = firstJustificationItem_;
@@ -1729,19 +1711,16 @@ class SpecificationItem extends Item
 		return null;
 		}
 
-	protected JustificationItem secondarySpecificationJustificationItem( SpecificationItem secondarySpecificationItem )
+	protected JustificationItem replacedSecondarySpecificationJustificationItem()
 		{
 		JustificationItem searchItem = firstJustificationItem_;
 
-		if( secondarySpecificationItem != null )
+		while( searchItem != null )
 			{
-			while( searchItem != null )
-				{
-				if( searchItem.secondarySpecificationItem() == secondarySpecificationItem )
-					return searchItem;
+			if( searchItem.hasReplacedSecondarySpecification() )
+				return searchItem;
 
-				searchItem = searchItem.attachedJustificationItem();
-				}
+			searchItem = searchItem.attachedJustificationItem();
 			}
 
 		return null;
@@ -1749,7 +1728,7 @@ class SpecificationItem extends Item
 
 	protected SpecificationItem nextSpecificationItem()
 		{
-		return (SpecificationItem)nextItem ;
+		return (SpecificationItem)nextItem;
 		}
 
 	protected SpecificationItem nextAssignmentOrSpecificationItem()

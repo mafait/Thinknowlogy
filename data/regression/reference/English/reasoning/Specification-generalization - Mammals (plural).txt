@@ -1,0 +1,17 @@
+﻿* 
+* My conclusions:
+< Cats and dogs are mammals.
+< 
+* 
+* My conclusions:
+< Whales, cats and dogs are mammals.
+< 
+* 
+* My conclusions:
+< Whales, cats and dogs are mammals.
+< 
+< Specifications:
+< Whales are mammals.
+< Dogs are mammals.
+< Cats are mammals.
+< 

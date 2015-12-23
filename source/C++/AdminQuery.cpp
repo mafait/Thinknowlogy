@@ -2,11 +2,10 @@
  *	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -141,13 +140,13 @@ class AdminQuery
 		return nTotalCount();
 		}
 
-	ResultType itemQuery( bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, bool isSuppressingMessage, char *textString )
+	ResultType itemQuery( bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSuppressingMessage, char *textString )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "itemQuery";
 
 		if( textString != NULL )
 			{
-			if( itemQuery( true, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR ) == RESULT_OK )
+			if( itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR ) == RESULT_OK )
 				{
 				if( commonVariables_->currentLanguageWordItem != NULL )
 					{
@@ -156,13 +155,13 @@ class AdminQuery
 						strcat( textString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
 					}
 				else
-					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The current language word item is undefined" );
+					return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
 				}
 			else
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query items" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query items" );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given text string is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given text string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -176,7 +175,7 @@ class AdminQuery
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
 			if( wordList->showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, ( queryWordTypeNr == WORD_TYPE_UNDEFINED ? commonVariables_->matchingWordTypeNr : queryWordTypeNr ), queryWidth ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to show the query result in my word list" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to show the query result in my word list" );
 			}
 
 		// Admin lists
@@ -185,7 +184,7 @@ class AdminQuery
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->showQueryResultInList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to show the query result" );
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to show the query result" );
 				}
 			}
 
@@ -230,7 +229,7 @@ class AdminQuery
 											}
 										}
 									else
-										return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find a number in the query string" );
+										return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find a number in the query string" );
 									}
 
 								if( hasEndChar &&
@@ -253,7 +252,7 @@ class AdminQuery
 												}
 											}
 										else
-											return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find the item number in the query string" );
+											return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find the item number in the query string" );
 										}
 									}
 								}
@@ -265,17 +264,17 @@ class AdminQuery
 							sourceString[queryStringPosition_] == endChar )
 								queryStringPosition_++;
 							else
-								return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given query string is corrupt" );
+								return adminItem_->startError( functionNameString, moduleNameString_, "The given query string is corrupt" );
 							}
 						}
 					else
-						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given command doesn't start with character '", startChar, "', but with '", sourceString[queryStringPosition_], "'" );
+						return adminItem_->startError( functionNameString, moduleNameString_, "The given command doesn't start with character '", startChar, "', but with '", sourceString[queryStringPosition_], "'" );
 					}
 				else
-					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given source string is empty or the given query source string position is undefined" );
+					return adminItem_->startError( functionNameString, moduleNameString_, "The given source string is empty or the given query source string position is undefined" );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given source string is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given source string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -297,6 +296,7 @@ class AdminQuery
 							if( queryStringPosition_ + 1 < strlen( sourceString ) )
 								{
 								queryStringPosition_++;
+								strcpy( nameString, EMPTY_STRING );
 
 								if( sourceString[queryStringPosition_] != endChar )
 									{
@@ -311,33 +311,32 @@ class AdminQuery
 										}
 
 									if( sourceString[queryStringPosition_] == endChar )
-										strncpy( nameString, &sourceString[startSourceStringPosition], nameLength );
+										strncat( nameString, &sourceString[startSourceStringPosition], nameLength );
 									else
-										return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The name in the given query string is corrupt" );
+										return adminItem_->startError( functionNameString, moduleNameString_, "The name in the given query string is corrupt" );
 									}
 
-								nameString[nameLength] = NULL_CHAR;
 								queryStringPosition_++;
 								}
 							else
-								return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The name in the given query string is corrupt" );
+								return adminItem_->startError( functionNameString, moduleNameString_, "The name in the given query string is corrupt" );
 							}
 						else
-							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given name doesn't start with character '", startChar, "', but with '", sourceString[0], "'" );
+							return adminItem_->startError( functionNameString, moduleNameString_, "The given name doesn't start with character '", startChar, "', but with '", sourceString[0], "'" );
 						}
 					else
-						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given source string is empty or the given query source string position is undefined" );
+						return adminItem_->startError( functionNameString, moduleNameString_, "The given source string is empty or the given query source string position is undefined" );
 				}
 			else
-				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given name string is undefined" );
+				return adminItem_->startError( functionNameString, moduleNameString_, "The given name string is undefined" );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given source string is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given source string is undefined" );
 
 		return RESULT_OK;
 		}
 
-	ResultType itemQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
+	ResultType itemQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "itemQuery";
@@ -345,8 +344,8 @@ class AdminQuery
 		// In words
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
-			if( wordList->itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query item numbers in my word list" );
+			if( wordList->itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query item numbers in my word list" );
 			}
 
 		// Admin lists
@@ -354,15 +353,15 @@ class AdminQuery
 			{
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->itemQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to query item numbers in" );
+				if( adminItem_->adminListArray[adminListNr]->itemQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != RESULT_OK )
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to query item numbers in" );
 				}
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType listQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *queryListString )
+	ResultType listQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString )
 		{
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "listQuery";
@@ -370,8 +369,8 @@ class AdminQuery
 		// In words
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
-			if( wordList->listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query my word list" );
+			if( wordList->listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListString ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query my word list" );
 			}
 
 		// Admin lists
@@ -379,15 +378,15 @@ class AdminQuery
 			{
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->listQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListString ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to do a list query module" );
+				if( adminItem_->adminListArray[adminListNr]->listQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListString ) != RESULT_OK )
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to do a list query module" );
 				}
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType wordTypeQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned short queryWordTypeNr )
+	ResultType wordTypeQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr )
 		{
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordTypeQuery";
@@ -395,8 +394,8 @@ class AdminQuery
 		// In words
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
-			if( wordList->wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query word types in my word list" );
+			if( wordList->wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query word types in my word list" );
 			}
 
 		// Admin lists
@@ -404,15 +403,15 @@ class AdminQuery
 			{
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->wordTypeQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to word types" );
+				if( adminItem_->adminListArray[adminListNr]->wordTypeQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr ) != RESULT_OK )
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to word types" );
 				}
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType parameterQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned int queryParameter )
+	ResultType parameterQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter )
 		{
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "parameterQuery";
@@ -420,8 +419,8 @@ class AdminQuery
 		// In words
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
-			if( wordList->parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query parameters in my word list" );
+			if( wordList->parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query parameters in my word list" );
 			}
 
 		// Admin lists
@@ -429,15 +428,15 @@ class AdminQuery
 			{
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->parameterQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to parameters" );
+				if( adminItem_->adminListArray[adminListNr]->parameterQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter ) != RESULT_OK )
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to parameters" );
 				}
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType wordQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *wordNameString )
+	ResultType wordQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *wordNameString )
 		{
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordQuery";
@@ -445,14 +444,14 @@ class AdminQuery
 		// In words
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
-			if( wordList->wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query the words in my word list" );
+			if( wordList->wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query the words in my word list" );
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType wordReferenceQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *wordReferenceNameString )
+	ResultType wordReferenceQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
 		{
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQuery";
@@ -460,8 +459,8 @@ class AdminQuery
 		// In words
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
-			if( wordList->wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query word references in my word list" );
+			if( wordList->wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query word references in my word list" );
 			}
 
 		// Admin lists
@@ -469,15 +468,15 @@ class AdminQuery
 			{
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->wordReferenceQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to query word references" );
+				if( adminItem_->adminListArray[adminListNr]->wordReferenceQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, false, wordReferenceNameString ) != RESULT_OK )
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to query word references" );
 				}
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType stringQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *queryString )
+	ResultType stringQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString )
 		{
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "stringQuery";
@@ -485,8 +484,8 @@ class AdminQuery
 		// In words
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
-			if( wordList->stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query strings in my word list" );
+			if( wordList->stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query strings in my word list" );
 			}
 
 		// Admin lists
@@ -494,8 +493,8 @@ class AdminQuery
 			{
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->stringQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to query strings" );
+				if( adminItem_->adminListArray[adminListNr]->stringQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString ) != RESULT_OK )
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to query strings" );
 				}
 			}
 
@@ -526,7 +525,7 @@ class AdminQuery
 		if( strlen( errorString ) > 0 )
 			{
 			if( adminItem_ != NULL )
-				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+				adminItem_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -572,10 +571,10 @@ class AdminQuery
 						if( executeQuery( true, false, true, promptTypeNr, textString ) == RESULT_OK )
 							position = queryStringPosition_;
 						else
-							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to execute query \"", &textString[previousPosition], "\"" );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute query \"", &textString[previousPosition], "\"" );
 						}
 					else
-						return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The text string ended with a query character" );
+						return adminItem_->startError( functionNameString, moduleNameString_, "The text string ended with a query character" );
 					}
 				else
 					{
@@ -587,7 +586,7 @@ class AdminQuery
 								hasFoundNewLine = true;
 							}
 						else
-							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The text string ended with a diacritical sign" );
+							return adminItem_->startError( functionNameString, moduleNameString_, "The text string ended with a diacritical sign" );
 						}
 					else
 						textChar = textString[position];
@@ -611,18 +610,18 @@ class AdminQuery
 						strcpy( writeString, EMPTY_STRING );
 						}
 					else
-						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write a character" );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a character" );
 					}
 				}
 
 			if( strlen( writeString ) > 0 )
 				{
 				if( commonVariables_->presentation->writeText( false, promptTypeNr, NO_CENTER_WIDTH, writeString ) != RESULT_OK )
-					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write the last characters" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the last characters" );
 				}
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given text string is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given text string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -636,25 +635,30 @@ class AdminQuery
 		bool isOnlyShowingWords = false;
 		bool isOnlyShowingWordReferences = false;
 		bool isReturnQueryToPosition = isReturningToPosition;
-		bool isSelectActiveItems = true;
-		bool isSelectInactiveItems = true;
-		bool isSelectArchivedItems = true;
-		bool isSelectReplacedItems = true;
-		bool isSelectDeletedItems = true;
+		bool isSelectingActiveItems = true;
+		bool isSelectingInactiveItems = true;
+		bool isSelectingArchivedItems = true;
+		bool isSelectingReplacedItems = true;
+		bool isSelectingDeletedItems = true;
 		bool isShowingCount = false;
+		bool isSelectingAttachedJustifications = false;
+		bool isSelectingJustificationSpecifications = false;
 		unsigned short queryWordTypeNr = WORD_TYPE_UNDEFINED;
 		unsigned int nTotal;
 		size_t listStringPosition;
+		size_t queryStringLength;
+		size_t nameStringLength;
 		size_t queryWidth = NO_CENTER_WIDTH;
 		char nameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "executeQuery";
 
 		strcpy( commonVariables_->queryString, EMPTY_STRING );
 
-		if( queryString != NULL )
+		if( queryString != NULL &&
+		( queryStringLength = strlen( queryString ) ) > 0 )
 			{
 			if( queryStringPosition_ > 0 &&
-			queryStringPosition_ < strlen( queryString ) )
+			queryStringPosition_ < queryStringLength )
 				{
 				if( commonVariables_->currentLanguageWordItem != NULL )
 					{
@@ -668,15 +672,14 @@ class AdminQuery
 
 					while( !isEndOfQuery &&
 					strlen( commonVariables_->queryString ) == 0 &&
-					queryStringPosition_ < strlen( queryString ) )
+					queryStringPosition_ < queryStringLength )
 						{
 						switch( queryString[queryStringPosition_] )
 							{
 							case QUERY_ITEM_START_CHAR:
-
 								if( getIdFromQuery( true, queryString, QUERY_ITEM_START_CHAR, QUERY_ITEM_END_CHAR ) == RESULT_OK )
 									{
-									if( itemQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, false, querySentenceNr_, queryItemNr_ ) == RESULT_OK )
+									if( itemQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, querySentenceNr_, queryItemNr_ ) == RESULT_OK )
 										{
 										isFirstInstruction = false;
 
@@ -685,18 +688,17 @@ class AdminQuery
 											strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_ITEM_WAS_FOUND ) );
 										}
 									else
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query items" );
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query items" );
 									}
 								else
-									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get an identification from the item" );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get an identification from the item" );
 
 								break;
 
 							case QUERY_REF_ITEM_START_CHAR:
-
 								if( getIdFromQuery( true, queryString, QUERY_REF_ITEM_START_CHAR, QUERY_REF_ITEM_END_CHAR ) == RESULT_OK )
 									{
-									if( itemQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, true, querySentenceNr_, queryItemNr_ ) == RESULT_OK )
+									if( itemQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, true, querySentenceNr_, queryItemNr_ ) == RESULT_OK )
 										{
 										isFirstInstruction = false;
 
@@ -705,10 +707,10 @@ class AdminQuery
 											strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_REFERENCE_ITEM_WAS_FOUND ) );
 										}
 									else
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query item references" );
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query item references" );
 									}
 								else
-									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get a reference identification from the item" );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get a reference identification from the item" );
 
 								break;
 
@@ -718,10 +720,11 @@ class AdminQuery
 								if( getNameFromQuery( queryString, nameString, QUERY_LIST_START_CHAR, QUERY_LIST_END_CHAR ) == RESULT_OK )
 									{
 									listStringPosition = 0;
+									nameStringLength = strlen( nameString );
 
 									// Check list characters for existence
 									do	{
-										if( strlen( nameString ) > 0 &&
+										if( nameStringLength > 0 &&
 										!isWordListChar( nameString[listStringPosition] ) &&
 										!isAdminListChar( nameString[listStringPosition] ) )
 											{
@@ -730,12 +733,12 @@ class AdminQuery
 											}
 										}
 									while( !isInvalidChar &&
-									++listStringPosition < strlen( nameString ) );
+									++listStringPosition < nameStringLength );
 
 									// All list characters are valid
 									if( !isInvalidChar )
 										{
-										if( listQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, nameString ) == RESULT_OK )
+										if( listQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, nameString ) == RESULT_OK )
 											{
 											isFirstInstruction = false;
 
@@ -744,16 +747,16 @@ class AdminQuery
 												strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_LIST_WAS_FOUND ) );
 											}
 										else
-											return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query lists" );
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query lists" );
 										}
 									}
 								else
-									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get a list string from the text" );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get a list string from the text" );
 
 								break;
 
 							case QUERY_WORD_START_CHAR:
-								if( queryStringPosition_ + 1 < strlen( queryString ) &&
+								if( queryStringPosition_ + 1 < queryStringLength &&
 								queryString[queryStringPosition_ + 1] != QUERY_CHAR )
 									{
 									strcpy( nameString, EMPTY_STRING );
@@ -762,7 +765,7 @@ class AdminQuery
 										{
 										if( strlen( nameString ) == 0 )
 											{
-											if( queryStringPosition_ < strlen( queryString ) &&
+											if( queryStringPosition_ < queryStringLength &&
 											queryString[queryStringPosition_] != QUERY_CHAR )
 												strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_EMPTY_WORD_SPECIFICATION ) );
 											else
@@ -773,7 +776,7 @@ class AdminQuery
 											}
 										else
 											{
-											if( wordQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, nameString ) == RESULT_OK )
+											if( wordQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, nameString ) == RESULT_OK )
 												{
 												isFirstInstruction = false;
 
@@ -782,11 +785,11 @@ class AdminQuery
 													strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_WORD_WAS_FOUND ) );
 												}
 											else
-												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query words" );
+												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query words" );
 											}
 										}
 									else
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get a word name from the query specification" );
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get a word name from the query specification" );
 									}
 								else
 									{
@@ -798,7 +801,7 @@ class AdminQuery
 								break;
 
 							case QUERY_WORD_REFERENCE_START_CHAR:
-								if( queryStringPosition_ + 1 < strlen( queryString ) &&
+								if( queryStringPosition_ + 1 < queryStringLength &&
 								queryString[queryStringPosition_ + 1] != QUERY_CHAR )
 									{
 									strcpy( nameString, EMPTY_STRING );
@@ -807,7 +810,7 @@ class AdminQuery
 										{
 										if( strlen( nameString ) == 0 )
 											{
-											if( queryStringPosition_ < strlen( queryString ) &&
+											if( queryStringPosition_ < queryStringLength &&
 											queryString[queryStringPosition_] != QUERY_CHAR )
 												strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_EMPTY_WORD_REFERENCE ) );
 											else
@@ -818,7 +821,7 @@ class AdminQuery
 											}
 										else
 											{
-											if( wordReferenceQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, nameString ) == RESULT_OK )
+											if( wordReferenceQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, nameString ) == RESULT_OK )
 												{
 												isFirstInstruction = false;
 
@@ -827,11 +830,11 @@ class AdminQuery
 													strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_WORD_REFERENCE_WAS_FOUND ) );
 												}
 											else
-												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query word references" );
+												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query word references" );
 											}
 										}
 									else
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get a word reference name from the query specification" );
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get a word reference name from the query specification" );
 									}
 								else
 									{
@@ -842,15 +845,16 @@ class AdminQuery
 
 								break;
 
-							case SYMBOL_BACK_SLASH:		// Escape character for string
-								if( queryStringPosition_ + 1 < strlen( queryString ) &&
+							// Escape character for string
+							case SYMBOL_BACK_SLASH:
+								if( queryStringPosition_ + 1 < queryStringLength &&
 								queryString[queryStringPosition_ + 1] != QUERY_CHAR )
 									queryStringPosition_++;
 
 								// Don't insert a break statement here
 
 							case QUERY_STRING_START_CHAR:
-								if( queryStringPosition_ + 1 < strlen( queryString ) &&
+								if( queryStringPosition_ + 1 < queryStringLength &&
 								queryString[queryStringPosition_ + 1] != QUERY_CHAR )
 									{
 									strcpy( nameString, EMPTY_STRING );
@@ -859,7 +863,7 @@ class AdminQuery
 										{
 										if( strlen( nameString ) == 0 )
 											{
-											if( queryStringPosition_ < strlen( queryString ) &&
+											if( queryStringPosition_ < queryStringLength &&
 											queryString[queryStringPosition_] != QUERY_CHAR )
 												strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_EMPTY_STRING_SPECIFICATION ) );
 											else
@@ -870,7 +874,7 @@ class AdminQuery
 											}
 										else
 											{
-											if( stringQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, nameString ) == RESULT_OK )
+											if( stringQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, nameString ) == RESULT_OK )
 												{
 												isFirstInstruction = false;
 
@@ -879,11 +883,11 @@ class AdminQuery
 													strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_STRING_WAS_FOUND ) );
 												}
 											else
-												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query strings" );
+												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query strings" );
 											}
 										}
 									else
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get a string from the query specification" );
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get a string from the query specification" );
 									}
 								else
 									{
@@ -895,14 +899,13 @@ class AdminQuery
 								break;
 
 							case QUERY_WORD_TYPE_CHAR:
-
 								querySentenceNr_ = NO_SENTENCE_NR;
 
 								if( getIdFromQuery( false, queryString, QUERY_WORD_TYPE_CHAR, QUERY_WORD_TYPE_CHAR ) == RESULT_OK )
 									{
 									if( queryItemNr_ == NO_ITEM_NR )
 										{
-										if( wordTypeQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, (unsigned short)querySentenceNr_ ) == RESULT_OK )
+										if( wordTypeQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, (unsigned short)querySentenceNr_ ) == RESULT_OK )
 											{
 											isFirstInstruction = false;
 											// Remember given word type number
@@ -913,25 +916,24 @@ class AdminQuery
 												strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_WORD_TYPE_WAS_FOUND ) );
 											}
 										else
-											return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query word types" );
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query word types" );
 										}
 									else
-										return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given parameter is undefined" );
+										return adminItem_->startError( functionNameString, moduleNameString_, "The given parameter is undefined" );
 									}
 								else
-									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get a word type" );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get a word type" );
 
 								break;
 
 							case QUERY_PARAMETER_CHAR:
-
 								querySentenceNr_ = NO_SENTENCE_NR;
 
 								if( getIdFromQuery( false, queryString, QUERY_PARAMETER_CHAR, QUERY_PARAMETER_CHAR ) == RESULT_OK )
 									{
 									if( queryItemNr_ == NO_ITEM_NR )
 										{
-										if( parameterQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, querySentenceNr_ ) == RESULT_OK )
+										if( parameterQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, querySentenceNr_ ) == RESULT_OK )
 											{
 											isFirstInstruction = false;
 
@@ -940,180 +942,185 @@ class AdminQuery
 												strcat( commonVariables_->queryString, commonVariables_->currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_PARAMETER_WAS_FOUND ) );
 											}
 										else
-											return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query parameters" );
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query parameters" );
 										}
 									else
-										return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given parameter is undefined" );
+										return adminItem_->startError( functionNameString, moduleNameString_, "The given parameter is undefined" );
 									}
 								else
-									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get a parameter" );
-
-								break;
-
-							case QUERY_CHAR:
-
-								isEndOfQuery = true;
-								queryStringPosition_++;
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get a parameter" );
 
 								break;
 
 							case QUERY_ACTIVE_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectInactiveItems = false;
-									isSelectArchivedItems = false;
-									isSelectReplacedItems = false;
-									isSelectDeletedItems = false;
+									isSelectingInactiveItems = false;
+									isSelectingArchivedItems = false;
+									isSelectingReplacedItems = false;
+									isSelectingDeletedItems = false;
 									}
 								else
-									isSelectActiveItems = true;
+									isSelectingActiveItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= strlen( queryString ) ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString[queryStringPosition_] == QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to perform an item query of active items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to perform an item query of active items" );
 									}
 
 								break;
 
 							case QUERY_INACTIVE_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectActiveItems = false;
-									isSelectArchivedItems = false;
-									isSelectReplacedItems = false;
-									isSelectDeletedItems = false;
+									isSelectingActiveItems = false;
+									isSelectingArchivedItems = false;
+									isSelectingReplacedItems = false;
+									isSelectingDeletedItems = false;
 									}
 								else
-									isSelectInactiveItems = true;
+									isSelectingInactiveItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= strlen( queryString ) ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString[queryStringPosition_] == QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to perform an item query of inactive items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to perform an item query of inactive items" );
 									}
 
 								break;
 
 							case QUERY_ARCHIVED_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectActiveItems = false;
-									isSelectInactiveItems = false;
-									isSelectReplacedItems = false;
-									isSelectDeletedItems = false;
+									isSelectingActiveItems = false;
+									isSelectingInactiveItems = false;
+									isSelectingReplacedItems = false;
+									isSelectingDeletedItems = false;
 									}
 								else
-									isSelectArchivedItems = true;
+									isSelectingArchivedItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= strlen( queryString ) ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString[queryStringPosition_] == QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to perform an item query of archived items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to perform an item query of archived items" );
 									}
 
 								break;
 
 							case QUERY_REPLACED_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectActiveItems = false;
-									isSelectInactiveItems = false;
-									isSelectArchivedItems = false;
-									isSelectDeletedItems = false;
+									isSelectingActiveItems = false;
+									isSelectingInactiveItems = false;
+									isSelectingArchivedItems = false;
+									isSelectingDeletedItems = false;
 									}
 								else
-									isSelectReplacedItems = true;
+									isSelectingReplacedItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= strlen( queryString ) ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString[queryStringPosition_] == QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to perform an item query of archived items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to perform an item query of archived items" );
 									}
 
 								break;
 
 							case QUERY_DELETED_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectActiveItems = false;
-									isSelectInactiveItems = false;
-									isSelectArchivedItems = false;
-									isSelectReplacedItems = false;
+									isSelectingActiveItems = false;
+									isSelectingInactiveItems = false;
+									isSelectingArchivedItems = false;
+									isSelectingReplacedItems = false;
 									}
 								else
-									isSelectDeletedItems = true;
+									isSelectingDeletedItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= strlen( queryString ) ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString[queryStringPosition_] == QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to perform an item query of deleted items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, commonVariables_->queryString ) != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to perform an item query of deleted items" );
 									}
 
 								break;
 
 							case QUERY_COUNT_CHAR:
-
 								isShowingCount = true;
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= strlen( queryString ) ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString[queryStringPosition_] == QUERY_CHAR )
 									{
-									if( itemQuery( true, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR ) != RESULT_OK )
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query items" );
+									if( itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR ) != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query items" );
 									}
+
+								break;
+
+							case QUERY_SELECTING_ATTACHED_JUSTIFICATIONS_CHAR:
+								if( isSelectingAttachedJustifications )
+									// Second asterisk
+									isSelectingJustificationSpecifications = true;
+								else
+									// First asterisk
+									isSelectingAttachedJustifications = true;
+
+								queryStringPosition_++;
+
+								break;
+
+							case QUERY_CHAR:
+								isEndOfQuery = true;
+								queryStringPosition_++;
 
 								break;
 
@@ -1121,18 +1128,19 @@ class AdminQuery
 								// Set query width parameter
 								if( isdigit( queryString[queryStringPosition_] ) )
 									{
-									while( queryStringPosition_ < strlen( queryString ) &&
+									while( queryStringPosition_ < queryStringLength &&
 									isdigit( queryString[queryStringPosition_] ) &&
 									queryWidth <= MAX_SENTENCE_NR / 10 )
 										{
 										queryWidth = ( queryWidth * 10 + queryString[queryStringPosition_] - '0' );
 										queryStringPosition_++;
 										}
+
 									if( queryWidth >= NUMBER_OF_CONSOLE_COLUMNS )
-										return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The query width in the query is too high" );
+										return adminItem_->startError( functionNameString, moduleNameString_, "The query width in the query is too high" );
 									}
 								else
-									return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I've found an illegal character '", queryString[queryStringPosition_], "' in the query" );
+									return adminItem_->startError( functionNameString, moduleNameString_, "I have found an illegal character '", queryString[queryStringPosition_], "' in the query" );
 							}
 						}
 
@@ -1141,8 +1149,8 @@ class AdminQuery
 						// No query performed yet
 						if( isFirstInstruction )
 							{
-							if( itemQuery( true, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR ) != RESULT_OK )
-								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to query items" );
+							if( itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to query items" );
 							}
 
 						if( isShowingCount )
@@ -1227,11 +1235,12 @@ class AdminQuery
 									}
 								}
 							else
-								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to show the query result" );
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to show the query result" );
 							}
 						}
 
-					if( nTotalCount() == 0 ||	// Show comment on empty query
+					// Show comment on empty query
+					if( nTotalCount() == 0 ||
 					commonVariables_->hasFoundQuery ||
 					queryWidth > NO_CENTER_WIDTH )
 						{
@@ -1241,20 +1250,20 @@ class AdminQuery
 						strlen( commonVariables_->queryString ) > 0 ) )
 							{
 							if( commonVariables_->presentation->writeText( ( !isSuppressingMessage && !commonVariables_->hasFoundQuery && queryWidth == NO_CENTER_WIDTH ), promptTypeNr, queryWidth, commonVariables_->queryString ) != RESULT_OK )
-								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write the query result" );
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the query result" );
 							}
 						}
 					else
 						strcpy( commonVariables_->queryString, EMPTY_STRING );
 					}
 				else
-					return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The current language word item is undefined" );
+					return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
 				}
 			else
-				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given instruction string is empty or the given instruction string position is undefined" );
+				return adminItem_->startError( functionNameString, moduleNameString_, "The given query string is empty or the given query string position is undefined" );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given instruction string is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given query string is undefined" );
 
 		return RESULT_OK;
 		}

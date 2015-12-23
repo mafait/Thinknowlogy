@@ -2,11 +2,10 @@
  *	Class:			AdminContext
  *	Supports class:	AdminItem
  *	Purpose:		To create context structures
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -32,6 +31,28 @@ class AdminContext
 
 
 	// Private methods
+
+	private static boolean isValidContextInAllWords( boolean isPossessive, int existingRelationContextNr, WordItem specificationWordItem, WordItem relationWordItem )
+		{
+		WordItem currentWordItem;
+
+		if( existingRelationContextNr > Constants.NO_CONTEXT_NR &&
+		specificationWordItem != null &&
+		( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
+			{
+			// Do for all words
+			do	{
+				if( currentWordItem.isProperName() &&
+				currentWordItem != relationWordItem &&
+				!currentWordItem.isUserRelationWord &&
+				currentWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, false, isPossessive, Constants.NO_QUESTION_PARAMETER, existingRelationContextNr, specificationWordItem ) != null )
+					return false;
+				}
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		return true;
+		}
 
 	private ContextResultType findPossessiveReversibleConclusionRelationContextOfInvolvedWords( boolean isPossessive, int nContextRelations, int relationContextNr, SpecificationItem foundSpecificationItem, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
@@ -103,26 +124,47 @@ class AdminContext
 									}
 								}
 							else
-								adminItem_.startErrorInItem( 1, moduleNameString_, "I've found an undefined generalization word" );
+								adminItem_.startError( 1, moduleNameString_, "I have found an undefined generalization word" );
 							}
 						while( CommonVariables.result == Constants.RESULT_OK &&
 						( currentGeneralizationItem = currentGeneralizationItem.nextRelationGeneralizationItem() ) != null );
 						}
 					}
 				else
-					adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+					adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 				}
 			else
-				adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+				adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 			}
 		else
-			adminItem_.startErrorInItem( 1, moduleNameString_, "The given relation context number is undefined" );
+			adminItem_.startError( 1, moduleNameString_, "The given relation context number is undefined" );
 
 		contextResult.result = CommonVariables.result;
 		return contextResult;
 		}
 
-	private ContextItem firstContextItemInAllWords( boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, WordItem specificationWordItem )
+	private byte copyContext( int existingContextNr, int newContextNr )
+		{
+		ContextItem currentContextItem;
+		WordItem currentWordItem;
+
+		if( ( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
+			{
+			// Do for all words
+			do	{
+				if( ( currentContextItem = currentWordItem.contextItem( existingContextNr ) ) != null )
+					{
+					if( currentWordItem.addContext( currentContextItem.isCompoundCollectionCollectedWithItself(), currentContextItem.contextWordTypeNr(), currentContextItem.specificationWordTypeNr(), newContextNr, currentContextItem.specificationWordItem() ) != Constants.RESULT_OK )
+						return adminItem_.addError( 1, moduleNameString_, "I failed to add a copied context to word \"" + currentWordItem.anyWordTypeString() + "\"" );
+					}
+				}
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		return Constants.RESULT_OK;
+		}
+
+	private ContextItem firstContextItemInAllWords( boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
 		boolean hasFoundCurrentContext = false;
 		boolean isPossessiveUserSpecification = adminItem_.isPossessiveUserSpecification();
@@ -130,30 +172,29 @@ class AdminContext
 		ContextItem foundContextItem = null;
 		WordItem currentWordItem;
 
-		if( specificationWordItem != null )
+		if( specificationWordItem != null &&
+		( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 			{
-			if( ( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
-				{
-				// Do for all words
-				do	{
-					if( ( currentContextItem = currentWordItem.contextItem( specificationWordItem ) ) != null )
+			// Do for all words
+			do	{
+				if( currentWordItem != generalizationWordItem &&
+				( currentContextItem = currentWordItem.contextItem( specificationWordItem ) ) != null )
+					{
+					if( isPossessive &&
+					!isPossessiveUserSpecification )
 						{
-						if( isPossessive &&
-						!isPossessiveUserSpecification )
-							{
-							if( foundContextItem == null )
-								foundContextItem = currentContextItem;
+						if( foundContextItem == null )
+							foundContextItem = currentContextItem;
 
-							if( !currentContextItem.isOlderItem() )
-								hasFoundCurrentContext = true;
-							}
-						else
-							return currentContextItem;
+						if( !currentContextItem.isOlderItem() )
+							hasFoundCurrentContext = true;
 						}
+					else
+						return currentContextItem;
 					}
-				while( !hasFoundCurrentContext &&
-				( currentWordItem = currentWordItem.nextWordItem() ) != null );
 				}
+			while( !hasFoundCurrentContext &&
+			( currentWordItem = currentWordItem.nextWordItem() ) != null );
 
 			if( !hasFoundCurrentContext &&
 			foundContextItem != null &&
@@ -191,7 +232,7 @@ class AdminContext
 		if( errorString != null )
 			{
 			if( adminItem_ != null )
-				adminItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
+				adminItem_.startSystemError( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -228,7 +269,7 @@ class AdminContext
 					if( ( relationWordReadItem = startRelationReadItem.firstRelationWordReadItem() ) != null )
 						currentRelationWordItem = relationWordReadItem.readWordItem();
 					else
-						adminItem_.startErrorInItem( 1, moduleNameString_, "The read word of the first relation word is undefined" );
+						adminItem_.startError( 1, moduleNameString_, "The read word of the first relation word is undefined" );
 					}
 
 				if( CommonVariables.result == Constants.RESULT_OK )
@@ -292,7 +333,7 @@ class AdminContext
 											}
 										}
 									else
-										adminItem_.startErrorInItem( 1, moduleNameString_, "The first word item is undefined" );
+										adminItem_.startError( 1, moduleNameString_, "The first word item is undefined" );
 									}
 								else
 									{
@@ -339,7 +380,7 @@ class AdminContext
 													if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_I_NOTICED_SEMANTIC_AMBIGUITY_START, generalizationWordItem.anyWordTypeString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_STATIC_SEMANTIC_AMBIGUITY_END ) == Constants.RESULT_OK )
 														contextResult.isExclusiveContext = true;
 													else
-														adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
+														adminItem_.addError( 1, moduleNameString_, "I failed to write the 'static semantic ambiguity' interface notification" );
 													}
 												}
 											else
@@ -348,7 +389,7 @@ class AdminContext
 													{
 													// Try to find the relation context of a possessive reversible conclusion
 													if( ( contextResult = findPossessiveReversibleConclusionRelationContextOfInvolvedWords( isPossessive, nContextRelations, contextResult.contextNr, foundSpecificationItem, relationWordItem, specificationWordItem ) ).result != Constants.RESULT_OK )
-														adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a possessive reversible conclusion relation context of involved words" );
+														adminItem_.addError( 1, moduleNameString_, "I failed to find a possessive reversible conclusion relation context of involved words" );
 													}
 												}
 											}
@@ -364,18 +405,18 @@ class AdminContext
 								// Create new context number
 								contextResult.contextNr++;
 							else
-								adminItem_.startSystemErrorInItem( 1, moduleNameString_, "Context number overflow" );
+								adminItem_.startSystemError( 1, moduleNameString_, "Context number overflow" );
 							}
 						}
 					else
-						adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't find any relation word" );
+						adminItem_.startError( 1, moduleNameString_, "I couldn't find any relation word" );
 					}
 				}
 			else
-				adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+				adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		contextResult.result = CommonVariables.result;
 		return contextResult;
@@ -385,7 +426,10 @@ class AdminContext
 		{
 		ContextResultType contextResult = new ContextResultType();
 		boolean isSpecificationCollectedWithItself;
+		int existingRelationContextNr;
+		int existingCopyContextNr = Constants.NO_CONTEXT_NR;
 		int foundRelationContextNr = Constants.NO_CONTEXT_NR;
+		int nUserRelationWords = CommonVariables.nUserRelationWords;
 		ContextItem foundContextItem;
 		SpecificationItem foundSpecificationItem;
 		SpecificationItem existingSpecificationItem = null;
@@ -397,7 +441,7 @@ class AdminContext
 				if( relationWordItem != null )
 					{
 					// Try to find relation context with same number of relation words as in the user sentence
-					if( ( foundContextItem = relationWordItem.contextItem( isCompoundCollectionCollectedWithItself, CommonVariables.nUserRelationWords, specificationWordItem ) ) == null )
+					if( ( foundContextItem = relationWordItem.contextItem( isCompoundCollectionCollectedWithItself, nUserRelationWords, specificationWordItem ) ) == null )
 						{
 						if( isCompoundCollectionCollectedWithItself )
 							existingSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, isArchivedAssignment, false, isArchivedAssignment, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationCollectionNr, Constants.NO_CONTEXT_NR, specificationWordItem );
@@ -408,7 +452,7 @@ class AdminContext
 
 						if( existingSpecificationItem == null &&
 						contextResult.contextNr == Constants.NO_CONTEXT_NR &&
-						CommonVariables.nUserRelationWords > 1 &&
+						nUserRelationWords > 1 &&
 
 						( !isSpecificationCollectedWithItself ||
 						CommonVariables.nUserGeneralizationWords > 1 ||
@@ -418,10 +462,19 @@ class AdminContext
 
 						// Not found yet
 						if( contextResult.contextNr == Constants.NO_CONTEXT_NR &&
-						( foundContextItem = firstContextItemInAllWords( isArchivedAssignment, isNegative, isPossessive, specificationWordItem ) ) != null )
+						( foundContextItem = firstContextItemInAllWords( isArchivedAssignment, isNegative, isPossessive, generalizationWordItem, specificationWordItem ) ) != null )
 							{
+							existingRelationContextNr = ( existingSpecificationItem == null ? Constants.NO_CONTEXT_NR : existingSpecificationItem.relationContextNr() );
+
 							// Find specification with found context word as relation word
-							if( ( foundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, isArchivedAssignment, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, specificationWordItem ) ) != null )
+							if( ( foundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, isArchivedAssignment, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, specificationWordItem ) ) == null )
+								{
+								if( isSpecificationCollectedWithItself &&
+								generalizationWordItem.isUserRelationWord &&
+								foundContextItem.myWordItem() == relationWordItem )
+									contextResult.contextNr = foundContextItem.contextNr();
+								}
+							else
 								{
 								if( existingSpecificationItem != null &&
 
@@ -429,7 +482,7 @@ class AdminContext
 
 								( isSpecificationCollectedWithItself &&
 								existingSpecificationItem.isHiddenSpecification() ) ) )
-									foundRelationContextNr = existingSpecificationItem.relationContextNr();
+									foundRelationContextNr = existingRelationContextNr;
 								else
 									{
 									if( ( !isSpecificationCollectedWithItself ||
@@ -451,20 +504,29 @@ class AdminContext
 									{
 									if( existingSpecificationItem.isSelfGeneratedAssumption() )
 										// Found reversed
-										contextResult.contextNr = existingSpecificationItem.relationContextNr();
+										contextResult.contextNr = existingRelationContextNr;
 									}
 								else
 									{
-									if( isSpecificationCollectedWithItself ||
-									existingSpecificationItem.isConcludedAssumption() ||
-									// Feminine word of a specification word collected with itself
-									existingSpecificationItem.hasSpecificationCompoundCollection() )
-										contextResult.contextNr = foundRelationContextNr;
+									if( existingSpecificationItem.isOlderItem() &&
+									adminItem_.isPossessiveUserSpecification() &&
+									!relationWordItem.hasContextInWord( existingRelationContextNr, specificationWordItem ) &&
+									!isValidContextInAllWords( isPossessive, existingRelationContextNr, specificationWordItem, relationWordItem ) &&
+
+									( existingSpecificationItem.isConcludedAssumption() ||
+									adminItem_.nContextWordsInAllWords( existingRelationContextNr, specificationWordItem ) > CommonVariables.nUserGeneralizationWords ) )
+										existingCopyContextNr = existingRelationContextNr;
 									else
 										{
-										// Skip on difference in assumption / conclusion
-										if( existingSpecificationItem.isSelfGeneratedAssumption() == isSelfGeneratedAssumption )
-											contextResult.contextNr = ( relationWordItem.hasAnsweredQuestion() ? foundRelationContextNr : existingSpecificationItem.relationContextNr() );
+										if( isSpecificationCollectedWithItself ||
+										existingSpecificationItem.isConcludedAssumption() )
+											contextResult.contextNr = foundRelationContextNr;
+										else
+											{
+											// Skip on difference in assumption / conclusion
+											if( existingSpecificationItem.isSelfGeneratedAssumption() == isSelfGeneratedAssumption )
+												contextResult.contextNr = existingRelationContextNr;
+											}
 										}
 									}
 								}
@@ -490,7 +552,7 @@ class AdminContext
 								contextResult.contextNr = Constants.NO_CONTEXT_NR;
 								}
 							else
-								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
+								adminItem_.addError( 1, moduleNameString_, "I failed to write the 'dynamic semantic ambiguity' interface notification" );
 							}
 						}
 
@@ -498,20 +560,30 @@ class AdminContext
 					contextResult.contextNr == Constants.NO_CONTEXT_NR )
 						{
 						if( ( contextResult.contextNr = adminItem_.highestContextNrInAllWords() ) < Constants.MAX_CONTEXT_NR )
+							{
 							// Create new context number
 							contextResult.contextNr++;
+
+							if( existingCopyContextNr > Constants.NO_CONTEXT_NR )
+								{
+								if( copyContext( existingCopyContextNr, contextResult.contextNr ) == Constants.RESULT_OK )
+									contextResult.copiedRelationContextNr = existingCopyContextNr;
+								else
+									adminItem_.addError( 1, moduleNameString_, "I failed to copied a context" );
+								}
+							}
 						else
-							adminItem_.startSystemErrorInItem( 1, moduleNameString_, "Context number overflow" );
+							adminItem_.startSystemError( 1, moduleNameString_, "Context number overflow" );
 						}
 					}
 				else
-					adminItem_.startErrorInItem( 1, moduleNameString_, "The given relation word item is undefined" );
+					adminItem_.startError( 1, moduleNameString_, "The given relation word item is undefined" );
 				}
 			else
-				adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+				adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		contextResult.result = CommonVariables.result;
 		return contextResult;

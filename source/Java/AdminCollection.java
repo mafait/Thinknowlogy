@@ -4,11 +4,10 @@
  *	Purpose:		To collect (associate, combine) words in the knowledge structure
  *					that belong together (which implies differentiating
  *					words that doesn't belong together)
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -64,13 +63,13 @@ class AdminCollection
 					( currentWordItem = currentWordItem.nextWordItem() ) != null );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The first word item is undefined" );
+					return adminItem_.startError( 1, moduleNameString_, "The first word item is undefined" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given collection word item is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The given collection word item is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given collection number is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given collection number is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -100,7 +99,7 @@ class AdminCollection
 									hasFoundCollection = true;
 								}
 							else
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" is collected with word \"" + newGeneralizationWordItem.anyWordTypeString() + "\"" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to find out if word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" is collected with word \"" + newGeneralizationWordItem.anyWordTypeString() + "\"" );
 							}
 
 						if( !hasFoundCollection )
@@ -119,36 +118,36 @@ class AdminCollection
 											if( previousGeneralizationWordItem.addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, newGeneralizationWordItem, previousCommonWordItem, null ).result == Constants.RESULT_OK )
 												{
 												if( newGeneralizationWordItem.addCollection( isExclusiveGeneralization, false, generalizationWordTypeNr, commonWordTypeNr, collectionNr, previousGeneralizationWordItem, previousCommonWordItem, null ).result != Constants.RESULT_OK )
-													return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect word \"" + newGeneralizationWordItem.anyWordTypeString() + "\" with word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\"" );
+													return adminItem_.addError( 1, moduleNameString_, "I failed to collect word \"" + newGeneralizationWordItem.anyWordTypeString() + "\" with word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\"" );
 												}
 											else
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" with word \"" + newGeneralizationWordItem.anyWordTypeString() + "\"" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to collect word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" with word \"" + newGeneralizationWordItem.anyWordTypeString() + "\"" );
 											}
 
 										if( newGeneralizationWordItem.collectGeneralizationsOrSpecifications( isExclusiveGeneralization, true, false, collectionNr ) != Constants.RESULT_OK )
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect generalizations and specifications in the new generalization word" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to collect generalizations and specifications in the new generalization word" );
 										}
 									else
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect the generalizations and specifications in the previous generalization word" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to collect the generalizations and specifications in the previous generalization word" );
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect word \"" + newGeneralizationWordItem.anyWordTypeString() + "\" with word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\"" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to collect word \"" + newGeneralizationWordItem.anyWordTypeString() + "\" with word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\"" );
 								}
 							else
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" with word \"" + newGeneralizationWordItem.anyWordTypeString() + "\"" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to collect word \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" with word \"" + newGeneralizationWordItem.anyWordTypeString() + "\"" );
 							}
 						}
 					else
-						return adminItem_.startErrorInItem( 1, moduleNameString_, "The given new common word item is undefined" );
+						return adminItem_.startError( 1, moduleNameString_, "The given new common word item is undefined" );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given previous and new generalization word items are the same word" );
+					return adminItem_.startError( 1, moduleNameString_, "The given previous and new generalization word items are the same word" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given new generalization word item is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The given new generalization word item is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given previous generalization word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given previous generalization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -171,7 +170,7 @@ class AdminCollection
 		if( errorString != null )
 			{
 			if( adminItem_ != null )
-				adminItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
+				adminItem_.startSystemError( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -213,39 +212,40 @@ class AdminCollection
 								}
 							}
 						else
-							collectionNr = adminItem_.collectionNrByCompoundGeneralizationWordInAllWords( specificationWordTypeNr, compoundGeneralizationWordItem );
+							{
+							if( !isExclusiveSpecification ||
+							generalizationWordItem == previousSpecificationWordItem ||
+							!generalizationWordItem.isNounWordCollectedWithItself() )
+								collectionNr = adminItem_.collectionNrByCompoundGeneralizationWordInAllWords( specificationWordTypeNr, compoundGeneralizationWordItem );
+							}
 
 						if( collectionNr > Constants.NO_COLLECTION_NR )
 							{
 							if( checkCollectionInAllWords( collectionNr, currentSpecificationWordItem, generalizationWordItem ) == Constants.RESULT_OK )
 								{
-								if( existingPairCollectionOrderNr_ > Constants.NO_ORDER_NR )
+								if( existingPairCollectionOrderNr_ > Constants.NO_ORDER_NR &&
+								( collectionOrderNr = adminItem_.highestCollectionOrderNrInAllWords( collectionNr ) ) > 1 )
 									{
-									if( ( collectionOrderNr = adminItem_.highestCollectionOrderNrInAllWords( collectionNr ) ) > 1 )
-										{
-										// "- 1" because collections come in pairs
-										if( existingPairCollectionOrderNr_ < collectionOrderNr - 1 )
-											collectionNr = Constants.NO_COLLECTION_NR;
-										}
+									// "- 1" because collections come in pairs
+									if( existingPairCollectionOrderNr_ < collectionOrderNr - 1 )
+										collectionNr = Constants.NO_COLLECTION_NR;
 									}
 								}
 							else
-								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check the collection in all words" );
+								adminItem_.addError( 1, moduleNameString_, "I failed to check the collection in all words" );
 							}
 
 						if( CommonVariables.result == Constants.RESULT_OK &&
 						!isPossessive &&
-						collectionNr > Constants.NO_COLLECTION_NR &&
-						// Skip if collected with itself
-						previousSpecificationWordItem != generalizationWordItem )
+						collectionNr > Constants.NO_COLLECTION_NR )
 							{
-							if( ( collectionResult = previousSpecificationWordItem.findCollection( true, currentSpecificationWordItem, generalizationWordItem ) ).result == Constants.RESULT_OK )
+							if( ( collectionResult = previousSpecificationWordItem.findCollection( ( previousSpecificationWordItem != generalizationWordItem ), currentSpecificationWordItem, generalizationWordItem ) ).result == Constants.RESULT_OK )
 								{
 								if( collectionResult.isCollected )
 									hasFoundCollection = true;
 								}
 							else
-								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if word \"" + currentSpecificationWordItem.anyWordTypeString() + "\" is collected with word \"" + previousSpecificationWordItem.anyWordTypeString() + "\"" );
+								adminItem_.addError( 1, moduleNameString_, "I failed to find out if word \"" + currentSpecificationWordItem.anyWordTypeString() + "\" is collected with word \"" + previousSpecificationWordItem.anyWordTypeString() + "\"" );
 							}
 
 						if( CommonVariables.result == Constants.RESULT_OK &&
@@ -259,32 +259,32 @@ class AdminCollection
 										collectionNr = collectionResult.createdCollectionNr;
 
 									if( currentSpecificationWordItem.addCollection( isExclusiveSpecification, isSpecificationGeneralization, specificationWordTypeNr, generalizationWordTypeNr, collectionNr, previousSpecificationWordItem, generalizationWordItem, compoundGeneralizationWordItem ).result != Constants.RESULT_OK )
-										adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect word \"" + currentSpecificationWordItem.anyWordTypeString() + "\" with word \"" + previousSpecificationWordItem.anyWordTypeString() + "\"" );
+										adminItem_.addError( 1, moduleNameString_, "I failed to collect word \"" + currentSpecificationWordItem.anyWordTypeString() + "\" with word \"" + previousSpecificationWordItem.anyWordTypeString() + "\"" );
 									}
 								else
-									adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect word \"" + previousSpecificationWordItem.anyWordTypeString() + "\" with word \"" + currentSpecificationWordItem.anyWordTypeString() + "\"" );
+									adminItem_.addError( 1, moduleNameString_, "I failed to collect word \"" + previousSpecificationWordItem.anyWordTypeString() + "\" with word \"" + currentSpecificationWordItem.anyWordTypeString() + "\"" );
 								}
 							else
-								adminItem_.startSystemErrorInItem( 1, moduleNameString_, "Collection order number overflow" );
+								adminItem_.startSystemError( 1, moduleNameString_, "Collection order number overflow" );
 							}
 
 						if( CommonVariables.result == Constants.RESULT_OK )
 							{
 							if( generalizationWordItem.collectGeneralizationsOrSpecifications( isExclusiveSpecification, false, isQuestion, collectionNr ) != Constants.RESULT_OK )
-								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect generalizations and specifications in the given generalization word" );
+								adminItem_.addError( 1, moduleNameString_, "I failed to collect generalizations and specifications in the given generalization word" );
 							}
 						}
 					else
-						adminItem_.startErrorInItem( 1, moduleNameString_, "The given previous and current specification words are the same word" );
+						adminItem_.startError( 1, moduleNameString_, "The given previous and current specification words are the same word" );
 					}
 				else
-					adminItem_.startErrorInItem( 1, moduleNameString_, "The given current specification word item is undefined" );
+					adminItem_.startError( 1, moduleNameString_, "The given current specification word item is undefined" );
 				}
 			else
-				adminItem_.startErrorInItem( 1, moduleNameString_, "The given previous specification word item is undefined" );
+				adminItem_.startError( 1, moduleNameString_, "The given previous specification word item is undefined" );
 			}
 		else
-			adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		collectionResult.result = CommonVariables.result;
 		return collectionResult;
@@ -322,7 +322,7 @@ class AdminCollection
 							// Try to find matching specification word
 							if( ( foundSpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( false, false, isPossessive, Constants.NO_QUESTION_PARAMETER, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != null )
 								{
-								// Relation word of a generalization word: proper noun
+								// Relation word of a generalization word: proper name
 								if( ( generalizationResult = currentGeneralizationWordItem.findGeneralization( true, generalizationWordItem ) ).result == Constants.RESULT_OK )
 									{
 									if( !generalizationResult.hasFoundGeneralization )
@@ -339,7 +339,7 @@ class AdminCollection
 											if( collectGeneralizationWords( isExclusiveGeneralization, generalizationWordTypeNr, specificationWordTypeNr, previousGeneralizationWordItem, generalizationWordItem, previousSpecificationWordItem, specificationWordItem ) == Constants.RESULT_OK )
 												hasCollectedGeneralizationWords = true;
 											else
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect generalization words \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" and \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to collect generalization words \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" and \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 											}
 
 										previousGeneralizationWordItem = currentGeneralizationWordItem;
@@ -347,7 +347,7 @@ class AdminCollection
 										}
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find a generalization item" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to find a generalization item" );
 								}
 							}
 						}
@@ -358,17 +358,17 @@ class AdminCollection
 					previousGeneralizationWordItem != null )
 						{
 						if( collectGeneralizationWords( isExclusiveGeneralization, generalizationWordTypeNr, specificationWordTypeNr, previousGeneralizationWordItem, generalizationWordItem, previousSpecificationWordItem, specificationWordItem ) != Constants.RESULT_OK )
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect generalization words \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" and \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to collect generalization words \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" and \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 						}
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't find any generalization word" );
+					return adminItem_.startError( 1, moduleNameString_, "I couldn't find any generalization word" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -396,7 +396,7 @@ class AdminCollection
 								hasFoundCollection = true;
 							}
 						else
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find out if word \"" + previousRelationWordItem.anyWordTypeString() + "\" is collected with word \"" + currentRelationWordItem.anyWordTypeString() + "\"" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to find out if word \"" + previousRelationWordItem.anyWordTypeString() + "\" is collected with word \"" + currentRelationWordItem.anyWordTypeString() + "\"" );
 						}
 
 					if( !hasFoundCollection )
@@ -407,20 +407,20 @@ class AdminCollection
 								collectionNr = collectionResult.createdCollectionNr;
 
 							if( currentRelationWordItem.addCollection( isExclusiveSpecification, false, relationWordTypeNr, commonWordTypeNr, collectionNr, previousRelationWordItem, commonWordItem, null ).result != Constants.RESULT_OK )
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect word \"" + currentRelationWordItem.anyWordTypeString() + "\" with word \"" + previousRelationWordItem.anyWordTypeString() + "\"" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to collect word \"" + currentRelationWordItem.anyWordTypeString() + "\" with word \"" + previousRelationWordItem.anyWordTypeString() + "\"" );
 							}
 						else
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to collect word \"" + previousRelationWordItem.anyWordTypeString() + "\" with word \"" + currentRelationWordItem.anyWordTypeString() + "\"" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to collect word \"" + previousRelationWordItem.anyWordTypeString() + "\" with word \"" + currentRelationWordItem.anyWordTypeString() + "\"" );
 						}
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given previous and current relation words are the same word" );
+					return adminItem_.startError( 1, moduleNameString_, "The given previous and current relation words are the same word" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given current relation word item is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The given current relation word item is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given previous relation word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given previous relation word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}

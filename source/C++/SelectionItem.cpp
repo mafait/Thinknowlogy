@@ -2,11 +2,10 @@
  *	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -148,10 +147,10 @@ class SelectionItem : private Item
 				if( ( specificationString_ = new char[specificationStringLength + 1] ) != NULL )
 					strcpy( specificationString_, specificationString );
 				else
-					startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create a specification string" );
+					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create a specification string" );
 				}
 			else
-				startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given specification string is too long" );
+				startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given specification string is too long" );
 			}
 		}
 
@@ -292,7 +291,7 @@ class SelectionItem : private Item
 		if( generalizationWordItem_ != NULL )
 			{
 			if( ( referenceResult = generalizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addErrorInItem( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the generalization word" );
+				addError( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the generalization word" );
 			}
 
 		if( commonVariables()->result == RESULT_OK &&
@@ -300,7 +299,7 @@ class SelectionItem : private Item
 		specificationWordItem_ != NULL )
 			{
 			if( ( referenceResult = specificationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addErrorInItem( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the specification word" );
+				addError( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the specification word" );
 			}
 
 		if( commonVariables()->result == RESULT_OK &&
@@ -308,7 +307,7 @@ class SelectionItem : private Item
 		relationWordItem_ != NULL )
 			{
 			if( ( referenceResult = relationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addErrorInItem( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the relation word" );
+				addError( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the relation word" );
 			}
 
 		return referenceResult;
@@ -327,7 +326,7 @@ class SelectionItem : private Item
 				referenceResult.hasFoundWordReference = true;
 			}
 		else
-			startErrorInItem( functionNameString, NULL, specificationString_, "The given reference word is undefined" );
+			startError( functionNameString, NULL, specificationString_, "The given reference word is undefined" );
 
 		return referenceResult;
 		}
@@ -681,7 +680,7 @@ class SelectionItem : private Item
 				}
 			}
 		else
-			return startErrorInItem( functionNameString, NULL, specificationString_, "The given solve word item is undefined" );
+			return startError( functionNameString, NULL, specificationString_, "The given solve word item is undefined" );
 
 		return RESULT_OK;
 		}

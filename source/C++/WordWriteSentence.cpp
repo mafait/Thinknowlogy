@@ -2,11 +2,10 @@
  *	Class:			WordWriteSentence
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -82,15 +81,15 @@ class WordWriteSentence
 	ResultType clearWriteLevel( bool isWritingCurrentSpecificationWordOnly, unsigned short currentWriteLevel, SpecificationItem *clearSpecificationItem )
 		{
 		bool isAnsweredQuestion;
-		bool isExclusiveSpecification;
-		bool isNegative;
-		bool isPossessive;
-		bool isSelfGenerated;
-		unsigned short assumptionLevel;
-		unsigned int specificationCollectionNr;
-		unsigned int generalizationContextNr;
-		unsigned int specificationContextNr;
-		unsigned int relationContextNr;
+		bool isExclusiveSpecification = false;
+		bool isNegative = false;
+		bool isPossessive = false;
+		bool isSelfGenerated = false;
+		unsigned short assumptionLevel = NO_ASSUMPTION_LEVEL;
+		unsigned int specificationCollectionNr = NO_COLLECTION_NR;
+		unsigned int generalizationContextNr = NO_CONTEXT_NR;
+		unsigned int specificationContextNr = NO_CONTEXT_NR;
+		unsigned int relationContextNr = NO_CONTEXT_NR;
 		SpecificationItem *currentSpecificationItem;
 		WordItem *currentSpecificationWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "clearWriteLevel";
@@ -103,23 +102,26 @@ class WordWriteSentence
 
 				isAnsweredQuestion = clearSpecificationItem->isAnsweredQuestion();
 
-				// Clear contexts
+				// Clear generalization context
 				if( clearContextWriteLevel( currentWriteLevel, clearSpecificationItem ) == RESULT_OK )
 					{
-					// Clear specification
+					// Clear specification context
 					if( ( currentSpecificationItem = myWordItem_->firstSelectedSpecificationItem( isAnsweredQuestion, clearSpecificationItem->isAssignment(), clearSpecificationItem->isInactiveAssignment(), clearSpecificationItem->isArchivedAssignment(), clearSpecificationItem->questionParameter() ) ) != NULL )
 						{
-						isExclusiveSpecification = clearSpecificationItem->isExclusiveSpecification();
-						isNegative = clearSpecificationItem->isNegative();
-						isPossessive = clearSpecificationItem->isPossessive();
-						isSelfGenerated = clearSpecificationItem->isSelfGenerated();
+						if( !isWritingCurrentSpecificationWordOnly )
+							{
+							isExclusiveSpecification = clearSpecificationItem->isExclusiveSpecification();
+							isNegative = clearSpecificationItem->isNegative();
+							isPossessive = clearSpecificationItem->isPossessive();
+							isSelfGenerated = clearSpecificationItem->isSelfGenerated();
 
-						assumptionLevel = clearSpecificationItem->assumptionLevel();
+							assumptionLevel = clearSpecificationItem->assumptionLevel();
 
-						specificationCollectionNr = clearSpecificationItem->specificationCollectionNr();
-						generalizationContextNr = clearSpecificationItem->generalizationContextNr();
-						specificationContextNr = clearSpecificationItem->specificationContextNr();
-						relationContextNr = clearSpecificationItem->relationContextNr();
+							specificationCollectionNr = clearSpecificationItem->specificationCollectionNr();
+							generalizationContextNr = clearSpecificationItem->generalizationContextNr();
+							specificationContextNr = clearSpecificationItem->specificationContextNr();
+							relationContextNr = clearSpecificationItem->relationContextNr();
+							}
 
 						do	{
 							if( currentSpecificationItem == clearSpecificationItem ||
@@ -151,10 +153,12 @@ class WordWriteSentence
 
 	ResultType cleanupWriteInfo( bool isWritingCurrentSpecificationWordOnly, unsigned short startWriteLevel, size_t startWordPosition, SpecificationItem *clearSpecificationItem )
 		{
+		char tempString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "cleanupWriteInfo";
 		if( strlen( commonVariables_->writeSentenceString ) > startWordPosition )
 			{
-			commonVariables_->writeSentenceString[startWordPosition] = NULL_CHAR;
+			strncat( tempString, commonVariables_->writeSentenceString, startWordPosition );
+			strcpy( commonVariables_->writeSentenceString, tempString );
 
 			if( commonVariables_->currentWriteLevel > startWriteLevel )
 				{
@@ -271,10 +275,10 @@ class WordWriteSentence
 						isSkippingClearWriteLevel_ = false;
 						commonVariables_->currentWriteLevel = NO_WRITE_LEVEL;
 
-						strcpy( commonVariables_->writeSentenceString, EMPTY_STRING );
-
 						myWordItem_->deleteTemporaryWriteList();
 						myWordItem_->initializeWordWriteWordsVariables();
+
+						strcpy( commonVariables_->writeSentenceString, EMPTY_STRING );
 						}
 
 					do	{

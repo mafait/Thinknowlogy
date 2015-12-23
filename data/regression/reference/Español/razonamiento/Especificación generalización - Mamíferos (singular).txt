@@ -1,0 +1,17 @@
+﻿* 
+* Mis conclusiones:
+< Un gato y un perro son mamífero [plural de 'mamífero' es desconocida].
+< 
+* 
+* Mis conclusiones:
+< Una ballena, un gato y un perro son mamífero [plural de 'mamífero' es desconocida].
+< 
+* 
+* Mis conclusiones:
+< Una ballena, un gato y un perro son mamíferos.
+< 
+< Especificaciones:
+< Una ballena es un mamífero.
+< Un perro es un mamífero.
+< Un gato es un mamífero.
+< 

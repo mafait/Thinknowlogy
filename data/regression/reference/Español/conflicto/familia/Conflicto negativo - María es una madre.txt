@@ -1,0 +1,30 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Una madre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< María no es probablemente un padre.
+< María no tiene probablemente un hijo.
+< 
+! 
+! No se acepta esta frase, porque está en conflicto con:
+< María no es una madre.
+< María no es probablemente un padre.
+< 

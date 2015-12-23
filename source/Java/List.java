@@ -1,11 +1,10 @@
 /*
  *	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -43,6 +42,12 @@ class List
 
 
 	// Private methods
+
+	private boolean isAssignmentOrSpecificationList()
+		{
+		return ( listChar_ == Constants.WORD_ASSIGNMENT_LIST_SYMBOL ||
+				listChar_ == Constants.WORD_SPECIFICATION_LIST_SYMBOL );
+		}
 
 	private boolean isIncludingThisList( StringBuffer queryListStringBuffer )
 		{
@@ -99,24 +104,24 @@ class List
 
 	// Protected error methods
 
-	protected byte addError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected byte addError( int methodLevel, String moduleNameString, String errorString )
 		{
-		Presentation.showError( listChar_, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordNameString, ( methodLevel + 1 ), errorString );
+		Presentation.showError( listChar_, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), ( myWordItem_ == null || myWordItem_.isAdminWord() ? null : myWordItem_.anyWordTypeString() ), ( methodLevel + 1 ), errorString );
 		return CommonVariables.result;
 		}
 
-	protected byte startError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected byte startError( int methodLevel, String moduleNameString, String errorString )
 		{
-		addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		addError( ( methodLevel + 1 ), moduleNameString, errorString );
 
 		CommonVariables.result = Constants.RESULT_ERROR;
 
 		return Constants.RESULT_ERROR;
 		}
 
-	protected byte startSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected byte startSystemError( int methodLevel, String moduleNameString, String errorString )
 		{
-		addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		addError( ( methodLevel + 1 ), moduleNameString, errorString );
 
 		CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
 
@@ -133,7 +138,7 @@ class List
 
 	protected ReferenceResultType findWordReference( WordItem referenceWordItem )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return new ReferenceResultType();
 		}
 
@@ -150,10 +155,10 @@ class List
 			{
 			// Always create the list cleanup module
 			if( ( listCleanup_ = new ListCleanup( this ) ) == null )
-				startSystemError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list cleanup module" );
+				startSystemError( 1, null, "I failed to create my list cleanup module" );
 			}
 		else
-			startSystemError( 1, null, null, "The given my word is undefined" );
+			startSystemError( 1, null, "The given my word is undefined" );
 		}
 
 	protected void deleteTemporaryList()
@@ -336,7 +341,7 @@ class List
 							break;
 
 						default:
-							return startError( 1, null, myWordItem_.anyWordTypeString(), "The given status character is unknown" );
+							return startError( 1, null, "The given status character is unknown" );
 						}
 
 					// Sort item in list
@@ -421,7 +426,7 @@ class List
 									break;
 
 								default:
-									return startError( 1, null, myWordItem_.anyWordTypeString(), "The given status character is unknown" );
+									return startError( 1, null, "The given status character is unknown" );
 								}
 							}
 						else
@@ -434,16 +439,16 @@ class List
 							}
 						}
 					else
-						return startError( 1, null, myWordItem_.anyWordTypeString(), "I've found an active item with the same identification" );
+						return startError( 1, null, "I have found an active item with the same identification" );
 					}
 				else
-					return startError( 1, null, myWordItem_.anyWordTypeString(), "The given new item seems to be a part of a list" );
+					return startError( 1, null, "The given new item seems to be a part of a list" );
 				}
 			else
-				return startError( 1, null, myWordItem_.anyWordTypeString(), "The given new item doesn't belong to my list" );
+				return startError( 1, null, "The given new item doesn't belong to my list" );
 			}
 		else
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "The given new item is undefined" );
+			return startError( 1, null, "The given new item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -465,19 +470,19 @@ class List
 								CommonVariables.isAssignmentChanged = true;
 							}
 						else
-							return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to add an item to the active list" );
+							return addError( 1, null, "I failed to add an item to the active list" );
 						}
 					else
-						return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to remove an item from the archive list" );
+						return addError( 1, null, "I failed to remove an item from the archive list" );
 					}
 				else
-					return startError( 1, null, myWordItem_.anyWordTypeString(), "The active sentence number of the given archived item is already assigned" );
+					return startError( 1, null, "The active sentence number of the given archived item is already assigned" );
 				}
 			else
-				return startError( 1, null, myWordItem_.anyWordTypeString(), "The given activate item is already an active item" );
+				return startError( 1, null, "The given activate item is already an active item" );
 			}
 		else
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "The given activate item is undefined" );
+			return startError( 1, null, "The given activate item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -503,22 +508,22 @@ class List
 									CommonVariables.isAssignmentChanged = true;
 								}
 							else
-								return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to add an item to the inactive list" );
+								return addError( 1, null, "I failed to add an item to the inactive list" );
 							}
 						else
-							return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to remove an item from the archive list" );
+							return addError( 1, null, "I failed to remove an item from the archive list" );
 						}
 					else
-						return startError( 1, null, myWordItem_.anyWordTypeString(), "The inactive sentence number of the given archived item is already assigned" );
+						return startError( 1, null, "The inactive sentence number of the given archived item is already assigned" );
 					}
 				else
-					return startError( 1, null, myWordItem_.anyWordTypeString(), "Only assignments, Guide by Grammar items and read items can be inactived" );
+					return startError( 1, null, "Only assignments, Guide by Grammar items and read items can be inactived" );
 				}
 			else
-				return startError( 1, null, myWordItem_.anyWordTypeString(), "The given inactivate item is already an inactive item" );
+				return startError( 1, null, "The given inactivate item is already an inactive item" );
 			}
 		else
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "The given inactivate item is undefined" );
+			return startError( 1, null, "The given inactivate item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -541,19 +546,19 @@ class List
 								CommonVariables.isAssignmentChanged = true;
 							}
 						else
-							return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to add an item to the archived list" );
+							return addError( 1, null, "I failed to add an item to the archived list" );
 						}
 					else
-						return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to remove an item from a list" );
+						return addError( 1, null, "I failed to remove an item from a list" );
 					}
 				else
-					return startError( 1, null, myWordItem_.anyWordTypeString(), "Only assignments can be archived" );
+					return startError( 1, null, "Only assignments can be archived" );
 				}
 			else
-				return startError( 1, null, myWordItem_.anyWordTypeString(), "The given archive item is already an archived item" );
+				return startError( 1, null, "The given archive item is already an archived item" );
 			}
 		else
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "The given archive item is undefined" );
+			return startError( 1, null, "The given archive item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -569,16 +574,16 @@ class List
 					replaceItem.previousStatusChar = replaceItem.statusChar();
 
 					if( addItemToList( Constants.QUERY_REPLACED_CHAR, replaceItem ) != Constants.RESULT_OK )
-						return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to add an item to the replaced list" );
+						return addError( 1, null, "I failed to add an item to the replaced list" );
 					}
 				else
-					return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to remove an item from a list" );
+					return addError( 1, null, "I failed to remove an item from a list" );
 				}
 			else
-				return startError( 1, null, myWordItem_.anyWordTypeString(), "The given replace item is already a replaced item" );
+				return startError( 1, null, "The given replace item is already a replaced item" );
 			}
 		else
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "The given replace item is undefined" );
+			return startError( 1, null, "The given replace item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -592,13 +597,13 @@ class List
 				if( addItemToList( Constants.QUERY_DELETED_CHAR, deleteItem ) == Constants.RESULT_OK )
 					deleteItem.isAvailableForRollbackAfterDelete = isAvailableForRollback;
 				else
-					return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to add an item to the deleted list" );
+					return addError( 1, null, "I failed to add an item to the deleted list" );
 				}
 			else
-				return startError( 1, null, myWordItem_.anyWordTypeString(), "The given delete item is already a deleted item" );
+				return startError( 1, null, "The given delete item is already a deleted item" );
 			}
 		else
-			return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to remove an item from a list" );
+			return addError( 1, null, "I failed to remove an item from a list" );
 
 		return Constants.RESULT_OK;
 		}
@@ -614,7 +619,7 @@ class List
 				if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
 					searchItem = nextListItem_;
 				else
-					return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to delete an active item" );
+					return addError( 1, null, "I failed to delete an active item" );
 				}
 			else
 				searchItem = searchItem.nextItem;
@@ -663,7 +668,7 @@ class List
 						CommonVariables.nDeletedItems++;
 						}
 					else
-						return addError( 1, null, myWordItem_.anyWordTypeString(), "I failed to check an item for its usage" );
+						return addError( 1, null, "I failed to check an item for its usage" );
 					}
 				while( removeItem != null &&
 				// Same sentence number
@@ -673,7 +678,7 @@ class List
 				}
 			}
 		else
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "There is already a range of deleted items" );
+			return startError( 1, null, "There is already a range of deleted items" );
 
 		return Constants.RESULT_OK;
 		}
@@ -710,7 +715,7 @@ class List
 							break;
 
 						default:
-							return startError( 1, null, myWordItem_.anyWordTypeString(), "The given remove item has an unknown status character" );
+							return startError( 1, null, "The given remove item has an unknown status character" );
 						}
 
 					if( removeItem.nextItem != null )
@@ -732,10 +737,10 @@ class List
 				removeItem.nextItem = null;
 				}
 			else
-				return startError( 1, null, myWordItem_.anyWordTypeString(), "The given remove item doesn't belong to my list" );
+				return startError( 1, null, "The given remove item doesn't belong to my list" );
 			}
 		else
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "The given remove item is undefined" );
+			return startError( 1, null, "The given remove item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -850,90 +855,90 @@ class List
 		( listQuery_ = new ListQuery( this ) ) != null )
 			return listQuery_.compareStrings( searchString, sourceString );
 
-		referenceResult.result = startError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list query module" );
+		referenceResult.result = startError( 1, null, "I failed to create my list query module" );
 		return referenceResult;
 		}
 
-	protected byte itemQueryInList( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
+	protected byte itemQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
 		{
 		if( listQuery_ == null &&
 		// Create supporting module
 		( listQuery_ = new ListQuery( this ) ) == null )
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list query module" );
+			return startError( 1, null, "I failed to create my list query module" );
 
-		listQuery_.itemQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr );
+		listQuery_.itemQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr );
 		return Constants.RESULT_OK;
 		}
 
-	protected byte listQueryInList( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, StringBuffer queryListStringBuffer )
+	protected byte listQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, StringBuffer queryListStringBuffer )
 		{
 		boolean isListIncludedInQuery = isIncludingThisList( queryListStringBuffer );
 
-		if( isSelectOnFind ||
+		if( isSelectingOnFind ||
 		!isListIncludedInQuery )
 			{
 			if( listQuery_ == null &&
 			// Create supporting module
 			( listQuery_ = new ListQuery( this ) ) == null )
-				return startError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list query module" );
+				return startError( 1, null, "I failed to create my list query module" );
 
-			listQuery_.listQuery( ( isSelectOnFind && isListIncludedInQuery ), isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems );
+			listQuery_.listQuery( ( isSelectingOnFind && isListIncludedInQuery ), isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems );
 			}
 
 		return Constants.RESULT_OK;
 		}
 
-	protected byte wordTypeQueryInList( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, short queryWordTypeNr )
+	protected byte wordTypeQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, short queryWordTypeNr )
 		{
 		if( listQuery_ == null &&
 		// Create supporting module
 		( listQuery_ = new ListQuery( this ) ) == null )
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list query module" );
+			return startError( 1, null, "I failed to create my list query module" );
 
-		listQuery_.wordTypeQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr );
+		listQuery_.wordTypeQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr );
 		return Constants.RESULT_OK;
 		}
 
-	protected byte parameterQueryInList( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, int queryParameter )
+	protected byte parameterQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, int queryParameter )
 		{
 		if( listQuery_ == null &&
 		// Create supporting module
 		( listQuery_ = new ListQuery( this ) ) == null )
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list query module" );
+			return startError( 1, null, "I failed to create my list query module" );
 
-		listQuery_.parameterQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter );
+		listQuery_.parameterQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter );
 		return Constants.RESULT_OK;
 		}
 
-	protected byte wordQueryInList( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems )
+	protected byte wordQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems )
 		{
 		if( listQuery_ == null &&
 		// Create supporting module
 		( listQuery_ = new ListQuery( this ) ) == null )
-			return startError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list query module" );
+			return startError( 1, null, "I failed to create my list query module" );
 
-		listQuery_.wordQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems );
+		listQuery_.wordQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems );
 		return Constants.RESULT_OK;
 		}
 
-	protected byte wordReferenceQueryInList( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String wordReferenceNameString )
+	protected byte wordReferenceQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
 		{
 		if( listQuery_ != null ||
 		// Create supporting module
 		( listQuery_ = new ListQuery( this ) ) != null )
-			return listQuery_.wordReferenceQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString );
+			return listQuery_.wordReferenceQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, ( isSelectingAttachedJustifications && isAssignmentOrSpecificationList() ), ( isSelectingJustificationSpecifications && isAssignmentOrSpecificationList() ), wordReferenceNameString );
 
-		return startError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list query module" );
+		return startError( 1, null, "I failed to create my list query module" );
 		}
 
-	protected byte stringQueryInList( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String queryString )
+	protected byte stringQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String queryString )
 		{
 		if( listQuery_ != null ||
 		// Create supporting module
 		( listQuery_ = new ListQuery( this ) ) != null )
-			return listQuery_.stringQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString );
+			return listQuery_.stringQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString );
 
-		return startError( 1, null, myWordItem_.anyWordTypeString(), "I failed to create my list query module" );
+		return startError( 1, null, "I failed to create my list query module" );
 		}
 
 	protected byte showQueryResultInList( boolean isOnlyShowingWords, boolean isOnlyShowingWordReferences, boolean isOnlyShowingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )

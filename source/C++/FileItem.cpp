@@ -2,11 +2,10 @@
  *	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -33,15 +32,18 @@ class FileItem : private Item
 	// Private loadable variables
 
 	bool isInfoFile_;
+	bool isTestFile_;
 
 	char *readFileNameString_;
+	char *writeFileNameString_;
 
 	FILE *readFile_;
+	FILE *writeFile_;
 
 	protected:
 	// Constructor / deconstructor
 
-	FileItem( bool isInfoFile, char *readFileNameString, FILE *readFile, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	FileItem( bool isInfoFile, bool isTestFile, char *readFileNameString, char *writeFileNameString, FILE *readFile, FILE *writeFile, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		size_t fileNameStringLength;
 
@@ -50,9 +52,13 @@ class FileItem : private Item
 		// Private loadable variables
 
 		isInfoFile_ = isInfoFile;
+		isTestFile_ = isTestFile;
 
 		readFileNameString_ = NULL;
+		writeFileNameString_ = NULL;
+
 		readFile_ = readFile;
+		writeFile_ = writeFile;
 
 		if( readFile_ != NULL )
 			{
@@ -63,22 +69,39 @@ class FileItem : private Item
 					if( ( readFileNameString_ = new char[fileNameStringLength + 1] ) != NULL )
 						strcpy( readFileNameString_, readFileNameString );
 					else
-						startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the read file name string" );
+						startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the read file name string" );
 					}
 				else
-					startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read file name string is too long" );
+					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read file name string is too long" );
+				}
+
+			if( writeFileNameString != NULL )
+				{
+				if( ( fileNameStringLength = strlen( writeFileNameString ) ) < MAX_SENTENCE_STRING_LENGTH )
+					{
+					if( ( writeFileNameString_ = new char[fileNameStringLength + 1] ) != NULL )
+						strcpy( writeFileNameString_, writeFileNameString );
+					else
+						startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the write file name string" );
+					}
+				else
+					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given write file name string is too long" );
 				}
 			}
 		else
-			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read file is undefined" );
+			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read file is undefined" );
 		}
 
 	~FileItem()
 		{
 		if( readFileNameString_ != NULL )
 			delete readFileNameString_;
+		if( writeFileNameString_ != NULL )
+			delete writeFileNameString_;
 		if( readFile_ != NULL )
 			fclose( readFile_ );
+		if( writeFile_ != NULL )
+			fclose( writeFile_ );
 		}
 
 
@@ -105,7 +128,7 @@ class FileItem : private Item
 
 	virtual bool isSorted( Item *nextSortItem )
 		{
-		// This is a virtual function. Therefore the given variables are unreferenced
+		// This is a virtual function. Therefore, the given variables are unreferenced.
 
 		// Add at the beginning of the list
 		return true;
@@ -121,12 +144,23 @@ class FileItem : private Item
 			strcat( commonVariables()->queryString, "isInfoFile" );
 			}
 
+		if( isTestFile_ )
+			{
+			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
+			strcat( commonVariables()->queryString, "isTestFile" );
+			}
+
 		if( readFileNameString_ != NULL )
 			{
 			sprintf( tempString, "%creadFileNameString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, readFileNameString_, QUERY_STRING_END_CHAR );
 			strcat( commonVariables()->queryString, tempString );
 			}
 
+		if( writeFileNameString_ != NULL )
+			{
+			sprintf( tempString, "%cwriteFileNameString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, writeFileNameString_, QUERY_STRING_END_CHAR );
+			strcat( commonVariables()->queryString, tempString );
+			}
 
 		return commonVariables()->queryString;
 		}
@@ -139,9 +173,19 @@ class FileItem : private Item
 		readFile_ = NULL;
 		}
 
+	void clearWriteFile()
+		{
+		writeFile_ = NULL;
+		}
+
 	bool isInfoFile()
 		{
 		return isInfoFile_;
+		}
+
+	bool isTestFile()
+		{
+		return isTestFile_;
 		}
 
 	char *readFileNameString()
@@ -149,9 +193,19 @@ class FileItem : private Item
 		return readFileNameString_;
 		}
 
+	char *writeFileNameString()
+		{
+		return writeFileNameString_;
+		}
+
 	FILE *readFile()
 		{
 		return readFile_;
+		}
+
+	FILE *writeFile()
+		{
+		return writeFile_;
 		}
 
 	FileItem *nextFileItem()

@@ -2,11 +2,10 @@
  *	Class:			WordWriteWords
  *	Supports class:	WordItem
  *	Purpose:		To write the words of the sentences
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -1152,6 +1151,7 @@ class WordWriteWords
 						case WORD_PARAMETER_NOUN_SOLVE_METHOD:
 						case WORD_PARAMETER_NOUN_SOLVE_STRATEGY:
 						case WORD_PARAMETER_NOUN_STARTUP_LANGUAGE:
+						case WORD_PARAMETER_NOUN_TEST_FILE:
 						case WORD_PARAMETER_NOUN_USER:
 							if( ( !isQuestion ||
 							hasFoundQuestionVerb_ ) &&

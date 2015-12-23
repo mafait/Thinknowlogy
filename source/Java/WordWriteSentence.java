@@ -2,11 +2,10 @@
  *	Class:			WordWriteSentence
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -74,15 +73,15 @@ class WordWriteSentence
 	private byte clearWriteLevel( boolean isWritingCurrentSpecificationWordOnly, short currentWriteLevel, SpecificationItem clearSpecificationItem )
 		{
 		boolean isAnsweredQuestion;
-		boolean isExclusiveSpecification;
-		boolean isNegative;
-		boolean isPossessive;
-		boolean isSelfGenerated;
-		short assumptionLevel;
-		int specificationCollectionNr;
-		int generalizationContextNr;
-		int specificationContextNr;
-		int relationContextNr;
+		boolean isExclusiveSpecification = false;
+		boolean isNegative = false;
+		boolean isPossessive = false;
+		boolean isSelfGenerated = false;
+		short assumptionLevel = Constants.NO_ASSUMPTION_LEVEL;
+		int specificationCollectionNr = Constants.NO_COLLECTION_NR;
+		int generalizationContextNr = Constants.NO_CONTEXT_NR;
+		int specificationContextNr = Constants.NO_CONTEXT_NR;
+		int relationContextNr = Constants.NO_CONTEXT_NR;
 		SpecificationItem currentSpecificationItem;
 		WordItem currentSpecificationWordItem;
 
@@ -94,23 +93,26 @@ class WordWriteSentence
 
 				isAnsweredQuestion = clearSpecificationItem.isAnsweredQuestion();
 
-				// Clear contexts
+				// Clear generalization context
 				if( clearContextWriteLevel( currentWriteLevel, clearSpecificationItem ) == Constants.RESULT_OK )
 					{
-					// Clear specification
+					// Clear specification context
 					if( ( currentSpecificationItem = myWordItem_.firstSelectedSpecificationItem( isAnsweredQuestion, clearSpecificationItem.isAssignment(), clearSpecificationItem.isInactiveAssignment(), clearSpecificationItem.isArchivedAssignment(), clearSpecificationItem.questionParameter() ) ) != null )
 						{
-						isExclusiveSpecification = clearSpecificationItem.isExclusiveSpecification();
-						isNegative = clearSpecificationItem.isNegative();
-						isPossessive = clearSpecificationItem.isPossessive();
-						isSelfGenerated = clearSpecificationItem.isSelfGenerated();
+						if( !isWritingCurrentSpecificationWordOnly )
+							{
+							isExclusiveSpecification = clearSpecificationItem.isExclusiveSpecification();
+							isNegative = clearSpecificationItem.isNegative();
+							isPossessive = clearSpecificationItem.isPossessive();
+							isSelfGenerated = clearSpecificationItem.isSelfGenerated();
 
-						assumptionLevel = clearSpecificationItem.assumptionLevel();
+							assumptionLevel = clearSpecificationItem.assumptionLevel();
 
-						specificationCollectionNr = clearSpecificationItem.specificationCollectionNr();
-						generalizationContextNr = clearSpecificationItem.generalizationContextNr();
-						specificationContextNr = clearSpecificationItem.specificationContextNr();
-						relationContextNr = clearSpecificationItem.relationContextNr();
+							specificationCollectionNr = clearSpecificationItem.specificationCollectionNr();
+							generalizationContextNr = clearSpecificationItem.generalizationContextNr();
+							specificationContextNr = clearSpecificationItem.specificationContextNr();
+							relationContextNr = clearSpecificationItem.relationContextNr();
+							}
 
 						do	{
 							if( currentSpecificationItem == clearSpecificationItem ||
@@ -254,10 +256,10 @@ class WordWriteSentence
 						isSkippingClearWriteLevel_ = false;
 						CommonVariables.currentWriteLevel = Constants.NO_WRITE_LEVEL;
 
-						CommonVariables.writeSentenceStringBuffer = null;
-
 						myWordItem_.deleteTemporaryWriteList();
 						myWordItem_.initializeWordWriteWordsVariables();
+
+						CommonVariables.writeSentenceStringBuffer = null;
 						}
 
 					do	{

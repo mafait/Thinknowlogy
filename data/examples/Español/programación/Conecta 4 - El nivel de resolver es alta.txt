@@ -1,0 +1,4 @@
+﻿Leer el archivo "Español/programación/Conecta 4".
+El nivel de resolver es alta.
+Mi movimiento es D.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

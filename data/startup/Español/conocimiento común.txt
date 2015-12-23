@@ -1,6 +1,8 @@
 ﻿1, 2, 3, 4, 5, 6, 7, 8, 9 y 0 son números.
 Una letra es una letra-minúscula o una letra-mayúscula.
-A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y y z son letras-minúsculas.
-A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y y Z son letras-mayúsculas.
+#A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y y z son letras-minúsculas.
+A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y y z son letra-minúsculas.
+#A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y y Z son letras-mayúsculas.
+A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y y Z son letra-mayúsculas.
 #Negro, azul, marrón, verde, gris, naranja, rosa, púrpura, rojo, blanco y amarillo son los colores.
 Negro, azul, marrón, verde, gris, naranja, rosa, púrpura, rojo, blanco y amarillo son colores.

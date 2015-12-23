@@ -1,0 +1,15 @@
+﻿Read the file "English/reasoning/family/family definition".
+Show the justification report about family.
+Show the justification report about parents.
+Show the justification report about children.
+Show the justification report about father.
+Show the justification report about mother.
+Show the justification report about son.
+Show the justification report about daughter.
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Show the justification report about John.
+Show the justification report about Anna.
+Show the justification report about Paul.
+Show the justification report about Joe.
+Show the justification report about Laura.
+# Remember to clear this knowledge before reading another example.

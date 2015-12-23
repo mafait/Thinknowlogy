@@ -1,0 +1,86 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A parent is probably a person.
+< A father is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< A son is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My assumptions:
+< John is probably a mother.
+< John is probably a woman.
+< John is possibly a person.
+< John is maybe not a man.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* My earlier assumptions that are corrected by knowledge:
+< John is probably a mother.
+< John is probably a woman.
+< John is maybe not a man.
+* 
+* Your questions that are answered:
+< Is John the mother of Paul?
+* 
+* My assumptions that are adjusted:
+< John is probably a person.
+* 
+* My conclusions:
+< John is a man.
+< Paul has a father, called John.
+< Joe has a father, called John.
+< Laura has a father, called John.
+* 
+* My assumptions:
+< John is probably not a woman.
+< John is probably a parent of Paul, Joe and Laura.
+< John is probably part of a family.
+< John is probably not a mother.
+< John has probably 3 children, called Paul, Joe and Laura.
+< John has possibly a daughter, called Laura.
+< Paul has probably a parent, called John.
+< Paul is probably a child of John.
+< Paul is probably part of a family.
+< Paul is possibly a person.
+< Joe has probably a parent, called John.
+< Joe is probably a child of John.
+< Joe is probably part of a family.
+< Joe is possibly a person.
+< Laura has probably a parent, called John.
+< Laura is probably a child of John.
+< Laura is probably part of a family.
+< Laura is possibly a person.
+< Laura is maybe not a man.
+< Laura is possibly a daughter of John.
+< Laura is maybe not a boy and not a man.
+< Laura is maybe not a son.
+* 
+* My questions:
+< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a son or a daughter?
+< Is Joe a man, a woman, a girl or a boy?
+< Is Joe a son or a daughter?
+< Is Laura a girl or a woman?
+< 

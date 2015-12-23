@@ -1,6 +1,12 @@
-﻿# User who is allowed to enter free text.
+﻿# Expert is allowed to enter free text.
+#Expert is a user and his password is expert123.
 Expert is a user and has no password.
 Expert is an expert.
 
+# Developer is allowed to enter free text and to run regression tests.
+#Developer is a user and his password is developer123.
+Developer is a user and has no password.
+Developer is a developer.
+
 # Default user.
-#Java#Guest is a user and has no password.
+Guest is a user and has no password.

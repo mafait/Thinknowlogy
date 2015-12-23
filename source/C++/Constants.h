@@ -1,11 +1,10 @@
 ﻿/*
  *	Class:			Constants
  *	Purpose:		Header file to define constants
- *	Version:		Thinknowlogy 2015r1beta (Coraz�n)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -30,312 +29,326 @@
 	typedef signed char ResultType;
 
 	// Version constants
-	#define PRODUCT_NAME										"Thinknowlogy"
-	#define VERSION_NAME										"2015r1beta (Corazón)"
+	#define PRODUCT_NAME												"Thinknowlogy"
+	#define VERSION_NAME												"2015r1 (Esperanza)"
 
 	// Character constants
-	#define	NULL_CHAR											'\0'
-	#define	BACK_SPACE_CHAR										'\b'
-	#define	BELL_CHAR											'\a'
-	#define	NEW_LINE_CHAR										'\n'
-	#define	CARRIAGE_RETURN_CHAR								'\r'
-	#define	TAB_CHAR											'\t'
-	#define	MAX_ERROR_STRING_LENGTH								500
-	#define	MAX_SENTENCE_STRING_LENGTH							2000
+	#define	BACK_SPACE_CHAR												'\b'
+	#define	BELL_CHAR													'\a'
+	#define	NEW_LINE_CHAR												'\n'
+	#define	CARRIAGE_RETURN_CHAR										'\r'
+	#define	TAB_CHAR													'\t'
+	#define	MAX_ERROR_STRING_LENGTH										500
+	#define	MAX_SENTENCE_STRING_LENGTH									2000
 
 	// File constants
-	#define	FILE_EXAMPLES_DIRECTORY_NAME_STRING					"data/examples/"
-	#define	FILE_GRAMMAR_DIRECTORY_NAME_STRING					"data/grammar/"
-	#define	FILE_INFO_DIRECTORY_NAME_STRING						"data/info/"
-	#define	FILE_INTERFACE_DIRECTORY_NAME_STRING				"data/interface/"
-	#define	FILE_STARTUP_DIRECTORY_NAME_STRING					"data/startup/"
-	#define	FILE_STARTUP_NAME_STRING							"startup"
-	#define	FILE_EXTENSION_STRING								".txt"
-	#define	FILE_ATTRIBUTES_READ_TEXT_UTF_8						"rt+, ccs=UTF-8"
-	#define	FILE_UTF_8_BOM_LENGTH								3
-	#define	FILE_UTF_8_BOM_CHAR_1								0xFFEF
-	#define	FILE_UTF_8_BOM_CHAR_2								0xFFBB
-	#define	FILE_UTF_8_BOM_CHAR_3								0xFFBF
+	#define	FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING					"data/examples/"
+	#define	FILE_DATA_GRAMMAR_DIRECTORY_NAME_STRING						"data/grammar/"
+	#define	FILE_DATA_INFO_DIRECTORY_NAME_STRING						"data/info/"
+	#define	FILE_DATA_INTERFACE_DIRECTORY_NAME_STRING					"data/interface/"
+	#define	FILE_DATA_STARTUP_DIRECTORY_NAME_STRING						"data/startup/"
+	#define	FILE_DATA_REGRESSION_TEST_OUTPUT_DIRECTORY_NAME_STRING		"data/regression/output/"
+	#define	FILE_DATA_REGRESSION_TEST_REFERENCE_DIRECTORY_NAME_STRING	"data/regression/reference/"
+
+	#define	FILE_STARTUP_NAME_STRING									"startup"
+	#define	FILE_WINDOWS_VERSION_STRING									"Español"
+	#define	FILE_EXTENSION_STRING										".txt"
+	#define	FILE_ATTRIBUTES_READ_TEXT_UTF_8								"rt+, ccs=UTF-8"
+	#define	FILE_ATTRIBUTES_WRITE_TEXT_UTF_8							"wt+, ccs=UTF-8"
+	#define	FILE_UTF_8_BOM_LENGTH										3
+	#define	FILE_UTF_8_BOM_CHAR_1										0xFFEF
+	#define	FILE_UTF_8_BOM_CHAR_2										0xFFBB
+	#define	FILE_UTF_8_BOM_CHAR_3										0xFFBF
 
 	// Grammar constants
-	#define	GRAMMAR_CHOICE_START								SYMBOL_OPEN_CURVED_BRACKET
-	#define	GRAMMAR_CHOICE_END									SYMBOL_CLOSE_CURVED_BRACKET
-	#define	GRAMMAR_OPTION_START								SYMBOL_OPEN_SQUARE_BRACKET
-	#define	GRAMMAR_OPTION_END									SYMBOL_CLOSE_SQUARE_BRACKET
-	#define	GRAMMAR_OPTION_READ_NOT_WRITE_START					SYMBOL_OPEN_ROUNDED_BRACKET
-	#define	GRAMMAR_OPTION_READ_NOT_WRITE_END					SYMBOL_CLOSE_ROUNDED_BRACKET
+	#define	GRAMMAR_CHOICE_START										SYMBOL_OPEN_CURVED_BRACKET
+	#define	GRAMMAR_CHOICE_END											SYMBOL_CLOSE_CURVED_BRACKET
+	#define	GRAMMAR_OPTION_START										SYMBOL_OPEN_SQUARE_BRACKET
+	#define	GRAMMAR_OPTION_END											SYMBOL_CLOSE_SQUARE_BRACKET
+	#define	GRAMMAR_OPTION_READ_NOT_WRITE_START							SYMBOL_OPEN_ROUNDED_BRACKET
+	#define	GRAMMAR_OPTION_READ_NOT_WRITE_END							SYMBOL_CLOSE_ROUNDED_BRACKET
 
 	// Initialization constants
-	#define	NO_ASSIGNMENT_LEVEL									0
-	#define	NO_ASSUMPTION_LEVEL									0
-	#define	NO_GRAMMAR_LEVEL									0
-	#define	NO_SELECTION_LEVEL									0
-	#define	NO_SOLVE_LEVEL										0
-	#define	NO_WRITE_LEVEL										0
-	#define	NO_LANGUAGE_NR										0
-	#define	NO_ORDER_NR											0
-	#define	NO_USER_NR											0
+	#define	NO_ASSIGNMENT_LEVEL											0
+	#define	NO_ASSUMPTION_LEVEL											0
+	#define	NO_GRAMMAR_LEVEL											0
+	#define	NO_SELECTION_LEVEL											0
+	#define	NO_SOLVE_LEVEL												0
+	#define	NO_WRITE_LEVEL												0
+	#define	NO_LANGUAGE_NR												0
+	#define	NO_ORDER_NR													0
+	#define	NO_USER_NR													0
 
-	#define	NO_ADJECTIVE_PARAMETER								0
-	#define	NO_ANSWER_PARAMETER									0
-	#define	NO_ASSIGNMENT_PARAMETER								0
-	#define	NO_DEFINITE_ARTICLE_PARAMETER						0
-	#define	NO_GRAMMAR_PARAMETER								0
-	#define	NO_IMPERATIVE_PARAMETER								0
-	#define	NO_INDEFINITE_ARTICLE_PARAMETER						0
-	#define	NO_INTERFACE_PARAMETER								0
-	#define	NO_PREPOSITION_PARAMETER							0
-	#define	NO_QUESTION_PARAMETER								0
-	#define	NO_SOLVE_STRATEGY_PARAMETER							0
-	#define	NO_WORD_PARAMETER									0
+	#define	NO_ADJECTIVE_PARAMETER										0
+	#define	NO_ANSWER_PARAMETER											0
+	#define	NO_ASSIGNMENT_PARAMETER										0
+	#define	NO_DEFINITE_ARTICLE_PARAMETER								0
+	#define	NO_GRAMMAR_PARAMETER										0
+	#define	NO_IMPERATIVE_PARAMETER										0
+	#define	NO_INDEFINITE_ARTICLE_PARAMETER								0
+	#define	NO_INTERFACE_PARAMETER										0
+	#define	NO_PREPOSITION_PARAMETER									0
+	#define	NO_QUESTION_PARAMETER										0
+	#define	NO_SOLVE_STRATEGY_PARAMETER									0
+	#define	NO_WORD_PARAMETER											0
 
-	#define	NO_LIST_NR											USHRT_MAX
-	#define	MAX_LEVEL											USHRT_MAX
-	#define	MAX_ORDER_NR										USHRT_MAX
-	#define	MAX_POSITION										USHRT_MAX
+	#define	NO_LIST_NR													USHRT_MAX
+	#define	MAX_LEVEL													USHRT_MAX
+	#define	MAX_ORDER_NR												USHRT_MAX
+	#define	MAX_POSITION												USHRT_MAX
 
-	#define	NO_CENTER_WIDTH										0
-	#define	NO_COLLECTION_NR									0
-	#define	NO_CONTEXT_NR										0
-	#define	NO_ITEM_NR											0
-	#define	NO_SCORE											0
-	#define	NO_SENTENCE_NR										0
+	#define	NO_CENTER_WIDTH												0
+	#define	NO_COLLECTION_NR											0
+	#define	NO_CONTEXT_NR												0
+	#define	NO_ITEM_NR													0
+	#define	NO_SCORE													0
+	#define	NO_SENTENCE_NR												0
 
-	#define	MAX_COLLECTION_NR									UINT_MAX
-	#define	MAX_CONTEXT_NR										UINT_MAX
-	#define	MAX_ITEM_NR											UINT_MAX
-	#define	MAX_NUMBER											UINT_MAX
-	#define	MAX_PROGRESS										UINT_MAX
-	#define	MAX_QUERY_PARAMETER									UINT_MAX
-	#define	MAX_SCORE											UINT_MAX
-	#define	MAX_SENTENCE_NR										UINT_MAX
-	#define	WINNING_SCORE										UINT_MAX
+	#define	MAX_COLLECTION_NR											UINT_MAX
+	#define	MAX_CONTEXT_NR												UINT_MAX
+	#define	MAX_ITEM_NR													UINT_MAX
+	#define	MAX_NUMBER													UINT_MAX
+	#define	MAX_PROGRESS												UINT_MAX
+	#define	MAX_QUERY_PARAMETER											UINT_MAX
+	#define	MAX_SCORE													UINT_MAX
+	#define	MAX_SENTENCE_NR												UINT_MAX
+	#define	WINNING_SCORE												UINT_MAX
 
 
 	// Presentation error constants
-	#define	PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME		"<init>"
-	#define	PRESENTATION_ERROR_CURRENT_ID_START_STRING			"\nCurrent item id: "
-	#define	PRESENTATION_ERROR_CURRENT_ID_END_STRING			".\n"
-	#define	PRESENTATION_ERROR_CLASS_STRING						"\nClass: "
-	#define	PRESENTATION_ERROR_SUPERCLASS_STRING				" / superclass "
-	#define	PRESENTATION_ERROR_FUNCTION_STRING					".\nFunction: "
-	#define	PRESENTATION_ERROR_FUNCTION_WORD_START_STRING		" of word \""
-	#define	PRESENTATION_ERROR_FUNCTION_WORD_END_STRING			"\""
-	#define	PRESENTATION_ERROR_FUNCTION_LIST_START_STRING		" in list <"
-	#define	PRESENTATION_ERROR_FUNCTION_LIST_END_STRING			">"
-	#define	PRESENTATION_ERROR_STRING							".\nError: "
+	#define	PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME				"<init>"
+	#define	PRESENTATION_ERROR_CURRENT_ID_START_STRING					"\nCurrent item id: "
+	#define	PRESENTATION_ERROR_CURRENT_ID_END_STRING					".\n"
+	#define	PRESENTATION_ERROR_CLASS_STRING								"\nClass: "
+	#define	PRESENTATION_ERROR_SUPERCLASS_STRING						" / superclass "
+	#define	PRESENTATION_ERROR_FUNCTION_STRING							".\nFunction: "
+	#define	PRESENTATION_ERROR_FUNCTION_WORD_START_STRING				" of word \""
+	#define	PRESENTATION_ERROR_FUNCTION_WORD_END_STRING					"\""
+	#define	PRESENTATION_ERROR_FUNCTION_LIST_START_STRING				" in list <"
+	#define	PRESENTATION_ERROR_FUNCTION_LIST_END_STRING					">"
+	#define	PRESENTATION_ERROR_STRING									".\nError: "
 
 
 	// Presentation prompt constants
-	#define PRESENTATION_PROMPT_READ							0
-	#define PRESENTATION_PROMPT_WRITE							1
-	#define	PRESENTATION_PROMPT_INFO							3
-	#define	PRESENTATION_PROMPT_NOTIFICATION					4
-	#define PRESENTATION_PROMPT_WARNING							5
-	#define PRESENTATION_PROMPT_QUERY							6
-//	#define PRESENTATION_PROMPT_ENTER							7
+	#define PRESENTATION_PROMPT_READ									0
+	#define PRESENTATION_PROMPT_WRITE									1
+	#define PRESENTATION_PROMPT_WRITE_INDENTED							2
+	#define	PRESENTATION_PROMPT_INFO									4
+	#define	PRESENTATION_PROMPT_NOTIFICATION							5
+	#define PRESENTATION_PROMPT_WARNING									6
+	#define PRESENTATION_PROMPT_WARNING_INDENTED						7
+	#define PRESENTATION_PROMPT_QUERY									8
+//	#define PRESENTATION_PROMPT_ENTER									9
 
-	#define	PRESENTATION_PROMPT_READ_STRING						"> "
-	#define	PRESENTATION_PROMPT_WRITE_STRING					"< "
-	#define	PRESENTATION_PROMPT_INFO_STRING						""
-	#define	PRESENTATION_PROMPT_NOTIFICATION_STRING				"* "
-	#define	PRESENTATION_PROMPT_WARNING_STRING					"! "
-	#define	PRESENTATION_PROMPT_QUERY_STRING					"? "
-	#define	PRESENTATION_PROMPT_ENTER_STRING					": "
-	#define	PRESENTATION_PROMPT_EMPTY_STRING					"  "
+	#define	PRESENTATION_PROMPT_READ_STRING								"> "
+	#define	PRESENTATION_PROMPT_WRITE_STRING							"< "
+	#define	PRESENTATION_PROMPT_WRITE_INDENTED_STRING					"<	- "
+	#define	PRESENTATION_PROMPT_INFO_STRING								""
+	#define	PRESENTATION_PROMPT_NOTIFICATION_STRING						"* "
+	#define	PRESENTATION_PROMPT_WARNING_STRING							"! "
+	#define	PRESENTATION_PROMPT_WARNING_INDENTED_STRING					"!	- "
+	#define	PRESENTATION_PROMPT_QUERY_STRING							"? "
+	#define	PRESENTATION_PROMPT_ENTER_STRING							": "
+	#define	PRESENTATION_PROMPT_EMPTY_STRING							"  "
 
-	#define	PRESENTATION_SKIP_COMMENT_STRING					"#Java#"
-	#define	PRESENTATION_STRIP_COMMENT_STRING					"#C++#"
+	#define	PRESENTATION_SKIP_COMMENT_STRING							"#Java#"
+	#define	PRESENTATION_STRIP_COMMENT_STRING							"#C++#"
 
 	// Query constants
-	#define	COMMENT_CHAR										SYMBOL_HASH
-	#define	GRAMMAR_WORD_DEFINITION_CHAR						SYMBOL_DOLLAR
+	#define	COMMENT_CHAR												SYMBOL_HASH
+	#define	GRAMMAR_WORD_DEFINITION_CHAR								SYMBOL_DOLLAR
 
-	#define	QUERY_CHAR											SYMBOL_SWUNG_DASH
-	#define	QUERY_COUNT_CHAR									SYMBOL_HASH
-	#define	QUERY_NO_LIST_CHAR									SYMBOL_QUESTION_MARK
-	#define	QUERY_WORD_TYPE_CHAR								SYMBOL_AT_SIGN
-	#define	QUERY_PARAMETER_CHAR								SYMBOL_DOUBLE_COLON
-	#define	QUERY_ACTIVE_CHAR									SYMBOL_EXCLAMATION_MARK
-	#define	QUERY_INACTIVE_CHAR									SYMBOL_ASTERISK
-	#define	QUERY_ARCHIVED_CHAR									SYMBOL_DOLLAR
-	#define	QUERY_REPLACED_CHAR									SYMBOL_PERCENT
-	#define	QUERY_DELETED_CHAR									SYMBOL_AMPERSAND
-	#define	QUERY_SEPARATOR_CHAR								SYMBOL_COMMA
-	#define	QUERY_ITEM_START_CHAR								SYMBOL_OPEN_ROUNDED_BRACKET
-	#define	QUERY_ITEM_END_CHAR									SYMBOL_CLOSE_ROUNDED_BRACKET
-	#define	QUERY_ITEM_SENTENCE_NR_START_CHAR					SYMBOL_OPEN_CURVED_BRACKET
-	#define	QUERY_ITEM_SENTENCE_NR_END_CHAR						SYMBOL_CLOSE_CURVED_BRACKET
-	#define	QUERY_REF_ITEM_START_CHAR							SYMBOL_OPEN_SQUARE_BRACKET
-	#define	QUERY_REF_ITEM_END_CHAR								SYMBOL_CLOSE_SQUARE_BRACKET
-	#define	QUERY_LIST_START_CHAR								SYMBOL_OPEN_HOOKED_BRACKET
-	#define	QUERY_LIST_END_CHAR									SYMBOL_CLOSE_HOOKED_BRACKET
-	#define	QUERY_WORD_START_CHAR								SYMBOL_QUOTE
-	#define	QUERY_WORD_END_CHAR									SYMBOL_QUOTE
-	#define	QUERY_WORD_REFERENCE_START_CHAR						SYMBOL_BACK_QUOTE
-	#define	QUERY_WORD_REFERENCE_END_CHAR						SYMBOL_BACK_QUOTE
-	#define	QUERY_STRING_START_CHAR								SYMBOL_DOUBLE_QUOTE
-	#define	QUERY_STRING_END_CHAR								SYMBOL_DOUBLE_QUOTE
+	#define	QUERY_CHAR													SYMBOL_SWUNG_DASH
+	#define	QUERY_COUNT_CHAR											SYMBOL_HASH
+	#define	QUERY_SELECTING_ATTACHED_JUSTIFICATIONS_CHAR				SYMBOL_ASTERISK
+	#define	QUERY_NO_LIST_CHAR											SYMBOL_QUESTION_MARK
+	#define	QUERY_WORD_TYPE_CHAR										SYMBOL_AT_SIGN
+	#define	QUERY_PARAMETER_CHAR										SYMBOL_DOUBLE_COLON
+	#define	QUERY_ACTIVE_CHAR											SYMBOL_PLUS
+	#define	QUERY_INACTIVE_CHAR											SYMBOL_EQUALITY
+	#define	QUERY_ARCHIVED_CHAR											SYMBOL_DOLLAR
+	#define	QUERY_REPLACED_CHAR											SYMBOL_PERCENT
+	#define	QUERY_DELETED_CHAR											SYMBOL_AMPERSAND
+	#define	QUERY_SEPARATOR_CHAR										SYMBOL_COMMA
+	#define	QUERY_ITEM_START_CHAR										SYMBOL_OPEN_ROUNDED_BRACKET
+	#define	QUERY_ITEM_END_CHAR											SYMBOL_CLOSE_ROUNDED_BRACKET
+	#define	QUERY_ITEM_SENTENCE_NR_START_CHAR							SYMBOL_OPEN_CURVED_BRACKET
+	#define	QUERY_ITEM_SENTENCE_NR_END_CHAR								SYMBOL_CLOSE_CURVED_BRACKET
+	#define	QUERY_REF_ITEM_START_CHAR									SYMBOL_OPEN_SQUARE_BRACKET
+	#define	QUERY_REF_ITEM_END_CHAR										SYMBOL_CLOSE_SQUARE_BRACKET
+	#define	QUERY_LIST_START_CHAR										SYMBOL_OPEN_HOOKED_BRACKET
+	#define	QUERY_LIST_END_CHAR											SYMBOL_CLOSE_HOOKED_BRACKET
+	#define	QUERY_WORD_START_CHAR										SYMBOL_QUOTE
+	#define	QUERY_WORD_END_CHAR											SYMBOL_QUOTE
+	#define	QUERY_WORD_REFERENCE_START_CHAR								SYMBOL_BACK_QUOTE
+	#define	QUERY_WORD_REFERENCE_END_CHAR								SYMBOL_BACK_QUOTE
+	#define	QUERY_STRING_START_CHAR										SYMBOL_DOUBLE_QUOTE
+	#define	QUERY_STRING_END_CHAR										SYMBOL_DOUBLE_QUOTE
 
-	#define	QUERY_SEPARATOR_SPACE_STRING						", "
-	#define	QUERY_SEPARATOR_STRING								","
+	#define	QUERY_SEPARATOR_SPACE_STRING								", "
+	#define	QUERY_SEPARATOR_STRING										","
 
-	#define	TEXT_BELL_CHAR										'a'
-	#define	TEXT_BACK_SPACE_CHAR								'b'
-	#define TEXT_NEW_LINE_CHAR									'n'
-	#define	TEXT_TAB_CHAR										't'
-	#define	TEXT_DIACRITICAL_CHAR								SYMBOL_BACK_SLASH
+	#define	TEXT_BELL_CHAR												'a'
+	#define	TEXT_BACK_SPACE_CHAR										'b'
+	#define TEXT_NEW_LINE_CHAR											'n'
+	#define	TEXT_TAB_CHAR												't'
+	#define	TEXT_DIACRITICAL_CHAR										SYMBOL_BACK_SLASH
 
 	// Result constants
-	#define	RESULT_OK											1
-	#define	RESULT_ERROR										0
-	#define	RESULT_SYSTEM_ERROR									-1
+	#define	RESULT_OK													1
+	#define	RESULT_ERROR												0
+	#define	RESULT_SYSTEM_ERROR											-1
 
 	// Screen constants
-	#define	TAB_LENGTH											8
-	#define	NUMBER_OF_CONSOLE_COLUMNS							80
+	#define	TAB_LENGTH													8
+	#define	NUMBER_OF_CONSOLE_COLUMNS									80
 
 	// String constants
-	#define	ASTERISK_STRING										"*"
-	#define	COLON_STRING										"."
-	#define	EMPTY_STRING										""
-	#define	SLASH_STRING										"/"
-	#define	SPACE_STRING										" "
-	#define	BELL_STRING											"\a"
-	#define	CARRIAGE_RETURN_STRING								"\r"
-	#define	NEW_LINE_STRING										"\n"
-	#define	EMPTY_WIDE_STRING									L""
-	#define	SPACE_WIDE_STRING									L" "
+	#define	ASTERISK_STRING												"*"
+	#define	COLON_STRING												"."
+	#define	EMPTY_STRING												""
+	#define	SLASH_STRING												"/"
+	#define	SPACE_STRING												" "
+	#define	BELL_STRING													"\a"
+	#define	CARRIAGE_RETURN_STRING										"\r"
+	#define	NEW_LINE_STRING												"\n"
+	#define	EMPTY_WIDE_STRING											L""
+	#define	SPACE_WIDE_STRING											L" "
 
 	// Symbol constants
-	#define	SYMBOL_COMMA										','
-	#define	SYMBOL_COLON										'.'
-	#define	SYMBOL_SEMI_COLON									';'
-	#define	SYMBOL_DOUBLE_COLON									':'
-	#define	SYMBOL_EXCLAMATION_MARK								'!'
-#ifdef _MSC_VER		// MS Visual Studio has no problems with wide-characters
-	#define	SYMBOL_EXCLAMATION_MARK_INVERTED					'¡'
+	#define	SYMBOL_COMMA												','
+	#define	SYMBOL_COLON												'.'
+	#define	SYMBOL_SEMI_COLON											';'
+	#define	SYMBOL_DOUBLE_COLON											':'
+	#define	SYMBOL_EXCLAMATION_MARK										'!'
+#ifdef _MSC_VER
+	// MS Visual Studio
+	#define	SYMBOL_EXCLAMATION_MARK_INVERTED							'¡'
 #else
-	#define	SYMBOL_EXCLAMATION_MARK_INVERTED					'!'
+	// Alternative for wide character
+	#define	SYMBOL_EXCLAMATION_MARK_INVERTED							'!'
 #endif
-	#define	SYMBOL_QUESTION_MARK								'?'
-#ifdef _MSC_VER		// MS Visual Studio has no problems with wide-characters
-	#define	SYMBOL_QUESTION_MARK_INVERTED						'¿'
+	#define	SYMBOL_QUESTION_MARK										'?'
+#ifdef _MSC_VER
+	// MS Visual Studio
+	#define	SYMBOL_QUESTION_MARK_INVERTED								'¿'
 #else
-	#define	SYMBOL_QUESTION_MARK_INVERTED						'?'
+	// Alternative for wide character
+	#define	SYMBOL_QUESTION_MARK_INVERTED								'?'
 #endif
-	#define	SYMBOL_PIPE											'|'
-	#define	SYMBOL_AMPERSAND									'&'
-	#define	SYMBOL_HASH											'#'
-	#define	SYMBOL_SWUNG_DASH									'~'
-	#define	SYMBOL_AT_SIGN										'@'
-	#define	SYMBOL_ASTERISK										'*'
-	#define	SYMBOL_PERCENT										'%'
-	#define	SYMBOL_DOLLAR										'$'
-	#define	SYMBOL_SLASH										'/'
-	#define	SYMBOL_BACK_SLASH									'\\'
-	#define	SYMBOL_QUOTE										'\''
-	#define	SYMBOL_BACK_QUOTE									'`'
-	#define	SYMBOL_DOUBLE_QUOTE									'"'
-	#define	SYMBOL_OPEN_ROUNDED_BRACKET							'('
-	#define	SYMBOL_CLOSE_ROUNDED_BRACKET						')'
-	#define	SYMBOL_OPEN_CURVED_BRACKET							'{'
-	#define	SYMBOL_CLOSE_CURVED_BRACKET							'}'
-	#define	SYMBOL_OPEN_HOOKED_BRACKET							'<'
-	#define	SYMBOL_CLOSE_HOOKED_BRACKET							'>'
-	#define	SYMBOL_OPEN_SQUARE_BRACKET							'['
-	#define	SYMBOL_CLOSE_SQUARE_BRACKET							']'
+	#define	SYMBOL_PLUS													'+'
+	#define	SYMBOL_EQUALITY												'='
+	#define	SYMBOL_PIPE													'|'
+	#define	SYMBOL_AMPERSAND											'&'
+	#define	SYMBOL_HASH													'#'
+	#define	SYMBOL_SWUNG_DASH											'~'
+	#define	SYMBOL_AT_SIGN												'@'
+	#define	SYMBOL_ASTERISK												'*'
+	#define	SYMBOL_PERCENT												'%'
+	#define	SYMBOL_DOLLAR												'$'
+	#define	SYMBOL_SLASH												'/'
+	#define	SYMBOL_BACK_SLASH											'\\'
+	#define	SYMBOL_QUOTE												'\''
+	#define	SYMBOL_BACK_QUOTE											'`'
+	#define	SYMBOL_DOUBLE_QUOTE											'"'
+	#define	SYMBOL_OPEN_ROUNDED_BRACKET									'('
+	#define	SYMBOL_CLOSE_ROUNDED_BRACKET								')'
+	#define	SYMBOL_OPEN_CURVED_BRACKET									'{'
+	#define	SYMBOL_CLOSE_CURVED_BRACKET									'}'
+	#define	SYMBOL_OPEN_HOOKED_BRACKET									'<'
+	#define	SYMBOL_CLOSE_HOOKED_BRACKET									'>'
+	#define	SYMBOL_OPEN_SQUARE_BRACKET									'['
+	#define	SYMBOL_CLOSE_SQUARE_BRACKET									']'
 
 
 	// Administrator initialization constants
 
-	#define	ADMIN_FILE_LIST										0
-	#define	ADMIN_READ_LIST										2
-	#define	ADMIN_SCORE_LIST									3
-	#define	ADMIN_WORD_LIST										4
-	#define	ADMIN_CONDITION_LIST								5		// SelectionItem
-	#define	ADMIN_ACTION_LIST									6		// SelectionItem
-	#define	ADMIN_ALTERNATIVE_LIST								7		// SelectionItem
-	#define	NUMBER_OF_ADMIN_LISTS								8
+	#define	ADMIN_FILE_LIST												0
+	#define	ADMIN_READ_LIST												2
+	#define	ADMIN_SCORE_LIST											3
+	#define	ADMIN_WORD_LIST												4
+	#define	ADMIN_CONDITION_LIST										5		// SelectionItem
+	#define	ADMIN_ACTION_LIST											6		// SelectionItem
+	#define	ADMIN_ALTERNATIVE_LIST										7		// SelectionItem
+	#define	NUMBER_OF_ADMIN_LISTS										8
 
-	#define	ADMIN_FILE_LIST_SYMBOL								'F'
-	#define	ADMIN_READ_LIST_SYMBOL								'R'
-	#define	ADMIN_SCORE_LIST_SYMBOL								'S'
-	#define	ADMIN_WORD_LIST_SYMBOL								'W'
-	#define	ADMIN_CONDITION_LIST_SYMBOL							'X'		// SelectionItem
-	#define	ADMIN_ACTION_LIST_SYMBOL							'Y'		// SelectionItem
-	#define	ADMIN_ALTERNATIVE_LIST_SYMBOL						'Z'		// SelectionItem
+	#define	ADMIN_FILE_LIST_SYMBOL										'F'
+	#define	ADMIN_READ_LIST_SYMBOL										'R'
+	#define	ADMIN_SCORE_LIST_SYMBOL										'S'
+	#define	ADMIN_WORD_LIST_SYMBOL										'W'
+	#define	ADMIN_CONDITION_LIST_SYMBOL									'X'		// SelectionItem
+	#define	ADMIN_ACTION_LIST_SYMBOL									'Y'		// SelectionItem
+	#define	ADMIN_ALTERNATIVE_LIST_SYMBOL								'Z'		// SelectionItem
 
 	// Word initialization constants
 
-	#define	WORD_ASSIGNMENT_LIST								0		// SpecificationItem
-	#define	WORD_COLLECTION_LIST								1
-	#define	WORD_GENERALIZATION_LIST							2
-	#define	WORD_INTERFACE_LIST									3
-	#define	WORD_JUSTIFICATION_LIST								4
-	#define	WORD_GRAMMAR_LIST									5
-	#define	WORD_MULTIPLE_WORD_LIST								6
-	#define	WORD_WRITE_LIST										7
-	#define	WORD_SPECIFICATION_LIST								8
-	#define	WORD_TYPE_LIST										9
-	#define	WORD_CONTEXT_LIST									10
-	#define	NUMBER_OF_WORD_LISTS								11
+	#define	WORD_ASSIGNMENT_LIST										0		// SpecificationItem
+	#define	WORD_COLLECTION_LIST										1
+	#define	WORD_GENERALIZATION_LIST									2
+	#define	WORD_INTERFACE_LIST											3
+	#define	WORD_JUSTIFICATION_LIST										4
+	#define	WORD_GRAMMAR_LIST											5
+	#define	WORD_MULTIPLE_WORD_LIST										6
+	#define	WORD_WRITE_LIST												7
+	#define	WORD_SPECIFICATION_LIST										8
+	#define	WORD_TYPE_LIST												9
+	#define	WORD_CONTEXT_LIST											10
+	#define	NUMBER_OF_WORD_LISTS										11
 
-	#define	WORD_ASSIGNMENT_LIST_SYMBOL							'a'		// SpecificationItem
-	#define	WORD_COLLECTION_LIST_SYMBOL							'c'
-	#define	WORD_GENERALIZATION_LIST_SYMBOL						'g'
-	#define	WORD_INTERFACE_LIST_SYMBOL							'i'
-	#define	WORD_JUSTIFICATION_LIST_SYMBOL						'j'
-	#define	WORD_GRAMMAR_LIST_SYMBOL							'l'
-	#define	WORD_MULTIPLE_WORD_LIST_SYMBOL						'm'
-	#define	WORD_WRITE_LIST_SYMBOL								'r'
-	#define	WORD_SPECIFICATION_LIST_SYMBOL						's'
-	#define	WORD_TYPE_LIST_SYMBOL								'w'
-	#define	WORD_CONTEXT_LIST_SYMBOL							'x'
+	#define	WORD_ASSIGNMENT_LIST_SYMBOL									'a'		// SpecificationItem
+	#define	WORD_COLLECTION_LIST_SYMBOL									'c'
+	#define	WORD_GENERALIZATION_LIST_SYMBOL								'g'
+	#define	WORD_INTERFACE_LIST_SYMBOL									'i'
+	#define	WORD_JUSTIFICATION_LIST_SYMBOL								'j'
+	#define	WORD_GRAMMAR_LIST_SYMBOL									'l'
+	#define	WORD_MULTIPLE_WORD_LIST_SYMBOL								'm'
+	#define	WORD_WRITE_LIST_SYMBOL										'r'
+	#define	WORD_SPECIFICATION_LIST_SYMBOL								's'
+	#define	WORD_TYPE_LIST_SYMBOL										'w'
+	#define	WORD_CONTEXT_LIST_SYMBOL									'x'
 
 	// Other initialization constants
-	#define FUNCTION_NAME_LENGTH								80
-	#define MAX_ASSUMPTION_LEVEL_RECALCULATIONS					1000	// Number of repeated calculations
-	#define MAX_GRAMMAR_LEVEL									50		// Depth of grammar parsing
-	#define MAX_SELECTION_EXECUTIONS							1000	// Number of repeated selections
-	#define	MAX_WORD_LENGTH										100
+	#define FUNCTION_NAME_LENGTH										80
+	#define MAX_ASSUMPTION_LEVEL_RECALCULATIONS							1000	// Number of repeated calculations
+	#define MAX_GRAMMAR_LEVEL											50		// Depth of grammar parsing
+	#define MAX_SELECTION_EXECUTIONS									1000	// Number of repeated selections
+	#define	MAX_WORD_LENGTH												100
 
-	#define NUMBER_OF_ASSUMPTION_LEVELS							3		// Probably, possibly and maybe
-	#define	NUMBER_OF_PHONETIC_VOWELS							4
+	#define NUMBER_OF_ASSUMPTION_LEVELS									3		// Probably, possibly and maybe
+	#define	NUMBER_OF_PHONETIC_VOWELS									4
 
-	const char PHONETIC_VOWEL[NUMBER_OF_PHONETIC_VOWELS] =		{	'a',
-																	'e',
-																	'i',
-																	'o' };
+	const char PHONETIC_VOWEL[NUMBER_OF_PHONETIC_VOWELS] =			{	'a',
+																		'e',
+																		'i',
+																		'o' };
 
 
 	// Justification types
 	#define	JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION									0
 	#define	JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION		1
 	#define	JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION				2
-	#define	JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION			3
-	#define	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION						4
-	#define	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION								5
+	#define	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION						3
+	#define	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION								4
 
-	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION									6
-	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION								7
-	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION								8
-	#define	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION											9
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION			10
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION						11
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION				12
-	#define	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION									13
+	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION									5
+	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION								6
+	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION								7
+	#define	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION											8
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION			9
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION						10
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION				11
+	#define	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION									12
 
-	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION									14
-	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION								15
-	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION								16
-	#define	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION											17
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION			18
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION						19
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION				20
-	#define	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION									21
+	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION									13
+	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION								14
+	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION								15
+	#define	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION											16
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION			17
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION						18
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION				19
+	#define	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION									20
 
-	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION							22
+	#define	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION							21
 
 
 	// Word types
@@ -475,6 +488,7 @@
 	#define	WORD_PARAMETER_NOUN_SOLVE_METHOD										1111
 	#define	WORD_PARAMETER_NOUN_SOLVE_STRATEGY										1112
 	#define	WORD_PARAMETER_NOUN_STARTUP_LANGUAGE									1113
+	#define	WORD_PARAMETER_NOUN_TEST_FILE											1114
 	#define	WORD_PARAMETER_NOUN_USER												1115
 	#define	WORD_PARAMETER_NOUN_INFORMATION											1116
 	#define	WORD_PARAMETER_NOUN_PART												1117
@@ -584,6 +598,7 @@
 
 	#define	NO_LANGUAGE_NAME_FOUND_STRING															"{no language name found}"
 	#define	NO_USER_NAME_FOUND_STRING																"{no user name found}"
+	#define	ADMIN_USER_NAME_STRING																	"Admin"
 
 
 	// INTERFACE CONSTANTS
@@ -593,9 +608,9 @@
 
 	// Console (common)
 	#define	INTERFACE_CONSOLE_START_MESSAGE															100
-	#define	INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START												106
-	#define	INTERFACE_CONSOLE_LOGIN_END																107
-	#define	INTERFACE_CONSOLE_LOGIN_FAILED															108
+	#define	INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START												104
+	#define	INTERFACE_CONSOLE_LOGIN_END																105
+	#define	INTERFACE_CONSOLE_LOGIN_FAILED															106
 
 	// Console (progress and status)
 	#define	INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START										110
@@ -667,10 +682,11 @@
 	// Justification report
 	#define	INTERFACE_JUSTIFICATION_BECAUSE															1300
 	#define	INTERFACE_JUSTIFICATION_AND																1301
-	#define	INTERFACE_JUSTIFICATION_SENTENCE_START													1302
-	#define	INTERFACE_JUSTIFICATION_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING						1303
-	#define	INTERFACE_JUSTIFICATION_FEMININE_PROPER_NAME_ENDING										1304
-	#define	INTERFACE_JUSTIFICATION_MASCULINE_PROPER_NAME_ENDING									1305
+	#define	INTERFACE_JUSTIFICATION_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING						1302
+	#define	INTERFACE_JUSTIFICATION_FEMININE_PROPER_NAME_ENDING										1303
+	#define	INTERFACE_JUSTIFICATION_MASCULINE_PROPER_NAME_ENDING									1304
+	#define	INTERFACE_JUSTIFICATION_LEARNED_FROM_USER_START											1305
+	#define	INTERFACE_JUSTIFICATION_LEARNED_FROM_USER_END											1306
 
 	// Listing (conflicts)
 	#define	INTERFACE_LISTING_SENTENCE_IN_CONFLICT_WITH_ITSELF										1400
@@ -689,15 +705,16 @@
 	#define	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED										1415
 	#define	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED										1416
 	#define	INTERFACE_LISTING_MY_HIDDEN_ASSUMPTIONS_THAT_ARE_CONCLUDED								1417
-	#define	INTERFACE_LISTING_MY_QUESTIONS															1418
-	#define	INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS													1419
-	#define	INTERFACE_LISTING_MY_ANSWER																1420
-	#define	INTERFACE_LISTING_I_ONLY_KNOW															1421
-	#define	INTERFACE_LISTING_I_AM_NOT_SURE_BUT														1422
-	#define	INTERFACE_LISTING_SPECIFICATIONS														1423
-	#define	INTERFACE_LISTING_SPECIFICATION_QUESTIONS												1424
-	#define	INTERFACE_LISTING_RELATED_INFORMATION													1425
-	#define	INTERFACE_LISTING_RELATED_QUESTIONS														1426
+	#define	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE							1418
+	#define	INTERFACE_LISTING_MY_QUESTIONS															1419
+	#define	INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS													1420
+	#define	INTERFACE_LISTING_MY_ANSWER																1421
+	#define	INTERFACE_LISTING_I_ONLY_KNOW															1422
+	#define	INTERFACE_LISTING_I_AM_NOT_SURE_BUT														1423
+	#define	INTERFACE_LISTING_SPECIFICATIONS														1424
+	#define	INTERFACE_LISTING_SPECIFICATION_QUESTIONS												1425
+	#define	INTERFACE_LISTING_RELATED_INFORMATION													1426
+	#define	INTERFACE_LISTING_RELATED_QUESTIONS														1427
 
 	// Listing (old information)
 	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION								1430
@@ -730,23 +747,24 @@
 
 	// Sentence (notifications)
 	#define	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_PROPER_NAME_TO_BE							1600
-	#define	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE										1601
-	#define	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE									1602
-	#define	INTERFACE_SENTENCE_NOTIFICATION_I_KNOW													1603
-	#define	INTERFACE_SENTENCE_NOTIFICATION_I_NOTICED_SEMANTIC_AMBIGUITY_START						1604
-	#define	INTERFACE_SENTENCE_NOTIFICATION_STATIC_SEMANTIC_AMBIGUITY_END							1605
-	#define	INTERFACE_SENTENCE_NOTIFICATION_DYNAMIC_SEMANTIC_AMBIGUITY_END							1606
-	#define	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START					1607
-	#define	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD						1608
-	#define	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END						1609
-	#define	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_QUESTION_MISSING_RELATION						1610
-	#define	INTERFACE_SENTENCE_NOTIFICATION_MISSING_RELATION_I_ASSUME_YOU_MEAN						1611
-	#define	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_WITH_NOUN_START					1612
-	#define	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_DEFINITE_ARTICLE_WITH_NOUN_START			1613
-	#define	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_INDEFINITE_ARTICLE_WITH_NOUN_START			1614
-	#define	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END			1615
-	#define	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_START		1616
-	#define	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_END			1617
+	#define	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_SINGULAR_NOUN_TO_BE							1601
+	#define	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE										1602
+	#define	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE									1603
+	#define	INTERFACE_SENTENCE_NOTIFICATION_I_KNOW													1604
+	#define	INTERFACE_SENTENCE_NOTIFICATION_I_NOTICED_SEMANTIC_AMBIGUITY_START						1605
+	#define	INTERFACE_SENTENCE_NOTIFICATION_STATIC_SEMANTIC_AMBIGUITY_END							1606
+	#define	INTERFACE_SENTENCE_NOTIFICATION_DYNAMIC_SEMANTIC_AMBIGUITY_END							1607
+	#define	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START					1608
+	#define	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD						1609
+	#define	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END						1610
+	#define	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_QUESTION_MISSING_RELATION						1611
+	#define	INTERFACE_SENTENCE_NOTIFICATION_MISSING_RELATION_I_ASSUME_YOU_MEAN						1612
+	#define	INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_WITH_NOUN_START				1613
+	#define	INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START			1614
+	#define	INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START		1615
+	#define	INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END		1616
+	#define	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_START		1617
+	#define	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_END			1618
 
 	// Sentence (warnings)
 	#define	INTERFACE_SENTENCE_WARNING_NOT_CONFORM_GRAMMAR											1620

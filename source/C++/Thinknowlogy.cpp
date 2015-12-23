@@ -1,11 +1,10 @@
 /*
  *	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -85,7 +84,7 @@ int main()
 /*************************************************************************
  *	"Because the Sovereign Lord helps me,
  *	I will not be disgraced.
- *	Therefore, I've set my face like a stone,
+ *	Therefore, I have set my face like a stone,
  *	determined to do his will.
  *	And I know that I will not be put to shame." (Psalm 50:7)
  *************************************************************************/

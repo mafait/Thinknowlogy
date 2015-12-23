@@ -4,11 +4,10 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,8 +28,10 @@ class GeneralizationItem extends Item
 	{
 	// Private loadable variables
 
+	private boolean isLanguageWord_;
 	private boolean isRelation_;
 
+	private short languageNr_;
 	private short specificationWordTypeNr_;
 	private short generalizationWordTypeNr_;
 
@@ -39,13 +40,16 @@ class GeneralizationItem extends Item
 
 	// Constructor / deconstructor
 
-	protected GeneralizationItem( boolean isRelation, short specificationWordTypeNr, short generalizationWordTypeNr, WordItem generalizationWordItem, List myList, WordItem myWordItem )
+	protected GeneralizationItem( boolean isLanguageWord, boolean isRelation, short languageNr, short specificationWordTypeNr, short generalizationWordTypeNr, WordItem generalizationWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
 		// Private loadable variables
 
+		isLanguageWord_ = isLanguageWord;
 		isRelation_ = isRelation;
+
+		languageNr_ = languageNr;
 
 		specificationWordTypeNr_ = specificationWordTypeNr;
 		generalizationWordTypeNr_ = generalizationWordTypeNr;
@@ -53,7 +57,7 @@ class GeneralizationItem extends Item
 		generalizationWordItem_ = generalizationWordItem;
 
 		if( generalizationWordItem_ == null )
-			startSystemErrorInItem( 1, null, null, "The given generalization word item is undefined" );
+			startSystemError( 1, null, null, "The given generalization word item is undefined" );
 		}
 
 
@@ -101,7 +105,7 @@ class GeneralizationItem extends Item
 		if( generalizationWordItem_ != null )
 			{
 			if( ( referenceResult = generalizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find a matching word reference string for the generalization word" );
+				addError( 1, null, "I failed to find a matching word reference string for the generalization word" );
 			}
 
 		return referenceResult;
@@ -110,13 +114,20 @@ class GeneralizationItem extends Item
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
 		String wordString;
+		String languageNameString = myWordItem().languageNameString( languageNr_ );
 		String generalizationWordTypeString = myWordItem().wordTypeNameString( generalizationWordTypeNr_ );
 		String specificationWordTypeString = myWordItem().wordTypeNameString( specificationWordTypeNr_ );
 
 		baseToStringBuffer( queryWordTypeNr );
 
+		if( isLanguageWord_ )
+			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isLanguageWord" );
+
 		if( isRelation_ )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isRelation" );
+
+		if( languageNr_ > Constants.NO_LANGUAGE_NR )
+			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + ( languageNameString == null ? ( "languageNr:" + languageNr_ ) : ( "language:" + languageNameString ) ) );
 
 		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordType:" + ( specificationWordTypeString == null ? Constants.EMPTY_STRING : specificationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + specificationWordTypeNr_ );
 
@@ -146,18 +157,27 @@ class GeneralizationItem extends Item
 		return generalizationWordTypeNr_;
 		}
 
+	protected short languageNr()
+		{
+		return languageNr_;
+		}
+
 	protected WordItem generalizationWordItem()
 		{
 		return generalizationWordItem_;
 		}
 
-	protected GeneralizationItem getGeneralizationItem( boolean isIncludingThisItem, boolean isOnlySelectingNoun, boolean isRelation )
+	protected GeneralizationItem getGeneralizationItem( boolean isIncludingThisItem, boolean isOnlySelectingCurrentLanguage, boolean isOnlySelectingNoun, boolean isRelation )
 		{
+		short currentLanguageNr = CommonVariables.currentLanguageNr;
 		GeneralizationItem searchItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
 
 		while( searchItem != null )
 			{
 			if( searchItem.isRelation_ == isRelation &&
+
+			( !isOnlySelectingCurrentLanguage ||
+			searchItem.languageNr_ == currentLanguageNr ) &&
 
 			( !isOnlySelectingNoun ||
 			isSingularOrPluralNoun( searchItem.generalizationWordTypeNr_ ) ) )
@@ -176,17 +196,17 @@ class GeneralizationItem extends Item
 
 	protected GeneralizationItem nextNounSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, true, false );
+		return getGeneralizationItem( false, false, true, false );
 		}
 
 	protected GeneralizationItem nextSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false, false );
+		return getGeneralizationItem( false, false, false, false );
 		}
 
 	protected GeneralizationItem nextRelationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false, true );
+		return getGeneralizationItem( false, false, false, true );
 		}
 	};
 

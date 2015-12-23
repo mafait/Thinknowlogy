@@ -2,11 +2,10 @@
  *	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -46,7 +45,7 @@
 				}
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given score item is undefined" );
+			return startError( functionNameString, NULL, "The given score item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -74,7 +73,7 @@
 				}
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given score item is undefined" );
+			return startError( functionNameString, NULL, "The given score item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -152,7 +151,7 @@
 							isLowerNotBlockingScore ) ) ) );
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given solve strategy parameter isn't implemented" );
+			return startError( functionNameString, NULL, "The given solve strategy parameter isn't implemented" );
 
 		return RESULT_OK;
 		}
@@ -269,7 +268,7 @@
 				}
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given action selection item is undefined" );
+			return startError( functionNameString, NULL, "The given action selection item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -284,13 +283,13 @@
 			while( searchItem != NULL )
 				{
 				if( searchItem->referenceSelectionItem == unusedSelectionItem )
-					return startError( functionNameString, NULL, NULL, "The reference selection item is still in use" );
+					return startError( functionNameString, NULL, "The reference selection item is still in use" );
 
 				searchItem = searchItem->nextScoreItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given unused justification item is undefined" );
+			return startError( functionNameString, NULL, "The given unused justification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -322,7 +321,7 @@
 				}
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given score item is undefined" );
+			return startError( functionNameString, NULL, "The given score item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -340,7 +339,7 @@
 				if( deleteItem( false, searchItem ) == RESULT_OK )
 					searchItem = nextScoreListItem();
 				else
-					return addError( functionNameString, NULL, NULL, "I failed to delete an active item" );
+					return addError( functionNameString, NULL, "I failed to delete an active item" );
 				}
 			else
 				searchItem = searchItem->nextScoreItem();
@@ -417,7 +416,7 @@
 									}
 								}
 							else
-								return addError( functionNameString, NULL, NULL, "I failed to get the best score" );
+								return addError( functionNameString, NULL, "I failed to get the best score" );
 							}
 						}
 					}
@@ -426,7 +425,7 @@
 				}
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "None of the given scores has a value parameter" );
+			return startError( functionNameString, NULL, "None of the given scores has a value parameter" );
 
 		return RESULT_OK;
 		}
@@ -438,15 +437,15 @@
 		if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 			{
 			if( addItemToList( QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, commonVariables()->currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-				return addError( functionNameString, NULL, NULL, "I failed to add an active score item" );
+				return addError( functionNameString, NULL, "I failed to add an active score item" );
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The current item number is undefined" );
+			return startError( functionNameString, NULL, "The current item number is undefined" );
 
 		return RESULT_OK;
 		}
 
-	SelectionResultType ScoreList::getBestAction( unsigned short solveStrategyParameter )
+	SelectionResultType ScoreList::getBestAction( bool isTesting, unsigned short solveStrategyParameter )
 		{
 		SelectionResultType selectionResult;
 		bool isCummulate = false;
@@ -537,7 +536,7 @@
 										}
 									}
 								else
-									addError( functionNameString, NULL, NULL, "I failed to get the best local score" );
+									addError( functionNameString, NULL, "I failed to get the best local score" );
 								}
 							}
 						}
@@ -551,7 +550,7 @@
 				if( hasEqualScore_ )
 					{
 					if( getBestScore( false, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) != RESULT_OK )
-						addError( functionNameString, NULL, NULL, "I failed to get the best score" );
+						addError( functionNameString, NULL, "I failed to get the best score" );
 					}
 				else
 					// Get highest number of winning scores, else if equal: Get lowest number of losing scores
@@ -583,14 +582,14 @@
 								{
 								// Previous best action
 								if( disableAction( true, selectionResult.bestActionItem ) != RESULT_OK )
-									addError( functionNameString, NULL, NULL, "I failed to disable the best action" );
+									addError( functionNameString, NULL, "I failed to disable the best action" );
 								}
 
 							if( commonVariables()->result == RESULT_OK )
 								{
 								// Current action
 								if( markAction( searchItem->referenceSelectionItem ) != RESULT_OK )
-									addError( functionNameString, NULL, NULL, "I failed to mark an action" );
+									addError( functionNameString, NULL, "I failed to mark an action" );
 								}
 							}
 
@@ -607,13 +606,13 @@
 									// Found the same best score with different action
 									isCummulate = true;
 								else
-									addError( functionNameString, NULL, NULL, "I failed to mark an action" );
+									addError( functionNameString, NULL, "I failed to mark an action" );
 								}
 							else
 								{
 								// Previous best action
 								if( disableAction( false, searchItem->referenceSelectionItem ) != RESULT_OK )
-									addError( functionNameString, NULL, NULL, "I failed to disable an action" );
+									addError( functionNameString, NULL, "I failed to disable an action" );
 								}
 							}
 						}
@@ -714,28 +713,28 @@
 																localNewBlockingScore += localSearchItem->newBlockingScore;
 																}
 															else
-																startSystemError( functionNameString, NULL, NULL, "Overflow of the new blocking cummulate score" );
+																startSystemError( functionNameString, NULL, "Overflow of the new blocking cummulate score" );
 															}
 														else
-															startSystemError( functionNameString, NULL, NULL, "Overflow of the old blocking cummulate score" );
+															startSystemError( functionNameString, NULL, "Overflow of the old blocking cummulate score" );
 														}
 													else
-														startSystemError( functionNameString, NULL, NULL, "Overflow of the new not-blocking cummulate score" );
+														startSystemError( functionNameString, NULL, "Overflow of the new not-blocking cummulate score" );
 													}
 												else
-													startSystemError( functionNameString, NULL, NULL, "Overflow of the old not-blocking cummulate score" );
+													startSystemError( functionNameString, NULL, "Overflow of the old not-blocking cummulate score" );
 												}
 											else
-												startSystemError( functionNameString, NULL, NULL, "Overflow of the new dissatisfied cummulate score" );
+												startSystemError( functionNameString, NULL, "Overflow of the new dissatisfied cummulate score" );
 											}
 										else
-											startSystemError( functionNameString, NULL, NULL, "Overflow of the old dissatisfied cummulate score" );
+											startSystemError( functionNameString, NULL, "Overflow of the old dissatisfied cummulate score" );
 										}
 									else
-										startSystemError( functionNameString, NULL, NULL, "Overflow of the new satisfied cummulate score" );
+										startSystemError( functionNameString, NULL, "Overflow of the new satisfied cummulate score" );
 									}
 								else
-									startSystemError( functionNameString, NULL, NULL, "Overflow of the old satisfied cummulate score" );
+									startSystemError( functionNameString, NULL, "Overflow of the old satisfied cummulate score" );
 								}
 							}
 
@@ -763,14 +762,14 @@
 									{
 									// Previous best action
 									if( disableAction( true, selectionResult.bestActionItem ) != RESULT_OK )
-										addError( functionNameString, NULL, NULL, "I failed to disable the best action" );
+										addError( functionNameString, NULL, "I failed to disable the best action" );
 									}
 
 								if( commonVariables()->result == RESULT_OK )
 									{
 									// Current action
 									if( markAction( searchItem->referenceSelectionItem ) != RESULT_OK )
-										addError( functionNameString, NULL, NULL, "I failed to mark an action" );
+										addError( functionNameString, NULL, "I failed to mark an action" );
 									}
 								}
 
@@ -786,25 +785,27 @@
 									if( markAction( searchItem->referenceSelectionItem ) == RESULT_OK )
 										nRandomEntries++;
 									else
-										addError( functionNameString, NULL, NULL, "I failed to mark an action" );
+										addError( functionNameString, NULL, "I failed to mark an action" );
 									}
 								else
 									{
 									// Previous best action
 									if( disableAction( false, searchItem->referenceSelectionItem ) != RESULT_OK )
-										addError( functionNameString, NULL, NULL, "I failed to disable an action" );
+										addError( functionNameString, NULL, "I failed to disable an action" );
 									}
 								}
 							}
 						}
 					else
-						addError( functionNameString, NULL, NULL, "I failed to get the best local score" );
+						addError( functionNameString, NULL, "I failed to get the best local score" );
 					}
 
 				searchItem = searchItem->nextScoreItem();
 				}
 
 			if( commonVariables()->result == RESULT_OK &&
+			// Skip random during testing. It would create different test results
+			!isTesting &&
 			// Found more than one the same best cummulate score with different action
 			nRandomEntries > 1 )
 				{

@@ -1,6 +1,12 @@
-﻿# Gebruiker die vrije tekst mag invoeren.
+﻿# Expert is toegestaan om vrije tekst in te voeren.
+#Expert is een gebruiker en zijn wachtwoord is expert123.
 Expert is een gebruiker en heeft geen wachtwoord.
 Expert is een expert.
 
+# Ontwikkelaar is toegestaan om vrije tekst in te voeren en om regressie-testen uit te voeren.
+#Ontwikkelaar is een gebruiker en zijn wachtwoord is ontwikkelaar123.
+Ontwikkelaar is een gebruiker en heeft geen wachtwoord.
+Ontwikkelaar is een ontwikkelaar.
+
 # Standaard gebruiker.
-#Java#Gast is een gebruiker en heeft geen wachtwoord.
+Gast is een gebruiker en heeft geen wachtwoord.

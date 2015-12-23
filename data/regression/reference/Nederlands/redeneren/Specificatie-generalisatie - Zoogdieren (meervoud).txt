@@ -1,0 +1,17 @@
+﻿* 
+* Mijn conclusies:
+< Katten en honden zijn zoogdieren.
+< 
+* 
+* Mijn conclusies:
+< Walvissen, katten en honden zijn zoogdieren.
+< 
+* 
+* Mijn conclusies:
+< Walvissen, katten en honden zijn zoogdieren.
+< 
+< Specificaties:
+< Walvissen zijn zoogdieren.
+< Honden zijn zoogdieren.
+< Katten zijn zoogdieren.
+< 

@@ -1,0 +1,151 @@
+﻿
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+* 
+* Su información:
+< Un movimiento puede-estar G, F, E, D, C, B o A.
+< Un movimiento puede-estar inválido.
+< Mi movimiento era D.
+< El movimiento era C.
+< 
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: D.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |m| | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: G.
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | |t|m| | | |
+		| | |m|t| | | |
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: C.
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+		| | |t|m| | | |
+		| | |m|t| | | |
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+		| | |t|m| | | |
+		| | |m|t| | | |
+		|t| |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: G.
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+		| | |t|m| | | |
+		| | |m|t| | |m|
+		|t| |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+* 
+* Su información:
+< Un movimiento puede-estar G, F, E, D, C, B o A.
+< Un movimiento puede-estar inválido.
+< Mi movimiento era A, C y D.
+< El movimiento era G, C y D.
+< 

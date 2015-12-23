@@ -2,11 +2,10 @@
  *	Class:			WordSpecification
  *	Supports class:	WordItem
  *	Purpose:		To create specification structures
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -23,6 +22,8 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
+#include "ContextItem.cpp"
+#include "GeneralizationItem.cpp"
 #include "SpecificationList.cpp"
 #include "WordTypeItem.cpp"
 
@@ -43,6 +44,7 @@ class WordSpecification
 	bool isSimilarOrRelatedQuestion_;
 	bool isStopDetectingQuestion_;
 
+	unsigned int compoundSpecificationCollectionNr_;
 	unsigned int userSpecificationCollectionNr_;
 
 	SpecificationItem *confirmedReplacedSpecificationItem_;
@@ -50,6 +52,9 @@ class WordSpecification
 	SpecificationItem *conflictingSpecificationItem_;
 	SpecificationItem *correctedAssumptionReplacedSpecificationItem_;
 	SpecificationItem *replacedAssignmentItem_;
+
+	WordItem *compoundSpecificationWordItem_;
+
 
 	CommonVariables *commonVariables_;
 	WordItem *myWordItem_;
@@ -86,7 +91,7 @@ class WordSpecification
 					{
 					if( !generalizationResult.hasFoundGeneralization )
 						{
-						// Relation word of a generalization word: proper noun
+						// Relation word of a generalization word: proper name
 						if( relationWordItem->createGeneralizationItem( true, relationWordTypeNr, generalizationWordTypeNr, myWordItem_ ) != RESULT_OK )
 							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to create a relation generalization item" );
 						}
@@ -125,11 +130,11 @@ class WordSpecification
 					{
 					isSpecificationCollectedWithItself = specificationWordItem->isNounWordCollectedWithItself();
 
-					// Check looping
+					// Check for looping
 					if( isSpecificationCollectedWithItself ||
 					( conflictingSpecificationItem_ = specificationWordItem->bestMatchingSpecificationWordSpecificationItem( true, false, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, myWordItem_ ) ) == NULL )
 						{
-						// Check past tense
+						// Check for past tense
 						foundSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( true, true, true, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem );
 
 						if( foundSpecificationItem != NULL &&
@@ -140,7 +145,7 @@ class WordSpecification
 							if( !isSpecificationCollectedWithItself &&
 							( compoundSpecificationCollectionNr = specificationWordItem->compoundCollectionNr( specificationWordTypeNr ) ) > NO_COLLECTION_NR )
 								{
-								// Check negative
+								// Check for negative
 								foundSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( true, true, true, true, isPossessive, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
 
 								if( foundSpecificationItem != NULL &&
@@ -162,7 +167,7 @@ class WordSpecification
 										{
 										// Write conflict
 										if( writeSpecificationConflict( isExclusiveSpecification, specificationCollectionNr, conflictingSpecificationItem_ ) != RESULT_OK )
-											return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the conflicting specification" );
+											return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write another conflicting specification" );
 										}
 
 									conflictingSpecificationItem_ = foundSpecificationItem;
@@ -186,7 +191,8 @@ class WordSpecification
 											}
 										else
 											{
-											if( tempConflictingSpecificationItem->specificationWordItem() != specificationWordItem )
+											if( tempConflictingSpecificationItem->specificationWordItem() != specificationWordItem &&
+											!tempConflictingSpecificationItem->isHiddenSpecification() )
 												conflictingSpecificationItem_ = tempConflictingSpecificationItem;
 											}
 										}
@@ -197,7 +203,7 @@ class WordSpecification
 					}
 				else
 					{
-					// Find possible past tense assignment of relatedSpecificationItem
+					// Find for possible past tense assignment of relatedSpecificationItem
 					pastTenseAssignmentItem = myWordItem_->firstNonQuestionAssignmentItem( false, false, true, isNegative, isPossessive, relationContextNr, relatedSpecificationItem->specificationWordItem() );
 					conflictingSpecificationItem_ = ( pastTenseAssignmentItem == NULL ? relatedSpecificationItem : pastTenseAssignmentItem );
 					}
@@ -255,7 +261,7 @@ class WordSpecification
 									{
 									if( ( correctedAssumptionReplacedSpecificationItem_ = myWordItem_->firstSelfGeneratedCheckSpecificationItem( true, true, true, relatedSpecificationItem->isNegative(), relatedSpecificationItem->isPossessive(), true, NO_QUESTION_PARAMETER, relatedSpecificationItem->specificationCollectionNr(), relatedSpecificationItem->relationContextNr(), relatedSpecificationItem->specificationWordItem() ) ) != NULL )
 										{
-										if( myWordItem_->writeUpdatedSpecification( false, false, true, correctedAssumptionReplacedSpecificationItem_ ) == RESULT_OK )
+										if( myWordItem_->writeUpdatedSpecification( false, false, false, true, correctedAssumptionReplacedSpecificationItem_ ) == RESULT_OK )
 											hasCorrectedAssumptionByOppositeQuestion_ = true;
 										else
 											return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a conflicting specification" );
@@ -282,8 +288,9 @@ class WordSpecification
 		return RESULT_OK;
 		}
 
-	ResultType checkUserSpecification( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelection, bool isValueSpecification, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, SpecificationItem *foundSpecificationItem, WordItem *specificationWordItem )
+	ResultType checkUserSpecification( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelection, bool isValueSpecification, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, SpecificationItem *foundSpecificationItem, WordItem *specificationWordItem, WordItem *relationWordItem )
 		{
+		bool hasFoundRelationContext;
 		bool hasRelationContext = ( relationContextNr > NO_CONTEXT_NR );
 		WordItem *currentLanguageWordItem;
 		WordItem *currentWordItem;
@@ -318,7 +325,18 @@ class WordSpecification
 							// Check if negative specification exists
 							myWordItem_->firstAssignmentOrSpecificationItem( true, true, true, isPossessive, NO_QUESTION_PARAMETER, specificationWordItem ) == NULL )
 								{
-								if( !foundSpecificationItem->hasRelationContext() )
+								if( foundSpecificationItem->hasRelationContext() )
+									{
+									if( isPossessive &&
+									relationWordItem != NULL &&
+									specificationWordItem->isFemale() != relationWordItem->isFemale() &&
+									specificationWordItem->isMale() != relationWordItem->isMale() )
+										{
+										if( checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) != RESULT_OK )
+											return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check for a specification conflict" );
+										}
+									}
+								else
 									{
 									if( writeMoreSpecificSpecification( foundSpecificationItem ) != RESULT_OK )
 										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an notification about a more specific related specification" );
@@ -331,99 +349,108 @@ class WordSpecification
 								}
 							}
 
-						if( !commonVariables_->hasShownWarning &&
-						commonVariables_->nUserGeneralizationWords == 1 &&
-						foundSpecificationItem->hasRelationContext() &&
-						foundSpecificationItem->relationContextNr() != relationContextNr &&
-						foundSpecificationItem->isInactiveAssignment() == isInactiveAssignment &&
-						foundSpecificationItem->isArchivedAssignment() == isArchivedAssignment &&
-
-						( !hasRelationContext ||
-						// Current user specification has less relation words than the found specification
-						commonVariables_->nUserRelationWords < myWordItem_->nContextWordsInAllWords( foundSpecificationItem->relationContextNr(), specificationWordItem ) ) )
+						if( !commonVariables_->hasShownWarning )
 							{
-							// Has new relation context
-							if( hasRelationContext ||
-							myWordItem_->firstUserSpecificationItem( isNegative, isPossessive, NO_COLLECTION_NR, relationContextNr, specificationWordItem ) == NULL )
+							if( foundSpecificationItem->hasRelationContext() &&
+							foundSpecificationItem->relationContextNr() != relationContextNr &&
+							foundSpecificationItem->isInactiveAssignment() == isInactiveAssignment &&
+							foundSpecificationItem->isArchivedAssignment() == isArchivedAssignment &&
+
+							( !hasRelationContext ||
+							// Current user specification has less relation words than the found specification
+							commonVariables_->nUserRelationWords < myWordItem_->nContextWordsInAllWords( foundSpecificationItem->relationContextNr(), specificationWordItem ) ) )
 								{
-								if( !hasRelationContext )
-									confirmedSpecificationButNoRelationReplacedSpecificationItem_ = foundSpecificationItem;
-
-								if( !foundSpecificationItem->isHiddenSpecification() )
+								// Has new relation context
+								if( hasRelationContext ||
+								myWordItem_->firstUserSpecificationItem( isNegative, isPossessive, NO_COLLECTION_NR, relationContextNr, specificationWordItem ) == NULL )
 									{
-									if( myWordItem_->writeSelectedSpecification( true, foundSpecificationItem ) == RESULT_OK )
-										{
-										if( strlen( commonVariables_->writeSentenceString ) > 0 )
-											{
-											if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( foundSpecificationItem->isSelfGeneratedAssumption() ? ( hasRelationContext ? INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_ASSUMPTION : INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION ) : ( hasRelationContext ? INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_CONCLUSION : INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION ) ) ) == RESULT_OK )
-												{
-												if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) != RESULT_OK )
-													return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a confirmed specification" );
-												}
-											else
-												return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a confirmation interface text" );
-											}
-										else
-											return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't write the confirmed self-generated specification" );
-										}
-									else
-										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the confirmed self-generated specification" );
-									}
-								}
-							}
-						else
-							{
-							if( hasRelationContext &&
-							!foundSpecificationItem->isOlderItem() &&
-							foundSpecificationItem->relationContextNr() == relationContextNr )
-								foundSpecificationItem = myWordItem_->firstSelfGeneratedCheckSpecificationItem( true, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, true, NO_QUESTION_PARAMETER, specificationCollectionNr, relationContextNr, specificationWordItem );
-
-							if( foundSpecificationItem != NULL )
-								{
-								// Confirmation: Replace a self-generated by a user-entered specification
-								if( foundSpecificationItem->isSelfGenerated() )
-									{
-									if( foundSpecificationItem->isExclusiveSpecification() )
-										isConfirmedExclusive_ = true;
-
-									if( foundSpecificationItem->isSelfGenerated() )
-										hasConfirmedSpecification_ = true;
-
-									confirmedReplacedSpecificationItem_ = foundSpecificationItem;
+									if( !hasRelationContext )
+										confirmedSpecificationButNoRelationReplacedSpecificationItem_ = foundSpecificationItem;
 
 									if( !foundSpecificationItem->isHiddenSpecification() )
 										{
-										if( writeConfirmedSpecification( foundSpecificationItem ) != RESULT_OK )
-											return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the confirmed specification" );
-										}
-									}
-
-								if( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL &&
-								foundSpecificationItem->specificationWordTypeNr() == WORD_TYPE_NOUN_SINGULAR &&
-								( pluralNounWordTypeItem = specificationWordItem->activeWordTypeItem( false, WORD_TYPE_NOUN_PLURAL ) ) != NULL )
-									{
-									// Skip announcement for new occurrences
-									if( !pluralNounWordTypeItem->isOlderItem() )
-										{
-										// Found unknown plural specification word
-										if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_START, pluralNounWordTypeItem->itemString(), INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_END ) == RESULT_OK )
+										if( myWordItem_->writeSelectedSpecification( true, foundSpecificationItem ) == RESULT_OK )
 											{
-											confirmedReplacedSpecificationItem_ = foundSpecificationItem;
-
-											if( ( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL &&
-											( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL &&
-											( unknownPluralNounString = currentLanguageWordItem->interfaceString( INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_START ) ) != NULL )
+											if( strlen( commonVariables_->writeSentenceString ) > 0 )
 												{
-												// Do for all words
-												do	{
-													if( currentWordItem->clearLastWrittenSentenceStringWithUnknownPluralNounInAllWords( unknownPluralNounString, specificationWordItem ) != RESULT_OK )
-														return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to clear the last written sentence string with specification word \"", specificationWordItem->anyWordTypeString(), "\" in generalization word \"", currentWordItem->anyWordTypeString(), "\"" );
+												if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( foundSpecificationItem->isSelfGeneratedAssumption() ? ( hasRelationContext ? INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_ASSUMPTION : INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION ) : ( hasRelationContext ? INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_CONCLUSION : INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION ) ) ) == RESULT_OK )
+													{
+													if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+														return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a confirmed specification" );
 													}
-												while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+												else
+													return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a confirmation interface text" );
 												}
+											else
+												return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't write the confirmed self-generated specification" );
 											}
 										else
-											return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a notification text" );
+											return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the confirmed self-generated specification" );
+										}
+									}
+								}
+							else
+								{
+								if( hasRelationContext )
+									{
+									hasFoundRelationContext = foundSpecificationItem->hasRelationContext();
+
+									if( !hasFoundRelationContext ||
+
+									( !foundSpecificationItem->isOlderItem() &&
+									foundSpecificationItem->relationContextNr() == relationContextNr ) )
+										// Confirmed relation words
+										foundSpecificationItem = myWordItem_->firstSelfGeneratedCheckSpecificationItem( hasFoundRelationContext, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, true, NO_QUESTION_PARAMETER, specificationCollectionNr, foundSpecificationItem->relationContextNr(), specificationWordItem );
+									}
+
+								if( foundSpecificationItem != NULL )
+									{
+									// Confirmation: Replace a self-generated by a user-entered specification
+									if( foundSpecificationItem->isSelfGenerated() &&
+									!myWordItem_->isNounWordCollectedWithItself() )
+										{
+										if( foundSpecificationItem->isExclusiveSpecification() )
+											isConfirmedExclusive_ = true;
+
+										if( foundSpecificationItem->isSelfGenerated() )
+											hasConfirmedSpecification_ = true;
+
+										confirmedReplacedSpecificationItem_ = foundSpecificationItem;
+
+										if( !foundSpecificationItem->isHiddenSpecification() )
+											{
+											if( writeConfirmedSpecification( foundSpecificationItem ) != RESULT_OK )
+												return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the confirmed specification" );
+											}
+										}
+
+									if( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL &&
+									foundSpecificationItem->specificationWordTypeNr() == WORD_TYPE_NOUN_SINGULAR &&
+									( pluralNounWordTypeItem = specificationWordItem->activeWordTypeItem( WORD_TYPE_NOUN_PLURAL ) ) != NULL )
+										{
+										// Skip announcement for new occurrences
+										if( !pluralNounWordTypeItem->isOlderItem() )
+											{
+											// Found unknown plural specification word
+											if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_START, pluralNounWordTypeItem->itemString(), INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_END ) == RESULT_OK )
+												{
+												confirmedReplacedSpecificationItem_ = foundSpecificationItem;
+
+												if( ( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL &&
+												( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL &&
+												( unknownPluralNounString = currentLanguageWordItem->interfaceString( INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_START ) ) != NULL )
+													{
+													// Do for all words
+													do	{
+														if( currentWordItem->clearLastWrittenSentenceStringWithUnknownPluralNounInAllWords( unknownPluralNounString, specificationWordItem ) != RESULT_OK )
+															return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to clear the last written sentence string with specification word \"", specificationWordItem->anyWordTypeString(), "\" in generalization word \"", currentWordItem->anyWordTypeString(), "\"" );
+														}
+													while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+													}
+												}
+											else
+												return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a notification text" );
+											}
 										}
 									}
 								}
@@ -442,15 +469,16 @@ class WordSpecification
 		return RESULT_OK;
 		}
 
-	ResultType checkUserSpecificationOrQuestion( bool hasRelationContext, bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isValueSpecification, unsigned short assumptionLevel, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
+	ResultType checkUserSpecificationOrQuestion( bool hasRelationContext, bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isValueSpecification, unsigned short assumptionLevel, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem, WordItem *relationWordItem )
 		{
 		GeneralizationResultType generalizationResult;
 		SpecificationResultType specificationResult;
-		bool hasFeminineProperNameEnding;
-		bool hasMasculineProperNameEnding;
+		bool hasFeminineSingularNounEnding;
+		bool isSingularNounGeneralizationWord = ( generalizationWordTypeNr == WORD_TYPE_NOUN_SINGULAR );
 		bool isQuestion = ( questionParameter > NO_QUESTION_PARAMETER );
 		SpecificationItem *foundSpecificationItem;
 		SpecificationItem *relatedSpecificationItem;
+		WordTypeItem *foundWordTypeItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkUserSpecificationOrQuestion";
 
 		hasCorrectedAssumptionByOppositeQuestion_ = false;
@@ -460,7 +488,7 @@ class WordSpecification
 		if( specificationWordItem != NULL )
 			{
 			// Skip if definition (singular noun) is collected with itself
-			if( generalizationWordTypeNr == WORD_TYPE_NOUN_SINGULAR &&
+			if( isSingularNounGeneralizationWord &&
 			specificationWordItem != myWordItem_ )
 				{
 				// Check specification in opposite direction
@@ -500,8 +528,7 @@ class WordSpecification
 					if( foundSpecificationItem == NULL )
 						foundSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( true, true, true, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem );
 
-					if( !isQuestion &&
-					generalizationWordTypeNr == WORD_TYPE_PROPER_NAME )
+					if( generalizationWordTypeNr == WORD_TYPE_PROPER_NAME )
 						{
 						// Exclusive specifications are not conflicting
 						if( !isExclusiveSpecification &&
@@ -509,15 +536,12 @@ class WordSpecification
 						!isPossessive &&
 						foundSpecificationItem == NULL )
 							{
-							hasFeminineProperNameEnding = myWordItem_->hasFeminineProperNameEnding();
-							hasMasculineProperNameEnding = myWordItem_->hasMasculineProperNameEnding();
-
 							if( !myWordItem_->isFemaleOrMale() &&
-							hasFeminineProperNameEnding != specificationWordItem->isFemale() &&
-							hasMasculineProperNameEnding != specificationWordItem->isMale() )
+							myWordItem_->hasFeminineProperNameEnding() != specificationWordItem->isFemale() &&
+							myWordItem_->hasMasculineProperNameEnding() != specificationWordItem->isMale() )
 								{
-								if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_PROPER_NAME_TO_BE, myWordItem_->anyWordTypeString(), ( hasFeminineProperNameEnding ? INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE : INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE ) ) != RESULT_OK )
-									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about unexpected feminine or masculine proper name" );
+								if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_PROPER_NAME_TO_BE, myWordItem_->anyWordTypeString(), ( myWordItem_->hasFeminineProperNameEnding() ? INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE : INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE ) ) != RESULT_OK )
+									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about a proper name expected to be feminine or masculine" );
 								}
 
 							if( specificationCollectionNr > NO_COLLECTION_NR )
@@ -534,7 +558,7 @@ class WordSpecification
 										// Assumption needs to be corrected
 										if( correctedAssumptionReplacedSpecificationItem_ == NULL )
 											{
-											if( myWordItem_->writeUpdatedSpecification( false, true, false, relatedSpecificationItem ) == RESULT_OK )
+											if( myWordItem_->writeUpdatedSpecification( false, false, true, false, relatedSpecificationItem ) == RESULT_OK )
 												{
 												hasCorrectedAssumptionByKnowledge_ = true;
 												correctedAssumptionReplacedSpecificationItem_ = relatedSpecificationItem;
@@ -551,8 +575,12 @@ class WordSpecification
 										myWordItem_->isUserGeneralizationWord &&
 
 										( relatedSpecificationItem == NULL ||
-										!relatedSpecificationItem->hasRelationContext() ||
-										relatedSpecificationItem->specificationWordItem() != specificationWordItem ) )
+
+										( ( !relatedSpecificationItem->hasRelationContext() ||
+										relatedSpecificationItem->specificationWordItem() != specificationWordItem ) &&
+
+										( !specificationWordItem->isNounWordCollectedWithItself() ||
+										!relatedSpecificationItem->isSpecificationWordCollectedWithItself() ) ) ) )
 											{
 											if( checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) != RESULT_OK )
 												return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check for a specification conflict" );
@@ -581,6 +609,32 @@ class WordSpecification
 								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface warning about ambiguity" );
 							}
 						}
+					else
+						{
+						if( isSingularNounGeneralizationWord &&
+						!myWordItem_->isFemaleOrMale() &&
+						( foundWordTypeItem = myWordItem_->activeWordTypeItem( WORD_TYPE_NOUN_SINGULAR ) ) != NULL )
+							{
+							hasFeminineSingularNounEnding = foundWordTypeItem->hasFeminineWordEnding();
+
+							if( ( hasFeminineSingularNounEnding ||
+							foundWordTypeItem->hasMasculineWordEnding() ) &&
+
+							!myWordItem_->isCorrectIndefiniteArticle( ( hasFeminineSingularNounEnding ? WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_FEMININE : WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE ), generalizationWordTypeNr ) )
+								{
+								// Remove indefinite article parameter from word type item
+								if( foundWordTypeItem->setIndefiniteArticleParameter( NO_INDEFINITE_ARTICLE_PARAMETER ).result == RESULT_OK )
+									{
+									if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_SINGULAR_NOUN_TO_BE, myWordItem_->anyWordTypeString(), ( hasFeminineSingularNounEnding ? INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE : INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE ) ) == RESULT_OK )
+										commonVariables_->hasShownArticleNotification = true;
+									else
+										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about a singular noun expected to be feminine or masculine" );
+									}
+								else
+									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about an indefinite article expected to be feminine or masculine" );
+								}
+							}
+						}
 					}
 				else
 					{
@@ -597,13 +651,13 @@ class WordSpecification
 								{
 								if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_MISSING_RELATION_I_ASSUME_YOU_MEAN ) == RESULT_OK )
 									{
-									if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) == RESULT_OK )
+									if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) == RESULT_OK )
 										commonVariables_->hasShownMessage = false;
 									else
 										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a sentence with an assumption about the relation" );
 									}
 								else
-									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification with an assumption about the relation" );
+									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about a missing relation" );
 								}
 							else
 								return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't write a sentence with an assumption about the relation" );
@@ -641,7 +695,7 @@ class WordSpecification
 						{
 						if( foundSpecificationItem != NULL )
 							{
-							if( checkUserSpecification( isAssignment, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, isSelection, isValueSpecification, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, foundSpecificationItem, specificationWordItem ) != RESULT_OK )
+							if( checkUserSpecification( isAssignment, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, isSelection, isValueSpecification, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, foundSpecificationItem, specificationWordItem, relationWordItem ) != RESULT_OK )
 								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the user specification" );
 							}
 						}
@@ -686,7 +740,7 @@ class WordSpecification
 			if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_QUESTION_YOU_HAD_THE_SAME_QUESTION_BEFORE ) == RESULT_OK )
 				isSameQuestionFromUser_ = true;
 			else
-				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write 'I had the same question before' interface notification" );
 			}
 
 		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
@@ -807,7 +861,7 @@ class WordSpecification
 								isSameQuestionFromUser_ = true;
 							}
 						else
-							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about the same question" );
 						}
 					else
 						{
@@ -817,13 +871,13 @@ class WordSpecification
 								{
 								if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, ( isSelfGenerated ? ( isSimilarQuestion && !isRelatedQuestion ? INTERFACE_QUESTION_I_HAD_A_SIMILAR_QUESTION_BEFORE : INTERFACE_QUESTION_I_HAD_A_RELATED_QUESTION_BEFORE ) : ( isSimilarQuestion && !isRelatedQuestion ? INTERFACE_QUESTION_YOU_HAD_A_SIMILAR_QUESTION_BEFORE : INTERFACE_QUESTION_YOU_HAD_A_RELATED_QUESTION_BEFORE ) ) ) == RESULT_OK )
 									{
-									if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) == RESULT_OK )
+									if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) == RESULT_OK )
 										isSimilarOrRelatedQuestion_ = true;
 									else
 										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a sentence about the same, a similar or a relation question" );
 									}
 								else
-									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about a related question" );
 								}
 							else
 								return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't write the found specification" );
@@ -895,6 +949,42 @@ class WordSpecification
 		return RESULT_OK;
 		}
 
+	ResultType showAssumptionsThatAreNotHiddenAnymore()
+		{
+		ContextItem *currentContextItem;
+		GeneralizationItem *currentGeneralizationItem;
+		SpecificationItem *hiddenSpecificationItem;
+		WordItem *currentGeneralizationWordItem;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "showAssumptionsThatAreNotHiddenAnymore";
+
+		if( ( currentContextItem = myWordItem_->firstActiveContextItem() ) != NULL )
+			{
+			// Do for all context items in my word
+			do	{
+				if( ( currentGeneralizationItem = myWordItem_->firstGeneralizationItem() ) != NULL )
+					{
+					// Check all involved words
+					do	{
+						if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) != NULL )
+							{
+							if( ( hiddenSpecificationItem = currentGeneralizationWordItem->firstUnHiddenSpecificationItem( currentContextItem->contextNr() ) ) != NULL )
+								{
+								if( currentGeneralizationWordItem->writeUpdatedSpecification( true, false, false, false, hiddenSpecificationItem ) != RESULT_OK )
+									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an assumption that is not hidden anymore" );
+								}
+							}
+						else
+							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I have found an undefined generalization word" );
+						}
+					while( ( currentGeneralizationItem = currentGeneralizationItem->nextGeneralizationItem() ) != NULL );
+					}
+				}
+			while( ( currentContextItem = currentContextItem->nextContextItem() ) != NULL );
+			}
+
+		return RESULT_OK;
+		}
+
 	ResultType writeConfirmedSpecification( SpecificationItem *writeSpecificationItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeConfirmedSpecification";
@@ -907,11 +997,11 @@ class WordSpecification
 					{
 					if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( writeSpecificationItem->isSelfGeneratedAssumption() ? INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONFIRMED : INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_CONFIRMED ) ) == RESULT_OK )
 						{
-						if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) != RESULT_OK )
+						if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
 							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a sentence about the same, a similar or a relation question" );
 						}
 					else
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface notification about a confirmation" );
 					}
 				else
 					return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't write the given write specification" );
@@ -948,7 +1038,7 @@ class WordSpecification
 							{
 							if( !isInConflictWithItself )
 								{
-								if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) == RESULT_OK )
+								if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) == RESULT_OK )
 									conflictingSpecificationItem->hasAlreadyBeenWrittenAsConflict = true;
 								else
 									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the conflict sentence" );
@@ -986,7 +1076,7 @@ class WordSpecification
 						{
 						if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( olderSpecificationItem->isQuestion() ? ( olderSpecificationItem->isSelfGenerated() ? INTERFACE_LISTING_YOUR_QUESTION_IS_MORE_SPECIFIC_THAN_MY_QUESTION : INTERFACE_LISTING_THIS_QUESTION_IS_MORE_SPECIFIC_THAN_YOUR_QUESTION ) : ( olderSpecificationItem->isSelfGenerated() ? ( olderSpecificationItem->isSelfGeneratedAssumption() ? INTERFACE_LISTING_YOUR_INFO_IS_MORE_SPECIFIC_THAN_MY_ASSUMPTION : INTERFACE_LISTING_YOUR_INFO_IS_MORE_SPECIFIC_THAN_MY_CONCLUSION ) : INTERFACE_LISTING_THIS_INFO_IS_MORE_SPECIFIC_THAN_YOUR_EARLIER_INFO ) ) ) == RESULT_OK )
 							{
-							if( commonVariables_->presentation->writeDiacriticalText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString ) != RESULT_OK )
+							if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
 								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a sentence" );
 							}
 						else
@@ -1063,7 +1153,10 @@ class WordSpecification
 
 							// If the specification has no relation, select the oldest one (the first of a series)
 							if( !hasRelationContext ||
-							specificationResult.relatedSpecificationItem == NULL )
+							specificationResult.relatedSpecificationItem == NULL ||
+
+							( currentSpecificationItem->specificationCollectionNr() == specificationCollectionNr &&
+							currentSpecificationItem->specificationWordItem() != specificationWordItem ) )
 								{
 								specificationResult.isFirstRelatedSpecification = isFirstRelatedSpecification;
 								specificationResult.relatedSpecificationItem = currentSpecificationItem;
@@ -1102,6 +1195,7 @@ class WordSpecification
 		isSimilarOrRelatedQuestion_ = false;
 		isStopDetectingQuestion_ = false;
 
+		compoundSpecificationCollectionNr_ = NO_COLLECTION_NR;
 		userSpecificationCollectionNr_ = NO_COLLECTION_NR;
 
 		confirmedReplacedSpecificationItem_ = NULL;
@@ -1109,6 +1203,8 @@ class WordSpecification
 		conflictingSpecificationItem_ = NULL;
 		correctedAssumptionReplacedSpecificationItem_ = NULL;
 		replacedAssignmentItem_ = NULL;
+
+		compoundSpecificationWordItem_ = NULL;
 
 		commonVariables_ = commonVariables;
 		myWordItem_ = myWordItem;
@@ -1144,7 +1240,10 @@ class WordSpecification
 		isOnlyCheckingForConflicts_ = false;
 		isStopDetectingQuestion_ = false;
 
+		compoundSpecificationCollectionNr_ = NO_COLLECTION_NR;
 		userSpecificationCollectionNr_ = NO_COLLECTION_NR;
+
+		compoundSpecificationWordItem_ = NULL;
 		}
 
 	bool hasConfirmedSpecification()
@@ -1173,11 +1272,6 @@ class WordSpecification
 		return hasShownMoreSpecificRelatedQuestion_;
 		}
 
-	unsigned int userSpecificationCollectionNr()
-		{
-		return userSpecificationCollectionNr_;
-		}
-
 	ResultType checkForSpecificationConflict( bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkForSpecificationConflict";
@@ -1200,28 +1294,27 @@ class WordSpecification
 		return RESULT_OK;
 		}
 
-	SpecificationResultType addSpecification( bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
+	SpecificationResultType addSpecification( bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int copiedRelationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
 		{
 		SpecificationResultType specificationResult;
 		bool isSpecificationCollectedWithItself;
+		bool hasCopiedRelationContext = ( copiedRelationContextNr > NO_CONTEXT_NR );
 		bool hasFoundSpecificationWithDifferentRelationContext = false;
 		bool hasRelationContext = ( relationContextNr > NO_CONTEXT_NR );
 		bool hasSpecificationCollection = ( specificationCollectionNr > NO_COLLECTION_NR );
 		bool isGeneralizationProperName = ( generalizationWordTypeNr == WORD_TYPE_PROPER_NAME );
 		bool isQuestion = ( questionParameter > NO_QUESTION_PARAMETER );
 		bool isSelfGenerated = ( firstJustificationItem != NULL );
-		unsigned int foundRelationContextNr;
 		unsigned int nonCompoundCollectionNr;
 		unsigned int originalSentenceNr;
 		unsigned int compoundCollectionNr = NO_COLLECTION_NR;
 		unsigned int generalizationCollectionNr = NO_COLLECTION_NR;
-		JustificationItem *obsoleteJustificationItem;
 		SpecificationItem *createdSpecificationItem;
-		SpecificationItem *foundUserSpecificationItem;
 		SpecificationItem *tempSpecificationItem;
 		SpecificationItem *foundReplacedHiddenSpecificationItem = NULL;
 		SpecificationItem *foundReplacedUserSpecificationItem = NULL;
 		SpecificationItem *foundSpecificationItem = NULL;
+		SpecificationItem *foundUserSpecificationItem = NULL;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addSpecification";
 
 		isConfirmedExclusive_ = false;
@@ -1274,7 +1367,7 @@ class WordSpecification
 						myWordItem_->isSingularOrPluralNoun( generalizationWordTypeNr ) &&
 						myWordItem_->isSingularOrPluralNoun( specificationWordTypeNr ) )
 							{
-							if( myWordItem_->addCollectionByGeneralization( isExclusiveSpecification, isAssignment, isQuestion, specificationWordTypeNr, generalizationWordTypeNr, myWordItem_, specificationWordItem ) != RESULT_OK )
+							if( myWordItem_->addCollectionByGeneralization( isAssignment, isQuestion, specificationWordTypeNr, generalizationWordTypeNr, myWordItem_, specificationWordItem ) != RESULT_OK )
 								myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to add a collection by generalization of specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 							}
 
@@ -1288,17 +1381,12 @@ class WordSpecification
 							else
 								{
 								if( !isSelfGenerated &&
-								userSpecificationCollectionNr_ > NO_COLLECTION_NR &&
-								
-								( isGeneralizationProperName ||
-
-								( !isAssignment &&
-								!isEveryGeneralization ) ) )
+								userSpecificationCollectionNr_ > NO_COLLECTION_NR )
 									// Use previous user specification collection
 									specificationCollectionNr = userSpecificationCollectionNr_;
 								else
 									{
-									compoundCollectionNr = specificationWordItem->compoundCollectionNr( specificationWordTypeNr );
+									compoundCollectionNr = specificationWordItem->lastCompoundCollectionNr( specificationWordTypeNr );
 									nonCompoundCollectionNr = specificationWordItem->nonCompoundCollectionNr( specificationWordTypeNr );
 
 									if( nonCompoundCollectionNr > NO_COLLECTION_NR &&
@@ -1328,8 +1416,14 @@ class WordSpecification
 						!isSelfGenerated &&
 						myWordItem_->isGeneralizationReasoningWordType( generalizationWordTypeNr ) )
 							{
-							if( checkUserSpecificationOrQuestion( hasRelationContext, isAssignment, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, isSelection, isSpecificationGeneralization, isValueSpecification, assumptionLevel, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) == RESULT_OK )
-								userSpecificationCollectionNr_ = specificationCollectionNr;
+							if( checkUserSpecificationOrQuestion( hasRelationContext, isAssignment, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, isSelection, isSpecificationGeneralization, isValueSpecification, assumptionLevel, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem, relationWordItem ) == RESULT_OK )
+								{
+								if( isGeneralizationProperName ||
+
+								( !isAssignment &&
+								!isEveryGeneralization ) )
+									userSpecificationCollectionNr_ = specificationCollectionNr;
+								}
 							else
 								myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check a user specification or question with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 							}
@@ -1337,27 +1431,46 @@ class WordSpecification
 						if( commonVariables_->result == RESULT_OK &&
 						!commonVariables_->hasShownWarning )
 							{
+							// Try to find specification
+							// Start with finding user specification
 							if( ( foundUserSpecificationItem = myWordItem_->firstSelfGeneratedCheckSpecificationItem( false, true, false, ( isExclusiveSpecification && isNegative ), isPossessive, false, questionParameter, specificationCollectionNr, ( isAssignment ? NO_CONTEXT_NR : relationContextNr ), specificationWordItem ) ) == NULL )
 								{
 								if( isSelfGenerated )
 									{
-									if( ( foundSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, false, isNegative, isPossessive, questionParameter, specificationCollectionNr, ( isAssignment ? NO_CONTEXT_NR : relationContextNr ), specificationWordItem ) ) == NULL )
+									if( ( foundSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, false, isNegative, isPossessive, questionParameter, specificationCollectionNr, ( isAssignment ? NO_CONTEXT_NR : ( hasCopiedRelationContext ? copiedRelationContextNr : relationContextNr ) ), specificationWordItem ) ) == NULL )
 										{
 										if( isSpecificationCollectedWithItself &&
 										hasSpecificationCollection &&
 										!isQuestion &&
 										( tempSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, isArchivedAssignment, isNegative, isPossessive, NO_QUESTION_PARAMETER, relationContextNr, specificationWordItem ) ) != NULL )
 											{
-											if( tempSpecificationItem->hasRelationContext() &&
-											tempSpecificationItem->isHiddenSpecification() )
-												foundReplacedHiddenSpecificationItem = tempSpecificationItem;
+											if( tempSpecificationItem->hasRelationContext() )
+												{
+												if( tempSpecificationItem->isHiddenSpecification() )
+													foundReplacedHiddenSpecificationItem = tempSpecificationItem;
+												}
+											else
+												{
+												if( myWordItem_->isUserRelationWord &&
+												tempSpecificationItem->isSelfGenerated() &&
+												tempSpecificationItem->hasSpecificationNonCompoundCollection() )
+													{
+													if( confirmedReplacedSpecificationItem_ == NULL )
+														{
+														if( myWordItem_->writeUpdatedSpecification( true, true, false, false, tempSpecificationItem ) == RESULT_OK )
+															confirmedReplacedSpecificationItem_ = tempSpecificationItem;
+														else
+															myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an assumption, which will have an added relation" );
+														}
+													else
+														myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The confirmed replaced specification item is already defined" );
+													}
+												}
 											}
 										}
 									else
 										{
-										foundRelationContextNr = foundSpecificationItem->relationContextNr();
-
-										if( foundRelationContextNr == relationContextNr )
+										if( foundSpecificationItem->relationContextNr() == relationContextNr )
 											{
 											if( isGeneralizationProperName &&
 											firstJustificationItem != NULL &&
@@ -1365,13 +1478,13 @@ class WordSpecification
 											foundSpecificationItem->isOlderItem() &&
 											foundSpecificationItem->isSelfGeneratedAssumption() &&
 											!foundSpecificationItem->isHiddenSpecification() &&
-											// No conclusion already exists
+											// Conclusion doesn't exists
 											myWordItem_->firstSelfGeneratedCheckSpecificationItem( true, isArchivedAssignment, isNegative, isPossessive, false, specificationWordItem, NULL ) == NULL )
 												{
 												if( foundSpecificationItem->markAsConcludedAssumption() == RESULT_OK )
 													{
-													if( myWordItem_->writeUpdatedSpecification( true, false, false, foundSpecificationItem ) != RESULT_OK )
-														myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the concluded assumption" );
+													if( myWordItem_->writeUpdatedSpecification( true, true, false, false, foundSpecificationItem ) != RESULT_OK )
+														myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a concluded assumption" );
 													}
 												else
 													myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark the found specification as concluded assumption" );
@@ -1380,14 +1493,62 @@ class WordSpecification
 										else
 											{
 											if( hasRelationContext &&
-											foundRelationContextNr > NO_CONTEXT_NR )
+											foundSpecificationItem->hasRelationContext() )
 												hasFoundSpecificationWithDifferentRelationContext = true;
 											}
 										}
 									}
 								}
 							else
-								foundSpecificationItem = foundUserSpecificationItem;
+								{
+								if( foundUserSpecificationItem->isSpecificationGeneralization() == isSpecificationGeneralization )
+									{
+									if( !isSelfGenerated ||
+									foundUserSpecificationItem->hasRelationContext() ||
+									!foundUserSpecificationItem->isExclusiveSpecification() ||
+									foundUserSpecificationItem->isOlderItem() )
+										{
+										foundSpecificationItem = foundUserSpecificationItem;
+
+										if( isAssignment &&
+										specificationCollectionNr > NO_COLLECTION_NR &&
+										confirmedReplacedSpecificationItem_ != NULL &&
+										foundUserSpecificationItem->isUserAssignment() )
+											// Prepare foundUserSpecificationItem for confirmation
+											foundUserSpecificationItem = myWordItem_->firstSpecificationItem( isPossessive, false, NO_QUESTION_PARAMETER, specificationWordItem );
+										else
+											foundUserSpecificationItem = NULL;
+										}
+									else
+										{
+										if( compoundSpecificationCollectionNr_ == NO_COLLECTION_NR ||
+										compoundSpecificationWordItem_ == NULL )
+											{
+											if( ( specificationCollectionNr = myWordItem_->highestCollectionNrInAllWords() ) < MAX_COLLECTION_NR )
+												{
+												compoundSpecificationCollectionNr_ = ++specificationCollectionNr;
+												compoundSpecificationWordItem_ = specificationWordItem;
+												}
+											else
+												myWordItem_->startSystemErrorInWord( functionNameString, moduleNameString_, "Collection number overflow" );
+											}
+										else
+											{
+											specificationCollectionNr = compoundSpecificationCollectionNr_;
+
+											if( compoundSpecificationWordItem_->addCollection( isExclusiveSpecification, false, specificationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, specificationWordItem, myWordItem_, myWordItem_ ).result == RESULT_OK )
+												{
+												if( specificationWordItem->addCollection( isExclusiveSpecification, false, specificationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, compoundSpecificationWordItem_, myWordItem_, myWordItem_ ).result != RESULT_OK )
+													myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to collect word \"", specificationWordItem->anyWordTypeString(), "\" with word \"", compoundSpecificationWordItem_->anyWordTypeString(), "\"" );
+												}
+											else
+												myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to collect word \"", compoundSpecificationWordItem_->anyWordTypeString(), "\" with word \"", specificationWordItem->anyWordTypeString(), "\"" );
+											}
+										}
+									}
+								else
+									specificationCollectionNr = foundUserSpecificationItem->generalizationCollectionNr();
+								}
 							}
 						}
 					else
@@ -1426,12 +1587,13 @@ class WordSpecification
 
 					// Accept different relation context (e.g. ambiguous specification)
 					( hasFoundSpecificationWithDifferentRelationContext &&
+					firstJustificationItem != NULL &&
 
-					( ( hasConfirmedSpecification_ &&
-					myWordItem_->nContextWordsInAllWords( relationContextNr, specificationWordItem ) == commonVariables_->nUserRelationWords ) ||
+					( hasConfirmedSpecification_ ||
+					firstJustificationItem->isPossessiveReversibleConclusion() ||
 
-					( firstJustificationItem != NULL &&
-					firstJustificationItem->isPossessiveReversibleConclusion() ) ) ) )
+					( hasCopiedRelationContext &&
+					!firstJustificationItem->isOlderItem() ) ) ) )
 						{
 						if( foundSpecificationItem != NULL )
 							{
@@ -1465,51 +1627,27 @@ class WordSpecification
 
 						originalSentenceNr = ( hasRelationContext ||
 											isQuestion ||
-											foundSpecificationItem == NULL ||
-
-											( foundSpecificationItem->hasRelationContext() &&
-											firstJustificationItem != NULL &&
-											firstJustificationItem->isExclusiveSpecificationSubstitutionAssumption() ) ? commonVariables_->currentSentenceNr : foundSpecificationItem->originalSentenceNr() );
+											foundSpecificationItem == NULL ? commonVariables_->currentSentenceNr : foundSpecificationItem->originalSentenceNr() );
 
 						// Create the actual specification
 						if( ( specificationResult = myWordItem_->createSpecificationItem( false, false, false, false, false, isConditional, ( hasCorrectedAssumptionByKnowledge_ || hasCorrectedAssumptionByOppositeQuestion_ ), isEveryGeneralization, isExclusiveSpecification, false, ( isAssignment && !isSelfGenerated ? false : isNegative ), isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, NO_ASSIGNMENT_LEVEL, assumptionLevel, commonVariables_->currentLanguageNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, ( isAssignment ? WORD_TYPE_UNDEFINED : relationWordTypeNr ), generalizationCollectionNr, specificationCollectionNr, generalizationContextNr, NO_CONTEXT_NR, ( isAssignment ? NO_CONTEXT_NR : relationContextNr ), originalSentenceNr, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, ( isAssignment ? 0 : nContextRelations ), firstJustificationItem, specificationWordItem, specificationString, NULL ) ).result == RESULT_OK )
 							{
 							if( ( createdSpecificationItem = specificationResult.createdSpecificationItem ) != NULL )
 								{
-								if( !isNegative &&
-								!isPossessive &&
-								!isQuestion &&
-								!isSelection &&
-								!isSelfGenerated &&
-								assumptionLevel == NO_ASSUMPTION_LEVEL &&
-								specificationWordItem != NULL &&
-								!myWordItem_->isFemaleOrMale() )
-									{
-									if( specificationWordItem->isFemale() )
-										{
-										if( myWordItem_->markWordAsFemale() != RESULT_OK )
-											myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark my word as female" );
-										}
-									else
-										{
-										if( specificationWordItem->isMale() )
-											{
-											if( myWordItem_->markWordAsMale() != RESULT_OK )
-												myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark my word as male" );
-											}
-										}
-									}
-
-								if( commonVariables_->result == RESULT_OK &&
-								confirmedReplacedSpecificationItem_ != NULL )
+								if( confirmedReplacedSpecificationItem_ != NULL )
 									{
 									if( replaceOrDeleteSpecification( confirmedReplacedSpecificationItem_, createdSpecificationItem ) == RESULT_OK )
 										{
-										if( ( obsoleteJustificationItem = myWordItem_->obsoleteJustificationItem() ) != NULL )
+										if( myWordItem_->replaceOrDeleteObsoleteJustification() == RESULT_OK )
 											{
-											if( myWordItem_->replaceOrDeleteJustification( obsoleteJustificationItem ) != RESULT_OK )
-												myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace an obsolete justification item" );
+											if( foundUserSpecificationItem != NULL )
+												{
+												if( replaceOrDeleteSpecification( foundUserSpecificationItem, createdSpecificationItem ) != RESULT_OK )
+													myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace or delete a duplicate user specification" );
+												}
 											}
+										else
+											myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace an obsolete justification item" );
 										}
 									else
 										myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace or delete a confirmed specification" );
@@ -1551,13 +1689,60 @@ class WordSpecification
 									}
 
 								if( commonVariables_->result == RESULT_OK &&
+								hasCopiedRelationContext &&
+								firstJustificationItem != NULL &&
+								foundSpecificationItem != NULL )
+									{
+									if( firstJustificationItem->changeAttachedJustification( foundSpecificationItem->firstJustificationItem() ) == RESULT_OK )
+										{
+										if( replaceOrDeleteSpecification( foundSpecificationItem, createdSpecificationItem ) != RESULT_OK )
+											myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace or delete the found specification with copied relation context" );
+										}
+									else
+										myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to attach the justifications of the found specification to the created specification" );
+									}
+
+								if( commonVariables_->result == RESULT_OK &&
 								!isNegative &&
 								!isPossessive &&
 								!isQuestion &&
 								!isSimilarOrRelatedQuestion_ &&
-								specificationWordItem != NULL )
+								specificationWordItem != NULL &&
+								!createdSpecificationItem->isHiddenSpecification() )
 									{
-									if( myWordItem_->findAnswersToQuestions( specificationWordItem->compoundCollectionNr( specificationWordTypeNr ), createdSpecificationItem ) != RESULT_OK )
+									if( myWordItem_->findAnswersToQuestions( specificationWordItem->compoundCollectionNr( specificationWordTypeNr ), createdSpecificationItem ) == RESULT_OK )
+										{
+										if( !isSelfGenerated &&
+										!myWordItem_->isFemaleOrMale() )
+											{
+											if( specificationWordItem->isFemale() )
+												{
+												if( myWordItem_->markWordAsFemale() != RESULT_OK )
+													myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark my word as female" );
+												}
+											else
+												{
+												if( specificationWordItem->isMale() )
+													{
+													if( myWordItem_->markWordAsMale() == RESULT_OK )
+														{
+														if( !isAssignment &&
+														isGeneralizationProperName &&
+														commonVariables_->currentLanguageWordItem != NULL &&
+														// Has current language hidden specifications
+														commonVariables_->currentLanguageWordItem->isNounWordCollectedWithItself() )
+															{
+															if( showAssumptionsThatAreNotHiddenAnymore() != RESULT_OK )
+																myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to show assumptions that are not hidden anymore" );
+															}
+														}
+													else
+														myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark my word as male" );
+													}
+												}
+											}
+										}
+									else
 										myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find answers to questions" );
 									}
 								}

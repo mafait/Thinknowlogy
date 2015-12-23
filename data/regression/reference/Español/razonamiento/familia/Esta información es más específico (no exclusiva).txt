@@ -1,0 +1,44 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Una madre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cruz es parte de una familia.
+* 
+* Mis suposiciones:
+< Cruz es probablemente una persona.
+< Cruz tiene probablemente un hijo.
+* 
+* Mis preguntas:
+< ¿Es Cruz un hombre o una mujer?
+< 
+* 
+* Esta información es más específica que la información anterior:
+< Cruz es un padre o una madre.
+* 
+* Mis preguntas que son contestadas:
+< ¿Es Cruz un hombre o una mujer?
+* 
+* Mis conclusiones:
+< Cruz es un hombre.
+* 
+* Mis suposiciones:
+< Cruz no es probablemente una mujer.
+< 

@@ -1,0 +1,4 @@
+﻿Read the file "English/reasoning/family/family definition".
+John was the father of Paul, Joe and Laura.
+Anna is the mother of Paul, Joe and Laura.
+# Remember to clear this knowledge before reading another example.

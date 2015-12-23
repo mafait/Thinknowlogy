@@ -2,11 +2,10 @@
  *	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -98,20 +97,20 @@ class InterfaceList : private List
 							if( !referenceResult.hasFoundMatchingStrings )
 								searchItem = searchItem->nextInterfaceItem();
 							else
-								return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given interface string already exists" );
+								return startError( functionNameString, NULL, "The given interface string already exists" );
 							}
 						else
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to compare two interface strings" );
+							return addError( functionNameString, NULL, "I failed to compare two interface strings" );
 						}
 					else
-						return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I've found an undefined interface string" );
+						return startError( functionNameString, NULL, "I have found an undefined interface string" );
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given interface parameter already exists" );
+					return startError( functionNameString, NULL, "The given interface parameter already exists" );
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given interface string is undefined" );
+			return startError( functionNameString, NULL, "The given interface string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -123,10 +122,10 @@ class InterfaceList : private List
 		if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 			{
 			if( addItemToList( QUERY_ACTIVE_CHAR, new InterfaceItem( interfaceParameter, interfaceStringLength, interfaceString, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-				return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active interface item" );
+				return addError( functionNameString, NULL, "I failed to add an active interface item" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current item number is undefined" );
+			return startError( functionNameString, NULL, "The current item number is undefined" );
 
 		return RESULT_OK;
 		}
@@ -141,7 +140,7 @@ class InterfaceList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeInterfaceItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store an interface item in the database" );
+					return addError( functionNameString, NULL, "I failed to store an interface item in the database" );
 				}
 
 			searchItem = searchItem->nextInterfaceItem();
@@ -154,7 +153,7 @@ class InterfaceList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeInterfaceItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced interface item in the database" );
+					return addError( functionNameString, NULL, "I failed to modify a replaced interface item in the database" );
 				}
 
 			searchItem = searchItem->nextInterfaceItem();

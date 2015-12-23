@@ -1,11 +1,10 @@
 ﻿/*
  *	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -25,267 +24,274 @@
 class Constants
 	{
 	// Version constants
-	protected static final String	PRODUCT_NAME =											"Thinknowlogy";
-	protected static final String	VERSION_NAME =											"2015r1beta (Corazón)";
+	protected static final String	PRODUCT_NAME =													"Thinknowlogy";
+	protected static final String	VERSION_NAME =													"2015r1 (Esperanza)";
 
 	// Character constants
-	protected static final char		BACK_SPACE_CHAR =										'\b';
-	protected static final char		BELL_CHAR =												'\u0007';
-	protected static final char		NEW_LINE_CHAR =											'\n';
-	protected static final char		CARRIAGE_RETURN_CHAR =									'\r';
-	protected static final char		TAB_CHAR =												'\t';
+	protected static final char		BACK_SPACE_CHAR =												'\b';
+	protected static final char		BELL_CHAR =														'\u0007';
+	protected static final char		NEW_LINE_CHAR =													'\n';
+	protected static final char		CARRIAGE_RETURN_CHAR =											'\r';
+	protected static final char		TAB_CHAR =														'\t';
 
 	// Console constants
-	protected static final short	CONSOLE_SLEEP_TIME =									10;		// in milliseconds
+	protected static final short	CONSOLE_SLEEP_TIME =											10;		// in milliseconds
 
-	protected static final short	CONSOLE_BORDER_SIZE =									4;		// in pixels
-	protected static final short	CONSOLE_BUTTON_PANE_HEIGHT =							35;		// in pixels
-	protected static final short	CONSOLE_ERROR_PANE_HEIGHT =								400;	// in pixels
-	protected static final short	CONSOLE_ERROR_PANE_WIDTH =								600;	// in pixels
-	protected static final short	CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_HEIGHT =			100;	// in pixels
-	protected static final short	CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_WIDTH =			600;	// in pixels
-	protected static final short	CONSOLE_MAXIMUM_FRAME_WIDTH_AT_STARTUP =				1280;	// in pixels
-	protected static final short	CONSOLE_TOP_BOTTOM_SPACE =								75;		// in pixels (space between top of screen and top of GUI and between bottom of GUI and bottom of screen)
-	protected static final short	CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS =					50; 
+	protected static final short	CONSOLE_BORDER_SIZE =											4;		// in pixels
+	protected static final short	CONSOLE_BUTTON_PANE_HEIGHT =									35;		// in pixels
+	protected static final short	CONSOLE_ERROR_PANE_HEIGHT =										400;	// in pixels
+	protected static final short	CONSOLE_ERROR_PANE_WIDTH =										600;	// in pixels
+	protected static final short	CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_HEIGHT =					100;	// in pixels
+	protected static final short	CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_WIDTH =					600;	// in pixels
+	protected static final short	CONSOLE_MAXIMUM_FRAME_WIDTH_AT_STARTUP =						1280;	// in pixels
+	protected static final short	CONSOLE_TOP_BOTTOM_SPACE =										75;		// in pixels (space between top of screen and top of GUI and between bottom of GUI and bottom of screen)
+	protected static final short	CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS =							50; 
 
-	protected static final short	CONSOLE_SUBMENU_INIT =									0;
-	protected static final short	CONSOLE_SUBMENU_AMBIGUITY =								1;
-	protected static final short	CONSOLE_SUBMENU_PROGRAMMING =							2;
-	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 =					3;
-	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_GREETING =					4;
-	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI =			5;
-	protected static final short	CONSOLE_SUBMENU_REASONING =								6;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS =			7;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS =			8;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT =	9;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS =			10;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION =		11;
-	protected static final short	CONSOLE_SUBMENU_CHANGE_LANGUAGE =						12;
-	protected static final short	CONSOLE_SUBMENU_CHANGE_FONT =							13;
-	protected static final short	CONSOLE_SUBMENU_HELP =									14;
+	protected static final short	CONSOLE_SUBMENU_INIT =											0;
+	protected static final short	CONSOLE_SUBMENU_AMBIGUITY =										1;
+	protected static final short	CONSOLE_SUBMENU_PROGRAMMING =									2;
+	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 =							3;
+	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_GREETING =							4;
+	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI =					5;
+	protected static final short	CONSOLE_SUBMENU_REASONING =										6;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS =					7;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS =					8;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT =			9;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS =					10;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION =				11;
+	protected static final short	CONSOLE_SUBMENU_CHANGE_LANGUAGE =								12;
+	protected static final short	CONSOLE_SUBMENU_CHANGE_FONT =									13;
+	protected static final short	CONSOLE_SUBMENU_HELP =											14;
 
-	protected static final short	CONSOLE_DEFAULT_FONT_SIZE =								13;
-	protected static final short	CONSOLE_MINIMUM_FONT_SIZE =								8;
-	protected static final short	CONSOLE_MAXIMUM_FONT_SIZE =								64;
-	protected static final String	CONSOLE_FONT_ARIEL =									"Ariel";
-	protected static final String	CONSOLE_FONT_COURIER =									"Courier";
-	protected static final String	CONSOLE_FONT_COURIER_NEW =								"Courier New";
-	protected static final String	CONSOLE_FONT_MICROSOFT_SANS_SERIF =						"Microsoft Sans Serif";
-	protected static final String	CONSOLE_FONT_MONOSPACED =								"monospaced";
-	protected static final String	CONSOLE_FONT_TIMES_NEW_ROMAN =							"Times New Roman";
-	protected static final String	CONSOLE_FONT_VERDANA =									"Verdana";
+	protected static final short	CONSOLE_DEFAULT_FONT_SIZE =										13;
+	protected static final short	CONSOLE_MINIMUM_FONT_SIZE =										8;
+	protected static final short	CONSOLE_MAXIMUM_FONT_SIZE =										64;
+	protected static final String	CONSOLE_FONT_ARIEL =											"Ariel";
+	protected static final String	CONSOLE_FONT_COURIER =											"Courier";
+	protected static final String	CONSOLE_FONT_COURIER_NEW =										"Courier New";
+	protected static final String	CONSOLE_FONT_MICROSOFT_SANS_SERIF =								"Microsoft Sans Serif";
+	protected static final String	CONSOLE_FONT_MONOSPACED =										"monospaced";
+	protected static final String	CONSOLE_FONT_TIMES_NEW_ROMAN =									"Times New Roman";
+	protected static final String	CONSOLE_FONT_VERDANA =											"Verdana";
 
-	protected static final String	CONSOLE_CONNECT_FOUR_INTERFERENCE_MESSAGE_STRING =		"Notification";
+	protected static final String	CONSOLE_CONNECT_FOUR_INTERFERENCE_MESSAGE_STRING =				"Notification";
 
 	// File constants
-	protected static final String	FILE_EXAMPLES_DIRECTORY_NAME_STRING =					"data/examples/";
-	protected static final String	FILE_GRAMMAR_DIRECTORY_NAME_STRING =					"data/grammar/";
-	protected static final String	FILE_INFO_DIRECTORY_NAME_STRING =						"data/info/";
-	protected static final String	FILE_INTERFACE_DIRECTORY_NAME_STRING =					"data/interface/";
-	protected static final String	FILE_STARTUP_DIRECTORY_NAME_STRING =					"data/startup/";
+	protected static final String	FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING =						"data/examples/";
+	protected static final String	FILE_DATA_GRAMMAR_DIRECTORY_NAME_STRING =						"data/grammar/";
+	protected static final String	FILE_DATA_INFO_DIRECTORY_NAME_STRING =							"data/info/";
+	protected static final String	FILE_DATA_INTERFACE_DIRECTORY_NAME_STRING =						"data/interface/";
+	protected static final String	FILE_DATA_STARTUP_DIRECTORY_NAME_STRING =						"data/startup/";
+	protected static final String	FILE_DATA_REGRESSION_TEST_OUTPUT_DIRECTORY_NAME_STRING =		"data/regression/output/";
+	protected static final String	FILE_DATA_REGRESSION_TEST_REFERENCE_DIRECTORY_NAME_STRING =		"data/regression/reference/";
+	protected static final String	FILE_SOURCE_DIRECTORY_NAME_STRING =								"source/Java/";
 
-	protected static final String	FILE_SOURCE_DIRECTORY_NAME_STRING =						"source/Java/";
-	protected static final String	FILE_DEVELOPMENT_SOURCE_DIRECTORY_NAME_STRING =			"source/Java_release/";
-	protected static final String	FILE_DEVELOPMENT_DIRECTORY_NAME_STRING =				"Release/";
+	protected static final String	FILE_STARTUP_NAME_STRING =										"startup";
+	protected static final String	FILE_WINDOWS_VERSION_STRING =									"Español";
 
-	protected static final String	FILE_STARTUP_NAME_STRING =								"startup";
-
-	protected static final String	FILE_EXTENSION_STRING =									".txt";
-	protected static final String	FILE_UTF_8_ENCODING_STRING =							"UTF-8";
-	protected static final String	FILE_UTF_8_BOM_STRING =									"\uFEFF";
-	protected static final char		FILE_UTF_8_BOM_CHAR =									0x3F;
+	protected static final String	FILE_EXTENSION_STRING =											".txt";
+	protected static final String	FILE_UTF_8_ENCODING_STRING =									"UTF-8";
+	protected static final String	FILE_UTF_8_BOM_STRING =											"\uFEFF";
+	protected static final char		FILE_UTF_8_BOM_CHAR =											0x3F;
 
 	// Initialization constants
-	protected static final short	NO_ASSIGNMENT_LEVEL =									0;
-	protected static final short	NO_ASSUMPTION_LEVEL =									0;
-	protected static final short	NO_GRAMMAR_LEVEL =										0;
-	protected static final short	NO_SELECTION_LEVEL =									0;
-	protected static final short	NO_SOLVE_LEVEL =										0;
-	protected static final short	NO_WRITE_LEVEL =										0;
-	protected static final short	NO_LANGUAGE_NR =										0;
-	protected static final short	NO_ORDER_NR =											0;
-	protected static final short	NO_USER_NR =											0;
+	protected static final short	NO_ASSIGNMENT_LEVEL =											0;
+	protected static final short	NO_ASSUMPTION_LEVEL =											0;
+	protected static final short	NO_GRAMMAR_LEVEL =												0;
+	protected static final short	NO_SELECTION_LEVEL =											0;
+	protected static final short	NO_SOLVE_LEVEL =												0;
+	protected static final short	NO_WRITE_LEVEL =												0;
+	protected static final short	NO_LANGUAGE_NR =												0;
+	protected static final short	NO_ORDER_NR =													0;
+	protected static final short	NO_USER_NR =													0;
 
-	protected static final short	NO_ADJECTIVE_PARAMETER =								0;
-	protected static final short	NO_ANSWER_PARAMETER =									0;
-	protected static final short	NO_ASSIGNMENT_PARAMETER =								0;
-	protected static final short	NO_DEFINITE_ARTICLE_PARAMETER =							0;
-	protected static final short	NO_GRAMMAR_PARAMETER =									0;
-	protected static final short	NO_IMPERATIVE_PARAMETER =								0;
-	protected static final short	NO_INDEFINITE_ARTICLE_PARAMETER =						0;
-	protected static final short	NO_INTERFACE_PARAMETER =								0;
-	protected static final short	NO_PREPOSITION_PARAMETER =								0;
-	protected static final short	NO_QUESTION_PARAMETER =									0;
-	protected static final short	NO_SOLVE_STRATEGY_PARAMETER =							0;
-	protected static final short	NO_WORD_PARAMETER =										0;
+	protected static final short	NO_ADJECTIVE_PARAMETER =										0;
+	protected static final short	NO_ANSWER_PARAMETER =											0;
+	protected static final short	NO_ASSIGNMENT_PARAMETER =										0;
+	protected static final short	NO_DEFINITE_ARTICLE_PARAMETER =									0;
+	protected static final short	NO_GRAMMAR_PARAMETER =											0;
+	protected static final short	NO_IMPERATIVE_PARAMETER =										0;
+	protected static final short	NO_INDEFINITE_ARTICLE_PARAMETER =								0;
+	protected static final short	NO_INTERFACE_PARAMETER =										0;
+	protected static final short	NO_PREPOSITION_PARAMETER =										0;
+	protected static final short	NO_QUESTION_PARAMETER =											0;
+	protected static final short	NO_SOLVE_STRATEGY_PARAMETER =									0;
+	protected static final short	NO_WORD_PARAMETER =												0;
 
-	protected static final short	NO_LIST_NR =											Short.MAX_VALUE;
-	protected static final short	MAX_LEVEL =												Short.MAX_VALUE;
-	protected static final short	MAX_ORDER_NR =											Short.MAX_VALUE;
-	protected static final short	MAX_POSITION =											Short.MAX_VALUE;
+	protected static final short	NO_LIST_NR =													Short.MAX_VALUE;
+	protected static final short	MAX_LEVEL =														Short.MAX_VALUE;
+	protected static final short	MAX_ORDER_NR =													Short.MAX_VALUE;
+	protected static final short	MAX_POSITION =													Short.MAX_VALUE;
 
-	protected static final int		NO_CENTER_WIDTH =										0;
-	protected static final int		NO_COLLECTION_NR =										0;
-	protected static final int		NO_CONTEXT_NR =											0;
-	protected static final int		NO_ITEM_NR =											0;
-	protected static final int		NO_SENTENCE_NR =										0;
-	protected static final int		NO_SCORE =												0;
+	protected static final int		NO_CENTER_WIDTH =												0;
+	protected static final int		NO_COLLECTION_NR =												0;
+	protected static final int		NO_CONTEXT_NR =													0;
+	protected static final int		NO_ITEM_NR =													0;
+	protected static final int		NO_SENTENCE_NR =												0;
+	protected static final int		NO_SCORE =														0;
 
-	protected static final int		MAX_COLLECTION_NR =										Integer.MAX_VALUE;
-	protected static final int		MAX_CONTEXT_NR =										Integer.MAX_VALUE;
-	protected static final int		MAX_ITEM_NR =											Integer.MAX_VALUE;
-	protected static final int		MAX_NUMBER =											Integer.MAX_VALUE;
-	protected static final int		MAX_PROGRESS =											Integer.MAX_VALUE;
-	protected static final int		MAX_QUERY_PARAMETER =									Integer.MAX_VALUE;
-	protected static final int		MAX_SENTENCE_NR =										Integer.MAX_VALUE;
-	protected static final int		MAX_SCORE =												Integer.MAX_VALUE;
-	protected static final int		WINNING_SCORE =											Integer.MAX_VALUE;
+	protected static final int		MAX_COLLECTION_NR =												Integer.MAX_VALUE;
+	protected static final int		MAX_CONTEXT_NR =												Integer.MAX_VALUE;
+	protected static final int		MAX_ITEM_NR =													Integer.MAX_VALUE;
+	protected static final int		MAX_NUMBER =													Integer.MAX_VALUE;
+	protected static final int		MAX_PROGRESS =													Integer.MAX_VALUE;
+	protected static final int		MAX_QUERY_PARAMETER =											Integer.MAX_VALUE;
+	protected static final int		MAX_SENTENCE_NR =												Integer.MAX_VALUE;
+	protected static final int		MAX_SCORE =														Integer.MAX_VALUE;
+	protected static final int		WINNING_SCORE =													Integer.MAX_VALUE;
 
 	// Presentation error constants
-	protected static final String	PRESENTATION_ERROR_INTERNAL_TITLE_STRING =				"Internal error";
-	protected static final String	PRESENTATION_ERROR_CURRENT_ID_STRING =					" with current item id: ";
+	protected static final String	PRESENTATION_ERROR_INTERNAL_TITLE_STRING =						"Internal error";
+	protected static final String	PRESENTATION_ERROR_CURRENT_ID_STRING =							" with current item id: ";
 
-	protected static final String	PRESENTATION_ERROR_CLASS_STRING =						"Class: ";
-	protected static final String	PRESENTATION_ERROR_SUPERCLASS_STRING =					" / superclass ";
-	protected static final String	PRESENTATION_ERROR_METHOD_STRING =						".\nMethod: ";
-	protected static final String	PRESENTATION_ERROR_CONSTRUCTOR_METHOD_NAME =			"<init>";
-	protected static final String	PRESENTATION_ERROR_METHOD_WORD_START_STRING =			" of word \"";
-	protected static final String	PRESENTATION_ERROR_METHOD_WORD_END_STRING =				"\"";
-	protected static final String	PRESENTATION_ERROR_METHOD_LIST_START_STRING =			" in list <";
-	protected static final String	PRESENTATION_ERROR_METHOD_LIST_END_STRING =				">";
-	protected static final String	PRESENTATION_ERROR_MESSAGE_START_STRING =				".\nError: ";
-	protected static final String	PRESENTATION_ERROR_MESSAGE_END_STRING =					".\n\n";
+	protected static final String	PRESENTATION_ERROR_CLASS_STRING =								"Class: ";
+	protected static final String	PRESENTATION_ERROR_SUPERCLASS_STRING =							" / superclass ";
+	protected static final String	PRESENTATION_ERROR_METHOD_STRING =								".\nMethod: ";
+	protected static final String	PRESENTATION_ERROR_CONSTRUCTOR_METHOD_NAME =					"<init>";
+	protected static final String	PRESENTATION_ERROR_METHOD_WORD_START_STRING =					" of word \"";
+	protected static final String	PRESENTATION_ERROR_METHOD_WORD_END_STRING =						"\"";
+	protected static final String	PRESENTATION_ERROR_METHOD_LIST_START_STRING =					" in list <";
+	protected static final String	PRESENTATION_ERROR_METHOD_LIST_END_STRING =						">";
+	protected static final String	PRESENTATION_ERROR_MESSAGE_START_STRING =						".\nError: ";
+	protected static final String	PRESENTATION_ERROR_MESSAGE_END_STRING =							".\n\n";
 
 	// Presentation prompt constants
-	protected static final short	PRESENTATION_PROMPT_READ =								0;
-	protected static final short	PRESENTATION_PROMPT_WRITE =								1;
-	protected static final short	PRESENTATION_PROMPT_INFO =								3;
-	protected static final short	PRESENTATION_PROMPT_NOTIFICATION =						4;
-	protected static final short	PRESENTATION_PROMPT_WARNING =							5;
-	protected static final short	PRESENTATION_PROMPT_QUERY =								6;
-//	protected static final short	PRESENTATION_PROMPT_ENTER =								7;
+	protected static final short	PRESENTATION_PROMPT_READ =										0;
+	protected static final short	PRESENTATION_PROMPT_WRITE =										1;
+	protected static final short	PRESENTATION_PROMPT_WRITE_INDENTED =							2;
+	protected static final short	PRESENTATION_PROMPT_INFO =										4;
+	protected static final short	PRESENTATION_PROMPT_NOTIFICATION =								5;
+	protected static final short	PRESENTATION_PROMPT_WARNING =									6;
+	protected static final short	PRESENTATION_PROMPT_WARNING_INDENTED =							7;
+	protected static final short	PRESENTATION_PROMPT_QUERY =										8;
+//	protected static final short	PRESENTATION_PROMPT_ENTER =										9;
 
-	protected static final String	PRESENTATION_PROMPT_READ_STRING =						"> ";
-	protected static final String	PRESENTATION_PROMPT_WRITE_STRING =						"< ";
-	protected static final String	PRESENTATION_PROMPT_INFO_STRING =						"";
-	protected static final String	PRESENTATION_PROMPT_NOTIFICATION_STRING =				"* ";
-	protected static final String	PRESENTATION_PROMPT_WARNING_STRING =					"! ";
-	protected static final String	PRESENTATION_PROMPT_QUERY_STRING =						"? ";
-	protected static final String	PRESENTATION_PROMPT_ENTER_STRING =						": ";
+	protected static final String	PRESENTATION_PROMPT_READ_STRING =								"> ";
+	protected static final String	PRESENTATION_PROMPT_WRITE_STRING =								"< ";
+	protected static final String	PRESENTATION_PROMPT_WRITE_INDENTED_STRING =						"<	- ";
+	protected static final String	PRESENTATION_PROMPT_INFO_STRING =								"";
+	protected static final String	PRESENTATION_PROMPT_NOTIFICATION_STRING =						"* ";
+	protected static final String	PRESENTATION_PROMPT_WARNING_STRING =							"! ";
+	protected static final String	PRESENTATION_PROMPT_WARNING_INDENTED_STRING =					"!	- ";
+	protected static final String	PRESENTATION_PROMPT_QUERY_STRING =								"? ";
+	protected static final String	PRESENTATION_PROMPT_ENTER_STRING =								": ";
 
-	protected static final String	PRESENTATION_SKIP_COMMENT_STRING =						"#C++#";
-	protected static final String	PRESENTATION_STRIP_COMMENT_STRING =						"#Java#";
+	protected static final String	PRESENTATION_SKIP_COMMENT_STRING =								"#C++#";
+	protected static final String	PRESENTATION_STRIP_COMMENT_STRING =								"#Java#";
 
 	// String constants
-	protected static final String	BACK_SLASH_STRING =										"\\";
-	protected static final String	DOUBLE_COLON_STRING =									":";
-	protected static final String	EMPTY_STRING =											"";
-	protected static final String	SLASH_STRING =											"/";
-	protected static final String	SPACE_STRING =											" ";
-	protected static final String	CARRIAGE_RETURN_NEW_LINE_STRING =						"\r\n";
-	protected static final String	NEW_LINE_STRING =										"\n";
-	protected static final String	COLON_NEW_LINE_STRING =									".\n";
-	protected static final String	CHANGE_LANGUAGE_STRING =								"~";
+	protected static final String	BACK_SLASH_STRING =												"\\";
+	protected static final String	DOUBLE_COLON_STRING =											":";
+	protected static final String	EMPTY_STRING =													"";
+	protected static final String	SLASH_STRING =													"/";
+	protected static final String	SPACE_STRING =													" ";
+	protected static final String	CARRIAGE_RETURN_NEW_LINE_STRING =								"\r\n";
+	protected static final String	NEW_LINE_STRING =												"\n";
+	protected static final String	COLON_NEW_LINE_STRING =											".\n";
+	protected static final String	CHANGE_LANGUAGE_STRING =										"~";
 
 	// Symbol constants
-	protected static final char		SYMBOL_COMMA =											',';
-	protected static final char		SYMBOL_COLON =											'.';
-	protected static final char		SYMBOL_SEMI_COLON =										';';
-	protected static final char		SYMBOL_DOUBLE_COLON =									':';
-	protected static final char		SYMBOL_EXCLAMATION_MARK =								'!';
-	protected static final char		SYMBOL_EXCLAMATION_MARK_INVERTED =						'¡';
-	protected static final char		SYMBOL_QUESTION_MARK =									'?';
-	protected static final char		SYMBOL_QUESTION_MARK_INVERTED =							'¿';
-	protected static final char		SYMBOL_PIPE =											'|';
-	protected static final char		SYMBOL_AMPERSAND =										'&';
-	protected static final char		SYMBOL_HASH =											'#';
-	protected static final char		SYMBOL_SWUNG_DASH =										'~';
-	protected static final char		SYMBOL_AT_SIGN =										'@';
-	protected static final char		SYMBOL_ASTERISK =										'*';
-	protected static final char		SYMBOL_PERCENT =										'%';
-	protected static final char		SYMBOL_DOLLAR =											'$';
-	protected static final char		SYMBOL_SLASH =											'/';
-	protected static final char		SYMBOL_BACK_SLASH =										'\\';
-	protected static final char		SYMBOL_QUOTE =											'\'';
-	protected static final char		SYMBOL_BACK_QUOTE =										'`';
-	protected static final char		SYMBOL_DOUBLE_QUOTE =									'"';
-	protected static final char		SYMBOL_OPEN_ROUNDED_BRACKET =							'(';
-	protected static final char		SYMBOL_CLOSE_ROUNDED_BRACKET =							')';
-	protected static final char		SYMBOL_OPEN_CURVED_BRACKET =							'{';
-	protected static final char		SYMBOL_CLOSE_CURVED_BRACKET =							'}';
-	protected static final char		SYMBOL_OPEN_HOOKED_BRACKET =							'<';
-	protected static final char		SYMBOL_CLOSE_HOOKED_BRACKET =							'>';
-	protected static final char		SYMBOL_OPEN_SQUARE_BRACKET =							'[';
-	protected static final char		SYMBOL_CLOSE_SQUARE_BRACKET =							']';
+	protected static final char		SYMBOL_COMMA =													',';
+	protected static final char		SYMBOL_COLON =													'.';
+	protected static final char		SYMBOL_SEMI_COLON =												';';
+	protected static final char		SYMBOL_DOUBLE_COLON =											':';
+	protected static final char		SYMBOL_EXCLAMATION_MARK =										'!';
+	protected static final char		SYMBOL_EXCLAMATION_MARK_INVERTED =								'¡';
+	protected static final char		SYMBOL_QUESTION_MARK =											'?';
+	protected static final char		SYMBOL_QUESTION_MARK_INVERTED =									'¿';
+	protected static final char		SYMBOL_PLUS =													'+';
+	protected static final char		SYMBOL_EQUALITY =												'=';
+	protected static final char		SYMBOL_PIPE =													'|';
+	protected static final char		SYMBOL_AMPERSAND =												'&';
+	protected static final char		SYMBOL_HASH =													'#';
+	protected static final char		SYMBOL_SWUNG_DASH =												'~';
+	protected static final char		SYMBOL_AT_SIGN =												'@';
+	protected static final char		SYMBOL_ASTERISK =												'*';
+	protected static final char		SYMBOL_PERCENT =												'%';
+	protected static final char		SYMBOL_DOLLAR =													'$';
+	protected static final char		SYMBOL_SLASH =													'/';
+	protected static final char		SYMBOL_BACK_SLASH =												'\\';
+	protected static final char		SYMBOL_QUOTE =													'\'';
+	protected static final char		SYMBOL_BACK_QUOTE =												'`';
+	protected static final char		SYMBOL_DOUBLE_QUOTE =											'"';
+	protected static final char		SYMBOL_OPEN_ROUNDED_BRACKET =									'(';
+	protected static final char		SYMBOL_CLOSE_ROUNDED_BRACKET =									')';
+	protected static final char		SYMBOL_OPEN_CURVED_BRACKET =									'{';
+	protected static final char		SYMBOL_CLOSE_CURVED_BRACKET =									'}';
+	protected static final char		SYMBOL_OPEN_HOOKED_BRACKET =									'<';
+	protected static final char		SYMBOL_CLOSE_HOOKED_BRACKET =									'>';
+	protected static final char		SYMBOL_OPEN_SQUARE_BRACKET =									'[';
+	protected static final char		SYMBOL_CLOSE_SQUARE_BRACKET =									']';
 
 	// Grammar constants
-	protected static final char		GRAMMAR_CHOICE_START =									SYMBOL_OPEN_CURVED_BRACKET;
-	protected static final char		GRAMMAR_CHOICE_END =									SYMBOL_CLOSE_CURVED_BRACKET;
-	protected static final char		GRAMMAR_OPTION_START =									SYMBOL_OPEN_SQUARE_BRACKET;
-	protected static final char		GRAMMAR_OPTION_END =									SYMBOL_CLOSE_SQUARE_BRACKET;
-	protected static final char		GRAMMAR_OPTION_READ_NOT_WRITE_START =					SYMBOL_OPEN_ROUNDED_BRACKET;
-	protected static final char		GRAMMAR_OPTION_READ_NOT_WRITE_END =						SYMBOL_CLOSE_ROUNDED_BRACKET;
+	protected static final char		GRAMMAR_CHOICE_START =											SYMBOL_OPEN_CURVED_BRACKET;
+	protected static final char		GRAMMAR_CHOICE_END =											SYMBOL_CLOSE_CURVED_BRACKET;
+	protected static final char		GRAMMAR_OPTION_START =											SYMBOL_OPEN_SQUARE_BRACKET;
+	protected static final char		GRAMMAR_OPTION_END =											SYMBOL_CLOSE_SQUARE_BRACKET;
+	protected static final char		GRAMMAR_OPTION_READ_NOT_WRITE_START =							SYMBOL_OPEN_ROUNDED_BRACKET;
+	protected static final char		GRAMMAR_OPTION_READ_NOT_WRITE_END =								SYMBOL_CLOSE_ROUNDED_BRACKET;
 
 	// Query constants
-	protected static final char		COMMENT_CHAR =											SYMBOL_HASH;
-	protected static final char		GRAMMAR_WORD_DEFINITION_CHAR =							SYMBOL_DOLLAR;
+	protected static final char		COMMENT_CHAR =													SYMBOL_HASH;
+	protected static final char		GRAMMAR_WORD_DEFINITION_CHAR =									SYMBOL_DOLLAR;
 
-	protected static final char		QUERY_CHAR =											SYMBOL_SWUNG_DASH;
-	protected static final char		QUERY_COUNT_CHAR =										SYMBOL_HASH;
-	protected static final char		QUERY_NO_LIST_CHAR =									SYMBOL_QUESTION_MARK;
-	protected static final char		QUERY_WORD_TYPE_CHAR =									SYMBOL_AT_SIGN;
-	protected static final char		QUERY_PARAMETER_CHAR =									SYMBOL_DOUBLE_COLON;
-	protected static final char		QUERY_ACTIVE_CHAR =										SYMBOL_EXCLAMATION_MARK;
-	protected static final char		QUERY_INACTIVE_CHAR =									SYMBOL_ASTERISK;
-	protected static final char		QUERY_ARCHIVED_CHAR =									SYMBOL_DOLLAR;
-	protected static final char		QUERY_REPLACED_CHAR =									SYMBOL_PERCENT;
-	protected static final char		QUERY_DELETED_CHAR =									SYMBOL_AMPERSAND;
-	protected static final char		QUERY_SEPARATOR_CHAR =									SYMBOL_COMMA;
-	protected static final char		QUERY_ITEM_START_CHAR =									SYMBOL_OPEN_ROUNDED_BRACKET;
-	protected static final char		QUERY_ITEM_END_CHAR =									SYMBOL_CLOSE_ROUNDED_BRACKET;
-	protected static final char		QUERY_ITEM_SENTENCE_NR_START_CHAR =						SYMBOL_OPEN_CURVED_BRACKET;
-	protected static final char		QUERY_ITEM_SENTENCE_NR_END_CHAR =						SYMBOL_CLOSE_CURVED_BRACKET;
-	protected static final char		QUERY_REF_ITEM_START_CHAR =								SYMBOL_OPEN_SQUARE_BRACKET;
-	protected static final char		QUERY_REF_ITEM_END_CHAR =								SYMBOL_CLOSE_SQUARE_BRACKET;
-	protected static final char		QUERY_LIST_START_CHAR =									SYMBOL_OPEN_HOOKED_BRACKET;
-	protected static final char		QUERY_LIST_END_CHAR =									SYMBOL_CLOSE_HOOKED_BRACKET;
-	protected static final char		QUERY_WORD_START_CHAR =									SYMBOL_QUOTE;
-	protected static final char		QUERY_WORD_END_CHAR =									SYMBOL_QUOTE;
-	protected static final char		QUERY_WORD_REFERENCE_START_CHAR =						SYMBOL_BACK_QUOTE;
-	protected static final char		QUERY_WORD_REFERENCE_END_CHAR =							SYMBOL_BACK_QUOTE;
-	protected static final char		QUERY_STRING_START_CHAR =								SYMBOL_DOUBLE_QUOTE;
-	protected static final char		QUERY_STRING_END_CHAR =									SYMBOL_DOUBLE_QUOTE;
+	protected static final char		QUERY_CHAR =													SYMBOL_SWUNG_DASH;
+	protected static final char		QUERY_COUNT_CHAR =												SYMBOL_HASH;
+	protected static final char		QUERY_SELECTING_ATTACHED_JUSTIFICATIONS_CHAR =					SYMBOL_ASTERISK;
+	protected static final char		QUERY_NO_LIST_CHAR =											SYMBOL_QUESTION_MARK;
+	protected static final char		QUERY_WORD_TYPE_CHAR =											SYMBOL_AT_SIGN;
+	protected static final char		QUERY_PARAMETER_CHAR =											SYMBOL_DOUBLE_COLON;
+	protected static final char		QUERY_ACTIVE_CHAR =												SYMBOL_PLUS;
+	protected static final char		QUERY_INACTIVE_CHAR 	=										SYMBOL_EQUALITY;
+	protected static final char		QUERY_ARCHIVED_CHAR =											SYMBOL_DOLLAR;
+	protected static final char		QUERY_REPLACED_CHAR =											SYMBOL_PERCENT;
+	protected static final char		QUERY_DELETED_CHAR =											SYMBOL_AMPERSAND;
+	protected static final char		QUERY_SEPARATOR_CHAR =											SYMBOL_COMMA;
+	protected static final char		QUERY_ITEM_START_CHAR =											SYMBOL_OPEN_ROUNDED_BRACKET;
+	protected static final char		QUERY_ITEM_END_CHAR =											SYMBOL_CLOSE_ROUNDED_BRACKET;
+	protected static final char		QUERY_ITEM_SENTENCE_NR_START_CHAR =								SYMBOL_OPEN_CURVED_BRACKET;
+	protected static final char		QUERY_ITEM_SENTENCE_NR_END_CHAR =								SYMBOL_CLOSE_CURVED_BRACKET;
+	protected static final char		QUERY_REF_ITEM_START_CHAR =										SYMBOL_OPEN_SQUARE_BRACKET;
+	protected static final char		QUERY_REF_ITEM_END_CHAR =										SYMBOL_CLOSE_SQUARE_BRACKET;
+	protected static final char		QUERY_LIST_START_CHAR =											SYMBOL_OPEN_HOOKED_BRACKET;
+	protected static final char		QUERY_LIST_END_CHAR =											SYMBOL_CLOSE_HOOKED_BRACKET;
+	protected static final char		QUERY_WORD_START_CHAR =											SYMBOL_QUOTE;
+	protected static final char		QUERY_WORD_END_CHAR =											SYMBOL_QUOTE;
+	protected static final char		QUERY_WORD_REFERENCE_START_CHAR =								SYMBOL_BACK_QUOTE;
+	protected static final char		QUERY_WORD_REFERENCE_END_CHAR =									SYMBOL_BACK_QUOTE;
+	protected static final char		QUERY_STRING_START_CHAR =										SYMBOL_DOUBLE_QUOTE;
+	protected static final char		QUERY_STRING_END_CHAR =											SYMBOL_DOUBLE_QUOTE;
 
-	protected static final char		TEXT_DIACRITICAL_CHAR =									SYMBOL_BACK_SLASH;
-	protected static final char		TEXT_BELL_CHAR =										'a';
-	protected static final char		TEXT_BACK_SPACE_CHAR =									'b';
-	protected static final char		TEXT_NEW_LINE_CHAR =									'n';
-	protected static final char		TEXT_TAB_CHAR =											't';
+	protected static final char		TEXT_DIACRITICAL_CHAR =											SYMBOL_BACK_SLASH;
+	protected static final char		TEXT_BELL_CHAR =												'a';
+	protected static final char		TEXT_BACK_SPACE_CHAR =											'b';
+	protected static final char		TEXT_NEW_LINE_CHAR =											'n';
+	protected static final char		TEXT_TAB_CHAR =													't';
 
-	protected static final String	QUERY_ITEM_START_STRING =								"(";
-	protected static final String	QUERY_LIST_START_STRING =								"<";
-	protected static final String	QUERY_SEPARATOR_SPACE_STRING =							", ";
-	protected static final String	QUERY_SEPARATOR_STRING =								",";
-	protected static final String	QUERY_WORD_TYPE_STRING =								EMPTY_STRING +	QUERY_WORD_TYPE_CHAR;
+	protected static final String	QUERY_ITEM_START_STRING =										"(";
+	protected static final String	QUERY_LIST_START_STRING =										"<";
+	protected static final String	QUERY_SEPARATOR_SPACE_STRING =									", ";
+	protected static final String	QUERY_SEPARATOR_STRING =										",";
+	protected static final String	QUERY_WORD_TYPE_STRING =										EMPTY_STRING +	QUERY_WORD_TYPE_CHAR;
 
 	// Result constants
-	protected static final byte		RESULT_OK =												1;
-	protected static final byte		RESULT_ERROR =											0;
-	protected static final byte		RESULT_SYSTEM_ERROR =									-1;
+	protected static final byte		RESULT_OK =														1;
+	protected static final byte		RESULT_ERROR =													0;
+	protected static final byte		RESULT_SYSTEM_ERROR =											-1;
 
 	// Screen constants
-	protected static final short	TAB_LENGTH =											8;
+	protected static final short	TAB_LENGTH =													8;
 
 
 	// Administrator initialization constants
-	protected static final short	ADMIN_FILE_LIST =										0;
-	protected static final short	ADMIN_READ_LIST =										2;
-	protected static final short	ADMIN_SCORE_LIST =										3;
-	protected static final short	ADMIN_WORD_LIST =										4;
-	protected static final short	ADMIN_CONDITION_LIST =									5;		// SelectionItem
-	protected static final short	ADMIN_ACTION_LIST =										6;		// SelectionItem
-	protected static final short	ADMIN_ALTERNATIVE_LIST =								7;		// SelectionItem
-	protected static final short	NUMBER_OF_ADMIN_LISTS =									8;
+	protected static final short	ADMIN_FILE_LIST =												0;
+	protected static final short	ADMIN_READ_LIST =												2;
+	protected static final short	ADMIN_SCORE_LIST =												3;
+	protected static final short	ADMIN_WORD_LIST =												4;
+	protected static final short	ADMIN_CONDITION_LIST =											5;		// SelectionItem
+	protected static final short	ADMIN_ACTION_LIST =												6;		// SelectionItem
+	protected static final short	ADMIN_ALTERNATIVE_LIST =										7;		// SelectionItem
+	protected static final short	NUMBER_OF_ADMIN_LISTS =											8;
 
 	protected static final short	AdminLists[] = {	ADMIN_FILE_LIST,
 														ADMIN_READ_LIST,
@@ -295,27 +301,27 @@ class Constants
 														ADMIN_ACTION_LIST,							// SelectionItem
 														ADMIN_ALTERNATIVE_LIST };					// SelectionItem
 
-	protected static final char		ADMIN_FILE_LIST_SYMBOL =								'F';
-	protected static final char		ADMIN_READ_LIST_SYMBOL =								'R';
-	protected static final char		ADMIN_SCORE_LIST_SYMBOL =								'S';
-	protected static final char		ADMIN_WORD_LIST_SYMBOL =								'W';
-	protected static final char		ADMIN_CONDITION_LIST_SYMBOL =							'X';	// SelectionItem
-	protected static final char		ADMIN_ACTION_LIST_SYMBOL =								'Y';	// SelectionItem
-	protected static final char		ADMIN_ALTERNATIVE_LIST_SYMBOL =							'Z';	// SelectionItem
+	protected static final char		ADMIN_FILE_LIST_SYMBOL =										'F';
+	protected static final char		ADMIN_READ_LIST_SYMBOL =										'R';
+	protected static final char		ADMIN_SCORE_LIST_SYMBOL =										'S';
+	protected static final char		ADMIN_WORD_LIST_SYMBOL =										'W';
+	protected static final char		ADMIN_CONDITION_LIST_SYMBOL =									'X';	// SelectionItem
+	protected static final char		ADMIN_ACTION_LIST_SYMBOL =										'Y';	// SelectionItem
+	protected static final char		ADMIN_ALTERNATIVE_LIST_SYMBOL =									'Z';	// SelectionItem
 
 	// Word initialization constants
-	protected static final short	WORD_ASSIGNMENT_LIST =									0;		// SpecificationItem
-	protected static final short	WORD_COLLECTION_LIST =									1;
-	protected static final short	WORD_GENERALIZATION_LIST =								2;
-	protected static final short	WORD_INTERFACE_LIST =									3;
-	protected static final short	WORD_JUSTIFICATION_LIST =								4;
-	protected static final short	WORD_GRAMMAR_LIST =										5;
-	protected static final short	WORD_MULTIPLE_WORD_LIST =								6;
-	protected static final short	WORD_WRITE_LIST =										7;
-	protected static final short	WORD_SPECIFICATION_LIST =								8;
-	protected static final short	WORD_TYPE_LIST =										9;
-	protected static final short	WORD_CONTEXT_LIST = 									10;
-	protected static final short	NUMBER_OF_WORD_LISTS =									11;
+	protected static final short	WORD_ASSIGNMENT_LIST =											0;		// SpecificationItem
+	protected static final short	WORD_COLLECTION_LIST =											1;
+	protected static final short	WORD_GENERALIZATION_LIST =										2;
+	protected static final short	WORD_INTERFACE_LIST =											3;
+	protected static final short	WORD_JUSTIFICATION_LIST =										4;
+	protected static final short	WORD_GRAMMAR_LIST =												5;
+	protected static final short	WORD_MULTIPLE_WORD_LIST =										6;
+	protected static final short	WORD_WRITE_LIST =												7;
+	protected static final short	WORD_SPECIFICATION_LIST =										8;
+	protected static final short	WORD_TYPE_LIST =												9;
+	protected static final short	WORD_CONTEXT_LIST = 											10;
+	protected static final short	NUMBER_OF_WORD_LISTS =											11;
 
 	protected static final short	WordLists[] = {	WORD_ASSIGNMENT_LIST,							// SpecificationItem
 													WORD_COLLECTION_LIST,
@@ -329,25 +335,25 @@ class Constants
 													WORD_TYPE_LIST,
 													WORD_CONTEXT_LIST };
 
-	protected static final char		WORD_ASSIGNMENT_LIST_SYMBOL =							'a';	// SpecificationItem
-	protected static final char		WORD_COLLECTION_LIST_SYMBOL =							'c';
-	protected static final char		WORD_GENERALIZATION_LIST_SYMBOL =						'g';
-	protected static final char		WORD_INTERFACE_LIST_SYMBOL =							'i';
-	protected static final char		WORD_JUSTIFICATION_LIST_SYMBOL =						'j';
-	protected static final char		WORD_GRAMMAR_LIST_SYMBOL =								'l';
-	protected static final char		WORD_MULTIPLE_WORD_LIST_SYMBOL =						'm';
-	protected static final char		WORD_WRITE_LIST_SYMBOL =								'r';
-	protected static final char		WORD_SPECIFICATION_LIST_SYMBOL =						's';
-	protected static final char		WORD_TYPE_LIST_SYMBOL =									'w';
-	protected static final char		WORD_CONTEXT_LIST_SYMBOL =								'x';
+	protected static final char		WORD_ASSIGNMENT_LIST_SYMBOL =									'a';	// SpecificationItem
+	protected static final char		WORD_COLLECTION_LIST_SYMBOL =									'c';
+	protected static final char		WORD_GENERALIZATION_LIST_SYMBOL =								'g';
+	protected static final char		WORD_INTERFACE_LIST_SYMBOL =									'i';
+	protected static final char		WORD_JUSTIFICATION_LIST_SYMBOL =								'j';
+	protected static final char		WORD_GRAMMAR_LIST_SYMBOL =										'l';
+	protected static final char		WORD_MULTIPLE_WORD_LIST_SYMBOL =								'm';
+	protected static final char		WORD_WRITE_LIST_SYMBOL =										'r';
+	protected static final char		WORD_SPECIFICATION_LIST_SYMBOL =								's';
+	protected static final char		WORD_TYPE_LIST_SYMBOL =											'w';
+	protected static final char		WORD_CONTEXT_LIST_SYMBOL =										'x';
 
 	// Other initialization constants
-	protected static final short	MAX_ASSUMPTION_LEVEL_RECALCULATIONS =					1000;	// Number of repeated calculations
-	protected static final short	MAX_GRAMMAR_LEVEL =										50;		// Depth of parsing grammar calls
-	protected static final short	MAX_SELECTION_EXECUTIONS =								1000;	// Number of repeated selections
+	protected static final short	MAX_ASSUMPTION_LEVEL_RECALCULATIONS =							1000;	// Number of repeated calculations
+	protected static final short	MAX_GRAMMAR_LEVEL =												50;		// Depth of parsing grammar calls
+	protected static final short	MAX_SELECTION_EXECUTIONS =										1000;	// Number of repeated selections
 
-	protected static final short	NUMBER_OF_ASSUMPTION_LEVELS =							3;		// Probably, possibly and may be
-	protected static final short	NUMBER_OF_PHONETIC_VOWELS = 							4;
+	protected static final short	NUMBER_OF_ASSUMPTION_LEVELS =									3;		// Probably, possibly and may be
+	protected static final short	NUMBER_OF_PHONETIC_VOWELS = 									4;
 
 	protected static final char		PHONETIC_VOWEL[] = {	'a',
 															'e',
@@ -359,29 +365,28 @@ class Constants
 	protected static final short	JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION =									0;
 	protected static final short	JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION =	1;
 	protected static final short	JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =			2;
-	protected static final short	JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION =		3;
-	protected static final short	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION =					4;
-	protected static final short	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =								5;
+	protected static final short	JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION =					3;
+	protected static final short	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =								4;
 
-	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION =								6;
-	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION =							7;
-	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION =								8;
-	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION =										9;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION =		10;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =						11;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION =				12;
-	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION =									13;
+	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION =								5;
+	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION =							6;
+	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION =								7;
+	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION =										8;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION =		9;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =						10;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION =				11;
+	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION =									12;
 
-	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION =								14;
-	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION =							15;
-	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION =								16;
-	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION =										17;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION =		18;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION =						19;
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION =				20;
-	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION =									21;
+	protected static final short	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION =								13;
+	protected static final short	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION =							14;
+	protected static final short	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION =								15;
+	protected static final short	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION =										16;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION =		17;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION =						18;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION =				19;
+	protected static final short	JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION =									20;
 
-	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =						22;
+	protected static final short	JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =						21;
 
 
 	//	Word types
@@ -548,6 +553,7 @@ class Constants
 	protected static final short	WORD_PARAMETER_NOUN_SOLVE_METHOD =										1111;
 	protected static final short	WORD_PARAMETER_NOUN_SOLVE_STRATEGY =									1112;
 	protected static final short	WORD_PARAMETER_NOUN_STARTUP_LANGUAGE =									1113;
+	protected static final short	WORD_PARAMETER_NOUN_TEST_FILE =											1114;
 	protected static final short	WORD_PARAMETER_NOUN_USER =												1115;
 	protected static final short	WORD_PARAMETER_NOUN_INFORMATION =										1116;
 	protected static final short	WORD_PARAMETER_NOUN_PART =												1117;
@@ -658,6 +664,7 @@ class Constants
 
 	protected static final String	NO_LANGUAGE_NAME_FOUND_STRING =															"{no language name found}";
 	protected static final String	NO_USER_NAME_FOUND_STRING =																"{no user name found}";
+	protected static final String	ADMIN_USER_NAME_STRING =																"Admin";
 
 
 	// INTERFACE CONSTANTS
@@ -666,13 +673,13 @@ class Constants
 	protected static final String	NO_LANGUAGE_WORD_FOUND =																"<no language word found>";
 
 	// Console (common)
-	protected static final short	INTERFACE_CONSOLE_START_MESSAGE_GUEST =													101;
-	protected static final short	INTERFACE_CONSOLE_START_MESSAGE_EXPERT =												102;
-	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_INPUT =													103;
-	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_SECURE_INPUT =											104;
-	protected static final short	INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START =												105;
-	protected static final short	INTERFACE_CONSOLE_LOGIN_END =															106;
-	protected static final short	INTERFACE_CONSOLE_LOGIN_FAILED =														107;
+	protected static final short	INTERFACE_CONSOLE_START_MESSAGE_GUEST =													100;
+	protected static final short	INTERFACE_CONSOLE_START_MESSAGE_EXPERT =												101;
+	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_INPUT =													102;
+	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_SECURE_INPUT =											103;
+	protected static final short	INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START =												104;
+	protected static final short	INTERFACE_CONSOLE_LOGIN_END =															105;
+	protected static final short	INTERFACE_CONSOLE_LOGIN_FAILED =														106;
 
 	// Console (status and progress)
 	protected static final short	INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START =										110;
@@ -685,9 +692,13 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_UNDO =														122;
 	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_REDO =														123;
 	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_LOGIN_AS_EXPERT =											124;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_MORE_EXAMPLES =											129;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START =											130;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END =											132;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_LOGIN_AS_DEVELOPER =										125;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_STOP_TESTING =												128;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_MORE_EXAMPLES =											130;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START =											131;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_THE_TEST_FILE =										132;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END =											133;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_REGRESSION =												134;
 
 	// Console (main menu)
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_BOSTON =							210;
@@ -730,9 +741,10 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_PROGRAMMING_TOWER_OF_HANOI_ODD_NUMBER_OF_DISCS =						311;
 
 	// Console (reasoning without prior knowledge sub-menu)
-	protected static final short	INTERFACE_CONSOLE_REASONING_A_CAR_HAS_AN_ENGINE =										400;
-	protected static final short	INTERFACE_CONSOLE_REASONING_JOHN_WAS_THE_FATHER_OF_PAUL =								401;
-	protected static final short	INTERFACE_CONSOLE_REASONING_READ_THE_FILE_REASONING_ONLY_OPTION_LEFT_BOAT =				402;
+	protected static final short	INTERFACE_CONSOLE_REASONING_EVERY_CAR_HAS_AN_ENGINE =									400;
+	protected static final short	INTERFACE_CONSOLE_REASONING_A_SAIL_IS_PART_OF_EVERY_SAILBOAT =							401;
+	protected static final short	INTERFACE_CONSOLE_REASONING_JAMES_WAS_THE_FATHER_OF_MICHAEL =							402;
+	protected static final short	INTERFACE_CONSOLE_REASONING_READ_THE_FILE_REASONING_ONLY_OPTION_LEFT_BOAT =				403;
 
 	// Console (reasoning/family definition sub-menu)
 	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_THE_FATHER_AND_ANN_IS_THE_MOTHER =			500;
@@ -900,10 +912,11 @@ class Constants
 	// Justification report
 	protected static final short	INTERFACE_JUSTIFICATION_BECAUSE =														1300;
 	protected static final short	INTERFACE_JUSTIFICATION_AND =															1301;
-	protected static final short	INTERFACE_JUSTIFICATION_SENTENCE_START =												1302;
-	protected static final short	INTERFACE_JUSTIFICATION_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING =						1303;
-	protected static final short	INTERFACE_JUSTIFICATION_FEMININE_PROPER_NAME_ENDING =									1304;
-	protected static final short	INTERFACE_JUSTIFICATION_MASCULINE_PROPER_NAME_ENDING =									1305;
+	protected static final short	INTERFACE_JUSTIFICATION_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING =						1302;
+	protected static final short	INTERFACE_JUSTIFICATION_FEMININE_PROPER_NAME_ENDING =									1303;
+	protected static final short	INTERFACE_JUSTIFICATION_MASCULINE_PROPER_NAME_ENDING =									1304;
+	protected static final short	INTERFACE_JUSTIFICATION_LEARNED_FROM_USER_START =										1305;
+	protected static final short	INTERFACE_JUSTIFICATION_LEARNED_FROM_USER_END =											1306;
 
 	// Listing (conflicts)
 	protected static final short	INTERFACE_LISTING_SENTENCE_IN_CONFLICT_WITH_ITSELF =									1400;
@@ -922,15 +935,16 @@ class Constants
 	protected static final short	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED =									1415;
 	protected static final short	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED =									1416;
 	protected static final short	INTERFACE_LISTING_MY_HIDDEN_ASSUMPTIONS_THAT_ARE_CONCLUDED =							1417;
-	protected static final short	INTERFACE_LISTING_MY_QUESTIONS =														1418;
-	protected static final short	INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS =												1419;
-	protected static final short	INTERFACE_LISTING_MY_ANSWER =															1420;
-	protected static final short	INTERFACE_LISTING_I_ONLY_KNOW =															1421;
-	protected static final short	INTERFACE_LISTING_I_AM_NOT_SURE_BUT =													1422;
-	protected static final short	INTERFACE_LISTING_SPECIFICATIONS =														1423;
-	protected static final short	INTERFACE_LISTING_SPECIFICATION_QUESTIONS =												1424;
-	protected static final short	INTERFACE_LISTING_RELATED_INFORMATION =													1425;
-	protected static final short	INTERFACE_LISTING_RELATED_QUESTIONS =													1426;
+	protected static final short	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =							1418;
+	protected static final short	INTERFACE_LISTING_MY_QUESTIONS =														1419;
+	protected static final short	INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS =												1420;
+	protected static final short	INTERFACE_LISTING_MY_ANSWER =															1421;
+	protected static final short	INTERFACE_LISTING_I_ONLY_KNOW =															1422;
+	protected static final short	INTERFACE_LISTING_I_AM_NOT_SURE_BUT =													1423;
+	protected static final short	INTERFACE_LISTING_SPECIFICATIONS =														1424;
+	protected static final short	INTERFACE_LISTING_SPECIFICATION_QUESTIONS =												1425;
+	protected static final short	INTERFACE_LISTING_RELATED_INFORMATION =													1426;
+	protected static final short	INTERFACE_LISTING_RELATED_QUESTIONS =													1427;
 
 	// Listing (old information)
 	protected static final short	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION =							1430;
@@ -963,23 +977,24 @@ class Constants
 
 	// Sentence (notifications)
 	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_PROPER_NAME_TO_BE =							1600;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE =									1601;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE =									1602;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_KNOW =												1603;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_NOTICED_SEMANTIC_AMBIGUITY_START =					1604;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_STATIC_SEMANTIC_AMBIGUITY_END =							1605;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_DYNAMIC_SEMANTIC_AMBIGUITY_END =						1606;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START =					1607;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD =					1608;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END =					1609;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_QUESTION_MISSING_RELATION =					1610;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_MISSING_RELATION_I_ASSUME_YOU_MEAN =					1611;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_WITH_NOUN_START =				1612;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_DEFINITE_ARTICLE_WITH_NOUN_START =			1613;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_INDEFINITE_ARTICLE_WITH_NOUN_START =		1614;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END =		1615;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_START =		1616;
-	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_END =		1617;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_SINGULAR_NOUN_TO_BE =						1601;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE =									1602;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE =									1603;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_KNOW =												1604;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_I_NOTICED_SEMANTIC_AMBIGUITY_START =					1605;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_STATIC_SEMANTIC_AMBIGUITY_END =							1606;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_DYNAMIC_SEMANTIC_AMBIGUITY_END =						1607;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START =					1608;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD =					1609;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END =					1610;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_QUESTION_MISSING_RELATION =					1611;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_MISSING_RELATION_I_ASSUME_YOU_MEAN =					1612;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_WITH_NOUN_START =				1613;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START =		1614;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START =		1615;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END =		1616;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_START =		1617;
+	protected static final short	INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_END =		1618;
 
 	// Sentence (warnings)
 	protected static final short	INTERFACE_SENTENCE_WARNING_NOT_CONFORM_GRAMMAR =										1620;

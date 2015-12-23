@@ -2,11 +2,10 @@
  *	Class:			AdminAuthorization
  *	Supports class:	AdminItem
  *	Purpose:		To handle authorization
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -27,123 +26,16 @@ class AdminAuthorization
 	{
 	// Private constructible variables
 
-	private boolean hasUserPasswordAssigned_;
-	private boolean hasUserEnteredCorrectPassword_;
+	private boolean isDeveloperUser_;
 	private boolean isExpertUser_;
 
 	private int firstSentenceNrOfCurrentUser_;
 
-	private SpecificationItem passwordAssignmentItem_;
-
 	private WordItem currentUserWordItem_;
-	private WordItem foundUserWordItem_;
 
 	private AdminItem adminItem_;
 	private String moduleNameString_;
 	private String authorizationKey_;
-
-
-	// Private methods
-
-	private byte findUserWord( String userNameString )
-		{
-		WordResultType wordResult;
-		GeneralizationItem currentGeneralizationItem;
-		WordItem currentGeneralizationWordItem;
-
-		foundUserWordItem_ = null;
-
-		if( userNameString != null )
-			{
-			if( CommonVariables.predefinedNounUserWordItem != null )
-				{
-				if( ( currentGeneralizationItem = CommonVariables.predefinedNounUserWordItem.firstSpecificationGeneralizationItem() ) != null )
-					{
-					do	{
-						if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
-							{
-							if( ( wordResult = currentGeneralizationWordItem.findWordType( false, Constants.WORD_TYPE_PROPER_NAME, userNameString ) ).result == Constants.RESULT_OK )
-								{
-								if( wordResult.foundWordTypeItem != null )
-									foundUserWordItem_ = currentGeneralizationWordItem;
-								}
-							else
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the user name" );
-							}
-						else
-							return adminItem_.startErrorInItem( 1, moduleNameString_, "I've found an undefined generalization word" );
-						}
-					while( ( currentGeneralizationItem = currentGeneralizationItem.nextSpecificationGeneralizationItem() ) != null );
-					}
-				}
-			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The predefined user noun word item is undefined" );
-			}
-		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given user name string is undefined" );
-
-		return Constants.RESULT_OK;
-		}
-
-	private byte checkUserForPasswordAssignment( WordItem userWordItem )
-		{
-		SpecificationResultType specificationResult;
-		WordItem predefinedNounPasswordWordItem;
-
-		hasUserPasswordAssigned_ = true;
-		passwordAssignmentItem_ = null;
-
-		if( userWordItem != null )
-			{
-			if( ( predefinedNounPasswordWordItem = adminItem_.predefinedNounPasswordWordItem() ) != null )
-				{
-				if( ( specificationResult = predefinedNounPasswordWordItem.findAssignmentByRelationWord( false, false, false, false, Constants.NO_QUESTION_PARAMETER, userWordItem ) ).result == Constants.RESULT_OK )
-					{
-					if( ( passwordAssignmentItem_ = specificationResult.foundSpecificationItem ) == null )
-						{
-						// No assignment found. So, check for explict negative password specification
-						if( userWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, true, true, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, predefinedNounPasswordWordItem ) != null )
-							hasUserPasswordAssigned_ = false;
-						}
-					}
-				else
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the password assignment" );
-				}
-			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The predefined password noun word item is undefined" );
-			}
-		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given user word item is undefined" );
-
-		return Constants.RESULT_OK;
-		}
-
-	private byte checkPassword( String enteredPasswordString )
-		{
-		WordItem passwordSpecificationWordItem;
-
-		// Fail safe
-		hasUserEnteredCorrectPassword_ = false;
-
-		if( enteredPasswordString != null )
-			{
-			if( passwordAssignmentItem_ != null )
-				{
-				if( ( passwordSpecificationWordItem = passwordAssignmentItem_.specificationWordItem() ) != null )
-					{
-
-					if( passwordSpecificationWordItem.isCorrectHiddenWordType( passwordAssignmentItem_.specificationWordTypeNr(), enteredPasswordString, authorizationKey_ ) )
-						hasUserEnteredCorrectPassword_ = true;
-					}
-				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The password assignment specification item is undefined" );
-				}
-			}
-		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given password string is undefined" );
-
-		return Constants.RESULT_OK;
-		}
 
 
 	// Constructor / deconstructor
@@ -152,15 +44,12 @@ class AdminAuthorization
 		{
 		String errorString = null;
 
-		hasUserPasswordAssigned_ = true;
-		hasUserEnteredCorrectPassword_ = false;
+		isDeveloperUser_ = false;
 		isExpertUser_ = false;
 
 		firstSentenceNrOfCurrentUser_ = Constants.NO_SENTENCE_NR;
 
-		passwordAssignmentItem_ = null;
 		currentUserWordItem_ = null;
-		foundUserWordItem_ = null;
 
 		adminItem_ = adminItem;
 		moduleNameString_ = this.getClass().getName();
@@ -173,7 +62,7 @@ class AdminAuthorization
 		if( errorString != null )
 			{
 			if( adminItem_ != null )
-				adminItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
+				adminItem_.startSystemError( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -184,6 +73,11 @@ class AdminAuthorization
 
 
 	// Protected methods
+
+	protected boolean isDeveloperUser()
+		{
+		return isDeveloperUser_;
+		}
 
 	protected boolean isExpertUser()
 		{
@@ -202,31 +96,33 @@ class AdminAuthorization
 			if( adminItem_.isSystemStartingUp() )
 				{
 				if( authorizationWordItem.assignChangePermissions( authorizationKey_ ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign my authorization permissions to a word" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to assign my authorization permissions to a word" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "You are not authorized to authorize the given word" );
+				return adminItem_.startError( 1, moduleNameString_, "You are not authorized to authorize the given word" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given authorization word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given authorization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte login( WordItem specificationWordItem )
 		{
+		WordResultType wordResult;
+		boolean isCorrectPassword = false;
 		GeneralizationItem currentGeneralizationItem;
+		SpecificationItem passwordAssignmentItem;
 		WordItem currentGeneralizationWordItem;
+		WordItem passwordSpecificationWordItem;
 		WordItem predefinedNounPasswordWordItem;
 		WordItem predefinedNounUserWordItem;
+		WordItem foundUserWordItem = null;
 		StringBuffer readUserNameStringBuffer = new StringBuffer();
 		StringBuffer readPasswordStringBuffer = new StringBuffer();
 
-		hasUserPasswordAssigned_ = true;
-		hasUserEnteredCorrectPassword_ = false;
-
-		passwordAssignmentItem_ = null;
-		foundUserWordItem_ = null;
+		isDeveloperUser_ = false;
+		isExpertUser_ = false;
 
 		if( ( predefinedNounUserWordItem = CommonVariables.predefinedNounUserWordItem ) != null )
 			{
@@ -235,112 +131,139 @@ class AdminAuthorization
 				// No user name is given
 				if( specificationWordItem == null &&
 				// Get first user without password
-				( currentGeneralizationItem = predefinedNounPasswordWordItem.firstSpecificationGeneralizationItem() ) != null )
+				( currentGeneralizationItem = predefinedNounPasswordWordItem.firstSpecificationGeneralizationItem( true ) ) != null )
 					{
 					do	{
 						if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
 							{
 							// Select first user in the current language
-							if( currentGeneralizationWordItem.hasWordType( Constants.WORD_TYPE_PROPER_NAME ) )
+							if( currentGeneralizationWordItem.activeWordTypeItem( false, Constants.WORD_TYPE_PROPER_NAME ) != null )
 								specificationWordItem = currentGeneralizationWordItem;
 							}
 						else
-							return adminItem_.startErrorInItem( 1, moduleNameString_, "I've found an undefined generalization word" );
+							return adminItem_.startError( 1, moduleNameString_, "I have found an undefined generalization word" );
 						}
 					while( specificationWordItem == null &&
 					( currentGeneralizationItem = currentGeneralizationItem.nextSpecificationGeneralizationItem() ) != null );
 					}
 
-				// No user name is given,
-				// and no user without password is found
+				// No user name is given, no user without password is found
 				if( specificationWordItem == null )
 					{
 					// Ask user name
 					if( adminItem_.getUserInput( false, false, true, false, predefinedNounUserWordItem.singularNounString(), readUserNameStringBuffer ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read to user name" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to read to user name" );
 					}
 				else
 					readUserNameStringBuffer.append( specificationWordItem.anyWordTypeString() );
 
-				if( readUserNameStringBuffer.length() > 0 )
+				if( readUserNameStringBuffer.length() > 0 &&
+				// Find user word
+				( currentGeneralizationItem = predefinedNounUserWordItem.firstSpecificationGeneralizationItem( false ) ) != null )
 					{
-					if( findUserWord( readUserNameStringBuffer.toString() ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to find the user" );
-					}
-
-				if( foundUserWordItem_ != null &&
-				foundUserWordItem_ == currentUserWordItem_ )
-					{
-					if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START, readUserNameStringBuffer.toString(), Constants.INTERFACE_CONSOLE_LOGIN_END ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
-					}
-				else
-					{
-					if( foundUserWordItem_ != null )
-						{
-						if( checkUserForPasswordAssignment( foundUserWordItem_ ) != Constants.RESULT_OK )
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check the user for password assignment" );
+					do	{
+						if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
+							{
+							if( ( wordResult = currentGeneralizationWordItem.findWordType( true, Constants.WORD_TYPE_PROPER_NAME, readUserNameStringBuffer.toString() ) ).result == Constants.RESULT_OK )
+								{
+								if( wordResult.foundWordTypeItem != null )
+									foundUserWordItem = currentGeneralizationWordItem;
+								}
+							else
+								return adminItem_.addError( 1, moduleNameString_, "I failed to find the user name" );
+							}
+						else
+							return adminItem_.startError( 1, moduleNameString_, "I have found an undefined generalization word" );
 						}
+					while( foundUserWordItem == null &&
+					( currentGeneralizationItem = currentGeneralizationItem.nextSpecificationGeneralizationItem() ) != null );
+					}
 
-					if( foundUserWordItem_ != null &&
-					!hasUserPasswordAssigned_ )
-						// User has no password
-						hasUserEnteredCorrectPassword_ = true;
+				if( foundUserWordItem != null )
+					{
+					if( foundUserWordItem == currentUserWordItem_ )
+						{
+						// Already logged in as given user
+						if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START, readUserNameStringBuffer.toString(), Constants.INTERFACE_CONSOLE_LOGIN_END ) == Constants.RESULT_OK )
+							isCorrectPassword = true;
+						else
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'already logged in' interface notification" );
+						}
 					else
 						{
-						if( adminItem_.getUserInput( false, true, true, false, predefinedNounPasswordWordItem.singularNounString(), readPasswordStringBuffer ) == Constants.RESULT_OK )
+						if( ( predefinedNounPasswordWordItem = adminItem_.predefinedNounPasswordWordItem() ) != null )
 							{
-							// Only check password if user was found
-							if( foundUserWordItem_ != null )
+							if( ( passwordAssignmentItem = predefinedNounPasswordWordItem.firstActiveAssignmentItem( false, Constants.NO_QUESTION_PARAMETER, foundUserWordItem ) ) == null )
 								{
-								if( checkPassword( readPasswordStringBuffer.toString() ) != Constants.RESULT_OK )
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to check the user and password" );
+								// No password assignment found. Now, check explicitly if no password is required
+								if( foundUserWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, true, true, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, predefinedNounPasswordWordItem ) != null )
+									// No password required
+									isCorrectPassword = true;
+								}
+							else
+								{
+								// Ask password
+								if( adminItem_.getUserInput( false, true, true, false, predefinedNounPasswordWordItem.singularNounString() + " (" + readUserNameStringBuffer + ")", readPasswordStringBuffer ) == Constants.RESULT_OK )
+									{
+									if( ( passwordSpecificationWordItem = passwordAssignmentItem.specificationWordItem() ) != null )
+										{
+										if( passwordSpecificationWordItem.isCorrectHiddenWordType( passwordAssignmentItem.specificationWordTypeNr(), readPasswordStringBuffer.toString(), authorizationKey_ ) )
+											isCorrectPassword = true;
+										}
+									else
+										return adminItem_.startError( 1, moduleNameString_, "The password assignment specification item is undefined" );
+									}
+								else
+									return adminItem_.addError( 1, moduleNameString_, "I failed to read to password" );
+								}
+
+							if( isCorrectPassword )
+								{
+								if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_UNDEFINED, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, 0, null, foundUserWordItem, predefinedNounUserWordItem, null ).result == Constants.RESULT_OK )
+									{
+									firstSentenceNrOfCurrentUser_ = CommonVariables.currentSentenceNr;
+									currentUserWordItem_ = foundUserWordItem;
+									CommonVariables.currentUserNr = predefinedNounUserWordItem.getUserNr( foundUserWordItem );
+
+									if( adminItem_.predefinedNounDeveloperWordItem() != null &&
+									foundUserWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, false, false, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, adminItem_.predefinedNounDeveloperWordItem() ) != null )
+										isDeveloperUser_ = true;
+
+									if( adminItem_.predefinedNounExpertWordItem() != null &&
+									foundUserWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, false, false, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, adminItem_.predefinedNounExpertWordItem() ) != null )
+										isExpertUser_ = true;
+									}
+								else
+									return adminItem_.addError( 1, moduleNameString_, "I failed to assign the user" );
 								}
 							}
 						else
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read to password" );
+							return adminItem_.startError( 1, moduleNameString_, "The predefined password noun word item is undefined" );
 						}
+					}
 
-					if( hasUserEnteredCorrectPassword_ &&
-					foundUserWordItem_ != null )
+				if( !isCorrectPassword ||
+				foundUserWordItem == null )
+					{
+					if( !adminItem_.isSystemStartingUp() )
 						{
-						isExpertUser_ = false;
-
-						if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_UNDEFINED, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, 0, null, foundUserWordItem_, predefinedNounUserWordItem, null ).result == Constants.RESULT_OK )
-							{
-							firstSentenceNrOfCurrentUser_ = CommonVariables.currentSentenceNr;
-							currentUserWordItem_ = foundUserWordItem_;
-							CommonVariables.currentUserNr = predefinedNounUserWordItem.getUserNr( foundUserWordItem_ );
-
-							if( adminItem_.predefinedNounExpertWordItem() != null &&
-							foundUserWordItem_.bestMatchingSpecificationWordSpecificationItem( false, false, false, false, false, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, adminItem_.predefinedNounExpertWordItem() ) != null )
-								isExpertUser_ = true;
-							}
-						else
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign the user" );
+						if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_CONSOLE_LOGIN_FAILED ) != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'login failed' interface notification" );
 						}
 					else
-						{
-						if( !adminItem_.isSystemStartingUp() )
-							{
-							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_CONSOLE_LOGIN_FAILED ) != Constants.RESULT_OK )
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
-							}
-						else
-							return adminItem_.startSystemErrorInItem( 1, moduleNameString_, "The user name or it's password isn't correct" );
-						}
+						return adminItem_.startSystemError( 1, moduleNameString_, "The user name or it's password isn't correct" );
 					}
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The predefined password noun word item is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The predefined password noun word item is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The predefined user noun word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The predefined user noun word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
-	protected SpecificationResultType addSpecificationWithAuthorization( boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSelection, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
+	protected SpecificationResultType addSpecificationWithAuthorization( boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSelection, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int copiedRelationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 		WordItem predefinedVerbLoginWordItem;
@@ -350,13 +273,14 @@ class AdminAuthorization
 			if( specificationWordItem != null )
 				{
 				if( generalizationWordItem.isNounPassword() ||
+				specificationWordItem.isNounDeveloper() ||
 				specificationWordItem.isNounExpert() ||
 				specificationWordItem.isNounUser() )
 					{
 					if( generalizationWordItem.isNounPassword() )
 						{
 						if( specificationWordItem.hideWordType( specificationWordTypeNr, authorizationKey_ ) != Constants.RESULT_OK )
-							adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to hide a password" );
+							adminItem_.addError( 1, moduleNameString_, "I failed to hide a password" );
 						}
 					else
 						{
@@ -366,23 +290,23 @@ class AdminAuthorization
 						// Create a login for this user
 						( predefinedVerbLoginWordItem = adminItem_.predefinedVerbLoginWordItem() ) != null )
 							{
-							if( ( specificationResult = predefinedVerbLoginWordItem.addSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_VERB_SINGULAR, generalizationWordTypeNr, Constants.WORD_TYPE_UNDEFINED, specificationCollectionNr, Constants.NO_CONTEXT_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, nContextRelations, firstJustificationItem, generalizationWordItem, null, null, authorizationKey_ ) ).result != Constants.RESULT_OK )
-								adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a specification with authorization" );
+							if( ( specificationResult = predefinedVerbLoginWordItem.addSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_VERB_SINGULAR, generalizationWordTypeNr, Constants.WORD_TYPE_UNDEFINED, specificationCollectionNr, Constants.NO_CONTEXT_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, nContextRelations, firstJustificationItem, generalizationWordItem, null, null, authorizationKey_ ) ).result != Constants.RESULT_OK )
+								adminItem_.addError( 1, moduleNameString_, "I failed to add a specification with authorization" );
 							}
 						}
 					}
 
 				if( CommonVariables.result == Constants.RESULT_OK )
 					{
-					if( ( specificationResult = generalizationWordItem.addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, authorizationKey_ ) ).result != Constants.RESULT_OK )
-						adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a specification with authorization" );
+					if( ( specificationResult = generalizationWordItem.addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, copiedRelationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, authorizationKey_ ) ).result != Constants.RESULT_OK )
+						adminItem_.addError( 1, moduleNameString_, "I failed to add a specification with authorization" );
 					}
 				}
 			else
-				adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+				adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		specificationResult.result = CommonVariables.result;
 		return specificationResult;
@@ -395,10 +319,10 @@ class AdminAuthorization
 		if( generalizationWordItem != null )
 			{
 			if( ( specificationResult = generalizationWordItem.assignSpecification( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, authorizationKey_ ) ).result != Constants.RESULT_OK )
-				adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign a specification with authorization" );
+				adminItem_.addError( 1, moduleNameString_, "I failed to assign a specification with authorization" );
 			}
 		else
-			adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		specificationResult.result = CommonVariables.result;
 		return specificationResult;

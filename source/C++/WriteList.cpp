@@ -2,11 +2,10 @@
  *	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -97,13 +96,13 @@ class WriteList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->startOfChoiceOrOptionGrammarItem() == unusedGrammarItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The start of choice or option grammar item is still in use" );
+					return startError( functionNameString, NULL, "The start of choice or option grammar item is still in use" );
 
 				searchItem = searchItem->nextWriteItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unused grammar item is undefined" );
+			return startError( functionNameString, NULL, "The given unused grammar item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -115,10 +114,10 @@ class WriteList : private List
 		if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 			{
 			if( addItemToList( QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-				return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active write item" );
+				return addError( functionNameString, NULL, "I failed to add an active write item" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current item number is undefined" );
+			return startError( functionNameString, NULL, "The current item number is undefined" );
 
 		return RESULT_OK;
 		}
@@ -130,7 +129,7 @@ class WriteList : private List
 	};
 
 /*************************************************************************
- *	"God says, "At the time I've planned,
+ *	"God says, "At the time I have planned,
  *	I will bring justice against the wicked.
  *	When the earth quackes and its people live in turmoil,
  *	I am the one that keeps its foundations firm." (Psalm 75:2-3)

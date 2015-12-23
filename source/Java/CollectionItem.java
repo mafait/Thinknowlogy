@@ -2,11 +2,10 @@
  *	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -155,21 +154,21 @@ class CollectionItem extends Item
 		if( collectionWordItem_ != null )
 			{
 			if( ( referenceResult = collectionWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find a matching word reference string for the collected word item" );
+				addError( 1, null, "I failed to find a matching word reference string for the collected word item" );
 			}
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
 		commonWordItem_ != null )
 			{
 			if( ( referenceResult = commonWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find a matching word reference string for the common word item" );
+				addError( 1, null, "I failed to find a matching word reference string for the common word item" );
 			}
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
 		compoundGeneralizationWordItem_ != null )
 			{
 			if( ( referenceResult = compoundGeneralizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find a matching word reference string for the compound word item" );
+				addError( 1, null, "I failed to find a matching word reference string for the compound word item" );
 			}
 
 		referenceResult.result = CommonVariables.result;

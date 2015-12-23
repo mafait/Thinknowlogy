@@ -2,11 +2,10 @@
  *	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -54,7 +53,7 @@ class MultipleWordItem : private Item
 		multipleWordItem_ = multipleWordItem;
 
 		if( multipleWordItem_ == NULL )
-			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given multiple word item is undefined" );
+			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given multiple word item is undefined" );
 		}
 
 
@@ -101,7 +100,7 @@ class MultipleWordItem : private Item
 		if( multipleWordItem_ != NULL )
 			{
 			if( ( referenceResult = multipleWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addErrorInItem( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to find a matching word reference string for the multiple word word" );
+				addError( functionNameString, NULL, "I failed to find a matching word reference string for the multiple word word" );
 			}
 
 		return referenceResult;

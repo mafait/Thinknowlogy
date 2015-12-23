@@ -1,0 +1,70 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A parent is probably a person.
+< A father is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< A son is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< Anna is a mother of Paul.
+< Anna is a woman.
+* 
+* My assumptions:
+< Paul has probably a parent, called Anna.
+< Paul is probably a child of Anna.
+< Paul is probably part of a family.
+< Paul is possibly a person.
+< Anna is probably a person.
+< Anna is probably not a man.
+< Anna is probably a parent of Paul.
+< Anna is probably part of a family.
+< Anna is probably not a father.
+< Anna has probably a child, called Paul.
+* 
+* My questions:
+< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a son or a daughter?
+< 
+* 
+* My questions that are answered:
+< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a son or a daughter?
+* 
+* My assumptions that are adjusted:
+< Paul is probably a person.
+* 
+* My assumptions:
+< Paul is probably a son.
+< Paul is probably not a woman.
+< Paul is possibly not a daughter.
+< Paul is probably not a boy, not a girl and not a woman.
+< 
+* 
+* My assumptions that are confirmed:
+< Paul is probably a son.
+* 
+* My assumptions that are adjusted:
+< Paul is probably not a daughter.
+< 

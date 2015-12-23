@@ -1,0 +1,4 @@
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+¿Es Juan la madre de Pablo?
+¿Es Juan el padre de Pablo?
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

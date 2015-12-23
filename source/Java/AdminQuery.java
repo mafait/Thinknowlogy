@@ -2,11 +2,10 @@
  *	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -134,11 +133,11 @@ class AdminQuery
 		return nTotalCount();
 		}
 
-	private byte itemQuery( boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, boolean isSuppressingMessage, StringBuffer textStringBuffer )
+	private byte itemQuery( boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSuppressingMessage, StringBuffer textStringBuffer )
 		{
 		if( textStringBuffer != null )
 			{
-			if( itemQuery( true, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, false, Constants.NO_SENTENCE_NR, Constants.NO_ITEM_NR ) == Constants.RESULT_OK )
+			if( itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, Constants.NO_SENTENCE_NR, Constants.NO_ITEM_NR ) == Constants.RESULT_OK )
 				{
 				if( CommonVariables.currentLanguageWordItem != null )
 					{
@@ -147,13 +146,13 @@ class AdminQuery
 						textStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The current language word item is undefined" );
+					return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
 				}
 			else
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query items" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to query items" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given text string buffer is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given text string buffer is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -166,7 +165,7 @@ class AdminQuery
 		if( ( wordList = adminItem_.wordList ) != null )
 			{
 			if( wordList.showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, ( queryWordTypeNr == Constants.WORD_TYPE_UNDEFINED ? CommonVariables.matchingWordTypeNr : queryWordTypeNr ), queryWidth ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to show the query result in my word list" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to show the query result in my word list" );
 			}
 
 		// Admin lists
@@ -175,7 +174,7 @@ class AdminQuery
 			if( adminItem_.adminListArray[adminListNr] != null )
 				{
 				if( adminItem_.adminListArray[adminListNr].showQueryResultInList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to show the query result" );
+					return adminItem_.addErrorWithAdminListNr( adminListNr, 1, moduleNameString_, "I failed to show the query result" );
 				}
 			}
 
@@ -220,7 +219,7 @@ class AdminQuery
 											}
 										}
 									else
-										return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't find a number in the query string" );
+										return adminItem_.startError( 1, moduleNameString_, "I couldn't find a number in the query string" );
 									}
 
 								if( hasEndChar &&
@@ -243,7 +242,7 @@ class AdminQuery
 												}
 											}
 										else
-											return adminItem_.startErrorInItem( 1, moduleNameString_, "I couldn't find the item number in the query string" );
+											return adminItem_.startError( 1, moduleNameString_, "I couldn't find the item number in the query string" );
 										}
 									}
 								}
@@ -255,20 +254,20 @@ class AdminQuery
 							sourceString.charAt( queryStringPosition_ ) == endChar )
 								queryStringPosition_++;
 							else
-								return adminItem_.startErrorInItem( 1, moduleNameString_, "The given query string is corrupt" );
+								return adminItem_.startError( 1, moduleNameString_, "The given query string is corrupt" );
 							}
 						}
 					else
-						return adminItem_.startErrorInItem( 1, moduleNameString_, "The given command doesn't start with character '" + startChar + "', but with '" + sourceString.charAt( queryStringPosition_ ) + "'" );
+						return adminItem_.startError( 1, moduleNameString_, "The given command doesn't start with character '" + startChar + "', but with '" + sourceString.charAt( queryStringPosition_ ) + "'" );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given source string is empty or the given query source string position is undefined" );
+					return adminItem_.startError( 1, moduleNameString_, "The given source string is empty or the given query source string position is undefined" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given query source string position is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The given query source string position is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given source string is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given source string is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -302,41 +301,41 @@ class AdminQuery
 									if( sourceString.charAt( queryStringPosition_ ) == endChar )
 										nameStringBuffer.append( sourceString.substring( startSourceStringPosition, queryStringPosition_ ) );
 									else
-										return adminItem_.startErrorInItem( 1, moduleNameString_, "The name in the given query string is corrupt" );
+										return adminItem_.startError( 1, moduleNameString_, "The name in the given query string is corrupt" );
 									}
 
 								queryStringPosition_++;
 								}
 							else
-								return adminItem_.startErrorInItem( 1, moduleNameString_, "The name in the given query string is corrupt" );
+								return adminItem_.startError( 1, moduleNameString_, "The name in the given query string is corrupt" );
 							}
 						else
-							return adminItem_.startErrorInItem( 1, moduleNameString_, "The given name doesn't start with character '" + startChar + "', but with '" + sourceString.charAt( 0 ) + "'" );
+							return adminItem_.startError( 1, moduleNameString_, "The given name doesn't start with character '" + startChar + "', but with '" + sourceString.charAt( 0 ) + "'" );
 						}
 					else
-						return adminItem_.startErrorInItem( 1, moduleNameString_, "The given source string is empty or the given query source string position is undefined" );
+						return adminItem_.startError( 1, moduleNameString_, "The given source string is empty or the given query source string position is undefined" );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given query source string position is undefined" );
+					return adminItem_.startError( 1, moduleNameString_, "The given query source string position is undefined" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given name string is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The given name string is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given source string is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given source string is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
-	private byte itemQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
+	private byte itemQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
 		{
 		WordList wordList;
 
 		// In words
 		if( ( wordList = adminItem_.wordList ) != null )
 			{
-			if( wordList.itemQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query item numbers in my word list" );
+			if( wordList.itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to query item numbers in my word list" );
 			}
 
 		// Admin lists
@@ -344,23 +343,23 @@ class AdminQuery
 			{
 			if( adminItem_.adminListArray[adminListNr] != null )
 				{
-				if( adminItem_.adminListArray[adminListNr].itemQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to query item numbers in" );
+				if( adminItem_.adminListArray[adminListNr].itemQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != Constants.RESULT_OK )
+					return adminItem_.addErrorWithAdminListNr( adminListNr, 1, moduleNameString_, "I failed to query item numbers in" );
 				}
 			}
 
 		return Constants.RESULT_OK;
 		}
 
-	private byte listQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, StringBuffer queryListStringBuffer )
+	private byte listQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, StringBuffer queryListStringBuffer )
 		{
 		WordList wordList;
 
 		// In words
 		if( ( wordList = adminItem_.wordList ) != null )
 			{
-			if( wordList.listQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListStringBuffer ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query my word list" );
+			if( wordList.listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to query my word list" );
 			}
 
 		// Admin lists
@@ -368,23 +367,23 @@ class AdminQuery
 			{
 			if( adminItem_.adminListArray[adminListNr] != null )
 				{
-				if( adminItem_.adminListArray[adminListNr].listQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryListStringBuffer ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to do a list query module" );
+				if( adminItem_.adminListArray[adminListNr].listQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer ) != Constants.RESULT_OK )
+					return adminItem_.addErrorWithAdminListNr( adminListNr, 1, moduleNameString_, "I failed to do a list query module" );
 				}
 			}
 
 		return Constants.RESULT_OK;
 		}
 
-	private byte wordTypeQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, short queryWordTypeNr )
+	private byte wordTypeQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, short queryWordTypeNr )
 		{
 		WordList wordList;
 
 		// In words
 		if( ( wordList = adminItem_.wordList ) != null )
 			{
-			if( wordList.wordTypeQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query word types in my word list" );
+			if( wordList.wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to query word types in my word list" );
 			}
 
 		// Admin lists
@@ -392,23 +391,23 @@ class AdminQuery
 			{
 			if( adminItem_.adminListArray[adminListNr] != null )
 				{
-				if( adminItem_.adminListArray[adminListNr].wordTypeQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to word types" );
+				if( adminItem_.adminListArray[adminListNr].wordTypeQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr ) != Constants.RESULT_OK )
+					return adminItem_.addErrorWithAdminListNr( adminListNr, 1, moduleNameString_, "I failed to word types" );
 				}
 			}
 
 		return Constants.RESULT_OK;
 		}
 
-	private byte parameterQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, int queryParameter )
+	private byte parameterQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, int queryParameter )
 		{
 		WordList wordList;
 
 		// In words
 		if( ( wordList = adminItem_.wordList ) != null )
 			{
-			if( wordList.parameterQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query parameters in my word list" );
+			if( wordList.parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to query parameters in my word list" );
 			}
 
 		// Admin lists
@@ -416,37 +415,37 @@ class AdminQuery
 			{
 			if( adminItem_.adminListArray[adminListNr] != null )
 				{
-				if( adminItem_.adminListArray[adminListNr].parameterQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to parameters" );
+				if( adminItem_.adminListArray[adminListNr].parameterQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter ) != Constants.RESULT_OK )
+					return adminItem_.addErrorWithAdminListNr( adminListNr, 1, moduleNameString_, "I failed to parameters" );
 				}
 			}
 
 		return Constants.RESULT_OK;
 		}
 
-	private byte wordQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String wordNameString )
+	private byte wordQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String wordNameString )
 		{
 		WordList wordList;
 
 		// In words
 		if( ( wordList = adminItem_.wordList ) != null )
 			{
-			if( wordList.wordQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordNameString ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query the words in my word list" );
+			if( wordList.wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to query the words in my word list" );
 			}
 
 		return Constants.RESULT_OK;
 		}
 
-	private byte wordReferenceQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String wordReferenceNameString )
+	private byte wordReferenceQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
 		{
 		WordList wordList;
 
 		// In words
 		if( ( wordList = adminItem_.wordList ) != null )
 			{
-			if( wordList.wordReferenceQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query word references in my word list" );
+			if( wordList.wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to query word references in my word list" );
 			}
 
 		// Admin lists
@@ -454,23 +453,23 @@ class AdminQuery
 			{
 			if( adminItem_.adminListArray[adminListNr] != null )
 				{
-				if( adminItem_.adminListArray[adminListNr].wordReferenceQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to query word references" );
+				if( adminItem_.adminListArray[adminListNr].wordReferenceQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, false, wordReferenceNameString ) != Constants.RESULT_OK )
+					return adminItem_.addErrorWithAdminListNr( adminListNr, 1, moduleNameString_, "I failed to query word references" );
 				}
 			}
 
 		return Constants.RESULT_OK;
 		}
 
-	private byte stringQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String queryString )
+	private byte stringQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String queryString )
 		{
 		WordList wordList;
 
 		// In words
 		if( ( wordList = adminItem_.wordList ) != null )
 			{
-			if( wordList.stringQueryInWordList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query strings in my word list" );
+			if( wordList.stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to query strings in my word list" );
 			}
 
 		// Admin lists
@@ -478,8 +477,8 @@ class AdminQuery
 			{
 			if( adminItem_.adminListArray[adminListNr] != null )
 				{
-				if( adminItem_.adminListArray[adminListNr].stringQueryInList( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( adminListNr ), 1, moduleNameString_, "I failed to query strings" );
+				if( adminItem_.adminListArray[adminListNr].stringQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString ) != Constants.RESULT_OK )
+					return adminItem_.addErrorWithAdminListNr( adminListNr, 1, moduleNameString_, "I failed to query strings" );
 				}
 			}
 
@@ -505,7 +504,7 @@ class AdminQuery
 		if( errorString != null )
 			{
 			if( adminItem_ != null )
-				adminItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
+				adminItem_.startSystemError( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -548,10 +547,10 @@ class AdminQuery
 						if( executeQuery( true, false, true, promptTypeNr, textString ) == Constants.RESULT_OK )
 							position = queryStringPosition_;
 						else
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute query \"" + textString.substring( previousPosition ) + "\"" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to execute query \"" + textString.substring( previousPosition ) + "\"" );
 						}
 					else
-						return adminItem_.startErrorInItem( 1, moduleNameString_, "The text string ended with a query character" );
+						return adminItem_.startError( 1, moduleNameString_, "The text string ended with a query character" );
 					}
 				else
 					{
@@ -563,7 +562,7 @@ class AdminQuery
 								hasFoundNewLine = true;
 							}
 						else
-							return adminItem_.startErrorInItem( 1, moduleNameString_, "The text string ended with a diacritical sign" );
+							return adminItem_.startError( 1, moduleNameString_, "The text string ended with a diacritical sign" );
 						}
 					else
 						textChar = textString.charAt( position );
@@ -585,18 +584,18 @@ class AdminQuery
 						writeStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
 						}
 					else
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write a character" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write a character" );
 					}
 				}
 
 			if( writeStringBuffer.length() > 0 )
 				{
 				if( Presentation.writeText( false, promptTypeNr, Constants.NO_CENTER_WIDTH, writeStringBuffer ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write the last characters" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the last characters" );
 				}
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given text string is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given text string is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -610,24 +609,29 @@ class AdminQuery
 		boolean isOnlyShowingWords = false;
 		boolean isOnlyShowingWordReferences = false;
 		boolean isReturnQueryToPosition = isReturningToPosition;
-		boolean isSelectActiveItems = true;
-		boolean isSelectInactiveItems = true;
-		boolean isSelectArchivedItems = true;
-		boolean isSelectReplacedItems = true;
-		boolean isSelectDeletedItems = true;
+		boolean isSelectingActiveItems = true;
+		boolean isSelectingInactiveItems = true;
+		boolean isSelectingArchivedItems = true;
+		boolean isSelectingReplacedItems = true;
+		boolean isSelectingDeletedItems = true;
 		boolean isShowingCount = false;
+		boolean isSelectingAttachedJustifications = false;
+		boolean isSelectingJustificationSpecifications = false;
 		short queryWordTypeNr = Constants.WORD_TYPE_UNDEFINED;
 		int nTotal;
 		int listStringPosition;
+		int queryStringLength;
+		int nameStringBufferLength;
 		int queryWidth = Constants.NO_CENTER_WIDTH;
 		StringBuffer nameStringBuffer = new StringBuffer();
 
 		CommonVariables.queryStringBuffer = new StringBuffer();
 
-		if( queryString != null )
+		if( queryString != null &&
+		( queryStringLength = queryString.length() ) > 0 )
 			{
 			if( queryStringPosition_ > 0 &&
-			queryStringPosition_ < queryString.length() )
+			queryStringPosition_ < queryStringLength )
 				{
 				if( CommonVariables.currentLanguageWordItem != null )
 					{
@@ -641,15 +645,14 @@ class AdminQuery
 
 					while( !isEndOfQuery &&
 					CommonVariables.queryStringBuffer.length() == 0 &&
-					queryStringPosition_ < queryString.length() )
+					queryStringPosition_ < queryStringLength )
 						{
 						switch( queryString.charAt( queryStringPosition_ ) )
 							{
 							case Constants.QUERY_ITEM_START_CHAR:
-
 								if( getIdFromQuery( true, queryString, Constants.QUERY_ITEM_START_CHAR, Constants.QUERY_ITEM_END_CHAR ) == Constants.RESULT_OK )
 									{
-									if( itemQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, false, querySentenceNr_, queryItemNr_ ) == Constants.RESULT_OK )
+									if( itemQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, querySentenceNr_, queryItemNr_ ) == Constants.RESULT_OK )
 										{
 										isFirstInstruction = false;
 
@@ -658,18 +661,17 @@ class AdminQuery
 											CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_ITEM_WAS_FOUND ) );
 										}
 									else
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query items" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to query items" );
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get an identification from the item" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to get an identification from the item" );
 
 								break;
 
 							case Constants.QUERY_REF_ITEM_START_CHAR:
-
 								if( getIdFromQuery( true, queryString, Constants.QUERY_REF_ITEM_START_CHAR, Constants.QUERY_REF_ITEM_END_CHAR ) == Constants.RESULT_OK )
 									{
-									if( itemQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, true, querySentenceNr_, queryItemNr_ ) == Constants.RESULT_OK )
+									if( itemQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, true, querySentenceNr_, queryItemNr_ ) == Constants.RESULT_OK )
 										{
 										isFirstInstruction = false;
 
@@ -678,10 +680,10 @@ class AdminQuery
 											CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_REFERENCE_ITEM_WAS_FOUND ) );
 										}
 									else
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query item references" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to query item references" );
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get a reference identification from the item" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to get a reference identification from the item" );
 
 								break;
 
@@ -691,10 +693,11 @@ class AdminQuery
 								if( getNameFromQuery( queryString, nameStringBuffer, Constants.QUERY_LIST_START_CHAR, Constants.QUERY_LIST_END_CHAR ) == Constants.RESULT_OK )
 									{
 									listStringPosition = 0;
+									nameStringBufferLength = nameStringBuffer.length();
 
 									// Check list characters for existence
 									do	{
-										if( nameStringBuffer.length() > 0 &&
+										if( nameStringBufferLength > 0 &&
 										!isWordListChar( nameStringBuffer.charAt( listStringPosition ) ) &&
 										!isAdminListChar( nameStringBuffer.charAt( listStringPosition ) ) )
 											{
@@ -703,12 +706,12 @@ class AdminQuery
 											}
 										}
 									while( !isInvalidChar &&
-									++listStringPosition < nameStringBuffer.length() );
+									++listStringPosition < nameStringBufferLength );
 
 									// All list characters are valid
 									if( !isInvalidChar )
 										{
-										if( listQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, nameStringBuffer ) == Constants.RESULT_OK )
+										if( listQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, nameStringBuffer ) == Constants.RESULT_OK )
 											{
 											isFirstInstruction = false;
 
@@ -717,16 +720,16 @@ class AdminQuery
 												CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_LIST_WAS_FOUND ) );
 											}
 										else
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query lists" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to query lists" );
 										}
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get a list string from the text" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to get a list string from the text" );
 
 								break;
 
 							case Constants.QUERY_WORD_START_CHAR:
-								if( queryStringPosition_ + 1 < queryString.length() &&
+								if( queryStringPosition_ + 1 < queryStringLength &&
 								queryString.charAt( queryStringPosition_ + 1 ) != Constants.QUERY_CHAR )
 									{
 									nameStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
@@ -735,7 +738,7 @@ class AdminQuery
 										{
 										if( nameStringBuffer.length() == 0 )
 											{
-											if( queryStringPosition_ < queryString.length() &&
+											if( queryStringPosition_ < queryStringLength &&
 											queryString.charAt( queryStringPosition_ ) != Constants.QUERY_CHAR )
 												CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_SPECIFICATION ) );
 											else
@@ -746,7 +749,7 @@ class AdminQuery
 											}
 										else
 											{
-											if( wordQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, nameStringBuffer.toString() ) == Constants.RESULT_OK )
+											if( wordQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, nameStringBuffer.toString() ) == Constants.RESULT_OK )
 												{
 												isFirstInstruction = false;
 
@@ -755,11 +758,11 @@ class AdminQuery
 													CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_WAS_FOUND ) );
 												}
 											else
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query words" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to query words" );
 											}
 										}
 									else
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get a word name from the query specification" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to get a word name from the query specification" );
 									}
 								else
 									{
@@ -771,7 +774,7 @@ class AdminQuery
 								break;
 
 							case Constants.QUERY_WORD_REFERENCE_START_CHAR:
-								if( queryStringPosition_ + 1 < queryString.length() &&
+								if( queryStringPosition_ + 1 < queryStringLength &&
 								queryString.charAt( queryStringPosition_ + 1 ) != Constants.QUERY_CHAR )
 									{
 									nameStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
@@ -780,7 +783,7 @@ class AdminQuery
 										{
 										if( nameStringBuffer.length() == 0 )
 											{
-											if( queryStringPosition_ < queryString.length() &&
+											if( queryStringPosition_ < queryStringLength &&
 											queryString.charAt( queryStringPosition_ ) != Constants.QUERY_CHAR )
 												CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_REFERENCE ) );
 											else
@@ -791,7 +794,7 @@ class AdminQuery
 											}
 										else
 											{
-											if( wordReferenceQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, nameStringBuffer.toString() ) == Constants.RESULT_OK )
+											if( wordReferenceQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, nameStringBuffer.toString() ) == Constants.RESULT_OK )
 												{
 												isFirstInstruction = false;
 
@@ -800,11 +803,11 @@ class AdminQuery
 													CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_REFERENCE_WAS_FOUND ) );
 												}
 											else
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query word references" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to query word references" );
 											}
 										}
 									else
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get a word reference name from the query specification" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to get a word reference name from the query specification" );
 									}
 								else
 									{
@@ -815,15 +818,16 @@ class AdminQuery
 
 								break;
 
-							case Constants.SYMBOL_BACK_SLASH:		// Escape character for string
-								if( queryStringPosition_ + 1 < queryString.length() &&
+							// Escape character for string
+							case Constants.SYMBOL_BACK_SLASH:
+								if( queryStringPosition_ + 1 < queryStringLength &&
 								queryString.charAt( queryStringPosition_ + 1 ) != Constants.QUERY_CHAR )
 									queryStringPosition_++;
 
 								// Don't insert a break statement here
 
 							case Constants.QUERY_STRING_START_CHAR:
-								if( queryStringPosition_ + 1 < queryString.length() &&
+								if( queryStringPosition_ + 1 < queryStringLength &&
 								queryString.charAt( queryStringPosition_ + 1 ) != Constants.QUERY_CHAR )
 									{
 									nameStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
@@ -832,7 +836,7 @@ class AdminQuery
 										{
 										if( nameStringBuffer.length() == 0 )
 											{
-											if( queryStringPosition_ < queryString.length() &&
+											if( queryStringPosition_ < queryStringLength &&
 											queryString.charAt( queryStringPosition_ ) != Constants.QUERY_CHAR )
 												CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_STRING_SPECIFICATION ) );
 											else
@@ -843,7 +847,7 @@ class AdminQuery
 											}
 										else
 											{
-											if( stringQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, nameStringBuffer.toString() ) == Constants.RESULT_OK )
+											if( stringQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, nameStringBuffer.toString() ) == Constants.RESULT_OK )
 												{
 												isFirstInstruction = false;
 
@@ -852,11 +856,11 @@ class AdminQuery
 													CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_STRING_WAS_FOUND ) );
 												}
 											else
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query strings" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to query strings" );
 											}
 										}
 									else
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get a string from the query specification" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to get a string from the query specification" );
 									}
 								else
 									{
@@ -868,14 +872,13 @@ class AdminQuery
 								break;
 
 							case Constants.QUERY_WORD_TYPE_CHAR:
-
 								querySentenceNr_ = Constants.NO_SENTENCE_NR;
 
 								if( getIdFromQuery( false, queryString, Constants.QUERY_WORD_TYPE_CHAR, Constants.QUERY_WORD_TYPE_CHAR ) == Constants.RESULT_OK )
 									{
 									if( queryItemNr_ == Constants.NO_ITEM_NR )
 										{
-										if( wordTypeQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, (short)querySentenceNr_ ) == Constants.RESULT_OK )
+										if( wordTypeQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, (short)querySentenceNr_ ) == Constants.RESULT_OK )
 											{
 											isFirstInstruction = false;
 											// Remember given word type number
@@ -886,25 +889,24 @@ class AdminQuery
 												CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_TYPE_WAS_FOUND ) );
 											}
 										else
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query word types" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to query word types" );
 										}
 									else
-										return adminItem_.startErrorInItem( 1, moduleNameString_, "The given parameter is undefined" );
+										return adminItem_.startError( 1, moduleNameString_, "The given parameter is undefined" );
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get a word type" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to get a word type" );
 
 								break;
 
 							case Constants.QUERY_PARAMETER_CHAR:
-
 								querySentenceNr_ = Constants.NO_SENTENCE_NR;
 
 								if( getIdFromQuery( false, queryString, Constants.QUERY_PARAMETER_CHAR, Constants.QUERY_PARAMETER_CHAR ) == Constants.RESULT_OK )
 									{
 									if( queryItemNr_ == Constants.NO_ITEM_NR )
 										{
-										if( parameterQuery( isFirstInstruction, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, querySentenceNr_ ) == Constants.RESULT_OK )
+										if( parameterQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, querySentenceNr_ ) == Constants.RESULT_OK )
 											{
 											isFirstInstruction = false;
 
@@ -913,180 +915,185 @@ class AdminQuery
 												CommonVariables.queryStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_PARAMETER_WAS_FOUND ) );
 											}
 										else
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query parameters" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to query parameters" );
 										}
 									else
-										return adminItem_.startErrorInItem( 1, moduleNameString_, "The given parameter is undefined" );
+										return adminItem_.startError( 1, moduleNameString_, "The given parameter is undefined" );
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to get a parameter" );
-
-								break;
-
-							case Constants.QUERY_CHAR:
-
-								isEndOfQuery = true;
-								queryStringPosition_++;
+									return adminItem_.addError( 1, moduleNameString_, "I failed to get a parameter" );
 
 								break;
 
 							case Constants.QUERY_ACTIVE_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectInactiveItems = false;
-									isSelectArchivedItems = false;
-									isSelectReplacedItems = false;
-									isSelectDeletedItems = false;
+									isSelectingInactiveItems = false;
+									isSelectingArchivedItems = false;
+									isSelectingReplacedItems = false;
+									isSelectingDeletedItems = false;
 									}
 								else
-									isSelectActiveItems = true;
+									isSelectingActiveItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= queryString.length() ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString.charAt( queryStringPosition_ ) == Constants.QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to perform an item query of active items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to perform an item query of active items" );
 									}
 
 								break;
 
 							case Constants.QUERY_INACTIVE_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectActiveItems = false;
-									isSelectArchivedItems = false;
-									isSelectReplacedItems = false;
-									isSelectDeletedItems = false;
+									isSelectingActiveItems = false;
+									isSelectingArchivedItems = false;
+									isSelectingReplacedItems = false;
+									isSelectingDeletedItems = false;
 									}
 								else
-									isSelectInactiveItems = true;
+									isSelectingInactiveItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= queryString.length() ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString.charAt( queryStringPosition_ ) == Constants.QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to perform an item query of inactive items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to perform an item query of inactive items" );
 									}
 
 								break;
 
 							case Constants.QUERY_ARCHIVED_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectActiveItems = false;
-									isSelectInactiveItems = false;
-									isSelectReplacedItems = false;
-									isSelectDeletedItems = false;
+									isSelectingActiveItems = false;
+									isSelectingInactiveItems = false;
+									isSelectingReplacedItems = false;
+									isSelectingDeletedItems = false;
 									}
 								else
-									isSelectArchivedItems = true;
+									isSelectingArchivedItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= queryString.length() ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString.charAt( queryStringPosition_ ) == Constants.QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to perform an item query of archived items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to perform an item query of archived items" );
 									}
 
 								break;
 
 							case Constants.QUERY_REPLACED_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectActiveItems = false;
-									isSelectInactiveItems = false;
-									isSelectArchivedItems = false;
-									isSelectDeletedItems = false;
+									isSelectingActiveItems = false;
+									isSelectingInactiveItems = false;
+									isSelectingArchivedItems = false;
+									isSelectingDeletedItems = false;
 									}
 								else
-									isSelectReplacedItems = true;
+									isSelectingReplacedItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= queryString.length() ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString.charAt( queryStringPosition_ ) == Constants.QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to perform an item query of archived items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to perform an item query of archived items" );
 									}
 
 								break;
 
 							case Constants.QUERY_DELETED_CHAR:
-
 								// Initially
-								if( isSelectActiveItems &&
-								isSelectInactiveItems &&
-								isSelectArchivedItems &&
-								isSelectReplacedItems &&
-								isSelectDeletedItems )
+								if( isSelectingActiveItems &&
+								isSelectingInactiveItems &&
+								isSelectingArchivedItems &&
+								isSelectingReplacedItems &&
+								isSelectingDeletedItems )
 									{
-									isSelectActiveItems = false;
-									isSelectInactiveItems = false;
-									isSelectArchivedItems = false;
-									isSelectReplacedItems = false;
+									isSelectingActiveItems = false;
+									isSelectingInactiveItems = false;
+									isSelectingArchivedItems = false;
+									isSelectingReplacedItems = false;
 									}
 								else
-									isSelectDeletedItems = true;
+									isSelectingDeletedItems = true;
 
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= queryString.length() ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString.charAt( queryStringPosition_ ) == Constants.QUERY_CHAR )
 									{
-									if( itemQuery( isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to perform an item query of deleted items" );
+									if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to perform an item query of deleted items" );
 									}
 
 								break;
 
 							case Constants.QUERY_COUNT_CHAR:
-
 								isShowingCount = true;
 								queryStringPosition_++;
 
-								if( queryStringPosition_ >= queryString.length() ||
+								if( queryStringPosition_ >= queryStringLength ||
 								// End of query
 								queryString.charAt( queryStringPosition_ ) == Constants.QUERY_CHAR )
 									{
-									if( itemQuery( true, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, false, Constants.NO_SENTENCE_NR, Constants.NO_ITEM_NR ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query items" );
+									if( itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, Constants.NO_SENTENCE_NR, Constants.NO_ITEM_NR ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to query items" );
 									}
+
+								break;
+
+							case Constants.QUERY_SELECTING_ATTACHED_JUSTIFICATIONS_CHAR:
+								if( isSelectingAttachedJustifications )
+									// Second asterisk
+									isSelectingJustificationSpecifications = true;
+								else
+									// First asterisk
+									isSelectingAttachedJustifications = true;
+
+								queryStringPosition_++;
+
+								break;
+
+							case Constants.QUERY_CHAR:
+								isEndOfQuery = true;
+								queryStringPosition_++;
 
 								break;
 
@@ -1094,7 +1101,7 @@ class AdminQuery
 								// Set query width parameter
 								if( Character.isDigit( queryString.charAt( queryStringPosition_ ) ) )
 									{
-									while( queryStringPosition_ < queryString.length() &&
+									while( queryStringPosition_ < queryStringLength &&
 									Character.isDigit( queryString.charAt( queryStringPosition_ ) ) &&
 									queryWidth <= Constants.MAX_SENTENCE_NR / 10 )
 										{
@@ -1103,7 +1110,7 @@ class AdminQuery
 										}
 									}
 								else
-									return adminItem_.startErrorInItem( 1, moduleNameString_, "I've found an illegal character '" + queryString.charAt( queryStringPosition_ ) + "' in the query" );
+									return adminItem_.startError( 1, moduleNameString_, "I have found an illegal character '" + queryString.charAt( queryStringPosition_ ) + "' in the query" );
 							}
 						}
 
@@ -1112,8 +1119,8 @@ class AdminQuery
 						// No query performed yet
 						if( isFirstInstruction )
 							{
-							if( itemQuery( true, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, false, Constants.NO_SENTENCE_NR, Constants.NO_ITEM_NR ) != Constants.RESULT_OK )
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to query items" );
+							if( itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, Constants.NO_SENTENCE_NR, Constants.NO_ITEM_NR ) != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to query items" );
 							}
 
 						if( isShowingCount )
@@ -1198,11 +1205,12 @@ class AdminQuery
 									}
 								}
 							else
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to show the query result" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to show the query result" );
 							}
 						}
 
-					if( nTotalCount() == 0 ||	// Show comment on empty query
+					// Show comment on empty query
+					if( nTotalCount() == 0 ||
 					CommonVariables.hasFoundQuery ||
 					queryWidth > Constants.NO_CENTER_WIDTH )
 						{
@@ -1212,20 +1220,20 @@ class AdminQuery
 						CommonVariables.queryStringBuffer.length() > 0 ) )
 							{
 							if( Presentation.writeText( ( !isSuppressingMessage && !CommonVariables.hasFoundQuery && queryWidth == Constants.NO_CENTER_WIDTH ), promptTypeNr, queryWidth, CommonVariables.queryStringBuffer ) != Constants.RESULT_OK )
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write the query result" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write the query result" );
 							}
 						}
 					else
 						CommonVariables.queryStringBuffer = new StringBuffer();
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The current language word item is undefined" );
+					return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given instruction string buffer is empty or the given instruction string position is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The given query string buffer is empty or the given query string position is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given instruction string buffer is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given query string buffer is undefined" );
 
 		return Constants.RESULT_OK;
 		}

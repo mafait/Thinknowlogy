@@ -1,0 +1,102 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Una madre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia.
+< Juan es un hombre.
+< Juan no es una mujer.
+< Juan no es una madre.
+< Ana es una mujer.
+< Ana no es un hombre.
+< Ana es parte de una familia.
+< Ana no es un padre.
+< Pablo tiene 2 padres, llamados Juan y Ana.
+< Pablo tiene un padre, llamado Juan.
+< Pablo tiene una madre, llamada Ana.
+< José tiene 2 padres, llamados Juan y Ana.
+< José tiene un padre, llamado Juan.
+< José tiene una madre, llamada Ana.
+< Luisa tiene 2 padres, llamados Juan y Ana.
+< Luisa tiene un padre, llamado Juan.
+< Luisa tiene una madre, llamada Ana.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona.
+< Juan tiene posiblemente una hija, llamada Luisa.
+< Ana es probablemente una persona.
+< Ana tiene posiblemente una hija, llamada Luisa.
+< Pablo es posiblemente una persona.
+< Pablo es probablemente parte de una familia.
+< José es posiblemente una persona.
+< José es probablemente parte de una familia.
+< Luisa es posiblemente hija de Juan y Ana.
+< Luisa es posiblemente una mujer.
+< Luisa es puede-ser una persona.
+< Luisa no es puede-ser un hombre.
+< Luisa es posiblemente parte de una familia.
+< Luisa no es posiblemente un hijo.
+* 
+* Mis preguntas:
+< ¿Es Pablo una mujer o un hombre?
+< ¿Es Pablo un hijo o una hija?
+< ¿Es José una mujer o un hombre?
+< ¿Es José un hijo o una hija?
+< 
+* Tu pregunta es semánticamente ambiguas, porque falta una especificación relación.
+* 
+* Mi respuesta:
+< No, Juan es el padre de Pablo, José y Luisa.
+< Ana es la madre de Pablo, José y Luisa.
+< 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Juan la madre?
+* 
+* Esta pregunta ya ha sido respondida.
+* 
+* Mi respuesta:
+< No, Juan es un padre.
+< Ana es una madre.
+< 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Juan una madre?
+* 
+* Mi respuesta:
+< Sí, Juan es un padre.
+< 
+* 
+* Esta pregunta es más específica que la anterior pregunta:
+< ¿Es Juan un padre?
+* 
+* Mi respuesta:
+< Sí, Juan es el padre de Pablo, José y Luisa.
+< 
+< Sí, Ana es la madre de Pablo, José y Luisa.
+< 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Ana la madre de Luisa?
+* 
+* Mi respuesta:
+< No, Ana es la madre de Pablo, José y Luisa.
+< Juan es el padre de Pablo, José y Luisa.
+< 

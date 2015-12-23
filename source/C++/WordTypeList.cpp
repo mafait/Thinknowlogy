@@ -2,11 +2,10 @@
  *	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -67,14 +66,14 @@ class WordTypeList : private List
 			}
 		}
 
-	WordTypeItem *wordTypeString( bool isAllowingNounDifference, bool isCheckingAllLanguages, unsigned short wordTypeNr, WordTypeItem *searchItem )
+	WordTypeItem *wordTypeString( bool isAllowingDifferentNoun, bool isCheckingAllLanguages, unsigned short wordTypeNr, WordTypeItem *searchItem )
 		{
 		while( searchItem != NULL )
 			{
 			if( wordTypeNr == WORD_TYPE_UNDEFINED ||
 			searchItem->wordTypeNr() == wordTypeNr ||
 
-			( isAllowingNounDifference &&
+			( isAllowingDifferentNoun &&
 			searchItem->isSingularOrPluralNounWordType() &&
 			myWordItem()->isSingularOrPluralNoun( searchItem->wordTypeNr() ) ) )
 				return searchItem;
@@ -230,44 +229,13 @@ class WordTypeList : private List
 			}
 		}
 
-	bool hasFeminineProperNameEnding()
-		{
-		WordTypeItem *searchItem = firstActiveCurrentLanguageWordTypeItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasFeminineProperNameEnding() )
-				return true;
-
-			searchItem = searchItem->nextCurrentLanguageWordTypeItem();
-			}
-
-		return false;
-		}
-
-	bool hasMasculineProperNameEnding()
-		{
-		WordTypeItem *searchItem = firstActiveCurrentLanguageWordTypeItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasMasculineProperNameEnding() )
-				return true;
-
-			searchItem = searchItem->nextCurrentLanguageWordTypeItem();
-			}
-
-		return false;
-		}
-
 	bool isCorrectHiddenWordType( unsigned short wordTypeNr, char *compareString, void *authorizationKey )
 		{
 		WordTypeItem *searchItem = firstActiveCurrentLanguageWordTypeItem();
 
 		while( searchItem != NULL )
 			{
-			if( searchItem->wordTypeNr() == wordTypeNr &&
-			searchItem->isCorrectHiddenWordType( compareString, authorizationKey ) )
+			if( searchItem->isCorrectHiddenWordType( wordTypeNr, compareString, authorizationKey ) )
 				return true;
 
 			searchItem = searchItem->nextCurrentLanguageWordTypeItem();
@@ -288,18 +256,18 @@ class WordTypeList : private List
 
 			if( searchItem->hasFeminineDefiniteArticleParameter() &&
 			searchItem->hasFeminineAndMasculineDefiniteArticle() )
-				interfaceParameter = INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_DEFINITE_ARTICLE_WITH_NOUN_START;
+				interfaceParameter = INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START;
 			else
 				{
 				if( searchItem->hasFeminineIndefiniteArticleParameter() &&
 				searchItem->hasFeminineAndMasculineIndefiniteArticle() )
-					interfaceParameter = INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_INDEFINITE_ARTICLE_WITH_NOUN_START;
+					interfaceParameter = INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START;
 				}
 
 			if( interfaceParameter > NO_INTERFACE_PARAMETER )
 				{
-				if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, interfaceParameter, searchItem->itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != RESULT_OK )
-					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to write an interface notification" );
+				if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, interfaceParameter, searchItem->itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to write an interface notification about the use of an article with a feminine noun" );
 				}
 
 			searchItem = searchItem->nextCurrentLanguageWordTypeItem();
@@ -320,18 +288,18 @@ class WordTypeList : private List
 
 			if( searchItem->hasMasculineDefiniteArticleParameter() &&
 			searchItem->hasFeminineAndMasculineDefiniteArticle() )
-				interfaceParameter = INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_DEFINITE_ARTICLE_WITH_NOUN_START;
+				interfaceParameter = INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START;
 			else
 				{
 				if( searchItem->hasMasculineIndefiniteArticleParameter() &&
 				searchItem->hasFeminineAndMasculineIndefiniteArticle() )
-					interfaceParameter = INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_INDEFINITE_ARTICLE_WITH_NOUN_START;
+					interfaceParameter = INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START;
 				}
 
 			if( interfaceParameter > NO_INTERFACE_PARAMETER )
 				{
-				if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, interfaceParameter, searchItem->itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != RESULT_OK )
-					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to write an interface notification" );
+				if( commonVariables()->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, interfaceParameter, searchItem->itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to write an interface notification about the use of an article with a masculine noun" );
 				}
 
 			searchItem = searchItem->nextCurrentLanguageWordTypeItem();
@@ -354,14 +322,14 @@ class WordTypeList : private List
 				if( deleteItem( false, searchItem ) == RESULT_OK )
 					hasFoundWordType = true;
 				else
-					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to delete an active item" );
+					return addError( functionNameString, NULL, "I failed to delete an active item" );
 				}
 			else
 				searchItem = searchItem->nextCurrentLanguageWordTypeItem();
 			}
 
 		if( !hasFoundWordType )
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I coundn't find the given word type" );
+			return startError( functionNameString, NULL, "I coundn't find the given word type" );
 
 		return RESULT_OK;
 		}
@@ -380,14 +348,14 @@ class WordTypeList : private List
 				if( searchItem->hideWordType( authorizationKey ) == RESULT_OK )
 					hasFoundWordType = true;
 				else
-					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to hide a word type" );
+					return addError( functionNameString, NULL, "I failed to hide a word type" );
 				}
 			else
 				searchItem = searchItem->nextCurrentLanguageWordTypeItem();
 			}
 
 		if( !hasFoundWordType )
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I coundn't find the given word type" );
+			return startError( functionNameString, NULL, "I coundn't find the given word type" );
 
 		return RESULT_OK;
 		}
@@ -424,7 +392,7 @@ class WordTypeList : private List
 						if( searchItem->markGeneralizationWordTypeAsWritten() == RESULT_OK )
 							hasFoundWordTypeNr = true;
 						else
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to mark a word as written" );
+							return addError( functionNameString, NULL, "I failed to mark a word as written" );
 						}
 					}
 
@@ -440,7 +408,7 @@ class WordTypeList : private List
 					pluralNounWordTypeItem != NULL )
 						{
 						if( pluralNounWordTypeItem->markGeneralizationWordTypeAsWritten() != RESULT_OK )
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to mark a plural noun word as written" );
+							return addError( functionNameString, NULL, "I failed to mark a plural noun word as written" );
 						}
 					else
 						{
@@ -449,18 +417,18 @@ class WordTypeList : private List
 						singularNounWordTypeItem != NULL )
 							{
 							if( singularNounWordTypeItem->markGeneralizationWordTypeAsWritten() != RESULT_OK )
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to mark a singular noun word as written" );
+								return addError( functionNameString, NULL, "I failed to mark a singular noun word as written" );
 							}
 						}
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't find the given word type number: ", wordTypeNr );
+					return startError( functionNameString, NULL, "I couldn't find the given word type number: ", wordTypeNr );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given word type number is already marked as written: ", wordTypeNr );
+				return startError( functionNameString, NULL, "The given word type number is already marked as written: ", wordTypeNr );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given word type number is undefined or out of bounds: ", wordTypeNr );
+			return startError( functionNameString, NULL, "The given word type number is undefined or out of bounds: ", wordTypeNr );
 
 		return RESULT_OK;
 		}
@@ -497,7 +465,7 @@ class WordTypeList : private List
 						if( searchItem->markSpecificationWordTypeAsWritten() == RESULT_OK )
 							hasFoundWordTypeNr = true;
 						else
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to mark a word as written" );
+							return addError( functionNameString, NULL, "I failed to mark a word as written" );
 						}
 					}
 
@@ -513,7 +481,7 @@ class WordTypeList : private List
 					pluralNounWordTypeItem != NULL )
 						{
 						if( pluralNounWordTypeItem->markSpecificationWordTypeAsWritten() != RESULT_OK )
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to mark a plural noun word as written" );
+							return addError( functionNameString, NULL, "I failed to mark a plural noun word as written" );
 						}
 					else
 						{
@@ -522,18 +490,18 @@ class WordTypeList : private List
 						singularNounWordTypeItem != NULL )
 							{
 							if( singularNounWordTypeItem->markSpecificationWordTypeAsWritten() != RESULT_OK )
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to mark a singular noun word as written" );
+								return addError( functionNameString, NULL, "I failed to mark a singular noun word as written" );
 							}
 						}
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't find the given word type number: ", wordTypeNr );
+					return startError( functionNameString, NULL, "I couldn't find the given word type number: ", wordTypeNr );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given word type number is already marked as written: ", wordTypeNr );
+				return startError( functionNameString, NULL, "The given word type number is already marked as written: ", wordTypeNr );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given word type number is undefined or out of bounds: ", wordTypeNr );
+			return startError( functionNameString, NULL, "The given word type number is undefined or out of bounds: ", wordTypeNr );
 
 		return RESULT_OK;
 		}
@@ -568,7 +536,7 @@ class WordTypeList : private List
 						if( searchItem->markRelationWordTypeAsWritten() == RESULT_OK )
 							hasFoundWordTypeNr = true;
 						else
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to mark a word as written" );
+							return addError( functionNameString, NULL, "I failed to mark a word as written" );
 						}
 					}
 
@@ -584,7 +552,7 @@ class WordTypeList : private List
 					pluralNounWordTypeItem != NULL )
 						{
 						if( pluralNounWordTypeItem->markRelationWordTypeAsWritten() != RESULT_OK )
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to mark a plural noun word as written" );
+							return addError( functionNameString, NULL, "I failed to mark a plural noun word as written" );
 						}
 					else
 						{
@@ -593,18 +561,18 @@ class WordTypeList : private List
 						singularNounWordTypeItem != NULL )
 							{
 							if( singularNounWordTypeItem->markRelationWordTypeAsWritten() != RESULT_OK )
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to mark a singular noun word as written" );
+								return addError( functionNameString, NULL, "I failed to mark a singular noun word as written" );
 							}
 						}
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't find the given word type number: ", wordTypeNr );
+					return startError( functionNameString, NULL, "I couldn't find the given word type number: ", wordTypeNr );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given word type number is already marked as written: ", wordTypeNr );
+				return startError( functionNameString, NULL, "The given word type number is already marked as written: ", wordTypeNr );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given word type number is undefined or out of bounds: ", wordTypeNr );
+			return startError( functionNameString, NULL, "The given word type number is undefined or out of bounds: ", wordTypeNr );
 
 		return RESULT_OK;
 		}
@@ -619,7 +587,7 @@ class WordTypeList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeWordTypeItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store a word type item in the database" );
+					return addError( functionNameString, NULL, "I failed to store a word type item in the database" );
 				}
 
 			searchItem = searchItem->nextWordTypeItem();
@@ -632,7 +600,7 @@ class WordTypeList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeWordTypeItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced word type item in the database" );
+					return addError( functionNameString, NULL, "I failed to modify a replaced word type item in the database" );
 				}
 
 			searchItem = searchItem->nextWordTypeItem();
@@ -659,7 +627,7 @@ class WordTypeList : private List
 						commonVariables()->matchingWordTypeNr = searchItem->wordTypeNr();
 					}
 				else
-					addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to compare an active word type string with the query string" );
+					addError( functionNameString, NULL, "I failed to compare an active word type string with the query string" );
 				}
 
 			searchItem = searchItem->nextWordTypeItem();
@@ -679,7 +647,7 @@ class WordTypeList : private List
 						commonVariables()->matchingWordTypeNr = searchItem->wordTypeNr();
 					}
 				else
-					addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to compare a deleted word type string with the query string" );
+					addError( functionNameString, NULL, "I failed to compare a deleted word type string with the query string" );
 				}
 
 			searchItem = searchItem->nextWordTypeItem();
@@ -699,7 +667,7 @@ class WordTypeList : private List
 						commonVariables()->matchingWordTypeNr = searchItem->wordTypeNr();
 					}
 				else
-					addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to compare a deleted word type string with the query string" );
+					addError( functionNameString, NULL, "I failed to compare a deleted word type string with the query string" );
 				}
 
 			searchItem = searchItem->nextWordTypeItem();
@@ -724,19 +692,19 @@ class WordTypeList : private List
 					if( ( wordResult.createdWordTypeItem = new WordTypeItem( hasFeminineWordEnding, hasMasculineWordEnding, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, commonVariables()->currentLanguageNr, wordTypeNr, wordLength, wordTypeString, commonVariables(), this, myWordItem() ) ) != NULL )
 						{
 						if( addItemToList( QUERY_ACTIVE_CHAR, wordResult.createdWordTypeItem ) != RESULT_OK )
-							addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active word type item" );
+							addError( functionNameString, NULL, "I failed to add an active word type item" );
 						}
 					else
-						startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The created word type item is undefined" );
+						startError( functionNameString, NULL, "The created word type item is undefined" );
 					}
 				else
-					startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current item number is undefined" );
+					startError( functionNameString, NULL, "The current item number is undefined" );
 				}
 			else
-				startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given wordTypeString is undefined" );
+				startError( functionNameString, NULL, "The given wordTypeString is undefined" );
 			}
 		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given word type number is undefined or out of bounds" );
+			startError( functionNameString, NULL, "The given word type number is undefined or out of bounds" );
 
 		wordResult.result = commonVariables()->result;
 		return wordResult;
@@ -775,12 +743,12 @@ class WordTypeList : private List
 		return NULL;
 		}
 
-	WordTypeItem *activeWordTypeItem( bool isAllowingNounDifference, bool isCheckingAllLanguages, unsigned short wordTypeNr )
+	WordTypeItem *activeWordTypeItem( bool isAllowingDifferentNoun, bool isCheckingAllLanguages, unsigned short wordTypeNr )
 		{
 		WordTypeItem *foundWordTypeItem;
 
 		// Try to find word type of the current language
-		if( ( foundWordTypeItem = wordTypeString( isAllowingNounDifference, false, wordTypeNr, firstActiveCurrentLanguageWordTypeItem() ) ) == NULL )
+		if( ( foundWordTypeItem = wordTypeString( isAllowingDifferentNoun, false, wordTypeNr, firstActiveCurrentLanguageWordTypeItem() ) ) == NULL )
 			{
 			// Not found in current language. Now, try all languages
 			if( isCheckingAllLanguages )

@@ -2,11 +2,10 @@
  *	Class:			AdminContext
  *	Supports class:	AdminItem
  *	Purpose:		To create context structures
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -42,6 +41,28 @@ class AdminContext
 
 
 	// Private functions
+
+	bool isValidContextInAllWords( bool isPossessive, unsigned int existingRelationContextNr, WordItem *specificationWordItem, WordItem *relationWordItem )
+		{
+		WordItem *currentWordItem;
+
+		if( existingRelationContextNr > NO_CONTEXT_NR &&
+		specificationWordItem != NULL &&
+		( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
+			{
+			// Do for all words
+			do	{
+				if( currentWordItem->isProperName() &&
+				currentWordItem != relationWordItem &&
+				!currentWordItem->isUserRelationWord &&
+				currentWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, false, isPossessive, NO_QUESTION_PARAMETER, existingRelationContextNr, specificationWordItem ) != NULL )
+					return false;
+				}
+			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			}
+
+		return true;
+		}
 
 	ContextResultType findPossessiveReversibleConclusionRelationContextOfInvolvedWords( bool isPossessive, unsigned int nContextRelations, unsigned int relationContextNr, SpecificationItem *foundSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
@@ -114,26 +135,48 @@ class AdminContext
 									}
 								}
 							else
-								adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I've found an undefined generalization word" );
+								adminItem_->startError( functionNameString, moduleNameString_, "I have found an undefined generalization word" );
 							}
 						while( commonVariables_->result == RESULT_OK &&
 						( currentGeneralizationItem = currentGeneralizationItem->nextRelationGeneralizationItem() ) != NULL );
 						}
 					}
 				else
-					adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+					adminItem_->startError( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 				}
 			else
-				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+				adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given relation context number is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given relation context number is undefined" );
 
 		contextResult.result = commonVariables_->result;
 		return contextResult;
 		}
 
-	ContextItem *firstContextItemInAllWords( bool isArchivedAssignment, bool isNegative, bool isPossessive, WordItem *specificationWordItem )
+	ResultType copyContext( unsigned int existingContextNr, unsigned int newContextNr )
+		{
+		ContextItem *currentContextItem;
+		WordItem *currentWordItem;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "copyContext";
+
+		if( ( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
+			{
+			// Do for all words
+			do	{
+				if( ( currentContextItem = currentWordItem->contextItem( existingContextNr ) ) != NULL )
+					{
+					if( currentWordItem->addContext( currentContextItem->isCompoundCollectionCollectedWithItself(), currentContextItem->contextWordTypeNr(), currentContextItem->specificationWordTypeNr(), newContextNr, currentContextItem->specificationWordItem() ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a copied context to word \"", currentWordItem->anyWordTypeString(), "\"" );
+					}
+				}
+			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			}
+
+		return RESULT_OK;
+		}
+
+	ContextItem *firstContextItemInAllWords( bool isArchivedAssignment, bool isNegative, bool isPossessive, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
 		bool hasFoundCurrentContext = false;
 		bool isPossessiveUserSpecification = adminItem_->isPossessiveUserSpecification();
@@ -141,30 +184,29 @@ class AdminContext
 		ContextItem *foundContextItem = NULL;
 		WordItem *currentWordItem;
 
-		if( specificationWordItem != NULL )
+		if( specificationWordItem != NULL &&
+		( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
 			{
-			if( ( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
-				{
-				// Do for all words
-				do	{
-					if( ( currentContextItem = currentWordItem->contextItem( specificationWordItem ) ) != NULL )
+			// Do for all words
+			do	{
+				if( currentWordItem != generalizationWordItem &&
+				( currentContextItem = currentWordItem->contextItem( specificationWordItem ) ) != NULL )
+					{
+					if( isPossessive &&
+					!isPossessiveUserSpecification )
 						{
-						if( isPossessive &&
-						!isPossessiveUserSpecification )
-							{
-							if( foundContextItem == NULL )
-								foundContextItem = currentContextItem;
+						if( foundContextItem == NULL )
+							foundContextItem = currentContextItem;
 
-							if( !currentContextItem->isOlderItem() )
-								hasFoundCurrentContext = true;
-							}
-						else
-							return currentContextItem;
+						if( !currentContextItem->isOlderItem() )
+							hasFoundCurrentContext = true;
 						}
+					else
+						return currentContextItem;
 					}
-				while( !hasFoundCurrentContext &&
-				( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 				}
+			while( !hasFoundCurrentContext &&
+			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 
 			if( !hasFoundCurrentContext &&
 			foundContextItem != NULL &&
@@ -207,7 +249,7 @@ class AdminContext
 		if( strlen( errorString ) > 0 )
 			{
 			if( adminItem_ != NULL )
-				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+				adminItem_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -246,7 +288,7 @@ class AdminContext
 					if( ( relationWordReadItem = startRelationReadItem->firstRelationWordReadItem() ) != NULL )
 						currentRelationWordItem = relationWordReadItem->readWordItem();
 					else
-						adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The read word of the first relation word is undefined" );
+						adminItem_->startError( functionNameString, moduleNameString_, "The read word of the first relation word is undefined" );
 					}
 
 				if( commonVariables_->result == RESULT_OK )
@@ -310,7 +352,7 @@ class AdminContext
 											}
 										}
 									else
-										adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The first word item is undefined" );
+										adminItem_->startError( functionNameString, moduleNameString_, "The first word item is undefined" );
 									}
 								else
 									{
@@ -357,7 +399,7 @@ class AdminContext
 													if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_NOTICED_SEMANTIC_AMBIGUITY_START, generalizationWordItem->anyWordTypeString(), INTERFACE_SENTENCE_NOTIFICATION_STATIC_SEMANTIC_AMBIGUITY_END ) == RESULT_OK )
 														contextResult.isExclusiveContext = true;
 													else
-														adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+														adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'static semantic ambiguity' interface notification" );
 													}
 												}
 											else
@@ -366,7 +408,7 @@ class AdminContext
 													{
 													// Try to find the relation context of a possessive reversible conclusion
 													if( ( contextResult = findPossessiveReversibleConclusionRelationContextOfInvolvedWords( isPossessive, nContextRelations, contextResult.contextNr, foundSpecificationItem, relationWordItem, specificationWordItem ) ).result != RESULT_OK )
-														adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a possessive reversible conclusion relation context of involved words" );
+														adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a possessive reversible conclusion relation context of involved words" );
 													}
 												}
 											}
@@ -382,18 +424,18 @@ class AdminContext
 								// Create new context number
 								contextResult.contextNr++;
 							else
-								adminItem_->startSystemErrorInItem( functionNameString, moduleNameString_, "Context number overflow" );
+								adminItem_->startSystemError( functionNameString, moduleNameString_, "Context number overflow" );
 							}
 						}
 					else
-						adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find any relation word" );
+						adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find any relation word" );
 					}
 				}
 			else
-				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+				adminItem_->startError( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		contextResult.result = commonVariables_->result;
 		return contextResult;
@@ -403,7 +445,10 @@ class AdminContext
 		{
 		ContextResultType contextResult;
 		bool isSpecificationCollectedWithItself;
+		unsigned int existingRelationContextNr;
+		unsigned int existingCopyContextNr = NO_CONTEXT_NR;
 		unsigned int foundRelationContextNr = NO_CONTEXT_NR;
+		unsigned int nUserRelationWords = commonVariables_->nUserRelationWords;
 		ContextItem *foundContextItem;
 		SpecificationItem *foundSpecificationItem;
 		SpecificationItem *existingSpecificationItem = NULL;
@@ -416,7 +461,7 @@ class AdminContext
 				if( relationWordItem != NULL )
 					{
 					// Try to find relation context with same number of relation words as in the user sentence
-					if( ( foundContextItem = relationWordItem->contextItem( isCompoundCollectionCollectedWithItself, commonVariables_->nUserRelationWords, specificationWordItem ) ) == NULL )
+					if( ( foundContextItem = relationWordItem->contextItem( isCompoundCollectionCollectedWithItself, nUserRelationWords, specificationWordItem ) ) == NULL )
 						{
 						if( isCompoundCollectionCollectedWithItself )
 							existingSpecificationItem = generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, isArchivedAssignment, false, isArchivedAssignment, isNegative, isPossessive, NO_QUESTION_PARAMETER, specificationCollectionNr, NO_CONTEXT_NR, specificationWordItem );
@@ -427,7 +472,7 @@ class AdminContext
 
 						if( existingSpecificationItem == NULL &&
 						contextResult.contextNr == NO_CONTEXT_NR &&
-						commonVariables_->nUserRelationWords > 1 &&
+						nUserRelationWords > 1 &&
 
 						( !isSpecificationCollectedWithItself ||
 						commonVariables_->nUserGeneralizationWords > 1 ||
@@ -437,10 +482,19 @@ class AdminContext
 
 						// Not found yet
 						if( contextResult.contextNr == NO_CONTEXT_NR &&
-						( foundContextItem = firstContextItemInAllWords( isArchivedAssignment, isNegative, isPossessive, specificationWordItem ) ) != NULL )
+						( foundContextItem = firstContextItemInAllWords( isArchivedAssignment, isNegative, isPossessive, generalizationWordItem, specificationWordItem ) ) != NULL )
 							{
+							existingRelationContextNr = ( existingSpecificationItem == NULL ? NO_CONTEXT_NR : existingSpecificationItem->relationContextNr() );
+
 							// Find specification with found context word as relation word
-							if( ( foundSpecificationItem = generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, isArchivedAssignment, isNegative, isPossessive, NO_QUESTION_PARAMETER, NO_CONTEXT_NR, specificationWordItem ) ) != NULL )
+							if( ( foundSpecificationItem = generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, isArchivedAssignment, isNegative, isPossessive, NO_QUESTION_PARAMETER, NO_CONTEXT_NR, specificationWordItem ) ) == NULL )
+								{
+								if( isSpecificationCollectedWithItself &&
+								generalizationWordItem->isUserRelationWord &&
+								foundContextItem->myWordItem() == relationWordItem )
+									contextResult.contextNr = foundContextItem->contextNr();
+								}
+							else
 								{
 								if( existingSpecificationItem != NULL &&
 
@@ -448,7 +502,7 @@ class AdminContext
 
 								( isSpecificationCollectedWithItself &&
 								existingSpecificationItem->isHiddenSpecification() ) ) )
-									foundRelationContextNr = existingSpecificationItem->relationContextNr();
+									foundRelationContextNr = existingRelationContextNr;
 								else
 									{
 									if( ( !isSpecificationCollectedWithItself ||
@@ -470,20 +524,29 @@ class AdminContext
 									{
 									if( existingSpecificationItem->isSelfGeneratedAssumption() )
 										// Found reversed
-										contextResult.contextNr = existingSpecificationItem->relationContextNr();
+										contextResult.contextNr = existingRelationContextNr;
 									}
 								else
 									{
-									if( isSpecificationCollectedWithItself ||
-									existingSpecificationItem->isConcludedAssumption() ||
-									// Feminine word of a specification word collected with itself
-									existingSpecificationItem->hasSpecificationCompoundCollection() )
-										contextResult.contextNr = foundRelationContextNr;
+									if( existingSpecificationItem->isOlderItem() &&
+									adminItem_->isPossessiveUserSpecification() &&
+									!relationWordItem->hasContextInWord( existingRelationContextNr, specificationWordItem ) &&
+									!isValidContextInAllWords( isPossessive, existingRelationContextNr, specificationWordItem, relationWordItem ) &&
+
+									( existingSpecificationItem->isConcludedAssumption() ||
+									adminItem_->nContextWordsInAllWords( existingRelationContextNr, specificationWordItem ) > commonVariables_->nUserGeneralizationWords ) )
+										existingCopyContextNr = existingRelationContextNr;
 									else
 										{
-										// Skip on difference in assumption / conclusion
-										if( existingSpecificationItem->isSelfGeneratedAssumption() == isSelfGeneratedAssumption )
-											contextResult.contextNr = ( relationWordItem->hasAnsweredQuestion() ? foundRelationContextNr : existingSpecificationItem->relationContextNr() );
+										if( isSpecificationCollectedWithItself ||
+										existingSpecificationItem->isConcludedAssumption() )
+											contextResult.contextNr = foundRelationContextNr;
+										else
+											{
+											// Skip on difference in assumption / conclusion
+											if( existingSpecificationItem->isSelfGeneratedAssumption() == isSelfGeneratedAssumption )
+												contextResult.contextNr = existingRelationContextNr;
+											}
 										}
 									}
 								}
@@ -509,7 +572,7 @@ class AdminContext
 								contextResult.contextNr = NO_CONTEXT_NR;
 								}
 							else
-								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'dynamic semantic ambiguity' interface notification" );
 							}
 						}
 
@@ -517,20 +580,30 @@ class AdminContext
 					contextResult.contextNr == NO_CONTEXT_NR )
 						{
 						if( ( contextResult.contextNr = adminItem_->highestContextNrInAllWords() ) < MAX_CONTEXT_NR )
+							{
 							// Create new context number
 							contextResult.contextNr++;
+
+							if( existingCopyContextNr > NO_CONTEXT_NR )
+								{
+								if( copyContext( existingCopyContextNr, contextResult.contextNr ) == RESULT_OK )
+									contextResult.copiedRelationContextNr = existingCopyContextNr;
+								else
+									adminItem_->addError( functionNameString, moduleNameString_, "I failed to copied a context" );
+								}
+							}
 						else
-							adminItem_->startSystemErrorInItem( functionNameString, moduleNameString_, "Context number overflow" );
+							adminItem_->startSystemError( functionNameString, moduleNameString_, "Context number overflow" );
 						}
 					}
 				else
-					adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given relation word item is undefined" );
+					adminItem_->startError( functionNameString, moduleNameString_, "The given relation word item is undefined" );
 				}
 			else
-				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+				adminItem_->startError( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		contextResult.result = commonVariables_->result;
 		return contextResult;

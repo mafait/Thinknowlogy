@@ -1,0 +1,64 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Una madre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Ana es madre de Pablo.
+< Ana es una mujer.
+< Ana es parte de una familia.
+< Ana no es un padre.
+* 
+* Mis suposiciones:
+< Pablo es posiblemente una persona.
+< Pablo es probablemente parte de una familia.
+< Ana es probablemente una persona.
+< Ana no es probablemente un hombre.
+* 
+* Mis preguntas:
+< ¿Es Pablo una mujer o un hombre?
+< ¿Es Pablo un hijo o una hija?
+< 
+* 
+* Mis preguntas que son contestadas:
+< ¿Es Pablo una mujer o un hombre?
+* 
+* Mis suposiciones que no son ocultos más:
+< Ana tiene probablemente un hijo, llamado Pablo.
+* 
+* Mis preguntas que son contestadas:
+< ¿Es Pablo un hijo o una hija?
+* 
+* Mis suposiciones que se ajustan:
+< Pablo es probablemente una persona.
+* 
+* Mis suposiciones:
+< Pablo es probablemente un hijo.
+< Pablo no es probablemente una mujer.
+< Pablo no es probablemente una hija.
+< 
+* 
+* Mis suposiciones que se confirman:
+< Pablo es probablemente un hijo.
+* 
+* Mis suposiciones que se concluyen:
+< Pablo es parte de una familia.
+< Pablo no es una mujer.
+< Pablo no es una hija.
+< 

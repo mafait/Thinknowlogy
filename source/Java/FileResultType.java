@@ -1,11 +1,10 @@
 /*
  *	Class:			FileResultType
  *	Purpose:		To return file variables of a method
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
+import java.io.BufferedReader;
 
 class FileResultType
 	{
@@ -29,6 +29,8 @@ class FileResultType
 
 	protected byte result;
 	protected FileItem createdFileItem;
+	BufferedReader outputFile;
+	BufferedReader referenceFile;
 
 	// Constructor / deconstructor
 
@@ -36,6 +38,8 @@ class FileResultType
 		{
 		result = Constants.RESULT_OK;
 		createdFileItem = null;
+		outputFile = null;
+		referenceFile = null;
 		}
 	};
 

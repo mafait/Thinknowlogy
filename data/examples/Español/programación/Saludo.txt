@@ -1,0 +1,69 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To demonstrate programming in natural language.
+#	Version:	Thinknowlogy 2015r1 (Esperanza)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+#	and bug reports are welcome at http://mafait.org
+#----------------------------------------------------------------------------
+
+# Mostrar el saludo y la limpieza para evitar la interferencia con el siguiente saludo.
+Si el saludo es inicia entonces mostrar "\n~+'marca de tiempo'<a>\"~ ~+'saludo'<a>\"~ ~+'nombre'<a>`~.\n\n", la edad es clara, el género es clara, el estado civil es clara, el tiempo es clara, el marca de tiempo es clara, el saludo es clara y el nombre es clara.
+
+# Determinar el saludo de un hombre.
+Si el saludo es inicia y el género es masculino entonces si la edad es asignado y la edad es menos que 12 entonces el saludo es "pequeño Sr." sino el saludo es "Sr.".
+
+# Determinar el saludo de una mujer.
+Si el saludo es inicia y el género es femenino entonces si el estado civil es casado entonces el saludo es "Sra." sino si la edad es asignado y la edad es menos que 12 entonces el saludo es "poca falta" sino el saludo es "señorita".
+
+# Determinar el saludo según la hora del día.
+Si el saludo es inicia y el tiempo es asignado entonces si el tiempo es más-temprano que "06:00" entonces el marca de tiempo es "Buenas noches" sino si el tiempo es más-temprano que "12:00" entonces el marca de tiempo es "Buenos días" sino si el tiempo es más-temprano que "18:00" entonces el marca de tiempo es "Buena tarde" sino el marca de tiempo es "Buenas noches".
+
+
+# Ahora haga su truco.
+
+#---------------------
+# Poca falta Rodriguez
+#---------------------
+El nombre es Rodriguez.
+El género es femenino.
+La edad es 6.
+# El estado civil es soltero.		# Obviamente para un niña y no es relevante
+El tiempo es "07:30".
+El saludo es inicia.
+#-------------
+# Pequeño Sr. Alonso
+#-------------
+El nombre es Alonso.
+El género es masculino.
+La edad es 8.
+# El estado civil es soltero.		# Obviamente para un niño y no es relevante
+El tiempo es "10:00".
+El saludo es inicia.
+#----------------
+# Señorita Sanchez
+#----------------
+El nombre es Sanchez.
+El género es femenino.
+La edad es 25.
+El estado civil es soltero.
+El tiempo es "17:00".
+El saludo es inicia.
+#----------------
+# Sra. Gonzalez
+#----------------
+El nombre es Gonzalez.
+El género es femenino.
+La edad es 29.
+El estado civil es casado.
+El tiempo es "18:30".
+El saludo es inicia.
+#----------------
+# Sr. Martinez
+#----------------
+El nombre es Martinez.
+El género es masculino.
+La edad es 32.
+# El estado civil es soltero. 	# No es relevante
+El tiempo es "01:30".
+El saludo es inicia.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

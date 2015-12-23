@@ -2,11 +2,10 @@
  *	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,20 +23,24 @@
  *************************************************************************/
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 
 class FileItem extends Item
 	{
 	// Private loadable variables
 
 	private boolean isInfoFile_;
+	private boolean isTestFile_;
 
 	private String readFileNameString_;
+	private String writeFileNameString_;
 
 	private BufferedReader readFile_;
+	private BufferedWriter writeFile_;
 
 	// Constructor / deconstructor
 
-	protected FileItem( boolean isInfoFile, String readFileNameString, BufferedReader readFile, List myList, WordItem myWordItem )
+	protected FileItem( boolean isInfoFile, boolean isTestFile, String readFileNameString, String writeFileNameString, BufferedReader readFile, BufferedWriter writeFile, List myList, WordItem myWordItem )
 		{
 
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
@@ -45,12 +48,16 @@ class FileItem extends Item
 		// Private loadable variables
 
 		isInfoFile_ = isInfoFile;
+		isTestFile_ = isTestFile;
 
 		readFileNameString_ = readFileNameString;
+		writeFileNameString_ = writeFileNameString;
+
 		readFile_ = readFile;
+		writeFile_ = writeFile;
 
 		if( readFile_ == null )
-			startSystemErrorInItem( 1, null, null, "The given read file is undefined" );
+			startSystemError( 1, null, null, "The given read file is undefined" );
 		}
 
 
@@ -77,7 +84,7 @@ class FileItem extends Item
 
 	protected boolean isSorted( Item nextSortItem )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual method. Therefore, the given variables are unreferenced.
 
 		// Add at the beginning of the list
 		return true;
@@ -90,9 +97,14 @@ class FileItem extends Item
 		if( isInfoFile_ )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isInfoFile" );
 
+		if( isTestFile_ )
+			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isTestFile" );
+
 		if( readFileNameString_ != null )
 			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "readFileNameString:" + Constants.QUERY_STRING_START_CHAR + readFileNameString_ + Constants.QUERY_STRING_END_CHAR );
 
+		if( writeFileNameString_ != null )
+			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "writeFileNameString:" + Constants.QUERY_STRING_START_CHAR + writeFileNameString_ + Constants.QUERY_STRING_END_CHAR );
 
 		return CommonVariables.queryStringBuffer;
 		}
@@ -105,9 +117,19 @@ class FileItem extends Item
 		readFile_ = null;
 		}
 
+	protected void clearWriteFile()
+		{
+		writeFile_ = null;
+		}
+
 	protected boolean isInfoFile()
 		{
 		return isInfoFile_;
+		}
+
+	protected boolean isTestFile()
+		{
+		return isTestFile_;
 		}
 
 	protected String readFileNameString()
@@ -115,9 +137,19 @@ class FileItem extends Item
 		return readFileNameString_;
 		}
 
+	protected String writeFileNameString()
+		{
+		return writeFileNameString_;
+		}
+
 	protected BufferedReader readFile()
 		{
 		return readFile_;
+		}
+
+	protected BufferedWriter writeFile()
+		{
+		return writeFile_;
 		}
 
 	protected FileItem nextFileItem()

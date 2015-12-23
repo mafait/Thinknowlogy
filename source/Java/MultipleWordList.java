@@ -2,11 +2,10 @@
  *	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -96,13 +95,13 @@ class MultipleWordList extends List
 			while( searchItem != null )
 				{
 				if( searchItem.multipleWordItem() == unusedWordItem )
-					return startError( 1, null, myWordItem().anyWordTypeString(), "The multiple word item is still in use" );
+					return startError( 1, null, "The multiple word item is still in use" );
 
 				searchItem = searchItem.nextMultipleWordItem();
 				}
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The given unused word item is undefined" );
+			return startError( 1, null, "The given unused word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -119,17 +118,17 @@ class MultipleWordList extends List
 					if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
 						{
 						if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, CommonVariables.currentLanguageNr, wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to add an active multiple word item" );
+							return addError( 1, null, "I failed to add an active multiple word item" );
 						}
 					}
 				else
-					return startError( 1, null, myWordItem().anyWordTypeString(), "The current item number is undefined" );
+					return startError( 1, null, "The current item number is undefined" );
 				}
 			else
-				return startError( 1, null, myWordItem().anyWordTypeString(), "The given multiple word item is undefined" );
+				return startError( 1, null, "The given multiple word item is undefined" );
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The given word type number is undefined or out of bounds" );
+			return startError( 1, null, "The given word type number is undefined or out of bounds" );
 
 		return Constants.RESULT_OK;
 		}
@@ -143,7 +142,7 @@ class MultipleWordList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeMultipleWordItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to store a multiple word item in the database" );
+					return addError( 1, null, "I failed to store a multiple word item in the database" );
 				}
 
 			searchItem = searchItem.nextMultipleWordItem();
@@ -156,7 +155,7 @@ class MultipleWordList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeMultipleWordItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to modify a replaced multiple word item in the database" );
+					return addError( 1, null, "I failed to modify a replaced multiple word item in the database" );
 				}
 
 			searchItem = searchItem.nextMultipleWordItem();

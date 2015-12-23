@@ -1,0 +1,10 @@
+﻿Leer el archivo "Español/programación/Conecta 4".
+Mi movimiento es D.
+Mostrar información sobre el movimientos.
+Mi movimiento es D.
+Mi movimiento es D.
+Mi movimiento es D.
+Mi movimiento es C.
+Mi movimiento es A.
+Mostrar información sobre el movimientos.
+# No olvide limpiar este conocimiento antes de leer otro ejemplo.

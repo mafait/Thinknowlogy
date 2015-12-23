@@ -2,11 +2,10 @@
  *	Class:			ListQuery
  *	Supports class:	List
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -33,7 +32,7 @@ class ListQuery
 
 	// Private methods
 
-	private static void itemQuery( boolean isSelectOnFind, boolean isReferenceQuery, int querySentenceNr, int queryItemNr, Item queryItem )
+	private static void itemQuery( boolean isSelectingOnFind, boolean isReferenceQuery, int querySentenceNr, int queryItemNr, Item queryItem )
 		{
 		while( queryItem != null )
 			{
@@ -47,7 +46,7 @@ class ListQuery
 			( queryItemNr == Constants.NO_SENTENCE_NR ||
 			queryItemNr == queryItem.itemNr() ) ) )
 				{
-				if( isSelectOnFind &&
+				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
 					{
 					CommonVariables.hasFoundQuery = true;
@@ -56,7 +55,7 @@ class ListQuery
 				}
 			else
 				{
-				if( !isSelectOnFind &&
+				if( !isSelectingOnFind &&
 				queryItem.isSelectedByQuery )
 					queryItem.isSelectedByQuery = false;
 				}
@@ -65,11 +64,11 @@ class ListQuery
 			}
 		}
 
-	private static void listQuery( boolean isSelectOnFind, Item queryItem )
+	private static void listQuery( boolean isSelectingOnFind, Item queryItem )
 		{
 		while( queryItem != null )
 			{
-			if( isSelectOnFind )
+			if( isSelectingOnFind )
 				{
 				if( !queryItem.isSelectedByQuery )
 					{
@@ -87,13 +86,13 @@ class ListQuery
 			}
 		}
 
-	private static void wordTypeQuery( boolean isSelectOnFind, short queryWordTypeNr, Item queryItem )
+	private static void wordTypeQuery( boolean isSelectingOnFind, short queryWordTypeNr, Item queryItem )
 		{
 		while( queryItem != null )
 			{
 			if( queryItem.hasFoundWordType( queryWordTypeNr ) )
 				{
-				if( isSelectOnFind &&
+				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
 					{
 					CommonVariables.hasFoundQuery = true;
@@ -102,7 +101,7 @@ class ListQuery
 				}
 			else
 				{
-				if( !isSelectOnFind &&
+				if( !isSelectingOnFind &&
 				queryItem.isSelectedByQuery )
 					queryItem.isSelectedByQuery = false;
 				}
@@ -111,13 +110,13 @@ class ListQuery
 			}
 		}
 
-	private static void parameterQuery( boolean isSelectOnFind, int queryParameter, Item queryItem )
+	private static void parameterQuery( boolean isSelectingOnFind, int queryParameter, Item queryItem )
 		{
 		while( queryItem != null )
 			{
 			if( queryItem.hasFoundParameter( queryParameter ) )
 				{
-				if( isSelectOnFind &&
+				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
 					{
 					CommonVariables.hasFoundQuery = true;
@@ -126,7 +125,7 @@ class ListQuery
 				}
 			else
 				{
-				if( !isSelectOnFind &&
+				if( !isSelectingOnFind &&
 				queryItem.isSelectedByQuery )
 					queryItem.isSelectedByQuery = false;
 				}
@@ -135,11 +134,11 @@ class ListQuery
 			}
 		}
 
-	private static void wordQuery( boolean isSelectOnFind, Item queryItem )
+	private static void wordQuery( boolean isSelectingOnFind, Item queryItem )
 		{
 		while( queryItem != null )
 			{
-			if( isSelectOnFind )
+			if( isSelectingOnFind )
 				{
 				if( !queryItem.isSelectedByQuery )
 					{
@@ -162,11 +161,13 @@ class ListQuery
 		while( searchItem != null )
 			{
 			searchItem.isSelectedByQuery = false;
+			searchItem.isSelectedByJustificationQuery = false;
+
 			searchItem = searchItem.nextItem;
 			}
 		}
 
-	private byte wordReferenceQuery( boolean isSelectOnFind, String wordReferenceNameString, Item queryItem )
+	private byte wordReferenceQuery( boolean isSelectingOnFind, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString, Item queryItem )
 		{
 		ReferenceResultType referenceResult;
 
@@ -176,16 +177,23 @@ class ListQuery
 				{
 				if( referenceResult.hasFoundMatchingStrings )
 					{
-					if( isSelectOnFind &&
-					!queryItem.isSelectedByQuery )
+					if( queryItem.isSelectedByQuery )
 						{
-						CommonVariables.hasFoundQuery = true;
-						queryItem.isSelectedByQuery = true;
+						if( isSelectingAttachedJustifications )
+							queryItem.selectingAttachedJustifications( isSelectingJustificationSpecifications );
+						}
+					else
+						{
+						if( isSelectingOnFind )
+							{
+							CommonVariables.hasFoundQuery = true;
+							queryItem.isSelectedByQuery = true;
+							}
 						}
 					}
 				else
 					{
-					if( !isSelectOnFind &&
+					if( !isSelectingOnFind &&
 					queryItem.isSelectedByQuery )
 						queryItem.isSelectedByQuery = false;
 					}
@@ -193,13 +201,13 @@ class ListQuery
 				queryItem = queryItem.nextItem;
 				}
 			else
-				return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to check the word references" );
+				return myList_.addError( 1, moduleNameString_, "I failed to check the word references" );
 			}
 
 		return Constants.RESULT_OK;
 		}
 
-	private byte stringQuery( boolean isSelectOnFind, String wordString, Item queryItem )
+	private byte stringQuery( boolean isSelectingOnFind, String wordString, Item queryItem )
 		{
 		ReferenceResultType referenceResult;
 		boolean hasFoundString;
@@ -217,7 +225,7 @@ class ListQuery
 						hasFoundString = true;
 					}
 				else
-					return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to compare two strings" );
+					return myList_.addError( 1, moduleNameString_, "I failed to compare two strings" );
 				}
 
 			if( !hasFoundString &&
@@ -229,12 +237,12 @@ class ListQuery
 						hasFoundString = true;
 					}
 				else
-					return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to compare two strings" );
+					return myList_.addError( 1, moduleNameString_, "I failed to compare two strings" );
 				}
 
 			if( hasFoundString )
 				{
-				if( isSelectOnFind &&
+				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
 					{
 					CommonVariables.hasFoundQuery = true;
@@ -243,7 +251,7 @@ class ListQuery
 				}
 			else
 				{
-				if( !isSelectOnFind &&
+				if( !isSelectingOnFind &&
 				queryItem.isSelectedByQuery )
 					queryItem.isSelectedByQuery = false;
 				}
@@ -258,7 +266,8 @@ class ListQuery
 		{
 		while( queryItem != null )
 			{
-			if( queryItem.isSelectedByQuery )
+			if( queryItem.isSelectedByQuery ||
+			queryItem.isSelectedByJustificationQuery )
 				{
 				if( isOnlyShowingWords )
 					queryItem.showWords( isReturnQueryToPosition, queryWordTypeNr );
@@ -273,7 +282,7 @@ class ListQuery
 						else
 							{
 							if( Presentation.writeText( true, promptTypeNr, queryWidth, queryItem.toStringBuffer( queryWordTypeNr ) ) != Constants.RESULT_OK )
-								return myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to show the info of an active item" );
+								return myList_.addError( 1, moduleNameString_, "I failed to show the info of an active item" );
 							}
 						}
 					}
@@ -302,7 +311,7 @@ class ListQuery
 			{
 			if( myList_ != null &&
 			myList_.myWordItem() != null )
-				myList_.startSystemError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), errorString );
+				myList_.startSystemError( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -387,129 +396,129 @@ class ListQuery
 			clearQuerySelections( searchItem );
 		}
 
-	protected void itemQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
+	protected void itemQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
 		{
 		Item searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_.firstActiveItem() ) != null )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 		}
 
-	protected void listQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems )
+	protected void listQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems )
 		{
 		Item searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_.firstActiveItem() ) != null )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 		}
 
-	protected void wordTypeQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, short queryWordTypeNr )
+	protected void wordTypeQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, short queryWordTypeNr )
 		{
 		Item searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_.firstActiveItem() ) != null )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 		}
 
-	protected void parameterQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, int queryParameter )
+	protected void parameterQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, int queryParameter )
 		{
 		Item searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_.firstActiveItem() ) != null )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 		}
 
-	protected void wordQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems )
+	protected void wordQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems )
 		{
 		Item searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_.firstActiveItem() ) != null )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 		}
 
 	protected ReferenceResultType compareStrings( String searchString, String sourceString )
@@ -566,7 +575,7 @@ class ListQuery
 												sourceStringPosition++;
 												}
 											else
-												myList_.addError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "I failed to compare the remaining strings" );
+												myList_.addError( 1, moduleNameString_, "I failed to compare the remaining strings" );
 											}
 										else
 											// Skip source characters if not equal
@@ -600,76 +609,76 @@ class ListQuery
 						}
 					}
 				else
-					myList_.startError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "The given strings are the same string" );
+					myList_.startError( 1, moduleNameString_, "The given strings are the same string" );
 				}
 			else
-				myList_.startError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "The given source string is undefined" );
+				myList_.startError( 1, moduleNameString_, "The given source string is undefined" );
 			}
 		else
-			myList_.startError( 1, moduleNameString_, myList_.myWordItem().anyWordTypeString(), "The given search string is undefined" );
+			myList_.startError( 1, moduleNameString_, "The given search string is undefined" );
 
 		referenceResult.result = CommonVariables.result;
 		return referenceResult;
 		}
 
-	protected byte wordReferenceQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String wordReferenceNameString )
+	protected byte wordReferenceQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
 		{
 		Item searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_.firstActiveItem() ) != null )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectInactiveItems &&
+		isSelectingInactiveItems &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectArchivedItems &&
+		isSelectingArchivedItems &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectReplacedItems &&
+		isSelectingReplacedItems &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectDeletedItems &&
+		isSelectingDeletedItems &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		return CommonVariables.result;
 		}
 
-	protected byte stringQuery( boolean isSelectOnFind, boolean isSelectActiveItems, boolean isSelectInactiveItems, boolean isSelectArchivedItems, boolean isSelectReplacedItems, boolean isSelectDeletedItems, String wordString )
+	protected byte stringQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String wordString )
 		{
 		Item searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_.firstActiveItem() ) != null )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectInactiveItems &&
+		isSelectingInactiveItems &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectArchivedItems &&
+		isSelectingArchivedItems &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectReplacedItems &&
+		isSelectingReplacedItems &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectDeletedItems &&
+		isSelectingDeletedItems &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		return CommonVariables.result;
 		}

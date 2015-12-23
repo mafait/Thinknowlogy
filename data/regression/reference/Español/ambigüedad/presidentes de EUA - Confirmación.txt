@@ -1,0 +1,59 @@
+﻿* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado George Bush.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un nuevo presidente, llamado Barack Obama.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado Barack Obama. Porque:
+<	- Barack Obama es el corriente presidente de los Estados Unidos.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush. Porque:
+<	- George Bush es el anterior presidente de los Estados Unidos.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado Barack Obama. Porque:
+<	- Barack Obama es el corriente presidente de los Estados Unidos.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Los Estados Unidos tiene un presidente, llamado Barack Obama.
+< 
+< 
+< Especificaciones:
+< Barack Obama es el corriente presidente de los Estados Unidos.
+< George Bush es el anterior presidente de los Estados Unidos.
+< Los Estados Unidos tiene un presidente, llamado Barack Obama.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+< 
+* 
+* Su información:
+< George Bush es el anterior presidente de los Estados Unidos.
+* 
+* Información relacionada:
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+< 
+* 
+* Su información:
+< Barack Obama es el corriente presidente de los Estados Unidos.
+* 
+* Información relacionada:
+< Los Estados Unidos tiene un presidente, llamado Barack Obama.
+< 
+* 
+* Su información:
+< Los Estados Unidos tiene un presidente, llamado Barack Obama.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+* 
+* Información relacionada:
+< Barack Obama es el corriente presidente de los Estados Unidos.
+< George Bush es el anterior presidente de los Estados Unidos.
+< 

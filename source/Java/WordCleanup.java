@@ -2,11 +2,10 @@
  *	Class:			WordCleanup
  *	Supports class:	WordItem
  *	Purpose:		To cleanup obsolete items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -119,7 +118,7 @@ class WordCleanup
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].decrementItemNrRangeInList( decrementSentenceNr, decrementItemNr, decrementOffset ) != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to decrement item number range" );
+					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to decrement item number range" );
 				}
 			}
 
@@ -139,7 +138,7 @@ class WordCleanup
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].decrementSentenceNrsInList( startSentenceNr ) != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
+					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
 				}
 			}
 
@@ -159,7 +158,7 @@ class WordCleanup
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].deleteSentencesInList( isAvailableForRollback, lowestSentenceNr ) != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to delete sentences in one of my lists" );
+					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to delete sentences in one of my lists" );
 				}
 			}
 
@@ -173,7 +172,7 @@ class WordCleanup
 			if( myWordItem_.wordListArray[wordListNr] != null )
 				{
 				if( myWordItem_.wordListArray[wordListNr].redoCurrentSentenceInList() != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to redo the current sentence" );
+					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to redo the current sentence" );
 				}
 			}
 
@@ -196,7 +195,7 @@ class WordCleanup
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
 				if( myWordItem_.wordListArray[wordListNr].removeFirstRangeOfDeletedItemsInList() != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to remove the first deleted items" );
+					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to remove the first deleted items" );
 				}
 
 			wordListNr++;
@@ -212,7 +211,7 @@ class WordCleanup
 			if( myWordItem_.wordListArray[wordListNr] != null )
 				{
 				if( myWordItem_.wordListArray[wordListNr].rollbackDeletedRedoInfoInList() != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to rollback the deleted redo info in one of my lists" );
+					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to rollback the deleted redo info in one of my lists" );
 				}
 			}
 
@@ -226,7 +225,7 @@ class WordCleanup
 			if( myWordItem_.wordListArray[wordListNr] != null )
 				{
 				if( myWordItem_.wordListArray[wordListNr].undoCurrentSentenceInList() != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( myWordItem_.wordListChar( wordListNr ), 1, moduleNameString_, "I failed to undo the current sentence" );
+					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to undo the current sentence" );
 				}
 			}
 

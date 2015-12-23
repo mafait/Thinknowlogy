@@ -1,0 +1,80 @@
+﻿
+Het aantal schijven is even. Dus de uitvoeringsvolgorde is: Verplaats eerst van start naar wissel, dan van start naar goal.
+
+Een schijf verplaatst van start naar wissel:
+* startpaal:	D, C, B.
+* wisselpaal:	A.
+* doelpaal:	.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	D, C.
+* wisselpaal:	A.
+* doelpaal:	B.
+
+Een schijf verplaatst van wissel naar doel:
+* startpaal:	D, C.
+* wisselpaal:	.
+* doelpaal:	B, A.
+
+Een schijf verplaatst van start naar wissel:
+* startpaal:	D.
+* wisselpaal:	C.
+* doelpaal:	B, A.
+
+Een schijf verplaatst van doel naar start:
+* startpaal:	D, A.
+* wisselpaal:	C.
+* doelpaal:	B.
+
+Een schijf verplaatst van doel naar wissel:
+* startpaal:	D, A.
+* wisselpaal:	C, B.
+* doelpaal:	.
+
+Een schijf verplaatst van start naar wissel:
+* startpaal:	D.
+* wisselpaal:	C, B, A.
+* doelpaal:	.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	.
+* wisselpaal:	C, B, A.
+* doelpaal:	D.
+
+Een schijf verplaatst van wissel naar doel:
+* startpaal:	.
+* wisselpaal:	C, B.
+* doelpaal:	D, A.
+
+Een schijf verplaatst van wissel naar start:
+* startpaal:	B.
+* wisselpaal:	C.
+* doelpaal:	D, A.
+
+Een schijf verplaatst van doel naar start:
+* startpaal:	B, A.
+* wisselpaal:	C.
+* doelpaal:	D.
+
+Een schijf verplaatst van wissel naar doel:
+* startpaal:	B, A.
+* wisselpaal:	.
+* doelpaal:	D, C.
+
+Een schijf verplaatst van start naar wissel:
+* startpaal:	B.
+* wisselpaal:	A.
+* doelpaal:	D, C.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	.
+* wisselpaal:	A.
+* doelpaal:	D, C, B.
+
+Een schijf verplaatst van wissel naar doel:
+* startpaal:	.
+* wisselpaal:	.
+* doelpaal:	D, C, B, A.
+
+Klaar.
+Om de puzzel nogmaals te starten: 'Wis je geheugen.' of 'Herstart.', en dan 'Lees het bestand "Nederlands/programmeren/toren van Hanoi"'.

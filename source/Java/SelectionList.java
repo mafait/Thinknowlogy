@@ -2,11 +2,10 @@
  *	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -67,7 +66,7 @@ class SelectionList extends List
 			if( ( referenceResult = searchItem.findWordReference( referenceWordItem ) ).result == Constants.RESULT_OK )
 				searchItem = searchItem.nextSelectionItem();
 			else
-				addError( 1, null, null, "I failed to check for a reference word item in an active selection item" );
+				addError( 1, null, "I failed to check for a reference word item in an active selection item" );
 			}
 
 		return referenceResult;
@@ -99,13 +98,13 @@ class SelectionList extends List
 			while( searchItem != null )
 				{
 				if( searchItem.nextExecutionItem() == unusedSelectionItem )
-					return startError( 1, null, null, "The reference selection item is still in use" );
+					return startError( 1, null, "The reference selection item is still in use" );
 
 				searchItem = searchItem.nextSelectionItem();
 				}
 			}
 		else
-			return startError( 1, null, null, "The given unused justification item is undefined" );
+			return startError( 1, null, "The given unused justification item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -119,16 +118,16 @@ class SelectionList extends List
 			while( searchItem != null )
 				{
 				if( searchItem.generalizationWordItem() == unusedWordItem )
-					return startError( 1, null, null, "The generalization word item is still in use" );
+					return startError( 1, null, "The generalization word item is still in use" );
 
 				if( searchItem.specificationWordItem() == unusedWordItem )
-					return startError( 1, null, null, "The specification word item is still in use" );
+					return startError( 1, null, "The specification word item is still in use" );
 
 				searchItem = searchItem.nextSelectionItem();
 				}
 			}
 		else
-			return startError( 1, null, null, "The given unused word item is undefined" );
+			return startError( 1, null, "The given unused word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -142,7 +141,7 @@ class SelectionList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to store a selection item in the database" );
+					return addError( 1, null, "I failed to store a selection item in the database" );
 				}
 
 			searchItem = searchItem.nextSelectionItem();
@@ -155,7 +154,7 @@ class SelectionList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to modify a replaced selection item in the database" );
+					return addError( 1, null, "I failed to modify a replaced selection item in the database" );
 				}
 
 			searchItem = searchItem.nextSelectionItem();
@@ -174,7 +173,7 @@ class SelectionList extends List
 			if( ( selectionResult.duplicateConditionSentenceNr = getLowerSentenceNr( selectionResult.duplicateConditionSentenceNr ) ) > Constants.NO_SENTENCE_NR )
 				{
 				if( ( selectionResult = checkDuplicateSelectionPart( selectionResult.duplicateConditionSentenceNr ) ).result != Constants.RESULT_OK )
-					addError( 1, null, null, "I failed to check if the alternative selection part is duplicate" );
+					addError( 1, null, "I failed to check if the alternative selection part is duplicate" );
 				}
 			}
 		while( CommonVariables.result == Constants.RESULT_OK &&
@@ -249,10 +248,10 @@ class SelectionList extends List
 					}
 				}
 			else
-				startError( 1, null, null, "The given duplicate sentence number is equal or higher than the current sentence number" );
+				startError( 1, null, "The given duplicate sentence number is equal or higher than the current sentence number" );
 			}
 		else
-			startError( 1, null, null, "The given duplicate sentence number is undefined" );
+			startError( 1, null, "The given duplicate sentence number is undefined" );
 
 		selectionResult.result = CommonVariables.result;
 		return selectionResult;
@@ -273,19 +272,19 @@ class SelectionList extends List
 					if( ( selectionResult.lastCreatedSelectionItem = new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, this, myWordItem() ) ) != null )
 						{
 						if( addItemToList( Constants.QUERY_ACTIVE_CHAR, selectionResult.lastCreatedSelectionItem ) != Constants.RESULT_OK )
-							addError( 1, null, null, "I failed to add an active selection item" );
+							addError( 1, null, "I failed to add an active selection item" );
 						}
 					else
-						startError( 1, null, null, "I failed to create a selection item" );
+						startError( 1, null, "I failed to create a selection item" );
 					}
 				else
-					startError( 1, null, null, "The current item number is undefined" );
+					startError( 1, null, "The current item number is undefined" );
 				}
 			else
-				startError( 1, null, null, "The given specification word type number is undefined or out of bounds" );
+				startError( 1, null, "The given specification word type number is undefined or out of bounds" );
 			}
 		else
-			startError( 1, null, null, "The given generalization word type number is undefined or out of bounds" );
+			startError( 1, null, "The given generalization word type number is undefined or out of bounds" );
 
 		selectionResult.result = CommonVariables.result;
 		return selectionResult;
@@ -301,7 +300,7 @@ class SelectionList extends List
 			if( firstSelectionItem.findNextExecutionSelectionItem( true, solveWordItem ) == Constants.RESULT_OK )
 				selectionResult.firstExecutionItem = firstSelectionItem.nextExecutionItem();
 			else
-				addError( 1, null, null, "I failed to find the first execution selection item" );
+				addError( 1, null, "I failed to find the first execution selection item" );
 			}
 
 		selectionResult.result = CommonVariables.result;

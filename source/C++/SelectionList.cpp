@@ -2,11 +2,10 @@
  *	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -107,7 +106,7 @@
 			if( ( referenceResult = searchItem->findWordReference( referenceWordItem ) ).result == RESULT_OK )
 				searchItem = searchItem->nextSelectionItem();
 			else
-				addError( functionNameString, NULL, NULL, "I failed to check for a reference word item in an active selection item" );
+				addError( functionNameString, NULL, "I failed to check for a reference word item in an active selection item" );
 			}
 
 		return referenceResult;
@@ -140,13 +139,13 @@
 			while( searchItem != NULL )
 				{
 				if( searchItem->nextExecutionItem() == unusedSelectionItem )
-					return startError( functionNameString, NULL, NULL, "The reference selection item is still in use" );
+					return startError( functionNameString, NULL, "The reference selection item is still in use" );
 
 				searchItem = searchItem->nextSelectionItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given unused justification item is undefined" );
+			return startError( functionNameString, NULL, "The given unused justification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -161,16 +160,16 @@
 			while( searchItem != NULL )
 				{
 				if( searchItem->generalizationWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, NULL, "The generalization word item is still in use" );
+					return startError( functionNameString, NULL, "The generalization word item is still in use" );
 
 				if( searchItem->specificationWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, NULL, "The specification word item is still in use" );
+					return startError( functionNameString, NULL, "The specification word item is still in use" );
 
 				searchItem = searchItem->nextSelectionItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given unused word item is undefined" );
+			return startError( functionNameString, NULL, "The given unused word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -185,7 +184,7 @@
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store a selection item in the database" );
+					return addError( functionNameString, NULL, "I failed to store a selection item in the database" );
 				}
 
 			searchItem = searchItem->nextSelectionItem();
@@ -198,7 +197,7 @@
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced selection item in the database" );
+					return addError( functionNameString, NULL, "I failed to modify a replaced selection item in the database" );
 				}
 
 			searchItem = searchItem->nextSelectionItem();
@@ -218,7 +217,7 @@
 			if( ( selectionResult.duplicateConditionSentenceNr = getLowerSentenceNr( selectionResult.duplicateConditionSentenceNr ) ) > NO_SENTENCE_NR )
 				{
 				if( ( selectionResult = checkDuplicateSelectionPart( selectionResult.duplicateConditionSentenceNr ) ).result != RESULT_OK )
-					addError( functionNameString, NULL, NULL, "I failed to check if the alternative selection part is duplicate" );
+					addError( functionNameString, NULL, "I failed to check if the alternative selection part is duplicate" );
 				}
 			}
 		while( commonVariables()->result == RESULT_OK &&
@@ -294,10 +293,10 @@
 					}
 				}
 			else
-				startError( functionNameString, NULL, NULL, "The given duplicate sentence number is equal or higher than the current sentence number" );
+				startError( functionNameString, NULL, "The given duplicate sentence number is equal or higher than the current sentence number" );
 			}
 		else
-			startError( functionNameString, NULL, NULL, "The given duplicate sentence number is undefined" );
+			startError( functionNameString, NULL, "The given duplicate sentence number is undefined" );
 
 		selectionResult.result = commonVariables()->result;
 		return selectionResult;
@@ -319,19 +318,19 @@
 					if( ( selectionResult.lastCreatedSelectionItem = new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, commonVariables(), this, myWordItem() ) ) != NULL )
 						{
 						if( addItemToList( QUERY_ACTIVE_CHAR, selectionResult.lastCreatedSelectionItem ) != RESULT_OK )
-							addError( functionNameString, NULL, NULL, "I failed to add an active selection item" );
+							addError( functionNameString, NULL, "I failed to add an active selection item" );
 						}
 					else
-						startError( functionNameString, NULL, NULL, "I failed to create a selection item" );
+						startError( functionNameString, NULL, "I failed to create a selection item" );
 					}
 				else
-					startError( functionNameString, NULL, NULL, "The current item number is undefined" );
+					startError( functionNameString, NULL, "The current item number is undefined" );
 				}
 			else
-				startError( functionNameString, NULL, NULL, "The given specification word type number is undefined or out of bounds" );
+				startError( functionNameString, NULL, "The given specification word type number is undefined or out of bounds" );
 			}
 		else
-			startError( functionNameString, NULL, NULL, "The given generalization word type number is undefined or out of bounds" );
+			startError( functionNameString, NULL, "The given generalization word type number is undefined or out of bounds" );
 
 		selectionResult.result = commonVariables()->result;
 		return selectionResult;
@@ -348,7 +347,7 @@
 			if( firstSelectionItem->findNextExecutionSelectionItem( true, solveWordItem ) == RESULT_OK )
 				selectionResult.firstExecutionItem = firstSelectionItem->nextExecutionItem();
 			else
-				addError( functionNameString, NULL, NULL, "I failed to find the first execution selection item" );
+				addError( functionNameString, NULL, "I failed to find the first execution selection item" );
 			}
 
 		selectionResult.result = commonVariables()->result;

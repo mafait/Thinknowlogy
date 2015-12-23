@@ -2,11 +2,10 @@
  *	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -53,20 +52,20 @@ class InterfaceList extends List
 							if( !referenceResult.hasFoundMatchingStrings )
 								searchItem = searchItem.nextInterfaceItem();
 							else
-								return startError( 1, null, myWordItem().anyWordTypeString(), "The given interface string already exists" );
+								return startError( 1, null, "The given interface string already exists" );
 							}
 						else
-							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to compare two interface strings" );
+							return addError( 1, null, "I failed to compare two interface strings" );
 						}
 					else
-						return startError( 1, null, myWordItem().anyWordTypeString(), "I've found an undefined interface string" );
+						return startError( 1, null, "I have found an undefined interface string" );
 					}
 				else
-					return startError( 1, null, myWordItem().anyWordTypeString(), "The given interface parameter already exists" );
+					return startError( 1, null, "The given interface parameter already exists" );
 				}
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The given interface string is undefined" );
+			return startError( 1, null, "The given interface string is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -76,10 +75,10 @@ class InterfaceList extends List
 		if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
 			{
 			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new InterfaceItem( interfaceParameter, interfaceStringLength, interfaceString, this, myWordItem() ) ) != Constants.RESULT_OK )
-				return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to add an active interface item" );
+				return addError( 1, null, "I failed to add an active interface item" );
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The current item number is undefined" );
+			return startError( 1, null, "The current item number is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -93,7 +92,7 @@ class InterfaceList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeInterfaceItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to store an interface item in the database" );
+					return addError( 1, null, "I failed to store an interface item in the database" );
 				}
 
 			searchItem = searchItem.nextInterfaceItem();
@@ -106,7 +105,7 @@ class InterfaceList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeInterfaceItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to modify a replaced interface item in the database" );
+					return addError( 1, null, "I failed to modify a replaced interface item in the database" );
 				}
 
 			searchItem = searchItem.nextInterfaceItem();

@@ -1,0 +1,4 @@
+﻿Read the file "English/reasoning/family/family definition".
+Mary is not a mother.
+# Remember to clear this knowledge before reading another example.
+Mary is a mother.

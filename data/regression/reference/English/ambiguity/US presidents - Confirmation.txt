@@ -1,0 +1,59 @@
+﻿* 
+* My conclusions:
+< The United States has a president, called George Bush.
+< 
+* 
+* My conclusions:
+< The United States has a new president, called Barack Obama.
+< The United States has a previous president, called George Bush.
+< 
+* 
+* My conclusions:
+< The United States has a president, called Barack Obama. Because:
+<	- Barack Obama is the current president of the United States.
+< The United States has a previous president, called George Bush. Because:
+<	- George Bush is the previous president of the United States.
+< 
+* 
+* My conclusions that are confirmed:
+< The United States has a previous president, called George Bush.
+< 
+* 
+* My conclusions:
+< The United States has a president, called Barack Obama. Because:
+<	- Barack Obama is the current president of the United States.
+< 
+* 
+* My conclusions that are confirmed:
+< The United States has a president, called Barack Obama.
+< 
+< 
+< Specifications:
+< Barack Obama is the current president of the United States.
+< George Bush is the previous president of the United States.
+< The United States has a president, called Barack Obama.
+< The United States has a previous president, called George Bush.
+< 
+* 
+* Your information:
+< George Bush is the previous president of the United States.
+* 
+* Related information:
+< The United States has a previous president, called George Bush.
+< 
+* 
+* Your information:
+< Barack Obama is the current president of the United States.
+* 
+* Related information:
+< The United States has a president, called Barack Obama.
+< 
+* 
+* Your information:
+< The United States has a president, called Barack Obama.
+< The United States has a previous president, called George Bush.
+* 
+* Related information:
+< Barack Obama is the current president of the United States.
+< George Bush is the previous president of the United States.
+< 

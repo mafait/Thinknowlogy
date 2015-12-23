@@ -2,11 +2,10 @@
  *	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -301,20 +300,20 @@ class ContextList : private List
 						if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 							{
 							if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionCollectedWithItself, contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active context item" );
+								return addError( functionNameString, NULL, "I failed to add an active context item" );
 							}
 						else
-							return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current item number is undefined" );
+							return startError( functionNameString, NULL, "The current item number is undefined" );
 						}
 					else
-						return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given specification word type is undefined or out of bounds" );
+						return startError( functionNameString, NULL, "The given specification word type is undefined or out of bounds" );
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given context word type is undefined or out of bounds" );
+					return startError( functionNameString, NULL, "The given context word type is undefined or out of bounds" );
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given context number is undefined" );
+			return startError( functionNameString, NULL, "The given context number is undefined" );
 
 		return RESULT_OK;
 		}
@@ -329,13 +328,13 @@ class ContextList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->specificationWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The specification word item is still in use" );
+					return startError( functionNameString, NULL, "The specification word item is still in use" );
 
 				searchItem = searchItem->nextContextItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unused word item is undefined" );
+			return startError( functionNameString, NULL, "The given unused word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -350,7 +349,7 @@ class ContextList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeContextItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store a context item in the database" );
+					return addError( functionNameString, NULL, "I failed to store a context item in the database" );
 				}
 
 			searchItem = searchItem->nextContextItem();
@@ -363,7 +362,7 @@ class ContextList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeContextItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced context item in the database" );
+					return addError( functionNameString, NULL, "I failed to modify a replaced context item in the database" );
 				}
 
 			searchItem = searchItem->nextContextItem();
@@ -439,6 +438,6 @@ class ContextList : private List
  *	"O Lord my God, you have performed many wonders for us.
  *	Your plans for us are too numerous to list.
  *	You have no equal.
- *	I've tried to recite all your wonderful deeds,
+ *	I have tried to recite all your wonderful deeds,
  *	I would never come to the end of them." (Psalm 40:5)
  *************************************************************************/

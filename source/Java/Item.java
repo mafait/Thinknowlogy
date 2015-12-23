@@ -1,11 +1,10 @@
 /*
  *	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -50,6 +49,7 @@ class Item
 
 	protected boolean isAvailableForRollbackAfterDelete;
 	protected boolean isSelectedByQuery;
+	protected boolean isSelectedByJustificationQuery;
 
 	protected char previousStatusChar;
 
@@ -105,6 +105,8 @@ class Item
 
 		isAvailableForRollbackAfterDelete = false;
 		isSelectedByQuery = false;
+		isSelectedByJustificationQuery = false;
+
 		previousStatusChar = Constants.QUERY_ACTIVE_CHAR;
 
 		nextItem = null;
@@ -114,61 +116,46 @@ class Item
 
 	// Protected error methods
 
-	protected byte addErrorInItem( int methodLevel, String moduleNameString, String errorString )
+	protected byte addError( int methodLevel, String moduleNameString, String errorString )
 		{
-		Presentation.showError( Constants.SYMBOL_QUESTION_MARK, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), null, ( methodLevel + 1 ), errorString );
-		return CommonVariables.result;
-		}
-	protected byte addErrorInItem( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		Presentation.showError( Constants.SYMBOL_QUESTION_MARK, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordNameString, ( methodLevel + 1 ), errorString );
-		return CommonVariables.result;
-		}
-	protected byte addErrorInItem( char listChar, int methodLevel, String moduleNameString, String errorString )
-		{
-		Presentation.showError( listChar, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), null, ( methodLevel + 1 ), errorString );
-		return CommonVariables.result;
+		return addError( ( methodLevel + 1 ), moduleNameString, ( myWordItem_ == null || myWordItem_.isAdminWord() ? null : myWordItem_.anyWordTypeString() ), errorString );
 		}
 
-	protected byte addErrorInItem( char listChar, int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected byte addError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
+		{
+		Presentation.showError( Constants.SYMBOL_QUESTION_MARK, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordItemString, ( methodLevel + 1 ), errorString );
+		return CommonVariables.result;
+		}
+	protected byte addError( char listChar, int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		Presentation.showError( listChar, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordNameString, ( methodLevel + 1 ), errorString );
 		return CommonVariables.result;
 		}
 
-	protected byte startErrorInItem( int methodLevel, String moduleNameString, String errorString )
+	protected byte startError( int methodLevel, String moduleNameString, String errorString )
 		{
-		addErrorInItem( ( methodLevel + 1 ), moduleNameString, null, errorString );
+		addError( ( methodLevel + 1 ), moduleNameString, null, errorString );
 
 		CommonVariables.result = Constants.RESULT_ERROR;
 
 		return Constants.RESULT_ERROR;
 		}
 
-	protected byte startErrorInItem( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected byte startError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
-		addErrorInItem( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
 
 		CommonVariables.result = Constants.RESULT_ERROR;
 
 		return Constants.RESULT_ERROR;
 		}
 
-	protected byte startErrorInItem( char listChar, int methodLevel, String moduleNameString, String errorString )
+	protected byte startSystemError( int methodLevel, String moduleNameString, String errorString )
 		{
-		addErrorInItem( listChar, ( methodLevel + 1 ), moduleNameString, errorString );
-
-		CommonVariables.result = Constants.RESULT_ERROR;
-
-		return Constants.RESULT_ERROR;
+		return startSystemError( ( methodLevel + 1 ), moduleNameString, null, errorString );
 		}
 
-	protected byte startSystemErrorInItem( int methodLevel, String moduleNameString, String errorString )
-		{
-		return startSystemErrorInItem( ( methodLevel + 1 ), moduleNameString, null, errorString );
-		}
-
-	protected byte startSystemErrorInItem( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected byte startSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		char textChar;
 		int errorStringPosition = 0;
@@ -190,7 +177,7 @@ class Item
 			errorStringPosition++;
 			}
 
-		addErrorInItem( ( methodLevel + 1 ), moduleNameString, wordNameString, tempStringBuffer.toString() );
+		addError( ( methodLevel + 1 ), moduleNameString, wordNameString, tempStringBuffer.toString() );
 
 		CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
 
@@ -200,14 +187,24 @@ class Item
 
 	// Protected virtual methods
 
+	protected void selectingAttachedJustifications( boolean isSelectingJustificationSpecifications )
+		{
+		// This is a virtual void method. Therefore, it has no body, and the given variables are unreferenced.
+		}
+
+	protected void selectingJustificationSpecifications()
+		{
+		// This is a virtual void method. Therefore, it has no body.
+		}
+
 	protected void showString( boolean isReturnQueryToPosition )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual void method. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	protected void showWordReferences( boolean isReturnQueryToPosition )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual void method. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	protected boolean isSorted( Item nextSortItem )
@@ -219,25 +216,25 @@ class Item
 
 	protected boolean hasFoundParameter( int queryParameter )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
 	protected boolean hasFoundWordType( short queryWordTypeNr )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
 	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
 	protected ReferenceResultType findMatchingWordReferenceString( String queryString )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return new ReferenceResultType();
 		}
 
@@ -248,7 +245,7 @@ class Item
 
 	protected void showWords( boolean isReturnQueryToPosition, short queryWordTypeNr )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual method. Therefore, the given variables are unreferenced.
 		String myWordString;
 
 		if( CommonVariables.queryStringBuffer == null )
@@ -280,7 +277,7 @@ class Item
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
-		// This is a virtual method. Therefore the given variables are unreferenced
+		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return null;
 		}
 
@@ -419,7 +416,7 @@ class Item
 		myWordItem_ = myWordItem;
 
 		if( myWordItem_ == null )
-			startSystemErrorInItem( 1, null, "The given my word is undefined" );
+			startSystemError( 1, null, "The given my word is undefined" );
 		}
 
 	protected void initializeItemVariables( int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, List myList, WordItem myWordItem )
@@ -444,10 +441,10 @@ class Item
 		if( myWordItem_ != null )
 			{
 			if( myList_ == null )
-				startSystemErrorInItem( 1, null, myWordItem_.anyWordTypeString(), "The given my list is undefined" );
+				startSystemError( 1, null, myWordItem_.anyWordTypeString(), "The given my list is undefined" );
 			}
 		else
-			startSystemErrorInItem( 1, null, null, "The given my word is undefined" );
+			startSystemError( 1, null, null, "The given my word is undefined" );
 		}
 
 	protected boolean hasActiveSentenceNr()
@@ -551,6 +548,11 @@ class Item
 		return ( previousStatusChar == Constants.QUERY_INACTIVE_CHAR );
 		}
 
+	protected short userNr()
+		{
+		return userNr_;
+		}
+
 	protected int activeSentenceNr()
 		{
 		return activeSentenceNr_;
@@ -596,7 +598,7 @@ class Item
 		if( activeSentenceNr_ > Constants.NO_SENTENCE_NR )
 			activeSentenceNr_--;
 		else
-			return startErrorInItem( 1, moduleNameString_, "The active sentence number is too low for a decrement" );
+			return startError( 1, moduleNameString_, "The active sentence number is too low for a decrement" );
 
 		return Constants.RESULT_OK;
 		}
@@ -606,7 +608,7 @@ class Item
 		if( inactiveSentenceNr_ > Constants.NO_SENTENCE_NR )
 			inactiveSentenceNr_--;
 		else
-			return startErrorInItem( 1, moduleNameString_, "The inactive sentence number is too low for a decrement" );
+			return startError( 1, moduleNameString_, "The inactive sentence number is too low for a decrement" );
 
 		return Constants.RESULT_OK;
 		}
@@ -616,7 +618,7 @@ class Item
 		if( originalSentenceNr_ > Constants.NO_SENTENCE_NR )
 			originalSentenceNr_--;
 		else
-			return startErrorInItem( 1, moduleNameString_, "The original sentence number is too low for a decrement" );
+			return startError( 1, moduleNameString_, "The original sentence number is too low for a decrement" );
 
 		return Constants.RESULT_OK;
 		}
@@ -626,7 +628,7 @@ class Item
 		if( creationSentenceNr_ > Constants.NO_SENTENCE_NR )
 			creationSentenceNr_--;
 		else
-			return startErrorInItem( 1, moduleNameString_, "The creation sentence number is too low for a decrement" );
+			return startError( 1, moduleNameString_, "The creation sentence number is too low for a decrement" );
 
 		return Constants.RESULT_OK;
 		}
@@ -636,7 +638,7 @@ class Item
 		if( archivedSentenceNr_ > Constants.NO_SENTENCE_NR )
 			archivedSentenceNr_--;
 		else
-			return startErrorInItem( 1, moduleNameString_, "The archived sentence number is too low for a decrement" );
+			return startError( 1, moduleNameString_, "The archived sentence number is too low for a decrement" );
 
 		return Constants.RESULT_OK;
 		}
@@ -646,7 +648,7 @@ class Item
 		if( replacedSentenceNr_ > Constants.NO_SENTENCE_NR )
 			replacedSentenceNr_--;
 		else
-			return startErrorInItem( 1, moduleNameString_, "The replaced sentence number is too low for a decrement" );
+			return startError( 1, moduleNameString_, "The replaced sentence number is too low for a decrement" );
 
 		return Constants.RESULT_OK;
 		}
@@ -656,7 +658,7 @@ class Item
 		if( itemNr_ > decrementOffset )
 			itemNr_ -= decrementOffset;
 		else
-			return startErrorInItem( 1, moduleNameString_, "The given decrement offset is higher than the item number itself" );
+			return startError( 1, moduleNameString_, "The given decrement offset is higher than the item number itself" );
 
 		return Constants.RESULT_OK;
 		}
@@ -684,7 +686,6 @@ class Item
 		return ( justificationTypeNr == Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION ||
@@ -817,11 +818,10 @@ class Item
 				return 0;
 
 			case Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
-			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				return (short)( hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
 
-			case Constants.JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION:
-				return (short)( hasAnotherPrimarySpecification ? 2 : 1 );
+			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+				return (short)( hasAnotherPrimarySpecification && hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
 
 			case Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
 				return (short)( hasFeminineOrMasculineProperNameEnding ? 1 : 0 );

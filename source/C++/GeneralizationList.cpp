@@ -2,11 +2,10 @@
  *	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -97,7 +96,7 @@ class GeneralizationList : private List
 				}
 			}
 		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given generalization word item is undefined" );
+			startError( functionNameString, NULL, "The given generalization word item is undefined" );
 
 		generalizationResult.result = commonVariables()->result;
 		return generalizationResult;
@@ -113,18 +112,18 @@ class GeneralizationList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->generalizationWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The generalization word item is still in use" );
+					return startError( functionNameString, NULL, "The generalization word item is still in use" );
 
 				searchItem = searchItem->nextGeneralizationItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unused word item is undefined" );
+			return startError( functionNameString, NULL, "The given unused word item is undefined" );
 
 		return RESULT_OK;
 		}
 
-	ResultType createGeneralizationItem( bool isRelation, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem )
+	ResultType createGeneralizationItem( bool isLanguageWord, bool isRelation, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createGeneralizationItem";
 
@@ -133,14 +132,14 @@ class GeneralizationList : private List
 			{
 			if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 				{
-				if( addItemToList( QUERY_ACTIVE_CHAR, new GeneralizationItem( isRelation, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active generalization item" );
+				if( addItemToList( QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, commonVariables()->currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to add an active generalization item" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current item number is undefined" );
+				return startError( functionNameString, NULL, "The current item number is undefined" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given generalization word type number is undefined or out of bounds" );
+			return startError( functionNameString, NULL, "The given generalization word type number is undefined or out of bounds" );
 
 		return RESULT_OK;
 		}
@@ -155,7 +154,7 @@ class GeneralizationList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeGeneralizationItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store a generalization item in the database" );
+					return addError( functionNameString, NULL, "I failed to store a generalization item in the database" );
 				}
 
 			searchItem = searchItem->nextGeneralizationItem();
@@ -168,7 +167,7 @@ class GeneralizationList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeGeneralizationItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced generalization item in the database" );
+					return addError( functionNameString, NULL, "I failed to modify a replaced generalization item in the database" );
 				}
 
 			searchItem = searchItem->nextGeneralizationItem();
@@ -182,11 +181,11 @@ class GeneralizationList : private List
 		return (GeneralizationItem *)firstActiveItem();
 		}
 
-	GeneralizationItem *firstGeneralizationItem( bool isOnlySelectingNoun, bool isRelation )
+	GeneralizationItem *firstGeneralizationItem( bool isOnlySelectingNoun, bool isOnlySelectingCurrentLanguage, bool isRelation )
 		{
 		GeneralizationItem *firstGeneralizationItem = firstActiveGeneralizationItem();
 
-		return ( firstGeneralizationItem == NULL ? NULL : firstGeneralizationItem->getGeneralizationItem( true, isOnlySelectingNoun, isRelation ) );
+		return ( firstGeneralizationItem == NULL ? NULL : firstGeneralizationItem->getGeneralizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isRelation ) );
 		}
 	};
 

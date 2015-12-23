@@ -3,11 +3,10 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -78,7 +77,7 @@ class GrammarItem extends Item
 		if( grammarString != null )
 			grammarString_ = grammarString.substring( 0, grammarStringLength );
 		else
-			startSystemErrorInItem( 1, null, null, "The given grammar string is undefined" );
+			startSystemError( 1, null, null, "The given grammar string is undefined" );
 
 
 		// Protected constructible variables

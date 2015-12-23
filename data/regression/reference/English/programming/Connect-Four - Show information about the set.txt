@@ -1,0 +1,151 @@
+﻿
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+set->	-A-B-C-D-E-F-G-
+
+It's your turn.
+
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | |y| | | |
+set->	-A-B-C-D-E-F-G-
+
+I selected: C.
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | |m|y| | | |
+set->	-A-B-C-D-E-F-G-
+
+It's your turn.
+
+* 
+* Your information:
+< A set can-be G, F, E, D, C, B or A.
+< A set can-be invalid.
+< My set was D.
+< The set was C.
+< 
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | |y| | | |
+	| | |m|y| | | |
+set->	-A-B-C-D-E-F-G-
+
+I selected: D.
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | |m| | | |
+	| | | |y| | | |
+	| | |m|y| | | |
+set->	-A-B-C-D-E-F-G-
+
+It's your turn.
+
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | |y| | | |
+	| | | |m| | | |
+	| | | |y| | | |
+	| | |m|y| | | |
+set->	-A-B-C-D-E-F-G-
+
+I selected: C.
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | |y| | | |
+	| | | |m| | | |
+	| | |m|y| | | |
+	| | |m|y| | | |
+set->	-A-B-C-D-E-F-G-
+
+It's your turn.
+
+
+	| | | | | | | |
+	| | | |y| | | |
+	| | | |y| | | |
+	| | | |m| | | |
+	| | |m|y| | | |
+	| | |m|y| | | |
+set->	-A-B-C-D-E-F-G-
+
+I selected: G.
+
+	| | | | | | | |
+	| | | |y| | | |
+	| | | |y| | | |
+	| | | |m| | | |
+	| | |m|y| | | |
+	| | |m|y| | |m|
+set->	-A-B-C-D-E-F-G-
+
+It's your turn.
+
+
+	| | | | | | | |
+	| | | |y| | | |
+	| | | |y| | | |
+	| | |y|m| | | |
+	| | |m|y| | | |
+	| | |m|y| | |m|
+set->	-A-B-C-D-E-F-G-
+
+I selected: C.
+
+	| | | | | | | |
+	| | | |y| | | |
+	| | |m|y| | | |
+	| | |y|m| | | |
+	| | |m|y| | | |
+	| | |m|y| | |m|
+set->	-A-B-C-D-E-F-G-
+
+It's your turn.
+
+
+	| | | | | | | |
+	| | | |y| | | |
+	| | |m|y| | | |
+	| | |y|m| | | |
+	| | |m|y| | | |
+	|y| |m|y| | |m|
+set->	-A-B-C-D-E-F-G-
+
+I selected: G.
+
+	| | | | | | | |
+	| | | |y| | | |
+	| | |m|y| | | |
+	| | |y|m| | | |
+	| | |m|y| | |m|
+	|y| |m|y| | |m|
+set->	-A-B-C-D-E-F-G-
+
+It's your turn.
+
+* 
+* Your information:
+< A set can-be G, F, E, D, C, B or A.
+< A set can-be invalid.
+< My set was A, C and D.
+< The set was G, C and D.
+< 

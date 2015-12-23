@@ -1,0 +1,17 @@
+﻿* 
+* My conclusions:
+< A cat and a dog are mammal [plural of 'mammal' is unknown].
+< 
+* 
+* My conclusions:
+< A whale, a cat and a dog are mammal [plural of 'mammal' is unknown].
+< 
+* 
+* My conclusions:
+< A whale, a cat and a dog are mammals.
+< 
+< Specifications:
+< A whale is a mammal.
+< A dog is a mammal.
+< A cat is a mammal.
+< 

@@ -1,11 +1,10 @@
 /*
  *	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -77,6 +76,8 @@
 
 		isAvailableForRollbackAfterDelete = false;
 		isSelectedByQuery = false;
+		isSelectedByJustificationQuery = false;
+
 		previousStatusChar = QUERY_ACTIVE_CHAR;
 
 		nextItem = NULL;
@@ -86,70 +87,53 @@
 
 	// Protected error functions
 
-	ResultType Item::addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString )
+	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		return addError( functionNameString, moduleNameString, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
+		}
+
+	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString )
 		{
 		if( commonVariables_ != NULL &&
 		commonVariables_->presentation != NULL )
-			commonVariables_->presentation->showError( SYMBOL_QUESTION_MARK, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), NULL, functionNameString, errorString );
+			commonVariables_->presentation->showError( SYMBOL_QUESTION_MARK, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), wordItemString, functionNameString, errorString );
 		else
-			fprintf( stderr, "\nClass:\t%s\nSubclass:\t%s\nFunction:\t%s\nError:\t\t%s.\n", classNameString_, superClassNameString_, functionNameString, errorString );
+			fprintf( stderr, "\nClass:\t%s\nSubclass:\t%s\nFunction:\t%s\nWordItem:%s\nError:\t\t%s.\n", classNameString_, superClassNameString_, functionNameString, wordItemString, errorString );
 
 		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
 		}
 
-	ResultType Item::addErrorInItem( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
-		{
-		if( commonVariables_ != NULL &&
-		commonVariables_->presentation != NULL )
-			commonVariables_->presentation->showError( SYMBOL_QUESTION_MARK, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), wordNameString, functionNameString, errorString );
-		else
-			fprintf( stderr, "\nClass:\t%s\nSubclass:\t%s\nFunction:\t%s\nError:\t\t%s.\n", classNameString_, superClassNameString_, functionNameString, errorString );
-
-		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
-		}
-
-	ResultType Item::addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 )
+	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 )
 		{
 		sprintf( tempString, "%s%u", errorString1, number1 );
-		return addErrorInItem( functionNameString, moduleNameString, NULL, tempString );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
 		}
 
-	ResultType Item::addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
+	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
 		{
 		sprintf( tempString, "%s%u%s%u", errorString1, number1, errorString2, number2 );
-		return addErrorInItem( functionNameString, moduleNameString, NULL, tempString );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
 		}
 
-	ResultType Item::addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
 		{
 		sprintf( tempString, "%s%s%s", errorString1, errorString2, errorString3 );
-		return addErrorInItem( functionNameString, moduleNameString, NULL, tempString );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
 		}
 
-	ResultType Item::addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1 )
+	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1 )
 		{
 		sprintf( tempString, "%s%s%s%u", errorString1, errorString2, errorString3, number1 );
-		return addErrorInItem( functionNameString, moduleNameString, NULL, tempString );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
 		}
 
-	ResultType Item::addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
 		{
 		sprintf( tempString, "%s%s%s%s%s", errorString1, errorString2, errorString3, errorString4, errorString5 );
-		return addErrorInItem( functionNameString, moduleNameString, NULL, tempString );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
 		}
 
-	ResultType Item::addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		if( commonVariables_ != NULL &&
-		commonVariables_->presentation != NULL )
-			commonVariables_->presentation->showError( listChar, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), NULL, functionNameString, errorString );
-		else
-			fprintf( stderr, "\nClass:\t%s\nSubclass:\t%s\nFunction:\t%s\nError:\t\t%s.\n", classNameString_, superClassNameString_, functionNameString, errorString );
-
-		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
-		}
-
-	ResultType Item::addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+	ResultType Item::addError( char listChar, const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		if( commonVariables_ != NULL &&
 		commonVariables_->presentation != NULL )
@@ -160,27 +144,9 @@
 		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
 		}
 
-	ResultType Item::addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		sprintf( tempString, "%s%u", errorString1, number1 );
-		return addErrorInItem( listChar, functionNameString, moduleNameString, tempString );
-		}
-
-	ResultType Item::addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
-		{
-		sprintf( tempString, "%s%s%s", errorString1, errorString2, errorString3 );
-		return addErrorInItem( listChar, functionNameString, moduleNameString, tempString );
-		}
-
-	ResultType Item::addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
-		{
-		sprintf( tempString, "%s%s%s%s%s", errorString1, errorString2, errorString3, errorString4, errorString5 );
-		return addErrorInItem( listChar, functionNameString, moduleNameString, tempString );
-		}
-
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		addErrorInItem( functionNameString, moduleNameString, NULL, errorString );
+		addError( functionNameString, moduleNameString, NULL, errorString );
 
 		if( commonVariables_ != NULL )
 		commonVariables_->result = RESULT_ERROR;
@@ -188,9 +154,9 @@
 		return RESULT_ERROR;
 		}
 
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
-		addErrorInItem( functionNameString, moduleNameString, wordNameString, errorString );
+		addError( functionNameString, moduleNameString, wordNameString, errorString );
 
 		if( commonVariables_ != NULL )
 		commonVariables_->result = RESULT_ERROR;
@@ -198,88 +164,60 @@
 		return RESULT_ERROR;
 		}
 
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 )
 		{
 		sprintf( tempString, "%s%u", errorString1, number1 );
-		return startErrorInItem( functionNameString, moduleNameString, NULL, tempString );
+		return startError( functionNameString, moduleNameString, NULL, tempString );
 		}
 
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
 		{
 		sprintf( tempString, "%s%u%s%u", errorString1, number1, errorString2, number2 );
-		return startErrorInItem( functionNameString, moduleNameString, tempString );
+		return startError( functionNameString, moduleNameString, tempString );
 		}
 
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2, const char *errorString3, unsigned int number3 )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2, const char *errorString3, unsigned int number3 )
 		{
 		sprintf( tempString, "%s%u%s%u%s%u", errorString1, number1, errorString2, number2, errorString3, number3 );
-		return startErrorInItem( functionNameString, moduleNameString, tempString );
+		return startError( functionNameString, moduleNameString, tempString );
 		}
 
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2 )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2 )
 		{
 		sprintf( tempString, "%s%c%s", errorString1, char1, errorString2 );
-		return startErrorInItem( functionNameString, moduleNameString, tempString );
+		return startError( functionNameString, moduleNameString, tempString );
 		}
 
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2, char char2, const char *errorString3 )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2, char char2, const char *errorString3 )
 		{
 		sprintf( tempString, "%s%c%s%c%s", errorString1, char1, errorString2, char2, errorString3 );
-		return startErrorInItem( functionNameString, moduleNameString, tempString );
+		return startError( functionNameString, moduleNameString, tempString );
 		}
 
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
 		{
 		sprintf( tempString, "%s%s%s", errorString1, errorString2, errorString3 );
-		return startErrorInItem( functionNameString, moduleNameString, tempString );
+		return startError( functionNameString, moduleNameString, tempString );
 		}
 
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
 		{
 		sprintf( tempString, "%s%s%s%s%s", errorString1, errorString2, errorString3, errorString4, errorString5 );
-		return startErrorInItem( functionNameString, moduleNameString, tempString );
+		return startError( functionNameString, moduleNameString, tempString );
 		}
 
-	ResultType Item::startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1, const char *errorString4, unsigned int number2, const char *errorString5, unsigned int number3 )
+	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1, const char *errorString4, unsigned int number2, const char *errorString5, unsigned int number3 )
 		{
 		sprintf( tempString, "%s%s%s%u%s%u%s%u", errorString1, errorString2, errorString3, number1, errorString4, number2, errorString5, number3 );
-		return startErrorInItem( functionNameString, moduleNameString, tempString );
+		return startError( functionNameString, moduleNameString, tempString );
 		}
 
-	ResultType Item::startErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString )
+	ResultType Item::startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		addErrorInItem( listChar, functionNameString, moduleNameString, errorString );
-
-		if( commonVariables_ != NULL )
-		commonVariables_->result = RESULT_ERROR;
-
-		return RESULT_ERROR;
+		return startSystemError( functionNameString, moduleNameString, NULL, errorString );
 		}
 
-	ResultType Item::startErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 )
-		{
-		sprintf( tempString, "%s%u", errorString1, number1 );
-		return startErrorInItem( listChar, functionNameString, moduleNameString, tempString );
-		}
-
-	ResultType Item::startErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
-		{
-		sprintf( tempString, "%s%s%s", errorString1, errorString2, errorString3 );
-		return startErrorInItem( listChar, functionNameString, moduleNameString, tempString );
-		}
-
-	ResultType Item::startErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
-		{
-		sprintf( tempString, "%s%u%s%u", errorString1, number1, errorString2, number2 );
-		return startErrorInItem( listChar, functionNameString, moduleNameString, tempString );
-		}
-
-	ResultType Item::startSystemErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		return startSystemErrorInItem( functionNameString, moduleNameString, NULL, errorString );
-		}
-
-	ResultType Item::startSystemErrorInItem( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+	ResultType Item::startSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		char textChar;
 		size_t tempStringPosition = 0;
@@ -303,7 +241,7 @@
 			errorStringPosition++;
 			}
 
-		addErrorInItem( functionNameString, moduleNameString, wordNameString, tempString );
+		addError( functionNameString, moduleNameString, wordNameString, tempString );
 
 		if( commonVariables_ != NULL )
 		commonVariables_->result = RESULT_SYSTEM_ERROR;
@@ -314,14 +252,24 @@
 
 	// Protected virtual functions
 
+	void Item::selectingAttachedJustifications( bool isSelectingJustificationSpecifications )
+		{
+		// This is a virtual void function. Therefore, it has no body, and the given variables are unreferenced.
+		}
+
+	void Item::selectingJustificationSpecifications()
+		{
+		// This is a virtual void function. Therefore, it has no body.
+		}
+
 	void Item::showString( bool isReturnQueryToPosition )
 		{
-		// This is a virtual function. Therefore the given variables are unreferenced
+		// This is a virtual void function. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	void Item::showWordReferences( bool isReturnQueryToPosition )
 		{
-		// This is a virtual function. Therefore the given variables are unreferenced
+		// This is a virtual void function. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	bool Item::isSorted( Item *nextSortItem )
@@ -333,25 +281,25 @@
 
 	bool Item::hasFoundParameter( unsigned int queryParameter )
 		{
-		// This is a virtual function. Therefore the given variables are unreferenced
+		// This is a virtual function. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
 	bool Item::hasFoundWordType( unsigned short queryWordTypeNr )
 		{
-		// This is a virtual function. Therefore the given variables are unreferenced
+		// This is a virtual function. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
 	bool Item::hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
-		// This is a virtual function. Therefore the given variables are unreferenced
+		// This is a virtual function. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
 	ReferenceResultType Item::findMatchingWordReferenceString( char *queryString )
 		{
-		// This is a virtual function. Therefore the given variables are unreferenced
+		// This is a virtual function. Therefore, the given variables are unreferenced.
 		ReferenceResultType referenceResult;
 		return referenceResult;
 		}
@@ -363,7 +311,7 @@
 
 	void Item::showWords( bool isReturnQueryToPosition, unsigned short queryWordTypeNr )
 		{
-		// This is a virtual function. Therefore the given variables are unreferenced
+		// This is a virtual function. Therefore, the given variables are unreferenced.
 		char *myWordString;
 		char statusString[2] = SPACE_STRING;
 		statusString[0] = statusChar_;
@@ -588,7 +536,7 @@
 			}
 
 		if( strlen( errorString ) > 0 )
-			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL ? NULL : myWordItem_->anyWordTypeString() ), errorString );
+			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
 		}
 
 	void Item::initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
@@ -637,7 +585,7 @@
 			}
 
 		if( strlen( errorString ) > 0 )
-			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL ? NULL : myWordItem_->anyWordTypeString() ), errorString );
+			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
 		}
 
 	bool Item::hasActiveSentenceNr()
@@ -741,6 +689,11 @@
 		return ( previousStatusChar == QUERY_INACTIVE_CHAR );
 		}
 
+	unsigned short Item::userNr()
+		{
+		return userNr_;
+		}
+
 	unsigned int Item::activeSentenceNr()
 		{
 		return activeSentenceNr_;
@@ -788,7 +741,7 @@
 		if( activeSentenceNr_ > NO_SENTENCE_NR )
 			activeSentenceNr_--;
 		else
-			return startErrorInItem( functionNameString, superClassNameString_, "The active sentence number is too low for a decrement" );
+			return startError( functionNameString, superClassNameString_, "The active sentence number is too low for a decrement" );
 
 		return RESULT_OK;
 		}
@@ -800,7 +753,7 @@
 		if( inactiveSentenceNr_ > NO_SENTENCE_NR )
 			inactiveSentenceNr_--;
 		else
-			return startErrorInItem( functionNameString, superClassNameString_, "The inactive sentence number is too low for a decrement" );
+			return startError( functionNameString, superClassNameString_, "The inactive sentence number is too low for a decrement" );
 
 		return RESULT_OK;
 		}
@@ -812,7 +765,7 @@
 		if( originalSentenceNr_ > NO_SENTENCE_NR )
 			originalSentenceNr_--;
 		else
-			return startErrorInItem( functionNameString, superClassNameString_, "The original sentence number is too low for a decrement" );
+			return startError( functionNameString, superClassNameString_, "The original sentence number is too low for a decrement" );
 
 		return RESULT_OK;
 		}
@@ -824,7 +777,7 @@
 		if( creationSentenceNr_ > NO_SENTENCE_NR )
 			creationSentenceNr_--;
 		else
-			return startErrorInItem( functionNameString, superClassNameString_, "The creation sentence number is too low for a decrement" );
+			return startError( functionNameString, superClassNameString_, "The creation sentence number is too low for a decrement" );
 
 		return RESULT_OK;
 		}
@@ -836,7 +789,7 @@
 		if( archivedSentenceNr_ > NO_SENTENCE_NR )
 			archivedSentenceNr_--;
 		else
-			return startErrorInItem( functionNameString, superClassNameString_, "The archived sentence number is too low for a decrement" );
+			return startError( functionNameString, superClassNameString_, "The archived sentence number is too low for a decrement" );
 
 		return RESULT_OK;
 		}
@@ -848,7 +801,7 @@
 		if( replacedSentenceNr_ > NO_SENTENCE_NR )
 			replacedSentenceNr_--;
 		else
-			return startErrorInItem( functionNameString, superClassNameString_, "The replaced sentence number is too low for a decrement" );
+			return startError( functionNameString, superClassNameString_, "The replaced sentence number is too low for a decrement" );
 
 		return RESULT_OK;
 		}
@@ -860,7 +813,7 @@
 		if( itemNr_ > decrementOffset )
 			itemNr_ -= decrementOffset;
 		else
-			return startErrorInItem( functionNameString, superClassNameString_, "The given decrement offset is higher than the item number itself" );
+			return startError( functionNameString, superClassNameString_, "The given decrement offset is higher than the item number itself" );
 
 		return RESULT_OK;
 		}
@@ -868,6 +821,16 @@
 	char Item::statusChar()
 		{
 		return statusChar_;
+		}
+
+	char *Item::classNameString()
+		{
+		return classNameString_;
+		}
+
+	char *Item::superClassNameString()
+		{
+		return superClassNameString_;
 		}
 
 	List *Item::myList()
@@ -893,7 +856,6 @@
 		return ( justificationTypeNr == JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION ||
@@ -1026,11 +988,10 @@
 				return 0;
 
 			case JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
-			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				return ( hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
 
-			case JUSTIFICATION_TYPE_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING_ASSUMPTION:
-				return ( hasAnotherPrimarySpecification ? 2 : 1 );
+			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+				return ( hasAnotherPrimarySpecification && hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
 
 			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
 				return ( hasFeminineOrMasculineProperNameEnding ? 1 : 0 );

@@ -1,0 +1,77 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A parent is probably a person.
+< A father is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< A son is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* I know nothing about John, but I'll keep the question in mind.
+* 
+* 
+* This question is more specific than your earlier question:
+< Is John a father?
+* 
+* Your questions that are answered:
+< Is John a father?
+* 
+* My assumptions:
+< John is probably a father.
+< John is probably a man.
+< John is possibly a person.
+< John is maybe not a woman.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* I know nothing about Anna, but I'll keep the question in mind.
+* 
+* 
+* This question is more specific than your earlier question:
+< Is Anna a father or a mother?
+* I know nothing about Anna, but I'll keep the question in mind.
+* 
+* 
+* Your questions that are answered:
+< Is Anna a mother?
+< Is Anna a father or a mother?
+* 
+* My conclusions:
+< Anna is a woman.
+* 
+* My assumptions:
+< Anna is probably a person.
+< Anna is probably not a man.
+< Anna is probably a parent.
+< Anna is probably part of a family.
+< Anna is probably not a father.
+< Anna has possibly a child.
+< 
+* 
+* This question is more specific than your earlier question:
+< Is Anna a mother?
+* 
+* I only know:
+< Anna is a mother.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 

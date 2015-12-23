@@ -3,11 +3,10 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -26,7 +25,7 @@
 
 // Justification Item header
 
-// Class declarations needed by some compilers
+// Some compilers need these class declarations
 class SpecificationItem;
 class SpecificationResultType;
 
@@ -65,7 +64,7 @@ class JustificationItem : private Item
 	protected:
 	// Protected constructible variables
 
-	bool hasBeenWritten;
+	bool hasJustificationBeenWritten;
 
 	unsigned short orderNr;
 
@@ -78,6 +77,8 @@ class JustificationItem : private Item
 
 
 	// Protected virtual functions
+
+	virtual void selectingJustificationSpecifications();
 
 	virtual bool hasFoundWordType( unsigned short queryWordTypeNr );
 	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr );
@@ -94,15 +95,17 @@ class JustificationItem : private Item
 	bool hasFoundJustification( JustificationItem *checkJustificationItem );
 	bool hasOnlyExclusiveSpecificationSubstitutionAssumptionsWithoutDefinition();
 
+	bool hasHiddenPrimarySpecification();
 	bool hasPrimarySpecification();
 	bool hasPrimaryAnsweredQuestion();
 	bool hasPrimaryQuestion();
 	bool hasPrimaryUserSpecification();
-	bool hasPossessivePrimarySpecification();
-	bool hasHiddenPrimarySpecification();
-	bool hasReplacedPrimarySpecification();
 	bool hasPrimarySpecificationWordCollectedWithItself();
+	bool hasPossessivePrimarySpecification();
+	bool hasReplacedPrimarySpecification();
 	bool hasUpdatedPrimarySpecificationWordCollectedWithItself();
+
+	bool hasReplacedSecondarySpecification();
 
 	bool isAssumptionJustification();
 	bool isConclusionJustification();
@@ -114,6 +117,7 @@ class JustificationItem : private Item
 	bool isSpecificationSubstitutionPartOfAssumption();
 	bool isSuggestiveQuestionAssumption();
 
+	bool isPossessiveReversibleAssumption();
 	bool isPossessiveReversibleConclusion();
 	bool isPossessiveReversibleAssumptionOrConclusion();
 
@@ -146,10 +150,9 @@ class JustificationItem : private Item
 	JustificationItem *nextJustificationItemWithSameTypeAndOrderNr();
 	JustificationItem *nextJustificationItemWithDifferentTypeOrOrderNr( JustificationItem *firstJustificationItem );
 
-	JustificationItem *primarySpecificationWithoutRelationContextJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
+	JustificationItem *primarySpecificationWithoutRelationContextJustificationItem( SpecificationItem *primarySpecificationItem );
 	JustificationItem *secondarySpecificationQuestion();
 	JustificationItem *selfGeneratedSecondarySpecificationJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
-//	JustificationItem *updatedJustificationItem();
 
 	SpecificationItem *primarySpecificationItem();
 	SpecificationItem *anotherPrimarySpecificationItem();

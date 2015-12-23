@@ -1,5 +1,0 @@
-﻿Lees het bestand "Nederlands/redeneren/gezinsdefinitie".
-Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
-Paul is een man.
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
-Paul is een jongen.

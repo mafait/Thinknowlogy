@@ -1,0 +1,82 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Una madre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Pablo es parte de una familia.
+< Pablo es un hombre.
+< Pablo no es una mujer.
+< Pablo no es una hija.
+< Juan tiene un hijo, llamado Pablo.
+< Ana tiene un hijo, llamado Pablo.
+* 
+* Mis suposiciones:
+< Pablo es probablemente una persona.
+< Pablo tiene posiblemente una madre, llamada Ana.
+< Juan es posiblemente una persona.
+< Juan es probablemente parte de una familia.
+< Ana es posiblemente madre de Pablo.
+< Ana es posiblemente una mujer.
+< Ana es puede-ser una persona.
+< Ana no es puede-ser un hombre.
+< Ana es posiblemente parte de una familia.
+< Ana no es posiblemente un padre.
+* 
+* Mis preguntas:
+< ¿Es Juan una mujer o un hombre?
+< ¿Es Juan un padre o una madre?
+< 
+* 
+* Mis conclusiones:
+< Juan tiene 2 hijos, llamados Pablo y José.
+< Ana tiene 2 hijos, llamados Pablo y José.
+< José es parte de una familia.
+< José es un hombre.
+< José no es una mujer.
+< José no es una hija.
+* 
+* Mis suposiciones:
+< Ana es posiblemente madre de Pablo y José.
+< José es probablemente una persona.
+< José tiene posiblemente una madre, llamada Ana.
+< 
+* 
+* Mis conclusiones:
+< Luisa es una mujer.
+< Luisa no es un hombre.
+< Luisa es parte de una familia.
+< Luisa no es un hijo.
+* 
+* Mis suposiciones:
+< Luisa es probablemente una persona.
+< Luisa tiene probablemente un padre.
+< 
+* 
+* Esta información es más específica que la información anterior:
+< Luisa es una hija.
+* 
+* Mis conclusiones:
+< Juan tiene una hija, llamada Luisa.
+< Ana tiene una hija, llamada Luisa.
+* 
+* Mis suposiciones:
+< Ana es posiblemente madre de Pablo, José y Luisa.
+< Luisa tiene posiblemente una madre, llamada Ana.
+< 

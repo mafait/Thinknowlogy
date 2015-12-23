@@ -1,0 +1,6 @@
+﻿< No, black, blue, brown, green, gray, orange, pink, purple, red, white and yellow are colors. (learned from user Admin)
+< A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y and z are small letters. (learned from user Admin)
+< 
+< No, 1, 2, 3, 4, 5, 6, 7, 8, 9 and 0 are numbers. (learned from user Admin)
+< A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y and z are small letters. (learned from user Admin)
+< 

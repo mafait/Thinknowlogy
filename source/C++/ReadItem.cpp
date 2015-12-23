@@ -2,11 +2,10 @@
  *	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -32,6 +31,7 @@ class ReadItem : private Item
 	friend class AdminCleanup;
 	friend class AdminContext;
 	friend class AdminImperative;
+	friend class AdminReadCreateWords;
 	friend class AdminReadSentence;
 	friend class AdminSpecification;
 	friend class AdminWriteSpecification;
@@ -101,14 +101,14 @@ class ReadItem : private Item
 				{
 				if( ( readString = new char[readStringLength + 1] ) != NULL )
 					{
-					strncpy( readString, _readString, readStringLength );
-					readString[readStringLength] = NULL_CHAR;
+					strcpy( readString, EMPTY_STRING );
+					strncat( readString, _readString, readStringLength );
 					}
 				else
-					startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the read string" );
+					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the read string" );
 				}
 			else
-				startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read string is too long" );
+				startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read string is too long" );
 			}
 		}
 
@@ -213,7 +213,7 @@ class ReadItem : private Item
 		if( readWordItem_ != NULL )
 			{
 			if( ( referenceResult = readWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addErrorInItem( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to find the word reference for the word reference query" );
+				addError( functionNameString, NULL, "I failed to find the word reference for the word reference query" );
 			}
 
 		return referenceResult;
@@ -230,7 +230,7 @@ class ReadItem : private Item
 				referenceResult.hasFoundWordReference = true;
 			}
 		else
-			startErrorInItem( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given reference word is undefined" );
+			startError( functionNameString, NULL, "The given reference word is undefined" );
 
 		return referenceResult;
 		}
@@ -480,7 +480,8 @@ class ReadItem : private Item
 
 	bool isNounFile()
 		{
-		return ( wordParameter_ == WORD_PARAMETER_NOUN_FILE );
+		return ( wordParameter_ == WORD_PARAMETER_NOUN_FILE ||
+				wordParameter_ == WORD_PARAMETER_NOUN_TEST_FILE );
 		}
 
 	bool isNounPartOf()
@@ -565,7 +566,7 @@ class ReadItem : private Item
 			readWordItem_ = newReadWordItem;
 			}
 		else
-			return startErrorInItem( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given new read word item is undefined" );
+			return startError( functionNameString, NULL, "The given new read word item is undefined" );
 
 		return RESULT_OK;
 		}

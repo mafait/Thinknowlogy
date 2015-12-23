@@ -2,11 +2,10 @@
  *	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -53,7 +52,7 @@ class GeneralizationList extends List
 				}
 			}
 		else
-			startError( 1, null, myWordItem().anyWordTypeString(), "The given generalization word item is undefined" );
+			startError( 1, null, "The given generalization word item is undefined" );
 
 		generalizationResult.result = CommonVariables.result;
 		return generalizationResult;
@@ -68,32 +67,32 @@ class GeneralizationList extends List
 			while( searchItem != null )
 				{
 				if( searchItem.generalizationWordItem() == unusedWordItem )
-					return startError( 1, null, myWordItem().anyWordTypeString(), "The generalization word item is still in use" );
+					return startError( 1, null, "The generalization word item is still in use" );
 
 				searchItem = searchItem.nextGeneralizationItem();
 				}
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The given unused word item is undefined" );
+			return startError( 1, null, "The given unused word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
-	protected byte createGeneralizationItem( boolean isRelation, short specificationWordTypeNr, short generalizationWordTypeNr, WordItem generalizationWordItem )
+	protected byte createGeneralizationItem( boolean isLanguageWord, boolean isRelation, short specificationWordTypeNr, short generalizationWordTypeNr, WordItem generalizationWordItem )
 		{
 		if( generalizationWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
 		generalizationWordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
 			{
 			if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
 				{
-				if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new GeneralizationItem( isRelation, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-					return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to add an active generalization item" );
+				if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, CommonVariables.currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+					return addError( 1, null, "I failed to add an active generalization item" );
 				}
 			else
-				return startError( 1, null, myWordItem().anyWordTypeString(), "The current item number is undefined" );
+				return startError( 1, null, "The current item number is undefined" );
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The given generalization word type number is undefined or out of bounds" );
+			return startError( 1, null, "The given generalization word type number is undefined or out of bounds" );
 
 		return Constants.RESULT_OK;
 		}
@@ -107,7 +106,7 @@ class GeneralizationList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeGeneralizationItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to store a generalization item in the database" );
+					return addError( 1, null, "I failed to store a generalization item in the database" );
 				}
 
 			searchItem = searchItem.nextGeneralizationItem();
@@ -120,7 +119,7 @@ class GeneralizationList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeGeneralizationItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to modify a replaced generalization item in the database" );
+					return addError( 1, null, "I failed to modify a replaced generalization item in the database" );
 				}
 
 			searchItem = searchItem.nextGeneralizationItem();
@@ -134,11 +133,11 @@ class GeneralizationList extends List
 		return (GeneralizationItem)firstActiveItem();
 		}
 
-	protected GeneralizationItem firstGeneralizationItem( boolean isOnlySelectingNoun, boolean isRelation )
+	protected GeneralizationItem firstGeneralizationItem( boolean isOnlySelectingNoun, boolean isOnlySelectingCurrentLanguage, boolean isRelation )
 		{
 		GeneralizationItem firstGeneralizationItem = firstActiveGeneralizationItem();
 
-		return ( firstGeneralizationItem == null ? null : firstGeneralizationItem.getGeneralizationItem( true, isOnlySelectingNoun, isRelation ) );
+		return ( firstGeneralizationItem == null ? null : firstGeneralizationItem.getGeneralizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isRelation ) );
 		}
 	};
 

@@ -2,11 +2,10 @@
  *	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -141,13 +140,13 @@ class MultipleWordList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->multipleWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The multiple word item is still in use" );
+					return startError( functionNameString, NULL, "The multiple word item is still in use" );
 
 				searchItem = searchItem->nextMultipleWordItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unused word item is undefined" );
+			return startError( functionNameString, NULL, "The given unused word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -166,17 +165,17 @@ class MultipleWordList : private List
 					if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
 						{
 						if( addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, commonVariables()->currentLanguageNr, wordTypeNr, multipleWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active multiple word item" );
+							return addError( functionNameString, NULL, "I failed to add an active multiple word item" );
 						}
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current item number is undefined" );
+					return startError( functionNameString, NULL, "The current item number is undefined" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given multiple word item is undefined" );
+				return startError( functionNameString, NULL, "The given multiple word item is undefined" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given word type number is undefined or out of bounds" );
+			return startError( functionNameString, NULL, "The given word type number is undefined or out of bounds" );
 
 		return RESULT_OK;
 		}
@@ -191,7 +190,7 @@ class MultipleWordList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeMultipleWordItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store a multiple word item in the database" );
+					return addError( functionNameString, NULL, "I failed to store a multiple word item in the database" );
 				}
 
 			searchItem = searchItem->nextMultipleWordItem();
@@ -204,7 +203,7 @@ class MultipleWordList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeMultipleWordItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced multiple word item in the database" );
+					return addError( functionNameString, NULL, "I failed to modify a replaced multiple word item in the database" );
 				}
 
 			searchItem = searchItem->nextMultipleWordItem();

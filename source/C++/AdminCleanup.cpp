@@ -2,11 +2,10 @@
  *	Class:			AdminCleanup
  *	Supports class:	AdminItem
  *	Purpose:		To cleanup obsolete items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -57,6 +56,16 @@ class AdminCleanup
 
 			// Necessary after changing current sentence number
 			setCurrentItemNr();
+
+			if( commonVariables_->currentItemNr == NO_ITEM_NR )
+				{
+				if( commonVariables_->currentSentenceNr > NO_SENTENCE_NR )
+					{
+					commonVariables_->currentSentenceNr--;
+					// Necessary after changing current sentence number
+					setCurrentItemNr();
+					}
+				}
 			}
 		else
 			commonVariables_->isDontIncrementCurrentSentenceNr = true;
@@ -133,7 +142,7 @@ class AdminCleanup
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
 			if( wordList->decrementItemNrRangeInWordList( decrementSentenceNr, startDecrementItemNr, decrementOffset ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to decrement item number range in my word list" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to decrement item number range in my word list" );
 			}
 
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
@@ -142,7 +151,7 @@ class AdminCleanup
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->decrementItemNrRangeInList( decrementSentenceNr, startDecrementItemNr, decrementOffset ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to decrement item number range" );
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to decrement item number range" );
 				}
 			}
 
@@ -158,7 +167,7 @@ class AdminCleanup
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
 			if( wordList->decrementSentenceNrsInWordList( startSentenceNr ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in my word list" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in my word list" );
 			}
 
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
@@ -167,14 +176,14 @@ class AdminCleanup
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->decrementSentenceNrsInList( startSentenceNr ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
 				}
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType deleteUnusedWordTypes( bool isInactiveItems, bool isDeleteAllActiveWordTypes )
+	ResultType deleteUnusedWordTypes( bool isInactiveItems, bool isDeletingAllActiveWordTypes )
 		{
 		ReadResultType readResult;
 		unsigned short nReadWordReferences;
@@ -192,7 +201,7 @@ class AdminCleanup
 			while( unusedReadItem != NULL )
 				{
 				if( isInactiveItems ||
-				isDeleteAllActiveWordTypes ||
+				isDeletingAllActiveWordTypes ||
 
 				( previousReadItem != NULL &&
 				!unusedReadItem->isSingularNoun() &&
@@ -206,15 +215,15 @@ class AdminCleanup
 							{
 							if( unusedWordTypeItem->hasCurrentCreationSentenceNr() )
 								{
-								if( !isDeleteAllActiveWordTypes &&
+								if( !isDeletingAllActiveWordTypes &&
 								// Wrong assumption: This noun isn't plural but singular
 								unusedReadItem->isPluralNoun() &&
 								unusedReadWordItem->isUserDefinedWord() &&
 								( pluralNounString = unusedWordTypeItem->itemString() ) != NULL &&
-								( singularNounWordTypeItem = unusedReadWordItem->activeWordTypeItem( false, WORD_TYPE_NOUN_SINGULAR ) ) != NULL )
+								( singularNounWordTypeItem = unusedReadWordItem->activeWordTypeItem( WORD_TYPE_NOUN_SINGULAR ) ) != NULL )
 									{
 									if( singularNounWordTypeItem->createNewWordTypeString( pluralNounString ) != RESULT_OK )
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a new word string for a singular noun word type of an active read word" );
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a new word string for a singular noun word type of an active read word" );
 									}
 
 								if( ( readResult = readList->getNumberOfReadWordReferences( unusedReadItem->wordTypeNr(), unusedReadWordItem ) ).result == RESULT_OK )
@@ -226,18 +235,18 @@ class AdminCleanup
 										if( nReadWordReferences == 1 )
 											{
 											if( unusedReadWordItem->deleteWordType( unusedReadItem->wordTypeNr() ) != RESULT_OK )
-												return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete an unused word type item" );
+												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete an unused word type item" );
 											}
 										}
 									else
-										return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I've found an invalid number of read word references" );
+										return adminItem_->startError( functionNameString, moduleNameString_, "I have found an invalid number of read word references" );
 									}
 								else
-									return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the number of read word references" );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the number of read word references" );
 								}
 							}
 						else
-							return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't find the word type of an active read word" );
+							return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find the word type of an active read word" );
 						}
 					}
 
@@ -246,24 +255,24 @@ class AdminCleanup
 				}
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The read list isn't created yet" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The read list isn't created yet" );
 
 		return RESULT_OK;
 		}
 
-	ResultType deleteUnusedWordTypes( bool isDeleteAllActiveWordTypes )
+	ResultType deleteUnusedWordTypes( bool isDeletingAllActiveWordTypes )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteUnusedWordTypes";
 
 		// From active read items
-		if( deleteUnusedWordTypes( false, isDeleteAllActiveWordTypes ) == RESULT_OK )
+		if( deleteUnusedWordTypes( false, isDeletingAllActiveWordTypes ) == RESULT_OK )
 			{
 			// From inactive read items
-			if( deleteUnusedWordTypes( true, isDeleteAllActiveWordTypes ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the active unused word types" );
+			if( deleteUnusedWordTypes( true, isDeletingAllActiveWordTypes ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the active unused word types" );
 			}
 		else
-			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the inactive unused word types" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the inactive unused word types" );
 
 		return RESULT_OK;
 		}
@@ -281,12 +290,12 @@ class AdminCleanup
 				if( adminItem_->adminListArray[adminListNr] != NULL )
 					{
 					if( adminItem_->adminListArray[adminListNr]->redoCurrentSentenceInList() != RESULT_OK )
-						return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to redo the current sentence" );
+						return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to redo the current sentence" );
 					}
 				}
 			}
 		else
-			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to redo the current sentence in my word list" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to redo the current sentence in my word list" );
 
 		return RESULT_OK;
 		}
@@ -304,7 +313,7 @@ class AdminCleanup
 			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The first word item is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The first word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -323,7 +332,7 @@ class AdminCleanup
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
 			if( wordList->removeFirstRangeOfDeletedItemsInWordList() != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the first deleted items in my word list" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to remove the first deleted items in my word list" );
 			}
 
 		// Admin lists
@@ -333,7 +342,7 @@ class AdminCleanup
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->removeFirstRangeOfDeletedItemsInList() != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to remove the first deleted items" );
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to remove the first deleted items" );
 				}
 
 			adminListNr++;
@@ -351,7 +360,7 @@ class AdminCleanup
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
 			if( wordList->rollbackDeletedRedoInfoInWordList() != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the current redo info of my words in my word list" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the current redo info of my words in my word list" );
 			}
 
 		// Admin lists
@@ -377,12 +386,12 @@ class AdminCleanup
 				if( adminItem_->adminListArray[adminListNr] != NULL )
 					{
 					if( adminItem_->adminListArray[adminListNr]->undoCurrentSentenceInList() != RESULT_OK )
-						return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to undo the current sentence" );
+						return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to undo the current sentence" );
 					}
 				}
 			}
 		else
-			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to undo the current sentence in my word list" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to undo the current sentence in my word list" );
 
 		return RESULT_OK;
 		}
@@ -400,7 +409,7 @@ class AdminCleanup
 			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The first word item is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The first word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -429,7 +438,7 @@ class AdminCleanup
 		if( strlen( errorString ) > 0 )
 			{
 			if( adminItem_ != NULL )
-				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+				adminItem_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -526,7 +535,7 @@ class AdminCleanup
 								decrementCurrentSentenceNr();
 							}
 						else
-							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number" );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number" );
 						}
 					}
 
@@ -535,11 +544,11 @@ class AdminCleanup
 					if( decrementItemNrRange( commonVariables_->removeSentenceNr, commonVariables_->removeStartItemNr, commonVariables_->nDeletedItems ) == RESULT_OK )
 						previousRemoveSentenceNr = commonVariables_->removeSentenceNr;
 					else
-						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to decrement item number range" );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to decrement item number range" );
 					}
 				}
 			else
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to remove the first deleted items" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to remove the first deleted items" );
 			}
 		while( commonVariables_->nDeletedItems > 0 );
 
@@ -562,12 +571,12 @@ class AdminCleanup
 		deleteWriteListsInAllWords();
 
 		if( cleanupDeletedItems() != RESULT_OK )
-			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
 
 		return RESULT_OK;
 		}
 
-	ResultType deleteUnusedInterpretations( bool isDeleteAllActiveWordTypes )
+	ResultType deleteUnusedInterpretations( bool isDeletingAllActiveWordTypes )
 		{
 		ReferenceResultType referenceResult;
 		unsigned short adminListNr;
@@ -582,9 +591,9 @@ class AdminCleanup
 			{
 			if( ( wordList = adminItem_->wordList ) != NULL )
 				{
-				// From active read items
-				if( deleteUnusedWordTypes( isDeleteAllActiveWordTypes ) == RESULT_OK )
+				if( deleteUnusedWordTypes( isDeletingAllActiveWordTypes ) == RESULT_OK )
 					{
+					// Active read items
 					while( unusedReadItem != NULL )
 						{
 						if( unusedReadItem->isUnusedReadItem ||
@@ -611,7 +620,7 @@ class AdminCleanup
 											{
 											// Check the selection lists for a reference to this word
 											if( ( referenceResult = adminItem_->adminListArray[adminListNr]->findWordReference( unusedWordItem ) ).result != RESULT_OK )
-												return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to find a reference to an active word \"", unusedWordItem->anyWordTypeString(), "\" in one of my lists" );
+												return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to find a reference to an active word \"", unusedWordItem->anyWordTypeString(), "\" in one of my lists" );
 											}
 
 										adminListNr++;
@@ -620,14 +629,14 @@ class AdminCleanup
 									if( !referenceResult.hasFoundWordReference )
 										{
 										if( wordList->deleteItem( false, unusedWordItem ) != RESULT_OK )
-											return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete a word item" );
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete a word item" );
 										}
 									}
 
 								unusedReadItem = readList->nextReadListItem();
 								}
 							else
-								return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete an active read item" );
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete an active read item" );
 							}
 						else
 							{
@@ -636,6 +645,7 @@ class AdminCleanup
 							}
 						}
 
+					// Inactive read items
 					while( ( unusedReadItem = adminItem_->firstInactiveReadItem() ) != NULL )
 						{
 						if( readList->deleteItem( false, unusedReadItem ) == RESULT_OK )
@@ -657,7 +667,7 @@ class AdminCleanup
 										{
 										// Check my lists for a reference to this word
 										if( ( referenceResult = adminItem_->adminListArray[adminListNr]->findWordReference( unusedWordItem ) ).result != RESULT_OK )
-											return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to find a reference to an inactive word \"", unusedWordItem->anyWordTypeString(), "\" in one of my lists" );
+											return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to find a reference to an inactive word \"", unusedWordItem->anyWordTypeString(), "\" in one of my lists" );
 										}
 
 									adminListNr++;
@@ -666,19 +676,19 @@ class AdminCleanup
 								if( !referenceResult.hasFoundWordReference )
 									{
 									if( wordList->deleteItem( false, unusedWordItem ) != RESULT_OK )
-										return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete a word item" );
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete a word item" );
 									}
 								}
 							}
 						else
-							return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete an unused (inactive) read word" );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete an unused (inactive) read word" );
 						}
 					}
 				else
-					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the unused word types" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the unused word types" );
 				}
 			else
-				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The word list isn't created yet" );
+				return adminItem_->startError( functionNameString, moduleNameString_, "The word list isn't created yet" );
 			}
 
 		return RESULT_OK;
@@ -693,7 +703,7 @@ class AdminCleanup
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
 			if( wordList->deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr ) != RESULT_OK )
-				return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete sentences in my word list" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete sentences in my word list" );
 			}
 
 		// Admin lists
@@ -702,12 +712,12 @@ class AdminCleanup
 			if( adminItem_->adminListArray[adminListNr] != NULL )
 				{
 				if( adminItem_->adminListArray[adminListNr]->deleteSentencesInList( isAvailableForRollback, lowestSentenceNr ) != RESULT_OK )
-					return adminItem_->addErrorInItem( adminItem_->adminListChar( adminListNr ), functionNameString, moduleNameString_, "I failed to delete sentences in a list" );
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to delete sentences in a list" );
 				}
 			}
 
 		if( cleanupDeletedItems() != RESULT_OK )
-			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
 
 		return RESULT_OK;
 		}
@@ -729,11 +739,12 @@ class AdminCleanup
 						commonVariables_->isDontIncrementCurrentSentenceNr = true;
 					}
 				else
-					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification about another user" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'no sentences to undo' interface notification" );
 				}
 			else
 				{
-				if( previousSentenceNr == commonVariables_->currentSentenceNr )
+				if( previousSentenceNr > NO_SENTENCE_NR &&
+				previousSentenceNr == commonVariables_->currentSentenceNr )
 					{
 					commonVariables_->currentSentenceNr--;
 					// Necessary after changing current sentence number
@@ -748,14 +759,14 @@ class AdminCleanup
 						commonVariables_->isDontIncrementCurrentSentenceNr = true;
 						}
 					else
-						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification about having undone a sentence" );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I have undone' interface notification" );
 					}
 				else
-					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to undo the current sentence" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to undo the current sentence" );
 				}
 			}
 		else
-			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete all temporary lists" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete all temporary lists" );
 
 		return RESULT_OK;
 		}
@@ -777,19 +788,19 @@ class AdminCleanup
 					if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_START, commonVariables_->currentSentenceNr, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_END ) == RESULT_OK )
 						wasUndoOrRedo_ = true;
 					else
-						return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification about having redone a sentence" );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I have redone' interface notification" );
 					}
 				else
-					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to redo the current sentence" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to redo the current sentence" );
 				}
 			else
 				{
 				if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_NO_SENTENCES_TO_REDO ) != RESULT_OK )
-					return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification about no sentences to redo" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'no sentences to redo' interface notification" );
 				}
 			}
 		else
-			return adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete all temporary lists" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete all temporary lists" );
 
 		return RESULT_OK;
 		}

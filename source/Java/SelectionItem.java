@@ -2,11 +2,10 @@
  *	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -259,7 +258,7 @@ class SelectionItem extends Item
 		if( generalizationWordItem_ != null )
 			{
 			if( ( referenceResult = generalizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, specificationString_, "I failed to find a matching word reference string for the generalization word" );
+				addError( 1, null, specificationString_, "I failed to find a matching word reference string for the generalization word" );
 			}
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
@@ -267,7 +266,7 @@ class SelectionItem extends Item
 		specificationWordItem_ != null )
 			{
 			if( ( referenceResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, specificationString_, "I failed to find a matching word reference string for the specification word" );
+				addError( 1, null, specificationString_, "I failed to find a matching word reference string for the specification word" );
 			}
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
@@ -275,7 +274,7 @@ class SelectionItem extends Item
 		relationWordItem_ != null )
 			{
 			if( ( referenceResult = relationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, specificationString_, "I failed to find a matching word reference string for the relation word" );
+				addError( 1, null, specificationString_, "I failed to find a matching word reference string for the relation word" );
 			}
 
 		return referenceResult;
@@ -293,7 +292,7 @@ class SelectionItem extends Item
 				referenceResult.hasFoundWordReference = true;
 			}
 		else
-			startErrorInItem( 1, null, specificationString_, "The given reference word is undefined" );
+			startError( 1, null, specificationString_, "The given reference word is undefined" );
 
 		return referenceResult;
 		}
@@ -553,7 +552,7 @@ class SelectionItem extends Item
 				}
 			}
 		else
-			return startErrorInItem( 1, null, specificationString_, "The given solve word item is undefined" );
+			return startError( 1, null, specificationString_, "The given solve word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}

@@ -2,11 +2,10 @@
  *	Class:			WordAssignment
  *	Supports class:	WordItem
  *	Purpose:		To assign specifications
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -60,7 +59,7 @@ class WordAssignment
 			{
 			if( !specificationWordItem.isNounValue() )
 				{
-				if( ( currentGeneralizationItem = specificationWordItem.firstSpecificationGeneralizationItem() ) != null )
+				if( ( currentGeneralizationItem = specificationWordItem.firstSpecificationGeneralizationItem( false ) ) != null )
 					{
 					do	{
 						if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
@@ -75,7 +74,7 @@ class WordAssignment
 								foundInactiveAssignmentItem = currentGeneralizationWordItem.firstNonQuestionAssignmentItem( false, true, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
 							}
 						else
-							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an undefined generalization word" );
+							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I have found an undefined generalization word" );
 						}
 					while( ( foundActiveAssignmentItem == null ||
 					foundInactiveAssignmentItem == null ) &&
@@ -102,20 +101,20 @@ class WordAssignment
 												return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to archive an inactive assignment" );
 											}
 										else
-											return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an inactive assignment without generalization word item" );
+											return myWordItem_.startErrorInWord( 1, moduleNameString_, "I have found an inactive assignment without generalization word item" );
 										}
 									else
-										return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an inactive assignment without generalization collection number" );
+										return myWordItem_.startErrorInWord( 1, moduleNameString_, "I have found an inactive assignment without generalization collection number" );
 									}
 								}
 							else
 								return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to inactivate an active assignment" );
 							}
 						else
-							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an active assignment without generalization word item" );
+							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I have found an active assignment without generalization word item" );
 						}
 					else
-						return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an active assignment without generalization collection number" );
+						return myWordItem_.startErrorInWord( 1, moduleNameString_, "I have found an active assignment without generalization collection number" );
 					}
 				}
 			else
@@ -146,7 +145,7 @@ class WordAssignment
 
 						if( relatedSpecificationItem != null &&
 						// Skip specification
-						relatedSpecificationItem.isAssignment() &&
+						relatedSpecificationItem.isUserAssignment() &&
 
 						( ( !isNegative &&
 						// Only option left
@@ -215,8 +214,9 @@ class WordAssignment
 			{
 			if( ( foundAssignmentItem = myWordItem_.firstAssignmentItem( true, true, true, isNegative, isPossessive, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem ) ) == null )
 				{
-				// Found no self-generated assignment. Now try to find a confirmed assignment
-				if( isSelfGenerated )
+				// Didn't find a self-generated assignment. Now try to find a confirmed assignment
+				if( isSelfGenerated &&
+				!isSpecificationGeneralization )
 					foundAssignmentItem = myWordItem_.firstAssignmentItem( true, true, true, isNegative, isPossessive, false, questionParameter, relationContextNr, specificationWordItem );
 				}
 
@@ -446,7 +446,7 @@ class WordAssignment
 				}
 			}
 		else
-			myWordItem_.startErrorInWord( 1, moduleNameString_, "I've more than one assignments at assignment level " + CommonVariables.currentAssignmentLevel );
+			myWordItem_.startErrorInWord( 1, moduleNameString_, "I have more than one assignment at assignment level " + CommonVariables.currentAssignmentLevel );
 
 		specificationResult.result = CommonVariables.result;
 		return specificationResult;
@@ -465,11 +465,11 @@ class WordAssignment
 				if( ( specificationWordItem = assignmentItem.specificationWordItem() ) != null )
 					specificationResult.assignmentParameter = specificationWordItem.wordParameter();
 				else
-					myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an undefined assignment word at assignment level " + CommonVariables.currentAssignmentLevel );
+					myWordItem_.startErrorInWord( 1, moduleNameString_, "I have found an undefined assignment word at assignment level " + CommonVariables.currentAssignmentLevel );
 				}
 			}
 		else
-			myWordItem_.startErrorInWord( 1, moduleNameString_, "I've more than one assignments at assignment level " + CommonVariables.currentAssignmentLevel );
+			myWordItem_.startErrorInWord( 1, moduleNameString_, "I have more than one assignment at assignment level " + CommonVariables.currentAssignmentLevel );
 
 		specificationResult.result = CommonVariables.result;
 		return specificationResult;
@@ -493,7 +493,7 @@ class WordAssignment
 		else
 			{
 			// Find the specification of the assignment
-			if( ( foundSpecificationItem = myWordItem_.firstSpecificationItem( isPossessive, questionParameter, specificationWordItem ) ) != null )
+			if( ( foundSpecificationItem = myWordItem_.firstSpecificationItem( isPossessive, isSpecificationGeneralization, questionParameter, specificationWordItem ) ) != null )
 				{
 				if( foundSpecificationItem.hasExclusiveGeneralizationCollection() )
 					{

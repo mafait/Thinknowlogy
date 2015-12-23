@@ -1,11 +1,10 @@
 /*
  *	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -22,8 +21,8 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-import java.awt.Insets;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
@@ -39,25 +38,14 @@ class Thinknowlogy
 	private static void deriveCurrentPath()
 		{
 		int lastIndex;
-		StringBuffer tempStringBuffer;
 		String absolutePath = Thinknowlogy.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
 		if( absolutePath.endsWith( Constants.FILE_SOURCE_DIRECTORY_NAME_STRING ) )
 			lastIndex = absolutePath.length() - Constants.FILE_SOURCE_DIRECTORY_NAME_STRING.length() - 1;
 		else
 			{
-			if( absolutePath.endsWith( Constants.FILE_DEVELOPMENT_SOURCE_DIRECTORY_NAME_STRING ) )
-				{
-				lastIndex = absolutePath.length() - Constants.FILE_DEVELOPMENT_SOURCE_DIRECTORY_NAME_STRING.length() - 1;
-				tempStringBuffer = new StringBuffer ( absolutePath.substring( 0, lastIndex + 1 ) + Constants.FILE_DEVELOPMENT_DIRECTORY_NAME_STRING );
-				absolutePath = tempStringBuffer.toString(); 
-				lastIndex += Constants.FILE_DEVELOPMENT_DIRECTORY_NAME_STRING.length();
-				}
-			else
-				{
-				if( ( lastIndex = ( absolutePath.lastIndexOf( Constants.SLASH_STRING ) ) ) < 0 )
-					lastIndex = absolutePath.lastIndexOf( Constants.BACK_SLASH_STRING );
-				}
+			if( ( lastIndex = ( absolutePath.lastIndexOf( Constants.SLASH_STRING ) ) ) < 0 )
+				lastIndex = absolutePath.lastIndexOf( Constants.BACK_SLASH_STRING );
 			}
 
 		// If no absolute path is given - add it

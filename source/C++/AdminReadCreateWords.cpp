@@ -2,11 +2,10 @@
  *	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		To create words of the read sentence
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -63,6 +62,8 @@ class AdminReadCreateWords
 				character == SYMBOL_EXCLAMATION_MARK_INVERTED ||
 				character == SYMBOL_QUESTION_MARK ||
 				character == SYMBOL_QUESTION_MARK_INVERTED ||
+				character == SYMBOL_PLUS ||
+				character == SYMBOL_EQUALITY ||
 				character == SYMBOL_PIPE ||
 				character == SYMBOL_AMPERSAND ||
 				character == SYMBOL_ASTERISK ||
@@ -104,27 +105,25 @@ class AdminReadCreateWords
 					{
 					if( readResult.wordLength < MAX_WORD_LENGTH )
 						{
-						strncpy( exactWordString_, &wordString[startPosition], readResult.wordLength );
-						exactWordString_[readResult.wordLength] = NULL_CHAR;
+						strcpy( exactWordString_, EMPTY_STRING );
+						strncat( exactWordString_, &wordString[startPosition], readResult.wordLength );
 
 						strcpy( lowerCaseWordString_, exactWordString_ );
 
 						for( unsigned i = 0; i < readResult.wordLength; i++ )
 							lowerCaseWordString_[i] = (char)tolower( exactWordString_[i] );
-
-						lowerCaseWordString_[readResult.wordLength] = NULL_CHAR;
 						}
 					else
-						adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word string is too long" );
+						adminItem_->startError( functionNameString, moduleNameString_, "The given word string is too long" );
 					}
 				else
-					adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word string is empty or has no words left anymore" );
+					adminItem_->startError( functionNameString, moduleNameString_, "The given word string is empty or has no words left anymore" );
 				}
 			else
-				adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read a word from the word string" );
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word from the word string" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word string is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given word string is undefined" );
 
 		readResult.result = commonVariables_->result;
 		return readResult;
@@ -163,10 +162,10 @@ class AdminReadCreateWords
 					}
 				}
 			else
-				return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word type string is empty" );
+				return adminItem_->startError( functionNameString, moduleNameString_, "The given word type string is empty" );
 			}
 		else
-			return adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word type string is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given word type string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -204,7 +203,7 @@ class AdminReadCreateWords
 		if( strlen( errorString ) > 0 )
 			{
 			if( adminItem_ != NULL )
-				adminItem_->startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
+				adminItem_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -252,10 +251,10 @@ class AdminReadCreateWords
 							readString = &textString[readResult.startWordPosition];
 							}
 						else
-							adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The found start word position is invalid" );
+							adminItem_->startError( functionNameString, moduleNameString_, "The found start word position is invalid" );
 						}
 					else
-						adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to read a word from a text string" );
+						adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word from a text string" );
 					}
 
 				if( commonVariables_->result == RESULT_OK )
@@ -266,13 +265,13 @@ class AdminReadCreateWords
 						if( ( adminItem_->readList = new ReadList( commonVariables_, adminItem_ ) ) != NULL )
 							adminItem_->adminListArray[ADMIN_READ_LIST] = adminItem_->readList;
 						else
-							adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create a read list" );
+							adminItem_->startError( functionNameString, moduleNameString_, "I failed to create a read list" );
 						}
 					else
 						{
 						// Find out if already exists
 						if( adminItem_->readList->hasFoundReadItem( wordOrderNr, wordParameter, wordTypeNr, readString, readWordItem ) )
-							adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given read item already exists" );
+							adminItem_->startError( functionNameString, moduleNameString_, "The given read item already exists" );
 						}
 
 					if( ( readResult = adminItem_->readList->createReadItem( wordOrderNr, wordParameter, wordTypeNr, readResult.wordLength, readString, readWordItem ) ).result == RESULT_OK )
@@ -281,14 +280,14 @@ class AdminReadCreateWords
 						lastCreatedWordOrderNr_ = wordOrderNr;
 						}
 					else
-						adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create an admin read words item" );
+						adminItem_->addError( functionNameString, moduleNameString_, "I failed to create an admin read words item" );
 					}
 				}
 			else
-				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "Both the given text string and the given read word item are undefined" );
+				adminItem_->startError( functionNameString, moduleNameString_, "Both the given text string and the given read word item are undefined" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word type number is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given word type number is undefined" );
 
 		readResult.result = commonVariables_->result;
 		return readResult;
@@ -299,13 +298,14 @@ class AdminReadCreateWords
 		GrammarResultType grammarResult;
 		ReadResultType readResult;
 		WordResultType wordResult;
+		bool isAdverb;
 		bool isCapitalSingularNoun;
 		bool isCapitalVerb;
 		bool isExactVerb;
 		bool isExactWord;
 		bool isFirstFind;
-		bool isNotPartOfMultipleWord;
 		bool isNumeral;
+		bool isPartOfMultipleWord;
 		bool wasPreviousWordAdjective;
 		bool wasPreviousWordArticle;
 		bool wasPreviousWordBasicVerb;
@@ -370,7 +370,7 @@ class AdminReadCreateWords
 							if( createReadWord( currentWordOrderNr_, WORD_TYPE_TEXT, readPosition, readSentenceString, NULL ).result == RESULT_OK )
 								nextWordPosition = nextTextStringPosition_;
 							else
-								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a read word" );
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a read word" );
 							}
 						else
 							{
@@ -391,6 +391,7 @@ class AdminReadCreateWords
 							previousWordIndefiniteArticleParameter = currentWordIndefiniteArticleParameter;
 
 							isAdjective = false;
+							isAdverb = false;
 							isArticle = false;
 							isBasicVerb = false;
 							isCapitalVerb = false;
@@ -418,7 +419,7 @@ class AdminReadCreateWords
 
 							if( ( readResult = createWordStrings( readPosition, readSentenceString ) ).result == RESULT_OK )
 								{
-								isNotPartOfMultipleWord = false;
+								isPartOfMultipleWord = true;
 
 								nextWordPosition = readResult.nextWordPosition;
 								wordStringLength = readResult.wordLength;
@@ -432,99 +433,108 @@ class AdminReadCreateWords
 										if( ( foundWordItem = wordResult.foundWordItem ) != NULL &&
 										( foundWordTypeItem = wordResult.foundWordTypeItem ) != NULL )
 											{
-											if( createReadWord( currentWordOrderNr_, foundWordTypeItem->wordTypeNr(), 0, NULL, foundWordItem ).result == RESULT_OK )
+											// Typically for Spanish: Skip answer, when there was an adverb too
+											if( !isAdverb ||
+											!foundWordTypeItem->isAnswer() )
 												{
-												isExactWord = true;
-
-												if( foundWordTypeItem->isAdjective() )
+												if( createReadWord( currentWordOrderNr_, foundWordTypeItem->wordTypeNr(), 0, NULL, foundWordItem ).result == RESULT_OK )
 													{
-													isAdjective = true;
+													isExactWord = true;
 
-													if( wordResult.foundWordItem != NULL &&
-													// Adjective 'no' can be used as article
-													wordResult.foundWordItem->isAdjectiveNo() )
+													if( foundWordTypeItem->isAdjective() )
+														{
+														isAdjective = true;
+
+														if( wordResult.foundWordItem != NULL &&
+														// Adjective 'no' can be used as article
+														wordResult.foundWordItem->isAdjectiveNo() )
+															isArticle = true;
+
+														currentWordAdjectiveParameter = foundWordTypeItem->adjectiveParameter();
+														}
+
+													if( foundWordTypeItem->isAdverb() )
+														isAdverb = true;
+
+													if( foundWordTypeItem->isArticle() )
+														{
 														isArticle = true;
 
-													currentWordAdjectiveParameter = foundWordTypeItem->adjectiveParameter();
-													}
+														if( foundWordTypeItem->isDefiniteArticle() )
+															currentWordDefiniteArticleParameter = foundWordTypeItem->definiteArticleParameter();
 
-												if( foundWordTypeItem->isArticle() )
-													{
-													isArticle = true;
-
-													if( foundWordTypeItem->isDefiniteArticle() )
-														currentWordDefiniteArticleParameter = foundWordTypeItem->definiteArticleParameter();
-
-													if( foundWordTypeItem->isIndefiniteArticle() )
-														currentWordIndefiniteArticleParameter = foundWordTypeItem->indefiniteArticleParameter();
-													}
-
-												if( foundWordItem->isBasicVerb() )
-													isBasicVerb = true;
-
-												if( foundWordTypeItem->isConjunction() )
-													isConjunction = true;
-
-												if( foundWordTypeItem->isVerb() )
-													{
-													isExactVerb = true;
-
-													if( !foundWordItem->isMultipleWord() )
-														isNotPartOfMultipleWord = true;
-													}
-
-												if( foundWordTypeItem->isNumeral() )
-													isNumeral = true;
-
-												if( foundWordTypeItem->isSingularNoun() )
-													{
-													isExactSingularNoun = true;
-
-													if( !foundWordItem->isMultipleWord() )
-														isNotPartOfMultipleWord = true;
-
-													if( ( wordResult = foundWordTypeItem->setParameter( previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter ) ).result == RESULT_OK )
-														{
-														if( wordResult.hasFoundDifferentParameter )
-															hasFoundDifferentParameter_ = true;
+														if( foundWordTypeItem->isIndefiniteArticle() )
+															currentWordIndefiniteArticleParameter = foundWordTypeItem->indefiniteArticleParameter();
 														}
-													else
-														adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to set a parameter of a singular noun" );
+
+													if( foundWordItem->isBasicVerb() )
+														isBasicVerb = true;
+
+													if( foundWordTypeItem->isConjunction() )
+														isConjunction = true;
+
+													if( foundWordTypeItem->isVerb() )
+														{
+														isExactVerb = true;
+
+														if( !foundWordItem->isMultipleWord() )
+															isPartOfMultipleWord = false;
+														}
+
+													if( foundWordTypeItem->isNumeral() )
+														isNumeral = true;
+
+													if( foundWordTypeItem->isSingularNoun() )
+														{
+														isExactSingularNoun = true;
+
+														if( !foundWordItem->isMultipleWord() )
+															isPartOfMultipleWord = false;
+
+														if( ( wordResult = foundWordTypeItem->setParameter( previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter ) ).result == RESULT_OK )
+															{
+															if( wordResult.hasFoundDifferentParameter )
+																hasFoundDifferentParameter_ = true;
+															}
+														else
+															adminItem_->addError( functionNameString, moduleNameString_, "I failed to set a parameter of a singular noun" );
+														}
+
+													if( foundWordTypeItem->isPluralNoun() )
+														isExactPluralNoun = true;
+
+													if( foundWordTypeItem->isPossessiveDeterminer() )
+														isPossessiveDeterminer = true;
+
+													if( foundWordTypeItem->isPossessivePronoun() )
+														isPossessivePronoun = true;
+
+													if( foundWordTypeItem->isPreposition() )
+														isPreposition = true;
+
+													if( foundWordTypeItem->isSymbol() )
+														isSymbol = true;
 													}
-
-												if( foundWordTypeItem->isPluralNoun() )
-													isExactPluralNoun = true;
-
-												if( foundWordTypeItem->isPossessiveDeterminer() )
-													isPossessiveDeterminer = true;
-
-												if( foundWordTypeItem->isPossessivePronoun() )
-													isPossessivePronoun = true;
-
-												if( foundWordTypeItem->isPreposition() )
-													isPreposition = true;
-
-												if( foundWordTypeItem->isSymbol() )
-													isSymbol = true;
+												else
+													adminItem_->addError( functionNameString, moduleNameString_, "I failed to create another read word" );
 												}
-											else
-												adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create another read word" );
 											}
 										}
 									else
-										adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find an exact word type in all words" );
+										adminItem_->addError( functionNameString, moduleNameString_, "I failed to find an exact word type in all words" );
 									}
 								while( commonVariables_->result == RESULT_OK &&
+
 								// Allow multiple finds
 								foundWordItem != NULL );
 
 								if( commonVariables_->result == RESULT_OK &&
-								isNotPartOfMultipleWord &&
+								!isPartOfMultipleWord &&
 								!wasPreviousWordExactNoun &&
 								( readList = adminItem_->readList ) != NULL )
 									{
 									if( readList->deleteInvalidPartOfMultipleWordReadItems( currentWordOrderNr_, &readSentenceString[readPosition] ) != RESULT_OK )
-										adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to delete the read items with part of multiple words" );
+										adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the read items with part of multiple words" );
 									}
 
 								if( commonVariables_->result == RESULT_OK &&
@@ -553,7 +563,7 @@ class AdminReadCreateWords
 														{
 														// Create same word type for different language
 														if( foundWordItem->addWordType( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr_, wordStringLength, lowerCaseWordString_ ).result != RESULT_OK )
-															adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a word type with lowercase first letter" );
+															adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a word type with lowercase first letter" );
 														}
 
 													if( createReadWord( currentWordOrderNr_, foundWordTypeNr, 0, NULL, foundWordItem ).result == RESULT_OK )
@@ -594,11 +604,11 @@ class AdminReadCreateWords
 															isPossessivePronoun = true;
 														}
 													else
-														adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a read word with a word type with difference case of the first letter" );
+														adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a read word with a word type with difference case of the first letter" );
 													}
 												}
 											else
-												adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a word type with difference case of the first letter in all words" );
+												adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a word type with difference case of the first letter in all words" );
 											}
 										while( commonVariables_->result == RESULT_OK &&
 										// Allow multiple finds
@@ -618,21 +628,21 @@ class AdminReadCreateWords
 														if( ( createdWordItem = wordResult.createdWordItem ) != NULL )
 															{
 															if( createReadWord( currentWordOrderNr_, wordTypeNr_, 0, NULL, createdWordItem ).result != RESULT_OK )
-																adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a read word with lowercase letter" );
+																adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a read word with lowercase letter" );
 															}
 														else
-															adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The created word with lowercase letter is undefined" );
+															adminItem_->startError( functionNameString, moduleNameString_, "The created word with lowercase letter is undefined" );
 														}
 													else
-														adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add word with lowercase letter" );
+														adminItem_->addError( functionNameString, moduleNameString_, "I failed to add word with lowercase letter" );
 													}
 												}
 											else
-												adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a lowercase letter" );
+												adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a lowercase letter" );
 											}
 										}
 									else
-										adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the word type number of a lowercase word" );
+										adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the word type number of a lowercase word" );
 									}
 
 								if( commonVariables_->result == RESULT_OK &&
@@ -676,10 +686,10 @@ class AdminReadCreateWords
 															if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, NO_WORD_PARAMETER, wordTypeNr_, wordStringLength, exactWordString_ ) ).result == RESULT_OK )
 																{
 																if( ( createdWordItem = wordResult.createdWordItem ) == NULL )
-																	adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I couldn't create an exact word" );
+																	adminItem_->startError( functionNameString, moduleNameString_, "I couldn't create an exact word" );
 																}
 															else
-																adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add an exact word" );
+																adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an exact word" );
 															}
 														else
 															{
@@ -691,7 +701,7 @@ class AdminReadCreateWords
 																if( foundWordItem->addWordType( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr_, wordStringLength, exactWordString_ ).result == RESULT_OK )
 																	createdWordItem = foundWordItem;
 																else
-																	adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add an exact word type" );
+																	adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an exact word type" );
 																}
 															}
 
@@ -706,16 +716,16 @@ class AdminReadCreateWords
 																	isProperName = true;
 																}
 															else
-																adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create an exact read word" );
+																adminItem_->addError( functionNameString, moduleNameString_, "I failed to create an exact read word" );
 															}
 														}
 													}
 												else
-													adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to get the word type number of an exact word" );
+													adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the word type number of an exact word" );
 												}
 											}
 										else
-											adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find an exact word" );
+											adminItem_->addError( functionNameString, moduleNameString_, "I failed to find an exact word" );
 										}
 									while( commonVariables_->result == RESULT_OK &&
 									// Allow multiple finds
@@ -777,13 +787,13 @@ class AdminReadCreateWords
 																			singularNounWordItem = pluralNounWordItem;
 																		}
 																	else
-																		adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a singular noun word type item for plural noun word \"", pluralNounWordItem->anyWordTypeString(), "\"" );
+																		adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a singular noun word type item for plural noun word \"", pluralNounWordItem->anyWordTypeString(), "\"" );
 																	}
 																else
-																	adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The created word item is undefined" );
+																	adminItem_->startError( functionNameString, moduleNameString_, "The created word item is undefined" );
 																}
 															else
-																adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a singular noun word" );
+																adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a singular noun word" );
 															}
 														else
 															{
@@ -793,12 +803,12 @@ class AdminReadCreateWords
 																if( foundWordItem->addWordType( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString_ ).result == RESULT_OK )
 																	pluralNounWordItem = foundWordItem;
 																else
-																	adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a plural noun word type item for word \"", foundWordItem->anyWordTypeString(), "\"" );
+																	adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a plural noun word type item for word \"", foundWordItem->anyWordTypeString(), "\"" );
 																}
 															}
 														}
 													else
-														adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find if a singular noun word already exists" );
+														adminItem_->addError( functionNameString, moduleNameString_, "I failed to find if a singular noun word already exists" );
 													}
 												else
 													{
@@ -808,7 +818,7 @@ class AdminReadCreateWords
 														if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, NO_WORD_PARAMETER, WORD_TYPE_NOUN_SINGULAR, wordStringLength, exactWordString_ ) ).result == RESULT_OK )
 															singularNounWordItem = wordResult.createdWordItem;
 														else
-															adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a singular noun word" );
+															adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a singular noun word" );
 														}
 													}
 
@@ -816,7 +826,7 @@ class AdminReadCreateWords
 												singularNounWordItem != NULL )
 													{
 													if( createReadWord( currentWordOrderNr_, WORD_TYPE_NOUN_SINGULAR, 0, NULL, singularNounWordItem ).result != RESULT_OK )
-														adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a singular noun read word" );
+														adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a singular noun read word" );
 													}
 
 												if( commonVariables_->result == RESULT_OK &&
@@ -824,7 +834,7 @@ class AdminReadCreateWords
 												pluralNounWordItem != NULL )
 													{
 													if( createReadWord( currentWordOrderNr_, WORD_TYPE_NOUN_PLURAL, 0, NULL, pluralNounWordItem ).result != RESULT_OK )
-														adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a plural noun read word" );
+														adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a plural noun read word" );
 													}
 												}
 
@@ -848,24 +858,24 @@ class AdminReadCreateWords
 														if( createReadWord( currentWordOrderNr_, WORD_TYPE_ADJECTIVE, 0, NULL, createdWordItem ).result == RESULT_OK )
 															isAdjective = true;
 														else
-															adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create an adjective read word" );
+															adminItem_->addError( functionNameString, moduleNameString_, "I failed to create an adjective read word" );
 														}
 													else
-														adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The last created adjective word is undefined" );
+														adminItem_->startError( functionNameString, moduleNameString_, "The last created adjective word is undefined" );
 													}
 												else
-													adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add an adjective word" );
+													adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an adjective word" );
 												}
 											}
 										else
-											adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to check the plural noun ending" );
+											adminItem_->addError( functionNameString, moduleNameString_, "I failed to check the plural noun ending" );
 										}
 									else
-										adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The current language word item is undefined" );
+										adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
 									}
 								}
 							else
-								adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create the word strings" );
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to create the word strings" );
 							}
 
 						// Don't mark Spanish reversed question mark as first word
@@ -875,17 +885,26 @@ class AdminReadCreateWords
 						readPosition = nextWordPosition;
 						}
 					else
-						adminItem_->startSystemErrorInItem( functionNameString, moduleNameString_, "Word order number overflow! I can't accept more words" );
+						adminItem_->startSystemError( functionNameString, moduleNameString_, "Word order number overflow! I can't accept more words" );
 					}
 				while( commonVariables_->result == RESULT_OK &&
 				hasCreatedReadWord_ &&
 				readPosition < readSentenceStringLength );
+
+				// The read sentence isn't ended by a colon.
+				// So, add the missing colon.
+				if( commonVariables_->result == RESULT_OK &&
+				!isSymbol )
+					{
+					if( createReadWord( ++currentWordOrderNr_, WORD_TYPE_SYMBOL, 0, NULL, adminItem_->predefinedWordItem( WORD_PARAMETER_SYMBOL_COLON ) ).result != RESULT_OK )
+						adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a read word for a missing colon" );
+					}
 				}
 			else
-				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given read sentence string is empty" );
+				adminItem_->startError( functionNameString, moduleNameString_, "The given read sentence string is empty" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given read sentence string is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given read sentence string is undefined" );
 
 		readResult.hasCreatedAllReadWords = hasCreatedReadWord_;
 		readResult.result = commonVariables_->result;
@@ -978,10 +997,10 @@ class AdminReadCreateWords
 					}
 				}
 			else
-				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given start word position is invalid" );
+				adminItem_->startError( functionNameString, moduleNameString_, "The given start word position is invalid" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word string is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given word string is undefined" );
 
 		readResult.result = commonVariables_->result;
 		readResult.nextWordPosition = wordPosition;
@@ -1017,12 +1036,12 @@ class AdminReadCreateWords
 						if( ( adminItem_->wordList = new WordList( commonVariables_, adminItem_ ) ) != NULL )
 							adminItem_->adminListArray[ADMIN_WORD_LIST] = adminItem_->wordList;
 						else
-							adminItem_->startErrorInItem( functionNameString, moduleNameString_, "I failed to create a word list" );
+							adminItem_->startError( functionNameString, moduleNameString_, "I failed to create a word list" );
 						}
 					else
 						{
 						if( ( wordResult = adminItem_->findWordTypeInAllWords( false, wordTypeNr, wordTypeString, NULL ) ).result != RESULT_OK )
-							adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to find a word type in all words" );
+							adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a word type in all words" );
 						}
 
 					if( wordResult.foundWordItem == NULL ||
@@ -1084,30 +1103,30 @@ class AdminReadCreateWords
 									wordTypeResult.createdWordTypeItem != NULL &&
 									!wordTypeResult.createdWordTypeItem->isCorrectIndefiniteArticle( false, indefiniteArticleParameter ) )
 										{
-										if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_INDEFINITE_ARTICLE_WITH_NOUN_START, wordTypeString, INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == RESULT_OK )
+										if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, wordTypeString, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == RESULT_OK )
 											hasFoundDifferentParameter_ = true;
 										else
-											adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to write an interface notification" );
+											adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'different indefinite article used' interface notification" );
 										}
 									}
 								else
-									adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to add a word type to a new word" );
+									adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a word type to a new word" );
 								}
 							else
-								adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The last created word item is undefined" );
+								adminItem_->startError( functionNameString, moduleNameString_, "The last created word item is undefined" );
 							}
 						else
-							adminItem_->addErrorInItem( functionNameString, moduleNameString_, "I failed to create a word item" );
+							adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a word item" );
 						}
 					}
 				else
-					adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word type number is undefined" );
+					adminItem_->startError( functionNameString, moduleNameString_, "The given word type number is undefined" );
 				}
 			else
-				adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word type string is empty or has no words left anymore" );
+				adminItem_->startError( functionNameString, moduleNameString_, "The given word type string is empty or has no words left anymore" );
 			}
 		else
-			adminItem_->startErrorInItem( functionNameString, moduleNameString_, "The given word type string is undefined" );
+			adminItem_->startError( functionNameString, moduleNameString_, "The given word type string is undefined" );
 
 		wordResult.result = commonVariables_->result;
 		return wordResult;

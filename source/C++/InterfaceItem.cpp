@@ -3,11 +3,10 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the interface messages
  *					in a certain language that can be shown to the user
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -56,17 +55,17 @@ class InterfaceItem : private Item
 				{
 				if( ( interfaceString_ = new char[interfaceStringLength + 1] ) != NULL )
 					{
-					strncpy( interfaceString_, interfaceString, interfaceStringLength );
-					interfaceString_[interfaceStringLength] = NULL_CHAR;
+					strcpy( interfaceString_, EMPTY_STRING );
+					strncat( interfaceString_, interfaceString, interfaceStringLength );
 					}
 				else
-					startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the interface string" );
+					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the interface string" );
 				}
 			else
-				startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given interface string is too long" );
+				startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given interface string is too long" );
 			}
 		else
-			startSystemErrorInItem( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given interface string is undefined" );
+			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given interface string is undefined" );
 		}
 
 	~InterfaceItem()

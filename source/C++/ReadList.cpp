@@ -2,11 +2,10 @@
  *	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -114,7 +113,7 @@ class ReadList : private List
 			if( ( referenceResult = searchItem->findWordReference( referenceWordItem ) ).result == RESULT_OK )
 				searchItem = searchItem->nextReadItem();
 			else
-				addError( functionNameString, NULL, NULL, "I failed to check for a reference word item in an active read item" );
+				addError( functionNameString, NULL, "I failed to check for a reference word item in an active read item" );
 			}
 
 		searchItem = firstInactiveReadItem();
@@ -126,7 +125,7 @@ class ReadList : private List
 			if( ( referenceResult = searchItem->findWordReference( referenceWordItem ) ).result == RESULT_OK )
 				searchItem = searchItem->nextReadItem();
 			else
-				addError( functionNameString, NULL, NULL, "I failed to check for a reference word item in an inactive read item" );
+				addError( functionNameString, NULL, "I failed to check for a reference word item in an inactive read item" );
 			}
 
 		return referenceResult;
@@ -152,7 +151,7 @@ class ReadList : private List
 						if( deleteItem( false, searchItem ) == RESULT_OK )
 							searchItem = nextReadListItem();
 						else
-							return addError( functionNameString, NULL, NULL, "I failed to delete an active read item" );
+							return addError( functionNameString, NULL, "I failed to delete an active read item" );
 						}
 					else
 						searchItem = searchItem->nextReadItem();
@@ -162,7 +161,7 @@ class ReadList : private List
 				}
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given sentence string is undefined" );
+			return startError( functionNameString, NULL, "The given sentence string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -203,13 +202,12 @@ class ReadList : private List
 
 	bool isImperativeSentence()
 		{
+		unsigned short wordOrderNr;
 		unsigned short previousWordOrderNr = NO_ORDER_NR;
 		unsigned int nWords = 0;
 		char *readWordString;
 		ReadItem *startItem = NULL;
 		ReadItem *searchItem = firstActiveReadItem();
-
-		strcpy( commonVariables()->writeSentenceString, EMPTY_STRING );
 
 		while( searchItem != NULL )
 			{
@@ -218,10 +216,10 @@ class ReadList : private List
 			searchItem->isSpecificationWord() ) &&
 
 			// First appearance of new word
-			searchItem->wordOrderNr() > previousWordOrderNr )
+			( wordOrderNr = searchItem->wordOrderNr() ) > previousWordOrderNr )
 				{
 				nWords++;
-				previousWordOrderNr = searchItem->wordOrderNr();
+				previousWordOrderNr = wordOrderNr;
 
 				if( startItem == NULL )
 					startItem = searchItem;
@@ -236,9 +234,11 @@ class ReadList : private List
 			previousWordOrderNr = NO_ORDER_NR;
 			searchItem = startItem;
 
+			strcpy( commonVariables()->writeSentenceString, EMPTY_STRING );
+
 			while( searchItem != NULL )
 				{
-				if( searchItem->wordOrderNr() > previousWordOrderNr &&
+				if( ( wordOrderNr = searchItem->wordOrderNr() ) > previousWordOrderNr &&
 				// Skip text
 				searchItem->readWordItem() != NULL &&
 				( readWordString = searchItem->readWordTypeString() ) != NULL )
@@ -248,15 +248,17 @@ class ReadList : private List
 					searchItem->grammarParameter != GRAMMAR_SENTENCE )
 						strcat( commonVariables()->writeSentenceString, SPACE_STRING );
 
-					previousWordOrderNr = searchItem->wordOrderNr();
+					previousWordOrderNr = wordOrderNr;
 					strcat( commonVariables()->writeSentenceString, readWordString );
 					}
 
 				searchItem = searchItem->nextReadItem();
 				}
+
+			return true;
 			}
 
-		return ( nWords > 2 );
+		return false;
 		}
 
 	ReadResultType createReadItem( unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, size_t readStringLength, char *readString, WordItem *readWordItem )
@@ -272,16 +274,16 @@ class ReadList : private List
 				if( ( readResult.createdReadItem = new ReadItem( wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, commonVariables(), this, myWordItem() ) ) != NULL )
 					{
 					if( addItemToList( QUERY_ACTIVE_CHAR, readResult.createdReadItem ) != RESULT_OK )
-						addError( functionNameString, NULL, NULL, "I failed to add an active read item" );
+						addError( functionNameString, NULL, "I failed to add an active read item" );
 					}
 				else
-					startError( functionNameString, NULL, NULL, "I failed to create a read item" );
+					startError( functionNameString, NULL, "I failed to create a read item" );
 				}
 			else
-				startError( functionNameString, NULL, NULL, "The current item number is undefined" );
+				startError( functionNameString, NULL, "The current item number is undefined" );
 			}
 		else
-			startError( functionNameString, NULL, NULL, "The given read word type number is undefined or out of bounds" );
+			startError( functionNameString, NULL, "The given read word type number is undefined or out of bounds" );
 
 		readResult.result = commonVariables()->result;
 		return readResult;
@@ -294,13 +296,6 @@ class ReadList : private List
 		ReadItem *inactiveReadItem = firstInactiveReadItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findMoreInterpretations";
 
-		// Clear grammar parameters of all active read items
-		while( activeReadItem != NULL )
-			{
-			activeReadItem->grammarParameter = NO_GRAMMAR_PARAMETER;
-			activeReadItem = activeReadItem->nextReadItem();
-			}
-
 		// Get last inactive item
 		while( inactiveReadItem != NULL &&
 		inactiveReadItem->nextReadItem() != NULL )
@@ -311,8 +306,17 @@ class ReadList : private List
 			readResult.hasFoundMoreInterpretations = true;
 			lastActivatedWordOrderNr_ = inactiveReadItem->wordOrderNr();
 
-			if( activateItem( inactiveReadItem ) != RESULT_OK )
-				addError( functionNameString, NULL, NULL, "I failed to active an inactive item" );
+			if( activateItem( inactiveReadItem ) == RESULT_OK )
+				{
+				// Clear grammar parameters of all active read items
+				while( activeReadItem != NULL )
+					{
+					activeReadItem->grammarParameter = NO_GRAMMAR_PARAMETER;
+					activeReadItem = activeReadItem->nextReadItem();
+					}
+				}
+			else
+				addError( functionNameString, NULL, "I failed to active an inactive item" );
 			}
 
 		readResult.result = commonVariables()->result;
@@ -350,7 +354,7 @@ class ReadList : private List
 				}
 			}
 		else
-			startError( functionNameString, NULL, NULL, "The given read word is undefined" );
+			startError( functionNameString, NULL, "The given read word is undefined" );
 
 		readResult.result = commonVariables()->result;
 		return readResult;
@@ -388,7 +392,7 @@ class ReadList : private List
 							if( inactivateItem( activeReadItem ) == RESULT_OK )
 								activeReadItem = nextReadListItem();
 							else
-								addError( functionNameString, NULL, NULL, "I failed to inactive an active item" );
+								addError( functionNameString, NULL, "I failed to inactive an active item" );
 							}
 						}
 					else
@@ -420,7 +424,7 @@ class ReadList : private List
 				if( activateItem( searchItem ) == RESULT_OK )
 					searchItem = nextReadListItem();
 				else
-					return addError( functionNameString, NULL, NULL, "I failed to activate an inactive item" );
+					return addError( functionNameString, NULL, "I failed to activate an inactive item" );
 				}
 			else
 				searchItem = searchItem->nextReadItem();
@@ -439,7 +443,7 @@ class ReadList : private List
 			if( deleteItem( false, searchItem ) == RESULT_OK )
 				searchItem = nextReadListItem();
 			else
-				return addError( functionNameString, NULL, NULL, "I failed to delete an active item" );
+				return addError( functionNameString, NULL, "I failed to delete an active item" );
 			}
 
 		return RESULT_OK;
@@ -449,6 +453,7 @@ class ReadList : private List
 		{
 		bool hasFound = false;
 		bool isMarked = true;
+		unsigned short wordOrderNr;
 		size_t definitionGrammarStringLength;
 		char *definitionGrammarString;
 		ReadItem *searchItem = firstActiveReadItem();
@@ -464,11 +469,11 @@ class ReadList : private List
 						{
 						while( isMarked &&
 						searchItem != NULL &&
-						searchItem->wordOrderNr() <= endWordOrderNr )
+						( wordOrderNr = searchItem->wordOrderNr() ) <= endWordOrderNr )
 							{
 							if( !searchItem->isMarkedBySetGrammarParameter &&
-							searchItem->wordOrderNr() > startWordOrderNr &&
-							searchItem->wordOrderNr() <= endWordOrderNr )
+							wordOrderNr > startWordOrderNr &&
+							wordOrderNr <= endWordOrderNr )
 								isMarked = false;
 
 							searchItem = searchItem->nextReadItem();
@@ -478,10 +483,10 @@ class ReadList : private List
 						}
 
 					while( searchItem != NULL &&
-					searchItem->wordOrderNr() <= endWordOrderNr )
+					( wordOrderNr = searchItem->wordOrderNr() ) <= endWordOrderNr )
 						{
-						if( searchItem->wordOrderNr() > startWordOrderNr &&
-						searchItem->wordOrderNr() <= endWordOrderNr )
+						if( wordOrderNr > startWordOrderNr &&
+						wordOrderNr <= endWordOrderNr )
 							{
 							hasFound = true;
 
@@ -509,10 +514,10 @@ class ReadList : private List
 												if( ( searchItem->readString = new char[definitionGrammarStringLength + 1] ) != NULL )
 													strcpy( searchItem->readString, definitionGrammarString );
 												else
-													return startError( functionNameString, NULL, NULL, "I failed to create a grammar string" );
+													return startError( functionNameString, NULL, "I failed to create a grammar string" );
 												}
 											else
-												return startError( functionNameString, NULL, NULL, "The grammar definition string is too long" );
+												return startError( functionNameString, NULL, "The grammar definition string is too long" );
 											}
 										}
 									}
@@ -525,16 +530,16 @@ class ReadList : private List
 						}
 
 					if( !hasFound )
-						return startError( functionNameString, NULL, NULL, "I couldn't find any item between the given word order numbers" );
+						return startError( functionNameString, NULL, "I couldn't find any item between the given word order numbers" );
 					}
 				else
-					return startError( functionNameString, NULL, NULL, "The given grammar definition word item is undefined" );
+					return startError( functionNameString, NULL, "The given grammar definition word item is undefined" );
 				}
 			else
-				return startError( functionNameString, NULL, NULL, "The given start word order number is equal or higher than the given end word order number" );
+				return startError( functionNameString, NULL, "The given start word order number is equal or higher than the given end word order number" );
 			}
 		else
-			return startError( functionNameString, NULL, NULL, "The given end word order number is undefined" );
+			return startError( functionNameString, NULL, "The given end word order number is undefined" );
 
 		return RESULT_OK;
 		}

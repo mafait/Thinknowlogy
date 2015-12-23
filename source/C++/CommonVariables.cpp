@@ -1,11 +1,10 @@
 /*
  *	Class:			CommonVariables
  *	Purpose:		To hold the common variables
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -25,11 +24,10 @@
 #include <string.h>
 #include "Constants.h"
 
-// Class declarations needed by some compilers
+// Some compilers need these class declarations
 class Presentation;
 class ScoreList;
 class SelectionList;
-class SpecificationItem;
 class WordItem;
 
 class CommonVariables
@@ -103,6 +101,7 @@ class CommonVariables
 
 	bool hasFoundAnswerToQuestion;
 	bool hasFoundQuery;
+	bool hasShownArticleNotification;
 	bool hasShownMessage;
 	bool hasShownWarning;
 
@@ -110,7 +109,6 @@ class CommonVariables
 	bool isDontIncrementCurrentSentenceNr;
 	bool isFirstAnswerToQuestion;
 	bool isQuestionAlreadyAnswered;
-	bool isUserQuestion;
 
 	ResultType result;
 
@@ -154,6 +152,8 @@ class CommonVariables
 	WordItem *predefinedNounUserWordItem;
 
 	char queryString[MAX_SENTENCE_STRING_LENGTH];
+
+	char learnedFromUserString[MAX_SENTENCE_STRING_LENGTH];
 	char writeSentenceString[MAX_SENTENCE_STRING_LENGTH];
 
 
@@ -166,6 +166,7 @@ class CommonVariables
 
 		hasFoundAnswerToQuestion = false;
 		hasFoundQuery = false;
+		hasShownArticleNotification = false;
 		hasShownMessage = false;
 		hasShownWarning = false;
 
@@ -173,7 +174,6 @@ class CommonVariables
 		isDontIncrementCurrentSentenceNr = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
-		isUserQuestion = false;
 
 		result = RESULT_OK;
 

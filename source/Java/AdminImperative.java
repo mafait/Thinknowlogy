@@ -2,11 +2,10 @@
  *	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -54,7 +53,7 @@ class AdminImperative
 					if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
 						{
 						if( adminItem_.writeTextWithPossibleQueryCommands( Constants.PRESENTATION_PROMPT_INFO, executionString ) != Constants.RESULT_OK )
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write the execution string" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write the execution string" );
 						}
 					}
 				else
@@ -65,7 +64,7 @@ class AdminImperative
 						{
 						case Constants.WORD_PARAMETER_NOUN_JUSTIFICATION_REPORT:
 							if( adminItem_.writeJustificationReport( specificationWordItem ) != Constants.RESULT_OK )
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write justification for a word" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write justification for a word" );
 
 							break;
 
@@ -80,37 +79,39 @@ class AdminImperative
 									( singularNounString = specificationWordItem.singularNounString() ) != null )
 										{
 										if( adminItem_.readInfoFile( false, singularNounString ).result != Constants.RESULT_OK )
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read the info file with a singular noun word" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to read the info file with a singular noun word" );
 										}
 
 									// Try to show all knowledge about this specification
 									if( adminItem_.writeInfoAboutWord( false, true, true, true, true, true, true, true, specificationWordItem ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write info about a word" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to write info about a word" );
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to read the info file" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to read the info file" );
 								}
 							else
-								return adminItem_.startErrorInItem( 1, moduleNameString_, "The specification word item is undefined" );
+								return adminItem_.startError( 1, moduleNameString_, "The specification word item is undefined" );
 						}
 
 					if( !CommonVariables.hasShownMessage &&
 					specificationWordItem != null )
 						{
-						if( adminItem_.isImperativeSentence() )
+						if( adminItem_.isImperativeSentence() &&
+						CommonVariables.writeSentenceStringBuffer != null &&
+						CommonVariables.writeSentenceStringBuffer.length() > 0 )
 							{
 							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_NO ) == Constants.RESULT_OK )
 								{
 								if( Presentation.writeDiacriticalText( false, false, Constants.PRESENTATION_PROMPT_NOTIFICATION, CommonVariables.writeSentenceStringBuffer.toString() ) != Constants.RESULT_OK )
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write a sentence" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to write a sentence" );
 								}
 							else
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface notification" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'I have no' interface notification" );
 							}
 						else
 							{
 							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_START, specificationWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_END ) != Constants.RESULT_OK )
-								return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
 							}
 						}
 					}
@@ -118,11 +119,11 @@ class AdminImperative
 			else
 				{
 				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
 				}
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -131,16 +132,16 @@ class AdminImperative
 		{
 		if( generalizationWordItem != null )
 			{
-			if( generalizationWordItem.addSpecification( true, false, false, false, false, false, false, false, false, false, isSelection, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.WORD_TYPE_UNDEFINED, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, specificationWordItem, null, null, null ).result == Constants.RESULT_OK )
+			if( generalizationWordItem.addSpecification( true, false, false, false, false, false, false, false, false, false, isSelection, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.WORD_TYPE_UNDEFINED, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, specificationWordItem, null, null, null ).result == Constants.RESULT_OK )
 				{
 				if( generalizationWordItem.assignSpecification( false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_UNDEFINED, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, 0, null, specificationWordItem, null, null ).result != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to assign a virtual list word" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to assign a virtual list word" );
 				}
 			else
-				return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a virtual list specification" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to add a virtual list specification" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -162,12 +163,12 @@ class AdminImperative
 							!specificationWordItem.isNounTail() )
 								{
 								if( addWordToVirtualList( false, relationWordTypeNr, specificationWordTypeNr, relationWordItem, specificationWordItem ) != Constants.RESULT_OK )
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a word to a virtual list" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to add a word to a virtual list" );
 								}
 							else
 								{
 								if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != Constants.RESULT_OK )
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
 								}
 
 							break;
@@ -185,7 +186,7 @@ class AdminImperative
 										else
 											{
 											if( relationWordItem.inactivateActiveAssignment( foundVirtualListAssignmentItem_ ) != Constants.RESULT_OK )
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to dectivate the head of a virtual list" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to dectivate the head of a virtual list" );
 											}
 										}
 									else
@@ -199,7 +200,7 @@ class AdminImperative
 											else
 												{
 												if( relationWordItem.inactivateActiveAssignment( foundVirtualListAssignmentItem_ ) != Constants.RESULT_OK )
-													return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to dectivate the tail of a virtual list" );
+													return adminItem_.addError( 1, moduleNameString_, "I failed to dectivate the tail of a virtual list" );
 												}
 											}
 										}
@@ -214,7 +215,7 @@ class AdminImperative
 										else
 											{
 											if( relationWordItem.inactivateActiveAssignment( foundVirtualListAssignmentItem_ ) != Constants.RESULT_OK )
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to dectivate the word in a virtual list" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to dectivate the word in a virtual list" );
 											}
 										}
 
@@ -226,20 +227,20 @@ class AdminImperative
 										if( !hasFoundVirtualListAction_ )
 											{
 											if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_NEEDS_A_LIST_TO_BE_SPECIFIED ) != Constants.RESULT_OK )
-												return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+												return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
 											}
 										}
 									else
 										{
 										if( addWordToVirtualList( false, foundVirtualListAssignmentItem_.generalizationWordTypeNr(), foundVirtualListAssignmentItem_.specificationWordTypeNr(), relationWordItem, foundVirtualListAssignmentItem_.specificationWordItem() ) != Constants.RESULT_OK )
-											return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to add a word to a virtual list" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to add a word to a virtual list" );
 										}
 
 									break;
 
 								default:
 									if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_PREPOSITION_NOT_USED_FOR_THIS_ACTION ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning about the preposition parameter" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning about the preposition parameter" );
 								}
 
 							break;
@@ -260,23 +261,23 @@ class AdminImperative
 							if( foundVirtualListAssignmentItem_ != null )
 								{
 								if( relationWordItem.inactivateActiveAssignment( foundVirtualListAssignmentItem_ ) != Constants.RESULT_OK )
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to dectivate the head of a virtual list" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to dectivate the head of a virtual list" );
 								}
 
 							break;
 
 						default:
-							return adminItem_.startErrorInItem( 1, moduleNameString_, "The given imperative parameter isn't a virtual list action" );
+							return adminItem_.startError( 1, moduleNameString_, "The given imperative parameter isn't a virtual list action" );
 						}
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given relation word item is undefined" );
+					return adminItem_.startError( 1, moduleNameString_, "The given relation word item is undefined" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -302,7 +303,7 @@ class AdminImperative
 							( relationWordItem = currentReadItem.readWordItem() ) != null )
 								{
 								if( executeVirtualListImperative( imperativeParameter, prepositionParameter, specificationWordTypeNr, currentReadItem.wordTypeNr(), generalizationWordItem, specificationWordItem, relationWordItem ) != Constants.RESULT_OK )
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute a virtual list imperative" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to execute a virtual list imperative" );
 								}
 							}
 						}
@@ -312,17 +313,17 @@ class AdminImperative
 				else
 					{
 					if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_NEEDS_A_LIST_TO_BE_SPECIFIED ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
 					}
 				}
 			else
 				{
 				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
 				}
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -340,19 +341,19 @@ class AdminImperative
 					if( ( relationWordItem = executionSelectionItem.relationWordItem() ) != null )
 						{
 						if( executeVirtualListImperative( imperativeParameter, executionSelectionItem.prepositionParameter(), specificationWordTypeNr, executionSelectionItem.relationWordTypeNr(), generalizationWordItem, specificationWordItem, relationWordItem ) != Constants.RESULT_OK )
-							return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to execute a virtual list imperative" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to execute a virtual list imperative" );
 						}
 					else
-						return adminItem_.startErrorInItem( 1, moduleNameString_, "The given execution selection item has no relation word item" );
+						return adminItem_.startError( 1, moduleNameString_, "The given execution selection item has no relation word item" );
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given execution selection item is undefined" );
+					return adminItem_.startError( 1, moduleNameString_, "The given execution selection item is undefined" );
 				}
 			else
-				return adminItem_.startErrorInItem( 1, moduleNameString_, "The given specification word item is undefined" );
+				return adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 			}
 		else
-			return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -378,7 +379,7 @@ class AdminImperative
 		if( errorString != null )
 			{
 			if( adminItem_ != null )
-				adminItem_.startSystemErrorInItem( 1, moduleNameString_, errorString );
+				adminItem_.startSystemError( 1, moduleNameString_, errorString );
 			else
 				{
 				CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
@@ -410,7 +411,7 @@ class AdminImperative
 			// Selection
 			case Constants.NO_IMPERATIVE_PARAMETER:
 				if( adminItem_.assignSelectionSpecification( executionSelectionItem ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to assign an imperative selection specification at assignment level " + CommonVariables.currentAssignmentLevel );
+					return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to assign an imperative selection specification at assignment level " + CommonVariables.currentAssignmentLevel );
 
 				break;
 
@@ -420,12 +421,12 @@ class AdminImperative
 				if( executionSelectionItem == null )
 					{
 					if( executeVirtualListImperative( imperativeParameter, specificationWordTypeNr, generalizationWordItem, specificationWordItem, startRelationWordReadItem, endRelationReadItem ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to execute a virtual list imperative" );
+						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to execute a virtual list imperative" );
 					}
 				else
 					{
 					if( executeVirtualListSelectionImperative( imperativeParameter, specificationWordTypeNr, generalizationWordItem, specificationWordItem, executionSelectionItem ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to execute a selection virtual list imperative" );
+						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to execute a selection virtual list imperative" );
 					}
 
 				break;
@@ -441,23 +442,23 @@ class AdminImperative
 								if( adminItem_.deleteSentences( false, adminItem_.firstSentenceNrOfCurrentUser() ) == Constants.RESULT_OK )
 									{
 									if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_IMPERATIVE_NOTIFICATION_MY_MIND_IS_CLEAR ) != Constants.RESULT_OK )
-										return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to write an interface notification about clearing my mind" );
+										return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to write the 'my mind is clear' interface notification about clearing my mind" );
 									}
 								else
-									return adminItem_.addErrorInItem( 1, moduleNameString_, "I failed to delete the previous sentences" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to delete the previous sentences" );
 
 								break;
 
 							default:
 								if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != Constants.RESULT_OK )
-									return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to write an interface warning about clearing" );
+									return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to write an interface warning about clearing" );
 							}
 						}
 					else
 						isShowingRelationWarning = true;
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+					return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 				break;
 
@@ -467,13 +468,13 @@ class AdminImperative
 					if( startRelationWordReadItem == null )
 						{
 						if( adminItem_.readInfoFile( true, generalizationWordItem.anyWordTypeString() ).result != Constants.RESULT_OK )
-							return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to read the info help file" );
+							return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to read the info help file" );
 						}
 					else
 						isShowingRelationWarning = true;
 					}
 				else
-					return adminItem_.startErrorInItem( 1, moduleNameString_, "The given generalization word item is undefined" );
+					return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "The given generalization word item is undefined" );
 
 				break;
 
@@ -481,7 +482,7 @@ class AdminImperative
 				if( startRelationWordReadItem == null )
 					{
 					if( adminItem_.login( specificationWordItem ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to login" );
+						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to login" );
 					}
 				else
 					isShowingRelationWarning = true;
@@ -495,15 +496,50 @@ class AdminImperative
 						{
 						case Constants.WORD_PARAMETER_NOUN_FILE:
 							if( adminItem_.readExampleFile( executionString ) != Constants.RESULT_OK )
-								return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to read an example file" );
+								return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to read an example file" );
 
 							break;
 
+						case Constants.WORD_PARAMETER_NOUN_TEST_FILE:
+							{
+							if( executionString != null &&
+							executionString.length() > 0 )
+								{
+								// Postpone result check. Close test file first
+								adminItem_.readTestFile( executionString );
+
+								// Stop redirecting to test results
+								Presentation.redirectOutputToTestFile( null );
+
+								// Test file is closed. Now check the result
+								if( CommonVariables.result == Constants.RESULT_OK )
+									{
+									if( !Console.isTestingCanceled() )
+										{
+										if( adminItem_.compareOutputFileAgainstReferenceFile( executionString ) != Constants.RESULT_OK )
+											return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to compare the test file against the reference file" );
+
+										// Continue redirecting to test results
+										Presentation.redirectOutputToTestFile( adminItem_.fileList == null ? null : adminItem_.fileList.currentWriteFile() );
+										}
+									}
+								else
+									{
+									Presentation.clearProgress();
+									return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to read a test file" );
+									}
+								}
+							else
+								return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "The given execution string is undefined or empty" );
+							}
+
+						break;
+
 						default:
 							if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-								return adminItem_.startErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I don't know how to perform imperative 'read'. Unknown specification parameter: " + specificationWordParameter );
+								return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to perform imperative 'read'. Unknown specification parameter: " + specificationWordParameter );
 
-							return adminItem_.startErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I don't know how to perform imperative 'read'. Unknown specification parameter: " + specificationWordParameter + " at assignment level " + CommonVariables.currentAssignmentLevel );
+							return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to perform imperative 'read'. Unknown specification parameter: " + specificationWordParameter + " at assignment level " + CommonVariables.currentAssignmentLevel );
 						}
 					}
 				else
@@ -515,7 +551,7 @@ class AdminImperative
 				if( adminItem_.undoLastSentence() == Constants.RESULT_OK )
 					adminItem_.dontDeletedRollbackInfo();
 				else
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to undo the last sentence" );
+					return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to undo the last sentence" );
 
 				break;
 
@@ -523,7 +559,7 @@ class AdminImperative
 				if( adminItem_.redoLastUndoneSentence() == Constants.RESULT_OK )
 					adminItem_.dontDeletedRollbackInfo();
 				else
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to redo the last undone sentence" );
+					return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to redo the last undone sentence" );
 
 				break;
 
@@ -533,7 +569,7 @@ class AdminImperative
 
 			case Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_SHOW:
 				if( executeImperativeShow( specificationWordParameter, specificationWordTypeNr, generalizationWordItem, specificationWordItem, executionString ) != Constants.RESULT_OK )
-					return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to execute the show imperative" );
+					return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to execute the show imperative" );
 
 				break;
 
@@ -548,27 +584,27 @@ class AdminImperative
 					adminItem_.clearCurrentSolveProgress();
 
 					if( adminItem_.solveWord( endSolveProgress, specificationWordItem, actionSelectionItem ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to solve a word at assignment level " + CommonVariables.currentAssignmentLevel );
+						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to solve a word at assignment level " + CommonVariables.currentAssignmentLevel );
 					}
 				else
 					{
 					if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, generalizationWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != Constants.RESULT_OK )
-						return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to write an interface warning about solving" );
+						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to write an interface warning about solving" );
 					}
 
 				break;
 
 			default:
 				if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-					return adminItem_.startErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I don't know how to execute the imperative with word parameter: " + imperativeParameter );
+					return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to execute the imperative with word parameter: " + imperativeParameter );
 
-				return adminItem_.startErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I don't know how to execute the imperative with word parameter: " + imperativeParameter + ", at assignment level " + CommonVariables.currentAssignmentLevel );
+				return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to execute the imperative with word parameter: " + imperativeParameter + ", at assignment level " + CommonVariables.currentAssignmentLevel );
 			}
 
 		if( isShowingRelationWarning )
 			{
 			if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_TO_DO_WITH_RELATION ) != Constants.RESULT_OK )
-				return adminItem_.addErrorInItem( adminItem_.adminListChar( executionListNr ), 1, moduleNameString_, "I failed to write an interface warning" );
+				return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to write an interface warning" );
 			}
 
 		return Constants.RESULT_OK;

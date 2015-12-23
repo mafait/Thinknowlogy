@@ -1,11 +1,10 @@
 /*
  *	Class:			CollectionResultType
  *	Purpose:		To return word type variables of a function
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -25,7 +24,7 @@
 #include <string.h>
 #include "Constants.h"
 
-// Class declarations needed by some compilers
+// Some compilers need these class declarations
 class WordItem;
 
 class CollectionResultType
@@ -35,6 +34,7 @@ class CollectionResultType
 	friend class AdminSpecification;
 	friend class CollectionList;
 	friend class WordCollection;
+	friend class WordSpecification;
 	friend class WordItem;
 	protected:
 	// Protected variables

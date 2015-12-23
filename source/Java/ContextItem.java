@@ -2,11 +2,10 @@
  *	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -108,7 +107,7 @@ class ContextItem extends Item
 		if( specificationWordItem_ != null )
 			{
 			if( ( referenceResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find a matching word reference string for the specification word" );
+				addError( 1, null, "I failed to find a matching word reference string for the specification word" );
 			}
 
 		return referenceResult;
@@ -154,6 +153,11 @@ class ContextItem extends Item
 	protected short contextWordTypeNr()
 		{
 		return contextWordTypeNr_;
+		}
+
+	protected short specificationWordTypeNr()
+		{
+		return specificationWordTypeNr_;
 		}
 
 	protected int contextNr()

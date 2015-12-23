@@ -1,0 +1,101 @@
+﻿#-----------
+# Algemeen
+#-----------
+Lees het testbestand "Nederlands/ambiguiteit/Boston".
+Lees het testbestand "Nederlands/ambiguiteit/presidenten van de VS".
+Lees het testbestand "Nederlands/ambiguiteit/presidenten van de VS - Bevestiging".
+
+Lees het testbestand "Nederlands/programmeren/Vier op 'n rij - Toon informatie over de zet".
+Lees het testbestand "Nederlands/programmeren/Vier op 'n rij - Het oplossingsniveau is hoog".
+Lees het testbestand "Nederlands/programmeren/Groeten".
+Lees het testbestand "Nederlands/programmeren/Toren van Hanoi (even aantal schijven)".
+Lees het testbestand "Nederlands/programmeren/Toren van Hanoi (oneven aantal schijven)".
+
+Lees het testbestand "Nederlands/vraagbeantwoording/Specificatie-generalisatie - Vraag (over definities)".
+Lees het testbestand "Nederlands/vraagbeantwoording/Specificatie-generalisatie - Vraag (letter)".
+Lees het testbestand "Nederlands/vraagbeantwoording/Specificatie-generalisatie - Vraag (getal)".
+Lees het testbestand "Nederlands/vraagbeantwoording/Deze vraag is specifieker (zonder relatie)".
+
+Lees het testbestand "Nederlands/redeneren/Bepaald lidwoord komt niet overeen met zelfstandig naamwoord".
+Lees het testbestand "Nederlands/redeneren/Mijn conclusies die bevestigd zijn (met relatie, zonder gezinsdefinitie)".
+Lees het testbestand "Nederlands/redeneren/De enig overgebleven optie - Boot".
+Lees het testbestand "Nederlands/redeneren/De enig overgebleven optie - Anne is geen vrouw".
+Lees het testbestand "Nederlands/redeneren/De enig overgebleven optie - Optie".
+Lees het testbestand "Nederlands/redeneren/Zin met bezittelijk werkwoord (zonder gezinsdefinitie)".
+Lees het testbestand "Nederlands/redeneren/Specificatie-generalisatie - Zoogdieren (meervoud)".
+Lees het testbestand "Nederlands/redeneren/Specificatie-generalisatie - Zoogdieren (enkelvoud)".
+
+#-----------
+# Gezin
+#-----------
+Lees het testbestand "Nederlands/conflict/gezin/Anna is een zoon".
+Lees het testbestand "Nederlands/conflict/gezin/Johan is een moeder".
+Lees het testbestand "Nederlands/conflict/gezin/Jan is een vrouw".
+Lees het testbestand "Nederlands/conflict/gezin/Jan is de moeder van Paul".
+Lees het testbestand "Nederlands/conflict/gezin/Maria is een man (accepteer)".
+Lees het testbestand "Nederlands/conflict/gezin/Ontkennend conflict - Jan is geen vader".
+Lees het testbestand "Nederlands/conflict/gezin/Ontkennend conflict - Marie is een moeder".
+Lees het testbestand "Nederlands/conflict/gezin/Ontkennend conflict - Peter is geen vader".
+Lees het testbestand "Nederlands/conflict/gezin/Ontkennend conflict - Suzanne is de moeder van Paul, Johan en Laura".
+Lees het testbestand "Nederlands/conflict/gezin/Verleden tijd - Jan was de vader van Paul - Jan is een man".
+Lees het testbestand "Nederlands/conflict/gezin/Paul is een jongen - Paul is een man (normaal)".
+Lees het testbestand "Nederlands/conflict/gezin/Paul is een dochter".
+Lees het testbestand "Nederlands/conflict/gezin/Paul is een man (normaal) - Paul is een jongen".
+Lees het testbestand "Nederlands/conflict/gezin/Vraag in tegenspraak met zichzelf (geen kennis vooraf)".
+Lees het testbestand "Nederlands/conflict/gezin/Vraag in tegenspraak met zichzelf (met kennis)".
+Lees het testbestand "Nederlands/conflict/gezin/Zin in tegenspraak met zichzelf".
+
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Veronderstelling door suggestieve vraag".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Exclusieve vraag".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Ik weet het niet zeker".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Ik heb deze vraag al eerder gesteld".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Ik weet alleen".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Indirect beantwoorde vraag, met bevestiging".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Ontkennende en alternatieve antwoorden".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Positieve antwoorden".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Vraagrelatie is deelverzameling van antwoordrelatie".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Dezelfde en gelijksoortige vragen".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Deze vraag is specifieker (met relatie)".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/U had eerder een gerelateerde vraag".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/U had eerder een dezelfde-gelijksoortige vraag (met relatie)".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/U had eerder een dezelfde-gelijksoortige vraag (zonder relatie)".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/U had eerder een dezelfde-gelijksoortige-gerelateerde vraag (met relatie)".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Uw vraag is specifieker (over Jan)".
+Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Uw vraag is specifieker (over Paul en Johan)".
+
+Lees het testbestand "Nederlands/redeneren/gezin/Anna was de moeder van Paul, Johan en Laura".
+Lees het testbestand "Nederlands/redeneren/gezin/Corrigeren onjuiste veronderstelling (door kennis)".
+Lees het testbestand "Nederlands/redeneren/gezin/Corrigeren onjuiste veronderstelling (door tegengestelde suggestieve vraag)".
+Lees het testbestand "Nederlands/redeneren/gezin/Jan - Anna - Paul, Johan en Laura".
+Lees het testbestand "Nederlands/redeneren/gezin/Jan en Anna - Paul, Johan en Laura".
+Lees het testbestand "Nederlands/redeneren/gezin/Jan was de vader van Paul, Johan en Laura".
+Lees het testbestand "Nederlands/redeneren/gezin/Verantwoordingsrapportage".
+Lees het testbestand "Nederlands/redeneren/gezin/Laura - Johan - Jan en Anna - Paul".
+Lees het testbestand "Nederlands/redeneren/gezin/Laura - Johan - Paul - Jan en Anna".
+Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (kind)".
+Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (ouders)".
+Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (Jan en Anna)".
+Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (Paul, Johan en Laura)".
+Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (zonder relatie)".
+Lees het testbestand "Nederlands/redeneren/gezin/Mijn conclusies die bevestigd zijn (vader en moeder)".
+Lees het testbestand "Nederlands/redeneren/gezin/Mijn conclusies die bevestigd zijn (met relatie en gezinsdefinitie)".
+Lees het testbestand "Nederlands/redeneren/gezin/Mijn conclusies die bevestigd zijn (zonder relatie)".
+Lees het testbestand "Nederlands/redeneren/gezin/Paul - Johan - Laura - Jan en Anna (ouders)".
+Lees het testbestand "Nederlands/redeneren/gezin/Paul - Johan - Laura - Jan en Anna (zoon - dochter)".
+Lees het testbestand "Nederlands/redeneren/gezin/Paul - Jan en Anna - Johan - Laura".
+Lees het testbestand "Nederlands/redeneren/gezin/Verleden tijd".
+Lees het testbestand "Nederlands/redeneren/gezin/Zin met bezittelijk werkwoord (met gezinsdefinitie)".
+Lees het testbestand "Nederlands/redeneren/gezin/Deze informatie is specificieker (niet-exclusief)".
+Lees het testbestand "Nederlands/redeneren/gezin/Deze informatie is specificieker".
+Lees het testbestand "Nederlands/redeneren/gezin/U hebt tenminste één relatiewoord bevestigd".
+Lees het testbestand "Nederlands/redeneren/gezin/U hebt de specificatie bevestigd - maar geen relatie".
+
+Help.
+#Toon informatie over de talen.
+#Toon informatie over de lijsten.
+#Toon informatie over de gebruikers.
+#Toon informatie over de woordtypes.
+Toon de opvraag-opdrachten.
+Toon het auteursrecht.
+Toon de GPLv2-licentie.
+Toon de garantie.

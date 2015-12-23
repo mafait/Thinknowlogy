@@ -1,11 +1,10 @@
 /*
  *	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -32,9 +31,8 @@
 #include "CommonVariables.cpp"
 #include "ReferenceResultType.cpp"
 
-// Class declarations needed by some compilers
+// Some compilers need these class declarations
 class List;
-class WordItem;
 
 class Item
 	{
@@ -84,6 +82,7 @@ class Item
 
 	bool isAvailableForRollbackAfterDelete;
 	bool isSelectedByQuery;
+	bool isSelectedByJustificationQuery;
 
 	char previousStatusChar;
 
@@ -100,44 +99,37 @@ class Item
 
 	// Protected error functions
 
-	ResultType addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ResultType addErrorInItem( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	ResultType addError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString );
 
-	ResultType addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 );
-	ResultType addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
-	ResultType addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	ResultType addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1 );
-	ResultType addErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 );
+	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
+	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1 );
+	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
 
-	ResultType addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ResultType addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	ResultType addError( char listChar, const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
-	ResultType addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 );
-	ResultType addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	ResultType addErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2, const char *errorString3, unsigned int number3 );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2 );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2, char char2, const char *errorString3 );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1, const char *errorString4, unsigned int number2, const char *errorString5, unsigned int number3 );
 
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 );
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2, const char *errorString3, unsigned int number3 );
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2 );
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2, char char2, const char *errorString3 );
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
-	ResultType startErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1, const char *errorString4, unsigned int number2, const char *errorString5, unsigned int number3 );
-
-	ResultType startErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ResultType startErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 );
-	ResultType startErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	ResultType startErrorInItem( char listChar, const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
-
-	ResultType startSystemErrorInItem( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ResultType startSystemErrorInItem( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	ResultType startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	ResultType startSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
 
 	// Protected virtual functions
+
+	virtual void selectingAttachedJustifications( bool isSelectingJustificationSpecifications );
+	virtual void selectingJustificationSpecifications();
 
 	virtual void showString( bool isReturnQueryToPosition );
 	virtual void showWordReferences( bool isReturnQueryToPosition );
@@ -177,7 +169,6 @@ class Item
 
 	// Strictly for initialization of AdminItem
 	void initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem );
-
 	void initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem );
 
 	bool hasActiveSentenceNr();
@@ -206,6 +197,8 @@ class Item
 	bool wasActiveBefore();
 	bool wasInactiveBefore();
 
+	unsigned short userNr();
+
 	unsigned int activeSentenceNr();
 	unsigned int inactiveSentenceNr();
 	unsigned int originalSentenceNr();
@@ -227,6 +220,9 @@ class Item
 	ResultType decrementItemNr( unsigned int decrementOffset );
 
 	char statusChar();
+
+	char *classNameString();
+	char *superClassNameString();
 
 	List *myList();
 

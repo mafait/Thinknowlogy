@@ -1,0 +1,8 @@
+﻿Read the file "English/reasoning/family/family definition".
+Is John a father?
+Is John the father of Paul?
+Is Anna a father or a mother?
+Is Anna a mother?
+Anna is a mother.
+Is Anna the mother of Paul?
+# Remember to clear this knowledge before reading another example.

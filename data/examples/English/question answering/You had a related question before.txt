@@ -1,5 +1,0 @@
-﻿Read the file "English/reasoning/family definition".
-Is John the father of Paul?
-Is John the father of Joe?
-Is John a father?
-# Remember to clear this knowledge before reading another example.

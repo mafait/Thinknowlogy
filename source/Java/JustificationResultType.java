@@ -1,11 +1,10 @@
 /*
  *	Class:			JustificationResultType
  *	Purpose:		To return justification variables of a method
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -27,7 +26,6 @@ class JustificationResultType
 	// Protected variables
 
 	protected byte result;
-	protected short foundOrderNr;
 
 	protected JustificationItem createdJustificationItem;
 	protected JustificationItem foundJustificationItem;
@@ -37,8 +35,6 @@ class JustificationResultType
 	JustificationResultType()
 		{
 		result = Constants.RESULT_OK;
-
-		foundOrderNr = Constants.NO_ORDER_NR;
 
 		createdJustificationItem = null;
 		foundJustificationItem = null;

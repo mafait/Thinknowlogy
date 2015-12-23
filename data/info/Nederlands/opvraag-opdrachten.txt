@@ -22,8 +22,15 @@ Toon "--------------------------------------------------------------------------
 Toon " Lege item-specificatie toont alle items				\~()".
 Toon " Lege lijst-specificatie toont alle items				\~<>".
 Toon "------------------------------------------------------------------------------".
-Toon " Toevoegen '#' geeft telfunctionaliteit					\~#(123)".
+Toon " Toevoegen van '#' geeft telfunctionaliteit				\~#(123)".
+Toon " Toevoegen van '+' selecteert alleen actieve items			\~+(123)".
+Toon " Toevoegen van '=' selecteert alleen inactieve items			\~=(123)".
+Toon " Toevoegen van '$' selecteert alleen gearchiveerde items		\~$(123)".
+Toon " Toevoegen van '%' selecteert alleen vervangen items			\~%(123)".
+Toon " Toevoegen van '&' selecteert alleen verwijderde items			\~&(123)".
 Toon " Aaneenschakeling van opvraag-opdrachten geeft 'EN'-functionaliteit	\~(123)<s>".
+Toon " Toevoegen van '*' selecteert ook gelinkte verantwoordings-items	\~*'Laura'<s>`dochter`".
+Toon " Toevoegen van '**' selecteert ook verantwoordings-specificaties	\~**'Laura'<s>`dochter`".
 Toon "------------------------------------------------------------------------------".
 Toon " Toevoegen van ' aan het einde, toont alleen woorden			\~(123)'".
 Toon " Toevoegen van ` aan het einde, toont alleen woordreferenties		\~(123)`".

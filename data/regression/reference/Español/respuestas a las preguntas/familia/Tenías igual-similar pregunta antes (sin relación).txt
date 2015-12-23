@@ -1,0 +1,52 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Una madre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Una hija es probablemente una persona.
+< 
+* No sé nada de Juan, pero voy a seguir la pregunta en la mente.
+* 
+* No sé nada de Ana, pero voy a seguir la pregunta en la mente.
+* 
+* No sé nada de Pablo, pero voy a seguir la pregunta en la mente.
+* 
+* No sé nada de Luisa, pero voy a seguir la pregunta en la mente.
+* 
+* 
+* Tenías la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Juan un padre?
+* No sé nada de Juan, pero voy a seguir la pregunta en la mente.
+* 
+* 
+* Tenías la misma pregunta antes.
+* No sé nada de Ana, pero voy a seguir la pregunta en la mente.
+* 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Pablo un hijo?
+* No sé nada de Pablo, pero voy a seguir la pregunta en la mente.
+* 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Luisa una hija?
+* No sé nada de Luisa, pero voy a seguir la pregunta en la mente.
+* 

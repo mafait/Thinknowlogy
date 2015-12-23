@@ -1,11 +1,10 @@
 /*
  *	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -30,7 +29,7 @@
 #include <stdlib.h>
 #include "Item.h"
 
-// Class declarations needed by some compilers
+// Some compilers need these class declarations
 class ListCleanup;
 class ListQuery;
 
@@ -70,6 +69,7 @@ class List
 	private:
 	// Private functions
 
+	bool isAssignmentOrSpecificationList();
 	bool isIncludingThisList( char *queryListString );
 
 	unsigned int highestItemNr();
@@ -86,13 +86,13 @@ class List
 
 	// Protected error functions
 
-	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *errorString );
+	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *errorString );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *errorString, unsigned int sentenceNr );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int sentenceNr );
+	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
 
-	ResultType startSystemError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *errorString );
+	ResultType startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
 
 	// Protected virtual functions
@@ -168,13 +168,13 @@ class List
 
 	ReferenceResultType compareStrings( char *searchString, char *sourceString );
 
-	ResultType itemQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr );
-	ResultType listQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *queryListString );
-	ResultType wordTypeQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned short queryWordTypeNr );
-	ResultType parameterQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned int queryParameter );
-	ResultType wordQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems );
-	ResultType wordReferenceQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *wordReferenceNameString );
-	ResultType stringQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *queryString );
+	ResultType itemQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr );
+	ResultType listQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString );
+	ResultType wordTypeQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr );
+	ResultType parameterQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter );
+	ResultType wordQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems );
+	ResultType wordReferenceQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString );
+	ResultType stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString );
 	ResultType showQueryResultInList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth );
 	};
 #endif

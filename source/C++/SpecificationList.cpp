@@ -2,11 +2,10 @@
  *	Class:			SpecificationList
  *	Parent class:	List
  *	Purpose:		To store specification items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -49,7 +48,7 @@ class SpecificationList : private List
 			if( copySpecificationItem( isInactiveAssignment, isArchivedAssignment, searchItem->isAnsweredQuestion(), searchItem->isExclusiveSpecification(), (unsigned short)(searchItem->assignmentLevel() + 1 ), searchItem->generalizationCollectionNr(), searchItem->specificationCollectionNr(), searchItem->relationContextNr(), searchItem->firstJustificationItem(), searchItem ).result == RESULT_OK )
 				searchItem = searchItem->nextAssignmentItemWithCurrentLevel();
 			else
-				return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to copy an assignment item with incremented assignment level" );
+				return addError( functionNameString, NULL, "I failed to copy an assignment item with incremented assignment level" );
 			}
 
 		return RESULT_OK;
@@ -86,7 +85,7 @@ class SpecificationList : private List
 							if( isUserSpecification )
 								{
 								if( myWordItem()->replaceJustification( currentJustificationItem, NULL, obsoleteSpecificationItem ) != RESULT_OK )
-									return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to remove a justification from a confirmed specification" );
+									return addError( functionNameString, NULL, "I failed to remove a justification from a confirmed specification" );
 								}
 							else
 								{
@@ -94,7 +93,7 @@ class SpecificationList : private List
 								!myWordItem()->isJustificationInUse( currentJustificationItem ) )
 									{
 									if( myWordItem()->replaceOrDeleteJustification( currentJustificationItem ) != RESULT_OK )
-										return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to delete the current justification item" );
+										return addError( functionNameString, NULL, "I failed to delete the current justification item" );
 									}
 								}
 							}
@@ -102,18 +101,18 @@ class SpecificationList : private List
 					while( ( currentJustificationItem = attachedJustificationItem ) != NULL );
 
 					if( isSelfGeneratedQuestion &&
-					( obsoleteJustificationItem = myWordItem()->olderSecondarySpecificationJustificationItem( JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, replacingSpecificationItem ) ) != NULL )
+					( obsoleteJustificationItem = myWordItem()->secondarySpecificationJustificationItem( false, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, replacingSpecificationItem ) ) != NULL )
 						{
 						if( myWordItem()->replaceOrDeleteJustification( obsoleteJustificationItem ) != RESULT_OK )
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to delete an obsolete justification item" );
+							return addError( functionNameString, NULL, "I failed to delete an obsolete justification item" );
 						}
 					}
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given replacing specification item is undefined" );
+				return startError( functionNameString, NULL, "The given replacing specification item is undefined" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given obsolete specification item is undefined" );
+			return startError( functionNameString, NULL, "The given obsolete specification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -130,7 +129,7 @@ class SpecificationList : private List
 				if( deleteItem( false, searchItem ) == RESULT_OK )
 					searchItem = nextSpecificationListItem();
 				else
-					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to delete an item" );
+					return addError( functionNameString, NULL, "I failed to delete an item" );
 				}
 			else
 				searchItem = searchItem->nextSpecificationItem();
@@ -158,10 +157,10 @@ class SpecificationList : private List
 					}
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given replaced specification item is a replaced item" );
+				return startError( functionNameString, NULL, "The given replaced specification item is a replaced item" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given obsolete specification item is undefined" );
+			return startError( functionNameString, NULL, "The given obsolete specification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -193,22 +192,22 @@ class SpecificationList : private List
 						if( ( createdSpecificationItem = specificationResult.createdSpecificationItem ) != NULL )
 							{
 							if( replaceOrDeleteSpecification( olderSpecificationItem, createdSpecificationItem ) != RESULT_OK )
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to replace or delete the given specification" );
+								return addError( functionNameString, NULL, "I failed to replace or delete the given specification" );
 							}
 						else
-							startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't create a specification" );
+							startError( functionNameString, NULL, "I couldn't create a specification" );
 						}
 					else
-						return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to copy the older specification with different exclusive indicator and/or different collection numbers" );
+						return addError( functionNameString, NULL, "I failed to copy the older specification with different exclusive indicator and/or different collection numbers" );
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't find any changing parameter" );
+					return startError( functionNameString, NULL, "I couldn't find any changing parameter" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given older specification item isn't old" );
+				return startError( functionNameString, NULL, "The given older specification item isn't old" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given older specification item is undefined" );
+			return startError( functionNameString, NULL, "The given older specification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -230,29 +229,24 @@ class SpecificationList : private List
 						if( ( createdJustificationItem = justificationResult.createdJustificationItem ) != NULL )
 							{
 							if( myWordItem()->replaceJustification( obsoleteJustificationItem, createdJustificationItem, confirmationSpecificationItem ) != RESULT_OK )
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to replace the given obsolete justification item by a created justification item" );
+								return addError( functionNameString, NULL, "I failed to replace the given obsolete justification item by a created justification item" );
 							}
 						else
-							return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't create a justification item" );
+							return startError( functionNameString, NULL, "I couldn't create a justification item" );
 						}
 					else
-						return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to copy the primary specification Justification item with a different primary specification item" );
+						return addError( functionNameString, NULL, "I failed to copy the primary specification Justification item with a different primary specification item" );
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given confirmation specification item isn't a user specification" );
+					return startError( functionNameString, NULL, "The given confirmation specification item isn't a user specification" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given confirmation specification item is undefined" );
+				return startError( functionNameString, NULL, "The given confirmation specification item is undefined" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given obsolete justification item is undefined" );
+			return startError( functionNameString, NULL, "The given obsolete justification item is undefined" );
 
 		return RESULT_OK;
-		}
-
-	SpecificationItem *firstActiveSpecificationItem()
-		{
-		return (SpecificationItem *)firstActiveItem();
 		}
 
 	SpecificationItem *firstInactiveSpecificationItem()
@@ -376,16 +370,16 @@ class SpecificationList : private List
 				if( createNewAssignmentLevel( true, false ) == RESULT_OK )
 					{
 					if( createNewAssignmentLevel( false, true ) != RESULT_OK )
-						return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to create an archive assignment level" );
+						return addError( functionNameString, NULL, "I failed to create an archive assignment level" );
 					}
 				else
-					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to create an inactive assignment level" );
+					return addError( functionNameString, NULL, "I failed to create an inactive assignment level" );
 				}
 			else
-				return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to create an active assignment level" );
+				return addError( functionNameString, NULL, "I failed to create an active assignment level" );
 			}
 		else
-			return startSystemError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "Assignment level overflow" );
+			return startSystemError( functionNameString, NULL, "Assignment level overflow" );
 
 		return RESULT_OK;
 		}
@@ -408,34 +402,9 @@ class SpecificationList : private List
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current assignment level is undefined" );
+			return startError( functionNameString, NULL, "The current assignment level is undefined" );
 
 		return commonVariables()->result;
-		}
-
-	SpecificationResultType findAssignmentByRelationWord( bool isIncludingAnsweredQuestions, bool isInactiveAssignment, bool isArchivedAssignment, bool isPossessive, unsigned short questionParameter, WordItem *relationWordItem )
-		{
-		SpecificationResultType specificationResult;
-		SpecificationItem *searchItem = firstAssignmentItem( isIncludingAnsweredQuestions, isInactiveAssignment, isArchivedAssignment, questionParameter );
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findAssignmentByRelationWord";
-
-		if( relationWordItem != NULL )
-			{
-			while( searchItem != NULL &&
-			specificationResult.foundSpecificationItem == NULL )
-				{
-				if( searchItem->isPossessive() == isPossessive &&
-				relationWordItem->hasContextInWord( searchItem->relationContextNr(), searchItem->specificationWordItem() ) )
-					specificationResult.foundSpecificationItem = searchItem;
-				else
-					searchItem = searchItem->nextSelectedQuestionParameterSpecificationItem( isIncludingAnsweredQuestions );
-				}
-			}
-		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given relation context word is undefined" );
-
-		specificationResult.result = commonVariables()->result;
-		return specificationResult;
 		}
 
 	SpecificationItem *firstActiveNumeralAssignmentItem()
@@ -666,6 +635,21 @@ class SpecificationList : private List
 		return false;
 		}
 
+	bool hasFoundAnyUserSpecification()
+		{
+		SpecificationItem *searchItem = firstActiveSpecificationItem();
+
+		while( searchItem != NULL )
+			{
+			if( searchItem->userNr() > NO_USER_NR )
+				return true;
+
+			searchItem = searchItem->nextSelectedSpecificationItem();
+			}
+
+		return false;
+		}
+
 	bool hasFoundReplacedOrDeletedJustification( bool isInactiveAssignment, bool isArchivedAssignment )
 		{
 		SpecificationItem *searchItem = firstSpecificationItem( isInactiveAssignment, isArchivedAssignment );
@@ -776,13 +760,13 @@ class SpecificationList : private List
 								if( myWordItem()->replaceJustification( firstJustificationItem, foundOrCreatedJustificationItem, searchItem ) == RESULT_OK )
 									searchItem = firstAssignmentOrSpecificationItem( false, isInactiveAssignment, isArchivedAssignment, false );
 								else
-									return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to replace a justification of a negative assumption" );
+									return addError( functionNameString, NULL, "I failed to replace a justification of a negative assumption" );
 								}
 							else
 								searchItem = searchItem->nextSelectedSpecificationItem();
 							}
 						else
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add a justification item" );
+							return addError( functionNameString, NULL, "I failed to add a justification item" );
 						}
 					else
 						searchItem = searchItem->nextSelectedSpecificationItem();
@@ -792,7 +776,7 @@ class SpecificationList : private List
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given secondary specification item is undefined" );
+			return startError( functionNameString, NULL, "The given secondary specification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -807,13 +791,13 @@ class SpecificationList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->hasFoundJustification( !isReplaced, unusedJustificationItem ) )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I've found a justification item that is still in use" );
+					return startError( functionNameString, NULL, "I have found a justification item that is still in use" );
 
 				searchItem = searchItem->nextSpecificationItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unused justification item is undefined" );
+			return startError( functionNameString, NULL, "The given unused justification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -828,13 +812,13 @@ class SpecificationList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->replacingSpecificationItem == unusedSpecificationItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I've found a replacing specification item that is still in use" );
+					return startError( functionNameString, NULL, "I have found a replacing specification item that is still in use" );
 
 				searchItem = searchItem->nextSpecificationItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unused specification item is undefined" );
+			return startError( functionNameString, NULL, "The given unused specification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -849,13 +833,13 @@ class SpecificationList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->specificationWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The specification word item is still in use" );
+					return startError( functionNameString, NULL, "The specification word item is still in use" );
 
 				searchItem = searchItem->nextSpecificationItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unused word item is undefined" );
+			return startError( functionNameString, NULL, "The given unused word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -864,7 +848,7 @@ class SpecificationList : private List
 		{
 		size_t unknownPluralNounStringLength;
 		SpecificationItem *searchItem = firstSpecificationItem( isInactiveAssignment, isArchivedAssignment );
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkSpecificationsForReplacedOrDeletedJustifications";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "clearLastWrittenSentenceStringWithUnknownPluralNounInAllWords";
 
 		if( unknownPluralNounString != NULL )
 			{
@@ -883,10 +867,10 @@ class SpecificationList : private List
 					}
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given specification word item is undefined" );
+				return startError( functionNameString, NULL, "The given specification word item is undefined" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unknown plural noun string is undefined" );
+			return startError( functionNameString, NULL, "The given unknown plural noun string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -921,14 +905,14 @@ class SpecificationList : private List
 							if( searchItem->collectSpecification( isCollectGeneralization, isExclusiveSpecification, collectionNr ) == RESULT_OK )
 								searchItem = searchItem->nextSelectedSpecificationItem();
 							else
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to collect a specification" );
+								return addError( functionNameString, NULL, "I failed to collect a specification" );
 							}
 						else
 							{
 							if( changeOlderSpecification( isExclusiveSpecification, ( isCollectGeneralization ? collectionNr : NO_COLLECTION_NR ), ( isCollectSpecification ? collectionNr : NO_COLLECTION_NR ), searchItem ) == RESULT_OK )
 								searchItem = firstAssignmentOrSpecificationItem( false, isInactiveAssignment, isArchivedAssignment, isQuestion );
 							else
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to collect an older specification" );
+								return addError( functionNameString, NULL, "I failed to collect an older specification" );
 							}
 						}
 					else
@@ -939,7 +923,7 @@ class SpecificationList : private List
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given collection number is undefined" );
+			return startError( functionNameString, NULL, "The given collection number is undefined" );
 
 		return RESULT_OK;
 		}
@@ -962,17 +946,17 @@ class SpecificationList : private List
 						if( confirmSpecificationInJustification( ( foundJustificationItem->primarySpecificationItem() == confirmedSpecificationItem ), foundJustificationItem, confirmationSpecificationItem ) == RESULT_OK )
 							searchItem = firstAssignmentOrSpecificationItem( false, isInactiveAssignment, isArchivedAssignment, false );
 						else
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to confirm a specification in the found justification" );
+							return addError( functionNameString, NULL, "I failed to confirm a specification in the found justification" );
 						}
 					else
 						searchItem = searchItem->nextSelectedSpecificationItem();
 					}
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given confirmed specification but not its relation(s) specification item isn't self-generated" );
+				return startError( functionNameString, NULL, "The given confirmed specification but not its relation(s) specification item isn't self-generated" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given confirmed specification but not its relation(s) specification item is undefined" );
+			return startError( functionNameString, NULL, "The given confirmed specification but not its relation(s) specification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -984,12 +968,10 @@ class SpecificationList : private List
 
 		while( searchItem != NULL )
 			{
-			if( searchItem->isSelfGeneratedAssumption() &&
-			!searchItem->hasFoundJustificationWithReplacedPrimarySpecification() &&
-			!searchItem->isHiddenSpecification() )
+			if( searchItem->isSelfGeneratedAssumption() )
 				{
 				if( searchItem->recalculateAssumption() != RESULT_OK )
-					return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to recalculate an assumption" );
+					return addError( functionNameString, NULL, "I failed to recalculate an assumption" );
 				}
 
 			searchItem = searchItem->nextSelectedSpecificationItem();
@@ -1027,12 +1009,12 @@ class SpecificationList : private List
 									if( obsoleteSpecificationItem->hasCurrentCreationSentenceNr() )
 										{
 										if( deleteItem( false, obsoleteSpecificationItem ) != RESULT_OK )
-											return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to delete a specification item" );
+											return addError( functionNameString, NULL, "I failed to delete a specification item" );
 										}
 									else
 										{
 										if( replaceItem( obsoleteSpecificationItem ) != RESULT_OK )
-											return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to replace a specification item" );
+											return addError( functionNameString, NULL, "I failed to replace a specification item" );
 										}
 
 									if( myWordItem()->updateSpecificationsInJustificationsOfInvolvedWords( obsoleteSpecificationItem, replacingSpecificationItem ) == RESULT_OK )
@@ -1040,32 +1022,32 @@ class SpecificationList : private List
 										if( replacingSpecificationItem != NULL )
 											{
 											if( checkForConfirmedAssumptionOrConclusion( obsoleteSpecificationItem, replacingSpecificationItem ) != RESULT_OK )
-												return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to check for confirmed assumption or conclusion" );
+												return addError( functionNameString, NULL, "I failed to check for confirmed assumption or conclusion" );
 											}
 										}
 									else
-										return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to update the specifications in the justification of involved words" );
+										return addError( functionNameString, NULL, "I failed to update the specifications in the justification of involved words" );
 									}
 								else
-									return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to update the replacing specification item of the archive specification items" );
+									return addError( functionNameString, NULL, "I failed to update the replacing specification item of the archive specification items" );
 								}
 							else
-								return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given replacing specification item is a hidden specification, while the given obsolete specification item isn't hidden" );
+								return startError( functionNameString, NULL, "The given replacing specification item is a hidden specification, while the given obsolete specification item isn't hidden" );
 							}
 						else
-							return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given replacing specification item is an assignment item and I am a specification list, or the given replacing specification item is a specification item and I am an assignment list" );
+							return startError( functionNameString, NULL, "The given replacing specification item is an assignment item and I am a specification list, or the given replacing specification item is a specification item and I am an assignment list" );
 						}
 					else
-						return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given obsolete specification item is an assignment item and I am a specification list, or the given obsolete specification item is a specification item and I am an assignment list" );
+						return startError( functionNameString, NULL, "The given obsolete specification item is an assignment item and I am a specification list, or the given obsolete specification item is a specification item and I am an assignment list" );
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given obsolete specification item and the given replacing specification item are the same specification item" );
+					return startError( functionNameString, NULL, "The given obsolete specification item and the given replacing specification item are the same specification item" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given obsolete specification item is already replaced or deleted" );
+				return startError( functionNameString, NULL, "The given obsolete specification item is already replaced or deleted" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given obsolete specification item is undefined" );
+			return startError( functionNameString, NULL, "The given obsolete specification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -1081,7 +1063,7 @@ class SpecificationList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeSpecificationItemInFutureDatabase( isAssignment ) != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store an active specification item in the database" );
+					return addError( functionNameString, NULL, "I failed to store an active specification item in the database" );
 				}
 
 			searchItem = searchItem->nextSpecificationItem();
@@ -1094,7 +1076,7 @@ class SpecificationList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeSpecificationItemInFutureDatabase( isAssignment ) != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store an inactive specification item in the database" );
+					return addError( functionNameString, NULL, "I failed to store an inactive specification item in the database" );
 				}
 
 			searchItem = searchItem->nextSpecificationItem();
@@ -1107,7 +1089,7 @@ class SpecificationList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeSpecificationItemInFutureDatabase( isAssignment ) != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store an archived specification item in the database" );
+					return addError( functionNameString, NULL, "I failed to store an archived specification item in the database" );
 				}
 
 			searchItem = searchItem->nextSpecificationItem();
@@ -1120,7 +1102,7 @@ class SpecificationList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeSpecificationItemInFutureDatabase( isAssignment ) != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced specification item in the database" );
+					return addError( functionNameString, NULL, "I failed to modify a replaced specification item in the database" );
 				}
 
 			searchItem = searchItem->nextSpecificationItem();
@@ -1157,7 +1139,7 @@ class SpecificationList : private List
 							if( searchItem->changeFirstJustification( replacingJustificationItem ) == RESULT_OK )
 								searchItem = searchItem->nextSpecificationItem();
 							else
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to change the first justification item of a specification item" );
+								return addError( functionNameString, NULL, "I failed to change the first justification item of a specification item" );
 							}
 						else
 							{
@@ -1168,10 +1150,10 @@ class SpecificationList : private List
 								if( ( specificationResult = copySpecificationItem( searchItem->isInactiveAssignment(), isArchivedAssignment, searchItem->isAnsweredQuestion(), ( isExclusiveGeneralization || searchItem->isExclusiveSpecification() ), searchItem->assignmentLevel(), searchItem->generalizationCollectionNr(), searchItem->specificationCollectionNr(), ( isExclusiveGeneralization ? NO_CONTEXT_NR : searchItem->relationContextNr() ), replacingJustificationItem, searchItem ) ).result == RESULT_OK )
 									{
 									if( ( createdSpecificationItem = specificationResult.createdSpecificationItem ) == NULL )
-										return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't copy the search specification item" );
+										return startError( functionNameString, NULL, "I couldn't copy the search specification item" );
 									}
 								else
-									return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to copy the search specification item" );
+									return addError( functionNameString, NULL, "I failed to copy the search specification item" );
 								}
 
 							if( replaceOrDeleteSpecification( searchItem, createdSpecificationItem ) == RESULT_OK )
@@ -1179,13 +1161,13 @@ class SpecificationList : private List
 								if( isExclusiveGeneralization )
 									{
 									if( myWordItem()->assignSpecification( false, false, true, false, searchItem->isNegative(), searchItem->isPartOf(), searchItem->isPossessive(), searchItem->isSpecificationGeneralization(), searchItem->isUniqueUserRelation(), searchItem->assumptionLevel(), searchItem->prepositionParameter(), searchItem->questionParameter(), searchItem->relationWordTypeNr(), searchItem->generalizationContextNr(), searchItem->specificationContextNr(), searchItem->relationContextNr(), searchItem->originalSentenceNr(), searchItem->activeSentenceNr(), searchItem->inactiveSentenceNr(), searchItem->archivedSentenceNr(), searchItem->nContextRelations(), replacingJustificationItem, searchItem->specificationWordItem(), NULL, searchItem->specificationString() ).result != RESULT_OK )
-										return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to create an assignment" );
+										return addError( functionNameString, NULL, "I failed to create an assignment" );
 									}
 
 								searchItem = firstSpecificationItem( isInactiveAssignment, isArchivedAssignment );
 								}
 							else
-								return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to replace or delete a specification" );
+								return addError( functionNameString, NULL, "I failed to replace or delete a specification" );
 							}
 						}
 					else
@@ -1204,13 +1186,13 @@ class SpecificationList : private List
 									if( isSameJustification )
 										{
 										if( myWordItem()->replaceJustification( obsoleteJustificationItem, replacingJustificationItem, searchItem ) != RESULT_OK )
-											return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to replace the obsolete justification item" );
+											return addError( functionNameString, NULL, "I failed to replace the obsolete justification item" );
 										}
 
 									searchItem = searchItem->nextSpecificationItem();
 									}
 								else
-									return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to change the attached justification item of a justification item" );
+									return addError( functionNameString, NULL, "I failed to change the attached justification item of a justification item" );
 								}
 							else
 								{
@@ -1221,13 +1203,13 @@ class SpecificationList : private List
 										if( myWordItem()->replaceJustification( attachedPredecessorOfOldJustificationItem, createdJustificationItem, searchItem ) == RESULT_OK )
 											searchItem = firstSpecificationItem( isInactiveAssignment, isArchivedAssignment );
 										else
-											return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to replace the attached predecessor of obsolete justification item by a created justification item" );
+											return addError( functionNameString, NULL, "I failed to replace the attached predecessor of obsolete justification item by a created justification item" );
 										}
 									else
 										searchItem = searchItem->nextSpecificationItem();
 									}
 								else
-									return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to copy the attached predecessor of obsolete justification item with a different first justification item" );
+									return addError( functionNameString, NULL, "I failed to copy the attached predecessor of obsolete justification item with a different first justification item" );
 								}
 							}
 						}
@@ -1237,7 +1219,7 @@ class SpecificationList : private List
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given obsolete justification item is undefined" );
+			return startError( functionNameString, NULL, "The given obsolete justification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -1250,7 +1232,7 @@ class SpecificationList : private List
 		if( originalSpecificationItem != NULL )
 			return createSpecificationItem( isNewInactiveAssignment, isNewArchivedAssignment, isNewAnsweredQuestion, originalSpecificationItem->isConcludedAssumption(), originalSpecificationItem->isConditional(), originalSpecificationItem->isCorrectedAssumption(), originalSpecificationItem->isEveryGeneralization(), isNewExclusiveSpecification, originalSpecificationItem->isGeneralizationAssignment(), originalSpecificationItem->isNegative(), originalSpecificationItem->isPartOf(), originalSpecificationItem->isPossessive(), originalSpecificationItem->isSpecificationGeneralization(), originalSpecificationItem->isUniqueUserRelation(), originalSpecificationItem->isValueSpecification(), newAssignmentLevel, originalSpecificationItem->assumptionLevel(), originalSpecificationItem->languageNr(), originalSpecificationItem->prepositionParameter(), originalSpecificationItem->questionParameter(), originalSpecificationItem->generalizationWordTypeNr(), originalSpecificationItem->specificationWordTypeNr(), originalSpecificationItem->relationWordTypeNr(), newGeneralizationCollectionNr, newSpecificationCollectionNr, originalSpecificationItem->generalizationContextNr(), originalSpecificationItem->specificationContextNr(), newRelationContextNr, originalSpecificationItem->originalSentenceNr(), originalSpecificationItem->activeSentenceNr(), originalSpecificationItem->inactiveSentenceNr(), originalSpecificationItem->archivedSentenceNr(), originalSpecificationItem->nContextRelations(), newFirstJustificationItem, originalSpecificationItem->specificationWordItem(), originalSpecificationItem->specificationString(), originalSpecificationItem->lastWrittenSentenceString );
 
-		specificationResult.result = startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given original specification item is undefined" );
+		specificationResult.result = startError( functionNameString, NULL, "The given original specification item is undefined" );
 		return specificationResult;
 		}
 
@@ -1279,19 +1261,19 @@ class SpecificationList : private List
 								if( isArchivedAssignment )
 									{
 									if( addItemToList( QUERY_ARCHIVED_CHAR, specificationResult.createdSpecificationItem ) != RESULT_OK )
-										addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an archive assignment item" );
+										addError( functionNameString, NULL, "I failed to add an archive assignment item" );
 									}
 								else
 									{
 									if( isInactiveAssignment )
 										{
 										if( addItemToList( QUERY_INACTIVE_CHAR, specificationResult.createdSpecificationItem ) != RESULT_OK )
-											addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an inactive assignment item" );
+											addError( functionNameString, NULL, "I failed to add an inactive assignment item" );
 										}
 									else
 										{
 										if( addItemToList( QUERY_ACTIVE_CHAR, specificationResult.createdSpecificationItem ) != RESULT_OK )
-											addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active specification item" );
+											addError( functionNameString, NULL, "I failed to add an active specification item" );
 										}
 									}
 
@@ -1308,22 +1290,22 @@ class SpecificationList : private List
 									}
 								}
 							else
-								startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to create a specification item" );
+								startError( functionNameString, NULL, "I failed to create a specification item" );
 							}
 						else
-							startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given specification word item is a value word" );
+							startError( functionNameString, NULL, "The given specification word item is a value word" );
 						}
 					else
-						startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given first justification item isn't active" );
+						startError( functionNameString, NULL, "The given first justification item isn't active" );
 					}
 				else
-					startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current item number is undefined" );
+					startError( functionNameString, NULL, "The current item number is undefined" );
 				}
 			else
-				startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given specification word type number is undefined or out of bounds" );
+				startError( functionNameString, NULL, "The given specification word type number is undefined or out of bounds" );
 			}
 		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given generalization word type number is undefined or out of bounds" );
+			startError( functionNameString, NULL, "The given generalization word type number is undefined or out of bounds" );
 
 		specificationResult.result = commonVariables()->result;
 		return specificationResult;
@@ -1492,6 +1474,11 @@ class SpecificationList : private List
 		return foundSpecificationItem;
 		}
 
+	SpecificationItem *firstActiveSpecificationItem()
+		{
+		return (SpecificationItem *)firstActiveItem();
+		}
+
 	SpecificationItem *firstActiveSpecificationItem( bool isIncludingAnsweredQuestions, bool isQuestion )
 		{
 		SpecificationItem *firstSpecificationItem;
@@ -1566,6 +1553,25 @@ class SpecificationList : private List
 
 		if( searchItem != NULL )
 			return searchItem->recentlyAnsweredQuestionSpecificationItem( true );
+
+		return NULL;
+		}
+
+	SpecificationItem *firstRelationSpecificationItem( bool isInactiveAssignment, bool isArchivedAssignment, bool isPossessive, unsigned short questionParameter, WordItem *relationWordItem )
+		{
+		SpecificationItem *searchItem = firstAssignmentItem( false, isInactiveAssignment, isArchivedAssignment, questionParameter );
+
+		if( relationWordItem != NULL )
+			{
+			while( searchItem != NULL )
+				{
+				if( searchItem->isPossessive() == isPossessive &&
+				relationWordItem->hasContextInWord( searchItem->relationContextNr(), searchItem->specificationWordItem() ) )
+					return searchItem;
+
+				searchItem = searchItem->nextSelectedQuestionParameterSpecificationItem();
+				}
+			}
 
 		return NULL;
 		}
@@ -1688,19 +1694,20 @@ class SpecificationList : private List
 		return NULL;
 		}
 
-	SpecificationItem *firstSpecificationItem( bool isIncludingAnsweredQuestions, bool isPossessive, unsigned short questionParameter, WordItem *specificationWordItem )
+	SpecificationItem *firstSpecificationItem( bool isPossessive, bool isSpecificationGeneralization, unsigned short questionParameter, WordItem *specificationWordItem )
 		{
-		SpecificationItem *searchItem = firstActiveSpecificationItem( isIncludingAnsweredQuestions, questionParameter );
+		SpecificationItem *searchItem = firstActiveSpecificationItem( false, questionParameter );
 
 		// In case of a specification string, the given specification word item will be undefined
 
 		while( searchItem != NULL )
 			{
 			if( searchItem->isPossessive() == isPossessive &&
+			searchItem->isSpecificationGeneralization() == isSpecificationGeneralization &&
 			searchItem->specificationWordItem() == specificationWordItem )
 				return searchItem;
 
-			searchItem = searchItem->nextSelectedQuestionParameterSpecificationItem( isIncludingAnsweredQuestions );
+			searchItem = searchItem->nextSelectedQuestionParameterSpecificationItem();
 			}
 
 		return NULL;
@@ -1720,6 +1727,26 @@ class SpecificationList : private List
 				return searchItem;
 
 			searchItem = searchItem->nextSelectedQuestionParameterSpecificationItem();
+			}
+
+		return NULL;
+		}
+
+	SpecificationItem *firstUnHiddenSpecificationItem( bool isArchivedAssignment, unsigned int relationContextNr )
+		{
+		SpecificationItem *searchItem = firstSpecificationItem( false, isArchivedAssignment );
+
+		if( relationContextNr > NO_CONTEXT_NR )
+			{
+			while( searchItem != NULL )
+				{
+				if( searchItem->relationContextNr() == relationContextNr &&
+				!searchItem->isHiddenSpecification() &&
+				searchItem->wasHiddenSpecification() )
+					return searchItem;
+
+				searchItem = searchItem->nextSelectedSpecificationItem();
+				}
 			}
 
 		return NULL;
@@ -1758,7 +1785,7 @@ class SpecificationList : private List
 		while( searchItem != NULL )
 			{
 			if( searchItem->isUserQuestion() &&
-			searchItem->nInvolvedSpecificationWords( true, true ) == nUserSpecificationWords )
+			searchItem->nInvolvedSpecificationWords( true ) == nUserSpecificationWords )
 				return searchItem;
 
 			searchItem = searchItem->nextSelectedQuestionParameterSpecificationItem();
@@ -1772,6 +1799,7 @@ class SpecificationList : private List
 		SpecificationItem *searchItem = firstActiveSpecificationItem( false, false );
 		WordItem *commonWordItem;
 		WordItem *specificationWordItem;
+		WordItem *thisWordItem = myWordItem();
 
 		while( searchItem != NULL )
 			{
@@ -1783,12 +1811,20 @@ class SpecificationList : private List
 				if( specificationWordItem->isFemaleOrMale() &&
 				( commonWordItem = specificationWordItem->commonWordItem( searchItem->specificationCollectionNr() ) ) != NULL )
 					{
-					if( ( isFeminineWord &&
-					commonWordItem->isFemale() ) ||
+					if( commonWordItem == thisWordItem )
+						{
+						if( specificationWordItem->isFemale() == isFeminineWord )
+							return specificationWordItem;
+						}
+					else
+						{
+						if( ( isFeminineWord &&
+						commonWordItem->isFemale() ) ||
 
-					( !isFeminineWord &&
-					commonWordItem->isMale() ) )
-						return commonWordItem;
+						( !isFeminineWord &&
+						commonWordItem->isMale() ) )
+							return commonWordItem;
+						}
 					}
 				}
 

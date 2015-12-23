@@ -1,0 +1,55 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A parent is probably a person.
+< A father is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< A son is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< John was a man.
+< Paul has no father anymore.
+< Paul had a father, called John.
+* 
+* My assumptions:
+< John has probably a child, called Paul.
+< John was probably a person.
+< John was probably not a woman.
+< John was probably a parent of Paul.
+< John was probably part of a family.
+< John was probably not a mother.
+< Paul is probably a child of John.
+< Paul is probably part of a family.
+< Paul is possibly a person.
+< Paul had probably a parent, called John.
+* 
+* My questions:
+< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a son or a daughter?
+< 
+! 
+! This sentence is not accepted, because it is in conflict with:
+< John was a man.
+< John was probably not a woman.
+< 

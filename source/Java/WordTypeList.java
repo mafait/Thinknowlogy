@@ -2,11 +2,10 @@
  *	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -60,14 +59,14 @@ class WordTypeList extends List
 			}
 		}
 
-	private WordTypeItem wordTypeString( boolean isAllowingNounDifference, boolean isCheckingAllLanguages, short wordTypeNr, WordTypeItem searchItem )
+	private WordTypeItem wordTypeString( boolean isAllowingDifferentNoun, boolean isCheckingAllLanguages, short wordTypeNr, WordTypeItem searchItem )
 		{
 		while( searchItem != null )
 			{
 			if( wordTypeNr == Constants.WORD_TYPE_UNDEFINED ||
 			searchItem.wordTypeNr() == wordTypeNr ||
 
-			( isAllowingNounDifference &&
+			( isAllowingDifferentNoun &&
 			searchItem.isSingularOrPluralNounWordType() &&
 			myWordItem().isSingularOrPluralNoun( searchItem.wordTypeNr() ) ) )
 				return searchItem;
@@ -185,44 +184,13 @@ class WordTypeList extends List
 			}
 		}
 
-	protected boolean hasFeminineProperNameEnding()
-		{
-		WordTypeItem searchItem = firstActiveCurrentLanguageWordTypeItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasFeminineProperNameEnding() )
-				return true;
-
-			searchItem = searchItem.nextCurrentLanguageWordTypeItem();
-			}
-
-		return false;
-		}
-
-	protected boolean hasMasculineProperNameEnding()
-		{
-		WordTypeItem searchItem = firstActiveCurrentLanguageWordTypeItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasMasculineProperNameEnding() )
-				return true;
-
-			searchItem = searchItem.nextCurrentLanguageWordTypeItem();
-			}
-
-		return false;
-		}
-
 	protected boolean isCorrectHiddenWordType( short wordTypeNr, String compareString, String authorizationKey )
 		{
 		WordTypeItem searchItem = firstActiveCurrentLanguageWordTypeItem();
 
 		while( searchItem != null )
 			{
-			if( searchItem.wordTypeNr() == wordTypeNr &&
-			searchItem.isCorrectHiddenWordType( compareString, authorizationKey ) )
+			if( searchItem.isCorrectHiddenWordType( wordTypeNr, compareString, authorizationKey ) )
 				return true;
 
 			searchItem = searchItem.nextCurrentLanguageWordTypeItem();
@@ -242,18 +210,18 @@ class WordTypeList extends List
 
 			if( searchItem.hasFeminineDefiniteArticleParameter() &&
 			searchItem.hasFeminineAndMasculineDefiniteArticle() )
-				interfaceParameter = Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_DEFINITE_ARTICLE_WITH_NOUN_START;
+				interfaceParameter = Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START;
 			else
 				{
 				if( searchItem.hasFeminineIndefiniteArticleParameter() &&
 				searchItem.hasFeminineAndMasculineIndefiniteArticle() )
-					interfaceParameter = Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_INDEFINITE_ARTICLE_WITH_NOUN_START;
+					interfaceParameter = Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START;
 				}
 
 			if( interfaceParameter > Constants.NO_INTERFACE_PARAMETER )
 				{
-				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, interfaceParameter, searchItem.itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
-					return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to write an interface notification" );
+				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, interfaceParameter, searchItem.itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
+					return addError( 1, null, "I failed to write an interface notification about the use of an article with a feminine noun" );
 				}
 
 			searchItem = searchItem.nextCurrentLanguageWordTypeItem();
@@ -273,18 +241,18 @@ class WordTypeList extends List
 
 			if( searchItem.hasMasculineDefiniteArticleParameter() &&
 			searchItem.hasFeminineAndMasculineDefiniteArticle() )
-				interfaceParameter = Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_DEFINITE_ARTICLE_WITH_NOUN_START;
+				interfaceParameter = Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START;
 			else
 				{
 				if( searchItem.hasMasculineIndefiniteArticleParameter() &&
 				searchItem.hasFeminineAndMasculineIndefiniteArticle() )
-					interfaceParameter = Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_INDEFINITE_ARTICLE_WITH_NOUN_START;
+					interfaceParameter = Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START;
 				}
 
 			if( interfaceParameter > Constants.NO_INTERFACE_PARAMETER )
 				{
-				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, interfaceParameter, searchItem.itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_INVALID_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
-					return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to write an interface notification" );
+				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, interfaceParameter, searchItem.itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
+					return addError( 1, null, "I failed to write an interface notification about the use of an article with a masculine noun" );
 				}
 
 			searchItem = searchItem.nextCurrentLanguageWordTypeItem();
@@ -306,14 +274,14 @@ class WordTypeList extends List
 				if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
 					hasFoundWordType = true;
 				else
-					return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to delete an active item" );
+					return addError( 1, null, "I failed to delete an active item" );
 				}
 			else
 				searchItem = searchItem.nextCurrentLanguageWordTypeItem();
 			}
 
 		if( !hasFoundWordType )
-			return startError( 1, null, myWordItem().anyWordTypeString(), "I coundn't find the given word type" );
+			return startError( 1, null, "I coundn't find the given word type" );
 
 		return Constants.RESULT_OK;
 		}
@@ -331,14 +299,14 @@ class WordTypeList extends List
 				if( searchItem.hideWordType( authorizationKey ) == Constants.RESULT_OK )
 					hasFoundWordType = true;
 				else
-					return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to hide a word type" );
+					return addError( 1, null, "I failed to hide a word type" );
 				}
 			else
 				searchItem = searchItem.nextCurrentLanguageWordTypeItem();
 			}
 
 		if( !hasFoundWordType )
-			return startError( 1, null, myWordItem().anyWordTypeString(), "I coundn't find the given word type" );
+			return startError( 1, null, "I coundn't find the given word type" );
 
 		return Constants.RESULT_OK;
 		}
@@ -374,7 +342,7 @@ class WordTypeList extends List
 						if( searchItem.markGeneralizationWordTypeAsWritten() == Constants.RESULT_OK )
 							hasFoundWordTypeNr = true;
 						else
-							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to mark a word as written" );
+							return addError( 1, null, "I failed to mark a word as written" );
 						}
 					}
 
@@ -390,7 +358,7 @@ class WordTypeList extends List
 					pluralNounWordTypeItem != null )
 						{
 						if( pluralNounWordTypeItem.markGeneralizationWordTypeAsWritten() != Constants.RESULT_OK )
-							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to mark a plural noun word as written" );
+							return addError( 1, null, "I failed to mark a plural noun word as written" );
 						}
 					else
 						{
@@ -399,18 +367,18 @@ class WordTypeList extends List
 						singularNounWordTypeItem != null )
 							{
 							if( singularNounWordTypeItem.markGeneralizationWordTypeAsWritten() != Constants.RESULT_OK )
-								return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to mark a singular noun word as written" );
+								return addError( 1, null, "I failed to mark a singular noun word as written" );
 							}
 						}
 					}
 				else
-					return startError( 1, null, myWordItem().anyWordTypeString(), "I couldn't find the given word type number: " + wordTypeNr );
+					return startError( 1, null, "I couldn't find the given word type number: " + wordTypeNr );
 				}
 			else
-				return startError( 1, null, myWordItem().anyWordTypeString(), "The given word type number is already marked as written: " + wordTypeNr );
+				return startError( 1, null, "The given word type number is already marked as written: " + wordTypeNr );
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The given word type number is undefined or out of bounds: " + wordTypeNr );
+			return startError( 1, null, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
 		return Constants.RESULT_OK;
 		}
@@ -446,7 +414,7 @@ class WordTypeList extends List
 						if( searchItem.markSpecificationWordTypeAsWritten() == Constants.RESULT_OK )
 							hasFoundWordTypeNr = true;
 						else
-							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to mark a word as written" );
+							return addError( 1, null, "I failed to mark a word as written" );
 						}
 					}
 
@@ -462,7 +430,7 @@ class WordTypeList extends List
 					pluralNounWordTypeItem != null )
 						{
 						if( pluralNounWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
-							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to mark a plural noun word as written" );
+							return addError( 1, null, "I failed to mark a plural noun word as written" );
 						}
 					else
 						{
@@ -471,18 +439,18 @@ class WordTypeList extends List
 						singularNounWordTypeItem != null )
 							{
 							if( singularNounWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
-								return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to mark a singular noun word as written" );
+								return addError( 1, null, "I failed to mark a singular noun word as written" );
 							}
 						}
 					}
 				else
-					return startError( 1, null, myWordItem().anyWordTypeString(), "I couldn't find the given word type number: " + wordTypeNr );
+					return startError( 1, null, "I couldn't find the given word type number: " + wordTypeNr );
 				}
 			else
-				return startError( 1, null, myWordItem().anyWordTypeString(), "The given word type number is already marked as written: " + wordTypeNr );
+				return startError( 1, null, "The given word type number is already marked as written: " + wordTypeNr );
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The given word type number is undefined or out of bounds: " + wordTypeNr );
+			return startError( 1, null, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
 		return Constants.RESULT_OK;
 		}
@@ -516,7 +484,7 @@ class WordTypeList extends List
 						if( searchItem.markRelationWordTypeAsWritten() == Constants.RESULT_OK )
 							hasFoundWordTypeNr = true;
 						else
-							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to mark a word as written" );
+							return addError( 1, null, "I failed to mark a word as written" );
 						}
 					}
 
@@ -532,7 +500,7 @@ class WordTypeList extends List
 					pluralNounWordTypeItem != null )
 						{
 						if( pluralNounWordTypeItem.markRelationWordTypeAsWritten() != Constants.RESULT_OK )
-							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to mark a plural noun word as written" );
+							return addError( 1, null, "I failed to mark a plural noun word as written" );
 						}
 					else
 						{
@@ -541,18 +509,18 @@ class WordTypeList extends List
 						singularNounWordTypeItem != null )
 							{
 							if( singularNounWordTypeItem.markRelationWordTypeAsWritten() != Constants.RESULT_OK )
-								return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to mark a singular noun word as written" );
+								return addError( 1, null, "I failed to mark a singular noun word as written" );
 							}
 						}
 					}
 				else
-					return startError( 1, null, myWordItem().anyWordTypeString(), "I couldn't find the given word type number: " + wordTypeNr );
+					return startError( 1, null, "I couldn't find the given word type number: " + wordTypeNr );
 				}
 			else
-				return startError( 1, null, myWordItem().anyWordTypeString(), "The given word type number is already marked as written: " + wordTypeNr );
+				return startError( 1, null, "The given word type number is already marked as written: " + wordTypeNr );
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The given word type number is undefined or out of bounds: " + wordTypeNr );
+			return startError( 1, null, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
 		return Constants.RESULT_OK;
 		}
@@ -566,7 +534,7 @@ class WordTypeList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeWordTypeItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to store a word type item in the database" );
+					return addError( 1, null, "I failed to store a word type item in the database" );
 				}
 
 			searchItem = searchItem.nextWordTypeItem();
@@ -579,7 +547,7 @@ class WordTypeList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeWordTypeItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to modify a replaced word type item in the database" );
+					return addError( 1, null, "I failed to modify a replaced word type item in the database" );
 				}
 
 			searchItem = searchItem.nextWordTypeItem();
@@ -605,7 +573,7 @@ class WordTypeList extends List
 						CommonVariables.matchingWordTypeNr = searchItem.wordTypeNr();
 					}
 				else
-					addError( 1, null, myWordItem().anyWordTypeString(), "I failed to compare an active word type string with the query string" );
+					addError( 1, null, "I failed to compare an active word type string with the query string" );
 				}
 
 			searchItem = searchItem.nextWordTypeItem();
@@ -625,7 +593,7 @@ class WordTypeList extends List
 						CommonVariables.matchingWordTypeNr = searchItem.wordTypeNr();
 					}
 				else
-					addError( 1, null, myWordItem().anyWordTypeString(), "I failed to compare a deleted word type string with the query string" );
+					addError( 1, null, "I failed to compare a deleted word type string with the query string" );
 				}
 
 			searchItem = searchItem.nextWordTypeItem();
@@ -645,7 +613,7 @@ class WordTypeList extends List
 						CommonVariables.matchingWordTypeNr = searchItem.wordTypeNr();
 					}
 				else
-					addError( 1, null, myWordItem().anyWordTypeString(), "I failed to compare a deleted word type string with the query string" );
+					addError( 1, null, "I failed to compare a deleted word type string with the query string" );
 				}
 
 			searchItem = searchItem.nextWordTypeItem();
@@ -669,19 +637,19 @@ class WordTypeList extends List
 					if( ( wordResult.createdWordTypeItem = new WordTypeItem( hasFeminineWordEnding, hasMasculineWordEnding, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, CommonVariables.currentLanguageNr, wordTypeNr, wordLength, wordTypeString, this, myWordItem() ) ) != null )
 						{
 						if( addItemToList( Constants.QUERY_ACTIVE_CHAR, wordResult.createdWordTypeItem ) != Constants.RESULT_OK )
-							addError( 1, null, myWordItem().anyWordTypeString(), "I failed to add an active word type item" );
+							addError( 1, null, "I failed to add an active word type item" );
 						}
 					else
-						startError( 1, null, myWordItem().anyWordTypeString(), "The created word type item is undefined" );
+						startError( 1, null, "The created word type item is undefined" );
 					}
 				else
-					startError( 1, null, myWordItem().anyWordTypeString(), "The current item number is undefined" );
+					startError( 1, null, "The current item number is undefined" );
 				}
 			else
-				startError( 1, null, myWordItem().anyWordTypeString(), "The given wordTypeString is undefined" );
+				startError( 1, null, "The given wordTypeString is undefined" );
 			}
 		else
-			startError( 1, null, myWordItem().anyWordTypeString(), "The given word type number is undefined or out of bounds" );
+			startError( 1, null, "The given word type number is undefined or out of bounds" );
 
 		wordResult.result = CommonVariables.result;
 		return wordResult;
@@ -720,12 +688,12 @@ class WordTypeList extends List
 		return null;
 		}
 
-	protected WordTypeItem activeWordTypeItem( boolean isAllowingNounDifference, boolean isCheckingAllLanguages, short wordTypeNr )
+	protected WordTypeItem activeWordTypeItem( boolean isAllowingDifferentNoun, boolean isCheckingAllLanguages, short wordTypeNr )
 		{
 		WordTypeItem foundWordTypeItem;
 
 		// Try to find word type of the current language
-		if( ( foundWordTypeItem = wordTypeString( isAllowingNounDifference, false, wordTypeNr, firstActiveCurrentLanguageWordTypeItem() ) ) == null )
+		if( ( foundWordTypeItem = wordTypeString( isAllowingDifferentNoun, false, wordTypeNr, firstActiveCurrentLanguageWordTypeItem() ) ) == null )
 			{
 			// Not found in current language. Now, try all languages
 			if( isCheckingAllLanguages )

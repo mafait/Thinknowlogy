@@ -2,11 +2,10 @@
  *	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -62,13 +61,13 @@ class GrammarList extends List
 						}
 					}
 				else
-					startError( 1, null, myWordItem().anyWordTypeString(), "The given original word ending string is undefined" );
+					startError( 1, null, "The given original word ending string is undefined" );
 				}
 			else
-				startError( 1, null, myWordItem().anyWordTypeString(), "The given original word string is undefined" );
+				startError( 1, null, "The given original word string is undefined" );
 			}
 		else
-			startError( 1, null, myWordItem().anyWordTypeString(), "The given original word string length is undefined" );
+			startError( 1, null, "The given original word string length is undefined" );
 
 		grammarResult.result = CommonVariables.result;
 		return grammarResult;
@@ -170,7 +169,7 @@ class GrammarList extends List
 							replacingWordEndingString = ( replacingWordEndingGrammarItem == null ? null : replacingWordEndingGrammarItem.grammarString() );
 
 							if( ( grammarResult = comparePluralEndingOfWord( originalWordStringLength, ( replacingWordEndingString == null ? 0 : replacingWordEndingString.length() ), originalWordString, originalWordEndingGrammarItem.itemString(), replacingWordEndingString ) ).result != Constants.RESULT_OK )
-								addError( 1, null, myWordItem().anyWordTypeString(), "I failed to find the plural ending of an undefined word type" );
+								addError( 1, null, "I failed to find the plural ending of an undefined word type" );
 							}
 						}
 					while( CommonVariables.result == Constants.RESULT_OK &&
@@ -179,10 +178,10 @@ class GrammarList extends List
 					}
 				}
 			else
-				startError( 1, null, myWordItem().anyWordTypeString(), "The given original word string is undefined" );
+				startError( 1, null, "The given original word string is undefined" );
 			}
 		else
-			startError( 1, null, myWordItem().anyWordTypeString(), "The given grammar parameter is undefined" );
+			startError( 1, null, "The given grammar parameter is undefined" );
 
 		grammarResult.result = CommonVariables.result;
 		return grammarResult;
@@ -213,16 +212,16 @@ class GrammarList extends List
 							}
 						}
 					else
-						addError( 1, null, myWordItem().anyWordTypeString(), "I failed to add an active grammar item" );
+						addError( 1, null, "I failed to add an active grammar item" );
 					}
 				else
-					startError( 1, null, myWordItem().anyWordTypeString(), "I failed to create a grammar item" );
+					startError( 1, null, "I failed to create a grammar item" );
 				}
 			else
-				startError( 1, null, myWordItem().anyWordTypeString(), "The current item number is undefined" );
+				startError( 1, null, "The current item number is undefined" );
 			}
 		else
-			startError( 1, null, myWordItem().anyWordTypeString(), "The given collected word type number is undefined or out of bounds" );
+			startError( 1, null, "The given collected word type number is undefined or out of bounds" );
 
 		grammarResult.result = CommonVariables.result;
 		return grammarResult;
@@ -252,11 +251,11 @@ class GrammarList extends List
 						searchItem = searchItem.nextGrammarItem();
 					}
 				else
-					startError( 1, null, myWordItem().anyWordTypeString(), "I've found a grammar word without grammar string" );
+					startError( 1, null, "I have found a grammar word without grammar string" );
 				}
 			}
 		else
-			startError( 1, null, myWordItem().anyWordTypeString(), "The given grammar string is undefined" );
+			startError( 1, null, "The given grammar string is undefined" );
 
 		grammarResult.result = CommonVariables.result;
 		return grammarResult;
@@ -337,14 +336,14 @@ class GrammarList extends List
 					if( isIdentical &&
 					currentGrammarItem == null &&
 					duplicateGrammarItem == null )
-						startError( 1, null, myWordItem().anyWordTypeString(), "I've found a duplicate grammar definition" );
+						startError( 1, null, "I have found a duplicate grammar definition" );
 					}
 				while( CommonVariables.result == Constants.RESULT_OK &&
 				( duplicateDefinitionGrammarItem = duplicateDefinitionGrammarItem.nextDefinitionGrammarItem ) != null );
 				}
 			}
 		else
-			startError( 1, null, myWordItem().anyWordTypeString(), "I couldn't find the last grammar definition word" );
+			startError( 1, null, "I couldn't find the last grammar definition word" );
 
 		grammarResult.result = CommonVariables.result;
 		return grammarResult;
@@ -374,14 +373,14 @@ class GrammarList extends List
 								if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_START, currentWordTypeNr, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_MIDDLE, myWordItem().anyWordTypeString(), Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) == Constants.RESULT_OK )
 									currentWordTypeNr = grammarWordTypeNr;
 								else
-									return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to write an interface notification" );
+									return addError( 1, null, "I failed to write the 'grammar word type definition missing' interface notification" );
 								}
 							else
 								{
 								if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_START, ( grammarWordTypeNr + 1 ), Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_TO, currentWordTypeNr, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_MIDDLE, myWordItem().anyWordTypeString(), Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) == Constants.RESULT_OK )
 									currentWordTypeNr = grammarWordTypeNr;
 								else
-									return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to write an interface notification" );
+									return addError( 1, null, "I failed to write the 'grammar word type definitions missing' interface notification" );
 								}
 							}
 
@@ -395,19 +394,19 @@ class GrammarList extends List
 					!currentGrammarItem.isWordEnding() )
 						{
 						if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_START, currentGrammarItem.grammarString(), Constants.INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_MIDDLE, myWordItem().anyWordTypeString(), Constants.INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_END ) != Constants.RESULT_OK )
-							return addError( 1, null, myWordItem().anyWordTypeString(), "I failed to write an interface notification" );
+							return addError( 1, null, "I failed to write the 'grammar definition is not used' interface notification" );
 						}
 					}
 				else
 					{
 					if( currentGrammarItem.definitionGrammarItem == null )
-						return startError( 1, null, myWordItem().anyWordTypeString(), "Grammar word \"" + currentGrammarItem.grammarString() + "\" in " + myWordItem().anyWordTypeString() + " is used, but not defined" );
+						return startError( 1, null, "Grammar word \"" + currentGrammarItem.grammarString() + "\" in " + myWordItem().anyWordTypeString() + " is used, but not defined" );
 					}
 				}
 			while( ( currentGrammarItem = currentGrammarItem.nextGrammarItem() ) != null );
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "I couldn't find any grammar item" );
+			return startError( 1, null, "I couldn't find any grammar item" );
 
 		return Constants.RESULT_OK;
 		}
@@ -421,16 +420,16 @@ class GrammarList extends List
 			while( searchItem != null )
 				{
 				if( searchItem.definitionGrammarItem == unusedGrammarItem )
-					return startError( 1, null, myWordItem().anyWordTypeString(), "The definition grammar item is still in use" );
+					return startError( 1, null, "The definition grammar item is still in use" );
 
 				if( searchItem.nextDefinitionGrammarItem == unusedGrammarItem )
-					return startError( 1, null, myWordItem().anyWordTypeString(), "The next definition grammar item is still in use" );
+					return startError( 1, null, "The next definition grammar item is still in use" );
 
 				searchItem = searchItem.nextGrammarItem();
 				}
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "The given unused grammar item is undefined" );
+			return startError( 1, null, "The given unused grammar item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -468,14 +467,14 @@ class GrammarList extends List
 							}
 						}
 					else
-						return startError( 1, null, myWordItem().anyWordTypeString(), "The grammar string of the grammar definition word is undefined" );
+						return startError( 1, null, "The grammar string of the grammar definition word is undefined" );
 					}
 				}
 			else
-				return startError( 1, null, myWordItem().anyWordTypeString(), "The grammar string of the grammar definition word is undefined" );
+				return startError( 1, null, "The grammar string of the grammar definition word is undefined" );
 			}
 		else
-			return startError( 1, null, myWordItem().anyWordTypeString(), "I couldn't find any grammar item" );
+			return startError( 1, null, "I couldn't find any grammar item" );
 
 		return Constants.RESULT_OK;
 		}
@@ -489,7 +488,7 @@ class GrammarList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeGrammarItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to store a grammar item in the database" );
+					return addError( 1, null, "I failed to store a grammar item in the database" );
 				}
 
 			searchItem = searchItem.nextGrammarItem();
@@ -502,7 +501,7 @@ class GrammarList extends List
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem.storeGrammarItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, null, "I failed to modify a replaced grammar item in the database" );
+					return addError( 1, null, "I failed to modify a replaced grammar item in the database" );
 				}
 
 			searchItem = searchItem.nextGrammarItem();

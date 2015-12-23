@@ -1,0 +1,55 @@
+﻿* 
+* Mijn conclusies:
+< Ouders en kinderen zijn deel van ieder gezin.
+< 
+* 
+* Mijn veronderstellingen:
+< Een ouder is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Een kind is waarschijnlijk een persoon.
+< Een zoon is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Ieder kind is een meisje, een vrouw, een jongen of een man.
+* 
+* Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Jan was een man.
+< Paul heeft geen vader meer.
+< Paul had een vader, genaamd Jan.
+* 
+* Mijn veronderstellingen:
+< Jan heeft waarschijnlijk een kind, genaamd Paul.
+< Jan was waarschijnlijk een persoon.
+< Jan was waarschijnlijk geen vrouw.
+< Jan was waarschijnlijk een ouder van Paul.
+< Jan was waarschijnlijk deel van een gezin.
+< Jan was waarschijnlijk geen moeder.
+< Paul is waarschijnlijk een kind van Jan.
+< Paul is waarschijnlijk deel van een gezin.
+< Paul is mogelijk een persoon.
+< Paul had waarschijnlijk een ouder, genaamd Jan.
+* 
+* Mijn vragen:
+< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een zoon of een dochter?
+< 
+! 
+! Deze zin is niet geaccepteerd, omdat het in conflict is met:
+< Jan was een man.
+< Jan was waarschijnlijk geen vrouw.
+< 

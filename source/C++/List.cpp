@@ -1,11 +1,10 @@
 /*
  *	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -26,6 +25,12 @@
 #include "ListQuery.cpp"
 
 	// Private functions
+
+	bool List::isAssignmentOrSpecificationList()
+		{
+		return ( listChar_ == WORD_ASSIGNMENT_LIST_SYMBOL ||
+				listChar_ == WORD_SPECIFICATION_LIST_SYMBOL );
+		}
 
 	bool List::isIncludingThisList( char *queryListString )
 		{
@@ -95,20 +100,20 @@
 
 	// Protected error functions
 
-	ResultType List::addError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *errorString )
+	ResultType List::addError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		if( commonVariables_ != NULL &&
 		commonVariables_->presentation != NULL )
-			commonVariables_->presentation->showError( listChar_, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), wordNameString, functionNameString, errorString );
+			commonVariables_->presentation->showError( listChar_, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), functionNameString, errorString );
 		else
 			fprintf( stderr, "\nClass:\t%s\nSubclass:\t%s\nFunction:\t%s\nError:\t\t%s.\n", classNameString_, superClassNameString_, functionNameString, errorString );
 
 		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
 		}
 
-	ResultType List::startError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *errorString )
+	ResultType List::startError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		addError( functionNameString, moduleNameString, wordNameString, errorString );
+		addError( functionNameString, moduleNameString, errorString );
 
 		if( commonVariables_ != NULL )
 		commonVariables_->result = RESULT_ERROR;
@@ -116,23 +121,23 @@
 		return RESULT_ERROR;
 		}
 
-	ResultType List::startError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *_errorString, unsigned int errorSentenceNr )
+	ResultType List::startError( const char *functionNameString, const char *moduleNameString, const char *_errorString, unsigned int errorSentenceNr )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH];
 		sprintf( errorString, "%s%u", _errorString, errorSentenceNr );
-		return startError( functionNameString, moduleNameString, wordNameString, errorString );
+		return startError( functionNameString, moduleNameString, errorString );
 		}
 
-	ResultType List::startError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+	ResultType List::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH];
 		sprintf( errorString, "%s%s%s", errorString1, errorString2, errorString3 );
-		return startError( functionNameString, moduleNameString, wordNameString, errorString );
+		return startError( functionNameString, moduleNameString, errorString );
 		}
 
-	ResultType List::startSystemError( const char *functionNameString, const char *moduleNameString, const char *wordNameString, const char *errorString )
+	ResultType List::startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		addError( functionNameString, moduleNameString, wordNameString, errorString );
+		addError( functionNameString, moduleNameString, errorString );
 
 		if( commonVariables_ != NULL )
 		commonVariables_->result = RESULT_SYSTEM_ERROR;
@@ -150,7 +155,7 @@
 
 	ReferenceResultType List::findWordReference( WordItem *referenceWordItem )
 		{
-		// This is a virtual function. Therefore the given variables are unreferenced
+		// This is a virtual function. Therefore, the given variables are unreferenced.
 		ReferenceResultType referenceResult;
 		return referenceResult;
 		}
@@ -188,7 +193,7 @@
 			strcpy( errorString, "I failed to create my list cleanup module" );
 
 		if( strlen( errorString ) > 0 )
-			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL ? NULL : myWordItem_->anyWordTypeString() ), errorString );
+			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, errorString );
 		}
 
 	void List::deleteTemporaryList()
@@ -372,7 +377,7 @@
 							break;
 
 						default:
-							return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given status character is unknown" );
+							return startError( functionNameString, NULL, "The given status character is unknown" );
 						}
 
 					// Sort item in list
@@ -457,7 +462,7 @@
 									break;
 
 								default:
-									return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given status character is unknown" );
+									return startError( functionNameString, NULL, "The given status character is unknown" );
 								}
 							}
 						else
@@ -470,16 +475,16 @@
 							}
 						}
 					else
-						return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I've found an active item with the same identification" );
+						return startError( functionNameString, NULL, "I have found an active item with the same identification" );
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given new item seems to be a part of a list" );
+					return startError( functionNameString, NULL, "The given new item seems to be a part of a list" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given new item doesn't belong to my list" );
+				return startError( functionNameString, NULL, "The given new item doesn't belong to my list" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given new item is undefined" );
+			return startError( functionNameString, NULL, "The given new item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -503,19 +508,19 @@
 								commonVariables_->isAssignmentChanged = true;
 							}
 						else
-							return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to add an item to the active list" );
+							return addError( functionNameString, NULL, "I failed to add an item to the active list" );
 						}
 					else
-						return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to remove an item from the archive list" );
+						return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The active sentence number of the given archived item is already assigned" );
+					return startError( functionNameString, NULL, "The active sentence number of the given archived item is already assigned" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given activate item is already an active item" );
+				return startError( functionNameString, NULL, "The given activate item is already an active item" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given activate item is undefined" );
+			return startError( functionNameString, NULL, "The given activate item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -543,22 +548,22 @@
 									commonVariables_->isAssignmentChanged = true;
 								}
 							else
-								return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to add an item to the inactive list" );
+								return addError( functionNameString, NULL, "I failed to add an item to the inactive list" );
 							}
 						else
-							return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to remove an item from the archive list" );
+							return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
 						}
 					else
-						return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The inactive sentence number of the given archived item is already assigned" );
+						return startError( functionNameString, NULL, "The inactive sentence number of the given archived item is already assigned" );
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "Only assignments, Guide by Grammar items and read items can be inactived" );
+					return startError( functionNameString, NULL, "Only assignments, Guide by Grammar items and read items can be inactived" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given inactivate item is already an inactive item" );
+				return startError( functionNameString, NULL, "The given inactivate item is already an inactive item" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given inactivate item is undefined" );
+			return startError( functionNameString, NULL, "The given inactivate item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -583,19 +588,19 @@
 								commonVariables_->isAssignmentChanged = true;
 							}
 						else
-							return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to add an item to the archived list" );
+							return addError( functionNameString, NULL, "I failed to add an item to the archived list" );
 						}
 					else
-						return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to remove an item from a list" );
+						return addError( functionNameString, NULL, "I failed to remove an item from a list" );
 					}
 				else
-					return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "Only assignments can be archived" );
+					return startError( functionNameString, NULL, "Only assignments can be archived" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given archive item is already an archived item" );
+				return startError( functionNameString, NULL, "The given archive item is already an archived item" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given archive item is undefined" );
+			return startError( functionNameString, NULL, "The given archive item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -613,16 +618,16 @@
 					replaceItem->previousStatusChar = replaceItem->statusChar();
 
 					if( addItemToList( QUERY_REPLACED_CHAR, replaceItem ) != RESULT_OK )
-						return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to add an item to the replaced list" );
+						return addError( functionNameString, NULL, "I failed to add an item to the replaced list" );
 					}
 				else
-					return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to remove an item from a list" );
+					return addError( functionNameString, NULL, "I failed to remove an item from a list" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given replace item is already a replaced item" );
+				return startError( functionNameString, NULL, "The given replace item is already a replaced item" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given replace item is undefined" );
+			return startError( functionNameString, NULL, "The given replace item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -638,13 +643,13 @@
 				if( addItemToList( QUERY_DELETED_CHAR, deleteItem ) == RESULT_OK )
 					deleteItem->isAvailableForRollbackAfterDelete = isAvailableForRollback;
 				else
-					return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to add an item to the deleted list" );
+					return addError( functionNameString, NULL, "I failed to add an item to the deleted list" );
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given delete item is already a deleted item" );
+				return startError( functionNameString, NULL, "The given delete item is already a deleted item" );
 			}
 		else
-			return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to remove an item from a list" );
+			return addError( functionNameString, NULL, "I failed to remove an item from a list" );
 
 		return RESULT_OK;
 		}
@@ -661,7 +666,7 @@
 				if( deleteItem( false, searchItem ) == RESULT_OK )
 					searchItem = nextListItem_;
 				else
-					return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to delete an active item" );
+					return addError( functionNameString, NULL, "I failed to delete an active item" );
 				}
 			else
 				searchItem = searchItem->nextItem;
@@ -712,7 +717,7 @@
 						commonVariables_->nDeletedItems++;
 						}
 					else
-						return addError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to check an item for its usage" );
+						return addError( functionNameString, NULL, "I failed to check an item for its usage" );
 					}
 				while( removeItem != NULL &&
 				// Same sentence number
@@ -722,7 +727,7 @@
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "There is already a range of deleted items" );
+			return startError( functionNameString, NULL, "There is already a range of deleted items" );
 
 		return RESULT_OK;
 		}
@@ -761,7 +766,7 @@
 							break;
 
 						default:
-							return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given remove item has an unknown status character" );
+							return startError( functionNameString, NULL, "The given remove item has an unknown status character" );
 						}
 
 					if( removeItem->nextItem != NULL )
@@ -783,10 +788,10 @@
 				removeItem->nextItem = NULL;
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given remove item doesn't belong to my list" );
+				return startError( functionNameString, NULL, "The given remove item doesn't belong to my list" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "The given remove item is undefined" );
+			return startError( functionNameString, NULL, "The given remove item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -907,103 +912,103 @@
 		( listQuery_ = new ListQuery( commonVariables_, this ) ) != NULL )
 			return listQuery_->compareStrings( searchString, sourceString );
 
-		referenceResult.result = startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to create my list query module" );
+		referenceResult.result = startError( functionNameString, NULL, "I failed to create my list query module" );
 		return referenceResult;
 		}
 
-	ResultType List::itemQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
+	ResultType List::itemQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "itemQueryInList";
 
 		if( listQuery_ == NULL &&
 		// Create supporting module
 		( listQuery_ = new ListQuery( commonVariables_, this ) ) == NULL )
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to create my list query module" );
+			return startError( functionNameString, NULL, "I failed to create my list query module" );
 
-		listQuery_->itemQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr );
+		listQuery_->itemQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr );
 		return RESULT_OK;
 		}
 
-	ResultType List::listQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *queryListString )
+	ResultType List::listQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString )
 		{
 		bool isListIncludedInQuery = isIncludingThisList( queryListString );
 		char functionNameString[FUNCTION_NAME_LENGTH] = "listQueryInList";
 
-		if( isSelectOnFind ||
+		if( isSelectingOnFind ||
 		!isListIncludedInQuery )
 			{
 			if( listQuery_ == NULL &&
 			// Create supporting module
 			( listQuery_ = new ListQuery( commonVariables_, this ) ) == NULL )
-				return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to create my list query module" );
+				return startError( functionNameString, NULL, "I failed to create my list query module" );
 
-			listQuery_->listQuery( ( isSelectOnFind && isListIncludedInQuery ), isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems );
+			listQuery_->listQuery( ( isSelectingOnFind && isListIncludedInQuery ), isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems );
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType List::wordTypeQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned short queryWordTypeNr )
+	ResultType List::wordTypeQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordTypeQueryInList";
 
 		if( listQuery_ == NULL &&
 		// Create supporting module
 		( listQuery_ = new ListQuery( commonVariables_, this ) ) == NULL )
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to create my list query module" );
+			return startError( functionNameString, NULL, "I failed to create my list query module" );
 
-		listQuery_->wordTypeQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryWordTypeNr );
+		listQuery_->wordTypeQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr );
 		return RESULT_OK;
 		}
 
-	ResultType List::parameterQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned int queryParameter )
+	ResultType List::parameterQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "parameterQueryInList";
 
 		if( listQuery_ == NULL &&
 		// Create supporting module
 		( listQuery_ = new ListQuery( commonVariables_, this ) ) == NULL )
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to create my list query module" );
+			return startError( functionNameString, NULL, "I failed to create my list query module" );
 
-		listQuery_->parameterQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryParameter );
+		listQuery_->parameterQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter );
 		return RESULT_OK;
 		}
 
-	ResultType List::wordQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems )
+	ResultType List::wordQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordQueryInList";
 
 		if( listQuery_ == NULL &&
 		// Create supporting module
 		( listQuery_ = new ListQuery( commonVariables_, this ) ) == NULL )
-			return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to create my list query module" );
+			return startError( functionNameString, NULL, "I failed to create my list query module" );
 
-		listQuery_->wordQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems );
+		listQuery_->wordQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems );
 		return RESULT_OK;
 		}
 
-	ResultType List::wordReferenceQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *wordReferenceNameString )
+	ResultType List::wordReferenceQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQueryInList";
 
 		if( listQuery_ != NULL ||
 		// Create supporting module
 		( listQuery_ = new ListQuery( commonVariables_, this ) ) != NULL )
-			return listQuery_->wordReferenceQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, wordReferenceNameString );
+			return listQuery_->wordReferenceQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, ( isSelectingAttachedJustifications && isAssignmentOrSpecificationList() ), ( isSelectingJustificationSpecifications && isAssignmentOrSpecificationList() ), wordReferenceNameString );
 
-		return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to create my list query module" );
+		return startError( functionNameString, NULL, "I failed to create my list query module" );
 		}
 
-	ResultType List::stringQueryInList( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *queryString )
+	ResultType List::stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "stringQueryInList";
 
 		if( listQuery_ != NULL ||
 		// Create supporting module
 		( listQuery_ = new ListQuery( commonVariables_, this ) ) != NULL )
-			return listQuery_->stringQuery( isSelectOnFind, isSelectActiveItems, isSelectInactiveItems, isSelectArchivedItems, isSelectReplacedItems, isSelectDeletedItems, queryString );
+			return listQuery_->stringQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString );
 
-		return startError( functionNameString, NULL, myWordItem_->anyWordTypeString(), "I failed to create my list query module" );
+		return startError( functionNameString, NULL, "I failed to create my list query module" );
 		}
 
 	ResultType List::showQueryResultInList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )

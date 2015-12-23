@@ -1,0 +1,9 @@
+﻿Read the file "English/reasoning/family/family definition".
+John is the father and Anna is the mother of Paul, Joe and Laura.
+John is a parent.
+Paul has a father.
+Paul has a mother.
+Joe has a mother.
+Joe has a father.
+Laura has a father and a mother.
+# Remember to clear this knowledge before reading another example.

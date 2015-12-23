@@ -1,5 +1,5 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
-#C++#Mostrar " \~{nombre del idioma}\t\t\t\t* Cambiar el idioma".
+#C++#Mostrar " \~{nombre del idioma}\t\t\t\t* Cambiar la idioma".
 #C++#Mostrar " Leer el archivo \"Español/ambigüedad/Boston\".\t\t* Detección de ambigüedad".
 #C++#Mostrar " Leer el archivo \"Español/ambigüedad/presidentes de EUA\".* Detección de ambigüedad".
 #C++#Mostrar " Leer el archivo \"Español/programación/Conecta 4\".\t* Juego Conecta 4".
@@ -17,7 +17,7 @@ Mostrar " Ayudar.\t\t\t\t* Muestra esta información de ayuda".
 Mostrar " Deshacer.\t\t\t\t* Deshacer la última frase".
 Mostrar " Rehacer.\t\t\t\t* Rehacer una sentencia sin hacer".
 Mostrar " Despejar la mente.\t\t\t* Olvídese de los conocimientos previos".
-Mostrar " Reanudar.\t\t\t\t* Reinicie el programa".
+Mostrar " Reiniciar.\t\t\t\t* Reiniciar el programa".
 Mostrar " Mostrar información sobre los idiomas.".
 Mostrar " Mostrar información sobre las listas.".
 Mostrar " Mostrar información sobre los tipos de palabra.".
@@ -26,10 +26,10 @@ Mostrar " Mostrar los derechos de autor.".
 Mostrar " Mostrar la licencia-GPLv2.".
 Mostrar " Mostrar la garantía.".
 Mostrar "------------------------------------------------------------------------------".
-#C++#Mostrar " Archivos de ejemplo:\t* carpeta: Thinknowlogy2015r1beta/data/examples/Español/".
+#C++#Mostrar " Archivos de ejemplo:\t* carpeta: Thinknowlogy2015r1/data/examples/Español/".
 #Java#Mostrar " Archivos de ejemplo: Utilice botón <más ejemplos>".
-#Java#Mostrar "\t    o ver carpeta: Thinknowlogy2015r1beta/data/examples/Español/".
-Mostrar " Fundamental:\t* carpeta: Thinknowlogy2015r1beta/documents/".
-Mostrar " Proyecto:\t* carpeta: Thinknowlogy2015r1beta/documents/design/".
-Mostrar " Imágenes:\t* carpeta: Thinknowlogy2015r1beta/screenshots/Español/".
+#Java#Mostrar "\t    o ver carpeta: Thinknowlogy2015r1/data/examples/Español/".
+Mostrar " Fundamental:\t* carpeta: Thinknowlogy2015r1/documents/".
+Mostrar " Proyecto:\t* carpeta: Thinknowlogy2015r1/documents/design/".
+Mostrar " Imágenes:\t* carpeta: Thinknowlogy2015r1/screenshots/Español/".
 Mostrar "------------------------------------------------------------------------------".

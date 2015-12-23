@@ -1,11 +1,10 @@
 /*
  *	Class:		Presentation
  *	Purpose:	To format the information presented to the user
- *	Version:	Thinknowlogy 2015r1beta (Corazón)
+ *	Version:	Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -23,6 +22,7 @@
  *************************************************************************/
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
 class Presentation
@@ -30,13 +30,13 @@ class Presentation
 	// Private static variables
 
 	private static boolean hasReadLine_;
+	private static boolean isDeveloperUser_;
 	private static boolean isExpertUser_;
-	private static boolean isFirstTimeAfterReadingFile_;
 	private static boolean isShowingExtraPromptLine_;
 	private static boolean wasPreviousPromptGuidedByGrammarInput_;
 
-	private static short lastUsedPromptTypeNr_;
 	private static short lastShownInterfaceParameter_;
+	private static short lastUsedPromptTypeNr_;
 
 	private static int currentPosition_;
 	private static int previousProgress_;
@@ -44,25 +44,40 @@ class Presentation
 	private static StringBuffer outputStringBuffer_;
 	private static StringBuffer currentStatusStringBuffer_;
 
+	private static BufferedWriter testFile_;
+
 	private static String classNameString_ = "Presentation";
 
 
 	// Private static methods
 
-	private static void returnOutputToPosition( boolean isWriting )
+	private static void returnOutputToPosition( boolean isSkippingInTestFile, boolean isWriting )
 		{
 		currentPosition_ = 0;
-		addStringToOutput( isWriting, Constants.CARRIAGE_RETURN_NEW_LINE_STRING );
+		addStringToOutput( isSkippingInTestFile, isWriting, Constants.CARRIAGE_RETURN_NEW_LINE_STRING );
 		}
 
-	private static void addStringToOutput( boolean isWriting, String writeString )
+	private static void addStringToOutput( boolean isSkippingInTestFile, boolean isWriting, String writeString )
 		{
 		outputStringBuffer_.append( writeString );
 
 		if( isWriting &&
 		outputStringBuffer_.length() > 0 )
 			{
+			if( isSkippingInTestFile ||
+			testFile_ == null )
 				Console.writeText( outputStringBuffer_.toString() );
+			else
+				{
+				try	{
+					testFile_.write( outputStringBuffer_.toString() );
+					}
+				catch( IOException exception )
+					{
+					Console.writeText( "Failed to write to test file: \"" + outputStringBuffer_.toString() + "\".\n" );
+					}
+				}
+
 			outputStringBuffer_ = new StringBuffer();
 			}
 		}
@@ -76,7 +91,8 @@ class Presentation
 		else
 			{
 			if( currentStatusStringBuffer_ == null ||
-			currentStatusStringBuffer_.indexOf( newStatusString ) == -1 )	// Different string
+			// Different string
+			currentStatusStringBuffer_.indexOf( newStatusString ) == -1 )
 				{
 				currentStatusStringBuffer_ = new StringBuffer( newStatusString + ( newStatusString.endsWith( "." ) ? Constants.EMPTY_STRING : "..." ) );
 
@@ -86,7 +102,7 @@ class Presentation
 			}
 		}
 
-	private static byte writeText( boolean isForcingEmptyString, boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, int leftWidth, int rightWidth, int printStringLength, String promptString, String writeString )
+	private static byte writeText( boolean isSkippingInTestFile, boolean isForcingEmptyString, boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, int leftWidth, int rightWidth, int printStringLength, String promptString, String writeString )
 		{
 		boolean startNewLine = false;
 		int wordPosition;
@@ -103,12 +119,8 @@ class Presentation
 			rightWidth > Constants.NO_CENTER_WIDTH )
 				{
 				if( currentPosition_ > 0 &&
-
-				( isReturningToPosition ||
-				isFirstTimeAfterReadingFile_ ) )
-					returnOutputToPosition( false );
-
-				isFirstTimeAfterReadingFile_ = false;
+				isReturningToPosition )
+					returnOutputToPosition( isSkippingInTestFile, false );
 
 				// Find first letter character position
 				while( firstLetterPosition < printStringLength &&
@@ -124,6 +136,7 @@ class Presentation
 				currentPosition_ == 0 ) &&
 
 				( promptTypeNr == Constants.PRESENTATION_PROMPT_WRITE ||
+				promptTypeNr == Constants.PRESENTATION_PROMPT_WRITE_INDENTED ||
 				promptTypeNr == Constants.PRESENTATION_PROMPT_WARNING ) )
 					textString = writeString.substring( 0, firstLetterPosition ) + Character.toUpperCase( writeString.charAt( firstLetterPosition ) ) + ( firstLetterPosition + 1 < printStringLength ? writeString.substring( ( firstLetterPosition + 1 ), printStringLength ) : Constants.EMPTY_STRING );
 				else
@@ -138,7 +151,7 @@ class Presentation
 					promptString != null )
 						{
 						currentPosition_ = promptString.length() - 1;
-						addStringToOutput( false, promptString );
+						addStringToOutput( isSkippingInTestFile, false, promptString );
 						}
 					}
 
@@ -150,7 +163,7 @@ class Presentation
 						if( currentPosition_ == 0 )
 							{
 							currentPosition_ = promptString.length() - 1;
-							addStringToOutput( false, promptString );
+							addStringToOutput( isSkippingInTestFile, false, promptString );
 							}
 	
 						if( i < printStringLength )
@@ -182,7 +195,7 @@ class Presentation
 							textString.charAt( i ) == Constants.CARRIAGE_RETURN_CHAR ) )
 								{
 								startNewLine = true;
-								addStringToOutput( ( i + 1 == printStringLength ), Constants.CARRIAGE_RETURN_NEW_LINE_STRING );
+								addStringToOutput( isSkippingInTestFile, ( i + 1 == printStringLength ), Constants.CARRIAGE_RETURN_NEW_LINE_STRING );
 	
 								i++;
 								currentPosition_ = 0;
@@ -197,14 +210,14 @@ class Presentation
 								{
 								leftWidth--;
 								currentPosition_++;
-								addStringToOutput( false, Constants.SPACE_STRING );
+								addStringToOutput( isSkippingInTestFile, false, Constants.SPACE_STRING );
 								}
 	
 							if( i < printStringLength )
 								{
 								if( textString.charAt( i ) == Constants.TAB_CHAR )
 									{
-									addStringToOutput( ( i + 1 == printStringLength ), Constants.EMPTY_STRING + textString.charAt( i ) );
+									addStringToOutput( isSkippingInTestFile, ( i + 1 == printStringLength ), Constants.EMPTY_STRING + textString.charAt( i ) );
 
 									i++;
 									currentPosition_ += length;
@@ -212,7 +225,7 @@ class Presentation
 								else
 									{
 									do	{
-										addStringToOutput( ( i + 1 == printStringLength ), Constants.EMPTY_STRING + textString.charAt( i ) );
+										addStringToOutput( isSkippingInTestFile, ( i + 1 == printStringLength ), Constants.EMPTY_STRING + textString.charAt( i ) );
 	
 										if( textString.charAt( i ) == Constants.NEW_LINE_CHAR ||
 										textString.charAt( i ) == Constants.CARRIAGE_RETURN_CHAR )
@@ -232,7 +245,7 @@ class Presentation
 				while( rightWidth-- > Constants.NO_CENTER_WIDTH )
 					{
 					currentPosition_++;
-					addStringToOutput( ( ( i + 1 == printStringLength ) && rightWidth == Constants.NO_CENTER_WIDTH ), Constants.SPACE_STRING );
+					addStringToOutput( isSkippingInTestFile, ( ( i + 1 == printStringLength ) && rightWidth == Constants.NO_CENTER_WIDTH ), Constants.SPACE_STRING );
 					}
 				}
 			else
@@ -250,7 +263,7 @@ class Presentation
 		return CommonVariables.result;
 		}
 
-	private static byte writeText( boolean isForcingEmptyString, boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, int queryWidth, String promptString, String textString )
+	private static byte writeText( boolean isSkippingInTestFile, boolean isForcingEmptyString, boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, int queryWidth, String promptString, String textString )
 		{
 		int widthDifference;
 		int leftWidth = Constants.NO_CENTER_WIDTH;
@@ -283,8 +296,8 @@ class Presentation
 					rightWidth = ( widthDifference - leftWidth );
 					}
 
-					if( writeText( isForcingEmptyString, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, leftWidth, rightWidth, textStringLength, promptString, textString ) == Constants.RESULT_OK )
-					lastUsedPromptTypeNr_ = promptTypeNr;
+				if( writeText( isSkippingInTestFile, isForcingEmptyString, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, leftWidth, rightWidth, textStringLength, promptString, textString ) == Constants.RESULT_OK )
+					lastUsedPromptTypeNr_ = ( promptTypeNr == Constants.PRESENTATION_PROMPT_WARNING_INDENTED ? Constants.PRESENTATION_PROMPT_WARNING : ( promptTypeNr == Constants.PRESENTATION_PROMPT_WRITE_INDENTED ? Constants.PRESENTATION_PROMPT_WRITE : promptTypeNr ) );
 				else
 					showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the string" );
 				}
@@ -313,6 +326,9 @@ class Presentation
 			case Constants.PRESENTATION_PROMPT_WRITE:
 				return Constants.PRESENTATION_PROMPT_WRITE_STRING;
 
+			case Constants.PRESENTATION_PROMPT_WRITE_INDENTED:
+				return Constants.PRESENTATION_PROMPT_WRITE_INDENTED_STRING;
+
 			case Constants.PRESENTATION_PROMPT_INFO:
 				return Constants.PRESENTATION_PROMPT_INFO_STRING;
 
@@ -321,6 +337,9 @@ class Presentation
 
 			case Constants.PRESENTATION_PROMPT_WARNING:
 				return Constants.PRESENTATION_PROMPT_WARNING_STRING;
+
+			case Constants.PRESENTATION_PROMPT_WARNING_INDENTED:
+				return Constants.PRESENTATION_PROMPT_WARNING_INDENTED_STRING;
 			}
 
 		return Constants.PRESENTATION_PROMPT_QUERY_STRING;
@@ -332,20 +351,29 @@ class Presentation
 	protected static void initialize()
 		{
 		hasReadLine_ = false;
+		isDeveloperUser_ = false;
 		isExpertUser_ = false;
-		isFirstTimeAfterReadingFile_ = false;
 		isShowingExtraPromptLine_ = false;
 		wasPreviousPromptGuidedByGrammarInput_ = false;
 
 		currentPosition_ = 0;
 		previousProgress_ = 0;
+
+		lastShownInterfaceParameter_ = Constants.NO_INTERFACE_PARAMETER;
 		lastUsedPromptTypeNr_ = Constants.PRESENTATION_PROMPT_QUERY;
 
 		outputStringBuffer_ = new StringBuffer();
 		currentStatusStringBuffer_ = null;
+
+		testFile_ = null;
 		}
 
 	// Protected methods
+
+	protected static void showStatus( short interfaceParameter )
+		{
+		showStatus( false, interfaceParameter );
+		}
 
 	protected static void clearStatus()
 		{
@@ -353,13 +381,9 @@ class Presentation
 		Console.clearProgress();
 		}
 
-	protected static void clearProgress()
+	protected static void startProgress( int startProgress, int maxProgress, short interfaceParameter1, short shortNumber, short interfaceParameter2 )
 		{
-		previousProgress_ = 0;
-		Console.clearProgress();
-
-		if( currentStatusStringBuffer_ != null )
-			Console.showProgressStatus( currentStatusStringBuffer_.toString() );
+		Console.startProgress( startProgress, maxProgress, ( CommonVariables.currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND : CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + shortNumber + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + "  " + Constants.QUERY_ITEM_START_STRING + CommonVariables.currentSentenceNr + ( CommonVariables.currentItemNr == Constants.NO_SENTENCE_NR ? Constants.EMPTY_STRING : Constants.QUERY_SEPARATOR_STRING + CommonVariables.currentItemNr ) + Constants.QUERY_ITEM_END_CHAR ) );
 		}
 
 	protected static void showProgress( int currentProgress )
@@ -371,9 +395,18 @@ class Presentation
 			}
 		}
 
-	protected static void startProgress( int startProgress, int maxProgress, short interfaceParameter1, short shortNumber, short interfaceParameter2 )
+	protected static void clearProgress()
 		{
-		Console.startProgress( startProgress, maxProgress, ( CommonVariables.currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND : CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + shortNumber + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + "  " + Constants.QUERY_ITEM_START_STRING + CommonVariables.currentSentenceNr + ( CommonVariables.currentItemNr == Constants.NO_SENTENCE_NR ? Constants.EMPTY_STRING : Constants.QUERY_SEPARATOR_STRING + CommonVariables.currentItemNr ) + Constants.QUERY_ITEM_END_CHAR ) );
+		previousProgress_ = 0;
+		Console.clearProgress();
+
+		if( currentStatusStringBuffer_ != null )
+			Console.showProgressStatus( currentStatusStringBuffer_.toString() );
+		}
+
+	protected static void redirectOutputToTestFile( BufferedWriter testFile )
+		{
+		testFile_ = testFile;
 		}
 
 	protected static void showError( char methodListChar, String classNameString, String subclassNameString, String wordNameString, int methodLevel, String errorString )
@@ -382,7 +415,8 @@ class Presentation
 		StackTraceElement[] elements;
 		Throwable t = new Throwable();
 
-		addStringToOutput( true, Constants.EMPTY_STRING );	// Show remaining output
+		// Show remaining output
+		addStringToOutput( true, true, Constants.EMPTY_STRING );
 
 		if( classNameString != null )
 			errorStringBuffer.append( Constants.PRESENTATION_ERROR_CLASS_STRING + classNameString );
@@ -394,7 +428,8 @@ class Presentation
 			{
 			if( elements.length > 0 )
 				{
-				if( methodLevel < elements.length )		// elements.[0] is this method
+				// elements.[0] is this method
+				if( methodLevel < elements.length )
 					errorStringBuffer.append( Constants.PRESENTATION_ERROR_METHOD_STRING + elements[methodLevel].getMethodName() );
 				else
 					errorStringBuffer.append( Constants.PRESENTATION_ERROR_METHOD_STRING + "{Invalid method level}" );
@@ -422,6 +457,11 @@ class Presentation
 	protected static boolean hasReadLine()
 		{
 		return hasReadLine_;
+		}
+
+	protected static boolean isDeveloperUser()
+		{
+		return isDeveloperUser_;
 		}
 
 	protected static boolean isExpertUser()
@@ -490,13 +530,153 @@ class Presentation
 		return textStringBuffer.toString();
 		}
 
-	protected static byte writeText( boolean isReturningToPosition, short promptTypeNr, int queryWidth, StringBuffer textStringBuffer )
+	protected static byte readLine( boolean isClearInputField, boolean isDeveloperUser, boolean isExpertUser, boolean isFirstLine, boolean isGuidedByGrammarPrompt, boolean isPassword, boolean isQuestion, boolean isText, boolean showline, String promptString, StringBuffer readStringBuffer, BufferedReader readFile )
 		{
-		if( textStringBuffer != null )
-			return writeText( false, true, isReturningToPosition, promptTypeNr, queryWidth, null, textStringBuffer.toString() );
+		int endPosition;
+		int startPosition = 0;
+		String readString = new String();
+		StringBuffer promptStringBuffer = new StringBuffer();
 
-		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given text string buffer is undefined" );
-		CommonVariables.result = Constants.RESULT_ERROR;
+		hasReadLine_ = false;
+		lastShownInterfaceParameter_ = Constants.NO_INTERFACE_PARAMETER;
+
+		if( readStringBuffer != null )
+			{
+			if( isText ||
+			isQuestion )
+				promptStringBuffer.append( Constants.PRESENTATION_PROMPT_WRITE_STRING );
+
+			if( promptString != null )
+				{
+				if( isQuestion &&
+				promptString.length() > 0 &&
+				Character.isLetter( promptString.charAt( 0 ) ) )
+					promptStringBuffer.append( Character.toUpperCase( promptString.charAt( 0 ) ) + promptString.substring( 1 ) );
+				else
+					promptStringBuffer.append( promptString );
+
+				isDeveloperUser_ = isDeveloperUser;
+				isExpertUser_ = isExpertUser;
+				}
+
+			promptStringBuffer.append( isQuestion ? Constants.PRESENTATION_PROMPT_QUERY_STRING : ( isText ? Constants.PRESENTATION_PROMPT_ENTER_STRING : Constants.PRESENTATION_PROMPT_READ_STRING ) );
+
+			if( currentPosition_ > 0 )
+				returnOutputToPosition( false, true );
+
+			if( isShowingExtraPromptLine_ )
+				{
+				if( writeText( false, false, true, true, lastUsedPromptTypeNr_, Constants.NO_CENTER_WIDTH, null, Constants.NEW_LINE_STRING ) == Constants.RESULT_OK )
+					isShowingExtraPromptLine_ = false;
+				else
+					showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the line" );
+				}
+
+			if( CommonVariables.result == Constants.RESULT_OK )
+				{
+				if( isPassword ||
+				readFile == null )
+					{
+					currentPosition_ = 0;
+
+					if( isPassword )
+						{
+						showStatus( true, Constants.INTERFACE_CONSOLE_WAITING_FOR_SECURE_INPUT );
+						addStringToOutput( false, true, promptStringBuffer.toString() + Constants.NEW_LINE_STRING );
+
+						if( ( readString = Console.getPassword() ) != null )
+							hasReadLine_ = true;
+						else
+							{
+							showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The returned password string is undefined" );
+							CommonVariables.result = Constants.RESULT_ERROR;
+							}
+						}
+					else
+						{
+						if( isClearInputField &&
+						!wasPreviousPromptGuidedByGrammarInput_ )
+							showStatus( false, Constants.INTERFACE_CONSOLE_WAITING_FOR_INPUT );
+						else
+							clearStatus();
+
+						// Avoid extra prompt on the screen
+						if( isGuidedByGrammarPrompt ||
+						!wasPreviousPromptGuidedByGrammarInput_ )
+							addStringToOutput( false, true, promptStringBuffer.toString() );
+
+						if( ( readString = Console.readLine( isClearInputField ) ) != null )
+							hasReadLine_ = true;
+						else
+							{
+							showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The returned read line string is undefined" );
+							CommonVariables.result = Constants.RESULT_ERROR;
+							}
+						}
+
+					wasPreviousPromptGuidedByGrammarInput_ = isGuidedByGrammarPrompt;
+					}
+				else
+					{
+					try	{
+						if( ( readString = readFile.readLine() ) != null )
+							{
+							hasReadLine_ = true;
+
+							// Check for possible UTF-8 BOM marker
+							if( isFirstLine &&
+							readString.length() > 0 &&
+
+							( readString.charAt( 0 ) == Constants.FILE_UTF_8_BOM_CHAR ||
+							readString.startsWith( Constants.FILE_UTF_8_BOM_STRING ) ) )
+								// Remove UTF-8 BOM marker
+								readString = readString.substring( 1 );
+
+							// Strip Java comment from line
+							if( readString.startsWith( Constants.PRESENTATION_STRIP_COMMENT_STRING ) )
+								readString = readString.substring( Constants.PRESENTATION_STRIP_COMMENT_STRING.length() );
+
+							if( showline &&
+							// Skip C++ comment line
+							!readString.startsWith( Constants.PRESENTATION_SKIP_COMMENT_STRING ) )
+								{
+								if( writeText( false, false, true, true, Constants.PRESENTATION_PROMPT_READ, Constants.NO_CENTER_WIDTH, promptStringBuffer.toString(), ( readString.length() == 0 ? Constants.NEW_LINE_STRING : readString ) ) != Constants.RESULT_OK )
+									showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the text" );
+								}
+							}
+						}
+					catch( IOException exception )
+						{
+						showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, exception.toString() );
+						CommonVariables.result = Constants.RESULT_ERROR;
+						}
+					}
+
+				if( CommonVariables.result == Constants.RESULT_OK &&
+				hasReadLine_ &&
+				readString != null &&
+				readString.length() > 0 )
+					{
+					while( readString.substring( startPosition ).length() > 0 &&
+					Character.isWhitespace( readString.charAt( startPosition ) ) )
+						startPosition++;
+
+					endPosition = readString.length();
+
+					while( endPosition > startPosition &&
+					Character.isWhitespace( readString.charAt( endPosition - 1 ) ) )
+						endPosition--;
+
+					readStringBuffer.append( readString.substring( startPosition, endPosition ) );
+					}
+				}
+			}
+		else
+			{
+			showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given read string buffer is undefined" );
+			CommonVariables.result = Constants.RESULT_ERROR;
+			}
+
 		return CommonVariables.result;
 		}
 
@@ -505,29 +685,29 @@ class Presentation
 		return writeDiacriticalText( true, true, promptTypeNr, diacriticalTextString );
 		}
 
-	protected static byte writeDiacriticalText( boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, String textString )
+	protected static byte writeDiacriticalText( boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, String diacriticalTextString )
 		{
 		boolean hasFoundNewLine = false;
 		int position = 0;
 		char textChar = Constants.SYMBOL_QUESTION_MARK;
 		StringBuffer textStringBuffer = new StringBuffer();
 
-		if( textString != null )
+		if( diacriticalTextString != null )
 			{
 			isShowingExtraPromptLine_ = true;
 
-			if( textString.charAt( 0 ) == Constants.SYMBOL_DOUBLE_QUOTE )
+			if( diacriticalTextString.charAt( 0 ) == Constants.SYMBOL_DOUBLE_QUOTE )
 				position++;
 
 			while( CommonVariables.result == Constants.RESULT_OK &&
-			position < textString.length() &&
-			textString.charAt( position ) != Constants.SYMBOL_DOUBLE_QUOTE )
+			position < diacriticalTextString.length() &&
+			diacriticalTextString.charAt( position ) != Constants.SYMBOL_DOUBLE_QUOTE )
 				{
-				if( textString.charAt( position ) == Constants.TEXT_DIACRITICAL_CHAR )
+				if( diacriticalTextString.charAt( position ) == Constants.TEXT_DIACRITICAL_CHAR )
 					{
-					if( ++position < textString.length() )
+					if( ++position < diacriticalTextString.length() )
 						{
-						if( ( textChar = convertDiacriticalChar( textString.charAt( position ) ) ) == Constants.NEW_LINE_CHAR )
+						if( ( textChar = convertDiacriticalChar( diacriticalTextString.charAt( position ) ) ) == Constants.NEW_LINE_CHAR )
 							hasFoundNewLine = true;
 						}
 					else
@@ -537,7 +717,7 @@ class Presentation
 						}
 					}
 				else
-					textChar = textString.charAt( position );
+					textChar = diacriticalTextString.charAt( position );
 
 				position++;
 				textStringBuffer.append( Constants.EMPTY_STRING + textChar );
@@ -545,30 +725,30 @@ class Presentation
 				if( hasFoundNewLine ||
 
 				( textStringBuffer.length() > 0 &&
-				position < textString.length() &&
-				textString.charAt( position ) != Constants.SYMBOL_DOUBLE_QUOTE &&
-				textString.charAt( position ) == Constants.QUERY_CHAR ) )
+				position < diacriticalTextString.length() &&
+				diacriticalTextString.charAt( position ) != Constants.SYMBOL_DOUBLE_QUOTE &&
+				diacriticalTextString.charAt( position ) == Constants.QUERY_CHAR ) )
 					{
-					if( writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) == Constants.RESULT_OK )
+					if( writeText( false, false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) == Constants.RESULT_OK )
 						{
 						hasFoundNewLine = false;
 						textStringBuffer = new StringBuffer();
 						}
 					else
-						showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write a character" );
+						showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write a text string part" );
 					}
 				}
 
 			if( CommonVariables.result == Constants.RESULT_OK &&
 			textStringBuffer.length() > 0 )
 				{
-				if( writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) != Constants.RESULT_OK )
-					showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the last characters" );
+				if( writeText( false, false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) != Constants.RESULT_OK )
+					showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the last text string part" );
 				}
 			}
 		else
 			{
-			showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given text string is undefined" );
+			showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given diacritical text string is undefined" );
 			CommonVariables.result = Constants.RESULT_ERROR;
 			}
 
@@ -604,16 +784,6 @@ class Presentation
 		{
 		if( CommonVariables.currentLanguageWordItem != null )
 			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) );
-
-		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
-		CommonVariables.result = Constants.RESULT_ERROR;
-		return CommonVariables.result;
-		}
-
-	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, int intNumber1, short interfaceParameter2, int intNumber2, short interfaceParameter3 )
-		{
-		if( CommonVariables.currentLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber1 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + intNumber2 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
@@ -660,20 +830,20 @@ class Presentation
 		return CommonVariables.result;
 		}
 
-	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString1, short interfaceParameter2, String textString2, short interfaceParameter3 )
+	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString, short interfaceParameter2 )
 		{
 		if( CommonVariables.currentLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString1 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + textString2 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
+			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
 		return CommonVariables.result;
 		}
 
-	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString1, short interfaceParameter2, String textString2, short interfaceParameter3, String textString3, short interfaceParameter4 )
+	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString1, short interfaceParameter2, String textString2, short interfaceParameter3 )
 		{
 		if( CommonVariables.currentLanguageWordItem != null )
-			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString1 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + textString2 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) + textString3 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter4 ) );
+			return writeDiacriticalText( promptTypeNr, CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString1 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter2 ) + textString2 + CommonVariables.currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
 
 		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
 		CommonVariables.result = Constants.RESULT_ERROR;
@@ -690,155 +860,41 @@ class Presentation
 		return CommonVariables.result;
 		}
 
-	protected static byte readLine( boolean isClearInputField, boolean isExpertUser, boolean isFirstLine, boolean isGuidedByGrammarPrompt, boolean isPassword, boolean isQuestion, boolean isText, boolean showline, String promptString, StringBuffer readStringBuffer, BufferedReader readFile )
+	protected static byte writeText( short promptTypeNr, StringBuffer textStringBuffer1, StringBuffer textStringBuffer2 )
 		{
-		int endPosition;
-		int startPosition = 0;
-		String readString = new String();
-		StringBuffer promptStringBuffer = new StringBuffer();
-
-		hasReadLine_ = false;
-		lastShownInterfaceParameter_ = Constants.NO_INTERFACE_PARAMETER;
-
-		if( readStringBuffer != null )
+		if( textStringBuffer1 != null )
 			{
-			if( isText ||
-			isQuestion )
-				promptStringBuffer.append( Constants.PRESENTATION_PROMPT_WRITE_STRING );
+			isShowingExtraPromptLine_ = true;
 
-			if( promptString != null )
+			if( writeText( false, false, true, true, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer1.toString() ) == Constants.RESULT_OK )
 				{
-				if( isQuestion &&
-				promptString.length() > 0 &&
-				Character.isLetter( promptString.charAt( 0 ) ) )
-					promptStringBuffer.append( Character.toUpperCase( promptString.charAt( 0 ) ) + promptString.substring( 1 ) );
-				else
-					promptStringBuffer.append( promptString );
-
-				isExpertUser_ = isExpertUser;
-				}
-
-			promptStringBuffer.append( isQuestion ? Constants.PRESENTATION_PROMPT_QUERY_STRING : ( isText ? Constants.PRESENTATION_PROMPT_ENTER_STRING : Constants.PRESENTATION_PROMPT_READ_STRING ) );
-
-			if( currentPosition_ > 0 )
-				returnOutputToPosition( true );
-
-			if( isShowingExtraPromptLine_ )
-				{
-				if( writeText( false, true, true, lastUsedPromptTypeNr_, Constants.NO_CENTER_WIDTH, null, Constants.NEW_LINE_STRING ) == Constants.RESULT_OK )
-					isShowingExtraPromptLine_ = false;
-				else
-					showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the line" );
-				}
-
-			if( CommonVariables.result == Constants.RESULT_OK )
-				{
-				if( isPassword ||
-				readFile == null )
-					{
-					currentPosition_ = 0;
-
-					if( isPassword )
-						{
-						showStatus( true, Constants.INTERFACE_CONSOLE_WAITING_FOR_SECURE_INPUT );
-						addStringToOutput( true, promptStringBuffer.toString() + Constants.NEW_LINE_STRING );
-
-						if( ( readString = Console.getPassword() ) != null )
-							hasReadLine_ = true;
-						else
-							{
-							showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The returned password string is undefined" );
-							CommonVariables.result = Constants.RESULT_ERROR;
-							}
-						}
-					else
-						{
-						if( isClearInputField &&
-						!wasPreviousPromptGuidedByGrammarInput_ )
-							showStatus( false, Constants.INTERFACE_CONSOLE_WAITING_FOR_INPUT );
-						else
-							clearStatus();
-
-						// Avoid extra prompt on the screen
-						if( isGuidedByGrammarPrompt ||
-						!wasPreviousPromptGuidedByGrammarInput_ )
-							addStringToOutput( true, promptStringBuffer.toString() );
-
-						if( ( readString = Console.readLine( isClearInputField ) ) != null )
-							hasReadLine_ = true;
-						else
-							{
-							showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The returned read line string is undefined" );
-							CommonVariables.result = Constants.RESULT_ERROR;
-							}
-						}
-
-					wasPreviousPromptGuidedByGrammarInput_ = isGuidedByGrammarPrompt;
-					}
-				else
-					{
-					try	{
-						if( ( readString = readFile.readLine() ) != null )
-							{
-							hasReadLine_ = true;
-
-							// Check for possible UTF-8 BOM marker
-							if( isFirstLine &&
-							readString.length() > 0 &&
-
-							( readString.charAt( 0 ) == Constants.FILE_UTF_8_BOM_CHAR ||
-							readString.startsWith( Constants.FILE_UTF_8_BOM_STRING ) ) )
-								// Remove UTF-8 BOM marker
-								readString = readString.substring( 1 );
-
-							// Strip Java comment from line
-							if( readString.startsWith( Constants.PRESENTATION_STRIP_COMMENT_STRING ) )
-								readString = readString.substring( Constants.PRESENTATION_STRIP_COMMENT_STRING.length() );
-
-							if( showline &&
-							// Skip C++ comment line
-							!readString.startsWith( Constants.PRESENTATION_SKIP_COMMENT_STRING ) )
-								{
-								if( writeText( false, true, true, Constants.PRESENTATION_PROMPT_READ, Constants.NO_CENTER_WIDTH, promptStringBuffer.toString(), ( readString.length() == 0 ? Constants.NEW_LINE_STRING : readString ) ) != Constants.RESULT_OK )
-									showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the text" );
-								}
-							}
-						}
-					catch( IOException exception )
-						{
-						showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, exception.toString() );
-						CommonVariables.result = Constants.RESULT_ERROR;
-						}
-					}
-
-				if( CommonVariables.result == Constants.RESULT_OK &&
-				hasReadLine_ &&
-				readString != null &&
-				readString.length() > 0 )
-					{
-					isFirstTimeAfterReadingFile_ = true;
-
-					while( readString.substring( startPosition ).length() > 0 &&
-					Character.isWhitespace( readString.charAt( startPosition ) ) )
-						startPosition++;
-
-					endPosition = readString.length();
-
-					while( endPosition > startPosition &&
-					Character.isWhitespace( readString.charAt( endPosition - 1 ) ) )
-						endPosition--;
-
-					readStringBuffer.append( readString.substring( startPosition, endPosition ) );
-					}
+				if( textStringBuffer2 != null &&
+				textStringBuffer2.length() > 0 )
+					return writeText( false, false, true, false, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer2.toString() );
 				}
 			}
 		else
 			{
-			showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given read string buffer is undefined" );
+			showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given first diacritical text string buffer is undefined" );
 			CommonVariables.result = Constants.RESULT_ERROR;
 			}
 
 		return CommonVariables.result;
+		}
+
+	protected static byte writeText( boolean isReturningToPosition, short promptTypeNr, int queryWidth, StringBuffer textStringBuffer )
+		{
+		if( textStringBuffer != null )
+			return writeText( false, false, true, isReturningToPosition, promptTypeNr, queryWidth, null, textStringBuffer.toString() );
+
+		showError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given text string buffer is undefined" );
+		CommonVariables.result = Constants.RESULT_ERROR;
+		return CommonVariables.result;
+		}
+
+	protected static byte writeText( boolean isSkippingInTestFile, boolean isReturningToPosition, short promptTypeNr, int queryWidth, String textString )
+		{
+		return writeText( isSkippingInTestFile, false, true, isReturningToPosition, promptTypeNr, queryWidth, null, textString );
 		}
 	};
 

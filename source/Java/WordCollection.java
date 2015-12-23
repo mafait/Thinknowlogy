@@ -2,11 +2,10 @@
  *	Class:			WordCollection
  *	Supports class:	WordItem
  *	Purpose:		To create collection structures
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -111,11 +110,16 @@ class WordCollection
 										isDuplicateCollection = true;
 									else
 										{
-										// Detected semantic ambiguity of the specification word
-										if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START, commonWordItem.wordTypeString( true, commonWordTypeNr ), Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD, myWordItem_.wordTypeString( true, foundCollectionWordTypeNr ), Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END ) == Constants.RESULT_OK )
-											collectionResult.isAmbiguousCollection = true;
-										else
-											myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an interface notification about ambiguity" );
+										// Skip if collected with itself
+										if( commonWordItem != compoundGeneralizationWordItem &&
+										!commonWordItem.isNounWordCollectedWithItself() )
+											{
+											// Detected semantic ambiguity of the specification word
+											if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START, commonWordItem.wordTypeString( true, commonWordTypeNr ), Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD, myWordItem_.wordTypeString( true, foundCollectionWordTypeNr ), Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END ) == Constants.RESULT_OK )
+												collectionResult.isAmbiguousCollection = true;
+											else
+												myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write the 'ambiguous due to' interface notification" );
+											}
 										}
 									}
 
@@ -132,7 +136,7 @@ class WordCollection
 										}
 									else
 										{
-										if( collectionResult.createdCollectionNr == Constants.NO_COLLECTION_NR  )
+										if( collectionResult.createdCollectionNr == Constants.NO_COLLECTION_NR )
 											// Check if collection already exists
 											hasFoundCollection = myWordItem_.collectionList.hasCollection( collectionNr, collectionWordItem, commonWordItem );
 										}
@@ -169,7 +173,7 @@ class WordCollection
 		return collectionResult;
 		}
 
-	protected CollectionResultType addCollectionByExclusiveSpecification( boolean isExclusiveSpecification, short collectionWordTypeNr, short commonWordTypeNr, WordItem generalizationWordItem, WordItem collectionWordItem )
+	protected CollectionResultType addCollectionByGeneralization( short collectionWordTypeNr, short commonWordTypeNr, WordItem generalizationWordItem, WordItem collectionWordItem )
 		{
 		CollectionResultType collectionResult = new CollectionResultType();
 		SpecificationItem currentSpecificationItem;
@@ -179,7 +183,8 @@ class WordCollection
 
 		if( generalizationWordItem != null )
 			{
-			if( generalizationWordItem != myWordItem_ )
+			if( generalizationWordItem != myWordItem_ ||
+			myWordItem_.isNounWordCollectedWithItself() )
 				{
 				if( collectionWordItem != null )
 					{
@@ -208,9 +213,9 @@ class WordCollection
 														{
 														if( !collectionResult.isCollected )
 															{
-															if( ( collectionResult = foundCollectionWordItem_.addCollection( isExclusiveSpecification, false, collectionWordTypeNr, commonWordTypeNr, Constants.NO_COLLECTION_NR, collectionWordItem, myWordItem_, null ) ).result == Constants.RESULT_OK )
+															if( ( collectionResult = foundCollectionWordItem_.addCollection( false, false, collectionWordTypeNr, commonWordTypeNr, Constants.NO_COLLECTION_NR, collectionWordItem, myWordItem_, null ) ).result == Constants.RESULT_OK )
 																{
-																if( collectionWordItem.addCollection( isExclusiveSpecification, false, collectionWordTypeNr, commonWordTypeNr, collectionResult.createdCollectionNr, foundCollectionWordItem_, myWordItem_, null ).result == Constants.RESULT_OK )
+																if( collectionWordItem.addCollection( false, false, collectionWordTypeNr, commonWordTypeNr, collectionResult.createdCollectionNr, foundCollectionWordItem_, myWordItem_, null ).result == Constants.RESULT_OK )
 																	{
 																	hasCreatedCollection_ = true;
 																	foundCollectionWordItem_ = null;
@@ -256,7 +261,7 @@ class WordCollection
 		return collectionResult;
 		}
 
-	protected byte addCollectionByGeneralization( boolean isExclusiveSpecification, boolean isExclusiveGeneralization, boolean isQuestion, short collectionWordTypeNr, short commonWordTypeNr, WordItem generalizationWordItem, WordItem collectionWordItem )
+	protected byte addCollectionByGeneralization( boolean isExclusiveGeneralization, boolean isQuestion, short collectionWordTypeNr, short commonWordTypeNr, WordItem generalizationWordItem, WordItem collectionWordItem )
 		{
 		CollectionResultType collectionResult = new CollectionResultType();
 		int collectionNr;
@@ -275,10 +280,9 @@ class WordCollection
 				do	{
 					if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
 						{
-						if( currentGeneralizationWordItem != collectionWordItem &&
-						currentGeneralizationWordItem != generalizationWordItem )
+						if( currentGeneralizationWordItem != collectionWordItem )
 							{
-							if( ( collectionResult = currentGeneralizationWordItem.addCollectionByExclusiveSpecification( isExclusiveSpecification, collectionWordTypeNr, commonWordTypeNr, generalizationWordItem, collectionWordItem ) ).result == Constants.RESULT_OK )
+							if( ( collectionResult = currentGeneralizationWordItem.addCollectionByGeneralization( collectionWordTypeNr, commonWordTypeNr, generalizationWordItem, collectionWordItem ) ).result == Constants.RESULT_OK )
 								{
 								foundGeneralizationWordItem = collectionResult.foundGeneralizationWordItem;
 
@@ -295,7 +299,7 @@ class WordCollection
 							}
 						}
 					else
-						return myWordItem_.startErrorInWord( 1, moduleNameString_, "I've found an undefined generalization word" );
+						return myWordItem_.startErrorInWord( 1, moduleNameString_, "I have found an undefined generalization word" );
 					}
 				while( collectionResult.foundGeneralizationWordItem == null &&
 				( currentGeneralizationItem = currentGeneralizationItem.nextNounSpecificationGeneralizationItem() ) != null );

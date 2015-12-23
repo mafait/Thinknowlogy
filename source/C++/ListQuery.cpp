@@ -2,11 +2,10 @@
  *	Class:			ListQuery
  *	Supports class:	List
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -39,7 +38,7 @@ class ListQuery
 
 	// Private functions
 
-	void itemQuery( bool isSelectOnFind, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr, Item *queryItem )
+	void itemQuery( bool isSelectingOnFind, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr, Item *queryItem )
 		{
 		while( queryItem != NULL )
 			{
@@ -53,7 +52,7 @@ class ListQuery
 			( queryItemNr == NO_SENTENCE_NR ||
 			queryItemNr == queryItem->itemNr() ) ) )
 				{
-				if( isSelectOnFind &&
+				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
 					{
 					commonVariables_->hasFoundQuery = true;
@@ -62,7 +61,7 @@ class ListQuery
 				}
 			else
 				{
-				if( !isSelectOnFind &&
+				if( !isSelectingOnFind &&
 				queryItem->isSelectedByQuery )
 					queryItem->isSelectedByQuery = false;
 				}
@@ -71,11 +70,11 @@ class ListQuery
 			}
 		}
 
-	void listQuery( bool isSelectOnFind, Item *queryItem )
+	void listQuery( bool isSelectingOnFind, Item *queryItem )
 		{
 		while( queryItem != NULL )
 			{
-			if( isSelectOnFind )
+			if( isSelectingOnFind )
 				{
 				if( !queryItem->isSelectedByQuery )
 					{
@@ -93,13 +92,13 @@ class ListQuery
 			}
 		}
 
-	void wordTypeQuery( bool isSelectOnFind, unsigned short queryWordTypeNr, Item *queryItem )
+	void wordTypeQuery( bool isSelectingOnFind, unsigned short queryWordTypeNr, Item *queryItem )
 		{
 		while( queryItem != NULL )
 			{
 			if( queryItem->hasFoundWordType( queryWordTypeNr ) )
 				{
-				if( isSelectOnFind &&
+				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
 					{
 					commonVariables_->hasFoundQuery = true;
@@ -108,7 +107,7 @@ class ListQuery
 				}
 			else
 				{
-				if( !isSelectOnFind &&
+				if( !isSelectingOnFind &&
 				queryItem->isSelectedByQuery )
 					queryItem->isSelectedByQuery = false;
 				}
@@ -117,13 +116,13 @@ class ListQuery
 			}
 		}
 
-	void parameterQuery( bool isSelectOnFind, unsigned int queryParameter, Item *queryItem )
+	void parameterQuery( bool isSelectingOnFind, unsigned int queryParameter, Item *queryItem )
 		{
 		while( queryItem != NULL )
 			{
 			if( queryItem->hasFoundParameter( queryParameter ) )
 				{
-				if( isSelectOnFind &&
+				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
 					{
 					commonVariables_->hasFoundQuery = true;
@@ -132,7 +131,7 @@ class ListQuery
 				}
 			else
 				{
-				if( !isSelectOnFind &&
+				if( !isSelectingOnFind &&
 				queryItem->isSelectedByQuery )
 					queryItem->isSelectedByQuery = false;
 				}
@@ -141,11 +140,11 @@ class ListQuery
 			}
 		}
 
-	void wordQuery( bool isSelectOnFind, Item *queryItem )
+	void wordQuery( bool isSelectingOnFind, Item *queryItem )
 		{
 		while( queryItem != NULL )
 			{
-			if( isSelectOnFind )
+			if( isSelectingOnFind )
 				{
 				if( !queryItem->isSelectedByQuery )
 					{
@@ -168,11 +167,13 @@ class ListQuery
 		while( searchItem != NULL )
 			{
 			searchItem->isSelectedByQuery = false;
+			searchItem->isSelectedByJustificationQuery = false;
+
 			searchItem = searchItem->nextItem;
 			}
 		}
 
-	ResultType wordReferenceQuery( bool isSelectOnFind, char *wordReferenceNameString, Item *queryItem )
+	ResultType wordReferenceQuery( bool isSelectingOnFind, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString, Item *queryItem )
 		{
 		ReferenceResultType referenceResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQuery";
@@ -183,16 +184,23 @@ class ListQuery
 				{
 				if( referenceResult.hasFoundMatchingStrings )
 					{
-					if( isSelectOnFind &&
-					!queryItem->isSelectedByQuery )
+					if( queryItem->isSelectedByQuery )
 						{
-						commonVariables_->hasFoundQuery = true;
-						queryItem->isSelectedByQuery = true;
+						if( isSelectingAttachedJustifications )
+							queryItem->selectingAttachedJustifications( isSelectingJustificationSpecifications );
+						}
+					else
+						{
+						if( isSelectingOnFind )
+							{
+							commonVariables_->hasFoundQuery = true;
+							queryItem->isSelectedByQuery = true;
+							}
 						}
 					}
 				else
 					{
-					if( !isSelectOnFind &&
+					if( !isSelectingOnFind &&
 					queryItem->isSelectedByQuery )
 						queryItem->isSelectedByQuery = false;
 					}
@@ -200,13 +208,13 @@ class ListQuery
 				queryItem = queryItem->nextItem;
 				}
 			else
-				return myList_->addError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "I failed to check the word references" );
+				return myList_->addError( functionNameString, moduleNameString_, "I failed to check the word references" );
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType stringQuery( bool isSelectOnFind, char *wordString, Item *queryItem )
+	ResultType stringQuery( bool isSelectingOnFind, char *wordString, Item *queryItem )
 		{
 		ReferenceResultType referenceResult;
 		bool hasFoundString;
@@ -225,7 +233,7 @@ class ListQuery
 						hasFoundString = true;
 					}
 				else
-					return myList_->addError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "I failed to compare two strings" );
+					return myList_->addError( functionNameString, moduleNameString_, "I failed to compare two strings" );
 				}
 
 			if( !hasFoundString &&
@@ -237,12 +245,12 @@ class ListQuery
 						hasFoundString = true;
 					}
 				else
-					return myList_->addError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "I failed to compare two strings" );
+					return myList_->addError( functionNameString, moduleNameString_, "I failed to compare two strings" );
 				}
 
 			if( hasFoundString )
 				{
-				if( isSelectOnFind &&
+				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
 					{
 					commonVariables_->hasFoundQuery = true;
@@ -251,7 +259,7 @@ class ListQuery
 				}
 			else
 				{
-				if( !isSelectOnFind &&
+				if( !isSelectingOnFind &&
 				queryItem->isSelectedByQuery )
 					queryItem->isSelectedByQuery = false;
 				}
@@ -268,7 +276,8 @@ class ListQuery
 
 		while( queryItem != NULL )
 			{
-			if( queryItem->isSelectedByQuery )
+			if( queryItem->isSelectedByQuery ||
+			queryItem->isSelectedByJustificationQuery )
 				{
 				if( isOnlyShowingWords )
 					queryItem->showWords( isReturnQueryToPosition, queryWordTypeNr );
@@ -283,7 +292,7 @@ class ListQuery
 						else
 							{
 							if( commonVariables_->presentation->writeText( true, promptTypeNr, queryWidth, queryItem->toString( queryWordTypeNr ) ) != RESULT_OK )
-								return myList_->addError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "I failed to show the info of an active item" );
+								return myList_->addError( functionNameString, moduleNameString_, "I failed to show the info of an active item" );
 							}
 						}
 					}
@@ -317,7 +326,7 @@ class ListQuery
 			{
 			if( myList_ != NULL &&
 			myList_->myWordItem() != NULL )
-				myList_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), errorString );
+				myList_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			else
 				{
 			if( commonVariables_ != NULL )
@@ -403,129 +412,129 @@ class ListQuery
 			clearQuerySelections( searchItem );
 		}
 
-	void itemQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
+	void itemQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		Item *searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_->firstActiveItem() ) != NULL )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			itemQuery( isSelectOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 		}
 
-	void listQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems )
+	void listQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems )
 		{
 		Item *searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_->firstActiveItem() ) != NULL )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			listQuery( isSelectOnFind, searchItem );
+			listQuery( isSelectingOnFind, searchItem );
 		}
 
-	void wordTypeQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned short queryWordTypeNr )
+	void wordTypeQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr )
 		{
 		Item *searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_->firstActiveItem() ) != NULL )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			wordTypeQuery( isSelectOnFind, queryWordTypeNr, searchItem );
+			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 		}
 
-	void parameterQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, unsigned int queryParameter )
+	void parameterQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter )
 		{
 		Item *searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_->firstActiveItem() ) != NULL )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			parameterQuery( isSelectOnFind, queryParameter, searchItem );
+			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 		}
 
-	void wordQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems )
+	void wordQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems )
 		{
 		Item *searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_->firstActiveItem() ) != NULL )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectInactiveItems &&
+		if( isSelectingInactiveItems &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectArchivedItems &&
+		if( isSelectingArchivedItems &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectReplacedItems &&
+		if( isSelectingReplacedItems &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 
-		if( isSelectDeletedItems &&
+		if( isSelectingDeletedItems &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			wordQuery( isSelectOnFind, searchItem );
+			wordQuery( isSelectingOnFind, searchItem );
 		}
 
 	ReferenceResultType compareStrings( char *searchString, char *sourceString )
@@ -583,7 +592,7 @@ class ListQuery
 												sourceStringPosition++;
 												}
 											else
-												myList_->addError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "I failed to compare the remaining strings" );
+												myList_->addError( functionNameString, moduleNameString_, "I failed to compare the remaining strings" );
 											}
 										else
 											// Skip source characters if not equal
@@ -617,76 +626,76 @@ class ListQuery
 						}
 					}
 				else
-					myList_->startError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "The given strings are the same string" );
+					myList_->startError( functionNameString, moduleNameString_, "The given strings are the same string" );
 				}
 			else
-				myList_->startError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "The given source string is undefined" );
+				myList_->startError( functionNameString, moduleNameString_, "The given source string is undefined" );
 			}
 		else
-			myList_->startError( functionNameString, moduleNameString_, myList_->myWordItem()->anyWordTypeString(), "The given search string is undefined" );
+			myList_->startError( functionNameString, moduleNameString_, "The given search string is undefined" );
 
 		referenceResult.result = commonVariables_->result;
 		return referenceResult;
 		}
 
-	ResultType wordReferenceQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *wordReferenceNameString )
+	ResultType wordReferenceQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
 		{
 		Item *searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_->firstActiveItem() ) != NULL )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectInactiveItems &&
+		isSelectingInactiveItems &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectArchivedItems &&
+		isSelectingArchivedItems &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectReplacedItems &&
+		isSelectingReplacedItems &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectDeletedItems &&
+		isSelectingDeletedItems &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			wordReferenceQuery( isSelectOnFind, wordReferenceNameString, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		return commonVariables_->result;
 		}
 
-	ResultType stringQuery( bool isSelectOnFind, bool isSelectActiveItems, bool isSelectInactiveItems, bool isSelectArchivedItems, bool isSelectReplacedItems, bool isSelectDeletedItems, char *wordString )
+	ResultType stringQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *wordString )
 		{
 		Item *searchItem;
 
-		if( isSelectActiveItems &&
+		if( isSelectingActiveItems &&
 		( searchItem = myList_->firstActiveItem() ) != NULL )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectInactiveItems &&
+		isSelectingInactiveItems &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectArchivedItems &&
+		isSelectingArchivedItems &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectReplacedItems &&
+		isSelectingReplacedItems &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectDeletedItems &&
+		isSelectingDeletedItems &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			stringQuery( isSelectOnFind, wordString, searchItem );
+			stringQuery( isSelectingOnFind, wordString, searchItem );
 
 		return commonVariables_->result;
 		}

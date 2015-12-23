@@ -2,11 +2,10 @@
  *	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -65,8 +64,8 @@ class GrammarList : private List
 							{
 							grammarResult.hasFoundWordEnding = true;
 
-							strcpy( grammarResult.singularNounWordString, originalWordString );
-							grammarResult.singularNounWordString[tempWordLength] = NULL_CHAR;
+							strcpy( grammarResult.singularNounWordString, EMPTY_STRING );
+							strncat( grammarResult.singularNounWordString, originalWordString, tempWordLength );
 
 							if( replacingWordEndingString != NULL )
 								strcat( grammarResult.singularNounWordString, replacingWordEndingString );
@@ -74,13 +73,13 @@ class GrammarList : private List
 						}
 					}
 				else
-					startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given original word ending string is undefined" );
+					startError( functionNameString, NULL, "The given original word ending string is undefined" );
 				}
 			else
-				startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given original word string is undefined" );
+				startError( functionNameString, NULL, "The given original word string is undefined" );
 			}
 		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given original word string length is undefined" );
+			startError( functionNameString, NULL, "The given original word string length is undefined" );
 
 		grammarResult.result = commonVariables()->result;
 		return grammarResult;
@@ -221,7 +220,7 @@ class GrammarList : private List
 							replacingWordEndingString = ( replacingWordEndingGrammarItem == NULL ? NULL : replacingWordEndingGrammarItem->grammarString() );
 
 							if( ( grammarResult = comparePluralEndingOfWord( originalWordStringLength, ( replacingWordEndingString == NULL ? 0 : strlen( replacingWordEndingString ) ), originalWordString, originalWordEndingGrammarItem->itemString(), replacingWordEndingString ) ).result != RESULT_OK )
-								addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to find the plural ending of an undefined word type" );
+								addError( functionNameString, NULL, "I failed to find the plural ending of an undefined word type" );
 							}
 						}
 					while( commonVariables()->result == RESULT_OK &&
@@ -230,10 +229,10 @@ class GrammarList : private List
 					}
 				}
 			else
-				startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given original word string is undefined" );
+				startError( functionNameString, NULL, "The given original word string is undefined" );
 			}
 		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given grammar parameter is undefined" );
+			startError( functionNameString, NULL, "The given grammar parameter is undefined" );
 
 		grammarResult.result = commonVariables()->result;
 		return grammarResult;
@@ -265,16 +264,16 @@ class GrammarList : private List
 							}
 						}
 					else
-						addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to add an active grammar item" );
+						addError( functionNameString, NULL, "I failed to add an active grammar item" );
 					}
 				else
-					startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to create a grammar item" );
+					startError( functionNameString, NULL, "I failed to create a grammar item" );
 				}
 			else
-				startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The current item number is undefined" );
+				startError( functionNameString, NULL, "The current item number is undefined" );
 			}
 		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given collected word type number is undefined or out of bounds" );
+			startError( functionNameString, NULL, "The given collected word type number is undefined or out of bounds" );
 
 		grammarResult.result = commonVariables()->result;
 		return grammarResult;
@@ -305,11 +304,11 @@ class GrammarList : private List
 						searchItem = searchItem->nextGrammarItem();
 					}
 				else
-					startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I've found a grammar word without grammar string" );
+					startError( functionNameString, NULL, "I have found a grammar word without grammar string" );
 				}
 			}
 		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given grammar string is undefined" );
+			startError( functionNameString, NULL, "The given grammar string is undefined" );
 
 		grammarResult.result = commonVariables()->result;
 		return grammarResult;
@@ -391,14 +390,14 @@ class GrammarList : private List
 					if( isIdentical &&
 					currentGrammarItem == NULL &&
 					duplicateGrammarItem == NULL )
-						startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I've found a duplicate grammar definition" );
+						startError( functionNameString, NULL, "I have found a duplicate grammar definition" );
 					}
 				while( commonVariables()->result == RESULT_OK &&
 				( duplicateDefinitionGrammarItem = duplicateDefinitionGrammarItem->nextDefinitionGrammarItem ) != NULL );
 				}
 			}
 		else
-			startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't find the last grammar definition word" );
+			startError( functionNameString, NULL, "I couldn't find the last grammar definition word" );
 
 		grammarResult.result = commonVariables()->result;
 		return grammarResult;
@@ -430,14 +429,14 @@ class GrammarList : private List
 								if( commonVariables()->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_START, currentWordTypeNr, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_MIDDLE, myWordItem()->anyWordTypeString(), INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) == RESULT_OK )
 									currentWordTypeNr = grammarWordTypeNr;
 								else
-									return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to write an interface notification" );
+									return addError( functionNameString, NULL, "I failed to write the 'grammar word type definition missing' interface notification" );
 								}
 							else
 								{
 								if( commonVariables()->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_START, ( grammarWordTypeNr + 1 ), INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_TO, currentWordTypeNr, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_MIDDLE, myWordItem()->anyWordTypeString(), INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) == RESULT_OK )
 									currentWordTypeNr = grammarWordTypeNr;
 								else
-									return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to write an interface notification" );
+									return addError( functionNameString, NULL, "I failed to write the 'grammar word type definitions missing' interface notification" );
 								}
 							}
 
@@ -451,7 +450,7 @@ class GrammarList : private List
 					!currentGrammarItem->isWordEnding() )
 						{
 						if( commonVariables()->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_START, currentGrammarItem->grammarString(), INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_MIDDLE, myWordItem()->anyWordTypeString(), INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_END ) != RESULT_OK )
-							return addError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I failed to write an interface notification" );
+							return addError( functionNameString, NULL, "I failed to write the 'grammar definition is not used' interface notification" );
 						}
 					}
 				else
@@ -459,14 +458,14 @@ class GrammarList : private List
 					if( currentGrammarItem->definitionGrammarItem == NULL )
 						{
 						sprintf( errorString, "Grammar word \"%s\" in \"%s\" is used, but not defined", currentGrammarItem->grammarString(), myWordItem()->anyWordTypeString() );
-						return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), errorString );
+						return startError( functionNameString, NULL, errorString );
 						}
 					}
 				}
 			while( ( currentGrammarItem = currentGrammarItem->nextGrammarItem() ) != NULL );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't find any grammar item" );
+			return startError( functionNameString, NULL, "I couldn't find any grammar item" );
 
 		return RESULT_OK;
 		}
@@ -481,16 +480,16 @@ class GrammarList : private List
 			while( searchItem != NULL )
 				{
 				if( searchItem->definitionGrammarItem == unusedGrammarItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The definition grammar item is still in use" );
+					return startError( functionNameString, NULL, "The definition grammar item is still in use" );
 
 				if( searchItem->nextDefinitionGrammarItem == unusedGrammarItem )
-					return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The next definition grammar item is still in use" );
+					return startError( functionNameString, NULL, "The next definition grammar item is still in use" );
 
 				searchItem = searchItem->nextGrammarItem();
 				}
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The given unused grammar item is undefined" );
+			return startError( functionNameString, NULL, "The given unused grammar item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -529,14 +528,14 @@ class GrammarList : private List
 							}
 						}
 					else
-						return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The grammar string of the grammar definition word is undefined" );
+						return startError( functionNameString, NULL, "The grammar string of the grammar definition word is undefined" );
 					}
 				}
 			else
-				return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "The grammar string of the grammar definition word is undefined" );
+				return startError( functionNameString, NULL, "The grammar string of the grammar definition word is undefined" );
 			}
 		else
-			return startError( functionNameString, NULL, myWordItem()->anyWordTypeString(), "I couldn't find any grammar item" );
+			return startError( functionNameString, NULL, "I couldn't find any grammar item" );
 
 		return RESULT_OK;
 		}
@@ -551,7 +550,7 @@ class GrammarList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeGrammarItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to store a grammar item in the database" );
+					return addError( functionNameString, NULL, "I failed to store a grammar item in the database" );
 				}
 
 			searchItem = searchItem->nextGrammarItem();
@@ -564,7 +563,7 @@ class GrammarList : private List
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->storeGrammarItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, NULL, "I failed to modify a replaced grammar item in the database" );
+					return addError( functionNameString, NULL, "I failed to modify a replaced grammar item in the database" );
 				}
 
 			searchItem = searchItem->nextGrammarItem();

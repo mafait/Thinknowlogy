@@ -2,11 +2,10 @@
  *	Class:			WordType
  *	Supports class:	WordItem
  *	Purpose:		To create word type structures
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -194,7 +193,7 @@ class WordType
 		return wordResult;
 		}
 
-	WordResultType findWordType( bool isForcingToCheckAllLanguages, unsigned short wordTypeNr, char *wordTypeString )
+	WordResultType findWordType( bool isCheckingAllLanguages, unsigned short wordTypeNr, char *wordTypeString )
 		{
 		WordResultType wordResult;
 		size_t currentWordTypeStringLength;
@@ -207,7 +206,7 @@ class WordType
 			{
 			if( ( wordTypeStringLength = strlen( wordTypeString ) ) > 0 )
 				{
-				if( ( currentWordTypeItem = myWordItem_->activeWordTypeItem( isForcingToCheckAllLanguages, wordTypeNr ) ) != NULL )
+				if( ( currentWordTypeItem = myWordItem_->activeWordTypeItem( isCheckingAllLanguages, wordTypeNr ) ) != NULL )
 					{
 					do	{
 						// Skip hidden word type
@@ -241,7 +240,7 @@ class WordType
 		return wordResult;
 		}
 
-	WordResultType findWordTypeInAllWords( bool isForcingToCheckAllLanguages, unsigned short wordTypeNr, char *wordTypeString, WordItem *previousWordItem )
+	WordResultType findWordTypeInAllWords( bool isCheckingAllLanguages, unsigned short wordTypeNr, char *wordTypeString, WordItem *previousWordItem )
 		{
 		WordResultType wordResult;
 		WordItem *currentWordItem;
@@ -250,7 +249,7 @@ class WordType
 		if( ( currentWordItem = ( previousWordItem == NULL ? commonVariables_->firstWordItem : previousWordItem->nextWordItem() ) ) != NULL )
 			{
 			do	{
-				if( ( wordResult = currentWordItem->findWordType( isForcingToCheckAllLanguages, wordTypeNr, wordTypeString ) ).result != RESULT_OK )
+				if( ( wordResult = currentWordItem->findWordType( isCheckingAllLanguages, wordTypeNr, wordTypeString ) ).result != RESULT_OK )
 					myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a word type in word \"", currentWordItem->anyWordTypeString(), "\"" );
 				}
 			while( wordResult.foundWordItem == NULL &&

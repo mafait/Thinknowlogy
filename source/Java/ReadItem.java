@@ -2,11 +2,10 @@
  *	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -178,7 +177,7 @@ class ReadItem extends Item
 		if( readWordItem_ != null )
 			{
 			if( ( referenceResult = readWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addErrorInItem( 1, null, myWordItem().anyWordTypeString(), "I failed to find the word reference for the word reference query" );
+				addError( 1, null, "I failed to find the word reference for the word reference query" );
 			}
 
 		return referenceResult;
@@ -194,7 +193,7 @@ class ReadItem extends Item
 				referenceResult.hasFoundWordReference = true;
 			}
 		else
-			startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The given reference word is undefined" );
+			startError( 1, null, "The given reference word is undefined" );
 
 		return referenceResult;
 		}
@@ -411,7 +410,8 @@ class ReadItem extends Item
 
 	protected boolean isNounFile()
 		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_FILE );
+		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_FILE ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_TEST_FILE );
 		}
 
 	protected boolean isNounPartOf()
@@ -495,7 +495,7 @@ class ReadItem extends Item
 			readWordItem_ = newReadWordItem;
 			}
 		else
-			return startErrorInItem( 1, null, myWordItem().anyWordTypeString(), "The given new read word item is undefined" );
+			return startError( 1, null, "The given new read word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}

@@ -1,32 +1,32 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
 Mostrar " Número total de elementos de tipo de palabra:	~#<w>~, (todos idiomas incluidos).".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " * Elementos de tipo de palabra activa:			~!#<w>~.".
-Mostrar "   (@1)  Símbolos:						~!#<w>@1~.".
-Mostrar "   (@2)  Números:						~!#<w>@2~.".
-Mostrar "   (@3)  Letras minúsculas:					~!#<w>@3~.".
-Mostrar "   (@4)  Letras mayúsculas:					~!#<w>@4~.".
-Mostrar "   (@5)  Nombres propios:					~!#<w>@5~.".
-Mostrar "   (@6)  Adjetivos:						~!#<w>@6~.".
-Mostrar "   (@7)  Adverbios:						~!#<w>@7~.".
-Mostrar "   (@8)  Respuesta palabras:					~!#<w>@8~.".
-Mostrar "   (@9)  Artículos:						~!#<w>@9~.".
-Mostrar "   (@10) Conjunciones:						~!#<w>@10~.".
-Mostrar "   (@11) Sustantivos singulares:				~!#<w>@11~.".
-Mostrar "   (@12) Sustantivos en plural:					~!#<w>@12~.".
-Mostrar "   (@13) Pronombre personal singular (subjetiva):		~!#<w>@13~.".
-Mostrar "   (@14) Pronombre personal singular (objetiva):		~!#<w>@14~.".
-Mostrar "   (@15) Determinante posesivo singular:			~!#<w>@15~.".
-Mostrar "   (@16) Pronombre posesivo singular:				~!#<w>@16~.".
-Mostrar "   (@17) Plural del pronombre personal (subjetiva):		~!#<w>@17~.".
-Mostrar "   (@18) Plural del pronombre personal (objetivo):		~!#<w>@18~.".
-Mostrar "   (@19) Plural determinante posesivo:				~!#<w>@19~.".
-Mostrar "   (@20) Plural del pronombre posesivo:				~!#<w>@20~.".
-Mostrar "   (@21) Preposiciones:						~!#<w>@21~.".
-Mostrar "   (@22) Verbos singulares:					~!#<w>@22~.".
-Mostrar "   (@23) Verbos en plural:					~!#<w>@23~.".
-Mostrar "   (@24) Palabras de selección:					~!#<w>@24~.".
-Mostrar " * Elementos de tipo de palabra desactiva:		~*#<w>~.".
+Mostrar " * Elementos de tipo de palabra activa:			~+#<w>~.".
+Mostrar "   (@1)  Símbolos:						~+#<w>@1~.".
+Mostrar "   (@2)  Números:						~+#<w>@2~.".
+Mostrar "   (@3)  Letras minúsculas:					~+#<w>@3~.".
+Mostrar "   (@4)  Letras mayúsculas:					~+#<w>@4~.".
+Mostrar "   (@5)  Nombres propios:					~+#<w>@5~.".
+Mostrar "   (@6)  Adjetivos:						~+#<w>@6~.".
+Mostrar "   (@7)  Adverbios:						~+#<w>@7~.".
+Mostrar "   (@8)  Respuesta palabras:					~+#<w>@8~.".
+Mostrar "   (@9)  Artículos:						~+#<w>@9~.".
+Mostrar "   (@10) Conjunciones:						~+#<w>@10~.".
+Mostrar "   (@11) Sustantivos singulares:				~+#<w>@11~.".
+Mostrar "   (@12) Sustantivos en plural:					~+#<w>@12~.".
+Mostrar "   (@13) Pronombre personal singular (subjetiva):		~+#<w>@13~.".
+Mostrar "   (@14) Pronombre personal singular (objetiva):		~+#<w>@14~.".
+Mostrar "   (@15) Determinante posesivo singular:			~+#<w>@15~.".
+Mostrar "   (@16) Pronombre posesivo singular:				~+#<w>@16~.".
+Mostrar "   (@17) Plural del pronombre personal (subjetiva):		~+#<w>@17~.".
+Mostrar "   (@18) Plural del pronombre personal (objetivo):		~+#<w>@18~.".
+Mostrar "   (@19) Plural determinante posesivo:				~+#<w>@19~.".
+Mostrar "   (@20) Plural del pronombre posesivo:				~+#<w>@20~.".
+Mostrar "   (@21) Preposiciones:						~+#<w>@21~.".
+Mostrar "   (@22) Verbos singulares:					~+#<w>@22~.".
+Mostrar "   (@23) Verbos en plural:					~+#<w>@23~.".
+Mostrar "   (@24) Palabras de selección:					~+#<w>@24~.".
+Mostrar " * Elementos de tipo de palabra desactiva:		~=#<w>~.".
 Mostrar " * Elementos de tipo de palabra archivados:		~$#<w>~.".
 Mostrar " * Elementos de tipo de palabra sustituidos:		~%#<w>~.".
 Mostrar " * Elementos de tipo de palabra eliminados:		~&#<w>~.".

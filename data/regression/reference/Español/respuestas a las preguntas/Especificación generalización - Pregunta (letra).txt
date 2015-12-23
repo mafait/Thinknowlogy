@@ -1,0 +1,29 @@
+﻿< Sí, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y y z son letra-minúsculas.
+< 
+< No, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y y Z son letra-mayúsculas. (aprendido de usuario Admin)
+< A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y y z son letra-minúsculas. (aprendido de usuario Admin)
+< 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es a una letra-minúscula?
+* 
+* Mi respuesta:
+< Sí, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y y z son letra-minúsculas.
+< 
+< Sí, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y y Z son letra-mayúsculas.
+< 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es a una letra-mayúscula?
+* 
+* Mi respuesta:
+< No, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y y Z son letra-mayúsculas. (aprendido de usuario Admin)
+< A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y y z son letra-minúsculas. (aprendido de usuario Admin)
+< 
+< No, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y y z son letra-minúsculas. (aprendido de usuario Admin)
+< A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y y Z son letra-mayúsculas. (aprendido de usuario Admin)
+< 
+< Sí, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y y z son letra-minúsculas.
+< 
+< Sí, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y y Z son letra-mayúsculas.
+< 

@@ -2,11 +2,10 @@
  *	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2015r1beta (Corazón)
+ *	Version:		Thinknowlogy 2015r1 (Esperanza)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait
- *	Your suggestions, modifications and bug reports are welcome at
- *	http://mafait.org
+/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
+ *	and bug reports are welcome at http://mafait.org
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -58,7 +57,7 @@ class ReadList extends List
 			if( ( referenceResult = searchItem.findWordReference( referenceWordItem ) ).result == Constants.RESULT_OK )
 				searchItem = searchItem.nextReadItem();
 			else
-				addError( 1, null, null, "I failed to check for a reference word item in an active read item" );
+				addError( 1, null, "I failed to check for a reference word item in an active read item" );
 			}
 
 		searchItem = firstInactiveReadItem();
@@ -70,7 +69,7 @@ class ReadList extends List
 			if( ( referenceResult = searchItem.findWordReference( referenceWordItem ) ).result == Constants.RESULT_OK )
 				searchItem = searchItem.nextReadItem();
 			else
-				addError( 1, null, null, "I failed to check for a reference word item in an inactive read item" );
+				addError( 1, null, "I failed to check for a reference word item in an inactive read item" );
 			}
 
 		return referenceResult;
@@ -95,7 +94,7 @@ class ReadList extends List
 						if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
 							searchItem = nextReadListItem();
 						else
-							return addError( 1, null, null, "I failed to delete an active read item" );
+							return addError( 1, null, "I failed to delete an active read item" );
 						}
 					else
 						searchItem = searchItem.nextReadItem();
@@ -105,7 +104,7 @@ class ReadList extends List
 				}
 			}
 		else
-			return startError( 1, null, null, "The given sentence string is undefined" );
+			return startError( 1, null, "The given sentence string is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -146,13 +145,12 @@ class ReadList extends List
 
 	protected boolean isImperativeSentence()
 		{
+		short wordOrderNr;
 		short previousWordOrderNr = Constants.NO_ORDER_NR;
 		int nWords = 0;
 		String readWordString;
 		ReadItem startItem = null;
 		ReadItem searchItem = firstActiveReadItem();
-
-		CommonVariables.writeSentenceStringBuffer = new StringBuffer();
 
 		while( searchItem != null )
 			{
@@ -161,10 +159,10 @@ class ReadList extends List
 			searchItem.isSpecificationWord() ) &&
 
 			// First appearance of new word
-			searchItem.wordOrderNr() > previousWordOrderNr )
+			( wordOrderNr = searchItem.wordOrderNr() ) > previousWordOrderNr )
 				{
 				nWords++;
-				previousWordOrderNr = searchItem.wordOrderNr();
+				previousWordOrderNr = wordOrderNr;
 
 				if( startItem == null )
 					startItem = searchItem;
@@ -178,11 +176,12 @@ class ReadList extends List
 			{
 			previousWordOrderNr = Constants.NO_ORDER_NR;
 			searchItem = startItem;
+
 			CommonVariables.writeSentenceStringBuffer = new StringBuffer();
 
 			while( searchItem != null )
 				{
-				if( searchItem.wordOrderNr() > previousWordOrderNr &&
+				if( ( wordOrderNr = searchItem.wordOrderNr() ) > previousWordOrderNr &&
 				// Skip text
 				searchItem.readWordItem() != null &&
 				( readWordString = searchItem.readWordTypeString() ) != null )
@@ -192,15 +191,17 @@ class ReadList extends List
 					searchItem.grammarParameter != Constants.GRAMMAR_SENTENCE )
 						CommonVariables.writeSentenceStringBuffer.append( Constants.SPACE_STRING );
 
-					previousWordOrderNr = searchItem.wordOrderNr();
+					previousWordOrderNr = wordOrderNr;
 					CommonVariables.writeSentenceStringBuffer.append( readWordString );
 					}
 
 				searchItem = searchItem.nextReadItem();
 				}
+
+			return true;
 			}
 
-		return ( nWords > 2 );
+		return false;
 		}
 
 	protected ReadResultType createReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String readString, WordItem readWordItem )
@@ -215,16 +216,16 @@ class ReadList extends List
 				if( ( readResult.createdReadItem = new ReadItem( wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, this, myWordItem() ) ) != null )
 					{
 					if( addItemToList( Constants.QUERY_ACTIVE_CHAR, readResult.createdReadItem ) != Constants.RESULT_OK )
-						addError( 1, null, null, "I failed to add an active read item" );
+						addError( 1, null, "I failed to add an active read item" );
 					}
 				else
-					startError( 1, null, null, "I failed to create a read item" );
+					startError( 1, null, "I failed to create a read item" );
 				}
 			else
-				startError( 1, null, null, "The current item number is undefined" );
+				startError( 1, null, "The current item number is undefined" );
 			}
 		else
-			startError( 1, null, null, "The given read word type number is undefined or out of bounds" );
+			startError( 1, null, "The given read word type number is undefined or out of bounds" );
 
 		readResult.result = CommonVariables.result;
 		return readResult;
@@ -236,13 +237,6 @@ class ReadList extends List
 		ReadItem activeReadItem = firstActiveReadItem();
 		ReadItem inactiveReadItem = firstInactiveReadItem();
 
-		// Clear grammar parameters of all active read items
-		while( activeReadItem != null )
-			{
-			activeReadItem.grammarParameter = Constants.NO_GRAMMAR_PARAMETER;
-			activeReadItem = activeReadItem.nextReadItem();
-			}
-
 		// Get last inactive item
 		while( inactiveReadItem != null &&
 		inactiveReadItem.nextReadItem() != null )
@@ -253,8 +247,17 @@ class ReadList extends List
 			readResult.hasFoundMoreInterpretations = true;
 			lastActivatedWordOrderNr_ = inactiveReadItem.wordOrderNr();
 
-			if( activateItem( inactiveReadItem ) != Constants.RESULT_OK )
-				addError( 1, null, null, "I failed to active an inactive item" );
+			if( activateItem( inactiveReadItem ) == Constants.RESULT_OK )
+				{
+				// Clear grammar parameters of all active read items
+				while( activeReadItem != null )
+					{
+					activeReadItem.grammarParameter = Constants.NO_GRAMMAR_PARAMETER;
+					activeReadItem = activeReadItem.nextReadItem();
+					}
+				}
+			else
+				addError( 1, null, "I failed to active an inactive item" );
 			}
 
 		readResult.result = CommonVariables.result;
@@ -291,7 +294,7 @@ class ReadList extends List
 				}
 			}
 		else
-			startError( 1, null, null, "The given read word is undefined" );
+			startError( 1, null, "The given read word is undefined" );
 
 		readResult.result = CommonVariables.result;
 		return readResult;
@@ -328,7 +331,7 @@ class ReadList extends List
 							if( inactivateItem( activeReadItem ) == Constants.RESULT_OK )
 								activeReadItem = nextReadListItem();
 							else
-								addError( 1, null, null, "I failed to inactive an active item" );
+								addError( 1, null, "I failed to inactive an active item" );
 							}
 						}
 					else
@@ -359,7 +362,7 @@ class ReadList extends List
 				if( activateItem( searchItem ) == Constants.RESULT_OK )
 					searchItem = nextReadListItem();
 				else
-					return addError( 1, null, null, "I failed to activate an inactive item" );
+					return addError( 1, null, "I failed to activate an inactive item" );
 				}
 			else
 				searchItem = searchItem.nextReadItem();
@@ -377,7 +380,7 @@ class ReadList extends List
 			if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
 				searchItem = nextReadListItem();
 			else
-				return addError( 1, null, null, "I failed to delete an active item" );
+				return addError( 1, null, "I failed to delete an active item" );
 			}
 
 		return Constants.RESULT_OK;
@@ -387,6 +390,7 @@ class ReadList extends List
 		{
 		boolean hasFound = false;
 		boolean isMarked = true;
+		short wordOrderNr;
 		String definitionGrammarString;
 		ReadItem searchItem = firstActiveReadItem();
 
@@ -400,11 +404,11 @@ class ReadList extends List
 						{
 						while( isMarked &&
 						searchItem != null &&
-						searchItem.wordOrderNr() <= endWordOrderNr )
+						( wordOrderNr = searchItem.wordOrderNr() ) <= endWordOrderNr )
 							{
 							if( !searchItem.isMarkedBySetGrammarParameter &&
-							searchItem.wordOrderNr() > startWordOrderNr &&
-							searchItem.wordOrderNr() <= endWordOrderNr )
+							wordOrderNr > startWordOrderNr &&
+							wordOrderNr <= endWordOrderNr )
 								isMarked = false;
 
 							searchItem = searchItem.nextReadItem();
@@ -414,10 +418,10 @@ class ReadList extends List
 						}
 
 					while( searchItem != null &&
-					searchItem.wordOrderNr() <= endWordOrderNr )
+					( wordOrderNr = searchItem.wordOrderNr() ) <= endWordOrderNr )
 						{
-						if( searchItem.wordOrderNr() > startWordOrderNr &&
-						searchItem.wordOrderNr() <= endWordOrderNr )
+						if( wordOrderNr > startWordOrderNr &&
+						wordOrderNr <= endWordOrderNr )
 							{
 							hasFound = true;
 
@@ -448,16 +452,16 @@ class ReadList extends List
 						}
 
 					if( !hasFound )
-						return startError( 1, null, null, "I couldn't find any item between the given word order numbers" );
+						return startError( 1, null, "I couldn't find any item between the given word order numbers" );
 					}
 				else
-					return startError( 1, null, null, "The given grammar definition word item is undefined" );
+					return startError( 1, null, "The given grammar definition word item is undefined" );
 				}
 			else
-				return startError( 1, null, null, "The given start word order number is equal or higher than the given end word order number" );
+				return startError( 1, null, "The given start word order number is equal or higher than the given end word order number" );
 			}
 		else
-			return startError( 1, null, null, "The given end word order number is undefined" );
+			return startError( 1, null, "The given end word order number is undefined" );
 
 		return Constants.RESULT_OK;
 		}

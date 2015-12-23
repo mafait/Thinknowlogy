@@ -1,0 +1,50 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A parent is probably a person.
+< A father is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< A son is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< James was a man.
+< Michael has no father anymore.
+< Michael had a father, called James.
+* 
+* My assumptions:
+< James has probably a child, called Michael.
+< James was probably a person.
+< James was probably not a woman.
+< James was probably a parent of Michael.
+< James was probably part of a family.
+< James was probably not a mother.
+< Michael is probably a child of James.
+< Michael is probably part of a family.
+< Michael is possibly a person.
+< Michael had probably a parent, called James.
+* 
+* My questions:
+< Is Michael a man, a woman, a girl or a boy?
+< Is Michael a son or a daughter?
+< 
