@@ -1,19 +1,19 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To demonstrate programming in natural language.
-#	Version:	Thinknowlogy 2015r1 (Esperanza)
+#	Version:		Thinknowlogy 2016r1 (Huguenot)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
-#	and bug reports are welcome at http://mafait.org
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 # Mostrar el saludo y la limpieza para evitar la interferencia con el siguiente saludo.
-Si el saludo es inicia entonces mostrar "\n~+'marca de tiempo'<a>\"~ ~+'saludo'<a>\"~ ~+'nombre'<a>`~.\n\n", la edad es clara, el género es clara, el estado civil es clara, el tiempo es clara, el marca de tiempo es clara, el saludo es clara y el nombre es clara.
+Si el saludo es inicia entonces mostrar "\n~+'marca de tiempo'<a>\"~ ~+'saludo'<a>\"~ ~+'nombre'<a>`~.\n\n", la edad es vacío, el género es vacío, el estado civil es vacío, el tiempo es vacío, el marca de tiempo es vacío, el saludo es vacío y el nombre es vacío.
 
 # Determinar el saludo de un hombre.
-Si el saludo es inicia y el género es masculino entonces si la edad es asignado y la edad es menos que 12 entonces el saludo es "pequeño Sr." sino el saludo es "Sr.".
+Si el saludo es inicia y el género es masculino entonces si la edad es asignado y la edad es menos que 13 entonces el saludo es "pequeño Sr." sino el saludo es "Sr.".
 
 # Determinar el saludo de una mujer.
-Si el saludo es inicia y el género es femenino entonces si el estado civil es casado entonces el saludo es "Sra." sino si la edad es asignado y la edad es menos que 12 entonces el saludo es "poca falta" sino el saludo es "señorita".
+Si el saludo es inicia y el género es femenino entonces si el estado civil es casado entonces el saludo es "Sra." sino si la edad es asignado y la edad es menos que 13 entonces el saludo es "poca falta" sino el saludo es "señorita".
 
 # Determinar el saludo según la hora del día.
 Si el saludo es inicia y el tiempo es asignado entonces si el tiempo es más-temprano que "06:00" entonces el marca de tiempo es "Buenas noches" sino si el tiempo es más-temprano que "12:00" entonces el marca de tiempo es "Buenos días" sino si el tiempo es más-temprano que "18:00" entonces el marca de tiempo es "Buena tarde" sino el marca de tiempo es "Buenas noches".
@@ -66,4 +66,4 @@ La edad es 32.
 # El estado civil es soltero. 	# No es relevante
 El tiempo es "01:30".
 El saludo es inicia.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

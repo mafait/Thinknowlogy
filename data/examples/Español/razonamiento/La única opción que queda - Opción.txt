@@ -8,4 +8,4 @@ La opción no es 5.
 La opción no es 7.
 La opción no es 8.
 La opción no es 9.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -1,11 +1,10 @@
-/*
- *	Class:			SelectionList
+/*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -142,19 +141,6 @@ class SelectionList extends List
 				{
 				if( searchItem.storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to store a selection item in the database" );
-				}
-
-			searchItem = searchItem.nextSelectionItem();
-			}
-
-		searchItem = firstReplacedSelectionItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem.storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to modify a replaced selection item in the database" );
 				}
 
 			searchItem = searchItem.nextSelectionItem();

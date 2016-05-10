@@ -1,11 +1,10 @@
-/*
- *	Class:			ScoreList
+/*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -193,17 +192,11 @@
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class ScoreList has inactive items." );
 
-		if( firstArchivedItem() )
+		if( firstArchivedItem() != NULL )
 			fprintf( stderr, "\nError: Class ScoreList has archived items." );
 
-		searchItem = (ScoreItem *)firstReplacedItem();
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextScoreItem();
-			delete deleteItem;
-			}
+		if( firstReplacedItem() != NULL )
+			fprintf( stderr, "\nError: Class ScoreList has replaced items." );
 
 		searchItem = (ScoreItem *)firstDeletedItem();
 
@@ -233,13 +226,14 @@
 
 	unsigned int ScoreList::nPossibilities()
 		{
+		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
 		unsigned int nItems = 0;
 		ScoreItem *searchItem = firstActiveScoreItem();
 
 		while( searchItem != NULL &&
-		searchItem->assignmentLevel() >= commonVariables()->currentAssignmentLevel )
+		searchItem->assignmentLevel() >= currentAssignmentLevel )
 			{
-			if( searchItem->assignmentLevel() == commonVariables()->currentAssignmentLevel )
+			if( searchItem->assignmentLevel() == currentAssignmentLevel )
 				nItems++;
 
 			searchItem = searchItem->nextScoreItem();
@@ -296,6 +290,7 @@
 
 	ResultType ScoreList::findScore( bool isPreparingSort, SelectionItem *findScoreItem )
 		{
+		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
 		ScoreItem *searchItem = firstActiveScoreItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findScore";
 
@@ -304,12 +299,12 @@
 		if( findScoreItem != NULL )
 			{
 			while( searchItem != NULL &&
-			searchItem->assignmentLevel() >= commonVariables()->currentAssignmentLevel )
+			searchItem->assignmentLevel() >= currentAssignmentLevel )
 				{
-				if( searchItem->assignmentLevel() == commonVariables()->currentAssignmentLevel )
+				if( searchItem->assignmentLevel() == currentAssignmentLevel )
 					{
 					if( ( searchItem->isChecked ||
-					commonVariables()->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL ) &&
+					currentAssignmentLevel == NO_ASSIGNMENT_LEVEL ) &&
 					searchItem->referenceSelectionItem == findScoreItem )
 						{
 						hasFoundScore_ = true;
@@ -328,15 +323,16 @@
 
 	ResultType ScoreList::deleteScores()
 		{
+		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
 		ScoreItem *searchItem = firstActiveScoreItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteScores";
 
 		while( searchItem != NULL &&
-		searchItem->assignmentLevel() >= commonVariables()->currentAssignmentLevel )
+		searchItem->assignmentLevel() >= currentAssignmentLevel )
 			{
-			if( searchItem->assignmentLevel() == commonVariables()->currentAssignmentLevel )
+			if( searchItem->assignmentLevel() == currentAssignmentLevel )
 				{
-				if( deleteItem( false, searchItem ) == RESULT_OK )
+				if( deleteItem( searchItem ) == RESULT_OK )
 					searchItem = nextScoreListItem();
 				else
 					return addError( functionNameString, NULL, "I failed to delete an active item" );
@@ -350,6 +346,7 @@
 
 	ResultType ScoreList::checkScores( bool isInverted, unsigned short solveStrategyParameter, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore )
 		{
+		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
 		unsigned int checkOldSatisfiedScore = ( isInverted ? oldDissatisfiedScore : oldSatisfiedScore );
 		unsigned int checkNewSatisfiedScore = ( isInverted ? newDissatisfiedScore : newSatisfiedScore );
 		unsigned int checkOldDissatisfiedScore = ( isInverted ? oldSatisfiedScore : oldDissatisfiedScore );
@@ -370,9 +367,9 @@
 		newBlockingScore > NO_SCORE )
 			{
 			while( searchItem != NULL &&
-			searchItem->assignmentLevel() >= commonVariables()->currentAssignmentLevel )
+			searchItem->assignmentLevel() >= currentAssignmentLevel )
 				{
-				if( searchItem->assignmentLevel() == commonVariables()->currentAssignmentLevel )
+				if( searchItem->assignmentLevel() == currentAssignmentLevel )
 					{
 					// All new created (=empty) scores
 					if( !searchItem->hasOldSatisfiedScore() &&
@@ -445,7 +442,7 @@
 		return RESULT_OK;
 		}
 
-	SelectionResultType ScoreList::getBestAction( bool isTesting, unsigned short solveStrategyParameter )
+	SelectionResultType ScoreList::getBestAction( bool isCurrentlyTesting, unsigned short solveStrategyParameter )
 		{
 		SelectionResultType selectionResult;
 		bool isCummulate = false;
@@ -805,7 +802,7 @@
 
 			if( commonVariables()->result == RESULT_OK &&
 			// Skip random during testing. It would create different test results
-			!isTesting &&
+			!isCurrentlyTesting &&
 			// Found more than one the same best cummulate score with different action
 			nRandomEntries > 1 )
 				{

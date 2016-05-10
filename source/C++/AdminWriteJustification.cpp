@@ -1,12 +1,11 @@
-/*
- *	Class:			AdminWriteJustification
+/*	Class:			AdminWriteJustification
  *	Supports class:	AdminItem
  *	Purpose:		To write justification reports for the
  *					self-generated knowledge
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,8 +23,6 @@
  *************************************************************************/
 
 #include "AdminItem.h"
-#include "Presentation.cpp"
-#include "SpecificationItem.cpp"
 
 class AdminWriteJustification
 	{
@@ -91,7 +88,7 @@ class AdminWriteJustification
 					{
 					if( ( primaryGeneralizationWordItem = primarySpecificationItem->generalizationWordItem() ) != NULL )
 						{
-						if( !primarySpecificationItem->isHiddenSpecification() )
+						if( !primarySpecificationItem->isHiddenSpanishSpecification() )
 							{
 							if( primaryGeneralizationWordItem->writeJustificationSpecification( ( !primarySpecificationItem->isExclusiveSpecification() && !primarySpecificationItem->isPossessive() ), primarySpecificationItem ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the definition justification specification" );
@@ -108,7 +105,7 @@ class AdminWriteJustification
 					{
 					if( ( generalizationWordItem = anotherPrimarySpecificationItem->generalizationWordItem() ) != NULL )
 						{
-						if( !anotherPrimarySpecificationItem->isHiddenSpecification() )
+						if( !anotherPrimarySpecificationItem->isHiddenSpanishSpecification() )
 							{
 							if( generalizationWordItem->writeJustificationSpecification( false, anotherPrimarySpecificationItem ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the another definition justification specification" );
@@ -127,7 +124,7 @@ class AdminWriteJustification
 					{
 					if( ( generalizationWordItem = secondarySpecificationItem->generalizationWordItem() ) != NULL )
 						{
-						if( !secondarySpecificationItem->isHiddenSpecification() )
+						if( !secondarySpecificationItem->isHiddenSpanishSpecification() )
 							{
 							isWritingCurrentSpecificationWordOnly = ( secondarySpecificationItem->isPartOf() ||
 
@@ -149,7 +146,7 @@ class AdminWriteJustification
 					{
 					if( ( generalizationWordItem = anotherSecondarySpecificationItem->generalizationWordItem() ) != NULL )
 						{
-						if( !anotherSecondarySpecificationItem->isHiddenSpecification() )
+						if( !anotherSecondarySpecificationItem->isHiddenSpanishSpecification() )
 							{
 							if( generalizationWordItem->writeJustificationSpecification( false, anotherSecondarySpecificationItem ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the another secondary justification specification" );
@@ -215,7 +212,7 @@ class AdminWriteJustification
 					isWritingPrimarySpecification = true;
 					isOnlyWritingPrimarySpecification = ( currentJustificationItem->nextJustificationItemWithSameTypeAndOrderNr() != NULL );
 
-					if( primarySpecificationItem->isSpecificationWordCollectedWithItself() &&
+					if( primarySpecificationItem->isSpecificationWordSpanishAmbiguous() &&
 					primarySpecificationItem->isPossessiveReversibleConclusion() &&
 					primarySpecificationItem->hasSpecificationNonCompoundCollection() &&
 					primarySpecificationItem->isPossessive() &&
@@ -305,6 +302,7 @@ class AdminWriteJustification
 		bool isFirstTime = true;
 		bool hasNonExclusiveCollection = false;
 		unsigned short assumptionLevel;
+		unsigned short specificationWordTypeNr;
 		unsigned int specificationCollectionNr;
 		unsigned int generalizationContextNr;
 		unsigned int specificationContextNr;
@@ -329,7 +327,7 @@ class AdminWriteJustification
 					{
 					if( isFirstJustificationType )
 						{
-						if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+						if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the justification sentence" );
 						}
 
@@ -337,8 +335,11 @@ class AdminWriteJustification
 
 					if( ( firstSecondarySpecificationItem = writeJustificationItem->secondarySpecificationItem() ) != NULL )
 						{
-						if( ( secondarySpecificationWordItem = firstSecondarySpecificationItem->specificationWordItem() ) != NULL )
-							hasNonExclusiveCollection = secondarySpecificationWordItem->hasNonExclusiveCollection( specificationCollectionNr );
+						secondarySpecificationWordItem = firstSecondarySpecificationItem->specificationWordItem();
+
+						if( secondarySpecificationWordItem != NULL &&
+						secondarySpecificationWordItem->hasNonExclusiveCollection( specificationCollectionNr ) )
+							hasNonExclusiveCollection = true;
 						}
 
 					if( isWritingSeparator_ )
@@ -350,7 +351,10 @@ class AdminWriteJustification
 					if( writeJustificationSpecifications( true, false, writeJustificationItem ) == RESULT_OK )
 						{
 						if( ( hasNonExclusiveCollection ||
-						!writeJustificationItem->isNegativeAssumptionOrConclusion() ) &&
+						!writeJustificationItem->isNegativeAssumptionOrConclusion() ||
+
+						( !writeJustificationItem->hasAnotherPrimarySpecification() &&
+						writeJustificationItem->isPrimarySpecificationWordSpanishAmbiguous() ) ) &&
 
 						( currentSpecificationItem = generalizationWordItem->firstSelectedSpecificationItem( false, selfGeneratedSpecificationItem->isAssignment(), selfGeneratedSpecificationItem->isInactiveAssignment(), selfGeneratedSpecificationItem->isArchivedAssignment(), selfGeneratedSpecificationItem->questionParameter() ) ) != NULL )
 							{
@@ -360,6 +364,7 @@ class AdminWriteJustification
 							isSelfGenerated = selfGeneratedSpecificationItem->isSelfGenerated();
 
 							assumptionLevel = selfGeneratedSpecificationItem->assumptionLevel();
+							specificationWordTypeNr = selfGeneratedSpecificationItem->specificationWordTypeNr();
 
 							generalizationContextNr = selfGeneratedSpecificationItem->generalizationContextNr();
 							specificationContextNr = selfGeneratedSpecificationItem->specificationContextNr();
@@ -368,7 +373,7 @@ class AdminWriteJustification
 							do	{
 								// Self-generated
 								if( ( currentJustificationItem = currentSpecificationItem->firstJustificationItem() ) != NULL &&
-								currentSpecificationItem->isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) )
+								currentSpecificationItem->isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) )
 									{
 									currentPrimarySpecificationItem = currentJustificationItem->primarySpecificationItem();
 

@@ -1,11 +1,10 @@
-/*
- *	Class:			SelectionItem
+/*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -138,7 +137,7 @@ class SelectionItem extends Item
 		if( specificationString_ != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
@@ -151,53 +150,56 @@ class SelectionItem extends Item
 
 	protected void showWordReferences( boolean isReturnQueryToPosition )
 		{
+		StringBuffer queryStringBuffer;
 		String wordString;
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
 
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( generalizationWordItem_ != null &&
 		( wordString = generalizationWordItem_.wordTypeString( true, generalizationWordTypeNr_ ) ) != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( wordString );
+			queryStringBuffer.append( wordString );
 			}
 
 		if( specificationWordItem_ != null &&
 		( wordString = specificationWordItem_.wordTypeString( true, specificationWordTypeNr_ ) ) != null )
 			{
 			if( CommonVariables.hasFoundQuery ||
-			CommonVariables.queryStringBuffer.length() > 0 )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+			queryStringBuffer.length() > 0 )
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( wordString );
+			queryStringBuffer.append( wordString );
 			}
 
 		if( relationWordItem_ != null &&
 		( wordString = relationWordItem_.wordTypeString( true, specificationWordTypeNr_ ) ) != null )
 			{
 			if( CommonVariables.hasFoundQuery ||
-			CommonVariables.queryStringBuffer.length() > 0 )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+			queryStringBuffer.length() > 0 )
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( wordString );
+			queryStringBuffer.append( wordString );
 			}
 		}
 
@@ -304,6 +306,7 @@ class SelectionItem extends Item
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
+		StringBuffer queryStringBuffer;
 		String wordString;
 		String generalizationWordTypeString = myWordItem().wordTypeNameString( generalizationWordTypeNr_ );
 		String specificationWordTypeString = myWordItem().wordTypeNameString( specificationWordTypeNr_ );
@@ -311,103 +314,108 @@ class SelectionItem extends Item
 
 		baseToStringBuffer( queryWordTypeNr );
 
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( isAction_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isAction" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isAction" );
 
 		if( isAssignedOrClear_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isAssignedOrClear" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isAssignedOrClear" );
 
 		if( isNewStart_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNewStart" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNewStart" );
 
 		if( isInactive_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isInactiveAssignment" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isInactiveAssignment" );
 
 		if( isArchived_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isArchivedAssignment" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isArchivedAssignment" );
 
 		if( isFirstComparisonPart_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isFirstComparisonPart" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isFirstComparisonPart" );
 
 		if( isNegative_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNegative" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNegative" );
 
 		if( isPossessive_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isPossessive" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isPossessive" );
 
 		if( isSpecificationGeneralization_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationGeneralization" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationGeneralization" );
 
 		if( isUniqueUserRelation_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUniqueUserRelation" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUniqueUserRelation" );
 
 		if( isValueSpecification_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isValueSpecification" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isValueSpecification" );
 
 		if( isConditionCheckedForSolving )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isConditionCheckedForSolving" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isConditionCheckedForSolving" );
 
 		if( assumptionLevel_ > Constants.NO_ASSUMPTION_LEVEL )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "assumptionLevel:" + assumptionLevel_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "assumptionLevel:" + assumptionLevel_ );
 
 		if( selectionLevel_ > Constants.NO_SELECTION_LEVEL )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "selectionLevel:" + selectionLevel_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "selectionLevel:" + selectionLevel_ );
 
 		if( imperativeParameter_ > Constants.NO_IMPERATIVE_PARAMETER )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "imperativeParameter:" + imperativeParameter_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "imperativeParameter:" + imperativeParameter_ );
 
 		if( prepositionParameter_ > Constants.NO_PREPOSITION_PARAMETER )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "prepositionParameter:" + prepositionParameter_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "prepositionParameter:" + prepositionParameter_ );
 
 		if( specificationWordParameter_ > Constants.NO_WORD_PARAMETER )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordParameter:" + specificationWordParameter_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordParameter:" + specificationWordParameter_ );
 
 		if( generalizationContextNr_ > Constants.NO_CONTEXT_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "generalizationContextNr:" + generalizationContextNr_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "generalizationContextNr:" + generalizationContextNr_ );
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "generalizationWordType:" + ( generalizationWordTypeString == null ? Constants.EMPTY_STRING : generalizationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + generalizationWordTypeNr_ );
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "generalizationWordType:" + ( generalizationWordTypeString == null ? Constants.EMPTY_STRING : generalizationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + generalizationWordTypeNr_ );
 
 		if( generalizationWordItem_ != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "generalizationWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + generalizationWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + generalizationWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "generalizationWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + generalizationWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + generalizationWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 			if( ( wordString = generalizationWordItem_.wordTypeString( true, generalizationWordTypeNr_ ) ) != null )
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
+				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
 		if( specificationContextNr_ > Constants.NO_CONTEXT_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationContextNr:" + specificationContextNr_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationContextNr:" + specificationContextNr_ );
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordType:" + ( specificationWordTypeString == null ? Constants.EMPTY_STRING : specificationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + specificationWordTypeNr_ );
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordType:" + ( specificationWordTypeString == null ? Constants.EMPTY_STRING : specificationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + specificationWordTypeNr_ );
 
 		if( specificationWordItem_ != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + specificationWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + specificationWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + specificationWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + specificationWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 			if( ( wordString = specificationWordItem_.wordTypeString( true, specificationWordTypeNr_ ) ) != null )
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
+				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
 		if( relationContextNr_ > Constants.NO_CONTEXT_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "relationContextNr:" + relationContextNr_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "relationContextNr:" + relationContextNr_ );
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "relationWordType:" + ( relationWordTypeString == null ? Constants.EMPTY_STRING : relationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + relationWordTypeNr_ );
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "relationWordType:" + ( relationWordTypeString == null ? Constants.EMPTY_STRING : relationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + relationWordTypeNr_ );
 
 		if( relationWordItem_ != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "relationWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + relationWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + relationWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "relationWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + relationWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + relationWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 			if( ( wordString = relationWordItem_.wordTypeString( true, relationWordTypeNr_ ) ) != null )
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
+				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
 		if( nContextRelations_ > Constants.NO_CONTEXT_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nContextRelations:" + nContextRelations_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nContextRelations:" + nContextRelations_ );
 
 		if( specificationString_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationString:" + Constants.QUERY_STRING_START_CHAR + specificationString_ + Constants.QUERY_STRING_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationString:" + Constants.QUERY_STRING_START_CHAR + specificationString_ + Constants.QUERY_STRING_END_CHAR );
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 

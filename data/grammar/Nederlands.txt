@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To define the grammar for the Dutch language
-#	Version:		Thinknowlogy 2015r1 (Esperanza)
+#	Version:		Thinknowlogy 2016r1 (Huguenot)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
-#	and bug reports are welcome at http://mafait.org
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------- Woord definities -----------
@@ -38,9 +38,9 @@
 @6		:0			$adjective								"bijvoeglijk naamwoord"
 @6		:600		$adjective																					toegewezen
 @6		:601		$adjective																					bezig
-@6		:602		$adjective																					leeg
-@6		:603		$adjective																					gereed
-@6		:604		$adjective																					defensief
+@6		:602		$adjective																					gereed
+@6		:603		$adjective																					defensief
+@6		:604		$adjective																					leeg
 @6		:605		$adjective																					exclusief
 @6		:606		$adjective																					omgekeerd
 @6		:607		$adjective																					vrouwelijk
@@ -82,6 +82,7 @@
 @7		:703		$adverb_uncertainty					"bijwoord (onzekerheid)"					mogelijk
 @7		:704		$adverb_uncertainty					"bijwoord (onzekerheid)"					waarschijnlijk
 @7		:705		$adverb_Not																				niet
+#@7		:706		$adverb_Pas							(Frans)
 
 
 #--- Tussenwerpsels ---
@@ -113,8 +114,9 @@
 @10		:1000	$conjunction_collective																	en
 @10		:1001	$conjunction_exclusive																	of
 @10		:1002	$conjunction_Than																		dan
-@10		:1003	$conjunction_Zowel																		zowel
-@10		:1004	$conjunction_Als																			als
+#@10	:1003	$conjunction_Than					(Frans)
+@10		:1004	$conjunction_Zowel																		zowel
+@10		:1005	$conjunction_Als																			als
 
 
 #--- Enkelvoudige zelfstandig naamwoorden ---
@@ -223,6 +225,7 @@
 @21		:2102	$preposition																				in
 @21		:2103	$preposition																				naar
 @21		:2104	$preposition_Of																			van
+#@21	:2105	$preposition_à							(Frans)
 
 
 #--- Enkelvoudige werkwoorden ---
@@ -270,10 +273,13 @@
 
 #--- Vrouwelijke eigennaam uitgangen ---
 @0		:3000	$a
+@0		:3000	$am
 @0		:3000	$ee
 @0		:3000	$ée
-@0		:3000	$ian
-@0		:3000	$jam
+@0		:3000	$ine
+@0		:3000	$lie
+@0		:3000	$lle
+@0		:3000	$tte
 
 
 #--- Mannelijke eigennaam uitgangen ---
@@ -289,50 +295,55 @@
 
 
 #--- Meervoudig zelfstandig-naamwoord uitgangen ---
-@0		:3004	$den																							d
-@0		:3004	$len																							l
-@0		:3004	$ren																							r
-@0		:3004	$ten																							t
+#@0		:3004	$a's																							a
+#@0		:3004	$o's																							o
+@0		:3004	$ars																							ar
 @0		:3004	$ls																							l
 @0		:3004	$ts																							t
-#@0		:3004	$a's																							a
+@0		:3004	$pes																							pe
+@0		:3004	$ses																							s
 @0		:3004	$bben																						b
+@0		:3004	$den																							d
 @0		:3004	$dden																						d
-@0		:3004	$eën																							e
 @0		:3004	$ffen																							f
 @0		:3004	$ggen																						g
 @0		:3004	$kken																						k
-@0		:3004	$llen																							l
+@0		:3004	$men																							m
 @0		:3004	$mmen																						m
-@0		:3004	$nen																							n
+@0		:3004	$len																							l
+@0		:3004	$llen																							l
 @0		:3004	$nnen																						n
-#@0		:3004	$o's																							o
+@0		:3004	$pen																							p
 @0		:3004	$ppen																						p
+@0		:3004	$ren																							r
 @0		:3004	$rren																							r
-@0		:3004	$ses																							s
-@0		:3004	$ons																							on
 @0		:3004	$ssen																						s
+@0		:3004	$ten																							t
 @0		:3004	$tten																							t
-@0		:3004	$cten																						en
+@0		:3004	$alen																							aal
+@0		:3004	$eën																							e
 @0		:3004	$egen																						en
 @0		:3004	$igen																							en
 @0		:3004	$ijen																							en
-@0		:3004	$rmen																						en
+@0		:3004	$ijnen																						ijn
 @0		:3004	$ers																							er
 @0		:3004	$mes																							me
 @0		:3004	$nsen																						ns
 @0		:3004	$nzen																						nz
-@0		:3004	$pes																							pe
-@0		:3004	$spen																						sp
-@0		:3004	$sten																							st
-@0		:3004	$alen																							aal
-#@0		:3004	$ezen																						ees
+@0		:3004	$oons																						oon
+@0		:3004	$oenen																						oen
+@0		:3004	$eken																						eek
+@0		:3004	$ezen																						ees
 @0		:3004	$omen																						oom
 @0		:3004	$onen																						oon
 @0		:3004	$oren																							oor
 @0		:3004	$oten																						oot
 @0		:3004	$uizen																						uis
 @0		:3004	$kinderen																					kind
+
+
+#--- Samengevoegde woorden ---
+#@0		:3005	$?
 
 
 #----------- Grammatica definities ---------------
@@ -601,7 +612,7 @@
 
 # Voorbeelden van gebiedende wijs:
 # - Help.
-# - Aanmelden als Guest.
+# - Aanmelden als Expert.
 # - Los-op het spel.
 # - Toon het auteursrecht.
 # - Toon "Hallo wereld".

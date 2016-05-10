@@ -77,7 +77,7 @@
 < Is Laura een meisje of een vrouw?
 < 
 * 
-* U hebt de specificatie bevestigd - maar geen relatie(s) - van mijn eerdere veronderstelling(en):
+* U hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere veronderstellingen:
 < Jan is waarschijnlijk een ouder van Paul, Johan en Laura.
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
@@ -86,23 +86,23 @@
 < Jan is geen moeder.
 < 
 * 
-* U hebt de specificatie bevestigd - maar geen relatie(s) - van mijn eerdere conclusie(s):
+* U hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere conclusies:
 < Paul heeft een vader, genaamd Jan.
 < 
 * 
-* U hebt de specificatie bevestigd - maar geen relatie(s) - van mijn eerdere conclusie(s):
+* U hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere conclusies:
 < Paul heeft een moeder, genaamd Anna.
 < 
 * 
-* U hebt de specificatie bevestigd - maar geen relatie(s) - van mijn eerdere conclusie(s):
+* U hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere conclusies:
 < Johan heeft een moeder, genaamd Anna.
 < 
 * 
-* U hebt de specificatie bevestigd - maar geen relatie(s) - van mijn eerdere conclusie(s):
+* U hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere conclusies:
 < Johan heeft een vader, genaamd Jan.
 < 
 * 
-* U hebt de specificatie bevestigd - maar geen relatie(s) - van mijn eerdere conclusie(s):
+* U hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere conclusies:
 < Laura heeft een vader, genaamd Jan.
 < Laura heeft een moeder, genaamd Anna.
 < 

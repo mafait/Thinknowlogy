@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminContext
+/*	Class:			AdminContext
  *	Supports class:	AdminItem
  *	Purpose:		To create context structures
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -40,7 +39,7 @@ class AdminContext
 		specificationWordItem != null &&
 		( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 			{
-			// Do for all words
+			// Do for all active words
 			do	{
 				if( currentWordItem.isProperName() &&
 				currentWordItem != relationWordItem &&
@@ -52,6 +51,25 @@ class AdminContext
 			}
 
 		return true;
+		}
+
+	private static int collectionNrInAllWords( int contextNr )
+		{
+		ContextItem foundContextItem;
+		WordItem currentWordItem;
+
+		if( contextNr > Constants.NO_CONTEXT_NR &&
+		( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
+			{
+			// Do for all active words
+			do	{
+				if( ( foundContextItem = currentWordItem.contextItem( contextNr ) ) != null )
+					return currentWordItem.collectionNr( foundContextItem.contextWordTypeNr(), foundContextItem.specificationWordItem() );
+				}
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		return Constants.NO_COLLECTION_NR;
 		}
 
 	private ContextResultType findPossessiveReversibleConclusionRelationContextOfInvolvedWords( boolean isPossessive, int nContextRelations, int relationContextNr, SpecificationItem foundSpecificationItem, WordItem generalizationWordItem, WordItem specificationWordItem )
@@ -150,11 +168,11 @@ class AdminContext
 
 		if( ( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 			{
-			// Do for all words
+			// Do for all active words
 			do	{
 				if( ( currentContextItem = currentWordItem.contextItem( existingContextNr ) ) != null )
 					{
-					if( currentWordItem.addContext( currentContextItem.isCompoundCollectionCollectedWithItself(), currentContextItem.contextWordTypeNr(), currentContextItem.specificationWordTypeNr(), newContextNr, currentContextItem.specificationWordItem() ) != Constants.RESULT_OK )
+					if( currentWordItem.addContext( currentContextItem.isCompoundCollectionSpanishAmbiguous(), currentContextItem.contextWordTypeNr(), currentContextItem.specificationWordTypeNr(), newContextNr, currentContextItem.specificationWordItem() ) != Constants.RESULT_OK )
 						return adminItem_.addError( 1, moduleNameString_, "I failed to add a copied context to word \"" + currentWordItem.anyWordTypeString() + "\"" );
 					}
 				}
@@ -166,41 +184,41 @@ class AdminContext
 
 	private ContextItem firstContextItemInAllWords( boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
-		boolean hasFoundCurrentContext = false;
-		boolean isPossessiveUserSpecification = adminItem_.isPossessiveUserSpecification();
+		boolean isCheckingOlderContextWords;
 		ContextItem currentContextItem;
 		ContextItem foundContextItem = null;
+		SpecificationItem userSpecificationItem = adminItem_.userSpecificationItem();
 		WordItem currentWordItem;
 
 		if( specificationWordItem != null &&
 		( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 			{
-			// Do for all words
+			isCheckingOlderContextWords = ( isPossessive &&
+
+											( userSpecificationItem == null ||
+											!userSpecificationItem.isPossessive() ) );
+
+			// Do for all active words
 			do	{
 				if( currentWordItem != generalizationWordItem &&
 				( currentContextItem = currentWordItem.contextItem( specificationWordItem ) ) != null )
 					{
-					if( isPossessive &&
-					!isPossessiveUserSpecification )
+					if( isCheckingOlderContextWords &&
+					currentContextItem.isOlderItem() )
 						{
 						if( foundContextItem == null )
 							foundContextItem = currentContextItem;
-
-						if( !currentContextItem.isOlderItem() )
-							hasFoundCurrentContext = true;
 						}
 					else
 						return currentContextItem;
 					}
 				}
-			while( !hasFoundCurrentContext &&
-			( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 
-			if( !hasFoundCurrentContext &&
-			foundContextItem != null &&
+			if( foundContextItem != null &&
 			( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 				{
-				// Do for all words
+				// Do for all active words
 				do	{
 					if( !currentWordItem.isUserGeneralizationWord &&
 					!currentWordItem.isUserRelationWord &&
@@ -289,7 +307,7 @@ class AdminContext
 										hasFoundRelationWordInThisList = false;
 										isSkippingThisContext = false;
 
-										// Do for all words, either in the current relation list or outside this list
+										// Do for all active words, either in the current relation list or outside this list
 										do	{
 											foundSpecificationItem = ( isUserSentence ? null : generalizationWordItem.firstActiveAssignmentOrSpecificationItem( true, false, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) );
 
@@ -333,7 +351,7 @@ class AdminContext
 											}
 										}
 									else
-										adminItem_.startError( 1, moduleNameString_, "The first word item is undefined" );
+										adminItem_.startError( 1, moduleNameString_, "The last predefined word item is undefined" );
 									}
 								else
 									{
@@ -422,10 +440,10 @@ class AdminContext
 		return contextResult;
 		}
 
-	protected ContextResultType getSpecificationRelationContext( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isCompoundCollectionCollectedWithItself, boolean isNegative, boolean isPossessive, boolean isSelfGeneratedAssumption, int specificationCollectionNr, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem )
+	protected ContextResultType getSpecificationRelationContext( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isCompoundCollectionSpanishAmbiguous, boolean isNegative, boolean isPossessive, boolean isSelfGeneratedAssumption, int specificationCollectionNr, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem )
 		{
 		ContextResultType contextResult = new ContextResultType();
-		boolean isSpecificationCollectedWithItself;
+		boolean isSpecificationWordSpanishAmbiguous;
 		int existingRelationContextNr;
 		int existingCopyContextNr = Constants.NO_CONTEXT_NR;
 		int foundRelationContextNr = Constants.NO_CONTEXT_NR;
@@ -441,24 +459,24 @@ class AdminContext
 				if( relationWordItem != null )
 					{
 					// Try to find relation context with same number of relation words as in the user sentence
-					if( ( foundContextItem = relationWordItem.contextItem( isCompoundCollectionCollectedWithItself, nUserRelationWords, specificationWordItem ) ) == null )
+					if( ( foundContextItem = relationWordItem.contextItem( isCompoundCollectionSpanishAmbiguous, nUserRelationWords, specificationWordItem ) ) == null )
 						{
-						if( isCompoundCollectionCollectedWithItself )
+						if( isCompoundCollectionSpanishAmbiguous )
 							existingSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, isArchivedAssignment, false, isArchivedAssignment, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationCollectionNr, Constants.NO_CONTEXT_NR, specificationWordItem );
 						else
 							existingSpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( false, isArchivedAssignment, isArchivedAssignment, isNegative, isPossessive, specificationCollectionNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, specificationWordItem );
 
-						isSpecificationCollectedWithItself = specificationWordItem.isNounWordCollectedWithItself();
+						isSpecificationWordSpanishAmbiguous = specificationWordItem.isNounWordSpanishAmbiguous();
 
 						if( existingSpecificationItem == null &&
 						contextResult.contextNr == Constants.NO_CONTEXT_NR &&
 						nUserRelationWords > 1 &&
 
-						( !isSpecificationCollectedWithItself ||
+						( !isSpecificationWordSpanishAmbiguous ||
 						CommonVariables.nUserGeneralizationWords > 1 ||
 						generalizationWordItem.isFemale() ||
 						!relationWordItem.isOlderItem() ) )
-							contextResult.contextNr = relationWordItem.contextNr( isCompoundCollectionCollectedWithItself, specificationWordItem );
+							contextResult.contextNr = relationWordItem.contextNr( isCompoundCollectionSpanishAmbiguous, specificationWordItem );
 
 						// Not found yet
 						if( contextResult.contextNr == Constants.NO_CONTEXT_NR &&
@@ -469,7 +487,7 @@ class AdminContext
 							// Find specification with found context word as relation word
 							if( ( foundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, isArchivedAssignment, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, specificationWordItem ) ) == null )
 								{
-								if( isSpecificationCollectedWithItself &&
+								if( isSpecificationWordSpanishAmbiguous &&
 								generalizationWordItem.isUserRelationWord &&
 								foundContextItem.myWordItem() == relationWordItem )
 									contextResult.contextNr = foundContextItem.contextNr();
@@ -480,12 +498,12 @@ class AdminContext
 
 								( !foundSpecificationItem.hasRelationContext() ||
 
-								( isSpecificationCollectedWithItself &&
-								existingSpecificationItem.isHiddenSpecification() ) ) )
+								( isSpecificationWordSpanishAmbiguous &&
+								existingSpecificationItem.isHiddenSpanishSpecification() ) ) )
 									foundRelationContextNr = existingRelationContextNr;
 								else
 									{
-									if( ( !isSpecificationCollectedWithItself ||
+									if( ( !isSpecificationWordSpanishAmbiguous ||
 									specificationCollectionNr == Constants.NO_COLLECTION_NR ||
 									foundSpecificationItem.isUserSpecification() ||
 									foundSpecificationItem.specificationCollectionNr() == specificationCollectionNr ) &&
@@ -508,8 +526,8 @@ class AdminContext
 									}
 								else
 									{
-									if( existingSpecificationItem.isOlderItem() &&
-									adminItem_.isPossessiveUserSpecification() &&
+									if( generalizationWordItem.isUserRelationWord &&
+									existingSpecificationItem.isOlderItem() &&
 									!relationWordItem.hasContextInWord( existingRelationContextNr, specificationWordItem ) &&
 									!isValidContextInAllWords( isPossessive, existingRelationContextNr, specificationWordItem, relationWordItem ) &&
 
@@ -518,7 +536,7 @@ class AdminContext
 										existingCopyContextNr = existingRelationContextNr;
 									else
 										{
-										if( isSpecificationCollectedWithItself ||
+										if( isSpecificationWordSpanishAmbiguous ||
 										existingSpecificationItem.isConcludedAssumption() )
 											contextResult.contextNr = foundRelationContextNr;
 										else
@@ -538,7 +556,7 @@ class AdminContext
 
 						if( isAssignment &&
 						// Has no relation context collection
-						adminItem_.collectionNrInAllWords( relationContextNr ) == Constants.NO_COLLECTION_NR &&
+						collectionNrInAllWords( relationContextNr ) == Constants.NO_COLLECTION_NR &&
 						// Check if assignment already exists
 						generalizationWordItem.firstNonQuestionAssignmentItem( ( !isInactiveAssignment && !isArchivedAssignment ), isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, contextResult.contextNr, specificationWordItem ) == null &&
 						// Check also recently replaced assignments

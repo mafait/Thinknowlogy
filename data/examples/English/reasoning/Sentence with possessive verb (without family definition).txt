@@ -1,4 +1,4 @@
-﻿George has a son, called Adam.
+﻿Michael has a son, called Adam.
 John is the father and Anna is the mother of Paul, Joe and Laura.
 Paul has a father, called John.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

@@ -18,12 +18,12 @@ Lees het testbestand "Nederlands/vraagbeantwoording/Deze vraag is specifieker (z
 
 Lees het testbestand "Nederlands/redeneren/Bepaald lidwoord komt niet overeen met zelfstandig naamwoord".
 Lees het testbestand "Nederlands/redeneren/Mijn conclusies die bevestigd zijn (met relatie, zonder gezinsdefinitie)".
-Lees het testbestand "Nederlands/redeneren/De enig overgebleven optie - Boot".
-Lees het testbestand "Nederlands/redeneren/De enig overgebleven optie - Anne is geen vrouw".
-Lees het testbestand "Nederlands/redeneren/De enig overgebleven optie - Optie".
+Lees het testbestand "Nederlands/redeneren/Wetenschappelijke uitdaging".
 Lees het testbestand "Nederlands/redeneren/Zin met bezittelijk werkwoord (zonder gezinsdefinitie)".
 Lees het testbestand "Nederlands/redeneren/Specificatie-generalisatie - Zoogdieren (meervoud)".
 Lees het testbestand "Nederlands/redeneren/Specificatie-generalisatie - Zoogdieren (enkelvoud)".
+Lees het testbestand "Nederlands/redeneren/De enig overgebleven optie - Boot".
+Lees het testbestand "Nederlands/redeneren/De enig overgebleven optie - Optie".
 
 #-----------
 # Gezin
@@ -91,10 +91,10 @@ Lees het testbestand "Nederlands/redeneren/gezin/U hebt tenminste één relatiew
 Lees het testbestand "Nederlands/redeneren/gezin/U hebt de specificatie bevestigd - maar geen relatie".
 
 Help.
-#Toon informatie over de talen.
-#Toon informatie over de lijsten.
-#Toon informatie over de gebruikers.
-#Toon informatie over de woordtypes.
+Toon informatie over de talen.
+Toon informatie over de lijsten.
+Toon informatie over de gebruikers.
+Toon informatie over de woordtypes.
 Toon de opvraag-opdrachten.
 Toon het auteursrecht.
 Toon de GPLv2-licentie.

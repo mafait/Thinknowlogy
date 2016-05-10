@@ -6,4 +6,4 @@ Is y a capital letter?
 Is Y a small letter?
 Is a a letter?
 Is Q a letter?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

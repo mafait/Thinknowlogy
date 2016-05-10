@@ -2,13 +2,13 @@
 George Bush is the president of the United States.
 # In 2009 Barack Obama was inaugurated as president as president of the United States.
 Barack Obama is the president of the United States.
-Show the justification report about the United States.
+Display the justification report about the United States.
 The United States has a previous president, called George Bush.
-Show the justification report about the United States.
+Display the justification report about the United States.
 The United States has a president, called Barack Obama.
-Show information about the presidents.
-Show information about George Bush.
-Show information about Barack Obama.
+Display information about the presidents.
+Display information about George Bush.
+Display information about Barack Obama.
 # There will be no justification report, because the conclusions are confirmed
-Show information about the United States.
-# Remember to clear this knowledge before reading another example.
+Display information about the United States.
+# To continue, click button «Clear your mind.» or «Restart.».

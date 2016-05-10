@@ -1,11 +1,10 @@
-/*
- *	Class:			FileItem
+/*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -109,7 +108,6 @@ class FileItem : private Item
 
 	virtual void showString( bool isReturnQueryToPosition )
 		{
-		char statusString[2] = SPACE_STRING;
 		statusString[0] = statusChar();
 
 		if( readFileNameString_ != NULL )
@@ -136,33 +134,37 @@ class FileItem : private Item
 
 	virtual char *toString( unsigned short queryWordTypeNr )
 		{
+		char *queryString;
+
 		Item::toString( queryWordTypeNr );
+
+		queryString = commonVariables()->queryString;
 
 		if( isInfoFile_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isInfoFile" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isInfoFile" );
 			}
 
 		if( isTestFile_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isTestFile" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isTestFile" );
 			}
 
 		if( readFileNameString_ != NULL )
 			{
 			sprintf( tempString, "%creadFileNameString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, readFileNameString_, QUERY_STRING_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( writeFileNameString_ != NULL )
 			{
 			sprintf( tempString, "%cwriteFileNameString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, writeFileNameString_, QUERY_STRING_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 

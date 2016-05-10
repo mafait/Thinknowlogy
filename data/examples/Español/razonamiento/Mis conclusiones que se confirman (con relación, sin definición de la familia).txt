@@ -2,4 +2,4 @@
 Pablo tiene un padre, llamado Juan.
 José tiene un padre, llamado Juan.
 Luisa tiene un padre, llamado Juan.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -5,4 +5,4 @@ Juan es el padre y Ana es la madre de Pablo, José y Luisa.
 ¿Es Pablo hijo de Juan y Ana?
 ¿Es Pablo hijo de Juan y Ana?
 ¿Es Pablo posiblemente hijo de Juan y Ana?
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

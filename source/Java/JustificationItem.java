@@ -1,12 +1,11 @@
-/*
- *	Class:			JustificationItem
+/*	Class:			JustificationItem
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -50,6 +49,26 @@ class JustificationItem extends Item
 
 	// Private methods
 
+	private static boolean isContextSimilarInAllWords( int firstContextNr, int secondContextNr )
+		{
+		WordItem currentWordItem;
+
+		if( firstContextNr > Constants.NO_CONTEXT_NR &&
+		secondContextNr > Constants.NO_CONTEXT_NR &&
+		firstContextNr != secondContextNr &&
+		( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
+			{
+			// Do for all active words
+			do	{
+				if( !currentWordItem.isContextSimilarInWord( firstContextNr, secondContextNr ) )
+					return false;
+				}
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		return true;
+		}
+
 	private boolean isSameJustificationType( JustificationItem referenceJustificationItem )
 		{
 		return ( referenceJustificationItem != null &&
@@ -88,6 +107,13 @@ class JustificationItem extends Item
 
 
 	// Protected virtual methods
+
+	protected void clearReplacingItem()
+		{
+		if( replacingJustificationItem != null &&
+		replacingJustificationItem.hasCurrentCreationSentenceNr() )
+			replacingJustificationItem = null;
+		}
 
 	protected void selectingJustificationSpecifications()
 		{
@@ -143,128 +169,135 @@ class JustificationItem extends Item
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
+		StringBuffer queryStringBuffer;
+
 		baseToStringBuffer( queryWordTypeNr );
 
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( hasFeminineOrMasculineProperNameEnding_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasFeminineOrMasculineProperNameEnding" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasFeminineOrMasculineProperNameEnding" );
 
 		switch( justificationTypeNr_ )
 			{
 			case Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isGeneralizationAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isGeneralizationAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOppositePossessiveConditionalSpecificationAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOppositePossessiveConditionalSpecificationAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isExclusiveSpecificationSubstitutionAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isExclusiveSpecificationSubstitutionAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isIndirectlyAnsweredQuestionAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isIndirectlyAnsweredQuestionAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSuggestiveQuestionAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSuggestiveQuestionAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOnlyOptionLeftAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOnlyOptionLeftAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isPossessiveReversibleAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isPossessiveReversibleAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isDefinitionPartOfAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isDefinitionPartOfAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNegativeAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNegativeAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationGeneralizationAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationGeneralizationAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionPartOfAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionPartOfAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUniqueUserRelationAssumption" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUniqueUserRelationAssumption" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOnlyOptionLeftConclusion" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOnlyOptionLeftConclusion" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isPossessiveReversibleConclusion" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isPossessiveReversibleConclusion" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isDefinitionPartOfConclusion" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isDefinitionPartOfConclusion" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNegativeConclusion" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNegativeConclusion" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationGeneralizationConclusion" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationGeneralizationConclusion" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionConclusion" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionConclusion" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionPartOfConclusion" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionPartOfConclusion" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUniqueUserRelationConclusion" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUniqueUserRelationConclusion" );
 				break;
 
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionQuestion" );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationSubstitutionQuestion" );
 				break;
 
 			default:
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "justificationType:" + justificationTypeNr_ );
+				queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "justificationType:" + justificationTypeNr_ );
 			}
 
-		CommonVariables.queryStringBuffer.append( Constants.EMPTY_STRING + Constants.QUERY_WORD_TYPE_CHAR + justificationTypeNr_ );
+		queryStringBuffer.append( Constants.EMPTY_STRING + Constants.QUERY_WORD_TYPE_CHAR + justificationTypeNr_ );
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "orderNr:" + orderNr );
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "orderNr:" + orderNr );
 
 		if( primarySpecificationItem_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "primarySpecificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + primarySpecificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + primarySpecificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "primarySpecificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + primarySpecificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + primarySpecificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 		if( anotherPrimarySpecificationItem_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "anotherPrimarySpecificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + anotherPrimarySpecificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + anotherPrimarySpecificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "anotherPrimarySpecificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + anotherPrimarySpecificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + anotherPrimarySpecificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 		if( secondarySpecificationItem_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "secondarySpecificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + secondarySpecificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + secondarySpecificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "secondarySpecificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + secondarySpecificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + secondarySpecificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 		if( anotherSecondarySpecificationItem_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "anotherSecondarySpecificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + anotherSecondarySpecificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + anotherSecondarySpecificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "anotherSecondarySpecificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + anotherSecondarySpecificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + anotherSecondarySpecificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 		if( attachedJustificationItem_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "attachedJustificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + attachedJustificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + attachedJustificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "attachedJustificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + attachedJustificationItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + attachedJustificationItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 		if( replacingJustificationItem != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "replacingJustificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + replacingJustificationItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + replacingJustificationItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "replacingJustificationItem" + Constants.QUERY_REF_ITEM_START_CHAR + replacingJustificationItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + replacingJustificationItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 
@@ -314,7 +347,7 @@ class JustificationItem extends Item
 	protected boolean hasHiddenPrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != null &&
-				primarySpecificationItem_.isHiddenSpecification() );
+				primarySpecificationItem_.isHiddenSpanishSpecification() );
 		}
 
 	protected boolean hasPrimarySpecification()
@@ -340,12 +373,6 @@ class JustificationItem extends Item
 				primarySpecificationItem_.isUserSpecification() );
 		}
 
-	protected boolean hasPrimarySpecificationWordCollectedWithItself()
-		{
-		return ( primarySpecificationItem_ != null &&
-				primarySpecificationItem_.isSpecificationWordCollectedWithItself() );
-		}
-
 	protected boolean hasPossessivePrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != null &&
@@ -358,15 +385,26 @@ class JustificationItem extends Item
 				primarySpecificationItem_.isReplacedItem() );
 		}
 
-	protected boolean hasUpdatedPrimarySpecificationWordCollectedWithItself()
+	protected boolean isPrimarySpecificationWordSpanishAmbiguous()
+		{
+		return ( primarySpecificationItem_ != null &&
+				primarySpecificationItem_.isSpecificationWordSpanishAmbiguous() );
+		}
+
+	protected boolean isUpdatedPrimarySpecificationWordSpanishAmbiguous()
 		{
 		WordItem updatedPrimarySpecificationWordItem;
 
 		if( primarySpecificationItem_ != null &&
 		( updatedPrimarySpecificationWordItem = primarySpecificationItem_.updatedSpecificationItem().specificationWordItem() ) != null )
-			return updatedPrimarySpecificationWordItem.isNounWordCollectedWithItself();
+			return updatedPrimarySpecificationWordItem.isNounWordSpanishAmbiguous();
 
 		return false;
+		}
+
+	protected boolean hasAnotherPrimarySpecification()
+		{
+		return ( anotherPrimarySpecificationItem_ != null );
 		}
 
 	protected boolean hasReplacedSecondarySpecification()
@@ -439,7 +477,20 @@ class JustificationItem extends Item
 
 	protected short justificationAssumptionGrade()
 		{
-		return assumptionGrade( ( anotherPrimarySpecificationItem_ != null ), hasFeminineOrMasculineProperNameEnding_, ( primarySpecificationItem_ != null && primarySpecificationItem_.isGeneralizationProperName() && primarySpecificationItem_.isPossessive() ), ( primarySpecificationItem_ != null && primarySpecificationItem_.isQuestion() ), justificationTypeNr_ );
+		boolean hasPossessivePrimarySpecification = false;
+		boolean hasPrimaryQuestionSpecification = false;
+
+		if( primarySpecificationItem_ != null )
+			{
+			if( primarySpecificationItem_.isGeneralizationProperName() &&
+			primarySpecificationItem_.isPossessive() )
+				hasPossessivePrimarySpecification = true;
+
+			if( primarySpecificationItem_.isQuestion() )
+				hasPrimaryQuestionSpecification = true;
+			}
+
+		return assumptionGrade( ( anotherPrimarySpecificationItem_ != null ), hasFeminineOrMasculineProperNameEnding_, hasPossessivePrimarySpecification, hasPrimaryQuestionSpecification, justificationTypeNr_ );
 		}
 
 	protected short justificationTypeNr()
@@ -472,7 +523,7 @@ class JustificationItem extends Item
 				if( anotherPrimarySpecificationItem_ == null )
 					{
 					if( secondaryRelationContextNr == relationContextNr ||
-					myWordItem().isContextSimilarInAllWords( secondaryRelationContextNr, relationContextNr ) )
+					isContextSimilarInAllWords( secondaryRelationContextNr, relationContextNr ) )
 						return nSpecificationRelationWords;
 					}
 				else

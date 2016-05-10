@@ -1,0 +1,116 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To demonstrate programming in natural language.
+#	Version:		Thinknowlogy 2016r1 (Huguenot)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	Un résumé du jeu Puissance 4:
+#----------------------------------------------------------------------------
+#	Le but du jeu est d'aligner 4 pions sur une grille comptant 6 rangées
+#	et 7 colonnes. Chaque joueur dispose de 21 pions d'une couleur (par
+#	convention, en général jaune ou rouge). Tour à tour les deux joueurs
+#	placent un pion dans la colonne de leur choix, le pion coulisse alors
+#	jusqu'à la position la plus basse possible dans ladite colonne à la
+#	suite de quoi c'est à l'adversaire de jouer. Le vainqueur est le joueur
+#	qui réalise le premier un alignement (horizontal, vertical ou diagonal)
+#	d'au moins quatre pions de sa couleur. Si, alors que toutes les cases
+#	de la grille de jeu sont remplies, aucun des deux joueurs n'a réalisé un
+#	tel alignement, la partie est déclarée nulle.
+#----------------------------------------------------------------------------
+#	Voir le texte intégral: https://fr.wikipedia.org/wiki/Puissance_4
+#----------------------------------------------------------------------------
+
+# Définitions initiales.
+#Un virage est le vôtre ou le mien.
+Un virage est vôtre ou mien.
+Un mouvement est A, B, C, D, E, F ou G.
+Un niveau de résolution est faible ou élevé.
+
+# Résoudre le problème.
+Si le mouvement est assigné et le virage est assigné puis si la méthode de résolution n'est pas occupé, la méthode de résolution n'est pas prêt et le jeu n'est pas tirage-au-sort puis le mouvement est vide et résoudrez le jeu autre le mouvement est vide et la méthode de résolution n'est pas prêt.
+
+# Inverser la méthode de résolution.
+Si le mouvement est assigné et le virage est assigné puis si la méthode de résolution n'est pas occupé ou la méthode de résolution n'est pas prêt puis si la méthode de résolution est inversé puis la méthode de résolution n'est pas inversé autre la méthode de résolution est inversé.
+
+# Afficher le virage.
+Si le virage est assigné puis si la méthode de résolution n'est pas prêt ou la méthode de résolution est prêt, le jeu est assigné et le jeu n'est pas invalide puis si le virage est vôtre puis affichez "\nC'est ton virage.\n\n".
+
+# Alterner le virage.
+Si le mouvement est assigné, le virage est assigné et le jeu n'est pas assigné puis si la méthode de résolution n'est pas occupé ou la méthode de résolution n'est pas prêt puis si le virage est vôtre puis le virage est mien autre affichez "\nJ'ai sélectionné: ~+'mouvement'<a>`~.\n" et le virage est vôtre.
+
+# Vérifier pour le tirage au sort.
+Si le mouvement n'est pas assigné, le jeu n'est pas assigné, A6 est assigné, B6 est assigné, C6 est assigné, D6 est assigné, E6 est assigné, F6 est assigné et G6 est assigné puis le jeu est tirage-au-sort, le virage est vide et affichez "Le jeu est tirage au sort.\n\n".
+
+# Jeu terminé...
+Si le mouvement est assigné, le jeu est assigné, le jeu n'est pas tirage-au-sort et le jeu n'est pas invalide puis si le virage est mien puis affichez "\nMon coup gagnant: ~+'mouvement'<a>`~.\n", le mouvement est vide et le virage est vide autre affichez "\nFélicitations!\n", le mouvement est vide et le virage est vide.
+
+# Réinitialiser un jeu non valide.
+Si le mouvement est invalide puis le mouvement est vide.
+
+# Afficher la carte de jeu.
+Si le virage est assigné, le mouvement n'est pas invalide, le jeu n'est pas vôtre et la méthode de résolution n'est pas prêt puis affichez "\n\t\t|~+1'A6'<a>`~|~+1'B6'<a>`~|~+1'C6'<a>`~|~+1'D6'<a>`~|~+1'E6'<a>`~|~+1'F6'<a>`~|~+1'G6'<a>`~|\n\t\t|~+1'A5'<a>`~|~+1'B5'<a>`~|~+1'C5'<a>`~|~+1'D5'<a>`~|~+1'E5'<a>`~|~+1'F5'<a>`~|~+1'G5'<a>`~|\n\t\t|~+1'A4'<a>`~|~+1'B4'<a>`~|~+1'C4'<a>`~|~+1'D4'<a>`~|~+1'E4'<a>`~|~+1'F4'<a>`~|~+1'G4'<a>`~|\n\t\t|~+1'A3'<a>`~|~+1'B3'<a>`~|~+1'C3'<a>`~|~+1'D3'<a>`~|~+1'E3'<a>`~|~+1'F3'<a>`~|~+1'G3'<a>`~|\n\t\t|~+1'A2'<a>`~|~+1'B2'<a>`~|~+1'C2'<a>`~|~+1'D2'<a>`~|~+1'E2'<a>`~|~+1'F2'<a>`~|~+1'G2'<a>`~|\n\t\t|~+1'A1'<a>`~|~+1'B1'<a>`~|~+1'C1'<a>`~|~+1'D1'<a>`~|~+1'E1'<a>`~|~+1'F1'<a>`~|~+1'G1'<a>`~|\nmouvement->\t-A-B-C-D-E-F-G-\n".
+Si le virage n'est pas assigné, le mouvement n'est pas assigné, le jeu est assigné et le jeu n'est pas invalide puis affichez "\n\t\t|~+1'A6'<a>`~|~+1'B6'<a>`~|~+1'C6'<a>`~|~+1'D6'<a>`~|~+1'E6'<a>`~|~+1'F6'<a>`~|~+1'G6'<a>`~|\n\t\t|~+1'A5'<a>`~|~+1'B5'<a>`~|~+1'C5'<a>`~|~+1'D5'<a>`~|~+1'E5'<a>`~|~+1'F5'<a>`~|~+1'G5'<a>`~|\n\t\t|~+1'A4'<a>`~|~+1'B4'<a>`~|~+1'C4'<a>`~|~+1'D4'<a>`~|~+1'E4'<a>`~|~+1'F4'<a>`~|~+1'G4'<a>`~|\n\t\t|~+1'A3'<a>`~|~+1'B3'<a>`~|~+1'C3'<a>`~|~+1'D3'<a>`~|~+1'E3'<a>`~|~+1'F3'<a>`~|~+1'G3'<a>`~|\n\t\t|~+1'A2'<a>`~|~+1'B2'<a>`~|~+1'C2'<a>`~|~+1'D2'<a>`~|~+1'E2'<a>`~|~+1'F2'<a>`~|~+1'G2'<a>`~|\n\t\t|~+1'A1'<a>`~|~+1'B1'<a>`~|~+1'C1'<a>`~|~+1'D1'<a>`~|~+1'E1'<a>`~|~+1'F1'<a>`~|~+1'G1'<a>`~|\nmouvement->\t-A-B-C-D-E-F-G-\n\nCe jeu est le ~+'jeu'<a>`~.\n\nPour jouer à nouveau, cliquez sur le bouton «Videz votre esprit.», et puis «Lirez le fichier \"Français/programmation/Puissance 4\".».\n\n", le mouvement est vide et le virage est vide.
+
+# La définition des possibilités horizontales pour gagner le match.
+# (À l'avenir, une grammaire plus fort sera mis en œuvre pour réduire les phrases suivantes à une seule phrase qui décrit un jeu gagnant horizontal.)
+
+Si le virage est assigné et le jeu n'est pas assigné puis si A1 est la valeur du virage, B1 est la valeur du virage, C1 est la valeur du virage et D1 est la valeur du virage ou B1 est la valeur du virage, C1 est la valeur du virage, D1 est la valeur du virage et E1 est la valeur du virage ou C1 est la valeur du virage, D1 est la valeur du virage, E1 est la valeur du virage et F1 est la valeur du virage ou D1 est la valeur du virage, E1 est la valeur du virage, F1 est la valeur du virage et G1 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A2 est la valeur du virage, B2 est la valeur du virage, C2 est la valeur du virage et D2 est la valeur du virage ou B2 est la valeur du virage, C2 est la valeur du virage, D2 est la valeur du virage et E2 est la valeur du virage ou C2 est la valeur du virage, D2 est la valeur du virage, E2 est la valeur du virage et F2 est la valeur du virage ou D2 est la valeur du virage, E2 est la valeur du virage, F2 est la valeur du virage et G2 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A3 est la valeur du virage, B3 est la valeur du virage, C3 est la valeur du virage et D3 est la valeur du virage ou B3 est la valeur du virage, C3 est la valeur du virage, D3 est la valeur du virage et E3 est la valeur du virage ou C3 est la valeur du virage, D3 est la valeur du virage, E3 est la valeur du virage et F3 est la valeur du virage ou D3 est la valeur du virage, E3 est la valeur du virage, F3 est la valeur du virage et G3 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A4 est la valeur du virage, B4 est la valeur du virage, C4 est la valeur du virage et D4 est la valeur du virage ou B4 est la valeur du virage, C4 est la valeur du virage, D4 est la valeur du virage et E4 est la valeur du virage ou C4 est la valeur du virage, D4 est la valeur du virage, E4 est la valeur du virage et F4 est la valeur du virage ou D4 est la valeur du virage, E4 est la valeur du virage, F4 est la valeur du virage et G4 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A5 est la valeur du virage, B5 est la valeur du virage, C5 est la valeur du virage et D5 est la valeur du virage ou B5 est la valeur du virage, C5 est la valeur du virage, D5 est la valeur du virage et E5 est la valeur du virage ou C5 est la valeur du virage, D5 est la valeur du virage, E5 est la valeur du virage et F5 est la valeur du virage ou D5 est la valeur du virage, E5 est la valeur du virage, F5 est la valeur du virage et G5 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A6 est la valeur du virage, B6 est la valeur du virage, C6 est la valeur du virage et D6 est la valeur du virage ou B6 est la valeur du virage, C6 est la valeur du virage, D6 est la valeur du virage et E6 est la valeur du virage ou C6 est la valeur du virage, D6 est la valeur du virage, E6 est la valeur du virage et F6 est la valeur du virage ou D6 est la valeur du virage, E6 est la valeur du virage, F6 est la valeur du virage et G6 est la valeur du virage puis le jeu est la valeur du virage.
+
+# La définition des possibilités verticales pour gagner le match.
+# (À l'avenir, une grammaire plus fort sera mis en œuvre pour réduire les phrases suivantes à une seule phrase qui décrit un jeu gagnant vertical.)
+
+Si le virage est assigné et le jeu n'est pas assigné puis si A1 est la valeur du virage, A2 est la valeur du virage, A3 est la valeur du virage et A4 est la valeur du virage ou A2 est la valeur du virage, A3 est la valeur du virage, A4 est la valeur du virage et A5 est la valeur du virage ou A3 est la valeur du virage, A4 est la valeur du virage, A5 est la valeur du virage et A6 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si B1 est la valeur du virage, B2 est la valeur du virage, B3 est la valeur du virage et B4 est la valeur du virage ou B2 est la valeur du virage, B3 est la valeur du virage, B4 est la valeur du virage et B5 est la valeur du virage ou B3 est la valeur du virage, B4 est la valeur du virage, B5 est la valeur du virage et B6 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si C1 est la valeur du virage, C2 est la valeur du virage, C3 est la valeur du virage et C4 est la valeur du virage ou C2 est la valeur du virage, C3 est la valeur du virage, C4 est la valeur du virage et C5 est la valeur du virage ou C3 est la valeur du virage, C4 est la valeur du virage, C5 est la valeur du virage et C6 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si D1 est la valeur du virage, D2 est la valeur du virage, D3 est la valeur du virage et D4 est la valeur du virage ou D2 est la valeur du virage, D3 est la valeur du virage, D4 est la valeur du virage et D5 est la valeur du virage ou D3 est la valeur du virage, D4 est la valeur du virage, D5 est la valeur du virage et D6 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si E1 est la valeur du virage, E2 est la valeur du virage, E3 est la valeur du virage et E4 est la valeur du virage ou E2 est la valeur du virage, E3 est la valeur du virage, E4 est la valeur du virage et E5 est la valeur du virage ou E3 est la valeur du virage, E4 est la valeur du virage, E5 est la valeur du virage et E6 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si F1 est la valeur du virage, F2 est la valeur du virage, F3 est la valeur du virage et F4 est la valeur du virage ou F2 est la valeur du virage, F3 est la valeur du virage, F4 est la valeur du virage et F5 est la valeur du virage ou F3 est la valeur du virage, F4 est la valeur du virage, F5 est la valeur du virage et F6 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si G1 est la valeur du virage, G2 est la valeur du virage, G3 est la valeur du virage et G4 est la valeur du virage ou G2 est la valeur du virage, G3 est la valeur du virage, G4 est la valeur du virage et G5 est la valeur du virage ou G3 est la valeur du virage, G4 est la valeur du virage, G5 est la valeur du virage et G6 est la valeur du virage puis le jeu est la valeur du virage.
+
+# La définition des possibilités diagonales pour gagner le match.
+# (À l'avenir, une grammaire plus fort sera mis en œuvre pour réduire les phrases suivantes à une seule phrase qui décrit un jeu gagnant diagonale.)
+
+Si le virage est assigné et le jeu n'est pas assigné puis si A1 est la valeur du virage, B2 est la valeur du virage, C3 est la valeur du virage et D4 est la valeur du virage ou B1 est la valeur du virage, C2 est la valeur du virage, D3 est la valeur du virage et E4 est la valeur du virage ou C1 est la valeur du virage, D2 est la valeur du virage, E3 est la valeur du virage et F4 est la valeur du virage ou D1 est la valeur du virage, E2 est la valeur du virage, F3 est la valeur du virage et G4 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A2 est la valeur du virage, B3 est la valeur du virage, C4 est la valeur du virage et D5 est la valeur du virage ou B2 est la valeur du virage, C3 est la valeur du virage, D4 est la valeur du virage et E5 est la valeur du virage ou C2 est la valeur du virage, D3 est la valeur du virage, E4 est la valeur du virage et F5 est la valeur du virage ou D2 est la valeur du virage, E3 est la valeur du virage, F4 est la valeur du virage et G5 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A3 est la valeur du virage, B4 est la valeur du virage, C5 est la valeur du virage et D6 est la valeur du virage ou B3 est la valeur du virage, C4 est la valeur du virage, D5 est la valeur du virage et E6 est la valeur du virage ou C3 est la valeur du virage, D4 est la valeur du virage, E5 est la valeur du virage et F6 est la valeur du virage ou D3 est la valeur du virage, E4 est la valeur du virage, F5 est la valeur du virage et G6 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A4 est la valeur du virage, B3 est la valeur du virage, C2 est la valeur du virage et D1 est la valeur du virage ou B4 est la valeur du virage, C3 est la valeur du virage, D2 est la valeur du virage et E1 est la valeur du virage ou C4 est la valeur du virage, D3 est la valeur du virage, E2 est la valeur du virage et F1 est la valeur du virage ou D4 est la valeur du virage, E3 est la valeur du virage, F2 est la valeur du virage et G1 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A5 est la valeur du virage, B4 est la valeur du virage, C3 est la valeur du virage et D2 est la valeur du virage ou B5 est la valeur du virage, C4 est la valeur du virage, D3 est la valeur du virage et E2 est la valeur du virage ou C5 est la valeur du virage, D4 est la valeur du virage, E3 est la valeur du virage et F2 est la valeur du virage ou D5 est la valeur du virage, E4 est la valeur du virage, F3 est la valeur du virage et G2 est la valeur du virage puis le jeu est la valeur du virage.
+Si le virage est assigné et le jeu n'est pas assigné puis si A6 est la valeur du virage, B5 est la valeur du virage, C4 est la valeur du virage et D3 est la valeur du virage ou B6 est la valeur du virage, C5 est la valeur du virage, D4 est la valeur du virage et E3 est la valeur du virage ou C6 est la valeur du virage, D5 est la valeur du virage, E4 est la valeur du virage et F3 est la valeur du virage ou D6 est la valeur du virage, E5 est la valeur du virage, F4 est la valeur du virage et G3 est la valeur du virage puis le jeu est la valeur du virage.
+
+# La puce sera mis dans la colonne choisie et «tomber» dans la cellule libre le plus bas.
+Si le mouvement est A et le jeu n'est pas assigné puis si A1 n'est pas assigné puis A1 est la valeur du virage autre si A2 n'est pas assigné puis A2 est la valeur du virage autre si A3 n'est pas assigné puis A3 est la valeur du virage autre si A4 n'est pas assigné puis A4 est la valeur du virage autre si A5 n'est pas assigné puis A5 est la valeur du virage autre si A6 n'est pas assigné puis A6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
+Si le mouvement est B et le jeu n'est pas assigné puis si B1 n'est pas assigné puis B1 est la valeur du virage autre si B2 n'est pas assigné puis B2 est la valeur du virage autre si B3 n'est pas assigné puis B3 est la valeur du virage autre si B4 n'est pas assigné puis B4 est la valeur du virage autre si B5 n'est pas assigné puis B5 est la valeur du virage autre si B6 n'est pas assigné puis B6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
+Si le mouvement est C et le jeu n'est pas assigné puis si C1 n'est pas assigné puis C1 est la valeur du virage autre si C2 n'est pas assigné puis C2 est la valeur du virage autre si C3 n'est pas assigné puis C3 est la valeur du virage autre si C4 n'est pas assigné puis C4 est la valeur du virage autre si C5 n'est pas assigné puis C5 est la valeur du virage autre si C6 n'est pas assigné puis C6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
+Si le mouvement est D et le jeu n'est pas assigné puis si D1 n'est pas assigné puis D1 est la valeur du virage autre si D2 n'est pas assigné puis D2 est la valeur du virage autre si D3 n'est pas assigné puis D3 est la valeur du virage autre si D4 n'est pas assigné puis D4 est la valeur du virage autre si D5 n'est pas assigné puis D5 est la valeur du virage autre si D6 n'est pas assigné puis D6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
+Si le mouvement est E et le jeu n'est pas assigné puis si E1 n'est pas assigné puis E1 est la valeur du virage autre si E2 n'est pas assigné puis E2 est la valeur du virage autre si E3 n'est pas assigné puis E3 est la valeur du virage autre si E4 n'est pas assigné puis E4 est la valeur du virage autre si E5 n'est pas assigné puis E5 est la valeur du virage autre si E6 n'est pas assigné puis E6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
+Si le mouvement est F et le jeu n'est pas assigné puis si F1 n'est pas assigné puis F1 est la valeur du virage autre si F2 n'est pas assigné puis F2 est la valeur du virage autre si F3 n'est pas assigné puis F3 est la valeur du virage autre si F4 n'est pas assigné puis F4 est la valeur du virage autre si F5 n'est pas assigné puis F5 est la valeur du virage autre si F6 n'est pas assigné puis F6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
+Si le mouvement est G et le jeu n'est pas assigné puis si G1 n'est pas assigné puis G1 est la valeur du virage autre si G2 n'est pas assigné puis G2 est la valeur du virage autre si G3 n'est pas assigné puis G3 est la valeur du virage autre si G4 n'est pas assigné puis G4 est la valeur du virage autre si G5 n'est pas assigné puis G5 est la valeur du virage autre si G6 n'est pas assigné puis G6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
+
+# Vérifier si le jeu est terminé.
+Si le jeu est assigné, le jeu n'est pas invalid et le mouvement est assigné puis affichez "\nDésolé, le jeu est déjà terminée.\n\nPour jouer à nouveau, cliquez sur le bouton «Videz votre esprit.», et puis «Lirez le fichier \"Français/programmation/Puissance 4\".».\n\n", le mouvement est vide, le virage est vide et le jeu est invalide.
+
+# Attention: Pas le e niveau de résolution défini.
+Si le niveau de résolution n'est pas assigné et le virage est assigné puis affichez "Attention: Le niveau de résolution n'a pas de valeur. S'il vous plaît affectez le niveau de résolution.\n", le mouvement est invalide et le virage est vide.
+
+# Configuration de jeu.
+#La méthode de résolution n'est pas occupé.
+#La méthode de résolution n'est pas prêt.
+La méthode de résolution est inversé.
+La stratégie de résolution est exclusive.
+Le niveau de résolution est faible.
+
+# Le début du jeu.
+Le virage est vôtre.
+#C++## Pour un mouvement, tapez par exemple:	Mon mouvement est A.
+#C++## Pour un jeu avancé, tapez:	Le niveau de résolution est élevé.
+#C++## Pour revenir au niveau débutant:	Le niveau de résolution est faible.
+#C++## Infos sur le mouvement:		Affichez information sur le mouvement.
+#Java## Si le plateau de jeu semble comprimé, s'il vous plaît changer la police en utilisant le bouton «changer la police».

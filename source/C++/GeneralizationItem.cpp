@@ -1,13 +1,12 @@
-/*
- *	Class:			GeneralizationItem
+/*	Class:			GeneralizationItem
  *	Parent class:	Item
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -38,8 +37,8 @@ class GeneralizationItem : private Item
 	friend class GeneralizationList;
 	friend class WordAssignment;
 	friend class WordCollection;
-	friend class WordSpecification;
 	friend class WordItem;
+	friend class WordSpecification;
 
 	// Private loadable variables
 
@@ -82,7 +81,7 @@ class GeneralizationItem : private Item
 	virtual void showWordReferences( bool isReturnQueryToPosition )
 		{
 		char *wordString;
-		char statusString[2] = SPACE_STRING;
+
 		statusString[0] = statusChar();
 
 		if( generalizationWordItem_ != NULL &&
@@ -129,6 +128,7 @@ class GeneralizationItem : private Item
 
 	virtual char *toString( unsigned short queryWordTypeNr )
 		{
+		char *queryString;
 		char *wordString;
 		char *languageNameString = myWordItem()->languageNameString( languageNr_ );
 		char *generalizationWordTypeString = myWordItem()->wordTypeNameString( generalizationWordTypeNr_ );
@@ -136,16 +136,18 @@ class GeneralizationItem : private Item
 
 		Item::toString( queryWordTypeNr );
 
+		queryString = commonVariables()->queryString;
+
 		if( isLanguageWord_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isLanguageWord" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isLanguageWord" );
 			}
 
 		if( isRelation_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isRelation" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isRelation" );
 			}
 
 		if( languageNr_ > NO_LANGUAGE_NR )
@@ -155,7 +157,7 @@ class GeneralizationItem : private Item
 			else
 				sprintf( tempString, "%clanguage:%s", QUERY_SEPARATOR_CHAR, languageNameString );
 
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( specificationWordTypeString == NULL )
@@ -163,28 +165,28 @@ class GeneralizationItem : private Item
 		else
 			sprintf( tempString, "%cspecificationWordType:%s%c%u", QUERY_SEPARATOR_CHAR, specificationWordTypeString, QUERY_WORD_TYPE_CHAR, specificationWordTypeNr_ );
 
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( generalizationWordTypeString == NULL )
 			sprintf( tempString, "%cgeneralizationWordType:%c%u", QUERY_SEPARATOR_CHAR, QUERY_WORD_TYPE_CHAR, generalizationWordTypeNr_ );
 		else
 			sprintf( tempString, "%cgeneralizationWordType:%s%c%u", QUERY_SEPARATOR_CHAR, generalizationWordTypeString, QUERY_WORD_TYPE_CHAR, generalizationWordTypeNr_ );
 
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( generalizationWordItem_ != NULL )
 			{
 			sprintf( tempString, "%cgeneralizationWord%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, generalizationWordItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, generalizationWordItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 
 			if( ( wordString = generalizationWordItem_->wordTypeString( true, generalizationWordTypeNr_ ) ) != NULL )
 				{
 				sprintf( tempString, "%c%s%c", QUERY_WORD_REFERENCE_START_CHAR, wordString, QUERY_WORD_REFERENCE_END_CHAR );
-				strcat( commonVariables()->queryString, tempString );
+				strcat( queryString, tempString );
 				}
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 

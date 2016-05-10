@@ -5,4 +5,4 @@ Is Paul a child of John?
 Is Paul a child of John and Anna?
 Is Paul a child of John and Anna?
 Is Paul possibly a child of John and Anna?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

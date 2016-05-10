@@ -1,339 +1,339 @@
-﻿Show "\n		    GNU GENERAL PUBLIC LICENSE".
-Show "		       Version 2, June 1991".
-Show "\n".
-Show " Copyright (C) 1989, 1991 Free Software Foundation, Inc.,".
-Show " 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA".
-Show " Everyone is permitted to copy and distribute verbatim copies".
-Show " of this license document, but changing it is not allowed.".
-Show "\n".
-Show "			    Preamble".
-Show "\n".
-Show "  The licenses for most software are designed to take away your".
-Show "freedom to share and change it.  By contrast, the GNU General Public".
-Show "License is intended to guarantee your freedom to share and change free".
-Show "software--to make sure the software is free for all its users.  This".
-Show "General Public License applies to most of the Free Software".
-Show "Foundation's software and to any other program whose authors commit to".
-Show "using it.  (Some other Free Software Foundation software is covered by".
-Show "the GNU Lesser General Public License instead.)  You can apply it to".
-Show "your programs, too.".
-Show "\n".
-Show "  When we speak of free software, we are referring to freedom, not".
-Show "price.  Our General Public Licenses are designed to make sure that you".
-Show "have the freedom to distribute copies of free software (and charge for".
-Show "this service if you wish), that you receive source code or can get it".
-Show "if you want it, that you can change the software or use pieces of it".
-Show "in new free programs; and that you know you can do these things.".
-Show "\n".
-Show "  To protect your rights, we need to make restrictions that forbid".
-Show "anyone to deny you these rights or to ask you to surrender the rights.".
-Show "These restrictions translate to certain responsibilities for you if you".
-Show "distribute copies of the software, or if you modify it.".
-Show "\n".
-Show "  For example, if you distribute copies of such a program, whether".
-Show "gratis or for a fee, you must give the recipients all the rights that".
-Show "you have.  You must make sure that they, too, receive or can get the".
-Show "source code.  And you must show them these terms so they know their".
-Show "rights.".
-Show "\n".
-Show "  We protect your rights with two steps: (1) copyright the software, and".
-Show "(2) offer you this license which gives you legal permission to copy,".
-Show "distribute and/or modify the software.".
-Show "\n".
-Show "  Also, for each author's protection and ours, we want to make certain".
-Show "that everyone understands that there is no warranty for this free".
-Show "software.  If the software is modified by someone else and passed on, we".
-Show "want its recipients to know that what they have is not the original, so".
-Show "that any problems introduced by others will not reflect on the original".
-Show "authors' reputations.".
-Show "\n".
-Show "  Finally, any free program is threatened constantly by software".
-Show "patents.  We wish to avoid the danger that redistributors of a free".
-Show "program will individually obtain patent licenses, in effect making the".
-Show "program proprietary.  To prevent this, we have made it clear that any".
-Show "patent must be licensed for everyone's free use or not licensed at all.".
-Show "\n".
-Show "  The precise terms and conditions for copying, distribution and".
-Show "modification follow.".
-Show "\n".
-Show "		    GNU GENERAL PUBLIC LICENSE".
-Show "   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION".
-Show "\n".
-Show "  0. This License applies to any program or other work which contains".
-Show "a notice placed by the copyright holder saying it may be distributed".
-Show "under the terms of this General Public License.  The "Program", below,".
-Show "refers to any such program or work, and a \"work based on the Program\"".
-Show "means either the Program or any derivative work under copyright law:".
-Show "that is to say, a work containing the Program or a portion of it,".
-Show "either verbatim or with modifications and/or translated into another".
-Show "language.  (Hereinafter, translation is included without limitation in".
-Show "the term "modification".)  Each licensee is addressed as \"you\".".
-Show "\n".
-Show "Activities other than copying, distribution and modification are not".
-Show "covered by this License; they are outside its scope.  The act of".
-Show "running the Program is not restricted, and the output from the Program".
-Show "is covered only if its contents constitute a work based on the".
-Show "Program (independent of having been made by running the Program).".
-Show "Whether that is true depends on what the Program does.".
-Show "\n".
-Show "  1. You may copy and distribute verbatim copies of the Program's".
-Show "source code as you receive it, in any medium, provided that you".
-Show "conspicuously and appropriately publish on each copy an appropriate".
-Show "copyright notice and disclaimer of warranty; keep intact all the".
-Show "notices that refer to this License and to the absence of any warranty;".
-Show "and give any other recipients of the Program a copy of this License".
-Show "along with the Program.".
-Show "\n".
-Show "You may charge a fee for the physical act of transferring a copy, and".
-Show "you may at your option offer warranty protection in exchange for a fee.".
-Show "\n".
-Show "  2. You may modify your copy or copies of the Program or any portion".
-Show "of it, thus forming a work based on the Program, and copy and".
-Show "distribute such modifications or work under the terms of Section 1".
-Show "above, provided that you also meet all of these conditions:".
-Show "\n".
-Show "    a) You must cause the modified files to carry prominent notices".
-Show "    stating that you changed the files and the date of any change.".
-Show "\n".
-Show "    b) You must cause any work that you distribute or publish, that in".
-Show "    whole or in part contains or is derived from the Program or any".
-Show "    part thereof, to be licensed as a whole at no charge to all third".
-Show "    parties under the terms of this License.".
-Show "\n".
-Show "    c) If the modified program normally reads commands interactively".
-Show "    when run, you must cause it, when started running for such".
-Show "    interactive use in the most ordinary way, to print or display an".
-Show "    announcement including an appropriate copyright notice and a".
-Show "    notice that there is no warranty (or else, saying that you provide".
-Show "    a warranty) and that users may redistribute the program under".
-Show "    these conditions, and telling the user how to view a copy of this".
-Show "    License.  (Exception: if the Program itself is interactive but".
-Show "    does not normally print such an announcement, your work based on".
-Show "    the Program is not required to print an announcement.)".
-Show "\n".
-Show "These requirements apply to the modified work as a whole.  If".
-Show "identifiable sections of that work are not derived from the Program,".
-Show "and can be reasonably considered independent and separate works in".
-Show "themselves, then this License, and its terms, do not apply to those".
-Show "sections when you distribute them as separate works.  But when you".
-Show "distribute the same sections as part of a whole which is a work based".
-Show "on the Program, the distribution of the whole must be on the terms of".
-Show "this License, whose permissions for other licensees extend to the".
-Show "entire whole, and thus to each and every part regardless of who wrote it.".
-Show "\n".
-Show "Thus, it is not the intent of this section to claim rights or contest".
-Show "your rights to work written entirely by you; rather, the intent is to".
-Show "exercise the right to control the distribution of derivative or".
-Show "collective works based on the Program.".
-Show "\n".
-Show "In addition, mere aggregation of another work not based on the Program".
-Show "with the Program (or with a work based on the Program) on a volume of".
-Show "a storage or distribution medium does not bring the other work under".
-Show "the scope of this License.".
-Show "\n".
-Show "  3. You may copy and distribute the Program (or a work based on it,".
-Show "under Section 2) in object code or executable form under the terms of".
-Show "Sections 1 and 2 above provided that you also do one of the following:".
-Show "\n".
-Show "    a) Accompany it with the complete corresponding machine-readable".
-Show "    source code, which must be distributed under the terms of Sections".
-Show "    1 and 2 above on a medium customarily used for software interchange; or,".
-Show "\n".
-Show "    b) Accompany it with a written offer, valid for at least three".
-Show "    years, to give any third party, for a charge no more than your".
-Show "    cost of physically performing source distribution, a complete".
-Show "    machine-readable copy of the corresponding source code, to be".
-Show "    distributed under the terms of Sections 1 and 2 above on a medium".
-Show "    customarily used for software interchange; or,".
-Show "\n".
-Show "    c) Accompany it with the information you received as to the offer".
-Show "    to distribute corresponding source code.  (This alternative is".
-Show "    allowed only for noncommercial distribution and only if you".
-Show "    received the program in object code or executable form with such".
-Show "    an offer, in accord with Subsection b above.)".
-Show "\n".
-Show "The source code for a work means the preferred form of the work for".
-Show "making modifications to it.  For an executable work, complete source".
-Show "code means all the source code for all modules it contains, plus any".
-Show "associated interface definition files, plus the scripts used to".
-Show "control compilation and installation of the executable.  However, as a".
-Show "special exception, the source code distributed need not include".
-Show "anything that is normally distributed (in either source or binary".
-Show "form) with the major components (compiler, kernel, and so on) of the".
-Show "operating system on which the executable runs, unless that component".
-Show "itself accompanies the executable.".
-Show "\n".
-Show "If distribution of executable or object code is made by offering".
-Show "access to copy from a designated place, then offering equivalent".
-Show "access to copy the source code from the same place counts as".
-Show "distribution of the source code, even though third parties are not".
-Show "compelled to copy the source along with the object code.".
-Show "\n".
-Show "  4. You may not copy, modify, sublicense, or distribute the Program".
-Show "except as expressly provided under this License.  Any attempt".
-Show "otherwise to copy, modify, sublicense or distribute the Program is".
-Show "void, and will automatically terminate your rights under this License.".
-Show "However, parties who have received copies, or rights, from you under".
-Show "this License will not have their licenses terminated so long as such".
-Show "parties remain in full compliance.".
-Show "\n".
-Show "  5. You are not required to accept this License, since you have not".
-Show "signed it.  However, nothing else grants you permission to modify or".
-Show "distribute the Program or its derivative works.  These actions are".
-Show "prohibited by law if you do not accept this License.  Therefore, by".
-Show "modifying or distributing the Program (or any work based on the".
-Show "Program), you indicate your acceptance of this License to do so, and".
-Show "all its terms and conditions for copying, distributing or modifying".
-Show "the Program or works based on it.".
-Show "\n".
-Show "  6. Each time you redistribute the Program (or any work based on the".
-Show "Program), the recipient automatically receives a license from the".
-Show "original licensor to copy, distribute or modify the Program subject to".
-Show "these terms and conditions.  You may not impose any further".
-Show "restrictions on the recipients' exercise of the rights granted herein.".
-Show "You are not responsible for enforcing compliance by third parties to".
-Show "this License.".
-Show "\n".
-Show "  7. If, as a consequence of a court judgment or allegation of patent".
-Show "infringement or for any other reason (not limited to patent issues),".
-Show "conditions are imposed on you (whether by court order, agreement or".
-Show "otherwise) that contradict the conditions of this License, they do not".
-Show "excuse you from the conditions of this License.  If you cannot".
-Show "distribute so as to satisfy simultaneously your obligations under this".
-Show "License and any other pertinent obligations, then as a consequence you".
-Show "may not distribute the Program at all.  For example, if a patent".
-Show "license would not permit royalty-free redistribution of the Program by".
-Show "all those who receive copies directly or indirectly through you, then".
-Show "the only way you could satisfy both it and this License would be to".
-Show "refrain entirely from distribution of the Program.".
-Show "\n".
-Show "If any portion of this section is held invalid or unenforceable under".
-Show "any particular circumstance, the balance of the section is intended to".
-Show "apply and the section as a whole is intended to apply in other".
-Show "circumstances.".
-Show "\n".
-Show "It is not the purpose of this section to induce you to infringe any".
-Show "patents or other property right claims or to contest validity of any".
-Show "such claims; this section has the sole purpose of protecting the".
-Show "integrity of the free software distribution system, which is".
-Show "implemented by public license practices.  Many people have made".
-Show "generous contributions to the wide range of software distributed".
-Show "through that system in reliance on consistent application of that".
-Show "system; it is up to the author/donor to decide if he or she is willing".
-Show "to distribute software through any other system and a licensee cannot".
-Show "impose that choice.".
-Show "\n".
-Show "This section is intended to make thoroughly clear what is believed to".
-Show "be a consequence of the rest of this License.".
-Show "\n".
-Show "  8. If the distribution and/or use of the Program is restricted in".
-Show "certain countries either by patents or by copyrighted interfaces, the".
-Show "original copyright holder who places the Program under this License".
-Show "may add an explicit geographical distribution limitation excluding".
-Show "those countries, so that distribution is permitted only in or among".
-Show "countries not thus excluded.  In such case, this License incorporates".
-Show "the limitation as if written in the body of this License.".
-Show "\n".
-Show "  9. The Free Software Foundation may publish revised and/or new versions".
-Show "of the General Public License from time to time.  Such new versions will".
-Show "be similar in spirit to the present version, but may differ in detail to".
-Show "address new problems or concerns.".
-Show "\n".
-Show "Each version is given a distinguishing version number.  If the Program".
-Show "specifies a version number of this License which applies to it and \"any".
-Show "later version\", you have the option of following the terms and conditions".
-Show "either of that version or of any later version published by the Free".
-Show "Software Foundation.  If the Program does not specify a version number of".
-Show "this License, you may choose any version ever published by the Free Software".
-Show "Foundation.".
-Show "\n".
-Show "  10. If you wish to incorporate parts of the Program into other free".
-Show "programs whose distribution conditions are different, write to the author".
-Show "to ask for permission.  For software which is copyrighted by the Free".
-Show "Software Foundation, write to the Free Software Foundation; we sometimes".
-Show "make exceptions for this.  Our decision will be guided by the two goals".
-Show "of preserving the free status of all derivatives of our free software and".
-Show "of promoting the sharing and reuse of software generally.".
-Show "\n".
-Show "			    NO WARRANTY".
-Show "\n".
-Show "  11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY".
-Show "FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN".
-Show "OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES".
-Show "PROVIDE THE PROGRAM \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED".
-Show "OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF".
-Show "MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS".
-Show "TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE".
-Show "PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING,".
-Show "REPAIR OR CORRECTION.".
-Show "\n".
-Show "  12. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING".
-Show "WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR".
-Show "REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES,".
-Show "INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING".
-Show "OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED".
-Show "TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY".
-Show "YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER".
-Show "PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE".
-Show "POSSIBILITY OF SUCH DAMAGES.".
-Show "\n".
-Show "		     END OF TERMS AND CONDITIONS".
-Show "\n".
-Show "	    How to Apply These Terms to Your New Programs".
-Show "\n".
-Show "  If you develop a new program, and you want it to be of the greatest".
-Show "possible use to the public, the best way to achieve this is to make it".
-Show "free software which everyone can redistribute and change under these terms.".
-Show "\n".
-Show "  To do so, attach the following notices to the program.  It is safest".
-Show "to attach them to the start of each source file to most effectively".
-Show "convey the exclusion of warranty; and each file should have at least".
-Show "the \"copyright\" line and a pointer to where the full notice is found.".
-Show "\n".
-Show "    <one line to give the program's name and a brief idea of what it does.>".
-Show "    Copyright (C) <year>  <name of author>".
-Show "\n".
-Show "    This program is free software; you can redistribute it and/or modify".
-Show "    it under the terms of the GNU General Public License as published by".
-Show "    the Free Software Foundation; either version 2 of the License, or".
-Show "    (at your option) any later version.".
-Show "\n".
-Show "    This program is distributed in the hope that it will be useful,".
-Show "    but WITHOUT ANY WARRANTY; without even the implied warranty of".
-Show "    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the".
-Show "    GNU General Public License for more details.".
-Show "\n".
-Show "    You should have received a copy of the GNU General Public License along".
-Show "    with this program; if not, write to the Free Software Foundation, Inc.,".
-Show "    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.".
-Show "\n".
-Show "Also add information on how to contact you by electronic and paper mail.".
-Show "\n".
-Show "If the program is interactive, make it output a short notice like this".
-Show "when it starts in an interactive mode:".
-Show "\n".
-Show "    Gnomovision version 69, Copyright (C) year name of author".
-Show "    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.".
-Show "    This is free software, and you are welcome to redistribute it".
-Show "    under certain conditions; type `show c' for details.".
-Show "\n".
-Show "The hypothetical commands `show w' and `show c' should show the appropriate".
-Show "parts of the General Public License.  Of course, the commands you use may".
-Show "be called something other than `show w' and `show c'; they could even be".
-Show "mouse-clicks or menu items--whatever suits your program.".
-Show "\n".
-Show "You should also get your employer (if you work as a programmer) or your".
-Show "school, if any, to sign a \"copyright disclaimer\" for the program, if".
-Show "necessary.  Here is a sample; alter the names:".
-Show "\n".
-Show "  Yoyodyne, Inc., hereby disclaims all copyright interest in the program".
-Show "  `Gnomovision' (which makes passes at compilers) written by James Hacker.".
-Show "\n".
-Show "  <signature of Ty Coon>, 1 April 1989".
-Show "  Ty Coon, President of Vice".
-Show "\n".
-Show "This General Public License does not permit incorporating your program into".
-Show "proprietary programs.  If your program is a subroutine library, you may".
-Show "consider it more useful to permit linking proprietary applications with the".
-Show "library.  If this is what you want to do, use the GNU Lesser General".
-Show "Public License instead of this License.".
+﻿Display "\n		    GNU GENERAL PUBLIC LICENSE".
+Display "		       Version 2, June 1991".
+Display "\n".
+Display " Copyright (C) 1989, 1991 Free Software Foundation, Inc.,".
+Display " 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA".
+Display " Everyone is permitted to copy and distribute verbatim copies".
+Display " of this license document, but changing it is not allowed.".
+Display "\n".
+Display "			    Preamble".
+Display "\n".
+Display "  The licenses for most software are designed to take away your".
+Display "freedom to share and change it.  By contrast, the GNU General Public".
+Display "License is intended to guarantee your freedom to share and change free".
+Display "software--to make sure the software is free for all its users.  This".
+Display "General Public License applies to most of the Free Software".
+Display "Foundation's software and to any other program whose authors commit to".
+Display "using it.  (Some other Free Software Foundation software is covered by".
+Display "the GNU Lesser General Public License instead.)  You can apply it to".
+Display "your programs, too.".
+Display "\n".
+Display "  When we speak of free software, we are referring to freedom, not".
+Display "price.  Our General Public Licenses are designed to make sure that you".
+Display "have the freedom to distribute copies of free software (and charge for".
+Display "this service if you wish), that you receive source code or can get it".
+Display "if you want it, that you can change the software or use pieces of it".
+Display "in new free programs; and that you know you can do these things.".
+Display "\n".
+Display "  To protect your rights, we need to make restrictions that forbid".
+Display "anyone to deny you these rights or to ask you to surrender the rights.".
+Display "These restrictions translate to certain responsibilities for you if you".
+Display "distribute copies of the software, or if you modify it.".
+Display "\n".
+Display "  For example, if you distribute copies of such a program, whether".
+Display "gratis or for a fee, you must give the recipients all the rights that".
+Display "you have.  You must make sure that they, too, receive or can get the".
+Display "source code.  And you must show them these terms so they know their".
+Display "rights.".
+Display "\n".
+Display "  We protect your rights with two steps: (1) copyright the software, and".
+Display "(2) offer you this license which gives you legal permission to copy,".
+Display "distribute and/or modify the software.".
+Display "\n".
+Display "  Also, for each author's protection and ours, we want to make certain".
+Display "that everyone understands that there is no warranty for this free".
+Display "software.  If the software is modified by someone else and passed on, we".
+Display "want its recipients to know that what they have is not the original, so".
+Display "that any problems introduced by others will not reflect on the original".
+Display "authors' reputations.".
+Display "\n".
+Display "  Finally, any free program is threatened constantly by software".
+Display "patents.  We wish to avoid the danger that redistributors of a free".
+Display "program will individually obtain patent licenses, in effect making the".
+Display "program proprietary.  To prevent this, we have made it clear that any".
+Display "patent must be licensed for everyone's free use or not licensed at all.".
+Display "\n".
+Display "  The precise terms and conditions for copying, distribution and".
+Display "modification follow.".
+Display "\n".
+Display "		    GNU GENERAL PUBLIC LICENSE".
+Display "   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION".
+Display "\n".
+Display "  0. This License applies to any program or other work which contains".
+Display "a notice placed by the copyright holder saying it may be distributed".
+Display "under the terms of this General Public License.  The "Program", below,".
+Display "refers to any such program or work, and a \"work based on the Program\"".
+Display "means either the Program or any derivative work under copyright law:".
+Display "that is to say, a work containing the Program or a portion of it,".
+Display "either verbatim or with modifications and/or translated into another".
+Display "language.  (Hereinafter, translation is included without limitation in".
+Display "the term "modification".)  Each licensee is addressed as \"you\".".
+Display "\n".
+Display "Activities other than copying, distribution and modification are not".
+Display "covered by this License; they are outside its scope.  The act of".
+Display "running the Program is not restricted, and the output from the Program".
+Display "is covered only if its contents constitute a work based on the".
+Display "Program (independent of having been made by running the Program).".
+Display "Whether that is true depends on what the Program does.".
+Display "\n".
+Display "  1. You may copy and distribute verbatim copies of the Program's".
+Display "source code as you receive it, in any medium, provided that you".
+Display "conspicuously and appropriately publish on each copy an appropriate".
+Display "copyright notice and disclaimer of warranty; keep intact all the".
+Display "notices that refer to this License and to the absence of any warranty;".
+Display "and give any other recipients of the Program a copy of this License".
+Display "along with the Program.".
+Display "\n".
+Display "You may charge a fee for the physical act of transferring a copy, and".
+Display "you may at your option offer warranty protection in exchange for a fee.".
+Display "\n".
+Display "  2. You may modify your copy or copies of the Program or any portion".
+Display "of it, thus forming a work based on the Program, and copy and".
+Display "distribute such modifications or work under the terms of Section 1".
+Display "above, provided that you also meet all of these conditions:".
+Display "\n".
+Display "    a) You must cause the modified files to carry prominent notices".
+Display "    stating that you changed the files and the date of any change.".
+Display "\n".
+Display "    b) You must cause any work that you distribute or publish, that in".
+Display "    whole or in part contains or is derived from the Program or any".
+Display "    part thereof, to be licensed as a whole at no charge to all third".
+Display "    parties under the terms of this License.".
+Display "\n".
+Display "    c) If the modified program normally reads commands interactively".
+Display "    when run, you must cause it, when started running for such".
+Display "    interactive use in the most ordinary way, to print or display an".
+Display "    announcement including an appropriate copyright notice and a".
+Display "    notice that there is no warranty (or else, saying that you provide".
+Display "    a warranty) and that users may redistribute the program under".
+Display "    these conditions, and telling the user how to view a copy of this".
+Display "    License.  (Exception: if the Program itself is interactive but".
+Display "    does not normally print such an announcement, your work based on".
+Display "    the Program is not required to print an announcement.)".
+Display "\n".
+Display "These requirements apply to the modified work as a whole.  If".
+Display "identifiable sections of that work are not derived from the Program,".
+Display "and can be reasonably considered independent and separate works in".
+Display "themselves, then this License, and its terms, do not apply to those".
+Display "sections when you distribute them as separate works.  But when you".
+Display "distribute the same sections as part of a whole which is a work based".
+Display "on the Program, the distribution of the whole must be on the terms of".
+Display "this License, whose permissions for other licensees extend to the".
+Display "entire whole, and thus to each and every part regardless of who wrote it.".
+Display "\n".
+Display "Thus, it is not the intent of this section to claim rights or contest".
+Display "your rights to work written entirely by you; rather, the intent is to".
+Display "exercise the right to control the distribution of derivative or".
+Display "collective works based on the Program.".
+Display "\n".
+Display "In addition, mere aggregation of another work not based on the Program".
+Display "with the Program (or with a work based on the Program) on a volume of".
+Display "a storage or distribution medium does not bring the other work under".
+Display "the scope of this License.".
+Display "\n".
+Display "  3. You may copy and distribute the Program (or a work based on it,".
+Display "under Section 2) in object code or executable form under the terms of".
+Display "Sections 1 and 2 above provided that you also do one of the following:".
+Display "\n".
+Display "    a) Accompany it with the complete corresponding machine-readable".
+Display "    source code, which must be distributed under the terms of Sections".
+Display "    1 and 2 above on a medium customarily used for software interchange; or,".
+Display "\n".
+Display "    b) Accompany it with a written offer, valid for at least three".
+Display "    years, to give any third party, for a charge no more than your".
+Display "    cost of physically performing source distribution, a complete".
+Display "    machine-readable copy of the corresponding source code, to be".
+Display "    distributed under the terms of Sections 1 and 2 above on a medium".
+Display "    customarily used for software interchange; or,".
+Display "\n".
+Display "    c) Accompany it with the information you received as to the offer".
+Display "    to distribute corresponding source code.  (This alternative is".
+Display "    allowed only for noncommercial distribution and only if you".
+Display "    received the program in object code or executable form with such".
+Display "    an offer, in accord with Subsection b above.)".
+Display "\n".
+Display "The source code for a work means the preferred form of the work for".
+Display "making modifications to it.  For an executable work, complete source".
+Display "code means all the source code for all modules it contains, plus any".
+Display "associated interface definition files, plus the scripts used to".
+Display "control compilation and installation of the executable.  However, as a".
+Display "special exception, the source code distributed need not include".
+Display "anything that is normally distributed (in either source or binary".
+Display "form) with the major components (compiler, kernel, and so on) of the".
+Display "operating system on which the executable runs, unless that component".
+Display "itself accompanies the executable.".
+Display "\n".
+Display "If distribution of executable or object code is made by offering".
+Display "access to copy from a designated place, then offering equivalent".
+Display "access to copy the source code from the same place counts as".
+Display "distribution of the source code, even though third parties are not".
+Display "compelled to copy the source along with the object code.".
+Display "\n".
+Display "  4. You may not copy, modify, sublicense, or distribute the Program".
+Display "except as expressly provided under this License.  Any attempt".
+Display "otherwise to copy, modify, sublicense or distribute the Program is".
+Display "void, and will automatically terminate your rights under this License.".
+Display "However, parties who have received copies, or rights, from you under".
+Display "this License will not have their licenses terminated so long as such".
+Display "parties remain in full compliance.".
+Display "\n".
+Display "  5. You are not required to accept this License, since you have not".
+Display "signed it.  However, nothing else grants you permission to modify or".
+Display "distribute the Program or its derivative works.  These actions are".
+Display "prohibited by law if you do not accept this License.  Therefore, by".
+Display "modifying or distributing the Program (or any work based on the".
+Display "Program), you indicate your acceptance of this License to do so, and".
+Display "all its terms and conditions for copying, distributing or modifying".
+Display "the Program or works based on it.".
+Display "\n".
+Display "  6. Each time you redistribute the Program (or any work based on the".
+Display "Program), the recipient automatically receives a license from the".
+Display "original licensor to copy, distribute or modify the Program subject to".
+Display "these terms and conditions.  You may not impose any further".
+Display "restrictions on the recipients' exercise of the rights granted herein.".
+Display "You are not responsible for enforcing compliance by third parties to".
+Display "this License.".
+Display "\n".
+Display "  7. If, as a consequence of a court judgment or allegation of patent".
+Display "infringement or for any other reason (not limited to patent issues),".
+Display "conditions are imposed on you (whether by court order, agreement or".
+Display "otherwise) that contradict the conditions of this License, they do not".
+Display "excuse you from the conditions of this License.  If you cannot".
+Display "distribute so as to satisfy simultaneously your obligations under this".
+Display "License and any other pertinent obligations, then as a consequence you".
+Display "may not distribute the Program at all.  For example, if a patent".
+Display "license would not permit royalty-free redistribution of the Program by".
+Display "all those who receive copies directly or indirectly through you, then".
+Display "the only way you could satisfy both it and this License would be to".
+Display "refrain entirely from distribution of the Program.".
+Display "\n".
+Display "If any portion of this section is held invalid or unenforceable under".
+Display "any particular circumstance, the balance of the section is intended to".
+Display "apply and the section as a whole is intended to apply in other".
+Display "circumstances.".
+Display "\n".
+Display "It is not the purpose of this section to induce you to infringe any".
+Display "patents or other property right claims or to contest validity of any".
+Display "such claims; this section has the sole purpose of protecting the".
+Display "integrity of the free software distribution system, which is".
+Display "implemented by public license practices.  Many people have made".
+Display "generous contributions to the wide range of software distributed".
+Display "through that system in reliance on consistent application of that".
+Display "system; it is up to the author/donor to decide if he or she is willing".
+Display "to distribute software through any other system and a licensee cannot".
+Display "impose that choice.".
+Display "\n".
+Display "This section is intended to make thoroughly clear what is believed to".
+Display "be a consequence of the rest of this License.".
+Display "\n".
+Display "  8. If the distribution and/or use of the Program is restricted in".
+Display "certain countries either by patents or by copyrighted interfaces, the".
+Display "original copyright holder who places the Program under this License".
+Display "may add an explicit geographical distribution limitation excluding".
+Display "those countries, so that distribution is permitted only in or among".
+Display "countries not thus excluded.  In such case, this License incorporates".
+Display "the limitation as if written in the body of this License.".
+Display "\n".
+Display "  9. The Free Software Foundation may publish revised and/or new versions".
+Display "of the General Public License from time to time.  Such new versions will".
+Display "be similar in spirit to the present version, but may differ in detail to".
+Display "address new problems or concerns.".
+Display "\n".
+Display "Each version is given a distinguishing version number.  If the Program".
+Display "specifies a version number of this License which applies to it and \"any".
+Display "later version\", you have the option of following the terms and conditions".
+Display "either of that version or of any later version published by the Free".
+Display "Software Foundation.  If the Program does not specify a version number of".
+Display "this License, you may choose any version ever published by the Free Software".
+Display "Foundation.".
+Display "\n".
+Display "  10. If you wish to incorporate parts of the Program into other free".
+Display "programs whose distribution conditions are different, write to the author".
+Display "to ask for permission.  For software which is copyrighted by the Free".
+Display "Software Foundation, write to the Free Software Foundation; we sometimes".
+Display "make exceptions for this.  Our decision will be guided by the two goals".
+Display "of preserving the free status of all derivatives of our free software and".
+Display "of promoting the sharing and reuse of software generally.".
+Display "\n".
+Display "			    NO WARRANTY".
+Display "\n".
+Display "  11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY".
+Display "FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN".
+Display "OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES".
+Display "PROVIDE THE PROGRAM \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED".
+Display "OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF".
+Display "MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS".
+Display "TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE".
+Display "PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY SERVICING,".
+Display "REPAIR OR CORRECTION.".
+Display "\n".
+Display "  12. IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING".
+Display "WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR".
+Display "REDISTRIBUTE THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES,".
+Display "INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING".
+Display "OUT OF THE USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED".
+Display "TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY".
+Display "YOU OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER".
+Display "PROGRAMS), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE".
+Display "POSSIBILITY OF SUCH DAMAGES.".
+Display "\n".
+Display "		     END OF TERMS AND CONDITIONS".
+Display "\n".
+Display "	    How to Apply These Terms to Your New Programs".
+Display "\n".
+Display "  If you develop a new program, and you want it to be of the greatest".
+Display "possible use to the public, the best way to achieve this is to make it".
+Display "free software which everyone can redistribute and change under these terms.".
+Display "\n".
+Display "  To do so, attach the following notices to the program.  It is safest".
+Display "to attach them to the start of each source file to most effectively".
+Display "convey the exclusion of warranty; and each file should have at least".
+Display "the \"copyright\" line and a pointer to where the full notice is found.".
+Display "\n".
+Display "    <one line to give the program's name and a brief idea of what it does.>".
+Display "    Copyright (C) <year>  <name of author>".
+Display "\n".
+Display "    This program is free software; you can redistribute it and/or modify".
+Display "    it under the terms of the GNU General Public License as published by".
+Display "    the Free Software Foundation; either version 2 of the License, or".
+Display "    (at your option) any later version.".
+Display "\n".
+Display "    This program is distributed in the hope that it will be useful,".
+Display "    but WITHOUT ANY WARRANTY; without even the implied warranty of".
+Display "    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the".
+Display "    GNU General Public License for more details.".
+Display "\n".
+Display "    You should have received a copy of the GNU General Public License along".
+Display "    with this program; if not, write to the Free Software Foundation, Inc.,".
+Display "    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.".
+Display "\n".
+Display "Also add information on how to contact you by electronic and paper mail.".
+Display "\n".
+Display "If the program is interactive, make it output a short notice like this".
+Display "when it starts in an interactive mode:".
+Display "\n".
+Display "    Gnomovision version 69, Copyright (C) year name of author".
+Display "    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.".
+Display "    This is free software, and you are welcome to redistribute it".
+Display "    under certain conditions; type `show c' for details.".
+Display "\n".
+Display "The hypothetical commands `show w' and `show c' should show the appropriate".
+Display "parts of the General Public License.  Of course, the commands you use may".
+Display "be called something other than `show w' and `show c'; they could even be".
+Display "mouse-clicks or menu items--whatever suits your program.".
+Display "\n".
+Display "You should also get your employer (if you work as a programmer) or your".
+Display "school, if any, to sign a \"copyright disclaimer\" for the program, if".
+Display "necessary.  Here is a sample; alter the names:".
+Display "\n".
+Display "  Yoyodyne, Inc., hereby disclaims all copyright interest in the program".
+Display "  `Gnomovision' (which makes passes at compilers) written by James Hacker.".
+Display "\n".
+Display "  <signature of Ty Coon>, 1 April 1989".
+Display "  Ty Coon, President of Vice".
+Display "\n".
+Display "This General Public License does not permit incorporating your program into".
+Display "proprietary programs.  If your program is a subroutine library, you may".
+Display "consider it more useful to permit linking proprietary applications with the".
+Display "library.  If this is what you want to do, use the GNU Lesser General".
+Display "Public License instead of this License.".

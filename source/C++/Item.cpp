@@ -1,10 +1,9 @@
-/*
- *	Class:		Item
+/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -70,11 +69,9 @@
 
 		strcpy( superClassNameString_, "Item" );
 		strcpy( classNameString_, EMPTY_STRING );
-		strcpy( tempString, EMPTY_STRING );
 
 		// Protected constructible variables
 
-		isAvailableForRollbackAfterDelete = false;
 		isSelectedByQuery = false;
 		isSelectedByJustificationQuery = false;
 
@@ -82,6 +79,9 @@
 
 		nextItem = NULL;
 		previousItem = NULL;
+
+		strcpy( statusString, SPACE_STRING );
+		strcpy( tempString, EMPTY_STRING );
 		}
 
 
@@ -227,7 +227,7 @@
 
 		while( errorStringPosition < strlen( errorString ) )
 			{
-			if( errorString[errorStringPosition] == TEXT_DIACRITICAL_CHAR )
+			if( errorString[errorStringPosition] == SYMBOL_BACK_SLASH )
 				{
 				errorStringPosition++;
 
@@ -252,24 +252,29 @@
 
 	// Protected virtual functions
 
+	void Item::clearReplacingItem()
+		{
+		// This is a virtual function. Therefore, it has no body.
+		}
+
 	void Item::selectingAttachedJustifications( bool isSelectingJustificationSpecifications )
 		{
-		// This is a virtual void function. Therefore, it has no body, and the given variables are unreferenced.
+		// This is a virtual function. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	void Item::selectingJustificationSpecifications()
 		{
-		// This is a virtual void function. Therefore, it has no body.
+		// This is a virtual function. Therefore, it has no body.
 		}
 
 	void Item::showString( bool isReturnQueryToPosition )
 		{
-		// This is a virtual void function. Therefore, it has no body, and the given variables are unreferenced.
+		// This is a virtual function. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	void Item::showWordReferences( bool isReturnQueryToPosition )
 		{
-		// This is a virtual void function. Therefore, it has no body, and the given variables are unreferenced.
+		// This is a virtual function. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	bool Item::isSorted( Item *nextSortItem )
@@ -309,11 +314,187 @@
 		return RESULT_OK;
 		}
 
+	char *Item::itemString()
+		{
+		return NULL;
+		}
+
+	char *Item::virtualGuideByGrammarString()
+		{
+		return NULL;
+		}
+
+
+	char *Item::toString( unsigned short queryWordTypeNr )
+		{
+		char *queryString;
+		char *myWordString = myWordTypeString( queryWordTypeNr );
+		char *userNameString = ( myWordItem_ == NULL ? NULL : myWordItem_->userNameString( userNr_ ) );
+		char statusString[2] = SPACE_STRING;
+
+		statusString[0] = statusChar_;
+		strcpy( commonVariables_->queryString, EMPTY_STRING );
+
+		queryString = commonVariables_->queryString;
+
+		// Show status if not active
+		if( !isActiveItem() )
+			strcat( queryString, statusString );
+
+		if( myWordString != NULL )
+			{
+			sprintf( tempString, "%c%s%c", QUERY_WORD_START_CHAR, myWordString, QUERY_WORD_END_CHAR );
+			strcat( queryString, tempString );
+			}
+
+		sprintf( tempString, "%c%c%c", QUERY_LIST_START_CHAR, ( myList_ == NULL ? QUERY_NO_LIST_CHAR : myList_->listChar() ), QUERY_LIST_END_CHAR );
+		strcat( queryString, tempString );
+
+		sprintf( tempString, "%c%u%c%u%c", QUERY_ITEM_START_CHAR, creationSentenceNr_, QUERY_SEPARATOR_CHAR, itemNr_, QUERY_ITEM_END_CHAR );
+		strcat( queryString, tempString );
+/*
+		// Don't show: Always true during query
+		if( isSelectedByQuery )
+			{
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isSelectedByQuery" );
+			}
+*/
+		if( isArchivedItem() ||
+		isReplacedItem() )
+			{
+			sprintf( tempString, "%cpreviousStatusChar:%c", QUERY_SEPARATOR_CHAR, previousStatusChar );
+			strcat( queryString, tempString );
+			}
+
+		if( userNr_ > NO_USER_NR )
+			{
+			if( userNameString != NULL )
+				sprintf( tempString, "%cuser:%s", QUERY_SEPARATOR_CHAR, userNameString );
+			else
+				sprintf( tempString, "%cuser:%u", QUERY_SEPARATOR_CHAR, userNr_ );
+
+			strcat( queryString, tempString );
+			}
+
+		if( originalSentenceNr_ > NO_SENTENCE_NR &&
+		originalSentenceNr_ != creationSentenceNr_ )
+			{
+			sprintf( tempString, "%coriginalSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, originalSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
+			strcat( queryString, tempString );
+			}
+
+		if( activeSentenceNr_ > NO_SENTENCE_NR &&
+		activeSentenceNr_ != creationSentenceNr_ )
+			{
+			sprintf( tempString, "%cactiveSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, activeSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
+			strcat( queryString, tempString );
+			}
+
+		if( inactiveSentenceNr_ > NO_SENTENCE_NR &&
+		inactiveSentenceNr_ != creationSentenceNr_ )
+			{
+			sprintf( tempString, "%cinactiveSentence:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, inactiveSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
+			strcat( queryString, tempString );
+			}
+
+		if( archivedSentenceNr_ > NO_SENTENCE_NR )
+			{
+			sprintf( tempString, "%carchivedSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, archivedSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
+			strcat( queryString, tempString );
+			}
+
+		if( replacedSentenceNr_ > NO_SENTENCE_NR )
+			{
+			sprintf( tempString, "%creplacedSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, replacedSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
+			strcat( queryString, tempString );
+			}
+
+		if( deletedSentenceNr_ > NO_SENTENCE_NR )
+			{
+			sprintf( tempString, "%cdeletedSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, deletedSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
+			strcat( queryString, tempString );
+			}
+
+		return queryString;
+		}
+
+
+	// Protected common functions
+
+	void Item::setActiveStatus()
+		{
+		statusChar_ = QUERY_ACTIVE_CHAR;
+		}
+
+	void Item::setArchivedStatus()
+		{
+		statusChar_ = QUERY_ARCHIVED_CHAR;
+		}
+
+	void Item::setDeletedStatus()
+		{
+		statusChar_ = QUERY_DELETED_CHAR;
+		}
+
+	void Item::setInactiveStatus()
+		{
+		statusChar_ = QUERY_INACTIVE_CHAR;
+		}
+
+	void Item::setReplacedStatus()
+		{
+		statusChar_ = QUERY_REPLACED_CHAR;
+		}
+
+	void Item::setActiveSentenceNr()
+		{
+		if( activeSentenceNr_ == NO_SENTENCE_NR )
+			activeSentenceNr_ = commonVariables_->currentSentenceNr;
+		}
+
+	void Item::setArchivedSentenceNr()
+		{
+		if( archivedSentenceNr_ == NO_SENTENCE_NR )
+			archivedSentenceNr_ = commonVariables_->currentSentenceNr;
+		}
+
+	void Item::setDeletedSentenceNr()
+		{
+		deletedSentenceNr_ = commonVariables_->currentSentenceNr;
+		}
+
+	void Item::setInactiveSentenceNr()
+		{
+		if( inactiveSentenceNr_ == NO_SENTENCE_NR )
+			inactiveSentenceNr_ = commonVariables_->currentSentenceNr;
+		}
+
+	void Item::setReplacedSentenceNr()
+		{
+		if( replacedSentenceNr_ == NO_SENTENCE_NR )
+			replacedSentenceNr_ = commonVariables_->currentSentenceNr;
+		}
+
+	void Item::clearArchivedSentenceNr()
+		{
+		archivedSentenceNr_ = NO_SENTENCE_NR;
+		}
+
+	void Item::clearDeletedSentenceNr()
+		{
+		deletedSentenceNr_ = NO_SENTENCE_NR;
+		}
+
+	void Item::clearReplacedSentenceNr()
+		{
+		replacedSentenceNr_ = NO_SENTENCE_NR;
+		}
+
 	void Item::showWords( bool isReturnQueryToPosition, unsigned short queryWordTypeNr )
 		{
-		// This is a virtual function. Therefore, the given variables are unreferenced.
 		char *myWordString;
-		char statusString[2] = SPACE_STRING;
+
 		statusString[0] = statusChar_;
 
 		if( ( myWordString = myWordTypeString( queryWordTypeNr ) ) != NULL )
@@ -328,180 +509,6 @@
 			commonVariables_->hasFoundQuery = true;
 			strcat( commonVariables_->queryString, myWordString );
 			}
-		}
-
-	char *Item::itemString()
-		{
-		return NULL;
-		}
-
-	char *Item::extraItemString()
-		{
-		return NULL;
-		}
-
-
-	char *Item::toString( unsigned short queryWordTypeNr )
-		{
-		char *myWordString = myWordTypeString( queryWordTypeNr );
-		char *userNameString = ( myWordItem_ == NULL ? NULL : myWordItem_->userNameString( userNr_ ) );
-		char statusString[2] = SPACE_STRING;
-		statusString[0] = statusChar_;
-		strcpy( commonVariables_->queryString, EMPTY_STRING );
-
-		// Show status if not active
-		if( !isActiveItem() )
-			strcat( commonVariables_->queryString, statusString );
-
-		if( myWordString != NULL )
-			{
-			sprintf( tempString, "%c%s%c", QUERY_WORD_START_CHAR, myWordString, QUERY_WORD_END_CHAR );
-			strcat( commonVariables_->queryString, tempString );
-			}
-
-		sprintf( tempString, "%c%c%c", QUERY_LIST_START_CHAR, ( myList_ == NULL ? QUERY_NO_LIST_CHAR : myList_->listChar() ), QUERY_LIST_END_CHAR );
-		strcat( commonVariables_->queryString, tempString );
-
-		sprintf( tempString, "%c%u%c%u%c", QUERY_ITEM_START_CHAR, creationSentenceNr_, QUERY_SEPARATOR_CHAR, itemNr_, QUERY_ITEM_END_CHAR );
-		strcat( commonVariables_->queryString, tempString );
-
-		if( isAvailableForRollbackAfterDelete )
-			{
-			strcat( commonVariables_->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables_->queryString, "isAvailableForRollbackAfterDelete" );
-			}
-/*
-		// Don't show: Always true during query
-		if( isSelectedByQuery )
-			{
-			strcat( commonVariables_->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables_->queryString, "isSelectedByQuery" );
-			}
-*/
-		if( isArchivedItem() ||
-		isReplacedItem() )
-			{
-			sprintf( tempString, "%cpreviousStatusChar:%c", QUERY_SEPARATOR_CHAR, previousStatusChar );
-			strcat( commonVariables_->queryString, tempString );
-			}
-
-		if( userNr_ > NO_USER_NR )
-			{
-			if( userNameString != NULL )
-				sprintf( tempString, "%cuser:%s", QUERY_SEPARATOR_CHAR, userNameString );
-			else
-				sprintf( tempString, "%cuser:%u", QUERY_SEPARATOR_CHAR, userNr_ );
-
-			strcat( commonVariables_->queryString, tempString );
-			}
-
-		if( originalSentenceNr_ > NO_SENTENCE_NR &&
-		originalSentenceNr_ != creationSentenceNr_ )
-			{
-			sprintf( tempString, "%coriginalSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, originalSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
-			strcat( commonVariables_->queryString, tempString );
-			}
-
-		if( activeSentenceNr_ > NO_SENTENCE_NR &&
-		activeSentenceNr_ != creationSentenceNr_ )
-			{
-			sprintf( tempString, "%cactiveSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, activeSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
-			strcat( commonVariables_->queryString, tempString );
-			}
-
-		if( inactiveSentenceNr_ > NO_SENTENCE_NR &&
-		inactiveSentenceNr_ != creationSentenceNr_ )
-			{
-			sprintf( tempString, "%cinactiveSentence:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, inactiveSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
-			strcat( commonVariables_->queryString, tempString );
-			}
-
-		if( archivedSentenceNr_ > NO_SENTENCE_NR )
-			{
-			sprintf( tempString, "%carchivedSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, archivedSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
-			strcat( commonVariables_->queryString, tempString );
-			}
-
-		if( replacedSentenceNr_ > NO_SENTENCE_NR )
-			{
-			sprintf( tempString, "%creplacedSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, replacedSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
-			strcat( commonVariables_->queryString, tempString );
-			}
-
-		if( deletedSentenceNr_ > NO_SENTENCE_NR )
-			{
-			sprintf( tempString, "%cdeletedSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, deletedSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
-			strcat( commonVariables_->queryString, tempString );
-			}
-
-		return commonVariables_->queryString;
-		}
-
-
-	// Protected common functions
-
-	void Item::setActiveStatus()
-		{
-		statusChar_ = QUERY_ACTIVE_CHAR;
-		}
-
-	void Item::setInactiveStatus()
-		{
-		statusChar_ = QUERY_INACTIVE_CHAR;
-		}
-
-	void Item::setArchivedStatus()
-		{
-		statusChar_ = QUERY_ARCHIVED_CHAR;
-		}
-
-	void Item::setReplacedStatus()
-		{
-		statusChar_ = QUERY_REPLACED_CHAR;
-		}
-
-	void Item::setDeletedStatus()
-		{
-		statusChar_ = QUERY_DELETED_CHAR;
-		}
-
-	void Item::setActiveSentenceNr()
-		{
-		if( activeSentenceNr_ == NO_SENTENCE_NR )
-			activeSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::setInactiveSentenceNr()
-		{
-		if( inactiveSentenceNr_ == NO_SENTENCE_NR )
-			inactiveSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::setArchivedSentenceNr()
-		{
-		if( archivedSentenceNr_ == NO_SENTENCE_NR )
-			archivedSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::setReplacedSentenceNr()
-		{
-		if( replacedSentenceNr_ == NO_SENTENCE_NR )
-			replacedSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::setDeletedSentenceNr()
-		{
-		deletedSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::clearArchivedSentenceNr()
-		{
-		archivedSentenceNr_ = NO_SENTENCE_NR;
-		}
-
-	void Item::clearReplacedSentenceNr()
-		{
-		replacedSentenceNr_ = NO_SENTENCE_NR;
 		}
 
 	// Strictly for initialization of AdminItem
@@ -563,7 +570,6 @@
 		activeSentenceNr_ = ( originalSentenceNr == NO_SENTENCE_NR ? commonVariables_->currentSentenceNr : activeSentenceNr );
 		inactiveSentenceNr_ = inactiveSentenceNr;
 		archivedSentenceNr_ = archivedSentenceNr;
-		replacedSentenceNr_ = NO_SENTENCE_NR;
 
 		itemNr_ = ++commonVariables_->currentItemNr;
 			}
@@ -598,9 +604,9 @@
 		return ( inactiveSentenceNr_ > NO_SENTENCE_NR );
 		}
 
-	bool Item::hasArchivedSentenceNr()
+	bool Item::hasCurrentOriginalSentenceNr()
 		{
-		return ( archivedSentenceNr_ > NO_SENTENCE_NR );
+		return ( originalSentenceNr_ == commonVariables_->currentSentenceNr );
 		}
 
 	bool Item::hasCurrentCreationSentenceNr()
@@ -628,9 +634,15 @@
 		return ( replacedSentenceNr_ == commonVariables_->currentSentenceNr );
 		}
 
-	bool Item::hasCurrentDeletedSentenceNr()
+	bool Item::hasSentenceNr( unsigned int sentenceNr )
 		{
-		return ( deletedSentenceNr_ == commonVariables_->currentSentenceNr );
+		return ( originalSentenceNr_ == sentenceNr ||
+				creationSentenceNr_ == sentenceNr ||
+				activeSentenceNr_ == sentenceNr ||
+				inactiveSentenceNr_ == sentenceNr ||
+				archivedSentenceNr_ == sentenceNr ||
+				replacedSentenceNr_ == sentenceNr ||
+				deletedSentenceNr_ == sentenceNr );
 		}
 
 	bool Item::isOlderItem()
@@ -833,6 +845,11 @@
 		return superClassNameString_;
 		}
 
+	CommonVariables *Item::commonVariables()
+		{
+		return commonVariables_;
+		}
+
 	List *Item::myList()
 		{
 		return myList_;
@@ -841,11 +858,6 @@
 	WordItem *Item::myWordItem()
 		{
 		return myWordItem_;
-		}
-
-	CommonVariables *Item::commonVariables()
-		{
-		return commonVariables_;
 		}
 
 

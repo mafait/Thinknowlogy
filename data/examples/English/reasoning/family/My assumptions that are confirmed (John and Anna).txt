@@ -5,4 +5,4 @@ Anna is a parent of Paul, Joe and Laura.
 John is a person.
 Anna has a daughter, called Laura.
 Paul is part of a family.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

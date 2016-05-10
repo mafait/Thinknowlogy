@@ -1,11 +1,10 @@
-/*
- *	Class:			WordCleanup
+/*	Class:			WordCleanup
  *	Supports class:	WordItem
  *	Purpose:		To cleanup obsolete items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -57,34 +56,46 @@ class WordCleanup
 
 	// Protected methods
 
-	protected void deleteRollbackInfo()
+	protected void clearReplacedInfo()
 		{
+		List currentWordList;
+
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
-				myWordItem_.wordListArray[wordListNr].deleteRollbackInfoInList();
+			currentWordList = myWordItem_.wordListArray[wordListNr];
+
+			if( currentWordList != null &&
+
+			// Not needed to clear replaced info in grammar, interface and temporary lists
+			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LIST &&
+			!currentWordList.isTemporaryList() ) )
+				currentWordList.clearReplacedInfoInList();
 			}
 		}
 
 	protected void getHighestInUseSentenceNr( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, boolean isLanguageWord, int highestSentenceNr )
 		{
 		short wordListNr = 0;
+		List currentWordList;
 
 		while( wordListNr < Constants.NUMBER_OF_WORD_LISTS &&
 		CommonVariables.highestInUseSentenceNr < highestSentenceNr )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null &&
+			currentWordList = myWordItem_.wordListArray[wordListNr];
+
+			if( currentWordList != null &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) &&
 
 			// Skip temporary lists
 			( isIncludingTemporaryLists ||
-			!myWordItem_.wordListArray[wordListNr].isTemporaryList() ) )
-				myWordItem_.wordListArray[wordListNr].getHighestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
+			!currentWordList.isTemporaryList() ) )
+				currentWordList.getHighestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
 
 			wordListNr++;
 			}
@@ -92,32 +103,40 @@ class WordCleanup
 
 	protected void setCurrentItemNr( boolean isLanguageWord )
 		{
+		List currentWordList;
+
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null &&
+			currentWordList = myWordItem_.wordListArray[wordListNr];
+
+			if( currentWordList != null &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
-				myWordItem_.wordListArray[wordListNr].setCurrentItemNrInList();
+				currentWordList.setCurrentItemNrInList();
 			}
 		}
 
 	protected byte decrementItemNrRange( boolean isLanguageWord, int decrementSentenceNr, int decrementItemNr, int decrementOffset )
 		{
+		List currentWordList;
+
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null &&
+			currentWordList = myWordItem_.wordListArray[wordListNr];
+
+			if( currentWordList != null &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
-				if( myWordItem_.wordListArray[wordListNr].decrementItemNrRangeInList( decrementSentenceNr, decrementItemNr, decrementOffset ) != Constants.RESULT_OK )
+				if( currentWordList.decrementItemNrRangeInList( decrementSentenceNr, decrementItemNr, decrementOffset ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to decrement item number range" );
 				}
 			}
@@ -127,17 +146,21 @@ class WordCleanup
 
 	protected byte decrementSentenceNrs( boolean isLanguageWord, int startSentenceNr )
 		{
+		List currentWordList;
+
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null &&
+			currentWordList = myWordItem_.wordListArray[wordListNr];
+
+			if( currentWordList != null &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
-				if( myWordItem_.wordListArray[wordListNr].decrementSentenceNrsInList( startSentenceNr ) != Constants.RESULT_OK )
+				if( currentWordList.decrementSentenceNrsInList( startSentenceNr ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
 				}
 			}
@@ -145,19 +168,23 @@ class WordCleanup
 		return Constants.RESULT_OK;
 		}
 
-	protected byte deleteSentences( boolean isAvailableForRollback, boolean isLanguageWord, int lowestSentenceNr )
+	protected byte deleteSentences( boolean isLanguageWord, int lowestSentenceNr )
 		{
+		List currentWordList;
+
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null &&
+			currentWordList = myWordItem_.wordListArray[wordListNr];
+
+			if( currentWordList != null &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
-				if( myWordItem_.wordListArray[wordListNr].deleteSentencesInList( isAvailableForRollback, lowestSentenceNr ) != Constants.RESULT_OK )
+				if( currentWordList.deleteSentencesInList( lowestSentenceNr ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to delete sentences in one of my lists" );
 				}
 			}
@@ -167,11 +194,18 @@ class WordCleanup
 
 	protected byte redoCurrentSentence()
 		{
+		List currentWordList;
+
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
+			// Not needed to redo items in grammar and interface lists
+			if( wordListNr != Constants.WORD_GRAMMAR_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LIST &&
+			( currentWordList = myWordItem_.wordListArray[wordListNr] ) != null )
 				{
-				if( myWordItem_.wordListArray[wordListNr].redoCurrentSentenceInList() != Constants.RESULT_OK )
+				// Not needed to redo items in temporary lists
+				if( !currentWordList.isTemporaryList() &&
+				currentWordList.redoCurrentSentenceInList() != Constants.RESULT_OK )
 					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to redo the current sentence" );
 				}
 			}
@@ -182,19 +216,22 @@ class WordCleanup
 	protected byte removeFirstRangeOfDeletedItems( boolean isLanguageWord )
 		{
 		short wordListNr = 0;
+		List currentWordList;
 
 		while( wordListNr < Constants.NUMBER_OF_WORD_LISTS &&
 		CommonVariables.nDeletedItems == 0 )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null &&
+			currentWordList = myWordItem_.wordListArray[wordListNr];
+
+			if( currentWordList != null &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
 			wordListNr != Constants.WORD_INTERFACE_LIST ) ) )
 				{
-				if( myWordItem_.wordListArray[wordListNr].removeFirstRangeOfDeletedItemsInList() != Constants.RESULT_OK )
+				if( currentWordList.removeFirstRangeOfDeletedItemsInList() != Constants.RESULT_OK )
 					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to remove the first deleted items" );
 				}
 
@@ -204,27 +241,20 @@ class WordCleanup
 		return Constants.RESULT_OK;
 		}
 
-	protected byte rollbackDeletedRedoInfo()
-		{
-		for( short wordListNr : Constants.WordLists )
-			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
-				{
-				if( myWordItem_.wordListArray[wordListNr].rollbackDeletedRedoInfoInList() != Constants.RESULT_OK )
-					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to rollback the deleted redo info in one of my lists" );
-				}
-			}
-
-		return Constants.RESULT_OK;
-		}
-
 	protected byte undoCurrentSentence()
 		{
+		List currentWordList;
+
 		for( short wordListNr : Constants.WordLists )
 			{
-			if( myWordItem_.wordListArray[wordListNr] != null )
+			// Not needed to undo items in grammar and interface lists
+			if( wordListNr != Constants.WORD_GRAMMAR_LIST &&
+			wordListNr != Constants.WORD_INTERFACE_LIST &&
+			( currentWordList = myWordItem_.wordListArray[wordListNr] ) != null )
 				{
-				if( myWordItem_.wordListArray[wordListNr].undoCurrentSentenceInList() != Constants.RESULT_OK )
+				// Not needed to undo items in temporary lists
+				if( !currentWordList.isTemporaryList() &&
+				currentWordList.undoCurrentSentenceInList() != Constants.RESULT_OK )
 					return myWordItem_.addErrorWithWordListNr( wordListNr, 1, moduleNameString_, "I failed to undo the current sentence" );
 				}
 			}

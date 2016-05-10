@@ -1,4 +1,4 @@
 ﻿Read the file "English/reasoning/family/family definition".
 John was the father of Paul.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».
 John is a man.

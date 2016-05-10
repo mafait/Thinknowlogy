@@ -1,12 +1,11 @@
-/*
- *	Class:			ScoreItem
+/*	Class:			ScoreItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -57,12 +56,13 @@ class ScoreItem : private Item
 
 	ScoreItem *possibilityItem( bool isIncludingThisItem )
 		{
+		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
 		ScoreItem *searchItem = ( isIncludingThisItem ? this : nextScoreItem() );
 
 		while( searchItem != NULL &&
-		searchItem->assignmentLevel_ >= commonVariables()->currentAssignmentLevel )
+		searchItem->assignmentLevel_ >= currentAssignmentLevel )
 			{
-			if( searchItem->assignmentLevel_ == commonVariables()->currentAssignmentLevel )
+			if( searchItem->assignmentLevel_ == currentAssignmentLevel )
 				return searchItem;
 
 			searchItem = searchItem->nextScoreItem();
@@ -144,75 +144,79 @@ class ScoreItem : private Item
 
 	virtual char *toString( unsigned short queryWordTypeNr )
 		{
+		char *queryString;
+
 		Item::toString( queryWordTypeNr );
+
+		queryString = commonVariables()->queryString;
 
 		if( isMarked )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isMarked" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isMarked" );
 			}
 
 		if( isChecked )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isChecked" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isChecked" );
 			}
 
 		if( oldSatisfiedScore > NO_SCORE )
 			{
 			sprintf( tempString, "%coldsatisfiedscore:%u", QUERY_SEPARATOR_CHAR, oldSatisfiedScore );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( newSatisfiedScore > NO_SCORE )
 			{
 			sprintf( tempString, "%cnewsatisfiedscore:%u", QUERY_SEPARATOR_CHAR, newSatisfiedScore );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( oldDissatisfiedScore > NO_SCORE )
 			{
 			sprintf( tempString, "%colddissatisfiedscore:%u", QUERY_SEPARATOR_CHAR, oldDissatisfiedScore );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( newDissatisfiedScore > NO_SCORE )
 			{
 			sprintf( tempString, "%cnewdissatisfiedscore:%u", QUERY_SEPARATOR_CHAR, newDissatisfiedScore );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( oldNotBlockingScore > NO_SCORE )
 			{
 			sprintf( tempString, "%coldnotblockingscore:%u", QUERY_SEPARATOR_CHAR, oldNotBlockingScore );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( newNotBlockingScore > NO_SCORE )
 			{
 			sprintf( tempString, "%cnewnotblockingscore:%u", QUERY_SEPARATOR_CHAR, newNotBlockingScore );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( oldBlockingScore > NO_SCORE )
 			{
 			sprintf( tempString, "%coldblockingscore:%u", QUERY_SEPARATOR_CHAR, oldBlockingScore );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( newBlockingScore > NO_SCORE )
 			{
 			sprintf( tempString, "%cnewblockingscore:%u", QUERY_SEPARATOR_CHAR, newBlockingScore );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( referenceSelectionItem != NULL )
 			{
 			sprintf( tempString, "%cselectionReference%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, referenceSelectionItem->creationSentenceNr(), QUERY_SEPARATOR_CHAR, referenceSelectionItem->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 

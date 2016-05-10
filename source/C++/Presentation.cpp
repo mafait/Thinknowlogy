@@ -1,10 +1,9 @@
-/*
- *	Class:		Presentation
+/*	Class:		Presentation
  *	Purpose:	To format the information presented to the user
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -30,7 +29,6 @@
 // Defines _getch()
 #include <conio.h>
 #endif
-#include <wchar.h>
 #include "WordItem.h"
 
 class Presentation
@@ -53,6 +51,7 @@ class Presentation
 	friend class Item;
 	friend class List;
 	friend class ListQuery;
+	friend class SpecificationItem;
 	friend class WordCollection;
 	friend class WordQuestion;
 	friend class WordSpecification;
@@ -157,23 +156,25 @@ class Presentation
 	void stripStartAndEndSpaces( char *inputString, char *outputString )
 		{
 		size_t endPosition;
-		size_t inputStringLength;
 		size_t startPosition = 0;
 
 		if( inputString != NULL &&
 		outputString != NULL &&
-		( inputStringLength = strlen( inputString ) ) > 0 )
+		( endPosition = strlen( inputString ) ) > 0 )
 			{
-			// Skipped start spaces
-			while( startPosition < inputStringLength &&
+			// Skip start spaces of the input string
+			while( startPosition < endPosition &&
 			isspace( inputString[startPosition] ) )
 				startPosition++;
 
 			endPosition = strlen( inputString );
 
-			// Skipped end spaces
+			// Skip 'new line' and 'carriage return' character
+			// at the end of the input string
 			while( startPosition < endPosition &&
-			isspace( inputString[endPosition - 1] ) )
+
+			( inputString[endPosition - 1] == NEW_LINE_CHAR ||
+			inputString[endPosition - 1] == CARRIAGE_RETURN_CHAR ) )
 				endPosition--;
 
 			strcpy( outputString, EMPTY_STRING );
@@ -188,9 +189,13 @@ class Presentation
 				character == SYMBOL_SEMI_COLON ||
 				character == SYMBOL_DOUBLE_COLON ||
 				character == SYMBOL_EXCLAMATION_MARK ||
+#ifdef _MSC_VER
 				character == SYMBOL_EXCLAMATION_MARK_INVERTED ||
+#endif
 				character == SYMBOL_QUESTION_MARK ||
+#ifdef _MSC_VER
 				character == SYMBOL_QUESTION_MARK_INVERTED ||
+#endif
 				character == SYMBOL_PIPE ||
 				character == SYMBOL_SLASH ||
 				character == SYMBOL_BACK_SLASH ||
@@ -530,11 +535,6 @@ class Presentation
 
 	// Protected functions
 
-	void redirectOutputToTestFile( FILE *testFile )
-		{
-		testFile_ = testFile;
-		}
-
 	void clearStatus()
 		{
 		if( statusLength_ > 0 )
@@ -568,6 +568,11 @@ class Presentation
 			previousProgress_ = 0;
 			strcpy( currentProgressString_, EMPTY_STRING );
 			}
+		}
+
+	void redirectOutputToTestFile( FILE *testFile )
+		{
+		testFile_ = testFile;
 		}
 
 	void showError( char functionListChar, const char *classNameString, const char *superClassNameString, const char *wordNameString, const char *functionString, const char *errorString )
@@ -636,13 +641,14 @@ class Presentation
 
 	void showStatus( unsigned short interfaceParameter )
 		{
+		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
 
-		if( commonVariables_->currentLanguageWordItem == NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) == NULL )
 			showStatus( NO_LANGUAGE_WORD_FOUND );
 		else
 			{
-			sprintf( interfaceString, "%s...", commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter ) );
+			sprintf( interfaceString, "%s...", currentLanguageWordItem->interfaceString( interfaceParameter ) );
 			showStatus( interfaceString );
 			}
 		}
@@ -726,16 +732,17 @@ class Presentation
 
 	void startProgress( unsigned int startProgress, unsigned int maxProgress, unsigned short interfaceParameter1, unsigned short shortNumber, unsigned short interfaceParameter2 )
 		{
+		WordItem *currentLanguageWordItem;
 		char newProgressString[MAX_SENTENCE_STRING_LENGTH];
 
 		if( statusLength_ > 0 )
 			clearStatus();
 
-		if( commonVariables_->currentLanguageWordItem == NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) == NULL )
 			strcpy( newProgressString, NO_LANGUAGE_WORD_FOUND );
 		else
 			{
-			sprintf( newProgressString, "%s%u%s", commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter1 ), shortNumber, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
+			sprintf( newProgressString, "%s%u%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), shortNumber, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
 			showStatus( newProgressString );
 			}
 
@@ -981,14 +988,14 @@ class Presentation
 			{
 			isShowingExtraPromptLine_ = true;
 
-			if( diacriticalTextString[0] == SYMBOL_DOUBLE_QUOTE )
+			if( diacriticalTextString[0] == QUERY_STRING_START_CHAR )
 				position++;
 
 			while( commonVariables_->result == RESULT_OK &&
 			position < strlen( diacriticalTextString ) &&
-			diacriticalTextString[position] != SYMBOL_DOUBLE_QUOTE )
+			diacriticalTextString[position] != QUERY_STRING_END_CHAR )
 				{
-				if( diacriticalTextString[position] == TEXT_DIACRITICAL_CHAR )
+				if( diacriticalTextString[position] == SYMBOL_BACK_SLASH )
 					{
 					if( ++position < strlen( diacriticalTextString ) )
 						{
@@ -1013,7 +1020,6 @@ class Presentation
 
 				( strlen( textString ) > 0 &&
 				position < strlen( diacriticalTextString ) &&
-				diacriticalTextString[position] != SYMBOL_DOUBLE_QUOTE &&
 				diacriticalTextString[position] == QUERY_CHAR ) )
 					{
 					if( writeText( false, false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, NO_CENTER_WIDTH, NULL, textString ) == RESULT_OK )
@@ -1055,15 +1061,16 @@ class Presentation
 
 	ResultType writeInterfaceText( bool isCheckingForDuplicateInterfaceParameter, bool isReturningToPosition, unsigned short promptTypeNr, unsigned short interfaceParameter )
 		{
+		WordItem *currentLanguageWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( commonVariables_->currentLanguageWordItem != NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 			{
 			if( !isCheckingForDuplicateInterfaceParameter ||
 			interfaceParameter != lastShownInterfaceParameter_ )
 				{
 				lastShownInterfaceParameter_ = interfaceParameter;
-				return writeDiacriticalText( true, isReturningToPosition, promptTypeNr, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter ) );
+				return writeDiacriticalText( true, isReturningToPosition, promptTypeNr, currentLanguageWordItem->interfaceString( interfaceParameter ) );
 				}
 			}
 		else
@@ -1077,12 +1084,13 @@ class Presentation
 
 	ResultType writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, unsigned int intNumber, unsigned short interfaceParameter2 )
 		{
+		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( commonVariables_->currentLanguageWordItem != NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 			{
-			sprintf( interfaceString, "%s%u%s", commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter1 ), intNumber, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
+			sprintf( interfaceString, "%s%u%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), intNumber, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
 			return writeDiacriticalText( promptTypeNr, interfaceString );
 			}
 
@@ -1093,12 +1101,13 @@ class Presentation
 
 	ResultType writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, unsigned int intNumber, unsigned short interfaceParameter2, char *textString, unsigned short interfaceParameter3 )
 		{
+		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( commonVariables_->currentLanguageWordItem != NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 			{
-			sprintf( interfaceString, "%s%u%s%s%s", commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter1 ), intNumber, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter2 ), textString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter3 ) );
+			sprintf( interfaceString, "%s%u%s%s%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), intNumber, currentLanguageWordItem->interfaceString( interfaceParameter2 ), textString, currentLanguageWordItem->interfaceString( interfaceParameter3 ) );
 			return writeDiacriticalText( promptTypeNr, interfaceString );
 			}
 
@@ -1109,12 +1118,13 @@ class Presentation
 
 	ResultType writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, unsigned int intNumber1, unsigned short interfaceParameter2, unsigned int intNumber2, unsigned short interfaceParameter3, char *textString, unsigned short interfaceParameter4 )
 		{
+		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( commonVariables_->currentLanguageWordItem != NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 			{
-			sprintf( interfaceString, "%s%u%s%u%s%s%s", commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter1 ), intNumber1, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter2 ), intNumber2, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter3 ), textString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter4 ) );
+			sprintf( interfaceString, "%s%u%s%u%s%s%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), intNumber1, currentLanguageWordItem->interfaceString( interfaceParameter2 ), intNumber2, currentLanguageWordItem->interfaceString( interfaceParameter3 ), textString, currentLanguageWordItem->interfaceString( interfaceParameter4 ) );
 			return writeDiacriticalText( promptTypeNr, interfaceString );
 			}
 
@@ -1125,19 +1135,20 @@ class Presentation
 
 	ResultType writeInterfaceText( bool isCheckingForDuplicateInterfaceParameter, unsigned short promptTypeNr, unsigned short interfaceParameter1, const char *textString, unsigned short interfaceParameter2 )
 		{
+		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( commonVariables_->currentLanguageWordItem != NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 			{
 			if( !isCheckingForDuplicateInterfaceParameter ||
 			interfaceParameter1 != lastShownInterfaceParameter_ )
 				{
 				lastShownInterfaceParameter_ = interfaceParameter1;
 
-				strcpy( interfaceString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter1 ) );
+				strcpy( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter1 ) );
 				strcat( interfaceString, textString );
-				strcat( interfaceString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
+				strcat( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
 
 				return writeDiacriticalText( promptTypeNr, interfaceString );
 				}
@@ -1153,12 +1164,13 @@ class Presentation
 
 	ResultType writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, char *textString, unsigned short interfaceParameter2, unsigned int longNumber, unsigned short interfaceParameter3 )
 		{
+		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( commonVariables_->currentLanguageWordItem != NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 			{
-			sprintf( interfaceString, "%s%s%s%u%s", commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter1 ), textString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter2 ), longNumber, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter3 ) );
+			sprintf( interfaceString, "%s%s%s%u%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), textString, currentLanguageWordItem->interfaceString( interfaceParameter2 ), longNumber, currentLanguageWordItem->interfaceString( interfaceParameter3 ) );
 			return writeDiacriticalText( promptTypeNr, interfaceString );
 			}
 
@@ -1169,14 +1181,15 @@ class Presentation
 
 	ResultType writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, const char *textString, unsigned short interfaceParameter2 )
 		{
+		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( commonVariables_->currentLanguageWordItem != NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 			{
-			strcpy( interfaceString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter1 ) );
+			strcpy( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter1 ) );
 			strcat( interfaceString, textString );
-			strcat( interfaceString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
+			strcat( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
 
 			return writeDiacriticalText( promptTypeNr, interfaceString );
 			}
@@ -1188,16 +1201,17 @@ class Presentation
 
 	ResultType writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, const char *textString1, unsigned short interfaceParameter2, const char *textString2, unsigned short interfaceParameter3 )
 		{
+		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( commonVariables_->currentLanguageWordItem != NULL )
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 			{
-			strcpy( interfaceString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter1 ) );
+			strcpy( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter1 ) );
 			strcat( interfaceString, textString1 );
-			strcat( interfaceString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
+			strcat( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
 			strcat( interfaceString, textString2 );
-			strcat( interfaceString, commonVariables_->currentLanguageWordItem->interfaceString( interfaceParameter3 ) );
+			strcat( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter3 ) );
 
 			return writeDiacriticalText( promptTypeNr, interfaceString );
 			}

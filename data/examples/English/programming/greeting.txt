@@ -1,19 +1,19 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To demonstrate programming in natural language.
-#	Version:	Thinknowlogy 2015r1 (Esperanza)
+#	Version:		Thinknowlogy 2016r1 (Huguenot)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
-#	and bug reports are welcome at http://mafait.org
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
-# Show the greeting and cleanup to avoid interference with the next greeting
-If the greeting is started then show "\n~+'timestamp'<a>\"~ ~+'salutation'<a>\"~ ~+'name'<a>`~.\n\n", the age is clear, the gender is clear, the time is clear, the greeting is clear, the marital status is clear, the timestamp is clear, the salutation is clear and the name is clear.
+# Display the greeting and cleanup to avoid interference with the next greeting
+If the greeting is started then display "\n~+'timestamp'<a>\"~ ~+'salutation'<a>\"~ ~+'name'<a>`~.\n\n", the age is empty, the gender is empty, the time is empty, the greeting is empty, the marital status is empty, the timestamp is empty, the salutation is empty and the name is empty.
 
 # Determine the salutation for a male.
-If the greeting is started and the gender is male then if the age is assigned and the age is less than 12 then the salutation is "Master" else the salutation is "Mr.".
+If the greeting is started and the gender is male then if the age is assigned and the age is less than 13 then the salutation is "Master" else the salutation is "Mr.".
 
 # Determine the salutation for a female.
-If the greeting is started and the gender is female then if the marital status is married then the salutation is "Mrs." else if the age is assigned and the age is less than 12 then the salutation is "Little Miss" else the salutation is "Miss".
+If the greeting is started and the gender is female then if the marital status is married then the salutation is "Mrs." else if the age is assigned and the age is less than 13 then the salutation is "Little Miss" else the salutation is "Miss".
 
 # Determine the greeting according the time of the day.
 If the greeting is started and the time is assigned then if the time is earlier than "06:00" then the timestamp is "Good night" else if the time is earlier than "12:00" then the timestamp is "Good morning" else if the time is earlier than "18:00" then the timestamp is "Good afternoon" else the timestamp is "Good evening".
@@ -66,4 +66,4 @@ The age is 32.
 # The marital status is single.	# Not relevant
 The time is "01:30".
 The greeting is started.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

@@ -1,11 +1,10 @@
-/*
- *	Class:			WordQuestion
+/*	Class:			WordQuestion
  *	Supports class:	WordItem
  *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -150,7 +149,7 @@ class WordQuestion
 			if( answerSpecificationItem != null &&
 			// Ignore suggestive assumptions
 			answerSpecificationItem.isOlderItem() &&
-			!answerSpecificationItem.isHiddenSpecification() )
+			!answerSpecificationItem.isHiddenSpanishSpecification() )
 				{
 				if( writeAnswerToQuestion( isNegativeAnswer, isPositiveAnswer, isUncertainAboutRelation, answerSpecificationItem ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an answer to a question" );
@@ -269,7 +268,7 @@ class WordQuestion
 
 			if( ( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 				{
-				// Do for all words for an alternative answer
+				// Do for all active words
 				do	{
 					if( currentWordItem != myWordItem_ &&
 					( foundSpecificationItem = currentWordItem.bestMatchingSpecificationWordSpecificationItem( false, isAssignment, isArchivedAssignment, isNegative, isPossessive, Constants.NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != null )
@@ -277,7 +276,7 @@ class WordQuestion
 						if( hasFoundSpecificationGeneralizationAnswer ||
 
 						( foundSpecificationItem.isRelatedSpecification( isNegative, isPossessive, generalizationWordTypeNr ) &&
-						!foundSpecificationItem.isHiddenSpecification() ) )
+						!foundSpecificationItem.isHiddenSpanishSpecification() ) )
 							{
 							if( currentWordItem.writeAnswerToQuestion( !hasFoundDeeperPositiveAnswer_, hasFoundDeeperPositiveAnswer_, false, foundSpecificationItem ) != Constants.RESULT_OK )
 								return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an answer to a question" );
@@ -287,7 +286,7 @@ class WordQuestion
 				while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 				}
 			else
-				return myWordItem_.startErrorInWord( 1, moduleNameString_, "The first word item is undefined" );
+				return myWordItem_.startErrorInWord( 1, moduleNameString_, "The last predefined word item is undefined" );
 			}
 		else
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given question specification item is undefined" );
@@ -354,12 +353,12 @@ class WordQuestion
 								{
 								if( myWordItem_.writeSelectedSpecification( true, true, false, false, Constants.NO_ANSWER_PARAMETER, uncertainAboutAnswerRelationSpecificationItem_ ) == Constants.RESULT_OK )
 									{
-									if( CommonVariables.writeSentenceStringBuffer != null &&
-									CommonVariables.writeSentenceStringBuffer.length() > 0 )
+									if( CommonVariables.writtenSentenceStringBuffer != null &&
+									CommonVariables.writtenSentenceStringBuffer.length() > 0 )
 										{
 										if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_LISTING_I_ONLY_KNOW ) == Constants.RESULT_OK )
 											{
-											if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writeSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+											if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 												return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an answer to a question" );
 											}
 										else
@@ -439,48 +438,24 @@ class WordQuestion
 
 	private byte markQuestionAsAnswered( SpecificationItem questionSpecificationItem )
 		{
-		SpecificationResultType specificationResult;
-		SpecificationItem answeredQuestionSpecificationItem;
-
 		if( questionSpecificationItem != null )
 			{
 			if( !questionSpecificationItem.isAnsweredQuestion() )
 				{
 				if( questionSpecificationItem.isAssignment() )
 					{
-					if( ( specificationResult = myWordItem_.copySpecificationItem( questionSpecificationItem.isInactiveAssignment(), questionSpecificationItem.isArchivedAssignment(), true, questionSpecificationItem.isExclusiveSpecification(), questionSpecificationItem.assignmentLevel(), questionSpecificationItem.generalizationCollectionNr(), questionSpecificationItem.specificationCollectionNr(), questionSpecificationItem.relationContextNr(), questionSpecificationItem.firstJustificationItem(), questionSpecificationItem ) ).result == Constants.RESULT_OK )
-						{
-						if( ( answeredQuestionSpecificationItem = specificationResult.createdSpecificationItem ) != null )
-							{
-							if( myWordItem_.replaceOrDeleteSpecification( questionSpecificationItem, answeredQuestionSpecificationItem ) == Constants.RESULT_OK )
-								// Get the specification of this assignment question
-								questionSpecificationItem = myWordItem_.firstSpecificationItem( questionSpecificationItem.isPossessive(), questionSpecificationItem.isSpecificationGeneralization(), questionSpecificationItem.questionParameter(), questionSpecificationItem.specificationWordItem() );
-							else
-								return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to replace an answered question assignment" );
-							}
-						else
-							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I couldn't create an answered question assignment item" );
-						}
+					if( myWordItem_.copyAndReplaceSpecificationItem( true, questionSpecificationItem.isExclusiveSpecification(), questionSpecificationItem.generalizationCollectionNr(), questionSpecificationItem.specificationCollectionNr(), questionSpecificationItem.firstJustificationItem(), questionSpecificationItem ) == Constants.RESULT_OK )
+						questionSpecificationItem = myWordItem_.firstSpecificationItem( questionSpecificationItem.isPossessive(), questionSpecificationItem.isSpecificationGeneralization(), questionSpecificationItem.questionParameter(), questionSpecificationItem.specificationWordItem() );
 					else
-						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to copy a question assignment to an answered question assignment" );
+						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to change a question assignment to an answered question assignment" );
 					}
 
 				if( questionSpecificationItem != null )
 					{
-					if( ( specificationResult = myWordItem_.copySpecificationItem( questionSpecificationItem.isInactiveAssignment(), questionSpecificationItem.isArchivedAssignment(), true, questionSpecificationItem.isExclusiveSpecification(), questionSpecificationItem.assignmentLevel(), questionSpecificationItem.generalizationCollectionNr(), questionSpecificationItem.specificationCollectionNr(), questionSpecificationItem.relationContextNr(), questionSpecificationItem.firstJustificationItem(), questionSpecificationItem ) ).result == Constants.RESULT_OK )
-						{
-						if( ( answeredQuestionSpecificationItem = specificationResult.createdSpecificationItem ) != null )
-							{
-							if( myWordItem_.replaceOrDeleteSpecification( questionSpecificationItem, answeredQuestionSpecificationItem ) == Constants.RESULT_OK )
-								hasFoundAnswerToQuestion_ = true;
-							else
-								return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to replace an answered question specification" );
-							}
-						else
-							return myWordItem_.startErrorInWord( 1, moduleNameString_, "I couldn't create an answered question specification item" );
-						}
+					if( myWordItem_.copyAndReplaceSpecificationItem( true, questionSpecificationItem.isExclusiveSpecification(), questionSpecificationItem.generalizationCollectionNr(), questionSpecificationItem.specificationCollectionNr(), questionSpecificationItem.firstJustificationItem(), questionSpecificationItem ) == Constants.RESULT_OK )
+						hasFoundAnswerToQuestion_ = true;
 					else
-						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to copy a question specification to an answered question specification" );
+						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to change a question specification to an answered question specification" );
 					}
 				}
 			else
@@ -643,16 +618,16 @@ class WordQuestion
 			{
 			if( answerSpecificationItem.isOlderItem() )
 				{
-				if( !answerSpecificationItem.hasAlreadyBeenWrittenAsAnswer )
+				if( !answerSpecificationItem.hasSpecificationBeenWrittenAsAnswer )
 					{
-					if( !answerSpecificationItem.isHiddenSpecification() )
+					if( !answerSpecificationItem.isHiddenSpanishSpecification() )
 						{
 						if( isPositiveAnswer )
 							{
 							if( currentLanguageWordItem != null )
 								{
-								if( myWordItem_.selectGrammarToWriteSentence( false, Constants.WORD_PARAMETER_INTERJECTION_YES, Constants.NO_GRAMMAR_LEVEL, currentLanguageWordItem.startOfGrammarItem(), answerSpecificationItem ) == Constants.RESULT_OK )
-									answerSpecificationItem.hasAlreadyBeenWrittenAsAnswer = true;
+								if( myWordItem_.selectGrammarToWriteSentence( false, false, Constants.WORD_PARAMETER_INTERJECTION_YES, Constants.NO_GRAMMAR_LEVEL, currentLanguageWordItem.firstGrammarItem(), answerSpecificationItem ) == Constants.RESULT_OK )
+									answerSpecificationItem.hasSpecificationBeenWrittenAsAnswer = true;
 								else
 									return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to select the grammar for an answer" );
 								}
@@ -675,15 +650,15 @@ class WordQuestion
 													CommonVariables.isFirstAnswerToQuestion ? Constants.WORD_PARAMETER_INTERJECTION_NO : Constants.NO_ANSWER_PARAMETER );
 
 								if( myWordItem_.writeSelectedSpecification( true, true, false, answerSpecificationItem.isNegative(), answerParameter, answerSpecificationItem ) == Constants.RESULT_OK )
-									answerSpecificationItem.hasAlreadyBeenWrittenAsAnswer = true;
+									answerSpecificationItem.hasSpecificationBeenWrittenAsAnswer = true;
 								else
 									return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a selected answer to a question" );
 								}
 							}
 
 						if( !isUncertainAboutRelation &&
-						CommonVariables.writeSentenceStringBuffer != null &&
-						CommonVariables.writeSentenceStringBuffer.length() > 0 )
+						CommonVariables.writtenSentenceStringBuffer != null &&
+						CommonVariables.writtenSentenceStringBuffer.length() > 0 )
 							{
 							// Show notification 'My answer:'
 							if( ( CommonVariables.hasShownMessage &&
@@ -697,7 +672,7 @@ class WordQuestion
 									return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a listing header" );
 								}
 
-							if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writeSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) == Constants.RESULT_OK )
+							if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) == Constants.RESULT_OK )
 								{
 								if( isNegativeAnswer )
 									isNegativeAnswer_ = true;
@@ -735,7 +710,7 @@ class WordQuestion
 				{
 				if( ( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 					{
-					// Do for all words
+					// Do for all active words
 					do	{
 						if( ( currentCollectionWordItem = currentWordItem.collectionWordItem( specificationCompoundCollectionNr, specificationWordItem ) ) != null )
 							{
@@ -755,7 +730,7 @@ class WordQuestion
 					( currentWordItem = currentWordItem.nextWordItem() ) != null );
 					}
 				else
-					myWordItem_.startErrorInWord( 1, moduleNameString_, "The first word item is undefined" );
+					myWordItem_.startErrorInWord( 1, moduleNameString_, "The last predefined word item is undefined" );
 				}
 			else
 				myWordItem_.startErrorInWord( 1, moduleNameString_, "The given specification compound collection number is undefined" );

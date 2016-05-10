@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminReadGrammar
+/*	Class:			AdminReadGrammar
  *	Supports class:	AdminItem
  *	Purpose:		To read and process grammar and interface files
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -51,7 +50,7 @@ class AdminReadGrammar
 
 		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
 			{
-			// Do for all words
+			// Do for all active words
 			do	currentWordItem.predefinedMultipleWordNr = 0;
 			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 			}
@@ -82,7 +81,7 @@ class AdminReadGrammar
 				}
 
 			if( multipleWordItem == null ||
-			multipleWordItem.creationSentenceNr() == CommonVariables.currentSentenceNr )
+			multipleWordItem.hasCurrentCreationSentenceNr() )
 				{
 				if( ( wordResult = adminItem_.addWord( false, true, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, wordParameter, wordTypeNr, multipleWordStringBuffer.length(), multipleWordStringBuffer.toString() ) ).result == Constants.RESULT_OK )
 					multipleWordItem_ = wordResult.createdWordItem;
@@ -306,7 +305,7 @@ class AdminReadGrammar
 		if( predefinedMultipleWordNr > 0 &&
 		( currentWordItem = CommonVariables.firstWordItem ) != null )
 			{
-			// Do for all words
+			// Do for all active words
 			do	{
 				if( currentWordItem.predefinedMultipleWordNr == predefinedMultipleWordNr )
 					return currentWordItem;
@@ -374,6 +373,7 @@ class AdminReadGrammar
 		boolean isChoice = false;
 		boolean isChoiceCheck = false;
 		boolean isChoiceStart = false;
+		boolean isMergedWord = false;
 		boolean isEndOfLine = false;
 		boolean isLastPartOfMultipleWord = false;
 		boolean isMultipleWord = false;
@@ -390,7 +390,7 @@ class AdminReadGrammar
 		int grammarStringLength;
 		int grammarPosition = 0;
 		GrammarItem foundGrammarItem;
-		GrammarItem grammarDefinitionItem = null;
+		GrammarItem definitionGrammarItem = null;
 		WordItem foundWordItem;
 		WordItem createdWordItem;
 		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
@@ -399,61 +399,64 @@ class AdminReadGrammar
 			{
 			if( ( grammarStringLength = grammarString.length() ) > 0 )
 				{
-				clearPredefinedMultipleWordNrInAllWords();
+				if( currentLanguageWordItem != null )
+					{
+					clearPredefinedMultipleWordNrInAllWords();
 
-				do	{
-					if( ( readResult = adminItem_.readWordFromString( true, false, grammarPosition, 0, grammarString ) ).result == Constants.RESULT_OK )
-						{
-						hasFoundWordDefinitionInfo = false;
-
-						switch( grammarString.charAt( grammarPosition ) )
+					do	{
+						if( ( readResult = adminItem_.readWordFromString( true, isMergedWord, false, grammarPosition, 0, grammarString ) ).result == Constants.RESULT_OK )
 							{
-							case Constants.QUERY_WORD_TYPE_CHAR:
-								if( !hasFoundWordTypeNr )
-									{
-									while( grammarPosition + 1 < grammarStringLength &&
-									Character.isDigit( grammarString.charAt( grammarPosition + 1 ) ) )
-										{
-										hasFoundWordTypeNr = true;
-										wordTypeNr = (short)( wordTypeNr * 10 + grammarString.charAt( ++grammarPosition ) - '0' );
-										}
+							hasFoundWordDefinitionInfo = false;
 
+							switch( grammarString.charAt( grammarPosition ) )
+								{
+								case Constants.QUERY_WORD_TYPE_CHAR:
 									if( !hasFoundWordTypeNr )
-										return adminItem_.startError( 1, moduleNameString_, "I failed to get the word type number from a grammar definition line" );
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "I have found more than one word type parameters defined in a grammar definition line" );
-
-								break;
-
-							case Constants.QUERY_PARAMETER_CHAR:
-								if( !hasFoundParameter )
-									{
-									// Get paramater from string
-									while( grammarPosition + 1 < grammarStringLength &&
-									Character.isDigit( grammarString.charAt( grammarPosition + 1 ) ) )
 										{
-										hasFoundParameter = true;
-										grammarParameter = (short)( grammarParameter * 10 + grammarString.charAt( ++grammarPosition ) - '0' );
+										while( grammarPosition + 1 < grammarStringLength &&
+										Character.isDigit( grammarString.charAt( grammarPosition + 1 ) ) )
+											{
+											hasFoundWordTypeNr = true;
+											wordTypeNr = (short)( wordTypeNr * 10 + grammarString.charAt( ++grammarPosition ) - '0' );
+											}
+
+										if( !hasFoundWordTypeNr )
+											return adminItem_.startError( 1, moduleNameString_, "I failed to get the word type number from a grammar definition line" );
 										}
+									else
+										return adminItem_.startError( 1, moduleNameString_, "I have found more than one word type parameters defined in a grammar definition line" );
 
+									break;
+
+								case Constants.QUERY_PARAMETER_CHAR:
 									if( !hasFoundParameter )
-										return adminItem_.startError( 1, moduleNameString_, "I failed to get the grammar parameter from a grammar definition line" );
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "I have found more than one values parameters defined in a grammar definition line" );
+										{
+										// Get paramater from string
+										while( grammarPosition + 1 < grammarStringLength &&
+										Character.isDigit( grammarString.charAt( grammarPosition + 1 ) ) )
+											{
+											hasFoundParameter = true;
+											grammarParameter = (short)( grammarParameter * 10 + grammarString.charAt( ++grammarPosition ) - '0' );
 
-								break;
+											if( grammarParameter == Constants.WORD_MERGED_WORD )
+												isMergedWord = true;
+											}
 
-							case Constants.GRAMMAR_WORD_DEFINITION_CHAR:
-								if( currentLanguageWordItem != null )
-									{
+										if( !hasFoundParameter )
+											return adminItem_.startError( 1, moduleNameString_, "I failed to get the grammar parameter from a grammar definition line" );
+										}
+									else
+										return adminItem_.startError( 1, moduleNameString_, "I have found more than one values parameters defined in a grammar definition line" );
+
+									break;
+
+								case Constants.GRAMMAR_WORD_DEFINITION_CHAR:
 									if( !hasCreatedInterface )
 										{
 										// Add grammar word or grammar definition word
 										if( firstCreationItemNr == Constants.NO_ITEM_NR )
 											{
-											if( ( readResult = adminItem_.readWordFromString( false, false, ++grammarPosition, 0, grammarString ) ).result == Constants.RESULT_OK )
+											if( ( readResult = adminItem_.readWordFromString( false, isMergedWord, false, ++grammarPosition, 0, grammarString ) ).result == Constants.RESULT_OK )
 												{
 												if( ( grammarResult = currentLanguageWordItem.findGrammar( ( grammarParameter >= Constants.GRAMMAR_SENTENCE ), grammarParameter, readResult.wordLength, grammarString.substring( grammarPosition ) ) ).result == Constants.RESULT_OK )
 													{
@@ -466,7 +469,7 @@ class AdminReadGrammar
 														if( ( grammarResult = currentLanguageWordItem.createGrammarItem( true, ( hasFoundParameter && grammarParameter < Constants.GRAMMAR_SENTENCE ), false, false, false, wordTypeNr, grammarParameter, readResult.wordLength, grammarString.substring( grammarPosition ), null ) ).result == Constants.RESULT_OK )
 															{
 															firstCreationItemNr = CommonVariables.currentItemNr;
-															grammarDefinitionItem = grammarResult.createdGrammarItem;
+															definitionGrammarItem = grammarResult.createdGrammarItem;
 															}
 														else
 															return adminItem_.addError( 1, moduleNameString_, "I failed to add a grammar definition word item" );
@@ -488,54 +491,49 @@ class AdminReadGrammar
 										}
 									else
 										return adminItem_.startError( 1, moduleNameString_, "Interface definition and grammar definitions can not be mixed" );
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
 
-								break;
+									break;
 
-							case Constants.GRAMMAR_OPTION_READ_NOT_WRITE_START:
-								isSkipOptionForWriting = true;
+								case Constants.GRAMMAR_OPTION_READ_NOT_WRITE_START:
+									isSkipOptionForWriting = true;
 
-								// Don't insert a break statement here
+									// Don't insert a break statement here
 
-							case Constants.GRAMMAR_OPTION_START:
-								if( !hasFoundWordTypeNr ||
-								grammarParameter >= Constants.GRAMMAR_SENTENCE )
-									{
-									if( CommonVariables.currentItemNr > Constants.NO_ITEM_NR )
+								case Constants.GRAMMAR_OPTION_START:
+									if( !hasFoundWordTypeNr ||
+									grammarParameter >= Constants.GRAMMAR_SENTENCE )
 										{
-										if( !isOption )
+										if( CommonVariables.currentItemNr > Constants.NO_ITEM_NR )
 											{
-											if( !hasFoundPipe )
+											if( !isOption )
 												{
-												isOption = true;
-												isNewStart = true;
-												isOptionStart = true;
-												isChoiceCheck = isChoice;
+												if( !hasFoundPipe )
+													{
+													isOption = true;
+													isNewStart = true;
+													isOptionStart = true;
+													isChoiceCheck = isChoice;
+													}
+												else
+													return adminItem_.startError( 1, moduleNameString_, "Pipes with different levels isn't allowed in the grammar definition" );
 												}
 											else
-												return adminItem_.startError( 1, moduleNameString_, "Pipes with different levels isn't allowed in the grammar definition" );
+												return adminItem_.startError( 1, moduleNameString_, "A grammar opion definition can not be nested" );
 											}
 										else
-											return adminItem_.startError( 1, moduleNameString_, "A grammar opion definition can not be nested" );
+											return adminItem_.startError( 1, moduleNameString_, "A grammar definition must start with a grammar definition word" );
 										}
 									else
-										return adminItem_.startError( 1, moduleNameString_, "A grammar definition must start with a grammar definition word" );
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
+										return adminItem_.startError( 1, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
 
-								break;
+									break;
 
-							case Constants.GRAMMAR_OPTION_READ_NOT_WRITE_END:
-								isSkipOptionForWriting = false;
+								case Constants.GRAMMAR_OPTION_READ_NOT_WRITE_END:
+									isSkipOptionForWriting = false;
 
-								// Don't insert a break statement here
+									// Don't insert a break statement here
 
-							case Constants.GRAMMAR_OPTION_END:
-								if( currentLanguageWordItem != null )
-									{
+								case Constants.GRAMMAR_OPTION_END:
 									if( isOption )
 										{
 										if( isChoiceCheck == isChoice )
@@ -559,44 +557,39 @@ class AdminReadGrammar
 										}
 									else
 										return adminItem_.startError( 1, moduleNameString_, "I have found an extra square bracket character in the grammar definition" );
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
 
-								break;
+									break;
 
-							case Constants.GRAMMAR_CHOICE_START:
-								if( !hasFoundWordTypeNr ||
-								grammarParameter >= Constants.GRAMMAR_SENTENCE )
-									{
-									if( CommonVariables.currentItemNr > Constants.NO_ITEM_NR )
+								case Constants.GRAMMAR_CHOICE_START:
+									if( !hasFoundWordTypeNr ||
+									grammarParameter >= Constants.GRAMMAR_SENTENCE )
 										{
-										if( !isChoice )
+										if( CommonVariables.currentItemNr > Constants.NO_ITEM_NR )
 											{
-											if( !hasFoundPipe )
+											if( !isChoice )
 												{
-												isChoice = true;
-												isNewStart = true;
-												isChoiceStart = true;
-												isOptionCheck = isOption;
+												if( !hasFoundPipe )
+													{
+													isChoice = true;
+													isNewStart = true;
+													isChoiceStart = true;
+													isOptionCheck = isOption;
+													}
+												else
+													return adminItem_.startError( 1, moduleNameString_, "Pipes with different levels isn't allowed in the grammar definition" );
 												}
 											else
-												return adminItem_.startError( 1, moduleNameString_, "Pipes with different levels isn't allowed in the grammar definition" );
+												return adminItem_.startError( 1, moduleNameString_, "Nesting curved brackets isn't allowed" );
 											}
 										else
-											return adminItem_.startError( 1, moduleNameString_, "Nesting curved brackets isn't allowed" );
+											return adminItem_.startError( 1, moduleNameString_, "A grammar definition must start with a grammar definition word" );
 										}
 									else
-										return adminItem_.startError( 1, moduleNameString_, "A grammar definition must start with a grammar definition word" );
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
+										return adminItem_.startError( 1, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
 
-								break;
+									break;
 
-							case Constants.GRAMMAR_CHOICE_END:
-								if( currentLanguageWordItem != null )
-									{
+								case Constants.GRAMMAR_CHOICE_END:
 									if( isChoice )
 										{
 										if( isOptionCheck == isOption )
@@ -626,55 +619,50 @@ class AdminReadGrammar
 										}
 									else
 										return adminItem_.startError( 1, moduleNameString_, "I have found an extra curved bracket character in the grammar definition" );
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
 
-								break;
+									break;
 
-							case Constants.SYMBOL_PIPE:
-								if( !hasFoundWordTypeNr ||
-								grammarParameter >= Constants.GRAMMAR_SENTENCE )
-									{
-									if( !hasFoundPipe )
+								case Constants.SYMBOL_PIPE:
+									if( !hasFoundWordTypeNr ||
+									grammarParameter >= Constants.GRAMMAR_SENTENCE )
 										{
-										if( isOption ||
-										isChoice )
+										if( !hasFoundPipe )
 											{
-											hasFoundPipe = true;
+											if( isOption ||
+											isChoice )
+												{
+												hasFoundPipe = true;
 
-											if( isChoice )
-												hasFoundChoiceAlternatives = true;
+												if( isChoice )
+													hasFoundChoiceAlternatives = true;
+												}
+											else
+												return adminItem_.startError( 1, moduleNameString_, "Pipes are only allowed within grammar definition options or choices" );
 											}
 										else
-											return adminItem_.startError( 1, moduleNameString_, "Pipes are only allowed within grammar definition options or choices" );
+											return adminItem_.startError( 1, moduleNameString_, "I have found an extra pipe character in the grammar definition" );
 										}
 									else
-										return adminItem_.startError( 1, moduleNameString_, "I have found an extra pipe character in the grammar definition" );
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
+										return adminItem_.startError( 1, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
 
-								break;
+									break;
 
-							// Either interface definition or Guide by Grammar
-							case Constants.SYMBOL_DOUBLE_QUOTE:
-								if( isNewStart &&
-								!hasGrammarWords &&
-								!isChoice &&
-								!isOption )
-									{
-									// Interface definition
-									if( grammarDefinitionItem == null )
+								// Either interface definition or Guide by Grammar
+								case Constants.SYMBOL_DOUBLE_QUOTE:
+									if( isNewStart &&
+									!hasGrammarWords &&
+									!isChoice &&
+									!isOption )
 										{
-										if( hasFoundParameter )
+										// Interface definition
+										if( definitionGrammarItem == null )
 											{
-											grammarPosition++;
-
-											if( grammarPosition < grammarStringLength ||
-											grammarString.charAt( grammarStringLength - 1 ) == Constants.SYMBOL_DOUBLE_QUOTE )
+											if( hasFoundParameter )
 												{
-												if( currentLanguageWordItem != null )
+												grammarPosition++;
+
+												if( grammarPosition < grammarStringLength ||
+												grammarString.charAt( grammarStringLength - 1 ) == Constants.SYMBOL_DOUBLE_QUOTE )
 													{
 													if( currentLanguageWordItem.checkInterface( grammarParameter, grammarString.substring( grammarPosition ) ) == Constants.RESULT_OK )
 														{
@@ -690,58 +678,54 @@ class AdminReadGrammar
 														return adminItem_.addError( 1, moduleNameString_, "I failed to add an interface definition word item" );
 													}
 												else
-													return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
+													return adminItem_.startError( 1, moduleNameString_, "I could a corrupte interface definition" );
 												}
 											else
-												return adminItem_.startError( 1, moduleNameString_, "I could a corrupte interface definition" );
+												return adminItem_.startError( 1, moduleNameString_, "An interface definition must have a parameter" );
 											}
 										else
-											return adminItem_.startError( 1, moduleNameString_, "An interface definition must have a parameter" );
+											{
+											// Guide by Grammar
+											endPosition = grammarPosition + 1;
+
+											while( endPosition < grammarStringLength &&
+											// Find end of string
+											grammarString.charAt( endPosition ) != Constants.SYMBOL_DOUBLE_QUOTE )
+												endPosition++;
+
+											if( endPosition < grammarStringLength )
+												{
+												if( ( definitionGrammarItem.guideByGrammarString = grammarString.substring( grammarPosition + 1, endPosition ) ) == null )
+													return adminItem_.startError( 1, moduleNameString_, "I failed to create the Guide by Grammar string" );
+												}
+											else
+												return adminItem_.startError( 1, moduleNameString_, "The Guide by Grammar string is corrupt" );
+											}
 										}
 									else
+										return adminItem_.startError( 1, moduleNameString_, "Grammar definition and interface definitions can not be mixed" );
+
+									break;
+
+								default:
+									if( !hasCreatedInterface )
 										{
-										// Guide by Grammar
-										endPosition = grammarPosition + 1;
-
-										while( endPosition < grammarStringLength &&
-										// Find end of string
-										grammarString.charAt( endPosition ) != Constants.SYMBOL_DOUBLE_QUOTE )
-											endPosition++;
-
-										if( endPosition < grammarStringLength )
+										if( CommonVariables.currentItemNr > Constants.NO_ITEM_NR )
 											{
-											if( ( grammarDefinitionItem.guideByGrammarString = grammarString.substring( grammarPosition + 1, endPosition ) ) == null )
-												return adminItem_.startError( 1, moduleNameString_, "I failed to create the Guide by Grammar string" );
-											}
-										else
-											return adminItem_.startError( 1, moduleNameString_, "The Guide by Grammar string is corrupt" );
-										}
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "Grammar definition and interface definitions can not be mixed" );
-
-								break;
-
-							default:
-								if( !hasCreatedInterface )
-									{
-									if( CommonVariables.currentItemNr > Constants.NO_ITEM_NR )
-										{
-										if( hasFoundParameter &&
-										grammarParameter < Constants.GRAMMAR_SENTENCE )
-											{
-											if( grammarParameter > Constants.NO_GRAMMAR_PARAMETER )
+											if( hasFoundParameter &&
+											grammarParameter < Constants.GRAMMAR_SENTENCE )
 												{
-												if( grammarParameter == Constants.WORD_PLURAL_NOUN_ENDING )
+												if( grammarParameter > Constants.NO_GRAMMAR_PARAMETER )
 													{
-													if( grammarDefinitionItem != null )
+													if( isMergedWord ||
+													grammarParameter == Constants.WORD_PLURAL_NOUN_ENDING )
 														{
-														if( currentLanguageWordItem != null )
+														if( definitionGrammarItem != null )
 															{
-															if( ( grammarResult = currentLanguageWordItem.createGrammarItem( false, false, false, false, false, Constants.WORD_TYPE_UNDEFINED, grammarParameter, readResult.wordLength, grammarString.substring( grammarPosition ), grammarDefinitionItem ) ).result == Constants.RESULT_OK )
+															if( ( grammarResult = currentLanguageWordItem.createGrammarItem( false, false, false, false, false, Constants.WORD_TYPE_UNDEFINED, grammarParameter, readResult.wordLength, grammarString.substring( grammarPosition ), definitionGrammarItem ) ).result == Constants.RESULT_OK )
 																{
-																if( grammarDefinitionItem.nextDefinitionGrammarItem == null )
-																	grammarDefinitionItem.nextDefinitionGrammarItem = grammarResult.createdGrammarItem;
+																if( definitionGrammarItem.nextDefinitionGrammarItem == null )
+																	definitionGrammarItem.nextDefinitionGrammarItem = grammarResult.createdGrammarItem;
 																else
 																	return adminItem_.startError( 1, moduleNameString_, "The next definition grammar item is undefined" );
 																}
@@ -749,74 +733,69 @@ class AdminReadGrammar
 																return adminItem_.addError( 1, moduleNameString_, "I failed to add a grammar definition word item" );
 															}
 														else
-															return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
+															return adminItem_.startError( 1, moduleNameString_, "The grammar definition item is undefined" );
 														}
 													else
-														return adminItem_.startError( 1, moduleNameString_, "The grammar definition item is undefined" );
-													}
-												else
-													{
-													foundWordItem = null;
-
-													if( ( readResult.wordLength + grammarPosition ) < grammarStringLength )
-														isMultipleWord = true;
-													else
 														{
-														// End of line
-														isEndOfLine = true;
+														foundWordItem = null;
 
-														if( isMultipleWord )
-															isLastPartOfMultipleWord = true;
-
-														foundWordItem = adminItem_.predefinedWordItem( grammarParameter );
-														}
-
-													if( isLastPartOfMultipleWord ||
-													foundWordItem == null )
-														{
-														if( ( wordResult = adminItem_.addWord( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, grammarParameter, wordTypeNr, readResult.wordLength, grammarString.substring( grammarPosition ) ) ).result == Constants.RESULT_OK )
+														if( ( readResult.wordLength + grammarPosition ) < grammarStringLength )
+															isMultipleWord = true;
+														else
 															{
-															if( ( createdWordItem = wordResult.createdWordItem ) != null )
-																{
-																if( isMultipleWord )
-																	{
-																	createdWordItem.predefinedMultipleWordNr = ++predefinedMultipleWordNr;
+															// End of line
+															isEndOfLine = true;
 
-																	if( isLastPartOfMultipleWord )
+															if( isMultipleWord )
+																isLastPartOfMultipleWord = true;
+
+															foundWordItem = adminItem_.predefinedWordItem( grammarParameter );
+															}
+
+														if( isLastPartOfMultipleWord ||
+														foundWordItem == null )
+															{
+															if( ( wordResult = adminItem_.addWord( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, grammarParameter, wordTypeNr, readResult.wordLength, grammarString.substring( grammarPosition ) ) ).result == Constants.RESULT_OK )
+																{
+																if( ( createdWordItem = wordResult.createdWordItem ) != null )
+																	{
+																	if( isMultipleWord )
 																		{
-																		if( addPredefinedMultipleWord( predefinedMultipleWordNr, grammarParameter, wordTypeNr, foundWordItem ) == Constants.RESULT_OK )
+																		createdWordItem.predefinedMultipleWordNr = ++predefinedMultipleWordNr;
+
+																		if( isLastPartOfMultipleWord )
 																			{
-																			if( ( createdWordItem = multipleWordItem_ ) == null )
-																				return adminItem_.startError( 1, moduleNameString_, "I couldn't create a predefined multiple grammar word" );
+																			if( addPredefinedMultipleWord( predefinedMultipleWordNr, grammarParameter, wordTypeNr, foundWordItem ) == Constants.RESULT_OK )
+																				{
+																				if( ( createdWordItem = multipleWordItem_ ) == null )
+																					return adminItem_.startError( 1, moduleNameString_, "I couldn't create a predefined multiple grammar word" );
+																				}
+																			else
+																				return adminItem_.addError( 1, moduleNameString_, "I failed to add a predefined multiple grammar word" );
 																			}
-																		else
-																			return adminItem_.addError( 1, moduleNameString_, "I failed to add a predefined multiple grammar word" );
+																		}
+
+																	if( isEndOfLine )
+																		{
+																		if( assignPredefinedWord( grammarParameter, createdWordItem ) != Constants.RESULT_OK )
+																			return adminItem_.addError( 1, moduleNameString_, "I failed to assign a predefined word" );
 																		}
 																	}
-
-																if( isEndOfLine )
-																	{
-																	if( assignPredefinedWord( grammarParameter, createdWordItem ) != Constants.RESULT_OK )
-																		return adminItem_.addError( 1, moduleNameString_, "I failed to assign a predefined word" );
-																	}
+																else
+																	return adminItem_.startError( 1, moduleNameString_, "I couldn't create a grammar word" );
 																}
 															else
-																return adminItem_.startError( 1, moduleNameString_, "I couldn't create a grammar word" );
+																return adminItem_.addError( 1, moduleNameString_, "I failed to add a grammar word" );
 															}
 														else
-															return adminItem_.addError( 1, moduleNameString_, "I failed to add a grammar word" );
-														}
-													else
-														{
-														if( foundWordItem.addWordType( false, false, ( adminItem_.isAdjectiveParameter( grammarParameter ) ? grammarParameter : Constants.NO_ADJECTIVE_PARAMETER ), ( adminItem_.isDefiniteArticleParameter( grammarParameter ) ? grammarParameter : Constants.NO_DEFINITE_ARTICLE_PARAMETER ), ( adminItem_.isIndefiniteArticleParameter( grammarParameter ) ? grammarParameter : Constants.NO_INDEFINITE_ARTICLE_PARAMETER ), wordTypeNr, readResult.wordLength, grammarString.substring( grammarPosition ) ).result != Constants.RESULT_OK )
-															return adminItem_.addError( 1, moduleNameString_, "I failed to add another word type to grammar word \"" + foundWordItem.anyWordTypeString() + "\"" );
+															{
+															if( foundWordItem.addWordType( false, false, ( adminItem_.isAdjectiveParameter( grammarParameter ) ? grammarParameter : Constants.NO_ADJECTIVE_PARAMETER ), ( adminItem_.isDefiniteArticleParameter( grammarParameter ) ? grammarParameter : Constants.NO_DEFINITE_ARTICLE_PARAMETER ), ( adminItem_.isIndefiniteArticleParameter( grammarParameter ) ? grammarParameter : Constants.NO_INDEFINITE_ARTICLE_PARAMETER ), wordTypeNr, readResult.wordLength, grammarString.substring( grammarPosition ) ).result != Constants.RESULT_OK )
+																return adminItem_.addError( 1, moduleNameString_, "I failed to add another word type to grammar word \"" + foundWordItem.anyWordTypeString() + "\"" );
+															}
 														}
 													}
 												}
-											}
-										else
-											{
-											if( currentLanguageWordItem != null )
+											else
 												{
 												// Get grammar identification
 												if( ( grammarResult = currentLanguageWordItem.findGrammar( true, Constants.NO_GRAMMAR_PARAMETER, readResult.wordLength, grammarString.substring( grammarPosition ) ) ).result == Constants.RESULT_OK )
@@ -845,63 +824,63 @@ class AdminReadGrammar
 												else
 													return adminItem_.addError( 1, moduleNameString_, "I failed to find a grammar definition word item" );
 												}
-											else
-												return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
 											}
+										else
+											return adminItem_.startError( 1, moduleNameString_, "The first grammar word in a grammar definition is the grammar definition word and must start with a grammar character" );
 										}
 									else
-										return adminItem_.startError( 1, moduleNameString_, "The first grammar word in a grammar definition is the grammar definition word and must start with a grammar character" );
-									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "Interface definition and grammar definitions can not be mixed" );
-							}
+										return adminItem_.startError( 1, moduleNameString_, "Interface definition and grammar definitions can not be mixed" );
+								}
 
-						if( !hasFoundWordDefinitionInfo &&
-						!readResult.hasFoundGrammarDefinition &&
-						readResult.nextWordPosition < grammarStringLength )
+							if( !hasFoundWordDefinitionInfo &&
+							!readResult.hasFoundGrammarDefinition &&
+							readResult.nextWordPosition < grammarStringLength )
+								{
+								if( ( readResult = adminItem_.readWordFromString( false, false, false, grammarPosition, 0, grammarString ) ).result != Constants.RESULT_OK )
+									return adminItem_.addError( 1, moduleNameString_, "I failed to read a new word from the grammar string" );
+								}
+
+							grammarPosition = readResult.nextWordPosition;
+							}
+						else
+							return adminItem_.addError( 1, moduleNameString_, "I failed to read a word from the grammar string" );
+						}
+					while( readResult.nextWordPosition < grammarStringLength );
+
+					if( isOption )
+						return adminItem_.startError( 1, moduleNameString_, "The grammar definition option isn't closed" );
+
+					if( isChoice )
+						return adminItem_.startError( 1, moduleNameString_, "The grammar definition choice isn't closed" );
+
+					if( hasFoundPipe )
+						return adminItem_.startError( 1, moduleNameString_, "The grammar definition ended with an open pipe" );
+
+					if( definitionGrammarItem != null )
+						{
+						if( hasFoundOnlyOptions &&
+
+						( !hasFoundWordTypeNr ||
+						grammarParameter >= Constants.GRAMMAR_SENTENCE ) )
 							{
-							if( ( readResult = adminItem_.readWordFromString( false, false, grammarPosition, 0, grammarString ) ).result != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to read a new word from the grammar string" );
+							if( hasGrammarWords )
+								return adminItem_.startError( 1, moduleNameString_, "The grammar definition only exists of options" );
+
+							return adminItem_.startError( 1, moduleNameString_, "The grammar definition only exists of a grammar definition word" );
 							}
 
-						grammarPosition = readResult.nextWordPosition;
+						// Remove possible duplicate grammar definition
+						if( ( grammarResult = currentLanguageWordItem.checkForDuplicateGrammarDefinition() ).result == Constants.RESULT_OK )
+							{
+							if( currentLanguageWordItem.linkLaterDefinedGrammarWords() != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to link later defined grammar words" );
+							}
+						else
+							return adminItem_.addError( 1, moduleNameString_, "I failed to check for a duplicate grammar definition" );
 						}
-					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to read a word from the grammar string" );
 					}
-				while( readResult.nextWordPosition < grammarStringLength );
-
-				if( isOption )
-					return adminItem_.startError( 1, moduleNameString_, "The grammar definition option isn't closed" );
-
-				if( isChoice )
-					return adminItem_.startError( 1, moduleNameString_, "The grammar definition choice isn't closed" );
-
-				if( hasFoundPipe )
-					return adminItem_.startError( 1, moduleNameString_, "The grammar definition ended with an open pipe" );
-
-				if( grammarDefinitionItem != null )
-					{
-					if( hasFoundOnlyOptions &&
-
-					( !hasFoundWordTypeNr ||
-					grammarParameter >= Constants.GRAMMAR_SENTENCE ) )
-						{
-						if( hasGrammarWords )
-							return adminItem_.startError( 1, moduleNameString_, "The grammar definition only exists of options" );
-
-						return adminItem_.startError( 1, moduleNameString_, "The grammar definition only exists of a grammar definition word" );
-						}
-
-					// Remove possible duplicate grammar definition
-					if( ( grammarResult = currentLanguageWordItem.checkForDuplicateGrammarDefinition() ).result == Constants.RESULT_OK )
-						{
-						if( currentLanguageWordItem.linkLaterDefinedGrammarWords() != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to link later defined grammar words" );
-						}
-					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to check for a duplicate grammar definition" );
-					}
+				else
+					return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
 				}
 			else
 				return adminItem_.startError( 1, moduleNameString_, "The given grammar string is empty" );

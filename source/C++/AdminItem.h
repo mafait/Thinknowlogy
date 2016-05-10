@@ -1,12 +1,11 @@
-/*
- *	Class:			AdminItem
+/*	Class:			AdminItem
  *	Parent class:	WordItem
  *	Grand parent:	Item
  *	Purpose:		To process tasks at administration level
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -28,7 +27,6 @@
 #ifndef ADMINITEM
 #define ADMINITEM 1
 
-#include "WordItem.h"
 #include "ContextResultType.cpp"
 #include "FileResultType.cpp"
 #include "ReadResultType.cpp"
@@ -177,18 +175,16 @@ class AdminItem : private WordItem
 	// Protected cleanup functions
 
 	void checkForChangesMadeByThisSentence();
-	void deleteRollbackInfo();
+	void clearAllTemporaryLists();
+	void decrementCurrentSentenceNr();
 	void setCurrentItemNr();
 
 	bool hasFoundAnyChangeMadeByThisSentence();
-	bool wasUndoOrRedo();
+	bool wasCurrentCommandUndoOrRedo();
 
 	ResultType cleanupDeletedItems();
-
-	ResultType deleteAllTemporaryLists();
 	ResultType deleteUnusedInterpretations( bool isDeletingAllActiveWordTypes );
-	ResultType deleteSentences( bool isAvailableForRollback, unsigned int lowestSentenceNr );
-
+	ResultType deleteSentences( unsigned int lowestSentenceNr );
 	ResultType undoLastSentence();
 	ResultType redoLastUndoneSentence();
 
@@ -197,7 +193,7 @@ class AdminItem : private WordItem
 
 	CollectionResultType collectSpecificationWords( bool isExclusiveSpecification, bool isPossessive, bool isQuestion, bool isSpecificationGeneralization, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, WordItem *compoundGeneralizationWordItem, WordItem *generalizationWordItem, WordItem *previousSpecificationWordItem, WordItem *currentSpecificationWordItem );
 
-	ResultType collectGeneralizationWordWithPreviousOne( bool isPossessive, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem );
+	ResultType collectGeneralizationWordWithPreviousOne( bool isAssignment, bool isPossessive, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem );
 	ResultType collectRelationWords( bool isExclusiveSpecification, unsigned short relationWordTypeNr, unsigned short specificationWordTypeNr, WordItem *previousRelationWordItem, WordItem *currentRelationWordItem, WordItem *specificationWordItem );
 
 
@@ -208,18 +204,24 @@ class AdminItem : private WordItem
 	bool hasFoundUnprocessedNegativeConclusion();
 
 	ResultType drawNegativeConclusionsFromAnsweredQuestions( SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem );
+	ResultType drawSimpleNegativeSpanishConclusion( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem );
 	ResultType drawOnlyOptionLeftConclusion( bool isInactiveAssignment, bool isArchivedAssignment, unsigned int specificationCollectionNr, WordItem *generalizationWordItem );
 	ResultType drawPossessiveReversibleConclusion( bool isArchivedAssignment, bool isExclusiveSpecification, bool isPossessive, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem );
 	ResultType drawSpecificationGeneralizationConclusion( bool isInactiveAssignment, bool isArchivedAssignment, bool isPossessive, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem );
-	ResultType drawSpecificationSubstitutionConclusionOrAskQuestion( bool isAssumption, bool isInactiveAssignment, bool isArchivedAssignment, bool isExclusiveSpecification, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem );
+	ResultType drawSpecificationSubstitutionConclusionOrAskQuestion( bool isAssumption, bool isInactiveAssignment, bool isArchivedAssignment, bool isExclusiveSpecification, bool isMakingPartOfAssumption, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem );
 
 	SpecificationResultType drawCompoundSpecificationSubstitutionConclusion( unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem );
+
+	SpecificationItem *spanishAmbiguousCompoundPrimarySpecificationItem();
+	SpecificationItem *spanishAmbiguousCompoundAnotherPrimarySpecificationItem();
 
 
 	// Protected context functions
 
+	unsigned int highestContextNrInAllWords();
+
 	ContextResultType getRelationContext( bool isArchivedAssignment, bool isNegative, bool isPossessive, bool isQuestion, bool isUserSentence, unsigned short specificationWordTypeNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, ReadItem *startRelationReadItem );
-	ContextResultType getSpecificationRelationContext( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isCompoundCollectionCollectedWithItself, bool isNegative, bool isPossessive, bool isSelfGeneratedAssumption, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem );
+	ContextResultType getSpecificationRelationContext( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isCompoundCollectionSpanishAmbiguous, bool isNegative, bool isPossessive, bool isSelfGeneratedAssumption, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem );
 
 
 	// Protected database connection functions
@@ -247,7 +249,7 @@ class AdminItem : private WordItem
 
 	void initializeQueryStringPosition();
 
-	ResultType writeTextWithPossibleQueryCommands( unsigned short promptTypeNr, char *textString );
+	ResultType writeInfoTextWithPossibleQueryCommands( char *textString );
 	ResultType executeQuery( bool isSuppressingMessage, bool isReturningToPosition, bool isWritingQueryResult, unsigned short promptTypeNr, char *queryString );
 
 
@@ -261,9 +263,10 @@ class AdminItem : private WordItem
 	unsigned short lastCreatedWordOrderNr();
 
 	ReadResultType createReadWords( char *grammarString );
-	ReadResultType readWordFromString( bool isCheckingForGrammarDefinition, bool isSkippingDoubleQuotes, size_t startWordPosition, size_t minimumStringLength, char *wordString );
+	ReadResultType readWordFromString( bool isCheckingForGrammarDefinition, bool isMergedWord, bool isSkippingTextString, size_t startWordPosition, size_t minimumStringLength, char *wordString );
 
 	WordResultType addWord( bool isLanguageWord, bool isMultipleWord, unsigned short previousWordAdjectiveParameter, unsigned short previousWordDefiniteArticleParameter, unsigned short previousWordIndefiniteArticleParameter, unsigned short wordParameter, unsigned short wordTypeNr, size_t wordLength, char *wordString );
+	WordResultType findWordTypeInAllWords( bool isCheckingAllLanguages, unsigned short wordTypeNr, char *wordTypeString, WordItem *previousWordItem );
 
 	ReadItem *firstActiveReadItem();
 	ReadItem *firstInactiveReadItem();
@@ -271,7 +274,8 @@ class AdminItem : private WordItem
 
 	// Protected read file functions
 
-	bool isTesting();
+	bool hasClosedFileDueToError();
+	bool isCurrentlyTesting();
 
 	ResultType compareOutputFileAgainstReferenceFile( char *testFileNameString );
 	ResultType getUserInput( bool isPassword, bool isQuestion, bool isText, char *promptInputString, char *readString );
@@ -281,6 +285,8 @@ class AdminItem : private WordItem
 	ResultType readTestFile( char *testFileNameString );
 
 	FileResultType readInfoFile( bool isReportingErrorIfFileDoesNotExist, char *infoFileNameString );
+
+	FILE *currentWriteFile();
 
 
 	// Protected read grammar functions
@@ -301,14 +307,9 @@ class AdminItem : private WordItem
 
 	// Protected read sentence functions
 
-	void dontDeletedRollbackInfo();
-
 	bool isActiveUserAssignment();
-	bool isPossessiveUserSpecification();
-
-	bool isUserImperativeSentence();
 	bool isUserQuestion();
-	bool isUserSelectionSentence();
+	bool wasPreviousCommandUndoOrRedo();
 
 	ResultType processReadSentence( char *readString );
 
@@ -317,7 +318,7 @@ class AdminItem : private WordItem
 
 	void initializeAdminReasoningVariables();
 	
-	ResultType askSpecificationSubstitutionQuestion( bool isArchivedAssignment, bool isExclusiveSpecification, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem );
+	ResultType askSpecificationSubstitutionQuestion( bool isArchivedAssignment, bool isExclusiveSpecification, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, SpecificationItem *existingQuestionSpecificationItem, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem );
 
 	SpecificationResultType addSelfGeneratedSpecification( bool hasFeminineOrMasculineProperNameEnding, bool isAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isForcingNewJustification, bool isNegative, bool isPartOf, bool isPossessive, bool isUniqueUserRelation, bool isSkipAdditionalConclusionOrAskQuestion, bool isSpecificationGeneralization, unsigned short assumptionLevel, unsigned short assumptionJustificationTypeNr, unsigned short conclusionJustificationTypeNr, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem );
 
@@ -338,7 +339,6 @@ class AdminItem : private WordItem
 	void clearCurrentSolveProgress();
 	void deleteTemporaryScoreList();
 
-	ResultType findPossibilityToSolveWord( bool isAddingScores, bool isAllowingDuplicates, bool isInverted, bool isPreparingSort, unsigned short solveStrategyParameter, WordItem *solveWordItem );
 	ResultType solveWord( unsigned int endSolveProgress, WordItem *solveWordItem, SelectionItem *actionSelectionItem );
 
 	SelectionResultType checkCondition( SelectionItem *conditionSelectionItem );
@@ -373,7 +373,7 @@ class AdminItem : private WordItem
 
 	ResultType answerQuestions();
 
-	ResultType checkIntegrityOfStoredUserSentence( char *readSentenceString );
+	ResultType checkIntegrityOfStoredUserSentence( char *readUserSentenceString );
 	ResultType markWordsPassingIntegrityCheckOfStoredUserSentence( SpecificationItem *userSpecificationItem );
 
 	ResultType writeJustificationReport( WordItem *justificationWordItem );

@@ -2,4 +2,4 @@
 Is John the father of Paul?
 Is John the father of Joe?
 Is John a father?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

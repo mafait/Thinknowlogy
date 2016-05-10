@@ -2,4 +2,4 @@
 Paul has a father, called John.
 Joe has a father, called John.
 Laura has a father, called John.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

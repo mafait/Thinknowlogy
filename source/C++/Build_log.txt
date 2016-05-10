@@ -1,4 +1,4 @@
-﻿Build started 20-12-2015 18:05:03.
+﻿Build started 10-5-2016 8:01:38.
      1>Project "E:\Thinknowlogy\Release\source\C++\Thinknowlogy_release.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Release\Thinknowlogy_release.lastbuildstate".
@@ -13,14 +13,13 @@
          AdminConclusion.cpp
          AdminContext.cpp
          AdminImperative.cpp
-     1>e:\thinknowlogy\release\source\c++\FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
          AdminItem.cpp
-     1>e:\thinknowlogy\release\source\c++\FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>e:\thinknowlogy\release\source\c++\FileItem.cpp(127): warning C4100: 'nextSortItem' : unreferenced formal parameter
          AdminLanguage.cpp
          AdminQuery.cpp
          AdminReadCreateWords.cpp
          AdminReadFile.cpp
-     1>e:\thinknowlogy\release\source\c++\FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>e:\thinknowlogy\release\source\c++\FileItem.cpp(127): warning C4100: 'nextSortItem' : unreferenced formal parameter
          AdminReadGrammar.cpp
          AdminReadSentence.cpp
          AdminReasoning.cpp
@@ -38,9 +37,9 @@
          ContextList.cpp
          ContextResultType.cpp
          FileItem.cpp
-     1>FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>FileItem.cpp(127): warning C4100: 'nextSortItem' : unreferenced formal parameter
          FileList.cpp
-     1>e:\thinknowlogy\release\source\c++\FileItem.cpp(129): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>e:\thinknowlogy\release\source\c++\FileItem.cpp(127): warning C4100: 'nextSortItem' : unreferenced formal parameter
          GeneralizationItem.cpp
          GeneralizationList.cpp
          GrammarItem.cpp
@@ -48,19 +47,19 @@
          InterfaceItem.cpp
          InterfaceList.cpp
          Item.cpp
-     1>Item.cpp(255): warning C4100: 'isSelectingJustificationSpecifications' : unreferenced formal parameter
-     1>Item.cpp(265): warning C4100: 'isReturnQueryToPosition' : unreferenced formal parameter
+     1>Item.cpp(260): warning C4100: 'isSelectingJustificationSpecifications' : unreferenced formal parameter
      1>Item.cpp(270): warning C4100: 'isReturnQueryToPosition' : unreferenced formal parameter
-     1>Item.cpp(282): warning C4100: 'queryParameter' : unreferenced formal parameter
-     1>Item.cpp(288): warning C4100: 'queryWordTypeNr' : unreferenced formal parameter
-     1>Item.cpp(294): warning C4100: 'queryItemNr' : unreferenced formal parameter
-     1>Item.cpp(294): warning C4100: 'querySentenceNr' : unreferenced formal parameter
-     1>Item.cpp(300): warning C4100: 'queryString' : unreferenced formal parameter
+     1>Item.cpp(275): warning C4100: 'isReturnQueryToPosition' : unreferenced formal parameter
+     1>Item.cpp(287): warning C4100: 'queryParameter' : unreferenced formal parameter
+     1>Item.cpp(293): warning C4100: 'queryWordTypeNr' : unreferenced formal parameter
+     1>Item.cpp(299): warning C4100: 'queryItemNr' : unreferenced formal parameter
+     1>Item.cpp(299): warning C4100: 'querySentenceNr' : unreferenced formal parameter
+     1>Item.cpp(305): warning C4100: 'queryString' : unreferenced formal parameter
          JustificationItem.cpp
          JustificationList.cpp
          JustificationResultType.cpp
          List.cpp
-     1>List.cpp(156): warning C4100: 'referenceWordItem' : unreferenced formal parameter
+     1>List.cpp(219): warning C4100: 'referenceWordItem' : unreferenced formal parameter
          Compiling...
          ListCleanup.cpp
          ListQuery.cpp
@@ -85,7 +84,7 @@
          Compiling...
          WordCollection.cpp
          WordItem.cpp
-     1>WordItem.cpp(535): warning C4100: 'nextSortItem' : unreferenced formal parameter
+     1>WordItem.cpp(503): warning C4100: 'nextSortItem' : unreferenced formal parameter
          WordList.cpp
          WordQuestion.cpp
          WordResultType.cpp
@@ -187,4 +186,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:16.56
+Time Elapsed 00:00:14.81

@@ -1,0 +1,9 @@
+﻿#1, 2, 3, 4, 5, 6, 7, 8, 9 et 0 sont les nombres.
+1, 2, 3, 4, 5, 6, 7, 8, 9 et 0 sont nombres.
+Une lettre est une lettre-minuscule ou lettre-majuscule.
+#A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y et z sont lettres minuscules.
+A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y et z sont lettre-minuscules.
+#A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y et Z sont lettres majuscules.
+A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y et Z sont lettre-majuscules.
+#Noir, bleu, brun, vert, gris, orange, rose, violet, rouge, blanc et jaune sont des couleurs.
+Noir, bleu, brun, vert, gris, orange, rose, violet, rouge, blanc et jaune sont couleurs.

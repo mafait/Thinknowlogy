@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminLanguage
+/*	Class:			AdminLanguage
  *	Supports class:	AdminItem
  *	Purpose:		To create and assign the languages
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -23,7 +22,6 @@
  *************************************************************************/
 
 #include "AdminItem.h"
-#include "SpecificationItem.cpp"
 
 class AdminLanguage
 	{
@@ -116,6 +114,7 @@ class AdminLanguage
 		{
 		WordResultType wordResult;
 		WordItem *languageWordItem;
+		WordItem *predefinedNounLanguageWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createLanguage";
 
 		if( findLanguageByName( languageNameString ) == RESULT_OK )
@@ -136,9 +135,9 @@ class AdminLanguage
 							strlen( adminItem_->startupLanguageNameString ) == 0 )
 								adminItem_->startupLanguageNameString = languageWordItem->anyWordTypeString();
 
-							if( commonVariables_->predefinedNounLanguageWordItem != NULL )
+							if( ( predefinedNounLanguageWordItem = commonVariables_->predefinedNounLanguageWordItem ) != NULL )
 								{
-								if( createLanguageSpecification( commonVariables_->predefinedNounLanguageWordItem ) != RESULT_OK )
+								if( createLanguageSpecification( predefinedNounLanguageWordItem ) != RESULT_OK )
 									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a language specification" );
 								}
 							}
@@ -213,6 +212,7 @@ class AdminLanguage
 		{
 		bool hasFoundLanguage = false;
 		SpecificationItem *languageSpecificationItem;
+		WordItem *predefinedNounLanguageWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "assignLanguage";
 
 		if( findLanguageByName( languageNameString ) == RESULT_OK )
@@ -220,13 +220,14 @@ class AdminLanguage
 			if( foundLanguageWordItem_ != NULL )
 				{
 				hasFoundLanguage = true;
+				predefinedNounLanguageWordItem = commonVariables_->predefinedNounLanguageWordItem;
 
-				if( ( languageSpecificationItem = foundLanguageWordItem_->bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, commonVariables_->predefinedNounLanguageWordItem ) ) != NULL )
+				if( ( languageSpecificationItem = foundLanguageWordItem_->bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, predefinedNounLanguageWordItem ) ) != NULL )
 					commonVariables_->currentLanguageNr = languageSpecificationItem->languageNr();
 
 				if( commonVariables_->currentLanguageWordItem != foundLanguageWordItem_ )
 					{
-					if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_UNDEFINED, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, foundLanguageWordItem_, commonVariables_->predefinedNounLanguageWordItem, NULL ).result == RESULT_OK )
+					if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_UNDEFINED, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, foundLanguageWordItem_, predefinedNounLanguageWordItem, NULL ).result == RESULT_OK )
 						commonVariables_->currentLanguageWordItem = foundLanguageWordItem_;
 					else
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );

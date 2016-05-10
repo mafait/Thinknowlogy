@@ -5,7 +5,7 @@ Read the test file "English/ambiguity/Boston".
 Read the test file "English/ambiguity/US presidents".
 Read the test file "English/ambiguity/US presidents - Confirmation".
 
-Read the test file "English/programming/Connect-Four - Show information about the set".
+Read the test file "English/programming/Connect-Four - Display information about the set".
 Read the test file "English/programming/Connect-Four - The solve level is high".
 Read the test file "English/programming/Greeting".
 Read the test file "English/programming/Tower of Hanoi (even number of discs)".
@@ -18,12 +18,12 @@ Read the test file "English/question answering/This question is more specific (w
 
 Read the test file "English/reasoning/Indefinite article doesn't match with noun".
 Read the test file "English/reasoning/My conclusions that are confirmed (with relation, without family definition)".
-Read the test file "English/reasoning/The only option left - Boat".
-Read the test file "English/reasoning/The only option left - Addison is not a woman".
-Read the test file "English/reasoning/The only option left - Option".
+Read the test file "English/reasoning/Scientific challenge".
 Read the test file "English/reasoning/Sentence with possessive verb (without family definition)".
 Read the test file "English/reasoning/Specification-generalization - Mammals (plural)".
 Read the test file "English/reasoning/Specification-generalization - Mammals (singular)".
+Read the test file "English/reasoning/The only option left - Boat".
+Read the test file "English/reasoning/The only option left - Option".
 
 #-----------
 # Family
@@ -91,11 +91,11 @@ Read the test file "English/reasoning/family/You have confirmed at least one rel
 Read the test file "English/reasoning/family/You have confirmed the specification - but not the relation".
 
 Help.
-#Show information about the languages.
-#Show information about the lists.
-#Show information about the users.
-#Show information about the word types.
-Show the query commands.
-Show the copyright.
-Show the GPLv2-license.
-Show the warranty.
+Display information about the languages.
+Display information about the lists.
+Display information about the users.
+Display information about the word types.
+Display the query commands.
+Display the copyright.
+Display the GPLv2-license.
+Display the warranty.

@@ -1,4 +1,4 @@
-﻿Show " This program is distributed in the hope that it will be useful,".
-Show " but WITHOUT ANY WARRANTY; without even the implied warranty of".
-Show " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the".
-Show " GNU General Public License for more details.".
+﻿Display " This program is distributed in the hope that it will be useful,".
+Display " but WITHOUT ANY WARRANTY; without even the implied warranty of".
+Display " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the".
+Display " GNU General Public License for more details.".

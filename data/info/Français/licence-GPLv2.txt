@@ -1,0 +1,355 @@
+﻿Affichez "\n		    GNU GENERAL PUBLIC LICENSE".
+Affichez "		       Version 2, June 1991".
+Affichez "\n".
+Affichez " Copyright (C) 1989, 1991 Free Software Foundation, Inc.,".
+Affichez " 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA".
+Affichez " Tout le monde peut copier et distribuer des copies verbatim de ce document".
+Affichez " mais il est interdit de le modifier.".
+Affichez "\n".
+Affichez "			    Preamble".
+Affichez "\n".
+Affichez "  Les licences de la plupart des logiciels sont conçues pour vous enlever toute".
+Affichez "liberté de les partager et de les modifier. A contrario, la Licence Publique Générale".
+Affichez "est destinée à garantir votre liberté de partager et de modifier les logiciels libres,".
+Affichez "et à assurer que ces logiciels soient libres pour tous leurs utilisateurs. La présente".
+Affichez "Licence Publique Générale s'applique à la plupart des logiciels de la Free Software".
+Affichez "Foundation, ainsi qu'à tout autre programme pour lequel ses auteurs s'engagent à".
+Affichez "l'utiliser. (Certains autres logiciels de la Free Software Foundation sont couverts".
+Affichez "par la GNU Lesser General Public License à la place.) Vous pouvez aussi l'appliquer".
+Affichez "aux programmes qui sont les vôtres.".
+Affichez "\n".
+Affichez "  Quand nous parlons de logiciels libres, nous parlons de liberté, non de prix. Nos".
+Affichez "licences publiques générales sont conçues pour vous donner l'assurance d'être".
+Affichez "libres de distribuer des copies des logiciels libres (et de facturer ce service, si".
+Affichez "vous le souhaitez), de recevoir le code source ou de pouvoir l'obtenir si vous le".
+Affichez "souhaitez, de pouvoir modifier les logiciels ou en utiliser des éléments dans de".
+Affichez "nouveaux programmes libres et de savoir que vous pouvez le faire.".
+Affichez "\n".
+Affichez "  Pour protéger vos droits, il nous est nécessaire d'imposer des limitations qui".
+Affichez "interdisent à quiconque de vous refuser ces droits ou de vous demander d'y".
+Affichez "renoncer. Certaines responsabilités vous incombent en raison de ces limitations".
+Affichez "si vous distribuez des copies de ces logiciels, ou si vous les modifiez.".
+Affichez "\n".
+Affichez "  Par exemple, si vous distribuez des copies d'un tel programme, à titre gratuit".
+Affichez "ou contre une rémunération, vous devez accorder aux destinataires tous les".
+Affichez "droits dont vous disposez. Vous devez vous assurer qu'eux aussi reçoivent ou".
+Affichez "puissent disposer du code source. Et vous devez leur montrer les présentes".
+Affichez "conditions afin qu'ils aient connaissance de leurs droits.".
+Affichez "\n".
+Affichez "  Nous protégeons vos droits en deux étapes : (1) nous sommes titulaires des".
+Affichez "droits d'auteur du logiciel, et (2) nous vous délivrons cette licence, qui vous".
+Affichez "donne l'autorisation légale de copier, distribuer et/ou modifier le logiciel.".
+Affichez "\n".
+Affichez "  En outre, pour la protection de chaque auteur ainsi que la nôtre, nous".
+Affichez "voulons nous assurer que chacun comprenne que ce logiciel libre ne fait".
+Affichez "l'objet d'aucune garantie. Si le logiciel est modifié par quelqu'un d'autre puis".
+Affichez "transmis à des tiers, nous voulons que les destinataires soient mis au courant".
+Affichez "que ce qu'ils ont reçu n'est pas le logiciel d'origine, de sorte que tout problème".
+Affichez "introduit par d'autres ne puisse entacher la réputation de l'auteur originel.".
+Affichez "\n".
+Affichez "  En définitive, un programme libre restera à la merci des brevets de logiciels.".
+Affichez "Nous souhaitons éviter le risque que les redistributeurs d'un programme libre".
+Affichez "fassent des demandes individuelles de licence de brevet, ceci ayant pour effet".
+Affichez "de rendre le programme propriétaire. Pour éviter cela, nous établissons".
+Affichez "clairement que toute licence de brevet doit être concédée de façon à ce que".
+Affichez "l'usage en soit libre pour tous ou bien qu'aucune licence ne soit concédée.".
+Affichez "\n".
+Affichez "  Les termes exacts et les conditions de copie, distribution et modification".
+Affichez "sont les suivants :".
+Affichez "\n".
+Affichez "			Conditions de copie, distribution et modification de".
+Affichez "			la Licence Publique Générale GNU.".
+Affichez "\n".
+Affichez "  0. La présente Licence s'applique à tout programme ou tout autre ouvrage".
+Affichez "contenant un avis, apposé par le titulaire des droits d'auteur, stipulant qu'il".
+Affichez "peut être distribué au titre des conditions de la présente Licence Publique".
+Affichez "Générale. Ci-après, le \"Programme\" désigne l'un quelconque de ces".
+Affichez "programmes ou ouvrages, et un \"ouvrage fondé sur le Programme\" désigne".
+Affichez "soit le Programme, soit un ouvrage qui en dérive au titre des lois sur le droit".
+Affichez "d'auteur : en d'autres termes, un ouvrage contenant le Programme ou une".
+Affichez "partie de ce dernier, soit à l'identique, soit avec des modifications et/ou traduit".
+Affichez "dans un autre langage. (Ci-après, le terme \"modification\" implique, sans s'y".
+Affichez "réduire, le terme traduction) Chaque concessionaire sera désigné par \"vous\".".
+Affichez "\n".
+Affichez "Les activités autres que la copie, la distribution et la modification ne sont pas".
+Affichez "couvertes par la présente Licence ; elles sont hors de son champ d'application.".
+Affichez "L'opération consistant à exécuter le Programme n'est soumise à aucune limitation".
+Affichez "et les sorties du programme ne sont couvertes que si leur contenu constitue un".
+Affichez "ouvrage fondé sur le Programme (indépendamment du fait qu'il ait été réalisé par".
+Affichez "l'exécution du Programme). La validité de ce qui précède dépend de ce que fait le".
+Affichez "Programme.".
+Affichez "\n".
+Affichez "  1. Vous pouvez copier et distribuer des copies à l'identique du code source du".
+Affichez "Programme tel que vous l'avez reçu, sur n'importe quel support, du moment que".
+Affichez "vous apposiez sur chaque copie, de manière ad hoc et parfaitement visible, l'avis".
+Affichez "de droit d'auteur adéquat et une exonération de garantie ; que vous gardiez".
+Affichez "intacts tous les avis faisant référence à la présente Licence et à l'absence de toute".
+Affichez "garantie ; et que vous fournissiez à tout destinataire du Programme autre que".
+Affichez "vous-même un exemplaire de la présente Licence en même temps que le Programme.".
+Affichez "\n".
+Affichez "Vous pouvez faire payer l'acte physique de transmission d'une copie, et vous".
+Affichez "pouvez, à votre discrétion, proposer une garantie contre rémunération.".
+Affichez "\n".
+Affichez "  2. ous pouvez modifier votre copie ou des copies du Programme ou n'importe".
+Affichez "quelle partie de celui-ci, créant ainsi un ouvrage fondé sur le Programme, et copier".
+Affichez "et distribuer de telles modifications ou ouvrage selon les termes de l'Article 1".
+Affichez "ci-dessus, à condition de vous conformer également à chacune des obligations".
+Affichez "suivantes :".
+Affichez "\n".
+Affichez "    a) Vous devez munir les fichiers modifiés d'avis bien visibles stipulants que vous".
+Affichez "    avez modifié ces fichiers, ainsi que la date de chaque modification ;".
+Affichez "\n".
+Affichez "    b) Vous devez prendre les dispositions nécessaires pour que tout ouvrage que vous".
+Affichez "    distribuez ou publiez, et qui, en totalité ou en partie, contient ou est fondé sur le".
+Affichez "    Programme - ou une partie quelconque de ce dernier - soit concédé comme un tout,".
+Affichez "    à titre gratuit, à n'importe quel tiers, au titre des conditions de la présente Licence.".
+Affichez "\n".
+Affichez "    c) Si le programme modifié lit habituellement des instructions de façon interactive".
+Affichez "    lorsqu'on l'exécute, vous devez, quand il commence son exécution pour ladite".
+Affichez "    utilisation interactive de la manière la plus usuelle, faire en sorte qu'il imprime ou".
+Affichez "    affiche une annonce comprenant un avis de droit d'auteur ad hoc, et un avis".
+Affichez "    stipulant qu'il n'y a pas de garantie (ou bien indiquant que c'est vous qui fournissez".
+Affichez "    la garantie), et que les utilisateurs peuvent redistribuer le programme en".
+Affichez "    respectant les présentes obligations, et expliquant à l'utilisateur comment voir une".
+Affichez "    copie de la présente Licence. (Exception : si le Programme est lui-même interactif".
+Affichez "    mais n'imprime pas habituellement une telle annonce, votre ouvrage fondé sur le".
+Affichez "    Programme n'est pas obligé d'imprimer une annonce).".
+Affichez "\n".
+Affichez "Ces obligations s'appliquent à l'ouvrage modifié pris comme un tout. Si des éléments".
+Affichez "identifiables de cet ouvrage ne sont pas fondés sur le Programme et peuvent".
+Affichez "raisonnablement être considérés comme des ouvrages indépendants distincts en".
+Affichez "eux-mêmes, alors la présente Licence et ses conditions ne s'appliquent pas à ces".
+Affichez "éléments lorsque vous les distribuez en tant qu'ouvrages distincts. Mais lorsque".
+Affichez "vous distribuez ces mêmes éléments comme partie d'un tout, lequel constitue un".
+Affichez "ouvrage fondé sur le Programme, la distribution de ce tout doit être soumise aux".
+Affichez "conditions de la présente Licence, et les autorisations qu'elle octroie aux autres".
+Affichez "concessionaires s'étendent à l'ensemble de l'ouvrage et par conséquent à chaque et".
+Affichez "toute partie indifférement de qui l'a écrite.".
+Affichez "\n".
+Affichez "Par conséquent, l'objet du présent article n'est pas de revendiquer des droits ou de".
+Affichez "contester vos droits sur un ouvrage entièrement écrit par vous ; son objet est plutôt".
+Affichez "d'exercer le droit de contrôler la distribution d'ouvrages dérivés ou d'ouvrages".
+Affichez "collectifs fondés sur le Programme.".
+Affichez "\n".
+Affichez "De plus, la simple proximité du Programme avec un autre ouvrage qui n'est pas fondé".
+Affichez "sur le Programme (ou un ouvrage fondé sur le Programme) sur une partition d'un".
+Affichez "espace de stockage ou un support de distribution ne place pas cet autre ouvrage".
+Affichez "dans le champ d'application de la présente Licence.".
+Affichez "\n".
+Affichez "  3. Vous pouvez copier et distribuer le Programme (ou un ouvrage fondé sur lui,".
+Affichez "selon l'Article 2) sous forme de code objet ou d'exécutable, selon les termes des".
+Affichez "Articles 1 et 2 ci-dessus, à condition que vous accomplissiez l'un des points suivants :".
+Affichez "\n".
+Affichez "    a) L'accompagner de l'intégralité du code source correspondant, sous une forme".
+Affichez "    lisible par un ordinateur, lequel doit être distribué au titre des termes des Articles 1".
+Affichez "    et 2 ci-dessus, sur un support habituellement utilisé pour l'échange de logiciels ; ou,".
+Affichez "\n".
+Affichez "    b) L'accompagner d'une proposition écrite, valable pendant au moins trois ans, de".
+Affichez "    fournir à tout tiers, à un tarif qui ne soit pas supérieur à ce que vous coûte l'acte".
+Affichez "    physique de réaliser une distribution source, une copie intégrale du code source".
+Affichez "    correspondant sous une forme lisible par un ordinateur, qui sera distribuée au titre".
+Affichez "    des termes des Articles 1 et 2 ci-dessus, sur un support habituellement utilisé pour".
+Affichez "    l'échange de logiciels ; ou,".
+Affichez "\n".
+Affichez "    c) L'accompagner des informations reçues par vous concernant la proposition de".
+Affichez "    distribution du code source correspondant. (Cette solution n'est autorisée que".
+Affichez "    dans le cas d'une distribution non commerciale et seulement si vous avez reçu le".
+Affichez "    programme sous forme de code objet ou d'éxécutable accompagné d'une telle".
+Affichez "    proposition - en conformité avec le sous-Article b ci-dessus.)".
+Affichez "\n".
+Affichez "Le code source d'un ouvrage désigne la forme favorite pour travailler à des".
+Affichez "modifications de cet ouvrage. Pour un ouvrage exécutable, le code source intégral".
+Affichez "désigne la totalité du code source de la totalité des modules qu'il contient, ainsi".
+Affichez "que les éventuels fichiers de définition des interfaces qui y sont associés, ainsi".
+Affichez "que les scripts utilisés pour contrôler la compilation et l'installation de l'exécutable.".
+Affichez "Cependant, par exception spéciale, le code source distribué n'est pas censé inclure".
+Affichez "quoi que ce soit de normalement distribué (que ce soit sous forme source ou binaire)".
+Affichez "avec les composants principaux (compilateur, noyau, et autre) du système".
+Affichez "d'exploitation sur lequel l'exécutable tourne, à moins que ce composant lui-même".
+Affichez "n'accompagne l'exécutable.".
+Affichez "\n".
+Affichez "Si distribuer un exécutable ou un code objet consiste à offrir un accès permettant".
+Affichez "leur copie depuis un endroit particulier, alors l'offre d'un accès équivalent pour".
+Affichez "copier le code source depuis le même endroit compte comme une distribution du".
+Affichez "code source - même si les tiers ne sont pas contraints de copier le source en".
+Affichez "même temps que le code objet.".
+Affichez "\n".
+Affichez "  4. Vous ne pouvez copier, modifier, concéder en sous-licence, ou distribuer".
+Affichez "le Programme, sauf tel qu'expressément prévu par la présente Licence. Toute".
+Affichez "tentative de copier, modifier, concéder en sous-licence, ou distribuer le".
+Affichez "Programme d'une autre manière est réputée non valable, et met".
+Affichez "immédiatement fin à vos droits au titre de la présente Licence. Toutefois,".
+Affichez "les tiers ayant reçu de vous des copies, ou des droits, au titre de la présente".
+Affichez "Licence ne verront pas leurs autorisations résiliées aussi longtemps que ledits".
+Affichez "tiers se conforment pleinement à elle.".
+Affichez "\n".
+Affichez "  5. Vous n'êtes pas obligé d'accepter la présente Licence étant donné que vous".
+Affichez "ne l'avez pas signée. Cependant, rien d'autre ne vous accorde l'autorisation de".
+Affichez "modifier ou distribuer le Programme ou les ouvrages fondés sur lui. Ces actions".
+Affichez "sont interdites par la loi si vous n'acceptez pas la présente Licence. En".
+Affichez "conséquence, en modifiant ou distribuant le Programme (ou un ouvrage".
+Affichez "quelconque fondé sur le Programme), vous signifiez votre acceptation de la".
+Affichez "présente Licence en le faisant, et de toutes ses conditions concernant la copie,".
+Affichez "la distribution ou la modification du Programme ou d'ouvrages fondés sur lui.".
+Affichez "\n".
+Affichez "  6. Chaque fois que vous redistribuez le Programme (ou n'importe quel ouvrage".
+Affichez "fondé sur le Programme), une licence est automatiquement concédée au".
+Affichez "destinataire par le concédant originel de la licence, l'autorisant à copier,".
+Affichez "distribuer ou modifier le Programme, sous réserve des présentes conditions.".
+Affichez "Vous ne pouvez imposer une quelconque limitation supplémentaire à l'exercice".
+Affichez "des droits octroyés au titre des présentes par le destinataire. Vous n'avez pas".
+Affichez "la responsabilité d'imposer le respect de la présente Licence à des tiers.".
+Affichez "\n".
+Affichez "  7. Si, conséquement à une décision de justice ou l'allégation d'une".
+Affichez "transgression de brevet ou pour toute autre raison (non limitée à un problème".
+Affichez "de brevet), des obligations vous sont imposées (que ce soit par jugement,".
+Affichez "conciliation ou autre) qui contredisent les conditions de la présente Licence,".
+Affichez "elles ne vous excusent pas des conditions de la présente Licence. Si vous ne".
+Affichez "pouvez distribuer de manière à satisfaire simultanément vos obligations au".
+Affichez "titre de la présente Licence et toute autre obligation pertinente, alors il en".
+Affichez "découle que vous ne pouvez pas du tout distribuer le Programme. Par".
+Affichez "exemple, si une licence de brevet ne permettait pas une redistribution sans".
+Affichez "redevance du Programme par tous ceux qui reçoivent une copie directement".
+Affichez "ou indirectement par votre intermédiaire, alors la seule façon pour vous de".
+Affichez "satisfaire à la fois à la licence du brevet et à la présente Licence serait de".
+Affichez "vous abstenir totalement de toute distribution du Programme.".
+Affichez "\n".
+Affichez "Si une partie quelconque de cet article est tenue pour nulle ou inopposable".
+Affichez "dans une circonstance particulière quelconque, l'intention est que le reste".
+Affichez "de l'article s'applique. La totalité de la section s'appliquera dans toutes les".
+Affichez "autres circonstances.".
+Affichez "\n".
+Affichez "Cet article n'a pas pour but de vous induire à transgresser un quelconque".
+Affichez "brevet ou d'autres revendications à un droit de propriété ou à contester la".
+Affichez "validité de la moindre de ces revendications ; cet article a pour seul".
+Affichez "objectif de protéger l'intégrité du système de distribution du logiciel libre,".
+Affichez "qui est mis en oeuvre par la pratique des licenses publiques. De nombreuses".
+Affichez "personnes ont fait de généreuses contributions au large spectre de logiciels".
+Affichez "distribués par ce système en se fiant à l'application cohérente de ce".
+Affichez "système ; il appartient à chaque auteur/donateur de décider si il ou elle".
+Affichez "veut distribuer du logiciel par l'intermédiaire d'un quelconque autre système".
+Affichez "et un concessionaire ne peut imposer ce choix.".
+Affichez "\n".
+Affichez "Cet article a pour but de rendre totalement limpide ce que l'on pense être".
+Affichez "une conséquence du reste de la présente Licence.".
+Affichez "\n".
+Affichez "  8. Si la distribution et/ou l'utilisation du Programme est limitée dans".
+Affichez "certains pays que ce soit par des brevets ou par des interfaces soumises".
+Affichez "au droit d'auteur, le titulaire originel des droits d'auteur qui décide de".
+Affichez "couvrir le Programme par la présente Licence peut ajouter une limitation".
+Affichez "géographique de distribution explicite qui exclue ces pays afin que la".
+Affichez "distribution soit permise seulement dans ou entre les pays qui ne sont".
+Affichez "pas ainsi exclus. Dans ce cas, la présente Licence incorpore la limitation".
+Affichez "comme si elle était écrite dans le corps de la présente Licence.".
+Affichez "\n".
+Affichez "  9. La Free Software Foundation peut, de temps à autre, publier des".
+Affichez "versions révisées et/ou nouvelles de la Licence Publique Générale. De".
+Affichez "telles nouvelles versions seront similaires à la présente version dans".
+Affichez "l'esprit mais pourront différer dans le détail pour prendre en compte".
+Affichez "de nouvelles problématiques ou inquiétudes.".
+Affichez "\n".
+Affichez "Chaque version possède un numéro de version la distinguant. Si le".
+Affichez "Programme précise le numéro de version de la présente Licence qui s'y".
+Affichez "applique et \"une version ultérieure quelconque\", vous avez le choix de".
+Affichez "suivre les conditions de la présente version ou de toute autre version".
+Affichez "ultérieure publiée par la Free Software Foundation. Si le Programme ne".
+Affichez "spécifie aucun numéro de version de la présente Licence, vous pouvez".
+Affichez "choisir une version quelconque publiée par la Free Software Foundation".
+Affichez "à quelque moment que ce soit.".
+Affichez "\n".
+Affichez "  10. Si vous souhaitez incorporer des parties du Programme dans d'autres".
+Affichez "programmes libres dont les conditions de distribution sont différentes,".
+Affichez "écrivez à l'auteur pour lui en demander l'autorisation. Pour les logiciels".
+Affichez "dont la Free Software Foundation est titulaire des droits d'auteur, écrivez".
+Affichez "à la Free Software Foundation ; nous faisons parfois des exceptions dans".
+Affichez "ce sens. Notre décision sera guidée par le double objectif de préserver le".
+Affichez "statut libre de tous les dérivés de nos logiciels libres et de promouvoir le".
+Affichez "partage et la réutilisation des logiciels en général.".
+Affichez "\n".
+Affichez "			    ABSENCE DE GARANTIE".
+Affichez "\n".
+Affichez "  11. COMME LA LICENCE DU PROGRAMME EST CONCEDEE A TITRE GRATUIT, AUCUNE".
+Affichez "GARANTIE NE S'APPLIQUE AU PROGRAMME, DANS LES LIMITES AUTORISEES PAR LA LOI".
+Affichez "APPLICABLE. SAUF MENTION CONTRAIRE ECRITE, LES TITULAIRES DU DROIT D'AUTEUR".
+Affichez "ET/OU LES AUTRES PARTIES FOURNISSENT LE PROGRAMME \"EN L'ETAT\", SANS AUCUNE".
+Affichez "GARANTIE DE QUELQUE NATURE QUE CE SOIT, EXPRESSE OU IMPLICITE, Y COMPRIS,".
+Affichez "MAIS SANS Y ETRE LIMITE, LES GARANTIES IMPLICITES DE COMMERCIABILITE ET DE".
+Affichez "LA CONFORMITE A UNE UTILISATION PARTICULIERE. VOUS ASSUMEZ LA TOTALITE DES".
+Affichez "RISQUES LIES A LA QUALITE ET AUX PERFORMANCES DU PROGRAMME. SI LE".
+Affichez "PROGRAMME SE REVELAIT DEFECTUEUX, LE COUT DE L'ENTRETIEN, DES REPARATIONS".
+Affichez "OU DES CORRECTIONS NECESSAIRES VOUS INCOMBENT INTEGRALEMENT.".
+Affichez "\n".
+Affichez "  12. EN AUCUN CAS, SAUF LORSQUE LA LOI APPLICABLE OU UNE CONVENTION ECRITE".
+Affichez "L'EXIGE, UN TITULAIRE DE DROIT D'AUTEUR QUEL QU'IL SOIT, OU TOUTE PARTIE QUI".
+Affichez "POURRAIT MODIFIER ET/OU REDISTRIBUER LE PROGRAMME COMME PERMIS CI-DESSUS,".
+Affichez "NE POURRAIT ETRE TENU POUR RESPONSABLE A VOTRE EGARD DES DOMMAGES,".
+Affichez "INCLUANT LES DOMMAGES GENERIQUES, SPECIFIQUES, SECONDAIRES OU CONSECUTIFS,".
+Affichez "RESULTANT DE L'UTILISATION OU DE L'INCAPACITE D'UTILISER LE PROGRAMME (Y".
+Affichez "COMPRIS, MAIS SANS Y ETRE LIMITE, LA PERTE DE DONNEES, OU LE FAIT QUE DES".
+Affichez "DONNEES SOIENT RENDUES IMPRECISES, OU LES PERTES EPROUVEES PAR VOUS OU PAR".
+Affichez "DES TIERS, OU LE FAIT QUE LE PROGRAMME ECHOUE A INTEROPERER AVEC UN AUTRE".
+Affichez "PROGRAMME QUEL QU'IL SOIT) MEME SI LE DIT TITULAIRE DU DROIT D'AUTEUR OU LE".
+Affichez "PARTIE CONCERNEE A ETE AVERTI DE L'EVENTUALITE DE TELS DOMMAGES.".
+Affichez "\n".
+Affichez "		     FIN DES CONDITIONS".
+Affichez "\n".
+Affichez "	    Comment appliquer ces conditions à vos nouveaux programmes".
+Affichez "\n".
+Affichez "  Si vous développez un nouveau programme, et si vous voulez qu'il soit de la plus".
+Affichez "grande utilité possible pour le public, le meilleur moyen d'y parvenir est d'en faire un".
+Affichez "logiciel libre que chacun peut redistribuer et modifier au titre des présentes conditions.".
+Affichez "\n".
+Affichez "  Pour ce faire, munissez le programme des avis qui suivent. Le plus sûr est de les".
+Affichez "ajouter au début de chaque fichier source pour véhiculer le plus efficacement possible".
+Affichez "l'absence de toute garantie ; chaque fichier devrait aussi contenir au moins la ligne".
+Affichez "\"copyright\" et une indication de l'endroit où se trouve l'avis complet.".
+Affichez "\n".
+Affichez "    une ligne donnant le nom du programme et une courte idée de ce qu'il fait.".
+Affichez "    Copyright (C) [année] [nom de l'auteur.]".
+Affichez "\n".
+Affichez "    Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le".
+Affichez "    modifier au titre des clauses de la Licence Publique Générale GNU, telle que".
+Affichez "    publiée par la Free Software Foundation ; soit la version 2 de la Licence, ou".
+Affichez "    (à votre discrétion) une version ultérieure quelconque.".
+Affichez "\n".
+Affichez "    Ce programme est distribué dans l'espoir qu'il sera utile, mais SANS AUCUNE".
+Affichez "    GARANTIE ; sans même une garantie implicite de COMMERCIABILITE ou DE".
+Affichez "    CONFORMITE A UNE UTILISATION PARTICULIERE. Voir la Licence Publique".
+Affichez "    Générale GNU pour plus de détails.".
+Affichez "\n".
+Affichez "    Vous devriez avoir reçu un exemplaire de la Licence Publique Générale GNU".
+Affichez "    avec ce programme ; si ce n'est pas le cas, écrivez à la Free Software".
+Affichez "    Foundation Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.".
+Affichez "\n".
+Affichez "Ajoutez aussi des informations sur la manière de vous contacter par courrier".
+Affichez "électronique et courrier postal.".
+Affichez "\n".
+Affichez "Si le programme est interactif, faites en sorte qu'il affiche un court avis tel que".
+Affichez "celui-ci lorsqu'il démarre en mode interactif :".
+Affichez "\n".
+Affichez "    Gnomovision version 69, Copyright (C) année nom de l'auteur".
+Affichez "    Gnomovision n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de".
+Affichez "    détails tapez \"show w\". Ceci est un logiciel libre et vous êtes invité à le redistribuer".
+Affichez "    en respectant certaines obligations ; pour plus de détails tapez \"show c\".".
+Affichez "\n".
+Affichez "Les instructions hypothétiques \"show w\" et \"show c\" sont supposées montrer les".
+Affichez "parties ad hoc de la Licence Publique Générale. Bien entendu, les instructions que".
+Affichez "vous utilisez peuvent porter d'autres noms que \"show w\" et \"show c\" ; elles".
+Affichez "peuvent même être des clics de souris ou des éléments d'un menu ou tout ce qui".
+Affichez "convient à votre programme.".
+Affichez "\n".
+Affichez "Vous devriez aussi obtenir de votre employeur (si vous travaillez en tant que développeur)".
+Affichez "ou de votre école, si c'est le cas, qu'il (ou elle) signe une \"renonciation aux droits d'auteur\"".
+Affichez "concernant le programme, si nécessaire. Voici un exemple (changez les noms) :".
+Affichez "\n".
+Affichez "  Yoyodyne, Inc., déclare par la présente renoncer à toute prétention sur les droits d'auteur".
+Affichez "  du programme \"Gnomovision\" (qui fait des avances aux compilateurs) écrit par James Hacker.".
+Affichez "\n".
+Affichez "  <signature of Ty Coon>, 1er avril 1989".
+Affichez "  Ty Coon, President du Vice".
+Affichez "\n".
+Affichez "La présente Licence Publique Générale n'autorise pas l'incorporation de votre programme".
+Affichez "dans des programmes propriétaires. Si votre programme est une bibliothèque de".
+Affichez "sous-programmes, vous pouvez considérer plus utile d'autoriser l'édition de liens".
+Affichez "d'applications propriétaires avec la bibliothèque. Si c'est ce que vous voulez faire,".
+Affichez "utilisez la GNU Lesser General Public License au lieu de la présente Licence.".

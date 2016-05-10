@@ -3,4 +3,4 @@ John is a parent.
 John is a father.
 Is John the father of Paul?
 Is John a parent of Joe?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

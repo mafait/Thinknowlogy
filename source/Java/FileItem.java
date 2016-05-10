@@ -1,11 +1,10 @@
-/*
- *	Class:			FileItem
+/*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -71,7 +70,7 @@ class FileItem extends Item
 		if( readFileNameString_ != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
@@ -92,21 +91,28 @@ class FileItem extends Item
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
+		StringBuffer queryStringBuffer;
+
 		baseToStringBuffer( queryWordTypeNr );
 
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( isInfoFile_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isInfoFile" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isInfoFile" );
 
 		if( isTestFile_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isTestFile" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isTestFile" );
 
 		if( readFileNameString_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "readFileNameString:" + Constants.QUERY_STRING_START_CHAR + readFileNameString_ + Constants.QUERY_STRING_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "readFileNameString:" + Constants.QUERY_STRING_START_CHAR + readFileNameString_ + Constants.QUERY_STRING_END_CHAR );
 
 		if( writeFileNameString_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "writeFileNameString:" + Constants.QUERY_STRING_START_CHAR + writeFileNameString_ + Constants.QUERY_STRING_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "writeFileNameString:" + Constants.QUERY_STRING_START_CHAR + writeFileNameString_ + Constants.QUERY_STRING_END_CHAR );
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 

@@ -2,4 +2,4 @@
 ¿Es Juan padre de Pablo?
 ¿Es Juan padre de José?
 ¿Es Juan un padre?
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

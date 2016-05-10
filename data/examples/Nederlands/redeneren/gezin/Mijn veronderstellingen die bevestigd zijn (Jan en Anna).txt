@@ -5,4 +5,4 @@ Anna is een ouder van Paul, Johan en Laura.
 Jan is een persoon.
 Anna heeft een dochter, genaamd Laura.
 Paul is deel van een gezin.
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

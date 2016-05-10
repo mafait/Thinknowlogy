@@ -2,4 +2,4 @@
 Perros son mamíferos.
 Ballenas son mamíferos.
 Mostrar información sobre los mamíferos.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

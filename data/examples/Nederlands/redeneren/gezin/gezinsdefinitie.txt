@@ -1,11 +1,11 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To demonstrate automated reasoning in natural language:
-#			Self-generated conclusions, assumptions and questions
-#			and the detection of conflicts and semantic ambiguity
-#	Version:	Thinknowlogy 2015r1 (Esperanza)
+#					Self-generated conclusions, assumptions and questions
+#					and the detection of conflicts and semantic ambiguity
+#	Version:		Thinknowlogy 2016r1 (Huguenot)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
-#	and bug reports are welcome at http://mafait.org
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 # De definitie van een gezin.
@@ -40,4 +40,4 @@ Een dochter is een meisje of een vrouw.
 #C++## (in submap screenshots\) voor meer voorbeelden.
 #C++##
 # Probeer de zinnen in allerlei combinaties en in verschillende volgorde.
-# Gebruik "Wis je geheugen.", "Ongedaan-maken." of "Herstart." op opnieuw te proberen.
+# Gebruik knop «Wis je geheugen.», «Ongedaan-maken.» of «Herstart.» op het opnieuw te proberen.

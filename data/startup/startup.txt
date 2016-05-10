@@ -1,22 +1,27 @@
-﻿# Read the grammar languages and the user-interface texts
+﻿# Read the grammar and the user-interface files
 ~English
 ~Español
+~Français
 ~Nederlands
 
 # Read the available users in available languages
 Read the file "data/startup/English/users".
 Leer el archivo "data/startup/Español/usuarios".
+Lirez le fichier "data/startup/Français/utilisateurs".
 Lees het bestand "data/startup/Nederlands/gebruikers".
 
 # Read common knowledge in available languages
 Read the file "data/startup/English/common knowledge".
 Leer el archivo "data/startup/Español/conocimiento común".
+Lirez le fichier "data/startup/Français/connaissance commune".
 Lees het bestand "data/startup/Nederlands/algemene kennis".
 
-# Show copyright text and intro text
-If the intro text is started then if the startup language is not assigned or the startup language is English then the intro text is clear, show the copyright and show the intro.
+# Display copyright text and intro text
+If the intro text is started then if the startup language is not assigned or the startup language is English then the intro text is empty, display the copyright and display the intro.
 The intro text is started.
-Si el texto de introducción es inicia entonces si la idioma de inicio es Español entonces el texto de introducción es clara, mostrar los derechos de autor y mostrar la intro.
+Si el texto de introducción es inicia entonces si la idioma de inicio es Español entonces el texto de introducción es vacío, mostrar los derechos de autor y mostrar la intro.
 El texto de introducción es inicia.
+Si le texte d'introduction est démarré puis si la langue de démarrage est Français puis le texte d'introduction est vide, affichez le droit d'auteur et affichez l'intro.
+Le texte d'introduction est démarré.
 Als de intro tekst is gestart dan als de opstarttaal is Nederlands dan de intro tekst is leeg, toon het auteursrecht en toon de intro.
 De intro tekst is gestart.

@@ -1,11 +1,10 @@
-/*
- *	Class:			CollectionList
+/*	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -119,7 +118,7 @@ class CollectionList extends List
 		return false;
 		}
 
-	protected boolean isCollectionCollectedWithItself( int collectionNr )
+	protected boolean isCollectionSpanishAmbiguous( int collectionNr )
 		{
 		CollectionItem searchItem = firstActiveCollectionItem();
 
@@ -255,25 +254,6 @@ class CollectionList extends List
 		}
 
 	protected int compoundCollectionNr( short collectionWordTypeNr )
-		{
-		CollectionItem searchItem = firstActiveCollectionItem();
-
-		if( collectionWordTypeNr > Constants.WORD_TYPE_UNDEFINED )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.isCompoundGeneralization() &&
-				searchItem.isMatchingCollectionWordTypeNr( collectionWordTypeNr ) )
-					return searchItem.collectionNr();
-
-				searchItem = searchItem.nextCollectionItem();
-				}
-			}
-
-		return Constants.NO_COLLECTION_NR;
-		}
-
-	protected int lastCompoundCollectionNr( short collectionWordTypeNr )
 		{
 		int foundCompoundCollectionNr = Constants.NO_COLLECTION_NR;
 		CollectionItem searchItem = firstActiveCollectionItem();
@@ -432,19 +412,6 @@ class CollectionList extends List
 			searchItem = searchItem.nextCollectionItem();
 			}
 
-		searchItem = firstReplacedCollectionItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem.storeCollectionItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to modify a replaced collection item in the database" );
-				}
-
-			searchItem = searchItem.nextCollectionItem();
-			}
-
 		return Constants.RESULT_OK;
 		}
 */
@@ -486,8 +453,9 @@ class CollectionList extends List
 		{
 		CollectionItem searchItem = firstActiveCollectionItem();
 
-		if( compoundCollectionNr > Constants.NO_COLLECTION_NR &&
-		notThisCommonWordItem != null )
+		// notThisCommonWordItem might be undefined
+
+		if( compoundCollectionNr > Constants.NO_COLLECTION_NR )
 			{
 			while( searchItem != null )
 				{

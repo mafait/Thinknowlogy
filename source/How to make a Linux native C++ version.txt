@@ -7,7 +7,7 @@ sudo apt-get install build-essential
 sudo apt-get install libncurses5-dev
 
 Go to the C++ source folder:
-cd Thinknowlogy2015r1/source/C++
+cd Thinknowlogy2016r1/source/C++
 
 Now make the application:
 make

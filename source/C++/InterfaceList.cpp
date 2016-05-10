@@ -1,11 +1,10 @@
-/*
- *	Class:			InterfaceList
+/*	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,11 +23,18 @@
 
 #include "InterfaceItem.cpp"
 #include "List.h"
-#include "WordItem.h"
 
 class InterfaceList : private List
 	{
 	friend class WordItem;
+
+
+	// Private functions
+
+	InterfaceItem *firstActiveInterfaceItem()
+		{
+		return (InterfaceItem *)firstActiveItem();
+		}
 
 	protected:
 	// Constructor / deconstructor
@@ -53,17 +59,11 @@ class InterfaceList : private List
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class InterfaceList has inactive items." );
 
-		if( firstArchivedItem() )
+		if( firstArchivedItem() != NULL )
 			fprintf( stderr, "\nError: Class InterfaceList has archived items." );
 
-		searchItem = (InterfaceItem *)firstReplacedItem();
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextInterfaceItem();
-			delete deleteItem;
-			}
+		if( firstReplacedItem() != NULL )
+			fprintf( stderr, "\nError: Class InterfaceList has replaced items." );
 
 		searchItem = (InterfaceItem *)firstDeletedItem();
 
@@ -146,27 +146,9 @@ class InterfaceList : private List
 			searchItem = searchItem->nextInterfaceItem();
 			}
 
-		searchItem = firstReplacedInterfaceItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem->storeInterfaceItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to modify a replaced interface item in the database" );
-				}
-
-			searchItem = searchItem->nextInterfaceItem();
-			}
-
 		return RESULT_OK;
 		}
 */
-	InterfaceItem *firstActiveInterfaceItem()
-		{
-		return (InterfaceItem *)firstActiveItem();
-		}
-
 	const char *interfaceString( unsigned short interfaceParameter )
 		{
 		InterfaceItem *searchItem = firstActiveInterfaceItem();

@@ -1,11 +1,10 @@
-/*
- *	Class:			WordTypeList
+/*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -30,35 +29,6 @@ class WordTypeList extends List
 
 
 	// Private methods
-
-	private static void showWords( boolean isReturnQueryToPosition, WordTypeItem searchItem )
-		{
-		String wordTypeString;
-
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
-
-		while( searchItem != null )
-			{
-			if( ( wordTypeString = searchItem.itemString() ) != null )
-				{
-				if( CommonVariables.hasFoundQuery ||
-				CommonVariables.queryStringBuffer.length() > 0 )
-					CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
-
-				CommonVariables.hasFoundQuery = true;
-
-				// Don't show status with active items
-				if( !searchItem.isActiveItem() )
-					CommonVariables.queryStringBuffer.append( searchItem.statusChar() );
-
-				CommonVariables.queryStringBuffer.append( wordTypeString );
-				}
-
-			searchItem = searchItem.nextWordTypeItem();
-			}
-		}
-
 	private WordTypeItem wordTypeString( boolean isAllowingDifferentNoun, boolean isCheckingAllLanguages, short wordTypeNr, WordTypeItem searchItem )
 		{
 		while( searchItem != null )
@@ -67,8 +37,7 @@ class WordTypeList extends List
 			searchItem.wordTypeNr() == wordTypeNr ||
 
 			( isAllowingDifferentNoun &&
-			searchItem.isSingularOrPluralNounWordType() &&
-			myWordItem().isSingularOrPluralNoun( searchItem.wordTypeNr() ) ) )
+			searchItem.isSingularOrPluralNounWordType() ) )
 				return searchItem;
 
 			if( foundWordTypeItem_ == null )
@@ -85,11 +54,6 @@ class WordTypeList extends List
 		return (WordTypeItem)firstActiveItem();
 		}
 
-	private WordTypeItem firstReplacedWordTypeItem()
-		{
-		return (WordTypeItem)firstReplacedItem();
-		}
-
 	private WordTypeItem firstDeletedWordTypeItem()
 		{
 		return (WordTypeItem)firstDeletedItem();
@@ -99,18 +63,6 @@ class WordTypeList extends List
 		{
 		short currentLanguageNr = CommonVariables.currentLanguageNr;
 		WordTypeItem searchItem = firstActiveWordTypeItem();
-
-		while( searchItem != null &&
-		searchItem.wordTypeLanguageNr() < currentLanguageNr )
-			searchItem = searchItem.nextWordTypeItem();
-
-		return ( searchItem != null && searchItem.wordTypeLanguageNr() == currentLanguageNr ? searchItem : null );
-		}
-
-	private WordTypeItem firstReplacedCurrentLanguageWordTypeItem()
-		{
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
-		WordTypeItem searchItem = firstReplacedWordTypeItem();
 
 		while( searchItem != null &&
 		searchItem.wordTypeLanguageNr() < currentLanguageNr )
@@ -143,13 +95,6 @@ class WordTypeList extends List
 
 
 	// Protected methods
-
-	protected void showWords( boolean isReturnQueryToPosition )
-		{
-		showWords( isReturnQueryToPosition, firstActiveWordTypeItem() );
-		showWords( isReturnQueryToPosition, firstReplacedWordTypeItem() );
-		showWords( isReturnQueryToPosition, firstDeletedWordTypeItem() );
-		}
 
 	protected void clearGeneralizationWriteLevel( boolean isLanguageWord, short currentWriteLevel )
 		{
@@ -271,7 +216,7 @@ class WordTypeList extends List
 			{
 			if( searchItem.wordTypeNr() == wordTypeNr )
 				{
-				if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
+				if( deleteItem( searchItem ) == Constants.RESULT_OK )
 					hasFoundWordType = true;
 				else
 					return addError( 1, null, "I failed to delete an active item" );
@@ -540,19 +485,6 @@ class WordTypeList extends List
 			searchItem = searchItem.nextWordTypeItem();
 			}
 
-		searchItem = firstReplacedWordTypeItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem.storeWordTypeItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to modify a replaced word type item in the database" );
-				}
-
-			searchItem = searchItem.nextWordTypeItem();
-			}
-
 		return Constants.RESULT_OK;
 		}
 */
@@ -574,26 +506,6 @@ class WordTypeList extends List
 					}
 				else
 					addError( 1, null, "I failed to compare an active word type string with the query string" );
-				}
-
-			searchItem = searchItem.nextWordTypeItem();
-			}
-
-		searchItem = firstReplacedWordTypeItem();
-
-		while( CommonVariables.result == Constants.RESULT_OK &&
-		!referenceResult.hasFoundMatchingStrings &&
-		searchItem != null )
-			{
-			if( searchItem.itemString() != null )
-				{
-				if( ( referenceResult = compareStrings( searchString, searchItem.itemString() ) ).result == Constants.RESULT_OK )
-					{
-					if( referenceResult.hasFoundMatchingStrings )
-						CommonVariables.matchingWordTypeNr = searchItem.wordTypeNr();
-					}
-				else
-					addError( 1, null, "I failed to compare a deleted word type string with the query string" );
 				}
 
 			searchItem = searchItem.nextWordTypeItem();
@@ -657,22 +569,29 @@ class WordTypeList extends List
 
 	protected String wordTypeString( boolean isCheckingAllLanguages, short wordTypeNr )
 		{
-		WordTypeItem foundWordTypeItem;
+		WordTypeItem searchItem;
+		WordTypeItem foundWordTypeItem = null;
 
 		foundWordTypeItem_ = null;
 
 		// Try to find word type of the current language
-		if( ( foundWordTypeItem = wordTypeString( false, false, wordTypeNr, firstActiveCurrentLanguageWordTypeItem() ) ) == null &&
-		( foundWordTypeItem = wordTypeString( false, false, wordTypeNr, firstReplacedCurrentLanguageWordTypeItem() ) ) == null &&
-		( foundWordTypeItem = wordTypeString( false, false, wordTypeNr, firstDeletedCurrentLanguageWordTypeItem() ) ) == null )
+		if( ( searchItem = firstActiveCurrentLanguageWordTypeItem() ) != null )
+			foundWordTypeItem = wordTypeString( false, false, wordTypeNr, searchItem );
+
+		if( foundWordTypeItem == null &&
+		( searchItem = firstDeletedCurrentLanguageWordTypeItem() ) != null )
+			foundWordTypeItem = wordTypeString( false, false, wordTypeNr, searchItem );
+
+		// Not found in current language. Now, try all languages
+		if( isCheckingAllLanguages &&
+		foundWordTypeItem == null )
 			{
-			// Not found in current language. Now, try all languages
-			if( isCheckingAllLanguages &&
-			( foundWordTypeItem = wordTypeString( false, true, wordTypeNr, firstActiveWordTypeItem() ) ) == null )
-				{
-				if( ( foundWordTypeItem = wordTypeString( false, true, wordTypeNr, firstReplacedWordTypeItem() ) ) == null )
-					foundWordTypeItem = wordTypeString( false, true, wordTypeNr, firstDeletedWordTypeItem() );
-				}
+			if( ( searchItem = firstActiveWordTypeItem() ) != null )
+				foundWordTypeItem = wordTypeString( false, true, wordTypeNr, searchItem );
+
+			if( foundWordTypeItem == null &&
+			( searchItem = firstDeletedWordTypeItem() ) != null )
+				foundWordTypeItem = wordTypeString( false, true, wordTypeNr, searchItem );
 			}
 
 		return ( foundWordTypeItem == null ? ( foundWordTypeItem_ == null ? null : foundWordTypeItem_.itemString() ) : foundWordTypeItem.itemString() );

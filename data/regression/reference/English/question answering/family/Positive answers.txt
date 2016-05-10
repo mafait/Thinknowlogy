@@ -78,20 +78,20 @@
 < 
 * 
 * My conclusions:
-< George is a man.
-< Adam has a father, called George.
+< Michael is a man.
+< Adam has a father, called Michael.
 * 
 * My assumptions:
-< George is probably a person.
-< George is probably not a woman.
-< George is probably a parent of Adam.
-< George is probably part of a family.
-< George is probably not a mother.
-< George has probably a child, called Adam.
-< Adam is probably a child of George.
+< Michael is probably a person.
+< Michael is probably not a woman.
+< Michael is probably a parent of Adam.
+< Michael is probably part of a family.
+< Michael is probably not a mother.
+< Michael has probably a child, called Adam.
+< Adam is probably a child of Michael.
 < Adam is probably part of a family.
 < Adam is possibly a person.
-< Adam has probably a parent, called George.
+< Adam has probably a parent, called Michael.
 * 
 * My questions:
 < Is Adam a man, a woman, a girl or a boy?
@@ -122,5 +122,5 @@
 < 
 < Yes, Anna is the mother of Paul, Joe and Laura.
 < 
-< Yes, George is a father.
+< Yes, Michael is a father.
 < 

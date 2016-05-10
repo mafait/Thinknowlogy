@@ -157,4 +157,4 @@ Movido un disco desde el polo inicio para el polo de objetivo:
 * polo de objetivo:	E, D, C, B, A.
 
 Hecho.
-Para iniciar el rompecabezas de nuevo: "Despejar la mente." o "Reiniciar.", y entonces 'Leer el archivo "Español/programación/Torres de Hanói"'.
+Para iniciar el rompecabezas de nuevo, haga clic en el botón «Despejar la mente.» y entonces «Leer el archivo "Español/programación/Torres de Hanói".».

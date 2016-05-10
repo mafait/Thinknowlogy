@@ -1,4 +1,4 @@
 ﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Marie is geen moeder.
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».
 Marie is een moeder.

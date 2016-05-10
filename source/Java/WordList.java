@@ -1,11 +1,10 @@
-/*
- *	Class:			WordList
+/*	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -26,15 +25,6 @@ class WordList extends List
 	{
 	// Private cleanup methods
 
-	private static void deleteRollbackInfoInWordList( WordItem searchItem )
-		{
-		while( searchItem != null )
-			{
-			searchItem.deleteRollbackInfo();
-			searchItem = searchItem.nextWordItem();
-			}
-		}
-
 	private static void getHighestInUseSentenceNrInWordList( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int highestSentenceNr, WordItem searchItem )
 		{
 		while( searchItem != null &&
@@ -54,27 +44,11 @@ class WordList extends List
 			}
 		}
 
-	private static int highestSentenceNrInWordList( WordItem searchItem )
-		{
-		int tempSentenceNr;
-		int highestSentenceNr = Constants.NO_SENTENCE_NR;
-
-		while( searchItem != null )
-			{
-			if( ( tempSentenceNr = searchItem.highestSentenceNr() ) > highestSentenceNr )
-				highestSentenceNr = tempSentenceNr;
-
-			searchItem = searchItem.nextWordItem();
-			}
-
-		return highestSentenceNr;
-		}
-
-	private byte deleteSentencesInWordList( boolean isAvailableForRollback, int lowestSentenceNr, WordItem searchItem )
+	private byte deleteSentencesInWordList( int lowestSentenceNr, WordItem searchItem )
 		{
 		while( searchItem != null )
 			{
-			if( searchItem.deleteSentencesInWord( isAvailableForRollback, lowestSentenceNr ) == Constants.RESULT_OK )
+			if( searchItem.deleteSentencesInWord( lowestSentenceNr ) == Constants.RESULT_OK )
 				searchItem = searchItem.nextWordItem();
 			else
 				return addError( 1, null, "I failed to delete sentences in a word" );
@@ -88,23 +62,10 @@ class WordList extends List
 		while( searchItem != null &&
 		CommonVariables.nDeletedItems == 0 )
 			{
-			if( searchItem.removeFirstRangeOfDeletedItems() == Constants.RESULT_OK )
+			if( searchItem.removeFirstRangeOfDeletedItemsInWord() == Constants.RESULT_OK )
 				searchItem = searchItem.nextWordItem();
 			else
 				return addError( 1, null, "I failed to remove the first deleted items in a word" );
-			}
-
-		return Constants.RESULT_OK;
-		}
-
-	private byte rollbackDeletedRedoInfoInWordList( WordItem searchItem )
-		{
-		while( searchItem != null )
-			{
-			if( searchItem.rollbackDeletedRedoInfo() == Constants.RESULT_OK )
-				searchItem = searchItem.nextWordItem();
-			else
-				return addError( 1, null, "I failed to rollback a deleted item in a word" );
 			}
 
 		return Constants.RESULT_OK;
@@ -273,11 +234,6 @@ class WordList extends List
 		return (WordItem)firstActiveItem();
 		}
 
-	private WordItem firstReplacedWordItem()
-		{
-		return (WordItem)firstReplacedItem();
-		}
-
 	private WordItem firstDeletedWordItem()
 		{
 		return (WordItem)firstDeletedItem();
@@ -292,109 +248,86 @@ class WordList extends List
 		}
 
 
-	// Protected assignment methods
-
-	protected byte createNewAssignmentLevelInWordList()
-		{
-		WordItem searchItem = firstActiveWordItem();
-
-		while( CommonVariables.result == Constants.RESULT_OK &&
-		searchItem != null )
-			{
-			searchItem.createNewAssignmentLevel();
-			searchItem = searchItem.nextWordItem();
-			}
-
-		return CommonVariables.result;
-		}
-
-
 	// Protected cleanup methods
-
-	protected void deleteRollbackInfoInWordList()
-		{
-		deleteRollbackInfoInWordList( firstActiveWordItem() );
-		deleteRollbackInfoInWordList( firstReplacedWordItem() );
-		}
 
 	protected void getHighestInUseSentenceNrInWordList( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int highestSentenceNr )
 		{
-		getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, firstActiveWordItem() );
+		WordItem searchItem;
 
-		if( CommonVariables.highestInUseSentenceNr < highestSentenceNr )
-			{
-			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, firstReplacedWordItem() );
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchItem );
 
-			if( isIncludingDeletedItems &&
-			CommonVariables.highestInUseSentenceNr < highestSentenceNr )
-				getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, firstDeletedWordItem() );
-			}
+		if( isIncludingDeletedItems &&
+		( searchItem = firstDeletedWordItem() ) != null &&
+		CommonVariables.highestInUseSentenceNr < highestSentenceNr )
+			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchItem );
 		}
 
 	protected void setCurrentItemNrInWordList()
 		{
-		setCurrentItemNrInWordList( firstActiveWordItem() );
-		setCurrentItemNrInWordList( firstReplacedWordItem() );
-		setCurrentItemNrInWordList( firstDeletedWordItem() );
-		}
+		WordItem searchItem;
 
-	protected int highestSentenceNrInWordList()
-		{
-		int tempSentenceNr;
-		int highestSentenceNr = highestSentenceNrInWordList( firstActiveWordItem() );
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			setCurrentItemNrInWordList( searchItem );
 
-		if( ( tempSentenceNr = highestSentenceNrInWordList( firstReplacedWordItem() ) ) > highestSentenceNr )
-			highestSentenceNr = tempSentenceNr;
-
-		if( ( tempSentenceNr = highestSentenceNrInWordList( firstDeletedWordItem() ) ) > highestSentenceNr )
-			highestSentenceNr = tempSentenceNr;
-
-		return highestSentenceNr;
+		if( ( searchItem = firstDeletedWordItem() ) != null )
+			setCurrentItemNrInWordList( searchItem );
 		}
 
 	protected byte decrementItemNrRangeInWordList( int decrementSentenceNr, int decrementItemNr, int decrementOffset )
 		{
-		if( decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, firstDeletedWordItem() );
+		WordItem searchItem;
 
-		return CommonVariables.result;
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, searchItem );
+
+		return Constants.RESULT_OK;
 		}
 
 	protected byte decrementSentenceNrsInWordList( int startSentenceNr )
 		{
-		if( decrementSentenceNrsInWordList( startSentenceNr, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		decrementSentenceNrsInWordList( startSentenceNr, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return decrementSentenceNrsInWordList( startSentenceNr, firstDeletedWordItem() );
+		WordItem searchItem;
 
-		return CommonVariables.result;
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			decrementSentenceNrsInWordList( startSentenceNr, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			decrementSentenceNrsInWordList( startSentenceNr, searchItem );
+
+		return Constants.RESULT_OK;
 		}
 
-	protected byte deleteSentencesInWordList( boolean isAvailableForRollback, int lowestSentenceNr )
+	protected byte deleteSentencesInWordList( int lowestSentenceNr )
 		{
-		if( deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr, firstDeletedWordItem() );
+		WordItem searchItem;
 
-		return CommonVariables.result;
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			deleteSentencesInWordList( lowestSentenceNr, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			deleteSentencesInWordList( lowestSentenceNr, searchItem );
+
+		return Constants.RESULT_OK;
 		}
 
 	protected byte removeFirstRangeOfDeletedItemsInWordList()
 		{
-		if( removeFirstRangeOfDeletedItemsInWordList( firstActiveWordItem() ) == Constants.RESULT_OK &&
-		removeFirstRangeOfDeletedItemsInWordList( firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return removeFirstRangeOfDeletedItemsInWordList( firstDeletedWordItem() );
+		WordItem searchItem;
 
-		return CommonVariables.result;
-		}
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			removeFirstRangeOfDeletedItemsInWordList( searchItem );
 
-	protected byte rollbackDeletedRedoInfoInWordList()
-		{
-		if( rollbackDeletedRedoInfoInWordList( firstActiveWordItem() ) == Constants.RESULT_OK &&
-		rollbackDeletedRedoInfoInWordList( firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return rollbackDeletedRedoInfoInWordList( firstDeletedWordItem() );
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			removeFirstRangeOfDeletedItemsInWordList( searchItem );
 
-		return CommonVariables.result;
+		return Constants.RESULT_OK;
 		}
 
 
@@ -413,19 +346,6 @@ class WordList extends List
 			searchItem = searchItem.nextWordItem();
 			}
 
-		searchItem = firstReplacedWordItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem.storeWordItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to modify a replaced word item in the database" );
-				}
-
-			searchItem = searchItem.nextWordItem();
-			}
-
 		return Constants.RESULT_OK;
 		}
 */
@@ -434,87 +354,134 @@ class WordList extends List
 
 	protected void countQueryInWordList()
 		{
-		countQueryInWordList( firstActiveWordItem() );
-		countQueryInWordList( firstReplacedWordItem() );
-		countQueryInWordList( firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			countQueryInWordList( searchItem );
+
+		if( ( searchItem = firstDeletedWordItem() ) != null )
+			countQueryInWordList( searchItem );
 		}
 
 	protected void clearQuerySelectionsInWordList()
 		{
-		clearQuerySelectionsInWordList( firstActiveWordItem() );
-		clearQuerySelectionsInWordList( firstReplacedWordItem() );
-		clearQuerySelectionsInWordList( firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			clearQuerySelectionsInWordList( searchItem );
+
+		if( ( searchItem = firstDeletedWordItem() ) != null )
+			clearQuerySelectionsInWordList( searchItem );
 		}
 
 	protected byte wordQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String wordNameString )
 		{
-		if( wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchItem );
 
 		return CommonVariables.result;
 		}
 
 	protected byte itemQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
 		{
-		if( itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 
 		return CommonVariables.result;
 		}
 
 	protected byte listQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, StringBuffer queryListStringBuffer )
 		{
-		if( listQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer ) == Constants.RESULT_OK &&
-		listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer, firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer, searchItem );
 
 		return CommonVariables.result;
 		}
 
 	protected byte wordTypeQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, short queryWordTypeNr )
 		{
-		if( wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, searchItem );
 
 		return CommonVariables.result;
 		}
 
 	protected byte parameterQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, int queryParameter )
 		{
-		if( parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, searchItem );
 
 		return CommonVariables.result;
 		}
 
 	protected byte wordReferenceQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
 		{
-		if( wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		return CommonVariables.result;
 		}
 
 	protected byte stringQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String queryString )
 		{
-		if( stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchItem );
 
 		return CommonVariables.result;
 		}
 
 	protected byte showQueryResultInWordList( boolean isOnlyShowingWords, boolean isOnlyShowingWordReferences, boolean isOnlyShowingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
 		{
-		if( showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstActiveWordItem() ) == Constants.RESULT_OK &&
-		showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstReplacedWordItem() ) == Constants.RESULT_OK )
-			return showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, firstDeletedWordItem() );
+		WordItem searchItem;
+
+		if( ( searchItem = firstActiveWordItem() ) != null )
+			showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+
+		if( CommonVariables.result == Constants.RESULT_OK &&
+		( searchItem = firstDeletedWordItem() ) != null )
+			showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		return CommonVariables.result;
 		}

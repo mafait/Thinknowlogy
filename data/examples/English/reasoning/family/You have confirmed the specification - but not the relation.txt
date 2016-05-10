@@ -6,4 +6,4 @@ Paul has a mother.
 Joe has a mother.
 Joe has a father.
 Laura has a father and a mother.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

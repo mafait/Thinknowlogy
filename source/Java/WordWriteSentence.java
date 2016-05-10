@@ -1,11 +1,10 @@
-/*
- *	Class:			WordWriteSentence
+/*	Class:			WordWriteSentence
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -35,41 +34,6 @@ class WordWriteSentence
 
 	// Private methods
 
-	private byte clearContextWriteLevel( short currentWriteLevel, SpecificationItem clearSpecificationItem )
-		{
-		WordItem currentWordItem;
-		if( clearSpecificationItem != null )
-			{
-			if( clearSpecificationItem.hasGeneralizationContext() &&
-			( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
-				{
-				// Do for all words
-				do	currentWordItem.clearGeneralizationContextWriteLevelInWord( currentWriteLevel, clearSpecificationItem.generalizationContextNr() );
-				while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
-				}
-
-			if( clearSpecificationItem.hasSpecificationContext() &&
-			( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
-				{
-				// Do for all words
-				do	currentWordItem.clearSpecificationContextWriteLevelInWord( currentWriteLevel, clearSpecificationItem.specificationContextNr() );
-				while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
-				}
-
-			if( clearSpecificationItem.hasRelationContext() &&
-			( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
-				{
-				// Do for all words
-				do	currentWordItem.clearRelationContextWriteLevelInWord( currentWriteLevel, clearSpecificationItem.relationContextNr() );
-				while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
-				}
-			}
-		else
-			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given clear specification item is undefined" );
-
-		return Constants.RESULT_OK;
-		}
-
 	private byte clearWriteLevel( boolean isWritingCurrentSpecificationWordOnly, short currentWriteLevel, SpecificationItem clearSpecificationItem )
 		{
 		boolean isAnsweredQuestion;
@@ -84,54 +48,58 @@ class WordWriteSentence
 		int relationContextNr = Constants.NO_CONTEXT_NR;
 		SpecificationItem currentSpecificationItem;
 		WordItem currentSpecificationWordItem;
+		WordItem currentWordItem;
 
 		if( clearSpecificationItem != null )
 			{
 			if( CommonVariables.currentWriteLevel >= currentWriteLevel )
 				{
+				// Clear generalization write level
 				myWordItem_.clearGeneralizationWriteLevel( currentWriteLevel );
 
-				isAnsweredQuestion = clearSpecificationItem.isAnsweredQuestion();
-
-				// Clear generalization context
-				if( clearContextWriteLevel( currentWriteLevel, clearSpecificationItem ) == Constants.RESULT_OK )
+				// Clear specification write level
+				if( ( currentSpecificationWordItem = clearSpecificationItem.specificationWordItem() ) != null )
 					{
-					// Clear specification context
-					if( ( currentSpecificationItem = myWordItem_.firstSelectedSpecificationItem( isAnsweredQuestion, clearSpecificationItem.isAssignment(), clearSpecificationItem.isInactiveAssignment(), clearSpecificationItem.isArchivedAssignment(), clearSpecificationItem.questionParameter() ) ) != null )
+					currentSpecificationWordItem.clearSpecificationWriteLevel( currentWriteLevel );
+					relationContextNr = clearSpecificationItem.relationContextNr();
+
+					if( !isWritingCurrentSpecificationWordOnly &&
+					clearSpecificationItem.hasSpecificationCollection() )
 						{
-						if( !isWritingCurrentSpecificationWordOnly )
+						isAnsweredQuestion = clearSpecificationItem.isAnsweredQuestion();
+						isExclusiveSpecification = clearSpecificationItem.isExclusiveSpecification();
+						isNegative = clearSpecificationItem.isNegative();
+						isPossessive = clearSpecificationItem.isPossessive();
+						isSelfGenerated = clearSpecificationItem.isSelfGenerated();
+
+						assumptionLevel = clearSpecificationItem.assumptionLevel();
+
+						specificationCollectionNr = clearSpecificationItem.specificationCollectionNr();
+						generalizationContextNr = clearSpecificationItem.generalizationContextNr();
+						specificationContextNr = clearSpecificationItem.specificationContextNr();
+
+						if( ( currentSpecificationItem = myWordItem_.firstSelectedSpecificationItem( isAnsweredQuestion, clearSpecificationItem.isAssignment(), clearSpecificationItem.isInactiveAssignment(), clearSpecificationItem.isArchivedAssignment(), clearSpecificationItem.questionParameter() ) ) != null )
 							{
-							isExclusiveSpecification = clearSpecificationItem.isExclusiveSpecification();
-							isNegative = clearSpecificationItem.isNegative();
-							isPossessive = clearSpecificationItem.isPossessive();
-							isSelfGenerated = clearSpecificationItem.isSelfGenerated();
-
-							assumptionLevel = clearSpecificationItem.assumptionLevel();
-
-							specificationCollectionNr = clearSpecificationItem.specificationCollectionNr();
-							generalizationContextNr = clearSpecificationItem.generalizationContextNr();
-							specificationContextNr = clearSpecificationItem.specificationContextNr();
-							relationContextNr = clearSpecificationItem.relationContextNr();
-							}
-
-						do	{
-							if( currentSpecificationItem == clearSpecificationItem ||
-
-							( !isWritingCurrentSpecificationWordOnly &&
-							currentSpecificationItem.isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) ) )
-								{
-								// Specification string
-								if( ( currentSpecificationWordItem = currentSpecificationItem.specificationWordItem() ) == null )
-									currentSpecificationItem.clearSpecificationStringWriteLevel( currentWriteLevel );
-								else
+							do	{
+								if( ( currentSpecificationWordItem = currentSpecificationItem.relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, Constants.WORD_TYPE_UNDEFINED, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) ) != null )
 									currentSpecificationWordItem.clearSpecificationWriteLevel( currentWriteLevel );
 								}
+							while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != null );
 							}
-						while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != null );
+						}
+
+					// Clear relation context write level
+					if( relationContextNr > Constants.NO_CONTEXT_NR &&
+					( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
+						{
+						// Do for all active words
+						do	{
+							if( currentWordItem.hasContextInWord( relationContextNr ) )
+								currentWordItem.clearRelationWriteLevel( currentWriteLevel );
+							}
+						while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 						}
 					}
-				else
-					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to clear the current write level of the current specification item" );
 				}
 			else
 				return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given current write level of this wordf is higher than the global current write level" );
@@ -144,10 +112,10 @@ class WordWriteSentence
 
 	private byte cleanupWriteInfo( boolean isWritingCurrentSpecificationWordOnly, short startWriteLevel, int startWordPosition, SpecificationItem clearSpecificationItem )
 		{
-		if( CommonVariables.writeSentenceStringBuffer != null &&
-		CommonVariables.writeSentenceStringBuffer.length() > startWordPosition )
+		if( CommonVariables.writtenSentenceStringBuffer != null &&
+		CommonVariables.writtenSentenceStringBuffer.length() > startWordPosition )
 			{
-			CommonVariables.writeSentenceStringBuffer = ( startWordPosition > 0 ? new StringBuffer( CommonVariables.writeSentenceStringBuffer.substring( 0, startWordPosition ) ) : null );
+			CommonVariables.writtenSentenceStringBuffer = new StringBuffer( startWordPosition > 0 ? CommonVariables.writtenSentenceStringBuffer.substring( 0, startWordPosition ) : Constants.EMPTY_STRING );
 
 			if( CommonVariables.currentWriteLevel > startWriteLevel )
 				{
@@ -229,7 +197,7 @@ class WordWriteSentence
 
 	// Protected methods
 
-	protected byte selectGrammarToWriteSentence( boolean isWritingCurrentSpecificationWordOnly, short answerParameter, short grammarLevel, GrammarItem selectedGrammarItem, SpecificationItem writeSpecificationItem )
+	protected byte selectGrammarToWriteSentence( boolean isCheckingUserSentenceForIntegrity, boolean isWritingCurrentSpecificationWordOnly, short answerParameter, short grammarLevel, GrammarItem selectedGrammarItem, SpecificationItem writeSpecificationItem )
 		{
 		WriteResultType writeResult;
 		boolean isChoice;
@@ -238,8 +206,10 @@ class WordWriteSentence
 		boolean isSkippingNextChoiceOrOptionParts;
 		boolean isStillSuccessful;
 		short startWriteLevel = CommonVariables.currentWriteLevel;
-		int startWordPosition = ( CommonVariables.writeSentenceStringBuffer == null ? 0 : CommonVariables.writeSentenceStringBuffer.length() );
+		// Take the current write sentence string buffer length as start position
+		int startWordPosition = ( CommonVariables.writtenSentenceStringBuffer == null ? 0 : CommonVariables.writtenSentenceStringBuffer.length() );
 		GrammarItem definitionGrammarItem = selectedGrammarItem;
+		WordItem currentLanguageWordItem;
 		WriteItem currentWriteItem = null;
 
 		hasFoundWordToWrite_ = false;
@@ -255,11 +225,10 @@ class WordWriteSentence
 						{
 						isSkippingClearWriteLevel_ = false;
 						CommonVariables.currentWriteLevel = Constants.NO_WRITE_LEVEL;
+						CommonVariables.writtenSentenceStringBuffer = new StringBuffer();
 
 						myWordItem_.deleteTemporaryWriteList();
 						myWordItem_.initializeWordWriteWordsVariables();
-
-						CommonVariables.writeSentenceStringBuffer = null;
 						}
 
 					do	{
@@ -375,7 +344,7 @@ class WordWriteSentence
 											{
 											if( grammarLevel + 1 < Constants.MAX_GRAMMAR_LEVEL )
 												{
-												if( selectGrammarToWriteSentence( isWritingCurrentSpecificationWordOnly, answerParameter, (short)( grammarLevel + 1 ), selectedGrammarItem.definitionGrammarItem, writeSpecificationItem ) == Constants.RESULT_OK )
+												if( selectGrammarToWriteSentence( false, isWritingCurrentSpecificationWordOnly, answerParameter, (short)( grammarLevel + 1 ), selectedGrammarItem.definitionGrammarItem, writeSpecificationItem ) == Constants.RESULT_OK )
 													{
 													if( !hasFoundWordToWrite_ )
 														// Failed, try next part
@@ -417,8 +386,9 @@ class WordWriteSentence
 
 									if( !hasFoundWordToWrite_ &&
 									!isSkippingClearWriteLevel_ &&
-									CommonVariables.writeSentenceStringBuffer != null &&
-									CommonVariables.writeSentenceStringBuffer.length() > startWordPosition )
+									// The sentence has grown
+									CommonVariables.writtenSentenceStringBuffer != null &&
+									CommonVariables.writtenSentenceStringBuffer.length() > startWordPosition )
 										{
 										if( cleanupWriteInfo( isWritingCurrentSpecificationWordOnly, startWriteLevel, startWordPosition, writeSpecificationItem ) != Constants.RESULT_OK )
 											return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to cleanup the write info" );
@@ -438,7 +408,26 @@ class WordWriteSentence
 
 					if( grammarLevel == Constants.NO_GRAMMAR_LEVEL )
 						{
-						if( clearWriteLevel( isWritingCurrentSpecificationWordOnly, Constants.NO_WRITE_LEVEL, writeSpecificationItem ) != Constants.RESULT_OK )
+						if( clearWriteLevel( isWritingCurrentSpecificationWordOnly, Constants.NO_WRITE_LEVEL, writeSpecificationItem ) == Constants.RESULT_OK )
+							{
+							if( CommonVariables.writtenSentenceStringBuffer != null &&
+							CommonVariables.writtenSentenceStringBuffer.length() > 0 )
+								{
+								if( isCheckingUserSentenceForIntegrity )
+									CommonVariables.writtenUserSentenceStringBuffer = new StringBuffer( CommonVariables.writtenSentenceStringBuffer );
+
+								// Typically for French: Compound words
+								currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+
+								if( currentLanguageWordItem != null &&
+								currentLanguageWordItem.isLanguageWithMergedWords() )
+									{
+									if( currentLanguageWordItem.shrinkMergedWordsInWriteSentence() != Constants.RESULT_OK )
+										return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to shrink the compound words in the write sentence string" );
+									}
+								}
+							}
+						else
 							return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to clear the write word levels in all words" );
 						}
 					}

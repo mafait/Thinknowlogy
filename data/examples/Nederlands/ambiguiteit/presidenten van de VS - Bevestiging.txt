@@ -11,4 +11,4 @@ Toon informatie over George Bush.
 Toon informatie over Barack Obama.
 # Er bestaat geen verantwoordingsrapportage, omdat de conclusies bevestigd zijn
 Toon informatie over de Verenigde Staten.
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

@@ -1,0 +1,123 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un parent est probablement une personne.
+< Un père est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un enfant est probablement une personne.
+< Un fils est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Olivier est partie d'une famille.
+* 
+* Mes hypothèses:
+< Olivier est probablement une personne.
+< Olivier a probablement un enfant.
+* 
+* Mes questions:
+< Est Olivier un homme ou une femme?
+< Est Olivier un père ou une mère?
+< 
+* 
+* Mes conclusions:
+< Amélie est partie d'une famille.
+* 
+* Mes hypothèses:
+< Amélie est probablement une personne.
+< Amélie est probablement une femme.
+< Amélie n'est probablement pas un homme.
+< Amélie est probablement une mère.
+< Amélie n'est probablement pas un père.
+< Amélie a probablement un enfant.
+< 
+* 
+* Mes questions qui sont répondues:
+< Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
+* 
+* Mes conclusions:
+< Olivier est un homme.
+< Olivier n'est pas une femme.
+< Olivier n'est pas une mère.
+< 
+* 
+* Mes hypothèses qui sont confirmées:
+< Amélie est probablement une mère.
+* 
+* Mes hypothèses qui sont conclus:
+< Amélie est une femme.
+< Amélie n'est pas un homme.
+< Amélie n'est pas un père.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Olivier est un homme.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Amélie est une femme.
+< 
+* 
+* Cette information est plus spécifique que votre information antérieure:
+< Olivier est un père.
+< Amélie est une mère.
+* 
+* Mes conclusions:
+< Laurent a un père, appelé Olivier.
+< Laurent a une mère, appelée Amélie.
+< Julien a un père, appelé Olivier.
+< Julien a une mère, appelée Amélie.
+< Lorraine a un père, appelé Olivier.
+< Lorraine a une mère, appelée Amélie.
+* 
+* Mes hypothèses:
+< Olivier est probablement un parent de Laurent, Julien et Lorraine.
+< Olivier a probablement 3 enfants, appelés Laurent, Julien et Lorraine.
+< Olivier a possible une fille, appelée Lorraine.
+< Amélie est probablement un parent de Laurent, Julien et Lorraine.
+< Amélie a probablement 3 enfants, appelés Laurent, Julien et Lorraine.
+< Amélie a possible une fille, appelée Lorraine.
+< Laurent a probablement 2 parents, appelés Olivier et Amélie.
+< Laurent est probablement un enfant de Olivier et Amélie.
+< Laurent est probablement partie d'une famille.
+< Laurent est possible une personne.
+< Julien a probablement 2 parents, appelés Olivier et Amélie.
+< Julien est probablement un enfant de Olivier et Amélie.
+< Julien est probablement partie d'une famille.
+< Julien est possible une personne.
+< Lorraine a probablement 2 parents, appelés Olivier et Amélie.
+< Lorraine est probablement un enfant de Olivier et Amélie.
+< Lorraine est probablement partie d'une famille.
+< Lorraine est possible une personne.
+< Lorraine n'est peut-être pas un homme.
+< Lorraine est possible une fille de Olivier et Amélie.
+< Lorraine n'est peut-être pas un garçon et pas un homme.
+< Lorraine n'est peut-être pas un fils.
+* 
+* Mes questions:
+< Est Laurent un homme, une femme, une jeune-fille ou un garçon?
+< Est Laurent un fils ou une fille?
+< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien un fils ou une fille?
+< Est Lorraine une jeune-fille ou une femme?
+< 

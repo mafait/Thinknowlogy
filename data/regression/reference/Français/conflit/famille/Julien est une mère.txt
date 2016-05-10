@@ -1,0 +1,65 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un parent est probablement une personne.
+< Un père est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un enfant est probablement une personne.
+< Un fils est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Olivier a un fils, appelé Julien.
+< Amélie a un fils, appelé Julien.
+* 
+* Mes hypothèses:
+< Julien est probablement une personne.
+< Julien est probablement un enfant de Olivier et Amélie.
+< Julien est probablement partie d'une famille.
+< Julien n'est probablement pas une jeune-fille et pas une femme.
+< Julien n'est probablement pas une fille.
+< Julien a probablement 2 parents, appelés Olivier et Amélie.
+< Julien a possible une mère, appelée Amélie.
+< Olivier a probablement un enfant, appelé Julien.
+< Olivier est probablement un parent de Julien.
+< Olivier est probablement partie d'une famille.
+< Olivier est possible une personne.
+< Amélie a probablement un enfant, appelé Julien.
+< Amélie est probablement un parent de Julien.
+< Amélie est probablement partie d'une famille.
+< Amélie est possible une personne.
+< Amélie est possible une femme.
+< Amélie n'est peut-être pas un homme.
+< Amélie est possible une mère de Julien.
+< Amélie n'est peut-être pas un père.
+* 
+* Mes questions:
+< Est Julien un garçon ou un homme?
+< Est Olivier un homme ou une femme?
+< Est Olivier un père ou une mère?
+< 
+! 
+! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec:
+< Julien est un fils de Olivier et Amélie.
+< Julien n'est probablement pas une fille.
+< Julien n'est probablement pas une jeune-fille et pas une femme.
+< 

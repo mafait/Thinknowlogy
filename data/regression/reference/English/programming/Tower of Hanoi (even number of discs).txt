@@ -77,4 +77,4 @@ Moved a disc from swap to goal:
 * goal pole:	D, C, B, A.
 
 Done.
-To start the puzzle again: "Clear your mind." or "Restart.", and then 'Read the file "English/programming/tower of Hanoi"'.
+To start the puzzle again, click button «Clear your mind.» and then «Read the file "English/programming/tower of Hanoi".»

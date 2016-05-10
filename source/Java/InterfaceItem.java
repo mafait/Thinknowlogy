@@ -1,12 +1,11 @@
-/*
- *	Class:			InterfaceItem
+/*	Class:			InterfaceItem
  *	Parent class:	Item
  *	Purpose:		To store info about the interface messages
  *					in a certain language that can be shown to the user
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -60,7 +59,7 @@ class InterfaceItem extends Item
 		if( interfaceString_ != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
@@ -86,14 +85,21 @@ class InterfaceItem extends Item
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
+		StringBuffer queryStringBuffer;
+
 		baseToStringBuffer( queryWordTypeNr );
 
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( interfaceParameter_ > Constants.NO_INTERFACE_PARAMETER )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "interfaceParameter:" + interfaceParameter_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "interfaceParameter:" + interfaceParameter_ );
 
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "interfaceString:" + Constants.QUERY_STRING_START_CHAR + interfaceString_ + Constants.QUERY_STRING_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "interfaceString:" + Constants.QUERY_STRING_START_CHAR + interfaceString_ + Constants.QUERY_STRING_END_CHAR );
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 

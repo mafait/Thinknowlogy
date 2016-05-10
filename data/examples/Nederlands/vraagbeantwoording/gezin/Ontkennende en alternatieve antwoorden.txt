@@ -8,4 +8,4 @@ Is Jan de vader van André?
 Is Sjors de vader van Paul?
 Willem is een vader.
 Is Willem de vader van Paul?
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

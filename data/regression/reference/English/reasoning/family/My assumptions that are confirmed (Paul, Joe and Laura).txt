@@ -119,7 +119,7 @@
 < Anna has a child, called Joe.
 < 
 * 
-* You have confirmed the specification - but no relation(s) - of my earlier assumption(s):
+* You have confirmed the specification - but none of its relations - of my earlier assumptions:
 < Laura is probably a child of John and Anna.
 * 
 * My assumptions that are concluded:

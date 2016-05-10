@@ -1,4 +1,4 @@
-# En 2001 George W. Bush fue inaugurado como presidente de los Estados Unidos.
+﻿# En 2001 George W. Bush fue inaugurado como presidente de los Estados Unidos.
 George Bush es el presidente de los Estados Unidos.
 # En 2009 Barack Obama fue investido como presidente de los Estados Unidos.
 Barack Obama es el presidente de los Estados Unidos.
@@ -12,4 +12,4 @@ Mostrar información sobre George Bush.
 Mostrar información sobre Barack Obama.
 # No habrá informe de justificación, porque se confirman las conclusiones
 Mostrar información sobre los Estados Unidos.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

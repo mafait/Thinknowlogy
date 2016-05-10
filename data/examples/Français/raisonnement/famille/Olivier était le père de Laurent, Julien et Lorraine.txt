@@ -1,0 +1,4 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Olivier était le père de Laurent, Julien et Lorraine.
+Amélie est la mère de Laurent, Julien et Lorraine.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

@@ -1,0 +1,17 @@
+﻿* 
+* Mes conclusions:
+< Armand est un fils de Guillaume.
+< 
+* 
+* Mes conclusions:
+< Laurent a un père, appelé Olivier.
+< Laurent a une mère, appelée Amélie.
+< Julien a un père, appelé Olivier.
+< Julien a une mère, appelée Amélie.
+< Lorraine a un père, appelé Olivier.
+< Lorraine a une mère, appelée Amélie.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Laurent a un père, appelé Olivier.
+< 

@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminReadSentence
+/*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		To read and analyze sentences
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -31,7 +30,6 @@ class AdminReadSentence
 	private boolean isInactiveAssignment_;
 	private boolean isArchivedAssignment_;
 	private boolean isConditional_;
-	private boolean isDeletingRollbackInfo_;
 	private boolean isEveryGeneralization_;
 	private boolean isExclusiveSpecification_;
 	private boolean isNegative_;
@@ -41,6 +39,7 @@ class AdminReadSentence
 	private boolean isSpecificationGeneralization_;
 	private boolean isUniqueUserRelation_;
 	private boolean isUserImperativeSentence_;
+	private boolean wasPreviousCommandUndoOrRedo_;
 
 	private short assumptionLevel_;
 	private short currentParseWordOrderNr_;
@@ -59,6 +58,8 @@ class AdminReadSentence
 	private ReadItem startRelationWordReadItem_;
 	private ReadItem endRelationReadItem_;
 
+	private StringBuffer originalReadStringBuffer;
+
 	private AdminItem adminItem_;
 	private String moduleNameString_;
 
@@ -71,7 +72,7 @@ class AdminReadSentence
 
 		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
 			{
-			// Do for all words
+			// Do for all active words
 			do	currentWordItem.initializeVariablesInWord();
 			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 			}
@@ -95,6 +96,7 @@ class AdminReadSentence
 
 			case Constants.WORD_PARAMETER_ADJECTIVE_NO:
 			case Constants.WORD_PARAMETER_ADVERB_NOT:
+			case Constants.WORD_PARAMETER_ADVERB_NOT_FRENCH:
 				isNegative_ = true;
 				break;
 
@@ -154,26 +156,28 @@ class AdminReadSentence
 		return contextResult;
 		}
 
-	private byte addMultipleWord( ReadItem firstReadItem, ReadItem secondReadItem )
+	private byte addMultipleWord( short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, ReadItem firstReadItem, ReadItem secondReadItem )
 		{
 		WordResultType wordResult;
-		boolean isFirstWordSingularOrPluralNoun;
-		boolean hasNextWordWithSameWordType = true;
+		boolean isFrenchPreposition;
+		boolean hasFoundFrenchPreposition = false;
+		boolean hasCurrentWordWithSameWordType = true;
 		boolean hasFoundWordWithDifferentWordType = false;
+		short currentWordTypeNr;
 		short firstWordTypeNr;
-		short nextWordTypeNr;
 		short nWordParts = 1;
 		ReadItem deletedReadItem;
+		ReadItem currentReadItem = secondReadItem;
 		ReadItem lastReadItem = null;
-		ReadItem nextReadItem = secondReadItem;
+		WordItem currentWordItem;
 		WordItem firstWordItem;
-		WordItem nextWordItem;
 		WordItem multipleWordItem;
 		WordItem createdMultipleWordItem;
 		WordItem createdWordItem;
+		WordTypeItem currentWordTypeItem;
 		WordTypeItem differentWordTypeItem;
 		WordTypeItem firstWordTypeItem;
-		WordTypeItem nextWordTypeItem;
+		WordTypeItem foundWordTypeItem;
 		StringBuffer existingMultipleWordStringBuffer;
 		StringBuffer multipleWordStringBuffer;
 		ReadList readList;
@@ -188,54 +192,69 @@ class AdminReadSentence
 
 					if( ( firstWordTypeItem = firstWordItem.activeWordTypeItem( firstWordTypeNr ) ) != null )
 						{
-						isFirstWordSingularOrPluralNoun = adminItem_.isSingularOrPluralNoun( firstWordTypeNr );
+						if( adjectiveParameter == Constants.NO_ADJECTIVE_PARAMETER )
+							adjectiveParameter = firstWordTypeItem.adjectiveParameter();
+
+						if( definiteArticleParameter == Constants.NO_DEFINITE_ARTICLE_PARAMETER )
+							definiteArticleParameter = firstWordTypeItem.definiteArticleParameter();
+
+						if( indefiniteArticleParameter == Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
+							indefiniteArticleParameter = firstWordTypeItem.indefiniteArticleParameter();
+
 						multipleWordStringBuffer = new StringBuffer( firstWordTypeItem.itemString() );
 						existingMultipleWordStringBuffer = new StringBuffer( multipleWordStringBuffer );
 
 						do	{
-							nextWordTypeNr = nextReadItem.wordTypeNr();
+							isFrenchPreposition = currentReadItem.isFrenchPreposition();
 
-							// The next word has the same word type as the first word
-							if( firstWordTypeNr == nextWordTypeNr ||
+							if( isFrenchPreposition )
+								hasFoundFrenchPreposition = true;
 
-							( isFirstWordSingularOrPluralNoun &&
-							adminItem_.isSingularOrPluralNoun( nextWordTypeNr ) ) )
+							currentWordTypeNr = currentReadItem.wordTypeNr();
+
+							// The current word has the same word type as the first word
+							if( isFrenchPreposition ||
+							firstWordTypeNr == currentWordTypeNr ||
+
+							// Allow mix of singular and plural nouns
+							( adminItem_.isSingularOrPluralNoun( firstWordTypeNr ) &&
+							adminItem_.isSingularOrPluralNoun( currentWordTypeNr ) ) )
 								{
-								if( ( nextWordItem = nextReadItem.readWordItem() ) != null )
+								if( ( currentWordItem = currentReadItem.readWordItem() ) != null )
 									{
-									if( ( nextWordTypeItem = nextWordItem.activeWordTypeItem( nextWordTypeNr ) ) != null )
+									if( ( currentWordTypeItem = currentWordItem.activeWordTypeItem( currentWordTypeNr ) ) != null )
 										{
 										nWordParts++;
-										lastReadItem = nextReadItem;
-										multipleWordStringBuffer.append( Constants.SPACE_STRING + nextWordTypeItem.itemString() );
+										lastReadItem = currentReadItem;
+										multipleWordStringBuffer.append( Constants.SPACE_STRING + currentWordTypeItem.itemString() );
 
-										if( firstWordTypeNr != nextWordTypeNr &&
-										( differentWordTypeItem = nextWordItem.activeWordTypeItem( firstWordTypeNr ) ) != null )
+										if( firstWordTypeNr != currentWordTypeNr &&
+										( differentWordTypeItem = currentWordItem.activeWordTypeItem( firstWordTypeNr ) ) != null )
 											{
 											hasFoundWordWithDifferentWordType = true;
 											existingMultipleWordStringBuffer.append( Constants.SPACE_STRING + differentWordTypeItem.itemString() );
 											}
 										else
-											existingMultipleWordStringBuffer.append( Constants.SPACE_STRING + nextWordTypeItem.itemString() );
+											existingMultipleWordStringBuffer.append( Constants.SPACE_STRING + currentWordTypeItem.itemString() );
 										}
 									else
-										return adminItem_.startError( 1, moduleNameString_, "I couldn't find the word type item of the next read word" );
+										return adminItem_.startError( 1, moduleNameString_, "I couldn't find the word type item of the current read word" );
 									}
 								else
 									return adminItem_.startError( 1, moduleNameString_, "I have found a read item without read word" );
 								}
 							else
-								hasNextWordWithSameWordType = false;
+								hasCurrentWordWithSameWordType = false;
 							}
-						while( hasNextWordWithSameWordType &&
-						( nextReadItem = nextReadItem.nextReadItem() ) != null );
+						while( hasCurrentWordWithSameWordType &&
+						( currentReadItem = currentReadItem.nextReadItem() ) != null );
 
-						nextReadItem = secondReadItem;
+						currentReadItem = secondReadItem;
 
 						do	{
-							nextWordTypeNr = nextReadItem.wordTypeNr();
+							currentWordTypeNr = ( hasFoundFrenchPreposition ? firstWordTypeNr : currentReadItem.wordTypeNr() );
 
-							if( ( nextWordItem = nextReadItem.readWordItem() ) != null )
+							if( ( currentWordItem = currentReadItem.readWordItem() ) != null )
 								{
 								createdMultipleWordItem = null;
 								createdWordItem = null;
@@ -247,7 +266,7 @@ class AdminReadSentence
 										{
 										if( ( createdWordItem = wordResult.foundWordItem ) != null )
 											{
-											if( createdWordItem.addWordType( false, firstWordTypeItem.isProperNamePrecededByDefiniteArticle( firstWordTypeItem.definiteArticleParameter() ), firstWordTypeItem.adjectiveParameter(), firstWordTypeItem.definiteArticleParameter(), firstWordTypeItem.indefiniteArticleParameter(), nextWordTypeNr, multipleWordStringBuffer.length(), multipleWordStringBuffer.toString() ).result == Constants.RESULT_OK )
+											if( createdWordItem.addWordType( false, firstWordTypeItem.isProperNamePrecededByDefiniteArticle( firstWordTypeItem.definiteArticleParameter() ), adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, currentWordTypeNr, multipleWordStringBuffer.length(), multipleWordStringBuffer.toString() ).result == Constants.RESULT_OK )
 												{
 												createdMultipleWordItem = createdWordItem;
 												multipleWordItem = createdWordItem;
@@ -262,10 +281,26 @@ class AdminReadSentence
 
 								if( createdWordItem == null )
 									{
-									if( ( wordResult = adminItem_.addWord( false, true, firstWordTypeItem.adjectiveParameter(), firstWordTypeItem.definiteArticleParameter(), firstWordTypeItem.indefiniteArticleParameter(), firstReadItem.wordParameter(), nextWordTypeNr, multipleWordStringBuffer.length(), multipleWordStringBuffer.toString() ) ).result == Constants.RESULT_OK )
+									if( ( wordResult = adminItem_.addWord( false, true, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, firstReadItem.wordParameter(), currentWordTypeNr, multipleWordStringBuffer.length(), multipleWordStringBuffer.toString() ) ).result == Constants.RESULT_OK )
 										{
 										createdMultipleWordItem = wordResult.createdWordItem;
 										multipleWordItem = ( createdMultipleWordItem == null ? wordResult.foundWordItem : createdMultipleWordItem );
+										foundWordTypeItem = wordResult.foundWordTypeItem;
+
+										if( foundWordTypeItem != null &&
+
+										( ( adjectiveParameter > Constants.NO_ADJECTIVE_PARAMETER &&
+										foundWordTypeItem.adjectiveParameter() == Constants.NO_ADJECTIVE_PARAMETER ) ||
+
+										( definiteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER &&
+										foundWordTypeItem.definiteArticleParameter() == Constants.NO_DEFINITE_ARTICLE_PARAMETER ) ||
+
+										( indefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER &&
+										foundWordTypeItem.indefiniteArticleParameter() == Constants.NO_INDEFINITE_ARTICLE_PARAMETER ) ) )
+											{
+											if( foundWordTypeItem.setParameter( adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter ).result != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to set a parameter of a multiple word" );
+											}
 										}
 									else
 										return adminItem_.addError( 1, moduleNameString_, "I failed to add the multiple word" );
@@ -274,15 +309,15 @@ class AdminReadSentence
 								if( createdMultipleWordItem != null )
 									{
 									// Link both words to the created multiple word
-									if( firstWordItem.addMultipleWord( nWordParts, nextWordTypeNr, createdMultipleWordItem ) == Constants.RESULT_OK )
+									if( firstWordItem.addMultipleWord( nWordParts, currentWordTypeNr, createdMultipleWordItem ) == Constants.RESULT_OK )
 										{
-										if( ( nextWordItem = nextReadItem.readWordItem() ) != null )
+										if( ( currentWordItem = currentReadItem.readWordItem() ) != null )
 											{
-											if( nextWordItem.addMultipleWord( nWordParts, nextWordTypeNr, createdMultipleWordItem ) != Constants.RESULT_OK )
+											if( currentWordItem.addMultipleWord( nWordParts, currentWordTypeNr, createdMultipleWordItem ) != Constants.RESULT_OK )
 												return adminItem_.addError( 1, moduleNameString_, "I failed to add the second multiple word" );
 											}
 										else
-											return adminItem_.startError( 1, moduleNameString_, "The next word item is undefined" );
+											return adminItem_.startError( 1, moduleNameString_, "The current word item is undefined" );
 										}
 									else
 										return adminItem_.addError( 1, moduleNameString_, "I failed to add the first multiple word" );
@@ -290,14 +325,14 @@ class AdminReadSentence
 
 								if( multipleWordItem != null )
 									{
-									if( firstReadItem.changeReadWord( nextWordTypeNr, multipleWordItem ) == Constants.RESULT_OK )
+									if( firstReadItem.changeReadWord( currentWordTypeNr, multipleWordItem ) == Constants.RESULT_OK )
 										{
 										if( ( readList = adminItem_.readList ) != null )
 											{
-											deletedReadItem = nextReadItem;
-											nextReadItem = ( deletedReadItem == lastReadItem ? null : nextReadItem.nextReadItem() );
+											deletedReadItem = currentReadItem;
+											currentReadItem = ( deletedReadItem == lastReadItem ? null : currentReadItem.nextReadItem() );
 
-											if( readList.deleteItem( false, deletedReadItem ) != Constants.RESULT_OK )
+											if( readList.deleteItem( deletedReadItem ) != Constants.RESULT_OK )
 												return adminItem_.addError( 1, moduleNameString_, "I failed to delete the second read item" );
 											}
 										else
@@ -312,7 +347,7 @@ class AdminReadSentence
 							else
 								return adminItem_.startError( 1, moduleNameString_, "I have found a read item without read word" );
 							}
-						while( nextReadItem != null );
+						while( currentReadItem != null );
 						}
 					else
 						return adminItem_.startError( 1, moduleNameString_, "I couldn't find the word type item of the given first read item" );
@@ -352,6 +387,13 @@ class AdminReadSentence
 					}
 				else
 					{
+					if( wasPreviousCommandUndoOrRedo_ )
+						{
+						// From this point, redo is not possible anymore
+						if( clearReplacedInfoFromItems() != Constants.RESULT_OK )
+							return adminItem_.addErrorWithAdminListNr( selectionListNr_, 1, moduleNameString_, "I failed to clear the replaced info from items" );
+						}
+
 					adminItem_.initializeAdminAssumptionVariables();
 					adminItem_.initializeAdminConclusionVariables();
 					adminItem_.initializeAdminReasoningVariables();
@@ -393,13 +435,14 @@ class AdminReadSentence
 
 	private byte checkForStructuralIntegrity()
 		{
+		boolean wasCurrentCommandUndoOrRedo = adminItem_.wasCurrentCommandUndoOrRedo();
 		WordItem currentWordItem;
 
 		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
 			{
-			// Do for all words
+			// Do for all active words
 			do	{
-				if( currentWordItem.checkSpecificationsForReplacedOrDeletedJustifications() == Constants.RESULT_OK )
+				if( currentWordItem.checkSpecificationsForReplacedOrDeletedJustifications( wasCurrentCommandUndoOrRedo ) == Constants.RESULT_OK )
 					{
 					if( currentWordItem.checkJustificationsForReplacedSpecifications() == Constants.RESULT_OK )
 						{
@@ -413,6 +456,33 @@ class AdminReadSentence
 					return adminItem_.addError( 1, moduleNameString_, "I failed to check for the specifications for replaced justifications in word \"" + currentWordItem.anyWordTypeString() + "\"" );
 				}
 			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		return Constants.RESULT_OK;
+		}
+
+	private byte clearReplacedInfoFromItems()
+		{
+		List currentAdminList;
+		WordItem currentWordItem;
+
+		wasPreviousCommandUndoOrRedo_ = false;
+
+		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
+			{
+			// Do for all active words
+			do	{
+				if( currentWordItem.clearReplacedInfoInWord() != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to clear the replaced info in word \"" + currentWordItem.anyWordTypeString() + "\"" );
+				}
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		// Admin lists
+		for( short adminListNr : Constants.AdminLists )
+			{
+			if( ( currentAdminList = adminItem_.adminListArray[adminListNr] ) != null )
+				currentAdminList.clearReplacedInfoInList();
 			}
 
 		return Constants.RESULT_OK;
@@ -585,7 +655,7 @@ class AdminReadSentence
 		return Constants.RESULT_OK;
 		}
 
-	private byte parseSentence( String readSentenceString )
+	private byte parseSentence( String readUserSentenceString )
 		{
 		boolean isAction = false;
 		boolean isNewStart = true;
@@ -627,7 +697,7 @@ class AdminReadSentence
 						case Constants.GRAMMAR_QUESTION_VERB:
 						case Constants.GRAMMAR_SPECIFICATION_GENERALIZATION_VERB:
 						case Constants.GRAMMAR_SPECIFICATION_GENERALIZATION_QUESTION_VERB:
-							if( scanSpecification( readSentenceString ) == Constants.RESULT_OK )
+							if( scanSpecification( readUserSentenceString ) == Constants.RESULT_OK )
 								{
 								if( addReadSpecification( isAction, isNewStart, selectionLevel ) == Constants.RESULT_OK )
 									isNewStart = false;
@@ -640,7 +710,7 @@ class AdminReadSentence
 							break;
 
 						case Constants.GRAMMAR_IMPERATIVE:
-							if( readImperative( isAction, isNewStart, selectionLevel, readSentenceString ) == Constants.RESULT_OK )
+							if( readImperative( isAction, isNewStart, selectionLevel, readUserSentenceString ) == Constants.RESULT_OK )
 								{
 								isNewStart = false;
 								isUserImperativeSentence_ = true;
@@ -715,19 +785,19 @@ class AdminReadSentence
 							break;
 
 						default:
-							if( readSentenceString != null &&
+							if( readUserSentenceString != null &&
 
-							( adminItem_.isTesting() ||
+							( adminItem_.isCurrentlyTesting() ||
 							adminItem_.isSystemStartingUp() ) )
-								return adminItem_.startError( 1, moduleNameString_, "I have found an unknown word in sentence \"" + readSentenceString + "\" at position " + wordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + wordParameter );
+								return adminItem_.startError( 1, moduleNameString_, "I have found an unknown word in sentence \"" + readUserSentenceString + "\" at position " + wordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + wordParameter );
 
 							return adminItem_.startError( 1, moduleNameString_, "I have found an unknown word at position " + wordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + wordParameter );
 						}
 					}
 				}
-			while( !CommonVariables.hasShownWarning &&
+			while( currentReadItem_ != null &&
+			!CommonVariables.hasShownWarning &&
 			!adminItem_.hasRequestedRestart() &&
-			currentReadItem_ != null &&
 			( currentReadItem_ = currentReadItem_.nextReadItem() ) != null );
 
 			if( selectionListNr_ != Constants.NO_LIST_NR )
@@ -742,130 +812,138 @@ class AdminReadSentence
 		return Constants.RESULT_OK;
 		}
 
-	private byte processSentence( String readSentenceString )
+	private byte processSentence( String readUserSentenceString )
 		{
 		ReadResultType readResult;
 		boolean hasFoundFullPath;
 		boolean hasFoundMoreInterpretations;
 		boolean hasCreatedAllReadWords = false;
+		short currentLanguageNr;
 		short lastCreatedWordOrderNr;
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
+		short nLanguages;
 		short originalLanguageNr = CommonVariables.currentLanguageNr;
-		short nLanguages = adminItem_.nLanguages();
-		GrammarItem startOfGrammarItem;
+		GrammarItem firstGrammarItem;
 		WordItem currentLanguageWordItem;
 		ReadList readList;
 
-		if( nLanguages > Constants.NO_LANGUAGE_NR )
+		if( ( nLanguages = adminItem_.nLanguages() ) > Constants.NO_LANGUAGE_NR )
 			{
-			if( nLanguages >= CommonVariables.currentLanguageNr )
+			currentLanguageNr = originalLanguageNr;
+
+			if( nLanguages >= currentLanguageNr )
 				{
+				if( readUserSentenceString != null )
+					originalReadStringBuffer = new StringBuffer( readUserSentenceString );
+
 				do	{
 					adminItem_.deleteTemporaryReadList();
 
-					if( adminItem_.deleteUnusedInterpretations( true ) == Constants.RESULT_OK )
+					// Need to switch language
+					if( currentLanguageNr != CommonVariables.currentLanguageNr )
 						{
-						// Need to switch language
-						if( currentLanguageNr != CommonVariables.currentLanguageNr )
+						if( adminItem_.assignLanguage( currentLanguageNr ) == Constants.RESULT_OK )
+							// Avoid using the expanded read string with other languages
+							readUserSentenceString = originalReadStringBuffer.toString();
+						else
+							return adminItem_.addError( 1, moduleNameString_, "I failed to assign the language" );
+						}
+
+					if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) != null )
+						{
+						if( currentLanguageWordItem.isNeededToCheckGrammar() )
 							{
-							if( adminItem_.assignLanguage( currentLanguageNr ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to assign the language" );
+							if( currentLanguageWordItem.checkGrammar() != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to check the grammar" );
 							}
 
-						if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) != null )
+						if( readUserSentenceString != null &&
+						currentLanguageWordItem.isLanguageWithMergedWords() )
 							{
-							if( currentLanguageWordItem.isCheckingGrammarNeeded() )
+							// Typically for French: Compound words
+							if( currentLanguageWordItem.expandMergedWordsInReadSentence( new StringBuffer( readUserSentenceString ) ) == Constants.RESULT_OK )
 								{
-								if( currentLanguageWordItem.checkGrammar() != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to check the grammar" );
+								if( CommonVariables.readUserSentenceStringBuffer != null )
+									readUserSentenceString = CommonVariables.readUserSentenceStringBuffer.toString();
 								}
+							else
+								return adminItem_.addError( 1, moduleNameString_, "I failed to expand the compound wordds in the read user sentence string" );
+							}
 
-							if( adminItem_.cleanupDeletedItems() == Constants.RESULT_OK )
+						hasFoundMoreInterpretations = false;
+						firstGrammarItem = currentLanguageWordItem.firstGrammarItem();
+
+						// Create read words from a given sentence
+						if( ( readResult = adminItem_.createReadWords( readUserSentenceString ) ).result == Constants.RESULT_OK )
+							hasCreatedAllReadWords = readResult.hasCreatedAllReadWords;
+						else
+							return adminItem_.addError( 1, moduleNameString_, "I failed to create the read words" );
+
+						if( ( readList = adminItem_.readList ) != null )
+							{
+							hasFoundFullPath = false;
+							hasFoundMoreInterpretations = false;
+							readList.clearLastActivatedWordOrderNr();
+							lastCreatedWordOrderNr = adminItem_.lastCreatedWordOrderNr();
+
+							if( hasCreatedAllReadWords )
 								{
-								hasFoundMoreInterpretations = false;
-								startOfGrammarItem = currentLanguageWordItem.startOfGrammarItem();
-
-									// Create read words from a given sentence
-									if( ( readResult = adminItem_.createReadWords( readSentenceString ) ).result == Constants.RESULT_OK )
-										hasCreatedAllReadWords = readResult.hasCreatedAllReadWords;
-									else
-										return adminItem_.addError( 1, moduleNameString_, "I failed to create the read words" );
-
-								if( ( readList = adminItem_.readList ) != null )
-									{
-									hasFoundFullPath = false;
-									hasFoundMoreInterpretations = false;
-									readList.clearLastActivatedWordOrderNr();
-									lastCreatedWordOrderNr = adminItem_.lastCreatedWordOrderNr();
-
-									if( hasCreatedAllReadWords )
+								do	{
+									if( findGrammarPath( Constants.NO_GRAMMAR_LEVEL, firstGrammarItem ) == Constants.RESULT_OK )
 										{
-										do	{
-											if( findGrammarPath( Constants.NO_GRAMMAR_LEVEL, startOfGrammarItem ) == Constants.RESULT_OK )
-												{
-												hasFoundFullPath = ( currentParseWordOrderNr_ == lastCreatedWordOrderNr );
-
-												if( !hasFoundFullPath )
-													{
-													if( ( readResult = readList.findMoreInterpretations() ).result == Constants.RESULT_OK )
-														hasFoundMoreInterpretations = readResult.hasFoundMoreInterpretations;
-													else
-														return adminItem_.addError( 1, moduleNameString_, "I failed to find more interpretations" );
-													}
-												}
-											else
-												return adminItem_.addError( 1, moduleNameString_, "I failed to find the grammar path for a sentence with language \"" + adminItem_.languageNameString( currentLanguageNr ) + "\"" );
-											}
-										while( !hasFoundFullPath &&
-										hasFoundMoreInterpretations );
-										}
-
-									if( adminItem_.deleteUnusedInterpretations( !hasFoundFullPath ) == Constants.RESULT_OK )
-										{
-										// Successful interpretation of sentence
-										if( hasFoundFullPath )
-											{
-											if( parseSentence( readSentenceString ) != Constants.RESULT_OK )
-												return adminItem_.addError( 1, moduleNameString_, "I failed to parse the sentence" );
-											}
+										hasFoundFullPath = ( currentParseWordOrderNr_ == lastCreatedWordOrderNr );
 
 										if( !hasFoundFullPath )
 											{
-											if( nLanguages <= 1 )
-												// The only language
-												currentLanguageNr++;
+											if( ( readResult = readList.findMoreInterpretations() ).result == Constants.RESULT_OK )
+												hasFoundMoreInterpretations = readResult.hasFoundMoreInterpretations;
 											else
-												{
-												// Failed for current language
-												if( currentLanguageNr == originalLanguageNr )
-													// Try all languages
-													currentLanguageNr = 1;
-												else
-													currentLanguageNr++;
-
-												// Skip current language (already tested)
-												if( currentLanguageNr == originalLanguageNr )
-													currentLanguageNr++;
-												}
+												return adminItem_.addError( 1, moduleNameString_, "I failed to find more interpretations" );
 											}
-
-										if( isDeletingRollbackInfo_ )
-											adminItem_.deleteRollbackInfo();
 										}
 									else
-										return adminItem_.addError( 1, moduleNameString_, "I failed to delete the unused interpretations of the read words" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to find the grammar path for a sentence with language \"" + adminItem_.languageNameString( currentLanguageNr ) + "\"" );
 									}
-								else
-									return adminItem_.startError( 1, moduleNameString_, "The read list isn't created yet" );
+								while( !hasFoundFullPath &&
+								hasFoundMoreInterpretations );
+								}
+
+							if( adminItem_.deleteUnusedInterpretations( !hasFoundFullPath ) == Constants.RESULT_OK )
+								{
+								// Successful interpretation of sentence
+								if( hasFoundFullPath )
+									{
+									if( parseSentence( readUserSentenceString ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to parse the sentence" );
+									}
+
+								if( !hasFoundFullPath )
+									{
+									if( nLanguages <= 1 )
+										// The only language
+										currentLanguageNr++;
+									else
+										{
+										// Failed for current language
+										if( currentLanguageNr == originalLanguageNr )
+											// Try all languages
+											currentLanguageNr = 1;
+										else
+											currentLanguageNr++;
+
+										// Skip current language (already tested)
+										if( currentLanguageNr == originalLanguageNr )
+											currentLanguageNr++;
+										}
+									}
 								}
 							else
-								return adminItem_.addError( 1, moduleNameString_, "I failed to cleanup the deleted items" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to delete the unused interpretations of the read words" );
 							}
 						else
-							return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
+							return adminItem_.startError( 1, moduleNameString_, "The read list isn't created yet" );
 						}
 					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to delete unused interpretations" );
+						return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
 					}
 				while( !hasFoundFullPath &&
 				currentLanguageNr <= nLanguages );
@@ -873,6 +951,13 @@ class AdminReadSentence
 				// Failed to interpret sentence
 				if( !hasFoundFullPath )
 					{
+					if( wasPreviousCommandUndoOrRedo_ )
+						{
+						// From this point, redo is not possible anymore
+						if( clearReplacedInfoFromItems() != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to clear the replaced info from items" );
+						}
+
 					if( CommonVariables.currentLanguageNr != originalLanguageNr )
 						{
 						// Restore the original language
@@ -907,7 +992,7 @@ class AdminReadSentence
 		return Constants.RESULT_OK;
 		}
 
-	private byte readImperative( boolean isAction, boolean isNewStart, short selectionLevel, String readSentenceString )
+	private byte readImperative( boolean isAction, boolean isNewStart, short selectionLevel, String readUserSentenceString )
 		{
 		short imperativeParameter = Constants.NO_IMPERATIVE_PARAMETER;
 		short specificationWordParameter = Constants.NO_WORD_PARAMETER;
@@ -918,7 +1003,7 @@ class AdminReadSentence
 		startGeneralizationWordReadItem_ = null;
 		endGeneralizationWordReadItem_ = null;
 
-		if( scanSpecification( readSentenceString ) == Constants.RESULT_OK )
+		if( scanSpecification( readUserSentenceString ) == Constants.RESULT_OK )
 			{
 			if( ( imperativeReadItem = startGeneralizationWordReadItem_ ) != null &&
 			endGeneralizationWordReadItem_ != null )
@@ -935,6 +1020,16 @@ class AdminReadSentence
 				// Only imperative word
 				if( ( specificationReadItem = startSpecificationWordReadItem_ ) == null )
 					{
+					if( imperativeWordItem != null &&
+					imperativeWordItem.isVerbUndoOrRedo() )
+						wasPreviousCommandUndoOrRedo_ = true;
+					else
+						{
+						// From this point, redo is not possible anymore
+						if( clearReplacedInfoFromItems() != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to clear the replaced info from items" );
+						}
+
 					if( adminItem_.executeImperative( true, Constants.NO_LIST_NR, startGeneralizationWordReadItem_.wordParameter(), specificationWordParameter, Constants.WORD_TYPE_UNDEFINED, Constants.MAX_PROGRESS, startGeneralizationWordReadItem_.readString, startGeneralizationWordReadItem_.readWordItem(), null, startRelationWordReadItem_, endRelationReadItem_, null, null ) != Constants.RESULT_OK )
 						{
 						if( startGeneralizationWordReadItem_ == null )
@@ -1006,18 +1101,20 @@ class AdminReadSentence
 		return Constants.RESULT_OK;
 		}
 
-	private byte scanSpecification( String readSentenceString )
+	private byte scanSpecification( String readUserSentenceString )
 		{
 		ContextResultType contextResult;
+		boolean isFrenchPreposition;
 		boolean isSameWordTypeAsPreviousWord;
+		boolean hasGeneralizationArticle = false;
 		boolean isStop = false;
 		short currentWordOrderNr;
 		short currentWordParameter;
 		short currentWordTypeNr;
+		short generalizationAdjectiveParameter = Constants.NO_ADJECTIVE_PARAMETER;
+		short generalizationDefiniteArticleParameter = Constants.NO_DEFINITE_ARTICLE_PARAMETER;
+		short generalizationIndefiniteArticleParameter = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
 		short previousWordTypeNr = Constants.WORD_TYPE_UNDEFINED;
-		short previousRelationWordOrderNr = Constants.NO_ORDER_NR;
-		short previousGeneralizationWordOrderNr = Constants.NO_ORDER_NR;
-		short previousSpecificationWordOrderNr = Constants.NO_ORDER_NR;
 		ReadItem previousReadItem = null;
 		WordItem currentReadWordItem;
 
@@ -1062,6 +1159,8 @@ class AdminReadSentence
 				}
 
 			do	{
+				isFrenchPreposition = currentReadItem_.isFrenchPreposition();
+
 				currentWordOrderNr = currentReadItem_.wordOrderNr();
 				currentWordParameter = currentReadItem_.wordParameter();
 				currentWordTypeNr = currentReadItem_.wordTypeNr();
@@ -1069,8 +1168,10 @@ class AdminReadSentence
 
 				setVariables( currentWordParameter );
 
-				isSameWordTypeAsPreviousWord = ( previousWordTypeNr == currentWordTypeNr ||
+				isSameWordTypeAsPreviousWord = ( isFrenchPreposition ||
+												previousWordTypeNr == currentWordTypeNr ||
 
+												// Allow mix of singular and plural nouns
 												( adminItem_.isSingularOrPluralNoun( previousWordTypeNr ) &&
 												adminItem_.isSingularOrPluralNoun( currentWordTypeNr ) ) );
 
@@ -1079,11 +1180,11 @@ class AdminReadSentence
 					case Constants.GRAMMAR_SENTENCE:
 						if( !currentReadItem_.isSeparator() )
 							{
-							if( readSentenceString != null &&
+							if( readUserSentenceString != null &&
 
-							( adminItem_.isTesting() ||
+							( adminItem_.isCurrentlyTesting() ||
 							adminItem_.isSystemStartingUp() ) )
-								return adminItem_.startError( 1, moduleNameString_, "I have found an unknown word in sentence \"" + readSentenceString + "\" at position " + currentWordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + currentWordParameter );
+								return adminItem_.startError( 1, moduleNameString_, "I have found an unknown word in sentence \"" + readUserSentenceString + "\" at position " + currentWordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + currentWordParameter );
 
 							return adminItem_.startError( 1, moduleNameString_, "I have found an unknown word at position " + currentWordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + currentWordParameter );
 							}
@@ -1104,25 +1205,40 @@ class AdminReadSentence
 					case Constants.GRAMMAR_GENERALIZATION_SPECIFICATION:
 					case Constants.GRAMMAR_GENERALIZATION_PART:
 					case Constants.GRAMMAR_GENERALIZATION_WORD:
-						if( currentReadItem_.isAdjectivePrevious() )
+						if( currentReadItem_.isAdjective() )
 							{
-							isAssignment_ = true;
-							isInactiveAssignment_ = true;
+							if( adminItem_.isAdjectiveParameter( currentReadItem_.wordParameter() ) )
+								generalizationAdjectiveParameter = currentReadItem_.wordParameter();
+
+							if( currentReadItem_.isAdjectivePrevious() )
+								{
+								isAssignment_ = true;
+								isInactiveAssignment_ = true;
+								}
+
+							if( currentReadItem_.isAdjectiveEvery() )
+								isEveryGeneralization_ = true;
 							}
 
-						if( currentReadItem_.isAdjectiveEvery() )
-							isEveryGeneralization_ = true;
+						if( currentReadItem_.isArticle() )
+							{
+							hasGeneralizationArticle = true;
+
+							if( currentReadItem_.isDefiniteArticleParameter( currentReadItem_.wordParameter() ) )
+								generalizationDefiniteArticleParameter = currentReadItem_.wordParameter();
+							else
+								generalizationIndefiniteArticleParameter = currentReadItem_.wordParameter();
+							}
 
 						if( currentReadItem_.isNounPartOf() )
 							isPartOf_ = true;
 
 						if( currentReadItem_.isGeneralizationWord() )
 							{
-							if( isSameWordTypeAsPreviousWord &&
-							previousGeneralizationWordOrderNr + 1 == currentWordOrderNr )
+							if( isSameWordTypeAsPreviousWord )
 								{
-								if( addMultipleWord( previousReadItem, currentReadItem_ ) == Constants.RESULT_OK )
-									// Current read item has been deleted
+								if( addMultipleWord( generalizationAdjectiveParameter, generalizationDefiniteArticleParameter, generalizationIndefiniteArticleParameter, previousReadItem, currentReadItem_ ) == Constants.RESULT_OK )
+									// Current read item is deleted
 									currentReadItem_ = previousReadItem;
 								else
 									return adminItem_.addError( 1, moduleNameString_, "I failed to add a multiple generalization word" );
@@ -1132,8 +1248,6 @@ class AdminReadSentence
 
 							if( currentReadWordItem != null )
 								currentReadWordItem.isUserGeneralizationWord = true;
-
-							previousGeneralizationWordOrderNr = currentWordOrderNr;
 							}
 
 						if( currentReadItem_.isDeterminerOrPronoun() )
@@ -1159,12 +1273,10 @@ class AdminReadSentence
 					case Constants.GRAMMAR_LINKED_GENERALIZATION_CONJUNCTION:
 						isStop = true;
 						isLinkedGeneralizationConjunction_ = true;
-
 						break;
 
 					case Constants.GRAMMAR_EXCLUSIVE_SPECIFICATION_CONJUNCTION:
 						isExclusiveSpecification_ = true;
-
 						break;
 
 					case Constants.GRAMMAR_RELATION_PART:
@@ -1174,11 +1286,10 @@ class AdminReadSentence
 
 						if( currentReadItem_.isRelationWord() )
 							{
-							if( isSameWordTypeAsPreviousWord &&
-							previousRelationWordOrderNr + 1 == currentWordOrderNr )
+							if( isSameWordTypeAsPreviousWord )
 								{
-								if( addMultipleWord( previousReadItem, currentReadItem_ ) == Constants.RESULT_OK )
-									// Current read item has been deleted
+								if( addMultipleWord( Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, previousReadItem, currentReadItem_ ) == Constants.RESULT_OK )
+									// Current read item is deleted
 									currentReadItem_ = previousReadItem;
 								else
 									return adminItem_.addError( 1, moduleNameString_, "I failed to add a multiple relation word" );
@@ -1188,8 +1299,6 @@ class AdminReadSentence
 
 							if( currentReadWordItem != null )
 								currentReadWordItem.isUserRelationWord = true;
-
-							previousRelationWordOrderNr = currentWordOrderNr;
 							}
 
 						if( startSpecificationWordReadItem_ == null )
@@ -1219,9 +1328,6 @@ class AdminReadSentence
 						isAssignment_ = true;
 						isActiveAssignment_ = true;
 
-						if( isArchivedAssignment_ )
-							isUniqueUserRelation_ = true;
-
 						if( currentReadItem_.isDeterminerOrPronoun() )
 							{
 							if( specificationContextNr_ == Constants.NO_CONTEXT_NR )
@@ -1242,22 +1348,25 @@ class AdminReadSentence
 					case Constants.GRAMMAR_TEXT:
 						if( currentReadItem_.isSpecificationWord() )
 							{
-							if( isSameWordTypeAsPreviousWord &&
-							previousSpecificationWordOrderNr + 1 == currentWordOrderNr )
+							if( isSameWordTypeAsPreviousWord )
 								{
-								if( addMultipleWord( previousReadItem, currentReadItem_ ) == Constants.RESULT_OK )
-									// Current read item has been deleted
+								if( addMultipleWord( Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, previousReadItem, currentReadItem_ ) == Constants.RESULT_OK )
+									// Current read item is deleted
 									currentReadItem_ = previousReadItem;
 								else
 									return adminItem_.addError( 1, moduleNameString_, "I failed to add a multiple specification word" );
 								}
 							else
+								{
+								if( isArchivedAssignment_ &&
+								!hasGeneralizationArticle )
+									isUniqueUserRelation_ = true;
+
 								CommonVariables.nUserSpecificationWords++;
+								}
 
 							if( currentReadWordItem != null )
 								currentReadWordItem.isUserSpecificationWord = true;
-
-							previousSpecificationWordOrderNr = currentWordOrderNr;
 							}
 
 						if( startSpecificationWordReadItem_ == null )
@@ -1307,7 +1416,9 @@ class AdminReadSentence
 							return adminItem_.startError( 1, moduleNameString_, "I have found a word that doesn't belong to an assignment or a specification" );
 					}
 
-				previousWordTypeNr = currentWordTypeNr;
+				if( !isFrenchPreposition )
+					previousWordTypeNr = currentWordTypeNr;
+
 				previousReadItem = currentReadItem_;
 				}
 			while( !isStop &&
@@ -1331,7 +1442,6 @@ class AdminReadSentence
 		isInactiveAssignment_ = false;
 		isArchivedAssignment_ = false;
 		isConditional_ = false;
-		isDeletingRollbackInfo_ = true;
 		isEveryGeneralization_ = false;
 		isExclusiveSpecification_ = false;
 		isNegative_ = false;
@@ -1341,6 +1451,7 @@ class AdminReadSentence
 		isSpecificationGeneralization_ = false;
 		isUniqueUserRelation_ = false;
 		isUserImperativeSentence_ = false;
+		wasPreviousCommandUndoOrRedo_ = false;
 
 		assumptionLevel_ = Constants.NO_ASSUMPTION_LEVEL;
 		currentParseWordOrderNr_ = Constants.NO_ORDER_NR;
@@ -1358,6 +1469,8 @@ class AdminReadSentence
 		endSpecificationWordReadItem_ = null;
 		startRelationWordReadItem_ = null;
 		endRelationReadItem_ = null;
+
+		originalReadStringBuffer = new StringBuffer();
 
 		adminItem_ = adminItem;
 		moduleNameString_ = this.getClass().getName();
@@ -1380,24 +1493,9 @@ class AdminReadSentence
 
 	// Protected methods
 
-	protected void dontDeletedRollbackInfo()
-		{
-		isDeletingRollbackInfo_ = false;
-		}
-
 	protected boolean isActiveUserAssignment()
 		{
 		return isActiveAssignment_;
-		}
-
-	protected boolean isPossessiveUserSpecification()
-		{
-		return isPossessive_;
-		}
-
-	protected boolean isUserImperativeSentence()
-		{
-		return isUserImperativeSentence_;
 		}
 
 	protected boolean isUserQuestion()
@@ -1410,87 +1508,99 @@ class AdminReadSentence
 		return ( selectionListNr_ != Constants.NO_LIST_NR );
 		}
 
-	protected byte processReadSentence( String readSentenceString )
+	protected boolean wasPreviousCommandUndoOrRedo()
 		{
-		int startSentenceNr = CommonVariables.currentSentenceNr;
+		return wasPreviousCommandUndoOrRedo_;
+		}
 
-		isDeletingRollbackInfo_ = true;
+	protected byte processReadSentence( String readUserSentenceString )
+		{
+		boolean hasFoundAnyChangeMadeByThisSentence;
+		int startSentenceNr = CommonVariables.currentSentenceNr;
 
 		CommonVariables.hasFoundAnswerToQuestion = false;
 		CommonVariables.hasShownArticleNotification = false;
-		CommonVariables.hasShownWarning = false;
 		CommonVariables.isFirstAnswerToQuestion = true;
 		CommonVariables.isQuestionAlreadyAnswered = false;
 
+		CommonVariables.writtenUserSentenceStringBuffer = new StringBuffer();
+
 		initializeVariablesInAllWords();
 
-		if( processSentence( readSentenceString ) == Constants.RESULT_OK )
+		if( processSentence( readUserSentenceString ) == Constants.RESULT_OK )
 			{
-			// Skip processing after Undo or Redo
-			if( isDeletingRollbackInfo_ &&
-			readSentenceString != null &&
+			if( readUserSentenceString != null &&
 			!CommonVariables.hasShownWarning &&
 			!adminItem_.hasRequestedRestart() &&
 			startSentenceNr == CommonVariables.currentSentenceNr )
 				{
-				if( adminItem_.checkIntegrityOfStoredUserSentence( readSentenceString ) == Constants.RESULT_OK )
+				adminItem_.checkForChangesMadeByThisSentence();
+				hasFoundAnyChangeMadeByThisSentence = adminItem_.hasFoundAnyChangeMadeByThisSentence();
+
+				// Skip integrity check if no changes are made
+				if( hasFoundAnyChangeMadeByThisSentence &&
+				!isUserImperativeSentence_ &&
+				selectionListNr_ == Constants.NO_LIST_NR &&
+				// User specification is already known (notification: I know)
+				adminItem_.userSpecificationItem() != null )
 					{
-					// Has passed integrity check
-					if( !CommonVariables.hasShownWarning )
+					if( adminItem_.checkIntegrityOfStoredUserSentence( readUserSentenceString ) != Constants.RESULT_OK )
+						return adminItem_.addError( 1, moduleNameString_, "I failed to check the integrity of the stored user sentence \"" + readUserSentenceString + "\"" );
+					}
+
+				// Has passed integrity check
+				if( !CommonVariables.hasShownWarning )
+					{
+					// Skip when no changes are made
+					if( hasFoundAnyChangeMadeByThisSentence )
 						{
-						// Skip when no changes are made
-						if( adminItem_.hasFoundAnyChangeMadeByThisSentence() )
+						// Show self-generated conclusions of the current sentence
+						if( adminItem_.writeSelfGeneratedInfo( true, false, false ) == Constants.RESULT_OK )
 							{
-							// Show self-generated conclusions of the current sentence
-							if( adminItem_.writeSelfGeneratedInfo( true, false, false ) == Constants.RESULT_OK )
+							// Show self-generated assumptions of the current sentence
+							if( adminItem_.writeSelfGeneratedInfo( false, true, false ) == Constants.RESULT_OK )
 								{
-								// Show self-generated assumptions of the current sentence
-								if( adminItem_.writeSelfGeneratedInfo( false, true, false ) == Constants.RESULT_OK )
+								// Show self-generated questions of the current sentence
+								if( adminItem_.writeSelfGeneratedInfo( false, false, true ) == Constants.RESULT_OK )
 									{
-									// Show self-generated questions of the current sentence
-									if( adminItem_.writeSelfGeneratedInfo( false, false, true ) == Constants.RESULT_OK )
+									if( !adminItem_.hasFoundUnprocessedNegativeConclusion() )
 										{
-										if( !adminItem_.hasFoundUnprocessedNegativeConclusion() )
+										if( checkForStructuralIntegrity() == Constants.RESULT_OK )
 											{
-											if( checkForStructuralIntegrity() == Constants.RESULT_OK )
-												{
-												// In case you are planning to save the data in a database
-/*												if( storeChangesInFutureDatabase() != Constants.RESULT_OK )
-													return adminItem_.addError( 1, moduleNameString_, "I failed to store the changes in a future database" );
-*/												}
-											else
-												return adminItem_.addError( 1, moduleNameString_, "The system has problem with the structural integrity" );
-											}
+											// In case you are planning to save the data in a database
+/*											if( storeChangesInFutureDatabase() != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to store the changes in a future database" );
+*/											}
 										else
-											return adminItem_.startError( 1, moduleNameString_, "I have found an unprocessed negative conclusion" );
+											return adminItem_.addError( 1, moduleNameString_, "The system has problem with the structural integrity" );
 										}
 									else
-										return adminItem_.addError( 1, moduleNameString_, "I failed to write the self-generated questions" );
+										return adminItem_.startError( 1, moduleNameString_, "I have found an unprocessed negative conclusion" );
 									}
 								else
-									return adminItem_.addError( 1, moduleNameString_, "I failed to write the self-generated assumptions" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to write the self-generated questions" );
 								}
 							else
-								return adminItem_.addError( 1, moduleNameString_, "I failed to write the self-generated conclusions" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write the self-generated assumptions" );
 							}
+						else
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write the self-generated conclusions" );
+						}
 
-						if( isUserQuestion() )
-							{
-							if( adminItem_.answerQuestions() != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to answer questions" );
-							}
+					if( isUserQuestion() )
+						{
+						if( adminItem_.answerQuestions() != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to answer questions" );
 						}
 					}
-				else
-					return adminItem_.addError( 1, moduleNameString_, "I failed to check the integrity of the stored user sentence \"" + readSentenceString + "\"" );
 				}
 			}
 		else
 			{
-			if( readSentenceString == null )
+			if( readUserSentenceString == null )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to process an undefined sentence" );
 
-			return adminItem_.addError( 1, moduleNameString_, "I failed to process sentence: \"" + readSentenceString + "\"" );
+			return adminItem_.addError( 1, moduleNameString_, "I failed to process sentence: \"" + readUserSentenceString + "\"" );
 			}
 
 		return Constants.RESULT_OK;

@@ -6,4 +6,4 @@ Joe has a father, called John.
 Joe has a mother, called Anna.
 Laura has a father, called John.
 Laura has a mother, called Anna.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

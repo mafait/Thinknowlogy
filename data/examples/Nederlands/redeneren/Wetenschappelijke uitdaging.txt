@@ -1,0 +1,36 @@
+﻿#-----------------------------------------------------------------------------
+#	Deze test voert de voorbeelden van mijn Wetenschappelijke Uitdaging uit.
+#	Voor meer info, zie het bijgevoegde Wetenschappelijke Uitdaging document,
+#	of: http://mafait.org/challenge/
+#-----------------------------------------------------------------------------
+
+#--------
+# Blok 1:
+#--------
+Paul is een zoon van Jan.
+Anna heeft een dochter, genaamd Laura.
+Iedere auto heeft een motor.
+Een zeil is deel van iedere zeilboot.
+#--------
+# Blok 2:
+#--------
+Jan is een ouder van Paul.
+Anna is een ouder van Paul.
+Paul heeft 2 ouders, genaamd Jan en Anna.
+#--------
+# Blok 3:
+#--------
+Johan was de vader van Peter.
+#--------
+# Blok 4:
+#--------
+Ieder persoon is een man of een vrouw.
+Anne is een man en een vrouw.
+Anne is een persoon.
+Anne is geen vrouw.
+#--------
+# Blok 5:
+#--------
+Bill Clinton is de president van de Verenigde Staten.
+Barack Obama is de president van de Verenigde Staten.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

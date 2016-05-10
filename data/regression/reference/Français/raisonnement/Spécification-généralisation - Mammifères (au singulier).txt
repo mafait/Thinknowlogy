@@ -1,0 +1,17 @@
+﻿* 
+* Mes conclusions:
+< Un chat et un chien sont mammifère [pluriel de «mammifère» est inconnue].
+< 
+* 
+* Mes conclusions:
+< Une baleine, un chat et un chien sont mammifère [pluriel de «mammifère» est inconnue].
+< 
+* 
+* Mes conclusions:
+< Une baleine, un chat et un chien sont mammifères.
+< 
+< Spécifications:
+< Une baleine est un mammifère.
+< Un chien est un mammifère.
+< Un chat est un mammifère.
+< 

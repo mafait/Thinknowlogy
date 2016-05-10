@@ -1,11 +1,10 @@
-/*
- *	Class:			ListCleanup
+/*	Class:			ListCleanup
  *	Supports class:	List
  *	Purpose:		To cleanup obsolete items in the lists
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -32,16 +31,34 @@ class ListCleanup
 
 	// Private methods
 
-	private static void setCurrentItemNr( Item searchItem )
+	private static void clearReplacedInfo( Item searchItem )
 		{
 		while( searchItem != null )
 			{
-			if( searchItem.hasCurrentCreationSentenceNr() &&
-			searchItem.itemNr() > CommonVariables.currentItemNr )
-				CommonVariables.currentItemNr = searchItem.itemNr();
+			searchItem.clearReplacingItem();
+
+			if( searchItem.hasCurrentReplacedSentenceNr() )
+				searchItem.clearReplacedSentenceNr();
 
 			searchItem = searchItem.nextItem;
 			}
+		}
+
+	private static void setCurrentItemNr( Item searchItem )
+		{
+		int tempItemNr;
+		int currentItemNr = CommonVariables.currentItemNr;
+
+		while( searchItem != null )
+			{
+			if( searchItem.hasCurrentCreationSentenceNr() &&
+			( tempItemNr = searchItem.itemNr() ) > currentItemNr )
+				currentItemNr = tempItemNr;
+
+			searchItem = searchItem.nextItem;
+			}
+
+		CommonVariables.currentItemNr = currentItemNr;
 		}
 
 	private static int highestInUseSentenceNrInList( int highestSentenceNr, Item searchItem )
@@ -209,6 +226,20 @@ class ListCleanup
 
 	// Protected methods
 
+	protected void clearReplacedInfo()
+		{
+		Item searchItem;
+
+		if( ( searchItem = myList_.firstActiveItem() ) != null )
+			clearReplacedInfo( searchItem );
+
+		if( ( searchItem = myList_.firstInactiveItem() ) != null )
+			clearReplacedInfo( searchItem );
+
+		if( ( searchItem = myList_.firstArchivedItem() ) != null )
+			clearReplacedInfo( searchItem );
+		}
+
 	protected void setCurrentItemNr()
 		{
 		Item searchItem;
@@ -227,20 +258,6 @@ class ListCleanup
 
 		if( ( searchItem = myList_.firstDeletedItem() ) != null )
 			setCurrentItemNr( searchItem );
-		}
-
-	protected void deleteRollbackInfo()
-		{
-		Item searchItem = myList_.firstDeletedItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.isAvailableForRollbackAfterDelete &&
-			searchItem.deletedSentenceNr() >= CommonVariables.currentSentenceNr )
-				searchItem.isAvailableForRollbackAfterDelete = false;
-
-			searchItem = searchItem.nextItem;
-			}
 		}
 
 	protected int highestInUseSentenceNrInList( boolean isIncludingDeletedItems, int highestSentenceNr )
@@ -300,7 +317,7 @@ class ListCleanup
 		else
 			return myList_.startError( 1, moduleNameString_, "The given start sentence number is undefined" );
 
-		return CommonVariables.result;
+		return Constants.RESULT_OK;
 		}
 
 	protected byte decrementItemNrRange( int decrementSentenceNr, int startDecrementItemNr, int decrementOffset )
@@ -346,7 +363,7 @@ class ListCleanup
 		return Constants.RESULT_OK;
 		}
 
-	protected byte deleteSentences( boolean isAvailableForRollback, int lowestSentenceNr )
+	protected byte deleteSentences( int lowestSentenceNr )
 		{
 		Item searchItem = myList_.firstActiveItem();
 
@@ -358,7 +375,7 @@ class ListCleanup
 					{
 					if( searchItem.creationSentenceNr() >= lowestSentenceNr )
 						{
-						if( myList_.deleteItem( isAvailableForRollback, searchItem ) == Constants.RESULT_OK )
+						if( myList_.deleteItem( searchItem ) == Constants.RESULT_OK )
 							searchItem = myList_.nextListItem();
 						else
 							return myList_.addError( 1, moduleNameString_, "I failed to delete an active item" );
@@ -388,7 +405,7 @@ class ListCleanup
 					{
 					if( searchItem.creationSentenceNr() >= lowestSentenceNr )
 						{
-						if( myList_.deleteItem( isAvailableForRollback, searchItem ) != Constants.RESULT_OK )
+						if( myList_.deleteItem( searchItem ) != Constants.RESULT_OK )
 							return myList_.addError( 1, moduleNameString_, "I failed to delete an inactive item" );
 						}
 					else
@@ -411,7 +428,7 @@ class ListCleanup
 					{
 					if( searchItem.creationSentenceNr() >= lowestSentenceNr )
 						{
-						if( myList_.deleteItem( isAvailableForRollback, searchItem ) != Constants.RESULT_OK )
+						if( myList_.deleteItem( searchItem ) != Constants.RESULT_OK )
 							return myList_.addError( 1, moduleNameString_, "I failed to delete an archived item" );
 						}
 					else
@@ -444,12 +461,13 @@ class ListCleanup
 					{
 					if( searchItem.creationSentenceNr() >= lowestSentenceNr )
 						{
-						if( myList_.deleteItem( isAvailableForRollback, searchItem ) != Constants.RESULT_OK )
+						if( myList_.deleteItem( searchItem ) != Constants.RESULT_OK )
 							return myList_.addError( 1, moduleNameString_, "I failed to delete a replaced item" );
 						}
 					else
 						{
-						searchItem.clearReplacedSentenceNr();
+//						searchItem.clearReplacingItem();
+//						searchItem.clearReplacedSentenceNr();
 
 						if( searchItem.wasActiveBefore() )
 							{
@@ -483,46 +501,144 @@ class ListCleanup
 		return Constants.RESULT_OK;
 		}
 
-	protected byte rollbackDeletedRedoInfo()
+	protected byte redoCurrentSentence()
 		{
-		Item searchItem = myList_.firstDeletedItem();
+		Item searchItem = myList_.firstActiveItem();
 
 		while( searchItem != null )
 			{
-			if( searchItem.isAvailableForRollbackAfterDelete &&
-			searchItem.hasCurrentDeletedSentenceNr() )
+			if( searchItem.hasCurrentInactiveSentenceNr() )
 				{
-				searchItem.isAvailableForRollbackAfterDelete = false;
-
-				if( myList_.removeItemFromList( searchItem ) == Constants.RESULT_OK )
+				if( myList_.inactivateItem( searchItem ) == Constants.RESULT_OK )
+					searchItem = myList_.nextListItem();
+				else
+					return myList_.addError( 1, moduleNameString_, "I failed to inactivate an active item" );
+				}
+			else
+				{
+				if( searchItem.hasCurrentArchivedSentenceNr() )
 					{
-					if( searchItem.hasInactiveSentenceNr() )
+					if( myList_.archiveItem( searchItem ) == Constants.RESULT_OK )
+						searchItem = myList_.nextListItem();
+					else
+						return myList_.addError( 1, moduleNameString_, "I failed to archive an active item" );
+					}
+				else
+					searchItem = searchItem.nextItem;
+				}
+			}
+
+		searchItem = myList_.firstInactiveItem();
+
+		while( searchItem != null )
+			{
+			if( searchItem.hasCurrentActiveSentenceNr() )
+				{
+				if( myList_.activateItem( searchItem ) == Constants.RESULT_OK )
+					searchItem = myList_.nextListItem();
+				else
+					return myList_.addError( 1, moduleNameString_, "I failed to activate an inactive item" );
+				}
+			else
+				{
+				if( searchItem.hasCurrentArchivedSentenceNr() )
+					{
+					if( myList_.archiveItem( searchItem ) == Constants.RESULT_OK )
+						searchItem = myList_.nextListItem();
+					else
+						return myList_.addError( 1, moduleNameString_, "I failed to archive an inactive item" );
+					}
+				else
+					searchItem = searchItem.nextItem;
+				}
+			}
+
+		searchItem = myList_.firstArchivedItem();
+
+		while( searchItem != null )
+			{
+			if( searchItem.hasCurrentActiveSentenceNr() )
+				{
+				if( myList_.activateItem( searchItem ) == Constants.RESULT_OK )
+					searchItem = myList_.nextListItem();
+				else
+					return myList_.addError( 1, moduleNameString_, "I failed to activate an archived item" );
+				}
+			else
+				{
+				if( searchItem.hasCurrentInactiveSentenceNr() )
+					{
+					if( myList_.inactivateItem( searchItem ) == Constants.RESULT_OK )
+						searchItem = myList_.nextListItem();
+					else
+						return myList_.addError( 1, moduleNameString_, "I failed to inactivate an archived item" );
+					}
+				else
+					searchItem = searchItem.nextItem;
+				}
+			}
+
+		searchItem = myList_.firstReplacedItem();
+
+		while( searchItem != null )
+			{
+			if( searchItem.hasCurrentActiveSentenceNr() )
+				{
+				if( myList_.activateItem( searchItem ) == Constants.RESULT_OK )
+					searchItem = myList_.nextListItem();
+				else
+					return myList_.addError( 1, moduleNameString_, "I failed to activate a replaced item" );
+				}
+			else
+				{
+				if( searchItem.hasCurrentInactiveSentenceNr() )
+					{
+					if( myList_.inactivateItem( searchItem ) == Constants.RESULT_OK )
+						searchItem = myList_.nextListItem();
+					else
+						return myList_.addError( 1, moduleNameString_, "I failed to inactivate a replaced item" );
+					}
+				else
+					{
+					if( searchItem.hasCurrentArchivedSentenceNr() )
 						{
-						if( searchItem.hasArchivedSentenceNr() )
-							{
-							if( myList_.addItemToList( Constants.QUERY_ARCHIVED_CHAR, searchItem ) == Constants.RESULT_OK )
-								searchItem = myList_.nextListItem();
-							else
-								return myList_.addError( 1, moduleNameString_, "I failed to add an item to the archive list" );
-							}
+						if( myList_.archiveItem( searchItem ) == Constants.RESULT_OK )
+							searchItem = myList_.nextListItem();
 						else
-							{
-							if( myList_.addItemToList( Constants.QUERY_INACTIVE_CHAR, searchItem ) == Constants.RESULT_OK )
-								searchItem = myList_.nextListItem();
-							else
-								return myList_.addError( 1, moduleNameString_, "I failed to add an item to the inactive list" );
-							}
+							return myList_.addError( 1, moduleNameString_, "I failed to archive a replaced item" );
+						}
+					else
+						searchItem = searchItem.nextItem;
+					}
+				}
+			}
+
+		searchItem = myList_.firstDeletedItem();
+
+		while( searchItem != null )
+			{
+			if( searchItem.hasCurrentOriginalSentenceNr() )
+				{
+				if( searchItem.wasActiveBefore() )
+					{
+					if( myList_.activateItem( searchItem ) != Constants.RESULT_OK )
+						return myList_.addError( 1, moduleNameString_, "I failed to activate a deleted item" );
+					}
+				else
+					{
+					if( searchItem.wasInactiveBefore() )
+						{
+						if( myList_.inactivateItem( searchItem ) != Constants.RESULT_OK )
+							return myList_.addError( 1, moduleNameString_, "I failed to inactivate a deleted item" );
 						}
 					else
 						{
-						if( myList_.addItemToList( Constants.QUERY_ACTIVE_CHAR, searchItem ) == Constants.RESULT_OK )
-							searchItem = myList_.nextListItem();
-						else
-							return myList_.addError( 1, moduleNameString_, "I failed to add an item to the active list" );
+						if( myList_.archiveItem( searchItem ) != Constants.RESULT_OK )
+							return myList_.addError( 1, moduleNameString_, "I failed to inactivate a deleted item" );
 						}
 					}
-				else
-					return myList_.addError( 1, moduleNameString_, "I failed to remove an item from the deleted list" );
+
+				searchItem = myList_.nextListItem();
 				}
 			else
 				searchItem = searchItem.nextItem;
@@ -538,26 +654,35 @@ class ListCleanup
 
 		while( searchItem != null )
 			{
-			if( searchItem.activeSentenceNr() >= CommonVariables.currentSentenceNr )
+			if( searchItem.hasCurrentActiveSentenceNr() )
 				{
-				if( searchItem.hasInactiveSentenceNr() &&
-				searchItem.hasCurrentActiveSentenceNr() &&
-				searchItem.inactiveSentenceNr() < searchItem.activeSentenceNr() )
+				if( searchItem.hasCurrentCreationSentenceNr() )
 					{
-					if( myList_.inactivateItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to inactivate an active item" );
+					if( myList_.deleteItem( searchItem ) != Constants.RESULT_OK )
+						return myList_.addError( 1, moduleNameString_, "I failed to delete an active item" );
 					}
 				else
 					{
-					if( isAssignment )
+					if( searchItem.hasInactiveSentenceNr() &&
+					searchItem.hasCurrentActiveSentenceNr() &&
+					searchItem.inactiveSentenceNr() < searchItem.activeSentenceNr() )
 						{
-						if( myList_.archiveItem( searchItem ) != Constants.RESULT_OK )
-							return myList_.addError( 1, moduleNameString_, "I failed to archive an active item" );
+						if( myList_.inactivateItem( searchItem ) != Constants.RESULT_OK )
+							return myList_.addError( 1, moduleNameString_, "I failed to inactivate an active item" );
 						}
 					else
 						{
-						if( myList_.replaceItem( searchItem ) != Constants.RESULT_OK )
-							return myList_.addError( 1, moduleNameString_, "I failed to replace an active item" );
+						// Only assignments can be archived
+						if( isAssignment )
+							{
+							if( myList_.archiveItem( searchItem ) != Constants.RESULT_OK )
+								return myList_.addError( 1, moduleNameString_, "I failed to archive an active item" );
+							}
+						else
+							{
+							if( myList_.replaceItem( searchItem ) != Constants.RESULT_OK )
+								return myList_.addError( 1, moduleNameString_, "I failed to replace an active item" );
+							}
 						}
 					}
 
@@ -571,19 +696,26 @@ class ListCleanup
 
 		while( searchItem != null )
 			{
-			if( searchItem.inactiveSentenceNr() >= CommonVariables.currentSentenceNr )
+			if( searchItem.hasCurrentInactiveSentenceNr() )
 				{
-				if( searchItem.hasActiveSentenceNr() &&
-				searchItem.hasCurrentInactiveSentenceNr() &&
-				searchItem.activeSentenceNr() < searchItem.inactiveSentenceNr() )
+				if( searchItem.hasCurrentCreationSentenceNr() )
 					{
-					if( myList_.activateItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to activate an inactive item" );
+					if( myList_.deleteItem( searchItem ) != Constants.RESULT_OK )
+						return myList_.addError( 1, moduleNameString_, "I failed to delete an inactive item" );
 					}
 				else
 					{
-					if( myList_.archiveItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to archive an inactive item" );
+					if( searchItem.hasActiveSentenceNr() &&
+					searchItem.activeSentenceNr() < searchItem.inactiveSentenceNr() )
+						{
+						if( myList_.activateItem( searchItem ) != Constants.RESULT_OK )
+							return myList_.addError( 1, moduleNameString_, "I failed to activate an inactive item" );
+						}
+					else
+						{
+						if( myList_.archiveItem( searchItem ) != Constants.RESULT_OK )
+							return myList_.addError( 1, moduleNameString_, "I failed to archive an inactive item" );
+						}
 					}
 
 				searchItem = myList_.nextListItem();
@@ -596,21 +728,25 @@ class ListCleanup
 
 		while( searchItem != null )
 			{
-			if( ( searchItem.archivedSentenceNr() == CommonVariables.currentSentenceNr &&
-			searchItem.creationSentenceNr() < CommonVariables.currentSentenceNr ) ||
-
-			( searchItem.archivedSentenceNr() + 1 == CommonVariables.currentSentenceNr &&
-			searchItem.creationSentenceNr() + 1 == CommonVariables.currentSentenceNr ) )
+			if( searchItem.hasCurrentArchivedSentenceNr() )
 				{
-				if( searchItem.wasActiveBefore() )
+				if( searchItem.hasCurrentCreationSentenceNr() )
 					{
-					if( myList_.activateItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to activate an archived item" );
+					if( myList_.deleteItem( searchItem ) != Constants.RESULT_OK )
+						return myList_.addError( 1, moduleNameString_, "I failed to delete an archived item" );
 					}
 				else
 					{
-					if( myList_.inactivateItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to inactivate an archived item" );
+					if( searchItem.wasActiveBefore() )
+						{
+						if( myList_.activateItem( searchItem ) != Constants.RESULT_OK )
+							return myList_.addError( 1, moduleNameString_, "I failed to activate an archived item" );
+						}
+					else
+						{
+						if( myList_.inactivateItem( searchItem ) != Constants.RESULT_OK )
+							return myList_.addError( 1, moduleNameString_, "I failed to inactivate an archived item" );
+						}
 					}
 
 				searchItem = myList_.nextListItem();
@@ -623,11 +759,7 @@ class ListCleanup
 
 		while( searchItem != null )
 			{
-			if( ( searchItem.replacedSentenceNr() == CommonVariables.currentSentenceNr &&
-			searchItem.creationSentenceNr() < CommonVariables.currentSentenceNr ) ||
-
-			( searchItem.replacedSentenceNr() + 1 == CommonVariables.currentSentenceNr &&
-			searchItem.creationSentenceNr() + 1 == CommonVariables.currentSentenceNr ) )
+			if( searchItem.hasCurrentReplacedSentenceNr() )
 				{
 				if( searchItem.wasActiveBefore() )
 					{
@@ -645,126 +777,6 @@ class ListCleanup
 						{
 						if( myList_.archiveItem( searchItem ) != Constants.RESULT_OK )
 							return myList_.addError( 1, moduleNameString_, "I failed to archive a replaced item" );
-						}
-					}
-
-				searchItem = myList_.nextListItem();
-				}
-			else
-				searchItem = searchItem.nextItem;
-			}
-
-		return Constants.RESULT_OK;
-		}
-
-	protected byte redoCurrentSentence()
-		{
-		Item searchItem = myList_.firstActiveItem();
-
-		while( searchItem != null )
-			{
-			if( ( searchItem.hasCurrentInactiveSentenceNr() ||
-			searchItem.hasCurrentArchivedSentenceNr() ||
-			searchItem.hasCurrentReplacedSentenceNr() ) &&
-
-			searchItem.activeSentenceNr() < CommonVariables.currentSentenceNr )
-				{
-				if( searchItem.inactiveSentenceNr() > searchItem.archivedSentenceNr() )
-					{
-					if( myList_.inactivateItem( searchItem ) == Constants.RESULT_OK )
-						searchItem = myList_.nextListItem();
-					else
-						return myList_.addError( 1, moduleNameString_, "I failed to inactivate an active item" );
-					}
-				else
-					{
-					if( searchItem.hasCurrentArchivedSentenceNr() )
-						{
-						if( myList_.archiveItem( searchItem ) == Constants.RESULT_OK )
-							searchItem = myList_.nextListItem();
-						else
-							return myList_.addError( 1, moduleNameString_, "I failed to archive an active item" );
-						}
-					else
-						searchItem = searchItem.nextItem;
-					}
-				}
-			else
-				searchItem = searchItem.nextItem;
-			}
-
-		searchItem = myList_.firstInactiveItem();
-
-		while( searchItem != null )
-			{
-			if( ( searchItem.hasCurrentActiveSentenceNr() ||
-			searchItem.hasCurrentArchivedSentenceNr() ||
-			searchItem.hasCurrentReplacedSentenceNr() ) &&
-
-			searchItem.inactiveSentenceNr() < CommonVariables.currentSentenceNr )
-				{
-				if( searchItem.inactiveSentenceNr() > searchItem.archivedSentenceNr() )
-					{
-					if( myList_.activateItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to activate an inactive item" );
-					}
-				else
-					{
-					if( myList_.archiveItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to archive an inactive item" );
-					}
-
-				searchItem = myList_.nextListItem();
-				}
-			else
-				searchItem = searchItem.nextItem;
-			}
-
-		searchItem = myList_.firstArchivedItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem.wasActiveBefore() )
-					{
-					if( myList_.activateItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to activate an archived item" );
-					}
-				else
-					{
-					if( myList_.inactivateItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to inactivate an archived item" );
-					}
-
-				searchItem = myList_.nextListItem();
-				}
-			else
-				searchItem = searchItem.nextItem;
-			}
-
-		searchItem = myList_.firstReplacedItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem.wasActiveBefore() )
-					{
-					if( myList_.activateItem( searchItem ) != Constants.RESULT_OK )
-						return myList_.addError( 1, moduleNameString_, "I failed to activate a replaced item" );
-					}
-				else
-					{
-					if( searchItem.wasInactiveBefore() )
-						{
-						if( myList_.inactivateItem( searchItem ) != Constants.RESULT_OK )
-							return myList_.addError( 1, moduleNameString_, "I failed to inactivate a replaced item" );
-						}
-					else
-						{
-						if( myList_.archiveItem( searchItem ) != Constants.RESULT_OK )
-							return myList_.addError( 1, moduleNameString_, "I failed to inactivate a replaced item" );
 						}
 					}
 

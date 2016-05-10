@@ -1,12 +1,11 @@
-/*
- *	Class:			GrammarItem
+/*	Class:			GrammarItem
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -136,33 +135,36 @@ class GrammarItem : private Item
 
 	virtual void showString( bool isReturnQueryToPosition )
 		{
-		char statusString[2] = SPACE_STRING;
+		char *queryString;
+
 		statusString[0] = statusChar();
+
+		queryString = commonVariables()->queryString;
 
 		if( grammarString_ != NULL )
 			{
 			if( commonVariables()->hasFoundQuery )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, grammarString_ );
+			strcat( queryString, grammarString_ );
 			}
 
 		if( guideByGrammarString != NULL )
 			{
 			if( commonVariables()->hasFoundQuery )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, guideByGrammarString );
+			strcat( queryString, guideByGrammarString );
 			}
 		}
 
@@ -200,68 +202,72 @@ class GrammarItem : private Item
 		return grammarString_;
 		}
 
-	virtual char *extraItemString()
+	virtual char *virtualGuideByGrammarString()
 		{
 		return guideByGrammarString;
 		}
 
 	virtual char *toString( unsigned short queryWordTypeNr )
 		{
+		char *queryString;
 		char *grammarWordTypeString = myWordItem()->wordTypeNameString( grammarWordTypeNr_ );
+
 		Item::toString( queryWordTypeNr );
+
+		queryString = commonVariables()->queryString;
 
 		if( isDefinitionStart_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isDefinitionStart" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isDefinitionStart" );
 			}
 
 		if( isNewStart_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isNewStart" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isNewStart" );
 			}
 
 		if( isOptionStart_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isOptionStart" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isOptionStart" );
 			}
 
 		if( isOptionEnd )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isOptionEnd" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isOptionEnd" );
 			}
 
 		if( isChoiceStart_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isChoiceStart" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isChoiceStart" );
 			}
 
 		if( isChoiceEnd )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isChoiceEnd" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isChoiceEnd" );
 			}
 
 		if( isSkipOptionForWriting_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isSkipOptionForWriting" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isSkipOptionForWriting" );
 			}
 /*
 		if( isGrammarItemInUse )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isGrammarItemInUse" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isGrammarItemInUse" );
 			}
 */
 		if( grammarParameter_ > NO_GRAMMAR_PARAMETER )
 			{
 			sprintf( tempString, "%cgrammarParameter:%u", QUERY_SEPARATOR_CHAR, grammarParameter_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( grammarWordTypeNr_ > WORD_TYPE_UNDEFINED )
@@ -271,34 +277,34 @@ class GrammarItem : private Item
 			else
 				sprintf( tempString, "%cgrammarWordType:%s", QUERY_SEPARATOR_CHAR, grammarWordTypeString );
 
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( grammarString_ != NULL )
 			{
 			sprintf( tempString, "%cgrammarString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, grammarString_, QUERY_STRING_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( guideByGrammarString != NULL )
 			{
 			sprintf( tempString, "%cguideByGrammarString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, guideByGrammarString, QUERY_STRING_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( definitionGrammarItem != NULL )
 			{
 			sprintf( tempString, "%cdefinitionGrammarItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, definitionGrammarItem->creationSentenceNr(), QUERY_SEPARATOR_CHAR, definitionGrammarItem->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( nextDefinitionGrammarItem != NULL )
 			{
 			sprintf( tempString, "%cnextDefinitionGrammarItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, nextDefinitionGrammarItem->creationSentenceNr(), QUERY_SEPARATOR_CHAR, nextDefinitionGrammarItem->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 
@@ -327,15 +333,6 @@ class GrammarItem : private Item
 	bool isSkipOptionForWriting()
 		{
 		return isSkipOptionForWriting_;
-		}
-
-	bool isWordEnding()
-		{
-		return ( grammarParameter_ == WORD_FEMININE_PROPER_NAME_ENDING ||
-				grammarParameter_ == WORD_MASCULINE_PROPER_NAME_ENDING ||
-				grammarParameter_ == WORD_FEMININE_SINGULAR_NOUN_ENDING ||
-				grammarParameter_ == WORD_MASCULINE_SINGULAR_NOUN_ENDING ||
-				grammarParameter_ == WORD_PLURAL_NOUN_ENDING );
 		}
 
 	bool isGrammarDefinition()

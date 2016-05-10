@@ -1,0 +1,50 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un parent est probablement une personne.
+< Un père est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un enfant est probablement une personne.
+< Un fils est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Philippe était un homme.
+< Antoine n'a aucun père plus.
+< Antoine avait un père, appelé Philippe.
+* 
+* Mes hypothèses:
+< Philippe a probablement un enfant, appelé Antoine.
+< Philippe était probablement une personne.
+< Philippe ne était probablement pas une femme.
+< Philippe était probablement un parent de Antoine.
+< Philippe était probablement partie d'une famille.
+< Philippe ne était probablement pas une mère.
+< Antoine est probablement un enfant de Philippe.
+< Antoine est probablement partie d'une famille.
+< Antoine est possible une personne.
+< Antoine avait probablement un parent, appelé Philippe.
+* 
+* Mes questions:
+< Est Antoine un homme, une femme, une jeune-fille ou un garçon?
+< Est Antoine un fils ou une fille?
+< 

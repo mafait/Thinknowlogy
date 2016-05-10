@@ -1,10 +1,9 @@
-/*
- *	Class:			CommonVariables
+/*	Class:			CommonVariables
  *	Purpose:		To hold the common variables
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -106,7 +105,6 @@ class CommonVariables
 	bool hasShownWarning;
 
 	bool isAssignmentChanged;
-	bool isDontIncrementCurrentSentenceNr;
 	bool isFirstAnswerToQuestion;
 	bool isQuestionAlreadyAnswered;
 
@@ -151,10 +149,10 @@ class CommonVariables
 	WordItem *predefinedNounLanguageWordItem;
 	WordItem *predefinedNounUserWordItem;
 
-	char queryString[MAX_SENTENCE_STRING_LENGTH];
-
 	char learnedFromUserString[MAX_SENTENCE_STRING_LENGTH];
-	char writeSentenceString[MAX_SENTENCE_STRING_LENGTH];
+	char queryString[MAX_SENTENCE_STRING_LENGTH];
+	char writtenSentenceString[MAX_SENTENCE_STRING_LENGTH];
+	char writtenUserSentenceString[MAX_SENTENCE_STRING_LENGTH];
 
 
 	protected:
@@ -171,7 +169,6 @@ class CommonVariables
 		hasShownWarning = false;
 
 		isAssignmentChanged = false;
-		isDontIncrementCurrentSentenceNr = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
 
@@ -217,8 +214,10 @@ class CommonVariables
 		predefinedNounLanguageWordItem = NULL;
 		predefinedNounUserWordItem = NULL;
 
+		strcpy( learnedFromUserString, EMPTY_STRING );
 		strcpy( queryString, EMPTY_STRING );
-		strcpy( writeSentenceString, EMPTY_STRING );
+		strcpy( writtenSentenceString, EMPTY_STRING );
+		strcpy( writtenUserSentenceString, EMPTY_STRING );
 		}
 	};
 

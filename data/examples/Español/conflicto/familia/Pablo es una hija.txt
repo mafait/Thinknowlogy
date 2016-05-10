@@ -1,4 +1,4 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Pablo es hijo de Juan y Ana.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».
 Pablo es una hija.

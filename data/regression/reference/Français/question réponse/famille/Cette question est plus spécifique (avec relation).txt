@@ -1,0 +1,77 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un parent est probablement une personne.
+< Un père est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un enfant est probablement une personne.
+< Un fils est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* Je ne sais rien sur Olivier, mais je vais garder cette question à l'esprit.
+* 
+* 
+* Cette question est plus spécifique que votre question antérieure:
+< Est Olivier un père?
+* 
+* Vos questions qui sont répondues:
+< Est Olivier un père?
+* 
+* Mes hypothèses:
+< Olivier est probablement un père.
+< Olivier est probablement un homme.
+< Olivier est possible une personne.
+< Olivier n'est peut-être pas une femme.
+* 
+* Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
+* 
+* Je ne sais rien sur Amélie, mais je vais garder cette question à l'esprit.
+* 
+* 
+* Cette question est plus spécifique que votre question antérieure:
+< Est Amélie un père ou une mère?
+* Je ne sais rien sur Amélie, mais je vais garder cette question à l'esprit.
+* 
+* 
+* Vos questions qui sont répondues:
+< Est Amélie une mère?
+< Est Amélie un père ou une mère?
+* 
+* Mes conclusions:
+< Amélie est une femme.
+* 
+* Mes hypothèses:
+< Amélie est probablement une personne.
+< Amélie n'est probablement pas un homme.
+< Amélie est probablement un parent.
+< Amélie est probablement partie d'une famille.
+< Amélie n'est probablement pas un père.
+< Amélie a possible un enfant.
+< 
+* 
+* Cette question est plus spécifique que votre question antérieure:
+< Est Amélie une mère?
+* 
+* Je sais seulement:
+< Amélie est une mère.
+* 
+* Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
+* 

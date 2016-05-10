@@ -2,4 +2,4 @@
 John is the father and Anna is the mother of Paul, Joe and Laura.
 Anna is a person.
 Laura is part of a family.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

@@ -1,10 +1,9 @@
-﻿/*
- *	Class:		Constants
+﻿/*	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -25,9 +24,10 @@ class Constants
 	{
 	// Version constants
 	protected static final String	PRODUCT_NAME =													"Thinknowlogy";
-	protected static final String	VERSION_NAME =													"2015r1 (Esperanza)";
+	protected static final String	VERSION_NAME =													"2016r1 (Huguenot)";
 
 	// Character constants
+	protected static final char		SPACE_CHAR =													' ';
 	protected static final char		BACK_SPACE_CHAR =												'\b';
 	protected static final char		BELL_CHAR =														'\u0007';
 	protected static final char		NEW_LINE_CHAR =													'\n';
@@ -262,7 +262,6 @@ class Constants
 	protected static final char		QUERY_STRING_START_CHAR =										SYMBOL_DOUBLE_QUOTE;
 	protected static final char		QUERY_STRING_END_CHAR =											SYMBOL_DOUBLE_QUOTE;
 
-	protected static final char		TEXT_DIACRITICAL_CHAR =											SYMBOL_BACK_SLASH;
 	protected static final char		TEXT_BELL_CHAR =												'a';
 	protected static final char		TEXT_BACK_SPACE_CHAR =											'b';
 	protected static final char		TEXT_NEW_LINE_CHAR =											'n';
@@ -468,9 +467,9 @@ class Constants
 	//	Adjectives
 	protected static final short	WORD_PARAMETER_ADJECTIVE_ASSIGNED =										600;
 	protected static final short	WORD_PARAMETER_ADJECTIVE_BUSY =											601;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_CLEAR =										602;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_DONE =											603;
-	protected static final short	WORD_PARAMETER_ADJECTIVE_DEFENSIVE =									604;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_DONE =											602;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_DEFENSIVE =									603;
+	protected static final short	WORD_PARAMETER_ADJECTIVE_EMPTY =										604;
 	protected static final short	WORD_PARAMETER_ADJECTIVE_EXCLUSIVE =									605;
 	protected static final short	WORD_PARAMETER_ADJECTIVE_INVERTED =										606;
 	protected static final short	WORD_PARAMETER_ADJECTIVE_FEMININE =										607;
@@ -510,6 +509,7 @@ class Constants
 	protected static final short	WORD_PARAMETER_ADVERB_ASSUMPTION_POSSIBLY =								703;
 	protected static final short	WORD_PARAMETER_ADVERB_ASSUMPTION_PROBABLY =								704;
 	protected static final short	WORD_PARAMETER_ADVERB_NOT =												705;
+	protected static final short	WORD_PARAMETER_ADVERB_NOT_FRENCH =										706;
 
 	// Interjections
 	protected static final short	WORD_PARAMETER_INTERJECTION_YES =										800;
@@ -534,9 +534,10 @@ class Constants
 	//	Conjunctions
 	protected static final short	WORD_PARAMETER_CONJUNCTION_AND =										1000;
 	protected static final short	WORD_PARAMETER_CONJUNCTION_OR =											1001;
-	protected static final short	WORD_PARAMETER_CONJUNCTION_THAN =										1002;
-	protected static final short	WORD_PARAMETER_CONJUNCTION_DUTCH_ZOWEL =								1003;
-	protected static final short	WORD_PARAMETER_CONJUNCTION_DUTCH_ALS =									1004;
+//	protected static final short	WORD_PARAMETER_CONJUNCTION_THAN =										1002;
+//	protected static final short	WORD_PARAMETER_CONJUNCTION_FRENCH_THAN =								1003;
+	protected static final short	WORD_PARAMETER_CONJUNCTION_DUTCH_ZOWEL =								1004;
+	protected static final short	WORD_PARAMETER_CONJUNCTION_DUTCH_ALS =									1005;
 
 	//	Singular / plural nouns
 	protected static final short	WORD_PARAMETER_NOUN_DEVELOPER =											1100;
@@ -582,6 +583,7 @@ class Constants
 	protected static final short	WORD_PARAMETER_PREPOSITION_IN =											2102;
 	protected static final short	WORD_PARAMETER_PREPOSITION_TO =											2103;
 	protected static final short	WORD_PARAMETER_PREPOSITION_OF =											2104;
+	protected static final short	WORD_PARAMETER_PREPOSITION_FRENCH_A =									2105;
 
 	//	Singular verbs
 	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IS =										2200;
@@ -632,6 +634,9 @@ class Constants
 
 	//	Plural noun ending
 	protected static final short	WORD_PLURAL_NOUN_ENDING =												3004;
+
+	// Merged words
+	protected static final short	WORD_MERGED_WORD =														3005;
 
 
 	//	Grammar parameters
@@ -701,28 +706,24 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_REGRESSION =												134;
 
 	// Console (main menu)
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_BOSTON =							210;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_PRESIDENTS =						211;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_CONNECT4 =						212;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_TOWER_OF_HANOI =					213;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_REASONING_FAMILY =							214;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_AMBIGUITY_SUBMENU =											216;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_PROGRAMMING_SUBMENU =										217;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_REASONING_SUBMENU =											218;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SUBMENU =											219;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_CONFLICT_SUBMENU =									220;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_JUSTIFICATION_REPORT_SUBMENU =						221;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_QUESTION_SUBMENU =									222;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SHOW_INFO_SUBMENU =									223;
-
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_BACK =														224;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_HELP =														225;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE =											226;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT =												227;
-
-	// Console (font size)
-	protected static final short	INTERFACE_CONSOLE_FONT_SIZE_DECREASE =													230;
-	protected static final short	INTERFACE_CONSOLE_FONT_SIZE_INCREASE =													231;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_BOSTON =							200;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_PRESIDENTS =						201;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_CONNECT4 =						202;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_TOWER_OF_HANOI =					203;
+	protected static final short	INTERFACE_CONSOLE_REASONING_READ_THE_FILE_SCIENTIFIC_CHALLENGE =						204;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_REASONING_FAMILY =							205;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_AMBIGUITY_SUBMENU =											206;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_PROGRAMMING_SUBMENU =										207;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_REASONING_SUBMENU =											208;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SUBMENU =											209;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_CONFLICT_SUBMENU =									210;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_JUSTIFICATION_REPORT_SUBMENU =						211;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_QUESTION_SUBMENU =									212;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SHOW_INFO_SUBMENU =									213;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_BACK =														214;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_HELP =														215;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE =											216;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT =												217;
 
 	// Console (programming/connect4 sub-menu)
 	protected static final short	INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_MY_SET_IS_A =									300;
@@ -740,112 +741,110 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_PROGRAMMING_TOWER_OF_HANOI_EVEN_NUMBER_OF_DISCS =						310;
 	protected static final short	INTERFACE_CONSOLE_PROGRAMMING_TOWER_OF_HANOI_ODD_NUMBER_OF_DISCS =						311;
 
-	// Console (reasoning without prior knowledge sub-menu)
-	protected static final short	INTERFACE_CONSOLE_REASONING_EVERY_CAR_HAS_AN_ENGINE =									400;
-	protected static final short	INTERFACE_CONSOLE_REASONING_A_SAIL_IS_PART_OF_EVERY_SAILBOAT =							401;
-	protected static final short	INTERFACE_CONSOLE_REASONING_JAMES_WAS_THE_FATHER_OF_MICHAEL =							402;
-	protected static final short	INTERFACE_CONSOLE_REASONING_READ_THE_FILE_REASONING_ONLY_OPTION_LEFT_BOAT =				403;
-
 	// Console (reasoning/family definition sub-menu)
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_THE_FATHER_AND_ANN_IS_THE_MOTHER =			500;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_THE_FATHER_OF_PAUL_JOE_AND_LAURA =			501;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_THE_MOTHER_OF_PAUL_JOE_AND_LAURA =			502;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_SON_OF_JOHN_AND_ANN =						503;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_SON_OF_JOHN_AND_ANN =						504;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_DAUGHTER_OF_JOHN_AND_ANN =				505;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_THE_FATHER_AND_ANN_IS_THE_MOTHER =			400;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_THE_FATHER_OF_PAUL_JOE_AND_LAURA =			401;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_THE_MOTHER_OF_PAUL_JOE_AND_LAURA =			402;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_SON_OF_JOHN_AND_ANN =						403;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_SON_OF_JOHN_AND_ANN =						404;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_DAUGHTER_OF_JOHN_AND_ANN =				405;
 
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_FATHER =									506;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_MOTHER =									507;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_SON =										508;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_SON =										509;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_DAUGHTER =								510;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_FATHER =									406;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_MOTHER =									407;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_SON =										408;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_SON =										409;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_DAUGHTER =								410;
 
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_HAS_A_FATHER_CALLED_JOHN =						511;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_HAS_A_MOTHER_CALLED_ANN =						512;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_HAS_A_FATHER_CALLED_JOHN =						513;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_HAS_A_MOTHER_CALLED_ANN =						514;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_HAS_A_FATHER_CALLED_JOHN =						515;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_HAS_A_MOTHER_CALLED_ANN =						516;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_HAS_A_FATHER_CALLED_JOHN =						411;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_HAS_A_MOTHER_CALLED_ANN =						412;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_HAS_A_FATHER_CALLED_JOHN =						413;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_HAS_A_MOTHER_CALLED_ANN =						414;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_HAS_A_FATHER_CALLED_JOHN =						415;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_HAS_A_MOTHER_CALLED_ANN =						416;
 
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_PARENT =									517;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_PARENT =									518;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_PARENT_OF_PAUL_JOE_AND_LAURA =				519;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_PARENT_OF_PAUL_JOE_AND_LAURA =				520;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_HAS_2_PARENT_CALLED_JOHN_AND_ANN =				521;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_HAS_2_PARENT_CALLED_JOHN_AND_ANN =				522;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_HAS_2_PARENT_CALLED_JOHN_AND_ANN =				523;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_CHILD_OF_JOHN_AND_ANN =					524;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_CHILD_OF_JOHN_AND_ANN =						525;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_CHILD_OF_JOHN_AND_ANN =					526;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_PARENT =									417;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_PARENT =									418;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_PARENT_OF_PAUL_JOE_AND_LAURA =				419;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_PARENT_OF_PAUL_JOE_AND_LAURA =				420;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_HAS_2_PARENT_CALLED_JOHN_AND_ANN =				421;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_HAS_2_PARENT_CALLED_JOHN_AND_ANN =				422;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_HAS_2_PARENT_CALLED_JOHN_AND_ANN =				423;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_CHILD_OF_JOHN_AND_ANN =					424;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_CHILD_OF_JOHN_AND_ANN =						425;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_CHILD_OF_JOHN_AND_ANN =					426;
 
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_MAN =										527;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_WOMAN =										528;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_MAN =										529;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_MAN =										530;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_WOMAN =									531;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_CHILD =									532;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_CHILD =										533;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_CHILD =									534;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_BOY =										535;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_BOY =										536;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_GIRL =									537;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOHN_IS_A_MAN =										427;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_ANN_IS_A_WOMAN =										428;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_MAN =										429;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_MAN =										430;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_WOMAN =									431;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_CHILD =									432;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_CHILD =										433;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_CHILD =									434;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_PAUL_IS_A_BOY =										435;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_JOE_IS_A_BOY =										436;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_LAURA_IS_A_GIRL =									437;
 
 	// Console (reasoning/family conflict sub-menu)
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_JOHN_IS_A_WOMAN =							540;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_JOHN_IS_THE_MOTHER_PETE =					541;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_ANN_IS_A_SON =								542;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_PAUL_IS_A_DAUGHTER =						543;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_JOE_IS_A_MOTHER =							544;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_JOHN_IS_A_WOMAN =							440;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_JOHN_IS_THE_MOTHER_PETE =					441;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_ANN_IS_A_SON =								442;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_PAUL_IS_A_DAUGHTER =						443;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_JOE_IS_A_MOTHER =							444;
 
 	// Console (reasoning/family justification sub-menu)
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_FAMILY =				550;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_PARENT =				551;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_CHILD =				552;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_FATHER =				553;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_MOTHER =				554;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_SON =					555;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_DAUGHTER =				556;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_JOHN =					557;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_ANN =					558;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_PAUL =					559;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_JOE =					560;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_LAURA =				561;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_FAMILY =				450;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_PARENT =				451;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_CHILD =				452;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_FATHER =				453;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_MOTHER =				454;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_SON =					455;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_DAUGHTER =				456;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_JOHN =					457;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_ANN =					458;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_PAUL =					459;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_JOE =					460;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_LAURA =				461;
 
 	// Console (reasoning/family question sub-menu)
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_JOHN_A_FATHER =							570;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_JOHN_A_MOTHER =							571;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_JOHN_THE_FATHER_OF_PAUL =				572;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_JOHN_THE_MOTHER_OF_PAUL =				573;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_MAN =								574;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_WOMAN =							575;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_MAN_OR_A_WOMAN =					576;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_SON =								577;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_DAUGHTER =						578;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_SON_OR_A_DAUGHTER =				579;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_JOHN_A_FATHER =							470;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_JOHN_A_MOTHER =							471;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_JOHN_THE_FATHER_OF_PAUL =				472;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_JOHN_THE_MOTHER_OF_PAUL =				473;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_MAN =								474;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_WOMAN =							475;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_MAN_OR_A_WOMAN =					476;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_SON =								477;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_DAUGHTER =						478;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_SON_OR_A_DAUGHTER =				479;
 
 	// Console (reasoning/family show information sub-menu)
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_FAMILY =						580;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_PARENT =						581;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_CHILD =						582;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_FATHER =						583;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_MOTHER =						584;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_SON =							585;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_DAUGHTER =					586;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_JOHN =						587;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_ANN =							588;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_PAUL =						589;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_JOE =							590;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_LAURA =						591;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_FAMILY =						480;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_PARENT =						481;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_CHILD =						482;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_FATHER =						483;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_MOTHER =						484;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_SON =							485;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_DAUGHTER =					486;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_JOHN =						487;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_ANN =							488;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_PAUL =						489;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_JOE =							490;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_LAURA =						491;
+
+	// Console (font size sub-menu)
+	protected static final short	INTERFACE_CONSOLE_FONT_SIZE_DECREASE =													500;
+	protected static final short	INTERFACE_CONSOLE_FONT_SIZE_INCREASE =													501;
 
 	// Console (help sub-menu)
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_LANGUAGES =									900;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_LISTS =										901;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_USERS =										902;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_WORD_TYPES =									903;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_QUERY_COMMANDS =										904;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_COPYRIGHT =												905;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_GPLv2_LICENSE =											906;
-	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_WARRANTY =												907;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_LANGUAGES =									510;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_LISTS =										511;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_USERS =										512;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_WORD_TYPES =									513;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_QUERY_COMMANDS =										514;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_COPYRIGHT =												515;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_GPLv2_LICENSE =											516;
+	protected static final short	INTERFACE_CONSOLE_HELP_SHOW_THE_WARRANTY =												517;
 
 	// Grammar
 	protected static final short	INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_START =										1000;
@@ -947,8 +946,8 @@ class Constants
 	protected static final short	INTERFACE_LISTING_RELATED_QUESTIONS =													1427;
 
 	// Listing (old information)
-	protected static final short	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION =							1430;
-	protected static final short	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION =							1431;
+	protected static final short	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION_BUT_NO_RELATION =			1430;
+	protected static final short	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION_BUT_NO_RELATION =			1431;
 	protected static final short	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_ASSUMPTION =	1432;
 	protected static final short	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_CONCLUSION =	1433;
 	protected static final short	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONFIRMED =									1434;

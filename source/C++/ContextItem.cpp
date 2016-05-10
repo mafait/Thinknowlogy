@@ -1,11 +1,10 @@
-/*
- *	Class:			ContextItem
+/*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -36,7 +35,7 @@ class ContextItem : private Item
 
 	// Private loadable variables
 
-	bool isCompoundCollectionCollectedWithItself_;
+	bool isCompoundCollectionSpanishAmbiguous_;
 
 	unsigned short contextWordTypeNr_;
 	unsigned short specificationWordTypeNr_;
@@ -49,13 +48,13 @@ class ContextItem : private Item
 	protected:
 	// Constructor / deconstructor
 
-	ContextItem( bool isCompoundCollectionCollectedWithItself, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	ContextItem( bool isCompoundCollectionSpanishAmbiguous, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ContextItem", commonVariables, myList, myWordItem );
 
 		// Private loadable variables
 
-		isCompoundCollectionCollectedWithItself_ = isCompoundCollectionCollectedWithItself;
+		isCompoundCollectionSpanishAmbiguous_ = isCompoundCollectionSpanishAmbiguous;
 
 		contextWordTypeNr_ = contextWordTypeNr;
 		specificationWordTypeNr_ = specificationWordTypeNr;
@@ -71,7 +70,7 @@ class ContextItem : private Item
 	virtual void showWordReferences( bool isReturnQueryToPosition )
 		{
 		char *wordString;
-		char statusString[2] = SPACE_STRING;
+
 		statusString[0] = statusChar();
 
 		if( specificationWordItem_ != NULL &&
@@ -127,27 +126,31 @@ class ContextItem : private Item
 	virtual char *toString( unsigned short queryWordTypeNr )
 		{
 		char *wordString;
+		char *queryString;
 		char *contextWordTypeString = myWordItem()->wordTypeNameString( contextWordTypeNr_ );
 		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
+
 		Item::toString( queryWordTypeNr );
+
+		queryString = commonVariables()->queryString;
 
 		if( contextWordTypeString == NULL )
 			sprintf( tempString, "%ccontextWordType:%c%u", QUERY_SEPARATOR_CHAR, QUERY_WORD_TYPE_CHAR, contextWordTypeNr_ );
 		else
 			sprintf( tempString, "%ccontextWordType:%s%c%u", QUERY_SEPARATOR_CHAR, contextWordTypeString, QUERY_WORD_TYPE_CHAR, contextWordTypeNr_ );
 
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
-		if( isCompoundCollectionCollectedWithItself_ )
+		if( isCompoundCollectionSpanishAmbiguous_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isCompoundCollectionCollectedWithItself" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isCompoundCollectionSpanishAmbiguous" );
 			}
 
 		if( contextNr_ > NO_CONTEXT_NR )
 			{
 			sprintf( tempString, "%ccontextNr:%u", QUERY_SEPARATOR_CHAR, contextNr_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( specificationWordTypeNr_ > WORD_TYPE_UNDEFINED )
@@ -157,30 +160,30 @@ class ContextItem : private Item
 			else
 				sprintf( tempString, "%cspecificationWordType:%s%c%u", QUERY_SEPARATOR_CHAR, specificationWordTypeString, QUERY_WORD_TYPE_CHAR, specificationWordTypeNr_ );
 
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( specificationWordItem_ != NULL )
 			{
 			sprintf( tempString, "%cspecificationWord%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, specificationWordItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, specificationWordItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 
 			if( ( wordString = specificationWordItem_->wordTypeString( true, specificationWordTypeNr_ ) ) != NULL )
 				{
 				sprintf( tempString, "%c%s%c", QUERY_WORD_REFERENCE_START_CHAR, wordString, QUERY_WORD_REFERENCE_END_CHAR );
-				strcat( commonVariables()->queryString, tempString );
+				strcat( queryString, tempString );
 				}
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 
 	// Protected functions
 
-	bool isCompoundCollectionCollectedWithItself()
+	bool isCompoundCollectionSpanishAmbiguous()
 		{
-		return isCompoundCollectionCollectedWithItself_;
+		return isCompoundCollectionSpanishAmbiguous_;
 		}
 
 	unsigned short contextWordTypeNr()

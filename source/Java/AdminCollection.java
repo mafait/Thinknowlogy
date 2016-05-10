@@ -1,13 +1,12 @@
-/*
- *	Class:			AdminCollection
+/*	Class:			AdminCollection
  *	Supports class:	AdminItem
  *	Purpose:		To collect (associate, combine) words in the knowledge structure
  *					that belong together (which implies differentiating
  *					words that doesn't belong together)
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -36,6 +35,26 @@ class AdminCollection
 
 	// Private methods
 
+	private static int collectionNrByCompoundGeneralizationWordInAllWords( short collectionWordTypeNr, WordItem compoundGeneralizationWordItem )
+		{
+		int collectionNr;
+		WordItem currentWordItem;
+
+		if( collectionWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
+		compoundGeneralizationWordItem != null &&
+		( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
+			{
+			// Do for all active words
+			do	{
+				if( ( collectionNr = currentWordItem.collectionNrByCompoundGeneralizationWordInWord( collectionWordTypeNr, compoundGeneralizationWordItem ) ) > Constants.NO_COLLECTION_NR )
+					return collectionNr;
+				}
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		return Constants.NO_COLLECTION_NR;
+		}
+
 	private byte checkCollectionInAllWords( int collectionNr, WordItem collectionWordItem, WordItem commonWordItem )
 		{
 		short foundCollectionOrderNr = Constants.NO_ORDER_NR;
@@ -50,7 +69,7 @@ class AdminCollection
 				{
 				if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
 					{
-					// Do for all words
+					// Do for all active words
 					do	{
 						if( ( foundCollectionOrderNr = currentWordItem.collectionOrderNr( collectionNr, collectionWordItem, commonWordItem ) ) > Constants.NO_ORDER_NR )
 							{
@@ -215,8 +234,8 @@ class AdminCollection
 							{
 							if( !isExclusiveSpecification ||
 							generalizationWordItem == previousSpecificationWordItem ||
-							!generalizationWordItem.isNounWordCollectedWithItself() )
-								collectionNr = adminItem_.collectionNrByCompoundGeneralizationWordInAllWords( specificationWordTypeNr, compoundGeneralizationWordItem );
+							!generalizationWordItem.isNounWordSpanishAmbiguous() )
+								collectionNr = collectionNrByCompoundGeneralizationWordInAllWords( specificationWordTypeNr, compoundGeneralizationWordItem );
 							}
 
 						if( collectionNr > Constants.NO_COLLECTION_NR )
@@ -290,72 +309,61 @@ class AdminCollection
 		return collectionResult;
 		}
 
-	protected byte collectGeneralizationWordWithPreviousOne( boolean isPossessive, short generalizationWordTypeNr, short specificationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem )
+	protected byte collectGeneralizationWordWithPreviousOne( boolean isAssignment, boolean isPossessive, short generalizationWordTypeNr, short specificationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
 		GeneralizationResultType generalizationResult;
 		boolean isNeedingAuthorizationForChanges;
-		boolean isSpecificationCollectedWithItself;
-		boolean hasCollectedGeneralizationWords = false;
+		boolean isSpecificationWordSpanishAmbiguous;
 		boolean isExclusiveGeneralization = false;
 		SpecificationItem foundSpecificationItem;
 		WordItem currentGeneralizationWordItem;
-		WordItem previousSpecificationWordItem = null;
 		WordItem previousGeneralizationWordItem = null;
+		WordItem previousSpecificationWordItem = null;
 
 		if( generalizationWordItem != null )
 			{
 			if( specificationWordItem != null )
 				{
 				isNeedingAuthorizationForChanges = specificationWordItem.isNeedingAuthorizationForChanges();
-				isSpecificationCollectedWithItself = specificationWordItem.isNounWordCollectedWithItself();
+				isSpecificationWordSpanishAmbiguous = specificationWordItem.isNounWordSpanishAmbiguous();
 
 				if( specificationCollectionNr == Constants.NO_COLLECTION_NR )
 					specificationCollectionNr = specificationWordItem.compoundCollectionNr( specificationWordTypeNr );
 
 				if( ( currentGeneralizationWordItem = CommonVariables.firstWordItem ) != null )
 					{
-					// Do for all words
+					// Do for all active words
 					do	{
 						if( currentGeneralizationWordItem != generalizationWordItem &&
-						currentGeneralizationWordItem.hasWordType( generalizationWordTypeNr ) )
+						currentGeneralizationWordItem.hasWordType( false, generalizationWordTypeNr ) &&
+						// Try to find matching specification word
+						( foundSpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( false, false, isPossessive, Constants.NO_QUESTION_PARAMETER, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != null )
 							{
-							// Try to find matching specification word
-							if( ( foundSpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( false, false, isPossessive, Constants.NO_QUESTION_PARAMETER, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ) != null )
+							// Relation word of a generalization word: proper name
+							if( ( generalizationResult = currentGeneralizationWordItem.findGeneralization( true, generalizationWordItem ) ).result == Constants.RESULT_OK )
 								{
-								// Relation word of a generalization word: proper name
-								if( ( generalizationResult = currentGeneralizationWordItem.findGeneralization( true, generalizationWordItem ) ).result == Constants.RESULT_OK )
+								if( !generalizationResult.hasFoundGeneralization )
 									{
-									if( !generalizationResult.hasFoundGeneralization )
-										{
-										if( !isPossessive &&
-										!isSpecificationCollectedWithItself &&
+									if( isAssignment &&
+									!isPossessive &&
+									!isSpecificationWordSpanishAmbiguous &&
 
-										( isNeedingAuthorizationForChanges ||
-										foundSpecificationItem.isActiveAssignment() ) )
-											isExclusiveGeneralization = true;
+									( isNeedingAuthorizationForChanges ||
+									foundSpecificationItem.isActiveAssignment() ) )
+										isExclusiveGeneralization = true;
 
-										if( previousGeneralizationWordItem != null )
-											{
-											if( collectGeneralizationWords( isExclusiveGeneralization, generalizationWordTypeNr, specificationWordTypeNr, previousGeneralizationWordItem, generalizationWordItem, previousSpecificationWordItem, specificationWordItem ) == Constants.RESULT_OK )
-												hasCollectedGeneralizationWords = true;
-											else
-												return adminItem_.addError( 1, moduleNameString_, "I failed to collect generalization words \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" and \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-											}
-
-										previousGeneralizationWordItem = currentGeneralizationWordItem;
-										previousSpecificationWordItem = foundSpecificationItem.specificationWordItem();
-										}
+									previousGeneralizationWordItem = currentGeneralizationWordItem;
+									previousSpecificationWordItem = foundSpecificationItem.specificationWordItem();
 									}
-								else
-									return adminItem_.addError( 1, moduleNameString_, "I failed to find a generalization item" );
 								}
+							else
+								return adminItem_.addError( 1, moduleNameString_, "I failed to find a generalization item" );
 							}
 						}
-					// Continue search - even if a generalization word is found - to get the most recent generalization word
+					// Continue search to get the most recent generalization word
 					while( ( currentGeneralizationWordItem = currentGeneralizationWordItem.nextWordItem() ) != null );
 
-					if( !hasCollectedGeneralizationWords &&
-					previousGeneralizationWordItem != null )
+					if( previousGeneralizationWordItem != null )
 						{
 						if( collectGeneralizationWords( isExclusiveGeneralization, generalizationWordTypeNr, specificationWordTypeNr, previousGeneralizationWordItem, generalizationWordItem, previousSpecificationWordItem, specificationWordItem ) != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to collect generalization words \"" + previousGeneralizationWordItem.anyWordTypeString() + "\" and \"" + generalizationWordItem.anyWordTypeString() + "\"" );

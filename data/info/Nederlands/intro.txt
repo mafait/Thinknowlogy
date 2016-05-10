@@ -1,7 +1,7 @@
 ﻿Toon "------------------------------------------------------------------------------".
 Toon " Thinknowlogy is experimentele, op grammatica gebaseerde software,".
-Toon " ontworpen om de Natuurwetten van Intelligentie in grammatica te benutten,".
-Toon " om op die manier - via natuurlijke taal - intelligentie te creëren in software,".
+Toon " ontworpen om Natuurwetten van Intelligentie ingebed in Grammatica te benutten,".
+Toon " om op die manier – via natuurlijke taal – intelligentie te creëren in software,".
 Toon " wat gedemonstreerd wordt door:".
 Toon " * Programmeren in natuurlijke taal;".
 Toon " * Redeneren in natuurlijke taal:".
@@ -17,12 +17,12 @@ Toon " Laat staan, tot de integratie van beide. Volgens het bijbels wereldbeeld 
 Toon " God natuurwetten gecreëerd. Gebaseerd op de natuurwetten van intelligentie,".
 Toon " implementeert alleen Thinknowlogy de natuurlijke betekenis (intelligente functie)".
 #C++#Toon " van woorden als bepaalde lidwoorden \"de\" en \"het\", voegwoord \"of\", bezittelijk".
-#C++#Toon " werkwoord \"hebben\" en werkwoorden in de verleden tijd \"waren\" en \"hadden\".".
+#C++#Toon " werkwoord \"hebben\", en werkwoorden in de verleden tijd \"waren\" en \"hadden\".".
 #Java#Toon " van woorden als bepaalde lidwoorden “de” en “het”, voegwoord “of”, bezittelijk".
-#Java#Toon " werkwoord “hebben” en werkwoorden in de verleden tijd “waren” en “hadden”.".
+#Java#Toon " werkwoord “hebben”, en werkwoorden in de verleden tijd “waren” en “hadden”.".
 Toon " Ik daag iedereen uit om dit systeem te verslaan: http://mafait.org/challenge/".
 Toon "------------------------------------------------------------------------------".
-#C++#Show " Help.\t\t\t\t\t\t\t * Toon meer help info".
+#C++#Toon " Help.\t\t\t\t\t\t\t * Toon meer help info".
 #C++#Toon " \~{taalnaam}\t\t\t\t\t\t\t* Wijzig taal".
 #C++#Toon " Lees het bestand \"Nederlands/ambiguiteit/Boston\".\t\t* Ambiguïteit".
 #C++#Toon " Lees het bestand \"Nederlands/ambiguiteit/presidenten van de VS\". * Ambiguïteit".
@@ -30,9 +30,9 @@ Toon "--------------------------------------------------------------------------
 #C++#Toon " Lees het bestand \"Nederlands/programmeren/Groeten\".\t\t* Groeten".
 #C++#Toon " Lees het bestand \"Nederlands/programmeren/toren van Hanoi\".\t* Puzzel".
 #C++#Toon " Lees het bestand \"Nederlands/redeneren/gezinsdefinitie\".\t* Redeneren".
-#Java#Show " Gebruik knop <ambiguïteit> voor het detecteren van ambiguïteit.".
-#Java#Show " Gebruik knop <programmeren> voor het programmeren in natuurlijke taal.".
-#Java#Show " Gebruik knop <redeneren> voor het redeneren in natuurlijke taal.".
+#Java#Toon " Gebruik knop <ambiguïteit> voor het detecteren van ambiguïteit.".
+#Java#Toon " Gebruik knop <programmeren> voor het programmeren in natuurlijke taal.".
+#Java#Toon " Gebruik knop <redeneren> voor het redeneren in natuurlijke taal.".
 Toon "------------------------------------------------------------------------------".
 Toon " Beschikbare talen: ~+`taal`<s>'~.".
 Toon "------------------------------------------------------------------------------".

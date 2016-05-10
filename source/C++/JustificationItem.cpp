@@ -1,12 +1,11 @@
-/*
- *	Class:			JustificationItem
+/*	Class:			JustificationItem
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -26,6 +25,26 @@
 #include "SpecificationItem.cpp"
 
 	// Private functions
+
+	bool JustificationItem::isContextSimilarInAllWords( unsigned int firstContextNr, unsigned int secondContextNr )
+		{
+		WordItem *currentWordItem;
+
+		if( firstContextNr > NO_CONTEXT_NR &&
+		secondContextNr > NO_CONTEXT_NR &&
+		firstContextNr != secondContextNr &&
+		( currentWordItem = commonVariables()->lastPredefinedWordItem ) != NULL )
+			{
+			// Do for all active words
+			do	{
+				if( !currentWordItem->isContextSimilarInWord( firstContextNr, secondContextNr ) )
+					return false;
+				}
+			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			}
+
+		return true;
+		}
 
 	bool JustificationItem::isSameJustificationType( JustificationItem *referenceJustificationItem )
 		{
@@ -65,6 +84,13 @@
 
 
 	// Protected virtual functions
+
+	void JustificationItem::clearReplacingItem()
+		{
+		if( replacingJustificationItem != NULL &&
+		replacingJustificationItem->hasCurrentCreationSentenceNr() )
+			replacingJustificationItem = NULL;
+		}
 
 	void JustificationItem::selectingJustificationSpecifications()
 		{
@@ -120,174 +146,178 @@
 
 	char *JustificationItem::toString( unsigned short queryWordTypeNr )
 		{
+		char *queryString;
+
 		Item::toString( queryWordTypeNr );
+
+		queryString = commonVariables()->queryString;
 
 		if( hasFeminineOrMasculineProperNameEnding_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "hasFeminineOrMasculineProperNameEnding" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "hasFeminineOrMasculineProperNameEnding" );
 			}
 
 		switch( justificationTypeNr_ )
 			{
 			case JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isGeneralizationAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isGeneralizationAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isOppositePossessiveConditionalSpecificationAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isOppositePossessiveConditionalSpecificationAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isExclusiveSpecificationSubstitutionAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isExclusiveSpecificationSubstitutionAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isIndirectlyAnsweredQuestionAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isIndirectlyAnsweredQuestionAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isSuggestiveQuestionAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isSuggestiveQuestionAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isOnlyOptionLeftAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isOnlyOptionLeftAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isPossessiveReversibleAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isPossessiveReversibleAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isDefinitionPartOfAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isDefinitionPartOfAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isNegativeAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isNegativeAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isSpecificationGeneralizationAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isSpecificationGeneralizationAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isSpecificationSubstitutionAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isSpecificationSubstitutionAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isSpecificationSubstitutionPartOfAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isSpecificationSubstitutionPartOfAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isUniqueUserRelationAssumption" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isUniqueUserRelationAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isOnlyOptionLeftConclusion" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isOnlyOptionLeftConclusion" );
 				break;
 
 			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isPossessiveReversibleConclusion" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isPossessiveReversibleConclusion" );
 				break;
 
 			case JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isDefinitionPartOfConclusion" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isDefinitionPartOfConclusion" );
 				break;
 
 			case JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isNegativeConclusion" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isNegativeConclusion" );
 				break;
 
 			case JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isSpecificationGeneralizationConclusion" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isSpecificationGeneralizationConclusion" );
 				break;
 
 			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isSpecificationSubstitutionConclusion" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isSpecificationSubstitutionConclusion" );
 				break;
 
 			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isSpecificationSubstitutionPartOfConclusion" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isSpecificationSubstitutionPartOfConclusion" );
 				break;
 
 			case JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isUniqueUserRelationConclusion" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isUniqueUserRelationConclusion" );
 				break;
 
 			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
-				strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-				strcat( commonVariables()->queryString, "isSpecificationSubstitutionQuestion" );
+				strcat( queryString, QUERY_SEPARATOR_STRING );
+				strcat( queryString, "isSpecificationSubstitutionQuestion" );
 				break;
 
 			default:
 				sprintf( tempString, "%cjustificationType:%u", QUERY_SEPARATOR_CHAR, justificationTypeNr_ );
-				strcat( commonVariables()->queryString, tempString );
+				strcat( queryString, tempString );
 			}
 
 		sprintf( tempString, "%c%u", QUERY_WORD_TYPE_CHAR, justificationTypeNr_ );
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		sprintf( tempString, "%corderNr:%u", QUERY_SEPARATOR_CHAR, orderNr );
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( primarySpecificationItem_ != NULL )
 			{
 			sprintf( tempString, "%cprimarySpecificationItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, primarySpecificationItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, primarySpecificationItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( anotherPrimarySpecificationItem_ != NULL )
 			{
 			sprintf( tempString, "%canotherPrimarySpecificationItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, anotherPrimarySpecificationItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, anotherPrimarySpecificationItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( secondarySpecificationItem_ != NULL )
 			{
 			sprintf( tempString, "%csecondarySpecificationItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, secondarySpecificationItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, secondarySpecificationItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( anotherSecondarySpecificationItem_ != NULL )
 			{
 			sprintf( tempString, "%canotherSecondarySpecificationItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, anotherSecondarySpecificationItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, anotherSecondarySpecificationItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( attachedJustificationItem_ != NULL )
 			{
 			sprintf( tempString, "%cattachedJustificationItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, attachedJustificationItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, attachedJustificationItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( replacingJustificationItem != NULL )
 			{
 			sprintf( tempString, "%creplacingJustificationItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, replacingJustificationItem->creationSentenceNr(), QUERY_SEPARATOR_CHAR, replacingJustificationItem->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 
@@ -337,7 +367,7 @@
 	bool JustificationItem::hasHiddenPrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isHiddenSpecification() );
+				primarySpecificationItem_->isHiddenSpanishSpecification() );
 		}
 
 	bool JustificationItem::hasPrimarySpecification()
@@ -363,12 +393,6 @@
 				primarySpecificationItem_->isUserSpecification() );
 		}
 
-	bool JustificationItem::hasPrimarySpecificationWordCollectedWithItself()
-		{
-		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isSpecificationWordCollectedWithItself() );
-		}
-
 	bool JustificationItem::hasPossessivePrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != NULL &&
@@ -381,15 +405,26 @@
 				primarySpecificationItem_->isReplacedItem() );
 		}
 
-	bool JustificationItem::hasUpdatedPrimarySpecificationWordCollectedWithItself()
+	bool JustificationItem::isPrimarySpecificationWordSpanishAmbiguous()
+		{
+		return ( primarySpecificationItem_ != NULL &&
+				primarySpecificationItem_->isSpecificationWordSpanishAmbiguous() );
+		}
+
+	bool JustificationItem::isUpdatedPrimarySpecificationWordSpanishAmbiguous()
 		{
 		WordItem *updatedPrimarySpecificationWordItem;
 
 		if( primarySpecificationItem_ != NULL &&
 		( updatedPrimarySpecificationWordItem = primarySpecificationItem_->updatedSpecificationItem()->specificationWordItem() ) != NULL )
-			return updatedPrimarySpecificationWordItem->isNounWordCollectedWithItself();
+			return updatedPrimarySpecificationWordItem->isNounWordSpanishAmbiguous();
 
 		return false;
+		}
+
+	bool JustificationItem::hasAnotherPrimarySpecification()
+		{
+		return ( anotherPrimarySpecificationItem_ != NULL );
 		}
 
 	bool JustificationItem::hasReplacedSecondarySpecification()
@@ -462,7 +497,20 @@
 
 	unsigned short JustificationItem::justificationAssumptionGrade()
 		{
-		return assumptionGrade( ( anotherPrimarySpecificationItem_ != NULL ), hasFeminineOrMasculineProperNameEnding_, ( primarySpecificationItem_ != NULL && primarySpecificationItem_->isGeneralizationProperName() && primarySpecificationItem_->isPossessive() ), ( primarySpecificationItem_ != NULL && primarySpecificationItem_->isQuestion() ), justificationTypeNr_ );
+		bool hasPossessivePrimarySpecification = false;
+		bool hasPrimaryQuestionSpecification = false;
+
+		if( primarySpecificationItem_ != NULL )
+			{
+			if( primarySpecificationItem_->isGeneralizationProperName() &&
+			primarySpecificationItem_->isPossessive() )
+				hasPossessivePrimarySpecification = true;
+
+			if( primarySpecificationItem_->isQuestion() )
+				hasPrimaryQuestionSpecification = true;
+			}
+
+		return assumptionGrade( ( anotherPrimarySpecificationItem_ != NULL ), hasFeminineOrMasculineProperNameEnding_, hasPossessivePrimarySpecification, hasPrimaryQuestionSpecification, justificationTypeNr_ );
 		}
 
 	unsigned short JustificationItem::justificationTypeNr()
@@ -495,7 +543,7 @@
 				if( anotherPrimarySpecificationItem_ == NULL )
 					{
 					if( secondaryRelationContextNr == relationContextNr ||
-					myWordItem()->isContextSimilarInAllWords( secondaryRelationContextNr, relationContextNr ) )
+					isContextSimilarInAllWords( secondaryRelationContextNr, relationContextNr ) )
 						return nSpecificationRelationWords;
 					}
 				else

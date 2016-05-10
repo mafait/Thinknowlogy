@@ -1,0 +1,8 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Olivier est le père et Amélie est la mère de Laurent, Julien et Lorraine.
+Olivier est un parent de Laurent, Julien et Lorraine.
+Amélie est un parent de Laurent, Julien et Lorraine.
+Olivier est une personne.
+Amélie a une fille, appelée Lorraine.
+Laurent est partie de une famille.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

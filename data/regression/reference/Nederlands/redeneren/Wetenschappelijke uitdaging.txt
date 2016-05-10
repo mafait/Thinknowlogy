@@ -1,0 +1,58 @@
+﻿* 
+* Mijn conclusies:
+< Jan heeft een zoon, genaamd Paul.
+< 
+* 
+* Mijn conclusies:
+< Laura is een dochter van Anna.
+< 
+* 
+* Mijn conclusies:
+< Een motor is deel van iedere auto.
+< 
+* 
+* Mijn conclusies:
+< Iedere zeilboot heeft een zeil.
+< 
+* 
+* Mijn conclusies:
+< Paul heeft een ouder, genaamd Jan.
+< 
+* 
+* Mijn conclusies:
+< Paul heeft 2 ouder [meervoud van 'ouder' is onbekend], genaamd Jan en Anna.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< Paul heeft 2 ouder [meervoud van 'ouder' is onbekend], genaamd Jan en Anna.
+* 
+* U heeft meervoudige zelfstandige naamwoord "ouders" ingevoerd, dat onbekend was voor mij.
+* 
+* 
+* Mijn conclusies:
+< Peter heeft geen vader meer.
+< Peter had een vader, genaamd Johan.
+< 
+! 
+! Deze zin is niet geaccepteerd, omdat het in conflict is met zichzelf.
+! 
+* 
+* Mijn vragen:
+< Is Anne een man of een vrouw?
+< 
+* 
+* Mijn vragen die beantwoord zijn:
+< Is Anne een man of een vrouw?
+* 
+* Mijn conclusies:
+< Anne is een man.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd Bill Clinton.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een nieuwe president, genaamd Barack Obama.
+< De Verenigde Staten heeft een vorige president, genaamd Bill Clinton.
+< 

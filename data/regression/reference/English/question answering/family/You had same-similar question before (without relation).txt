@@ -26,13 +26,13 @@
 * My assumptions:
 < A daughter is probably a person.
 < 
-* I know nothing about John, but I'll keep the question in mind.
+* I know nothing about John, but I'll keep this question in mind.
 * 
-* I know nothing about Anna, but I'll keep the question in mind.
+* I know nothing about Anna, but I'll keep this question in mind.
 * 
-* I know nothing about Paul, but I'll keep the question in mind.
+* I know nothing about Paul, but I'll keep this question in mind.
 * 
-* I know nothing about Laura, but I'll keep the question in mind.
+* I know nothing about Laura, but I'll keep this question in mind.
 * 
 * 
 * You had the same question before.
@@ -42,19 +42,19 @@
 * 
 * You had a similar question before:
 < Is John a father?
-* I know nothing about John, but I'll keep the question in mind.
+* I know nothing about John, but I'll keep this question in mind.
 * 
 * 
 * You had the same question before.
-* I know nothing about Anna, but I'll keep the question in mind.
+* I know nothing about Anna, but I'll keep this question in mind.
 * 
 * 
 * You had a similar question before:
 < Is Paul a son?
-* I know nothing about Paul, but I'll keep the question in mind.
+* I know nothing about Paul, but I'll keep this question in mind.
 * 
 * 
 * You had a similar question before:
 < Is Laura a daughter?
-* I know nothing about Laura, but I'll keep the question in mind.
+* I know nothing about Laura, but I'll keep this question in mind.
 * 

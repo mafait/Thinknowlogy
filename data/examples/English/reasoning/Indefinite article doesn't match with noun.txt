@@ -4,4 +4,4 @@ An house is incorrect.
 An article is correct.
 A article is incorrect.
 A animal is incorrect.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

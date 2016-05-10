@@ -11,34 +11,41 @@
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis conclusiones:
-< Cada hijo es una mujer o un hombre.
-* 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
 < Una hija es probablemente una persona.
 < 
 * 
 * Mis conclusiones:
-< Luisa es una mujer.
-< Luisa no es un hombre.
 < Luisa es parte de una familia.
+< Luisa no es un niño y un hombre.
 < Luisa no es un hijo.
 * 
 * Mis suposiciones:
 < Luisa es probablemente una persona.
 < Luisa tiene probablemente un padre.
+* 
+* Mis preguntas:
+< ¿Es Luisa una niña o una mujer?
 < 
 * 
 * Mis conclusiones:
 < José es parte de una familia.
-< José es un hombre.
-< José no es una mujer.
 < José no es una hija.
+< José no es una niña y una mujer.
 * 
 * Mis suposiciones:
 < José es probablemente una persona.
 < José tiene probablemente un padre.
+* 
+* Mis preguntas:
+< ¿Es José un niño o un hombre?
 < 
 * 
 * Mis suposiciones que se concluyen:
@@ -77,7 +84,7 @@
 < Pablo es probablemente parte de una familia.
 * 
 * Mis preguntas:
-< ¿Es Pablo una mujer o un hombre?
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
 < ¿Es Pablo un hijo o una hija?
 < 
 * 
@@ -87,14 +94,16 @@
 * Mis suposiciones que se concluyen:
 < Pablo es parte de una familia.
 * 
-* Mis preguntas que son contestadas:
-< ¿Es Pablo una mujer o un hombre?
+* Mis preguntas ajustadas:
+< ¿Es Pablo un niño o un hombre?
 * 
 * Mis suposiciones que se ajustan:
 < Pablo es probablemente una persona.
 * 
 * Mis conclusiones:
-< Pablo es un hombre.
-< Pablo no es una mujer.
 < Pablo no es una hija.
+< Pablo no es una niña y una mujer.
+* 
+* Mis suposiciones:
+< Pablo es probablemente hijo de Juan y Ana.
 < 

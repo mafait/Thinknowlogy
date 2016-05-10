@@ -1,37 +1,37 @@
-﻿Show "------------------------------------------------------------------------------".
-Show " Total number of items: ~#<>~.".
-Show "------------------------------------------------------------------------------".
-Show " Items in administrator:	~#<FRSWXYZ>~.".
-Show "------------------------------------------------------------------------------".
-Show " * Active items:			~+#<FRSWXYZ>~.".
-Show "    <F> Files:					~+#<F>~.".
-Show "    <R> Read words (temporary):			~+#<R>~.".
-Show "    <S> Solve scores (temporary):		~+#<S>~.".
-Show "    <W> Words:					~+#<W>~, (predefined: ~+#<W>:*~).".
-Show "    <X> Conditions:				~+#<X>~.".
-Show "    <Y> Actions:				~+#<Y>~.".
-Show "    <Z> Alternatives:				~+#<Z>~.".
-Show " * Inactive items:			~=#<FRSWXYZ>~.".
-Show " * Archived items:			~$#<FRSWXYZ>~.".
-Show " * Replaced items:			~%#<FRSWXYZ>~.".
-Show " * Deleted items:			~&#<FRSWXYZ>~.".
-Show "------------------------------------------------------------------------------".
-Show " Items in words:		~#<acgijlmrswx>~.".
-Show "------------------------------------------------------------------------------".
-Show " * Active items:			~+#<acgijlmrswx>~.".
-Show "    <a> assignments:				~+#<a>~.".
-Show "    <c> collections:				~+#<c>~.".
-Show "    <g> generalizations:			~+#<g>~.".
-Show "    <i> interface:				~+#<i>~.".
-Show "    <j> justification:				~+#<j>~.".
-Show "    <l> grammar:				~+#<l>~.".
-Show "    <m> multiple word:				~+#<m>~.".
-Show "    <s> specifications:				~+#<s>~.".
-Show "    <r> write words (temporary):		~+#<r>~.".
-Show "    <w> word types:				~+#<w>~.".
-Show "    <x> context:				~+#<x>~.".
-Show " * Inactive items:			~=#<acgijlmrswx>~.".
-Show " * Archived items:			~$#<acgijlmrswx>~.".
-Show " * Replaced items:			~%#<acgijlmrswx>~.".
-Show " * Deleted items:			~&#<acgijlmrswx>~.".
-Show "------------------------------------------------------------------------------".
+﻿Display "------------------------------------------------------------------------------".
+Display " Total number of items: ~#<>~.".
+Display "------------------------------------------------------------------------------".
+Display " Items in administrator:	~#<FRSWXYZ>~.".
+Display "------------------------------------------------------------------------------".
+Display " * Active items:			~+#<FRSWXYZ>~.".
+Display "    <F> Files:					~+#<F>~.".
+Display "    <R> Read words (temporary):			~+#<R>~.".
+Display "    <S> Solve scores (temporary):		~+#<S>~.".
+Display "    <W> Words:					~+#<W>~, (predefined: ~+#<W>:*~).".
+Display "    <X> Conditions:				~+#<X>~.".
+Display "    <Y> Actions:				~+#<Y>~.".
+Display "    <Z> Alternatives:				~+#<Z>~.".
+Display " * Inactive items:			~=#<FRSWXYZ>~.".
+Display " * Archived items:			~$#<FRSWXYZ>~.".
+Display " * Replaced items:			~%#<FRSWXYZ>~.".
+Display " * Deleted items:			~&#<FRSWXYZ>~.".
+Display "------------------------------------------------------------------------------".
+Display " Items in words:		~#<acgijlmrswx>~.".
+Display "------------------------------------------------------------------------------".
+Display " * Active items:			~+#<acgijlmrswx>~.".
+Display "    <a> assignments:				~+#<a>~.".
+Display "    <c> collections:				~+#<c>~.".
+Display "    <g> generalizations:			~+#<g>~.".
+Display "    <i> interface:				~+#<i>~.".
+Display "    <j> justification:				~+#<j>~.".
+Display "    <l> grammar:				~+#<l>~.".
+Display "    <m> multiple word:				~+#<m>~.".
+Display "    <s> specifications:				~+#<s>~.".
+Display "    <r> write words (temporary):		~+#<r>~.".
+Display "    <w> word types:				~+#<w>~.".
+Display "    <x> context:				~+#<x>~.".
+Display " * Inactive items:			~=#<acgijlmrswx>~.".
+Display " * Archived items:			~$#<acgijlmrswx>~.".
+Display " * Replaced items:			~%#<acgijlmrswx>~.".
+Display " * Deleted items:			~&#<acgijlmrswx>~.".
+Display "------------------------------------------------------------------------------".

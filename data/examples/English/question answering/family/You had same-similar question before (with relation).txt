@@ -6,4 +6,4 @@ Is John a father?
 Is John the father of Paul?
 Is Anna the mother of Laura?
 Is Anna the father of Laura?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

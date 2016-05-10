@@ -77,7 +77,7 @@
 < Is Laura a girl or a woman?
 < 
 * 
-* You have confirmed the specification and at least one relation of my earlier assumption(s):
+* You have confirmed the specification and at least one relation of my earlier assumptions:
 < Paul has probably 2 parents, called John and Anna.
 * 
 * My assumptions that are concluded:
@@ -89,7 +89,7 @@
 < John is a parent of Paul.
 < 
 * 
-* You have confirmed the specification and at least one relation of my earlier assumption(s):
+* You have confirmed the specification and at least one relation of my earlier assumptions:
 < Paul has probably 2 parents, called John and Anna.
 * 
 * My assumptions that are concluded:

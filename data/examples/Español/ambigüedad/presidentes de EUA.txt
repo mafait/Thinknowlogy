@@ -5,7 +5,7 @@ Bill Clinton es el presidente de los Estados Unidos.
 Mostrar información sobre los presidentes.
 # En 1997, Bill Clinton, fue re-inaugurado como presidente de los Estados Unidos.
 Bill Clinton es el presidente de los Estados Unidos.
-# En 2001 George W. Bush - el hijo de George HW Bush - fue inaugurado como presidente de los Estados Unidos.
+# En 2001 George W. Bush - hijo de George HW Bush - fue inaugurado como presidente de los Estados Unidos.
 George Bush es el presidente de los Estados Unidos.
 Mostrar información sobre los presidentes.
 # En 2005 George W. Bush fue re-inaugurado como presidente de los Estados Unidos.
@@ -14,4 +14,4 @@ George Bush es el presidente de los Estados Unidos.
 Barack Obama es el presidente de los Estados Unidos.
 Mostrar información sobre los presidentes.
 # En 2013 ...
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -11,11 +11,14 @@
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis conclusiones:
-< Cada hijo es una mujer o un hombre.
-* 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
 < Una hija es probablemente una persona.
 < 
 * 
@@ -38,7 +41,5 @@
 * 
 * Mis conclusiones:
 < Cruz es un hombre.
-* 
-* Mis suposiciones:
-< Cruz no es probablemente una mujer.
+< Cruz no es una mujer.
 < 

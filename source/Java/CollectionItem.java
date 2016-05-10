@@ -1,11 +1,10 @@
-/*
- *	Class:			CollectionItem
+/*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -65,53 +64,56 @@ class CollectionItem extends Item
 
 	protected void showWordReferences( boolean isReturnQueryToPosition )
 		{
+		StringBuffer queryStringBuffer;
 		String wordString;
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
 
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( collectionWordItem_ != null &&
 		( wordString = collectionWordItem_.wordTypeString( true, collectionWordTypeNr_ ) ) != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( wordString );
+			queryStringBuffer.append( wordString );
 			}
 
 		if( commonWordItem_ != null &&
 		( wordString = commonWordItem_.wordTypeString( true, commonWordTypeNr_ ) ) != null )
 			{
 			if( CommonVariables.hasFoundQuery ||
-			CommonVariables.queryStringBuffer.length() > 0 )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+			queryStringBuffer.length() > 0 )
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( wordString );
+			queryStringBuffer.append( wordString );
 			}
 
 		if( compoundGeneralizationWordItem_ != null &&
 		( wordString = compoundGeneralizationWordItem_.wordTypeString( true, commonWordTypeNr_ ) ) != null )
 			{
 			if( CommonVariables.hasFoundQuery ||
-			CommonVariables.queryStringBuffer.length() > 0 )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+			queryStringBuffer.length() > 0 )
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( wordString );
+			queryStringBuffer.append( wordString );
 			}
 		}
 
@@ -178,49 +180,55 @@ class CollectionItem extends Item
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
 		String wordString;
+		StringBuffer queryStringBuffer;
 		String collectionWordTypeString = myWordItem().wordTypeNameString( collectionWordTypeNr_ );
 		String commonWordTypeString = myWordItem().wordTypeNameString( commonWordTypeNr_ );
 
 		baseToStringBuffer( queryWordTypeNr );
 
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( isExclusiveSpecification_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isExclusiveSpecification" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isExclusiveSpecification" );
 
 		if( collectionNr_ > Constants.NO_COLLECTION_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "collectionNr:" + collectionNr_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "collectionNr:" + collectionNr_ );
 
 		if( collectionOrderNr_ > Constants.NO_ORDER_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "collectionOrderNr:" + collectionOrderNr_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "collectionOrderNr:" + collectionOrderNr_ );
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "collectionWordType:" + ( collectionWordTypeString == null ? Constants.EMPTY_STRING : collectionWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + collectionWordTypeNr_ );
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "collectionWordType:" + ( collectionWordTypeString == null ? Constants.EMPTY_STRING : collectionWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + collectionWordTypeNr_ );
 
 		if( collectionWordItem_ != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "collectionWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + collectionWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + collectionWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "collectionWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + collectionWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + collectionWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 			if( ( wordString = collectionWordItem_.wordTypeString( true, collectionWordTypeNr_ ) ) != null )
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
+				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "commonWordType:" + ( commonWordTypeString == null ? Constants.EMPTY_STRING : commonWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + commonWordTypeNr_ );
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "commonWordType:" + ( commonWordTypeString == null ? Constants.EMPTY_STRING : commonWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + commonWordTypeNr_ );
 
 		if( commonWordItem_ != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "commonWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + commonWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + commonWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "commonWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + commonWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + commonWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 			if( ( wordString = commonWordItem_.wordTypeString( true, commonWordTypeNr_ ) ) != null )
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
+				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
 		if( compoundGeneralizationWordItem_ != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "compoundGeneralizationWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + compoundGeneralizationWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + compoundGeneralizationWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "compoundGeneralizationWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + compoundGeneralizationWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + compoundGeneralizationWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 			if( ( wordString = compoundGeneralizationWordItem_.wordTypeString( true, commonWordTypeNr_ ) ) != null )
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
+				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 

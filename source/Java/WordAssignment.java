@@ -1,11 +1,10 @@
-/*
- *	Class:			WordAssignment
+/*	Class:			WordAssignment
  *	Supports class:	WordItem
  *	Purpose:		To assign specifications
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -347,24 +346,6 @@ class WordAssignment
 
 	// Protected methods
 
-	protected byte createNewAssignmentLevel()
-		{
-		SpecificationList assignmentList;
-
-		if( !myWordItem_.isAdminWord() )
-			{
-			if( ( assignmentList = myWordItem_.assignmentList ) != null )
-				{
-				if( assignmentList.createNewAssignmentLevel() != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to create assignment level " + ( CommonVariables.currentAssignmentLevel + 1 ) );
-				}
-			}
-		else
-			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The admin word item cannot have assignments" );
-
-		return Constants.RESULT_OK;
-		}
-
 	protected byte inactivateActiveAssignment( SpecificationItem activeAssignmentItem )
 		{
 		SpecificationList assignmentList;
@@ -381,7 +362,7 @@ class WordAssignment
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to inactivate an active assignment" );
 					}
 				else
-					return myWordItem_.startErrorInWord( 1, moduleNameString_, "The assignment list isn't created yet" );
+					return myWordItem_.startErrorInWord( 1, moduleNameString_, "My assignment list isn't created yet" );
 				}
 			else
 				return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given assignment item isn't active" );
@@ -408,7 +389,7 @@ class WordAssignment
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to archive the given inactive assignment item" );
 					}
 				else
-					return myWordItem_.startErrorInWord( 1, moduleNameString_, "The assignment list isn't created yet" );
+					return myWordItem_.startErrorInWord( 1, moduleNameString_, "My assignment list isn't created yet" );
 				}
 			else
 				return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given assignment item isn't inactive" );
@@ -511,22 +492,12 @@ class WordAssignment
 					else
 						{
 						if( ( specificationResult = assignSpecification( isAmbiguousRelationContext, isInactiveAssignment, isArchivedAssignment, foundSpecificationItem.isEveryGeneralization(), foundSpecificationItem.isExclusiveSpecification(), ( foundSpecificationItem.isExclusiveSpecification() && foundSpecificationItem.isGeneralizationProperName() ), isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, foundSpecificationItem.generalizationWordTypeNr(), foundSpecificationItem.specificationWordTypeNr(), relationWordTypeNr, foundSpecificationItem.generalizationCollectionNr(), foundSpecificationItem.specificationCollectionNr(), generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString ) ).result != Constants.RESULT_OK )
-							{
-							if( specificationWordItem == null )
-								myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to assign specification string \"" + specificationString + "\"" );
-							else
-								myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to assign specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
-							}
+							myWordItem_.addErrorInWord( 1, moduleNameString_, ( specificationWordItem == null ? "I failed to assign specification string \"" + specificationString + "\"" : "I failed to assign specification word \"" + specificationWordItem.anyWordTypeString() + "\"" ) );
 						}
 					}
 				}
 			else
-				{
-				if( specificationWordItem == null )
-					myWordItem_.startErrorInWord( 1, moduleNameString_, "String \"" + specificationString + "\" isn't one of my specifications" );
-				else
-					myWordItem_.startErrorInWord( 1, moduleNameString_, "Word \"" + specificationWordItem.anyWordTypeString() + "\" isn't one of my specifications" );
-				}
+				myWordItem_.startErrorInWord( 1, moduleNameString_, ( specificationWordItem == null ? "String \"" + specificationString + "\" isn't one of my specifications" : "Word \"" + specificationWordItem.anyWordTypeString() + "\" isn't one of my specifications" ) );
 			}
 
 		specificationResult.result = CommonVariables.result;

@@ -7,4 +7,4 @@ Mijn zet is D.
 Mijn zet is C.
 Mijn zet is A.
 Toon informatie over de zet.
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

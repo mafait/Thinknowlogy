@@ -11,19 +11,21 @@
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis conclusiones:
-< Cada hijo es una mujer o un hombre.
-* 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
 < Una hija es probablemente una persona.
 < 
 * 
 * Mis conclusiones:
 < José es parte de una familia.
-< José es un hombre.
-< José no es una mujer.
 < José no es una hija.
+< José no es una niña y una mujer.
 < Juan tiene un hijo, llamado José.
 < Ana tiene un hijo, llamado José.
 * 
@@ -40,6 +42,7 @@
 < Ana no es posiblemente un padre.
 * 
 * Mis preguntas:
+< ¿Es José un niño o un hombre?
 < ¿Es Juan una mujer o un hombre?
 < ¿Es Juan un padre o una madre?
 < 
@@ -47,6 +50,5 @@
 ! No se acepta esta frase, porque está en conflicto con:
 < José es hijo de Juan y Ana.
 < José no es una hija.
-< José es un hombre.
-< José no es una mujer.
+< José no es una niña y una mujer.
 < 

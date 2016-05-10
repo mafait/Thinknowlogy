@@ -1,0 +1,39 @@
+﻿Affichez "------------------------------------------------------------------------------".
+Affichez " Thinknowlogy est un logiciel expérimental, à base de grammaire,".
+Affichez " conçu pour utiliser Lois Naturelles de l'Intelligence intégrée dans la Grammaire,".
+Affichez " afin de créer l'intelligence – à travers le langage naturel – dans le logiciel,".
+Affichez " ce qui est démontré par:".
+Affichez " * Programmation en langage naturel;".
+Affichez " * Raisonnement en langage naturel:".
+Affichez "   - tirer des conclusions (plus avancés que les solutions scientifiques),".
+Affichez "   - faire des hypothèses (avec niveau d'incertitude auto-réglage),".
+Affichez "   - poser des questions (environ lacunes dans les connaissances),".
+Affichez "   - détecter les conflits et les quelques cas d'ambiguïté sémantique;".
+Affichez " * Multilinguisme, prouver: Langues naturelles ont une origine commune.".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Malgré 160 années de recherche, la théorie de l'évolution n'a pas encore".
+Affichez " été pris en charge par des preuves concrètes en ce qui concerne l'origine".
+Affichez " de l'intelligence et de la langue. Sans parler, l'intégration des deux.".
+Affichez " Selon la vision du monde biblique, Dieu a créé lois de la nature, y compris".
+Affichez " les lois de l'intelligence. Étant basé sur les lois de l'intelligence,".
+Affichez " seulement Thinknowlogy implémente le sens naturel (fonction intelligente)".
+#C++#Affichez " des mots comme les articles définis \"le\" et \"la\", conjonction \"ou\", verbe".
+#C++#Affichez " possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\". Je défie".
+#Java#Affichez " des mots comme les articles définis «le» et «la», conjonction «ou», verbe".
+#Java#Affichez " possessif «avoir», et verbes au passé «étaient» et «avaient». Je défie".
+Affichez " quiconque de battre ce raisonneur: http://mafait.org/challenge/".
+Affichez "------------------------------------------------------------------------------".
+#C++#Affichez " Aidez.\t\t\t\t\t\t* Afficher plus d'aide d'info".
+#C++#Affichez " \~{languageName}\t\t\t\t* Changer la langue".
+#C++#Affichez " Lirez le fichier \"Français/ambiguïté/Boston\".\t* Ambiguïté détection".
+#C++#Affichez " Lirez le fichier \"Français/ambiguïté/Présidents des États-Unis\".".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Puissance 4\".\t* Jeu Puissance 4".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Voeux\".\t* Voeux (salut)".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Tours de Hanoï\".\t* Un puzzle".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/définition de famille\".* Raisonnement".
+#Java#Affichez " Bouton <ambiguïté> utiliser pour en apprendre davantage sur la détection d'ambiguïté.".
+#Java#Affichez " Bouton <programmation> utiliser pour apprendre la programmation en langage naturel.".
+#Java#Affichez " Bouton <raisonnement> utiliser pour en apprendre davantage sur le raisonnement en langage naturel.".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Langues disponibles: ~+`langue`<s>'~.".
+Affichez "------------------------------------------------------------------------------".

@@ -1,11 +1,10 @@
-/*
- *	Class:			ReadList
+/*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -70,17 +69,11 @@ class ReadList : private List
 			delete deleteItem;
 			}
 
-		if( firstArchivedItem() )
+		if( firstArchivedItem() != NULL )
 			fprintf( stderr, "\nError: Class ReadList has archived items." );
 
-		searchItem = (ReadItem *)firstReplacedItem();
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextReadItem();
-			delete deleteItem;
-			}
+		if( firstReplacedItem() != NULL )
+			fprintf( stderr, "\nError: Class ReadList has replaced items." );
 
 		searchItem = (ReadItem *)firstDeletedItem();
 
@@ -131,41 +124,6 @@ class ReadList : private List
 		return referenceResult;
 		}
 
-	ResultType deleteInvalidPartOfMultipleWordReadItems( unsigned short wordOrderNr, char *sentenceString )
-		{
-		ReadItem *searchItem = firstActiveReadItem();
-		WordItem *readWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteInvalidPartOfMultipleWordReadItems";
-
-		if( sentenceString != NULL )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->wordOrderNr() == wordOrderNr &&
-				( readWordItem = searchItem->readWordItem() ) != NULL )
-					{
-					if( readWordItem->isMultipleWord() &&
-					// No matching multiple word parts
-					readWordItem->matchingMultipleSingularNounWordParts( sentenceString ) == 0 )
-						{
-						if( deleteItem( false, searchItem ) == RESULT_OK )
-							searchItem = nextReadListItem();
-						else
-							return addError( functionNameString, NULL, "I failed to delete an active read item" );
-						}
-					else
-						searchItem = searchItem->nextReadItem();
-					}
-				else
-					searchItem = searchItem->nextReadItem();
-				}
-			}
-		else
-			return startError( functionNameString, NULL, "The given sentence string is undefined" );
-
-		return RESULT_OK;
-		}
-
 
 	// Protected functions
 
@@ -206,6 +164,7 @@ class ReadList : private List
 		unsigned short previousWordOrderNr = NO_ORDER_NR;
 		unsigned int nWords = 0;
 		char *readWordString;
+		char *writtenSentenceString;
 		ReadItem *startItem = NULL;
 		ReadItem *searchItem = firstActiveReadItem();
 
@@ -233,23 +192,23 @@ class ReadList : private List
 			{
 			previousWordOrderNr = NO_ORDER_NR;
 			searchItem = startItem;
+			strcpy( commonVariables()->writtenSentenceString, EMPTY_STRING );
 
-			strcpy( commonVariables()->writeSentenceString, EMPTY_STRING );
+			writtenSentenceString = commonVariables()->writtenSentenceString;
 
 			while( searchItem != NULL )
 				{
 				if( ( wordOrderNr = searchItem->wordOrderNr() ) > previousWordOrderNr &&
-				// Skip text
-				searchItem->readWordItem() != NULL &&
+				!searchItem->isText() &&
 				( readWordString = searchItem->readWordTypeString() ) != NULL )
 					{
 					if( previousWordOrderNr > NO_ORDER_NR &&
 					// End of string (colon, question mark, etc)
 					searchItem->grammarParameter != GRAMMAR_SENTENCE )
-						strcat( commonVariables()->writeSentenceString, SPACE_STRING );
+						strcat( writtenSentenceString, SPACE_STRING );
 
 					previousWordOrderNr = wordOrderNr;
-					strcat( commonVariables()->writeSentenceString, readWordString );
+					strcat( writtenSentenceString, readWordString );
 					}
 
 				searchItem = searchItem->nextReadItem();
@@ -433,18 +392,37 @@ class ReadList : private List
 		return RESULT_OK;
 		}
 
-	ResultType deleteActiveReadWords()
+	ResultType deleteReadItemsWithNonMatchingMultipleWordPart( unsigned short wordOrderNr, char *sentenceString )
 		{
 		ReadItem *searchItem = firstActiveReadItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteActiveReadWords";
+		WordItem *readWordItem;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteReadItemsWithNonMatchingMultipleWordPart";
 
-		while( searchItem != NULL )
+		if( sentenceString != NULL )
 			{
-			if( deleteItem( false, searchItem ) == RESULT_OK )
-				searchItem = nextReadListItem();
-			else
-				return addError( functionNameString, NULL, "I failed to delete an active item" );
+			while( searchItem != NULL )
+				{
+				if( searchItem->wordOrderNr() == wordOrderNr &&
+				( readWordItem = searchItem->readWordItem() ) != NULL )
+					{
+					if( readWordItem->isMultipleWord() &&
+					// No matching multiple word parts
+					readWordItem->matchingMultipleSingularNounWordParts( sentenceString ) == 0 )
+						{
+						if( deleteItem( searchItem ) == RESULT_OK )
+							searchItem = nextReadListItem();
+						else
+							return addError( functionNameString, NULL, "I failed to delete an active read item" );
+						}
+					else
+						searchItem = searchItem->nextReadItem();
+					}
+				else
+					searchItem = searchItem->nextReadItem();
+				}
 			}
+		else
+			return startError( functionNameString, NULL, "The given sentence string is undefined" );
 
 		return RESULT_OK;
 		}

@@ -117,7 +117,7 @@
 < Joe is probably not a daughter.
 < 
 * 
-* You have confirmed the specification - but no relation(s) - of my earlier assumption(s):
+* You have confirmed the specification - but none of its relations - of my earlier assumptions:
 < Laura is possibly a daughter of John and Anna.
 * 
 * My assumptions that are adjusted:

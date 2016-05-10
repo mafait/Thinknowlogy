@@ -1,12 +1,11 @@
-/*
- *	Class:			ScoreItem
+/*	Class:			ScoreItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -49,12 +48,13 @@ class ScoreItem extends Item
 
 	private ScoreItem possibilityItem( boolean isIncludingThisItem )
 		{
+		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
 		ScoreItem searchItem = ( isIncludingThisItem ? this : nextScoreItem() );
 
 		while( searchItem != null &&
-		searchItem.assignmentLevel_ >= CommonVariables.currentAssignmentLevel )
+		searchItem.assignmentLevel_ >= currentAssignmentLevel )
 			{
-			if( searchItem.assignmentLevel_ == CommonVariables.currentAssignmentLevel )
+			if( searchItem.assignmentLevel_ == currentAssignmentLevel )
 				return searchItem;
 
 			searchItem = searchItem.nextScoreItem();
@@ -135,42 +135,49 @@ class ScoreItem extends Item
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
+		StringBuffer queryStringBuffer;
+
 		baseToStringBuffer( queryWordTypeNr );
 
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( isMarked )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "Marked" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "Marked" );
 
 		if( isChecked )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "Checked" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "Checked" );
 
 		if( oldSatisfiedScore > Constants.NO_SCORE )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "oldSatisfiedScore:" + oldSatisfiedScore );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "oldSatisfiedScore:" + oldSatisfiedScore );
 
 		if( newSatisfiedScore > Constants.NO_SCORE )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "newSatisfiedScore:" + newSatisfiedScore );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "newSatisfiedScore:" + newSatisfiedScore );
 
 		if( oldDissatisfiedScore > Constants.NO_SCORE )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "oldDissatisfiedScore:" + oldDissatisfiedScore );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "oldDissatisfiedScore:" + oldDissatisfiedScore );
 
 		if( newDissatisfiedScore > Constants.NO_SCORE )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "newDissatisfiedScore:" + newDissatisfiedScore );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "newDissatisfiedScore:" + newDissatisfiedScore );
 
 		if( oldNotBlockingScore > Constants.NO_SCORE )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "oldNotBlockingScore:" + oldNotBlockingScore );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "oldNotBlockingScore:" + oldNotBlockingScore );
 
 		if( newNotBlockingScore > Constants.NO_SCORE )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "newNotBlockingScore:" + newNotBlockingScore );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "newNotBlockingScore:" + newNotBlockingScore );
 
 		if( oldBlockingScore > Constants.NO_SCORE )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "oldBlockingScore:" + oldBlockingScore );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "oldBlockingScore:" + oldBlockingScore );
 
 		if( newBlockingScore > Constants.NO_SCORE )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "newBlockingScore:" + newBlockingScore );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "newBlockingScore:" + newBlockingScore );
 
 		if( referenceSelectionItem != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "referenceSelectionItem" + Constants.QUERY_REF_ITEM_START_CHAR + referenceSelectionItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + referenceSelectionItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "referenceSelectionItem" + Constants.QUERY_REF_ITEM_START_CHAR + referenceSelectionItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + referenceSelectionItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 

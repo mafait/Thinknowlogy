@@ -77,4 +77,4 @@ Een schijf verplaatst van wissel naar doel:
 * doelpaal:	D, C, B, A.
 
 Klaar.
-Om de puzzel nogmaals te starten: 'Wis je geheugen.' of 'Herstart.', en dan 'Lees het bestand "Nederlands/programmeren/toren van Hanoi"'.
+Om de puzzel nogmaals te starten, klik op knop «Wis je geheugen.» en dan op «Lees het bestand "Nederlands/programmeren/toren van Hanoi"».

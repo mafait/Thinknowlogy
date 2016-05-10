@@ -1,10 +1,9 @@
-/*
- *	Class:		CommonVariables
+/*	Class:		CommonVariables
  *	Purpose:	To hold the common variables
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -30,7 +29,6 @@ class CommonVariables
 	protected static boolean hasShownWarning;
 
 	protected static boolean isAssignmentChanged;
-	protected static boolean isDontIncrementCurrentSentenceNr;
 	protected static boolean isFirstAnswerToQuestion;
 	protected static boolean isQuestionAlreadyAnswered;
 
@@ -73,13 +71,13 @@ class CommonVariables
 	protected static WordItem predefinedNounLanguageWordItem;
 	protected static WordItem predefinedNounUserWordItem;
 
-	protected static StringBuffer interfaceLanguageStringBuffer;
-	protected static StringBuffer queryStringBuffer;
-
-	protected static StringBuffer learnedFromUserStringBuffer;
-	protected static StringBuffer writeSentenceStringBuffer;
-
 	protected static StringBuffer currentPathStringBuffer;
+	protected static StringBuffer interfaceLanguageStringBuffer;
+	protected static StringBuffer learnedFromUserStringBuffer;
+	protected static StringBuffer queryStringBuffer;
+	protected static StringBuffer readUserSentenceStringBuffer;
+	protected static StringBuffer writtenSentenceStringBuffer;
+	protected static StringBuffer writtenUserSentenceStringBuffer;
 
 
 	// Protected methods
@@ -93,7 +91,6 @@ class CommonVariables
 		hasShownWarning = false;
 
 		isAssignmentChanged = false;
-		isDontIncrementCurrentSentenceNr = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
 
@@ -137,16 +134,16 @@ class CommonVariables
 		predefinedNounLanguageWordItem = null;
 		predefinedNounUserWordItem = null;
 
-		interfaceLanguageStringBuffer = null;
-		queryStringBuffer = null;
-
-		learnedFromUserStringBuffer = null;
-		writeSentenceStringBuffer = null;
-
 		// Don't initialize 'currentPathStringBuffer' there. 
 		// It will be set in the main() method of the Thinknowlogy class.
 		// Otherwise it will destroy the initialization by Thinknowlogy
 //		currentPathStringBuffer = null;
+		interfaceLanguageStringBuffer = null;
+		learnedFromUserStringBuffer = null;
+		queryStringBuffer = null;
+		readUserSentenceStringBuffer = null;
+		writtenSentenceStringBuffer = null;
+		writtenUserSentenceStringBuffer = null;
 		}
 	};
 

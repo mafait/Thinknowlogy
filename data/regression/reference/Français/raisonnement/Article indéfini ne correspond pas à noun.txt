@@ -1,0 +1,8 @@
+﻿* L'article indéfini que vous avez utilisé, ne correspond pas avec le nom «cheval».
+* 
+* Je m'attendais que le nom au singulier «article» serait masculin.
+* 
+* Je m'attendais que le nom au singulier «baleine» serait féminine.
+* 
+* L'article indéfini que vous avez utilisé, ne correspond pas avec le nom «maison».
+* 

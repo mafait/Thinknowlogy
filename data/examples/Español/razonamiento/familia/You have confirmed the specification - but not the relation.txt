@@ -6,4 +6,4 @@ Pablo tiene una madre.
 José tiene una madre.
 José tiene un padre.
 Luisa tiene un padre y una madre.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

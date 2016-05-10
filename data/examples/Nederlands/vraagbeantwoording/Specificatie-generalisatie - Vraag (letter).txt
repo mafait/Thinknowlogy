@@ -6,4 +6,4 @@ Is y een hoofdletter?
 Is Y een kleine letter?
 Is a een letter?
 Is Q een letter?
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

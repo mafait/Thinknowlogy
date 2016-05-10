@@ -1,0 +1,43 @@
+﻿Affichez "------------------------------------------------------------------------------".
+Affichez " Les commandes de requête sont disponibles:				Exemples:".
+Affichez "------------------------------------------------------------------------------".
+Affichez " \~(phraseNr)		identification de l'élément			\~(123)".
+Affichez " \~(phraseNr,élémentNr)	identification de l'élément			\~(123,1)".
+Affichez " \~(,élémentNr)		identification de l'élément			\~(,3)".
+Affichez " \~[phraseNr]		référence à l'identification des éléments	\~[123]".
+Affichez " \~[phraseNr,élémentNr]	référence à l'identification des éléments	\~[123,1]".
+Affichez " \~[,élémentNr]		référence à l'identification des éléments	\~[,3]".
+Affichez " \~<adminListeCar>	liste des administrateurs			\~<W>".
+Affichez " \~<motListeCar>		liste de mots					\~<w>".
+Affichez " \~<listeCarlisteCar>	plusieurs listes				\~<Xas>".
+Affichez " \~'mot'			mot						\~'Français'".
+Affichez " \~`motRéférence`	référence à un mot				\~`Français`".
+Affichez " \~\"chaîneTexte\"		chaîne de texte					\~\"phrase\"".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Les deux jokers '?' et '*' peut être utilisé dans:".
+Affichez "			* mots						\~'Fran?ais'".
+Affichez "			* les références à un mot			\~`Fran*is`".
+Affichez "			* chaînes de texte				\~\"gr?m*\"".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Une spécification vide de l'article affichera tous les articles	\~()".
+Affichez " Une spécification de liste vide affichera tous les articles		\~<>".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Ajouter de '#' fournira des fonctionnalités de comptage		\~#(123)".
+Affichez " Ajouter de '+' sélectionnera seulement les éléments actifs		\~+(123)".
+Affichez " Ajouter de '=' sélectionnera seulement les éléments inactifs		\~=(123)".
+Affichez " Ajouter de '$' sélectionnera seulement les éléments archivés		\~$(123)".
+Affichez " Ajouter de '%' sélectionnera seulement les éléments remplacés		\~%(123)".
+Affichez " Ajouter de '&' sélectionnera seulement les éléments supprimés		\~&(123)".
+Affichez " Concaténation des requêtes fournira "ET" fonctionnalité			\~(123)<s>".
+Affichez " Ajouter de '*' sélectionnera éléments de justification aussi attachés	\~*'Lorraine'<s>`fille`".
+Affichez " Ajouter de '**' sélectionnera également spécifications de justification \~**'Lorraine'<s>`fille`".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Ajouter de ' à la fin, affichera que des mots				\~(123)'".
+Affichez " Ajouter de ` à la fin, affichera que des références de mots		\~(123)`".
+Affichez " Ajouter de \" à la fin, affichera que les chaînes de texte		\~(123)\"".
+Affichez " Ajouter de '' affichera que des mots sur une nouvelle ligne		\~(123)''".
+Affichez " Ajouter de `` affichera que des références de mot sur nouvelle ligne	\~(123)``".
+Affichez " Ajouter de \"\" affichera seulement chaînes de texte sur nouvelle ligne	\~(123)\"\"".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Dans les fichiers '\~' marquera la fin d'une requête			...\~#<W>\~...".
+Affichez "------------------------------------------------------------------------------".

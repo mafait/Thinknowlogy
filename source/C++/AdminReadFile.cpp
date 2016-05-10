@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminReadFile
+/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the lines from knowledge files
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -25,7 +24,6 @@
 #include <time.h>
 #include "AdminItem.h"
 #include "FileList.cpp"
-#include "Presentation.cpp"
 
 class AdminReadFile
 	{
@@ -33,7 +31,11 @@ class AdminReadFile
 
 	// Private constructible variables
 
+	bool hasClosedFileDueToError_;
+	bool hasFoundDifferentTestResult_;
+
 	unsigned short testFileNr_;
+
 	clock_t startTime_;
 
 	AdminItem *adminItem_;
@@ -49,7 +51,7 @@ class AdminReadFile
 
 		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
 			{
-			// Do for all words
+			// Do for all active words
 			do	{
 				if( currentWordItem->hasFoundAnyUserSpecification() &&
 				!currentWordItem->isNeedingAuthorizationForChanges() )
@@ -140,28 +142,18 @@ class AdminReadFile
 		return RESULT_OK;
 		}
 
-	ResultType checkCurrentSentenceNr()
+	ResultType incrementCurrentSentenceNr()
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkCurrentSentenceNr";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "incrementCurrentSentenceNr";
 
-		if( commonVariables_->isDontIncrementCurrentSentenceNr )
+		if( commonVariables_->currentSentenceNr < MAX_SENTENCE_NR )
 			{
-			commonVariables_->isDontIncrementCurrentSentenceNr = false;
-
-			if( adminItem_->deleteSentences( true, commonVariables_->currentSentenceNr ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the current redo info" );
+			commonVariables_->currentSentenceNr++;
+			// Necessary after changing current sentence number
+			adminItem_->setCurrentItemNr();
 			}
 		else
-			{
-			if( commonVariables_->currentSentenceNr < MAX_SENTENCE_NR )
-				{
-				commonVariables_->currentSentenceNr++;
-				// Necessary after changing current sentence number
-				adminItem_->setCurrentItemNr();
-				}
-			else
-				return adminItem_->startSystemError( functionNameString, moduleNameString_, "Sentence number overflow! I can't except anymore input" );
-			}
+			return adminItem_->startSystemError( functionNameString, moduleNameString_, "Sentence number overflow! I can't except anymore input" );
 
 		return RESULT_OK;
 		}
@@ -169,6 +161,7 @@ class AdminReadFile
 	ResultType executeLine( char *readString )
 		{
 		bool hasSwitchedLanguage = false;
+		bool wasCurrentCommandUndoOrRedo;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "executeLine";
 
 		if( readString != NULL )
@@ -179,114 +172,133 @@ class AdminReadFile
 			readString[0] != COMMENT_CHAR )
 				{
 				commonVariables_->hasShownMessage = false;
+				commonVariables_->hasShownWarning = false;
 				commonVariables_->isAssignmentChanged = false;
 
-				if( adminItem_->cleanupDeletedItems() == RESULT_OK )
+				if( !adminItem_->wasPreviousCommandUndoOrRedo() )
 					{
-					// Guide-by-grammar, grammar/language or query
-					if( readString[0] == QUERY_CHAR )
+					if( adminItem_->cleanupDeletedItems() != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
+					}
+
+				hasClosedFileDueToError_ = false;
+
+				// Guide-by-grammar, grammar/language or query
+				if( readString[0] == QUERY_CHAR )
+					{
+					// Guide-by-grammar
+					if( strlen( readString ) == 1 )
 						{
-						// Guide-by-grammar
-						if( strlen( readString ) == 1 )
+						if( incrementCurrentSentenceNr() == RESULT_OK )
 							{
-							if( checkCurrentSentenceNr() == RESULT_OK )
-								{
-								if( adminItem_->processReadSentence( NULL ) != RESULT_OK )
-									adminItem_->addError( functionNameString, moduleNameString_, "I failed to process a read sentence" );
-								}
-							else
-								adminItem_->addError( functionNameString, moduleNameString_, "I failed to check to current sentence number" );
+							if( adminItem_->processReadSentence( NULL ) != RESULT_OK )
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to process a read sentence" );
 							}
 						else
-							{
-							// Grammar/language
-							if( isalpha( readString[1] ) )
-								{
-								if( adminItem_->isSystemStartingUp() )
-									{
-									if( readGrammarFileAndUserInterfaceFile( &readString[1] ) != RESULT_OK )
-										adminItem_->addError( functionNameString, moduleNameString_, "I failed to read the language" );
-									}
-								else
-									{
-									// Change language
-									if( adminItem_->assignLanguage( &readString[1] ) == RESULT_OK )
-										hasSwitchedLanguage = true;
-									else
-										adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
-									}
-								}
-							else
-								{
-								// Query
-								if( readString[0] == QUERY_CHAR )
-									{
-									adminItem_->initializeQueryStringPosition();
-
-									if( adminItem_->executeQuery( false, true, true, PRESENTATION_PROMPT_QUERY, readString ) != RESULT_OK )
-										adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute query: \"", readString, "\"" );
-									}
-								}
-							}
+							adminItem_->addError( functionNameString, moduleNameString_, "I failed to increment the current sentence number for Guide by Grammar" );
 						}
 					else
 						{
-						// Sentence or grammar definition
-						if( checkCurrentSentenceNr() == RESULT_OK )
+						// Grammar/language
+						if( isalpha( readString[1] ) )
 							{
-							// Grammar definition
-							if( isGrammarChar( readString[0] ) )
+							if( adminItem_->isSystemStartingUp() )
 								{
-								if( adminItem_->addGrammar( readString ) != RESULT_OK )
-									adminItem_->addError( functionNameString, moduleNameString_, "I failed to add grammar: \"", readString, "\"" );
+								if( readGrammarFileAndUserInterfaceFile( &readString[1] ) != RESULT_OK )
+									adminItem_->addError( functionNameString, moduleNameString_, "I failed to read the language" );
 								}
 							else
 								{
-								// Sentence
-								if( adminItem_->processReadSentence( readString ) != RESULT_OK )
-									adminItem_->addError( functionNameString, moduleNameString_, "I failed to process a read sentence" );
+								// Change language
+								if( adminItem_->assignLanguage( &readString[1] ) == RESULT_OK )
+									hasSwitchedLanguage = true;
+								else
+									adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
 								}
 							}
 						else
-							adminItem_->addError( functionNameString, moduleNameString_, "I failed to check to current sentence number" );
-						}
-
-					if( commonVariables_->result != RESULT_SYSTEM_ERROR &&
-					!adminItem_->hasRequestedRestart() )
-						{
-						if( commonVariables_->result == RESULT_OK &&
-						!hasSwitchedLanguage &&
-						!commonVariables_->hasShownWarning &&
-						adminItem_->hasFoundAnyChangeMadeByThisSentence() &&
-
-						// Execute selections after Undo or Redo
-						( adminItem_->wasUndoOrRedo() ||
-						!commonVariables_->hasShownMessage ) )
 							{
-							if( adminItem_->executeSelections() != RESULT_OK )
-								adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute selections after reading the sentence" );
-							}
+							// Query
+							if( readString[0] == QUERY_CHAR )
+								{
+								adminItem_->initializeQueryStringPosition();
 
-						if( commonVariables_->result == RESULT_OK &&
-						!hasSwitchedLanguage &&
-						!adminItem_->hasFoundAnyChangeMadeByThisSentence() &&
-						!adminItem_->isSystemStartingUp() &&
-						!commonVariables_->hasShownMessage &&
-						!commonVariables_->hasShownWarning )
-							{
-							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != RESULT_OK )
-								adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I know' interface notification" );
-							}
-
-						if( commonVariables_->result == RESULT_OK )
-							{
-							if( adminItem_->deleteAllTemporaryLists() != RESULT_OK )
-								adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete all temporary lists" );
+								if( adminItem_->executeQuery( false, true, true, PRESENTATION_PROMPT_QUERY, readString ) != RESULT_OK )
+									adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute query: \"", readString, "\"" );
+								}
 							}
 						}
 					}
 				else
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
+					{
+					// Sentence or grammar definition
+					if( incrementCurrentSentenceNr() == RESULT_OK )
+						{
+						// Grammar definition
+						if( isGrammarChar( readString[0] ) )
+							{
+							if( adminItem_->addGrammar( readString ) != RESULT_OK )
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to add grammar: \"", readString, "\"" );
+							}
+						else
+							{
+							// Sentence
+							if( adminItem_->processReadSentence( readString ) != RESULT_OK )
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to process a read sentence" );
+							}
+						}
+					else
+						adminItem_->addError( functionNameString, moduleNameString_, "I failed to increment the current sentence number" );
+					}
+
+				if( commonVariables_->result != RESULT_SYSTEM_ERROR &&
+				!adminItem_->hasRequestedRestart() )
+					{
+					wasCurrentCommandUndoOrRedo = adminItem_->wasCurrentCommandUndoOrRedo();
+
+					if( commonVariables_->result == RESULT_OK &&
+					!commonVariables_->hasShownWarning )
+						{
+						if( adminItem_->hasFoundAnyChangeMadeByThisSentence() )
+							{
+							if( !hasSwitchedLanguage &&
+
+							( wasCurrentCommandUndoOrRedo ||
+							!commonVariables_->hasShownMessage ) )
+								{
+								if( adminItem_->executeSelections() != RESULT_OK )
+									adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute selections after reading the sentence" );
+								}
+							}
+						else
+							{
+							if( !hasSwitchedLanguage &&
+							!commonVariables_->hasShownMessage &&
+							!adminItem_->isSystemStartingUp() )
+								{
+								if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != RESULT_OK )
+									adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I know' interface notification" );
+								}
+							}
+						}
+
+					adminItem_->clearAllTemporaryLists();
+
+					if( !wasCurrentCommandUndoOrRedo )
+						{
+						if( adminItem_->cleanupDeletedItems() != RESULT_OK )
+							adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
+
+						if( !adminItem_->isSystemStartingUp() )
+							{
+							// Check for empty sentence
+							adminItem_->setCurrentItemNr();
+
+							if( commonVariables_->currentItemNr == NO_ITEM_NR )
+								adminItem_->decrementCurrentSentenceNr();
+							}
+						}
+					}
 				}
 			}
 		else
@@ -310,9 +322,27 @@ class AdminReadFile
 
 			if( fileList->closeCurrentFile( closeFileItem ) == RESULT_OK )
 				{
-				if( isTestFile &&
-				adminItem_->deleteSentences( false, testFileSentenceNr ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the previous test sentences" );
+				if( isTestFile )
+					{
+					if( adminItem_->deleteSentences( testFileSentenceNr ) == RESULT_OK )
+						{
+						if( testFileSentenceNr > NO_SENTENCE_NR &&
+						// Not reading from file
+						fileList->currentReadFile() == NULL )
+							{
+							commonVariables_->currentSentenceNr = ( testFileSentenceNr - 1 );
+							// Necessary after changing current sentence number
+							adminItem_->setCurrentItemNr();
+							}
+						}
+					else
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the test sentences added during read the test file" );
+					}
+				else
+					{
+					if( commonVariables_->result != RESULT_OK )
+						hasClosedFileDueToError_ = true;
+					}
 				}
 			else
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to close a file" );
@@ -374,6 +404,9 @@ class AdminReadFile
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
+		hasClosedFileDueToError_ = false;
+		hasFoundDifferentTestResult_ = false;
+
 		testFileNr_ = 0;
 		startTime_ = 0;
 
@@ -403,6 +436,11 @@ class AdminReadFile
 
 	// Protected functions
 
+	bool hasClosedFileDueToError()
+		{
+		return hasClosedFileDueToError_;
+		}
+
 	ResultType compareOutputFileAgainstReferenceFile( char *testFileNameString )
 		{
 		FileResultType fileResult;
@@ -410,10 +448,12 @@ class AdminReadFile
 		bool hasReadReference;
 		bool isStop = false;
 		unsigned int lineNr = 0;
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 		char outputString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char referenceString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "compareOutputFileAgainstReferenceFile";
+
+		hasFoundDifferentTestResult_ = false;
 
 		if( ( fileResult = openFile( true, false, false, true, FILE_DATA_REGRESSION_TEST_OUTPUT_DIRECTORY_NAME_STRING, testFileNameString, NULL, FILE_DATA_REGRESSION_TEST_REFERENCE_DIRECTORY_NAME_STRING ) ).result == RESULT_OK )
 			{
@@ -422,6 +462,8 @@ class AdminReadFile
 				if( fileResult.referenceFile != NULL )
 					{
 					do	{
+						isStop = true;
+
 						if( commonVariables_->presentation->readLine( false, false, false, false, NULL, outputString, fileResult.outputFile ) == RESULT_OK )
 							{
 							hasReadOutput = commonVariables_->presentation->hasReadLine();
@@ -432,31 +474,29 @@ class AdminReadFile
 
 								if( hasReadOutput &&
 								hasReadReference )
-									{
-									if( strcmp( outputString, referenceString ) == 0 )
-										lineNr++;
-									else
-										{
-										sprintf( errorString, "Line number %u is different:\n* test result:\t\t\"%s\"\n* against reference:\t\"%s\"", lineNr, outputString, referenceString );
-										return adminItem_->startError( functionNameString, moduleNameString_, errorString );
-										}
-									}
-								else
-									{
-									isStop = true;
-
-									if( hasReadOutput )
-										return adminItem_->startError( functionNameString, moduleNameString_, "The output file is longer than the reference file" );
-
-									if( hasReadReference )
-										return adminItem_->startError( functionNameString, moduleNameString_, "The output file is shorter than the reference file" );
-									}
+							{
+							if( strcmp( outputString, referenceString ) == 0 )
+								{
+								isStop = false;
+								lineNr++;
 								}
 							else
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a line from the reference file" );
+								sprintf( errorString, "Line number %u is different:\n* test result:\t\t\"%s\"\n* against reference:\t\"%s\"", lineNr, outputString, referenceString );
 							}
 						else
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a line from the output file" );
+							{
+							if( hasReadOutput )
+								strcpy( errorString, "The output file is longer than the reference file" );
+
+							if( hasReadReference )
+								strcpy( errorString, "The output file is shorter than the reference file" );
+							}
+								}
+							else
+								strcpy( errorString, "I failed to read a line from the reference file" );
+							}
+						else
+							strcpy( errorString, "I failed to read a line from the output file" );
 						}
 					while( !isStop );
 
@@ -467,13 +507,19 @@ class AdminReadFile
 							fclose( fileResult.referenceFile );
 					}
 				else
-					return adminItem_->startError( functionNameString, moduleNameString_, "The reference file is undefined" );
+					strcpy( errorString, "The reference file is undefined" );
 				}
 			else
-				return adminItem_->startError( functionNameString, moduleNameString_, "The output file is undefined" );
+				strcpy( errorString, "The output file is undefined" );
 			}
 		else
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to open a test file" );
+			strcpy( errorString, "I failed to open a test file" );
+
+		if( strlen( errorString ) > 0 )
+			{
+			hasFoundDifferentTestResult_ = true;
+			return adminItem_->startError( functionNameString, moduleNameString_, errorString );
+			}
 
 		return RESULT_OK;
 		}
@@ -484,11 +530,13 @@ class AdminReadFile
 		char readString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "readAndExecute";
 
+		hasFoundDifferentTestResult_ = false;
+
 		do	{
 			isLineExecuted = false;
 			strcpy( readString, EMPTY_STRING );
 
-			if( readLine( false, false, false, ( commonVariables_->isDontIncrementCurrentSentenceNr ? commonVariables_->currentSentenceNr : commonVariables_->currentSentenceNr + 1 ), adminItem_->currentUserName(), readString ) == RESULT_OK )
+			if( readLine( false, false, false, ( commonVariables_->currentSentenceNr + 1 ), adminItem_->currentUserName(), readString ) == RESULT_OK )
 				{
 				if( commonVariables_->presentation->hasReadLine() )
 					{
@@ -502,10 +550,11 @@ class AdminReadFile
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a line" );
 			}
 		while( isLineExecuted &&
+		!hasFoundDifferentTestResult_ &&
 		!adminItem_->hasRequestedRestart() &&
 
 		// Ignore warnings during testing
-		( adminItem_->isTesting() ||
+		( adminItem_->isCurrentlyTesting() ||
 		!commonVariables_->hasShownWarning ) );
 
 		if( adminItem_->isSystemStartingUp() &&

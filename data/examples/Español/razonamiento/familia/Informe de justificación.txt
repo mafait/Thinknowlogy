@@ -10,4 +10,4 @@ Mostrar el informe de justificación sobre Ana.
 Mostrar el informe de justificación sobre Pablo.
 Mostrar el informe de justificación sobre José.
 Mostrar el informe de justificación sobre Luisa.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

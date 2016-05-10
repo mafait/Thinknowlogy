@@ -8,4 +8,4 @@
 ¿Es Ana un padre o una madre?
 ¿Es Pablo un hijo o una hija?
 ¿Es Luisa un hijo o una hija?
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

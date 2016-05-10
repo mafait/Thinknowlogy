@@ -1,11 +1,10 @@
-/*
- *	Class:			WordWrite
+/*	Class:			WordWrite
  *	Supports class:	WordItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -22,7 +21,6 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#include "Presentation.cpp"
 #include "SpecificationItem.cpp"
 
 class WordWrite
@@ -76,11 +74,11 @@ class WordWrite
 			{
 			if( !justificationSpecificationItem->isReplacedItem() )
 				{
-				if( writeSelectedSpecification( false, true, true, false, isWritingCurrentSpecificationWordOnly, NO_ANSWER_PARAMETER, justificationSpecificationItem ) == RESULT_OK )
+				if( writeSelectedSpecification( false, false, true, true, false, isWritingCurrentSpecificationWordOnly, NO_ANSWER_PARAMETER, justificationSpecificationItem ) == RESULT_OK )
 					{
-					if( strlen( commonVariables_->writeSentenceString ) > 0 )
+					if( strlen( commonVariables_->writtenSentenceString ) > 0 )
 						{
-						if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE_INDENTED, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+						if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE_INDENTED, commonVariables_->writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
 							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a justification sentence" );
 						}
 					else
@@ -109,15 +107,15 @@ class WordWrite
 				{
 				do	{
 					if( currentSpecificationItem->specificationWordItem() == writeWordItem &&
-					!currentSpecificationItem->isHiddenSpecification() )
+					!currentSpecificationItem->isHiddenSpanishSpecification() )
 						{
-						if( writeSelectedSpecification( false, false, false, false, false, NO_ANSWER_PARAMETER, currentSpecificationItem ) == RESULT_OK )
+						if( writeSelectedSpecification( false, false, false, false, false, false, NO_ANSWER_PARAMETER, currentSpecificationItem ) == RESULT_OK )
 							{
-							if( strlen( commonVariables_->writeSentenceString ) > 0 )
+							if( strlen( commonVariables_->writtenSentenceString ) > 0 )
 								{
 								if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_WRITE, ( isQuestion ? INTERFACE_LISTING_SPECIFICATION_QUESTIONS : INTERFACE_LISTING_SPECIFICATIONS ) ) == RESULT_OK )
 									{
-									if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+									if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
 										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a sentence" );
 									}
 								else
@@ -148,16 +146,16 @@ class WordWrite
 				{
 				do	{
 					if( writeWordItem->hasContextInWord( currentSpecificationItem->relationContextNr(), currentSpecificationItem->specificationWordItem() ) &&
-					!currentSpecificationItem->isHiddenSpecification() &&
+					!currentSpecificationItem->isHiddenSpanishSpecification() &&
 					myWordItem_->firstRelationSpecificationItem( isInactiveAssignment, isArchivedAssignment, currentSpecificationItem->isPossessive(), currentSpecificationItem->questionParameter(), writeWordItem ) != NULL )
 						{
-						if( writeSelectedSpecification( false, false, false, false, false, NO_ANSWER_PARAMETER, currentSpecificationItem ) == RESULT_OK )
+						if( writeSelectedSpecification( false, false, false, false, false, false, NO_ANSWER_PARAMETER, currentSpecificationItem ) == RESULT_OK )
 							{
-							if( strlen( commonVariables_->writeSentenceString ) > 0 )
+							if( strlen( commonVariables_->writtenSentenceString ) > 0 )
 								{
 								if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( isQuestion ? INTERFACE_LISTING_RELATED_QUESTIONS : INTERFACE_LISTING_RELATED_INFORMATION ) ) == RESULT_OK )
 									{
-									if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+									if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
 										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a sentence" );
 									}
 								else
@@ -177,13 +175,14 @@ class WordWrite
 		return RESULT_OK;
 		}
 
-	ResultType writeSelectedSpecification( bool isAdjustedAssumption, bool isForcingResponseNotBeingAssignment, bool isForcingResponseNotBeingFirstSpecification, bool isWritingCurrentSentenceOnly, bool isWritingCurrentSpecificationWordOnly, unsigned short answerParameter, SpecificationItem *writeSpecificationItem )
+	ResultType writeSelectedSpecification( bool isAdjustedAssumption, bool isCheckingUserSentenceForIntegrity, bool isForcingResponseNotBeingAssignment, bool isForcingResponseNotBeingFirstSpecification, bool isWritingCurrentSentenceOnly, bool isWritingCurrentSpecificationWordOnly, unsigned short answerParameter, SpecificationItem *writeSpecificationItem )
 		{
 		SpecificationResultType specificationResult;
 		bool hasRelationContext;
 		bool hasSpecificationCompoundCollection;
 		bool isAssignment;
 		bool isExclusiveSpecification;
+		bool isNegative;
 		bool isPossessive;
 		bool isOlderItem;
 		bool isQuestion;
@@ -197,7 +196,7 @@ class WordWrite
 		bool isLastRelatedSpecification = false;
 		bool isSelfGeneratedDefinitionConclusion = false;
 		unsigned int relationContextNr;
-		size_t writeSentenceStringLength;
+		size_t writtenSentenceStringLength;
 		SpecificationItem *firstAssignmentItem;
 		SpecificationItem *relatedSpecificationItem = NULL;
 		WordItem *specificationWordItem;
@@ -205,29 +204,17 @@ class WordWrite
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeSelectedSpecification";
 
 		strcpy( commonVariables_->learnedFromUserString, EMPTY_STRING );
-		strcpy( commonVariables_->writeSentenceString, EMPTY_STRING );
+		strcpy( commonVariables_->writtenSentenceString, EMPTY_STRING );
 
 		if( writeSpecificationItem != NULL )
 			{
-			if( !writeSpecificationItem->isHiddenSpecification() )
+			if( !writeSpecificationItem->isHiddenSpanishSpecification() )
 				{
-				// Skip specification string
-				if( ( specificationWordItem = writeSpecificationItem->specificationWordItem() ) != NULL )
-					{
-					if( ( specificationResult = myWordItem_->findRelatedSpecification( true, writeSpecificationItem ) ).result == RESULT_OK )
-						{
-						isFirstRelatedSpecification = specificationResult.isFirstRelatedSpecification;
-						isLastRelatedSpecification = specificationResult.isLastRelatedSpecification;
-						relatedSpecificationItem = specificationResult.relatedSpecificationItem;
-						}
-					else
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a related specification" );
-					}
-
 				hasRelationContext = writeSpecificationItem->hasRelationContext();
 				hasSpecificationCompoundCollection = writeSpecificationItem->hasSpecificationCompoundCollection();
 				isAssignment = writeSpecificationItem->isAssignment();
 				isExclusiveSpecification = writeSpecificationItem->isExclusiveSpecification();
+				isNegative = writeSpecificationItem->isNegative();
 				isPossessive = writeSpecificationItem->isPossessive();
 				isOlderItem = writeSpecificationItem->isOlderItem();
 				isQuestion = writeSpecificationItem->isQuestion();
@@ -235,38 +222,54 @@ class WordWrite
 
 				relationContextNr = writeSpecificationItem->relationContextNr();
 
-				if( !isAssignment &&
-				( firstAssignmentItem = myWordItem_->firstAssignmentItem( true, true, true, isPossessive, writeSpecificationItem->questionParameter(), relationContextNr, specificationWordItem ) ) != NULL )
+				if( ( specificationWordItem = writeSpecificationItem->specificationWordItem() ) != NULL )
 					{
-					hasAssignment = true;
+					if( !isWritingCurrentSpecificationWordOnly &&
+					answerParameter == NO_ANSWER_PARAMETER )
+						{
+						if( ( specificationResult = myWordItem_->findRelatedSpecification( true, writeSpecificationItem ) ).result == RESULT_OK )
+							{
+							isFirstRelatedSpecification = specificationResult.isFirstRelatedSpecification;
+							isLastRelatedSpecification = specificationResult.isLastRelatedSpecification;
+							relatedSpecificationItem = specificationResult.relatedSpecificationItem;
 
-					if( isExclusiveSpecification &&
-					!firstAssignmentItem->hasRelationContext() &&
-					firstAssignmentItem->isArchivedAssignment() )
-						isForcingResponseNotBeingAssignment = true;
+							if( relatedSpecificationItem != NULL &&
+							relatedSpecificationItem->isOlderItem() )
+								{
+								if( !hasAssignment &&
+								!hasSpecificationCompoundCollection &&
+								isWritingCurrentSentenceOnly )
+									isCombinedSpecification = true;
+
+								if( !isOlderItem )
+									isCombinedOldAndNewSpecification = true;
+								}
+							}
+						else
+							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a related specification" );
+						}
+
+					if( !isAssignment &&
+					( firstAssignmentItem = myWordItem_->firstAssignmentItem( true, true, true, isPossessive, writeSpecificationItem->questionParameter(), relationContextNr, specificationWordItem ) ) != NULL )
+						{
+						hasAssignment = true;
+
+						if( isExclusiveSpecification &&
+						!firstAssignmentItem->hasRelationContext() &&
+						firstAssignmentItem->isArchivedAssignment() )
+							isForcingResponseNotBeingAssignment = true;
+						}
+
+					if( hasSpecificationCompoundCollection &&
+					!isFirstRelatedSpecification &&
+					isLastRelatedSpecification )
+						isLastCompoundSpecification = true;
+
+					if( !isSpecificationGeneralization &&
+					writeSpecificationItem->isGeneralizationNoun() &&
+					writeSpecificationItem->isSelfGeneratedConclusion() )
+						isSelfGeneratedDefinitionConclusion = true;
 					}
-
-				if( relatedSpecificationItem != NULL &&
-				relatedSpecificationItem->isOlderItem() )
-					{
-					if( !hasAssignment &&
-					!hasSpecificationCompoundCollection &&
-					isWritingCurrentSentenceOnly )
-						isCombinedSpecification = true;
-
-					if( !isOlderItem )
-						isCombinedOldAndNewSpecification = true;
-					}
-
-				if( hasSpecificationCompoundCollection &&
-				!isFirstRelatedSpecification &&
-				isLastRelatedSpecification )
-					isLastCompoundSpecification = true;
-
-				if( !isSpecificationGeneralization &&
-				writeSpecificationItem->isGeneralizationNoun() &&
-				writeSpecificationItem->isSelfGeneratedConclusion() )
-					isSelfGeneratedDefinitionConclusion = true;
 
 				if( isCombinedSpecification ||
 
@@ -276,7 +279,6 @@ class WordWrite
 				( !isExclusiveSpecification ||
 				isLastCompoundSpecification ||
 				isForcingResponseNotBeingFirstSpecification ||
-				!isExclusiveSpecification ||
 
 				( !hasSpecificationCompoundCollection &&
 				isFirstRelatedSpecification ) ) ) ||
@@ -285,7 +287,6 @@ class WordWrite
 				( !isSelfGeneratedDefinitionConclusion &&
 
 				( !hasAssignment ||
-				isAssignment ||
 				isForcingResponseNotBeingAssignment ||
 				writeSpecificationItem->isConditional() ||
 				writeSpecificationItem->isCorrectedAssumption() ) &&
@@ -296,95 +297,87 @@ class WordWrite
 				relatedSpecificationItem == NULL ||
 
 				( !isAdjustedAssumption &&
+				isNegative &&
 				!isQuestion &&
 				writeSpecificationItem->assumptionLevel() != relatedSpecificationItem->assumptionLevel() ) ) ) )
 					{
 					isWritingSentenceWithOneSpecificationOnly = ( isWritingCurrentSpecificationWordOnly &&
 																strlen( writeSpecificationItem->lastWrittenSentenceWithOneSpecificationOnlyString ) > 0 );
 
-					// In order to increase performance, use the last written sentence if still up-to-date
-					if( !isAdjustedAssumption &&
-					answerParameter == NO_ANSWER_PARAMETER &&
+					// To increase performance, use the last written sentence if still up-to-date
+					if( answerParameter == NO_ANSWER_PARAMETER &&
 					strlen( writeSpecificationItem->lastWrittenSentenceString ) > 0 &&
 
-					( isQuestion ||
-					isWritingSentenceWithOneSpecificationOnly ||
+					( isWritingSentenceWithOneSpecificationOnly ||
+
+					// Question
+					( isQuestion &&
+
+					( !isAdjustedAssumption ||
+					writeSpecificationItem->hasCurrentActiveSentenceNr() ) ) ||
 
 					// No relation context
 					( !hasRelationContext &&
 
-					( !isWritingCurrentSpecificationWordOnly ||
-					myWordItem_->isUserGeneralizationWord ) ) ||
+					( ( isExclusiveSpecification &&
+
+					( !isAdjustedAssumption ||
+					!hasSpecificationCompoundCollection ) ) ||
+
+					( ( !isAdjustedAssumption ||
+					!isQuestion ) &&
+
+					myWordItem_->isUserGeneralizationWord ) ) ) ||
 
 					// Relation context
 					( hasRelationContext &&
-
-					( ( ( isOlderItem ||
-					myWordItem_->isUserGeneralizationWord ) &&
-
-					!myWordItem_->hasContextCurrentlyBeenUpdatedInAllWords( relationContextNr, specificationWordItem ) ) ||
-
-					myWordItem_->nContextWordsInAllWords( relationContextNr, specificationWordItem ) == 1 ) ) ) )
+					!myWordItem_->hasContextCurrentlyBeenUpdatedInAllWords( relationContextNr, specificationWordItem ) ) ) )
+						{
 						// Use the last written sentence
-						strcpy( commonVariables_->writeSentenceString, ( isWritingSentenceWithOneSpecificationOnly ? writeSpecificationItem->lastWrittenSentenceWithOneSpecificationOnlyString : writeSpecificationItem->lastWrittenSentenceString ) );
+						if( isCheckingUserSentenceForIntegrity )
+							strcpy( commonVariables_->writtenUserSentenceString, writeSpecificationItem->lastWrittenSentenceString );
+						else
+							strcpy( commonVariables_->writtenSentenceString, ( isWritingSentenceWithOneSpecificationOnly ? writeSpecificationItem->lastWrittenSentenceWithOneSpecificationOnlyString : writeSpecificationItem->lastWrittenSentenceString ) );
+
+						}
 					else
 						{
-						// In order to increase performance, use the last written sentence of a related specification
-						if( !isFirstRelatedSpecification &&
-						!isWritingCurrentSpecificationWordOnly &&
-						answerParameter == NO_ANSWER_PARAMETER &&
-						writeSpecificationItem->isOlderItem() &&
+						// To increase performance, use the last written sentence of a related specification
+						if( isOlderItem &&
+						!isQuestion &&
 						relatedSpecificationItem != NULL &&
 						relatedSpecificationItem->lastWrittenSentenceString != NULL &&
 						strlen( relatedSpecificationItem->lastWrittenSentenceString ) > 0 )
 							// Use the last written sentence of a related specification
-							strcpy( commonVariables_->writeSentenceString, relatedSpecificationItem->lastWrittenSentenceString );
+							strcpy( commonVariables_->writtenSentenceString, relatedSpecificationItem->lastWrittenSentenceString );
 						else
 							{
 							if( currentLanguageWordItem != NULL )
 								{
-								if( myWordItem_->selectGrammarToWriteSentence( isWritingCurrentSpecificationWordOnly, answerParameter, NO_GRAMMAR_LEVEL, currentLanguageWordItem->startOfGrammarItem(), writeSpecificationItem ) == RESULT_OK )
+								if( myWordItem_->selectGrammarToWriteSentence( isCheckingUserSentenceForIntegrity, isWritingCurrentSpecificationWordOnly, answerParameter, NO_GRAMMAR_LEVEL, currentLanguageWordItem->firstGrammarItem(), writeSpecificationItem ) == RESULT_OK )
 									{
 									// Under certain conditions, the last written sentence will be stored, in order to be re-used if needed
 									if( answerParameter == NO_ANSWER_PARAMETER &&
-									// Skip hidden specification word type
-									!writeSpecificationItem->hasHiddenSpecificationWordType() &&
-									strlen( commonVariables_->writeSentenceString ) > 0 &&
+									strlen( commonVariables_->writtenSentenceString ) > 0 &&
 
-									// Any 'part of' specification
-									( writeSpecificationItem->isPartOf() ||
+									( ( ( !isAssignment ||
+									!isPossessive )&&
 
-									// Any user question
-									writeSpecificationItem->isUserQuestion() ||
+									writeSpecificationItem->isUserSpecification() ) ||
 
-									// Any non-exclusive non-specification-generalization specification
-									( !isExclusiveSpecification &&
-									!isSpecificationGeneralization &&
-									!writeSpecificationItem->isNegative() ) ||
+									( !isNegative &&
 
-									( !hasRelationContext &&
-
-									// Any older self-generated specification without relation context
-									( ( isOlderItem &&
-									!writeSpecificationItem->isNegative() &&
-									writeSpecificationItem->isSelfGenerated() ) ||
-
-									// Any user specification
-									( !isAssignment &&
-									writeSpecificationItem->isUserSpecification() ) ) ) ||
-
-									// Any non-generalization assignment with relation context
-									( hasRelationContext &&
-									!writeSpecificationItem->isGeneralizationAssignment() ) ) )
+									( isOlderItem ||
+									!writeSpecificationItem->isGeneralizationAssignment() ) ) ) )
 										{
 										if( isWritingCurrentSpecificationWordOnly )
 											{
 											if( strlen( writeSpecificationItem->lastWrittenSentenceWithOneSpecificationOnlyString ) == 0 &&
 											writeSpecificationItem->nInvolvedSpecificationWords( false ) > 1 )
-												strcpy( writeSpecificationItem->lastWrittenSentenceWithOneSpecificationOnlyString, commonVariables_->writeSentenceString );
+												strcpy( writeSpecificationItem->lastWrittenSentenceWithOneSpecificationOnlyString, commonVariables_->writtenSentenceString );
 											}
 										else
-											strcpy( writeSpecificationItem->lastWrittenSentenceString, commonVariables_->writeSentenceString );
+											strcpy( writeSpecificationItem->lastWrittenSentenceString, commonVariables_->writtenSentenceString );
 										}
 									}
 								else
@@ -397,7 +390,7 @@ class WordWrite
 
 					if( currentLanguageWordItem != NULL &&
 					writeSpecificationItem->userNr() != commonVariables_->currentUserNr &&
-					( writeSentenceStringLength = strlen( commonVariables_->writeSentenceString ) ) > 0 )
+					( writtenSentenceStringLength = strlen( commonVariables_->writtenSentenceString ) ) > 0 )
 						{
 						strcpy( commonVariables_->learnedFromUserString, currentLanguageWordItem->interfaceString( INTERFACE_JUSTIFICATION_LEARNED_FROM_USER_START ) );
 						strcat( commonVariables_->learnedFromUserString, myWordItem_->userNameString( writeSpecificationItem->userNr() ) );
@@ -417,26 +410,26 @@ class WordWrite
 	ResultType writeUpdatedSpecification( bool isAdjustedSpecification, bool isConcludedAssumption, bool isCorrectedAssumptionByKnowledge, bool isCorrectedAssumptionByOppositeQuestion, SpecificationItem *writeSpecificationItem )
 		{
 		bool isExclusiveSpecification;
-		bool wasHiddenSpecification;
+		bool wasHiddenSpanishSpecification;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeUpdatedSpecification";
 
 		if( writeSpecificationItem != NULL )
 			{
 			isExclusiveSpecification = writeSpecificationItem->isExclusiveSpecification();
-			wasHiddenSpecification = writeSpecificationItem->wasHiddenSpecification();
+			wasHiddenSpanishSpecification = writeSpecificationItem->wasHiddenSpanishSpecification();
 
-			if( writeSelectedSpecification( true, true, isExclusiveSpecification, false, false, NO_ANSWER_PARAMETER, writeSpecificationItem ) == RESULT_OK )
+			if( writeSelectedSpecification( true, false, true, isExclusiveSpecification, false, false, NO_ANSWER_PARAMETER, writeSpecificationItem ) == RESULT_OK )
 				{
-				if( strlen( commonVariables_->writeSentenceString ) > 0 )
+				if( strlen( commonVariables_->writtenSentenceString ) > 0 )
 					{
-					if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( isCorrectedAssumptionByKnowledge ? INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_KNOWLEDGE : ( isCorrectedAssumptionByOppositeQuestion ? INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_QUESTION : ( isAdjustedSpecification ? ( writeSpecificationItem->isQuestion() ? INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS : ( isConcludedAssumption || writeSpecificationItem->isConcludedAssumption() ? ( wasHiddenSpecification ? INTERFACE_LISTING_MY_HIDDEN_ASSUMPTIONS_THAT_ARE_CONCLUDED : INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED ) : ( wasHiddenSpecification ? INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE : INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED ) ) ) : ( writeSpecificationItem->isSelfGenerated() ? INTERFACE_LISTING_MY_QUESTIONS_THAT_ARE_ANSWERED : INTERFACE_LISTING_YOUR_QUESTIONS_THAT_ARE_ANSWERED ) ) ) ) ) == RESULT_OK )
+					if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( isCorrectedAssumptionByKnowledge ? INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_KNOWLEDGE : ( isCorrectedAssumptionByOppositeQuestion ? INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_QUESTION : ( isAdjustedSpecification ? ( writeSpecificationItem->isQuestion() ? INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS : ( isConcludedAssumption || writeSpecificationItem->isConcludedAssumption() ? ( wasHiddenSpanishSpecification ? INTERFACE_LISTING_MY_HIDDEN_ASSUMPTIONS_THAT_ARE_CONCLUDED : INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED ) : ( wasHiddenSpanishSpecification ? INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE : INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED ) ) ) : ( writeSpecificationItem->isSelfGenerated() ? INTERFACE_LISTING_MY_QUESTIONS_THAT_ARE_ANSWERED : INTERFACE_LISTING_YOUR_QUESTIONS_THAT_ARE_ANSWERED ) ) ) ) ) == RESULT_OK )
 						{
-						if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) == RESULT_OK )
+						if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writtenSentenceString, commonVariables_->learnedFromUserString ) == RESULT_OK )
 							{
 							if( !isCorrectedAssumptionByOppositeQuestion )
 								{
 								if( myWordItem_->recalculateAssumptionsInAllTouchedWords() != RESULT_OK )
-									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to recalculate the assumptions in all words" );
+									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to recalculate the assumptions in all touched words" );
 								}
 							}
 						else

@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminAuthorization
+/*	Class:			AdminAuthorization
  *	Supports class:	AdminItem
  *	Purpose:		To handle authorization
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,9 +23,6 @@
 
 #include "AdminItem.h"
 #include "GeneralizationItem.cpp"
-#include "Presentation.cpp"
-#include "SpecificationItem.cpp"
-#include "WordTypeItem.cpp"
 
 class AdminAuthorization
 	{

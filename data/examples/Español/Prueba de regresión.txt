@@ -18,12 +18,12 @@ Leer el archivo de prueba "Español/respuestas a las preguntas/Esta pregunta es 
 
 Leer el archivo de prueba "Español/razonamiento/Artículo indefinido no coincide con el sustantivo".
 Leer el archivo de prueba "Español/razonamiento/Mis conclusiones que se confirman (con relación, sin definición de la familia)".
-Leer el archivo de prueba "Español/razonamiento/La única opción que queda - Barco".
-Leer el archivo de prueba "Español/razonamiento/La única opción que queda - Cruz no es una mujer".
-Leer el archivo de prueba "Español/razonamiento/La única opción que queda - Opción".
+Leer el archivo de prueba "Español/razonamiento/Reto científico".
 Leer el archivo de prueba "Español/razonamiento/Frase con verbo posesivo (sin definición de la familia)".
 Leer el archivo de prueba "Español/razonamiento/Especificación generalización - Mamíferos (plural)".
 Leer el archivo de prueba "Español/razonamiento/Especificación generalización - Mamíferos (singular)".
+Leer el archivo de prueba "Español/razonamiento/La única opción que queda - Barco".
+Leer el archivo de prueba "Español/razonamiento/La única opción que queda - Opción".
 
 #-----------
 # Familia
@@ -31,12 +31,12 @@ Leer el archivo de prueba "Español/razonamiento/Especificación generalización
 Leer el archivo de prueba "Español/conflicto/familia/Ana es un hijo".
 Leer el archivo de prueba "Español/conflicto/familia/José es una madre".
 Leer el archivo de prueba "Español/conflicto/familia/Juan es una mujer".
-Leer el archivo de prueba "Español/conflicto/familia/Juan es la madre de Pablo".
+Leer el archivo de prueba "Español/conflicto/familia/Juan es madre de Pablo".
 Leer el archivo de prueba "Español/conflicto/familia/María es un hombre (aceptar)".
 Leer el archivo de prueba "Español/conflicto/familia/Conflicto negativo - Juan no es un padre".
 Leer el archivo de prueba "Español/conflicto/familia/Conflicto negativo - María es una madre".
 Leer el archivo de prueba "Español/conflicto/familia/Conflicto negativo - Pedro no es un padre".
-Leer el archivo de prueba "Español/conflicto/familia/Conflicto negativo - Suela es la madre de Pablo, José y Luisa".
+Leer el archivo de prueba "Español/conflicto/familia/Conflicto negativo - Suela es madre de Pablo, José y Luisa".
 Leer el archivo de prueba "Español/conflicto/familia/Tiempo pasado - Juan era padre de Pablo - Juan es un hombre".
 Leer el archivo de prueba "Español/conflicto/familia/Pablo tiene un padre, llamada Ana".
 Leer el archivo de prueba "Español/conflicto/familia/Pablo es una hija".
@@ -62,12 +62,12 @@ Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Tenías m
 Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Juan)".
 Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Pablo y José)".
 
-Leer el archivo de prueba "Español/razonamiento/familia/Ana era la madre de Pablo, José y Luisa".
+Leer el archivo de prueba "Español/razonamiento/familia/Ana era madre de Pablo, José y Luisa".
 Leer el archivo de prueba "Español/razonamiento/familia/Corrección supuesto invalidado (por el conocimiento)".
 Leer el archivo de prueba "Español/razonamiento/familia/Corrección supuesto invalidado (por la pregunta sugestiva contrario)".
 Leer el archivo de prueba "Español/razonamiento/familia/Juan - Ana - Pablo, José y Luisa".
 Leer el archivo de prueba "Español/razonamiento/familia/Juan y Ana - Pablo, José y Luisa".
-Leer el archivo de prueba "Español/razonamiento/familia/Juan era el padre de Pablo, José y Luisa".
+Leer el archivo de prueba "Español/razonamiento/familia/Juan era padre de Pablo, José y Luisa".
 Leer el archivo de prueba "Español/razonamiento/familia/Informe de justificación".
 Leer el archivo de prueba "Español/razonamiento/familia/Luisa - José - Juan y Ana - Pablo".
 Leer el archivo de prueba "Español/razonamiento/familia/Luisa - José - Pablo - Juan y Ana".
@@ -88,10 +88,10 @@ Leer el archivo de prueba "Español/razonamiento/familia/Esta información es m�
 Leer el archivo de prueba "Español/razonamiento/familia/Esta información es más específico".
 
 Ayudar.
-#Mostrar información sobre los idiomas.
-#Mostrar información sobre las listas.
-#Mostrar información sobre los usuarios.
-#Mostrar información sobre los tipos de palabra.
+Mostrar información sobre los idiomas.
+Mostrar información sobre las listas.
+Mostrar información sobre los usuarios.
+Mostrar información sobre los tipos de palabra.
 Mostrar los comandos de consulta.
 Mostrar los derechos de autor.
 Mostrar la licencia-GPLv2.

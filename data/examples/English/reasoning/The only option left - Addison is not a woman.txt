@@ -1,4 +1,0 @@
-A person is a man or a woman.
-Addison is a person.
-Addison is not a woman.
-# Remember to clear this knowledge before reading another example.

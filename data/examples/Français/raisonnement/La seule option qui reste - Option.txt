@@ -1,0 +1,11 @@
+﻿Une option est 1, 2, 3, 4, 5, 6, 7, 8 ou 9.
+L'option n'est pas 1.
+L'option n'est pas 2.
+L'option n'est pas 3.
+L'option n'est pas 4.
+L'option n'est pas 5.
+#L'option n'est pas 6.
+L'option n'est pas 7.
+L'option n'est pas 8.
+L'option n'est pas 9.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

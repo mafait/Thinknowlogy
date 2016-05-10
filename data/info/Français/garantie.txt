@@ -1,0 +1,4 @@
+﻿Affichez " Ce programme est distribué dans l'espoir qu'il sera utile,".
+Affichez " mais SANS AUCUNE GARANTIE ; sans même une garantie implicite de".
+Affichez " COMMERCIABILITE ou DE CONFORMITE A UNE UTILISATION PARTICULIERE.".
+Affichez " Voir la Licence Publique Générale GNU pour plus de détails.".

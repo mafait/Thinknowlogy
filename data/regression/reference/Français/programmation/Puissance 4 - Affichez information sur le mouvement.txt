@@ -1,0 +1,151 @@
+﻿
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+* 
+* Vos informations:
+< Un mouvement peut-être G, F, E, D, C, B ou A.
+< Un mouvement peut-être invalide.
+< Mon mouvement était D.
+< Le mouvement était C.
+< 
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: D.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |m| | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | | | | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: G.
+
+		| | | | | | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | | |
+		| | |m|v| | |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | | | | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | |v|m| | | |
+		| | |m|v| | | |
+		| | |m|v| | |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: C.
+
+		| | | | | | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+		| | |v|m| | | |
+		| | |m|v| | | |
+		| | |m|v| | |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | | | | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+		| | |v|m| | | |
+		| | |m|v| | | |
+		|v| |m|v| | |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: G.
+
+		| | | | | | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+		| | |v|m| | | |
+		| | |m|v| | |m|
+		|v| |m|v| | |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+* 
+* Vos informations:
+< Un mouvement peut-être G, F, E, D, C, B ou A.
+< Un mouvement peut-être invalide.
+< Mon mouvement était A, C et D.
+< Le mouvement était G, C et D.
+< 

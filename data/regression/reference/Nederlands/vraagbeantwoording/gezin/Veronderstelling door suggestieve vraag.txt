@@ -63,7 +63,7 @@
 * 
 * Mijn vragen die beantwoord zijn:
 < Is Jan een vader of een moeder?
-< Is Jan een vrouw of een man?
+< Is Jan een man of een vrouw?
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een vader.

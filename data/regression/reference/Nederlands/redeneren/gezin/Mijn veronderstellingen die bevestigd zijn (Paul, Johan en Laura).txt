@@ -119,7 +119,7 @@
 < Anna heeft een kind, genaamd Johan.
 < 
 * 
-* U hebt de specificatie bevestigd - maar geen relatie(s) - van mijn eerdere veronderstelling(en):
+* U hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere veronderstellingen:
 < Laura is waarschijnlijk een kind van Jan en Anna.
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:

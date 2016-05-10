@@ -3,4 +3,4 @@ Paul is a son of John and Anna.
 Joe is a son of John and Anna.
 Laura is a daughter of John and Anna.
 John is the father and Anna is the mother of Paul, Joe and Laura.
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

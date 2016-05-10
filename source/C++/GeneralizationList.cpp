@@ -1,11 +1,10 @@
-/*
- *	Class:			GeneralizationList
+/*	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -52,17 +51,11 @@ class GeneralizationList : private List
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class GeneralizationList has inactive items." );
 
-		if( firstArchivedItem() )
+		if( firstArchivedItem() != NULL )
 			fprintf( stderr, "\nError: Class GeneralizationList has archived items." );
 
-		searchItem = (GeneralizationItem *)firstReplacedItem();
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextGeneralizationItem();
-			delete deleteItem;
-			}
+		if( firstReplacedItem() != NULL )
+			fprintf( stderr, "\nError: Class GeneralizationList has replaced items." );
 
 		searchItem = (GeneralizationItem *)firstDeletedItem();
 
@@ -155,19 +148,6 @@ class GeneralizationList : private List
 				{
 				if( searchItem->storeGeneralizationItemInFutureDatabase() != RESULT_OK )
 					return addError( functionNameString, NULL, "I failed to store a generalization item in the database" );
-				}
-
-			searchItem = searchItem->nextGeneralizationItem();
-			}
-
-		searchItem = firstReplacedGeneralizationItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem->storeGeneralizationItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to modify a replaced generalization item in the database" );
 				}
 
 			searchItem = searchItem->nextGeneralizationItem();

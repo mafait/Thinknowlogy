@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To define the grammar for the English language
-#	Version:		Thinknowlogy 2015r1 (Esperanza)
+#	Version:		Thinknowlogy 2016r1 (Huguenot)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
-#	and bug reports are welcome at http://mafait.org
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------- Word definitions -----------
@@ -38,9 +38,9 @@
 @6		:0			$adjective
 @6		:600		$adjective																					assigned
 @6		:601		$adjective																					busy
-@6		:602		$adjective																					clear
-@6		:603		$adjective																					done
-@6		:604		$adjective																					defensive
+@6		:602		$adjective																					done
+@6		:603		$adjective																					defensive
+@6		:604		$adjective																					empty
 @6		:605		$adjective																					exclusive
 @6		:606		$adjective																					inverted
 @6		:607		$adjective																					feminine
@@ -82,6 +82,7 @@
 @7		:703		$adverb_uncertainty					"adverb (uncertainty)"						possibly
 @7		:704		$adverb_uncertainty					"adverb (uncertainty)"						probably
 @7		:705		$adverb_Not																				not
+#@7		:706		$adverb_Pas							(French)
 
 
 #--- Interjections ---
@@ -113,8 +114,9 @@
 @10		:1000	$conjunction_collective																	and
 @10		:1001	$conjunction_exclusive																	or
 @10		:1002	$conjunction_Than																		than
-#@10	:1003	$conjunction_Zowel					(Dutch)
-#@10	:1004	$conjunction_Als						(Dutch)
+#@10	:1003	$conjunction_Than					(French)
+#@10	:1004	$conjunction_Zowel					(Dutch)
+#@10	:1005	$conjunction_Als						(Dutch)
 
 
 #--- Singular nouns ---
@@ -145,7 +147,7 @@
 
 
 #--- Singular pronouns ---
-@13		:0			$personal_pronoun_singular_subjective		"personal pronoun (subjective, singular)"
+@13		:0			$personal_pronoun_singular_subjective	"personal pronoun (subjective, singular)"
 #@13	:1300	$personal_pronoun_singular_subjective											I
 #@13	:1301	$personal_pronoun_singular_subjective											you
 #@13	:1302	$personal_pronoun_singular_subjective											you
@@ -169,7 +171,7 @@
 @15		:1304	$possessive_determiner_singular														her
 @15		:1305	$possessive_determiner_singular														its
 
-@16		:0			$possessive_pronoun_singular					"possessive pronoun (singular)"
+@16		:0			$possessive_pronoun_singular				"possessive pronoun (singular)"
 @16		:1300	$possessive_pronoun_singular														mine
 @16		:1301	$possessive_pronoun_singular														yours
 @16		:1302	$possessive_pronoun_singular														yours
@@ -220,9 +222,10 @@
 @21		:0			$preposition
 @21		:2100	$preposition																				about
 @21		:2101	$preposition																				from
-@21		:2102	$preposition																				in
+#@21	:2102	$preposition																				in
 @21		:2103	$preposition																				to
 @21		:2104	$preposition_Of																			of
+#@21	:2105	$preposition_à							(French)
 
 
 #--- Singular verbs ---
@@ -242,7 +245,7 @@
 @22		:2212	$verb_imperative						"imperative verb"								read
 @22		:2213	$verb_imperative						"imperative verb"								redo
 @22		:2214	$verb_imperative						"imperative verb"								restart
-@22		:2215	$verb_imperative						"imperative verb"								show
+@22		:2215	$verb_imperative						"imperative verb"								display
 @22		:2216	$verb_imperative						"imperative verb"								solve
 @22		:2217	$verb_imperative						"imperative verb"								undo
 
@@ -272,10 +275,15 @@
 @0		:3000	$a
 @0		:3000	$ee
 @0		:3000	$ée
-@0		:3000	$ian
+@0		:3000	$ell
+@0		:3000	$ine
+@0		:3000	$lie
+@0		:3000	$lle
 @0		:3000	$lyn
 @0		:3000	$nn
+@0		:3000	$nne
 @0		:3000	$oan
+@0		:3000	$tte
 
 
 #--- Masculine proper name endings ---
@@ -314,9 +322,13 @@
 @0		:3004	$res																							re
 @0		:3004	$ses																							se
 @0		:3004	$tes																							te
-#@0		:3004	$fish																							fish
+@0		:3004	$fish																							fish
 @0		:3004	$men																							man
 @0		:3004	$mice																						mouse
+
+
+#--- Merged words ---
+#@0		:3005	$?
 
 
 #----------- Grammar definitions ---------------
@@ -587,12 +599,12 @@
 
 # Examples of an imperative:
 # - Help.
-# - Login as Guest.
+# - Login as Expert.
 # - Solve the game.
-# - Show the copyright.
-# - Show "Hello world".
-# - Show info about John.
-# - Show info about the lists.
+# - Display the copyright.
+# - Display "Hello world".
+# - Display info about John.
+# - Display info about the lists.
 :5100	$imperative																								verb_imperative [ singular_noun_assignment_specification | plural_assignment_specification | Information preposition_assignment_relation | As specification_proper_name | execution_text ]
 
 # Examples of an imperative:

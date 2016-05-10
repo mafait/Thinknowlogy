@@ -1,12 +1,11 @@
-/*
- *	Class:			GrammarItem
+/*	Class:			GrammarItem
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -100,33 +99,37 @@ class GrammarItem extends Item
 
 	protected void showString( boolean isReturnQueryToPosition )
 		{
+		StringBuffer queryStringBuffer;
+
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
 
 		if( grammarString_ != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( grammarString_ );
+			queryStringBuffer.append( grammarString_ );
 			}
 
 		if( guideByGrammarString != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				queryStringBuffer.append( statusChar() );
 
 			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( guideByGrammarString );
+			queryStringBuffer.append( guideByGrammarString );
 			}
 		}
 
@@ -164,63 +167,70 @@ class GrammarItem extends Item
 		return grammarString_;
 		}
 
-	protected String extraItemString()
+	protected String virtualGuideByGrammarString()
 		{
 		return guideByGrammarString;
 		}
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
+		StringBuffer queryStringBuffer;
 		String grammarWordTypeString = myWordItem().wordTypeNameString( grammarWordTypeNr_ );
+
 		baseToStringBuffer( queryWordTypeNr );
 
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( isDefinitionStart_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isDefinitionStart" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isDefinitionStart" );
 
 		if( isNewStart_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNewStart" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNewStart" );
 
 		if( isOptionStart_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOptionStart" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOptionStart" );
 
 		if( isOptionEnd )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOptionEnd" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isOptionEnd" );
 
 		if( isChoiceStart_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isChoiceStart" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isChoiceStart" );
 
 		if( isChoiceEnd )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isChoiceEnd" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isChoiceEnd" );
 
 		if( isSkipOptionForWriting_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSkipOptionForWriting" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSkipOptionForWriting" );
 /*
 		if( isGrammarItemInUse )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isGrammarItemInUse" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isGrammarItemInUse" );
 */
 		if( grammarParameter_ > Constants.NO_GRAMMAR_PARAMETER )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarParameter:" + grammarParameter_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarParameter:" + grammarParameter_ );
 
 		if( grammarWordTypeNr_ > Constants.WORD_TYPE_UNDEFINED )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarWordType:" + ( grammarWordTypeString == null ? Constants.QUERY_WORD_TYPE_STRING + grammarWordTypeNr_ : grammarWordTypeString ) );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarWordType:" + ( grammarWordTypeString == null ? Constants.QUERY_WORD_TYPE_STRING + grammarWordTypeNr_ : grammarWordTypeString ) );
 
 		if( grammarString_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarString:" + Constants.QUERY_STRING_START_CHAR + grammarString_ + Constants.QUERY_STRING_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarString:" + Constants.QUERY_STRING_START_CHAR + grammarString_ + Constants.QUERY_STRING_END_CHAR );
 
 		if( guideByGrammarString != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "guideByGrammarString:" + Constants.QUERY_STRING_START_CHAR + guideByGrammarString + Constants.QUERY_STRING_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "guideByGrammarString:" + Constants.QUERY_STRING_START_CHAR + guideByGrammarString + Constants.QUERY_STRING_END_CHAR );
 
 		if( definitionGrammarItem != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "definitionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + definitionGrammarItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + definitionGrammarItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "definitionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + definitionGrammarItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + definitionGrammarItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 			}
 
 		if( nextDefinitionGrammarItem != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nextDefinitionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + nextDefinitionGrammarItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + nextDefinitionGrammarItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nextDefinitionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + nextDefinitionGrammarItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + nextDefinitionGrammarItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 			}
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 
@@ -249,15 +259,6 @@ class GrammarItem extends Item
 	protected boolean isSkipOptionForWriting()
 		{
 		return isSkipOptionForWriting_;
-		}
-
-	protected boolean isWordEnding()
-		{
-		return ( grammarParameter_ == Constants.WORD_FEMININE_PROPER_NAME_ENDING ||
-				grammarParameter_ == Constants.WORD_MASCULINE_PROPER_NAME_ENDING ||
-				grammarParameter_ == Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING ||
-				grammarParameter_ == Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING ||
-				grammarParameter_ == Constants.WORD_PLURAL_NOUN_ENDING );
 		}
 
 	protected boolean isGrammarDefinition()

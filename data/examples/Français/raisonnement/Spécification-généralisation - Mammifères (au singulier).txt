@@ -1,0 +1,5 @@
+﻿Un chat est un mammifère.
+Un chien est un mammifère.
+Une baleine est un mammifère.
+Affichez information sur les mammifères.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

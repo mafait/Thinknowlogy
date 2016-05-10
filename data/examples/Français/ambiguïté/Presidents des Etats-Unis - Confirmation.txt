@@ -1,0 +1,17 @@
+﻿# En 2001, George W. Bush a été inauguré en tant que président des États-Unis.
+George Bush est le président des États-Unis.
+# En 2009, Barack Obama a été inauguré en tant que président en tant que président des États-Unis.
+Barack Obama est le président des États-Unis.
+#Affichez le rapport de justification sur des États-Unis.
+Affichez le rapport de justification sur les États-Unis.
+Les États-Unis a un précédent président, appelé George Bush.
+#Affichez le rapport de justification sur des États-Unis.
+Affichez le rapport de justification sur les États-Unis.
+Les États-Unis a un président, appelé Barack Obama.
+Affichez information sur les présidents.
+Affichez information sur George Bush.
+Affichez information sur Barack Obama.
+# There will be no justification report, because the conclusions are confirmed
+#Affichez information sur des États-Unis.
+Affichez information sur les États-Unis.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

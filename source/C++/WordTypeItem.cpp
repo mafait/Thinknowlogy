@@ -1,11 +1,10 @@
-/*
- *	Class:			WordTypeItem
+/*	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -28,7 +27,6 @@
 
 class WordTypeItem : private Item
 	{
-	friend class AdminAuthorization;
 	friend class AdminCleanup;
 	friend class AdminReadCreateWords;
 	friend class AdminReadGrammar;
@@ -99,7 +97,7 @@ class WordTypeItem : private Item
 
 		if( phoneticVowelIndefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER &&
 		( phoneticVowelIndefiniteArticleWordItem = myWordItem()->predefinedWordItem( phoneticVowelIndefiniteArticleParameter ) ) != NULL )
-			return phoneticVowelIndefiniteArticleWordItem->hasWordType( WORD_TYPE_ARTICLE );
+			return phoneticVowelIndefiniteArticleWordItem->hasWordType( false, WORD_TYPE_ARTICLE );
 
 		return false;
 		}
@@ -251,7 +249,6 @@ class WordTypeItem : private Item
 
 	virtual void showString( bool isReturnQueryToPosition )
 		{
-		char statusString[2] = SPACE_STRING;
 		statusString[0] = statusChar();
 
 		if( itemString() != NULL )
@@ -306,11 +303,14 @@ class WordTypeItem : private Item
 
 	virtual char *toString( unsigned short queryWordTypeNr )
 		{
+		char *queryString;
 		char *wordString;
 		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
 		char *languageNameString = myWordItem()->languageNameString( wordTypeLanguageNr_ );
 
 		Item::toString( queryWordTypeNr );
+
+		queryString = commonVariables()->queryString;
 
 		if( wordTypeLanguageNr_ > NO_LANGUAGE_NR )
 			{
@@ -319,49 +319,49 @@ class WordTypeItem : private Item
 			else
 				sprintf( tempString, "%cwordTypeLanguageNr:%s", QUERY_SEPARATOR_CHAR, languageNameString );
 
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( hideKey_ != NULL )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isHidden" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isHidden" );
 			}
 
 		if( hasFeminineWordEnding_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "hasFeminineWordEnding" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "hasFeminineWordEnding" );
 			}
 
 		if( hasMasculineWordEnding_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "hasMasculineWordEnding" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "hasMasculineWordEnding" );
 			}
 
 		if( isProperNamePrecededByDefiniteArticle_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isProperNamePrecededByDefiniteArticle" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isProperNamePrecededByDefiniteArticle" );
 			}
 
 		if( adjectiveParameter_ > NO_DEFINITE_ARTICLE_PARAMETER )
 			{
 			sprintf( tempString, "%cadjectiveParameter:%u", QUERY_SEPARATOR_CHAR, adjectiveParameter_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( definiteArticleParameter_ > NO_DEFINITE_ARTICLE_PARAMETER )
 			{
 			sprintf( tempString, "%cdefiniteArticleParameter:%u", QUERY_SEPARATOR_CHAR, definiteArticleParameter_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( indefiniteArticleParameter_ > NO_INDEFINITE_ARTICLE_PARAMETER )
 			{
 			sprintf( tempString, "%cindefiniteArticleParameter:%u", QUERY_SEPARATOR_CHAR, indefiniteArticleParameter_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( wordTypeString == NULL )
@@ -369,15 +369,15 @@ class WordTypeItem : private Item
 		else
 			sprintf( tempString, "%cwordType:%s%c%u", QUERY_SEPARATOR_CHAR, wordTypeString, QUERY_WORD_TYPE_CHAR, wordTypeNr_ );
 
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( ( wordString = itemString() ) != NULL )
 			{
 			sprintf( tempString, "%cwordString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, wordString, QUERY_STRING_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 

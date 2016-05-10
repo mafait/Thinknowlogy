@@ -1,11 +1,10 @@
-/*
- *	Class:			ReadItem
+/*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -31,7 +30,6 @@ class ReadItem : private Item
 	friend class AdminCleanup;
 	friend class AdminContext;
 	friend class AdminImperative;
-	friend class AdminReadCreateWords;
 	friend class AdminReadSentence;
 	friend class AdminSpecification;
 	friend class AdminWriteSpecification;
@@ -123,7 +121,6 @@ class ReadItem : private Item
 
 	virtual void showString( bool isReturnQueryToPosition )
 		{
-		char statusString[2] = SPACE_STRING;
 		statusString[0] = statusChar();
 
 		if( readString != NULL )
@@ -143,7 +140,7 @@ class ReadItem : private Item
 	virtual void showWordReferences( bool isReturnQueryToPosition )
 		{
 		char *wordString;
-		char statusString[2] = SPACE_STRING;
+
 		statusString[0] = statusChar();
 
 		if( readWordItem_ != NULL &&
@@ -242,51 +239,54 @@ class ReadItem : private Item
 
 	virtual char *toString( unsigned short queryWordTypeNr )
 		{
+		char *queryString;
 		char *wordString;
 		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
 
 		Item::toString( queryWordTypeNr );
 
+		queryString = commonVariables()->queryString;
+
 		if( isUnusedReadItem )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isUnusedReadItem" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isUnusedReadItem" );
 			}
 
 		if( hasWordPassedIntegrityCheckOfStoredUserSentence )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "hasWordPassedIntegrityCheckOfStoredUserSentence" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "hasWordPassedIntegrityCheckOfStoredUserSentence" );
 			}
 
 		if( isMarkedBySetGrammarParameter )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isMarkedBySetGrammarParameter" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isMarkedBySetGrammarParameter" );
 			}
 
 		if( wordOrderNr_ > NO_ORDER_NR )
 			{
 			sprintf( tempString, "%cwordOrderNr:%u", QUERY_SEPARATOR_CHAR, wordOrderNr_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( wordParameter_ > NO_WORD_PARAMETER )
 			{
 			sprintf( tempString, "%cwordParameter:%u", QUERY_SEPARATOR_CHAR, wordParameter_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( grammarParameter > NO_GRAMMAR_PARAMETER )
 			{
 			sprintf( tempString, "%cgrammarParameter:%u", QUERY_SEPARATOR_CHAR, grammarParameter );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( readString != NULL )
 			{
 			sprintf( tempString, "%creadString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, readString, QUERY_STRING_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( wordTypeString == NULL )
@@ -294,27 +294,27 @@ class ReadItem : private Item
 		else
 			sprintf( tempString, "%cwordType:%s%c%u", QUERY_SEPARATOR_CHAR, wordTypeString, QUERY_WORD_TYPE_CHAR, wordTypeNr_ );
 
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( readWordItem_ != NULL )
 			{
 			sprintf( tempString, "%creadWord%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, readWordItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, readWordItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 
 			if( ( wordString = readWordItem_->wordTypeString( true, wordTypeNr_ ) ) != NULL )
 				{
 				sprintf( tempString, "%c%s%c", QUERY_WORD_REFERENCE_START_CHAR, wordString, QUERY_WORD_REFERENCE_END_CHAR );
-				strcat( commonVariables()->queryString, tempString );
+				strcat( queryString, tempString );
 				}
 			}
 
 		if( definitionGrammarItem != NULL )
 			{
 			sprintf( tempString, "%cdefinitionGrammarItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, definitionGrammarItem->creationSentenceNr(), QUERY_SEPARATOR_CHAR, definitionGrammarItem->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 
@@ -347,6 +347,11 @@ class ReadItem : private Item
 	bool isNumeral()
 		{
 		return ( wordTypeNr_ == WORD_TYPE_NUMERAL );
+		}
+
+	bool isAdjective()
+		{
+		return ( wordTypeNr_ == WORD_TYPE_ADJECTIVE );
 		}
 
 	bool isArticle()
@@ -432,10 +437,16 @@ class ReadItem : private Item
 		return ( wordParameter_ == WORD_PARAMETER_ADJECTIVE_ASSIGNED );
 		}
 
-	bool isAdjectiveAssignedOrClear()
+	bool isAdjectiveAssignedOrEmpty()
 		{
-		return ( wordParameter_ == WORD_PARAMETER_ADJECTIVE_CLEAR ||
-				wordParameter_ == WORD_PARAMETER_ADJECTIVE_ASSIGNED );
+		return ( wordParameter_ == WORD_PARAMETER_ADJECTIVE_ASSIGNED ||
+				wordParameter_ == WORD_PARAMETER_ADJECTIVE_EMPTY );
+		}
+
+	bool isAdjectiveCalledSingularFeminineOrMasculine()
+		{
+		return ( wordParameter_ == WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_FEMININE ||
+				wordParameter_ == WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_MASCULINE );
 		}
 
 	bool isAdjectiveEvery()
@@ -450,17 +461,11 @@ class ReadItem : private Item
 				wordParameter_ == WORD_PARAMETER_ADJECTIVE_PREVIOUS_FEMININE_MASCULINE );
 		}
 
-	bool isVirtualListPreposition()
-		{
-		return ( wordParameter_ == WORD_PARAMETER_PREPOSITION_FROM ||
-				wordParameter_ == WORD_PARAMETER_PREPOSITION_TO ||
-				wordParameter_ == WORD_PARAMETER_PREPOSITION_OF );
-		}
-
 	bool isNegative()
 		{
 		return ( wordParameter_ == WORD_PARAMETER_ADJECTIVE_NO ||
-				wordParameter_ == WORD_PARAMETER_ADVERB_NOT );
+				wordParameter_ == WORD_PARAMETER_ADVERB_NOT ||
+				wordParameter_ == WORD_PARAMETER_ADVERB_NOT_FRENCH );
 		}
 
 	bool isNounJustificationReport()
@@ -499,6 +504,18 @@ class ReadItem : private Item
 				wordParameter_ == WORD_PARAMETER_SYMBOL_QUESTION_MARK_INVERTED );
 		}
 
+	bool isVirtualListPreposition()
+		{
+		return ( wordParameter_ == WORD_PARAMETER_PREPOSITION_FROM ||
+				wordParameter_ == WORD_PARAMETER_PREPOSITION_TO ||
+				wordParameter_ == WORD_PARAMETER_PREPOSITION_OF );
+		}
+
+	bool isFrenchPreposition()
+		{
+		return ( wordParameter_ == WORD_PARAMETER_PREPOSITION_FRENCH_A );
+		}
+
 	bool isUserDefined()
 		{
 		return ( wordParameter_ == NO_WORD_PARAMETER );
@@ -526,7 +543,7 @@ class ReadItem : private Item
 
 	bool isRelationWord()
 		{
-		// To avoid triggering on the article before a proper name preceded-by-defined-article
+		// To avoid triggering on the article before a proper name preceded by defined article
 		return ( wordTypeNr_ != WORD_TYPE_ARTICLE &&
 				grammarParameter == GRAMMAR_RELATION_WORD );
 		}

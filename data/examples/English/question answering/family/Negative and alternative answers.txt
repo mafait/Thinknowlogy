@@ -3,9 +3,9 @@ John is the father and Anna is the mother of Paul, Joe and Laura.
 Is John a mother?
 Is John the mother of Paul?
 Is John the father of Adam?
-George is the father of Adam.
+Michael is the father of Adam.
 Is John the father of Adam?
-Is George the father of Paul?
-Bill is a father.
-Is Bill the father of Paul?
-# Remember to clear this knowledge before reading another example.
+Is Michael the father of Paul?
+Richard is a father.
+Is Richard the father of Paul?
+# To continue, click button «Clear your mind.» or «Restart.».

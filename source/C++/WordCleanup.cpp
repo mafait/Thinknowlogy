@@ -1,11 +1,10 @@
-/*
- *	Class:			WordCleanup
+/*	Class:			WordCleanup
  *	Supports class:	WordItem
  *	Purpose:		To cleanup obsolete items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -69,34 +68,46 @@ class WordCleanup
 
 	// Protected functions
 
-	void deleteRollbackInfo()
+	void clearReplacedInfo()
 		{
+		List *currentWordList;
+
 		for( unsigned short wordListNr = 0; wordListNr < NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL )
-				myWordItem_->wordListArray[wordListNr]->deleteRollbackInfoInList();
+			currentWordList = myWordItem_->wordListArray[wordListNr];
+
+			if( currentWordList != NULL &&
+
+			// Not needed to clear replaced info in grammar, interface and temporary lists
+			( wordListNr != WORD_GRAMMAR_LIST &&
+			wordListNr != WORD_INTERFACE_LIST &&
+			!currentWordList->isTemporaryList() ) )
+				currentWordList->clearReplacedInfoInList();
 			}
 		}
 
 	void getHighestInUseSentenceNr( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, bool isLanguageWord, unsigned int highestSentenceNr )
 		{
 		unsigned short wordListNr = 0;
+		List *currentWordList;
 
 		while( wordListNr < NUMBER_OF_WORD_LISTS &&
 		commonVariables_->highestInUseSentenceNr < highestSentenceNr )
 			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL &&
+			currentWordList = myWordItem_->wordListArray[wordListNr];
+
+			if( currentWordList != NULL &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != WORD_GRAMMAR_LIST &&
 			wordListNr != WORD_INTERFACE_LIST ) ) &&
 
 			// Skip temporary lists
 			( isIncludingTemporaryLists ||
-			!myWordItem_->wordListArray[wordListNr]->isTemporaryList() ) )
-				myWordItem_->wordListArray[wordListNr]->getHighestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
+			!currentWordList->isTemporaryList() ) )
+				currentWordList->getHighestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
 
 			wordListNr++;
 			}
@@ -104,34 +115,41 @@ class WordCleanup
 
 	void setCurrentItemNr( bool isLanguageWord )
 		{
+		List *currentWordList;
+
 		for( unsigned short wordListNr = 0; wordListNr < NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL &&
+			currentWordList = myWordItem_->wordListArray[wordListNr];
+
+			if( currentWordList != NULL &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != WORD_GRAMMAR_LIST &&
 			wordListNr != WORD_INTERFACE_LIST ) ) )
-				myWordItem_->wordListArray[wordListNr]->setCurrentItemNrInList();
+				currentWordList->setCurrentItemNrInList();
 			}
 		}
 
 	ResultType decrementItemNrRange( bool isLanguageWord, unsigned int decrementSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset )
 		{
+		List *currentWordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRange";
 
 		for( unsigned short wordListNr = 0; wordListNr < NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL &&
+			currentWordList = myWordItem_->wordListArray[wordListNr];
+
+			if( currentWordList != NULL &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != WORD_GRAMMAR_LIST &&
 			wordListNr != WORD_INTERFACE_LIST ) ) )
 				{
-				if( myWordItem_->wordListArray[wordListNr]->decrementItemNrRangeInList( decrementSentenceNr, decrementItemNr, decrementOffset ) != RESULT_OK )
+				if( currentWordList->decrementItemNrRangeInList( decrementSentenceNr, decrementItemNr, decrementOffset ) != RESULT_OK )
 					return myWordItem_->addErrorWithWordListNr( wordListNr, functionNameString, moduleNameString_, "I failed to decrement item number range" );
 				}
 			}
@@ -141,19 +159,22 @@ class WordCleanup
 
 	ResultType decrementSentenceNrs( bool isLanguageWord, unsigned int startSentenceNr )
 		{
+		List *currentWordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrs";
 
 		for( unsigned short wordListNr = 0; wordListNr < NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL &&
+			currentWordList = myWordItem_->wordListArray[wordListNr];
+
+			if( currentWordList != NULL &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != WORD_GRAMMAR_LIST &&
 			wordListNr != WORD_INTERFACE_LIST ) ) )
 				{
-				if( myWordItem_->wordListArray[wordListNr]->decrementSentenceNrsInList( startSentenceNr ) != RESULT_OK )
+				if( currentWordList->decrementSentenceNrsInList( startSentenceNr ) != RESULT_OK )
 					return myWordItem_->addErrorWithWordListNr( wordListNr, functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
 				}
 			}
@@ -161,21 +182,24 @@ class WordCleanup
 		return RESULT_OK;
 		}
 
-	ResultType deleteSentences( bool isAvailableForRollback, bool isLanguageWord, unsigned int lowestSentenceNr )
+	ResultType deleteSentences( bool isLanguageWord, unsigned int lowestSentenceNr )
 		{
+		List *currentWordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentences";
 
 		for( unsigned short wordListNr = 0; wordListNr < NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL &&
+			currentWordList = myWordItem_->wordListArray[wordListNr];
+
+			if( currentWordList != NULL &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != WORD_GRAMMAR_LIST &&
 			wordListNr != WORD_INTERFACE_LIST ) ) )
 				{
-				if( myWordItem_->wordListArray[wordListNr]->deleteSentencesInList( isAvailableForRollback, lowestSentenceNr ) != RESULT_OK )
+				if( currentWordList->deleteSentencesInList( lowestSentenceNr ) != RESULT_OK )
 					return myWordItem_->addErrorWithWordListNr( wordListNr, functionNameString, moduleNameString_, "I failed to delete sentences in one of my lists" );
 				}
 			}
@@ -185,13 +209,19 @@ class WordCleanup
 
 	ResultType redoCurrentSentence()
 		{
+		List *currentWordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentence";
 
 		for( unsigned short wordListNr = 0; wordListNr < NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL )
+			// Not needed to redo items in grammar and interface lists
+			if( wordListNr != WORD_GRAMMAR_LIST &&
+			wordListNr != WORD_INTERFACE_LIST &&
+			( currentWordList = myWordItem_->wordListArray[wordListNr] ) != NULL )
 				{
-				if( myWordItem_->wordListArray[wordListNr]->redoCurrentSentenceInList() != RESULT_OK )
+				// Not needed to redo items in temporary lists
+				if( !currentWordList->isTemporaryList() &&
+				currentWordList->redoCurrentSentenceInList() != RESULT_OK )
 					return myWordItem_->addErrorWithWordListNr( wordListNr, functionNameString, moduleNameString_, "I failed to redo the current sentence" );
 				}
 			}
@@ -202,20 +232,23 @@ class WordCleanup
 	ResultType removeFirstRangeOfDeletedItems( bool isLanguageWord )
 		{
 		unsigned short wordListNr = 0;
+		List *currentWordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItems";
 
 		while( wordListNr < NUMBER_OF_WORD_LISTS &&
 		commonVariables_->nDeletedItems == 0 )
 			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL &&
+			currentWordList = myWordItem_->wordListArray[wordListNr];
+
+			if( currentWordList != NULL &&
 
 			( !isLanguageWord ||
 
-			// To increase performance, skip organizing grammar and interface lists
+			// Not needed to organize grammar and interface lists
 			( wordListNr != WORD_GRAMMAR_LIST &&
 			wordListNr != WORD_INTERFACE_LIST ) ) )
 				{
-				if( myWordItem_->wordListArray[wordListNr]->removeFirstRangeOfDeletedItemsInList() != RESULT_OK )
+				if( currentWordList->removeFirstRangeOfDeletedItemsInList() != RESULT_OK )
 					return myWordItem_->addErrorWithWordListNr( wordListNr, functionNameString, moduleNameString_, "I failed to remove the first deleted items" );
 				}
 
@@ -225,31 +258,21 @@ class WordCleanup
 		return RESULT_OK;
 		}
 
-	ResultType rollbackDeletedRedoInfo()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "rollbackDeletedRedoInfo";
-
-		for( unsigned short wordListNr = 0; wordListNr < NUMBER_OF_WORD_LISTS; wordListNr++ )
-			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL )
-				{
-				if( myWordItem_->wordListArray[wordListNr]->rollbackDeletedRedoInfoInList() != RESULT_OK )
-					return myWordItem_->addErrorWithWordListNr( wordListNr, functionNameString, moduleNameString_, "I failed to rollback the deleted redo info in one of my lists" );
-				}
-			}
-
-		return RESULT_OK;
-		}
-
 	ResultType undoCurrentSentence()
 		{
+		List *currentWordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentence";
 
 		for( unsigned short wordListNr = 0; wordListNr < NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
-			if( myWordItem_->wordListArray[wordListNr] != NULL )
+			// Not needed to undo items in grammar and interface lists
+			if( wordListNr != WORD_GRAMMAR_LIST &&
+			wordListNr != WORD_INTERFACE_LIST &&
+			( currentWordList = myWordItem_->wordListArray[wordListNr] ) != NULL )
 				{
-				if( myWordItem_->wordListArray[wordListNr]->undoCurrentSentenceInList() != RESULT_OK )
+				// Not needed to undo items in temporary lists
+				if( !currentWordList->isTemporaryList() &&
+				currentWordList->undoCurrentSentenceInList() != RESULT_OK )
 					return myWordItem_->addErrorWithWordListNr( wordListNr, functionNameString, moduleNameString_, "I failed to undo the current sentence" );
 				}
 			}

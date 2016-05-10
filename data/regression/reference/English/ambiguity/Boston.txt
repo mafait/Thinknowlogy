@@ -10,7 +10,7 @@
 < 
 * 
 * Your information:
-< Boston is a city in both the United States and the United Kingdom.
+< Boston is a city of both the United States and the United Kingdom.
 * 
 * Related information:
 < The United Kingdom has a city, called Boston.

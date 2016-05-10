@@ -1,5 +1,5 @@
 ﻿Read the file "English/reasoning/family/family definition".
 Paul is a son of John and Anna.
 Is John the father of Paul?
-Is George the father of Adam?
-# Remember to clear this knowledge before reading another example.
+Is Michael the father of Adam?
+# To continue, click button «Clear your mind.» or «Restart.».

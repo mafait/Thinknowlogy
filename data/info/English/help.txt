@@ -1,36 +1,35 @@
-﻿Show "------------------------------------------------------------------------------".
-#C++#Show " \~{languageName}\t\t\t\t\t* Change language".
-#C++#Show " Read the file \"English/ambiguity/Boston\".\t\t* Detecting ambiguity".
-#C++#Show " Read the file \"English/ambiguity/US presidents\".\t* Detecting ambiguity".
-#C++#Show " Read the file \"English/programming/Connect-Four\".\t* Game Connect-Four".
-#C++#Show " Read the file \"English/programming/greeting\".\t\t* Greeting (salutation)".
-#C++#Show " Read the file \"English/programming/tower of Hanoi\".\t* Solving a puzzle".
-#C++#Show " Read the file \"English/reasoning/family\".\t\t* Reasoning".
-#Java#Show " Use button <ambiguity>		to learn about detecting ambiguity".
-#Java#Show " Use button <programming>	to learn about programming in natural language".
-#Java#Show " Use button <reasoning>		to learn about reasoning in natural language".
-Show "------------------------------------------------------------------------------".
-Show " Examples of available imperative sentences:".
-Show "------------------------------------------------------------------------------".
-Show " Read the file \"{filename}\".\t* Read a file".
-Show " Help.\t\t\t\t* Show this help information".
-Show " Undo.\t\t\t\t* Undo the last sentence".
-Show " Redo.\t\t\t\t* Redo an undone sentence".
-Show " Clear your mind.\t\t* Forget previous knowledge".
-Show " Restart.\t\t\t* Restart this program".
-Show " Show info about the grammar languages.".
-Show " Show info about the interface languages.".
-Show " Show info about the lists.".
-Show " Show info about the word types.".
-Show " Show the query commands.".
-Show " Show the copyright.".
-Show " Show the GPLv2-license.".
-Show " Show the warranty.".
-Show "------------------------------------------------------------------------------".
-#C++#Show " Example files:	* folder: Thinknowlogy2015r1/data/examples/English/".
-#Java#Show " Example files:	* Use button <more examples> or see".
-#Java#Show "		  folder: Thinknowlogy2015r1/data/examples/English/".
-Show " Fundamental:	* folder: Thinknowlogy2015r1/documents/".
-Show " Design:	* folder: Thinknowlogy2015r1/documents/design/".
-Show " Screenshots:	* folder: Thinknowlogy2015r1/screenshots/English/".
-Show "------------------------------------------------------------------------------".
+﻿Display "------------------------------------------------------------------------------".
+#C++#Display " \~{languageName}\t\t\t\t\t* Change language".
+#C++#Display " Read the file \"English/ambiguity/Boston\".\t\t* Detecting ambiguity".
+#C++#Display " Read the file \"English/ambiguity/US presidents\".\t* Detecting ambiguity".
+#C++#Display " Read the file \"English/programming/Connect-Four\".\t* Game Connect-Four".
+#C++#Display " Read the file \"English/programming/greeting\".\t\t* Greeting (salutation)".
+#C++#Display " Read the file \"English/programming/tower of Hanoi\".\t* Solving a puzzle".
+#C++#Display " Read the file \"English/reasoning/family\".\t\t* Reasoning".
+#Java#Display " Use button <ambiguity>		to learn about detecting ambiguity".
+#Java#Display " Use button <programming>	to learn about programming in natural language".
+#Java#Display " Use button <reasoning>		to learn about reasoning in natural language".
+Display "------------------------------------------------------------------------------".
+Display " Examples of available imperative sentences:".
+Display "------------------------------------------------------------------------------".
+Display " Read the file \"{filename}\".\t* Read a file".
+Display " Help.\t\t\t\t* Displays this help information".
+Display " Undo.\t\t\t\t* Undo the last sentence".
+Display " Redo.\t\t\t\t* Redo an undone sentence".
+Display " Clear your mind.\t\t* Forget previous knowledge".
+Display " Restart.\t\t\t* Restart this program".
+Display " Display info about the languages.".
+Display " Display info about the lists.".
+Display " Display info about the word types.".
+Display " Display the query commands.".
+Display " Display the copyright.".
+Display " Display the GPLv2-license.".
+Display " Display the warranty.".
+Display "------------------------------------------------------------------------------".
+#C++#Display " Example files:	* folder: Thinknowlogy2016r1/data/examples/English/".
+#Java#Display " Example files:	* Use button <more examples> or see".
+#Java#Display "		  folder: Thinknowlogy2016r1/data/examples/English/".
+Display " Fundamental:	* folder: Thinknowlogy2016r1/documents/".
+Display " Design:	* folder: Thinknowlogy2016r1/documents/design/".
+Display " Screenshots:	* folder: Thinknowlogy2016r1/screenshots/English/".
+Display "------------------------------------------------------------------------------".

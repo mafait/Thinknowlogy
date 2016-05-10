@@ -26,7 +26,7 @@
 * My assumptions:
 < A daughter is probably a person.
 < 
-* I know nothing about John, but I'll keep the question in mind.
+* I know nothing about John, but I'll keep this question in mind.
 * 
 * 
 * This question is more specific than your earlier question:
@@ -43,12 +43,12 @@
 * 
 * I don't know the answer to this question, but I'll keep it in mind.
 * 
-* I know nothing about Anna, but I'll keep the question in mind.
+* I know nothing about Anna, but I'll keep this question in mind.
 * 
 * 
 * This question is more specific than your earlier question:
 < Is Anna a father or a mother?
-* I know nothing about Anna, but I'll keep the question in mind.
+* I know nothing about Anna, but I'll keep this question in mind.
 * 
 * 
 * Your questions that are answered:

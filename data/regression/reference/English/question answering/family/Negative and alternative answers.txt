@@ -96,20 +96,20 @@
 < 
 * 
 * My conclusions:
-< Adam has a father, called George.
-< George is a man.
+< Adam has a father, called Michael.
+< Michael is a man.
 * 
 * My assumptions:
-< Adam is probably a child of George.
+< Adam is probably a child of Michael.
 < Adam is probably part of a family.
 < Adam is possibly a person.
-< Adam has probably a parent, called George.
-< George is probably a person.
-< George is probably not a woman.
-< George is probably a parent of Adam.
-< George is probably part of a family.
-< George is probably not a mother.
-< George has probably a child, called Adam.
+< Adam has probably a parent, called Michael.
+< Michael is probably a person.
+< Michael is probably not a woman.
+< Michael is probably a parent of Adam.
+< Michael is probably part of a family.
+< Michael is probably not a mother.
+< Michael has probably a child, called Adam.
 * 
 * My questions:
 < Is Adam a man, a woman, a girl or a boy?
@@ -122,25 +122,25 @@
 * 
 * My answer:
 < No, John is the father of Paul, Joe and Laura.
-< George is the father of Adam.
+< Michael is the father of Adam.
 < 
-< No, George is the father of Adam.
+< No, Michael is the father of Adam.
 < John is the father of Paul, Joe and Laura.
 < 
 * 
 * My conclusions:
-< Bill is a man.
+< Richard is a man.
 * 
 * My assumptions:
-< Bill is probably a person.
-< Bill is probably not a woman.
-< Bill is probably a parent.
-< Bill is probably part of a family.
-< Bill is probably not a mother.
-< Bill has possibly a child.
+< Richard is probably a person.
+< Richard is probably not a woman.
+< Richard is probably a parent.
+< Richard is probably part of a family.
+< Richard is probably not a mother.
+< Richard has possibly a child.
 < 
 < No, John is the father of Paul, Joe and Laura.
 * 
 * I only know:
-< Bill is a father.
+< Richard is a father.
 < 

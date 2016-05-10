@@ -29,22 +29,22 @@
 * 
 * My conclusions:
 < James was a man.
-< Michael has no father anymore.
-< Michael had a father, called James.
+< Peter has no father anymore.
+< Peter had a father, called James.
 * 
 * My assumptions:
-< James has probably a child, called Michael.
+< James has probably a child, called Peter.
 < James was probably a person.
 < James was probably not a woman.
-< James was probably a parent of Michael.
+< James was probably a parent of Peter.
 < James was probably part of a family.
 < James was probably not a mother.
-< Michael is probably a child of James.
-< Michael is probably part of a family.
-< Michael is possibly a person.
-< Michael had probably a parent, called James.
+< Peter is probably a child of James.
+< Peter is probably part of a family.
+< Peter is possibly a person.
+< Peter had probably a parent, called James.
 * 
 * My questions:
-< Is Michael a man, a woman, a girl or a boy?
-< Is Michael a son or a daughter?
+< Is Peter a man, a woman, a girl or a boy?
+< Is Peter a son or a daughter?
 < 

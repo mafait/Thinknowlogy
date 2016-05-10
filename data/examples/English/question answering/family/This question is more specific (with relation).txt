@@ -5,4 +5,4 @@ Is Anna a father or a mother?
 Is Anna a mother?
 Anna is a mother.
 Is Anna the mother of Paul?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

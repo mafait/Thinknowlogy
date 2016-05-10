@@ -1,12 +1,11 @@
-/*
- *	Class:			WriteItem
+/*	Class:			WriteItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about a word
  *					during the process of writing a sentence
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -67,17 +66,24 @@ class WriteItem extends Item
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
+		StringBuffer queryStringBuffer;
+
 		baseToStringBuffer( queryWordTypeNr );
 
-		if( isSkipped )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSkipped" );
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarLevel:" + grammarLevel_ );
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
+		if( isSkipped )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSkipped" );
+
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarLevel:" + grammarLevel_ );
 
 		if( startOfChoiceOrOptionGrammarItem_ != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "startOfChoiceOrOptionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + startOfChoiceOrOptionGrammarItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + startOfChoiceOrOptionGrammarItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "startOfChoiceOrOptionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + startOfChoiceOrOptionGrammarItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + startOfChoiceOrOptionGrammarItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 

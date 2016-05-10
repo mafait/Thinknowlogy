@@ -41,7 +41,7 @@
 * 
 * My questions that are answered:
 < Is John a father or a mother?
-< Is John a woman or a man?
+< Is John a man or a woman?
 * 
 * My conclusions:
 < John is a man.

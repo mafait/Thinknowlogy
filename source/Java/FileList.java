@@ -1,11 +1,10 @@
-/*
- *	Class:			FileList
+/*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -105,7 +104,7 @@ class FileList extends List
 		return true;
 		}
 
-	protected boolean isTesting()
+	protected boolean isCurrentlyTesting()
 		{
 		FileItem searchItem = firstActiveFileItem();
 
@@ -164,7 +163,7 @@ class FileList extends List
 					return startError( 1, null, "I couldn't close write file: \"" + currentFileItem.writeFileNameString() + "\"" );
 					}
 
-				if( deleteItem( false, currentFileItem ) != Constants.RESULT_OK )
+				if( deleteItem( currentFileItem ) != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to delete a file item" );
 				}
 			else
@@ -186,19 +185,6 @@ class FileList extends List
 				{
 				if( searchItem.storeFileItemInFutureDatabase() != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to store a file item in the database" );
-				}
-
-			searchItem = searchItem.nextFileItem();
-			}
-
-		searchItem = firstReplacedFileItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem.storeFileItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to modify a replaced file item in the database" );
 				}
 
 			searchItem = searchItem.nextFileItem();

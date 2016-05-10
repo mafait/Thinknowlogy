@@ -1,0 +1,5 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Laurent est un fils de Olivier et Amélie.
+Est Olivier le père de Laurent?
+Est Guillaume le père de Armand?
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

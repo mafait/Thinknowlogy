@@ -1,11 +1,10 @@
-/*
- *	Class:			MultipleWordItem
+/*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -65,7 +64,7 @@ class MultipleWordItem extends Item
 		( wordString = multipleWordItem_.wordTypeString( true, wordTypeNr_ ) ) != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
@@ -103,28 +102,34 @@ class MultipleWordItem extends Item
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
+		StringBuffer queryStringBuffer;
 		String wordString;
 		String wordTypeString = myWordItem().wordTypeNameString( wordTypeNr_ );
 		String languageNameString = myWordItem().languageNameString( wordTypeLanguageNr_ );
 
 		baseToStringBuffer( queryWordTypeNr );
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nWordParts:" + nWordParts_ );
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nWordParts:" + nWordParts_ );
 
 		if( wordTypeLanguageNr_ > Constants.NO_LANGUAGE_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordTypeLanguageNr:" + ( languageNameString == null ? wordTypeLanguageNr_ : languageNameString ) );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordTypeLanguageNr:" + ( languageNameString == null ? wordTypeLanguageNr_ : languageNameString ) );
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "multipleWordType:" + ( wordTypeString == null ? Constants.EMPTY_STRING : wordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + wordTypeNr_ );
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "multipleWordType:" + ( wordTypeString == null ? Constants.EMPTY_STRING : wordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + wordTypeNr_ );
 
 		if( multipleWordItem_ != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "multipleWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + multipleWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + multipleWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "multipleWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + multipleWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + multipleWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 			if( ( wordString = multipleWordItem_.wordTypeString( true, wordTypeNr_ ) ) != null )
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
+				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 

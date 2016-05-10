@@ -1,12 +1,11 @@
-/*
- *	Class:			AdminSolve
+/*	Class:			AdminSolve
  *	Supports class:	AdminItem
  *	Purpose:		Trying to solve (= to assign) words according to the
  *					given selections
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,11 +23,8 @@
  *************************************************************************/
 
 #include "AdminItem.h"
-#include "Presentation.cpp"
 #include "ScoreList.h"
 #include "SelectionList.h"
-#include "SpecificationItem.cpp"
-#include "WordList.cpp"
 
 class AdminSolve
 	{
@@ -67,18 +63,6 @@ class AdminSolve
 
 	// Private functions
 
-	void clearAllWordSolveChecksInAllWords()
-		{
-		WordItem *currentWordItem;
-
-		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
-			{
-			// Do for all words
-			do	currentWordItem->isWordCheckedForSolving = false;
-			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-			}
-		}
-
 	bool isNumeralString( char *checkString )
 		{
 		size_t stringLength;
@@ -95,6 +79,36 @@ class AdminSolve
 			}
 
 		return false;
+		}
+
+	ResultType createNewAssignmentLevelInAllWords()
+		{
+		WordItem *currentWordItem;
+
+		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+			{
+			// Do for all active words
+			do	currentWordItem->createNewAssignmentLevelInWord();
+			while( commonVariables_->result == RESULT_OK &&
+			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			}
+
+		return commonVariables_->result;
+		}
+
+	ResultType deleteAssignmentLevelInAllWords()
+		{
+		WordItem *currentWordItem;
+
+		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+			{
+			// Do for all active words
+			do	currentWordItem->deleteAssignmentLevelInWord();
+			while( commonVariables_->result == RESULT_OK &&
+			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			}
+
+		return commonVariables_->result;
 		}
 
 	ResultType getComparisonAssignment( bool isNumeralRelation, WordItem *specificationWordItem, WordItem *relationWordItem )
@@ -132,21 +146,6 @@ class AdminSolve
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 
 		return RESULT_OK;
-		}
-
-	ResultType deleteAssignmentLevelInAllWords()
-		{
-		WordItem *currentWordItem;
-
-		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
-			{
-			// Do for all words
-			do	currentWordItem->deleteAssignmentLevelInWord();
-			while( commonVariables_->result == RESULT_OK &&
-			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-			}
-
-		return commonVariables_->result;
 		}
 
 	ResultType backTrackConditionScorePaths( bool isAddingScores, bool isInverted, bool isAllowingDuplicates, bool isPreparingSort, unsigned short executionLevel, unsigned short solveStrategyParameter, unsigned int conditionSentenceNr )
@@ -796,7 +795,7 @@ class AdminSolve
 									{
 									isOriginalFoundPossibility = hasFoundPossibility_;
 
-									if( adminItem_->findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == RESULT_OK )
+									if( findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == RESULT_OK )
 										{
 										if( hasFoundPossibility_ )
 											isAddLocalScores = false;
@@ -823,7 +822,7 @@ class AdminSolve
 											{
 											isOriginalFoundPossibility = hasFoundPossibility_;
 
-											if( adminItem_->findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == RESULT_OK )
+											if( findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == RESULT_OK )
 												{
 												if( hasFoundPossibility_ )
 													isAddLocalScores = false;
@@ -1061,7 +1060,6 @@ class AdminSolve
 		WordItem *predefinedNounSolveMethodWordItem;
 		WordItem *predefinedNounSolveStrategyWordItem;
 		ScoreList *scoreList;
-		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "solveWord";
 
 		if( solveWordItem != NULL )
@@ -1090,16 +1088,12 @@ class AdminSolve
 							{
 							if( adminItem_->assignSpecification( predefinedNounSolveMethodWordItem, adminItem_->predefinedAdjectiveBusyWordItem() ) == RESULT_OK )
 								{
-								if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+								if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
+								( scoreList = adminItem_->scoreList ) != NULL )
 									{
-									clearAllWordSolveChecksInAllWords();
-
-									if( ( scoreList = adminItem_->scoreList ) != NULL )
-										{
-										// Make sure no scores are left at the start
-										if( scoreList->deleteScores() != RESULT_OK )
-											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the admin score list" );
-										}
+									// Make sure no scores are left at the start
+									if( scoreList->deleteScores() != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the admin score list" );
 									}
 
 								isInverted = ( predefinedNounSolveMethodWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, adminItem_->predefinedAdjectiveInvertedWordItem() ) != NULL );
@@ -1120,106 +1114,101 @@ class AdminSolve
 													if( solveLevel_ > 1 )
 														commonVariables_->presentation->startProgress( currentSolveProgress_, MAX_PROGRESS, INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START, solveLevel_, INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END );
 
-													if( ( wordList = adminItem_->wordList ) != NULL )
+													if( ( possibilityItem = scoreList->firstPossibility() ) != NULL )
 														{
-														if( ( possibilityItem = scoreList->firstPossibility() ) != NULL )
-															{
-															do	{
-																// Copy solve action of NO_ASSIGNMENT_LEVEL to higher levels
-																if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-																	actionSelectionItem = possibilityItem->scoreReference();
+														do	{
+															// Copy solve action of NO_ASSIGNMENT_LEVEL to higher levels
+															if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+																actionSelectionItem = possibilityItem->scoreReference();
 
-																if( wordList->createNewAssignmentLevelInWordList() == RESULT_OK )
+															if( createNewAssignmentLevelInAllWords() == RESULT_OK )
+																{
+																commonVariables_->currentAssignmentLevel++;
+
+																if( adminItem_->assignSelectionSpecification( possibilityItem->scoreReference() ) == RESULT_OK )
 																	{
-																	commonVariables_->currentAssignmentLevel++;
+																	tempEndSolveProgress = currentSolveProgress_ + solveProgressStep;
 
-																	if( adminItem_->assignSelectionSpecification( possibilityItem->scoreReference() ) == RESULT_OK )
+																	if( adminItem_->executeSelection( ( currentSolveProgress_ + solveProgressStep / 2L ), actionSelectionItem ) == RESULT_OK )
 																		{
-																		tempEndSolveProgress = currentSolveProgress_ + solveProgressStep;
-
-																		if( adminItem_->executeSelection( ( currentSolveProgress_ + solveProgressStep / 2L ), actionSelectionItem ) == RESULT_OK )
+																		// Word has active assignments
+																		if( solveWordItem->firstNonQuestionActiveAssignmentItem() != NULL )
 																			{
-																			// Word has active assignments
-																			if( solveWordItem->firstNonQuestionActiveAssignmentItem() != NULL )
+																			isInverted = ( predefinedNounSolveMethodWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, adminItem_->predefinedAdjectiveInvertedWordItem() ) != NULL );
+
+																			if( !isInverted &&
+																			commonVariables_->currentAssignmentLevel < solveLevel_ )
 																				{
-																				isInverted = ( predefinedNounSolveMethodWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, adminItem_->predefinedAdjectiveInvertedWordItem() ) != NULL );
-
-																				if( !isInverted &&
-																				commonVariables_->currentAssignmentLevel < solveLevel_ )
-																					{
-																					if( scoreList->deleteScores() == RESULT_OK )
-																						// Don't solve any deeper if there is a winning score
-																						solveLevel_ = commonVariables_->currentAssignmentLevel;
-																					else
-																						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the scores with an assignment level higher than ", commonVariables_->currentAssignmentLevel );
-																					}
-
-																				// Create winning or losing score
-																				if( createScore( false, NO_SCORE, ( isInverted ? NO_SCORE : WINNING_SCORE ), NO_SCORE, ( isInverted ? WINNING_SCORE : NO_SCORE ), NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, actionSelectionItem ) == RESULT_OK )
-																					{
-																					currentSolveProgress_ = tempEndSolveProgress;
-
-																					if( solveLevel_ > 1 )
-																						commonVariables_->presentation->showProgress( currentSolveProgress_ );
-																					}
+																				if( scoreList->deleteScores() == RESULT_OK )
+																					// Don't solve any deeper if there is a winning score
+																					solveLevel_ = commonVariables_->currentAssignmentLevel;
 																				else
-																					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a winning or losing score of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+																					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the scores with an assignment level higher than ", commonVariables_->currentAssignmentLevel );
+																				}
+
+																			// Create winning or losing score
+																			if( createScore( false, NO_SCORE, ( isInverted ? NO_SCORE : WINNING_SCORE ), NO_SCORE, ( isInverted ? WINNING_SCORE : NO_SCORE ), NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, actionSelectionItem ) == RESULT_OK )
+																				{
+																				currentSolveProgress_ = tempEndSolveProgress;
+
+																				if( solveLevel_ > 1 )
+																					commonVariables_->presentation->showProgress( currentSolveProgress_ );
 																				}
 																			else
-																				{
-																				if( solveWord( tempEndSolveProgress, solveWordItem, actionSelectionItem ) == RESULT_OK )
-																					{
-																					if( commonVariables_->currentAssignmentLevel == 1 )
-																						scoreList->changeAction( actionSelectionItem );
-																					}
-																				else
-																					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
-																				}
-
-																			if( deleteAssignmentLevelInAllWords() == RESULT_OK )
-																				{
-																				commonVariables_->currentAssignmentLevel--;
-																				possibilityItem = possibilityItem->nextPossibilityItem();
-
-																				if( ++possibilityNumber <= nPossibilities )
-																					{
-																					if( possibilityItem != NULL &&
-																					possibilityNumber == nPossibilities )
-																						return adminItem_->startError( functionNameString, moduleNameString_, "I have found more possibility items than number of possibilities" );
-																					}
-																				else
-																					{
-																					if( possibilityItem == NULL )
-																						return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't get the next possibility item before the number of possibilities is reached" );
-																					}
-																				}
-																			else
-																				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the assignments of level ", commonVariables_->currentAssignmentLevel );
+																				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a winning or losing score of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
 																			}
 																		else
-																			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute a selection during the solving of word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+																			{
+																			if( solveWord( tempEndSolveProgress, solveWordItem, actionSelectionItem ) == RESULT_OK )
+																				{
+																				if( commonVariables_->currentAssignmentLevel == 1 )
+																					scoreList->changeAction( actionSelectionItem );
+																				}
+																			else
+																				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+																			}
+
+																		if( deleteAssignmentLevelInAllWords() == RESULT_OK )
+																			{
+																			commonVariables_->currentAssignmentLevel--;
+																			possibilityItem = possibilityItem->nextPossibilityItem();
+
+																			if( ++possibilityNumber <= nPossibilities )
+																				{
+																				if( possibilityItem != NULL &&
+																				possibilityNumber == nPossibilities )
+																					return adminItem_->startError( functionNameString, moduleNameString_, "I have found more possibility items than number of possibilities" );
+																				}
+																			else
+																				{
+																				if( possibilityItem == NULL )
+																					return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't get the next possibility item before the number of possibilities is reached" );
+																				}
+																			}
+																		else
+																			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the assignments of level ", commonVariables_->currentAssignmentLevel );
 																		}
 																	else
-																		return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a selection specifcation at assignment level: ", commonVariables_->currentAssignmentLevel );
+																		return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute a selection during the solving of word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
 																	}
 																else
-																	return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a new assignment level: ", commonVariables_->currentAssignmentLevel );
+																	return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a selection specifcation at assignment level: ", commonVariables_->currentAssignmentLevel );
 																}
-															while( possibilityItem != NULL );
-
-															if( nPossibilities > 1 ||
-															// Higher level has possibilities
-															commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL )
-																{
-																if( scoreList->deleteScores() != RESULT_OK )
-																	return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the scores with assignment level ", commonVariables_->currentAssignmentLevel );
-																}
+															else
+																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a new assignment level: ", commonVariables_->currentAssignmentLevel );
 															}
-														else
-															return adminItem_->startError( functionNameString, moduleNameString_, "I failed to get the first possibility item at assignment level ", commonVariables_->currentAssignmentLevel );
+														while( possibilityItem != NULL );
+
+														if( nPossibilities > 1 ||
+														// Higher level has possibilities
+														commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL )
+															{
+															if( scoreList->deleteScores() != RESULT_OK )
+																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the scores with assignment level ", commonVariables_->currentAssignmentLevel );
+															}
 														}
 													else
-														return adminItem_->startError( functionNameString, moduleNameString_, "The word list isn't created yet" );
+														return adminItem_->startError( functionNameString, moduleNameString_, "I failed to get the first possibility item at assignment level ", commonVariables_->currentAssignmentLevel );
 													}
 												else
 													return adminItem_->startError( functionNameString, moduleNameString_, "The solve scores list isn't created yet at assignment level ", commonVariables_->currentAssignmentLevel );
@@ -1238,7 +1227,7 @@ class AdminSolve
 													{
 													if( ( specificationResult = predefinedNounSolveStrategyWordItem->getAssignmentWordParameter() ).result == RESULT_OK )
 														{
-														if( ( selectionResult = scoreList->getBestAction( adminItem_->isTesting(), specificationResult.assignmentParameter ) ).result == RESULT_OK )
+														if( ( selectionResult = scoreList->getBestAction( adminItem_->isCurrentlyTesting(), specificationResult.assignmentParameter ) ).result == RESULT_OK )
 															{
 															if( ( actionSelectionItem = selectionResult.bestActionItem ) != NULL )
 																{
@@ -1324,7 +1313,7 @@ class AdminSolve
 
 					if( conditionSelectionItem->isAssignedOrClear() )
 						{
-						if( specificationWordItem->isAdjectiveClear() )
+						if( specificationWordItem->isAdjectiveEmpty() )
 							{
 							// Adjective "clear"
 							if( findScoringAssignment( !isNegative, generalizationWordItem ) == RESULT_OK )

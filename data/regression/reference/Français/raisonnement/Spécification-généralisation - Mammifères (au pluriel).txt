@@ -1,0 +1,17 @@
+﻿* 
+* Mes conclusions:
+< Chats et chiens sont mammifères.
+< 
+* 
+* Mes conclusions:
+< Baleines, chats et chiens sont mammifères.
+< 
+* 
+* Mes conclusions:
+< Baleines, chats et chiens sont mammifères.
+< 
+< Spécifications:
+< Baleines sont mammifères.
+< Chiens sont mammifères.
+< Chats sont mammifères.
+< 

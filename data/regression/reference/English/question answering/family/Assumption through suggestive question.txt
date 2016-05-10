@@ -63,7 +63,7 @@
 * 
 * My questions that are answered:
 < Is John a father or a mother?
-< Is John a woman or a man?
+< Is John a man or a woman?
 * 
 * My assumptions:
 < John is probably a father.
@@ -74,10 +74,10 @@
 * 
 * 
 * My assumptions:
-< George is probably a father.
-< George is probably a man.
-< George is possibly a person.
-< George is maybe not a woman.
+< Michael is probably a father.
+< Michael is probably a man.
+< Michael is possibly a person.
+< Michael is maybe not a woman.
 * 
 * I don't know the answer to this question, but I'll keep it in mind.
 * 

@@ -1,10 +1,9 @@
-/*
- *	Class:		List
+/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -37,6 +36,7 @@ class List
 	{
 	friend class AdminCleanup;
 	friend class AdminQuery;
+	friend class AdminReadSentence;
 	friend class Item;
 	friend class ListCleanup;
 	friend class ListQuery;
@@ -72,7 +72,7 @@ class List
 	bool isAssignmentOrSpecificationList();
 	bool isIncludingThisList( char *queryListString );
 
-	unsigned int highestItemNr();
+	ResultType removeItemFromList( Item *removeItem );
 
 	Item *tailOfList( Item *searchItem );
 
@@ -111,9 +111,6 @@ class List
 
 	bool isAdminList();
 	bool isAssignmentList();
-	bool isReadList();
-
-	unsigned int highestSentenceNrInList();
 
 	char listChar();
 
@@ -123,12 +120,11 @@ class List
 	ResultType inactivateItem( Item *inactivateItem );
 	ResultType archiveItem( Item *archiveItem );
 	ResultType replaceItem( Item *replaceItem );
-	ResultType deleteItem( bool isAvailableForRollback, Item *deleteItem );
+	ResultType deleteItem( Item *deleteItem );
 
 	ResultType deleteActiveItemsWithCurrentSentenceNr();
 
 	ResultType removeFirstRangeOfDeletedItemsInList();
-	ResultType removeItemFromList( Item *removeItem );
 
 	Item *firstActiveItem();
 	Item *firstInactiveItem();
@@ -138,24 +134,21 @@ class List
 
 	Item *nextListItem();
 
-	WordItem *myWordItem();
-
 	CommonVariables *commonVariables();
+
+	WordItem *myWordItem();
 
 
 	// Protected cleanup functions
 
-	void deleteRollbackInfoInList();
-
+	void clearReplacedInfoInList();
 	void getHighestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr );
 	void setCurrentItemNrInList();
 
-	ResultType deleteSentencesInList( bool isAvailableForRollback, unsigned int lowestSentenceNr );
+	ResultType deleteSentencesInList( unsigned int lowestSentenceNr );
 
 	ResultType decrementSentenceNrsInList( unsigned int startSentenceNr );
 	ResultType decrementItemNrRangeInList( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset );
-
-	ResultType rollbackDeletedRedoInfoInList();
 
 	ResultType undoCurrentSentenceInList();
 	ResultType redoCurrentSentenceInList();

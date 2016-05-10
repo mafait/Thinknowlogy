@@ -6,25 +6,107 @@
  Examples of available imperative sentences:
 ------------------------------------------------------------------------------
  Read the file "{filename}".	* Read a file
- Help.				* Show this help information
+ Help.				* Displays this help information
  Undo.				* Undo the last sentence
  Redo.				* Redo an undone sentence
  Clear your mind.		* Forget previous knowledge
  Restart.			* Restart this program
- Show info about the grammar languages.
- Show info about the interface languages.
- Show info about the lists.
- Show info about the word types.
- Show the query commands.
- Show the copyright.
- Show the GPLv2-license.
- Show the warranty.
+ Display info about the languages.
+ Display info about the lists.
+ Display info about the word types.
+ Display the query commands.
+ Display the copyright.
+ Display the GPLv2-license.
+ Display the warranty.
 ------------------------------------------------------------------------------
  Example files:	* Use button <more examples> or see
-		  folder: Thinknowlogy2015r1/data/examples/English/
- Fundamental:	* folder: Thinknowlogy2015r1/documents/
- Design:	* folder: Thinknowlogy2015r1/documents/design/
- Screenshots:	* folder: Thinknowlogy2015r1/screenshots/English/
+		  folder: Thinknowlogy2016r1/data/examples/English/
+ Fundamental:	* folder: Thinknowlogy2016r1/documents/
+ Design:	* folder: Thinknowlogy2016r1/documents/design/
+ Screenshots:	* folder: Thinknowlogy2016r1/screenshots/English/
+------------------------------------------------------------------------------
+< 
+< Specifications:
+< Nederlands is the previous language. (learned from user Admin)
+< Français is a language. (learned from user Admin)
+< Español is a language. (learned from user Admin)
+< English is the current language. (learned from user Admin)
+< 
+------------------------------------------------------------------------------
+ Total number of items: 7522.
+------------------------------------------------------------------------------
+ Items in administrator:	382.
+------------------------------------------------------------------------------
+ * Active items:			382.
+    <F> Files:					2.
+    <R> Read words (temporary):			3.
+    <S> Solve scores (temporary):		0.
+    <W> Words:					356, (predefined: 183).
+    <X> Conditions:				9.
+    <Y> Actions:				12.
+    <Z> Alternatives:				0.
+ * Inactive items:			0.
+ * Archived items:			0.
+ * Replaced items:			0.
+ * Deleted items:			0.
+------------------------------------------------------------------------------
+ Items in words:		7140.
+------------------------------------------------------------------------------
+ * Active items:			7105.
+    <a> assignments:				5.
+    <c> collections:				232.
+    <g> generalizations:			323.
+    <i> interface:				1120.
+    <j> justification:				0.
+    <l> grammar:				4052.
+    <m> multiple word:				77.
+    <s> specifications:				376.
+    <r> write words (temporary):		0.
+    <w> word types:				920.
+    <x> context:				0.
+ * Inactive items:			3.
+ * Archived items:			25.
+ * Replaced items:			7.
+ * Deleted items:			0.
+------------------------------------------------------------------------------
+< 
+< Specifications:
+< Guest is a user. (learned from user Admin)
+< Developer is the current user. (learned from user Expert)
+< Expert is the previous user. (learned from user Guest)
+< 
+------------------------------------------------------------------------------
+ Total number of word type items:	925,	(all languages included).
+------------------------------------------------------------------------------
+ * Active word type items:			925.
+   (@1)  Symbols:					18.
+   (@2)  Numerals:					43.
+   (@3)  Small letters:					104.
+   (@4)  Capital letters:				104.
+   (@5)  Proper names:					16.
+   (@6)  Adjectives:					165.
+   (@7)  Adverbs:					25.
+   (@8)  Answer words:					8.
+   (@9)  Articles:					18.
+   (@10) Conjunctions:					15.
+   (@11) Singular nouns:				178.
+   (@12) Plural nouns:					24.
+   (@13) Personal pronoun singular (subjective):	0.
+   (@14) Personal pronoun singular (objective):		0.
+   (@15) Possessive determiner singular:		20.
+   (@16) Possessive pronoun singular:			19.
+   (@17) Personal pronoun plural (subjective):		0.
+   (@18) Personal pronoun plural (objective):		0.
+   (@19) Possessive determiner plural:			19.
+   (@20) Possessive pronoun plural:			21.
+   (@21) Prepositions:					18.
+   (@22) Singular verbs:				74.
+   (@23) Plural verbs:					24.
+   (@24) Selection words:				12.
+ * Inactive word type items:			0.
+ * Archived word type items:			0.
+ * Replaced word type items:			0.
+ * Deleted word type items:			0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
  The available query commands are:				Examples:
@@ -42,37 +124,37 @@
  ~`wordReference`	reference to word			~`English`
  ~"textString"		text string				~"sentence"
 ------------------------------------------------------------------------------
- Both wild cards '?' and '*' can be used in:
+ Both wildcards '?' and '*' can be used in:
 			* words					~'Engl?sh'
 			* references to a word			~`Eng*sh`
 			* text strings				~"gr?m*"
 ------------------------------------------------------------------------------
- Empty item specification will show all items			~()
- Empty list specification will show all items			~<>
+ Empty item specification will display all items		~()
+ Empty list specification will display all items		~<>
 ------------------------------------------------------------------------------
- Adding '#' gives count functionality				~#(123)
- Adding '+' only selects active items				~+(123)
- Adding '=' only selects inactive items				~=(123)
- Adding '$' only selects archived items				~$(123)
- Adding '%' only selects replaced items				~%(123)
- Adding '&' only selects deleted items				~&(123)
- Concatenation of queries gives 'AND' functionality		~(123)<s>
- Adding '*' also selects attached justification items		~*'Laura'<s>`daughter`
- Adding '**' also selects justification specifications		~**'Laura'<s>`daughter`
+ Adding '#' will provide count functionality			~#(123)
+ Adding '+' will select only active items			~+(123)
+ Adding '=' will select only inactive items			~=(123)
+ Adding '$' will select only archived items			~$(123)
+ Adding '%' will select only replaced items			~%(123)
+ Adding '&' will select only deleted items			~&(123)
+ Concatenation of queries will provide 'AND' functionality	~(123)<s>
+ Adding '*' will select also attached justification items	~*'Laura'<s>`daughter`
+ Adding '**' will select also justification specifications	~**'Laura'<s>`daughter`
 ------------------------------------------------------------------------------
- Adding ' at the end will show only words			~(123)'
- Adding ` at the end shows only word references			~(123)`
- Adding " at the end will show only text strings		~(123)"
- Adding '' shows only words on new line				~(123)''
- Adding `` shows only word references on new line		~(123)``
- Adding "" shows only text strings on new line			~(123)""
+ Adding ' at the end will display only words			~(123)'
+ Adding ` at the end will display only word references		~(123)`
+ Adding " at the end will display only text strings		~(123)"
+ Adding '' will display only words on new line			~(123)''
+ Adding `` will display only word references on new line	~(123)``
+ Adding "" will display only text strings on new line		~(123)""
 ------------------------------------------------------------------------------
  In files '~' will mark the end of a query			...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2015, Menno Mafait
- Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details type "Show the
- warranty.". This is free software, and you are welcome to redistribute it
- under certain conditions; type "Show the GPLv2-license." for details.
+ Copyright (C) 2009-2016, Menno Mafait
+ Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details type "Display
+ the warranty.". This is free software, and you are welcome to redistribute
+ it under certain conditions; type "Display the GPLv2-license." for details.
 
 		    GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991

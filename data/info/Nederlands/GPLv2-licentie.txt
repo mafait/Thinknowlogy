@@ -1,4 +1,4 @@
-Toon "English disclaimer".
+﻿Toon "English disclaimer".
 Toon "This is an unofficial translation of the GNU General".
 Toon "Public License into Dutch. It was not published by the Free Software".
 Toon "Foundation, and does not legally state the distribution terms for software".

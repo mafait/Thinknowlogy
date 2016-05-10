@@ -28,23 +28,23 @@
 < 
 * 
 * My conclusions:
-< Adam is a son of George.
+< Adam is a son of Michael.
 * 
 * My assumptions:
-< George has probably a child, called Adam.
-< George is probably a parent of Adam.
-< George is probably part of a family.
-< George is possibly a person.
+< Michael has probably a child, called Adam.
+< Michael is probably a parent of Adam.
+< Michael is probably part of a family.
+< Michael is possibly a person.
 < Adam is probably a person.
-< Adam is probably a child of George.
+< Adam is probably a child of Michael.
 < Adam is probably part of a family.
 < Adam is probably not a girl and not a woman.
 < Adam is probably not a daughter.
-< Adam has probably a parent, called George.
+< Adam has probably a parent, called Michael.
 * 
 * My questions:
-< Is George a man or a woman?
-< Is George a father or a mother?
+< Is Michael a man or a woman?
+< Is Michael a father or a mother?
 < Is Adam a boy or a man?
 < 
 * 

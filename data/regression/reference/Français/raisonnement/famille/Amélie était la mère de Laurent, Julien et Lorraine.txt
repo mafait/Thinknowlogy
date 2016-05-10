@@ -1,0 +1,93 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un parent est probablement une personne.
+< Un père est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un enfant est probablement une personne.
+< Un fils est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Olivier est un homme.
+< Laurent a un père, appelé Olivier.
+< Julien a un père, appelé Olivier.
+< Lorraine a un père, appelé Olivier.
+* 
+* Mes hypothèses:
+< Olivier est probablement une personne.
+< Olivier n'est probablement pas une femme.
+< Olivier est probablement un parent de Laurent, Julien et Lorraine.
+< Olivier est probablement partie d'une famille.
+< Olivier n'est probablement pas une mère.
+< Olivier a probablement 3 enfants, appelés Laurent, Julien et Lorraine.
+< Olivier a possible une fille, appelée Lorraine.
+< Laurent a probablement un parent, appelé Olivier.
+< Laurent est probablement un enfant de Olivier.
+< Laurent est probablement partie d'une famille.
+< Laurent est possible une personne.
+< Julien a probablement un parent, appelé Olivier.
+< Julien est probablement un enfant de Olivier.
+< Julien est probablement partie d'une famille.
+< Julien est possible une personne.
+< Lorraine a probablement un parent, appelé Olivier.
+< Lorraine est probablement un enfant de Olivier.
+< Lorraine est probablement partie d'une famille.
+< Lorraine est possible une personne.
+< Lorraine n'est peut-être pas un homme.
+< Lorraine est possible une fille de Olivier.
+< Lorraine n'est peut-être pas un garçon et pas un homme.
+< Lorraine n'est peut-être pas un fils.
+* 
+* Mes questions:
+< Est Laurent un homme, une femme, une jeune-fille ou un garçon?
+< Est Laurent un fils ou une fille?
+< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien un fils ou une fille?
+< Est Lorraine une jeune-fille ou une femme?
+< 
+* 
+* Mes conclusions:
+< Laurent n'a aucun mère plus.
+< Laurent avait une mère, appelée Amélie.
+< Julien n'a aucun mère plus.
+< Julien avait une mère, appelée Amélie.
+< Lorraine n'a aucun mère plus.
+< Lorraine avait une mère, appelée Amélie.
+< Amélie était une femme.
+* 
+* Mes hypothèses:
+< Laurent est probablement un enfant de Olivier et Amélie.
+< Laurent avait probablement un parent, appelée Amélie.
+< Julien est probablement un enfant de Olivier et Amélie.
+< Julien avait probablement un parent, appelée Amélie.
+< Lorraine est probablement un enfant de Olivier et Amélie.
+< Lorraine est possible une fille de Olivier et Amélie.
+< Lorraine avait probablement un parent, appelée Amélie.
+< Amélie a probablement 3 enfants, appelés Laurent, Julien et Lorraine.
+< Amélie était probablement une personne.
+< Amélie ne était probablement pas un homme.
+< Amélie était probablement un parent de Laurent, Julien et Lorraine.
+< Amélie était probablement partie d'une famille.
+< Amélie ne était probablement pas un père.
+< Amélie avait possible une fille, appelée Lorraine.
+< 

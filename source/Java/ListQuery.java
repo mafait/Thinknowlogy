@@ -1,11 +1,10 @@
-/*
- *	Class:			ListQuery
+/*	Class:			ListQuery
  *	Supports class:	List
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -40,8 +39,9 @@ class ListQuery
 			queryItem.hasFoundReferenceItemById( querySentenceNr, queryItemNr ) ) ||
 
 			( !isReferenceQuery &&
+
 			( querySentenceNr == Constants.NO_SENTENCE_NR ||
-			querySentenceNr == queryItem.creationSentenceNr() ) &&
+			queryItem.hasSentenceNr( querySentenceNr ) ) &&
 
 			( queryItemNr == Constants.NO_SENTENCE_NR ||
 			queryItemNr == queryItem.itemNr() ) ) )
@@ -229,7 +229,7 @@ class ListQuery
 				}
 
 			if( !hasFoundString &&
-			( itemString = queryItem.extraItemString() ) != null )
+			( itemString = queryItem.virtualGuideByGrammarString() ) != null )
 				{
 				if( ( referenceResult = compareStrings( wordString, itemString ) ).result == Constants.RESULT_OK )
 					{
@@ -237,7 +237,7 @@ class ListQuery
 						hasFoundString = true;
 					}
 				else
-					return myList_.addError( 1, moduleNameString_, "I failed to compare two strings" );
+					return myList_.addError( 1, moduleNameString_, "I failed to compare a Guide by Grammar string" );
 				}
 
 			if( hasFoundString )

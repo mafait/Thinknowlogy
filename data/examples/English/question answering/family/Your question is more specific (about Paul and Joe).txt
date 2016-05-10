@@ -9,4 +9,4 @@ Is Joe a son or a daughter?
 Is Joe a daughter?
 Is Laura a girl or a woman?
 Is Laura a girl?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

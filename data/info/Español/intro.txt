@@ -1,7 +1,7 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
 Mostrar " Thinknowlogy es un software experimental, basado en la gramática,".
-Mostrar " diseñado para utilizar las Leyes Naturales de la Inteligencia en la gramática,".
-Mostrar " con el fin de crear la inteligencia - a través del lenguaje natural - en software,".
+Mostrar " diseñado para utilizar Leyes Naturales de la Inteligencia encajada en la Gramática,".
+Mostrar " con el fin de crear la inteligencia – a través del lenguaje natural – en software,".
 Mostrar " lo que se demuestra por:".
 Mostrar " * Programación en lenguaje natural;".
 Mostrar " * Razonamiento en lenguaje natural:".

@@ -1,11 +1,10 @@
-/*
- *	Class:			WordType
+/*	Class:			WordType
  *	Supports class:	WordItem
  *	Purpose:		To create word type structures
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -47,7 +46,7 @@ class WordType
 			{
 			if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) != null )
 				{
-				if( ( grammarResult = currentLanguageWordItem.checkOnWordEnding( ( isSingularNoun ? Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING : Constants.WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result == Constants.RESULT_OK )
+				if( ( grammarResult = currentLanguageWordItem.analyzeWordEnding( ( isSingularNoun ? Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING : Constants.WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result == Constants.RESULT_OK )
 					{
 					if( grammarResult.hasFoundWordEnding )
 						{
@@ -61,7 +60,7 @@ class WordType
 						}
 					else
 						{
-						if( ( grammarResult = currentLanguageWordItem.checkOnWordEnding( ( isSingularNoun ? Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING : Constants.WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result == Constants.RESULT_OK )
+						if( ( grammarResult = currentLanguageWordItem.analyzeWordEnding( ( isSingularNoun ? Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING : Constants.WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result == Constants.RESULT_OK )
 							{
 							if( grammarResult.hasFoundWordEnding )
 								{
@@ -216,25 +215,6 @@ class WordType
 			}
 		else
 			myWordItem_.startErrorInWord( 1, moduleNameString_, "The given word type string is undefined" );
-
-		wordResult.result = CommonVariables.result;
-		return wordResult;
-		}
-
-	protected WordResultType findWordTypeInAllWords( boolean isCheckingAllLanguages, short wordTypeNr, String wordTypeString, WordItem previousWordItem )
-		{
-		WordResultType wordResult = new WordResultType();
-		WordItem currentWordItem;
-
-		if( ( currentWordItem = ( previousWordItem == null ? CommonVariables.firstWordItem : previousWordItem.nextWordItem() ) ) != null )
-			{
-			do	{
-				if( ( wordResult = currentWordItem.findWordType( isCheckingAllLanguages, wordTypeNr, wordTypeString ) ).result != Constants.RESULT_OK )
-					myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find a word type in word \"" + currentWordItem.anyWordTypeString() + "\"" );
-				}
-			while( wordResult.foundWordItem == null &&
-			( currentWordItem = currentWordItem.nextWordItem() ) != null );
-			}
 
 		wordResult.result = CommonVariables.result;
 		return wordResult;

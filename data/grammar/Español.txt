@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To define the grammar for the Spanish language
-#	Version:		Thinknowlogy 2015r1 (Esperanza)
+#	Version:		Thinknowlogy 2016r1 (Huguenot)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
-#	and bug reports are welcome at http://mafait.org
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------- Definiciones de la palabra -----------
@@ -38,9 +38,9 @@
 @6		:0			$adjective								"adjetivo"
 @6		:600		$adjective																					asignado
 @6		:601		$adjective																					ocupado
-@6		:602		$adjective																					clara
-@6		:603		$adjective																					hecho
-@6		:604		$adjective																					defensiva
+@6		:602		$adjective																					hecho
+@6		:603		$adjective																					defensiva
+@6		:604		$adjective																					vacío
 @6		:605		$adjective																					exclusivo
 @6		:606		$adjective																					invertida
 @6		:607		$adjective																					femenina
@@ -82,6 +82,7 @@
 @7		:703		$adverb_uncertainty					"adverbio (incertidumbre)"					posiblemente
 @7		:704		$adverb_uncertainty					"adverbio (incertidumbre)"					probablemente
 @7		:705		$adverb_Not																				no
+#@7		:706		$adverb_Pas							(francés)
 
 
 #--- Interjecciones ---
@@ -107,18 +108,13 @@
 @9		:912		$article_definite						"artículo determinado"						la
 @9		:913		$article_definite						"artículo determinado"						el
 
-# un / el = masculino singular
-# una / la = feminine singular
-# unos / los = masculino plural
-# unas / las = feminine plural
-# lo = neutral
-
 
 #--- Conjunciones ---
 @10		:0			$conjunction
 @10		:1000	$conjunction_collective																	y
 @10		:1001	$conjunction_exclusive																	o
 @10		:1002	$conjunction_Than																		que
+#@10	:1003	$conjunction_Than					(francés)
 #@10	:1003	$conjunction_Zowel					(holandés)
 #@10	:1004	$conjunction_Als						(holandés)
 
@@ -165,7 +161,7 @@
 #@14	:1302	$personal_pronoun_singular_objective												usted
 #@14	:1303	$personal_pronoun_singular_objective												él
 #@14	:1304	$personal_pronoun_singular_objective												ella
-#@14	:1305	$personal_pronoun_singular_objective		(Inglés: it)
+#@14	:1305	$personal_pronoun_singular_objective		(Inglés)
 
 @15		:0			$possessive_determiner_singular				"determinante posesivo (singular)"
 @15		:1300	$possessive_determiner_singular														mi
@@ -173,7 +169,7 @@
 @15		:1302	$possessive_determiner_singular														su
 #@15	:1303	$possessive_determiner_singular														su
 #@15	:1304	$possessive_determiner_singular														su
-#@15	:1305	$possessive_determiner_singular				(Inglés: it)
+#@15	:1305	$possessive_determiner_singular				(Inglés)
 
 @16		:0			$possessive_pronoun_singular					"pronombre posesivo (singular)"
 #@16	:1300	$possessive_pronoun_singular														mío mía la-mía el-mío
@@ -183,7 +179,7 @@
 #@16	:1302	$possessive_pronoun_singular														de-ustedes
 #@16	:1303	$possessive_pronoun_singular														suya suyo suyas suyos
 #@16	:1304	$possessive_pronoun_singular														suyos
-#@16	:1305	$possessive_pronoun_singular					(Inglés: it)
+#@16	:1305	$possessive_pronoun_singular				(Inglés)
 
 
 #--- Plural pronombres ---
@@ -228,9 +224,10 @@
 @21		:0			$preposition	
 @21		:2100	$preposition																				sobre
 @21		:2101	$preposition																				desde
-@21		:2102	$preposition																				en
+#@21	:2102	$preposition																				en
 @21		:2103	$preposition																				para
 @21		:2104	$preposition_Of																			de
+#@21	:2105	$preposition_à							(francés)
 
 
 #--- Verbos singulares ---
@@ -305,6 +302,7 @@
 @0		:3004	$das																							da
 @0		:3004	$dos																							do
 @0		:3004	$eos																							eo
+@0		:3004	$hes																							he
 @0		:3004	$hos																							ho
 @0		:3004	$ios																							io
 @0		:3004	$jos																							jo
@@ -330,6 +328,10 @@
 @0		:3004	$ores																							or
 @0		:3004	$rmos																						rmo
 @0		:3004	$bejas																						beja
+
+
+#--- Palabras fusionadas ---
+#@0		:3005	$?
 
 
 #----------- Definiciones de gramática ---------------
@@ -453,12 +455,10 @@
 			$plural_structure_specification_noun															[ numeral ] plural_specification_noun
 
 			$structure_specification_noun																	{ singular_structure_specification_noun_with_mandatory_article | plural_structure_specification_noun }
-
 			$comma_separated_structure_specification_nouns											symbol_comma structure_specification_noun [ comma_separated_structure_specification_nouns ]
 			$more_collective_structure_specification_nouns											[ comma_separated_structure_specification_nouns ] conjunction_collective structure_specification_noun
 			$collective_structure_specification_nouns													structure_specification_noun [ more_collective_structure_specification_nouns ]
 			$more_exclusive_structure_specification_nouns												[ comma_separated_structure_specification_nouns ] exclusive_specification_conjunction structure_specification_noun
-
 			$structure_specification_nouns																	structure_specification_noun [ more_collective_structure_specification_nouns | more_exclusive_structure_specification_nouns ]
 
 :6022	$specification_pronoun																				{ possessive_pronoun_singular | possessive_pronoun_plural }
@@ -597,7 +597,7 @@
 
 # Ejemplos de imperativo:
 # - Ayudar.
-# - Inicie la sesión como Experto.
+# - Inicie-la-sesión como Experto.
 # - Resuelva el juego.
 # - Mostrar los derechos de autor.
 # - Mostrar "Hola Mundo".

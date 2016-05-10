@@ -1,11 +1,10 @@
-/*
- *	Class:			MultipleWordItem
+/*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -62,7 +61,7 @@ class MultipleWordItem : private Item
 	virtual void showWordReferences( bool isReturnQueryToPosition )
 		{
 		char *wordString;
-		char statusString[2] = SPACE_STRING;
+
 		statusString[0] = statusChar();
 
 		if( multipleWordItem_ != NULL &&
@@ -108,14 +107,17 @@ class MultipleWordItem : private Item
 
 	virtual char *toString( unsigned short queryWordTypeNr )
 		{
+		char *queryString;
 		char *wordString;
 		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
 		char *languageNameString = myWordItem()->languageNameString( wordTypeLanguageNr_ );
 
 		Item::toString( queryWordTypeNr );
 
+		queryString = commonVariables()->queryString;
+
 		sprintf( tempString, "%cnWordParts:%u", QUERY_SEPARATOR_CHAR, nWordParts_ );
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( wordTypeLanguageNr_ > NO_LANGUAGE_NR )
 			{
@@ -124,7 +126,7 @@ class MultipleWordItem : private Item
 			else
 				sprintf( tempString, "%cwordTypeLanguageNr:%s", QUERY_SEPARATOR_CHAR, languageNameString );
 
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( wordTypeString == NULL )
@@ -132,21 +134,21 @@ class MultipleWordItem : private Item
 		else
 			sprintf( tempString, "%cwordType:%s%c%u", QUERY_SEPARATOR_CHAR, wordTypeString, QUERY_WORD_TYPE_CHAR, wordTypeNr_ );
 
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( multipleWordItem_ != NULL )
 			{
 			sprintf( tempString, "%cmultipleWord%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, multipleWordItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, multipleWordItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 
 			if( ( wordString = multipleWordItem_->wordTypeString( true, wordTypeNr_ ) ) != NULL )
 				{
 				sprintf( tempString, "%c%s%c", QUERY_WORD_REFERENCE_START_CHAR, wordString, QUERY_WORD_REFERENCE_END_CHAR );
-				strcat( commonVariables()->queryString, tempString );
+				strcat( queryString, tempString );
 				}
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 

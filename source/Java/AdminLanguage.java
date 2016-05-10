@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminLanguage
+/*	Class:			AdminLanguage
  *	Supports class:	AdminItem
  *	Purpose:		To create and assign the languages
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -104,6 +103,7 @@ class AdminLanguage
 		{
 		WordResultType wordResult;
 		WordItem languageWordItem;
+		WordItem predefinedNounLanguageWordItem;
 
 		if( findLanguageByName( languageNameString ) == Constants.RESULT_OK )
 			{
@@ -122,9 +122,9 @@ class AdminLanguage
 							if( adminItem_.startupLanguageNameString == null )
 								adminItem_.startupLanguageNameString = languageWordItem.anyWordTypeString();
 
-							if( CommonVariables.predefinedNounLanguageWordItem != null )
+							if( ( predefinedNounLanguageWordItem = CommonVariables.predefinedNounLanguageWordItem ) != null )
 								{
-								if( createLanguageSpecification( CommonVariables.predefinedNounLanguageWordItem ) != Constants.RESULT_OK )
+								if( createLanguageSpecification( predefinedNounLanguageWordItem ) != Constants.RESULT_OK )
 									return adminItem_.addError( 1, moduleNameString_, "I failed to create a language specification" );
 								}
 							}
@@ -197,19 +197,21 @@ class AdminLanguage
 		{
 		boolean hasFoundLanguage = false;
 		SpecificationItem languageSpecificationItem;
+		WordItem predefinedNounLanguageWordItem;
 
 		if( findLanguageByName( languageNameString ) == Constants.RESULT_OK )
 			{
 			if( foundLanguageWordItem_ != null )
 				{
 				hasFoundLanguage = true;
+				predefinedNounLanguageWordItem = CommonVariables.predefinedNounLanguageWordItem;
 
-				if( ( languageSpecificationItem = foundLanguageWordItem_.bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, CommonVariables.predefinedNounLanguageWordItem ) ) != null )
+				if( ( languageSpecificationItem = foundLanguageWordItem_.bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, predefinedNounLanguageWordItem ) ) != null )
 					CommonVariables.currentLanguageNr = languageSpecificationItem.languageNr();
 
 				if( CommonVariables.currentLanguageWordItem != foundLanguageWordItem_ )
 					{
-					if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_UNDEFINED, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, 0, null, foundLanguageWordItem_, CommonVariables.predefinedNounLanguageWordItem, null ).result == Constants.RESULT_OK )
+					if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.WORD_TYPE_UNDEFINED, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, 0, null, foundLanguageWordItem_, predefinedNounLanguageWordItem, null ).result == Constants.RESULT_OK )
 						CommonVariables.currentLanguageWordItem = foundLanguageWordItem_;
 					else
 						return adminItem_.addError( 1, moduleNameString_, "I failed to assign the language" );

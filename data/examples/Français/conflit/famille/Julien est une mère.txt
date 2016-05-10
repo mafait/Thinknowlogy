@@ -1,0 +1,4 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Julien est un fils de Olivier et Amélie.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
+Julien est une mère.

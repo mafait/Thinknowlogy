@@ -1,11 +1,11 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To demonstrate automated reasoning in natural language:
-#			Self-generated conclusions, assumptions and questions
-#			and the detection of conflicts and semantic ambiguity
-#	Version:	Thinknowlogy 2015r1 (Esperanza)
+#					Self-generated conclusions, assumptions and questions
+#					and the detection of conflicts and semantic ambiguity
+#	Version:		Thinknowlogy 2016r1 (Huguenot)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
-#	and bug reports are welcome at http://mafait.org
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 # The definition of a family.
@@ -29,9 +29,9 @@ Every daughter is a girl or a woman.
 #C++## Laura is a daughter.		Laura is a woman.
 #C++## John is a father.			John is a parent.
 #C++## Anna is a mother.			Anna is a parent.
-#C++## Show information about John.	Show information about Anna.
-#C++## Show information about Paul.	Show information about Laura.
-#C++## Show information about parents.	Show information about children.
+#C++## Display information about John.	Display information about Anna.
+#C++## Display information about Paul.	Display information about Laura.
+#C++## Display information about parents. Display information about children.
 #C++## Paul is a son of John and Anna.
 #C++## Joe is a son of John and Anna.
 #C++## Laura is a daughter of John and Anna.
@@ -40,4 +40,4 @@ Every daughter is a girl or a woman.
 #C++## (in subfolder: screenshots) for more examples.
 #C++##
 # Try the sentences in all kind of combinations and in different order.
-# Use "Clear your mind.", "Undo." or "Restart." for a retry.
+# Use button «Clear your mind.», «Undo.» or «Restart.» for a retry.

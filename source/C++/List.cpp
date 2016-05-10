@@ -1,10 +1,9 @@
-/*
- *	Class:		List
+/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -48,6 +47,70 @@
 			}
 
 		return true;
+		}
+
+	ResultType List::removeItemFromList( Item *removeItem )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "removeItemFromList";
+
+		if( removeItem != NULL )
+			{
+			if( removeItem->myList() == this )
+				{
+				// First item in list
+				if( removeItem->previousItem == NULL )
+					{
+					switch( removeItem->statusChar() )
+						{
+						case QUERY_ACTIVE_CHAR:
+							activeList_ = removeItem->nextItem;
+							break;
+
+						case QUERY_INACTIVE_CHAR:
+							inactiveList_ = removeItem->nextItem;
+							break;
+
+						case QUERY_ARCHIVED_CHAR:
+							archivedList_ = removeItem->nextItem;
+							break;
+
+						case QUERY_REPLACED_CHAR:
+							replacedList_ = removeItem->nextItem;
+							break;
+
+						case QUERY_DELETED_CHAR:
+							deletedList_ = removeItem->nextItem;
+							break;
+
+						default:
+							return startError( functionNameString, NULL, "The given remove item has an unknown status character" );
+						}
+
+					if( removeItem->nextItem != NULL )
+						removeItem->nextItem->previousItem = NULL;
+					}
+				else
+					{
+					removeItem->previousItem->nextItem = removeItem->nextItem;
+
+					if( removeItem->nextItem != NULL )
+						removeItem->nextItem->previousItem = removeItem->previousItem;
+					}
+
+				// Remember next item
+				nextListItem_ = removeItem->nextItem;
+
+				// Disconnect item from the list
+				removeItem->previousItem = NULL;
+				removeItem->nextItem = NULL;
+				}
+			else
+				return startError( functionNameString, NULL, "The given remove item doesn't belong to my list" );
+			}
+		else
+			return startError( functionNameString, NULL, "The given remove item is undefined" );
+
+		return RESULT_OK;
 		}
 
 	Item *List::tailOfList( Item *searchItem )
@@ -275,57 +338,6 @@
 		return ( listChar_ == WORD_ASSIGNMENT_LIST_SYMBOL );
 		}
 
-	bool List::isReadList()
-		{
-		return ( listChar_ == ADMIN_READ_LIST_SYMBOL );
-		}
-
-	unsigned int List::highestSentenceNrInList()
-		{
-		unsigned int highestSentenceNr = NO_SENTENCE_NR;
-		Item *searchItem = activeList_;
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->creationSentenceNr() > highestSentenceNr )
-				highestSentenceNr = searchItem->creationSentenceNr();
-
-			searchItem = searchItem->nextItem;
-			}
-
-		searchItem = inactiveList_;
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->creationSentenceNr() > highestSentenceNr )
-				highestSentenceNr = searchItem->creationSentenceNr();
-
-			searchItem = searchItem->nextItem;
-			}
-
-		searchItem = archivedList_;
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->creationSentenceNr() > highestSentenceNr )
-				highestSentenceNr = searchItem->creationSentenceNr();
-
-			searchItem = searchItem->nextItem;
-			}
-
-		searchItem = replacedList_;
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->creationSentenceNr() > highestSentenceNr )
-				highestSentenceNr = searchItem->creationSentenceNr();
-
-			searchItem = searchItem->nextItem;
-			}
-
-		return highestSentenceNr;
-		}
-
 	char List::listChar()
 		{
 		return listChar_;
@@ -497,24 +509,19 @@
 			{
 			if( activateItem->statusChar() != QUERY_ACTIVE_CHAR )
 				{
-				if( activateItem->creationSentenceNr() == activateItem->activeSentenceNr() )
+				if( removeItemFromList( activateItem ) == RESULT_OK )
 					{
-					if( removeItemFromList( activateItem ) == RESULT_OK )
+					if( addItemToList( QUERY_ACTIVE_CHAR, activateItem ) == RESULT_OK )
 						{
-						if( addItemToList( QUERY_ACTIVE_CHAR, activateItem ) == RESULT_OK )
-							{
-							if( isAssignmentList() &&
-							commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-								commonVariables_->isAssignmentChanged = true;
-							}
-						else
-							return addError( functionNameString, NULL, "I failed to add an item to the active list" );
+						if( isAssignmentList() &&
+						commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+							commonVariables_->isAssignmentChanged = true;
 						}
 					else
-						return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
+						return addError( functionNameString, NULL, "I failed to add an item to the active list" );
 					}
 				else
-					return startError( functionNameString, NULL, "The active sentence number of the given archived item is already assigned" );
+					return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
 				}
 			else
 				return startError( functionNameString, NULL, "The given activate item is already an active item" );
@@ -534,27 +541,21 @@
 			if( inactivateItem->statusChar() != QUERY_INACTIVE_CHAR )
 				{
 				if( isAssignmentList() ||
-				isReadList() )
+				listChar_ == ADMIN_READ_LIST_SYMBOL )
 					{
-					if( !inactivateItem->hasInactiveSentenceNr() ||
-					inactivateItem->creationSentenceNr() == inactivateItem->activeSentenceNr() )
+					if( removeItemFromList( inactivateItem ) == RESULT_OK )
 						{
-						if( removeItemFromList( inactivateItem ) == RESULT_OK )
+						if( addItemToList( QUERY_INACTIVE_CHAR, inactivateItem ) == RESULT_OK )
 							{
-							if( addItemToList( QUERY_INACTIVE_CHAR, inactivateItem ) == RESULT_OK )
-								{
-								if( isAssignmentList() &&
-								commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-									commonVariables_->isAssignmentChanged = true;
-								}
-							else
-								return addError( functionNameString, NULL, "I failed to add an item to the inactive list" );
+							if( isAssignmentList() &&
+							commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+								commonVariables_->isAssignmentChanged = true;
 							}
 						else
-							return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
+							return addError( functionNameString, NULL, "I failed to add an item to the inactive list" );
 						}
 					else
-						return startError( functionNameString, NULL, "The inactive sentence number of the given archived item is already assigned" );
+						return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
 					}
 				else
 					return startError( functionNameString, NULL, "Only assignments, Guide by Grammar items and read items can be inactived" );
@@ -632,17 +633,17 @@
 		return RESULT_OK;
 		}
 
-	ResultType List::deleteItem( bool isAvailableForRollback, Item *deleteItem )
+	ResultType List::deleteItem( Item *deleteItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteItem";
 
 		if( removeItemFromList( deleteItem ) == RESULT_OK )
 			{
+			deleteItem->previousStatusChar = deleteItem->statusChar();
+
 			if( deleteItem->statusChar() != QUERY_DELETED_CHAR )
 				{
-				if( addItemToList( QUERY_DELETED_CHAR, deleteItem ) == RESULT_OK )
-					deleteItem->isAvailableForRollbackAfterDelete = isAvailableForRollback;
-				else
+				if( addItemToList( QUERY_DELETED_CHAR, deleteItem ) != RESULT_OK )
 					return addError( functionNameString, NULL, "I failed to add an item to the deleted list" );
 				}
 			else
@@ -663,7 +664,7 @@
 			{
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
-				if( deleteItem( false, searchItem ) == RESULT_OK )
+				if( deleteItem( searchItem ) == RESULT_OK )
 					searchItem = nextListItem_;
 				else
 					return addError( functionNameString, NULL, "I failed to delete an active item" );
@@ -678,42 +679,27 @@
 	ResultType List::removeFirstRangeOfDeletedItemsInList()
 		{
 		Item *removeItem = deletedList_;
-		Item *previousRemoveItem = NULL;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItemsInList";
 
-		if( commonVariables_->nDeletedItems == 0 &&
-		commonVariables_->removeSentenceNr == 0 &&
-		commonVariables_->removeStartItemNr == 0 )
+		if( removeItem != NULL )
 			{
-			// Skip items that must be kept for rollback
-			while( removeItem != NULL &&
-			// and items of current sentence (if wanted)
-			removeItem->isAvailableForRollbackAfterDelete )
-				{
-				previousRemoveItem = removeItem;
-				removeItem = removeItem->nextItem;
-				}
-
-			// Found items to remove
-			if( removeItem != NULL )
+			if( commonVariables_->nDeletedItems == 0 &&
+			commonVariables_->removeSentenceNr == 0 &&
+			commonVariables_->removeStartItemNr == 0 )
 				{
 				commonVariables_->removeSentenceNr = removeItem->creationSentenceNr();
 				commonVariables_->removeStartItemNr = removeItem->itemNr();
 
 				do	{
-					if( previousRemoveItem == NULL )
-						// Disconnect deleted list from item
-						deletedList_ = deletedList_->nextItem;
-					else
-						// Disconnect deleted list from item
-						previousRemoveItem->nextItem = removeItem->nextItem;
+					// Disconnect deleted list from item
+					deletedList_ = deletedList_->nextItem;
 
 					if( removeItem->checkForUsage() == RESULT_OK )
 						{
 						// Disconnect item from the deleted list
 						removeItem->nextItem = NULL;
 						delete removeItem;
-						removeItem = ( previousRemoveItem == NULL ? deletedList_ : previousRemoveItem->nextItem );
+						removeItem = deletedList_;
 						commonVariables_->nDeletedItems++;
 						}
 					else
@@ -725,73 +711,9 @@
 				// Ascending item number
 				removeItem->itemNr() == commonVariables_->removeStartItemNr + commonVariables_->nDeletedItems );
 				}
-			}
-		else
-			return startError( functionNameString, NULL, "There is already a range of deleted items" );
-
-		return RESULT_OK;
-		}
-
-	ResultType List::removeItemFromList( Item *removeItem )
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "removeItemFromList";
-
-		if( removeItem != NULL )
-			{
-			if( removeItem->myList() == this )
-				{
-				// First item in list
-				if( removeItem->previousItem == NULL )
-					{
-					switch( removeItem->statusChar() )
-						{
-						case QUERY_ACTIVE_CHAR:
-							activeList_ = removeItem->nextItem;
-							break;
-
-						case QUERY_INACTIVE_CHAR:
-							inactiveList_ = removeItem->nextItem;
-							break;
-
-						case QUERY_ARCHIVED_CHAR:
-							archivedList_ = removeItem->nextItem;
-							break;
-
-						case QUERY_REPLACED_CHAR:
-							replacedList_ = removeItem->nextItem;
-							break;
-
-						case QUERY_DELETED_CHAR:
-							deletedList_ = removeItem->nextItem;
-							break;
-
-						default:
-							return startError( functionNameString, NULL, "The given remove item has an unknown status character" );
-						}
-
-					if( removeItem->nextItem != NULL )
-						removeItem->nextItem->previousItem = NULL;
-					}
-				else
-					{
-					removeItem->previousItem->nextItem = removeItem->nextItem;
-
-					if( removeItem->nextItem != NULL )
-						removeItem->nextItem->previousItem = removeItem->previousItem;
-					}
-
-				// Remember next item
-				nextListItem_ = removeItem->nextItem;
-
-				// Disconnect item from the list
-				removeItem->previousItem = NULL;
-				removeItem->nextItem = NULL;
-				}
 			else
-				return startError( functionNameString, NULL, "The given remove item doesn't belong to my list" );
+				return startError( functionNameString, NULL, "There is already a range of deleted items" );
 			}
-		else
-			return startError( functionNameString, NULL, "The given remove item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -826,22 +748,22 @@
 		return nextListItem_;
 		}
 
-	WordItem *List::myWordItem()
-		{
-		return myWordItem_;
-		}
-
 	CommonVariables *List::commonVariables()
 		{
 		return commonVariables_;
 		}
 
+	WordItem *List::myWordItem()
+		{
+		return myWordItem_;
+		}
+
 
 	// Protected cleanup functions
 
-	void List::deleteRollbackInfoInList()
+	void List::clearReplacedInfoInList()
 		{
-		listCleanup_->deleteRollbackInfo();
+		listCleanup_->clearReplacedInfo();
 		}
 
 	void List::getHighestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr )
@@ -862,19 +784,14 @@
 		return listCleanup_->decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset );
 		}
 
-	ResultType List::deleteSentencesInList( bool isAvailableForRollback, unsigned int lowestSentenceNr )
+	ResultType List::deleteSentencesInList( unsigned int lowestSentenceNr )
 		{
-		return listCleanup_->deleteSentences( isAvailableForRollback, lowestSentenceNr );
+		return listCleanup_->deleteSentences( lowestSentenceNr );
 		}
 
 	ResultType List::decrementSentenceNrsInList( unsigned int startSentenceNr )
 		{
 		return listCleanup_->decrementSentenceNrs( startSentenceNr );
-		}
-
-	ResultType List::rollbackDeletedRedoInfoInList()
-		{
-		return listCleanup_->rollbackDeletedRedoInfo();
 		}
 
 	ResultType List::undoCurrentSentenceInList()

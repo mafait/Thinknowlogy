@@ -1,12 +1,11 @@
-/*
- *	Class:			AdminWriteJustification
+/*	Class:			AdminWriteJustification
  *	Supports class:	AdminItem
  *	Purpose:		To write justification reports for the
  *					self-generated knowledge
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -82,7 +81,7 @@ class AdminWriteJustification
 					{
 					if( ( primaryGeneralizationWordItem = primarySpecificationItem.generalizationWordItem() ) != null )
 						{
-						if( !primarySpecificationItem.isHiddenSpecification() )
+						if( !primarySpecificationItem.isHiddenSpanishSpecification() )
 							{
 							if( primaryGeneralizationWordItem.writeJustificationSpecification( ( !primarySpecificationItem.isExclusiveSpecification() && !primarySpecificationItem.isPossessive() ), primarySpecificationItem ) != Constants.RESULT_OK )
 								return adminItem_.addError( 1, moduleNameString_, "I failed to write the definition justification specification" );
@@ -99,7 +98,7 @@ class AdminWriteJustification
 					{
 					if( ( generalizationWordItem = anotherPrimarySpecificationItem.generalizationWordItem() ) != null )
 						{
-						if( !anotherPrimarySpecificationItem.isHiddenSpecification() )
+						if( !anotherPrimarySpecificationItem.isHiddenSpanishSpecification() )
 							{
 							if( generalizationWordItem.writeJustificationSpecification( false, anotherPrimarySpecificationItem ) != Constants.RESULT_OK )
 								return adminItem_.addError( 1, moduleNameString_, "I failed to write the another definition justification specification" );
@@ -118,7 +117,7 @@ class AdminWriteJustification
 					{
 					if( ( generalizationWordItem = secondarySpecificationItem.generalizationWordItem() ) != null )
 						{
-						if( !secondarySpecificationItem.isHiddenSpecification() )
+						if( !secondarySpecificationItem.isHiddenSpanishSpecification() )
 							{
 							isWritingCurrentSpecificationWordOnly = ( secondarySpecificationItem.isPartOf() ||
 
@@ -140,7 +139,7 @@ class AdminWriteJustification
 					{
 					if( ( generalizationWordItem = anotherSecondarySpecificationItem.generalizationWordItem() ) != null )
 						{
-						if( !anotherSecondarySpecificationItem.isHiddenSpecification() )
+						if( !anotherSecondarySpecificationItem.isHiddenSpanishSpecification() )
 							{
 							if( generalizationWordItem.writeJustificationSpecification( false, anotherSecondarySpecificationItem ) != Constants.RESULT_OK )
 								return adminItem_.addError( 1, moduleNameString_, "I failed to write the another secondary justification specification" );
@@ -205,7 +204,7 @@ class AdminWriteJustification
 					isWritingPrimarySpecification = true;
 					isOnlyWritingPrimarySpecification = ( currentJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() != null );
 
-					if( primarySpecificationItem.isSpecificationWordCollectedWithItself() &&
+					if( primarySpecificationItem.isSpecificationWordSpanishAmbiguous() &&
 					primarySpecificationItem.isPossessiveReversibleConclusion() &&
 					primarySpecificationItem.hasSpecificationNonCompoundCollection() &&
 					primarySpecificationItem.isPossessive() &&
@@ -295,6 +294,7 @@ class AdminWriteJustification
 		boolean isFirstTime = true;
 		boolean hasNonExclusiveCollection = false;
 		short assumptionLevel;
+		short specificationWordTypeNr;
 		int specificationCollectionNr;
 		int generalizationContextNr;
 		int specificationContextNr;
@@ -318,7 +318,7 @@ class AdminWriteJustification
 					{
 					if( isFirstJustificationType )
 						{
-						if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writeSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+						if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification sentence" );
 						}
 
@@ -326,8 +326,11 @@ class AdminWriteJustification
 
 					if( ( firstSecondarySpecificationItem = writeJustificationItem.secondarySpecificationItem() ) != null )
 						{
-						if( ( secondarySpecificationWordItem = firstSecondarySpecificationItem.specificationWordItem() ) != null )
-							hasNonExclusiveCollection = secondarySpecificationWordItem.hasNonExclusiveCollection( specificationCollectionNr );
+						secondarySpecificationWordItem = firstSecondarySpecificationItem.specificationWordItem();
+
+						if( secondarySpecificationWordItem != null &&
+						secondarySpecificationWordItem.hasNonExclusiveCollection( specificationCollectionNr ) )
+							hasNonExclusiveCollection = true;
 						}
 
 					if( isWritingSeparator_ )
@@ -339,7 +342,10 @@ class AdminWriteJustification
 					if( writeJustificationSpecifications( true, false, writeJustificationItem ) == Constants.RESULT_OK )
 						{
 						if( ( hasNonExclusiveCollection ||
-						!writeJustificationItem.isNegativeAssumptionOrConclusion() ) &&
+						!writeJustificationItem.isNegativeAssumptionOrConclusion() ||
+
+						( !writeJustificationItem.hasAnotherPrimarySpecification() &&
+						writeJustificationItem.isPrimarySpecificationWordSpanishAmbiguous() ) ) &&
 
 						( currentSpecificationItem = generalizationWordItem.firstSelectedSpecificationItem( false, selfGeneratedSpecificationItem.isAssignment(), selfGeneratedSpecificationItem.isInactiveAssignment(), selfGeneratedSpecificationItem.isArchivedAssignment(), selfGeneratedSpecificationItem.questionParameter() ) ) != null )
 							{
@@ -349,6 +355,7 @@ class AdminWriteJustification
 							isSelfGenerated = selfGeneratedSpecificationItem.isSelfGenerated();
 
 							assumptionLevel = selfGeneratedSpecificationItem.assumptionLevel();
+							specificationWordTypeNr = selfGeneratedSpecificationItem.specificationWordTypeNr();
 
 							generalizationContextNr = selfGeneratedSpecificationItem.generalizationContextNr();
 							specificationContextNr = selfGeneratedSpecificationItem.specificationContextNr();
@@ -357,7 +364,7 @@ class AdminWriteJustification
 							do	{
 								// Self-generated
 								if( ( currentJustificationItem = currentSpecificationItem.firstJustificationItem() ) != null &&
-								currentSpecificationItem.isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) )
+								currentSpecificationItem.isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) )
 									{
 									currentPrimarySpecificationItem = currentJustificationItem.primarySpecificationItem();
 

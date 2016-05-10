@@ -1,11 +1,10 @@
-/*
- *	Class:			ReadItem
+/*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -93,7 +92,7 @@ class ReadItem extends Item
 		if( readString != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
@@ -115,7 +114,7 @@ class ReadItem extends Item
 		( wordString = readWordItem_.wordTypeString( true, wordTypeNr_ ) ) != null )
 			{
 			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
@@ -205,46 +204,52 @@ class ReadItem extends Item
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
+		StringBuffer queryStringBuffer;
 		String wordString;
 		String wordTypeString = myWordItem().wordTypeNameString( wordTypeNr_ );
 
 		baseToStringBuffer( queryWordTypeNr );
 
+		if( CommonVariables.queryStringBuffer == null )
+			CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
 		if( isUnusedReadItem )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUnusedReadItem" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUnusedReadItem" );
 
 		if( hasWordPassedIntegrityCheckOfStoredUserSentence )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasWordPassedIntegrityCheckOfStoredUserSentence" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasWordPassedIntegrityCheckOfStoredUserSentence" );
 
 		if( isMarkedBySetGrammarParameter )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isMarkedBySetGrammarParameter" );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isMarkedBySetGrammarParameter" );
 
 		if( wordOrderNr_ > Constants.NO_ORDER_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordOrderNr:" + wordOrderNr_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordOrderNr:" + wordOrderNr_ );
 
 		if( wordParameter_ > Constants.NO_WORD_PARAMETER )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordParameter:" + wordParameter_ );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordParameter:" + wordParameter_ );
 
 		if( grammarParameter > Constants.NO_GRAMMAR_PARAMETER )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarParameter:" + grammarParameter );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarParameter:" + grammarParameter );
 
 		if( readString != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "readString:" + Constants.QUERY_STRING_START_CHAR + readString + Constants.QUERY_STRING_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "readString:" + Constants.QUERY_STRING_START_CHAR + readString + Constants.QUERY_STRING_END_CHAR );
 
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordType:" + ( wordTypeString == null ? Constants.EMPTY_STRING : wordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + wordTypeNr_ );
+		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "wordType:" + ( wordTypeString == null ? Constants.EMPTY_STRING : wordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + wordTypeNr_ );
 
 		if( readWordItem_ != null )
 			{
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "readWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + readWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + readWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "readWordItem" + Constants.QUERY_REF_ITEM_START_CHAR + readWordItem_.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + readWordItem_.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 			if( ( wordString = readWordItem_.wordTypeString( true, wordTypeNr_ ) ) != null )
-				CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
+				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
 		if( definitionGrammarItem != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "definitionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + definitionGrammarItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + definitionGrammarItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "definitionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + definitionGrammarItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + definitionGrammarItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
-		return CommonVariables.queryStringBuffer;
+		return queryStringBuffer;
 		}
 
 
@@ -277,6 +282,11 @@ class ReadItem extends Item
 	protected boolean isNumeral()
 		{
 		return ( wordTypeNr_ == Constants.WORD_TYPE_NUMERAL );
+		}
+
+	protected boolean isAdjective()
+		{
+		return ( wordTypeNr_ == Constants.WORD_TYPE_ADJECTIVE );
 		}
 
 	protected boolean isArticle()
@@ -362,10 +372,16 @@ class ReadItem extends Item
 		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_ASSIGNED );
 		}
 
-	protected boolean isAdjectiveAssignedOrClear()
+	protected boolean isAdjectiveAssignedOrEmpty()
 		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_CLEAR ||
-				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_ASSIGNED );
+		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_ASSIGNED ||
+				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_EMPTY );
+		}
+
+	protected boolean isAdjectiveCalledSingularFeminineOrMasculine()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_FEMININE ||
+				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_MASCULINE );
 		}
 
 	protected boolean isAdjectiveEvery()
@@ -380,17 +396,11 @@ class ReadItem extends Item
 				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_PREVIOUS_FEMININE_MASCULINE );
 		}
 
-	protected boolean isVirtualListPreposition()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_FROM ||
-				wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_TO ||
-				wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_OF );
-		}
-
 	protected boolean isNegative()
 		{
 		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_NO ||
-				wordParameter_ == Constants.WORD_PARAMETER_ADVERB_NOT );
+				wordParameter_ == Constants.WORD_PARAMETER_ADVERB_NOT ||
+				wordParameter_ == Constants.WORD_PARAMETER_ADVERB_NOT_FRENCH );
 		}
 
 	protected boolean isNounJustificationReport()
@@ -429,6 +439,18 @@ class ReadItem extends Item
 				wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_QUESTION_MARK_INVERTED );
 		}
 
+	protected boolean isVirtualListPreposition()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_FROM ||
+				wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_TO ||
+				wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_OF );
+		}
+
+	protected boolean isFrenchPreposition()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_FRENCH_A );
+		}
+
 	protected boolean isUserDefined()
 		{
 		return ( wordParameter_ == Constants.NO_WORD_PARAMETER );
@@ -456,7 +478,7 @@ class ReadItem extends Item
 
 	protected boolean isRelationWord()
 		{
-		// To avoid triggering on the article before a proper name preceded-by-defined-article
+		// To avoid triggering on the article before a proper name preceded by defined article
 		return ( wordTypeNr_ != Constants.WORD_TYPE_ARTICLE &&
 				grammarParameter == Constants.GRAMMAR_RELATION_WORD );
 		}

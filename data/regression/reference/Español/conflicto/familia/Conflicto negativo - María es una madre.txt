@@ -11,20 +11,21 @@
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis conclusiones:
-< Cada hijo es una mujer o un hombre.
-* 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
 < Una hija es probablemente una persona.
 < 
 * 
 * Mis suposiciones:
-< María no es probablemente un padre.
 < María no tiene probablemente un hijo.
 < 
 ! 
 ! No se acepta esta frase, porque está en conflicto con:
 < María no es una madre.
-< María no es probablemente un padre.
 < 

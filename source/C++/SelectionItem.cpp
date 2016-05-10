@@ -1,11 +1,10 @@
-/*
- *	Class:			SelectionItem
+/*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -165,7 +164,6 @@ class SelectionItem : private Item
 
 	virtual void showString( bool isReturnQueryToPosition )
 		{
-		char statusString[2] = SPACE_STRING;
 		statusString[0] = statusChar();
 
 		if( specificationString_ != NULL )
@@ -184,52 +182,55 @@ class SelectionItem : private Item
 
 	virtual void showWordReferences( bool isReturnQueryToPosition )
 		{
+		char *queryString;
 		char *wordString;
-		char statusString[2] = SPACE_STRING;
+
 		statusString[0] = statusChar();
+
+		queryString = commonVariables()->queryString;
 
 		if( generalizationWordItem_ != NULL &&
 		( wordString = generalizationWordItem_->wordTypeString( true, generalizationWordTypeNr_ ) ) != NULL )
 			{
 			if( commonVariables()->hasFoundQuery )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, wordString );
+			strcat( queryString, wordString );
 			}
 
 		if( specificationWordItem_ != NULL &&
 		( wordString = specificationWordItem_->wordTypeString( true, specificationWordTypeNr_ ) ) != NULL )
 			{
 			if( commonVariables()->hasFoundQuery ||
-			strlen( commonVariables()->queryString ) > 0 )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+			strlen( queryString ) > 0 )
+				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, wordString );
+			strcat( queryString, wordString );
 			}
 
 		if( relationWordItem_ != NULL &&
 		( wordString = relationWordItem_->wordTypeString( true, specificationWordTypeNr_ ) ) != NULL )
 			{
 			if( commonVariables()->hasFoundQuery ||
-			strlen( commonVariables()->queryString ) > 0 )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+			strlen( queryString ) > 0 )
+				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Show status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( queryString, statusString );
 
 			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, wordString );
+			strcat( queryString, wordString );
 			}
 		}
 
@@ -338,6 +339,7 @@ class SelectionItem : private Item
 
 	virtual char *toString( unsigned short queryWordTypeNr )
 		{
+		char *queryString;
 		char *wordString;
 		char *generalizationWordTypeString = myWordItem()->wordTypeNameString( generalizationWordTypeNr_ );
 		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
@@ -345,112 +347,114 @@ class SelectionItem : private Item
 
 		Item::toString( queryWordTypeNr );
 
+		queryString = commonVariables()->queryString;
+
 		if( isAction_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isAction" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isAction" );
 			}
 
 		if( isAssignedOrClear_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isAssignedOrClear" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isAssignedOrClear" );
 			}
 
 		if( isNewStart_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isNewStart" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isNewStart" );
 			}
 
 		if( isInactive_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isInactiveAssignment" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isInactiveAssignment" );
 			}
 
 		if( isArchived_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isArchivedAssignment" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isArchivedAssignment" );
 			}
 
 		if( isFirstComparisonPart_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isFirstComparisonPart" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isFirstComparisonPart" );
 			}
 
 		if( isNegative_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isNegative" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isNegative" );
 			}
 
 		if( isPossessive_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isPossessive" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isPossessive" );
 			}
 
 		if( isSpecificationGeneralization_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isSpecificationGeneralization" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isSpecificationGeneralization" );
 			}
 
 		if( isUniqueUserRelation_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isUniqueUserRelation" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isUniqueUserRelation" );
 			}
 
 		if( isValueSpecification_ )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isValueSpecification" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isValueSpecification" );
 			}
 
 		if( isConditionCheckedForSolving )
 			{
-			strcat( commonVariables()->queryString, QUERY_SEPARATOR_STRING );
-			strcat( commonVariables()->queryString, "isConditionCheckedForSolving" );
+			strcat( queryString, QUERY_SEPARATOR_STRING );
+			strcat( queryString, "isConditionCheckedForSolving" );
 			}
 
 		if( assumptionLevel_ > NO_ASSUMPTION_LEVEL )
 			{
 			sprintf( tempString, "%cassumptionLevel:%u", QUERY_SEPARATOR_CHAR, assumptionLevel_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( selectionLevel_ > NO_SELECTION_LEVEL )
 			{
 			sprintf( tempString, "%cselectionLevel:%u", QUERY_SEPARATOR_CHAR, selectionLevel_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( imperativeParameter_ > NO_IMPERATIVE_PARAMETER )
 			{
 			sprintf( tempString, "%cimperativeParameter:%u", QUERY_SEPARATOR_CHAR, imperativeParameter_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( prepositionParameter_ > NO_PREPOSITION_PARAMETER )
 			{
 			sprintf( tempString, "%cprepositionParameter:%u", QUERY_SEPARATOR_CHAR, prepositionParameter_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( specificationWordParameter_ > NO_WORD_PARAMETER )
 			{
 			sprintf( tempString, "%cspecificationWordParameter:%u", QUERY_SEPARATOR_CHAR, specificationWordParameter_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( generalizationContextNr_ > NO_CONTEXT_NR )
 			{
 			sprintf( tempString, "%cgeneralizationContextNr:%u", QUERY_SEPARATOR_CHAR, generalizationContextNr_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( generalizationWordTypeString == NULL )
@@ -458,24 +462,24 @@ class SelectionItem : private Item
 		else
 			sprintf( tempString, "%cgeneralizationWordType:%s%c%u", QUERY_SEPARATOR_CHAR, generalizationWordTypeString, QUERY_WORD_TYPE_CHAR, generalizationWordTypeNr_ );
 
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( generalizationWordItem_ != NULL )
 			{
 			sprintf( tempString, "%cgeneralizationWordItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, generalizationWordItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, generalizationWordItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 
 			if( ( wordString = generalizationWordItem_->wordTypeString( true, generalizationWordTypeNr_ ) ) != NULL )
 				{
 				sprintf( tempString, "%c%s%c", QUERY_WORD_REFERENCE_START_CHAR, wordString, QUERY_WORD_REFERENCE_END_CHAR );
-				strcat( commonVariables()->queryString, tempString );
+				strcat( queryString, tempString );
 				}
 			}
 
 		if( specificationContextNr_ > NO_CONTEXT_NR )
 			{
 			sprintf( tempString, "%cspecificationContextNr:%u", QUERY_SEPARATOR_CHAR, specificationContextNr_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( specificationWordTypeString == NULL )
@@ -483,24 +487,24 @@ class SelectionItem : private Item
 		else
 			sprintf( tempString, "%cspecificationWordType:%s%c%u", QUERY_SEPARATOR_CHAR, specificationWordTypeString, QUERY_WORD_TYPE_CHAR, specificationWordTypeNr_ );
 
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( specificationWordItem_ != NULL )
 			{
 			sprintf( tempString, "%cspecificationWordItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, specificationWordItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, specificationWordItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 
 			if( ( wordString = specificationWordItem_->wordTypeString( true, specificationWordTypeNr_ ) ) != NULL )
 				{
 				sprintf( tempString, "%c%s%c", QUERY_WORD_REFERENCE_START_CHAR, wordString, QUERY_WORD_REFERENCE_END_CHAR );
-				strcat( commonVariables()->queryString, tempString );
+				strcat( queryString, tempString );
 				}
 			}
 
 		if( relationContextNr_ > NO_CONTEXT_NR )
 			{
 			sprintf( tempString, "%crelationContextNr:%u", QUERY_SEPARATOR_CHAR, relationContextNr_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( relationWordTypeString == NULL )
@@ -508,33 +512,33 @@ class SelectionItem : private Item
 		else
 			sprintf( tempString, "%crelationWordType:%s%c%u", QUERY_SEPARATOR_CHAR, relationWordTypeString, QUERY_WORD_TYPE_CHAR, relationWordTypeNr_ );
 
-		strcat( commonVariables()->queryString, tempString );
+		strcat( queryString, tempString );
 
 		if( relationWordItem_ != NULL )
 			{
 			sprintf( tempString, "%crelationWordItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, relationWordItem_->creationSentenceNr(), QUERY_SEPARATOR_CHAR, relationWordItem_->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 
 			if( ( wordString = relationWordItem_->wordTypeString( true, relationWordTypeNr_ ) ) != NULL )
 				{
 				sprintf( tempString, "%c%s%c", QUERY_WORD_REFERENCE_START_CHAR, wordString, QUERY_WORD_REFERENCE_END_CHAR );
-				strcat( commonVariables()->queryString, tempString );
+				strcat( queryString, tempString );
 				}
 			}
 
 		if( nContextRelations_ > NO_CONTEXT_NR )
 			{
 			sprintf( tempString, "%cnContextRelations:%u", QUERY_SEPARATOR_CHAR, nContextRelations_ );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
 		if( specificationString_ != NULL )
 			{
 			sprintf( tempString, "%cspecificationString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, specificationString_, QUERY_STRING_END_CHAR );
-			strcat( commonVariables()->queryString, tempString );
+			strcat( queryString, tempString );
 			}
 
-		return commonVariables()->queryString;
+		return queryString;
 		}
 
 

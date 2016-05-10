@@ -1,0 +1,6 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Lorraine est une fille.
+Julien est un fils.
+Olivier est le père et Amélie est la mère de Laurent, Julien et Lorraine.
+Laurent est un fils.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

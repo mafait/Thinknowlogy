@@ -77,7 +77,7 @@
 < Is Laura een meisje of een vrouw?
 < 
 * 
-* U hebt de specificatie en tenminste één relatie bevestigd van mijn eerdere veronderstelling(en):
+* U hebt de specificatie en tenminste één relatie bevestigd van mijn eerdere veronderstellingen:
 < Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
@@ -89,7 +89,7 @@
 < Jan is een ouder van Paul.
 < 
 * 
-* U hebt de specificatie en tenminste één relatie bevestigd van mijn eerdere veronderstelling(en):
+* U hebt de specificatie en tenminste één relatie bevestigd van mijn eerdere veronderstellingen:
 < Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:

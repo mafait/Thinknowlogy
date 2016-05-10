@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminReadFile
+/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the lines from knowledge files
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,7 +28,11 @@ class AdminReadFile
 	{
 	// Private constructible variables
 
+	private boolean hasClosedFileDueToError_;
+	private boolean hasFoundDifferentTestResult_;
+
 	private short testFileNr_;
+
 	long startTime_;
 
 	private AdminItem adminItem_;
@@ -44,7 +47,7 @@ class AdminReadFile
 
 		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
 			{
-			// Do for all words
+			// Do for all active words
 			do	{
 				if( currentWordItem.hasFoundAnyUserSpecification() &&
 				!currentWordItem.isNeedingAuthorizationForChanges() )
@@ -133,26 +136,16 @@ class AdminReadFile
 		return Constants.RESULT_OK;
 		}
 
-	private byte checkCurrentSentenceNr()
+	private byte incrementCurrentSentenceNr()
 		{
-		if( CommonVariables.isDontIncrementCurrentSentenceNr )
+		if( CommonVariables.currentSentenceNr < Constants.MAX_SENTENCE_NR )
 			{
-			CommonVariables.isDontIncrementCurrentSentenceNr = false;
-
-			if( adminItem_.deleteSentences( true, CommonVariables.currentSentenceNr ) != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to delete the current redo info" );
+			CommonVariables.currentSentenceNr++;
+			// Necessary after changing current sentence number
+			adminItem_.setCurrentItemNr();
 			}
 		else
-			{
-			if( CommonVariables.currentSentenceNr < Constants.MAX_SENTENCE_NR )
-				{
-				CommonVariables.currentSentenceNr++;
-				// Necessary after changing current sentence number
-				adminItem_.setCurrentItemNr();
-				}
-			else
-				return adminItem_.startSystemError( 1, moduleNameString_, "Sentence number overflow! I can't except anymore input" );
-			}
+			return adminItem_.startSystemError( 1, moduleNameString_, "Sentence number overflow! I can't except anymore input" );
 
 		return Constants.RESULT_OK;
 		}
@@ -160,6 +153,7 @@ class AdminReadFile
 	private byte executeLine( StringBuffer readStringBuffer )
 		{
 		boolean hasSwitchedLanguage = false;
+		boolean wasCurrentCommandUndoOrRedo;
 
 		if( readStringBuffer != null )
 			{
@@ -169,114 +163,133 @@ class AdminReadFile
 			readStringBuffer.charAt( 0 ) != Constants.COMMENT_CHAR )
 				{
 				CommonVariables.hasShownMessage = false;
+				CommonVariables.hasShownWarning = false;
 				CommonVariables.isAssignmentChanged = false;
 
-				if( adminItem_.cleanupDeletedItems() == Constants.RESULT_OK )
+				if( !adminItem_.wasPreviousCommandUndoOrRedo() )
 					{
-					// Guide-by-grammar, grammar/language or query
-					if( readStringBuffer.charAt( 0 ) == Constants.QUERY_CHAR )
+					if( adminItem_.cleanupDeletedItems() != Constants.RESULT_OK )
+						return adminItem_.addError( 1, moduleNameString_, "I failed to cleanup the deleted items" );
+					}
+
+				hasClosedFileDueToError_ = false;
+
+				// Guide-by-grammar, grammar/language or query
+				if( readStringBuffer.charAt( 0 ) == Constants.QUERY_CHAR )
+					{
+					// Guide-by-grammar
+					if( readStringBuffer.length() == 1 )
 						{
-						// Guide-by-grammar
-						if( readStringBuffer.length() == 1 )
+						if( incrementCurrentSentenceNr() == Constants.RESULT_OK )
 							{
-							if( checkCurrentSentenceNr() == Constants.RESULT_OK )
-								{
-								if( adminItem_.processReadSentence( null ) != Constants.RESULT_OK )
-									adminItem_.addError( 1, moduleNameString_, "I failed to process a read sentence" );
-								}
-							else
-								adminItem_.addError( 1, moduleNameString_, "I failed to check to current sentence number" );
+							if( adminItem_.processReadSentence( null ) != Constants.RESULT_OK )
+								adminItem_.addError( 1, moduleNameString_, "I failed to process a read sentence" );
 							}
 						else
-							{
-							// Grammar/language
-							if( Character.isLetter( readStringBuffer.charAt( 1 ) ) )
-								{
-								if( adminItem_.isSystemStartingUp() )
-									{
-									if( readGrammarFileAndUserInterfaceFile( readStringBuffer.substring( 1 ) ) != Constants.RESULT_OK )
-										adminItem_.addError( 1, moduleNameString_, "I failed to read the language" );
-									}
-								else
-									{
-									// Change language
-									if( adminItem_.assignLanguage( readStringBuffer.substring( 1 ) ) == Constants.RESULT_OK )
-										hasSwitchedLanguage = true;
-									else
-										adminItem_.addError( 1, moduleNameString_, "I failed to assign the language" );
-									}
-								}
-							else
-								{
-								// Query
-								if( readStringBuffer.charAt( 0 ) == Constants.QUERY_CHAR )
-									{
-									adminItem_.initializeQueryStringPosition();
-
-									if( adminItem_.executeQuery( false, true, true, Constants.PRESENTATION_PROMPT_QUERY, readStringBuffer.toString() ) != Constants.RESULT_OK )
-										adminItem_.addError( 1, moduleNameString_, "I failed to execute query: \"" + readStringBuffer + "\"" );
-									}
-								}
-							}
+							adminItem_.addError( 1, moduleNameString_, "I failed to increment the current sentence number for Guide by Grammar" );
 						}
 					else
 						{
-						// Sentence or grammar definition
-						if( checkCurrentSentenceNr() == Constants.RESULT_OK )
+						// Grammar/language
+						if( Character.isLetter( readStringBuffer.charAt( 1 ) ) )
 							{
-							// Grammar definition
-							if( isGrammarChar( readStringBuffer.charAt( 0 ) ) )
+							if( adminItem_.isSystemStartingUp() )
 								{
-								if( adminItem_.addGrammar( readStringBuffer.toString() ) != Constants.RESULT_OK )
-									adminItem_.addError( 1, moduleNameString_, "I failed to add grammar: \"" + readStringBuffer + "\"" );
+								if( readGrammarFileAndUserInterfaceFile( readStringBuffer.substring( 1 ) ) != Constants.RESULT_OK )
+									adminItem_.addError( 1, moduleNameString_, "I failed to read the language" );
 								}
 							else
 								{
-								// Sentence
-								if( adminItem_.processReadSentence( readStringBuffer.toString() ) != Constants.RESULT_OK )
-									adminItem_.addError( 1, moduleNameString_, "I failed to process a read sentence" );
+								// Change language
+								if( adminItem_.assignLanguage( readStringBuffer.substring( 1 ) ) == Constants.RESULT_OK )
+									hasSwitchedLanguage = true;
+								else
+									adminItem_.addError( 1, moduleNameString_, "I failed to assign the language" );
 								}
 							}
 						else
-							adminItem_.addError( 1, moduleNameString_, "I failed to check to current sentence number" );
-						}
-
-					if( CommonVariables.result != Constants.RESULT_SYSTEM_ERROR &&
-					!adminItem_.hasRequestedRestart() )
-						{
-						if( CommonVariables.result == Constants.RESULT_OK &&
-						!hasSwitchedLanguage &&
-						!CommonVariables.hasShownWarning &&
-						adminItem_.hasFoundAnyChangeMadeByThisSentence() &&
-
-						// Execute selections after Undo or Redo
-						( adminItem_.wasUndoOrRedo() ||
-						!CommonVariables.hasShownMessage ) )
 							{
-							if( adminItem_.executeSelections() != Constants.RESULT_OK )
-								adminItem_.addError( 1, moduleNameString_, "I failed to execute selections after reading the sentence" );
-							}
+							// Query
+							if( readStringBuffer.charAt( 0 ) == Constants.QUERY_CHAR )
+								{
+								adminItem_.initializeQueryStringPosition();
 
-						if( CommonVariables.result == Constants.RESULT_OK &&
-						!hasSwitchedLanguage &&
-						!adminItem_.hasFoundAnyChangeMadeByThisSentence() &&
-						!adminItem_.isSystemStartingUp() &&
-						!CommonVariables.hasShownMessage &&
-						!CommonVariables.hasShownWarning )
-							{
-							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != Constants.RESULT_OK )
-								adminItem_.addError( 1, moduleNameString_, "I failed to write the 'I know' interface notification" );
-							}
-
-						if( CommonVariables.result == Constants.RESULT_OK )
-							{
-							if( adminItem_.deleteAllTemporaryLists() != Constants.RESULT_OK )
-								adminItem_.addError( 1, moduleNameString_, "I failed to delete all temporary lists" );
+								if( adminItem_.executeQuery( false, true, true, Constants.PRESENTATION_PROMPT_QUERY, readStringBuffer.toString() ) != Constants.RESULT_OK )
+									adminItem_.addError( 1, moduleNameString_, "I failed to execute query: \"" + readStringBuffer + "\"" );
+								}
 							}
 						}
 					}
 				else
-					return adminItem_.addError( 1, moduleNameString_, "I failed to cleanup the deleted items" );
+					{
+					// Sentence or grammar definition
+					if( incrementCurrentSentenceNr() == Constants.RESULT_OK )
+						{
+						// Grammar definition
+						if( isGrammarChar( readStringBuffer.charAt( 0 ) ) )
+							{
+							if( adminItem_.addGrammar( readStringBuffer.toString() ) != Constants.RESULT_OK )
+								adminItem_.addError( 1, moduleNameString_, "I failed to add grammar: \"" + readStringBuffer + "\"" );
+							}
+						else
+							{
+							// Sentence
+							if( adminItem_.processReadSentence( readStringBuffer.toString() ) != Constants.RESULT_OK )
+								adminItem_.addError( 1, moduleNameString_, "I failed to process a read sentence" );
+							}
+						}
+					else
+						adminItem_.addError( 1, moduleNameString_, "I failed to increment the current sentence number" );
+					}
+
+				if( CommonVariables.result != Constants.RESULT_SYSTEM_ERROR &&
+				!adminItem_.hasRequestedRestart() )
+					{
+					wasCurrentCommandUndoOrRedo = adminItem_.wasCurrentCommandUndoOrRedo();
+
+					if( CommonVariables.result == Constants.RESULT_OK &&
+					!CommonVariables.hasShownWarning )
+						{
+						if( adminItem_.hasFoundAnyChangeMadeByThisSentence() )
+							{
+							if( !hasSwitchedLanguage &&
+
+							( wasCurrentCommandUndoOrRedo ||
+							!CommonVariables.hasShownMessage ) )
+								{
+								if( adminItem_.executeSelections() != Constants.RESULT_OK )
+									adminItem_.addError( 1, moduleNameString_, "I failed to execute selections after reading the sentence" );
+								}
+							}
+						else
+							{
+							if( !hasSwitchedLanguage &&
+							!CommonVariables.hasShownMessage &&
+							!adminItem_.isSystemStartingUp() )
+								{
+								if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != Constants.RESULT_OK )
+									adminItem_.addError( 1, moduleNameString_, "I failed to write the 'I know' interface notification" );
+								}
+							}
+						}
+
+					adminItem_.clearAllTemporaryLists();
+
+					if( !wasCurrentCommandUndoOrRedo )
+						{
+						if( adminItem_.cleanupDeletedItems() != Constants.RESULT_OK )
+							adminItem_.addError( 1, moduleNameString_, "I failed to cleanup the deleted items" );
+
+						if( !adminItem_.isSystemStartingUp() )
+							{
+							// Check for empty sentence
+							adminItem_.setCurrentItemNr();
+
+							if( CommonVariables.currentItemNr == Constants.NO_ITEM_NR )
+								adminItem_.decrementCurrentSentenceNr();
+							}
+						}
+					}
 				}
 			}
 		else
@@ -299,9 +312,27 @@ class AdminReadFile
 
 			if( fileList.closeCurrentFile( closeFileItem ) == Constants.RESULT_OK )
 				{
-				if( isTestFile &&
-				adminItem_.deleteSentences( false, testFileSentenceNr ) != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to delete the previous test sentences" );
+				if( isTestFile )
+					{
+					if( adminItem_.deleteSentences( testFileSentenceNr ) == Constants.RESULT_OK )
+						{
+						if( testFileSentenceNr > Constants.NO_SENTENCE_NR &&
+						// Not reading from file
+						fileList.currentReadFile() == null )
+							{
+							CommonVariables.currentSentenceNr = ( testFileSentenceNr - 1 );
+							// Necessary after changing current sentence number
+							adminItem_.setCurrentItemNr();
+							}
+						}
+					else
+						return adminItem_.addError( 1, moduleNameString_, "I failed to delete the test sentences added during read the test file" );
+					}
+				else
+					{
+					if( CommonVariables.result != Constants.RESULT_OK )
+						hasClosedFileDueToError_ = true;
+					}
 				}
 			else
 				return adminItem_.addError( 1, moduleNameString_, "I failed to close a file" );
@@ -361,6 +392,9 @@ class AdminReadFile
 		{
 		String errorString = null;
 
+		hasClosedFileDueToError_ = false;
+		hasFoundDifferentTestResult_ = false;
+
 		testFileNr_ = 0;
 		startTime_ = 0;
 
@@ -385,13 +419,21 @@ class AdminReadFile
 
 	// Protected methods
 
+	protected boolean hasClosedFileDueToError()
+		{
+		return hasClosedFileDueToError_;
+		}
+
 	protected byte compareOutputFileAgainstReferenceFile( String testFileNameString )
 		{
 		FileResultType fileResult;
 		boolean isStop = false;
 		int lineNr = 0;
+		String errorString = null;
 		String outputString = null;
 		String referenceString = null;
+
+		hasFoundDifferentTestResult_ = false;
 
 		if( ( fileResult = openFile( true, false, false, true, Constants.FILE_DATA_REGRESSION_TEST_OUTPUT_DIRECTORY_NAME_STRING, testFileNameString, null, Constants.FILE_DATA_REGRESSION_TEST_REFERENCE_DIRECTORY_NAME_STRING ) ).result == Constants.RESULT_OK )
 			{
@@ -400,6 +442,8 @@ class AdminReadFile
 				if( fileResult.referenceFile != null )
 					{
 					do	{
+						isStop = true;
+
 						try	{
 							outputString = fileResult.outputFile.readLine();
 							referenceString = fileResult.referenceFile.readLine();
@@ -409,24 +453,25 @@ class AdminReadFile
 							return adminItem_.startError( 1, moduleNameString_, "I couldn't read from the output file or the reference file" );
 							}
 
-								if( outputString != null &&
-								referenceString != null )
-									{
-									if( outputString.equals( referenceString ) )
-										lineNr++;
-									else
-										return adminItem_.startError( 1, moduleNameString_, "Line number " + lineNr + " is different:\n* test result:\t\t\"" + outputString + "\"\n* against reference:\t\"" + referenceString + "\"" );
-									}
-								else
-									{
-									isStop = true;
+						if( outputString != null &&
+						referenceString != null )
+							{
+							if( outputString.equals( referenceString ) )
+								{
+								isStop = false;
+								lineNr++;
+								}
+							else
+								errorString = "Line number " + lineNr + " is different:\n* test result:\t\t\"" + outputString + "\"\n* against reference:\t\"" + referenceString + "\"";
+							}
+						else
+							{
+							if( outputString != null )
+								errorString = "The output file is longer than the reference file";
 
-									if( outputString != null )
-										return adminItem_.startError( 1, moduleNameString_, "The output file is longer than the reference file" );
-
-									if( referenceString != null )
-										return adminItem_.startError( 1, moduleNameString_, "The output file is shorter than the reference file" );
-									}
+							if( referenceString != null )
+								errorString = "The output file is shorter than the reference file";
+							}
 						}
 					while( !isStop );
 
@@ -443,13 +488,19 @@ class AdminReadFile
 						}
 					}
 				else
-					return adminItem_.startError( 1, moduleNameString_, "The reference file is undefined" );
+					errorString = "The reference file is undefined";
 				}
 			else
-				return adminItem_.startError( 1, moduleNameString_, "The output file is undefined" );
+				errorString = "The output file is undefined";
 			}
 		else
-			return adminItem_.addError( 1, moduleNameString_, "I failed to open a test file" );
+			errorString = "I failed to open a test file";
+
+		if( errorString != null )
+			{
+			hasFoundDifferentTestResult_ = true;
+			return adminItem_.startError( 1, moduleNameString_, errorString );
+			}
 
 		return Constants.RESULT_OK;
 		}
@@ -460,11 +511,13 @@ class AdminReadFile
 		boolean isFirstLine = true;
 		StringBuffer readStringBuffer = new StringBuffer();
 
+		hasFoundDifferentTestResult_ = false;
+
 		do	{
 			isLineExecuted = false;
-			readStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
+			readStringBuffer = new StringBuffer();
 
-			if( readLine( false, isFirstLine, false, false, false, false, ( CommonVariables.isDontIncrementCurrentSentenceNr ? CommonVariables.currentSentenceNr : CommonVariables.currentSentenceNr + 1 ), adminItem_.currentUserName(), readStringBuffer ) == Constants.RESULT_OK )
+			if( readLine( false, isFirstLine, false, false, false, false, ( CommonVariables.currentSentenceNr + 1 ), adminItem_.currentUserName(), readStringBuffer ) == Constants.RESULT_OK )
 				{
 				if( Presentation.hasReadLine() )
 					{
@@ -481,11 +534,12 @@ class AdminReadFile
 				return adminItem_.addError( 1, moduleNameString_, "I failed to read a line" );
 			}
 		while( isLineExecuted &&
+		!hasFoundDifferentTestResult_ &&
 		!adminItem_.hasRequestedRestart() &&
 		!Console.isTestingCanceled() &&
 
 		// Ignore warnings during testing
-		( adminItem_.isTesting() ||
+		( adminItem_.isCurrentlyTesting() ||
 		!CommonVariables.hasShownWarning ) );
 
 		if( adminItem_.isSystemStartingUp() &&

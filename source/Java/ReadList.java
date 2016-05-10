@@ -1,11 +1,10 @@
-/*
- *	Class:			ReadList
+/*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -75,40 +74,6 @@ class ReadList extends List
 		return referenceResult;
 		}
 
-	protected byte deleteInvalidPartOfMultipleWordReadItems( short wordOrderNr, String sentenceString )
-		{
-		ReadItem searchItem = firstActiveReadItem();
-		WordItem readWordItem;
-
-		if( sentenceString != null )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.wordOrderNr() == wordOrderNr &&
-				( readWordItem = searchItem.readWordItem() ) != null )
-					{
-					if( readWordItem.isMultipleWord() &&
-					// No matching multiple word parts
-					readWordItem.matchingMultipleSingularNounWordParts( sentenceString ) == 0 )
-						{
-						if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
-							searchItem = nextReadListItem();
-						else
-							return addError( 1, null, "I failed to delete an active read item" );
-						}
-					else
-						searchItem = searchItem.nextReadItem();
-					}
-				else
-					searchItem = searchItem.nextReadItem();
-				}
-			}
-		else
-			return startError( 1, null, "The given sentence string is undefined" );
-
-		return Constants.RESULT_OK;
-		}
-
 
 	// Protected methods
 
@@ -149,6 +114,7 @@ class ReadList extends List
 		short previousWordOrderNr = Constants.NO_ORDER_NR;
 		int nWords = 0;
 		String readWordString;
+		StringBuffer writtenSentenceStringBuffer;
 		ReadItem startItem = null;
 		ReadItem searchItem = firstActiveReadItem();
 
@@ -176,23 +142,23 @@ class ReadList extends List
 			{
 			previousWordOrderNr = Constants.NO_ORDER_NR;
 			searchItem = startItem;
+			CommonVariables.writtenSentenceStringBuffer = new StringBuffer();
 
-			CommonVariables.writeSentenceStringBuffer = new StringBuffer();
+			writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer;
 
 			while( searchItem != null )
 				{
 				if( ( wordOrderNr = searchItem.wordOrderNr() ) > previousWordOrderNr &&
-				// Skip text
-				searchItem.readWordItem() != null &&
+				!searchItem.isText() &&
 				( readWordString = searchItem.readWordTypeString() ) != null )
 					{
 					if( previousWordOrderNr > Constants.NO_ORDER_NR &&
 					// End of string (colon, question mark, etc)
 					searchItem.grammarParameter != Constants.GRAMMAR_SENTENCE )
-						CommonVariables.writeSentenceStringBuffer.append( Constants.SPACE_STRING );
+						writtenSentenceStringBuffer.append( Constants.SPACE_STRING );
 
 					previousWordOrderNr = wordOrderNr;
-					CommonVariables.writeSentenceStringBuffer.append( readWordString );
+					writtenSentenceStringBuffer.append( readWordString );
 					}
 
 				searchItem = searchItem.nextReadItem();
@@ -371,17 +337,36 @@ class ReadList extends List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte deleteActiveReadWords()
+	protected byte deleteReadItemsWithNonMatchingMultipleWordPart( short wordOrderNr, String sentenceString )
 		{
 		ReadItem searchItem = firstActiveReadItem();
+		WordItem readWordItem;
 
-		while( searchItem != null )
+		if( sentenceString != null )
 			{
-			if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
-				searchItem = nextReadListItem();
-			else
-				return addError( 1, null, "I failed to delete an active item" );
+			while( searchItem != null )
+				{
+				if( searchItem.wordOrderNr() == wordOrderNr &&
+				( readWordItem = searchItem.readWordItem() ) != null )
+					{
+					if( readWordItem.isMultipleWord() &&
+					// No matching multiple word parts
+					readWordItem.matchingMultipleSingularNounWordParts( sentenceString ) == 0 )
+						{
+						if( deleteItem( searchItem ) == Constants.RESULT_OK )
+							searchItem = nextReadListItem();
+						else
+							return addError( 1, null, "I failed to delete an active read item" );
+						}
+					else
+						searchItem = searchItem.nextReadItem();
+					}
+				else
+					searchItem = searchItem.nextReadItem();
+				}
 			}
+		else
+			return startError( 1, null, "The given sentence string is undefined" );
 
 		return Constants.RESULT_OK;
 		}

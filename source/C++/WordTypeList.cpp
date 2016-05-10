@@ -1,11 +1,10 @@
-/*
- *	Class:			WordTypeList
+/*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -36,36 +35,6 @@ class WordTypeList : private List
 
 
 	// Private functions
-
-	void showWords( bool isReturnQueryToPosition, WordTypeItem *searchItem )
-		{
-		char *wordTypeString;
-		char statusString[2] = SPACE_STRING;
-
-		while( searchItem != NULL )
-			{
-			if( ( wordTypeString = searchItem->itemString() ) != NULL )
-				{
-				if( commonVariables()->hasFoundQuery ||
-				strlen( commonVariables()->queryString ) > 0 )
-					strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
-
-				commonVariables()->hasFoundQuery = true;
-
-				// Don't show status with active items
-				if( !searchItem->isActiveItem() )
-					{
-					statusString[0] = searchItem->statusChar();
-					strcat( commonVariables()->queryString, statusString );
-					}
-
-				strcat( commonVariables()->queryString, wordTypeString );
-				}
-
-			searchItem = searchItem->nextWordTypeItem();
-			}
-		}
-
 	WordTypeItem *wordTypeString( bool isAllowingDifferentNoun, bool isCheckingAllLanguages, unsigned short wordTypeNr, WordTypeItem *searchItem )
 		{
 		while( searchItem != NULL )
@@ -74,8 +43,7 @@ class WordTypeList : private List
 			searchItem->wordTypeNr() == wordTypeNr ||
 
 			( isAllowingDifferentNoun &&
-			searchItem->isSingularOrPluralNounWordType() &&
-			myWordItem()->isSingularOrPluralNoun( searchItem->wordTypeNr() ) ) )
+			searchItem->isSingularOrPluralNounWordType() ) )
 				return searchItem;
 
 			if( foundWordTypeItem_ == NULL )
@@ -92,11 +60,6 @@ class WordTypeList : private List
 		return (WordTypeItem *)firstActiveItem();
 		}
 
-	WordTypeItem *firstReplacedWordTypeItem()
-		{
-		return (WordTypeItem *)firstReplacedItem();
-		}
-
 	WordTypeItem *firstDeletedWordTypeItem()
 		{
 		return (WordTypeItem *)firstDeletedItem();
@@ -106,18 +69,6 @@ class WordTypeList : private List
 		{
 		unsigned short currentLanguageNr = commonVariables()->currentLanguageNr;
 		WordTypeItem *searchItem = firstActiveWordTypeItem();
-
-		while( searchItem != NULL &&
-		searchItem->wordTypeLanguageNr() < currentLanguageNr )
-			searchItem = searchItem->nextWordTypeItem();
-
-		return ( searchItem != NULL && searchItem->wordTypeLanguageNr() == currentLanguageNr ? searchItem : NULL );
-		}
-
-	WordTypeItem *firstReplacedCurrentLanguageWordTypeItem()
-		{
-		unsigned short currentLanguageNr = commonVariables()->currentLanguageNr;
-		WordTypeItem *searchItem = firstReplacedWordTypeItem();
 
 		while( searchItem != NULL &&
 		searchItem->wordTypeLanguageNr() < currentLanguageNr )
@@ -164,17 +115,11 @@ class WordTypeList : private List
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class WordTypeList has inactive items." );
 
-		if( firstArchivedItem() )
+		if( firstArchivedItem() != NULL )
 			fprintf( stderr, "\nError: Class WordTypeList has archived items." );
 
-		searchItem = firstReplacedWordTypeItem();
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextWordTypeItem();
-			delete deleteItem;
-			}
+		if( firstReplacedItem() != NULL )
+			fprintf( stderr, "\nError: Class WordTypeList has replaced items." );
 
 		searchItem = firstDeletedWordTypeItem();
 
@@ -188,13 +133,6 @@ class WordTypeList : private List
 
 
 	// Protected functions
-
-	void showWords( bool isReturnQueryToPosition )
-		{
-		showWords( isReturnQueryToPosition, firstActiveWordTypeItem() );
-		showWords( isReturnQueryToPosition, firstReplacedWordTypeItem() );
-		showWords( isReturnQueryToPosition, firstDeletedWordTypeItem() );
-		}
 
 	void clearGeneralizationWriteLevel( bool isLanguageWord, unsigned short currentWriteLevel )
 		{
@@ -319,7 +257,7 @@ class WordTypeList : private List
 			{
 			if( searchItem->wordTypeNr() == wordTypeNr )
 				{
-				if( deleteItem( false, searchItem ) == RESULT_OK )
+				if( deleteItem( searchItem ) == RESULT_OK )
 					hasFoundWordType = true;
 				else
 					return addError( functionNameString, NULL, "I failed to delete an active item" );
@@ -593,19 +531,6 @@ class WordTypeList : private List
 			searchItem = searchItem->nextWordTypeItem();
 			}
 
-		searchItem = firstReplacedWordTypeItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem->storeWordTypeItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to modify a replaced word type item in the database" );
-				}
-
-			searchItem = searchItem->nextWordTypeItem();
-			}
-
 		return RESULT_OK;
 		}
 */
@@ -628,26 +553,6 @@ class WordTypeList : private List
 					}
 				else
 					addError( functionNameString, NULL, "I failed to compare an active word type string with the query string" );
-				}
-
-			searchItem = searchItem->nextWordTypeItem();
-			}
-
-		searchItem = firstReplacedWordTypeItem();
-
-		while( commonVariables()->result == RESULT_OK &&
-		!referenceResult.hasFoundMatchingStrings &&
-		searchItem != NULL )
-			{
-			if( searchItem->itemString() != NULL )
-				{
-				if( ( referenceResult = compareStrings( searchString, searchItem->itemString() ) ).result == RESULT_OK )
-					{
-					if( referenceResult.hasFoundMatchingStrings )
-						commonVariables()->matchingWordTypeNr = searchItem->wordTypeNr();
-					}
-				else
-					addError( functionNameString, NULL, "I failed to compare a deleted word type string with the query string" );
 				}
 
 			searchItem = searchItem->nextWordTypeItem();
@@ -712,22 +617,29 @@ class WordTypeList : private List
 
 	char *wordTypeString( bool isCheckingAllLanguages, unsigned short wordTypeNr )
 		{
-		WordTypeItem *foundWordTypeItem;
+		WordTypeItem *searchItem;
+		WordTypeItem *foundWordTypeItem = NULL;
 
 		foundWordTypeItem_ = NULL;
 
 		// Try to find word type of the current language
-		if( ( foundWordTypeItem = wordTypeString( false, false, wordTypeNr, firstActiveCurrentLanguageWordTypeItem() ) ) == NULL &&
-		( foundWordTypeItem = wordTypeString( false, false, wordTypeNr, firstReplacedCurrentLanguageWordTypeItem() ) ) == NULL &&
-		( foundWordTypeItem = wordTypeString( false, false, wordTypeNr, firstDeletedCurrentLanguageWordTypeItem() ) ) == NULL )
+		if( ( searchItem = firstActiveCurrentLanguageWordTypeItem() ) != NULL )
+			foundWordTypeItem = wordTypeString( false, false, wordTypeNr, searchItem );
+
+		if( foundWordTypeItem == NULL &&
+		( searchItem = firstDeletedCurrentLanguageWordTypeItem() ) != NULL )
+			foundWordTypeItem = wordTypeString( false, false, wordTypeNr, searchItem );
+
+		// Not found in current language. Now, try all languages
+		if( isCheckingAllLanguages &&
+		foundWordTypeItem == NULL )
 			{
-			// Not found in current language. Now, try all languages
-			if( isCheckingAllLanguages &&
-			( foundWordTypeItem = wordTypeString( false, true, wordTypeNr, firstActiveWordTypeItem() ) ) == NULL )
-				{
-				if( ( foundWordTypeItem = wordTypeString( false, true, wordTypeNr, firstReplacedWordTypeItem() ) ) == NULL )
-					foundWordTypeItem = wordTypeString( false, true, wordTypeNr, firstDeletedWordTypeItem() );
-				}
+			if( ( searchItem = firstActiveWordTypeItem() ) != NULL )
+				foundWordTypeItem = wordTypeString( false, true, wordTypeNr, searchItem );
+
+			if( foundWordTypeItem == NULL &&
+			( searchItem = firstDeletedWordTypeItem() ) != NULL )
+				foundWordTypeItem = wordTypeString( false, true, wordTypeNr, searchItem );
 			}
 
 		return ( foundWordTypeItem == NULL ? ( foundWordTypeItem_ == NULL ? NULL : foundWordTypeItem_->itemString() ) : foundWordTypeItem->itemString() );

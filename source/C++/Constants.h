@@ -1,10 +1,9 @@
-﻿/*
- *	Class:			Constants
+﻿/*	Class:			Constants
  *	Purpose:		Header file to define constants
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -30,9 +29,10 @@
 
 	// Version constants
 	#define PRODUCT_NAME												"Thinknowlogy"
-	#define VERSION_NAME												"2015r1 (Esperanza)"
+	#define VERSION_NAME												"2016r1 (Huguenot)"
 
 	// Character constants
+	#define	SPACE_CHAR													' '
 	#define	BACK_SPACE_CHAR												'\b'
 	#define	BELL_CHAR													'\a'
 	#define	NEW_LINE_CHAR												'\n'
@@ -192,7 +192,6 @@
 	#define	TEXT_BACK_SPACE_CHAR										'b'
 	#define TEXT_NEW_LINE_CHAR											'n'
 	#define	TEXT_TAB_CHAR												't'
-	#define	TEXT_DIACRITICAL_CHAR										SYMBOL_BACK_SLASH
 
 	// Result constants
 	#define	RESULT_OK													1
@@ -222,19 +221,11 @@
 	#define	SYMBOL_DOUBLE_COLON											':'
 	#define	SYMBOL_EXCLAMATION_MARK										'!'
 #ifdef _MSC_VER
-	// MS Visual Studio
 	#define	SYMBOL_EXCLAMATION_MARK_INVERTED							'¡'
-#else
-	// Alternative for wide character
-	#define	SYMBOL_EXCLAMATION_MARK_INVERTED							'!'
 #endif
 	#define	SYMBOL_QUESTION_MARK										'?'
 #ifdef _MSC_VER
-	// MS Visual Studio
 	#define	SYMBOL_QUESTION_MARK_INVERTED								'¿'
-#else
-	// Alternative for wide character
-	#define	SYMBOL_QUESTION_MARK_INVERTED								'?'
 #endif
 	#define	SYMBOL_PLUS													'+'
 	#define	SYMBOL_EQUALITY												'='
@@ -403,9 +394,9 @@
 	// Adjectives
 	#define	WORD_PARAMETER_ADJECTIVE_ASSIGNED										600
 	#define	WORD_PARAMETER_ADJECTIVE_BUSY											601
-	#define	WORD_PARAMETER_ADJECTIVE_CLEAR											602
-	#define	WORD_PARAMETER_ADJECTIVE_DONE											603
-	#define	WORD_PARAMETER_ADJECTIVE_DEFENSIVE										604
+	#define	WORD_PARAMETER_ADJECTIVE_DONE											602
+	#define	WORD_PARAMETER_ADJECTIVE_DEFENSIVE										603
+	#define	WORD_PARAMETER_ADJECTIVE_EMPTY											604
 	#define	WORD_PARAMETER_ADJECTIVE_EXCLUSIVE										605
 	#define	WORD_PARAMETER_ADJECTIVE_INVERTED										606
 	#define	WORD_PARAMETER_ADJECTIVE_FEMININE										607
@@ -445,6 +436,7 @@
 	#define	WORD_PARAMETER_ADVERB_ASSUMPTION_POSSIBLY								703
 	#define	WORD_PARAMETER_ADVERB_ASSUMPTION_PROBABLY								704
 	#define	WORD_PARAMETER_ADVERB_NOT												705
+	#define	WORD_PARAMETER_ADVERB_NOT_FRENCH										706
 
 	// Interjections
 	#define	WORD_PARAMETER_INTERJECTION_YES											800
@@ -469,9 +461,10 @@
 	// Conjunctions
 	#define	WORD_PARAMETER_CONJUNCTION_AND											1000
 	#define	WORD_PARAMETER_CONJUNCTION_OR											1001
-	#define	WORD_PARAMETER_CONJUNCTION_THAN											1002
-	#define	WORD_PARAMETER_CONJUNCTION_DUTCH_ZOWEL									1003
-	#define	WORD_PARAMETER_CONJUNCTION_DUTCH_ALS									1004
+//	#define	WORD_PARAMETER_CONJUNCTION_THAN											1002
+//	#define	WORD_PARAMETER_CONJUNCTION_FRENCH_THAN									1003
+	#define	WORD_PARAMETER_CONJUNCTION_DUTCH_ZOWEL									1004
+	#define	WORD_PARAMETER_CONJUNCTION_DUTCH_ALS									1005
 
 	// Singular / plural nouns
 	#define	WORD_PARAMETER_NOUN_DEVELOPER											1100
@@ -517,6 +510,7 @@
 	#define	WORD_PARAMETER_PREPOSITION_IN											2102
 	#define	WORD_PARAMETER_PREPOSITION_TO											2103
 	#define	WORD_PARAMETER_PREPOSITION_OF											2104
+	#define	WORD_PARAMETER_PREPOSITION_FRENCH_A										2105
 
 	// Singular verbs
 	#define	WORD_PARAMETER_SINGULAR_VERB_IS											2200
@@ -567,6 +561,9 @@
 
 	// Plural noun ending
 	#define	WORD_PLURAL_NOUN_ENDING													3004
+
+	// Merged words
+	#define	WORD_MERGED_WORD														3005
 
 	// Grammar parameters
 	#define GRAMMAR_SENTENCE														4000
@@ -717,8 +714,8 @@
 	#define	INTERFACE_LISTING_RELATED_QUESTIONS														1427
 
 	// Listing (old information)
-	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION								1430
-	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION								1431
+	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION_BUT_NO_RELATION				1430
+	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION_BUT_NO_RELATION				1431
 	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_ASSUMPTION	1432
 	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_CONCLUSION	1433
 	#define	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONFIRMED										1434

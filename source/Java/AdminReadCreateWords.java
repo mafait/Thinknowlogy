@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminReadCreateWords
+/*	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		To create words of the read sentence
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -44,6 +43,13 @@ class AdminReadCreateWords
 
 	// Private methods
 
+	private static boolean isGrammarDefinitionSymbol( char character )
+		{
+		return ( character == Constants.QUERY_WORD_TYPE_CHAR ||
+				character == Constants.QUERY_PARAMETER_CHAR ||
+				character == Constants.GRAMMAR_WORD_DEFINITION_CHAR );
+		}
+
 	private static boolean isSymbol( char character )
 		{
 		return ( character == Constants.SYMBOL_COMMA ||
@@ -63,7 +69,7 @@ class AdminReadCreateWords
 				character == Constants.SYMBOL_DOLLAR ||
 				character == Constants.SYMBOL_SLASH ||
 				character == Constants.SYMBOL_BACK_SLASH ||
-				character == Constants.SYMBOL_QUOTE ||
+				// Don't add Constants.SYMBOL_QUOTE to avoid analyzing compound words
 				// Don't add Constants.SYMBOL_DOUBLE_QUOTE to avoid analyzing text strings
 				character == Constants.SYMBOL_OPEN_ROUNDED_BRACKET ||
 				character == Constants.SYMBOL_CLOSE_ROUNDED_BRACKET ||
@@ -75,11 +81,19 @@ class AdminReadCreateWords
 				character == Constants.SYMBOL_CLOSE_SQUARE_BRACKET );
 		}
 
-	private static boolean isGrammarDefinitionSymbol( char character )
+	private static int skipSpaces( int wordPosition, String wordString )
 		{
-		return ( character == Constants.QUERY_WORD_TYPE_CHAR ||
-				character == Constants.QUERY_PARAMETER_CHAR ||
-				character == Constants.GRAMMAR_WORD_DEFINITION_CHAR );
+		int wordStringLength;
+
+		if( wordString != null &&
+		( wordStringLength = wordString.length() ) > 0 )
+			{
+			while( wordPosition < wordStringLength &&
+			Character.isWhitespace( wordString.charAt( wordPosition ) ) )
+				wordPosition++;
+			}
+
+		return wordPosition;
 		}
 
 	private ReadResultType createWordStrings( int startPosition, String wordString )
@@ -90,7 +104,7 @@ class AdminReadCreateWords
 
 		if( wordString != null )
 			{
-			if( ( readResult = readWordFromString( false, false, startPosition, 0, wordString ) ).result == Constants.RESULT_OK )
+			if( ( readResult = readWordFromString( false, false, false, startPosition, 0, wordString ) ).result == Constants.RESULT_OK )
 				{
 				if( readResult.wordLength > 0 )
 					{
@@ -203,7 +217,8 @@ class AdminReadCreateWords
 	protected ReadResultType createReadWord( short wordOrderNr, short wordTypeNr, int textStringStartPosition, String textString, WordItem readWordItem )
 		{
 		ReadResultType readResult = new ReadResultType();
-		short wordParameter = ( wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL || readWordItem == null ? Constants.NO_WORD_PARAMETER : readWordItem.wordParameter() );
+		short wordParameter = ( wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ||
+										readWordItem == null ? Constants.NO_WORD_PARAMETER : readWordItem.wordParameter() );
 		String readString = null;
 
 		hasCreatedReadWord_ = false;
@@ -216,7 +231,7 @@ class AdminReadCreateWords
 				{
 				if( textString != null )
 					{
-					if( ( readResult = readWordFromString( false, true, textStringStartPosition, 0, textString ) ).result == Constants.RESULT_OK )
+					if( ( readResult = readWordFromString( false, false, true, textStringStartPosition, 0, textString ) ).result == Constants.RESULT_OK )
 						{
 						if( readResult.startWordPosition < textString.length() )
 							{
@@ -266,26 +281,25 @@ class AdminReadCreateWords
 		return readResult;
 		}
 
-	protected ReadResultType createReadWords( String readSentenceString )
+	protected ReadResultType createReadWords( String readUserSentenceString )
 		{
 		GrammarResultType grammarResult;
 		ReadResultType readResult = new ReadResultType();
 		WordResultType wordResult;
+		boolean hasFoundSingularNoun;
 		boolean isAdverb;
 		boolean isCapitalSingularNoun;
 		boolean isCapitalVerb;
-		boolean isExactVerb;
 		boolean isExactWord;
 		boolean isFirstFind;
-		boolean isNumeral;
 		boolean isPartOfMultipleWord;
 		boolean wasPreviousWordAdjective;
 		boolean wasPreviousWordArticle;
 		boolean wasPreviousWordBasicVerb;
 		boolean wasPreviousWordConjunction;
 		boolean wasPreviousWordExactNoun;
+		boolean wasPreviousWordNumeral;
 		boolean wasPreviousWordPossessiveDeterminer;
-		boolean wasPreviousWordPossessivePronoun;
 		boolean wasPreviousWordPreposition;
 		boolean wasPreviousWordProperName;
 		boolean wasPreviousWordSymbol;
@@ -296,6 +310,7 @@ class AdminReadCreateWords
 		boolean isConjunction = false;
 		boolean isExactPluralNoun = false;
 		boolean isExactSingularNoun = false;
+		boolean isNumeral = false;
 		boolean isPossessiveDeterminer = false;
 		boolean isPossessivePronoun = false;
 		boolean isPreposition = false;
@@ -311,7 +326,7 @@ class AdminReadCreateWords
 		short currentWordDefiniteArticleParameter = Constants.NO_DEFINITE_ARTICLE_PARAMETER;
 		short currentWordIndefiniteArticleParameter = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
 		short currentLanguageNr = CommonVariables.currentLanguageNr;
-		int readSentenceStringLength;
+		int readUserSentenceStringLength;
 		int wordStringLength;
 		int nextWordPosition = 0;
 		int readPosition = 0;
@@ -328,18 +343,18 @@ class AdminReadCreateWords
 		hasFoundDifferentParameter_ = false;
 		currentWordOrderNr_ = Constants.NO_ORDER_NR;
 
-		if( readSentenceString != null )
+		if( readUserSentenceString != null )
 			{
-			if( ( readSentenceStringLength = readSentenceString.length() ) > 0 )
+			if( ( readUserSentenceStringLength = readUserSentenceString.length() ) > 0 )
 				{
 				do	{
 					if( ++currentWordOrderNr_ < Constants.MAX_ORDER_NR )
 						{
 						hasCreatedReadWord_ = false;
 
-						if( readSentenceString.charAt( readPosition ) == Constants.SYMBOL_DOUBLE_QUOTE )
+						if( readUserSentenceString.charAt( readPosition ) == Constants.QUERY_STRING_START_CHAR )
 							{
-							if( createReadWord( currentWordOrderNr_, Constants.WORD_TYPE_TEXT, readPosition, readSentenceString, null ).result == Constants.RESULT_OK )
+							if( createReadWord( currentWordOrderNr_, Constants.WORD_TYPE_TEXT, readPosition, readUserSentenceString, null ).result == Constants.RESULT_OK )
 								nextWordPosition = nextTextStringPosition_;
 							else
 								adminItem_.addError( 1, moduleNameString_, "I failed to create a read word" );
@@ -351,8 +366,8 @@ class AdminReadCreateWords
 							wasPreviousWordBasicVerb = isBasicVerb;
 							wasPreviousWordConjunction = isConjunction;
 							wasPreviousWordExactNoun = ( isExactSingularNoun || isExactPluralNoun );
+							wasPreviousWordNumeral = isNumeral;
 							wasPreviousWordPossessiveDeterminer = isPossessiveDeterminer;
-							wasPreviousWordPossessivePronoun = isPossessivePronoun;
 							wasPreviousWordPreposition = isPreposition;
 							wasPreviousWordProperName = isProperName;
 							wasPreviousWordSymbol = isSymbol;
@@ -371,7 +386,6 @@ class AdminReadCreateWords
 							isConjunction = false;
 							isExactPluralNoun = false;
 							isExactSingularNoun = false;
-							isExactVerb = false;
 							isExactWord = false;
 							isNumeral = false;
 							isPossessiveDeterminer = false;
@@ -389,7 +403,7 @@ class AdminReadCreateWords
 							pluralNounWordItem = null;
 							singularNounWordItem = null;
 
-							if( ( readResult = createWordStrings( readPosition, readSentenceString ) ).result == Constants.RESULT_OK )
+							if( ( readResult = createWordStrings( readPosition, readUserSentenceString ) ).result == Constants.RESULT_OK )
 								{
 								isPartOfMultipleWord = true;
 
@@ -399,7 +413,7 @@ class AdminReadCreateWords
 
 								// Step 1: Find exact word types in all words
 								do	{
-									if( ( wordResult = adminItem_.findWordTypeInAllWords( false, Constants.WORD_TYPE_UNDEFINED, exactWordString_, foundWordItem ) ).result == Constants.RESULT_OK )
+									if( ( wordResult = findWordTypeInAllWords( false, Constants.WORD_TYPE_UNDEFINED, exactWordString_, foundWordItem ) ).result == Constants.RESULT_OK )
 										{
 										// Found exact word
 										if( ( foundWordItem = wordResult.foundWordItem ) != null &&
@@ -409,7 +423,9 @@ class AdminReadCreateWords
 											if( !isAdverb ||
 											!foundWordTypeItem.isAnswer() )
 												{
-												if( createReadWord( currentWordOrderNr_, foundWordTypeItem.wordTypeNr(), 0, null, foundWordItem ).result == Constants.RESULT_OK )
+												hasFoundSingularNoun = foundWordTypeItem.isSingularNoun();
+
+												if( createReadWord( currentWordOrderNr_, ( hasFoundSingularNoun && wasPreviousWordNumeral ? Constants.WORD_TYPE_NOUN_PLURAL : foundWordTypeItem.wordTypeNr() ), 0, null, foundWordItem ).result == Constants.RESULT_OK )
 													{
 													isExactWord = true;
 
@@ -445,31 +461,38 @@ class AdminReadCreateWords
 													if( foundWordTypeItem.isConjunction() )
 														isConjunction = true;
 
-													if( foundWordTypeItem.isVerb() )
-														{
-														isExactVerb = true;
-
-														if( !foundWordItem.isMultipleWord() )
-															isPartOfMultipleWord = false;
-														}
+													if( foundWordTypeItem.isVerb() &&
+													!foundWordItem.isMultipleWord() )
+														isPartOfMultipleWord = false;
 
 													if( foundWordTypeItem.isNumeral() )
 														isNumeral = true;
 
-													if( foundWordTypeItem.isSingularNoun() )
+													if( hasFoundSingularNoun )
 														{
 														isExactSingularNoun = true;
 
-														if( !foundWordItem.isMultipleWord() )
-															isPartOfMultipleWord = false;
-
-														if( ( wordResult = foundWordTypeItem.setParameter( previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter ) ).result == Constants.RESULT_OK )
+														if( wasPreviousWordNumeral )
 															{
-															if( wordResult.hasFoundDifferentParameter )
-																hasFoundDifferentParameter_ = true;
+															// Typically for French: Skip singular/plural noun mismatch of word 'fils'
+															if( foundWordItem.addWordType( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString_ ).result != Constants.RESULT_OK )
+																adminItem_.addError( 1, moduleNameString_, "I failed to add a plural noun word type item for word \"" + foundWordItem.anyWordTypeString() + "\"" );
 															}
 														else
-															adminItem_.addError( 1, moduleNameString_, "I failed to set a parameter of a singular noun" );
+															{
+															if( !foundWordItem.isMultipleWord() )
+																{
+																isPartOfMultipleWord = false;
+
+																if( ( wordResult = foundWordTypeItem.setParameter( previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter ) ).result == Constants.RESULT_OK )
+																	{
+																	if( wordResult.hasFoundDifferentParameter )
+																		hasFoundDifferentParameter_ = true;
+																	}
+																else
+																	adminItem_.addError( 1, moduleNameString_, "I failed to set a parameter of a singular noun" );
+																}
+															}
 														}
 
 													if( foundWordTypeItem.isPluralNoun() )
@@ -496,7 +519,6 @@ class AdminReadCreateWords
 										adminItem_.addError( 1, moduleNameString_, "I failed to find an exact word type in all words" );
 									}
 								while( CommonVariables.result == Constants.RESULT_OK &&
-
 								// Allow multiple finds
 								foundWordItem != null );
 
@@ -505,13 +527,13 @@ class AdminReadCreateWords
 								!wasPreviousWordExactNoun &&
 								( readList = adminItem_.readList ) != null )
 									{
-									if( readList.deleteInvalidPartOfMultipleWordReadItems( currentWordOrderNr_, readSentenceString.substring( readPosition ) ) != Constants.RESULT_OK )
-										adminItem_.addError( 1, moduleNameString_, "I failed to delete the read items with part of multiple words" );
+									if( readList.deleteReadItemsWithNonMatchingMultipleWordPart( currentWordOrderNr_, readUserSentenceString.substring( readPosition ) ) != Constants.RESULT_OK )
+										adminItem_.addError( 1, moduleNameString_, "I failed to delete the read items with a non-matching multiple word part" );
 									}
 
 								if( CommonVariables.result == Constants.RESULT_OK &&
 								isFirstWord &&
-								Character.isUpperCase( readSentenceString.charAt( readPosition ) ) )
+								Character.isUpperCase( readUserSentenceString.charAt( readPosition ) ) )
 									{
 									if( getWordTypeNr( false, wordStringLength, lowerCaseWordString_ ) == Constants.RESULT_OK )
 										{
@@ -522,7 +544,7 @@ class AdminReadCreateWords
 
 										// Step 2: Find word type with lowercase first letter in all words
 										do	{
-											if( ( wordResult = adminItem_.findWordTypeInAllWords( true, Constants.WORD_TYPE_UNDEFINED, lowerCaseWordString_, foundWordItem ) ).result == Constants.RESULT_OK )
+											if( ( wordResult = findWordTypeInAllWords( true, Constants.WORD_TYPE_UNDEFINED, lowerCaseWordString_, foundWordItem ) ).result == Constants.RESULT_OK )
 												{
 												// Found word type with lowercase first letter
 												if( ( foundWordItem = wordResult.foundWordItem ) != null &&
@@ -591,7 +613,7 @@ class AdminReadCreateWords
 										wordStringLength == 1 )
 											{
 											// Step 3: Typically for English: Find or create lowercase letter 'a' as first letter of a sentence.
-											if( ( wordResult = adminItem_.findWordTypeInAllWords( false, wordTypeNr_, lowerCaseWordString_, null ) ).result == Constants.RESULT_OK )
+											if( ( wordResult = findWordTypeInAllWords( false, wordTypeNr_, lowerCaseWordString_, null ) ).result == Constants.RESULT_OK )
 												{
 												if( wordResult.foundWordItem == null )
 													{
@@ -619,8 +641,14 @@ class AdminReadCreateWords
 
 								if( CommonVariables.result == Constants.RESULT_OK &&
 
-								( !isExactWord ||
+								// Proper name
+								( ( !isExactWord &&
 
+								// Skip 'Undo' and 'Redo'
+								( !isCapitalVerb ||
+								wordStringLength == 1 ) ) ||
+
+								// Small letters, capital letters and numerals
 								( wasPreviousWordSymbol &&
 								wordStringLength == 1 &&
 
@@ -634,7 +662,7 @@ class AdminReadCreateWords
 
 									// Step 4: Find exact word types in all words
 									do	{
-										if( ( wordResult = adminItem_.findWordTypeInAllWords( true, Constants.WORD_TYPE_UNDEFINED, exactWordString_, foundWordItem ) ).result == Constants.RESULT_OK )
+										if( ( wordResult = findWordTypeInAllWords( true, Constants.WORD_TYPE_UNDEFINED, exactWordString_, foundWordItem ) ).result == Constants.RESULT_OK )
 											{
 											createdWordItem = null;
 											foundWordItem = wordResult.foundWordItem;
@@ -704,7 +732,7 @@ class AdminReadCreateWords
 									foundWordItem != null );
 									}
 
-								// Create a noun
+								// Step 5 and 6: Create singular noun and/or plural noun
 								if( CommonVariables.result == Constants.RESULT_OK &&
 								!isAdjective &&
 								!isArticle &&
@@ -719,24 +747,21 @@ class AdminReadCreateWords
 
 								( isExactSingularNoun ||
 								isUndefinedWord ||
-								wasPreviousWordArticle ||
-
-								( !isExactVerb &&
-								wasPreviousWordConjunction ) ) &&
+								wasPreviousWordArticle ) &&
 
 								( isFirstWord ||
-								!Character.isUpperCase( readSentenceString.charAt( readPosition ) ) ) )
+								!Character.isUpperCase( readUserSentenceString.charAt( readPosition ) ) ) )
 									{
 									if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) != null )
 										{
-										if( ( grammarResult = currentLanguageWordItem.checkOnWordEnding( Constants.WORD_PLURAL_NOUN_ENDING, wordStringLength, exactWordString_ ) ).result == Constants.RESULT_OK )
+										if( ( grammarResult = currentLanguageWordItem.analyzeWordEnding( Constants.WORD_PLURAL_NOUN_ENDING, wordStringLength, exactWordString_ ) ).result == Constants.RESULT_OK )
 											{
 											if( wasPreviousWordAdjective ||
 											wasPreviousWordArticle ||
 											wasPreviousWordBasicVerb ||
 											wasPreviousWordConjunction ||
+											wasPreviousWordNumeral ||
 											wasPreviousWordPossessiveDeterminer ||
-											wasPreviousWordPossessivePronoun ||
 											wasPreviousWordPreposition ||
 											wasPreviousWordProperName ||
 											wasPreviousWordSymbol ||
@@ -744,15 +769,15 @@ class AdminReadCreateWords
 												{
 												if( grammarResult.hasFoundWordEnding )
 													{
-													if( ( wordResult = adminItem_.findWordTypeInAllWords( false, Constants.WORD_TYPE_NOUN_SINGULAR, grammarResult.singularNounWordString, null ) ).result == Constants.RESULT_OK )
+													if( ( wordResult = findWordTypeInAllWords( false, Constants.WORD_TYPE_NOUN_SINGULAR, grammarResult.singularNounWordString, null ) ).result == Constants.RESULT_OK )
 														{
 														if( ( foundWordItem = wordResult.foundWordItem ) == null )
 															{
-															if( ( wordResult = addWord( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString_ ) ).result == Constants.RESULT_OK )
+															if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString_ ) ).result == Constants.RESULT_OK )
 																{
 																if( ( pluralNounWordItem = wordResult.createdWordItem ) != null )
 																	{
-																	if( pluralNounWordItem.addWordType( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, Constants.WORD_TYPE_NOUN_SINGULAR, grammarResult.singularNounWordStringLength, grammarResult.singularNounWordString ).result == Constants.RESULT_OK )
+																	if( pluralNounWordItem.addWordType( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.WORD_TYPE_NOUN_SINGULAR, grammarResult.singularNounWordStringLength, grammarResult.singularNounWordString ).result == Constants.RESULT_OK )
 																		{
 																		if( wordStringLength == grammarResult.singularNounWordStringLength &&
 																		exactWordString_.equals( grammarResult.singularNounWordString ) )
@@ -772,7 +797,7 @@ class AdminReadCreateWords
 															// Found singular noun
 															if( !isExactPluralNoun )
 																{
-																if( foundWordItem.addWordType( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, Constants.WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString_ ).result == Constants.RESULT_OK )
+																if( foundWordItem.addWordType( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString_ ).result == Constants.RESULT_OK )
 																	pluralNounWordItem = foundWordItem;
 																else
 																	adminItem_.addError( 1, moduleNameString_, "I failed to add a plural noun word type item for word \"" + foundWordItem.anyWordTypeString() + "\"" );
@@ -787,37 +812,52 @@ class AdminReadCreateWords
 													if( !isCapitalSingularNoun &&
 													!isExactSingularNoun )
 														{
-														if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_NOUN_SINGULAR, wordStringLength, exactWordString_ ) ).result == Constants.RESULT_OK )
-															singularNounWordItem = wordResult.createdWordItem;
+														// Typically for French: Singular and plural noun 'fils' are the same
+														if( wasPreviousWordNumeral )
+															{
+															if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString_ ) ).result == Constants.RESULT_OK )
+																pluralNounWordItem = wordResult.createdWordItem;
+															else
+																adminItem_.addError( 1, moduleNameString_, "I failed to add a singular noun word" );
+															}
 														else
-															adminItem_.addError( 1, moduleNameString_, "I failed to add a singular noun word" );
+															{
+															if( !isExactWord ||
+															previousWordIndefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
+																{
+																if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_NOUN_SINGULAR, wordStringLength, exactWordString_ ) ).result == Constants.RESULT_OK )
+																	singularNounWordItem = wordResult.createdWordItem;
+																else
+																	adminItem_.addError( 1, moduleNameString_, "I failed to add a singular noun word" );
+																}
+															}
 														}
 													}
 
 												if( CommonVariables.result == Constants.RESULT_OK &&
 												singularNounWordItem != null )
 													{
+													// Singular noun
 													if( createReadWord( currentWordOrderNr_, Constants.WORD_TYPE_NOUN_SINGULAR, 0, null, singularNounWordItem ).result != Constants.RESULT_OK )
 														adminItem_.addError( 1, moduleNameString_, "I failed to create a singular noun read word" );
 													}
 
 												if( CommonVariables.result == Constants.RESULT_OK &&
-												grammarResult.hasFoundWordEnding &&
-												pluralNounWordItem != null )
+												pluralNounWordItem != null &&
+
+												( grammarResult.hasFoundWordEnding ||
+												wasPreviousWordNumeral ) )
 													{
+													// Plural noun
 													if( createReadWord( currentWordOrderNr_, Constants.WORD_TYPE_NOUN_PLURAL, 0, null, pluralNounWordItem ).result != Constants.RESULT_OK )
 														adminItem_.addError( 1, moduleNameString_, "I failed to create a plural noun read word" );
 													}
 												}
 
-											// Create an adjective
+											// Step 7: Create an adjective
 											if( CommonVariables.result == Constants.RESULT_OK &&
+											!isExactWord &&
 											!wasPreviousWordUndefined &&
-
-											( !isExactWord ||
-
-											( wasPreviousWordBasicVerb &&
-											isExactSingularNoun ) ) &&
 
 											( wasPreviousWordConjunction ||
 											wasPreviousWordSymbol ||
@@ -861,7 +901,7 @@ class AdminReadCreateWords
 					}
 				while( CommonVariables.result == Constants.RESULT_OK &&
 				hasCreatedReadWord_ &&
-				readPosition < readSentenceStringLength );
+				readPosition < readUserSentenceStringLength );
 
 				// The read sentence isn't ended by a colon.
 				// So, add the missing colon.
@@ -873,17 +913,17 @@ class AdminReadCreateWords
 					}
 				}
 			else
-				adminItem_.startError( 1, moduleNameString_, "The given read sentence string is empty" );
+				adminItem_.startError( 1, moduleNameString_, "The given read user sentence string is empty" );
 			}
 		else
-			adminItem_.startError( 1, moduleNameString_, "The given read sentence string is undefined" );
+			adminItem_.startError( 1, moduleNameString_, "The given read user sentence string is undefined" );
 
 		readResult.hasCreatedAllReadWords = hasCreatedReadWord_;
 		readResult.result = CommonVariables.result;
 		return readResult;
 		}
 
-	protected ReadResultType readWordFromString( boolean isCheckingForGrammarDefinition, boolean isSkippingDoubleQuotes, int startWordPosition, int minimumStringLength, String wordString )
+	protected ReadResultType readWordFromString( boolean isCheckingForGrammarDefinition, boolean isMergedWord, boolean isSkippingTextString, int startWordPosition, int minimumStringLength, String wordString )
 		{
 		ReadResultType readResult = new ReadResultType();
 		boolean isText = false;
@@ -897,12 +937,7 @@ class AdminReadCreateWords
 
 			if( wordPosition < wordStringLength )
 				{
-				// Skip spaces
-				while( wordPosition < wordStringLength &&
-				Character.isWhitespace( wordString.charAt( wordPosition ) ) )
-					wordPosition++;
-
-				if( wordPosition < wordStringLength )
+				if( ( wordPosition = skipSpaces( wordPosition, wordString ) ) < wordStringLength )
 					{
 					readResult.startWordPosition = wordPosition;
 
@@ -916,7 +951,7 @@ class AdminReadCreateWords
 						}
 					else
 						{
-						if( isSkippingDoubleQuotes &&
+						if( isSkippingTextString &&
 						wordString.charAt( wordPosition ) == Constants.SYMBOL_DOUBLE_QUOTE )
 							isWordStartingWithDoubleQuote = true;
 
@@ -925,7 +960,11 @@ class AdminReadCreateWords
 						( isText ||
 						readResult.wordLength < minimumStringLength ||
 
-						( !Character.isWhitespace( wordString.charAt( wordPosition ) ) &&
+						( ( !Character.isWhitespace( wordString.charAt( wordPosition ) ) ||
+
+						( isMergedWord &&
+						// Typically for French: Include spaces in grammar compound word definition
+						wordString.charAt( wordPosition ) == Constants.SPACE_CHAR ) ) &&
 
 						( !isSymbol( wordString.charAt( wordPosition ) ) ||
 
@@ -936,7 +975,7 @@ class AdminReadCreateWords
 							isGrammarDefinitionSymbol( wordString.charAt( wordPosition ) ) )
 								readResult.hasFoundGrammarDefinition = true;
 
-							if( wordString.charAt( wordPosition ) == Constants.QUERY_STRING_START_CHAR &&
+							if( wordString.charAt( wordPosition ) == Constants.SYMBOL_DOUBLE_QUOTE &&
 
 							( wordPosition == 0 ||
 							// Skip escaped double quote character
@@ -951,20 +990,17 @@ class AdminReadCreateWords
 						readResult.wordLength > 1 )
 							readResult.wordLength--;
 
-						if( isSkippingDoubleQuotes &&
+						if( isSkippingTextString &&
 						wordPosition > 1 &&
 						readResult.wordLength > 1 &&
-						wordString.charAt( wordPosition - 1 ) == Constants.SYMBOL_DOUBLE_QUOTE )
+						wordString.charAt( wordPosition - 1 ) == Constants.QUERY_STRING_END_CHAR )
 							{
 							readResult.wordLength--;
 							readResult.startWordPosition++;
 							}
 						}
 
-					// Skip spaces
-					while( wordPosition < wordStringLength &&
-					Character.isWhitespace( wordString.charAt( wordPosition ) ) )
-						wordPosition++;
+					wordPosition = skipSpaces( wordPosition, wordString );
 					}
 				}
 			else
@@ -1010,7 +1046,7 @@ class AdminReadCreateWords
 						}
 					else
 						{
-						if( ( wordResult = adminItem_.findWordTypeInAllWords( false, wordTypeNr, wordTypeString, null ) ).result != Constants.RESULT_OK )
+						if( ( wordResult = findWordTypeInAllWords( false, wordTypeNr, wordTypeString, null ) ).result != Constants.RESULT_OK )
 							adminItem_.addError( 1, moduleNameString_, "I failed to find a word type in all words" );
 						}
 
@@ -1097,6 +1133,26 @@ class AdminReadCreateWords
 			}
 		else
 			adminItem_.startError( 1, moduleNameString_, "The given word type string is undefined" );
+
+		wordResult.result = CommonVariables.result;
+		return wordResult;
+		}
+
+	protected WordResultType findWordTypeInAllWords( boolean isCheckingAllLanguages, short wordTypeNr, String wordTypeString, WordItem previousWordItem )
+		{
+		WordResultType wordResult = new WordResultType();
+		WordItem currentWordItem;
+
+		if( ( currentWordItem = ( previousWordItem == null ? CommonVariables.firstWordItem : previousWordItem.nextWordItem() ) ) != null )
+			{
+			do	{
+				if( ( wordResult = currentWordItem.findWordType( isCheckingAllLanguages, wordTypeNr, wordTypeString ) ).result != Constants.RESULT_OK )
+					adminItem_.addError( 1, moduleNameString_, "I failed to find a word type in word \"" + currentWordItem.anyWordTypeString() + "\"" );
+				}
+			while( wordResult.result == Constants.RESULT_OK &&
+			wordResult.foundWordItem == null &&
+			( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
 
 		wordResult.result = CommonVariables.result;
 		return wordResult;

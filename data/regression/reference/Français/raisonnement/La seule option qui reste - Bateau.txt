@@ -1,0 +1,4 @@
+﻿* 
+* Mes conclusions:
+< Le bateau est un bateau à rames.
+< 

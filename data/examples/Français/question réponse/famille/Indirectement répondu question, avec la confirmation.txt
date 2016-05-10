@@ -1,0 +1,5 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Laurent a une mère, appelée Amélie.
+Laurent est un homme.
+Laurent est un fils.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

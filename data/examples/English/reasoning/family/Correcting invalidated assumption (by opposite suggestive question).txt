@@ -1,4 +1,4 @@
 ﻿Read the file "English/reasoning/family/family definition".
 Is John the mother of Paul?
 Is John the father of Paul?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

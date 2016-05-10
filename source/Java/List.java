@@ -1,10 +1,9 @@
-/*
- *	Class:		List
+/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -65,6 +64,68 @@ class List
 			}
 
 		return true;
+		}
+
+	private byte removeItemFromList( Item removeItem )
+		{
+		if( removeItem != null )
+			{
+			if( removeItem.myList() == this )
+				{
+				// First item in list
+				if( removeItem.previousItem == null )
+					{
+					switch( removeItem.statusChar() )
+						{
+						case Constants.QUERY_ACTIVE_CHAR:
+							activeList_ = removeItem.nextItem;
+							break;
+
+						case Constants.QUERY_INACTIVE_CHAR:
+							inactiveList_ = removeItem.nextItem;
+							break;
+
+						case Constants.QUERY_ARCHIVED_CHAR:
+							archivedList_ = removeItem.nextItem;
+							break;
+
+						case Constants.QUERY_REPLACED_CHAR:
+							replacedList_ = removeItem.nextItem;
+							break;
+
+						case Constants.QUERY_DELETED_CHAR:
+							deletedList_ = removeItem.nextItem;
+							break;
+
+						default:
+							return startError( 1, null, "The given remove item has an unknown status character" );
+						}
+
+					if( removeItem.nextItem != null )
+						removeItem.nextItem.previousItem = null;
+					}
+				else
+					{
+					removeItem.previousItem.nextItem = removeItem.nextItem;
+
+					if( removeItem.nextItem != null )
+						removeItem.nextItem.previousItem = removeItem.previousItem;
+					}
+
+				// Remember next item
+				nextListItem_ = removeItem.nextItem;
+
+				// Disconnect item from the list
+				removeItem.previousItem = null;
+				removeItem.nextItem = null;
+				}
+			else
+				return startError( 1, null, "The given remove item doesn't belong to my list" );
+			}
+		else
+			return startError( 1, null, "The given remove item is undefined" );
+
+		return Constants.RESULT_OK;
 		}
 
 	private static Item tailOfList( Item searchItem )
@@ -240,57 +301,6 @@ class List
 		return ( listChar_ == Constants.WORD_ASSIGNMENT_LIST_SYMBOL );
 		}
 
-	protected boolean isReadList()
-		{
-		return ( listChar_ == Constants.ADMIN_READ_LIST_SYMBOL );
-		}
-
-	protected int highestSentenceNrInList()
-		{
-		int highestSentenceNr = Constants.NO_SENTENCE_NR;
-		Item searchItem = activeList_;
-
-		while( searchItem != null )
-			{
-			if( searchItem.creationSentenceNr() > highestSentenceNr )
-				highestSentenceNr = searchItem.creationSentenceNr();
-
-			searchItem = searchItem.nextItem;
-			}
-
-		searchItem = inactiveList_;
-
-		while( searchItem != null )
-			{
-			if( searchItem.creationSentenceNr() > highestSentenceNr )
-				highestSentenceNr = searchItem.creationSentenceNr();
-
-			searchItem = searchItem.nextItem;
-			}
-
-		searchItem = archivedList_;
-
-		while( searchItem != null )
-			{
-			if( searchItem.creationSentenceNr() > highestSentenceNr )
-				highestSentenceNr = searchItem.creationSentenceNr();
-
-			searchItem = searchItem.nextItem;
-			}
-
-		searchItem = replacedList_;
-
-		while( searchItem != null )
-			{
-			if( searchItem.creationSentenceNr() > highestSentenceNr )
-				highestSentenceNr = searchItem.creationSentenceNr();
-
-			searchItem = searchItem.nextItem;
-			}
-
-		return highestSentenceNr;
-		}
-
 	protected char listChar()
 		{
 		return listChar_;
@@ -459,24 +469,19 @@ class List
 			{
 			if( activateItem.statusChar() != Constants.QUERY_ACTIVE_CHAR )
 				{
-				if( activateItem.creationSentenceNr() == activateItem.activeSentenceNr() )
+				if( removeItemFromList( activateItem ) == Constants.RESULT_OK )
 					{
-					if( removeItemFromList( activateItem ) == Constants.RESULT_OK )
+					if( addItemToList( Constants.QUERY_ACTIVE_CHAR, activateItem ) == Constants.RESULT_OK )
 						{
-						if( addItemToList( Constants.QUERY_ACTIVE_CHAR, activateItem ) == Constants.RESULT_OK )
-							{
-							if( isAssignmentList() &&
-							CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-								CommonVariables.isAssignmentChanged = true;
-							}
-						else
-							return addError( 1, null, "I failed to add an item to the active list" );
+						if( isAssignmentList() &&
+						CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+							CommonVariables.isAssignmentChanged = true;
 						}
 					else
-						return addError( 1, null, "I failed to remove an item from the archive list" );
+						return addError( 1, null, "I failed to add an item to the active list" );
 					}
 				else
-					return startError( 1, null, "The active sentence number of the given archived item is already assigned" );
+					return addError( 1, null, "I failed to remove an item from the archive list" );
 				}
 			else
 				return startError( 1, null, "The given activate item is already an active item" );
@@ -494,27 +499,21 @@ class List
 			if( inactivateItem.statusChar() != Constants.QUERY_INACTIVE_CHAR )
 				{
 				if( isAssignmentList() ||
-				isReadList() )
+				listChar_ == Constants.ADMIN_READ_LIST_SYMBOL )
 					{
-					if( !inactivateItem.hasInactiveSentenceNr() ||
-					inactivateItem.creationSentenceNr() == inactivateItem.activeSentenceNr() )
+					if( removeItemFromList( inactivateItem ) == Constants.RESULT_OK )
 						{
-						if( removeItemFromList( inactivateItem ) == Constants.RESULT_OK )
+						if( addItemToList( Constants.QUERY_INACTIVE_CHAR, inactivateItem ) == Constants.RESULT_OK )
 							{
-							if( addItemToList( Constants.QUERY_INACTIVE_CHAR, inactivateItem ) == Constants.RESULT_OK )
-								{
-								if( isAssignmentList() &&
-								CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-									CommonVariables.isAssignmentChanged = true;
-								}
-							else
-								return addError( 1, null, "I failed to add an item to the inactive list" );
+							if( isAssignmentList() &&
+							CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+								CommonVariables.isAssignmentChanged = true;
 							}
 						else
-							return addError( 1, null, "I failed to remove an item from the archive list" );
+							return addError( 1, null, "I failed to add an item to the inactive list" );
 						}
 					else
-						return startError( 1, null, "The inactive sentence number of the given archived item is already assigned" );
+						return addError( 1, null, "I failed to remove an item from the archive list" );
 					}
 				else
 					return startError( 1, null, "Only assignments, Guide by Grammar items and read items can be inactived" );
@@ -588,15 +587,15 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte deleteItem( boolean isAvailableForRollback, Item deleteItem )
+	protected byte deleteItem( Item deleteItem )
 		{
 		if( removeItemFromList( deleteItem ) == Constants.RESULT_OK )
 			{
+			deleteItem.previousStatusChar = deleteItem.statusChar();
+
 			if( deleteItem.statusChar() != Constants.QUERY_DELETED_CHAR )
 				{
-				if( addItemToList( Constants.QUERY_DELETED_CHAR, deleteItem ) == Constants.RESULT_OK )
-					deleteItem.isAvailableForRollbackAfterDelete = isAvailableForRollback;
-				else
+				if( addItemToList( Constants.QUERY_DELETED_CHAR, deleteItem ) != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to add an item to the deleted list" );
 				}
 			else
@@ -616,7 +615,7 @@ class List
 			{
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
-				if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
+				if( deleteItem( searchItem ) == Constants.RESULT_OK )
 					searchItem = nextListItem_;
 				else
 					return addError( 1, null, "I failed to delete an active item" );
@@ -631,40 +630,25 @@ class List
 	protected byte removeFirstRangeOfDeletedItemsInList()
 		{
 		Item removeItem = deletedList_;
-		Item previousRemoveItem = null;
 
-		if( CommonVariables.nDeletedItems == 0 &&
-		CommonVariables.removeSentenceNr == 0 &&
-		CommonVariables.removeStartItemNr == 0 )
+		if( removeItem != null )
 			{
-			// Skip items that must be kept for rollback
-			while( removeItem != null &&
-			// and items of current sentence (if wanted)
-			removeItem.isAvailableForRollbackAfterDelete )
-				{
-				previousRemoveItem = removeItem;
-				removeItem = removeItem.nextItem;
-				}
-
-			// Found items to remove
-			if( removeItem != null )
+			if( CommonVariables.nDeletedItems == 0 &&
+			CommonVariables.removeSentenceNr == 0 &&
+			CommonVariables.removeStartItemNr == 0 )
 				{
 				CommonVariables.removeSentenceNr = removeItem.creationSentenceNr();
 				CommonVariables.removeStartItemNr = removeItem.itemNr();
 
 				do	{
-					if( previousRemoveItem == null )
-						// Disconnect deleted list from item
-						deletedList_ = deletedList_.nextItem;
-					else
-						// Disconnect deleted list from item
-						previousRemoveItem.nextItem = removeItem.nextItem;
+					// Disconnect deleted list from item
+					deletedList_ = deletedList_.nextItem;
 
 					if( removeItem.checkForUsage() == Constants.RESULT_OK )
 						{
 						// Disconnect item from the deleted list
 						removeItem.nextItem = null;
-						removeItem = ( previousRemoveItem == null ? deletedList_ : previousRemoveItem.nextItem );
+						removeItem = deletedList_;
 						CommonVariables.nDeletedItems++;
 						}
 					else
@@ -676,71 +660,9 @@ class List
 				// Ascending item number
 				removeItem.itemNr() == CommonVariables.removeStartItemNr + CommonVariables.nDeletedItems );
 				}
-			}
-		else
-			return startError( 1, null, "There is already a range of deleted items" );
-
-		return Constants.RESULT_OK;
-		}
-
-	protected byte removeItemFromList( Item removeItem )
-		{
-		if( removeItem != null )
-			{
-			if( removeItem.myList() == this )
-				{
-				// First item in list
-				if( removeItem.previousItem == null )
-					{
-					switch( removeItem.statusChar() )
-						{
-						case Constants.QUERY_ACTIVE_CHAR:
-							activeList_ = removeItem.nextItem;
-							break;
-
-						case Constants.QUERY_INACTIVE_CHAR:
-							inactiveList_ = removeItem.nextItem;
-							break;
-
-						case Constants.QUERY_ARCHIVED_CHAR:
-							archivedList_ = removeItem.nextItem;
-							break;
-
-						case Constants.QUERY_REPLACED_CHAR:
-							replacedList_ = removeItem.nextItem;
-							break;
-
-						case Constants.QUERY_DELETED_CHAR:
-							deletedList_ = removeItem.nextItem;
-							break;
-
-						default:
-							return startError( 1, null, "The given remove item has an unknown status character" );
-						}
-
-					if( removeItem.nextItem != null )
-						removeItem.nextItem.previousItem = null;
-					}
-				else
-					{
-					removeItem.previousItem.nextItem = removeItem.nextItem;
-
-					if( removeItem.nextItem != null )
-						removeItem.nextItem.previousItem = removeItem.previousItem;
-					}
-
-				// Remember next item
-				nextListItem_ = removeItem.nextItem;
-
-				// Disconnect item from the list
-				removeItem.previousItem = null;
-				removeItem.nextItem = null;
-				}
 			else
-				return startError( 1, null, "The given remove item doesn't belong to my list" );
+				return startError( 1, null, "There is already a range of deleted items" );
 			}
-		else
-			return startError( 1, null, "The given remove item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -783,9 +705,9 @@ class List
 
 	// Protected cleanup methods
 
-	protected void deleteRollbackInfoInList()
+	protected void clearReplacedInfoInList()
 		{
-		listCleanup_.deleteRollbackInfo();
+		listCleanup_.clearReplacedInfo();
 		}
 
 	protected void getHighestInUseSentenceNrInList( boolean isIncludingDeletedItems, int highestSentenceNr )
@@ -806,19 +728,14 @@ class List
 		return listCleanup_.decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset );
 		}
 
-	protected byte deleteSentencesInList( boolean isAvailableForRollback, int lowestSentenceNr )
+	protected byte deleteSentencesInList( int lowestSentenceNr )
 		{
-		return listCleanup_.deleteSentences( isAvailableForRollback, lowestSentenceNr );
+		return listCleanup_.deleteSentences( lowestSentenceNr );
 		}
 
 	protected byte decrementSentenceNrsInList( int startSentenceNr )
 		{
 		return listCleanup_.decrementSentenceNrs( startSentenceNr );
-		}
-
-	protected byte rollbackDeletedRedoInfoInList()
-		{
-		return listCleanup_.rollbackDeletedRedoInfo();
 		}
 
 	protected byte undoCurrentSentenceInList()

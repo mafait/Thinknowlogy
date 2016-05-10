@@ -6,4 +6,4 @@ Juan es el padre y Ana es la madre de Pablo, José y Luisa.
 ¿Es Juan el padre de Pablo?
 ¿Es Ana la madre de Luisa?
 ¿Es Ana el padre de Luisa?
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

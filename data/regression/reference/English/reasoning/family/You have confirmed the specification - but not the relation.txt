@@ -77,7 +77,7 @@
 < Is Laura a girl or a woman?
 < 
 * 
-* You have confirmed the specification - but no relation(s) - of my earlier assumption(s):
+* You have confirmed the specification - but none of its relations - of my earlier assumptions:
 < John is probably a parent of Paul, Joe and Laura.
 * 
 * My assumptions that are concluded:
@@ -86,23 +86,23 @@
 < John is not a mother.
 < 
 * 
-* You have confirmed the specification - but no relation(s) - of my earlier conclusion(s):
+* You have confirmed the specification - but none of its relations - of my earlier conclusions:
 < Paul has a father, called John.
 < 
 * 
-* You have confirmed the specification - but no relation(s) - of my earlier conclusion(s):
+* You have confirmed the specification - but none of its relations - of my earlier conclusions:
 < Paul has a mother, called Anna.
 < 
 * 
-* You have confirmed the specification - but no relation(s) - of my earlier conclusion(s):
+* You have confirmed the specification - but none of its relations - of my earlier conclusions:
 < Joe has a mother, called Anna.
 < 
 * 
-* You have confirmed the specification - but no relation(s) - of my earlier conclusion(s):
+* You have confirmed the specification - but none of its relations - of my earlier conclusions:
 < Joe has a father, called John.
 < 
 * 
-* You have confirmed the specification - but no relation(s) - of my earlier conclusion(s):
+* You have confirmed the specification - but none of its relations - of my earlier conclusions:
 < Laura has a father, called John.
 < Laura has a mother, called Anna.
 < 

@@ -20,30 +20,113 @@
  Mostrar la garantía.
 ------------------------------------------------------------------------------
  Archivos de ejemplo: Utilice botón <más ejemplos>
-	    o ver carpeta: Thinknowlogy2015r1/data/examples/Español/
- Fundamental:	* carpeta: Thinknowlogy2015r1/documents/
- Proyecto:	* carpeta: Thinknowlogy2015r1/documents/design/
- Imágenes:	* carpeta: Thinknowlogy2015r1/screenshots/Español/
+	    o ver carpeta: Thinknowlogy2016r1/data/examples/Español/
+ Fundamental:		* carpeta: Thinknowlogy2016r1/documents/
+ Proyecto:		* carpeta: Thinknowlogy2016r1/documents/design/
+ Imágenes:		* carpeta: Thinknowlogy2016r1/screenshots/Español/
+------------------------------------------------------------------------------
+< 
+< Especificaciones:
+< Nederlands es la anterior idioma. (aprendido de usuario Admin)
+< Français es una idioma. (aprendido de usuario Admin)
+< Español es la corriente idioma. (aprendido de usuario Admin)
+< English es una idioma. (aprendido de usuario Admin)
+< 
+------------------------------------------------------------------------------
+ Número total de elementos:	7524.
+------------------------------------------------------------------------------
+ Elementos de administrador:		382.
+------------------------------------------------------------------------------
+ * Elementos activos:				382.
+    <F> Archivos:					2.
+    <R> Leer palabras (temporal):			3.
+    <S> Resolver las puntuaciones (temporal):		0.
+    <W> Palabras:					356, (predefinido: 183).
+    <X> Condiciones:					9.
+    <Y> Acciones:					12.
+    <Z> Alternativas:					0.
+ * Elementos inactivos:				0.
+ * Elementos archivados:			0.
+ * Elementos sustituidos:			0.
+ * Elementos eliminados:			0.
+------------------------------------------------------------------------------
+ Elementos de las palabras:		7142.
+------------------------------------------------------------------------------
+ * Elementos activos:				7108.
+    <a> asignaciones:					6.
+    <c> colecciones:					232.
+    <g> generalizaciones:				323.
+    <i> interfaz:					1120.
+    <j> justificación:					0.
+    <l> gramática:					4052.
+    <m> varias palabras:				77.
+    <s> especificaciones:				378.
+    <r> escribir palabras (temporal):			0.
+    <w> tipos de palabra:				920.
+    <x> contexto:					0.
+ * Elementos inactivos:				3.
+ * Elementos archivados:			25.
+ * Elementos sustituidos:			6.
+ * Elementos eliminados:			0.
+------------------------------------------------------------------------------
+< 
+< Especificaciones:
+< Invitado es un usuario. (aprendido de usuario Admin)
+< Revelador es el corriente usuario. (aprendido de usuario Experto)
+< Experto es el anterior usuario. (aprendido de usuario Invitado)
+< 
+------------------------------------------------------------------------------
+ Número total de elementos de tipo de palabra:	925, (todos idiomas incluidos).
+------------------------------------------------------------------------------
+ * Elementos de tipo de palabra activa:			925.
+   (@1)  Símbolos:						18.
+   (@2)  Números:						43.
+   (@3)  Letras minúsculas:					104.
+   (@4)  Letras mayúsculas:					104.
+   (@5)  Nombres propios:					16.
+   (@6)  Adjetivos:						165.
+   (@7)  Adverbios:						25.
+   (@8)  Respuesta palabras:					8.
+   (@9)  Artículos:						18.
+   (@10) Conjunciones:						15.
+   (@11) Sustantivos singulares:				179.
+   (@12) Sustantivos en plural:					23.
+   (@13) Pronombre personal singular (subjetiva):		0.
+   (@14) Pronombre personal singular (objetiva):		0.
+   (@15) Determinante posesivo singular:			20.
+   (@16) Pronombre posesivo singular:				19.
+   (@17) Plural del pronombre personal (subjetiva):		0.
+   (@18) Plural del pronombre personal (objetivo):		0.
+   (@19) Plural determinante posesivo:				19.
+   (@20) Plural del pronombre posesivo:				21.
+   (@21) Preposiciones:						18.
+   (@22) Verbos singulares:					74.
+   (@23) Verbos en plural:					24.
+   (@24) Palabras de selección:					12.
+ * Elementos de tipo de palabra desactiva:		0.
+ * Elementos de tipo de palabra archivados:		0.
+ * Elementos de tipo de palabra sustituidos:		0.
+ * Elementos de tipo de palabra eliminados:		0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
  Los comandos de consulta disponibles son:				Ejemplos:
 ------------------------------------------------------------------------------
- ~(sentenceNr)		identificación del artículo			~(123)
- ~(sentenceNr,itemNr)	identificación del artículo			~(123,1)
- ~(,itemNr)		identificación del artículo			~(,3)
- ~[sentenceNr]		referencia a la identificación de artículos	~[123]
- ~[sentenceNr,itemNr]	referencia a la identificación de artículos	~[123,1]
- ~[,itemNr]		referencia a la identificación de artículos	~[,3]
- ~<adminListChar>	lista de administradores			~<W>
- ~<wordListChar>	lista de palabras				~<w>
- ~<listCharlistChar>	múltiples listas				~<Xas>
- ~'word'		palabra						~'English'
- ~`wordReference`	referencia a la palabra				~`English`
- ~"textString"		cadena de texto					~"sentence"
+ ~(phraseNr)		identificación del artículo			~(123)
+ ~(phraseNr,artículoNr)	identificación del artículo			~(123,1)
+ ~(,artículoNr)		identificación del artículo			~(,3)
+ ~[phraseNr]		referencia a la identificación de artículos	~[123]
+ ~[phraseNr,artículoNr]	referencia a la identificación de artículos	~[123,1]
+ ~[,artículoNr]		referencia a la identificación de artículos	~[,3]
+ ~<adminListaCar>	lista de administradores			~<W>
+ ~<wordListaCar>	lista de palabras				~<w>
+ ~<listaCarlistaCar>	múltiples listas				~<Xas>
+ ~'palabra'		palabra						~'Español'
+ ~`palabraReferencia`	referencia a la palabra				~`Español`
+ ~"textoCedena"		cadena de texto					~"phrase"
 ------------------------------------------------------------------------------
  Ambos comodines '?' y '*' puede ser utilizado en:
- 			* palabras					~'Engl?sh'
- 			* referencias a una palabra			~`Eng*sh`
+ 			* palabras					~'Espa?ol'
+ 			* referencias a una palabra			~`Es*ol`
  			* cadenas de texto				~"gr?m*"
 ------------------------------------------------------------------------------
  Especificación del elemento vacío mostrará todos los artículos		~()
@@ -68,7 +151,7 @@
 ------------------------------------------------------------------------------
  En los archivos de '~' marcará el fin de una consulta			...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2015, Menno Mafait
+ Copyright (C) 2009-2016, Menno Mafait
  Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles escriba
  "Mostrar la garantía.". Este software es libre, y se le permite redistribuirlo
  bajo ciertas condiciones; Escriba "Mostrar la licencia-GPLv2." para más detalles.

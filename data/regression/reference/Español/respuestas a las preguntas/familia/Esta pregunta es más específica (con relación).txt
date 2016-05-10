@@ -11,14 +11,17 @@
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis conclusiones:
-< Cada hijo es una mujer o un hombre.
-* 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
 < Una hija es probablemente una persona.
 < 
-* No sé nada de Juan, pero voy a seguir la pregunta en la mente.
+* No sé nada acerca de Juan, pero yo seguiré esta pregunta en la mente.
 * 
 * 
 * Esta pregunta es más específica que la anterior pregunta:
@@ -37,12 +40,12 @@
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
-* No sé nada de Ana, pero voy a seguir la pregunta en la mente.
+* No sé nada acerca de Ana, pero yo seguiré esta pregunta en la mente.
 * 
 * 
 * Esta pregunta es más específica que la anterior pregunta:
 < ¿Es Ana un padre o una madre?
-* No sé nada de Ana, pero voy a seguir la pregunta en la mente.
+* No sé nada acerca de Ana, pero yo seguiré esta pregunta en la mente.
 * 
 * 
 * Sus preguntas son contestadas:

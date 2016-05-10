@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminWriteSpecification
+/*	Class:			AdminWriteSpecification
  *	Supports class:	AdminItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,9 +23,7 @@
 
 #include "AdminItem.h"
 #include "GeneralizationItem.cpp"
-#include "Presentation.cpp"
 #include "ReadItem.cpp"
-#include "SpecificationItem.cpp"
 
 class AdminWriteSpecification
 	{
@@ -91,7 +88,7 @@ class AdminWriteSpecification
 
 					isSelfGenerated = currentSpecificationItem->isSelfGenerated();
 
-					if( currentSpecificationItem->isSpecificationWordCollectedWithItself() &&
+					if( currentSpecificationItem->isSpecificationWordSpanishAmbiguous() &&
 					currentSpecificationItem->isPossessiveReversibleConclusion() &&
 					currentSpecificationItem->hasSpecificationNonCompoundCollection() &&
 					adminItem_->nContextWordsInAllWords( currentSpecificationItem->relationContextNr(), currentSpecificationItem->specificationWordItem() ) == 1 )
@@ -105,7 +102,7 @@ class AdminWriteSpecification
 
 					// Skip hidden specifications
 					if( !isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion &&
-					!currentSpecificationItem->isHiddenSpecification() &&
+					!currentSpecificationItem->isHiddenSpanishSpecification() &&
 
 					// Conclusions
 					( ( isWritingSelfGeneratedConclusions &&
@@ -135,7 +132,8 @@ class AdminWriteSpecification
 					( !isWritingCurrentSentenceOnly ||
 					// If nothing has changed, it will result in the notification: "I know".
 					!hasFoundAnyChangeMadeByThisSentence ||
-					currentSpecificationItem->hasNewInformation() ) )
+					currentSpecificationItem->hasNewInformation() ||
+					currentSpecificationItem->wasHiddenSpanishSpecification() ) )
 						{
 						isForcingResponseNotBeingFirstSpecification = ( isAssignment &&
 																		isSelfGenerated &&
@@ -143,7 +141,7 @@ class AdminWriteSpecification
 
 						if( writeWordItem->writeSelectedSpecification( false, isForcingResponseNotBeingFirstSpecification, isWritingCurrentSentenceOnly, false, NO_ANSWER_PARAMETER, currentSpecificationItem ) == RESULT_OK )
 							{
-							if( strlen( commonVariables_->writeSentenceString ) > 0 )
+							if( strlen( commonVariables_->writtenSentenceString ) > 0 )
 								{
 								if( isWritingSelfGeneratedConclusions )
 									{
@@ -214,7 +212,7 @@ class AdminWriteSpecification
 									}
 								else
 									{
-									if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+									if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a sentence" );
 									}
 								}
@@ -517,7 +515,7 @@ class AdminWriteSpecification
 
 		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
 			{
-			// Do for all words for an answer
+			// Do for all active words for an answer
 			do	{
 				if( currentWordItem->isWordTouchedDuringCurrentSentence )
 					{
@@ -540,69 +538,61 @@ class AdminWriteSpecification
 		return RESULT_OK;
 		}
 
-	ResultType checkIntegrityOfStoredUserSentence( char *readSentenceString )
+	ResultType checkIntegrityOfStoredUserSentence( char *readUserSentenceString )
 		{
 		bool haveAllWordsPassed = true;
 		bool hasFoundPluralQuestionVerb = false;
 		ReadItem *currentReadItem = adminItem_->firstActiveReadItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkIntegrityOfStoredUserSentence";
 
-		adminItem_->checkForChangesMadeByThisSentence();
-
-		// Skip when no changes are made
-		if( adminItem_->hasFoundAnyChangeMadeByThisSentence() &&
-		!adminItem_->isUserImperativeSentence() &&
-		!adminItem_->isUserSelectionSentence() )
+		if( currentReadItem != NULL )
 			{
-			if( currentReadItem != NULL )
-				{
-				do	{
-					if( !currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence )
-						haveAllWordsPassed = false;
+			do	{
+				if( !currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence )
+					haveAllWordsPassed = false;
 
-					if( currentReadItem->isPluralQuestionVerb() )
-						hasFoundPluralQuestionVerb = true;
-					}
-				while( haveAllWordsPassed &&
-				( currentReadItem = currentReadItem->nextReadItem() ) != NULL );
+				if( currentReadItem->isPluralQuestionVerb() )
+					hasFoundPluralQuestionVerb = true;
+				}
+			while( haveAllWordsPassed &&
+			( currentReadItem = currentReadItem->nextReadItem() ) != NULL );
+			}
+
+		if( !haveAllWordsPassed &&
+		// Skip plural questions until implemented
+		!hasFoundPluralQuestionVerb )
+			{
+			if( readUserSentenceString != NULL &&
+
+			( adminItem_->isCurrentlyTesting() ||
+			adminItem_->isSystemStartingUp() ) )
+				{
+				if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, EMPTY_STRING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START, readUserSentenceString, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS : INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE ) ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+				}
+			else
+				{
+				if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, EMPTY_STRING, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS : INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE ) ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 				}
 
-			if( !haveAllWordsPassed &&
-			// Skip plural questions until implemented
-			!hasFoundPluralQuestionVerb )
+			if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ )
 				{
-				if( readSentenceString != NULL &&
-
-				( adminItem_->isTesting() ||
-				adminItem_->isSystemStartingUp() ) )
+				if( showWordsThatDidntPassIntegrityCheckOfStoredUserSentence() == RESULT_OK )
 					{
-					if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, EMPTY_STRING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START, readSentenceString, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS : INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE ) ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+					if( strlen( commonVariables_->writtenSentenceString ) > 0 )
+						{
+						if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START, commonVariables_->writtenSentenceString, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END ) != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+						}
 					}
 				else
-					{
-					if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, EMPTY_STRING, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS : INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE ) ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
-					}
-
-				if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ )
-					{
-					if( showWordsThatDidntPassIntegrityCheckOfStoredUserSentence() == RESULT_OK )
-						{
-						if( strlen( commonVariables_->writeSentenceString ) > 0 )
-							{
-							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START, commonVariables_->writeSentenceString, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END ) != RESULT_OK )
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
-							}
-						}
-					else
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to show the words that didn't pass" );
-					}
-
-				if( adminItem_->isSystemStartingUp() &&
-				commonVariables_->hasShownWarning )
-					return adminItem_->startError( functionNameString, moduleNameString_, "An integrity error occurred during startup" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to show the words that didn't pass the integrity check" );
 				}
+
+			if( adminItem_->isSystemStartingUp() &&
+			commonVariables_->hasShownWarning )
+				return adminItem_->startError( functionNameString, moduleNameString_, "An integrity error occurred during startup" );
 			}
 
 		return RESULT_OK;
@@ -612,10 +602,11 @@ class AdminWriteSpecification
 		{
 		ReadResultType readResult;
 		unsigned short lastFoundWordOrderNr = NO_ORDER_NR;
-		size_t writeSentenceStringLength;
+		size_t writtenUserSentenceStringLength;
 		size_t readWordTypeStringLength;
 		size_t wordPosition = 0;
 		char *readWordTypeString;
+		char *writtenUserSentenceString;
 		ReadItem *currentReadItem;
 		ReadItem *startNewSpecificationReadItem = NULL;
 		WordItem *generalizationWordItem;
@@ -627,9 +618,11 @@ class AdminWriteSpecification
 				{
 				if( ( generalizationWordItem = userSpecificationItem->generalizationWordItem() ) != NULL )
 					{
-					if( generalizationWordItem->writeSelectedSpecification( false, userSpecificationItem ) == RESULT_OK )
+					if( generalizationWordItem->writeSelectedSpecification( true, false, userSpecificationItem ) == RESULT_OK )
 						{
-						if( ( writeSentenceStringLength = strlen( commonVariables_->writeSentenceString ) ) > 0 )
+						writtenUserSentenceString = commonVariables_->writtenUserSentenceString;
+
+						if( ( writtenUserSentenceStringLength = strlen( writtenUserSentenceString ) ) > 0 )
 							{
 							do	{
 								do	{
@@ -640,13 +633,13 @@ class AdminWriteSpecification
 										{
 										readWordTypeStringLength = strlen( readWordTypeString );
 
-										if( ( readResult = adminItem_->readWordFromString( false, false, wordPosition, readWordTypeStringLength, commonVariables_->writeSentenceString ) ).result == RESULT_OK )
+										if( ( readResult = adminItem_->readWordFromString( false, false, false, wordPosition, readWordTypeStringLength, writtenUserSentenceString ) ).result == RESULT_OK )
 											{
 											if( readResult.wordLength > 0 &&
 											!currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence )
 												{
 												if( readWordTypeStringLength == readResult.wordLength &&
-												strncmp( &commonVariables_->writeSentenceString[wordPosition], readWordTypeString, readResult.wordLength ) == 0 )
+												strncmp( &writtenUserSentenceString[wordPosition], readWordTypeString, readResult.wordLength ) == 0 )
 													{
 													hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = true;
 													currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence = true;
@@ -666,15 +659,19 @@ class AdminWriteSpecification
 													if( currentReadItem->isLinkedGeneralizationConjunction() ||
 
 													// Skip on grammar conjunctions.
-													// Example: "Guest is a user and has no password."
+													// Example: "Expert is a user and his password is expert123."
 													currentReadItem->isSentenceConjunction() ||
 
 													// Skip on extra comma in sentence that isn't written.
 													// See grammar file for: '( symbolComma )'
+													// Example: "A creature is an animal, fungus, human-being, micro-organism, or plant."
 													currentReadItem->isSymbol() ||
 
-													// Skip text until it is implemented
-													currentReadItem->isText() ||
+													// A singular adjective is given, but a plural adjective is found.
+													// Example, given: "Laurent a un parent, appelée Amélie.",
+													// but found: "Laurent a 2 parent [pluriel de «parent» est inconnue], appelés Olivier et Amélie."
+													( currentReadItem->isAdjectiveCalledSingularFeminineOrMasculine() &&
+													adminItem_->nContextWordsInAllWords( userSpecificationItem->relationContextNr(), userSpecificationItem->specificationWordItem() ) > 1 ) ||
 
 													// Skip if indefinite article doesn't match with noun.
 													// In that case, a warning will be shown.
@@ -702,7 +699,7 @@ class AdminWriteSpecification
 								wordPosition = readResult.nextWordPosition;
 								currentReadItem = startNewSpecificationReadItem;
 								}
-							while( readResult.nextWordPosition < writeSentenceStringLength );
+							while( readResult.nextWordPosition < writtenUserSentenceStringLength );
 							}
 						}
 					else
@@ -731,7 +728,7 @@ class AdminWriteSpecification
 
 		if( ( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
 			{
-			// Do for all words for self-generated info
+			// Do for all active words for self-generated info
 			do	{
 				if( currentWordItem->isWordTouchedDuringCurrentSentence )
 					{
@@ -742,7 +739,7 @@ class AdminWriteSpecification
 			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 			}
 		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The first word item is undefined" );
+			return adminItem_->startError( functionNameString, moduleNameString_, "The last predefined word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -797,7 +794,7 @@ class AdminWriteSpecification
 			}
 
 		if( isWritingSpecificationInfo &&
-		!writeWordItem->isNounWordCollectedWithItself() )
+		!writeWordItem->isNounWordSpanishAmbiguous() )
 			{
 			if( writeSelectedSpecificationInfo( writeWordItem ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write selected specification info" );

@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminWriteSpecification
+/*	Class:			AdminWriteSpecification
  *	Supports class:	AdminItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -77,7 +76,7 @@ class AdminWriteSpecification
 
 					isSelfGenerated = currentSpecificationItem.isSelfGenerated();
 
-					if( currentSpecificationItem.isSpecificationWordCollectedWithItself() &&
+					if( currentSpecificationItem.isSpecificationWordSpanishAmbiguous() &&
 					currentSpecificationItem.isPossessiveReversibleConclusion() &&
 					currentSpecificationItem.hasSpecificationNonCompoundCollection() &&
 					adminItem_.nContextWordsInAllWords( currentSpecificationItem.relationContextNr(), currentSpecificationItem.specificationWordItem() ) == 1 )
@@ -91,7 +90,7 @@ class AdminWriteSpecification
 
 					// Skip hidden specifications
 					if( !isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion &&
-					!currentSpecificationItem.isHiddenSpecification() &&
+					!currentSpecificationItem.isHiddenSpanishSpecification() &&
 
 					// Conclusions
 					( ( isWritingSelfGeneratedConclusions &&
@@ -121,7 +120,8 @@ class AdminWriteSpecification
 					( !isWritingCurrentSentenceOnly ||
 					// If nothing has changed, it will result in the notification: "I know".
 					!hasFoundAnyChangeMadeByThisSentence ||
-					currentSpecificationItem.hasNewInformation() ) )
+					currentSpecificationItem.hasNewInformation() ||
+					currentSpecificationItem.wasHiddenSpanishSpecification() ) )
 						{
 						isForcingResponseNotBeingFirstSpecification = ( isAssignment &&
 																		isSelfGenerated &&
@@ -129,8 +129,8 @@ class AdminWriteSpecification
 
 						if( writeWordItem.writeSelectedSpecification( false, isForcingResponseNotBeingFirstSpecification, isWritingCurrentSentenceOnly, false, Constants.NO_ANSWER_PARAMETER, currentSpecificationItem ) == Constants.RESULT_OK )
 							{
-							if( CommonVariables.writeSentenceStringBuffer != null &&
-							CommonVariables.writeSentenceStringBuffer.length() > 0 )
+							if( CommonVariables.writtenSentenceStringBuffer != null &&
+							CommonVariables.writtenSentenceStringBuffer.length() > 0 )
 								{
 								if( isWritingSelfGeneratedConclusions )
 									{
@@ -201,7 +201,7 @@ class AdminWriteSpecification
 									}
 								else
 									{
-									if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writeSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+									if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 										return adminItem_.addError( 1, moduleNameString_, "I failed to write a sentence" );
 									}
 								}
@@ -489,7 +489,7 @@ class AdminWriteSpecification
 
 		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
 			{
-			// Do for all words for an answer
+			// Do for all active words for an answer
 			do	{
 				if( currentWordItem.isWordTouchedDuringCurrentSentence )
 					{
@@ -512,69 +512,61 @@ class AdminWriteSpecification
 		return Constants.RESULT_OK;
 		}
 
-	protected byte checkIntegrityOfStoredUserSentence( String readSentenceString )
+	protected byte checkIntegrityOfStoredUserSentence( String readUserSentenceString )
 		{
 		boolean haveAllWordsPassed = true;
 		boolean hasFoundPluralQuestionVerb = false;
 		ReadItem currentReadItem = adminItem_.firstActiveReadItem();
 
-		adminItem_.checkForChangesMadeByThisSentence();
-
-		// Skip when no changes are made
-		if( adminItem_.hasFoundAnyChangeMadeByThisSentence() &&
-		!adminItem_.isUserImperativeSentence() &&
-		!adminItem_.isUserSelectionSentence() )
+		if( currentReadItem != null )
 			{
-			if( currentReadItem != null )
-				{
-				do	{
-					if( !currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence )
-						haveAllWordsPassed = false;
+			do	{
+				if( !currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence )
+					haveAllWordsPassed = false;
 
-					if( currentReadItem.isPluralQuestionVerb() )
-						hasFoundPluralQuestionVerb = true;
-					}
-				while( haveAllWordsPassed &&
-				( currentReadItem = currentReadItem.nextReadItem() ) != null );
+				if( currentReadItem.isPluralQuestionVerb() )
+					hasFoundPluralQuestionVerb = true;
+				}
+			while( haveAllWordsPassed &&
+			( currentReadItem = currentReadItem.nextReadItem() ) != null );
+			}
+
+		if( !haveAllWordsPassed &&
+		// Skip plural questions until implemented
+		!hasFoundPluralQuestionVerb )
+			{
+			if( readUserSentenceString != null &&
+
+			( adminItem_.isCurrentlyTesting() ||
+			adminItem_.isSystemStartingUp() ) )
+				{
+				if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, Constants.EMPTY_STRING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START, readUserSentenceString, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS : Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE ) ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
+				}
+			else
+				{
+				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, Constants.EMPTY_STRING, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS : Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE ) ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
 				}
 
-			if( !haveAllWordsPassed &&
-			// Skip plural questions until implemented
-			!hasFoundPluralQuestionVerb )
+			if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ )
 				{
-				if( readSentenceString != null &&
-
-				( adminItem_.isTesting() ||
-				adminItem_.isSystemStartingUp() ) )
+				if( showWordsThatDidntPassIntegrityCheckOfStoredUserSentence() == Constants.RESULT_OK )
 					{
-					if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, Constants.EMPTY_STRING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START, readSentenceString, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS : Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE ) ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
+					if( CommonVariables.writtenSentenceStringBuffer != null &&
+					CommonVariables.writtenSentenceStringBuffer.length() > 0 )
+						{
+						if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START, CommonVariables.writtenSentenceStringBuffer.toString(), Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END ) != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
+						}
 					}
 				else
-					{
-					if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, Constants.EMPTY_STRING, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS : Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE ) ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
-					}
-
-				if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ )
-					{
-					if( showWordsThatDidntPassIntegrityCheckOfStoredUserSentence() == Constants.RESULT_OK )
-						{
-						if( CommonVariables.writeSentenceStringBuffer != null &&
-						CommonVariables.writeSentenceStringBuffer.length() > 0 )
-							{
-							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START, CommonVariables.writeSentenceStringBuffer.toString(), Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
-							}
-						}
-					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to show the words that didn't pass" );
-					}
-
-				if( adminItem_.isSystemStartingUp() &&
-				CommonVariables.hasShownWarning )
-					return adminItem_.startError( 1, moduleNameString_, "An integrity error occurred during startup" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to show the words that didn't pass the integrity check" );
 				}
+
+			if( adminItem_.isSystemStartingUp() &&
+			CommonVariables.hasShownWarning )
+				return adminItem_.startError( 1, moduleNameString_, "An integrity error occurred during startup" );
 			}
 
 		return Constants.RESULT_OK;
@@ -584,10 +576,11 @@ class AdminWriteSpecification
 		{
 		ReadResultType readResult = new ReadResultType();
 		short lastFoundWordOrderNr = Constants.NO_ORDER_NR;
-		int writeSentenceStringBufferLength;
+		int writtenUserSentenceStringBufferLength;
 		int readWordTypeStringLength;
 		int wordPosition = 0;
 		String readWordTypeString;
+		StringBuffer writtenUserSentenceStringBuffer;
 		ReadItem currentReadItem;
 		ReadItem startNewSpecificationReadItem = null;
 		WordItem generalizationWordItem;
@@ -598,10 +591,12 @@ class AdminWriteSpecification
 				{
 				if( ( generalizationWordItem = userSpecificationItem.generalizationWordItem() ) != null )
 					{
-					if( generalizationWordItem.writeSelectedSpecification( false, userSpecificationItem ) == Constants.RESULT_OK )
+					if( generalizationWordItem.writeSelectedSpecification( true, false, userSpecificationItem ) == Constants.RESULT_OK )
 						{
-						if( CommonVariables.writeSentenceStringBuffer != null &&
-						( writeSentenceStringBufferLength = CommonVariables.writeSentenceStringBuffer.length() ) > 0 )
+						writtenUserSentenceStringBuffer = CommonVariables.writtenUserSentenceStringBuffer;
+
+						if( writtenUserSentenceStringBuffer != null &&
+						( writtenUserSentenceStringBufferLength = writtenUserSentenceStringBuffer.length() ) > 0 )
 							{
 							do	{
 								do	{
@@ -612,13 +607,13 @@ class AdminWriteSpecification
 										{
 										readWordTypeStringLength = readWordTypeString.length();
 
-										if( ( readResult = adminItem_.readWordFromString( false, false, wordPosition, readWordTypeStringLength, CommonVariables.writeSentenceStringBuffer.toString() ) ).result == Constants.RESULT_OK )
+										if( ( readResult = adminItem_.readWordFromString( false, false, false, wordPosition, readWordTypeStringLength, writtenUserSentenceStringBuffer.toString() ) ).result == Constants.RESULT_OK )
 											{
 											if( readResult.wordLength > 0 &&
 											!currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence )
 												{
 												if( readWordTypeStringLength == readResult.wordLength &&
-												CommonVariables.writeSentenceStringBuffer.substring( wordPosition ).startsWith( readWordTypeString ) )
+												writtenUserSentenceStringBuffer.substring( wordPosition ).startsWith( readWordTypeString ) )
 													{
 													hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = true;
 													currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence = true;
@@ -638,15 +633,19 @@ class AdminWriteSpecification
 													if( currentReadItem.isLinkedGeneralizationConjunction() ||
 
 													// Skip on grammar conjunctions.
-													// Example: "Guest is a user and has no password."
+													// Example: "Expert is a user and his password is expert123."
 													currentReadItem.isSentenceConjunction() ||
 
 													// Skip on extra comma in sentence that isn't written.
 													// See grammar file for: '( symbolComma )'
+													// Example: "A creature is an animal, fungus, human-being, micro-organism, or plant."
 													currentReadItem.isSymbol() ||
 
-													// Skip text until it is implemented
-													currentReadItem.isText() ||
+													// A singular adjective is given, but a plural adjective is found.
+													// Example, given: "Laurent a un parent, appelée Amélie.",
+													// but found: "Laurent a 2 parent [pluriel de «parent» est inconnue], appelés Olivier et Amélie."
+													( currentReadItem.isAdjectiveCalledSingularFeminineOrMasculine() &&
+													adminItem_.nContextWordsInAllWords( userSpecificationItem.relationContextNr(), userSpecificationItem.specificationWordItem() ) > 1 ) ||
 
 													// Skip if indefinite article doesn't match with noun.
 													// In that case, a warning will be shown.
@@ -674,7 +673,7 @@ class AdminWriteSpecification
 								wordPosition = readResult.nextWordPosition;
 								currentReadItem = startNewSpecificationReadItem;
 								}
-							while( readResult.nextWordPosition < writeSentenceStringBufferLength );
+							while( readResult.nextWordPosition < writtenUserSentenceStringBufferLength );
 							}
 						}
 					else
@@ -702,7 +701,7 @@ class AdminWriteSpecification
 
 		if( ( currentWordItem = CommonVariables.lastPredefinedWordItem ) != null )
 			{
-			// Do for all words for self-generated info
+			// Do for all active words for self-generated info
 			do	{
 				if( currentWordItem.isWordTouchedDuringCurrentSentence )
 					{
@@ -713,7 +712,7 @@ class AdminWriteSpecification
 			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 			}
 		else
-			return adminItem_.startError( 1, moduleNameString_, "The first word item is undefined" );
+			return adminItem_.startError( 1, moduleNameString_, "The last predefined word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
@@ -764,7 +763,7 @@ class AdminWriteSpecification
 			}
 
 		if( isWritingSpecificationInfo &&
-		!writeWordItem.isNounWordCollectedWithItself() )
+		!writeWordItem.isNounWordSpanishAmbiguous() )
 			{
 			if( writeSelectedSpecificationInfo( writeWordItem ) != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to write selected specification info" );

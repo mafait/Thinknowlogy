@@ -1,10 +1,9 @@
-/*
- *	Class:		Console
+/*	Class:		Console
  *	Purpose:	To create the GUI and to process the events
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -57,11 +56,9 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static boolean hasSelectedAmbiguityPresidents_;
 	private static boolean hasSelectedProgrammingConnect4_;
 	private static boolean hasSelectedProgrammingTowerOfHanoi_;
-	private static boolean hasSelectedReasoningEveryCarHasAnEngine_;
-	private static boolean hasSelectedReasoningASailIsPartOfEverySailboat_;
-	private static boolean hasSelectedReasoningJamesWasTheFatherOfMichael_;
-	private static boolean hasSelectedReasoningReadTheFileOnlyOptionLeftBoat_;
-	private static boolean hasSelectedReasoningFamily_;
+	private static boolean hasSelectedReasoningScientificChallenge_;
+	private static boolean hasSelectedReasoningFamilyDefinition_;
+	private static boolean hasSelectedMoreExamples_;
 
 	private static boolean isActionPerformed_;
 	private static boolean isStopResizing_;
@@ -120,17 +117,15 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static JButton mainMenuReadTheFileProgrammingTowerOfHanoiButton_;
 
 	private static JButton mainMenuReasoningSubMenuButton_;
-	private static JButton mainMenuEveryCarHasAnEngineButton_;
-	private static JButton mainMenuASailIsPartOfEverySailboat_;
-	private static JButton mainMenuJamesWasTheFatherOfMichaelButton_;
-	private static JButton mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_;
+	private static JButton mainMenuReasoningFamilyDefinitionsSubMenuButton_;
+	private static JButton mainMenuReasoningFamilyConflictsSubMenuButton_;
+	private static JButton mainMenuReasoningFamilyJustificationSubMenuButton_;
+	private static JButton mainMenuReasoningFamilyQuestionsSubMenuButton_;
+	private static JButton mainMenuReasoningFamilyShowInformationSubMenuButton_;
 
-	private static JButton mainMenuReadTheFileReasoningFamilyButton_;
-	private static JButton mainMenuFamilyDefinitionsSubMenuButton_;
-	private static JButton mainMenuFamilyConflictsSubMenuButton_;
-	private static JButton mainMenuFamilyJustificationSubMenuButton_;
-	private static JButton mainMenuFamilyQuestionsSubMenuButton_;
-	private static JButton mainMenuFamilyShowInformationSubMenuButton_;
+	private static JButton mainMenuReasoningReadTheFileScientificChallengeButton_;
+
+	private static JButton mainMenuReasoningReadTheFileFamilyDefinitionButton_;
 
 	private static JButton mainMenuBackButton_;
 	private static JButton mainMenuChangeLanguageButton_;
@@ -159,7 +154,10 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		( interfaceString = currentLanguageWordItem_.interfaceString( interfaceParameter ) ) != null )
 			{
 			if( !interfaceString.equals( Constants.INTERFACE_STRING_NOT_AVAILABLE ) )
+				{
+				subMenuButtonArray_[nSubMenuButtons_].setEnabled( true );
 				subMenuButtonArray_[nSubMenuButtons_++].setText( interfaceString );
+				}
 			}
 		}
 
@@ -231,6 +229,11 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	private static void enableMenus( boolean isEnablingNormalButtons, boolean isEnablingSubMenuButtons )
 		{
+		boolean hasSelectedMainButton = ( hasSelectedProgrammingConnect4_ ||
+										hasSelectedProgrammingTowerOfHanoi_ ||
+										hasSelectedReasoningScientificChallenge_ ||
+										hasSelectedReasoningFamilyDefinition_ ||
+										hasSelectedMoreExamples_ );
 		boolean isInitMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_INIT );
 		boolean isChangeLanguageMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
 		boolean isChangeFontMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_FONT );
@@ -239,7 +242,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 								isChangeLanguageMenu ||
 								isChangeFontMenu ||
 								isHelpMenu );
-		
+
 		// Upper menu
 		upperMenuClearYourMindButton_.setEnabled( isEnablingNormalButtons );
 		upperMenuRestartButton_.setEnabled( isEnablingNormalButtons );
@@ -248,7 +251,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		upperMenuLoginAsExpertButton_.setEnabled( isEnablingNormalButtons && !Presentation.isExpertUser() );
 		upperMenuLoginAsDeveloperButton_.setEnabled( isEnablingNormalButtons && Presentation.isExpertUser() );
 		upperMenuReadTheTestFileRegressionButton_.setEnabled( isEnablingNormalButtons && Presentation.isDeveloperUser() );
-		upperMenuMoreExamplesButton_.setEnabled( isEnablingNormalButtons );
+		upperMenuMoreExamplesButton_.setEnabled( !hasSelectedMainButton && isEnablingNormalButtons );
 
 		// Main menu
 		mainMenuAmbiguitySubMenuButton_.setEnabled( isEnablingNormalButtons );
@@ -262,10 +265,10 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		if( currentSubMenu_ == Constants.CONSOLE_SUBMENU_AMBIGUITY )
 			{
-			mainMenuReadTheFileAmbiguityBostonButton_.setEnabled( hasSelectedAmbiguityBoston_ ? false : isEnablingNormalButtons );
+			mainMenuReadTheFileAmbiguityBostonButton_.setEnabled( !hasSelectedAmbiguityBoston_ && isEnablingNormalButtons );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_BOSTON, mainMenuReadTheFileAmbiguityBostonButton_ );
 
-			mainMenuReadTheFileAmbiguityPresidentsButton_.setEnabled( hasSelectedAmbiguityPresidents_ ? false : isEnablingNormalButtons );
+			mainMenuReadTheFileAmbiguityPresidentsButton_.setEnabled( !hasSelectedAmbiguityPresidents_ && isEnablingNormalButtons );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_PRESIDENTS, mainMenuReadTheFileAmbiguityPresidentsButton_ );
 			}
 		else
@@ -279,10 +282,10 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		currentSubMenu_ == Constants.CONSOLE_SUBMENU_PROGRAMMING_GREETING ||
 		currentSubMenu_ == Constants.CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI )
 			{
-			mainMenuReadTheFileProgrammingConnect4Button_.setEnabled( hasSelectedProgrammingConnect4_ ? false : isEnablingNormalButtons );
+			mainMenuReadTheFileProgrammingConnect4Button_.setEnabled( !hasSelectedMainButton && isEnablingNormalButtons );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_CONNECT4, mainMenuReadTheFileProgrammingConnect4Button_ );
 
-			mainMenuReadTheFileProgrammingTowerOfHanoiButton_.setEnabled( hasSelectedProgrammingTowerOfHanoi_ ? false : isEnablingNormalButtons );
+			mainMenuReadTheFileProgrammingTowerOfHanoiButton_.setEnabled( !hasSelectedMainButton && isEnablingNormalButtons );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_TOWER_OF_HANOI, mainMenuReadTheFileProgrammingTowerOfHanoiButton_ );
 			}
 		else
@@ -293,25 +296,11 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		if( currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING )
 			{
-			mainMenuEveryCarHasAnEngineButton_.setEnabled( hasSelectedReasoningEveryCarHasAnEngine_ ? false : isEnablingNormalButtons );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_EVERY_CAR_HAS_AN_ENGINE, mainMenuEveryCarHasAnEngineButton_ );
-
-			mainMenuASailIsPartOfEverySailboat_.setEnabled( hasSelectedReasoningASailIsPartOfEverySailboat_ ? false : isEnablingNormalButtons );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_A_SAIL_IS_PART_OF_EVERY_SAILBOAT, mainMenuASailIsPartOfEverySailboat_ );
-
-			mainMenuJamesWasTheFatherOfMichaelButton_.setEnabled( hasSelectedReasoningJamesWasTheFatherOfMichael_ ? false : isEnablingNormalButtons );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_JAMES_WAS_THE_FATHER_OF_MICHAEL, mainMenuJamesWasTheFatherOfMichaelButton_ );
-
-			mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_.setEnabled( hasSelectedReasoningReadTheFileOnlyOptionLeftBoat_ ? false : isEnablingNormalButtons );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_READ_THE_FILE_REASONING_ONLY_OPTION_LEFT_BOAT, mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_ );
+			mainMenuReasoningReadTheFileScientificChallengeButton_.setEnabled( !hasSelectedMainButton && isEnablingNormalButtons );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_READ_THE_FILE_SCIENTIFIC_CHALLENGE, mainMenuReasoningReadTheFileScientificChallengeButton_ );
 			}
 		else
-			{
-			mainMenuEveryCarHasAnEngineButton_.setVisible( false );
-			mainMenuASailIsPartOfEverySailboat_.setVisible( false );
-			mainMenuJamesWasTheFatherOfMichaelButton_.setVisible( false );
-			mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_.setVisible( false );
-			}
+			mainMenuReasoningReadTheFileScientificChallengeButton_.setVisible( false );
 
 		if( currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING ||
 		currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS ||
@@ -320,40 +309,40 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS ||
 		currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION )
 			{
-			mainMenuReadTheFileReasoningFamilyButton_.setEnabled( hasSelectedReasoningFamily_ ? false : isEnablingNormalButtons );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_REASONING_FAMILY, mainMenuReadTheFileReasoningFamilyButton_ );
+			mainMenuReasoningReadTheFileFamilyDefinitionButton_.setEnabled( !hasSelectedMainButton && isEnablingNormalButtons );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_REASONING_FAMILY, mainMenuReasoningReadTheFileFamilyDefinitionButton_ );
 
-			mainMenuFamilyDefinitionsSubMenuButton_.setEnabled( hasSelectedReasoningFamily_ && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS ? isEnablingNormalButtons : false );
-			setButtonText( hasSelectedReasoningFamily_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SUBMENU, mainMenuFamilyDefinitionsSubMenuButton_ );
+			mainMenuReasoningFamilyDefinitionsSubMenuButton_.setEnabled( hasSelectedReasoningFamilyDefinition_ && isEnablingNormalButtons && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
+			setButtonText( hasSelectedReasoningFamilyDefinition_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SUBMENU, mainMenuReasoningFamilyDefinitionsSubMenuButton_ );
 
-			mainMenuFamilyConflictsSubMenuButton_.setEnabled( hasSelectedReasoningFamily_ && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS ? isEnablingNormalButtons : false );
-			setButtonText( hasSelectedReasoningFamily_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_CONFLICT_SUBMENU, mainMenuFamilyConflictsSubMenuButton_ );
+			mainMenuReasoningFamilyConflictsSubMenuButton_.setEnabled( hasSelectedReasoningFamilyDefinition_ && isEnablingNormalButtons && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS );
+			setButtonText( hasSelectedReasoningFamilyDefinition_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_CONFLICT_SUBMENU, mainMenuReasoningFamilyConflictsSubMenuButton_ );
 
-			mainMenuFamilyJustificationSubMenuButton_.setEnabled( hasSelectedReasoningFamily_ && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT ? isEnablingNormalButtons : false );
-			setButtonText( hasSelectedReasoningFamily_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_JUSTIFICATION_REPORT_SUBMENU, mainMenuFamilyJustificationSubMenuButton_ );
+			mainMenuReasoningFamilyJustificationSubMenuButton_.setEnabled( hasSelectedReasoningFamilyDefinition_ && isEnablingNormalButtons && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT );
+			setButtonText( hasSelectedReasoningFamilyDefinition_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_JUSTIFICATION_REPORT_SUBMENU, mainMenuReasoningFamilyJustificationSubMenuButton_ );
 
-			mainMenuFamilyQuestionsSubMenuButton_.setEnabled( hasSelectedReasoningFamily_ && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS ? isEnablingNormalButtons : false );
-			setButtonText( hasSelectedReasoningFamily_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_QUESTION_SUBMENU, mainMenuFamilyQuestionsSubMenuButton_ );
+			mainMenuReasoningFamilyQuestionsSubMenuButton_.setEnabled( hasSelectedReasoningFamilyDefinition_ && isEnablingNormalButtons && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS );
+			setButtonText( hasSelectedReasoningFamilyDefinition_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_QUESTION_SUBMENU, mainMenuReasoningFamilyQuestionsSubMenuButton_ );
 
-			mainMenuFamilyShowInformationSubMenuButton_.setEnabled( hasSelectedReasoningFamily_ && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION ? isEnablingNormalButtons : false );
-			setButtonText( hasSelectedReasoningFamily_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SHOW_INFO_SUBMENU, mainMenuFamilyShowInformationSubMenuButton_ );
+			mainMenuReasoningFamilyShowInformationSubMenuButton_.setEnabled( hasSelectedReasoningFamilyDefinition_ && isEnablingNormalButtons && currentSubMenu_ != Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION );
+			setButtonText( hasSelectedReasoningFamilyDefinition_, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SHOW_INFO_SUBMENU, mainMenuReasoningFamilyShowInformationSubMenuButton_ );
 			}
 		else
 			{
-			mainMenuReadTheFileReasoningFamilyButton_.setVisible( false );
+			mainMenuReasoningReadTheFileFamilyDefinitionButton_.setVisible( false );
 
-			mainMenuFamilyDefinitionsSubMenuButton_.setVisible( false );
-			mainMenuFamilyConflictsSubMenuButton_.setVisible( false );
-			mainMenuFamilyJustificationSubMenuButton_.setVisible( false );
-			mainMenuFamilyQuestionsSubMenuButton_.setVisible( false );
-			mainMenuFamilyShowInformationSubMenuButton_.setVisible( false );
+			mainMenuReasoningFamilyDefinitionsSubMenuButton_.setVisible( false );
+			mainMenuReasoningFamilyConflictsSubMenuButton_.setVisible( false );
+			mainMenuReasoningFamilyJustificationSubMenuButton_.setVisible( false );
+			mainMenuReasoningFamilyQuestionsSubMenuButton_.setVisible( false );
+			mainMenuReasoningFamilyShowInformationSubMenuButton_.setVisible( false );
 			}
 
 		mainMenuBackButton_.setEnabled( isEnablingNormalButtons );
 
 		setButtonText( ( !isInitMenu && !isChangeLanguageMenu && !isChangeFontMenu && !isHelpMenu ), Constants.INTERFACE_CONSOLE_MAIN_MENU_BACK, mainMenuBackButton_ );
-		setButtonText( ( isChangeLanguageMenu ? false : isEnablingNormalButtons ), Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE, mainMenuChangeLanguageButton_ );
-		setButtonText( ( isChangeFontMenu ? false : isEnablingNormalButtons ), Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT, mainMenuChangeFontButton_ );
+		setButtonText( ( !isChangeLanguageMenu && isEnablingNormalButtons ), Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE, mainMenuChangeLanguageButton_ );
+		setButtonText( ( !isChangeFontMenu && isEnablingNormalButtons ), Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT, mainMenuChangeFontButton_ );
 		setButtonText( isEnablingNormalButtons, Constants.INTERFACE_CONSOLE_MAIN_MENU_HELP, mainMenuHelpButton_ );
 
 		// Sub-menu
@@ -498,17 +487,14 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_TOWER_OF_HANOI, mainMenuReadTheFileProgrammingTowerOfHanoiButton_ );
 
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_REASONING_SUBMENU, mainMenuReasoningSubMenuButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_EVERY_CAR_HAS_AN_ENGINE, mainMenuEveryCarHasAnEngineButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_A_SAIL_IS_PART_OF_EVERY_SAILBOAT , mainMenuASailIsPartOfEverySailboat_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_JAMES_WAS_THE_FATHER_OF_MICHAEL, mainMenuJamesWasTheFatherOfMichaelButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_READ_THE_FILE_REASONING_ONLY_OPTION_LEFT_BOAT, mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_ );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_REASONING_READ_THE_FILE_SCIENTIFIC_CHALLENGE, mainMenuReasoningReadTheFileScientificChallengeButton_ );
 
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_REASONING_FAMILY, mainMenuReadTheFileReasoningFamilyButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SUBMENU, mainMenuFamilyDefinitionsSubMenuButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_CONFLICT_SUBMENU, mainMenuFamilyConflictsSubMenuButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_JUSTIFICATION_REPORT_SUBMENU, mainMenuFamilyJustificationSubMenuButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_QUESTION_SUBMENU, mainMenuFamilyQuestionsSubMenuButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SHOW_INFO_SUBMENU, mainMenuFamilyShowInformationSubMenuButton_ );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_REASONING_FAMILY, mainMenuReasoningReadTheFileFamilyDefinitionButton_ );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SUBMENU, mainMenuReasoningFamilyDefinitionsSubMenuButton_ );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_CONFLICT_SUBMENU, mainMenuReasoningFamilyConflictsSubMenuButton_ );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_JUSTIFICATION_REPORT_SUBMENU, mainMenuReasoningFamilyJustificationSubMenuButton_ );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_QUESTION_SUBMENU, mainMenuReasoningFamilyQuestionsSubMenuButton_ );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SHOW_INFO_SUBMENU, mainMenuReasoningFamilyShowInformationSubMenuButton_ );
 
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_BACK, mainMenuBackButton_ );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE, mainMenuChangeLanguageButton_ );
@@ -742,13 +728,39 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		upperMenuMoreExamplesButton_.setVisible( isVisible );
 		}
 
-	private static void showConnectFourInterferenceNotification()
+	private static String convertDiacriticalText( String textString )
 		{
-		JTextArea errorTextArea = new JTextArea( "\n\tThe Connect-Four playing rules are still present in the system.\n\tThey may interfere with the current action. My advice:\n\tClear the Connect-Four playing rules from the system first,\n\tby using \"Clear your mind.\" or \"Restart.\". Then select this action again." );
-		errorTextArea.setEditable( false );
-		JScrollPane errorScrollPane = new JScrollPane( errorTextArea );
-		errorScrollPane.setPreferredSize( new Dimension( Constants.CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_WIDTH, Constants.CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_HEIGHT ) );
-		JOptionPane.showMessageDialog( null, errorScrollPane, Constants.CONSOLE_CONNECT_FOUR_INTERFERENCE_MESSAGE_STRING, JOptionPane.ERROR_MESSAGE );			
+		int position = 0;
+		char textChar = Constants.SYMBOL_QUESTION_MARK;
+		StringBuffer textStringBuffer = new StringBuffer();
+
+		if( textString != null )
+			{
+			if( textString.charAt( 0 ) == Constants.QUERY_STRING_START_CHAR )
+				position++;
+
+			while( position < textString.length() &&
+			textString.charAt( position ) != Constants.QUERY_STRING_END_CHAR )
+				{
+				if( textString.charAt( position ) == Constants.SYMBOL_BACK_SLASH )
+					{
+					if( ++position < textString.length() )
+						{
+						textChar = Presentation.convertDiacriticalChar( textString.charAt( position ) );
+						textStringBuffer.append( Constants.EMPTY_STRING + textChar );
+						}
+					}
+				else
+					{
+					textChar = textString.charAt( position );
+					textStringBuffer.append( Constants.EMPTY_STRING + textChar );
+					}
+
+				position++;
+				}
+			}
+
+		return textStringBuffer.toString();
 		}
 
 	private static String getInputString()
@@ -877,35 +889,26 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		mainMenuReasoningSubMenuButton_ = new JButton();
 		mainMenuReasoningSubMenuButton_.addActionListener( this );
 
-		mainMenuEveryCarHasAnEngineButton_ = new JButton();
-		mainMenuEveryCarHasAnEngineButton_.addActionListener( this );
+		mainMenuReasoningReadTheFileScientificChallengeButton_ = new JButton();
+		mainMenuReasoningReadTheFileScientificChallengeButton_.addActionListener( this );
 
-		mainMenuASailIsPartOfEverySailboat_ = new JButton();
-		mainMenuASailIsPartOfEverySailboat_.addActionListener( this );
+		mainMenuReasoningReadTheFileFamilyDefinitionButton_ = new JButton();
+		mainMenuReasoningReadTheFileFamilyDefinitionButton_.addActionListener( this );
 
-		mainMenuJamesWasTheFatherOfMichaelButton_ = new JButton();
-		mainMenuJamesWasTheFatherOfMichaelButton_.addActionListener( this );
+		mainMenuReasoningFamilyDefinitionsSubMenuButton_ = new JButton();
+		mainMenuReasoningFamilyDefinitionsSubMenuButton_.addActionListener( this );
 
-		mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_ = new JButton();
-		mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_.addActionListener( this );
+		mainMenuReasoningFamilyConflictsSubMenuButton_ = new JButton();
+		mainMenuReasoningFamilyConflictsSubMenuButton_.addActionListener( this );
 
-		mainMenuReadTheFileReasoningFamilyButton_ = new JButton();
-		mainMenuReadTheFileReasoningFamilyButton_.addActionListener( this );
+		mainMenuReasoningFamilyJustificationSubMenuButton_ = new JButton();
+		mainMenuReasoningFamilyJustificationSubMenuButton_.addActionListener( this );
 
-		mainMenuFamilyDefinitionsSubMenuButton_ = new JButton();
-		mainMenuFamilyDefinitionsSubMenuButton_.addActionListener( this );
+		mainMenuReasoningFamilyQuestionsSubMenuButton_ = new JButton();
+		mainMenuReasoningFamilyQuestionsSubMenuButton_.addActionListener( this );
 
-		mainMenuFamilyConflictsSubMenuButton_ = new JButton();
-		mainMenuFamilyConflictsSubMenuButton_.addActionListener( this );
-
-		mainMenuFamilyJustificationSubMenuButton_ = new JButton();
-		mainMenuFamilyJustificationSubMenuButton_.addActionListener( this );
-
-		mainMenuFamilyQuestionsSubMenuButton_ = new JButton();
-		mainMenuFamilyQuestionsSubMenuButton_.addActionListener( this );
-
-		mainMenuFamilyShowInformationSubMenuButton_ = new JButton();
-		mainMenuFamilyShowInformationSubMenuButton_.addActionListener( this );
+		mainMenuReasoningFamilyShowInformationSubMenuButton_ = new JButton();
+		mainMenuReasoningFamilyShowInformationSubMenuButton_.addActionListener( this );
 
 		mainMenuBackButton_ = new JButton();
 		mainMenuBackButton_.addActionListener( this );
@@ -981,16 +984,13 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		mainMenuPanel_.add( mainMenuReadTheFileProgrammingTowerOfHanoiButton_ );
 
 		mainMenuPanel_.add( mainMenuReasoningSubMenuButton_ );
-		mainMenuPanel_.add( mainMenuEveryCarHasAnEngineButton_ );
-		mainMenuPanel_.add( mainMenuASailIsPartOfEverySailboat_ );
-		mainMenuPanel_.add( mainMenuJamesWasTheFatherOfMichaelButton_ );
-		mainMenuPanel_.add( mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_ );
-		mainMenuPanel_.add( mainMenuReadTheFileReasoningFamilyButton_ );
-		mainMenuPanel_.add( mainMenuFamilyDefinitionsSubMenuButton_ );
-		mainMenuPanel_.add( mainMenuFamilyConflictsSubMenuButton_ );
-		mainMenuPanel_.add( mainMenuFamilyJustificationSubMenuButton_ );
-		mainMenuPanel_.add( mainMenuFamilyQuestionsSubMenuButton_ );
-		mainMenuPanel_.add( mainMenuFamilyShowInformationSubMenuButton_ );
+		mainMenuPanel_.add( mainMenuReasoningReadTheFileScientificChallengeButton_ );
+		mainMenuPanel_.add( mainMenuReasoningReadTheFileFamilyDefinitionButton_ );
+		mainMenuPanel_.add( mainMenuReasoningFamilyDefinitionsSubMenuButton_ );
+		mainMenuPanel_.add( mainMenuReasoningFamilyConflictsSubMenuButton_ );
+		mainMenuPanel_.add( mainMenuReasoningFamilyJustificationSubMenuButton_ );
+		mainMenuPanel_.add( mainMenuReasoningFamilyQuestionsSubMenuButton_ );
+		mainMenuPanel_.add( mainMenuReasoningFamilyShowInformationSubMenuButton_ );
 
 		mainMenuPanel_.add( mainMenuBackButton_ );
 		mainMenuPanel_.add( mainMenuChangeLanguageButton_ );
@@ -1023,15 +1023,11 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		// Initialize private static variables
 		hasSelectedAmbiguityBoston_ = false;
 		hasSelectedAmbiguityPresidents_ = false;
-
 		hasSelectedProgrammingConnect4_ = false;
 		hasSelectedProgrammingTowerOfHanoi_ = false;
-
-		hasSelectedReasoningEveryCarHasAnEngine_ = false;
-		hasSelectedReasoningASailIsPartOfEverySailboat_ = false;
-		hasSelectedReasoningJamesWasTheFatherOfMichael_ = false;
-		hasSelectedReasoningReadTheFileOnlyOptionLeftBoat_ = false;
-		hasSelectedReasoningFamily_ = false;
+		hasSelectedReasoningScientificChallenge_ = false;
+		hasSelectedReasoningFamilyDefinition_ = false;
+		hasSelectedMoreExamples_ = false;
 
 		isActionPerformed_ = false;
 		isStopResizing_ = false;
@@ -1269,15 +1265,11 @@ class Console extends JPanel implements ActionListener, ComponentListener
 								{
 								hasSelectedAmbiguityBoston_ = false;
 								hasSelectedAmbiguityPresidents_ = false;
-
 								hasSelectedProgrammingConnect4_ = false;
 								hasSelectedProgrammingTowerOfHanoi_ = false;
-
-								hasSelectedReasoningEveryCarHasAnEngine_ = false;
-								hasSelectedReasoningASailIsPartOfEverySailboat_ = false;
-								hasSelectedReasoningJamesWasTheFatherOfMichael_ = false;
-								hasSelectedReasoningReadTheFileOnlyOptionLeftBoat_ = false;
-								hasSelectedReasoningFamily_ = false;
+								hasSelectedReasoningScientificChallenge_ = false;
+								hasSelectedReasoningFamilyDefinition_ = false;
+								hasSelectedMoreExamples_ = false;
 
 								setSubMenuVisible( true, Constants.CONSOLE_SUBMENU_INIT );
 
@@ -1295,7 +1287,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 									if( actionSource == upperMenuReadTheTestFileRegressionButton_ )
 										{
 										isTesting_ = true;
-										inputString_ = ( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_THE_TEST_FILE ) + Constants.SYMBOL_DOUBLE_QUOTE + currentLanguageWordItem_.anyWordTypeString() + Constants.SYMBOL_SLASH + actionCommandString + Presentation.convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) ) );
+										inputString_ = ( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_THE_TEST_FILE ) + currentLanguageWordItem_.anyWordTypeString() + Constants.SYMBOL_SLASH + actionCommandString + convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) ) );
 										}
 									else
 										{
@@ -1308,9 +1300,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 											{
 											if( actionSource == upperMenuMoreExamplesButton_ )
 												{
-												if( hasSelectedProgrammingConnect4_ )
-													showConnectFourInterferenceNotification();
-		
 												if( ( currentDirectory = fileChooser_.getCurrentDirectory() ) != null )
 													{
 													if( currentLanguageWordItem_ != null &&
@@ -1329,7 +1318,10 @@ class Console extends JPanel implements ActionListener, ComponentListener
 													if( ( selectedFile = fileChooser_.getSelectedFile() ) != null )
 														{
 														if( ( selectedFilePath = selectedFile.getPath() ) != null )
-															inputString_ = Presentation.convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START ) ) + selectedFilePath + Presentation.convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) );
+															{
+															hasSelectedMoreExamples_ = true;
+															inputString_ = convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START ) ) + selectedFilePath + convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) );
+															}
 														}
 													}
 												else
@@ -1376,9 +1368,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 																	{
 																	if( actionSource == mainMenuReadTheFileProgrammingTowerOfHanoiButton_ )
 																		{
-																		if( hasSelectedProgrammingConnect4_ )
-																			showConnectFourInterferenceNotification();
-		
 																		hasSelectedProgrammingTowerOfHanoi_ = true;
 																		setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI );
 																		inputString_ = actionCommandString;
@@ -1392,109 +1381,86 @@ class Console extends JPanel implements ActionListener, ComponentListener
 																			}
 																		else
 																			{
-																			if( actionSource == mainMenuEveryCarHasAnEngineButton_ )
+																			if( actionSource == mainMenuReasoningReadTheFileScientificChallengeButton_ )
 																				{
-																				hasSelectedReasoningEveryCarHasAnEngine_ = true;
+																				hasSelectedReasoningScientificChallenge_ = true;
 																				inputString_ = actionCommandString;
 																				}
 																			else
 																				{
-																				if( actionSource == mainMenuASailIsPartOfEverySailboat_ )
+																				if( actionSource == mainMenuReasoningReadTheFileFamilyDefinitionButton_ )
 																					{
-																					hasSelectedReasoningASailIsPartOfEverySailboat_ = true;
+																					hasSelectedReasoningFamilyDefinition_ = true;
+																					setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
 																					inputString_ = actionCommandString;
 																					}
 																				else
 																					{
-																					if( actionSource == mainMenuJamesWasTheFatherOfMichaelButton_ )
+																					if( actionSource == mainMenuReasoningFamilyDefinitionsSubMenuButton_ )
 																						{
-																						hasSelectedReasoningJamesWasTheFatherOfMichael_ = true;
-																						inputString_ = actionCommandString;
+																						setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
+																						enableMenus( true, true );
 																						}
 																					else
 																						{
-																						if( actionSource == mainMenuReadTheFileReasoningOnlyOptionLeftBoatButton_ )
+																						if( actionSource == mainMenuReasoningFamilyConflictsSubMenuButton_ )
 																							{
-																							hasSelectedReasoningReadTheFileOnlyOptionLeftBoat_ = true;
-																							inputString_ = actionCommandString;
+																							setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS );
+																							enableMenus( true, true );
 																							}
 																						else
 																							{
-																							if( actionSource == mainMenuReadTheFileReasoningFamilyButton_ )
+																							if( actionSource == mainMenuReasoningFamilyJustificationSubMenuButton_ )
 																								{
-																								if( hasSelectedProgrammingConnect4_ )
-																									showConnectFourInterferenceNotification();
-			
-																								hasSelectedReasoningFamily_ = true;
-																								setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
-																								inputString_ = actionCommandString;
+																								setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT );
+																								enableMenus( true, true );
 																								}
 																							else
 																								{
-																								if( actionSource == mainMenuFamilyDefinitionsSubMenuButton_ )
+																								if( actionSource == mainMenuReasoningFamilyQuestionsSubMenuButton_ )
 																									{
-																									setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
+																									setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS );
 																									enableMenus( true, true );
 																									}
 																								else
 																									{
-																									if( actionSource == mainMenuFamilyConflictsSubMenuButton_ )
+																									if( actionSource == mainMenuReasoningFamilyShowInformationSubMenuButton_ )
 																										{
-																										setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS );
+																										setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION );
 																										enableMenus( true, true );
 																										}
 																									else
 																										{
-																										if( actionSource == mainMenuFamilyJustificationSubMenuButton_ )
+																										if( actionSource == mainMenuBackButton_ )
 																											{
-																											setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT );
+																											setSubMenuVisible( false, ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION ? Constants.CONSOLE_SUBMENU_REASONING : Constants.CONSOLE_SUBMENU_INIT ) );
 																											enableMenus( true, true );
 																											}
 																										else
 																											{
-																											if( actionSource == mainMenuFamilyQuestionsSubMenuButton_ )
+																											if( actionSource == mainMenuChangeLanguageButton_ )
 																												{
-																												setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS );
+																												setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
 																												enableMenus( true, true );
+																												setSubMenuButtonTexts();
 																												}
 																											else
 																												{
-																												if( actionSource == mainMenuFamilyShowInformationSubMenuButton_ )
+																												if( actionSource == mainMenuChangeFontButton_ )
 																													{
-																													setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION );
+																													setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_FONT );
 																													enableMenus( true, true );
+																													setSubMenuButtonTexts();
 																													}
 																												else
 																													{
-																													if( actionSource == mainMenuBackButton_ )
+																													if( actionSource == mainMenuHelpButton_ )
 																														{
-																														setSubMenuVisible( false, ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION ? Constants.CONSOLE_SUBMENU_REASONING : Constants.CONSOLE_SUBMENU_INIT ) );
-																														enableMenus( true, true );
+																														setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_HELP );
+																														inputString_ = actionCommandString;
 																														}
 																													else
-																														{
-																														if( actionSource == mainMenuChangeLanguageButton_ )
-																															{
-																															setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
-																															enableMenus( true, true );
-																															setSubMenuButtonTexts();
-																															}
-																														else
-																															{
-																															if( actionSource == mainMenuChangeFontButton_ )
-																																{
-																																setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_FONT );
-																																enableMenus( true, true );
-																																setSubMenuButtonTexts();
-																																}
-																															else
-																																{
-																																if( actionSource == mainMenuHelpButton_ )
-																																	setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_HELP );
-																																	inputString_ = actionCommandString;
-																																}
-																															}
-																														}
+																														inputString_ = actionCommandString;
 																													}
 																												}
 																											}

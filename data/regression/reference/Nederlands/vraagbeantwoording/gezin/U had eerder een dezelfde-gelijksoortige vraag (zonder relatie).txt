@@ -26,13 +26,13 @@
 * Mijn veronderstellingen:
 < Een dochter is waarschijnlijk een persoon.
 < 
-* Ik weet niets over Jan, maar ik zal de vraag onthouden.
+* Ik weet niets over Jan, maar ik zal deze vraag onthouden.
 * 
-* Ik weet niets over Anna, maar ik zal de vraag onthouden.
+* Ik weet niets over Anna, maar ik zal deze vraag onthouden.
 * 
-* Ik weet niets over Paul, maar ik zal de vraag onthouden.
+* Ik weet niets over Paul, maar ik zal deze vraag onthouden.
 * 
-* Ik weet niets over Laura, maar ik zal de vraag onthouden.
+* Ik weet niets over Laura, maar ik zal deze vraag onthouden.
 * 
 * 
 * U hebt deze vraag al eerder gesteld.
@@ -42,19 +42,19 @@
 * 
 * U hebt eerder een gelijksoortige vraag gesteld:
 < Is Jan een vader?
-* Ik weet niets over Jan, maar ik zal de vraag onthouden.
+* Ik weet niets over Jan, maar ik zal deze vraag onthouden.
 * 
 * 
 * U hebt deze vraag al eerder gesteld.
-* Ik weet niets over Anna, maar ik zal de vraag onthouden.
+* Ik weet niets over Anna, maar ik zal deze vraag onthouden.
 * 
 * 
 * U hebt eerder een gelijksoortige vraag gesteld:
 < Is Paul een zoon?
-* Ik weet niets over Paul, maar ik zal de vraag onthouden.
+* Ik weet niets over Paul, maar ik zal deze vraag onthouden.
 * 
 * 
 * U hebt eerder een gelijksoortige vraag gesteld:
 < Is Laura een dochter?
-* Ik weet niets over Laura, maar ik zal de vraag onthouden.
+* Ik weet niets over Laura, maar ik zal deze vraag onthouden.
 * 

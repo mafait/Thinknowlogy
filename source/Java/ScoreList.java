@@ -1,11 +1,10 @@
-/*
- *	Class:			ScoreList
+/*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -199,13 +198,14 @@ class ScoreList extends List
 
 	protected int nPossibilities()
 		{
+		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
 		int nItems = 0;
 		ScoreItem searchItem = firstActiveScoreItem();
 
 		while( searchItem != null &&
-		searchItem.assignmentLevel() >= CommonVariables.currentAssignmentLevel )
+		searchItem.assignmentLevel() >= currentAssignmentLevel )
 			{
-			if( searchItem.assignmentLevel() == CommonVariables.currentAssignmentLevel )
+			if( searchItem.assignmentLevel() == currentAssignmentLevel )
 				nItems++;
 
 			searchItem = searchItem.nextScoreItem();
@@ -260,6 +260,7 @@ class ScoreList extends List
 
 	protected byte findScore( boolean isPreparingSort, SelectionItem findScoreItem )
 		{
+		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
 		ScoreItem searchItem = firstActiveScoreItem();
 
 		hasFoundScore_ = false;
@@ -267,12 +268,12 @@ class ScoreList extends List
 		if( findScoreItem != null )
 			{
 			while( searchItem != null &&
-			searchItem.assignmentLevel() >= CommonVariables.currentAssignmentLevel )
+			searchItem.assignmentLevel() >= currentAssignmentLevel )
 				{
-				if( searchItem.assignmentLevel() == CommonVariables.currentAssignmentLevel )
+				if( searchItem.assignmentLevel() == currentAssignmentLevel )
 					{
 					if( ( searchItem.isChecked ||
-					CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL ) &&
+					currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL ) &&
 					searchItem.referenceSelectionItem == findScoreItem )
 						{
 						hasFoundScore_ = true;
@@ -291,14 +292,15 @@ class ScoreList extends List
 
 	protected byte deleteScores()
 		{
+		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
 		ScoreItem searchItem = firstActiveScoreItem();
 
 		while( searchItem != null &&
-		searchItem.assignmentLevel() >= CommonVariables.currentAssignmentLevel )
+		searchItem.assignmentLevel() >= currentAssignmentLevel )
 			{
-			if( searchItem.assignmentLevel() == CommonVariables.currentAssignmentLevel )
+			if( searchItem.assignmentLevel() == currentAssignmentLevel )
 				{
-				if( deleteItem( false, searchItem ) == Constants.RESULT_OK )
+				if( deleteItem( searchItem ) == Constants.RESULT_OK )
 					searchItem = nextScoreListItem();
 				else
 					return addError( 1, null, "I failed to delete an active item" );
@@ -312,6 +314,7 @@ class ScoreList extends List
 
 	protected byte checkScores( boolean isInverted, short solveStrategyParameter, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore )
 		{
+		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
 		int checkOldSatisfiedScore = ( isInverted ? oldDissatisfiedScore : oldSatisfiedScore );
 		int checkNewSatisfiedScore = ( isInverted ? newDissatisfiedScore : newSatisfiedScore );
 		int checkOldDissatisfiedScore = ( isInverted ? oldSatisfiedScore : oldDissatisfiedScore );
@@ -331,9 +334,9 @@ class ScoreList extends List
 		newBlockingScore > Constants.NO_SCORE )
 			{
 			while( searchItem != null &&
-			searchItem.assignmentLevel() >= CommonVariables.currentAssignmentLevel )
+			searchItem.assignmentLevel() >= currentAssignmentLevel )
 				{
-				if( searchItem.assignmentLevel() == CommonVariables.currentAssignmentLevel )
+				if( searchItem.assignmentLevel() == currentAssignmentLevel )
 					{
 					// All new created (=empty) scores
 					if( !searchItem.hasOldSatisfiedScore() &&
@@ -404,7 +407,7 @@ class ScoreList extends List
 		return Constants.RESULT_OK;
 		}
 
-	protected SelectionResultType getBestAction( boolean isTesting, short solveStrategyParameter )
+	protected SelectionResultType getBestAction( boolean isCurrentlyTesting, short solveStrategyParameter )
 		{
 		SelectionResultType selectionResult = new SelectionResultType();
 		boolean isCummulate = false;
@@ -763,7 +766,7 @@ class ScoreList extends List
 
 			if( CommonVariables.result == Constants.RESULT_OK &&
 			// Skip random during testing. It would create different test results
-			!isTesting &&
+			!isCurrentlyTesting &&
 			// Found more than one the same best cummulate score with different action
 			nRandomEntries > 1 )
 				{

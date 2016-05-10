@@ -1,10 +1,9 @@
-/*
- *	Class:		Item
+/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -40,8 +39,6 @@ class Item
 	friend class ListCleanup;
 	friend class ListQuery;
 	friend class SelectionList;
-	friend class SpecificationItem;
-	friend class WordItem;
 
 
 	// Private constructible variables
@@ -80,7 +77,6 @@ class Item
 	protected:
 	// Protected constructible variables
 
-	bool isAvailableForRollbackAfterDelete;
 	bool isSelectedByQuery;
 	bool isSelectedByJustificationQuery;
 
@@ -89,6 +85,7 @@ class Item
 	Item *previousItem;
 	Item *nextItem;
 
+	char statusString[2];
 	char tempString[MAX_SENTENCE_STRING_LENGTH];
 
 
@@ -128,12 +125,13 @@ class Item
 
 	// Protected virtual functions
 
+	virtual void clearReplacingItem();
+
 	virtual void selectingAttachedJustifications( bool isSelectingJustificationSpecifications );
 	virtual void selectingJustificationSpecifications();
 
 	virtual void showString( bool isReturnQueryToPosition );
 	virtual void showWordReferences( bool isReturnQueryToPosition );
-	virtual void showWords( bool isReturnQueryToPosition, unsigned short queryWordTypeNr );
 
 	virtual bool hasFoundParameter( unsigned int queryParameter );
 	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr );
@@ -146,26 +144,29 @@ class Item
 	virtual ResultType checkForUsage();
 
 	virtual char *itemString();
-	virtual char *extraItemString();
+	virtual char *virtualGuideByGrammarString();
 	virtual char *toString( unsigned short queryWordTypeNr );
 
 
 	// Protected common functions
 
 	void setActiveStatus();
-	void setInactiveStatus();
 	void setArchivedStatus();
-	void setReplacedStatus();
 	void setDeletedStatus();
+	void setInactiveStatus();
+	void setReplacedStatus();
 
 	void setActiveSentenceNr();
-	void setInactiveSentenceNr();
 	void setArchivedSentenceNr();
-	void setReplacedSentenceNr();
 	void setDeletedSentenceNr();
+	void setInactiveSentenceNr();
+	void setReplacedSentenceNr();
 
 	void clearArchivedSentenceNr();
+	void clearDeletedSentenceNr();
 	void clearReplacedSentenceNr();
+
+	void showWords( bool isReturnQueryToPosition, unsigned short queryWordTypeNr );
 
 	// Strictly for initialization of AdminItem
 	void initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem );
@@ -173,15 +174,15 @@ class Item
 
 	bool hasActiveSentenceNr();
 	bool hasInactiveSentenceNr();
-	bool hasArchivedSentenceNr();
 
+	bool hasCurrentOriginalSentenceNr();
 	bool hasCurrentCreationSentenceNr();
-
 	bool hasCurrentActiveSentenceNr();
 	bool hasCurrentInactiveSentenceNr();
 	bool hasCurrentArchivedSentenceNr();
 	bool hasCurrentReplacedSentenceNr();
-	bool hasCurrentDeletedSentenceNr();
+
+	bool hasSentenceNr( unsigned int sentenceNr );
 
 	bool isOlderItem();
 
@@ -224,11 +225,11 @@ class Item
 	char *classNameString();
 	char *superClassNameString();
 
+	CommonVariables *commonVariables();
+
 	List *myList();
 
 	WordItem *myWordItem();
-
-	CommonVariables *commonVariables();
 
 
 	// Protected definition functions

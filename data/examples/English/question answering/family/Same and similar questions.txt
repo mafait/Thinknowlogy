@@ -14,4 +14,4 @@ Is Joe a woman or a man?
 Is Joe a girl or a boy?
 Is Paul a son or a daughter?
 Is Joe a daughter?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

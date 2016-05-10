@@ -10,12 +10,12 @@ Toon " \~[,itemNr]		referentie naar een item-identificatie		\~[,3]".
 Toon " \~<adminListChar>	administrator-lijst				\~<W>".
 Toon " \~<wordListChar>	woordlijst					\~<w>".
 Toon " \~<listCharlistChar>	meerdere lijsten				\~<Xas>".
-Toon " \~'woord'		woord						\~'English'".
+Toon " \~'woord'		woord						\~'Nederlands'".
 Toon " \~`woordReferentie`	referentie naar een woord			\~`Nederlands`".
 Toon " \~\"tekst\"		tekst						\~\"zin\"".
 Toon "------------------------------------------------------------------------------".
 Toon " Beide jokers '?' en '*' kunnen gebruikt worden in:".
-Toon "			* woorden					\~'Engl?sh'".
+Toon "			* woorden					\~'Ned?rlands'".
 Toon "			* referenties naar een woord			\~`Ned*lands`".
 Toon "			* teksten					\~\"gr?m*\"".
 Toon "------------------------------------------------------------------------------".

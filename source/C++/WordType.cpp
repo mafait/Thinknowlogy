@@ -1,11 +1,10 @@
-/*
- *	Class:			WordType
+/*	Class:			WordType
  *	Supports class:	WordItem
  *	Purpose:		To create word type structures
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -56,7 +55,7 @@ class WordType
 			{
 			if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
 				{
-				if( ( grammarResult = currentLanguageWordItem->checkOnWordEnding( ( isSingularNoun ? WORD_FEMININE_SINGULAR_NOUN_ENDING : WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
+				if( ( grammarResult = currentLanguageWordItem->analyzeWordEnding( ( isSingularNoun ? WORD_FEMININE_SINGULAR_NOUN_ENDING : WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
 					{
 					if( grammarResult.hasFoundWordEnding )
 						{
@@ -70,7 +69,7 @@ class WordType
 						}
 					else
 						{
-						if( ( grammarResult = currentLanguageWordItem->checkOnWordEnding( ( isSingularNoun ? WORD_MASCULINE_SINGULAR_NOUN_ENDING : WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
+						if( ( grammarResult = currentLanguageWordItem->analyzeWordEnding( ( isSingularNoun ? WORD_MASCULINE_SINGULAR_NOUN_ENDING : WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
 							{
 							if( grammarResult.hasFoundWordEnding )
 								{
@@ -235,26 +234,6 @@ class WordType
 			}
 		else
 			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given word type string is undefined" );
-
-		wordResult.result = commonVariables_->result;
-		return wordResult;
-		}
-
-	WordResultType findWordTypeInAllWords( bool isCheckingAllLanguages, unsigned short wordTypeNr, char *wordTypeString, WordItem *previousWordItem )
-		{
-		WordResultType wordResult;
-		WordItem *currentWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findWordTypeInAllWords";
-
-		if( ( currentWordItem = ( previousWordItem == NULL ? commonVariables_->firstWordItem : previousWordItem->nextWordItem() ) ) != NULL )
-			{
-			do	{
-				if( ( wordResult = currentWordItem->findWordType( isCheckingAllLanguages, wordTypeNr, wordTypeString ) ).result != RESULT_OK )
-					myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a word type in word \"", currentWordItem->anyWordTypeString(), "\"" );
-				}
-			while( wordResult.foundWordItem == NULL &&
-			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-			}
 
 		wordResult.result = commonVariables_->result;
 		return wordResult;

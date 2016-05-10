@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminSpecification
+/*	Class:			AdminSpecification
  *	Supports class:	AdminItem
  *	Purpose:		To create and assign specification structures
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,10 +23,8 @@
 
 #include "AdminItem.h"
 #include "ContextItem.cpp"
-#include "Presentation.cpp"
 #include "ReadItem.cpp"
 #include "SelectionItem.cpp"
-#include "SpecificationItem.cpp"
 
 class AdminSpecification
 	{
@@ -35,7 +32,6 @@ class AdminSpecification
 
 	// Private constructible variables
 
-	bool hasAlreadyFoundRelationContext_;
 	bool isArchivedAssignment_;
 
 	unsigned short doneSpecificationWordOrderNr_;
@@ -57,13 +53,25 @@ class AdminSpecification
 
 	// Private functions
 
-	ResultType addUserSpecificationWithRelation( bool isAction, bool isAssignedOrClear, bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isNewStart, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short selectionLevel, unsigned short selectionListNr, unsigned short imperativeParameter, unsigned short specificationWordParameter, unsigned short questionParameter, unsigned short userAssumptionLevel, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, ReadItem *startRelationReadItem, ReadItem *endRelationReadItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, char *specificationString )
+	bool isNeedingAuthorizationForChanges( WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
+		return( generalizationWordItem != NULL &&
+				specificationWordItem != NULL &&
+				adminItem_->isSystemStartingUp() &&
+
+				( generalizationWordItem->isNeedingAuthorizationForChanges() ||
+				specificationWordItem->isNeedingAuthorizationForChanges() ) );
+		}
+
+	ResultType addUserSpecificationWithRelation( bool isAction, bool isAssignedOrClear, bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isNewStart, bool isPartOf, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short selectionLevel, unsigned short selectionListNr, unsigned short imperativeParameter, unsigned short specificationWordParameter, unsigned short questionParameter, unsigned short userAssumptionLevel, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, ReadItem *startRelationReadItem, ReadItem *endRelationReadItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+		{
+		bool isCheckingExistingUserSpecification;
 		bool isFirstComparisonPart = ( selectionListNr == ADMIN_CONDITION_LIST );
 		bool isStop = false;
 		unsigned short relationWordTypeNr;
 		unsigned short prepositionParameter = NO_PREPOSITION_PARAMETER;
 		ReadItem *currentRelationReadItem = startRelationReadItem;
+		SpecificationItem *existingSpecificationItem;
 		SpecificationItem *foundSpecificationItem;
 		WordItem *mostRecentContextWord;
 		WordItem *relationWordItem;
@@ -78,6 +86,10 @@ class AdminSpecification
 					{
 					if( specificationWordItem != NULL )
 						{
+						isCheckingExistingUserSpecification = ( isPossessive &&
+																nContextRelations == 0 &&
+																!specificationWordItem->isNounWordSpanishAmbiguous() );
+
 						do	{
 							if( currentRelationReadItem->isPreposition() )
 								prepositionParameter = currentRelationReadItem->wordParameter();
@@ -113,7 +125,9 @@ class AdminSpecification
 
 												if( selectionListNr == NO_LIST_NR )
 													{
-													if( addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, false, prepositionParameter, questionParameter, userAssumptionLevel, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, NULL, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ).result != RESULT_OK )
+													existingSpecificationItem = ( isCheckingExistingUserSpecification ? generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( isNegative, isPossessive, NO_QUESTION_PARAMETER, specificationWordItem, relationWordItem ) : NULL );
+
+													if( addSpecification( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, false, isSpecificationGeneralization, isUniqueUserRelation, false, prepositionParameter, questionParameter, userAssumptionLevel, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, ( existingSpecificationItem == NULL ? NO_COLLECTION_NR : existingSpecificationItem->specificationCollectionNr() ), generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, NULL, generalizationWordItem, specificationWordItem, relationWordItem, NULL ).result != RESULT_OK )
 														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a specification having relation word \"", relationWordItem->anyWordTypeString(), "\"" );
 													}
 												else
@@ -129,7 +143,7 @@ class AdminSpecification
 															return adminItem_->startSystemError( functionNameString, moduleNameString_, "Context number overflow" );
 														}
 
-													if( adminItem_->createSelectionPart( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, ( isFirstComparisonPart && !relationWordItem->isNumeralWordType() ), isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, false, userAssumptionLevel, selectionLevel, selectionListNr, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) == RESULT_OK )
+													if( adminItem_->createSelectionPart( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, ( isFirstComparisonPart && !relationWordItem->isNumeralWordType() ), isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, false, userAssumptionLevel, selectionLevel, selectionListNr, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, NULL ) == RESULT_OK )
 														isFirstComparisonPart = false;
 													else
 														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a selection part having relation word \"", relationWordItem->anyWordTypeString(), "\"" );
@@ -177,7 +191,7 @@ class AdminSpecification
 		if( contextNr > NO_CONTEXT_NR &&
 		( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
 			{
-			// Do for all words
+			// Do for all active words
 			do	{
 				if( ( currentContextItem = currentWordItem->contextItem( contextNr ) ) != NULL )
 					{
@@ -203,7 +217,6 @@ class AdminSpecification
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
-		hasAlreadyFoundRelationContext_ = false;
 		isArchivedAssignment_ = false;
 
 		doneSpecificationWordOrderNr_ = NO_ORDER_NR;
@@ -266,12 +279,7 @@ class AdminSpecification
 
 		if( generalizationWordItem != NULL )
 			{
-			if( adminItem_->isSystemStartingUp() &&
-
-			( generalizationWordItem->isNeedingAuthorizationForChanges() ||
-
-			( specificationWordItem != NULL &&
-			specificationWordItem->isNeedingAuthorizationForChanges() ) ) )
+			if( isNeedingAuthorizationForChanges( generalizationWordItem, specificationWordItem ) )
 				{
 				if( ( specificationResult = adminItem_->assignSpecificationWithAuthorization( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, userAssumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, generalizationWordItem, specificationWordItem, specificationString ) ).result != RESULT_OK )
 					adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign generalization word \"", generalizationWordItem->anyWordTypeString(), "\" to specification word \"", ( specificationWordItem == NULL ? specificationString : specificationWordItem->anyWordTypeString() ), "\" with authorization" );
@@ -300,7 +308,6 @@ class AdminSpecification
 
 	void initializeAdminSpecificationVariables()
 		{
-		hasAlreadyFoundRelationContext_ = false;
 		isArchivedAssignment_ = false;
 
 		doneSpecificationWordOrderNr_ = NO_ORDER_NR;
@@ -322,6 +329,7 @@ class AdminSpecification
 		ContextResultType contextResult;
 		SpecificationResultType specificationResult;
 		bool isGeneralizationProperName;
+		bool isGeneralizationReasoningWordType;
 		bool isRelationWord;
 		bool isSpecificationWord;
 		bool hasFoundAction = false;
@@ -365,6 +373,7 @@ class AdminSpecification
 				{
 				isGeneralizationProperName = generalizationReadItem->isProperName();
 				generalizationWordTypeNr = generalizationReadItem->wordTypeNr();
+				isGeneralizationReasoningWordType = adminItem_->isGeneralizationReasoningWordType( generalizationWordTypeNr );
 
 				if( ( currentReadItem = startSpecificationReadItem ) != NULL )
 					{
@@ -467,7 +476,6 @@ class AdminSpecification
 										{
 										if( ( contextResult = adminItem_->getRelationContext( isArchivedAssignment, isNegative, isPossessive, isQuestion, true, currentSpecificationWordTypeNr, nContextRelations, generalizationWordItem, currentSpecificationWordItem, NULL, startRelationReadItem ) ).result == RESULT_OK )
 											{
-											hasAlreadyFoundRelationContext_ = true;
 											isExclusiveContext = contextResult.isExclusiveContext;
 											userRelationContextNr_ = contextResult.contextNr;
 											}
@@ -540,19 +548,20 @@ class AdminSpecification
 													if( hasRelationWord )
 														{
 														// Selection, no value, with relation
-														if( addUserSpecificationWithRelation( isAction, currentReadItem->isAdjectiveAssignedOrClear(), isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, ( isExclusiveSpecification || isExclusiveContext ), isNegative, isNewStart, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, selectionLevel, selectionListNr, imperativeParameter, specificationWordParameter, userAssumptionLevel, questionParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, generalizationContextNr, specificationContextNr, userRelationContextNr_, nContextRelations, startRelationReadItem, endRelationReadItem, generalizationWordItem, currentSpecificationWordItem, specificationString ) != RESULT_OK )
+														if( addUserSpecificationWithRelation( isAction, currentReadItem->isAdjectiveAssignedOrEmpty(), isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, ( isExclusiveSpecification || isExclusiveContext ), isNegative, isNewStart, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, selectionLevel, selectionListNr, imperativeParameter, specificationWordParameter, userAssumptionLevel, questionParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, generalizationContextNr, specificationContextNr, userRelationContextNr_, nContextRelations, startRelationReadItem, endRelationReadItem, generalizationWordItem, currentSpecificationWordItem ) != RESULT_OK )
 															return adminItem_->addErrorWithAdminListNr( selectionListNr, functionNameString, moduleNameString_, "I failed to create a selection part with relation" );
 														}
 													else
 														{
 														// Selection, no value, no relation
-														if( adminItem_->createSelectionPart( isAction, currentReadItem->isAdjectiveAssignedOrClear(), isInactiveAssignment, isArchivedAssignment, false, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, false, userAssumptionLevel, selectionLevel, selectionListNr, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, WORD_TYPE_UNDEFINED, generalizationContextNr, specificationContextNr, userRelationContextNr_, nContextRelations, generalizationWordItem, currentSpecificationWordItem, NULL, specificationString ) != RESULT_OK )
+														if( adminItem_->createSelectionPart( isAction, currentReadItem->isAdjectiveAssignedOrEmpty(), isInactiveAssignment, isArchivedAssignment, false, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, false, userAssumptionLevel, selectionLevel, selectionListNr, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, WORD_TYPE_UNDEFINED, generalizationContextNr, specificationContextNr, userRelationContextNr_, nContextRelations, generalizationWordItem, currentSpecificationWordItem, NULL, specificationString ) != RESULT_OK )
 															return adminItem_->addErrorWithAdminListNr( selectionListNr, functionNameString, moduleNameString_, "I failed to create a selection part" );
 														}
 													}
 												}
 
-											if( !currentReadItem->isAdjectiveAssignedOrClear() )
+											if( !isSelection ||
+											!currentReadItem->isAdjectiveAssignedOrEmpty() )
 												{
 												doneSpecificationWordOrderNr_ = currentReadItem->wordOrderNr();
 												linkedSpecificationWordTypeNr = currentSpecificationWordTypeNr;
@@ -570,7 +579,7 @@ class AdminSpecification
 														if( hasRelationWord )
 															{
 															// No value, with relation
-															if( addUserSpecificationWithRelation( false, false, isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, ( isExclusiveSpecification || isExclusiveContext ), ( isConditional ? false : isNegative ), false, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, NO_SELECTION_LEVEL, NO_LIST_NR, imperativeParameter, specificationWordParameter, questionParameter, userAssumptionLevel, generalizationWordTypeNr, currentSpecificationWordTypeNr, generalizationContextNr, specificationContextNr, userRelationContextNr_, nContextRelations, startRelationReadItem, endRelationReadItem, generalizationWordItem, currentSpecificationWordItem, specificationString ) == RESULT_OK )
+															if( addUserSpecificationWithRelation( false, false, isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, ( isExclusiveSpecification || isExclusiveContext ), ( isConditional ? false : isNegative ), false, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, NO_SELECTION_LEVEL, NO_LIST_NR, imperativeParameter, specificationWordParameter, questionParameter, userAssumptionLevel, generalizationWordTypeNr, currentSpecificationWordTypeNr, generalizationContextNr, specificationContextNr, userRelationContextNr_, nContextRelations, startRelationReadItem, endRelationReadItem, generalizationWordItem, currentSpecificationWordItem ) == RESULT_OK )
 																hasFoundAction = true;
 															else
 																return adminItem_->addErrorWithAdminListNr( selectionListNr, functionNameString, moduleNameString_, "I failed to add a user specification with a relation to generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
@@ -584,35 +593,46 @@ class AdminSpecification
 																return adminItem_->addErrorWithAdminListNr( selectionListNr, functionNameString, moduleNameString_, "I failed to add a specification to generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 															}
 
-														if( !isNegative &&
+														if( isGeneralizationReasoningWordType &&
+														!isNegative &&
 														!isPartOf &&
 														!isQuestion &&
 														currentSpecificationWordItem != NULL &&
-														adminItem_->isGeneralizationReasoningWordType( generalizationWordTypeNr ) &&
 														adminItem_->isSingularOrPluralNoun( currentSpecificationWordTypeNr ) )
 															{
 															// Generalizations with noun specifications - without relations
 															if( !isPossessive )
 																{
-																if( adminItem_->drawSpecificationSubstitutionConclusionOrAskQuestion( false, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, questionParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, WORD_TYPE_UNDEFINED, generalizationContextNr, specificationContextNr, generalizationWordItem, currentSpecificationWordItem, NULL ) == RESULT_OK )
+																if( adminItem_->drawSpecificationSubstitutionConclusionOrAskQuestion( false, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, true, questionParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, WORD_TYPE_UNDEFINED, generalizationContextNr, specificationContextNr, generalizationWordItem, currentSpecificationWordItem, NULL ) == RESULT_OK )
 																	{
-																	if( !commonVariables_->hasShownWarning &&
-																	// Definition specification
-																	adminItem_->isSingularOrPluralNoun( generalizationWordTypeNr ) )
+																	if( !commonVariables_->hasShownWarning )
 																		{
-																		// Definition specification
-																		if( ( specificationResult = adminItem_->drawCompoundSpecificationSubstitutionConclusion( generalizationWordTypeNr, generalizationContextNr, specificationContextNr, userRelationContextNr_, generalizationWordItem ) ).result == RESULT_OK )
-																			compoundGeneralizationWordItem = specificationResult.compoundGeneralizationWordItem;
+																		if( isGeneralizationProperName )
+																			{
+																			if( !isExclusiveSpecification &&
+																			generalizationWordItem->isUserGeneralizationWord &&
+																			adminItem_->isSpanishCurrentLanguage() )
+																				{
+																				if( adminItem_->drawSimpleNegativeSpanishConclusion( isArchivedAssignment, generalizationWordTypeNr, currentSpecificationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, currentSpecificationWordItem ) != RESULT_OK )
+																					return adminItem_->addErrorWithAdminListNr( selectionListNr, functionNameString, moduleNameString_, "I failed to draw a simple negative Spanish conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+																				}
+																			}
 																		else
-																			return adminItem_->addErrorWithAdminListNr( selectionListNr, functionNameString, moduleNameString_, "I failed to draw a primary specification substitution conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+																			{
+																			// Definition specification
+																			if( ( specificationResult = adminItem_->drawCompoundSpecificationSubstitutionConclusion( generalizationWordTypeNr, generalizationContextNr, specificationContextNr, userRelationContextNr_, generalizationWordItem ) ).result == RESULT_OK )
+																				compoundGeneralizationWordItem = specificationResult.compoundGeneralizationWordItem;
+																			else
+																				return adminItem_->addErrorWithAdminListNr( selectionListNr, functionNameString, moduleNameString_, "I failed to draw a primary specification substitution conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+																			}
 																		}
 																	}
 																else
 																	return adminItem_->addErrorWithAdminListNr( selectionListNr, functionNameString, moduleNameString_, "I failed to draw a specification substitution conclusion or ask a question for generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 																}
 
-															if( !commonVariables_->hasShownWarning &&
-															isGeneralizationProperName &&
+															if( isGeneralizationProperName &&
+															!commonVariables_->hasShownWarning &&
 															commonVariables_->nUserRelationWords == 1 &&
 															startRelationReadItem != NULL &&
 															( firstRelationReadItem = startRelationReadItem->firstRelationWordReadItem() ) != NULL )
@@ -738,19 +758,21 @@ class AdminSpecification
 		ContextResultType contextResult;
 		SpecificationResultType assignmentResult;
 		SpecificationResultType specificationResult;
-		bool hasRelationWord = ( relationWordItem != NULL );
-		bool isCompoundCollectionCollectedWithItself = false;
 		bool isDefinitionSpecification;
+		bool isNeedingAuthorization;
+		bool isSpecificationWordSpanishAmbiguous;
+		bool hasRelationWord = ( relationWordItem != NULL );
+		bool isCompoundCollectionSpanishAmbiguous = false;
 		bool isQuestion = ( questionParameter > NO_QUESTION_PARAMETER );
 		bool isRelationContextAlreadyDefined = false;
 		bool isSelfGenerated = ( firstJustificationItem != NULL );
+		SpecificationItem *existingSpecificationItem;
 		SpecificationItem *foundSpecificationItem;
 		SpecificationItem *foundAssignmentItem;
 		SpecificationItem *replacedAssignmentItem;
 		SpecificationItem *tempSpecificationItem;
 		SpecificationItem *createdAssignmentItem = NULL;
 		SpecificationItem *createdSpecificationItem = NULL;
-		SpecificationItem *existingSpecificationItem = NULL;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addSpecification";
 
 		if( generalizationWordItem != NULL )
@@ -763,33 +785,28 @@ class AdminSpecification
 					relationWordItem != NULL &&
 					!relationWordItem->isNumeralWordType() )
 						{
-						if( isPossessive &&
-						specificationCollectionNr > NO_COLLECTION_NR &&
-						specificationWordItem->isNounWordCollectedWithItself() &&
-						specificationWordItem->isCompoundCollection( specificationCollectionNr ) )
-							isCompoundCollectionCollectedWithItself = true;
+						isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
 
-						if( isPossessive &&
-						!isSelfGenerated &&
-						nContextRelations == 0 &&
-						relationContextNr > NO_CONTEXT_NR )
-							existingSpecificationItem = generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( isNegative, isPossessive, NO_QUESTION_PARAMETER, specificationWordItem, relationWordItem );
+						if( isSpecificationWordSpanishAmbiguous &&
+						hasRelationWord &&
+						isPossessive &&
+						specificationCollectionNr > NO_COLLECTION_NR &&
+						specificationWordItem->isCompoundCollection( specificationCollectionNr ) )
+							isCompoundCollectionSpanishAmbiguous = true;
 
 						if( isArchivedAssignment ||
-						isCompoundCollectionCollectedWithItself ||
+						isCompoundCollectionSpanishAmbiguous ||
 						relationContextNr == NO_CONTEXT_NR ||
 
 						( isPossessive &&
 						!isSelfGenerated &&
+						!isSpecificationWordSpanishAmbiguous &&
+						nContextRelations == 0 &&
 
-						( ( nContextRelations == 0 &&
-						existingSpecificationItem == NULL ) ||
-
-						( !hasAlreadyFoundRelationContext_ &&
-						existingSpecificationItem != NULL &&
-						existingSpecificationItem->isUserSpecification() ) ) ) )
+						( specificationCollectionNr == NO_COLLECTION_NR ||
+						relationContextNr != userRelationContextNr_ ) ) )
 							{
-							if( ( contextResult = adminItem_->getSpecificationRelationContext( isAssignment, isInactiveAssignment, isArchivedAssignment, isCompoundCollectionCollectedWithItself, isNegative, isPossessive, ( firstJustificationItem != NULL && firstJustificationItem->isAssumptionJustification() ), specificationCollectionNr, userRelationContextNr_, generalizationWordItem, specificationWordItem, relationWordItem ) ).result == RESULT_OK )
+							if( ( contextResult = adminItem_->getSpecificationRelationContext( isAssignment, isInactiveAssignment, isArchivedAssignment, isCompoundCollectionSpanishAmbiguous, isNegative, isPossessive, ( firstJustificationItem != NULL && firstJustificationItem->isAssumptionJustification() ), specificationCollectionNr, userRelationContextNr_, generalizationWordItem, specificationWordItem, relationWordItem ) ).result == RESULT_OK )
 								relationContextNr = contextResult.contextNr;
 							else
 								adminItem_->addError( functionNameString, moduleNameString_, "I failed to get a relation context" );
@@ -800,7 +817,7 @@ class AdminSpecification
 						if( commonVariables_->result == RESULT_OK &&
 						!isSelection )
 							{
-							if( relationWordItem->addContext( isCompoundCollectionCollectedWithItself, relationWordTypeNr, specificationWordTypeNr, relationContextNr, specificationWordItem ) != RESULT_OK )
+							if( relationWordItem->addContext( isCompoundCollectionSpanishAmbiguous, relationWordTypeNr, specificationWordTypeNr, relationContextNr, specificationWordItem ) != RESULT_OK )
 								adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a relation context to word \"", relationWordItem->anyWordTypeString(), "\"" );
 							}
 						}
@@ -820,13 +837,9 @@ class AdminSpecification
 							isArchivedAssignment_ &&
 							generalizationWordItem->firstAssignmentOrSpecificationItem( true, true, !isNegative, isPossessive, questionParameter, specificationWordItem ) != NULL )
 								isAssignment = true;
+							isNeedingAuthorization = isNeedingAuthorizationForChanges( generalizationWordItem, specificationWordItem );
 
-							if( adminItem_->isSystemStartingUp() &&
-
-							( generalizationWordItem->isNeedingAuthorizationForChanges() ||
-
-							( specificationWordItem != NULL &&
-							specificationWordItem->isNeedingAuthorizationForChanges() ) ) )
+							if( isNeedingAuthorization )
 								{
 								if( ( specificationResult = adminItem_->addSpecificationWithAuthorization( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, userAssumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, contextResult.copiedRelationContextNr, nContextRelations, firstJustificationItem, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result != RESULT_OK )
 									adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a specification to generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with authorization" );
@@ -891,7 +904,7 @@ class AdminSpecification
 												}
 											else
 												{
-												if( adminItem_->collectGeneralizationWordWithPreviousOne( isPossessive, generalizationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, generalizationWordItem, specificationWordItem ) == RESULT_OK )
+												if( adminItem_->collectGeneralizationWordWithPreviousOne( ( isAssignment || isNeedingAuthorization ), isPossessive, generalizationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, generalizationWordItem, specificationWordItem ) == RESULT_OK )
 													{
 													if( !isPossessive )
 														{
@@ -944,13 +957,13 @@ class AdminSpecification
 														if( isAssignment ||
 														foundAssignmentItem != NULL )
 															{
-															if( generalizationWordItem->writeSelectedSpecification( true, ( foundAssignmentItem == NULL ? specificationResult.foundSpecificationItem : foundAssignmentItem ) ) == RESULT_OK )
+															if( generalizationWordItem->writeSelectedSpecification( false, true, ( foundAssignmentItem == NULL ? specificationResult.foundSpecificationItem : foundAssignmentItem ) ) == RESULT_OK )
 																{
-																if( strlen( commonVariables_->writeSentenceString ) > 0 )
+																if( strlen( commonVariables_->writtenSentenceString ) > 0 )
 																	{
 																	if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( foundAssignmentItem == NULL ? INTERFACE_LISTING_SENTENCE_ASSIGNMENT_CONFLICTS_WITH_DEFINITION_SPECIFICATION : INTERFACE_LISTING_SENTENCE_DEFINITION_SPECIFICATION_IS_ALREADY_ASSIGNED ) ) == RESULT_OK )
 																		{
-																		if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writeSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+																		if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
 																			adminItem_->startError( functionNameString, moduleNameString_, "I failed to write a sentence" );
 																		}
 																	else
@@ -993,7 +1006,7 @@ class AdminSpecification
 
 								replacedAssignmentItem != NULL ) )
 									{
-									if( ( assignmentResult = assignSpecification( contextResult.isAmbiguousRelationContext, ( specificationWordItem != NULL && specificationWordItem->isAdjectiveAssignedOrClear() ), isInactiveAssignment, isArchivedAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, userAssumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, firstJustificationItem, generalizationWordItem, specificationWordItem, specificationString ) ).result == RESULT_OK )
+									if( ( assignmentResult = assignSpecification( contextResult.isAmbiguousRelationContext, ( specificationWordItem != NULL && specificationWordItem->isAdjectiveAssignedOrEmpty() ), isInactiveAssignment, isArchivedAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, userAssumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, firstJustificationItem, generalizationWordItem, specificationWordItem, specificationString ) ).result == RESULT_OK )
 										{
 										if( ( createdAssignmentItem = assignmentResult.createdSpecificationItem ) != NULL )
 											{

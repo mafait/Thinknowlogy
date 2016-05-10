@@ -1,12 +1,11 @@
-/*
- *	Class:			JustificationItem
+/*	Class:			JustificationItem
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -58,6 +57,7 @@ class JustificationItem : private Item
 
 	// Private functions
 
+	bool isContextSimilarInAllWords( unsigned int firstContextNr, unsigned int secondContextNr );
 	bool isSameJustificationType( JustificationItem *referenceJustificationItem );
 
 
@@ -77,6 +77,8 @@ class JustificationItem : private Item
 
 
 	// Protected virtual functions
+
+	virtual void clearReplacingItem();
 
 	virtual void selectingJustificationSpecifications();
 
@@ -100,10 +102,12 @@ class JustificationItem : private Item
 	bool hasPrimaryAnsweredQuestion();
 	bool hasPrimaryQuestion();
 	bool hasPrimaryUserSpecification();
-	bool hasPrimarySpecificationWordCollectedWithItself();
 	bool hasPossessivePrimarySpecification();
 	bool hasReplacedPrimarySpecification();
-	bool hasUpdatedPrimarySpecificationWordCollectedWithItself();
+	bool isPrimarySpecificationWordSpanishAmbiguous();
+	bool isUpdatedPrimarySpecificationWordSpanishAmbiguous();
+
+	bool hasAnotherPrimarySpecification();
 
 	bool hasReplacedSecondarySpecification();
 

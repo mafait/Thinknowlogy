@@ -1,4 +1,4 @@
-Un caballo es correcta.
+﻿Un caballo es correcta.
 Una caballo es incorrecta.
 Una artículo es incorrecta.
 Un artículo es correcta.
@@ -6,4 +6,4 @@ Un ballena es incorrecta.
 Una ballena es correcta.
 Una casa es correcta.
 Un casa es incorrecta.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

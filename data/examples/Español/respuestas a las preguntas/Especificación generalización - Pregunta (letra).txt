@@ -1,4 +1,4 @@
-¿Es a una letra-minúscula?
+﻿¿Es a una letra-minúscula?
 ¿Es a una letra-mayúscula?
 ¿Es g una letra-minúscula?
 ¿Es G una letra-mayúscula?
@@ -6,4 +6,4 @@
 ¿Es Y una letra-minúscula?
 ¿Es a una letra?
 ¿Es Q una letra?
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

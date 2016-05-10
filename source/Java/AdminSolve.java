@@ -1,12 +1,11 @@
-/*
- *	Class:			AdminSolve
+/*	Class:			AdminSolve
  *	Supports class:	AdminItem
  *	Purpose:		Trying to solve (= to assign) words according to the
  *					given selections
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -57,18 +56,6 @@ class AdminSolve
 
 	// Private methods
 
-	private static void clearAllWordSolveChecksInAllWords()
-		{
-		WordItem currentWordItem;
-
-		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
-			{
-			// Do for all words
-			do	currentWordItem.isWordCheckedForSolving = false;
-			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
-			}
-		}
-
 	private static boolean isNumeralString( String checkString )
 		{
 		int stringLength;
@@ -85,6 +72,36 @@ class AdminSolve
 			}
 
 		return false;
+		}
+
+	private static byte createNewAssignmentLevelInAllWords()
+		{
+		WordItem currentWordItem;
+
+		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
+			{
+			// Do for all active words
+			do	currentWordItem.createNewAssignmentLevelInWord();
+			while( CommonVariables.result == Constants.RESULT_OK &&
+			( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		return CommonVariables.result;
+		}
+
+	private static byte deleteAssignmentLevelInAllWords()
+		{
+		WordItem currentWordItem;
+
+		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
+			{
+			// Do for all active words
+			do	currentWordItem.deleteAssignmentLevelInWord();
+			while( CommonVariables.result == Constants.RESULT_OK &&
+			( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		return CommonVariables.result;
 		}
 
 	private byte getComparisonAssignment( boolean isNumeralRelation, WordItem specificationWordItem, WordItem relationWordItem )
@@ -120,21 +137,6 @@ class AdminSolve
 			return adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 
 		return Constants.RESULT_OK;
-		}
-
-	private static byte deleteAssignmentLevelInAllWords()
-		{
-		WordItem currentWordItem;
-
-		if( ( currentWordItem = CommonVariables.firstWordItem ) != null )
-			{
-			// Do for all words
-			do	currentWordItem.deleteAssignmentLevelInWord();
-			while( CommonVariables.result == Constants.RESULT_OK &&
-			( currentWordItem = currentWordItem.nextWordItem() ) != null );
-			}
-
-		return CommonVariables.result;
 		}
 
 	private byte backTrackConditionScorePaths( boolean isAddingScores, boolean isInverted, boolean isAllowingDuplicates, boolean isPreparingSort, short executionLevel, short solveStrategyParameter, int conditionSentenceNr )
@@ -772,7 +774,7 @@ class AdminSolve
 									{
 									isOriginalFoundPossibility = hasFoundPossibility_;
 
-									if( adminItem_.findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == Constants.RESULT_OK )
+									if( findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == Constants.RESULT_OK )
 										{
 										if( hasFoundPossibility_ )
 											isAddLocalScores = false;
@@ -799,7 +801,7 @@ class AdminSolve
 											{
 											isOriginalFoundPossibility = hasFoundPossibility_;
 
-											if( adminItem_.findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == Constants.RESULT_OK )
+											if( findPossibilityToSolveWord( false, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, generalizationWordItem ) == Constants.RESULT_OK )
 												{
 												if( hasFoundPossibility_ )
 													isAddLocalScores = false;
@@ -1030,7 +1032,6 @@ class AdminSolve
 		WordItem predefinedNounSolveMethodWordItem;
 		WordItem predefinedNounSolveStrategyWordItem;
 		ScoreList scoreList;
-		WordList wordList;
 
 		if( solveWordItem != null )
 			{
@@ -1058,16 +1059,12 @@ class AdminSolve
 							{
 							if( adminItem_.assignSpecification( predefinedNounSolveMethodWordItem, adminItem_.predefinedAdjectiveBusyWordItem() ) == Constants.RESULT_OK )
 								{
-								if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+								if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL &&
+								( scoreList = adminItem_.scoreList ) != null )
 									{
-									clearAllWordSolveChecksInAllWords();
-
-									if( ( scoreList = adminItem_.scoreList ) != null )
-										{
-										// Make sure no scores are left at the start
-										if( scoreList.deleteScores() != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to delete the admin score list" );
-										}
+									// Make sure no scores are left at the start
+									if( scoreList.deleteScores() != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to delete the admin score list" );
 									}
 
 								isInverted = ( predefinedNounSolveMethodWordItem.firstNonQuestionAssignmentItem( true, false, false, false, false, Constants.NO_CONTEXT_NR, adminItem_.predefinedAdjectiveInvertedWordItem() ) != null );
@@ -1088,106 +1085,101 @@ class AdminSolve
 													if( solveLevel_ > 1 )
 														Presentation.startProgress( currentSolveProgress_, Constants.MAX_PROGRESS, Constants.INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START, solveLevel_, Constants.INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END );
 
-													if( ( wordList = adminItem_.wordList ) != null )
+													if( ( possibilityItem = scoreList.firstPossibility() ) != null )
 														{
-														if( ( possibilityItem = scoreList.firstPossibility() ) != null )
-															{
-															do	{
-																// Copy solve action of Constants.NO_ASSIGNMENT_LEVEL to higher levels
-																if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-																	actionSelectionItem = possibilityItem.scoreReference();
+														do	{
+															// Copy solve action of Constants.NO_ASSIGNMENT_LEVEL to higher levels
+															if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+																actionSelectionItem = possibilityItem.scoreReference();
 
-																if( wordList.createNewAssignmentLevelInWordList() == Constants.RESULT_OK )
+															if( createNewAssignmentLevelInAllWords() == Constants.RESULT_OK )
+																{
+																CommonVariables.currentAssignmentLevel++;
+
+																if( adminItem_.assignSelectionSpecification( possibilityItem.scoreReference() ) == Constants.RESULT_OK )
 																	{
-																	CommonVariables.currentAssignmentLevel++;
+																	tempEndSolveProgress = currentSolveProgress_ + solveProgressStep;
 
-																	if( adminItem_.assignSelectionSpecification( possibilityItem.scoreReference() ) == Constants.RESULT_OK )
+																	if( adminItem_.executeSelection( (int)( currentSolveProgress_ + solveProgressStep / 2L ), actionSelectionItem ) == Constants.RESULT_OK )
 																		{
-																		tempEndSolveProgress = currentSolveProgress_ + solveProgressStep;
-
-																		if( adminItem_.executeSelection( (int)( currentSolveProgress_ + solveProgressStep / 2L ), actionSelectionItem ) == Constants.RESULT_OK )
+																		// Word has active assignments
+																		if( solveWordItem.firstNonQuestionActiveAssignmentItem() != null )
 																			{
-																			// Word has active assignments
-																			if( solveWordItem.firstNonQuestionActiveAssignmentItem() != null )
+																			isInverted = ( predefinedNounSolveMethodWordItem.firstNonQuestionAssignmentItem( true, false, false, false, false, Constants.NO_CONTEXT_NR, adminItem_.predefinedAdjectiveInvertedWordItem() ) != null );
+
+																			if( !isInverted &&
+																			CommonVariables.currentAssignmentLevel < solveLevel_ )
 																				{
-																				isInverted = ( predefinedNounSolveMethodWordItem.firstNonQuestionAssignmentItem( true, false, false, false, false, Constants.NO_CONTEXT_NR, adminItem_.predefinedAdjectiveInvertedWordItem() ) != null );
-
-																				if( !isInverted &&
-																				CommonVariables.currentAssignmentLevel < solveLevel_ )
-																					{
-																					if( scoreList.deleteScores() == Constants.RESULT_OK )
-																						// Don't solve any deeper if there is a winning score
-																						solveLevel_ = CommonVariables.currentAssignmentLevel;
-																					else
-																						return adminItem_.addError( 1, moduleNameString_, "I failed to delete the scores with an assignment level higher than " + CommonVariables.currentAssignmentLevel );
-																					}
-
-																				// Create winning or losing score
-																				if( createScore( false, Constants.NO_SCORE, ( isInverted ? Constants.NO_SCORE : Constants.WINNING_SCORE ), Constants.NO_SCORE, ( isInverted ? Constants.WINNING_SCORE : Constants.NO_SCORE ), Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, actionSelectionItem ) == Constants.RESULT_OK )
-																					{
-																					currentSolveProgress_ = tempEndSolveProgress;
-
-																					if( solveLevel_ > 1 )
-																						Presentation.showProgress( currentSolveProgress_ );
-																					}
+																				if( scoreList.deleteScores() == Constants.RESULT_OK )
+																					// Don't solve any deeper if there is a winning score
+																					solveLevel_ = CommonVariables.currentAssignmentLevel;
 																				else
-																					return adminItem_.addError( 1, moduleNameString_, "I failed to create a winning or losing score of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+																					return adminItem_.addError( 1, moduleNameString_, "I failed to delete the scores with an assignment level higher than " + CommonVariables.currentAssignmentLevel );
+																				}
+
+																			// Create winning or losing score
+																			if( createScore( false, Constants.NO_SCORE, ( isInverted ? Constants.NO_SCORE : Constants.WINNING_SCORE ), Constants.NO_SCORE, ( isInverted ? Constants.WINNING_SCORE : Constants.NO_SCORE ), Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, actionSelectionItem ) == Constants.RESULT_OK )
+																				{
+																				currentSolveProgress_ = tempEndSolveProgress;
+
+																				if( solveLevel_ > 1 )
+																					Presentation.showProgress( currentSolveProgress_ );
 																				}
 																			else
-																				{
-																				if( solveWord( tempEndSolveProgress, solveWordItem, actionSelectionItem ) == Constants.RESULT_OK )
-																					{
-																					if( CommonVariables.currentAssignmentLevel == 1 )
-																						scoreList.changeAction( actionSelectionItem );
-																					}
-																				else
-																					return adminItem_.addError( 1, moduleNameString_, "I failed to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
-																				}
-
-																			if( deleteAssignmentLevelInAllWords() == Constants.RESULT_OK )
-																				{
-																				CommonVariables.currentAssignmentLevel--;
-																				possibilityItem = possibilityItem.nextPossibilityItem();
-
-																				if( ++possibilityNumber <= nPossibilities )
-																					{
-																					if( possibilityItem != null &&
-																					possibilityNumber == nPossibilities )
-																						return adminItem_.startError( 1, moduleNameString_, "I have found more possibility items than number of possibilities" );
-																					}
-																				else
-																					{
-																					if( possibilityItem == null )
-																						return adminItem_.startError( 1, moduleNameString_, "I couldn't get the next possibility item before the number of possibilities is reached" );
-																					}
-																				}
-																			else
-																				return adminItem_.addError( 1, moduleNameString_, "I failed to delete the assignments of level " + CommonVariables.currentAssignmentLevel );
+																				return adminItem_.addError( 1, moduleNameString_, "I failed to create a winning or losing score of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
 																			}
 																		else
-																			return adminItem_.addError( 1, moduleNameString_, "I failed to execute a selection during the solving of word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+																			{
+																			if( solveWord( tempEndSolveProgress, solveWordItem, actionSelectionItem ) == Constants.RESULT_OK )
+																				{
+																				if( CommonVariables.currentAssignmentLevel == 1 )
+																					scoreList.changeAction( actionSelectionItem );
+																				}
+																			else
+																				return adminItem_.addError( 1, moduleNameString_, "I failed to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+																			}
+
+																		if( deleteAssignmentLevelInAllWords() == Constants.RESULT_OK )
+																			{
+																			CommonVariables.currentAssignmentLevel--;
+																			possibilityItem = possibilityItem.nextPossibilityItem();
+
+																			if( ++possibilityNumber <= nPossibilities )
+																				{
+																				if( possibilityItem != null &&
+																				possibilityNumber == nPossibilities )
+																					return adminItem_.startError( 1, moduleNameString_, "I have found more possibility items than number of possibilities" );
+																				}
+																			else
+																				{
+																				if( possibilityItem == null )
+																					return adminItem_.startError( 1, moduleNameString_, "I couldn't get the next possibility item before the number of possibilities is reached" );
+																				}
+																			}
+																		else
+																			return adminItem_.addError( 1, moduleNameString_, "I failed to delete the assignments of level " + CommonVariables.currentAssignmentLevel );
 																		}
 																	else
-																		return adminItem_.addError( 1, moduleNameString_, "I failed to assign a selection specifcation at assignment level: " + CommonVariables.currentAssignmentLevel );
+																		return adminItem_.addError( 1, moduleNameString_, "I failed to execute a selection during the solving of word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
 																	}
 																else
-																	return adminItem_.addError( 1, moduleNameString_, "I failed to create a new assignment level: " + CommonVariables.currentAssignmentLevel );
+																	return adminItem_.addError( 1, moduleNameString_, "I failed to assign a selection specifcation at assignment level: " + CommonVariables.currentAssignmentLevel );
 																}
-															while( possibilityItem != null );
-
-															if( nPossibilities > 1 ||
-															// Higher level has possibilities
-															CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL )
-																{
-																if( scoreList.deleteScores() != Constants.RESULT_OK )
-																	return adminItem_.addError( 1, moduleNameString_, "I failed to delete the scores with assignment level " + CommonVariables.currentAssignmentLevel );
-																}
+															else
+																return adminItem_.addError( 1, moduleNameString_, "I failed to create a new assignment level: " + CommonVariables.currentAssignmentLevel );
 															}
-														else
-															return adminItem_.startError( 1, moduleNameString_, "I failed to get the first possibility item at assignment level " + CommonVariables.currentAssignmentLevel );
+														while( possibilityItem != null );
+
+														if( nPossibilities > 1 ||
+														// Higher level has possibilities
+														CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL )
+															{
+															if( scoreList.deleteScores() != Constants.RESULT_OK )
+																return adminItem_.addError( 1, moduleNameString_, "I failed to delete the scores with assignment level " + CommonVariables.currentAssignmentLevel );
+															}
 														}
 													else
-														return adminItem_.startError( 1, moduleNameString_, "The word list isn't created yet" );
+														return adminItem_.startError( 1, moduleNameString_, "I failed to get the first possibility item at assignment level " + CommonVariables.currentAssignmentLevel );
 													}
 												else
 													return adminItem_.startError( 1, moduleNameString_, "The solve scores list isn't created yet at assignment level " + CommonVariables.currentAssignmentLevel );
@@ -1206,7 +1198,7 @@ class AdminSolve
 													{
 													if( ( specificationResult = predefinedNounSolveStrategyWordItem.getAssignmentWordParameter() ).result == Constants.RESULT_OK )
 														{
-														if( ( selectionResult = scoreList.getBestAction( adminItem_.isTesting(), specificationResult.assignmentParameter ) ).result == Constants.RESULT_OK )
+														if( ( selectionResult = scoreList.getBestAction( adminItem_.isCurrentlyTesting(), specificationResult.assignmentParameter ) ).result == Constants.RESULT_OK )
 															{
 															if( ( actionSelectionItem = selectionResult.bestActionItem ) != null )
 																{
@@ -1291,7 +1283,7 @@ class AdminSolve
 
 					if( conditionSelectionItem.isAssignedOrClear() )
 						{
-						if( specificationWordItem.isAdjectiveClear() )
+						if( specificationWordItem.isAdjectiveEmpty() )
 							{
 							// Adjective "clear"
 							if( findScoringAssignment( !isNegative, generalizationWordItem ) == Constants.RESULT_OK )

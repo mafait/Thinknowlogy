@@ -1,11 +1,10 @@
-/*
- *	Class:			WordCollection
+/*	Class:			WordCollection
  *	Supports class:	WordItem
  *	Purpose:		To create collection structures
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,7 +23,6 @@
 
 #include "CollectionList.cpp"
 #include "GeneralizationItem.cpp"
-#include "Presentation.cpp"
 #include "SpecificationItem.cpp"
 
 class WordCollection
@@ -104,9 +102,9 @@ class WordCollection
 						if( collectionWordTypeNr == WORD_TYPE_NOUN_PLURAL )
 							collectionWordTypeNr = WORD_TYPE_NOUN_SINGULAR;
 
-						if( myWordItem_->hasWordType( collectionWordTypeNr ) )
+						if( myWordItem_->hasWordType( true, collectionWordTypeNr ) )
 							{
-							if( collectionWordItem->hasWordType( collectionWordTypeNr ) )
+							if( collectionWordItem->hasWordType( true, collectionWordTypeNr ) )
 								{
 								if( collectionNr == NO_COLLECTION_NR )
 									{
@@ -125,9 +123,9 @@ class WordCollection
 										isDuplicateCollection = true;
 									else
 										{
-										// Skip if collected with itself
+										// Skip if Spanish ambiguous
 										if( commonWordItem != compoundGeneralizationWordItem &&
-										!commonWordItem->isNounWordCollectedWithItself() )
+										!commonWordItem->isNounWordSpanishAmbiguous() )
 											{
 											// Detected semantic ambiguity of the specification word
 											if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START, commonWordItem->wordTypeString( true, commonWordTypeNr ), INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD, myWordItem_->wordTypeString( true, foundCollectionWordTypeNr ), INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END ) == RESULT_OK )
@@ -200,7 +198,7 @@ class WordCollection
 		if( generalizationWordItem != NULL )
 			{
 			if( generalizationWordItem != myWordItem_ ||
-			myWordItem_->isNounWordCollectedWithItself() )
+			myWordItem_->isNounWordSpanishAmbiguous() )
 				{
 				if( collectionWordItem != NULL )
 					{

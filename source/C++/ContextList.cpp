@@ -1,11 +1,10 @@
-/*
- *	Class:			ContextList
+/*	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -31,7 +30,7 @@ class ContextList : private List
 
 	// Private functions
 
-	bool hasContext( bool isCompoundCollectionCollectedWithItself, unsigned int contextNr, WordItem *specificationWordItem )
+	bool hasContext( bool isCompoundCollectionSpanishAmbiguous, unsigned int contextNr, WordItem *specificationWordItem )
 		{
 		ContextItem *searchItem = firstActiveContextItem();
 
@@ -43,7 +42,7 @@ class ContextList : private List
 				{
 				if( searchItem->contextNr() == contextNr &&
 				searchItem->specificationWordItem() == specificationWordItem &&
-				searchItem->isCompoundCollectionCollectedWithItself() == isCompoundCollectionCollectedWithItself )
+				searchItem->isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous )
 					return true;
 
 				searchItem = searchItem->nextContextItem();
@@ -76,17 +75,11 @@ class ContextList : private List
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class ContextList has inactive items." );
 
-		if( firstArchivedItem() )
+		if( firstArchivedItem() != NULL )
 			fprintf( stderr, "\nError: Class ContextList has archived items." );
 
-		searchItem = (ContextItem *)firstReplacedItem();
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextContextItem();
-			delete deleteItem;
-			}
+		if( firstReplacedItem() != NULL )
+			fprintf( stderr, "\nError: Class ContextList has replaced items." );
 
 		searchItem = (ContextItem *)firstDeletedItem();
 
@@ -100,54 +93,6 @@ class ContextList : private List
 
 
 	// Protected functions
-
-	void clearGeneralizationContextWriteLevel( unsigned short currentWriteLevel, unsigned int contextNr )
-		{
-		ContextItem *searchItem = firstActiveContextItem();
-
-		if( contextNr > NO_CONTEXT_NR )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->contextNr() == contextNr )
-					myWordItem()->clearGeneralizationWriteLevel( currentWriteLevel );
-
-				searchItem = searchItem->nextContextItem();
-				}
-			}
-		}
-
-	void clearSpecificationContextWriteLevel( unsigned short currentWriteLevel, unsigned int contextNr )
-		{
-		ContextItem *searchItem = firstActiveContextItem();
-
-		if( contextNr > NO_CONTEXT_NR )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->contextNr() == contextNr )
-					myWordItem()->clearSpecificationWriteLevel( currentWriteLevel );
-
-				searchItem = searchItem->nextContextItem();
-				}
-			}
-		}
-
-	void clearRelationContextWriteLevel( unsigned short currentWriteLevel, unsigned int contextNr )
-		{
-		ContextItem *searchItem = firstActiveContextItem();
-
-		if( contextNr > NO_CONTEXT_NR )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->contextNr() == contextNr )
-					myWordItem()->clearRelationWriteLevel( currentWriteLevel );
-
-				searchItem = searchItem->nextContextItem();
-				}
-			}
-		}
 
 	bool hasContext( unsigned int contextNr )
 		{
@@ -247,7 +192,7 @@ class ContextList : private List
 		return NO_CONTEXT_NR;
 		}
 
-	unsigned int contextNr( bool isCompoundCollectionCollectedWithItself, WordItem *specificationWordItem )
+	unsigned int contextNr( bool isCompoundCollectionSpanishAmbiguous, WordItem *specificationWordItem )
 		{
 		ContextItem *searchItem = firstActiveContextItem();
 
@@ -256,7 +201,7 @@ class ContextList : private List
 		while( searchItem != NULL )
 			{
 			if( searchItem->specificationWordItem() == specificationWordItem &&
-			searchItem->isCompoundCollectionCollectedWithItself() == isCompoundCollectionCollectedWithItself )
+			searchItem->isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous )
 				return searchItem->contextNr();
 
 			searchItem = searchItem->nextContextItem();
@@ -281,13 +226,13 @@ class ContextList : private List
 		return highestContextNr;
 		}
 
-	ResultType addContext( bool isCompoundCollectionCollectedWithItself, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem )
+	ResultType addContext( bool isCompoundCollectionSpanishAmbiguous, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addContext";
 
 		if( contextNr > NO_CONTEXT_NR )
 			{
-			if( !hasContext( isCompoundCollectionCollectedWithItself, contextNr, specificationWordItem ) )
+			if( !hasContext( isCompoundCollectionSpanishAmbiguous, contextNr, specificationWordItem ) )
 				{
 				if( contextWordTypeNr > WORD_TYPE_UNDEFINED &&
 				contextWordTypeNr < NUMBER_OF_WORD_TYPES )
@@ -299,7 +244,7 @@ class ContextList : private List
 						{
 						if( commonVariables()->currentItemNr < MAX_ITEM_NR )
 							{
-							if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionCollectedWithItself, contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
+							if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionSpanishAmbiguous, contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
 								return addError( functionNameString, NULL, "I failed to add an active context item" );
 							}
 						else
@@ -355,19 +300,6 @@ class ContextList : private List
 			searchItem = searchItem->nextContextItem();
 			}
 
-		searchItem = firstReplacedContextItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem->storeContextItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to modify a replaced context item in the database" );
-				}
-
-			searchItem = searchItem->nextContextItem();
-			}
-
 		return RESULT_OK;
 		}
 */
@@ -394,28 +326,6 @@ class ContextList : private List
 		return NULL;
 		}
 
-	ContextItem *contextItem( bool isCompoundCollectionCollectedWithItself, unsigned int nContextWords, WordItem *specificationWordItem )
-		{
-		ContextItem *searchItem = firstActiveContextItem();
-
-		// In case of a pronoun context, the given specification word item will be undefined
-
-		if( nContextWords > 0 )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->specificationWordItem() == specificationWordItem &&
-				searchItem->isCompoundCollectionCollectedWithItself() == isCompoundCollectionCollectedWithItself &&
-				myWordItem()->nContextWordsInAllWords( searchItem->contextNr(), specificationWordItem ) == nContextWords )
-					return searchItem;
-
-				searchItem = searchItem->nextContextItem();
-				}
-			}
-
-		return NULL;
-		}
-
 	ContextItem *contextItem( WordItem *specificationWordItem )
 		{
 		ContextItem *searchItem = firstActiveContextItem();
@@ -428,6 +338,29 @@ class ContextList : private List
 				return searchItem;
 
 			searchItem = searchItem->nextContextItem();
+			}
+
+		return NULL;
+		}
+
+	ContextItem *contextItem( bool isCompoundCollectionSpanishAmbiguous, unsigned int nContextWords, WordItem *specificationWordItem )
+		{
+		ContextItem *searchItem = firstActiveContextItem();
+		WordItem *anyWordItem = myWordItem();
+
+		// In case of a pronoun context, the given specification word item will be undefined
+
+		if( nContextWords > 0 )
+			{
+			while( searchItem != NULL )
+				{
+				if( searchItem->specificationWordItem() == specificationWordItem &&
+				searchItem->isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous &&
+				anyWordItem->nContextWordsInAllWords( searchItem->contextNr(), specificationWordItem ) == nContextWords )
+					return searchItem;
+
+				searchItem = searchItem->nextContextItem();
+				}
 			}
 
 		return NULL;

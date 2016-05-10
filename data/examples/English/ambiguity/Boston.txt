@@ -1,4 +1,4 @@
-﻿Boston is a city in the United States.
-Boston is a city in the United Kingdom.
-Show information about Boston.
-# Remember to clear this knowledge before reading another example.
+﻿Boston is a city of the United States.
+Boston is a city of the United Kingdom.
+Display information about Boston.
+# To continue, click button «Clear your mind.» or «Restart.».

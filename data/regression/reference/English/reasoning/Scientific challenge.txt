@@ -1,0 +1,58 @@
+﻿* 
+* My conclusions:
+< John has a son, called Paul.
+< 
+* 
+* My conclusions:
+< Laura is a daughter of Anna.
+< 
+* 
+* My conclusions:
+< An engine is part of every car.
+< 
+* 
+* My conclusions:
+< Every sailboat has a sail.
+< 
+* 
+* My conclusions:
+< Paul has a parent, called John.
+< 
+* 
+* My conclusions:
+< Paul has 2 parent [plural of 'parent' is unknown], called John and Anna.
+< 
+* 
+* My conclusions that are confirmed:
+< Paul has 2 parent [plural of 'parent' is unknown], called John and Anna.
+* 
+* You have entered plural noun "parents", which was unknown to me.
+* 
+* 
+* My conclusions:
+< Peter has no father anymore.
+< Peter had a father, called James.
+< 
+! 
+! This sentence is not accepted, because it is in conflict with itself.
+! 
+* 
+* My questions:
+< Is Addison a man or a woman?
+< 
+* 
+* My questions that are answered:
+< Is Addison a man or a woman?
+* 
+* My conclusions:
+< Addison is a man.
+< 
+* 
+* My conclusions:
+< The United States has a president, called Bill Clinton.
+< 
+* 
+* My conclusions:
+< The United States has a new president, called Barack Obama.
+< The United States has a previous president, called Bill Clinton.
+< 

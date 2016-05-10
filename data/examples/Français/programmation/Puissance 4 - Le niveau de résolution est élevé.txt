@@ -1,0 +1,4 @@
+﻿Lirez le fichier "Français/programmation/Puissance 4".
+Le niveau de résolution est élevé.
+Mon mouvement est D.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

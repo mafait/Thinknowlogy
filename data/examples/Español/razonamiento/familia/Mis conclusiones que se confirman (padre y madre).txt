@@ -6,4 +6,4 @@ José tiene un padre, llamado Juan.
 José tiene una madre, llamada Ana.
 Luisa tiene un padre, llamado Juan.
 Luisa tiene una madre, llamada Ana.
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

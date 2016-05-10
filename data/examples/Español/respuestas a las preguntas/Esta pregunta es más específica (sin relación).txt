@@ -1,4 +1,4 @@
 ﻿¿Es Juan un panadero o un carnicero?
 ¿Es Juan un panadero?
 ¿Es Juan un carnicero?
-# No olvide limpiar este conocimiento antes de leer otro ejemplo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

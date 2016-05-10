@@ -3,4 +3,4 @@ John is the father and Anna is the mother of Paul, Joe and Laura.
 Is Paul a girl, a woman, a boy, or a man?
 Is Joe a son or a daughter?
 Is Laura a girl or a woman?
-# Remember to clear this knowledge before reading another example.
+# To continue, click button «Clear your mind.» or «Restart.».

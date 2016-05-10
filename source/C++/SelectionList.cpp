@@ -1,11 +1,10 @@
-/*
- *	Class:			SelectionList
+/*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -68,17 +67,11 @@
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class SelectionList has inactive items." );
 
-		if( firstArchivedItem() )
+		if( firstArchivedItem() != NULL )
 			fprintf( stderr, "\nError: Class SelectionList has archived items." );
 
-		searchItem = (SelectionItem *)firstReplacedItem();
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextSelectionItem();
-			delete deleteItem;
-			}
+		if( firstReplacedItem() != NULL )
+			fprintf( stderr, "\nError: Class SelectionList has replaced items." );
 
 		searchItem = (SelectionItem *)firstDeletedItem();
 
@@ -185,19 +178,6 @@
 				{
 				if( searchItem->storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != RESULT_OK )
 					return addError( functionNameString, NULL, "I failed to store a selection item in the database" );
-				}
-
-			searchItem = searchItem->nextSelectionItem();
-			}
-
-		searchItem = firstReplacedSelectionItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem->storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to modify a replaced selection item in the database" );
 				}
 
 			searchItem = searchItem->nextSelectionItem();

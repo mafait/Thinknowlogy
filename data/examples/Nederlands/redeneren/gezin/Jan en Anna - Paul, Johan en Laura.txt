@@ -3,4 +3,4 @@ Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 Paul is een zoon.
 Johan is een zoon.
 Laura is een dochter.
-# Vergeet niet om deze kennis te wissen voorafgaand aan het lezen van een ander voorbeeld.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

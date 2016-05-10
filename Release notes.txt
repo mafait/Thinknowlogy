@@ -1,8 +1,6 @@
-﻿Changes in Thinknowlogy 2015r1 (Esperanza) compared to Thinknowlogy 2015r1beta (Corazón):
+﻿Changes in Thinknowlogy 2016r1 (Huguenot) compared to Thinknowlogy 2015r1 (Esperanza):
 - Bug fixes;
-- Slightly improved reasoning (all languages);
-- Slightly improved justification (all languages);
-- Improved reasoning in Spanish;
-- Added programming in Spanish;
-- Added additional query features;
-- Added regression test (for developer user).
+- Improved performance;
+- Improved Spanish family definition;
+- Added test for the Scientific challenge (see scientific challenge document);
+- Added French language.

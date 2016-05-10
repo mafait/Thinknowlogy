@@ -1,11 +1,10 @@
-/*
- *	Class:			CollectionList
+/*	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -60,17 +59,11 @@ class CollectionList : private List
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class CollectionList has inactive items." );
 
-		if( firstArchivedItem() )
+		if( firstArchivedItem() != NULL )
 			fprintf( stderr, "\nError: Class CollectionList has archived items." );
 
-		searchItem = (CollectionItem *)firstReplacedItem();
-
-		while( searchItem != NULL )
-			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextCollectionItem();
-			delete deleteItem;
-			}
+		if( firstReplacedItem() != NULL )
+			fprintf( stderr, "\nError: Class CollectionList has replaced items." );
 
 		searchItem = (CollectionItem *)firstDeletedItem();
 
@@ -163,7 +156,7 @@ class CollectionList : private List
 		return false;
 		}
 
-	bool isCollectionCollectedWithItself( unsigned int collectionNr )
+	bool isCollectionSpanishAmbiguous( unsigned int collectionNr )
 		{
 		CollectionItem *searchItem = firstActiveCollectionItem();
 
@@ -299,25 +292,6 @@ class CollectionList : private List
 		}
 
 	unsigned int compoundCollectionNr( unsigned short collectionWordTypeNr )
-		{
-		CollectionItem *searchItem = firstActiveCollectionItem();
-
-		if( collectionWordTypeNr > WORD_TYPE_UNDEFINED )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->isCompoundGeneralization() &&
-				searchItem->isMatchingCollectionWordTypeNr( collectionWordTypeNr ) )
-					return searchItem->collectionNr();
-
-				searchItem = searchItem->nextCollectionItem();
-				}
-			}
-
-		return NO_COLLECTION_NR;
-		}
-
-	unsigned int lastCompoundCollectionNr( unsigned short collectionWordTypeNr )
 		{
 		unsigned int foundCompoundCollectionNr = NO_COLLECTION_NR;
 		CollectionItem *searchItem = firstActiveCollectionItem();
@@ -480,19 +454,6 @@ class CollectionList : private List
 			searchItem = searchItem->nextCollectionItem();
 			}
 
-		searchItem = firstReplacedCollectionItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem->storeCollectionItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to modify a replaced collection item in the database" );
-				}
-
-			searchItem = searchItem->nextCollectionItem();
-			}
-
 		return RESULT_OK;
 		}
 */
@@ -535,8 +496,9 @@ class CollectionList : private List
 		{
 		CollectionItem *searchItem = firstActiveCollectionItem();
 
-		if( compoundCollectionNr > NO_COLLECTION_NR &&
-		notThisCommonWordItem != NULL )
+		// notThisCommonWordItem might be undefined
+
+		if( compoundCollectionNr > NO_COLLECTION_NR )
 			{
 			while( searchItem != NULL )
 				{

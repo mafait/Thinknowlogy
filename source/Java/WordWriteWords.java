@@ -1,11 +1,10 @@
-/*
- *	Class:			WordWriteWords
+/*	Class:			WordWriteWords
  *	Supports class:	WordItem
  *	Purpose:		To write the words of the sentences
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,22 +28,23 @@ class WordWriteWords
 	private boolean hasFoundAllSpecificationWords_;
 	private boolean hasFoundAllSpecificationWordsBeforeConjunction_;
 	private boolean hasFoundGeneralizationWord_;
-	private boolean hasFoundSpecificationWord_;
 	private boolean hasFoundQuestionVerb_;
 	private boolean hasFoundSingleSpecificationWord_;
 	private boolean hasFoundSpecificationGeneralizationVerb_;
+	private boolean hasFoundSpecificationWord_;
 
 	private boolean isSkippingClearWriteLevel_;
 	private boolean isSpecificationWaitingForConjunction_;
-	private boolean isRelationWaitingForConjunction_;
 	private boolean isUnknownPluralOfNoun_;
+
+	private short writeWordTypeNr_;
 
 	private int lastNumeralWordPosition_;
 	private int generalizationStartWordPosition_;
 	private int specificationStartWordPosition_;
 
+	private SpecificationItem mixedWordTypesSpecificationItem_;
 	private SpecificationItem lastFoundSpecificationItem_;
-	private SpecificationItem singularNounSpecificationItem_;
 
 	private WordItem lastFoundRelationWordItem_;
 
@@ -93,43 +93,158 @@ class WordWriteWords
 		return Constants.RESULT_OK;
 		}
 
-	private byte writeSpecificationWordToSentence( boolean isSpecificationGeneralization, boolean isWordTypeNumeral, boolean isWordTypePluralNoun, boolean isWordTypeSingularNoun, boolean isWritingCurrentSpecificationWordOnly, short grammarWordTypeNr, SpecificationItem writeSpecificationItem )
+	private byte writeSpecificationWordToSentence( boolean isPossessive, boolean isWordTypeNumeral, boolean isWordTypePluralNoun, short grammarWordTypeNr, int relationContextNr, SpecificationItem writeSpecificationItem )
+		{
+		boolean isNumberOfRelations = false;
+		short specificationWordTypeNr;
+		int nContextRelations;
+		WordItem specificationWordItem;
+		String specificationWordString;
+
+		if( writeSpecificationItem != null )
+			{
+			// Specification string
+			if( ( specificationWordItem = writeSpecificationItem.specificationWordItem() ) == null )
+				{
+				if( !writeSpecificationItem.isSpecificationStringAlreadyWritten() )
+					{
+					if( writeSpecificationItem.markSpecificationStringAsWritten() == Constants.RESULT_OK )
+						{
+						hasFoundSpecificationWord_ = true;
+						lastFoundSpecificationItem_ = writeSpecificationItem;
+						writeWordString_ = writeSpecificationItem.specificationString();
+						}
+					else
+						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to mark specification string \"" + writeSpecificationItem.specificationString() + "\" as written" );
+					}
+				}
+			else
+				{
+				// Specification word
+				specificationWordTypeNr = writeSpecificationItem.specificationWordTypeNr();
+
+				if( !specificationWordItem.isSpecificationWordTypeAlreadyWritten( specificationWordTypeNr ) )
+					{
+					// Number of relation words of user specification item
+					if( ( nContextRelations = writeSpecificationItem.nContextRelations() ) == 0 )
+						{
+						// Calculated number of relation words of a self-generated possessive specification
+						if( isPossessive &&
+						relationContextNr > Constants.NO_CONTEXT_NR )
+							nContextRelations = myWordItem_.nContextWordsInAllWords( relationContextNr, specificationWordItem );
+						}
+
+					// No relation word
+					if( ( ( nContextRelations == 0 ||
+					// One relation word
+					nContextRelations == 1 ) &&
+
+					grammarWordTypeNr == specificationWordTypeNr ) ||
+
+					// Multiple relation words
+					( nContextRelations > 1 &&
+
+					( isWordTypeNumeral ||
+					isWordTypePluralNoun ) ) )
+						{
+						if( ( specificationWordString = specificationWordItem.activeWordTypeString( grammarWordTypeNr ) ) == null )
+							{
+							if( isWordTypeNumeral )
+								{
+								// To avoid looping in numbers
+								if( lastNumeralWordPosition_ == 0 )
+									{
+									// The word 'number' needs to be converted to the number of relation words
+									isNumberOfRelations = true;
+									lastNumeralWordPosition_ = specificationStartWordPosition_;
+									writeWordString_ = ( Constants.EMPTY_STRING + nContextRelations );
+									}
+								}
+							else
+								{
+								if( isWordTypePluralNoun )
+									{
+									if( ( writeWordString_ = specificationWordItem.singularNounString() ) != null )
+										{
+										// The plural noun is unknown, but the singular noun is known.
+										// So, force a singular noun, but add a 'plural noun is unknown' text.
+										isUnknownPluralOfNoun_ = true;
+										writeWordTypeNr_ = Constants.WORD_TYPE_NOUN_SINGULAR;
+										}
+									}
+								else
+									// Must be hidden word type
+									writeWordString_ = specificationWordItem.anyWordTypeString();
+								}
+							}
+						else
+							writeWordString_ = specificationWordString;
+
+						if( !isNumberOfRelations &&
+						writeWordString_ != null )
+							{
+							if( specificationWordItem.markSpecificationWordTypeAsWritten( writeWordTypeNr_ ) == Constants.RESULT_OK )
+								{
+								hasFoundSpecificationWord_ = true;
+								lastFoundSpecificationItem_ = writeSpecificationItem;
+
+								if( hasFoundAllSpecificationWordsBeforeConjunction_ )
+									{
+									hasFoundAllSpecificationWords_ = true;
+									isSkippingClearWriteLevel_ = false;
+									}
+								}
+							else
+								return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to mark specification word \"" + specificationWordItem.anyWordTypeString() + "\" as written" );
+							}
+						}
+					}
+				}
+			}
+		else
+			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given write specification item is undefined" );
+
+		return Constants.RESULT_OK;
+		}
+
+	private byte writeSpecificationWordToSentence( boolean isSpecificationGeneralization, boolean isWordTypeNumeral, boolean isWordTypePluralNoun, boolean isWritingCurrentSpecificationWordOnly, short grammarWordTypeNr, SpecificationItem writeSpecificationItem )
 		{
 		boolean isAnsweredQuestion;
 		boolean isExclusiveSpecification;
 		boolean isNegative;
 		boolean isPossessive;
 		boolean isSelfGenerated;
-		boolean hasFoundUnwrittenWordType = false;
-		boolean isNumberOfRelations = false;
+		boolean hasSkippedDifferentSpecification = false;
 		short assumptionLevel;
-		short currentSpecificationWordTypeNr;
-		short writeWordTypeNr = grammarWordTypeNr;
 		int specificationCollectionNr;
-		int nContextRelations;
-		int currentRelationContextNr;
 		int generalizationContextNr;
 		int specificationContextNr;
 		int relationContextNr;
 		SpecificationItem currentSpecificationItem;
-		WordItem currentSpecificationWordItem;
 		WordItem lastFoundSpecificationWordItem;
-		String specificationWordString;
 
 		hasFoundSingleSpecificationWord_ = false;
 		isUnknownPluralOfNoun_ = false;
+
+		writeWordTypeNr_ = grammarWordTypeNr;
 
 		writeWordString_ = null;
 
 		if( writeSpecificationItem != null )
 			{
-			isAnsweredQuestion = writeSpecificationItem.isAnsweredQuestion();
+			isPossessive = writeSpecificationItem.isPossessive();
+			relationContextNr = writeSpecificationItem.relationContextNr();
 
-			if( ( currentSpecificationItem = myWordItem_.firstSelectedSpecificationItem( isAnsweredQuestion, writeSpecificationItem.isAssignment(), writeSpecificationItem.isInactiveAssignment(), writeSpecificationItem.isArchivedAssignment(), writeSpecificationItem.questionParameter() ) ) != null )
+			if( isWritingCurrentSpecificationWordOnly )
 				{
+				if( writeSpecificationWordToSentence( isPossessive, isWordTypeNumeral, isWordTypePluralNoun, grammarWordTypeNr, relationContextNr, writeSpecificationItem ) != Constants.RESULT_OK )
+					myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a specification word only to the sentence" );
+				}
+			else
+				{
+				isAnsweredQuestion = writeSpecificationItem.isAnsweredQuestion();
 				isExclusiveSpecification = writeSpecificationItem.isExclusiveSpecification();
 				isNegative = writeSpecificationItem.isNegative();
-				isPossessive = writeSpecificationItem.isPossessive();
 				isSelfGenerated = writeSpecificationItem.isSelfGenerated();
 
 				assumptionLevel = writeSpecificationItem.assumptionLevel();
@@ -137,134 +252,31 @@ class WordWriteWords
 				specificationCollectionNr = writeSpecificationItem.specificationCollectionNr();
 				generalizationContextNr = writeSpecificationItem.generalizationContextNr();
 				specificationContextNr = writeSpecificationItem.specificationContextNr();
-				relationContextNr = writeSpecificationItem.relationContextNr();
 
-				do	{
-					if( currentSpecificationItem == writeSpecificationItem ||
-
-					( !isWritingCurrentSpecificationWordOnly &&
-					currentSpecificationItem.isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) ) )
-						{
-						if( currentSpecificationItem != writeSpecificationItem )
-							hasFoundUnwrittenWordType = true;
-
-						// Specification string
-						if( ( currentSpecificationWordItem = currentSpecificationItem.specificationWordItem() ) == null )
+				if( ( currentSpecificationItem = myWordItem_.firstSelectedSpecificationItem( isAnsweredQuestion, writeSpecificationItem.isAssignment(), writeSpecificationItem.isInactiveAssignment(), writeSpecificationItem.isArchivedAssignment(), writeSpecificationItem.questionParameter() ) ) != null )
+					{
+					do	{
+						if( currentSpecificationItem == writeSpecificationItem ||
+						currentSpecificationItem.isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, Constants.WORD_TYPE_UNDEFINED, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) )
 							{
-							if( !currentSpecificationItem.isSpecificationStringAlreadyWritten() )
+							if( writeSpecificationWordToSentence( isPossessive, isWordTypeNumeral, isWordTypePluralNoun, grammarWordTypeNr, relationContextNr, currentSpecificationItem ) == Constants.RESULT_OK )
 								{
-								if( currentSpecificationItem.markSpecificationStringAsWritten() == Constants.RESULT_OK )
+								if( writeWordString_ == null &&
+								currentSpecificationItem != writeSpecificationItem )
 									{
-									hasFoundSpecificationWord_ = true;
-									lastFoundSpecificationItem_ = currentSpecificationItem;
-									writeWordString_ = currentSpecificationItem.specificationString();
+									hasSkippedDifferentSpecification = true;
 
-									if( hasFoundAllSpecificationWordsBeforeConjunction_ )
-										{
-										hasFoundAllSpecificationWords_ = true;
-										hasFoundAllSpecificationWordsBeforeConjunction_ = false;
-										isSkippingClearWriteLevel_ = false;
-										}
-									}
-								else
-									return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to mark specification string \"" + currentSpecificationItem.specificationString() + "\" as written" );
-								}
-							}
-						else
-							{
-							// Specification word
-							currentSpecificationWordTypeNr = currentSpecificationItem.specificationWordTypeNr();
-
-							if( !currentSpecificationWordItem.isSpecificationWordTypeAlreadyWritten( currentSpecificationWordTypeNr ) )
-								{
-								// Number of relation words of user specification item
-								if( ( nContextRelations = currentSpecificationItem.nContextRelations() ) == 0 )
-									{
-									// Calculated number of relation words of a self-generated possessive specification
-									if( isPossessive &&
-									( currentRelationContextNr = currentSpecificationItem.relationContextNr() ) > Constants.NO_CONTEXT_NR )
-										nContextRelations = myWordItem_.nContextWordsInAllWords( currentRelationContextNr, currentSpecificationWordItem );
-									}
-
-								// No relation word
-								if( ( nContextRelations == 0 &&
-								grammarWordTypeNr == currentSpecificationWordTypeNr ) ||
-
-								// One relation word
-								( nContextRelations == 1 &&
-								isWordTypeSingularNoun ) ||
-
-								// Multiple relation words
-								( nContextRelations > 1 &&
-
-								( isWordTypeNumeral ||
-								isWordTypePluralNoun ) ) )
-									{
-									if( ( specificationWordString = currentSpecificationWordItem.activeWordTypeString( grammarWordTypeNr ) ) == null )
-										{
-										if( isWordTypeNumeral )
-											{
-											// To avoid looping in numbers
-											if( lastNumeralWordPosition_ == 0 )
-												{
-												// The word 'number' needs to be converted to the number of relation words
-												isNumberOfRelations = true;
-												lastNumeralWordPosition_ = specificationStartWordPosition_;
-												writeWordString_ = ( Constants.EMPTY_STRING + nContextRelations );
-												}
-											}
-										else
-											{
-											if( isWordTypePluralNoun )
-												{
-												if( ( writeWordString_ = currentSpecificationWordItem.singularNounString() ) != null )
-													{
-													// The plural noun is unknown, but the singular is known. So, force a singular noun, but with a remark
-													// Force as singular noun
-													isUnknownPluralOfNoun_ = true;
-													writeWordTypeNr = Constants.WORD_TYPE_NOUN_SINGULAR;
-													}
-												}
-											else
-												// Must be hidden word type
-												writeWordString_ = currentSpecificationWordItem.anyWordTypeString();
-											}
-										}
-									else
-										writeWordString_ = specificationWordString;
-
-									if( !isNumberOfRelations &&
-									writeWordString_ != null )
-										{
-										if( currentSpecificationWordItem.markSpecificationWordTypeAsWritten( writeWordTypeNr ) == Constants.RESULT_OK )
-											{
-											hasFoundSpecificationWord_ = true;
-											lastFoundSpecificationItem_ = currentSpecificationItem;
-
-											if( hasFoundAllSpecificationWordsBeforeConjunction_ )
-												{
-												hasFoundAllSpecificationWords_ = true;
-												isSkippingClearWriteLevel_ = false;
-												}
-											}
-										else
-											return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to mark specification word \"" + currentSpecificationWordItem.anyWordTypeString() + "\" as written" );
-										}
-									}
-								else
-									{
-									if( isPossessive &&
-									isWordTypePluralNoun &&
-									nContextRelations == 0 &&
-									currentSpecificationWordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR )
-										singularNounSpecificationItem_ = currentSpecificationItem;
+									if( writeSpecificationItem.specificationWordTypeNr() != currentSpecificationItem.specificationWordTypeNr() )
+										mixedWordTypesSpecificationItem_ = currentSpecificationItem;
 									}
 								}
+							else
+								myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a specification word to the sentence" );
 							}
 						}
+					while( writeWordString_ == null &&
+					( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != null );
 					}
-				while( writeWordString_ == null &&
-				( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != null );
 				}
 
 			if( !hasFoundSpecificationWord_ &&
@@ -273,7 +285,7 @@ class WordWriteWords
 			lastFoundSpecificationItem_ != null &&
 			lastFoundSpecificationItem_.specificationWordTypeNr() == grammarWordTypeNr )
 				{
-				if( hasFoundUnwrittenWordType )
+				if( hasSkippedDifferentSpecification )
 					{
 					if( previousSpecificationStringBuffer_ != null &&
 					previousSpecificationStringBuffer_.length() > 0 )
@@ -286,12 +298,9 @@ class WordWriteWords
 
 						lastNumeralWordPosition_ = 0;
 
-						CommonVariables.writeSentenceStringBuffer = new StringBuffer( previousSpecificationStringBuffer_ );
+						CommonVariables.writtenSentenceStringBuffer = new StringBuffer( previousSpecificationStringBuffer_ );
 
-						// Specification string
-						if( ( lastFoundSpecificationWordItem = lastFoundSpecificationItem_.specificationWordItem() ) == null )
-							lastFoundSpecificationItem_.clearSpecificationStringWriteLevel( Constants.NO_WRITE_LEVEL );
-						else
+						if( ( lastFoundSpecificationWordItem = lastFoundSpecificationItem_.specificationWordItem() ) != null )
 							lastFoundSpecificationWordItem.clearSpecificationWriteLevel( Constants.NO_WRITE_LEVEL );
 						}
 					}
@@ -311,7 +320,7 @@ class WordWriteWords
 		return Constants.RESULT_OK;
 		}
 
-	private byte writeRelationContextWordToSentence( short grammarWordTypeNr, SpecificationItem writeSpecificationItem )
+	private byte writeRelationWordToSentence( short grammarWordTypeNr, SpecificationItem writeSpecificationItem )
 		{
 		// Start to search first word in method contextWordInAllWords
 		WordItem currentRelationWordItem = null;
@@ -345,11 +354,7 @@ class WordWriteWords
 			lastFoundRelationWordItem_ != currentRelationWordItem &&
 			// Look ahead: This is the last relation word of the relation context
 			writeSpecificationItem.relationWordItem( currentRelationWordItem ) == null )
-				{
-				isRelationWaitingForConjunction_ = true;
 				writeWordString_ = null;
-				currentRelationWordItem.clearRelationWriteLevel( Constants.NO_WRITE_LEVEL );
-				}
 
 			lastFoundRelationWordItem_ = currentRelationWordItem;
 			}
@@ -399,24 +404,26 @@ class WordWriteWords
 		hasFoundAllSpecificationWords_ = false;
 		hasFoundAllSpecificationWordsBeforeConjunction_ = false;
 		hasFoundGeneralizationWord_ = false;
-		hasFoundSpecificationWord_ = false;
 		hasFoundQuestionVerb_ = false;
 		hasFoundSingleSpecificationWord_ = false;
 		hasFoundSpecificationGeneralizationVerb_ = false;
+		hasFoundSpecificationWord_ = false;
 
 		isSkippingClearWriteLevel_ = false;
 		isSpecificationWaitingForConjunction_ = false;
-		isRelationWaitingForConjunction_ = false;
 		isUnknownPluralOfNoun_ = false;
+
+		writeWordTypeNr_ = Constants.WORD_TYPE_UNDEFINED;
 
 		lastNumeralWordPosition_ = 0;
 		generalizationStartWordPosition_ = 0;
 		specificationStartWordPosition_ = 0;
 
+		mixedWordTypesSpecificationItem_ = null;
 		lastFoundSpecificationItem_ = null;
-		singularNounSpecificationItem_ = null;
 
 		lastFoundRelationWordItem_ = null;
+
 		writeWordString_ = null;
 
 		lastSpecificationStringBuffer_ = null;
@@ -448,24 +455,24 @@ class WordWriteWords
 		hasFoundAllSpecificationWords_ = false;
 		hasFoundAllSpecificationWordsBeforeConjunction_ = false;
 		hasFoundGeneralizationWord_ = false;
-		hasFoundSpecificationWord_ = false;
 		hasFoundQuestionVerb_ = false;
 		hasFoundSingleSpecificationWord_ = false;
 		hasFoundSpecificationGeneralizationVerb_ = false;
+		hasFoundSpecificationWord_ = false;
 
 		isSkippingClearWriteLevel_ = false;
 		isSpecificationWaitingForConjunction_ = false;
-		isRelationWaitingForConjunction_ = false;
 		isUnknownPluralOfNoun_ = false;
 
 		lastNumeralWordPosition_ = 0;
 		generalizationStartWordPosition_ = 0;
 		specificationStartWordPosition_ = 0;
 
+		mixedWordTypesSpecificationItem_ = null;
 		lastFoundSpecificationItem_ = null;
-		singularNounSpecificationItem_ = null;
 
 		lastFoundRelationWordItem_ = null;
+
 		writeWordString_ = null;
 
 		lastSpecificationStringBuffer_ = null;
@@ -522,6 +529,7 @@ class WordWriteWords
 		short definitionGrammarParameter;
 		short definitionGrammarWordTypeNr;
 		short generalizationWordTypeNr;
+		short specificationWordTypeNr;
 		int generalizationContextNr;
 		int specificationContextNr;
 		int relationContextNr;
@@ -530,11 +538,15 @@ class WordWriteWords
 		WordItem pronounWordItem;
 		WordItem relationWordItem;
 		WordItem specificationWordItem;
+		WordItem currentLanguageWordItem;
+		StringBuffer writtenSentenceStringBuffer;
 		String predefinedWordString = null;
 
 		hasFoundGeneralizationWord_ = false;
 		hasFoundSpecificationWord_ = false;
 		isUnknownPluralOfNoun_ = false;
+
+		writeWordTypeNr_ = Constants.WORD_TYPE_UNDEFINED;
 
 		writeWordString_ = null;
 
@@ -580,10 +592,12 @@ class WordWriteWords
 					isSpecification = ( !isGeneralization &&
 										!isRelation );
 
-					assumptionLevel = writeSpecificationItem.assumptionLevel();
 					definitionGrammarParameter = definitionGrammarItem.grammarParameter();
 					definitionGrammarWordTypeNr = definitionGrammarItem.grammarWordTypeNr();
+
+					assumptionLevel = writeSpecificationItem.assumptionLevel();
 					generalizationWordTypeNr = writeSpecificationItem.generalizationWordTypeNr();
+					specificationWordTypeNr = writeSpecificationItem.specificationWordTypeNr();
 
 					generalizationContextNr = writeSpecificationItem.generalizationContextNr();
 					specificationContextNr = writeSpecificationItem.specificationContextNr();
@@ -613,7 +627,6 @@ class WordWriteWords
 						// Ambiguity
 						// Typically for Dutch: in zowel ... als ...
 						case Constants.WORD_PARAMETER_CONJUNCTION_DUTCH_ALS:
-							isRelationWaitingForConjunction_ = false;
 							isSpecificationWaitingForConjunction_ = false;
 
 							// Don't insert a break statement here
@@ -673,6 +686,7 @@ class WordWriteWords
 
 						case Constants.WORD_PARAMETER_ADJECTIVE_NO:
 						case Constants.WORD_PARAMETER_ADVERB_NOT:
+						case Constants.WORD_PARAMETER_ADVERB_NOT_FRENCH:
 							if( isNegative )
 								writeWordString_ = predefinedWordString;
 
@@ -809,11 +823,12 @@ class WordWriteWords
 							( isSpecification &&
 							isSpecificationNoun &&
 
-							( ( singularNounSpecificationItem_ == null &&
+							( ( specificationWordTypeNr != Constants.WORD_TYPE_NOUN_PLURAL &&
+							mixedWordTypesSpecificationItem_ == null &&
 							writeSpecificationItem.isCorrectSpecificationArticle( definitionGrammarParameter ) ) ||
 
-							( singularNounSpecificationItem_ != null &&
-							singularNounSpecificationItem_.isCorrectSpecificationArticle( definitionGrammarParameter ) ) ) ) ) )
+							( mixedWordTypesSpecificationItem_ != null &&
+							mixedWordTypesSpecificationItem_.isCorrectSpecificationArticle( definitionGrammarParameter ) ) ) ) ) )
 								writeWordString_ = predefinedWordString;
 
 							break;
@@ -832,6 +847,10 @@ class WordWriteWords
 							// Generalization noun
 							( ( isGeneralization &&
 							isGeneralizationNoun &&
+
+							( !isArchivedAssignment ||
+							!writeSpecificationItem.isEveryGeneralization() ) &&
+
 							myWordItem_.isCorrectDefiniteArticle( definitionGrammarParameter, generalizationWordTypeNr ) ) ||
 
 							// Specification nouns
@@ -840,12 +859,12 @@ class WordWriteWords
 							isSpecificationNoun &&
 							writeSpecificationItem.isCorrectSpecificationArticle( definitionGrammarParameter ) ) ) ) ||
 
-							// Generalization proper name preceded-by-defined-article
+							// Generalization proper name preceded by defined article
 							( isGeneralization &&
 							isGeneralizationProperName &&
 							myWordItem_.isProperNamePrecededByDefiniteArticle( definitionGrammarParameter ) ) ||
 
-							// Relation proper names preceded-by-defined-article
+							// Relation proper names preceded by defined article
 							( isRelation &&
 							writeSpecificationItem.isRelationProperName() &&
 							writeSpecificationItem.isCorrectRelationArticle( definitionGrammarParameter ) ) )
@@ -860,7 +879,6 @@ class WordWriteWords
 							isNegative ||
 							isRelation )
 								{
-								isRelationWaitingForConjunction_ = false;
 								isSpecificationWaitingForConjunction_ = false;
 								writeWordString_ = predefinedWordString;
 								}
@@ -870,7 +888,6 @@ class WordWriteWords
 						case Constants.WORD_PARAMETER_CONJUNCTION_OR:
 							if( isExclusiveSpecification )
 								{
-								isRelationWaitingForConjunction_ = false;
 								isSpecificationWaitingForConjunction_ = false;
 								writeWordString_ = predefinedWordString;
 								}
@@ -942,6 +959,9 @@ class WordWriteWords
 							writeSpecificationItem.prepositionParameter() == definitionGrammarParameter )
 								writeWordString_ = predefinedWordString;
 
+							break;
+
+						case Constants.WORD_PARAMETER_PREPOSITION_FRENCH_A:
 							break;
 
 						// Verbs
@@ -1107,9 +1127,9 @@ class WordWriteWords
 						// Adjectives
 						case Constants.WORD_PARAMETER_ADJECTIVE_ASSIGNED:
 						case Constants.WORD_PARAMETER_ADJECTIVE_BUSY:
-						case Constants.WORD_PARAMETER_ADJECTIVE_CLEAR:
 						case Constants.WORD_PARAMETER_ADJECTIVE_DONE:
 						case Constants.WORD_PARAMETER_ADJECTIVE_DEFENSIVE:
+						case Constants.WORD_PARAMETER_ADJECTIVE_EMPTY:
 						case Constants.WORD_PARAMETER_ADJECTIVE_EXCLUSIVE:
 						case Constants.WORD_PARAMETER_ADJECTIVE_INVERTED:
 						case Constants.WORD_PARAMETER_ADJECTIVE_MASCULINE:
@@ -1135,8 +1155,7 @@ class WordWriteWords
 							if( ( !isQuestion ||
 							hasFoundQuestionVerb_ ) &&
 
-							( !isRelationWaitingForConjunction_ &&
-							!isSpecificationWaitingForConjunction_ ) )
+							!isSpecificationWaitingForConjunction_ )
 								{
 								if( isGeneralization )
 									{
@@ -1160,10 +1179,10 @@ class WordWriteWords
 										isWordTypePluralNoun ||
 										isWordTypeSingularNoun ||
 										// Matching specification word type
-										writeSpecificationItem.specificationWordTypeNr() == definitionGrammarWordTypeNr )
+										specificationWordTypeNr == definitionGrammarWordTypeNr )
 											{
 											// Specification
-											if( writeSpecificationWordToSentence( isSpecificationGeneralization, isWordTypeNumeral, isWordTypePluralNoun, isWordTypeSingularNoun, isWritingCurrentSpecificationWordOnly, definitionGrammarWordTypeNr, writeSpecificationItem ) != Constants.RESULT_OK )
+											if( writeSpecificationWordToSentence( isSpecificationGeneralization, isWordTypeNumeral, isWordTypePluralNoun, isWritingCurrentSpecificationWordOnly, definitionGrammarWordTypeNr, writeSpecificationItem ) != Constants.RESULT_OK )
 												myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a specification word to the sentence" );
 											}
 										}
@@ -1174,8 +1193,8 @@ class WordWriteWords
 										writeSpecificationItem.relationWordTypeNr() == definitionGrammarWordTypeNr )
 											{
 											// Relation context
-											if( writeRelationContextWordToSentence( definitionGrammarWordTypeNr, writeSpecificationItem ) != Constants.RESULT_OK )
-												myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a relation context word to the sentence" );
+											if( writeRelationWordToSentence( definitionGrammarWordTypeNr, writeSpecificationItem ) != Constants.RESULT_OK )
+												myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a relation word to the sentence" );
 											}
 										}
 									}
@@ -1191,37 +1210,40 @@ class WordWriteWords
 						{
 						if( writeWordString_ != null )
 							{
-							if( CommonVariables.writeSentenceStringBuffer == null )
-								CommonVariables.writeSentenceStringBuffer = new StringBuffer( writeWordString_ );
+							if( CommonVariables.writtenSentenceStringBuffer == null ||
+							CommonVariables.writtenSentenceStringBuffer.length() == 0 )
+								CommonVariables.writtenSentenceStringBuffer = new StringBuffer( writeWordString_ );
 							else
 								{
 								isSkippingClearWriteLevel_ = false;
 
 								if( isInsertingSeparator )
-									CommonVariables.writeSentenceStringBuffer.append( Constants.SPACE_STRING );
+									CommonVariables.writtenSentenceStringBuffer.append( Constants.SPACE_STRING );
 
-								CommonVariables.writeSentenceStringBuffer.append( writeWordString_ );
+								CommonVariables.writtenSentenceStringBuffer.append( writeWordString_ );
 								}
+
+							writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer;
 
 							if( isUnknownPluralOfNoun_ )
 								{
-								if( CommonVariables.currentLanguageWordItem != null )
-									CommonVariables.writeSentenceStringBuffer.append( CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_START ) + writeWordString_ + CommonVariables.currentLanguageWordItem.interfaceString( Constants.INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_ENDING ) );
+								if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) != null )
+									writtenSentenceStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_START ) + writeWordString_ + currentLanguageWordItem.interfaceString( Constants.INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_ENDING ) );
 								else
 									myWordItem_.startErrorInWord( 1, moduleNameString_, "The current language word item is undefined" );
 								}
 
 							if( hasFoundGeneralizationWord_ )
-								generalizationStartWordPosition_ = CommonVariables.writeSentenceStringBuffer.length();
+								generalizationStartWordPosition_ = writtenSentenceStringBuffer.length();
 							else
 								{
 								if( hasFoundSpecificationWord_ )
 									{
-									specificationStartWordPosition_ = CommonVariables.writeSentenceStringBuffer.length();
+									specificationStartWordPosition_ = writtenSentenceStringBuffer.length();
 
 									// Recover an unsuccessful grammar path
 									previousSpecificationStringBuffer_ = lastSpecificationStringBuffer_;
-									lastSpecificationStringBuffer_ = new StringBuffer( CommonVariables.writeSentenceStringBuffer );
+									lastSpecificationStringBuffer_ = new StringBuffer( writtenSentenceStringBuffer );
 									}
 								}
 							}

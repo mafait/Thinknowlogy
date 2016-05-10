@@ -11,20 +11,102 @@
  Herstellen.				* Herstel vorige zin
  Wis je geheugen.			* Vergeet de ingevoerde kennis
  Herstart.				* Herstart dit programma
- Toon info over de grammatica-talen.
- Toon info over de interface-talen.
+ Toon info over de talen.
  Toon info over de lijsten.
  Toon info over de woordtypes.
  Toon de opvraagopdrachten.
  Toon het auteursrecht.
- Toon de licentie.
+ Toon de GPLv2-licentie.
  Toon de garantie.
 ------------------------------------------------------------------------------
  Voorbeeldbestanden:	* Gebruik knop <meer voorbeelden> of zie
-			  map: Thinknowlogy2015r1/data/examples/Nederlands/
- Fundamenteel:		* map: Thinknowlogy2015r1/documents/
- Ontwerp:		* map: Thinknowlogy2015r1/documents/design/
- Schermafdrukken:	* map: Thinknowlogy2015r1/screenshots/Nederlands/
+			  map: Thinknowlogy2016r1/data/examples/Nederlands/
+ Fundamenteel:		* map: Thinknowlogy2016r1/documents/
+ Ontwerp:		* map: Thinknowlogy2016r1/documents/design/
+ Schermafdrukken:	* map: Thinknowlogy2016r1/screenshots/Nederlands/
+------------------------------------------------------------------------------
+< 
+< Specificaties:
+< Nederlands is de huidige taal. (geleerd van gebruiker Admin)
+< Français is een taal. (geleerd van gebruiker Admin)
+< Español is de vorige taal. (geleerd van gebruiker Admin)
+< English is een taal. (geleerd van gebruiker Admin)
+< 
+------------------------------------------------------------------------------
+ Totaal aantal items:	7523.
+------------------------------------------------------------------------------
+ Items in administrator:	382.
+------------------------------------------------------------------------------
+ * Actieve items:			382.
+    <F> Bestanden:				2.
+    <R> Leeswoorden (tijdelijk):		3.
+    <S> Oplospunten (tijdelijk):		0.
+    <W> Woorden:				356, (voorgedefinieerd: 183).
+    <X> Condities:				9.
+    <Y> Acties:					12.
+    <Z> Alternatieven:				0.
+ * Inactieve items:			0.
+ * Gearchiveerde items:			0.
+ * Vervangen items:			0.
+ * Verwijderde items:			0.
+------------------------------------------------------------------------------
+ Items in woorden:		7141.
+------------------------------------------------------------------------------
+ * Actieve items:			7109.
+    <a> toewijzingen:				7.
+    <c> collecties:				232.
+    <g> generalisaties:				323.
+    <i> interface:				1120.
+    <j> verantwoordingen:			0.
+    <l> grammatica:				4052.
+    <m> multiple woord:				77.
+    <s> specificaties:				378.
+    <r> schrijfwoorden (tijdelijk):		0.
+    <w> woordtypes:				920.
+    <x> context:				0.
+ * Inactieve items:			3.
+ * Gearchiveerde items:			23.
+ * Vervangen items:			6.
+ * Verwijderde items:			0.
+------------------------------------------------------------------------------
+< 
+< Specificaties:
+< Gast is de vorige gebruiker. (geleerd van gebruiker Admin)
+< Ontwikkelaar is de huidige gebruiker. (geleerd van gebruiker Expert)
+< Expert is de gebruiker. (geleerd van gebruiker Gast)
+< 
+------------------------------------------------------------------------------
+ Totaal aantal woordtype items:			923, (alle talen inbegrepen).
+------------------------------------------------------------------------------
+ * Actieve woordtype items:				923.
+   (@1)  Symbolen:						18.
+   (@2)  Cijfers/telwoorden:					43.
+   (@3)  Kleine letters:					104.
+   (@4)  Hoofdletters:						104.
+   (@5)  Eigennamen:						16.
+   (@6)  Bijvoeglijk naamwoorden:				165.
+   (@7)  Bijwoorden:						25.
+   (@8)  Antwoorden:						8.
+   (@9)  Lidwoorden:						18.
+   (@10) Voegwoorden:						15.
+   (@11) Enkelvoudige zelfstandig naamwoorden:			177.
+   (@12) Meervoudige zelfstandig naamwoorden:			23.
+   (@13) Persoonlijk voornaamwoord enkelvoud (subjectief):	0.
+   (@14) Persoonlijk voornaamwoord enkelvoud (objectief):	0.
+   (@15) Bezittelijk voornaamwoord enkelvoud:			20.
+   (@16) Bezittelijk voornaamwoord enkelvoud (na voorzetsel):	19.
+   (@17) Persoonlijk voornaamwoord meervoud (subjectief):	0.
+   (@18) Persoonlijk voornaamwoord meervoud (objectief):	0.
+   (@19) Bezittelijk voornaamwoord meervoud:			19.
+   (@20) Bezittelijk voornaamwoord meervoud (na voorzetsel):	21.
+   (@21) Voorzetsels:						18.
+   (@22) Enkelvoudige werkwoorden:				74.
+   (@23) Meervoudige werkwoorden:				24.
+   (@24) Selectie woorden:					12.
+ * Inactieve woordtype items:				0.
+ * Gearchiveerde woordtype items:			0.
+ * Vervangen woordtype items:				0.
+ * Verwijderde woordtype items:				0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
  De beschikbare opvraag-opdrachten zijn:				Voorbeelden:
@@ -38,12 +120,12 @@
  ~<adminListChar>	administrator-lijst				~<W>
  ~<wordListChar>	woordlijst					~<w>
  ~<listCharlistChar>	meerdere lijsten				~<Xas>
- ~'woord'		woord						~'English'
+ ~'woord'		woord						~'Nederlands'
  ~`woordReferentie`	referentie naar een woord			~`Nederlands`
  ~"tekst"		tekst						~"zin"
 ------------------------------------------------------------------------------
  Beide jokers '?' en '*' kunnen gebruikt worden in:
-			* woorden					~'Engl?sh'
+			* woorden					~'Ned?rlands'
 			* referenties naar een woord			~`Ned*lands`
 			* teksten					~"gr?m*"
 ------------------------------------------------------------------------------
@@ -69,7 +151,7 @@
 ------------------------------------------------------------------------------
  In bestanden markeert '~' het einde van de opvraag-opdracht		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2015, Menno Mafait
+ Copyright (C) 2009-2016, Menno Mafait
  Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details type "Toon de
  garantie.". Dit is vrije software en het is u toegestaan deze te verspreiden
  onder bepaalde voorwaarden; type "Toon de GPLv2-licentie." voor meer details.

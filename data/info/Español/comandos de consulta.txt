@@ -1,22 +1,22 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
 Mostrar " Los comandos de consulta disponibles son:				Ejemplos:".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " \~(sentenceNr)		identificación del artículo			\~(123)".
-Mostrar " \~(sentenceNr,itemNr)	identificación del artículo			\~(123,1)".
-Mostrar " \~(,itemNr)		identificación del artículo			\~(,3)".
-Mostrar " \~[sentenceNr]		referencia a la identificación de artículos	\~[123]".
-Mostrar " \~[sentenceNr,itemNr]	referencia a la identificación de artículos	\~[123,1]".
-Mostrar " \~[,itemNr]		referencia a la identificación de artículos	\~[,3]".
-Mostrar " \~<adminListChar>	lista de administradores			\~<W>".
-Mostrar " \~<wordListChar>	lista de palabras				\~<w>".
-Mostrar " \~<listCharlistChar>	múltiples listas				\~<Xas>".
-Mostrar " \~'word'		palabra						\~'English'".
-Mostrar " \~`wordReference`	referencia a la palabra				\~`English`".
-Mostrar " \~\"textString\"		cadena de texto					\~\"sentence\"".
+Mostrar " \~(phraseNr)		identificación del artículo			\~(123)".
+Mostrar " \~(phraseNr,artículoNr)	identificación del artículo			\~(123,1)".
+Mostrar " \~(,artículoNr)		identificación del artículo			\~(,3)".
+Mostrar " \~[phraseNr]		referencia a la identificación de artículos	\~[123]".
+Mostrar " \~[phraseNr,artículoNr]	referencia a la identificación de artículos	\~[123,1]".
+Mostrar " \~[,artículoNr]		referencia a la identificación de artículos	\~[,3]".
+Mostrar " \~<adminListaCar>	lista de administradores			\~<W>".
+Mostrar " \~<wordListaCar>	lista de palabras				\~<w>".
+Mostrar " \~<listaCarlistaCar>	múltiples listas				\~<Xas>".
+Mostrar " \~'palabra'		palabra						\~'Español'".
+Mostrar " \~`palabraReferencia`	referencia a la palabra				\~`Español`".
+Mostrar " \~\"textoCedena\"		cadena de texto					\~\"phrase\"".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Ambos comodines '?' y '*' puede ser utilizado en:".
-Mostrar " 			* palabras					\~'Engl?sh'".
-Mostrar " 			* referencias a una palabra			\~`Eng*sh`".
+Mostrar " 			* palabras					\~'Espa?ol'".
+Mostrar " 			* referencias a una palabra			\~`Es*ol`".
 Mostrar " 			* cadenas de texto				\~\"gr?m*\"".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Especificación del elemento vacío mostrará todos los artículos		\~()".

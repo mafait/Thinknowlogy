@@ -1,11 +1,10 @@
-/*
- *	Class:			AdminCleanup
+/*	Class:			AdminCleanup
  *	Supports class:	AdminItem
  *	Purpose:		To cleanup obsolete items
- *	Version:		Thinknowlogy 2015r1 (Esperanza)
+ *	Version:		Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -34,7 +33,7 @@ class AdminCleanup
 	// Private constructible variables
 
 	bool hasFoundAnyChangeMadeByThisSentence_;
-	bool wasUndoOrRedo_;
+	bool wasCurrentCommandUndoOrRedo_;
 
 	AdminItem *adminItem_;
 	CommonVariables *commonVariables_;
@@ -43,49 +42,22 @@ class AdminCleanup
 
 	// Private functions
 
-	void decrementCurrentSentenceNr()
-		{
-		unsigned int firstSentenceNrOfCurrentUser = adminItem_->firstSentenceNrOfCurrentUser();
-
-		if( commonVariables_->currentSentenceNr >= firstSentenceNrOfCurrentUser )
-			{
-			getHighestInUseSentenceNr( false, false, --commonVariables_->currentSentenceNr );
-
-			if( commonVariables_->highestInUseSentenceNr < commonVariables_->currentSentenceNr )
-				commonVariables_->currentSentenceNr = ( commonVariables_->highestInUseSentenceNr > firstSentenceNrOfCurrentUser ? commonVariables_->highestInUseSentenceNr : firstSentenceNrOfCurrentUser );
-
-			// Necessary after changing current sentence number
-			setCurrentItemNr();
-
-			if( commonVariables_->currentItemNr == NO_ITEM_NR )
-				{
-				if( commonVariables_->currentSentenceNr > NO_SENTENCE_NR )
-					{
-					commonVariables_->currentSentenceNr--;
-					// Necessary after changing current sentence number
-					setCurrentItemNr();
-					}
-				}
-			}
-		else
-			commonVariables_->isDontIncrementCurrentSentenceNr = true;
-		}
-
 	void deleteWriteListsInAllWords()
 		{
 		WordItem *currentWordItem;
 
 		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
 			{
-			// Do for all words
+			// Do for all active words
 			do	currentWordItem->deleteTemporaryWriteList();
 			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 			}
 		}
 
-	void getHighestInUseSentenceNr( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr )
+	unsigned int getHighestInUseSentenceNr( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr )
 		{
 		unsigned short adminListNr = 0;
+		List *currentAdminList;
 		WordList *wordList;
 
 		commonVariables_->highestInUseSentenceNr = NO_SENTENCE_NR;
@@ -95,42 +67,26 @@ class AdminCleanup
 			wordList->getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr );
 
 		// Admin lists
-		while( commonVariables_->highestInUseSentenceNr < highestSentenceNr &&
-		adminListNr < NUMBER_OF_ADMIN_LISTS )
+		while( adminListNr < NUMBER_OF_ADMIN_LISTS &&
+		highestSentenceNr > commonVariables_->highestInUseSentenceNr )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL &&
+			currentAdminList = adminItem_->adminListArray[adminListNr];
+
+			if( currentAdminList != NULL &&
 
 			( isIncludingTemporaryLists ||
-			!adminItem_->adminListArray[adminListNr]->isTemporaryList() ) )
-				adminItem_->adminListArray[adminListNr]->getHighestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
+			!currentAdminList->isTemporaryList() ) )
+				currentAdminList->getHighestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
 
 			adminListNr++;
 			}
-		}
 
-	unsigned int highestSentenceNr()
-		{
-		unsigned int tempSentenceNr;
-		unsigned int highestSentenceNr = NO_SENTENCE_NR;
-		WordList *wordList;
-
-		// In words
-		if( ( wordList = adminItem_->wordList ) != NULL )
-			highestSentenceNr = wordList->highestSentenceNrInWordList();
-
-		// Admin lists
-		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-			{
-			if( adminItem_->adminListArray[adminListNr] != NULL &&
-			( tempSentenceNr = adminItem_->adminListArray[adminListNr]->highestSentenceNrInList() ) > highestSentenceNr )
-				highestSentenceNr = tempSentenceNr;
-			}
-
-		return highestSentenceNr;
+		return commonVariables_->highestInUseSentenceNr;
 		}
 
 	ResultType decrementItemNrRange( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset )
 		{
+		List *currentAdminList;
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRange";
 
@@ -145,12 +101,12 @@ class AdminCleanup
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to decrement item number range in my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			// Admin lists
-			if( adminItem_->adminListArray[adminListNr] != NULL )
+			if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->decrementItemNrRangeInList( decrementSentenceNr, startDecrementItemNr, decrementOffset ) != RESULT_OK )
+				if( currentAdminList->decrementItemNrRangeInList( decrementSentenceNr, startDecrementItemNr, decrementOffset ) != RESULT_OK )
 					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to decrement item number range" );
 				}
 			}
@@ -160,6 +116,7 @@ class AdminCleanup
 
 	ResultType decrementSentenceNrs( unsigned int startSentenceNr )
 		{
+		List *currentAdminList;
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrs";
 
@@ -170,12 +127,12 @@ class AdminCleanup
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in my word list" );
 			}
 
+		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			// Admin lists
-			if( adminItem_->adminListArray[adminListNr] != NULL )
+			if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->decrementSentenceNrsInList( startSentenceNr ) != RESULT_OK )
+				if( currentAdminList->decrementSentenceNrsInList( startSentenceNr ) != RESULT_OK )
 					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number in one of my lists" );
 				}
 			}
@@ -277,50 +234,10 @@ class AdminCleanup
 		return RESULT_OK;
 		}
 
-	ResultType redoCurrentSentence()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentence";
-
-		// In words
-		if( redoCurrentSentenceInAllWords() == RESULT_OK )
-			{
-			// Admin lists
-			for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-				{
-				if( adminItem_->adminListArray[adminListNr] != NULL )
-					{
-					if( adminItem_->adminListArray[adminListNr]->redoCurrentSentenceInList() != RESULT_OK )
-						return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to redo the current sentence" );
-					}
-				}
-			}
-		else
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to redo the current sentence in my word list" );
-
-		return RESULT_OK;
-		}
-
-	ResultType redoCurrentSentenceInAllWords()
-		{
-		WordItem *currentWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentenceInAllWords";
-
-		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
-			{
-			// Do for all words
-			do	currentWordItem->redoCurrentSentence();
-			while( commonVariables_->result == RESULT_OK &&
-			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-			}
-		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The first word item is undefined" );
-
-		return RESULT_OK;
-		}
-
 	ResultType removeFirstRangeOfDeletedItems()
 		{
 		unsigned short adminListNr = 0;
+		List *currentAdminList;
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItems";
 
@@ -339,77 +256,14 @@ class AdminCleanup
 		while( adminListNr < NUMBER_OF_ADMIN_LISTS &&
 		commonVariables_->nDeletedItems == 0 )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )
+			if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->removeFirstRangeOfDeletedItemsInList() != RESULT_OK )
-					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to remove the first deleted items" );
+				if( currentAdminList->removeFirstRangeOfDeletedItemsInList() != RESULT_OK )
+					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to remove the first deleted items of an admin list" );
 				}
 
 			adminListNr++;
 			}
-
-		return RESULT_OK;
-		}
-
-	ResultType rollbackDeletedRedoInfo()
-		{
-		WordList *wordList;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "rollbackDeletedRedoInfo";
-
-		// In words
-		if( ( wordList = adminItem_->wordList ) != NULL )
-			{
-			if( wordList->rollbackDeletedRedoInfoInWordList() != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the current redo info of my words in my word list" );
-			}
-
-		// Admin lists
-		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )
-				adminItem_->adminListArray[adminListNr]->rollbackDeletedRedoInfoInList();
-			}
-
-		return RESULT_OK;
-		}
-
-	ResultType undoCurrentSentence()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentence";
-
-		// In words
-		if( undoCurrentSentenceInAllWords() == RESULT_OK )
-			{
-			// Admin lists
-			for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-				{
-				if( adminItem_->adminListArray[adminListNr] != NULL )
-					{
-					if( adminItem_->adminListArray[adminListNr]->undoCurrentSentenceInList() != RESULT_OK )
-						return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to undo the current sentence" );
-					}
-				}
-			}
-		else
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to undo the current sentence in my word list" );
-
-		return RESULT_OK;
-		}
-
-	ResultType undoCurrentSentenceInAllWords()
-		{
-		WordItem *currentWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentenceInAllWords";
-
-		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
-			{
-			// Do for all words
-			do	currentWordItem->undoCurrentSentence();
-			while( commonVariables_->result == RESULT_OK &&
-			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-			}
-		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The first word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -423,7 +277,7 @@ class AdminCleanup
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		hasFoundAnyChangeMadeByThisSentence_ = false;
-		wasUndoOrRedo_ = false;
+		wasCurrentCommandUndoOrRedo_ = false;
 
 		adminItem_ = adminItem;
 		commonVariables_ = commonVariables;
@@ -453,32 +307,37 @@ class AdminCleanup
 
 	void checkForChangesMadeByThisSentence()
 		{
-		hasFoundAnyChangeMadeByThisSentence_ = true;
+		unsigned int currentSentenceNr = commonVariables_->currentSentenceNr;
+		unsigned int highestInUseSentenceNr = getHighestInUseSentenceNr( false, false, currentSentenceNr );
 
-		getHighestInUseSentenceNr( false, false, commonVariables_->currentSentenceNr );
-
-		if( commonVariables_->highestInUseSentenceNr < commonVariables_->currentSentenceNr )
-			hasFoundAnyChangeMadeByThisSentence_ = false;
+		hasFoundAnyChangeMadeByThisSentence_ = ( highestInUseSentenceNr >= currentSentenceNr );
 		}
 
-	void deleteRollbackInfo()
+	void clearAllTemporaryLists()
 		{
-		WordList *wordList;
+		wasCurrentCommandUndoOrRedo_ = false;
 
-		// In words
-		if( ( wordList = adminItem_->wordList ) != NULL )
-			wordList->deleteRollbackInfoInWordList();
+		// Read list is a temporary list
+		adminItem_->deleteTemporaryReadList();
+		// Score list is a temporary list
+		adminItem_->deleteTemporaryScoreList();
+		// Response lists are temporary lists
+		deleteWriteListsInAllWords();
+		}
 
-		// Admin lists
-		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
+	void decrementCurrentSentenceNr()
+		{
+		if( commonVariables_->currentSentenceNr > NO_SENTENCE_NR )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )
-				adminItem_->adminListArray[adminListNr]->deleteRollbackInfoInList();
+			commonVariables_->currentSentenceNr--;
+			// Necessary after changing current sentence number
+			setCurrentItemNr();
 			}
 		}
 
 	void setCurrentItemNr()
 		{
+		List *currentAdminList;
 		WordList *wordList;
 
 		commonVariables_->currentItemNr = NO_ITEM_NR;
@@ -490,8 +349,8 @@ class AdminCleanup
 		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )
-				adminItem_->adminListArray[adminListNr]->setCurrentItemNrInList();
+			if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
+				currentAdminList->setCurrentItemNrInList();
 			}
 		}
 
@@ -500,49 +359,38 @@ class AdminCleanup
 		return hasFoundAnyChangeMadeByThisSentence_;
 		}
 
-	bool wasUndoOrRedo()
+	bool wasCurrentCommandUndoOrRedo()
 		{
-		return wasUndoOrRedo_;
+		return wasCurrentCommandUndoOrRedo_;
 		}
 
 	ResultType cleanupDeletedItems()
 		{
-		unsigned int previousRemoveSentenceNr = NO_SENTENCE_NR;
+		unsigned int firstSentenceNrOfCurrentUser;
+		unsigned int startRemoveSentenceNr = NO_SENTENCE_NR;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "cleanupDeletedItems";
 /*
 		if( !adminItem_->isSystemStartingUp() )
 			commonVariables_->presentation->showStatus( INTERFACE_CONSOLE_I_AM_CLEANING_UP_DELETED_ITEMS );
 */
+		if( ( commonVariables_->hasShownWarning ||
+		commonVariables_->result != RESULT_OK ) &&
+
+		!adminItem_->hasClosedFileDueToError() )
+			{
+			if( deleteSentences( commonVariables_->currentSentenceNr ) == RESULT_OK )
+				commonVariables_->hasShownWarning = false;
+			else
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the current sentence" );
+			}
+
 		do	{
 			if( removeFirstRangeOfDeletedItems() == RESULT_OK )
 				{
-				if( previousRemoveSentenceNr > NO_SENTENCE_NR &&
-				// Previous deleted sentence is may be empty
-				previousRemoveSentenceNr != commonVariables_->removeSentenceNr )
-					{
-					getHighestInUseSentenceNr( true, true, previousRemoveSentenceNr );
-
-					// All items of this sentence are deleted
-					if( commonVariables_->highestInUseSentenceNr < previousRemoveSentenceNr )
-						{
-						// So, decrement all higher sentence numbers
-						if( decrementSentenceNrs( previousRemoveSentenceNr ) == RESULT_OK )
-							{
-							if( commonVariables_->removeSentenceNr > previousRemoveSentenceNr )
-								commonVariables_->removeSentenceNr--;
-
-							if( commonVariables_->currentSentenceNr >= previousRemoveSentenceNr )
-								decrementCurrentSentenceNr();
-							}
-						else
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number" );
-						}
-					}
-
 				if( commonVariables_->nDeletedItems > 0 )
 					{
 					if( decrementItemNrRange( commonVariables_->removeSentenceNr, commonVariables_->removeStartItemNr, commonVariables_->nDeletedItems ) == RESULT_OK )
-						previousRemoveSentenceNr = commonVariables_->removeSentenceNr;
+						startRemoveSentenceNr = commonVariables_->removeSentenceNr;
 					else
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to decrement item number range" );
 					}
@@ -552,26 +400,35 @@ class AdminCleanup
 			}
 		while( commonVariables_->nDeletedItems > 0 );
 
+		if( startRemoveSentenceNr > NO_SENTENCE_NR &&
+		// Previous deleted sentence might be empty
+		startRemoveSentenceNr != commonVariables_->removeSentenceNr &&
+		// All items of this sentence are deleted
+		getHighestInUseSentenceNr( true, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
+			{
+			// So, decrement all higher sentence numbers
+			if( decrementSentenceNrs( startRemoveSentenceNr ) == RESULT_OK )
+				{
+				if( commonVariables_->currentSentenceNr >= startRemoveSentenceNr )
+					{
+					firstSentenceNrOfCurrentUser = adminItem_->firstSentenceNrOfCurrentUser();
+
+					// First user sentence
+					if( startRemoveSentenceNr == firstSentenceNrOfCurrentUser )
+						decrementCurrentSentenceNr();
+					else
+						{
+						commonVariables_->currentSentenceNr = getHighestInUseSentenceNr( false, false, commonVariables_->currentSentenceNr );
+						// Necessary after changing current sentence number
+						setCurrentItemNr();
+						}
+					}
+				}
+			else
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to decrement the sentence numbers from the current sentence number" );
+			}
+
 //		commonVariables_->presentation->clearStatus();
-
-		return RESULT_OK;
-		}
-
-	ResultType deleteAllTemporaryLists()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteAllTemporaryLists";
-
-		wasUndoOrRedo_ = false;
-
-		// Read list is a temporary list
-		adminItem_->deleteTemporaryReadList();
-		// Score list is a temporary list
-		adminItem_->deleteTemporaryScoreList();
-		// Response lists are temporary lists
-		deleteWriteListsInAllWords();
-
-		if( cleanupDeletedItems() != RESULT_OK )
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
 
 		return RESULT_OK;
 		}
@@ -581,9 +438,10 @@ class AdminCleanup
 		ReferenceResultType referenceResult;
 		unsigned short adminListNr;
 		unsigned short previousWordOrderNr = NO_ORDER_NR;
-		WordItem *unusedWordItem;
+		List *currentAdminList;
 		ReadItem *unusedReadItem = adminItem_->firstActiveReadItem();
 		ReadList *readList;
+		WordItem *unusedWordItem;
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteUnusedInterpretations";
 
@@ -602,7 +460,7 @@ class AdminCleanup
 							previousWordOrderNr = unusedReadItem->wordOrderNr();
 							unusedWordItem = unusedReadItem->readWordItem();
 
-							if( readList->deleteItem( false, unusedReadItem ) == RESULT_OK )
+							if( readList->deleteItem( unusedReadItem ) == RESULT_OK )
 								{
 								// Skip text
 								if( unusedWordItem != NULL &&
@@ -613,13 +471,13 @@ class AdminCleanup
 									adminListNr = 0;
 									referenceResult.hasFoundWordReference = false;
 
-									while( !referenceResult.hasFoundWordReference &&
-									adminListNr < NUMBER_OF_ADMIN_LISTS )
+									while( adminListNr < NUMBER_OF_ADMIN_LISTS &&
+									!referenceResult.hasFoundWordReference )
 										{
-										if( adminItem_->adminListArray[adminListNr] != NULL )
+										if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
 											{
 											// Check the selection lists for a reference to this word
-											if( ( referenceResult = adminItem_->adminListArray[adminListNr]->findWordReference( unusedWordItem ) ).result != RESULT_OK )
+											if( ( referenceResult = currentAdminList->findWordReference( unusedWordItem ) ).result != RESULT_OK )
 												return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to find a reference to an active word \"", unusedWordItem->anyWordTypeString(), "\" in one of my lists" );
 											}
 
@@ -628,7 +486,7 @@ class AdminCleanup
 
 									if( !referenceResult.hasFoundWordReference )
 										{
-										if( wordList->deleteItem( false, unusedWordItem ) != RESULT_OK )
+										if( wordList->deleteItem( unusedWordItem ) != RESULT_OK )
 											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete a word item" );
 										}
 									}
@@ -648,7 +506,7 @@ class AdminCleanup
 					// Inactive read items
 					while( ( unusedReadItem = adminItem_->firstInactiveReadItem() ) != NULL )
 						{
-						if( readList->deleteItem( false, unusedReadItem ) == RESULT_OK )
+						if( readList->deleteItem( unusedReadItem ) == RESULT_OK )
 							{
 							unusedWordItem = unusedReadItem->readWordItem();
 
@@ -660,13 +518,13 @@ class AdminCleanup
 								adminListNr = 0;
 								referenceResult.hasFoundWordReference = false;
 
-								while( !referenceResult.hasFoundWordReference &&
-								adminListNr < NUMBER_OF_ADMIN_LISTS )
+								while( adminListNr < NUMBER_OF_ADMIN_LISTS &&
+								!referenceResult.hasFoundWordReference )
 									{
-									if( adminItem_->adminListArray[adminListNr] != NULL )
+									if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
 										{
 										// Check my lists for a reference to this word
-										if( ( referenceResult = adminItem_->adminListArray[adminListNr]->findWordReference( unusedWordItem ) ).result != RESULT_OK )
+										if( ( referenceResult = currentAdminList->findWordReference( unusedWordItem ) ).result != RESULT_OK )
 											return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to find a reference to an inactive word \"", unusedWordItem->anyWordTypeString(), "\" in one of my lists" );
 										}
 
@@ -675,7 +533,7 @@ class AdminCleanup
 
 								if( !referenceResult.hasFoundWordReference )
 									{
-									if( wordList->deleteItem( false, unusedWordItem ) != RESULT_OK )
+									if( wordList->deleteItem( unusedWordItem ) != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete a word item" );
 									}
 								}
@@ -694,113 +552,130 @@ class AdminCleanup
 		return RESULT_OK;
 		}
 
-	ResultType deleteSentences( bool isAvailableForRollback, unsigned int lowestSentenceNr )
+	ResultType deleteSentences( unsigned int lowestSentenceNr )
 		{
+		List *currentAdminList;
 		WordList *wordList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentences";
 
 		// In words
 		if( ( wordList = adminItem_->wordList ) != NULL )
 			{
-			if( wordList->deleteSentencesInWordList( isAvailableForRollback, lowestSentenceNr ) != RESULT_OK )
+			if( wordList->deleteSentencesInWordList( lowestSentenceNr ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete sentences in my word list" );
 			}
 
 		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( adminItem_->adminListArray[adminListNr] != NULL )
+			if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
 				{
-				if( adminItem_->adminListArray[adminListNr]->deleteSentencesInList( isAvailableForRollback, lowestSentenceNr ) != RESULT_OK )
+				if( currentAdminList->deleteSentencesInList( lowestSentenceNr ) != RESULT_OK )
 					return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to delete sentences in a list" );
 				}
 			}
-
-		if( cleanupDeletedItems() != RESULT_OK )
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
-
-		return RESULT_OK;
-		}
-
-	ResultType undoLastSentence()
-		{
-		unsigned int previousSentenceNr = commonVariables_->currentSentenceNr;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "undoLastSentence";
-
-		// Remove the deleted read items of this undo sentence
-		if( deleteAllTemporaryLists() == RESULT_OK )
-			{
-			// No sentences found to undo
-			if( commonVariables_->currentSentenceNr <= adminItem_->firstSentenceNrOfCurrentUser() )
-				{
-				if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_NO_SENTENCES_TO_UNDO ) == RESULT_OK )
-					{
-					if( previousSentenceNr == commonVariables_->currentSentenceNr )
-						commonVariables_->isDontIncrementCurrentSentenceNr = true;
-					}
-				else
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'no sentences to undo' interface notification" );
-				}
-			else
-				{
-				if( previousSentenceNr > NO_SENTENCE_NR &&
-				previousSentenceNr == commonVariables_->currentSentenceNr )
-					{
-					commonVariables_->currentSentenceNr--;
-					// Necessary after changing current sentence number
-					setCurrentItemNr();
-					}
-
-				if( undoCurrentSentence() == RESULT_OK )
-					{
-					if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_UNDONE_SENTENCE_NR_START, commonVariables_->currentSentenceNr, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_UNDONE_SENTENCE_NR_END ) == RESULT_OK )
-						{
-						wasUndoOrRedo_ = true;
-						commonVariables_->isDontIncrementCurrentSentenceNr = true;
-						}
-					else
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I have undone' interface notification" );
-					}
-				else
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to undo the current sentence" );
-				}
-			}
-		else
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete all temporary lists" );
 
 		return RESULT_OK;
 		}
 
 	ResultType redoLastUndoneSentence()
 		{
+		List *currentAdminList;
+		WordItem *currentWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "redoLastUndoneSentence";
 
-		// Remove the deleted read items of this redo sentence
-		if( deleteAllTemporaryLists() == RESULT_OK )
-			{
-			if( commonVariables_->currentSentenceNr > highestSentenceNr() )
-				{
-				// Roll-back deleted sentence. Process this sentence as a command, not as a sentence
-				rollbackDeletedRedoInfo();
+		wasCurrentCommandUndoOrRedo_ = true;
 
-				if( redoCurrentSentence() == RESULT_OK )
+		if( getHighestInUseSentenceNr( true, false, commonVariables_->currentSentenceNr ) == commonVariables_->currentSentenceNr )
+			{
+			// Important: Redo admin lists first, and the words after that.
+			// Because redoing admin words list might redo words.
+			for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
+				{
+				if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
 					{
-					if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_START, commonVariables_->currentSentenceNr, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_END ) == RESULT_OK )
-						wasUndoOrRedo_ = true;
-					else
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I have redone' interface notification" );
+					if( !currentAdminList->isTemporaryList() &&
+					currentAdminList->redoCurrentSentenceInList() != RESULT_OK )
+						return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to redo the current sentence" );
 					}
-				else
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to redo the current sentence" );
+				}
+
+			if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+				{
+				// Do for all active words
+				do	{
+					if( currentWordItem->redoCurrentSentence() != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to redo the current sentence in word \"", currentWordItem->anyWordTypeString(), "\"" );
+					}
+				while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+
+				if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_START, commonVariables_->currentSentenceNr, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_REDONE_SENTENCE_NR_END ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I have redone' interface notification" );
 				}
 			else
-				{
-				if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_NO_SENTENCES_TO_REDO ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'no sentences to redo' interface notification" );
-				}
+				return adminItem_->startError( functionNameString, moduleNameString_, "The first word item is undefined" );
 			}
 		else
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete all temporary lists" );
+			{
+			// No sentences found to redo
+			if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_NO_SENTENCES_TO_REDO ) == RESULT_OK )
+				decrementCurrentSentenceNr();
+			else
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'no sentences to redo' interface notification" );
+			}
+
+		return RESULT_OK;
+		}
+
+	ResultType undoLastSentence()
+		{
+		unsigned int firstSentenceNrOfCurrentUser = adminItem_->firstSentenceNrOfCurrentUser();
+		List *currentAdminList;
+		WordItem *currentWordItem;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "undoLastSentence";
+
+		wasCurrentCommandUndoOrRedo_ = true;
+
+		// Remove the deleted read items of this undo sentence
+		if( commonVariables_->currentSentenceNr > firstSentenceNrOfCurrentUser )
+			{
+			decrementCurrentSentenceNr();
+
+			if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+				{
+				// Do for all active words
+				do	{
+					if( currentWordItem->undoCurrentSentence() != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to undo the current sentence in word \"", currentWordItem->anyWordTypeString(), "\"" );
+					}
+				while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+
+				// Admin lists
+				for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
+					{
+					if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
+						{
+						if( !currentAdminList->isTemporaryList() &&
+						currentAdminList->undoCurrentSentenceInList() != RESULT_OK )
+							return adminItem_->addErrorWithAdminListNr( adminListNr, functionNameString, moduleNameString_, "I failed to undo the current sentence" );
+						}
+					}
+
+				if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_UNDONE_SENTENCE_NR_START, commonVariables_->currentSentenceNr, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_UNDONE_SENTENCE_NR_END ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I have undone' interface notification" );
+				}
+			else
+				return adminItem_->startError( functionNameString, moduleNameString_, "The first word item is undefined" );
+			}
+		else
+			{
+			// No sentences found to undo
+			if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_NO_SENTENCES_TO_UNDO ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'no sentences to undo' interface notification" );
+			}
+
+		if( commonVariables_->currentSentenceNr >= firstSentenceNrOfCurrentUser )
+			decrementCurrentSentenceNr();
 
 		return RESULT_OK;
 		}

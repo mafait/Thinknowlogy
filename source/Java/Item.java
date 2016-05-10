@@ -1,10 +1,9 @@
-/*
- *	Class:		Item
+/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2015r1 (Esperanza)
+ *	Version:	Thinknowlogy 2016r1 (Huguenot)
  *************************************************************************/
-/*	Copyright (C) 2009-2015, Menno Mafait. Your suggestions, modifications
- *	and bug reports are welcome at http://mafait.org
+/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -47,7 +46,6 @@ class Item
 
 	// Protected constructible variables
 
-	protected boolean isAvailableForRollbackAfterDelete;
 	protected boolean isSelectedByQuery;
 	protected boolean isSelectedByJustificationQuery;
 
@@ -103,7 +101,6 @@ class Item
 
 		// Protected constructible variables
 
-		isAvailableForRollbackAfterDelete = false;
 		isSelectedByQuery = false;
 		isSelectedByJustificationQuery = false;
 
@@ -163,7 +160,7 @@ class Item
 
 		while( errorStringPosition < errorString.length() )
 			{
-			if( errorString.charAt( errorStringPosition ) == Constants.TEXT_DIACRITICAL_CHAR )
+			if( errorString.charAt( errorStringPosition ) == Constants.SYMBOL_BACK_SLASH )
 				{
 				errorStringPosition++;
 
@@ -187,24 +184,29 @@ class Item
 
 	// Protected virtual methods
 
+	protected void clearReplacingItem()
+		{
+		// This is a virtual method. Therefore, it has no body.
+		}
+
 	protected void selectingAttachedJustifications( boolean isSelectingJustificationSpecifications )
 		{
-		// This is a virtual void method. Therefore, it has no body, and the given variables are unreferenced.
+		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	protected void selectingJustificationSpecifications()
 		{
-		// This is a virtual void method. Therefore, it has no body.
+		// This is a virtual method. Therefore, it has no body.
 		}
 
 	protected void showString( boolean isReturnQueryToPosition )
 		{
-		// This is a virtual void method. Therefore, it has no body, and the given variables are unreferenced.
+		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	protected void showWordReferences( boolean isReturnQueryToPosition )
 		{
-		// This is a virtual void method. Therefore, it has no body, and the given variables are unreferenced.
+		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
 	protected boolean isSorted( Item nextSortItem )
@@ -243,9 +245,151 @@ class Item
 		return Constants.RESULT_OK;
 		}
 
-	protected void showWords( boolean isReturnQueryToPosition, short queryWordTypeNr )
+	protected String itemString()
+		{
+		return null;
+		}
+
+	protected String virtualGuideByGrammarString()
+		{
+		return null;
+		}
+
+	protected StringBuffer toStringBuffer( short queryWordTypeNr )
 		{
 		// This is a virtual method. Therefore, the given variables are unreferenced.
+		return null;
+		}
+
+	protected StringBuffer baseToStringBuffer( short queryWordTypeNr )
+		{
+		StringBuffer queryStringBuffer;
+		String myWordString = myWordTypeString( queryWordTypeNr );
+		String userNameString = ( myWordItem_ == null ? null : myWordItem_.userNameString( userNr_ ) );
+		CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
+		// Show status if not active
+		if( !isActiveItem() )
+			queryStringBuffer.append( statusChar_ );
+
+		if( myWordString != null )
+			queryStringBuffer.append( Constants.QUERY_WORD_START_CHAR + myWordString + Constants.QUERY_WORD_END_CHAR );
+
+		queryStringBuffer.append( Constants.QUERY_LIST_START_STRING + ( myList_ == null ? Constants.QUERY_NO_LIST_CHAR : myList_.listChar() ) + Constants.QUERY_LIST_END_CHAR );
+
+		queryStringBuffer.append( Constants.QUERY_ITEM_START_STRING + creationSentenceNr_ + Constants.QUERY_SEPARATOR_CHAR + itemNr_ + Constants.QUERY_ITEM_END_CHAR );
+/*
+		// Don't show: Always true during query
+		if( isSelectedByQuery )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSelectedByQuery" );
+*/
+		if( isArchivedItem() ||
+		isReplacedItem() )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "previousStatusChar:" + previousStatusChar );
+
+		if( userNr_ > Constants.NO_USER_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "user:" + ( userNameString == null ? userNr_ : userNameString ) );
+
+		if( originalSentenceNr_ > Constants.NO_SENTENCE_NR &&
+		originalSentenceNr_ != creationSentenceNr_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "originalSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + originalSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		if( activeSentenceNr_ > Constants.NO_SENTENCE_NR &&
+		activeSentenceNr_ != creationSentenceNr_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "activeSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + activeSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		if( inactiveSentenceNr_ > Constants.NO_SENTENCE_NR &&
+		inactiveSentenceNr_ != creationSentenceNr_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "inactiveSentence:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + inactiveSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		if( archivedSentenceNr_ > Constants.NO_SENTENCE_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "archivedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + archivedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		if( replacedSentenceNr_ > Constants.NO_SENTENCE_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "replacedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + replacedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		if( deletedSentenceNr_ > Constants.NO_SENTENCE_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "deletedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + deletedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		return queryStringBuffer;
+		}
+
+
+	// Protected common methods
+
+	protected void setActiveStatus()
+		{
+		statusChar_ = Constants.QUERY_ACTIVE_CHAR;
+		}
+
+	protected void setArchivedStatus()
+		{
+		statusChar_ = Constants.QUERY_ARCHIVED_CHAR;
+		}
+
+	protected void setDeletedStatus()
+		{
+		statusChar_ = Constants.QUERY_DELETED_CHAR;
+		}
+
+	protected void setInactiveStatus()
+		{
+		statusChar_ = Constants.QUERY_INACTIVE_CHAR;
+		}
+
+	protected void setReplacedStatus()
+		{
+		statusChar_ = Constants.QUERY_REPLACED_CHAR;
+		}
+
+	protected void setActiveSentenceNr()
+		{
+		if( activeSentenceNr_ == Constants.NO_SENTENCE_NR )
+			activeSentenceNr_ = CommonVariables.currentSentenceNr;
+		}
+
+	protected void setArchivedSentenceNr()
+		{
+		if( archivedSentenceNr_ == Constants.NO_SENTENCE_NR )
+			archivedSentenceNr_ = CommonVariables.currentSentenceNr;
+		}
+
+	protected void setDeletedSentenceNr()
+		{
+		deletedSentenceNr_ = CommonVariables.currentSentenceNr;
+		}
+
+	protected void setInactiveSentenceNr()
+		{
+		if( inactiveSentenceNr_ == Constants.NO_SENTENCE_NR )
+			inactiveSentenceNr_ = CommonVariables.currentSentenceNr;
+		}
+
+	protected void setReplacedSentenceNr()
+		{
+		if( replacedSentenceNr_ == Constants.NO_SENTENCE_NR )
+			replacedSentenceNr_ = CommonVariables.currentSentenceNr;
+		}
+
+	protected void clearArchivedSentenceNr()
+		{
+		archivedSentenceNr_ = Constants.NO_SENTENCE_NR;
+		}
+
+	protected void clearDeletedSentenceNr()
+		{
+		deletedSentenceNr_ = Constants.NO_SENTENCE_NR;
+		}
+
+	protected void clearReplacedSentenceNr()
+		{
+		replacedSentenceNr_ = Constants.NO_SENTENCE_NR;
+		}
+
+	protected void showWords( boolean isReturnQueryToPosition, short queryWordTypeNr )
+		{
 		String myWordString;
 
 		if( CommonVariables.queryStringBuffer == null )
@@ -263,144 +407,6 @@ class Item
 			CommonVariables.hasFoundQuery = true;
 			CommonVariables.queryStringBuffer.append( myWordString );
 			}
-		}
-
-	protected String itemString()
-		{
-		return null;
-		}
-
-	protected String extraItemString()
-		{
-		return null;
-		}
-
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
-		{
-		// This is a virtual method. Therefore, the given variables are unreferenced.
-		return null;
-		}
-
-	protected StringBuffer baseToStringBuffer( short queryWordTypeNr )
-		{
-		String myWordString = myWordTypeString( queryWordTypeNr );
-		String userNameString = ( myWordItem_ == null ? null : myWordItem_.userNameString( userNr_ ) );
-		CommonVariables.queryStringBuffer = new StringBuffer( Constants.EMPTY_STRING );
-
-		// Show status if not active
-		if( !isActiveItem() )
-			CommonVariables.queryStringBuffer.append( statusChar_ );
-
-		if( myWordString != null )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_WORD_START_CHAR + myWordString + Constants.QUERY_WORD_END_CHAR );
-
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_LIST_START_STRING + ( myList_ == null ? Constants.QUERY_NO_LIST_CHAR : myList_.listChar() ) + Constants.QUERY_LIST_END_CHAR );
-
-		CommonVariables.queryStringBuffer.append( Constants.QUERY_ITEM_START_STRING + creationSentenceNr_ + Constants.QUERY_SEPARATOR_CHAR + itemNr_ + Constants.QUERY_ITEM_END_CHAR );
-
-		if( isAvailableForRollbackAfterDelete )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isAvailableForRollbackAfterDelete" );
-/*
-		// Don't show: Always true during query
-		if( isSelectedByQuery )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSelectedByQuery" );
-*/
-		if( isArchivedItem() ||
-		isReplacedItem() )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "previousStatusChar:" + previousStatusChar );
-
-		if( userNr_ > Constants.NO_USER_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "user:" + ( userNameString == null ? userNr_ : userNameString ) );
-
-		if( originalSentenceNr_ > Constants.NO_SENTENCE_NR &&
-		originalSentenceNr_ != creationSentenceNr_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "originalSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + originalSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( activeSentenceNr_ > Constants.NO_SENTENCE_NR &&
-		activeSentenceNr_ != creationSentenceNr_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "activeSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + activeSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( inactiveSentenceNr_ > Constants.NO_SENTENCE_NR &&
-		inactiveSentenceNr_ != creationSentenceNr_ )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "inactiveSentence:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + inactiveSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( archivedSentenceNr_ > Constants.NO_SENTENCE_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "archivedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + archivedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( replacedSentenceNr_ > Constants.NO_SENTENCE_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "replacedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + replacedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( deletedSentenceNr_ > Constants.NO_SENTENCE_NR )
-			CommonVariables.queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "deletedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + deletedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		return CommonVariables.queryStringBuffer;
-		}
-
-
-	// Protected common methods
-
-	protected void setActiveStatus()
-		{
-		statusChar_ = Constants.QUERY_ACTIVE_CHAR;
-		}
-
-	protected void setInactiveStatus()
-		{
-		statusChar_ = Constants.QUERY_INACTIVE_CHAR;
-		}
-
-	protected void setArchivedStatus()
-		{
-		statusChar_ = Constants.QUERY_ARCHIVED_CHAR;
-		}
-
-	protected void setReplacedStatus()
-		{
-		statusChar_ = Constants.QUERY_REPLACED_CHAR;
-		}
-
-	protected void setDeletedStatus()
-		{
-		statusChar_ = Constants.QUERY_DELETED_CHAR;
-		}
-
-	protected void setActiveSentenceNr()
-		{
-		if( activeSentenceNr_ == Constants.NO_SENTENCE_NR )
-			activeSentenceNr_ = CommonVariables.currentSentenceNr;
-		}
-
-	protected void setInactiveSentenceNr()
-		{
-		if( inactiveSentenceNr_ == Constants.NO_SENTENCE_NR )
-			inactiveSentenceNr_ = CommonVariables.currentSentenceNr;
-		}
-
-	protected void setArchivedSentenceNr()
-		{
-		if( archivedSentenceNr_ == Constants.NO_SENTENCE_NR )
-			archivedSentenceNr_ = CommonVariables.currentSentenceNr;
-		}
-
-	protected void setReplacedSentenceNr()
-		{
-		if( replacedSentenceNr_ == Constants.NO_SENTENCE_NR )
-			replacedSentenceNr_ = CommonVariables.currentSentenceNr;
-		}
-
-	protected void setDeletedSentenceNr()
-		{
-		deletedSentenceNr_ = CommonVariables.currentSentenceNr;
-		}
-
-	protected void clearArchivedSentenceNr()
-		{
-		archivedSentenceNr_ = Constants.NO_SENTENCE_NR;
-		}
-
-	protected void clearReplacedSentenceNr()
-		{
-		replacedSentenceNr_ = Constants.NO_SENTENCE_NR;
 		}
 
 	// Strictly for initialization of AdminItem
@@ -434,7 +440,6 @@ class Item
 		activeSentenceNr_ = ( originalSentenceNr == Constants.NO_SENTENCE_NR ? CommonVariables.currentSentenceNr : activeSentenceNr );
 		inactiveSentenceNr_ = inactiveSentenceNr;
 		archivedSentenceNr_ = archivedSentenceNr;
-		replacedSentenceNr_ = Constants.NO_SENTENCE_NR;
 
 		itemNr_ = ++CommonVariables.currentItemNr;
 
@@ -457,9 +462,9 @@ class Item
 		return ( inactiveSentenceNr_ > Constants.NO_SENTENCE_NR );
 		}
 
-	protected boolean hasArchivedSentenceNr()
+	protected boolean hasCurrentOriginalSentenceNr()
 		{
-		return ( archivedSentenceNr_ > Constants.NO_SENTENCE_NR );
+		return ( originalSentenceNr_ == CommonVariables.currentSentenceNr );
 		}
 
 	protected boolean hasCurrentCreationSentenceNr()
@@ -487,9 +492,15 @@ class Item
 		return ( replacedSentenceNr_ == CommonVariables.currentSentenceNr );
 		}
 
-	protected boolean hasCurrentDeletedSentenceNr()
+	protected boolean hasSentenceNr( int sentenceNr )
 		{
-		return ( deletedSentenceNr_ == CommonVariables.currentSentenceNr );
+		return ( originalSentenceNr_ == sentenceNr ||
+				creationSentenceNr_ == sentenceNr ||
+				activeSentenceNr_ == sentenceNr ||
+				inactiveSentenceNr_ == sentenceNr ||
+				archivedSentenceNr_ == sentenceNr ||
+				replacedSentenceNr_ == sentenceNr ||
+				deletedSentenceNr_ == sentenceNr );
 		}
 
 	protected boolean isOlderItem()
