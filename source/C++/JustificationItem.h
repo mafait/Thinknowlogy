@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -32,7 +32,6 @@ class JustificationItem : private Item
 	{
 	friend class AdminAssumption;
 	friend class AdminConclusion;
-	friend class AdminReasoning;
 	friend class AdminSpecification;
 	friend class AdminWriteJustification;
 	friend class JustificationList;
@@ -41,7 +40,7 @@ class JustificationItem : private Item
 	friend class WordItem;
 	friend class WordSpecification;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	bool hasFeminineOrMasculineProperNameEnding_;
 
@@ -62,7 +61,7 @@ class JustificationItem : private Item
 
 
 	protected:
-	// Protected constructible variables
+	// Protected constructed variables
 
 	bool hasJustificationBeenWritten;
 
@@ -71,19 +70,19 @@ class JustificationItem : private Item
 	JustificationItem *replacingJustificationItem;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	JustificationItem( bool hasFeminineOrMasculineProperNameEnding, unsigned short justificationTypeNr, unsigned short orderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, JustificationItem *attachedJustificationItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem );
 
 
 	// Protected virtual functions
 
-	virtual void clearReplacingItem();
+	virtual void clearReplacingInfo();
 
 	virtual void selectingJustificationSpecifications();
 
-	virtual bool hasFoundWordType( unsigned short queryWordTypeNr );
-	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr );
+	virtual bool hasWordType( unsigned short queryWordTypeNr );
+	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr );
 
 	virtual ResultType checkForUsage();
 
@@ -94,7 +93,7 @@ class JustificationItem : private Item
 
 	bool hasAttachedJustification();
 	bool hasFeminineOrMasculineProperNameEnding();
-	bool hasFoundJustification( JustificationItem *checkJustificationItem );
+	bool hasJustification( JustificationItem *checkJustificationItem );
 	bool hasOnlyExclusiveSpecificationSubstitutionAssumptionsWithoutDefinition();
 
 	bool hasHiddenPrimarySpecification();
@@ -117,6 +116,7 @@ class JustificationItem : private Item
 	bool isExclusiveSpecificationSubstitutionAssumption();
 	bool isGeneralizationAssumption();
 	bool isNegativeAssumptionOrConclusion();
+	bool isOppositePossessiveConditionalSpecificationAssumption();
 	bool isSpecificationSubstitutionAssumption();
 	bool isSpecificationSubstitutionPartOfAssumption();
 	bool isSuggestiveQuestionAssumption();
@@ -143,7 +143,7 @@ class JustificationItem : private Item
 	ResultType changeAnotherSecondarySpecification( SpecificationItem *replacingSpecificationItem );
 
 	ResultType checkForDeletedSpecifications();
-	ResultType checkForReplacedOrDeletedSpecifications();
+	ResultType checkForReplacedOrDeletedSpecification();
 
 	SpecificationResultType getCombinedAssumptionLevel();
 
@@ -154,9 +154,9 @@ class JustificationItem : private Item
 	JustificationItem *nextJustificationItemWithSameTypeAndOrderNr();
 	JustificationItem *nextJustificationItemWithDifferentTypeOrOrderNr( JustificationItem *firstJustificationItem );
 
+	JustificationItem *obsoleteSpanishJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
 	JustificationItem *primarySpecificationWithoutRelationContextJustificationItem( SpecificationItem *primarySpecificationItem );
 	JustificationItem *secondarySpecificationQuestion();
-	JustificationItem *selfGeneratedSecondarySpecificationJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
 
 	SpecificationItem *primarySpecificationItem();
 	SpecificationItem *anotherPrimarySpecificationItem();

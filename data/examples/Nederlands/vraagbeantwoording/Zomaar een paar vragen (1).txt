@@ -1,0 +1,12 @@
+﻿Een zet is A, B, C, D, E, F of G.
+Mijn zet is D.
+Is Jan mijn vader?
+
+Is de zet A?
+Is de zet een vader?
+Is de zet een getal?
+
+Is een zet een getal?
+Is een zet rond?
+Is een zet A?
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

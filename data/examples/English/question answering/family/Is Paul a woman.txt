@@ -1,0 +1,7 @@
+﻿Read the file "English/user/reasoning/family/family definition".
+Paul is a son of John and Anna.
+Is Paul a man?
+Is Paul a woman?
+Is Paul a man or a woman?
+Paul is not a woman.
+# To continue, click button «Clear your mind.» or «Restart.».

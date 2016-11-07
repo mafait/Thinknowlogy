@@ -1,0 +1,7 @@
+﻿Read the file "English/user/ambiguity/Boston".
+Display the justification report about the United States.
+Display the justification report about the United Kingdom.
+Read the file "English/user/ambiguity/Boston".
+Display the justification report about the United States.
+Display the justification report about the United Kingdom.
+# To continue, click button «Clear your mind.» or «Restart.».

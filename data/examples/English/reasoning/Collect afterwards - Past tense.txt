@@ -1,0 +1,7 @@
+﻿A father was a parent.
+A mother was a parent.
+Display the justification report about parents.
+A boy was probably a child.
+A girl was possibly a child.
+Display the justification report about children.
+# To continue, click button «Clear your mind.» or «Restart.».

@@ -1,0 +1,19 @@
+﻿* 
+* Mijn conclusies:
+< Jan is een ouder van Paul.
+< 
+* 
+* Mijn conclusies:
+< Anna is een ouder van Paul.
+< 
+* 
+* Uw informatie:
+< Paul heeft 2 ouder [meervoud van 'ouder' is onbekend], genaamd Jan en Anna.
+* 
+* Gerelateerde informatie:
+< Anna is een ouder van Paul.
+< Jan is een ouder van Paul.
+< 
+* 
+* U heeft meervoudige zelfstandige naamwoord "ouders" ingevoerd, dat onbekend was voor mij.
+* 

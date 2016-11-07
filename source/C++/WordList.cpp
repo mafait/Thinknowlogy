@@ -1,7 +1,7 @@
 /*	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -35,226 +35,222 @@ class WordList : private List
 
 	// Private cleanup functions
 
-	void getHighestInUseSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr, WordItem *searchItem )
-		{
-		while( searchItem != NULL &&
-		commonVariables()->highestInUseSentenceNr < highestSentenceNr )
-			{
-			searchItem->getHighestInUseSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr );
-			searchItem = searchItem->nextWordItem();
-			}
-		}
-
-	void setCurrentItemNrInWordList( WordItem *searchItem )
-		{
-		while( searchItem != NULL )
-			{
-			searchItem->setCurrentItemNrInWord();
-			searchItem = searchItem->nextWordItem();
-			}
-		}
-
-	ResultType deleteSentencesInWordList( unsigned int lowestSentenceNr, WordItem *searchItem )
+	void deleteSentencesInWordList( unsigned int lowestSentenceNr, WordItem *searchWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentencesInWordList";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			if( searchItem->deleteSentencesInWord( lowestSentenceNr ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
-				return addError( functionNameString, NULL, "I failed to delete sentences in a word" );
-			}
+			if( searchWordItem->deleteSentencesInWord( lowestSentenceNr ) != RESULT_OK )
+				// This function can be called during an error situation. So, the result isn't returned
+				addError( functionNameString, NULL, "I failed to delete sentences in a word" );
 
-		return RESULT_OK;
+			searchWordItem = searchWordItem->nextWordItem();
+			}
 		}
 
-	ResultType removeFirstRangeOfDeletedItemsInWordList( WordItem *searchItem )
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItemsInWordList";
-
-		while( searchItem != NULL &&
-		commonVariables()->nDeletedItems == 0 )
-			{
-			if( searchItem->removeFirstRangeOfDeletedItemsInWord() == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
-				return addError( functionNameString, NULL, "I failed to remove the first deleted items in a word" );
-			}
-
-		return RESULT_OK;
-		}
-
-	ResultType decrementSentenceNrsInWordList( unsigned int startSentenceNr, WordItem *searchItem )
+	void decrementSentenceNrsInWordList( unsigned int startSentenceNr, WordItem *searchWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrsInWordList";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			if( searchItem->decrementSentenceNrsInWord( startSentenceNr ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
-				return addError( functionNameString, NULL, "I failed to decrement the sentence numbers from the current sentence number in a word" );
-			}
+			if( searchWordItem->decrementSentenceNrsInWord( startSentenceNr ) != RESULT_OK )
+				// This function can be called during an error situation. So, the result isn't returned
+				addError( functionNameString, NULL, "I failed to decrement the sentence numbers from the current sentence number in a word" );
 
-		return RESULT_OK;
+			searchWordItem = searchWordItem->nextWordItem();
+			}
 		}
 
-	ResultType decrementItemNrRangeInWordList( unsigned int decrementSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset, WordItem *searchItem )
+	void decrementItemNrRangeInWordList( unsigned int decrementSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset, WordItem *searchWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRangeInWordList";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			if( searchItem->decrementItemNrRangeInWord( decrementSentenceNr, decrementItemNr, decrementOffset ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
-				return addError( functionNameString, NULL, "I failed to decrement item numbers in a word" );
-			}
+			if( searchWordItem->decrementItemNrRangeInWord( decrementSentenceNr, decrementItemNr, decrementOffset ) != RESULT_OK )
+				// This function can be called during an error situation. So, the result isn't returned
+				addError( functionNameString, NULL, "I failed to decrement item numbers in a word" );
 
-		return RESULT_OK;
+			searchWordItem = searchWordItem->nextWordItem();
+			}
+		}
+
+	void getHighestInUseSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr, WordItem *searchWordItem )
+		{
+		while( searchWordItem != NULL &&
+		commonVariables()->highestInUseSentenceNr < highestSentenceNr )
+			{
+			searchWordItem->getHighestInUseSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr );
+			searchWordItem = searchWordItem->nextWordItem();
+			}
+		}
+
+	void removeFirstRangeOfDeletedItemsInWordList( WordItem *searchWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItemsInWordList";
+
+		while( searchWordItem != NULL &&
+		commonVariables()->nDeletedItems == 0 )
+			{
+			if( searchWordItem->removeFirstRangeOfDeletedItemsInWord() != RESULT_OK )
+				// This function can be called during an error situation. So, the result isn't returned
+				addError( functionNameString, NULL, "I failed to remove the first deleted items in a word" );
+
+			searchWordItem = searchWordItem->nextWordItem();
+			}
+		}
+
+	void setCurrentItemNrInWordList( WordItem *searchWordItem )
+		{
+		while( searchWordItem != NULL )
+			{
+			searchWordItem->setCurrentItemNrInWord();
+			searchWordItem = searchWordItem->nextWordItem();
+			}
 		}
 
 
 	// Private query functions
 
-	void countQueryInWordList( WordItem *searchItem )
+	void countQueryInWordList( WordItem *searchWordItem )
 		{
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			searchItem->countQuery();
-			searchItem = searchItem->nextWordItem();
+			searchWordItem->countQuery();
+			searchWordItem = searchWordItem->nextWordItem();
 			}
 		}
 
-	void clearQuerySelectionsInWordList( WordItem *searchItem )
+	void clearQuerySelectionsInWordList( WordItem *searchWordItem )
 		{
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			searchItem->clearQuerySelections();
-			searchItem = searchItem->nextWordItem();
+			searchWordItem->clearQuerySelections();
+			searchWordItem = searchWordItem->nextWordItem();
 			}
 		}
 
-	ResultType wordQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *wordNameString, WordItem *searchItem )
+	ResultType displayQueryResultInWordList( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "wordQueryInWordList";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "displayQueryResultInWordList";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			if( searchItem->wordQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
-				return addError( functionNameString, NULL, "I failed to query a word" );
+			if( searchWordItem->displayQueryResultInWord( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to display the query result in a word" );
+
+			searchWordItem = searchWordItem->nextWordItem();
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType itemQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr, WordItem *searchItem )
+	ResultType itemQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr, WordItem *searchWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "itemQueryInWordList";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			if( searchItem->itemQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
+			if( searchWordItem->itemQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to query item numbers in a word" );
+
+			searchWordItem = searchWordItem->nextWordItem();
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType listQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString, WordItem *searchItem )
+	ResultType listQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString, WordItem *searchWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "listQueryInWordList";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			if( searchItem->listQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListString ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
+			if( searchWordItem->listQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListString ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to query lists in a word" );
+
+			searchWordItem = searchWordItem->nextWordItem();
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType wordTypeQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr, WordItem *searchItem )
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "wordTypeQueryInWordList";
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->wordTypeQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
-				return addError( functionNameString, NULL, "I failed to query word types in a word" );
-			}
-
-		return RESULT_OK;
-		}
-
-	ResultType parameterQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter, WordItem *searchItem )
+	ResultType parameterQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter, WordItem *searchWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "parameterQueryInWordList";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
 			if( isSelectingOnFind &&
-			searchItem->hasFoundParameter( queryParameter ) )
-				searchItem->isSelectedByQuery = true;
+			searchWordItem->hasParameter( queryParameter ) )
+				searchWordItem->isSelectedByQuery = true;
 
-			if( searchItem->parameterQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
+			if( searchWordItem->parameterQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to query parameters in a word" );
+
+			searchWordItem = searchWordItem->nextWordItem();
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType wordReferenceQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString, WordItem *searchItem )
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQueryInWordList";
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->wordReferenceQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
-				return addError( functionNameString, NULL, "I failed to query word references in a word" );
-			}
-
-		return RESULT_OK;
-		}
-
-	ResultType stringQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString, WordItem *searchItem )
+	ResultType stringQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString, WordItem *searchWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "stringQueryInWordList";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			if( searchItem->stringQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
+			if( searchWordItem->stringQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to query strings in a word" );
+
+			searchWordItem = searchWordItem->nextWordItem();
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType showQueryResultInWordList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, WordItem *searchItem )
+	ResultType wordQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *wordNameString, WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "showQueryResultInWordList";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "wordQueryInWordList";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			if( searchItem->showQueryResultInWord( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) == RESULT_OK )
-				searchItem = searchItem->nextWordItem();
-			else
-				return addError( functionNameString, NULL, "I failed to show the query result in a word" );
+			if( searchWordItem->wordQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to query a word" );
+
+			searchWordItem = searchWordItem->nextWordItem();
+			}
+
+		return RESULT_OK;
+		}
+
+	ResultType wordReferenceQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString, WordItem *searchWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQueryInWordList";
+
+		while( searchWordItem != NULL )
+			{
+			if( searchWordItem->wordReferenceQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to query word references in a word" );
+
+			searchWordItem = searchWordItem->nextWordItem();
+			}
+
+		return RESULT_OK;
+		}
+
+	ResultType wordTypeQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr, WordItem *searchWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "wordTypeQueryInWordList";
+
+		while( searchWordItem != NULL )
+			{
+			if( searchWordItem->wordTypeQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to query word types in a word" );
+
+			searchWordItem = searchWordItem->nextWordItem();
 			}
 
 		return RESULT_OK;
@@ -275,7 +271,7 @@ class WordList : private List
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	WordList( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
@@ -284,14 +280,14 @@ class WordList : private List
 
 	~WordList()
 		{
-		WordItem *deleteItem;
-		WordItem *searchItem = firstActiveWordItem();
+		WordItem *deleteWordItem;
+		WordItem *searchWordItem = firstActiveWordItem();
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextWordItem();
-			delete deleteItem;
+			deleteWordItem = searchWordItem;
+			searchWordItem = searchWordItem->nextWordItem();
+			delete deleteWordItem;
 			}
 
 		if( firstInactiveItem() != NULL )
@@ -303,97 +299,85 @@ class WordList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class WordList has replaced items." );
 
-		searchItem = firstDeletedWordItem();
+		searchWordItem = firstDeletedWordItem();
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextWordItem();
-			delete deleteItem;
+			deleteWordItem = searchWordItem;
+			searchWordItem = searchWordItem->nextWordItem();
+			delete deleteWordItem;
 			}
 		}
 
 
 	// Protected cleanup functions
 
+	void decrementItemNrRangeInWordList( unsigned int decrementSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset )
+		{
+		WordItem *searchWordItem;
+
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, searchWordItem );
+
+		if( ( searchWordItem = firstDeletedWordItem() ) != NULL )
+			decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, searchWordItem );
+		}
+
+	void decrementSentenceNrsInWordList( unsigned int startSentenceNr )
+		{
+		WordItem *searchWordItem;
+
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			decrementSentenceNrsInWordList( startSentenceNr, searchWordItem );
+
+		if( ( searchWordItem = firstDeletedWordItem() ) != NULL )
+			decrementSentenceNrsInWordList( startSentenceNr, searchWordItem );
+		}
+
+	void deleteSentencesInWordList( unsigned int lowestSentenceNr )
+		{
+		WordItem *searchWordItem;
+
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			deleteSentencesInWordList( lowestSentenceNr, searchWordItem );
+
+		if( ( searchWordItem = firstDeletedWordItem() ) != NULL )
+			deleteSentencesInWordList( lowestSentenceNr, searchWordItem );
+		}
+
 	void getHighestInUseSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr )
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchWordItem );
 
 		if( isIncludingDeletedItems &&
-		( searchItem = firstDeletedWordItem() ) != NULL &&
+		( searchWordItem = firstDeletedWordItem() ) != NULL &&
 		commonVariables()->highestInUseSentenceNr < highestSentenceNr )
-			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchItem );
+			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchWordItem );
+		}
+
+	void removeFirstRangeOfDeletedItemsInWordList()
+		{
+		WordItem *searchWordItem;
+
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			removeFirstRangeOfDeletedItemsInWordList( searchWordItem );
+
+		if( ( searchWordItem = firstDeletedWordItem() ) != NULL )
+			removeFirstRangeOfDeletedItemsInWordList( searchWordItem );
 		}
 
 	void setCurrentItemNrInWordList()
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			setCurrentItemNrInWordList( searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			setCurrentItemNrInWordList( searchWordItem );
 
-		if( ( searchItem = firstDeletedWordItem() ) != NULL )
-			setCurrentItemNrInWordList( searchItem );
-		}
-
-	ResultType decrementItemNrRangeInWordList( unsigned int decrementSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset )
-		{
-		WordItem *searchItem;
-
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, searchItem );
-
-		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, searchItem );
-
-		return RESULT_OK;
-		}
-
-	ResultType decrementSentenceNrsInWordList( unsigned int startSentenceNr )
-		{
-		WordItem *searchItem;
-
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			decrementSentenceNrsInWordList( startSentenceNr, searchItem );
-
-		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			decrementSentenceNrsInWordList( startSentenceNr, searchItem );
-
-		return RESULT_OK;
-		}
-
-	ResultType deleteSentencesInWordList( unsigned int lowestSentenceNr )
-		{
-		WordItem *searchItem;
-
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			deleteSentencesInWordList( lowestSentenceNr, searchItem );
-
-		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			deleteSentencesInWordList( lowestSentenceNr, searchItem );
-
-		return RESULT_OK;
-		}
-
-	ResultType removeFirstRangeOfDeletedItemsInWordList()
-		{
-		WordItem *searchItem;
-
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			removeFirstRangeOfDeletedItemsInWordList( searchItem );
-
-		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			removeFirstRangeOfDeletedItemsInWordList( searchItem );
-
-		return RESULT_OK;
+		if( ( searchWordItem = firstDeletedWordItem() ) != NULL )
+			setCurrentItemNrInWordList( searchWordItem );
 		}
 
 
@@ -401,16 +385,16 @@ class WordList : private List
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		WordItem *searchItem = firstActiveWordItem();
+		WordItem *searchWordItem = firstActiveWordItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			// Do for all active words
-			if( searchItem->storeWordItemInFutureDatabase() != RESULT_OK )
+			// Do for all words
+			if( searchWordItem->storeWordItemInFutureDatabase() != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to store a word item in the database" );
 
-			searchItem = searchItem->nextWordItem();
+			searchWordItem = searchWordItem->nextWordItem();
 			}
 
 		return RESULT_OK;
@@ -421,134 +405,134 @@ class WordList : private List
 
 	void countQueryInWordList()
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			countQueryInWordList( searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			countQueryInWordList( searchWordItem );
 
-		if( ( searchItem = firstDeletedWordItem() ) != NULL )
-			countQueryInWordList( searchItem );
+		if( ( searchWordItem = firstDeletedWordItem() ) != NULL )
+			countQueryInWordList( searchWordItem );
 		}
 
 	void clearQuerySelectionsInWordList()
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			clearQuerySelectionsInWordList( searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			clearQuerySelectionsInWordList( searchWordItem );
 
-		if( ( searchItem = firstDeletedWordItem() ) != NULL )
-			clearQuerySelectionsInWordList( searchItem );
+		if( ( searchWordItem = firstDeletedWordItem() ) != NULL )
+			clearQuerySelectionsInWordList( searchWordItem );
 		}
 
-	ResultType wordQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *wordNameString )
+	ResultType displayQueryResultInWordList( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			displayQueryResultInWordList( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchWordItem );
 
 		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchItem );
+		( searchWordItem = firstDeletedWordItem() ) != NULL )
+			displayQueryResultInWordList( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchWordItem );
 
 		return commonVariables()->result;
 		}
 
 	ResultType itemQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, searchWordItem );
 
 		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
+		( searchWordItem = firstDeletedWordItem() ) != NULL )
+			itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, searchWordItem );
 
 		return commonVariables()->result;
 		}
 
 	ResultType listQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString )
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListString, searchItem );
-
-		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListString, searchItem );
-
-		return commonVariables()->result;
-		}
-
-	ResultType wordTypeQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr )
-		{
-		WordItem *searchItem;
-
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListString, searchWordItem );
 
 		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, searchItem );
+		( searchWordItem = firstDeletedWordItem() ) != NULL )
+			listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListString, searchWordItem );
 
 		return commonVariables()->result;
 		}
 
 	ResultType parameterQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter )
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, searchItem );
-
-		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, searchItem );
-
-		return commonVariables()->result;
-		}
-
-	ResultType wordReferenceQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
-		{
-		WordItem *searchItem;
-
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, searchWordItem );
 
 		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+		( searchWordItem = firstDeletedWordItem() ) != NULL )
+			parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, searchWordItem );
 
 		return commonVariables()->result;
 		}
 
 	ResultType stringQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString )
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchWordItem );
 
 		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchItem );
+		( searchWordItem = firstDeletedWordItem() ) != NULL )
+			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchWordItem );
 
 		return commonVariables()->result;
 		}
 
-	ResultType showQueryResultInWordList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
+	ResultType wordQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *wordNameString )
 		{
-		WordItem *searchItem;
+		WordItem *searchWordItem;
 
-		if( ( searchItem = firstActiveWordItem() ) != NULL )
-			showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchWordItem );
 
 		if( commonVariables()->result == RESULT_OK &&
-		( searchItem = firstDeletedWordItem() ) != NULL )
-			showQueryResultInWordList( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+		( searchWordItem = firstDeletedWordItem() ) != NULL )
+			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchWordItem );
+
+		return commonVariables()->result;
+		}
+
+	ResultType wordReferenceQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
+		{
+		WordItem *searchWordItem;
+
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchWordItem );
+
+		if( commonVariables()->result == RESULT_OK &&
+		( searchWordItem = firstDeletedWordItem() ) != NULL )
+			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchWordItem );
+
+		return commonVariables()->result;
+		}
+
+	ResultType wordTypeQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr )
+		{
+		WordItem *searchWordItem;
+
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, searchWordItem );
+
+		if( commonVariables()->result == RESULT_OK &&
+		( searchWordItem = firstDeletedWordItem() ) != NULL )
+			wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, searchWordItem );
 
 		return commonVariables()->result;
 		}
@@ -561,21 +545,13 @@ class WordList : private List
 		WordResultType wordResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createWordItem";
 
-		if( commonVariables()->currentItemNr < MAX_ITEM_NR )
-			{
-			// Create word
-			if( ( wordResult.createdWordItem = new WordItem( isLanguageWord, wordParameter, commonVariables(), this ) ) != NULL )
-				{
-				if( addItemToList( QUERY_ACTIVE_CHAR, wordResult.createdWordItem ) != RESULT_OK )
-					addError( functionNameString, NULL, "I failed to add an active word item" );
-				}
-			else
-				startError( functionNameString, NULL, "I failed to create a word item" );
-			}
-		else
-			startError( functionNameString, NULL, "The current item number is undefined" );
+		// Create word
+		if( ( wordResult.createdWordItem = new WordItem( isLanguageWord, wordParameter, commonVariables(), this ) ) == NULL )
+			return startWordResultError( functionNameString, NULL, "I failed to create a word item" );
 
-		wordResult.result = commonVariables()->result;
+		if( addItemToList( QUERY_ACTIVE_CHAR, wordResult.createdWordItem ) != RESULT_OK )
+			return addWordResultError( functionNameString, NULL, "I failed to add an active word item" );
+
 		return wordResult;
 		}
 	};

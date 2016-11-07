@@ -1,0 +1,11 @@
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+Jan is de vader van Paul.
+Toon de verantwoordingsrapportage over Jan.
+Jan is de vader van Johan.
+Toon de verantwoordingsrapportage over Jan.
+Jan is de vader van Laura.
+Toon de verantwoordingsrapportage over Jan.
+Jan is de vader van Claudia.
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Claudia.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

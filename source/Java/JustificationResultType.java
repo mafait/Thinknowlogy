@@ -1,6 +1,7 @@
-/*	Class:			JustificationResultType
- *	Purpose:		To return justification variables of a method
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		JustificationResultType
+ *	Purpose:	To return justification variables,
+ *				as the result of a method call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,7 +30,7 @@ class JustificationResultType
 	protected JustificationItem createdJustificationItem;
 	protected JustificationItem foundJustificationItem;
 
-	// Constructor / deconstructor
+	// Constructor
 
 	JustificationResultType()
 		{

@@ -1,27 +1,27 @@
 ﻿Display "------------------------------------------------------------------------------".
-Display " Thinknowlogy is experimental, grammar-based software,".
-Display " designed to utilize Natural Laws of Intelligence embedded in Grammar,".
-Display " in order to create intelligence – through natural language – in software,".
-Display " which is demonstrated by:".
+Display " Despite centuries of exhaustive research, the theory of evolution still hasn't".
+Display " provided a satisfying explanation for the origin of intelligence and language.".
+Display " Let alone, how both are related. According to the biblical world view, God".
+#C++#Display " has created laws of nature - including laws of intelligence - to make his".
+#Java#Display " has created laws of nature – including laws of intelligence – to make his".
+Display " creation run like clockwork. Being based on the Natural Laws of Intelligence".
+Display " embedded in Grammar, only Thinknowlogy implements the natural meaning".
+#C++#Display " (intelligent function) of words like definite article \"the\", conjunction \"or\",".
+#C++#Display " possessive verb \"have\", and past tense verbs \"were\" and \"had\".".
+#Java#Display " (intelligent function) of words like definite article “the”, conjunction “or”,".
+#Java#Display " possessive verb “have”, and past tense verbs “were” and “had”.".
+Display "------------------------------------------------------------------------------".
+Display " These Natural Laws of Intelligence embedded in Grammar are demonstrated by:".
 Display " * Programming in natural language;".
 Display " * Reasoning in natural language:".
 Display "   - drawing conclusions (more advanced than scientific solutions),".
 Display "   - making assumptions (with self-adjusting level of uncertainty),".
 Display "   - asking questions (about gaps in the knowledge),".
-Display "   - detecting conflicts and some cases of semantic ambiguity;".
+Display "   - detecting conflicts and some cases of semantic ambiguity,".
+Display "   - displaying of justification reports for the self-generated knowledge;".
 Display " * Multilingualism, proving: Natural languages have one common origin.".
 Display "------------------------------------------------------------------------------".
-Display " Despite 160 years of research, the theory of evolution still hasn't been".
-Display " supported by concrete evidence regarding to the origin of intelligence and".
-Display " language. Let alone, to the integration of both. According to the biblical".
-Display " world view, God has created laws of nature, including laws of intelligence.".
-Display " Being based on the laws of intelligence, only Thinknowlogy implements the".
-#C++#Display " natural meaning (intelligent function) of words like definite article \"the\",".
-#C++#Display " conjunction \"or\", possessive verb \"have\", and past tense verbs \"were\" and".
-#C++#Display " \"had\". I defy anyone to beat this system: http://mafait.org/challenge/".
-#Java#Display " natural meaning (intelligent function) of words like definite article “the”,".
-#Java#Display " conjunction “or”, possessive verb “have”, and past tense verbs “were” and".
-#Java#Display " “had”. I defy anyone to beat this reasoner: http://mafait.org/challenge/".
+Display " I defy anyone to beat this reasoner: http://mafait.org/challenge/".
 Display "------------------------------------------------------------------------------".
 #C++#Display " Help.\t\t\t\t\t\t\t* Display more help info".
 #C++#Display " \~{languageName}\t\t\t\t\t* Change language".

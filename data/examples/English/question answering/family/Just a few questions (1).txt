@@ -1,0 +1,13 @@
+﻿Are 1 and 2 numbers?
+Was James the father of Peter?
+Is John the father of Paul?
+Are Paul and Joe children?
+Read the file "English/user/reasoning/family/family definition".
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Michael is the father of Adam.
+Are Paul and Joe children?
+Are Paul and Joe parents?
+Are Paul and Joe children of Adam?
+Are Paul and Joe children of John?
+Are Paul and Joe children of John and Anna?
+# To continue, click button «Clear your mind.» or «Restart.».

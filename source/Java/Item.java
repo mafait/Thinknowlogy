@@ -1,6 +1,6 @@
 /*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -22,7 +22,7 @@
 
 class Item
 	{
-	// Private constructible variables
+	// Private constructed variables
 
 	private short userNr_;
 
@@ -38,13 +38,13 @@ class Item
 
 	private char statusChar_;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	private List myList_;
 	private WordItem myWordItem_;
 	private String moduleNameString_;
 
-	// Protected constructible variables
+	// Protected constructed variables
 
 	protected boolean isSelectedByQuery;
 	protected boolean isSelectedByJustificationQuery;
@@ -54,7 +54,6 @@ class Item
 	protected Item previousItem;
 	protected Item nextItem;
 
-
 	// Private methods
 
 	private String myWordTypeString( short queryWordTypeNr )
@@ -62,7 +61,7 @@ class Item
 		String wordTypeString = null;
 
 		if( myList_ != null &&
-		// Don't show my word string if the item is in an admin list
+		// Don't display my word string if the item is in an admin list
 		!myList_.isAdminList() &&
 		myWordItem_ != null &&
 		( wordTypeString = myWordItem_.wordTypeString( true, queryWordTypeNr ) ) == null )
@@ -71,12 +70,11 @@ class Item
 		return wordTypeString;
 		}
 
-
-	// Constructor / deconstructor
+	// Constructor
 
 	protected Item()
 		{
-		// Private constructible variables
+		// Private constructed variables
 
 		userNr_ = Constants.NO_USER_NR;
 
@@ -93,13 +91,13 @@ class Item
 
 		statusChar_ = Constants.QUERY_ACTIVE_CHAR;
 
-		// Private loadable variables
+		// Private initialized variables
 
 		myList_ = null;
 		myWordItem_ = null;
 		moduleNameString_ = this.getClass().getName();
 
-		// Protected constructible variables
+		// Protected constructed variables
 
 		isSelectedByQuery = false;
 		isSelectedByJustificationQuery = false;
@@ -113,6 +111,134 @@ class Item
 
 	// Protected error methods
 
+	protected CollectionResultType addCollectionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = addError( 1, moduleNameString, errorString );
+		return collectionResult;
+		}
+
+	protected CollectionResultType addCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = addError( 1, moduleNameString, wordNameString, errorString );
+		return collectionResult;
+		}
+
+	protected CollectionResultType startCollectionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = startError( 1, moduleNameString, errorString );
+		return collectionResult;
+		}
+
+	protected CollectionResultType startCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = startError( 1, moduleNameString, wordNameString, errorString );
+		return collectionResult;
+		}
+
+	protected CollectionResultType startCollectionResultSystemError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = startSystemError( 1, moduleNameString, errorString );
+		return collectionResult;
+		}
+
+	protected CollectionResultType startCollectionResultSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = startSystemError( 1, moduleNameString, wordNameString, errorString );
+		return collectionResult;
+		}
+
+	protected ContextResultType addContextResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ContextResultType contextResult = new ContextResultType();
+
+		contextResult.result = addError( 1, moduleNameString, errorString );
+		return contextResult;
+		}
+
+	protected ContextResultType startContextResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ContextResultType contextResult = new ContextResultType();
+
+		contextResult.result = startError( 1, moduleNameString, errorString );
+		return contextResult;
+		}
+
+	protected ContextResultType startContextResultSystemError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ContextResultType contextResult = new ContextResultType();
+
+		contextResult.result = startSystemError( 1, moduleNameString, errorString );
+		return contextResult;
+		}
+
+	protected FileResultType addFileResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		FileResultType fileResult = new FileResultType();
+
+		fileResult.result = addError( 1, moduleNameString, errorString );
+		return fileResult;
+		}
+
+	protected FileResultType startFileResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		FileResultType fileResult = new FileResultType();
+
+		fileResult.result = startError( 1, moduleNameString, errorString );
+		return fileResult;
+		}
+
+	protected GrammarResultType startGrammarResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		GrammarResultType grammarResult = new GrammarResultType();
+
+		grammarResult.result = startError( 1, moduleNameString, wordNameString, errorString );
+		return grammarResult;
+		}
+
+	protected JustificationResultType startJustificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		JustificationResultType justificationResult = new JustificationResultType();
+
+		justificationResult.result = startError( 1, moduleNameString, wordNameString, errorString );
+		return justificationResult;
+		}
+
+	protected ReadResultType addReadResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ReadResultType readResult = new ReadResultType();
+
+		readResult.result = addError( 1, moduleNameString, errorString );
+		return readResult;
+		}
+
+	protected ReadResultType startReadResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ReadResultType readResult = new ReadResultType();
+
+		readResult.result = startError( 1, moduleNameString, errorString );
+		return readResult;
+		}
+
+	protected ReadResultType startReadResultSystemError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ReadResultType readResult = new ReadResultType();
+
+		readResult.result = startSystemError( 1, moduleNameString, errorString );
+		return readResult;
+		}
+
 	protected byte addError( int methodLevel, String moduleNameString, String errorString )
 		{
 		return addError( ( methodLevel + 1 ), moduleNameString, ( myWordItem_ == null || myWordItem_.isAdminWord() ? null : myWordItem_.anyWordTypeString() ), errorString );
@@ -120,12 +246,12 @@ class Item
 
 	protected byte addError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
 		{
-		Presentation.showError( Constants.SYMBOL_QUESTION_MARK, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordItemString, ( methodLevel + 1 ), errorString );
+		Presentation.displayError( Constants.SYMBOL_QUESTION_MARK, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordItemString, ( methodLevel + 1 ), errorString );
 		return CommonVariables.result;
 		}
 	protected byte addError( char listChar, int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
-		Presentation.showError( listChar, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordNameString, ( methodLevel + 1 ), errorString );
+		Presentation.displayError( listChar, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordNameString, ( methodLevel + 1 ), errorString );
 		return CommonVariables.result;
 		}
 
@@ -134,7 +260,6 @@ class Item
 		addError( ( methodLevel + 1 ), moduleNameString, null, errorString );
 
 		CommonVariables.result = Constants.RESULT_ERROR;
-
 		return Constants.RESULT_ERROR;
 		}
 
@@ -143,7 +268,6 @@ class Item
 		addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
 
 		CommonVariables.result = Constants.RESULT_ERROR;
-
 		return Constants.RESULT_ERROR;
 		}
 
@@ -177,14 +301,149 @@ class Item
 		addError( ( methodLevel + 1 ), moduleNameString, wordNameString, tempStringBuffer.toString() );
 
 		CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
-
 		return Constants.RESULT_SYSTEM_ERROR;
+		}
+
+	protected SelectionResultType addSelectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		SelectionResultType selectionResult = new SelectionResultType();
+
+		selectionResult.result = addError( 1, moduleNameString, wordNameString, errorString );
+		return selectionResult;
+		}
+
+	protected SelectionResultType startSelectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		SelectionResultType selectionResult = new SelectionResultType();
+
+		selectionResult.result = startError( 1, moduleNameString, wordNameString, errorString );
+		return selectionResult;
+		}
+
+	protected SpecificationResultType addSpecificationResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		SpecificationResultType specificationResult = new SpecificationResultType();
+
+		specificationResult.result = addError( 1, moduleNameString, errorString );
+		return specificationResult;
+		}
+
+	protected SpecificationResultType addSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		SpecificationResultType specificationResult = new SpecificationResultType();
+
+		specificationResult.result = addError( 1, moduleNameString, wordNameString, errorString );
+		return specificationResult;
+		}
+
+	protected SpecificationResultType startSpecificationResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		SpecificationResultType specificationResult = new SpecificationResultType();
+
+		specificationResult.result = startError( 1, moduleNameString, errorString );
+		return specificationResult;
+		}
+
+	protected SpecificationResultType startSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		SpecificationResultType specificationResult = new SpecificationResultType();
+
+		specificationResult.result = startError( 1, moduleNameString, wordNameString, errorString );
+		return specificationResult;
+		}
+
+	protected SpecificationResultType startSpecificationResultSystemError( int methodLevel, String moduleNameString, String errorString )
+		{
+		SpecificationResultType specificationResult = new SpecificationResultType();
+
+		specificationResult.result = startSystemError( 1, moduleNameString, errorString );
+		return specificationResult;
+		}
+
+	protected SpecificationResultType startSpecificationResultSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		SpecificationResultType specificationResult = new SpecificationResultType();
+
+		specificationResult.result = startSystemError( 1, moduleNameString, wordNameString, errorString );
+		return specificationResult;
+		}
+
+	protected StringResultType addStringResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		StringResultType stringResult = new StringResultType();
+
+		stringResult.result = addError( 1, moduleNameString, errorString );
+		return stringResult;
+		}
+
+	protected StringResultType addStringResultError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
+		{
+		StringResultType stringResult = new StringResultType();
+
+		stringResult.result = addError( 1, moduleNameString, wordItemString, errorString );
+		return stringResult;
+		}
+
+	protected StringResultType startStringResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		StringResultType stringResult = new StringResultType();
+
+		stringResult.result = startError( 1, moduleNameString, errorString );
+		return stringResult;
+		}
+
+	protected WordResultType addWordResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		WordResultType wordResult = new WordResultType();
+
+		wordResult.result = addError( 1, moduleNameString, errorString );
+		return wordResult;
+		}
+
+	protected WordResultType startWordResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		WordResultType wordResult = new WordResultType();
+
+		wordResult.result = startError( 1, moduleNameString, errorString );
+		return wordResult;
+		}
+
+	protected WordResultType addWordResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		WordResultType wordResult = new WordResultType();
+
+		wordResult.result = addError( 1, moduleNameString, wordNameString, errorString );
+		return wordResult;
+		}
+
+	protected WordResultType startWordResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		WordResultType wordResult = new WordResultType();
+
+		wordResult.result = startError( 1, moduleNameString, wordNameString, errorString );
+		return wordResult;
+		}
+
+	protected WriteResultType addWriteResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		WriteResultType writeResult = new WriteResultType();
+
+		writeResult.result = addError( 1, moduleNameString, wordNameString, errorString );
+		return writeResult;
+		}
+
+	protected WriteResultType startWriteResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		WriteResultType writeResult = new WriteResultType();
+
+		writeResult.result = startError( 1, moduleNameString, wordNameString, errorString );
+		return writeResult;
 		}
 
 
 	// Protected virtual methods
 
-	protected void clearReplacingItem()
+	protected void clearReplacingInfo()
 		{
 		// This is a virtual method. Therefore, it has no body.
 		}
@@ -199,50 +458,50 @@ class Item
 		// This is a virtual method. Therefore, it has no body.
 		}
 
-	protected void showString( boolean isReturnQueryToPosition )
+	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
-	protected void showWordReferences( boolean isReturnQueryToPosition )
+	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
+		}
+
+	protected boolean hasParameter( int queryParameter )
+		{
+		// This is a virtual method. Therefore, the given variables are unreferenced.
+		return false;
+		}
+
+	protected boolean hasWordType( short queryWordTypeNr )
+		{
+		// This is a virtual method. Therefore, the given variables are unreferenced.
+		return false;
+		}
+
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
+		{
+		// This is a virtual method. Therefore, the given variables are unreferenced.
+		return false;
 		}
 
 	protected boolean isSorted( Item nextSortItem )
 		{
 		return ( nextSortItem != null &&
-				// Descending creationSentenceNr_
+				// Default: Descending creationSentenceNr_
 				creationSentenceNr_ > nextSortItem.creationSentenceNr_ );
-		}
-
-	protected boolean hasFoundParameter( int queryParameter )
-		{
-		// This is a virtual method. Therefore, the given variables are unreferenced.
-		return false;
-		}
-
-	protected boolean hasFoundWordType( short queryWordTypeNr )
-		{
-		// This is a virtual method. Therefore, the given variables are unreferenced.
-		return false;
-		}
-
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
-		{
-		// This is a virtual method. Therefore, the given variables are unreferenced.
-		return false;
-		}
-
-	protected ReferenceResultType findMatchingWordReferenceString( String queryString )
-		{
-		// This is a virtual method. Therefore, the given variables are unreferenced.
-		return new ReferenceResultType();
 		}
 
 	protected byte checkForUsage()
 		{
 		return Constants.RESULT_OK;
+		}
+
+	protected StringResultType findMatchingWordReferenceString( String queryString )
+		{
+		// This is a virtual method. Therefore, the given variables are unreferenced.
+		return new StringResultType();
 		}
 
 	protected String itemString()
@@ -270,7 +529,7 @@ class Item
 
 		queryStringBuffer = CommonVariables.queryStringBuffer;
 
-		// Show status if not active
+		// Display status if not active
 		if( !isActiveItem() )
 			queryStringBuffer.append( statusChar_ );
 
@@ -281,7 +540,7 @@ class Item
 
 		queryStringBuffer.append( Constants.QUERY_ITEM_START_STRING + creationSentenceNr_ + Constants.QUERY_SEPARATOR_CHAR + itemNr_ + Constants.QUERY_ITEM_END_CHAR );
 /*
-		// Don't show: Always true during query
+		// Don't display. Is always true during a query
 		if( isSelectedByQuery )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSelectedByQuery" );
 */
@@ -318,6 +577,16 @@ class Item
 
 
 	// Protected common methods
+
+	protected void clearArchivedSentenceNr()
+		{
+		archivedSentenceNr_ = Constants.NO_SENTENCE_NR;
+		}
+
+	protected void clearReplacedSentenceNr()
+		{
+		replacedSentenceNr_ = Constants.NO_SENTENCE_NR;
+		}
 
 	protected void setActiveStatus()
 		{
@@ -373,22 +642,7 @@ class Item
 			replacedSentenceNr_ = CommonVariables.currentSentenceNr;
 		}
 
-	protected void clearArchivedSentenceNr()
-		{
-		archivedSentenceNr_ = Constants.NO_SENTENCE_NR;
-		}
-
-	protected void clearDeletedSentenceNr()
-		{
-		deletedSentenceNr_ = Constants.NO_SENTENCE_NR;
-		}
-
-	protected void clearReplacedSentenceNr()
-		{
-		replacedSentenceNr_ = Constants.NO_SENTENCE_NR;
-		}
-
-	protected void showWords( boolean isReturnQueryToPosition, short queryWordTypeNr )
+	protected void displayWords( boolean isReturnQueryToPosition, short queryWordTypeNr )
 		{
 		String myWordString;
 
@@ -400,7 +654,7 @@ class Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar_ );
 
@@ -412,11 +666,11 @@ class Item
 	// Strictly for initialization of AdminItem
 	protected void initializeItemVariables( WordItem myWordItem )
 		{
-		// Private constructible variables
+		// Private constructed variables
 
-//		AdminItem has no constructible variables to be initialized
+//		AdminItem has no constructed variables to be initialized
 
-		// Private loadable variables
+		// Private initialized variables
 
 //		AdminItem has no myList_;
 		myWordItem_ = myWordItem;
@@ -427,12 +681,12 @@ class Item
 
 	protected void initializeItemVariables( int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, List myList, WordItem myWordItem )
 		{
-		// Private loadable variables
+		// Private initialized variables
 
 		myList_ = myList;
 		myWordItem_ = myWordItem;
 
-		// Private constructible variables
+		// Private constructed variables
 
 		userNr_ = CommonVariables.currentUserNr;
 
@@ -441,11 +695,21 @@ class Item
 		inactiveSentenceNr_ = inactiveSentenceNr;
 		archivedSentenceNr_ = archivedSentenceNr;
 
-		itemNr_ = ++CommonVariables.currentItemNr;
-
 		if( myWordItem_ != null )
 			{
-			if( myList_ == null )
+			if( myList_ != null )
+				{
+				if( CommonVariables.currentItemNr >= Constants.NO_ITEM_NR )
+					{
+					if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
+						itemNr_ = ++CommonVariables.currentItemNr;
+					else
+						startSystemError( 1, null, myWordItem_.anyWordTypeString(), "Current item number overflow" );
+					}
+				else
+					startSystemError( 1, null, myWordItem_.anyWordTypeString(), "The given current item number is less than zero" );
+				}
+			else
 				startSystemError( 1, null, myWordItem_.anyWordTypeString(), "The given my list is undefined" );
 			}
 		else
@@ -460,11 +724,6 @@ class Item
 	protected boolean hasInactiveSentenceNr()
 		{
 		return ( inactiveSentenceNr_ > Constants.NO_SENTENCE_NR );
-		}
-
-	protected boolean hasCurrentOriginalSentenceNr()
-		{
-		return ( originalSentenceNr_ == CommonVariables.currentSentenceNr );
 		}
 
 	protected boolean hasCurrentCreationSentenceNr()
@@ -559,6 +818,11 @@ class Item
 		return ( previousStatusChar == Constants.QUERY_INACTIVE_CHAR );
 		}
 
+	protected boolean wasArchivedBefore()
+		{
+		return ( previousStatusChar == Constants.QUERY_ARCHIVED_CHAR );
+		}
+
 	protected short userNr()
 		{
 		return userNr_;
@@ -606,70 +870,70 @@ class Item
 
 	protected byte decrementActiveSentenceNr()
 		{
-		if( activeSentenceNr_ > Constants.NO_SENTENCE_NR )
-			activeSentenceNr_--;
-		else
-			return startError( 1, moduleNameString_, "The active sentence number is too low for a decrement" );
+		if( activeSentenceNr_ <= Constants.NO_SENTENCE_NR )
+			return startError( 1, moduleNameString_, "The active sentence number is undefined" );
+
+		activeSentenceNr_--;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte decrementInactiveSentenceNr()
 		{
-		if( inactiveSentenceNr_ > Constants.NO_SENTENCE_NR )
-			inactiveSentenceNr_--;
-		else
-			return startError( 1, moduleNameString_, "The inactive sentence number is too low for a decrement" );
+		if( inactiveSentenceNr_ <= Constants.NO_SENTENCE_NR )
+			return startError( 1, moduleNameString_, "The inactive sentence number is undefined" );
+
+		inactiveSentenceNr_--;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte decrementOriginalSentenceNr()
 		{
-		if( originalSentenceNr_ > Constants.NO_SENTENCE_NR )
-			originalSentenceNr_--;
-		else
-			return startError( 1, moduleNameString_, "The original sentence number is too low for a decrement" );
+		if( originalSentenceNr_ <= Constants.NO_SENTENCE_NR )
+			return startError( 1, moduleNameString_, "The original sentence number is undefined" );
+
+		originalSentenceNr_--;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte decrementCreationSentenceNr()
 		{
-		if( creationSentenceNr_ > Constants.NO_SENTENCE_NR )
-			creationSentenceNr_--;
-		else
-			return startError( 1, moduleNameString_, "The creation sentence number is too low for a decrement" );
+		if( creationSentenceNr_ <= Constants.NO_SENTENCE_NR )
+			return startError( 1, moduleNameString_, "The creation sentence number is undefined" );
+
+		creationSentenceNr_--;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte decrementArchivedSentenceNr()
 		{
-		if( archivedSentenceNr_ > Constants.NO_SENTENCE_NR )
-			archivedSentenceNr_--;
-		else
-			return startError( 1, moduleNameString_, "The archived sentence number is too low for a decrement" );
+		if( archivedSentenceNr_ <= Constants.NO_SENTENCE_NR )
+			return startError( 1, moduleNameString_, "The archived sentence number is undefined" );
+
+		archivedSentenceNr_--;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte decrementReplacedSentenceNr()
 		{
-		if( replacedSentenceNr_ > Constants.NO_SENTENCE_NR )
-			replacedSentenceNr_--;
-		else
-			return startError( 1, moduleNameString_, "The replaced sentence number is too low for a decrement" );
+		if( replacedSentenceNr_ <= Constants.NO_SENTENCE_NR )
+			return startError( 1, moduleNameString_, "The replaced sentence number is undefined" );
+
+		replacedSentenceNr_--;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte decrementItemNr( int decrementOffset )
 		{
-		if( itemNr_ > decrementOffset )
-			itemNr_ -= decrementOffset;
-		else
+		if( decrementOffset >= itemNr_ )
 			return startError( 1, moduleNameString_, "The given decrement offset is higher than the item number itself" );
+
+		itemNr_ -= decrementOffset;
 
 		return Constants.RESULT_OK;
 		}
@@ -684,6 +948,20 @@ class Item
 		return myList_;
 		}
 
+	protected Item tailOfList()
+		{
+		Item searchItem = nextItem;
+		Item previousSearchItem = this;
+
+		while( searchItem != null )
+			{
+			previousSearchItem = searchItem;
+			searchItem = searchItem.nextItem;
+			}
+
+		return previousSearchItem;
+		}
+
 	protected WordItem myWordItem()
 		{
 		return myWordItem_;
@@ -691,6 +969,24 @@ class Item
 
 
 	// Protected definition methods
+
+	protected boolean doesStringStartWithPhoneticVowel( String textString )
+		{
+		short index = 0;
+
+		if( textString != null )
+			{
+			while( index < Constants.NUMBER_OF_PHONETIC_VOWELS )
+				{
+				if( textString.charAt( 0 ) == Constants.PHONETIC_VOWEL[index] )
+					return true;
+
+				index++;
+				}
+			}
+
+		return false;
+		}
 
 	protected boolean isAssumption( short justificationTypeNr )
 		{
@@ -783,45 +1079,30 @@ class Item
 	protected boolean isGeneralizationReasoningWordType( short wordTypeNr )
 		{
 		return ( wordTypeNr == Constants.WORD_TYPE_PROPER_NAME ||
-				isSingularOrPluralNoun( wordTypeNr ) );
-		}
-
-	protected boolean isSingularOrPluralNoun( short wordTypeNr )
-		{
-		return ( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
-				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
+				isNounWordType( wordTypeNr ) );
 		}
 
 	protected boolean isMatchingWordType( short firstWordTypeNr, short secondWordTypeNr )
 		{
 		return	( firstWordTypeNr == secondWordTypeNr ||
 
-				( isSingularOrPluralNoun( firstWordTypeNr ) &&
-				isSingularOrPluralNoun( secondWordTypeNr ) ) );
+				( isNounWordType( firstWordTypeNr ) &&
+				isNounWordType( secondWordTypeNr ) ) );
 		}
 
-	protected boolean isStartingWithPhoneticVowel( String textString )
+	protected boolean isNounWordType( short wordTypeNr )
 		{
-		short index = 0;
-
-		if( textString != null )
-			{
-			while( index < Constants.NUMBER_OF_PHONETIC_VOWELS )
-				{
-				if( textString.charAt( 0 ) == Constants.PHONETIC_VOWEL[index] )
-					return true;
-
-				index++;
-				}
-			}
-
-		return false;
+		return ( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
+				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
 	protected short assumptionGrade( boolean hasAnotherPrimarySpecification, boolean hasFeminineOrMasculineProperNameEnding, boolean hasPossessivePrimarySpecification, boolean hasPrimaryQuestionSpecification, short justificationTypeNr )
 		{
 		switch( justificationTypeNr )
 			{
+			case Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION:
+				return 1;
+
 			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION:

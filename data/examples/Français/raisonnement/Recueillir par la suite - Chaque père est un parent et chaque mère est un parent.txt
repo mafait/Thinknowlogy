@@ -1,0 +1,7 @@
+﻿Chaque père est un parent et chaque mère est un parent.
+Olivier est un père.
+Amélie est une mère.
+Chaque garçon est probablement un enfant et chaque jeune-fille est probablement un enfant.
+Pascal est un garçon.
+Lorraine est une jeune-fille.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

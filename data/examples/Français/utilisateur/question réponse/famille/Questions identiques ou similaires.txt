@@ -1,0 +1,17 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Est Pascal une femme?
+Est Pascal un homme ou une femme?
+Est Pascal un homme?
+Est Pascal un homme ou une femme?
+Est Pascal une femme?
+Est Pascal un homme?
+Est Julien une femme ou un homme?
+Est Julien une jeune-fille, une femme, un garçon ou un homme?
+Est Julien une jeune-fille ou un garçon?
+Est Julien une jeune-fille, une femme, un garçon ou un homme?
+Est Julien une femme ou un homme?
+Est Julien une jeune-fille ou un garçon?
+Est Pascal un fils ou une fille?
+Est Julien une fille?
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

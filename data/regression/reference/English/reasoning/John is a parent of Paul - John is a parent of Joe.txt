@@ -1,0 +1,20 @@
+﻿* 
+* My conclusions:
+< Paul has a parent, called John.
+< 
+* 
+* The word "John" is semantically ambiguous. There are multiple instances of this entity.
+* 
+* My conclusions:
+< Joe has a parent, called John.
+< 
+* 
+* Your information:
+< John is a parent of both Paul and Joe.
+* 
+* Related information:
+< Joe has a parent, called John.
+< Paul has a parent, called John.
+< 
+* I know.
+* 

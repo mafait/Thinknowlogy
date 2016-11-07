@@ -1,0 +1,3 @@
+﻿A glass is full, half-full or empty.
+Display information about glass.
+# To continue, click button «Clear your mind.» or «Restart.».

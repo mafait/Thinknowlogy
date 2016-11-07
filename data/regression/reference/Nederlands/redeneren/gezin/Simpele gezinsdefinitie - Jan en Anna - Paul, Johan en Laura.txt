@@ -1,0 +1,98 @@
+﻿* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een ouder.
+< Een vader is waarschijnlijk een ouder.
+< 
+* 
+* Mijn conclusies:
+< Jan is een man.
+< Paul heeft een vader, genaamd Jan.
+< Paul heeft een moeder, genaamd Anna.
+< Johan heeft een vader, genaamd Jan.
+< Johan heeft een moeder, genaamd Anna.
+< Laura heeft een vader, genaamd Jan.
+< Laura heeft een moeder, genaamd Anna.
+< Anna is een vrouw.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder.
+< Jan is waarschijnlijk geen moeder.
+< Jan is waarschijnlijk geen vrouw.
+< Anna is waarschijnlijk een ouder.
+< Anna is waarschijnlijk geen vader.
+< Anna is waarschijnlijk geen man.
+< 
+* 
+* Mijn conclusies:
+< Jan is een man. Omdat:
+<	- Jan is een vader.
+<	- Iedere vader is een man.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder. Omdat:
+<	- Iedere ouder is een vader of een moeder.
+<	- Jan is een vader.
+* 	en:
+<	- Iedere ouder is een vrouw of een man.
+<	- Jan is een man.
+* 	en:
+<	- Jan is een vader.
+<	- Een vader is waarschijnlijk een ouder.
+< Jan is waarschijnlijk geen moeder. Omdat:
+<	- Jan is waarschijnlijk een ouder.
+<	- Iedere ouder is een vader of een moeder.
+<	- Jan is een vader.
+< Jan is waarschijnlijk geen vrouw. Omdat:
+<	- Jan is waarschijnlijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+<	- Jan is een man.
+< 
+* 
+* Mijn conclusies:
+< Anna is een vrouw. Omdat:
+<	- Anna is een moeder.
+<	- Iedere moeder is een vrouw.
+* 
+* Mijn veronderstellingen:
+< Anna is waarschijnlijk een ouder. Omdat:
+<	- Iedere ouder is een vader of een moeder.
+<	- Anna is een moeder.
+* 	en:
+<	- Iedere ouder is een vrouw of een man.
+<	- Anna is een vrouw.
+* 	en:
+<	- Anna is een moeder.
+<	- Een moeder is waarschijnlijk een ouder.
+< Anna is waarschijnlijk geen vader. Omdat:
+<	- Anna is waarschijnlijk een ouder.
+<	- Iedere ouder is een vader of een moeder.
+<	- Anna is een moeder.
+< Anna is waarschijnlijk geen man. Omdat:
+<	- Anna is waarschijnlijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+<	- Anna is een vrouw.
+< 
+* 
+* Mijn conclusies:
+< Paul heeft een vader, genaamd Jan. Omdat:
+<	- Jan is de vader van Paul, Johan en Laura.
+< Paul heeft een moeder, genaamd Anna. Omdat:
+<	- Anna is de moeder van Paul, Johan en Laura.
+< 
+* 
+* Mijn conclusies:
+< Johan heeft een vader, genaamd Jan. Omdat:
+<	- Jan is de vader van Paul, Johan en Laura.
+< Johan heeft een moeder, genaamd Anna. Omdat:
+<	- Anna is de moeder van Paul, Johan en Laura.
+< 
+* 
+* Mijn conclusies:
+< Laura heeft een vader, genaamd Jan. Omdat:
+<	- Jan is de vader van Paul, Johan en Laura.
+< Laura heeft een moeder, genaamd Anna. Omdat:
+<	- Anna is de moeder van Paul, Johan en Laura.
+< 

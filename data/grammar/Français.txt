@@ -1,6 +1,6 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To define the grammar for the French language
-#	Version:		Thinknowlogy 2016r1 (Huguenot)
+#	Version:		Thinknowlogy 2016r2 (Restyle)
 #----------------------------------------------------------------------------
 #	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
 #	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -221,8 +221,8 @@
 #--- Prépositions ---
 @21		:0			$preposition							"préposition"
 @21		:2100	$preposition																				sur
-@21		:2101	$preposition																				vers
-#@21	:2102	$preposition																				aux
+#@21	:2101	$preposition																				de
+@21		:2102	$preposition																				vers
 @21		:2103	$preposition																				à
 @21		:2104	$preposition_Of																			de
 @21		:2105	$preposition_à																				à
@@ -237,17 +237,17 @@
 @22		:2204	$verb_singular_possessive_past_tense												avait
 @22		:2205	$verb_singular_possessive_conditional												peut avoir
 @22		:2206	$verb_imperative						"verbe impératif"								ajoutez
-@22		:2207	$verb_imperative						"verbe impératif"								déplacez
-@22		:2208	$verb_imperative						"verbe impératif"								supprimez
-@22		:2209	$verb_imperative						"verbe impératif"								videz
-@22		:2210	$verb_imperative						"verbe impératif"								aidez
-@22		:2211	$verb_imperative						"verbe impératif"								connectez-vous
-@22		:2212	$verb_imperative						"verbe impératif"								lirez
-@22		:2213	$verb_imperative						"verbe impératif"								refairez
-@22		:2214	$verb_imperative						"verbe impératif"								redémarrez
-@22		:2215	$verb_imperative						"verbe impératif"								affichez
+@22		:2207	$verb_imperative						"verbe impératif"								affichez
+@22		:2208	$verb_imperative						"verbe impératif"								déplacez
+@22		:2209	$verb_imperative						"verbe impératif"								supprimez
+@22		:2210	$verb_imperative						"verbe impératif"								videz
+@22		:2211	$verb_imperative						"verbe impératif"								aide
+@22		:2212	$verb_imperative						"verbe impératif"								connectez-vous
+@22		:2213	$verb_imperative						"verbe impératif"								lirez
+@22		:2214	$verb_imperative						"verbe impératif"								refaire
+@22		:2215	$verb_imperative						"verbe impératif"								redémarrer
 @22		:2216	$verb_imperative						"verbe impératif"								résoudrez
-@22		:2217	$verb_imperative						"verbe impératif"								défairez
+@22		:2217	$verb_imperative						"verbe impératif"								annuler
 
 
 #--- Verbes plurielles ---
@@ -274,6 +274,7 @@
 #--- Feminine proper name endings ---
 @0		:3000	$dia
 @0		:3000	$ée
+@0		:3000	$te
 @0		:3000	$ina
 @0		:3000	$lie
 @0		:3000	$raine
@@ -299,7 +300,7 @@
 @0		:3004	$ds																							d
 @0		:3004	$es																							e
 @0		:3004	$és																							é
-@0		:3004	$ms																							n
+@0		:3004	$ms																							m
 @0		:3004	$ns																							n
 @0		:3004	$rs																							r
 @0		:3004	$ts																							t
@@ -389,9 +390,12 @@
 
 
 #--- Verbes spéciales ---
-:6120	$singular_verb																							[ adverb_Ne ] { verb_singular_present_tense | verb_singular_past_tense } [ adverb_uncertainty ]
+			$singular_verb_present_tense_or_past_tense												[ adverb_Ne ] { verb_singular_present_tense | verb_singular_past_tense }
+:6120	$singular_verb																							singular_verb_present_tense_or_past_tense [ adverb_uncertainty ]
 :6120	$singular_conditional_verb																			verb_singular_conditional
-:6120	$plural_verb																							[ adverb_Ne ] { verb_plural_present_tense | verb_plural_past_tense } [ adverb_uncertainty ]
+
+			$plural_verb_present_tense_or_past_tense													[ adverb_Ne ] { verb_plural_present_tense | verb_plural_past_tense }
+:6120	$plural_verb																							plural_verb_present_tense_or_past_tense [ adverb_uncertainty ]
 :6120	$plural_conditional_verb																			verb_plural_conditional
 
 :6120	$singular_possessive_verb																			[ adverb_Ne ] { verb_singular_possessive_present_tense | verb_singular_possessive_past_tense } [ adverb_uncertainty ]
@@ -399,14 +403,14 @@
 :6120	$plural_possessive_verb																			[ adverb_Ne ] { verb_plural_possessive_present_tense | verb_plural_possessive_past_tense } [ adverb_uncertainty ]
 :6120	$plural_possessive_conditional_verb															verb_plural_possessive_conditional
 
-:6121	$singular_question_verb																			[ adverb_Ne ] { verb_singular_present_tense | verb_singular_past_tense }
-:6121	$plural_question_verb																				[ adverb_Ne ] { verb_plural_present_tense | verb_plural_past_tense }
+:6121	$singular_question_verb																			singular_verb_present_tense_or_past_tense
+:6121	$plural_question_verb																				plural_verb_present_tense_or_past_tense
 
-:6122	$singular_specification_generalization_verb													[ adverb_Ne ] { verb_singular_present_tense | verb_singular_past_tense }
-:6122	$plural_specification_generalization_verb														[ adverb_Ne ] { verb_plural_present_tense | verb_plural_past_tense }
+:6122	$singular_specification_generalization_verb													singular_verb
+:6122	$plural_specification_generalization_verb														plural_verb
 
-:6123	$singular_specification_generalization_question_verb										[ adverb_Ne ] { verb_singular_present_tense | verb_singular_past_tense }
-:6123	$plural_specification_generalization_question_verb											[ adverb_Ne ] { verb_plural_present_tense | verb_plural_past_tense }
+:6123	$singular_specification_generalization_question_verb										singular_verb_present_tense_or_past_tense
+:6123	$plural_specification_generalization_question_verb											plural_verb_present_tense_or_past_tense
 
 
 #--- Conjonctions spéciales ---
@@ -547,29 +551,29 @@
 :6020	$singular_structure_specification																{ singular_exclusive_structure_specification_nouns | exclusive_specification_proper_names | exclusive_specification_numerals | exclusive_specification_small_letters | exclusive_specification_capital_letters | exclusive_specification_adjectives | exclusive_specification_pronouns | exclusive_specification_texts }
 :6020	$plural_structure_specification																	{ collective_structure_specification_nouns | singular_collective_structure_specification_nouns | collective_specification_proper_names | collective_specification_numerals | collective_specification_small_letters | collective_specification_capital_letters | collective_specification_adjectives | collective_specification_pronouns }
 
-:6020	$singular_condition_noun_specification															specification_noun_assignment_article single_singular_specification_noun
+:6020	$singular_condition_noun_specification															{ specification_assignment_possessive_determiner | specification_assignment_definite_article } single_singular_specification_noun
 
 
 #-----------
 
 :6031	$relation_numeral																						numeral
 
-:6031	$single_singular_specification_relation_noun													multiple_word_singular_noun
-:6031	$single_plural_specification_relation_noun														multiple_word_plural_noun
+:6031	$single_singular_relation_noun																	multiple_word_singular_noun
+:6031	$single_plural_relation_noun																		multiple_word_plural_noun
 
-:6031	$specification_relation_proper_name															[ article_definite ] multiple_word_proper_name
-			$comma_separated_specification_relation_proper_names									symbol_comma specification_relation_proper_name [ comma_separated_specification_relation_proper_names ]
-			$more_specification_relation_proper_names													[ comma_separated_specification_relation_proper_names ] conjunction_collective specification_relation_proper_name
-			$specification_relation_proper_names															specification_relation_proper_name [ more_specification_relation_proper_names ]
+:6031	$relation_proper_name																				[ article_definite ] multiple_word_proper_name
+			$comma_separated_relation_proper_names													symbol_comma relation_proper_name [ comma_separated_relation_proper_names ]
+			$more_relation_proper_names																		[ comma_separated_relation_proper_names ] conjunction_collective relation_proper_name
+			$relation_proper_names																				relation_proper_name [ more_relation_proper_names ]
 
 			$preposition_word																					{ preposition | preposition_Of }
 
-			$specification_assignment_relation_noun														[ article_definite ] { single_plural_specification_relation_noun | single_singular_specification_relation_noun }
+			$specification_assignment_relation_noun														[ article_definite ] { single_plural_relation_noun | single_singular_relation_noun }
 
-:6030	$preposition_assignment_relation																preposition_word { specification_relation_proper_name | specification_assignment_relation_noun }
-:6030	$preposition_assignment_relations																preposition_word specification_relation_proper_names
-:6030	$preposition_structure_relations																	preposition_word [ numeral_Both ] specification_relation_proper_names
-:6030	$possessive_relations																				[ symbol_comma ] adjective_Called specification_relation_proper_names
+:6030	$preposition_assignment_relation																preposition_word { relation_proper_name | specification_assignment_relation_noun }
+:6030	$preposition_assignment_relations																preposition_word relation_proper_names
+:6030	$preposition_structure_relations																	preposition_word [ numeral_Both ] relation_proper_names
+:6030	$possessive_relations																				[ symbol_comma ] adjective_Called relation_proper_names
 
 :6040	$execution_text																						text
 
@@ -639,8 +643,8 @@
 :6000	$structure_generalization_specification_question											singular_question_verb generalization_proper_name [ adverb_uncertainty ] structure_specification_nouns [ preposition_structure_relations ]
 :6000	$structure_generalization_specification_question											singular_question_verb singular_structure_noun_generalization singular_structure_specification
 
-:6000	$structure_specification_generalization														plural_structure_specification plural_specification_generalization_verb [ adverb_uncertainty ] { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
-:6000	$structure_specification_generalization														singular_structure_specification singular_specification_generalization_verb [ adverb_uncertainty ] [ Part_Of ] singular_structure_noun_generalization
+:6000	$structure_specification_generalization														plural_structure_specification plural_specification_generalization_verb { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
+:6000	$structure_specification_generalization														singular_structure_specification singular_specification_generalization_verb [ Part_Of ] singular_structure_noun_generalization
 
 :6000	$structure_specification_generalization_question											plural_specification_generalization_question_verb plural_structure_specification [ adverb_uncertainty ] { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
 :6000	$structure_specification_generalization_question											singular_specification_generalization_question_verb singular_structure_specification [ adverb_uncertainty ] [ Part_Of ] singular_structure_noun_generalization
@@ -649,7 +653,7 @@
 #-----------
 
 # Exemples d'un impératif:
-# - Aidez.
+# - Aide.
 # - Connectez-vous comme Expert.
 # - Résoudrez le jeu.
 # - Affichez le droit d'auteur.

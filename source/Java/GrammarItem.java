@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,7 +24,7 @@
 
 class GrammarItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private boolean isDefinitionStart_;
 	private boolean isNewStart_;
@@ -38,7 +38,7 @@ class GrammarItem extends Item
 	private String grammarString_;
 
 
-	// Protected constructible variables
+	// Protected constructed variables
 
 	protected boolean isOptionEnd;
 	protected boolean isChoiceEnd;
@@ -49,18 +49,18 @@ class GrammarItem extends Item
 	protected String guideByGrammarString;
 
 
-	// Protected loadable variables
+	// Protected initialized variables
 
 	protected GrammarItem definitionGrammarItem;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
-	protected GrammarItem( boolean isDefinitionStart, boolean isNewStart, boolean isOptionStart, boolean isChoiceStart, boolean isSkipOptionForWriting, short grammarWordTypeNr, short grammarParameter, int grammarStringLength, String grammarString, GrammarItem _grammarDefinitionWordItem, List myList, WordItem myWordItem )
+	protected GrammarItem( boolean isDefinitionStart, boolean isNewStart, boolean isOptionStart, boolean isChoiceStart, boolean isSkipOptionForWriting, short grammarWordTypeNr, short grammarParameter, int grammarStringLength, String grammarString, GrammarItem _definitionGrammarItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isDefinitionStart_ = isDefinitionStart;
 		isNewStart_ = isNewStart;
@@ -79,7 +79,7 @@ class GrammarItem extends Item
 			startSystemError( 1, null, null, "The given grammar string is undefined" );
 
 
-		// Protected constructible variables
+		// Protected constructed variables
 
 		isOptionEnd = false;
 		isChoiceEnd = false;
@@ -89,15 +89,15 @@ class GrammarItem extends Item
 
 		guideByGrammarString = null;
 
-		// Protected loadable variables
+		// Protected initialized variables
 
-		definitionGrammarItem = _grammarDefinitionWordItem;
+		definitionGrammarItem = _definitionGrammarItem;
 		}
 
 
 	// Protected virtual methods
 
-	protected void showString( boolean isReturnQueryToPosition )
+	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		StringBuffer queryStringBuffer;
 
@@ -111,7 +111,7 @@ class GrammarItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
@@ -124,7 +124,7 @@ class GrammarItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
@@ -133,7 +133,7 @@ class GrammarItem extends Item
 			}
 		}
 
-	protected boolean hasFoundParameter( int queryParameter )
+	protected boolean hasParameter( int queryParameter )
 		{
 		return ( grammarParameter_ == queryParameter ||
 
@@ -141,7 +141,7 @@ class GrammarItem extends Item
 				grammarParameter_ > Constants.NO_GRAMMAR_PARAMETER ) );
 		}
 
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( ( definitionGrammarItem == null ? false :
 					( querySentenceNr == Constants.NO_SENTENCE_NR ? true : definitionGrammarItem.creationSentenceNr() == querySentenceNr ) &&
@@ -152,7 +152,7 @@ class GrammarItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : nextDefinitionGrammarItem.itemNr() == queryItemNr ) ) );
 		}
 
-	protected boolean hasFoundWordType( short queryWordTypeNr )
+	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( grammarWordTypeNr_ == queryWordTypeNr );
 		}
@@ -211,7 +211,7 @@ class GrammarItem extends Item
 		if( grammarParameter_ > Constants.NO_GRAMMAR_PARAMETER )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarParameter:" + grammarParameter_ );
 
-		if( grammarWordTypeNr_ > Constants.WORD_TYPE_UNDEFINED )
+		if( grammarWordTypeNr_ > Constants.NO_WORD_TYPE_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "grammarWordType:" + ( grammarWordTypeString == null ? Constants.QUERY_WORD_TYPE_STRING + grammarWordTypeNr_ : grammarWordTypeString ) );
 
 		if( grammarString_ != null )
@@ -221,20 +221,24 @@ class GrammarItem extends Item
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "guideByGrammarString:" + Constants.QUERY_STRING_START_CHAR + guideByGrammarString + Constants.QUERY_STRING_END_CHAR );
 
 		if( definitionGrammarItem != null )
-			{
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "definitionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + definitionGrammarItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + definitionGrammarItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
-			}
 
 		if( nextDefinitionGrammarItem != null )
-			{
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nextDefinitionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + nextDefinitionGrammarItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + nextDefinitionGrammarItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
-			}
 
 		return queryStringBuffer;
 		}
 
 
 	// Protected methods
+
+	protected boolean isAllowedToEnterNewWord()
+		{
+		return ( grammarWordTypeNr_ == Constants.WORD_TYPE_PROPER_NAME ||
+				grammarWordTypeNr_ == Constants.WORD_TYPE_ADJECTIVE ||
+				grammarWordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR ||
+				grammarWordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
+		}
 
 	protected boolean isDefinitionStart()
 		{
@@ -268,7 +272,7 @@ class GrammarItem extends Item
 
 	protected boolean isPredefinedWord()
 		{
-		return ( grammarWordTypeNr_ > Constants.WORD_TYPE_UNDEFINED &&
+		return ( grammarWordTypeNr_ > Constants.NO_WORD_TYPE_NR &&
 				grammarWordTypeNr_ < Constants.WORD_TYPE_TEXT &&
 
 				grammarParameter_ > Constants.NO_GRAMMAR_PARAMETER );
@@ -276,7 +280,7 @@ class GrammarItem extends Item
 
 	protected boolean isUserDefinedWord()
 		{
-		return ( grammarWordTypeNr_ > Constants.WORD_TYPE_UNDEFINED &&
+		return ( grammarWordTypeNr_ > Constants.NO_WORD_TYPE_NR &&
 				grammarParameter_ == Constants.NO_GRAMMAR_PARAMETER );
 		}
 
@@ -287,7 +291,7 @@ class GrammarItem extends Item
 
 	protected boolean hasWordType()
 		{
-		return ( grammarWordTypeNr_ > Constants.WORD_TYPE_UNDEFINED );
+		return ( grammarWordTypeNr_ > Constants.NO_WORD_TYPE_NR );
 		}
 
 	protected boolean isSymbol()
@@ -342,19 +346,19 @@ class GrammarItem extends Item
 	protected boolean isUniqueGrammarDefinition( GrammarItem checkGrammarItem )
 		{
 		String checkGrammarString;
-		GrammarItem searchItem = this;
+		GrammarItem searchGrammarItem = this;
 
 		if( checkGrammarItem != null &&
 		( checkGrammarString = checkGrammarItem.grammarString() ) != null )
 			{
-			while( searchItem != null )
+			while( searchGrammarItem != null )
 				{
-				if( searchItem.isDefinitionStart_ &&
-				searchItem != checkGrammarItem &&
-				searchItem.grammarString_.equals( checkGrammarString ) )
+				if( searchGrammarItem.isDefinitionStart_ &&
+				searchGrammarItem != checkGrammarItem &&
+				searchGrammarItem.grammarString_.equals( checkGrammarString ) )
 					return false;
 
-				searchItem = searchItem.nextGrammarItem();
+				searchGrammarItem = searchGrammarItem.nextGrammarItem();
 				}
 			}
 

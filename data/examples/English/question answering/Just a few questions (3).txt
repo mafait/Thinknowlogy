@@ -1,0 +1,5 @@
+﻿Is John probably the father of Paul?
+Is John the father of Paul?
+Is Anna the mother of Paul?
+Is Anna probably the mother of Paul?
+# To continue, click button «Clear your mind.» or «Restart.».

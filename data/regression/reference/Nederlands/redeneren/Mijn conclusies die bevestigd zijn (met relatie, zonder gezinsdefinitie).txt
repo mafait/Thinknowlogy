@@ -8,14 +8,36 @@
 < Laura heeft een moeder, genaamd Anna.
 < 
 * 
+* Mijn conclusies:
+< Paul heeft een vader, genaamd Jan. Omdat:
+<	- Jan is de vader van Paul, Johan en Laura.
+< Paul heeft een moeder, genaamd Anna. Omdat:
+<	- Anna is de moeder van Paul, Johan en Laura.
+< 
+* 
 * Mijn conclusies die bevestigd zijn:
 < Paul heeft een vader, genaamd Jan.
+< 
+* 
+* Mijn conclusies:
+< Paul heeft een moeder, genaamd Anna. Omdat:
+<	- Anna is de moeder van Paul, Johan en Laura.
 < 
 * 
 * Mijn conclusies die bevestigd zijn:
 < Johan heeft een vader, genaamd Jan.
 < 
 * 
+* Mijn conclusies:
+< Johan heeft een moeder, genaamd Anna. Omdat:
+<	- Anna is de moeder van Paul, Johan en Laura.
+< 
+* 
 * Mijn conclusies die bevestigd zijn:
 < Laura heeft een vader, genaamd Jan.
+< 
+* 
+* Mijn conclusies:
+< Laura heeft een moeder, genaamd Anna. Omdat:
+<	- Anna is de moeder van Paul, Johan en Laura.
 < 

@@ -1,0 +1,15 @@
+﻿Un movimiento es A, B, C, D, E, F o G.
+Mi movimiento es D.
+¿Es Juan mi padre?
+
+¿Es un movimiento un número?
+¿Es un movimiento redondo?
+¿Es un movimiento A?
+
+¿Es el movimiento un padre?
+¿Es el movimiento un número?
+
+¿Es mi padre Juan?
+¿Es el movimiento A?
+¿Es un movimiento A?
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -1,0 +1,6 @@
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+# The next sentence will not be accepted. Don't worry: It is a test. In testing mode, the test will continue.
+Jan is de vader.
+Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
+Jan is de vader.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

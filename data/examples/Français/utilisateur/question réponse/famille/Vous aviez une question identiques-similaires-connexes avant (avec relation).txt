@@ -1,0 +1,10 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Est Olivier le père de Pascal?
+Est Olivier le père de Julien?
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Est Olivier le père de Pascal?
+Est Olivier la mère de Pascal?
+Est Olivier le père de Pascal?
+Est Olivier un père?
+Est Olivier le père de Lorraine?
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

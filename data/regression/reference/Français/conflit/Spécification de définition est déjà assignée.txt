@@ -1,0 +1,4 @@
+﻿* 
+* Cette spécification de définition n'est pas acceptée, parce qu'il est déjà assignée:
+< L'homme a un chapeau.
+< 

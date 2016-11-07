@@ -1,6 +1,7 @@
-﻿Changes in Thinknowlogy 2016r1 (Huguenot) compared to Thinknowlogy 2015r1 (Esperanza):
+﻿Changes in Thinknowlogy 2016r2 (Restyle) compared to Thinknowlogy 2016r1 (Huguenot):
 - Bug fixes;
-- Improved performance;
-- Improved Spanish family definition;
-- Added test for the Scientific challenge (see scientific challenge document);
-- Added French language.
+- Improved system stability on errors;
+- Slightly improved reasoning;
+- Slightly improved performance (through quick access lists);
+- Added deep regression test for user Developer;
+- Restyled source code.

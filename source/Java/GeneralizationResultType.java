@@ -1,6 +1,7 @@
-/*	Class:			GeneralizationResultType
- *	Purpose:		To return generalization variables of a method
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		GeneralizationResultType
+ *	Purpose:	To return generalization variables,
+ *				as the result of a method call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,7 +28,7 @@ class GeneralizationResultType
 	protected byte result;
 	protected boolean hasFoundGeneralization;
 
-	// Constructor / deconstructor
+	// Constructor
 
 	GeneralizationResultType()
 		{
@@ -38,5 +39,5 @@ class GeneralizationResultType
 
 /*************************************************************************
  *	"God has ascended with a mighty shout.
- *	The Lord has ascended with trumput blaring." (Psalm 47:5)
+ *	The Lord has ascended with trumpets blaring." (Psalm 47:5)
  *************************************************************************/

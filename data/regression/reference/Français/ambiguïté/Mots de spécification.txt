@@ -1,0 +1,5 @@
+﻿* 
+* Mot de généralisation «personne» est sémantiquement ambiguë, en raison de la spécification mot «homme».
+* 
+* Mot de généralisation «personne» est sémantiquement ambiguë, en raison de la spécification mot «femme».
+* 

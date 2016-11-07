@@ -1,6 +1,7 @@
-/*	Class:			JustificationResultType
- *	Purpose:		To return justification variables of a function
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		JustificationResultType
+ *	Purpose:	To return justification variables,
+ *				as the result of a function call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,10 +28,12 @@ class JustificationItem;
 class JustificationResultType
 	{
 	friend class AdminAssumption;
-	friend class AdminReasoning;
+	friend class AdminSpecification;
+	friend class Item;
 	friend class JustificationList;
+	friend class List;
 	friend class SpecificationList;
-	friend class WordItem;
+
 	protected:
 	// Protected variables
 
@@ -40,7 +43,7 @@ class JustificationResultType
 	JustificationItem *foundJustificationItem;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	JustificationResultType()
 		{

@@ -1,17 +1,25 @@
 ﻿# En 1989, George H. W. Bush a été inauguré en tant que président des États-Unis.
 George Bush est le président des États-Unis.
+Affichez information sur les présidents.
+#Affichez le rapport de justification sur des États-Unis.
+Affichez le rapport de justification sur les États-Unis.
 # En 1993, Bill Clinton a été inauguré en tant que président des États-Unis.
 Bill Clinton est le président des États-Unis.
 Affichez information sur les présidents.
+#Affichez le rapport de justification sur des États-Unis.
+Affichez le rapport de justification sur les États-Unis.
 # En 1997, Bill Clinton a été ré-inauguré en tant que président des États-Unis.
 Bill Clinton est le président des États-Unis.
 # En 2001, George W. Bush - un fils de George H. W. Bush - a été inauguré en tant que président des États-Unis.
 George Bush est le président des États-Unis.
 Affichez information sur les présidents.
+#Affichez le rapport de justification sur des États-Unis.
+Affichez le rapport de justification sur les États-Unis.
 # En 2005, George W. Bush a été ré-inauguré en tant que président des États-Unis.
 George Bush est le président des États-Unis.
 # En 2009, Barack Obama a été inauguré en tant que président en tant que président des États-Unis.
 Barack Obama est le président des États-Unis.
 Affichez information sur les présidents.
-# En 2013 ...
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
+#Affichez le rapport de justification sur des États-Unis.
+Affichez le rapport de justification sur les États-Unis.
+# In 2013 ...

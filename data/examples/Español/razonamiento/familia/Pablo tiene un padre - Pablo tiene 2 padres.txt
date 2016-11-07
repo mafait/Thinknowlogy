@@ -1,0 +1,5 @@
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Pablo tiene un padre, llamado Juan.
+Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+Pablo tiene 2 padres, llamados Juan y Ana.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

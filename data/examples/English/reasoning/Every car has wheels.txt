@@ -1,0 +1,3 @@
+﻿Every car has wheels.
+Display the justification report about cars.
+# To continue, click button «Clear your mind.» or «Restart.».

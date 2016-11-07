@@ -1,0 +1,8 @@
+﻿Ajoutez le bon, la brute et le truand vers les films.
+Ajoutez Bon, Brute et Truand à Films.
+Déplacez la tête des films aux genres.
+Déplacez la queue des films aux genres.
+Déplacez Brute de Films à Genres.
+Supprimez la tête vers les genres.
+Déplacez la tête vers le meilleur.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

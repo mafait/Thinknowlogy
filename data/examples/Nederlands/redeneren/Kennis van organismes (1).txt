@@ -1,0 +1,36 @@
+﻿# Organisme
+Een schepsel is een organisme.
+
+#Een wezen is een dier, een schimmel, een mens, een micro-organisme of een plant.
+Een dier is een gewervelde of een ongewervelde.
+Een gewervelde is een amfibie, een vogel, een vis, een zogende of een reptiel.
+Een ongewervelde is een annelid, een geleedpotige, een stekelhuidige, een weekdier of een oerdier.
+Een zogende is een walvisachtige, een buideldier, een primaat of een knaagdier.
+
+Wormsalamanders, kikkers, salamanders en padden zijn amfibieën.
+# Xxxx zijn vogels.
+#Bevers, cavia's, hamsters, muizen, stekelvarkens, ratten en eekhoorns zijn knaagdieren.
+Bonobo's, chimpansees, gorilla's, zijdeaapjes, klauwaapjes, orang-oetans en eekhoorn-apen zijn primaten.
+
+Krabben, spinnen en insecten zijn geleedpotigen.
+Een krokodil is een reptiel.
+Walvissen en dolfijnen zijn walvisachtigen.
+#Kangoeroes, koala's, opossums en Tasmaanse-duivels zijn buideldieren.
+
+#Amoeben en flagellaten zijn protozoa (meervoud van oerdier).
+Regenwormen, rondwormen en platwormen zijn ringwormen.
+Zeesterren, zee-egels, zand-dollars en zeekomkommers zijn stekelhuidigen.
+Kokkels, inktvissen, mosselen, nautiluses, octopussen, oesters, slakken en pijlinktvissen zijn weekdieren.
+Spinachtigen, schaaldieren en insecten zijn geleedpotigen.
+#Mijten, teken, schorpioenen, spinnen zijn spinachtigen.
+Krabben, kreeften en zeepokken zijn schaaldieren.
+Kevers, vliegen, vlinders, motten, libellen, bijen, wespen en bidden-mantises zijn insecten.
+
+Een mens is een gewervelde.
+#Toon de verantwoordingsrapportage over mensen.
+Een mens is een zogende.
+#Toon de verantwoordingsrapportage over mensen.
+Een mens is een primaat.
+#Toon de verantwoordingsrapportage over mensen.
+Jan is een mens.
+Toon de verantwoordingsrapportage over Jan.

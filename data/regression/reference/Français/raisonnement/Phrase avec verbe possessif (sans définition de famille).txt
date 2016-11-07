@@ -4,14 +4,31 @@
 < 
 * 
 * Mes conclusions:
-< Laurent a un père, appelé Olivier.
-< Laurent a une mère, appelée Amélie.
+< Armand est un fils de Guillaume. En raison:
+<	- Guillaume a un fils, appelé Armand.
+< 
+* 
+* Mes conclusions:
+< Pascal a un père, appelé Olivier.
+< Pascal a une mère, appelée Amélie.
 < Julien a un père, appelé Olivier.
 < Julien a une mère, appelée Amélie.
 < Lorraine a un père, appelé Olivier.
 < Lorraine a une mère, appelée Amélie.
 < 
 * 
+* Mes conclusions:
+< Pascal a un père, appelé Olivier. En raison:
+<	- Olivier est le père de Pascal, Julien et Lorraine.
+< Pascal a une mère, appelée Amélie. En raison:
+<	- Amélie est la mère de Pascal, Julien et Lorraine.
+< 
+* 
 * Mes conclusions qui sont confirmées:
-< Laurent a un père, appelé Olivier.
+< Pascal a un père, appelé Olivier.
+< 
+* 
+* Mes conclusions:
+< Pascal a une mère, appelée Amélie. En raison:
+<	- Amélie est la mère de Pascal, Julien et Lorraine.
 < 

@@ -1,7 +1,7 @@
 /*	Class:			WordWriteSentence
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,7 +28,7 @@ class WordWriteSentence
 	{
 	friend class WordItem;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	bool hasFoundWordToWrite_;
 	bool isSkippingClearWriteLevel_;
@@ -47,72 +47,69 @@ class WordWriteSentence
 		bool isNegative = false;
 		bool isPossessive = false;
 		bool isSelfGenerated = false;
-		unsigned short assumptionLevel = NO_ASSUMPTION_LEVEL;
-		unsigned int specificationCollectionNr = NO_COLLECTION_NR;
-		unsigned int generalizationContextNr = NO_CONTEXT_NR;
-		unsigned int specificationContextNr = NO_CONTEXT_NR;
-		unsigned int relationContextNr = NO_CONTEXT_NR;
+		unsigned short assumptionLevel;
+		unsigned int specificationCollectionNr;
+		unsigned int generalizationContextNr;
+		unsigned int specificationContextNr;
+		unsigned int relationContextNr;
 		SpecificationItem *currentSpecificationItem;
+		WordItem *currentContextWordItem;
 		WordItem *currentSpecificationWordItem;
-		WordItem *currentWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "clearWriteLevel";
 
-		if( clearSpecificationItem != NULL )
+		if( clearSpecificationItem == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given clear specification item is undefined" );
+
+		if( commonVariables_->currentWriteLevel < currentWriteLevel )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given current write level of this wordf is higher than the global current write level" );
+
+		// Clear generalization write level
+		myWordItem_->clearGeneralizationWriteLevel( currentWriteLevel );
+
+		if( ( currentSpecificationWordItem = clearSpecificationItem->specificationWordItem() ) != NULL )
 			{
-			if( commonVariables_->currentWriteLevel >= currentWriteLevel )
+			// Clear specification write level of current specification word
+			currentSpecificationWordItem->clearSpecificationWriteLevel( currentWriteLevel );
+
+			if( ( relationContextNr = clearSpecificationItem->relationContextNr() ) == NO_CONTEXT_NR )
 				{
-				// Clear generalization write level
-				myWordItem_->clearGeneralizationWriteLevel( currentWriteLevel );
-
-				// Clear specification write level
-				if( ( currentSpecificationWordItem = clearSpecificationItem->specificationWordItem() ) != NULL )
+				if( !isWritingCurrentSpecificationWordOnly &&
+				( specificationCollectionNr = clearSpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR )
 					{
-					currentSpecificationWordItem->clearSpecificationWriteLevel( currentWriteLevel );
-					relationContextNr = clearSpecificationItem->relationContextNr();
+					// Clear specification write level of related specification words
+					isAnsweredQuestion = clearSpecificationItem->isAnsweredQuestion();
+					isExclusiveSpecification = clearSpecificationItem->isExclusiveSpecification();
+					isNegative = clearSpecificationItem->isNegative();
+					isPossessive = clearSpecificationItem->isPossessive();
+					isSelfGenerated = clearSpecificationItem->isSelfGenerated();
 
-					if( !isWritingCurrentSpecificationWordOnly &&
-					clearSpecificationItem->hasSpecificationCollection() )
+					assumptionLevel = clearSpecificationItem->assumptionLevel();
+
+					generalizationContextNr = clearSpecificationItem->generalizationContextNr();
+					specificationContextNr = clearSpecificationItem->specificationContextNr();
+
+					if( ( currentSpecificationItem = myWordItem_->firstSelectedSpecificationItem( isAnsweredQuestion, clearSpecificationItem->isAssignment(), clearSpecificationItem->isInactiveAssignment(), clearSpecificationItem->isArchivedAssignment(), clearSpecificationItem->questionParameter() ) ) != NULL )
 						{
-						isAnsweredQuestion = clearSpecificationItem->isAnsweredQuestion();
-						isExclusiveSpecification = clearSpecificationItem->isExclusiveSpecification();
-						isNegative = clearSpecificationItem->isNegative();
-						isPossessive = clearSpecificationItem->isPossessive();
-						isSelfGenerated = clearSpecificationItem->isSelfGenerated();
-
-						assumptionLevel = clearSpecificationItem->assumptionLevel();
-
-						specificationCollectionNr = clearSpecificationItem->specificationCollectionNr();
-						generalizationContextNr = clearSpecificationItem->generalizationContextNr();
-						specificationContextNr = clearSpecificationItem->specificationContextNr();
-
-						if( ( currentSpecificationItem = myWordItem_->firstSelectedSpecificationItem( isAnsweredQuestion, clearSpecificationItem->isAssignment(), clearSpecificationItem->isInactiveAssignment(), clearSpecificationItem->isArchivedAssignment(), clearSpecificationItem->questionParameter() ) ) != NULL )
-							{
-							do	{
-								if( ( currentSpecificationWordItem = currentSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, WORD_TYPE_UNDEFINED, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) ) != NULL )
-									currentSpecificationWordItem->clearSpecificationWriteLevel( currentWriteLevel );
-								}
-							while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != NULL );
-							}
-						}
-
-					// Clear relation context write level
-					if( relationContextNr > NO_CONTEXT_NR &&
-					( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
-						{
-						// Do for all active words
 						do	{
-							if( currentWordItem->hasContextInWord( relationContextNr ) )
-								currentWordItem->clearRelationWriteLevel( currentWriteLevel );
+							if( currentSpecificationItem != clearSpecificationItem &&
+							( currentSpecificationWordItem = currentSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, NO_WORD_TYPE_NR, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) ) != NULL )
+								currentSpecificationWordItem->clearSpecificationWriteLevel( currentWriteLevel );
 							}
-						while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+						while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != NULL );
 						}
 					}
 				}
 			else
-				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given current write level of this wordf is higher than the global current write level" );
+				{
+				// Clear relation context write level
+				if( ( currentContextWordItem = commonVariables_->firstContextWordItem ) != NULL )
+					{
+					// Do for all context words
+					do	currentContextWordItem->clearRelationWriteLevel( currentWriteLevel, relationContextNr );
+					while( ( currentContextWordItem = currentContextWordItem->nextContextWordItem ) != NULL );
+					}
+				}
 			}
-		else
-			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given clear specification item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -122,21 +119,19 @@ class WordWriteSentence
 		char tempString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "cleanupWriteInfo";
 
-		if( strlen( commonVariables_->writtenSentenceString ) > startWordPosition )
-			{
-			strncat( tempString, commonVariables_->writtenSentenceString, startWordPosition );
-			strcpy( commonVariables_->writtenSentenceString, tempString );
-
-			if( commonVariables_->currentWriteLevel > startWriteLevel )
-				{
-				if( clearWriteLevel( isWritingCurrentSpecificationWordOnly, startWriteLevel, clearSpecificationItem ) == RESULT_OK )
-					myWordItem_->initializeWordWriteWordsSpecificationVariables( clearSpecificationItem->isQuestion(), startWordPosition );
-				else
-					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to cleanup the write levels of the write words" );
-				}
-			}
-		else
+		if( strlen( commonVariables_->writtenSentenceString ) <= startWordPosition )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given start position is equal or smaller than the size of the write sentence string" );
+
+		strncat( tempString, commonVariables_->writtenSentenceString, startWordPosition );
+		strcpy( commonVariables_->writtenSentenceString, tempString );
+
+		if( commonVariables_->currentWriteLevel > startWriteLevel )
+			{
+			if( clearWriteLevel( isWritingCurrentSpecificationWordOnly, startWriteLevel, clearSpecificationItem ) != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to cleanup the write levels of the write words" );
+
+			myWordItem_->initializeWordWriteWordsSpecificationVariables( clearSpecificationItem->isQuestion(), startWordPosition );
+			}
 
 		return RESULT_OK;
 		}
@@ -145,26 +140,19 @@ class WordWriteSentence
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createWriteWord";
 
-		if( !myWordItem_->isAdminWord() )
-			{
-			if( selectedGrammarItem != NULL )
-				{
-				if( myWordItem_->writeList == NULL )
-					{
-					// Create list
-					if( ( myWordItem_->writeList = new WriteList( commonVariables_, myWordItem_ ) ) != NULL )
-						myWordItem_->wordListArray[WORD_WRITE_LIST] = myWordItem_->writeList;
-					else
-						return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I failed to create a write list" );
-					}
-
-				return myWordItem_->writeList->createWriteItem( isSkipped, grammarLevel, selectedGrammarItem );
-				}
-
+		if( selectedGrammarItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given grammar definition word item is undefined" );
+
+		if( myWordItem_->writeList == NULL )
+			{
+			// Create list
+			if( ( myWordItem_->writeList = new WriteList( commonVariables_, myWordItem_ ) ) == NULL )
+				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I failed to create a write list" );
+
+			myWordItem_->wordListArray[WORD_WRITE_LIST] = myWordItem_->writeList;
 			}
 
-		return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The admin word item cannot have a write list" );
+		return myWordItem_->writeList->createWriteItem( isSkipped, grammarLevel, selectedGrammarItem );
 		}
 
 	WriteItem *firstWriteItem()
@@ -179,7 +167,7 @@ class WordWriteSentence
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	WordWriteSentence( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
@@ -232,229 +220,210 @@ class WordWriteSentence
 
 		hasFoundWordToWrite_ = false;
 
-		if( grammarLevel < MAX_GRAMMAR_LEVEL )
+		if( grammarLevel >= MAX_GRAMMAR_LEVEL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given grammar level is too high: #", grammarLevel );
+
+		if( selectedGrammarItem == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given selected grammar item is undefined" );
+
+		if( writeSpecificationItem == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given write specification item is undefined" );
+
+		// Initialize
+		if( grammarLevel == NO_GRAMMAR_LEVEL )
 			{
-			if( selectedGrammarItem != NULL )
+			isSkippingClearWriteLevel_ = false;
+			commonVariables_->currentWriteLevel = NO_WRITE_LEVEL;
+			strcpy( commonVariables_->writtenSentenceString, EMPTY_STRING );
+
+			myWordItem_->deleteTemporaryWriteList();
+			myWordItem_->initializeWordWriteWordsVariables();
+			}
+
+		do	{
+			if( !definitionGrammarItem->isDefinitionStart() )
+				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The grammar definition word item isn't a definition start" );
+
+			// Grammar word
+			if( definitionGrammarItem->isNewStart() )
 				{
-				if( writeSpecificationItem != NULL )
-					{
-					// Initialize
-					if( grammarLevel == NO_GRAMMAR_LEVEL )
+				if( ( writeResult = myWordItem_->writeWordsToSentence( isWritingCurrentSpecificationWordOnly, answerParameter, definitionGrammarItem, writeSpecificationItem ) ).result != RESULT_OK )
+					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a word to a sentence" );
+
+				if( writeResult.hasFoundWordToWrite )
+					hasFoundWordToWrite_ = true;
+
+				isSkippingClearWriteLevel_ = writeResult.isSkippingClearWriteLevel;
+				}
+			else
+				{
+				// Grammar definition
+				if( ( selectedGrammarItem = definitionGrammarItem->nextGrammarItem() ) == NULL )
+					return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The grammar word item is undefined" );
+
+				isChoice = false;
+				isOption = false;
+				isStillSuccessful = true;
+				isSkippingThisChoiceOrOptionPart = false;
+				isSkippingNextChoiceOrOptionParts = false;
+
+				do	{
+					if( selectedGrammarItem->isNewStart() )
 						{
-						isSkippingClearWriteLevel_ = false;
-						commonVariables_->currentWriteLevel = NO_WRITE_LEVEL;
-						strcpy( commonVariables_->writtenSentenceString, EMPTY_STRING );
-
-						myWordItem_->deleteTemporaryWriteList();
-						myWordItem_->initializeWordWriteWordsVariables();
-						}
-
-					do	{
-						if( definitionGrammarItem->isDefinitionStart() )
+						if( isChoice ||
+						isOption ||
+						selectedGrammarItem->isChoiceStart() ||
+						selectedGrammarItem->isOptionStart() )
 							{
-							// Grammar word
-							if( definitionGrammarItem->isNewStart() )
-								{
-								if( ( writeResult = myWordItem_->writeWordsToSentence( isWritingCurrentSpecificationWordOnly, answerParameter, definitionGrammarItem, writeSpecificationItem ) ).result == RESULT_OK )
-									{
-									if( writeResult.hasFoundWordToWrite )
-										hasFoundWordToWrite_ = true;
+							currentWriteItem = firstWriteItem();
 
-									isSkippingClearWriteLevel_ = writeResult.isSkippingClearWriteLevel;
+							while( currentWriteItem != NULL &&
+							( currentWriteItem->grammarLevel() != grammarLevel ||
+							currentWriteItem->startOfChoiceOrOptionGrammarItem() != selectedGrammarItem ) )
+								currentWriteItem = currentWriteItem->nextWriteItem();
+
+							if( isChoice ||
+							// End of old choice or option - new one starts
+							isOption )
+								{
+								isSkippingThisChoiceOrOptionPart = false;
+
+								if( hasFoundWordToWrite_ )
+									isSkippingNextChoiceOrOptionParts = true;
+								else
+									{
+									if( isStillSuccessful &&
+									currentWriteItem != NULL &&
+									currentWriteItem->isSkipped )
+										currentWriteItem->isSkipped = false;
+									}
+
+								if( currentWriteItem == NULL )
+									{
+									if( createWriteWord( ( !isStillSuccessful || isSkippingNextChoiceOrOptionParts ), grammarLevel, selectedGrammarItem ) != RESULT_OK )
+										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to create a write word" );
 									}
 								else
-									return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a word to a sentence" );
+									{
+									if( currentWriteItem->startOfChoiceOrOptionGrammarItem()->activeSentenceNr() != selectedGrammarItem->activeSentenceNr() ||
+									currentWriteItem->startOfChoiceOrOptionGrammarItem()->itemNr() != selectedGrammarItem->itemNr() )
+										return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I lost track of the selected grammar path" );
+
+									if( currentWriteItem->grammarLevel() != grammarLevel )
+										return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I lost track of the grammar level" );
+
+									currentWriteItem = currentWriteItem->nextWriteItem();
+									}
 								}
 							else
 								{
-								// Grammar definition
-								if( ( selectedGrammarItem = definitionGrammarItem->nextGrammarItem() ) != NULL )
+								if( selectedGrammarItem->isChoiceStart() )
+									isChoice = true;
+								else
+									isOption = true;
+
+								isSkippingThisChoiceOrOptionPart = false;
+
+								if( currentWriteItem == NULL )
 									{
-									isChoice = false;
-									isOption = false;
-									isStillSuccessful = true;
-									isSkippingThisChoiceOrOptionPart = false;
-									isSkippingNextChoiceOrOptionParts = false;
-
-									do	{
-										if( selectedGrammarItem->isNewStart() )
-											{
-											if( isChoice ||
-											isOption ||
-											selectedGrammarItem->isChoiceStart() ||
-											selectedGrammarItem->isOptionStart() )
-												{
-												currentWriteItem = firstWriteItem();
-
-												while( currentWriteItem != NULL &&
-												( currentWriteItem->grammarLevel() != grammarLevel ||
-												currentWriteItem->startOfChoiceOrOptionGrammarItem() != selectedGrammarItem ) )
-													currentWriteItem = currentWriteItem->nextWriteItem();
-
-												if( isChoice ||
-												// End of old choice or option - new one starts
-												isOption )
-													{
-													isSkippingThisChoiceOrOptionPart = false;
-
-													if( hasFoundWordToWrite_ )
-														isSkippingNextChoiceOrOptionParts = true;
-													else
-														{
-														if( isStillSuccessful &&
-														currentWriteItem != NULL &&
-														currentWriteItem->isSkipped )
-															currentWriteItem->isSkipped = false;
-														}
-
-													if( currentWriteItem == NULL )
-														{
-														if( createWriteWord( ( !isStillSuccessful || isSkippingNextChoiceOrOptionParts ), grammarLevel, selectedGrammarItem ) != RESULT_OK )
-															return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to create a write word" );
-														}
-													else
-														{
-														if( currentWriteItem->startOfChoiceOrOptionGrammarItem()->activeSentenceNr() == selectedGrammarItem->activeSentenceNr() &&
-														currentWriteItem->startOfChoiceOrOptionGrammarItem()->itemNr() == selectedGrammarItem->itemNr() )
-															{
-															if( currentWriteItem->grammarLevel() == grammarLevel )
-																currentWriteItem = currentWriteItem->nextWriteItem();
-															else
-																return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I lost track of the grammar level" );
-															}
-														else
-															return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I lost track of the selected grammar path" );
-														}
-													}
-												else
-													{
-													if( selectedGrammarItem->isChoiceStart() )
-														isChoice = true;
-													else
-														isOption = true;
-
-													isSkippingThisChoiceOrOptionPart = false;
-
-													if( currentWriteItem == NULL )
-														{
-														if( createWriteWord( !isStillSuccessful, grammarLevel, selectedGrammarItem ) != RESULT_OK )
-															return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to create a start write word" );
-														}
-													else
-														{
-														if( currentWriteItem->startOfChoiceOrOptionGrammarItem()->activeSentenceNr() == selectedGrammarItem->activeSentenceNr() &&
-														currentWriteItem->startOfChoiceOrOptionGrammarItem()->itemNr() == selectedGrammarItem->itemNr() )
-															{
-															if( currentWriteItem->grammarLevel() != grammarLevel )
-																return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I lost track of the grammar level at the start of a choice or option" );
-															}
-														else
-															return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I lost track of the selected grammar path at the start of a choice or option" );
-														}
-													}
-												}
-											}
-
-										if( isStillSuccessful &&
-										!isSkippingThisChoiceOrOptionPart &&
-										!isSkippingNextChoiceOrOptionParts &&
-										!selectedGrammarItem->isSkipOptionForWriting() )
-											{
-											if( grammarLevel + 1 < MAX_GRAMMAR_LEVEL )
-												{
-												if( selectGrammarToWriteSentence( false, isWritingCurrentSpecificationWordOnly, answerParameter, ( grammarLevel + 1 ), selectedGrammarItem->definitionGrammarItem, writeSpecificationItem ) == RESULT_OK )
-													{
-													if( !hasFoundWordToWrite_ )
-														// Failed, try next part
-														isSkippingThisChoiceOrOptionPart = true;
-													}
-												else
-													return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to select the grammar for writing a sentence at grammar level reached: #", ( grammarLevel + 1 ) );
-												}
-											else
-												return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "There is probably an endless loop in the grammar definitions, because the grammar level reached: #", ( grammarLevel + 1 ) );
-											}
-
-										if( selectedGrammarItem->isChoiceEnd ||
-										selectedGrammarItem->isOptionEnd )
-											{
-											isSkippingThisChoiceOrOptionPart = false;
-											isSkippingNextChoiceOrOptionParts = false;
-
-											if( selectedGrammarItem->isChoiceEnd )
-												isChoice = false;
-											else
-												{
-												isOption = false;
-
-												if( isStillSuccessful )
-													hasFoundWordToWrite_ = true;
-												}
-											}
-
-										selectedGrammarItem = selectedGrammarItem->nextGrammarItem();
-
-										if( !isChoice &&
-										!isOption &&
-										!hasFoundWordToWrite_ )
-											isStillSuccessful = false;
-										}
-									while( selectedGrammarItem != NULL &&
-									!selectedGrammarItem->isDefinitionStart() );
-
-									if( !hasFoundWordToWrite_ &&
-									!isSkippingClearWriteLevel_ &&
-									// The sentence has grown
-									strlen( commonVariables_->writtenSentenceString ) > startWordPosition )
-										{
-										if( cleanupWriteInfo( isWritingCurrentSpecificationWordOnly, startWriteLevel, startWordPosition, writeSpecificationItem ) != RESULT_OK )
-											return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to cleanup the write info" );
-										}
+									if( createWriteWord( !isStillSuccessful, grammarLevel, selectedGrammarItem ) != RESULT_OK )
+										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to create a start write word" );
 									}
 								else
-									return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The grammar word item is undefined" );
-								}
-
-							definitionGrammarItem = definitionGrammarItem->nextDefinitionGrammarItem;
-							}
-						else
-							return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The grammar definition word item isn't a definition start" );
-						}
-					while( !hasFoundWordToWrite_ &&
-					definitionGrammarItem != NULL );
-
-					if( grammarLevel == NO_GRAMMAR_LEVEL )
-						{
-						if( clearWriteLevel( isWritingCurrentSpecificationWordOnly, NO_WRITE_LEVEL, writeSpecificationItem ) == RESULT_OK )
-							{
-							if( strlen( commonVariables_->writtenSentenceString ) > 0 )
-								{
-								if( isCheckingUserSentenceForIntegrity )
-									strcpy( commonVariables_->writtenUserSentenceString, commonVariables_->writtenSentenceString );
-
-								// Typically for French: Compound words
-								currentLanguageWordItem = commonVariables_->currentLanguageWordItem;
-
-								if( currentLanguageWordItem != NULL &&
-								currentLanguageWordItem->isLanguageWithMergedWords() )
 									{
-									if( currentLanguageWordItem->shrinkMergedWordsInWriteSentence() != RESULT_OK )
-										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to shrink the compound words in the write sentence string" );
+									if( currentWriteItem->startOfChoiceOrOptionGrammarItem()->activeSentenceNr() != selectedGrammarItem->activeSentenceNr() ||
+									currentWriteItem->startOfChoiceOrOptionGrammarItem()->itemNr() != selectedGrammarItem->itemNr() )
+										return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I lost track of the selected grammar path at the start of a choice or option" );
+
+									if( currentWriteItem->grammarLevel() != grammarLevel )
+										return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I lost track of the grammar level at the start of a choice or option" );
 									}
 								}
 							}
-						else
-							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to clear the write word levels in all words" );
 						}
+
+					if( isStillSuccessful &&
+					!isSkippingThisChoiceOrOptionPart &&
+					!isSkippingNextChoiceOrOptionParts &&
+					!selectedGrammarItem->isSkipOptionForWriting() )
+						{
+						if( grammarLevel + 1 >= MAX_GRAMMAR_LEVEL )
+							return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "There is probably an endless loop in the grammar definitions, because the grammar level reached: #", ( grammarLevel + 1 ) );
+
+						if( selectGrammarToWriteSentence( false, isWritingCurrentSpecificationWordOnly, answerParameter, ( grammarLevel + 1 ), selectedGrammarItem->definitionGrammarItem, writeSpecificationItem ) != RESULT_OK )
+							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to select the grammar for writing a sentence at grammar level reached: #", ( grammarLevel + 1 ) );
+
+						if( !hasFoundWordToWrite_ )
+							// Failed, try next part
+							isSkippingThisChoiceOrOptionPart = true;
+						}
+
+					if( selectedGrammarItem->isChoiceEnd ||
+					selectedGrammarItem->isOptionEnd )
+						{
+						isSkippingThisChoiceOrOptionPart = false;
+						isSkippingNextChoiceOrOptionParts = false;
+
+						if( selectedGrammarItem->isChoiceEnd )
+							isChoice = false;
+						else
+							{
+							isOption = false;
+
+							if( isStillSuccessful )
+								hasFoundWordToWrite_ = true;
+							}
+						}
+
+					selectedGrammarItem = selectedGrammarItem->nextGrammarItem();
+
+					if( !isChoice &&
+					!isOption &&
+					!hasFoundWordToWrite_ )
+						isStillSuccessful = false;
 					}
-				else
-					return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given write specification item is undefined" );
+				while( selectedGrammarItem != NULL &&
+				!selectedGrammarItem->isDefinitionStart() );
+
+				if( !hasFoundWordToWrite_ &&
+				!isSkippingClearWriteLevel_ &&
+				// The sentence has grown
+				strlen( commonVariables_->writtenSentenceString ) > startWordPosition )
+					{
+					if( cleanupWriteInfo( isWritingCurrentSpecificationWordOnly, startWriteLevel, startWordPosition, writeSpecificationItem ) != RESULT_OK )
+						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to cleanup the write info" );
+					}
 				}
-			else
-				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given selected grammar item is undefined" );
+
+			definitionGrammarItem = definitionGrammarItem->nextDefinitionGrammarItem;
 			}
-		else
-			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given grammar level is too high: #", grammarLevel );
+		while( !hasFoundWordToWrite_ &&
+		definitionGrammarItem != NULL );
+
+		if( grammarLevel == NO_GRAMMAR_LEVEL )
+			{
+			// Cleanup
+			myWordItem_->deleteTemporaryWriteList();
+
+			if( clearWriteLevel( isWritingCurrentSpecificationWordOnly, NO_WRITE_LEVEL, writeSpecificationItem ) != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to clear the write word levels in all words" );
+
+			if( strlen( commonVariables_->writtenSentenceString ) > 0 )
+				{
+				if( isCheckingUserSentenceForIntegrity )
+					strcpy( commonVariables_->writtenUserSentenceString, commonVariables_->writtenSentenceString );
+
+				// Typically for French: Compound words
+				currentLanguageWordItem = commonVariables_->currentLanguageWordItem;
+
+				if( currentLanguageWordItem != NULL &&
+				currentLanguageWordItem->isLanguageWithMergedWords() )
+					{
+					if( currentLanguageWordItem->shrinkMergedWordsInWriteSentence() != RESULT_OK )
+						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to shrink the compound words in the write sentence string" );
+					}
+				}
+			}
 
 		return RESULT_OK;
 		}

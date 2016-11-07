@@ -1,0 +1,24 @@
+﻿* 
+* Mijn conclusies:
+< Paul heeft een vader, genaamd Jan.
+< Johan heeft een vader, genaamd Jan.
+< 
+* 
+* Mijn conclusies:
+< Laura heeft een vader, genaamd Jan.
+< 
+* 
+* Mijn conclusies:
+< Paul heeft een vader, genaamd Jan. Omdat:
+<	- Jan is de vader van Paul, Johan en Laura.
+< 
+* 
+* Mijn conclusies:
+< Johan heeft een vader, genaamd Jan. Omdat:
+<	- Jan is de vader van Paul, Johan en Laura.
+< 
+* 
+* Mijn conclusies:
+< Laura heeft een vader, genaamd Jan. Omdat:
+<	- Jan is de vader van Paul, Johan en Laura.
+< 

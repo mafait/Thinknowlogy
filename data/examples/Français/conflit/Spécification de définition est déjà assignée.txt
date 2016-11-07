@@ -1,0 +1,3 @@
+﻿L'homme a un chapeau.
+Un homme a un chapeau.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

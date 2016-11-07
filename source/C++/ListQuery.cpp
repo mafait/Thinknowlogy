@@ -1,7 +1,7 @@
 /*	Class:			ListQuery
  *	Supports class:	List
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,7 +28,7 @@ class ListQuery
 	{
 	friend class List;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	CommonVariables *commonVariables_;
 	List *myList_;
@@ -42,15 +42,21 @@ class ListQuery
 		while( queryItem != NULL )
 			{
 			if( ( isReferenceQuery &&
-			queryItem->hasFoundReferenceItemById( querySentenceNr, queryItemNr ) ) ||
+			queryItem->hasReferenceItemById( querySentenceNr, queryItemNr ) ) ||
 
 			( !isReferenceQuery &&
 
-			( querySentenceNr == NO_SENTENCE_NR ||
-			queryItem->hasSentenceNr( querySentenceNr ) ) &&
+			( ( querySentenceNr == NO_SENTENCE_NR &&
+			queryItemNr == NO_SENTENCE_NR ) ||
 
-			( queryItemNr == NO_SENTENCE_NR ||
-			queryItemNr == queryItem->itemNr() ) ) )
+			( querySentenceNr > NO_SENTENCE_NR &&
+			queryItemNr == NO_SENTENCE_NR &&
+			queryItem->hasSentenceNr( querySentenceNr ) ) ||
+
+			( queryItem->itemNr() == queryItemNr &&
+
+			( querySentenceNr == NO_SENTENCE_NR ||
+			queryItem->creationSentenceNr() == querySentenceNr ) ) ) ) )
 				{
 				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
@@ -96,7 +102,7 @@ class ListQuery
 		{
 		while( queryItem != NULL )
 			{
-			if( queryItem->hasFoundWordType( queryWordTypeNr ) )
+			if( queryItem->hasWordType( queryWordTypeNr ) )
 				{
 				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
@@ -120,7 +126,7 @@ class ListQuery
 		{
 		while( queryItem != NULL )
 			{
-			if( queryItem->hasFoundParameter( queryParameter ) )
+			if( queryItem->hasParameter( queryParameter ) )
 				{
 				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
@@ -173,42 +179,35 @@ class ListQuery
 			}
 		}
 
-	ResultType wordReferenceQuery( bool isSelectingOnFind, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString, Item *queryItem )
+	ResultType displayQueryResult( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, Item *queryItem )
 		{
-		ReferenceResultType referenceResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQuery";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "displayQueryResult";
 
 		while( queryItem != NULL )
 			{
-			if( ( referenceResult = queryItem->findMatchingWordReferenceString( wordReferenceNameString ) ).result == RESULT_OK )
+			if( queryItem->isSelectedByQuery ||
+			queryItem->isSelectedByJustificationQuery )
 				{
-				if( referenceResult.hasFoundMatchingStrings )
+				if( isOnlyDisplayingWords )
+					queryItem->displayWords( isReturnQueryToPosition, queryWordTypeNr );
+				else
 					{
-					if( queryItem->isSelectedByQuery )
-						{
-						if( isSelectingAttachedJustifications )
-							queryItem->selectingAttachedJustifications( isSelectingJustificationSpecifications );
-						}
+					if( isOnlyDisplayingWordReferences )
+						queryItem->displayWordReferences( isReturnQueryToPosition );
 					else
 						{
-						if( isSelectingOnFind )
+						if( isOnlyDisplayingStrings )
+							queryItem->displayString( isReturnQueryToPosition );
+						else
 							{
-							commonVariables_->hasFoundQuery = true;
-							queryItem->isSelectedByQuery = true;
+							if( commonVariables_->presentation->writeText( true, promptTypeNr, queryWidth, queryItem->toString( queryWordTypeNr ) ) != RESULT_OK )
+								return myList_->addError( functionNameString, moduleNameString_, "I failed to display the info of an active item" );
 							}
 						}
 					}
-				else
-					{
-					if( !isSelectingOnFind &&
-					queryItem->isSelectedByQuery )
-						queryItem->isSelectedByQuery = false;
-					}
-
-				queryItem = queryItem->nextItem;
 				}
-			else
-				return myList_->addError( functionNameString, moduleNameString_, "I failed to check the word references" );
+
+			queryItem = queryItem->nextItem;
 			}
 
 		return RESULT_OK;
@@ -216,7 +215,7 @@ class ListQuery
 
 	ResultType stringQuery( bool isSelectingOnFind, char *wordString, Item *queryItem )
 		{
-		ReferenceResultType referenceResult;
+		StringResultType stringResult;
 		bool hasFoundString;
 		char *itemString;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "stringQuery";
@@ -227,25 +226,21 @@ class ListQuery
 
 			if( ( itemString = queryItem->itemString() ) != NULL )
 				{
-				if( ( referenceResult = compareStrings( wordString, itemString ) ).result == RESULT_OK )
-					{
-					if( referenceResult.hasFoundMatchingStrings )
-						hasFoundString = true;
-					}
-				else
+				if( ( stringResult = compareStrings( wordString, itemString ) ).result != RESULT_OK )
 					return myList_->addError( functionNameString, moduleNameString_, "I failed to compare two strings" );
+
+				if( stringResult.hasFoundMatchingStrings )
+					hasFoundString = true;
 				}
 
 			if( !hasFoundString &&
 			( itemString = queryItem->virtualGuideByGrammarString() ) != NULL )
 				{
-				if( ( referenceResult = compareStrings( wordString, itemString ) ).result == RESULT_OK )
-					{
-					if( referenceResult.hasFoundMatchingStrings )
-						hasFoundString = true;
-					}
-				else
+				if( ( stringResult = compareStrings( wordString, itemString ) ).result != RESULT_OK )
 					return myList_->addError( functionNameString, moduleNameString_, "I failed to compare a Guide by Grammar string" );
+
+				if( stringResult.hasFoundMatchingStrings )
+					hasFoundString = true;
 				}
 
 			if( hasFoundString )
@@ -270,32 +265,37 @@ class ListQuery
 		return RESULT_OK;
 		}
 
-	ResultType showQueryResult( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, Item *queryItem )
+	ResultType wordReferenceQuery( bool isSelectingOnFind, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString, Item *queryItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "showQueryResult";
+		StringResultType stringResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQuery";
 
 		while( queryItem != NULL )
 			{
-			if( queryItem->isSelectedByQuery ||
-			queryItem->isSelectedByJustificationQuery )
+			if( ( stringResult = queryItem->findMatchingWordReferenceString( wordReferenceNameString ) ).result != RESULT_OK )
+				return myList_->addError( functionNameString, moduleNameString_, "I failed to check the word references" );
+
+			if( stringResult.hasFoundMatchingStrings )
 				{
-				if( isOnlyShowingWords )
-					queryItem->showWords( isReturnQueryToPosition, queryWordTypeNr );
+				if( queryItem->isSelectedByQuery )
+					{
+					if( isSelectingAttachedJustifications )
+						queryItem->selectingAttachedJustifications( isSelectingJustificationSpecifications );
+					}
 				else
 					{
-					if( isOnlyShowingWordReferences )
-						queryItem->showWordReferences( isReturnQueryToPosition );
-					else
+					if( isSelectingOnFind )
 						{
-						if( isOnlyShowingStrings )
-							queryItem->showString( isReturnQueryToPosition );
-						else
-							{
-							if( commonVariables_->presentation->writeText( true, promptTypeNr, queryWidth, queryItem->toString( queryWordTypeNr ) ) != RESULT_OK )
-								return myList_->addError( functionNameString, moduleNameString_, "I failed to show the info of an active item" );
-							}
+						commonVariables_->hasFoundQuery = true;
+						queryItem->isSelectedByQuery = true;
 						}
 					}
+				}
+			else
+				{
+				if( !isSelectingOnFind &&
+				queryItem->isSelectedByQuery )
+					queryItem->isSelectedByQuery = false;
 				}
 
 			queryItem = queryItem->nextItem;
@@ -306,7 +306,7 @@ class ListQuery
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	ListQuery( CommonVariables *commonVariables, List *myList )
 		{
@@ -537,134 +537,28 @@ class ListQuery
 			wordQuery( isSelectingOnFind, searchItem );
 		}
 
-	ReferenceResultType compareStrings( char *searchString, char *sourceString )
-		{
-		ReferenceResultType referenceResult;
-		bool isStop;
-		size_t searchStringPosition = 0;
-		size_t sourceStringPosition = 0;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "compareStrings";
-
-		if( searchString != NULL )
-			{
-			if( sourceString != NULL )
-				{
-				if( searchString != sourceString )
-					{
-					referenceResult.hasFoundMatchingStrings = true;
-
-					while( commonVariables_->result == RESULT_OK &&
-					referenceResult.hasFoundMatchingStrings &&
-					searchStringPosition < strlen( searchString ) &&
-					sourceStringPosition < strlen( sourceString ) )
-						{
-						if( searchString[searchStringPosition] == SYMBOL_QUESTION_MARK ||
-						searchString[searchStringPosition] == sourceString[sourceStringPosition] )
-							{
-							searchStringPosition++;
-							sourceStringPosition++;
-							}
-						else
-							{
-							if( searchString[searchStringPosition] == SYMBOL_ASTERISK )
-								{
-								if( ++searchStringPosition < strlen( searchString ) )
-									{
-									isStop = false;
-
-									while( !isStop &&
-									sourceStringPosition < strlen( sourceString ) )
-										{
-										if( searchString[searchStringPosition] == sourceString[sourceStringPosition] )
-											{
-											// Check remaining strings
-											if( ( referenceResult = compareStrings( &searchString[searchStringPosition], &sourceString[sourceStringPosition] ) ).result == RESULT_OK )
-												{
-												if( referenceResult.hasFoundMatchingStrings )
-													{
-													isStop = true;
-													searchStringPosition++;
-													}
-												else
-													// Reset indicator
-													referenceResult.hasFoundMatchingStrings = true;
-
-												sourceStringPosition++;
-												}
-											else
-												myList_->addError( functionNameString, moduleNameString_, "I failed to compare the remaining strings" );
-											}
-										else
-											// Skip source characters if not equal
-											sourceStringPosition++;
-										}
-									}
-								else
-									// Empty source string after asterisk
-									sourceStringPosition = strlen( sourceString );
-								}
-							else
-								referenceResult.hasFoundMatchingStrings = false;
-							}
-						}
-
-					if( commonVariables_->result == RESULT_OK )
-						{
-						if( referenceResult.hasFoundMatchingStrings &&
-						sourceStringPosition == strlen( sourceString ) )
-							{
-							// Check search string for extra asterisks
-							while( searchStringPosition < strlen( searchString ) &&
-							searchString[searchStringPosition] == SYMBOL_ASTERISK )
-								// Skip extra asterisks
-								searchStringPosition++;
-							}
-
-						if( searchStringPosition < strlen( searchString ) ||
-						sourceStringPosition < strlen( sourceString ) )
-							referenceResult.hasFoundMatchingStrings = false;
-						}
-					}
-				else
-					myList_->startError( functionNameString, moduleNameString_, "The given strings are the same string" );
-				}
-			else
-				myList_->startError( functionNameString, moduleNameString_, "The given source string is undefined" );
-			}
-		else
-			myList_->startError( functionNameString, moduleNameString_, "The given search string is undefined" );
-
-		referenceResult.result = commonVariables_->result;
-		return referenceResult;
-		}
-
-	ResultType wordReferenceQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
+	ResultType displayQueryResult( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
 		{
 		Item *searchItem;
 
-		if( isSelectingActiveItems &&
-		( searchItem = myList_->firstActiveItem() ) != NULL )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+		if( ( searchItem = myList_->firstActiveItem() ) != NULL )
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectingInactiveItems &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectingArchivedItems &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectingReplacedItems &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
-		isSelectingDeletedItems &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		return commonVariables_->result;
 		}
@@ -700,30 +594,123 @@ class ListQuery
 		return commonVariables_->result;
 		}
 
-	ResultType showQueryResult( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
+	ResultType wordReferenceQuery( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
 		{
 		Item *searchItem;
 
-		if( ( searchItem = myList_->firstActiveItem() ) != NULL )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+		if( isSelectingActiveItems &&
+		( searchItem = myList_->firstActiveItem() ) != NULL )
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
+		isSelectingInactiveItems &&
 		( searchItem = myList_->firstInactiveItem() ) != NULL )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
+		isSelectingArchivedItems &&
 		( searchItem = myList_->firstArchivedItem() ) != NULL )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
+		isSelectingReplacedItems &&
 		( searchItem = myList_->firstReplacedItem() ) != NULL )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( commonVariables_->result == RESULT_OK &&
+		isSelectingDeletedItems &&
 		( searchItem = myList_->firstDeletedItem() ) != NULL )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		return commonVariables_->result;
+		}
+
+	StringResultType compareStrings( char *searchString, char *sourceString )
+		{
+		StringResultType stringResult;
+		bool isStop;
+		size_t searchStringPosition = 0;
+		size_t sourceStringPosition = 0;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "compareStrings";
+
+		if( searchString == NULL )
+			return myList_->startStringResultError( functionNameString, moduleNameString_, "The given search string is undefined" );
+
+		if( sourceString == NULL )
+			return myList_->startStringResultError( functionNameString, moduleNameString_, "The given source string is undefined" );
+
+		if( searchString == sourceString )
+			return myList_->startStringResultError( functionNameString, moduleNameString_, "The given strings are the same string" );
+
+		stringResult.hasFoundMatchingStrings = true;
+
+		while( stringResult.hasFoundMatchingStrings &&
+		searchStringPosition < strlen( searchString ) &&
+		sourceStringPosition < strlen( sourceString ) )
+			{
+			if( searchString[searchStringPosition] == SYMBOL_QUESTION_MARK ||
+			searchString[searchStringPosition] == sourceString[sourceStringPosition] )
+				{
+				searchStringPosition++;
+				sourceStringPosition++;
+				}
+			else
+				{
+				if( searchString[searchStringPosition] == SYMBOL_ASTERISK )
+					{
+					if( ++searchStringPosition < strlen( searchString ) )
+						{
+						isStop = false;
+
+						while( !isStop &&
+						sourceStringPosition < strlen( sourceString ) )
+							{
+							if( searchString[searchStringPosition] == sourceString[sourceStringPosition] )
+								{
+								// Check remaining strings
+								if( ( stringResult = compareStrings( &searchString[searchStringPosition], &sourceString[sourceStringPosition] ) ).result != RESULT_OK )
+									return myList_->addStringResultError( functionNameString, moduleNameString_, "I failed to compare the remaining strings" );
+
+								if( stringResult.hasFoundMatchingStrings )
+									{
+									isStop = true;
+									searchStringPosition++;
+									}
+								else
+									// Reset indicator
+									stringResult.hasFoundMatchingStrings = true;
+
+								sourceStringPosition++;
+								}
+							else
+								// Skip source characters if not equal
+								sourceStringPosition++;
+							}
+						}
+					else
+						// Empty source string after asterisk
+						sourceStringPosition = strlen( sourceString );
+					}
+				else
+					stringResult.hasFoundMatchingStrings = false;
+				}
+			}
+
+		if( stringResult.hasFoundMatchingStrings &&
+		sourceStringPosition == strlen( sourceString ) )
+			{
+			// Check search string for extra asterisks
+			while( searchStringPosition < strlen( searchString ) &&
+			searchString[searchStringPosition] == SYMBOL_ASTERISK )
+				// Skip extra asterisks
+				searchStringPosition++;
+			}
+
+		if( searchStringPosition < strlen( searchString ) ||
+		sourceStringPosition < strlen( sourceString ) )
+			stringResult.hasFoundMatchingStrings = false;
+
+		return stringResult;
 		}
 	};
 

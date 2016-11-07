@@ -1,8 +1,0 @@
-﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
-Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
-Is Paul een kind?
-Is Paul een kind van Jan?
-Is Paul een kind van Jan en Anna?
-Is Paul een kind van Jan en Anna?
-Is Paul mogelijk een kind van Jan en Anna?
-# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

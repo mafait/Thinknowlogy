@@ -1,0 +1,5 @@
+﻿Paul has a parent, called John.
+Paul has a parent, called Anna.
+Display information about Paul.
+Paul has 2 parents, called John and Anna.
+# To continue, click button «Clear your mind.» or «Restart.».

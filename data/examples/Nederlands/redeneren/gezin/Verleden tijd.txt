@@ -1,3 +1,5 @@
-﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
 Cor was de vader van Kees.
+Toon de verantwoordingsrapportage over Cor.
+Toon de verantwoordingsrapportage over Kees.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

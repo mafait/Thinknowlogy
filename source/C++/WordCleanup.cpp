@@ -1,7 +1,7 @@
 /*	Class:			WordCleanup
  *	Supports class:	WordItem
  *	Purpose:		To cleanup obsolete items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,7 +28,7 @@ class WordCleanup
 	{
 	friend class WordItem;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	CommonVariables *commonVariables_;
 	WordItem *myWordItem_;
@@ -36,7 +36,7 @@ class WordCleanup
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	WordCleanup( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
@@ -68,7 +68,7 @@ class WordCleanup
 
 	// Protected functions
 
-	void clearReplacedInfo()
+	void clearReplacingInfo()
 		{
 		List *currentWordList;
 
@@ -82,7 +82,7 @@ class WordCleanup
 			( wordListNr != WORD_GRAMMAR_LIST &&
 			wordListNr != WORD_INTERFACE_LIST &&
 			!currentWordList->isTemporaryList() ) )
-				currentWordList->clearReplacedInfoInList();
+				currentWordList->clearReplacingInfoInList();
 			}
 		}
 
@@ -283,6 +283,6 @@ class WordCleanup
 
 /*************************************************************************
  *	"He has paid a full ransom for his people.
- *	He has guaranteed his convenant with them forever.
+ *	He has guaranteed his covenant with them forever.
  *	What a holy, awe-inspiring name he has!" (Psalm 111:9)
  *************************************************************************/

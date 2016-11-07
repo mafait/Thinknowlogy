@@ -1,0 +1,16 @@
+﻿* 
+* Mis suposiciones:
+< Pablo no tiene posiblemente un padre nunca-más.
+< Pablo tenido posiblemente un padre, llamado Jorge.
+< 
+< Sí, Jorge era posiblemente el padre de Pablo.
+< 
+* 
+* Tenías una pregunta similar antes:
+< ¿Era Jorge posiblemente el padre de Pablo?
+* 
+* Esta pregunta ya ha sido respondida.
+* 
+* No estoy seguro, pero:
+< Jorge era posiblemente el padre de Pablo.
+< 

@@ -1,0 +1,38 @@
+﻿* 
+* Mijn veronderstellingen:
+< Een vader en een moeder zijn waarschijnlijk ouder [meervoud van 'ouder' is onbekend].
+< 
+* 
+* Mijn veronderstellingen:
+< Een vader en een moeder zijn waarschijnlijk ouders. Omdat:
+<	- Een moeder is waarschijnlijk een ouder.
+* 	en:
+<	- Iedere vader is een ouder.
+< 
+* 
+* Mijn conclusies:
+< Jan is een ouder.
+< 
+* 
+* Mijn veronderstellingen:
+< Anna is waarschijnlijk een ouder.
+< 
+* 
+* Mijn veronderstellingen:
+< Een jongen en een meisje zijn mogelijk kind [meervoud van 'kind' is onbekend].
+< 
+* 
+* Mijn veronderstellingen:
+< Een jongen en een meisje zijn mogelijk kinderen. Omdat:
+<	- Een meisje is mogelijk een kind.
+* 	en:
+<	- Een jongen is waarschijnlijk een kind.
+< 
+* 
+* Mijn veronderstellingen:
+< Paul is waarschijnlijk een kind.
+< 
+* 
+* Mijn veronderstellingen:
+< Laura is mogelijk een kind.
+< 

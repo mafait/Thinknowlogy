@@ -1,0 +1,9 @@
+﻿#Une baleine, un chien et un chat sont des mammifères.
+Une baleine, un chien et un chat sont mammifères.
+#Affichez information sur des mammifères.
+Affichez information sur mammifères.
+#Un père et une mère sont des parents.
+Un père et une mère sont parents.
+#Affichez information sur des parents.
+Affichez information sur parents.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

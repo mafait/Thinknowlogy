@@ -1,29 +1,27 @@
-﻿Affichez "------------------------------------------------------------------------------".
-Affichez " Thinknowlogy est un logiciel expérimental, à base de grammaire,".
-Affichez " conçu pour utiliser Lois Naturelles de l'Intelligence intégrée dans la Grammaire,".
-Affichez " afin de créer l'intelligence – à travers le langage naturel – dans le logiciel,".
-Affichez " ce qui est démontré par:".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Malgré des siècles d'enquête approfondie, la théorie de l'évolution n'a toujours".
+Affichez " pas d'explication satisfaisante pour l'origine de l'intelligence et de la langue.".
+Affichez " Soit seul, comment les deux sont liés. Selon la vision du monde biblique, Dieu".
+Affichez " a créé lois de la nature, y compris les lois de l'intelligence. Étant basé sur".
+Affichez " les lois de l'intelligence, seulement Thinknowlogy implémente le sens naturel".
+#C++#Affichez " (fonction intelligente) des mots comme les articles définis \"le\" et \"la\",".
+#C++#Affichez " conjonction \"ou\", verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
+#Java#Affichez " (fonction intelligente) des mots comme les articles définis «le» et «la»,".
+#Java#Affichez " conjonction «ou», verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Ces lois naturelles de l'intelligence embarquée dans la grammaire sont démontrées par:".
 Affichez " * Programmation en langage naturel;".
 Affichez " * Raisonnement en langage naturel:".
 Affichez "   - tirer des conclusions (plus avancés que les solutions scientifiques),".
 Affichez "   - faire des hypothèses (avec niveau d'incertitude auto-réglage),".
 Affichez "   - poser des questions (environ lacunes dans les connaissances),".
-Affichez "   - détecter les conflits et les quelques cas d'ambiguïté sémantique;".
+Affichez "   - détecter les conflits et les quelques cas d'ambiguïté sémantique,".
+Affichez "   - l'affichage de rapports de justification pour la connaissance autoproduite;".
 Affichez " * Multilinguisme, prouver: Langues naturelles ont une origine commune.".
 Affichez "------------------------------------------------------------------------------".
-Affichez " Malgré 160 années de recherche, la théorie de l'évolution n'a pas encore".
-Affichez " été pris en charge par des preuves concrètes en ce qui concerne l'origine".
-Affichez " de l'intelligence et de la langue. Sans parler, l'intégration des deux.".
-Affichez " Selon la vision du monde biblique, Dieu a créé lois de la nature, y compris".
-Affichez " les lois de l'intelligence. Étant basé sur les lois de l'intelligence,".
-Affichez " seulement Thinknowlogy implémente le sens naturel (fonction intelligente)".
-#C++#Affichez " des mots comme les articles définis \"le\" et \"la\", conjonction \"ou\", verbe".
-#C++#Affichez " possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\". Je défie".
-#Java#Affichez " des mots comme les articles définis «le» et «la», conjonction «ou», verbe".
-#Java#Affichez " possessif «avoir», et verbes au passé «étaient» et «avaient». Je défie".
-Affichez " quiconque de battre ce raisonneur: http://mafait.org/challenge/".
+Affichez " Je défie quiconque de battre ce raisonneur: http://mafait.org/challenge/".
 Affichez "------------------------------------------------------------------------------".
-#C++#Affichez " Aidez.\t\t\t\t\t\t* Afficher plus d'aide d'info".
+#C++#Affichez " Aide.\t\t\t\t\t\t* Afficher plus d'aide d'info".
 #C++#Affichez " \~{languageName}\t\t\t\t* Changer la langue".
 #C++#Affichez " Lirez le fichier \"Français/ambiguïté/Boston\".\t* Ambiguïté détection".
 #C++#Affichez " Lirez le fichier \"Français/ambiguïté/Présidents des États-Unis\".".

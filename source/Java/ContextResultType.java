@@ -1,6 +1,7 @@
-/*	Class:			ContextResultType
- *	Purpose:		To return context variables of a method
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		ContextResultType
+ *	Purpose:	To return context variables,
+ *				as the result of a method call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,21 +28,19 @@ class ContextResultType
 	protected byte result;
 
 	protected boolean isAmbiguousRelationContext;
-	protected boolean isExclusiveContext;
 
 	protected int contextNr;
 	protected int copiedRelationContextNr;
 
 	protected SpecificationItem conclusionSpecificationItem;
 
-	// Constructor / deconstructor
+	// Constructor
 
 	ContextResultType()
 		{
 		result = Constants.RESULT_OK;
 
 		isAmbiguousRelationContext = false;
-		isExclusiveContext = false;
 
 		contextNr = Constants.NO_CONTEXT_NR;
 		copiedRelationContextNr = Constants.NO_CONTEXT_NR;

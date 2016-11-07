@@ -1,0 +1,62 @@
+﻿* 
+* Mes hypothèses:
+< Un père et un mère sont probablement parent [pluriel de «parent» est inconnue].
+< 
+* 
+* Mes hypothèses:
+< Un père et un mère sont probablement parents. En raison:
+<	- Chaque mère est probablement un parent.
+* 	et:
+<	- Chaque père est un parent.
+< 
+* 
+* Mes conclusions:
+< Olivier est un parent.
+< 
+* 
+* Mes conclusions:
+< Olivier est un parent. En raison:
+<	- Olivier est un père.
+<	- Chaque père est un parent.
+< 
+* 
+* Mes hypothèses:
+< Amélie est probablement un parent.
+< 
+* 
+* Mes hypothèses:
+< Amélie est probablement un parent. En raison:
+<	- Amélie est une mère.
+<	- Chaque mère est probablement un parent.
+< 
+* 
+* Mes hypothèses:
+< Un garçon et une jeune-fille sont possible enfant [pluriel de «enfant» est inconnue].
+< 
+* 
+* Mes hypothèses:
+< Un garçon et une jeune-fille sont possible enfants. En raison:
+<	- Chaque jeune-fille est probablement un enfant.
+* 	et:
+<	- Chaque garçon est possible un enfant.
+< 
+* 
+* Mes hypothèses:
+< Pascal est possible un enfant.
+< 
+* 
+* Mes hypothèses:
+< Pascal est possible un enfant. En raison:
+<	- Pascal est un garçon.
+<	- Chaque garçon est possible un enfant.
+< 
+* 
+* Mes hypothèses:
+< Lorraine est possible un enfant.
+< 
+* 
+* Mes hypothèses:
+< Lorraine est possible un enfant. En raison:
+<	- Lorraine est probablement une jeune-fille.
+<	- Chaque jeune-fille est probablement un enfant.
+< 

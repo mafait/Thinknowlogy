@@ -1,0 +1,5 @@
+﻿Olivier est un parent de Pascal.
+Olivier est un parent de Julien.
+Affichez information sur Olivier.
+Olivier est un parent de Pascal et Julien.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

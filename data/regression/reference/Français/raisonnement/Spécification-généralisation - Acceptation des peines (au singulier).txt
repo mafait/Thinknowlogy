@@ -1,0 +1,8 @@
+﻿* 
+* Vos informations:
+< Une baleine, un chien et un chat sont mammifères.
+< 
+* 
+* Vos informations:
+< Un père et une mère sont parents.
+< 

@@ -4,8 +4,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een ouder is waarschijnlijk een persoon.
 < Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -16,8 +16,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een kind is waarschijnlijk een persoon.
 < Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -35,6 +35,24 @@
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een moeder. Omdat:
+<	- Is Jan de moeder van Paul?
+< Jan is waarschijnlijk een vrouw. Omdat:
+<	- Jan is waarschijnlijk een moeder.
+<	- Iedere moeder is een vrouw.
+< Jan is mogelijk een persoon. Omdat:
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is waarschijnlijk een vrouw.
+* 	en:
+<	- Jan is waarschijnlijk een moeder.
+<	- Een moeder is waarschijnlijk een persoon.
+< Jan is misschien geen man. Omdat:
+<	- Jan is mogelijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is waarschijnlijk een vrouw.
+< 
 * 
 * Mijn eerdere veronderstellingen die gecorrigeerd zijn door een tegengestelde suggestieve vraag:
 < Jan is waarschijnlijk een moeder.
@@ -55,3 +73,25 @@
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een persoon. Omdat:
+<	- Is Jan een moeder of een vader?
+<	- Een moeder is waarschijnlijk een persoon.
+<	- Een vader is waarschijnlijk een persoon.
+* 
+* Mijn vragen:
+< Is Jan een vrouw of een man? Omdat:
+<	- Jan is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
+<	- Is Jan de moeder van Paul?
+<	- Iedere moeder is een vrouw.
+* 	en:
+<	- Is Jan de vader van Paul?
+<	- Iedere vader is een man.
+< Is Jan een moeder of een vader? Omdat:
+<	- Is Jan de vader van Paul?
+* 	en:
+<	- Is Jan de moeder van Paul?
+< 

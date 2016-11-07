@@ -1,7 +1,7 @@
 /*	Class:			ListQuery
  *	Supports class:	List
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class ListQuery
 	{
-	// Private constructible variables
+	// Private constructed variables
 
 	private List myList_;
 	private String moduleNameString_;
@@ -36,15 +36,21 @@ class ListQuery
 		while( queryItem != null )
 			{
 			if( ( isReferenceQuery &&
-			queryItem.hasFoundReferenceItemById( querySentenceNr, queryItemNr ) ) ||
+			queryItem.hasReferenceItemById( querySentenceNr, queryItemNr ) ) ||
 
 			( !isReferenceQuery &&
 
-			( querySentenceNr == Constants.NO_SENTENCE_NR ||
-			queryItem.hasSentenceNr( querySentenceNr ) ) &&
+			( ( querySentenceNr == Constants.NO_SENTENCE_NR &&
+			queryItemNr == Constants.NO_SENTENCE_NR ) ||
 
-			( queryItemNr == Constants.NO_SENTENCE_NR ||
-			queryItemNr == queryItem.itemNr() ) ) )
+			( querySentenceNr > Constants.NO_SENTENCE_NR &&
+			queryItemNr == Constants.NO_SENTENCE_NR &&
+			queryItem.hasSentenceNr( querySentenceNr ) ) ||
+
+			( queryItem.itemNr() == queryItemNr &&
+
+			( querySentenceNr == Constants.NO_SENTENCE_NR ||
+			queryItem.creationSentenceNr() == querySentenceNr ) ) ) ) )
 				{
 				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
@@ -90,7 +96,7 @@ class ListQuery
 		{
 		while( queryItem != null )
 			{
-			if( queryItem.hasFoundWordType( queryWordTypeNr ) )
+			if( queryItem.hasWordType( queryWordTypeNr ) )
 				{
 				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
@@ -114,7 +120,7 @@ class ListQuery
 		{
 		while( queryItem != null )
 			{
-			if( queryItem.hasFoundParameter( queryParameter ) )
+			if( queryItem.hasParameter( queryParameter ) )
 				{
 				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
@@ -167,41 +173,33 @@ class ListQuery
 			}
 		}
 
-	private byte wordReferenceQuery( boolean isSelectingOnFind, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString, Item queryItem )
+	private byte displayQueryResult( boolean isOnlyDisplayingWords, boolean isOnlyDisplayingWordReferences, boolean isOnlyDisplayingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth, Item queryItem )
 		{
-		ReferenceResultType referenceResult;
-
 		while( queryItem != null )
 			{
-			if( ( referenceResult = queryItem.findMatchingWordReferenceString( wordReferenceNameString ) ).result == Constants.RESULT_OK )
+			if( queryItem.isSelectedByQuery ||
+			queryItem.isSelectedByJustificationQuery )
 				{
-				if( referenceResult.hasFoundMatchingStrings )
+				if( isOnlyDisplayingWords )
+					queryItem.displayWords( isReturnQueryToPosition, queryWordTypeNr );
+				else
 					{
-					if( queryItem.isSelectedByQuery )
-						{
-						if( isSelectingAttachedJustifications )
-							queryItem.selectingAttachedJustifications( isSelectingJustificationSpecifications );
-						}
+					if( isOnlyDisplayingWordReferences )
+						queryItem.displayWordReferences( isReturnQueryToPosition );
 					else
 						{
-						if( isSelectingOnFind )
+						if( isOnlyDisplayingStrings )
+							queryItem.displayString( isReturnQueryToPosition );
+						else
 							{
-							CommonVariables.hasFoundQuery = true;
-							queryItem.isSelectedByQuery = true;
+							if( Presentation.writeText( true, promptTypeNr, queryWidth, queryItem.toStringBuffer( queryWordTypeNr ) ) != Constants.RESULT_OK )
+								return myList_.addError( 1, moduleNameString_, "I failed to display the info of an active item" );
 							}
 						}
 					}
-				else
-					{
-					if( !isSelectingOnFind &&
-					queryItem.isSelectedByQuery )
-						queryItem.isSelectedByQuery = false;
-					}
-
-				queryItem = queryItem.nextItem;
 				}
-			else
-				return myList_.addError( 1, moduleNameString_, "I failed to check the word references" );
+
+			queryItem = queryItem.nextItem;
 			}
 
 		return Constants.RESULT_OK;
@@ -209,7 +207,7 @@ class ListQuery
 
 	private byte stringQuery( boolean isSelectingOnFind, String wordString, Item queryItem )
 		{
-		ReferenceResultType referenceResult;
+		StringResultType stringResult;
 		boolean hasFoundString;
 		String itemString;
 
@@ -219,25 +217,21 @@ class ListQuery
 
 			if( ( itemString = queryItem.itemString() ) != null )
 				{
-				if( ( referenceResult = compareStrings( wordString, itemString ) ).result == Constants.RESULT_OK )
-					{
-					if( referenceResult.hasFoundMatchingStrings )
-						hasFoundString = true;
-					}
-				else
+				if( ( stringResult = compareStrings( wordString, itemString ) ).result != Constants.RESULT_OK )
 					return myList_.addError( 1, moduleNameString_, "I failed to compare two strings" );
+
+				if( stringResult.hasFoundMatchingStrings )
+					hasFoundString = true;
 				}
 
 			if( !hasFoundString &&
 			( itemString = queryItem.virtualGuideByGrammarString() ) != null )
 				{
-				if( ( referenceResult = compareStrings( wordString, itemString ) ).result == Constants.RESULT_OK )
-					{
-					if( referenceResult.hasFoundMatchingStrings )
-						hasFoundString = true;
-					}
-				else
+				if( ( stringResult = compareStrings( wordString, itemString ) ).result != Constants.RESULT_OK )
 					return myList_.addError( 1, moduleNameString_, "I failed to compare a Guide by Grammar string" );
+
+				if( stringResult.hasFoundMatchingStrings )
+					hasFoundString = true;
 				}
 
 			if( hasFoundString )
@@ -262,30 +256,36 @@ class ListQuery
 		return Constants.RESULT_OK;
 		}
 
-	private byte showQueryResult( boolean isOnlyShowingWords, boolean isOnlyShowingWordReferences, boolean isOnlyShowingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth, Item queryItem )
+	private byte wordReferenceQuery( boolean isSelectingOnFind, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString, Item queryItem )
 		{
+		StringResultType stringResult;
+
 		while( queryItem != null )
 			{
-			if( queryItem.isSelectedByQuery ||
-			queryItem.isSelectedByJustificationQuery )
+			if( ( stringResult = queryItem.findMatchingWordReferenceString( wordReferenceNameString ) ).result != Constants.RESULT_OK )
+				return myList_.addError( 1, moduleNameString_, "I failed to check the word references" );
+
+			if( stringResult.hasFoundMatchingStrings )
 				{
-				if( isOnlyShowingWords )
-					queryItem.showWords( isReturnQueryToPosition, queryWordTypeNr );
+				if( queryItem.isSelectedByQuery )
+					{
+					if( isSelectingAttachedJustifications )
+						queryItem.selectingAttachedJustifications( isSelectingJustificationSpecifications );
+					}
 				else
 					{
-					if( isOnlyShowingWordReferences )
-						queryItem.showWordReferences( isReturnQueryToPosition );
-					else
+					if( isSelectingOnFind )
 						{
-						if( isOnlyShowingStrings )
-							queryItem.showString( isReturnQueryToPosition );
-						else
-							{
-							if( Presentation.writeText( true, promptTypeNr, queryWidth, queryItem.toStringBuffer( queryWordTypeNr ) ) != Constants.RESULT_OK )
-								return myList_.addError( 1, moduleNameString_, "I failed to show the info of an active item" );
-							}
+						CommonVariables.hasFoundQuery = true;
+						queryItem.isSelectedByQuery = true;
 						}
 					}
+				}
+			else
+				{
+				if( !isSelectingOnFind &&
+				queryItem.isSelectedByQuery )
+					queryItem.isSelectedByQuery = false;
 				}
 
 			queryItem = queryItem.nextItem;
@@ -295,7 +295,7 @@ class ListQuery
 		}
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected ListQuery( List myList )
 		{
@@ -521,133 +521,28 @@ class ListQuery
 			wordQuery( isSelectingOnFind, searchItem );
 		}
 
-	protected ReferenceResultType compareStrings( String searchString, String sourceString )
-		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
-		boolean isStop;
-		int searchStringPosition = 0;
-		int sourceStringPosition = 0;
-
-		if( searchString != null )
-			{
-			if( sourceString != null )
-				{
-				if( searchString != sourceString )
-					{
-					referenceResult.hasFoundMatchingStrings = true;
-
-					while( CommonVariables.result == Constants.RESULT_OK &&
-					referenceResult.hasFoundMatchingStrings &&
-					searchStringPosition < searchString.length() &&
-					sourceStringPosition < sourceString.length() )
-						{
-						if( searchString.charAt( searchStringPosition ) == Constants.SYMBOL_QUESTION_MARK ||
-						searchString.charAt( searchStringPosition ) == sourceString.charAt( sourceStringPosition ) )
-							{
-							searchStringPosition++;
-							sourceStringPosition++;
-							}
-						else
-							{
-							if( searchString.charAt( searchStringPosition ) == Constants.SYMBOL_ASTERISK )
-								{
-								if( ++searchStringPosition < searchString.length() )
-									{
-									isStop = false;
-
-									while( !isStop &&
-									sourceStringPosition < sourceString.length() )
-										{
-										if( searchString.charAt( searchStringPosition ) == sourceString.charAt( sourceStringPosition ) )
-											{
-											// Check remaining strings
-											if( ( referenceResult = compareStrings( searchString.substring( searchStringPosition ), sourceString.substring( sourceStringPosition ) ) ).result == Constants.RESULT_OK )
-												{
-												if( referenceResult.hasFoundMatchingStrings )
-													{
-													isStop = true;
-													searchStringPosition++;
-													}
-												else
-													// Reset indicator
-													referenceResult.hasFoundMatchingStrings = true;
-
-												sourceStringPosition++;
-												}
-											else
-												myList_.addError( 1, moduleNameString_, "I failed to compare the remaining strings" );
-											}
-										else
-											// Skip source characters if not equal
-											sourceStringPosition++;
-										}
-									}
-								else
-									// Empty source string after asterisk
-									sourceStringPosition = sourceString.length();
-								}
-							else
-								referenceResult.hasFoundMatchingStrings = false;
-							}
-						}
-
-					if( CommonVariables.result == Constants.RESULT_OK )
-						{
-						if( referenceResult.hasFoundMatchingStrings &&
-						sourceStringPosition == sourceString.length() )
-							{
-							// Check search string for extra asterisks
-							while( searchStringPosition < searchString.length() &&
-							searchString.charAt( searchStringPosition ) == Constants.SYMBOL_ASTERISK )
-								// Skip extra asterisks
-								searchStringPosition++;
-							}
-
-						if( searchStringPosition < searchString.length() ||
-						sourceStringPosition < sourceString.length() )
-							referenceResult.hasFoundMatchingStrings = false;
-						}
-					}
-				else
-					myList_.startError( 1, moduleNameString_, "The given strings are the same string" );
-				}
-			else
-				myList_.startError( 1, moduleNameString_, "The given source string is undefined" );
-			}
-		else
-			myList_.startError( 1, moduleNameString_, "The given search string is undefined" );
-
-		referenceResult.result = CommonVariables.result;
-		return referenceResult;
-		}
-
-	protected byte wordReferenceQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
+	protected byte displayQueryResult( boolean isOnlyDisplayingWords, boolean isOnlyDisplayingWordReferences, boolean isOnlyDisplayingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
 		{
 		Item searchItem;
 
-		if( isSelectingActiveItems &&
-		( searchItem = myList_.firstActiveItem() ) != null )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+		if( ( searchItem = myList_.firstActiveItem() ) != null )
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectingInactiveItems &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectingArchivedItems &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectingReplacedItems &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
-		isSelectingDeletedItems &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
+			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
 		return CommonVariables.result;
 		}
@@ -683,30 +578,122 @@ class ListQuery
 		return CommonVariables.result;
 		}
 
-	protected byte showQueryResult( boolean isOnlyShowingWords, boolean isOnlyShowingWordReferences, boolean isOnlyShowingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
+	protected byte wordReferenceQuery( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
 		{
 		Item searchItem;
 
-		if( ( searchItem = myList_.firstActiveItem() ) != null )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+		if( isSelectingActiveItems &&
+		( searchItem = myList_.firstActiveItem() ) != null )
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectingInactiveItems &&
 		( searchItem = myList_.firstInactiveItem() ) != null )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectingArchivedItems &&
 		( searchItem = myList_.firstArchivedItem() ) != null )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectingReplacedItems &&
 		( searchItem = myList_.firstReplacedItem() ) != null )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		if( CommonVariables.result == Constants.RESULT_OK &&
+		isSelectingDeletedItems &&
 		( searchItem = myList_.firstDeletedItem() ) != null )
-			showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
+			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		return CommonVariables.result;
+		}
+
+	protected StringResultType compareStrings( String searchString, String sourceString )
+		{
+		StringResultType stringResult = new StringResultType();
+		boolean isStop;
+		int searchStringPosition = 0;
+		int sourceStringPosition = 0;
+
+		if( searchString == null )
+			return myList_.startStringResultError( 1, moduleNameString_, "The given search string is undefined" );
+
+		if( sourceString == null )
+			return myList_.startStringResultError( 1, moduleNameString_, "The given source string is undefined" );
+
+		if( searchString == sourceString )
+			return myList_.startStringResultError( 1, moduleNameString_, "The given strings are the same string" );
+
+		stringResult.hasFoundMatchingStrings = true;
+
+		while( stringResult.hasFoundMatchingStrings &&
+		searchStringPosition < searchString.length() &&
+		sourceStringPosition < sourceString.length() )
+			{
+			if( searchString.charAt( searchStringPosition ) == Constants.SYMBOL_QUESTION_MARK ||
+			searchString.charAt( searchStringPosition ) == sourceString.charAt( sourceStringPosition ) )
+				{
+				searchStringPosition++;
+				sourceStringPosition++;
+				}
+			else
+				{
+				if( searchString.charAt( searchStringPosition ) == Constants.SYMBOL_ASTERISK )
+					{
+					if( ++searchStringPosition < searchString.length() )
+						{
+						isStop = false;
+
+						while( !isStop &&
+						sourceStringPosition < sourceString.length() )
+							{
+							if( searchString.charAt( searchStringPosition ) == sourceString.charAt( sourceStringPosition ) )
+								{
+								// Check remaining strings
+								if( ( stringResult = compareStrings( searchString.substring( searchStringPosition ), sourceString.substring( sourceStringPosition ) ) ).result != Constants.RESULT_OK )
+									return myList_.addStringResultError( 1, moduleNameString_, "I failed to compare the remaining strings" );
+
+								if( stringResult.hasFoundMatchingStrings )
+									{
+									isStop = true;
+									searchStringPosition++;
+									}
+								else
+									// Reset indicator
+									stringResult.hasFoundMatchingStrings = true;
+
+								sourceStringPosition++;
+								}
+							else
+								// Skip source characters if not equal
+								sourceStringPosition++;
+							}
+						}
+					else
+						// Empty source string after asterisk
+						sourceStringPosition = sourceString.length();
+					}
+				else
+					stringResult.hasFoundMatchingStrings = false;
+				}
+			}
+
+		if( stringResult.hasFoundMatchingStrings &&
+		sourceStringPosition == sourceString.length() )
+			{
+			// Check search string for extra asterisks
+			while( searchStringPosition < searchString.length() &&
+			searchString.charAt( searchStringPosition ) == Constants.SYMBOL_ASTERISK )
+				// Skip extra asterisks
+				searchStringPosition++;
+			}
+
+		if( searchStringPosition < searchString.length() ||
+		sourceStringPosition < sourceString.length() )
+			stringResult.hasFoundMatchingStrings = false;
+
+		return stringResult;
 		}
 	};
 

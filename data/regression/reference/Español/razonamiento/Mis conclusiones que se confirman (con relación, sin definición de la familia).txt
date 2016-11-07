@@ -8,14 +8,36 @@
 < Luisa tiene una madre, llamada Ana.
 < 
 * 
+* Mis conclusiones:
+< Pablo tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
+< Pablo tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
+< 
+* 
 * Mis conclusiones son confirmadas:
 < Pablo tiene un padre, llamado Juan.
+< 
+* 
+* Mis conclusiones:
+< Pablo tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
 < 
 * 
 * Mis conclusiones son confirmadas:
 < José tiene un padre, llamado Juan.
 < 
 * 
+* Mis conclusiones:
+< José tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
+< 
+* 
 * Mis conclusiones son confirmadas:
 < Luisa tiene un padre, llamado Juan.
+< 
+* 
+* Mis conclusiones:
+< Luisa tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
 < 

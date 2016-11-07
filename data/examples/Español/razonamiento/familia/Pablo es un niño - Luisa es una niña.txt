@@ -1,0 +1,8 @@
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Pablo es un niño.
+Luisa es una niña.
+Mostrar el informe de justificación sobre Pablo.
+Mostrar el informe de justificación sobre Luisa.
+Pablo es un hombre.
+Luisa es una mujer.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

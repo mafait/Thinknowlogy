@@ -1,0 +1,83 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Juan es padre de Pablo.
+< Juan es parte de una familia.
+< Juan es un hombre.
+< Juan no es una mujer.
+< Juan no es una madre.
+* 
+* Mis suposiciones:
+< Pablo es posiblemente una persona.
+< Pablo es probablemente parte de una familia.
+< Juan es probablemente una persona.
+* 
+* Mis preguntas:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+< ¿Es Pablo un hijo o una hija?
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Juan es padre de Pablo.
+* 
+* Mis conclusiones:
+< Pablo tiene 2 padres, llamados Juan y Ana.
+< Pablo tiene una madre, llamada Ana.
+< José tiene 2 padres, llamados Juan y Ana.
+< José tiene un padre, llamado Juan.
+< José tiene una madre, llamada Ana.
+< Luisa tiene 2 padres, llamados Juan y Ana.
+< Luisa tiene un padre, llamado Juan.
+< Luisa tiene una madre, llamada Ana.
+< Ana es una mujer.
+< Ana no es un hombre.
+< Ana es parte de una familia.
+< Ana no es un padre.
+* 
+* Mis suposiciones:
+< Juan tiene posiblemente una hija, llamada Luisa.
+< José es posiblemente una persona.
+< José es probablemente parte de una familia.
+< Luisa es posiblemente hija de Juan y Ana.
+< Luisa es puede-ser una persona.
+< Luisa es posiblemente parte de una familia.
+< Luisa no es posiblemente un niño y un hombre.
+< Luisa no es posiblemente un hijo.
+< Ana es probablemente una persona.
+< Ana tiene posiblemente una hija, llamada Luisa.
+* 
+* Mis preguntas:
+< ¿Es José una niña, una mujer, un niño o un hombre?
+< ¿Es José un hijo o una hija?
+< ¿Es Luisa una niña o una mujer?
+< 
+* 
+* Mis conclusiones son confirmadas:
+< José tiene un padre, llamado Juan.
+< 
+* Sé.
+* 
+* Sé.
+* 

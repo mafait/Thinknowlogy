@@ -1,0 +1,58 @@
+﻿* 
+* Mes conclusions:
+< Olivier a un fils, appelé Pascal.
+< 
+* 
+* Mes conclusions:
+< Lorraine est une fille de Amélie.
+< 
+* 
+* Mes conclusions:
+< Un moteur est partie de chaque voiture.
+< 
+* 
+* Mes conclusions:
+< Chaque voilier a une voile.
+< 
+* 
+* Mes conclusions:
+< Pascal a un parent, appelé Olivier.
+< 
+* 
+* Mes conclusions:
+< Pascal a 2 parent [pluriel de «parent» est inconnue], appelés Olivier et Amélie.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Pascal a 2 parent [pluriel de «parent» est inconnue], appelés Olivier et Amélie.
+* 
+* Vous avez entré le nom au pluriel «parents», qui était inconnu pour moi.
+* 
+* 
+* Mes conclusions:
+< Antoine n'a aucun père plus.
+< Antoine avait un père, appelé Philippe.
+< 
+! 
+! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec lui-même.
+! 
+* 
+* Mes questions:
+< Est Dominique un homme ou une femme?
+< 
+* 
+* Mes questions qui sont répondues:
+< Est Dominique un homme ou une femme?
+* 
+* Mes conclusions:
+< Dominique est un homme.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un président, appelé Bill Clinton.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un nouveau président, appelé Barack Obama.
+< Les États-Unis a un précédent président, appelé Bill Clinton.
+< 

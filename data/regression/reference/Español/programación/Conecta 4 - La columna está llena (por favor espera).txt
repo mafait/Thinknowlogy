@@ -1,0 +1,132 @@
+﻿
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: D.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |m| | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: G.
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: G.
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | |m|
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+Lo sentimos, la columna D está llena.
+
+Es tu turno.
+
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | |m|
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+

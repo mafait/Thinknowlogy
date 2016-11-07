@@ -1,0 +1,154 @@
+﻿* 
+* Mijn conclusies:
+< Ouders en kinderen zijn deel van ieder gezin.
+< 
+* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Ieder kind is een meisje, een vrouw, een jongen of een man.
+* 
+* Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Jan is deel van een gezin.
+< Paul heeft een ouder, genaamd Jan.
+< Johan heeft een ouder, genaamd Jan.
+< Laura heeft een ouder, genaamd Jan.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een persoon.
+< Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+< Jan heeft mogelijk een dochter, genaamd Laura.
+< Paul is waarschijnlijk een kind van Jan.
+< Paul is waarschijnlijk deel van een gezin.
+< Paul is mogelijk een persoon.
+< Johan is waarschijnlijk een kind van Jan.
+< Johan is waarschijnlijk deel van een gezin.
+< Johan is mogelijk een persoon.
+< Laura is waarschijnlijk een kind van Jan.
+< Laura is waarschijnlijk deel van een gezin.
+< Laura is mogelijk een persoon.
+< Laura is misschien geen man.
+< Laura is mogelijk een dochter van Jan.
+< Laura is misschien geen jongen en geen man.
+< Laura is misschien geen zoon.
+* 
+* Mijn vragen:
+< Is Jan een man of een vrouw?
+< Is Jan een vader of een moeder?
+< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een zoon of een dochter?
+< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een zoon of een dochter?
+< Is Laura een meisje of een vrouw?
+< 
+* 
+* Mijn vragen die beantwoord zijn:
+< Is Paul een zoon of een dochter?
+* 
+* Mijn aangepaste vragen:
+< Is Paul een jongen of een man?
+* 
+* Mijn veronderstellingen die aangepast zijn:
+< Paul is waarschijnlijk een persoon.
+* 
+* Mijn veronderstellingen:
+< Paul is waarschijnlijk geen meisje en geen vrouw.
+< Paul is waarschijnlijk geen dochter.
+< 
+* 
+* Mijn conclusies:
+< Jan is deel van een gezin. Omdat:
+<	- Jan is een ouder van Paul, Johan en Laura.
+<	- Ouders zijn deel van ieder gezin.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een persoon. Omdat:
+<	- Jan is een ouder van Paul, Johan en Laura.
+<	- Een ouder is waarschijnlijk een persoon.
+< Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Jan is een ouder van Paul, Johan en Laura.
+* 	en:
+<	- Paul is waarschijnlijk een kind van Jan.
+<	- Johan is waarschijnlijk een kind van Jan.
+<	- Laura is waarschijnlijk een kind van Jan.
+< Jan heeft mogelijk een dochter, genaamd Laura. Omdat:
+<	- Laura is mogelijk een dochter van Jan.
+* 	en:
+<	- Laura heeft een ouder, genaamd Jan.
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Ieder kind is een zoon of een dochter.
+<	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
+* 
+* Mijn vragen:
+< Is Jan een man of een vrouw? Omdat:
+<	- Jan is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
+<	- Jan is een ouder van Paul, Johan en Laura.
+<	- Iedere ouder is een vrouw of een man.
+* 	en:
+<	- Is Jan een vader of een moeder?
+<	- Iedere moeder is een vrouw.
+<	- Iedere vader is een man.
+< Is Jan een vader of een moeder? Omdat:
+<	- Jan is een ouder van Paul, Johan en Laura.
+<	- Iedere ouder is een vader of een moeder.
+< 
+* 
+* Mijn conclusies:
+< Paul heeft een ouder, genaamd Jan. Omdat:
+<	- Jan is een ouder van Paul, Johan en Laura.
+* 
+* Mijn veronderstellingen:
+< Paul is waarschijnlijk een persoon. Omdat:
+<	- Paul is een zoon.
+<	- Een zoon is waarschijnlijk een persoon.
+* 	en:
+<	- Paul is waarschijnlijk een kind van Jan.
+<	- Een kind is waarschijnlijk een persoon.
+< Paul is waarschijnlijk geen meisje en geen vrouw. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan.
+<	- Ieder kind is een meisje, een vrouw, een jongen of een man.
+<	- Paul is een zoon.
+<	- Een zoon is een jongen of een man.
+< Paul is waarschijnlijk geen dochter. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan.
+<	- Ieder kind is een zoon of een dochter.
+<	- Paul is een zoon.
+< Paul is waarschijnlijk een kind van Jan. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Jan is een ouder van Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul heeft een ouder, genaamd Jan.
+* 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+< Paul is waarschijnlijk deel van een gezin. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan.
+<	- Kinderen zijn deel van ieder gezin.
+* 
+* Mijn vragen:
+< Is Paul een jongen of een man? Omdat:
+<	- Paul is een zoon.
+<	- Een zoon is een jongen of een man.
+< 

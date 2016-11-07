@@ -1,0 +1,8 @@
+﻿* 
+* My conclusions:
+< A head is part of a person.
+< 
+* 
+* This assignment is not accepted, because it is in conflict with definition specification:
+< A person has a head.
+< 

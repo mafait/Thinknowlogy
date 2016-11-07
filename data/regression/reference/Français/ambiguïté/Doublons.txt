@@ -1,0 +1,50 @@
+﻿* 
+* Mes conclusions:
+< Les États-Unis a une ville, appelé Boston.
+< 
+* 
+* Le mot «Boston» est sémantiquement ambiguë. Il ya plusieurs instances de cette entité.
+* 
+* Mes conclusions:
+< Le Royaume-Uni a une ville, appelé Boston.
+< 
+* 
+* Vos informations:
+< Boston est une ville de la-fois les États-Unis et le Royaume-Uni.
+* 
+* Informations connexes:
+< Le Royaume-Uni a une ville, appelé Boston.
+< Les États-Unis a une ville, appelé Boston.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a une ville, appelé Boston. En raison:
+<	- Boston est une ville de la-fois les États-Unis et le Royaume-Uni.
+< 
+* 
+* Mes conclusions:
+< Le Royaume-Uni a une ville, appelé Boston. En raison:
+<	- Boston est une ville de la-fois les États-Unis et le Royaume-Uni.
+< 
+* Je sais que.
+* 
+* Je sais que.
+* 
+* 
+* Vos informations:
+< Boston est une ville de la-fois les États-Unis et le Royaume-Uni.
+* 
+* Informations connexes:
+< Le Royaume-Uni a une ville, appelé Boston.
+< Les États-Unis a une ville, appelé Boston.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a une ville, appelé Boston. En raison:
+<	- Boston est une ville de la-fois les États-Unis et le Royaume-Uni.
+< 
+* 
+* Mes conclusions:
+< Le Royaume-Uni a une ville, appelé Boston. En raison:
+<	- Boston est une ville de la-fois les États-Unis et le Royaume-Uni.
+< 

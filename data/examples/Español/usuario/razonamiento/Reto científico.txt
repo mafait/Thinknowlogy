@@ -1,0 +1,34 @@
+﻿#-----------------------------------------------------------------
+#	Esta prueba ejecuta los ejemplos de mi Reto Científico. Para
+#	obtener más información, consulte el documento Reto Científico
+#	incluido, o: http://mafait.org/challenge/
+#-----------------------------------------------------------------
+# Bloque 1: Conversiones
+#-----------------------------------------------------------------
+Pablo es hijo de Juan.
+Ana tiene una hija, llamada Laura.
+Cada coche tiene un motor.
+Una vela es parte de cada velero.
+#-----------------------------------------------------------------
+# Bloque 2: Agrupación de los conocimientos
+#-----------------------------------------------------------------
+Juan tiene un hijo, llamado Pablo.
+Ana tiene un hijo, llamado Pablo.
+Pablo es hijo de Juan y Ana.
+#-----------------------------------------------------------------
+# Bloque 3: Pasado el razonamiento tensa
+#-----------------------------------------------------------------
+Hernando era padre de Rafael.
+#-----------------------------------------------------------------
+# Bloque 4: La detección de un conflicto y la generación de una pregunta
+#-----------------------------------------------------------------
+Cada persona es un hombre o una mujer.
+Cruz es un hombre y una mujer.
+Cruz es una persona.
+Cruz no es una mujer.
+#-----------------------------------------------------------------
+# Bloque 5: Archivo de los conocimientos
+#-----------------------------------------------------------------
+Bill Clinton es el presidente de los Estados Unidos.
+Barack Obama es el presidente de los Estados Unidos.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

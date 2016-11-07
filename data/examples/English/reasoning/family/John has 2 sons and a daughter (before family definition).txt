@@ -1,0 +1,4 @@
+﻿John has 2 sons and a daughter.
+Read the file "English/user/reasoning/family/family definition".
+Display information about John.
+# To continue, click button «Clear your mind.» or «Restart.».

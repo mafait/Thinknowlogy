@@ -1,0 +1,4 @@
+﻿Boston est une ville des États-Unis.
+Boston est une ville du Royaume-Uni.
+Affichez information sur Boston.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

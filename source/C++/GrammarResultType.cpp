@@ -1,6 +1,7 @@
-/*	Class:			GrammarResultType
- *	Purpose:		To return justification variables of a function
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		GrammarResultType
+ *	Purpose:	To return grammar variables,
+ *				as the result of a function call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,17 +30,17 @@ class GrammarResultType
 	friend class AdminReadCreateWords;
 	friend class AdminReadGrammar;
 	friend class GrammarList;
+	friend class Item;
+	friend class List;
 	friend class WordItem;
 	friend class WordType;
+
 	protected:
 	// Protected variables
 
 	ResultType result;
 
 	bool hasFoundWordEnding;
-
-	unsigned short guideByGrammarSelectionNr;
-	unsigned short guideByGrammarWordOrderNr;
 
 	size_t singularNounWordStringLength;
 
@@ -49,16 +50,13 @@ class GrammarResultType
 	char singularNounWordString[MAX_WORD_LENGTH];
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	GrammarResultType()
 		{
 		result = RESULT_OK;
 
 		hasFoundWordEnding = false;
-
-		guideByGrammarSelectionNr = 0;
-		guideByGrammarWordOrderNr = NO_ORDER_NR;
 
 		singularNounWordStringLength = 0;
 

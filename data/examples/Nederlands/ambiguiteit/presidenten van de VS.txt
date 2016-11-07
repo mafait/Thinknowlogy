@@ -1,17 +1,21 @@
 ﻿# In 1989 werd George H. W. Bush ingehuldigd als president van de Verenigde Staten.
 George Bush is de president van de Verenigde Staten.
+Toon informatie over de presidenten.
+Toon de verantwoordingsrapportage over de Verenigde Staten.
 # In 1993 werd Bill Clinton ingehuldigd als president van de Verenigde Staten.
 Bill Clinton is de president van de Verenigde Staten.
 Toon informatie over de presidenten.
+Toon de verantwoordingsrapportage over de Verenigde Staten.
 # In 1997 werd Bill Clinton opnieuw ingehuldigd als president van de Verenigde Staten.
 Bill Clinton is de president van de Verenigde Staten.
 # In 2001 werd George W. Bush - een zoon of George H. W. Bush - ingehuldigd als president van de Verenigde Staten.
 George Bush is de president van de Verenigde Staten.
 Toon informatie over de presidenten.
+Toon de verantwoordingsrapportage over de Verenigde Staten.
 # In 2005 werd George W. Bush opnieuw ingehuldigd als president van de Verenigde Staten.
 George Bush is de president van de Verenigde Staten.
 # In 2009 werd Barack Obama ingehuldigd als president van de Verenigde Staten.
 Barack Obama is de president van de Verenigde Staten.
 Toon informatie over de presidenten.
+Toon de verantwoordingsrapportage over de Verenigde Staten.
 # In 2013 ...
-# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

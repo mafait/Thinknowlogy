@@ -7,8 +7,8 @@
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
 < Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:
@@ -44,3 +44,52 @@
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
+* 
+* Sus preguntas:
+< ¿Es Juan un padre?
+* 
+* Mis conclusiones:
+< Juan tiene un hijo, llamado Pablo.
+* 
+* Mis suposiciones:
+< Juan es posiblemente una persona.
+< Juan es probablemente parte de una familia.
+* 
+* Mis preguntas:
+< ¿Es Juan una mujer o un hombre?
+< ¿Es Juan un padre o una madre?
+* 
+* Información relacionada:
+< Pablo es hijo de Juan.
+< 
+* 
+* Mis conclusiones:
+< Juan tiene un hijo, llamado Pablo. Porque:
+<	- Pablo es hijo de Juan.
+* 
+* Mis suposiciones:
+< Juan es posiblemente una persona. Porque:
+<	- Juan tiene un hijo, llamado Pablo.
+<	- Cada familia tiene padres y hijos.
+<	- Un padre es probablemente una persona.
+< Juan es probablemente parte de una familia. Porque:
+<	- ¿Es Juan un padre o una madre?
+<	- Padres son parte de cada familia.
+* 
+* Mis preguntas:
+< ¿Es Juan una mujer o un hombre? Porque:
+<	- Juan tiene un hijo, llamado Pablo.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es una mujer o un hombre.
+* 	y:
+<	- ¿Es Juan un padre o una madre?
+<	- Cada padre es un hombre.
+<	- Cada madre es una mujer.
+* 	y:
+<	- Juan es posiblemente una persona.
+<	- Cada persona es un hombre o una mujer.
+< ¿Es Juan un padre o una madre? Porque:
+<	- Juan tiene un hijo, llamado Pablo.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es un padre o una madre.
+< 

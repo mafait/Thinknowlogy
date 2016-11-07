@@ -1,7 +1,7 @@
 /*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,12 +23,12 @@
 
 class SelectionItem extends Item
 	{
-	// Private constructible variables
+	// Private constructed variables
 
 	private SelectionItem nextExecutionItem_;
 
 
-	// Private loadable variables
+	// Private initialized variables
 
 	private boolean isAction_;
 	private boolean isAssignedOrClear_;
@@ -44,9 +44,8 @@ class SelectionItem extends Item
 
 	private short assumptionLevel_;
 	private short selectionLevel_;
-	private short imperativeParameter_;
+	private short imperativeVerbParameter_;
 	private short prepositionParameter_;
-	private short specificationWordParameter_;
 
 	private short generalizationWordTypeNr_;
 	private short specificationWordTypeNr_;
@@ -65,22 +64,22 @@ class SelectionItem extends Item
 	private String specificationString_;
 
 
-	// Protected constructible variables
+	// Protected constructed variables
 
 	protected boolean isConditionCheckedForSolving;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
-	protected SelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeParameter, short prepositionParameter, short specificationWordParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString, List myList, WordItem myWordItem )
+	protected SelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeVerbParameter, short prepositionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private constructible variables
+		// Private constructed variables
 
 		nextExecutionItem_ = null;
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isAction_ = isAction;
 		isAssignedOrClear_ = isAssignedOrClear;
@@ -100,9 +99,8 @@ class SelectionItem extends Item
 		assumptionLevel_ = assumptionLevel;
 		selectionLevel_ = selectionLevel;
 
-		imperativeParameter_ = imperativeParameter;
+		imperativeVerbParameter_ = imperativeVerbParameter;
 		prepositionParameter_ = prepositionParameter;
-		specificationWordParameter_ = specificationWordParameter;
 
 		generalizationWordTypeNr_ = generalizationWordTypeNr;
 		specificationWordTypeNr_ = specificationWordTypeNr;
@@ -121,7 +119,7 @@ class SelectionItem extends Item
 		relationWordItem_ = relationWordItem;
 
 
-		// Protected constructible variables
+		// Protected constructed variables
 
 		isConditionCheckedForSolving = false;
 		}
@@ -129,7 +127,7 @@ class SelectionItem extends Item
 
 	// Protected virtual methods
 
-	protected void showString( boolean isReturnQueryToPosition )
+	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -139,7 +137,7 @@ class SelectionItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
@@ -148,7 +146,7 @@ class SelectionItem extends Item
 			}
 		}
 
-	protected void showWordReferences( boolean isReturnQueryToPosition )
+	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		StringBuffer queryStringBuffer;
 		String wordString;
@@ -164,7 +162,7 @@ class SelectionItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
@@ -179,7 +177,7 @@ class SelectionItem extends Item
 			queryStringBuffer.length() > 0 )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
@@ -194,7 +192,7 @@ class SelectionItem extends Item
 			queryStringBuffer.length() > 0 )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
@@ -203,12 +201,11 @@ class SelectionItem extends Item
 			}
 		}
 
-	protected boolean hasFoundParameter( int queryParameter )
+	protected boolean hasParameter( int queryParameter )
 		{
 		return ( selectionLevel_ == queryParameter ||
-				imperativeParameter_ == queryParameter ||
+				imperativeVerbParameter_ == queryParameter ||
 				prepositionParameter_ == queryParameter ||
-				specificationWordParameter_ == queryParameter ||
 				generalizationContextNr_ == queryParameter ||
 				specificationContextNr_ == queryParameter ||
 				relationContextNr_ == queryParameter ||
@@ -217,16 +214,15 @@ class SelectionItem extends Item
 				( queryParameter == Constants.MAX_QUERY_PARAMETER &&
 
 				( selectionLevel_ > Constants.NO_SELECTION_LEVEL ||
-				imperativeParameter_ > Constants.NO_IMPERATIVE_PARAMETER ||
+				imperativeVerbParameter_ > Constants.NO_IMPERATIVE_PARAMETER ||
 				prepositionParameter_ > Constants.NO_PREPOSITION_PARAMETER ||
-				specificationWordParameter_ > Constants.NO_WORD_PARAMETER ||
 				generalizationContextNr_ > Constants.NO_CONTEXT_NR ||
 				specificationContextNr_ > Constants.NO_CONTEXT_NR ||
 				relationContextNr_ > Constants.NO_CONTEXT_NR ||
 				nContextRelations_ > 0 ) ) );
 		}
 
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( ( generalizationWordItem_ == null ? false :
 					( querySentenceNr == Constants.NO_SENTENCE_NR ? true : generalizationWordItem_.creationSentenceNr() == querySentenceNr ) &&
@@ -241,7 +237,7 @@ class SelectionItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : relationWordItem_.itemNr() == queryItemNr ) ) );
 		}
 
-	protected boolean hasFoundWordType( short queryWordTypeNr )
+	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( generalizationWordTypeNr_ == queryWordTypeNr ||
 				specificationWordTypeNr_ == queryWordTypeNr ||
@@ -253,50 +249,31 @@ class SelectionItem extends Item
 		return myWordItem().checkSelectionForUsageInWord( this );
 		}
 
-	protected ReferenceResultType findMatchingWordReferenceString( String queryString )
+	protected StringResultType findMatchingWordReferenceString( String queryString )
 		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
+		StringResultType stringResult = new StringResultType();
 
 		if( generalizationWordItem_ != null )
 			{
-			if( ( referenceResult = generalizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, specificationString_, "I failed to find a matching word reference string for the generalization word" );
+			if( ( stringResult = generalizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, specificationString_, "I failed to find a matching word reference string for the generalization word" );
 			}
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
-		!referenceResult.hasFoundMatchingStrings &&
+		if( !stringResult.hasFoundMatchingStrings &&
 		specificationWordItem_ != null )
 			{
-			if( ( referenceResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, specificationString_, "I failed to find a matching word reference string for the specification word" );
+			if( ( stringResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, specificationString_, "I failed to find a matching word reference string for the specification word" );
 			}
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
-		!referenceResult.hasFoundMatchingStrings &&
+		if( !stringResult.hasFoundMatchingStrings &&
 		relationWordItem_ != null )
 			{
-			if( ( referenceResult = relationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, specificationString_, "I failed to find a matching word reference string for the relation word" );
+			if( ( stringResult = relationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, specificationString_, "I failed to find a matching word reference string for the relation word" );
 			}
 
-		return referenceResult;
-		}
-
-	protected ReferenceResultType findWordReference( WordItem referenceWordItem )
-		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
-
-		if( referenceWordItem != null )
-			{
-			if( generalizationWordItem_ == referenceWordItem ||
-			specificationWordItem_ == referenceWordItem ||
-			relationWordItem_ == referenceWordItem )
-				referenceResult.hasFoundWordReference = true;
-			}
-		else
-			startError( 1, null, specificationString_, "The given reference word is undefined" );
-
-		return referenceResult;
+		return stringResult;
 		}
 
 	protected String itemString()
@@ -361,14 +338,11 @@ class SelectionItem extends Item
 		if( selectionLevel_ > Constants.NO_SELECTION_LEVEL )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "selectionLevel:" + selectionLevel_ );
 
-		if( imperativeParameter_ > Constants.NO_IMPERATIVE_PARAMETER )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "imperativeParameter:" + imperativeParameter_ );
+		if( imperativeVerbParameter_ > Constants.NO_IMPERATIVE_PARAMETER )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "imperativeVerbParameter:" + imperativeVerbParameter_ );
 
 		if( prepositionParameter_ > Constants.NO_PREPOSITION_PARAMETER )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "prepositionParameter:" + prepositionParameter_ );
-
-		if( specificationWordParameter_ > Constants.NO_WORD_PARAMETER )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordParameter:" + specificationWordParameter_ );
 
 		if( generalizationContextNr_ > Constants.NO_CONTEXT_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "generalizationContextNr:" + generalizationContextNr_ );
@@ -491,19 +465,14 @@ class SelectionItem extends Item
 		return selectionLevel_;
 		}
 
-	protected short imperativeParameter()
+	protected short imperativeVerbParameter()
 		{
-		return imperativeParameter_;
+		return imperativeVerbParameter_;
 		}
 
 	protected short prepositionParameter()
 		{
 		return prepositionParameter_;
-		}
-
-	protected short specificationWordParameter()
-		{
-		return specificationWordParameter_;
 		}
 
 	protected short specificationWordTypeNr()
@@ -543,24 +512,22 @@ class SelectionItem extends Item
 
 	protected byte findNextExecutionSelectionItem( boolean isIncludingThisItem, WordItem solveWordItem )
 		{
-		SelectionItem searchItem = ( isIncludingThisItem ? this : nextSelectionItem() );
+		SelectionItem searchSelectionItem = ( isIncludingThisItem ? this : nextSelectionItem() );
 
 		nextExecutionItem_ = null;
 
-		if( solveWordItem != null )
-			{
-			while( searchItem != null &&
-			nextExecutionItem_ == null )
-				{
-				if( searchItem.generalizationWordItem_ == solveWordItem &&
-				searchItem.specificationWordItem_ != null )
-					nextExecutionItem_ = searchItem;
-				else
-					searchItem = searchItem.nextSelectionItem();
-				}
-			}
-		else
+		if( solveWordItem == null )
 			return startError( 1, null, specificationString_, "The given solve word item is undefined" );
+
+		while( searchSelectionItem != null &&
+		nextExecutionItem_ == null )
+			{
+			if( searchSelectionItem.generalizationWordItem_ == solveWordItem &&
+			searchSelectionItem.specificationWordItem_ != null )
+				nextExecutionItem_ = searchSelectionItem;
+			else
+				searchSelectionItem = searchSelectionItem.nextSelectionItem();
+			}
 
 		return Constants.RESULT_OK;
 		}

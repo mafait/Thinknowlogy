@@ -1,0 +1,5 @@
+﻿Une personne est un homme ou une femme.
+Dominique est une personne.
+Dominique n'est pas une femme.
+Affichez le rapport de justification sur Dominique.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

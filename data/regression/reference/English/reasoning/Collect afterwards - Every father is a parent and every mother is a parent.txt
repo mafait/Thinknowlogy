@@ -1,0 +1,24 @@
+﻿* 
+* My conclusions:
+< A father and a mother are parent [plural of 'parent' is unknown].
+< 
+* 
+* My conclusions:
+< John is a parent.
+< 
+* 
+* My conclusions:
+< Anna is a parent.
+< 
+* 
+* My assumptions:
+< A boy and a girl are probably child [plural of 'child' is unknown].
+< 
+* 
+* My assumptions:
+< Paul is probably a child.
+< 
+* 
+* My assumptions:
+< Laura is probably a child.
+< 

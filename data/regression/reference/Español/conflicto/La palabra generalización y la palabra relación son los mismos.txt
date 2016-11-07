@@ -1,0 +1,2 @@
+﻿! La palabra "Juan" es una palabra generalización, así como una palabra relación. Se supone que hay múltiples (diferentes) instancias de esta palabra. Sin embargo, esta lógica niño aún no está implementado.
+! 

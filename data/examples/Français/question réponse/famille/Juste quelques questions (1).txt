@@ -1,0 +1,13 @@
+﻿Sont 1 et 2 nombres?
+Était Philippe le père de Antoine?
+Est Olivier le père de Pascal?
+Sont Pascal et Julien enfants?
+Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Guillaume est le père de Armand.
+Sont Pascal et Julien enfants?
+Sont Pascal et Julien parents?
+Sont Pascal et Julien enfants de Armand?
+Sont Pascal et Julien enfants de Olivier?
+Sont Pascal et Julien enfants de Olivier et Amélie?
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

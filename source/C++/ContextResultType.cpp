@@ -1,6 +1,7 @@
-/*	Class:			ContextResultType
- *	Purpose:		To return context variables of a function
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		ContextResultType
+ *	Purpose:	To return context variables,
+ *				as the result of a function call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -26,16 +27,16 @@ class ContextResultType
 	{
 	friend class AdminConclusion;
 	friend class AdminContext;
-	friend class AdminItem;
 	friend class AdminReadSentence;
 	friend class AdminSpecification;
+	friend class Item;
+
 	protected:
 	// Protected variables
 
 	ResultType result;
 
 	bool isAmbiguousRelationContext;
-	bool isExclusiveContext;
 
 	unsigned int contextNr;
 	unsigned int copiedRelationContextNr;
@@ -43,14 +44,13 @@ class ContextResultType
 	SpecificationItem *conclusionSpecificationItem;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	ContextResultType()
 		{
 		result = RESULT_OK;
 
 		isAmbiguousRelationContext = false;
-		isExclusiveContext = false;
 
 		contextNr = NO_CONTEXT_NR;
 		copiedRelationContextNr = NO_CONTEXT_NR;

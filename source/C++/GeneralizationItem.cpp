@@ -3,7 +3,7 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -40,7 +40,7 @@ class GeneralizationItem : private Item
 	friend class WordItem;
 	friend class WordSpecification;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	bool isLanguageWord_;
 	bool isRelation_;
@@ -53,13 +53,13 @@ class GeneralizationItem : private Item
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	GeneralizationItem( bool isLanguageWord, bool isRelation, unsigned short languageNr, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GeneralizationItem", commonVariables, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isLanguageWord_ = isLanguageWord;
 		isRelation_ = isRelation;
@@ -78,7 +78,7 @@ class GeneralizationItem : private Item
 
 	// Protected virtual functions
 
-	virtual void showWordReferences( bool isReturnQueryToPosition )
+	virtual void displayWordReferences( bool isReturnQueryToPosition )
 		{
 		char *wordString;
 
@@ -90,7 +90,7 @@ class GeneralizationItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
@@ -99,31 +99,31 @@ class GeneralizationItem : private Item
 			}
 		}
 
-	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
+	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		return ( generalizationWordItem_ == NULL ? false :
 					( querySentenceNr == NO_SENTENCE_NR ? true : generalizationWordItem_->creationSentenceNr() == querySentenceNr ) &&
 					( queryItemNr == NO_ITEM_NR ? true : generalizationWordItem_->itemNr() == queryItemNr ) );
 		}
 
-	virtual bool hasFoundWordType( unsigned short queryWordTypeNr )
+	virtual bool hasWordType( unsigned short queryWordTypeNr )
 		{
 		return ( specificationWordTypeNr_ == queryWordTypeNr ||
 				generalizationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	virtual ReferenceResultType findMatchingWordReferenceString( char *queryString )
+	virtual StringResultType findMatchingWordReferenceString( char *queryString )
 		{
-		ReferenceResultType referenceResult;
+		StringResultType stringResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
 
 		if( generalizationWordItem_ != NULL )
 			{
-			if( ( referenceResult = generalizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addError( functionNameString, NULL, "I failed to find a matching word reference string for the generalization word" );
+			if( ( stringResult = generalizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the generalization word" );
 			}
 
-		return referenceResult;
+		return stringResult;
 		}
 
 	virtual char *toString( unsigned short queryWordTypeNr )
@@ -207,28 +207,23 @@ class GeneralizationItem : private Item
 		return languageNr_;
 		}
 
-	WordItem *generalizationWordItem()
-		{
-		return generalizationWordItem_;
-		}
-
 	GeneralizationItem *getGeneralizationItem( bool isIncludingThisItem, bool isOnlySelectingCurrentLanguage, bool isOnlySelectingNoun, bool isRelation )
 		{
 		unsigned short currentLanguageNr = commonVariables()->currentLanguageNr;
-		GeneralizationItem *searchItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
+		GeneralizationItem *searchGeneralizationItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
 
-		while( searchItem != NULL )
+		while( searchGeneralizationItem != NULL )
 			{
-			if( searchItem->isRelation_ == isRelation &&
+			if( searchGeneralizationItem->isRelation_ == isRelation &&
 
 			( !isOnlySelectingCurrentLanguage ||
-			searchItem->languageNr_ == currentLanguageNr ) &&
+			searchGeneralizationItem->languageNr_ == currentLanguageNr ) &&
 
 			( !isOnlySelectingNoun ||
-			isSingularOrPluralNoun( searchItem->generalizationWordTypeNr_ ) ) )
-				return searchItem;
+			isNounWordType( searchGeneralizationItem->generalizationWordTypeNr_ ) ) )
+				return searchGeneralizationItem;
 
-			searchItem = searchItem->nextGeneralizationItem();
+			searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();
 			}
 
 		return NULL;
@@ -252,6 +247,11 @@ class GeneralizationItem : private Item
 	GeneralizationItem *nextRelationGeneralizationItem()
 		{
 		return getGeneralizationItem( false, false, false, true );
+		}
+
+	WordItem *generalizationWordItem()
+		{
+		return generalizationWordItem_;
 		}
 	};
 #endif

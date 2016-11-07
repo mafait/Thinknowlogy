@@ -1,0 +1,9 @@
+﻿Cada padre es un padre.
+Cada madre es un padre.
+Juan es un padre.
+Ana es una madre.
+Cada niño es un hijo.
+Cada niña es una hija.
+Pablo es un niño.
+Luisa es una niña.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

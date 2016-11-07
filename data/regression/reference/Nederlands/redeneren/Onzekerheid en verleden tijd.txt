@@ -1,0 +1,55 @@
+﻿* 
+* Mijn veronderstellingen:
+< André heeft mogelijk geen vader meer.
+< André had mogelijk een vader, genaamd Sjors.
+< 
+* 
+* Mijn veronderstellingen:
+< André heeft mogelijk geen vader meer. Omdat:
+<	- André had mogelijk een vader, genaamd Sjors.
+< André had mogelijk een vader, genaamd Sjors. Omdat:
+<	- Sjors was mogelijk de vader van André.
+< 
+* 
+* Ik weet het niet zeker, maar:
+< Willem was mogelijk een vader.
+< 
+* 
+* Mijn veronderstellingen:
+< Ronald was waarschijnlijk een vader.
+* 
+* Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
+* 
+* 
+* Mijn veronderstellingen:
+< Ronald was waarschijnlijk een ouder.
+< Sjors was mogelijk een ouder.
+< Willem was mogelijk een ouder.
+< Jan was mogelijk een ouder.
+< 
+* 
+* Mijn veronderstellingen:
+< Jan was mogelijk een ouder. Omdat:
+<	- Jan is mogelijk een vader.
+<	- Iedere vader was een ouder.
+< 
+* 
+* Mijn veronderstellingen:
+< Willem was mogelijk een ouder. Omdat:
+<	- Willem was mogelijk een vader.
+<	- Iedere vader was een ouder.
+< 
+* 
+* Mijn veronderstellingen:
+< Sjors was mogelijk een ouder. Omdat:
+<	- Sjors was mogelijk de vader van André.
+<	- Iedere vader was een ouder.
+< 
+* 
+* Mijn veronderstellingen:
+< Ronald was waarschijnlijk een ouder. Omdat:
+<	- Ronald was waarschijnlijk een vader.
+<	- Iedere vader was een ouder.
+< Ronald was waarschijnlijk een vader. Omdat:
+<	- Was Ronald de vader van Paul?
+< 

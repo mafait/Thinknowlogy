@@ -4,8 +4,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een ouder is waarschijnlijk een persoon.
 < Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -16,8 +16,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een kind is waarschijnlijk een persoon.
 < Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -53,3 +53,64 @@
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
+* 
+* Uw vragen:
+< Is Jan een vader?
+* 
+* Mijn conclusies:
+< Jan heeft een zoon, genaamd Paul.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder van Paul.
+< Jan is waarschijnlijk deel van een gezin.
+< Jan is mogelijk een persoon.
+< Jan heeft waarschijnlijk een kind, genaamd Paul.
+* 
+* Mijn vragen:
+< Is Jan een man of een vrouw?
+< Is Jan een vader of een moeder?
+* 
+* Gerelateerde informatie:
+< Paul is waarschijnlijk een kind van Jan.
+< Paul heeft waarschijnlijk een ouder, genaamd Jan.
+< Paul is de zoon van Jan.
+< 
+* 
+* Mijn conclusies:
+< Jan heeft een zoon, genaamd Paul. Omdat:
+<	- Paul is de zoon van Jan.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder van Paul. Omdat:
+<	- Paul heeft waarschijnlijk een ouder, genaamd Jan.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Ieder kind is een zoon of een dochter.
+<	- Jan heeft een zoon, genaamd Paul.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul is waarschijnlijk een kind van Jan.
+< Jan is waarschijnlijk deel van een gezin. Omdat:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Ouders zijn deel van ieder gezin.
+< Jan is mogelijk een persoon. Omdat:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Een ouder is waarschijnlijk een persoon.
+< Jan heeft waarschijnlijk een kind, genaamd Paul. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan.
+* 
+* Mijn vragen:
+< Is Jan een man of een vrouw? Omdat:
+<	- Jan is mogelijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Iedere ouder is een vrouw of een man.
+* 	en:
+<	- Is Jan een vader of een moeder?
+<	- Iedere moeder is een vrouw.
+<	- Iedere vader is een man.
+< Is Jan een vader of een moeder? Omdat:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Iedere ouder is een vader of een moeder.
+< 

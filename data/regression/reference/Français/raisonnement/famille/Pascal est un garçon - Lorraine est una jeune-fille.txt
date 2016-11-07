@@ -1,0 +1,116 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un père est probablement une personne.
+< Un parent est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un fils est probablement une personne.
+< Un enfant est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Pascal est probablement un fils.
+< Pascal est possible une personne.
+< Pascal est probablement un enfant.
+< Pascal est probablement partie d'une famille.
+< Pascal n'est probablement pas un homme, pas une jeune-fille et pas une femme.
+< Pascal n'est possible pas une fille.
+< Pascal a possible un parent.
+< 
+* 
+* Mes hypothèses:
+< Lorraine est probablement une fille.
+< Lorraine est possible une personne.
+< Lorraine est probablement un enfant.
+< Lorraine est probablement partie d'une famille.
+< Lorraine n'est probablement pas une femme, pas un garçon et pas un homme.
+< Lorraine n'est possible pas un fils.
+< Lorraine a possible un parent.
+< 
+* 
+* Mes hypothèses:
+< Pascal est probablement un fils. En raison:
+<	- Chaque fils est un garçon ou un homme.
+<	- Pascal est un garçon.
+< Pascal est possible une personne. En raison:
+<	- Pascal est probablement un fils.
+<	- Un fils est probablement une personne.
+* 	et:
+<	- Pascal est probablement un enfant.
+<	- Un enfant est probablement une personne.
+< Pascal est probablement un enfant. En raison:
+<	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+<	- Pascal est un garçon.
+< Pascal est probablement partie d'une famille. En raison:
+<	- Pascal est probablement un enfant.
+<	- Enfants sont partie de chaque famille.
+< Pascal n'est probablement pas un homme, pas une jeune-fille et pas une femme. En raison:
+<	- Pascal est probablement un enfant.
+<	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+<	- Pascal est un garçon.
+< Pascal n'est possible pas une fille. En raison:
+<	- Pascal est probablement un enfant.
+<	- Chaque enfant est un fils ou une fille.
+<	- Pascal est probablement un fils.
+< Pascal a possible un parent. En raison:
+<	- Chaque famille a parents et enfants.
+<	- Pascal est probablement un enfant.
+< 
+* 
+* Mes hypothèses:
+< Lorraine est probablement une fille. En raison:
+<	- Chaque fille est une jeune-fille ou une femme.
+<	- Lorraine est une jeune-fille.
+< Lorraine est possible une personne. En raison:
+<	- Lorraine est probablement une fille.
+<	- Une fille est probablement une personne.
+* 	et:
+<	- Lorraine est probablement un enfant.
+<	- Un enfant est probablement une personne.
+< Lorraine est probablement un enfant. En raison:
+<	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+<	- Lorraine est une jeune-fille.
+< Lorraine est probablement partie d'une famille. En raison:
+<	- Lorraine est probablement un enfant.
+<	- Enfants sont partie de chaque famille.
+< Lorraine n'est probablement pas une femme, pas un garçon et pas un homme. En raison:
+<	- Lorraine est probablement un enfant.
+<	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+<	- Lorraine est une jeune-fille.
+< Lorraine n'est possible pas un fils. En raison:
+<	- Lorraine est probablement un enfant.
+<	- Chaque enfant est un fils ou une fille.
+<	- Lorraine est probablement une fille.
+< Lorraine a possible un parent. En raison:
+<	- Chaque famille a parents et enfants.
+<	- Lorraine est probablement un enfant.
+< 
+! 
+! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec:
+< Pascal est un garçon.
+< Pascal n'est probablement pas un homme, pas une jeune-fille et pas une femme.
+< 
+! 
+! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec:
+< Lorraine est une jeune-fille.
+< Lorraine n'est probablement pas une femme, pas un garçon et pas un homme.
+< 

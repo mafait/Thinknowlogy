@@ -1,0 +1,17 @@
+﻿* 
+* My conclusions:
+< Adam is a son of Michael.
+< 
+* 
+* My conclusions:
+< Paul has a father, called John.
+< Paul has a mother, called Anna.
+< Joe has a father, called John.
+< Joe has a mother, called Anna.
+< Laura has a father, called John.
+< Laura has a mother, called Anna.
+< 
+* 
+* My conclusions that are confirmed:
+< Paul has a father, called John.
+< 

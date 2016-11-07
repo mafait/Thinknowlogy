@@ -4,8 +4,8 @@
 < 
 * 
 * Mes hypothèses:
-< Un parent est probablement une personne.
 < Un père est probablement une personne.
+< Un parent est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -16,8 +16,8 @@
 < 
 * 
 * Mes hypothèses:
-< Un enfant est probablement une personne.
 < Un fils est probablement une personne.
+< Un enfant est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -28,22 +28,22 @@
 < 
 * 
 * Mes conclusions:
-< Olivier a un fils, appelé Laurent.
+< Olivier a un fils, appelé Pascal.
 * 
 * Mes hypothèses:
-< Laurent est probablement une personne.
-< Laurent est probablement un enfant de Olivier.
-< Laurent est probablement partie d'une famille.
-< Laurent n'est probablement pas une jeune-fille et pas une femme.
-< Laurent n'est probablement pas une fille.
-< Laurent a probablement un parent, appelé Olivier.
-< Olivier est probablement un parent de Laurent.
+< Pascal est probablement une personne.
+< Pascal est probablement un enfant de Olivier.
+< Pascal est probablement partie d'une famille.
+< Pascal n'est probablement pas une jeune-fille et pas une femme.
+< Pascal n'est probablement pas une fille.
+< Pascal a probablement un parent, appelé Olivier.
+< Olivier est probablement un parent de Pascal.
 < Olivier est probablement partie d'une famille.
 < Olivier est possible une personne.
-< Olivier a probablement un enfant, appelé Laurent.
+< Olivier a probablement un enfant, appelé Pascal.
 * 
 * Mes questions:
-< Est Laurent un garçon ou un homme?
+< Est Pascal un garçon ou un homme?
 < Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
 < 
@@ -53,3 +53,64 @@
 * 
 * Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
 * 
+* 
+* Vos questions:
+< Est Olivier un père?
+* 
+* Mes conclusions:
+< Olivier a un fils, appelé Pascal.
+* 
+* Mes hypothèses:
+< Olivier est probablement un parent de Pascal.
+< Olivier est probablement partie d'une famille.
+< Olivier est possible une personne.
+< Olivier a probablement un enfant, appelé Pascal.
+* 
+* Mes questions:
+< Est Olivier un homme ou une femme?
+< Est Olivier un père ou une mère?
+* 
+* Informations connexes:
+< Pascal est probablement un enfant de Olivier.
+< Pascal a probablement un parent, appelé Olivier.
+< Pascal est le fils de Olivier.
+< 
+* 
+* Mes conclusions:
+< Olivier a un fils, appelé Pascal. En raison:
+<	- Pascal est le fils de Olivier.
+* 
+* Mes hypothèses:
+< Olivier est probablement un parent de Pascal. En raison:
+<	- Pascal a probablement un parent, appelé Olivier.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Chaque enfant est un fils ou une fille.
+<	- Olivier a un fils, appelé Pascal.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Pascal est probablement un enfant de Olivier.
+< Olivier est probablement partie d'une famille. En raison:
+<	- Olivier est probablement un parent de Pascal.
+<	- Parents sont partie de chaque famille.
+< Olivier est possible une personne. En raison:
+<	- Olivier est probablement un parent de Pascal.
+<	- Un parent est probablement une personne.
+< Olivier a probablement un enfant, appelé Pascal. En raison:
+<	- Pascal est probablement un enfant de Olivier.
+* 
+* Mes questions:
+< Est Olivier un homme ou une femme? En raison:
+<	- Olivier est possible une personne.
+<	- Chaque personne est un homme ou une femme.
+* 	et:
+<	- Olivier est probablement un parent de Pascal.
+<	- Chaque parent est une femme ou un homme.
+* 	et:
+<	- Est Olivier un père ou une mère?
+<	- Chaque mère est une femme.
+<	- Chaque père est un homme.
+< Est Olivier un père ou une mère? En raison:
+<	- Olivier est probablement un parent de Pascal.
+<	- Chaque parent est un père ou une mère.
+< 

@@ -1,0 +1,102 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A father is probably a person.
+< A parent is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A son is probably a person.
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< John is a man.
+* 
+* My assumptions:
+< John is probably a person.
+< John is probably not a woman.
+< John is probably part of a family.
+< John is probably a parent and a child.
+< John is probably not a girl, not a woman and not a boy.
+< John is probably not a mother and not a daughter.
+< John has possibly a child and a parent.
+< 
+* 
+* My conclusions:
+< John is a man. Because:
+<	- John is a father.
+<	- Every father is a man.
+* 
+* My assumptions:
+< John is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- John is a man.
+* 	and:
+<	- John is a father.
+<	- A father is probably a person.
+* 	and:
+<	- John is probably a parent.
+<	- A parent is probably a person.
+* 	and:
+<	- John is a son.
+<	- A son is probably a person.
+* 	and:
+<	- John is probably a child.
+<	- A child is probably a person.
+< John is probably not a woman. Because:
+<	- John is probably a person.
+<	- Every person is a man or a woman.
+<	- John is a man.
+* 	and:
+<	- John is probably a parent.
+<	- Every parent is a woman or a man.
+<	- John is a man.
+< John is probably part of a family. Because:
+<	- John is probably a parent.
+<	- Parents are part of every family.
+* 	and:
+<	- John is probably a child.
+<	- Children are part of every family.
+< John is probably a parent and a child. Because:
+<	- Every child is a son or a daughter.
+<	- John is a son.
+* 	and:
+<	- Every parent is a father or a mother.
+<	- John is a father.
+< John is probably not a girl, not a woman and not a boy. Because:
+<	- John is probably a child.
+<	- Every child is a girl, a woman, a boy or a man.
+<	- John is a man.
+< John is probably not a mother and not a daughter. Because:
+<	- John is probably a child.
+<	- Every child is a son or a daughter.
+<	- John is a son.
+* 	and:
+<	- John is probably a parent.
+<	- Every parent is a father or a mother.
+<	- John is a father.
+< John has possibly a child and a parent. Because:
+<	- Every family has parents and children.
+<	- John is probably a child.
+* 	and:
+<	- Every family has parents and children.
+<	- John is probably a parent.
+< 

@@ -1,7 +1,7 @@
 /*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class MultipleWordItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private short nWordParts_;
 	private short wordTypeLanguageNr_;
@@ -32,13 +32,13 @@ class MultipleWordItem extends Item
 	private WordItem multipleWordItem_;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected MultipleWordItem( short nWordParts, short wordTypeLanguageNr, short wordTypeNr, WordItem multipleWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		nWordParts_ = nWordParts;
 		wordTypeLanguageNr_ = wordTypeLanguageNr;
@@ -53,7 +53,7 @@ class MultipleWordItem extends Item
 
 	// Protected virtual methods
 
-	protected void showWordReferences( boolean isReturnQueryToPosition )
+	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		String wordString;
 
@@ -66,7 +66,7 @@ class MultipleWordItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
@@ -75,29 +75,29 @@ class MultipleWordItem extends Item
 			}
 		}
 
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( multipleWordItem_ == null ? false :
 					( querySentenceNr == Constants.NO_SENTENCE_NR ? true : multipleWordItem_.creationSentenceNr() == querySentenceNr ) &&
 					( queryItemNr == Constants.NO_ITEM_NR ? true : multipleWordItem_.itemNr() == queryItemNr ) );
 		}
 
-	protected boolean hasFoundWordType( short queryWordTypeNr )
+	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( wordTypeNr_ == queryWordTypeNr );
 		}
 
-	protected ReferenceResultType findMatchingWordReferenceString( String queryString )
+	protected StringResultType findMatchingWordReferenceString( String queryString )
 		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
+		StringResultType stringResult = new StringResultType();
 
 		if( multipleWordItem_ != null )
 			{
-			if( ( referenceResult = multipleWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, "I failed to find a matching word reference string for the multiple word word" );
+			if( ( stringResult = multipleWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, "I failed to find a matching word reference string for the multiple word word" );
 			}
 
-		return referenceResult;
+		return stringResult;
 		}
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )

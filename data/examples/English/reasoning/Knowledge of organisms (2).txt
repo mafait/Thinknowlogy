@@ -1,0 +1,7 @@
+﻿Every animal is a creature.
+Every horse is an animal.
+Every person is a human.
+Every human is a creature.
+Every creature has a body.
+Creatures have a body.
+# To continue, click button «Clear your mind.» or «Restart.».

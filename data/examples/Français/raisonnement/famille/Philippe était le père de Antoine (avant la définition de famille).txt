@@ -1,0 +1,13 @@
+﻿Philippe était le père de Antoine.
+Philippe était le père de Antoine et Patric.
+Affichez le rapport de justification sur Antoine.
+Affichez le rapport de justification sur Patric.
+Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Affichez le rapport de justification sur Philippe.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Julien.
+Affichez le rapport de justification sur Lorraine.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

@@ -1,0 +1,150 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia.
+< Juan es un hombre.
+< Juan no es una mujer.
+< Juan no es una madre.
+< Pablo tiene un padre, llamado Juan.
+< José tiene un padre, llamado Juan.
+< Luisa tiene un padre, llamado Juan.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona.
+< Juan tiene posiblemente una hija, llamada Luisa.
+< Pablo es posiblemente una persona.
+< Pablo es probablemente parte de una familia.
+< José es posiblemente una persona.
+< José es probablemente parte de una familia.
+< Luisa es posiblemente hija de Juan.
+< Luisa es puede-ser una persona.
+< Luisa es posiblemente parte de una familia.
+< Luisa no es posiblemente un niño y un hombre.
+< Luisa no es posiblemente un hijo.
+* 
+* Mis preguntas:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+< ¿Es Pablo un hijo o una hija?
+< ¿Es José una niña, una mujer, un niño o un hombre?
+< ¿Es José un hijo o una hija?
+< ¿Es Luisa una niña o una mujer?
+< 
+* 
+* Mis preguntas que son contestadas:
+< ¿Es Pablo un hijo o una hija?
+* 
+* Mis suposiciones que no son ocultos más:
+< Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
+* 
+* Mis suposiciones que se concluyen:
+< Pablo es parte de una familia.
+* 
+* Mis preguntas ajustadas:
+< ¿Es Pablo un niño o un hombre?
+* 
+* Mis suposiciones que se ajustan:
+< Pablo es probablemente una persona.
+* 
+* Mis conclusiones:
+< Pablo no es una hija.
+< Pablo no es una niña y una mujer.
+* 
+* Mis suposiciones:
+< Pablo es probablemente hijo de Juan.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia. Porque:
+<	- Juan es padre de Pablo, José y Luisa.
+<	- Padres son parte de cada familia.
+< Juan es un hombre. Porque:
+<	- Juan es padre de Pablo, José y Luisa.
+<	- Cada padre es un hombre.
+< Juan no es una mujer. Porque:
+<	- Juan es padre de Pablo, José y Luisa.
+<	- Cada padre es una mujer o un hombre.
+<	- Juan es un hombre.
+< Juan no es una madre. Porque:
+<	- Juan es padre de Pablo, José y Luisa.
+<	- Cada padre es un padre o una madre.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona. Porque:
+<	- Juan es padre de Pablo, José y Luisa.
+<	- Un padre es probablemente una persona.
+* 	y:
+<	- Cada persona es un hombre o una mujer.
+<	- Juan es un hombre.
+< Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa. Porque:
+<	- Juan es padre de Pablo, José y Luisa.
+<	- Cada familia tiene padres y hijos.
+* 	y:
+<	- Pablo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene un padre, llamado Juan.
+<	- Cada familia tiene padres y hijos.
+< Juan tiene posiblemente una hija, llamada Luisa. Porque:
+<	- Luisa es posiblemente hija de Juan.
+* 	y:
+<	- Luisa tiene un padre, llamado Juan.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es un hijo o una hija.
+<	- Nombre propio "Luisa" es probablemente femenino.
+< 
+* 
+* Mis conclusiones:
+< Pablo es parte de una familia. Porque:
+<	- Pablo es un hijo.
+<	- Hijos son parte de cada familia.
+< Pablo no es una hija. Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo es un hijo o una hija.
+< Pablo no es una niña y una mujer. Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+<	- Cada hijo es un niño o un hombre.
+< Pablo tiene un padre, llamado Juan. Porque:
+<	- Juan es padre de Pablo, José y Luisa.
+* 
+* Mis suposiciones:
+< Pablo es probablemente una persona. Porque:
+<	- Pablo es un hijo.
+<	- Un hijo es probablemente una persona.
+* 	y:
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada familia tiene padres y hijos.
+<	- Un hijo es probablemente una persona.
+< Pablo es probablemente hijo de Juan. Porque:
+<	- Juan es padre de Pablo, José y Luisa.
+<	- Cada familia tiene padres y hijos.
+* 	y:
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada familia tiene padres y hijos.
+* 
+* Mis preguntas:
+< ¿Es Pablo un niño o un hombre? Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo es un niño o un hombre.
+< 

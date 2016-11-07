@@ -1,0 +1,2 @@
+﻿! Woord "Jan" is zowel een generalisatie-woord als een relatie-woord. Het veronderstelt dat er meerdere (verschillende) instanties bestaan van dit woord. Dit soort logica is echter nog niet geïmplementeerd.
+! 

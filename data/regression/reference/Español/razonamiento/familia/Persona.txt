@@ -1,0 +1,49 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis preguntas:
+< ¿Es Cruz un hombre o una mujer?
+< 
+* 
+* Mis preguntas:
+< ¿Es Cruz un hombre o una mujer? Porque:
+<	- Cruz es una persona.
+<	- Cada persona es un hombre o una mujer.
+< 
+* 
+* Mis suposiciones:
+< Ana es probablemente una mujer.
+< Ana no es probablemente un hombre.
+< 
+* 
+* Mis suposiciones:
+< Ana es probablemente una mujer. Porque:
+<	- Ana es una persona.
+<	- Cada persona es un hombre o una mujer.
+<	- Nombre propio "Ana" es probablemente femenino.
+< Ana no es probablemente un hombre. Porque:
+<	- Ana es una persona.
+<	- Cada persona es un hombre o una mujer.
+<	- Ana es probablemente una mujer.
+< 

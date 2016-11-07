@@ -1,0 +1,54 @@
+﻿* 
+* My conclusions:
+< Paul has a parent, called John.
+< 
+* 
+* My conclusions:
+< John is a parent of Paul and Joe.
+< Anna is a parent of Joe.
+< 
+* 
+* My conclusions:
+< John is a parent of Paul and Joe.
+* 
+* Related information:
+< Joe has 2 parents, called John and Anna.
+< Paul has a parent, called John.
+< 
+* 
+* My conclusions:
+< Anna is a parent of Joe.
+* 
+* Related information:
+< Joe has 2 parents, called John and Anna.
+< 
+* 
+* My conclusions:
+< Paul has a parent, called John.
+* 
+* Related information:
+< John is a parent of Paul and Joe.
+< 
+* 
+* Your information:
+< Joe has 2 parents, called John and Anna.
+* 
+* Related information:
+< John is a parent of Paul and Joe.
+< Anna is a parent of Joe.
+< 
+* 
+* My conclusions:
+< John is a parent of Paul and Joe. Because:
+<	- Joe has 2 parents, called John and Anna.
+< 
+* 
+* My conclusions:
+< Anna is a parent of Joe. Because:
+<	- Joe has 2 parents, called John and Anna.
+< 
+* 
+* My conclusions:
+< Paul has a parent, called John. Because:
+<	- John is a parent of Paul and Joe.
+< 

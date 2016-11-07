@@ -1,0 +1,116 @@
+﻿* 
+* Mijn conclusies:
+< Ouders en kinderen zijn deel van ieder gezin.
+< 
+* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Ieder kind is een meisje, een vrouw, een jongen of een man.
+* 
+* Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Paul is waarschijnlijk een zoon.
+< Paul is mogelijk een persoon.
+< Paul is waarschijnlijk een kind.
+< Paul is waarschijnlijk deel van een gezin.
+< Paul is waarschijnlijk geen man, geen meisje en geen vrouw.
+< Paul is mogelijk geen dochter.
+< Paul heeft mogelijk een ouder.
+< 
+* 
+* Mijn veronderstellingen:
+< Laura is waarschijnlijk een dochter.
+< Laura is mogelijk een persoon.
+< Laura is waarschijnlijk een kind.
+< Laura is waarschijnlijk deel van een gezin.
+< Laura is waarschijnlijk geen vrouw, geen jongen en geen man.
+< Laura is mogelijk geen zoon.
+< Laura heeft mogelijk een ouder.
+< 
+* 
+* Mijn veronderstellingen:
+< Paul is waarschijnlijk een zoon. Omdat:
+<	- Een zoon is een jongen of een man.
+<	- Paul is een jongen.
+< Paul is mogelijk een persoon. Omdat:
+<	- Paul is waarschijnlijk een zoon.
+<	- Een zoon is waarschijnlijk een persoon.
+* 	en:
+<	- Paul is waarschijnlijk een kind.
+<	- Een kind is waarschijnlijk een persoon.
+< Paul is waarschijnlijk een kind. Omdat:
+<	- Ieder kind is een meisje, een vrouw, een jongen of een man.
+<	- Paul is een jongen.
+< Paul is waarschijnlijk deel van een gezin. Omdat:
+<	- Paul is waarschijnlijk een kind.
+<	- Kinderen zijn deel van ieder gezin.
+< Paul is waarschijnlijk geen man, geen meisje en geen vrouw. Omdat:
+<	- Paul is waarschijnlijk een kind.
+<	- Ieder kind is een meisje, een vrouw, een jongen of een man.
+<	- Paul is een jongen.
+< Paul is mogelijk geen dochter. Omdat:
+<	- Paul is waarschijnlijk een kind.
+<	- Ieder kind is een zoon of een dochter.
+<	- Paul is waarschijnlijk een zoon.
+< Paul heeft mogelijk een ouder. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul is waarschijnlijk een kind.
+< 
+* 
+* Mijn veronderstellingen:
+< Laura is waarschijnlijk een dochter. Omdat:
+<	- Een dochter is een meisje of een vrouw.
+<	- Laura is een meisje.
+< Laura is mogelijk een persoon. Omdat:
+<	- Laura is waarschijnlijk een dochter.
+<	- Een dochter is waarschijnlijk een persoon.
+* 	en:
+<	- Laura is waarschijnlijk een kind.
+<	- Een kind is waarschijnlijk een persoon.
+< Laura is waarschijnlijk een kind. Omdat:
+<	- Ieder kind is een meisje, een vrouw, een jongen of een man.
+<	- Laura is een meisje.
+< Laura is waarschijnlijk deel van een gezin. Omdat:
+<	- Laura is waarschijnlijk een kind.
+<	- Kinderen zijn deel van ieder gezin.
+< Laura is waarschijnlijk geen vrouw, geen jongen en geen man. Omdat:
+<	- Laura is waarschijnlijk een kind.
+<	- Ieder kind is een meisje, een vrouw, een jongen of een man.
+<	- Laura is een meisje.
+< Laura is mogelijk geen zoon. Omdat:
+<	- Laura is waarschijnlijk een kind.
+<	- Ieder kind is een zoon of een dochter.
+<	- Laura is waarschijnlijk een dochter.
+< Laura heeft mogelijk een ouder. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Laura is waarschijnlijk een kind.
+< 
+! 
+! Deze zin is niet geaccepteerd, omdat het in conflict is met:
+< Paul is een jongen.
+< Paul is waarschijnlijk geen man, geen meisje en geen vrouw.
+< 
+! 
+! Deze zin is niet geaccepteerd, omdat het in conflict is met:
+< Laura is een meisje.
+< Laura is waarschijnlijk geen vrouw, geen jongen en geen man.
+< 

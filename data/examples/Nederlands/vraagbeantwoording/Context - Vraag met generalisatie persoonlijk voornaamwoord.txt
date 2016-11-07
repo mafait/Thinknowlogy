@@ -1,0 +1,5 @@
+﻿Een drank is heet, warm of koud.
+Koffie is een drank.
+Mijn koffie is heet.
+Is mijn koffie koud?
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

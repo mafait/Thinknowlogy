@@ -1,0 +1,5 @@
+﻿Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
+Paul heeft een vader, genaamd Jan.
+Johan heeft een vader, genaamd Jan.
+Laura heeft een vader, genaamd Jan.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

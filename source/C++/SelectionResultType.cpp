@@ -1,6 +1,7 @@
 /*	Class:		SelectionResultType
- *	Purpose:	To return selection variables of a function
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Purpose:	To return selection variables,
+ *				as the result of a function call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,11 +29,14 @@ class SelectionItem;
 
 class SelectionResultType
 	{
-	friend class AdminItem;
 	friend class AdminSelection;
 	friend class AdminSolve;
+	friend class Item;
+	friend class List;
 	friend class ScoreList;
 	friend class SelectionList;
+	friend class WordSelectionCondition;
+
 	protected:
 	// Protected variables
 
@@ -43,12 +47,21 @@ class SelectionResultType
 
 	unsigned int duplicateConditionSentenceNr;
 
+	unsigned int oldSatisfiedScore;
+	unsigned int newSatisfiedScore;
+	unsigned int oldDissatisfiedScore;
+	unsigned int newDissatisfiedScore;
+	unsigned int oldNotBlockingScore;
+	unsigned int newNotBlockingScore;
+	unsigned int oldBlockingScore;
+	unsigned int newBlockingScore;
+
 	SelectionItem *bestActionItem;
 	SelectionItem *firstExecutionItem;
 	SelectionItem *lastCreatedSelectionItem;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	SelectionResultType()
 		{
@@ -58,6 +71,15 @@ class SelectionResultType
 		isConditionSatisfied = false;
 
 		duplicateConditionSentenceNr = NO_SENTENCE_NR;
+
+		oldSatisfiedScore = NO_SCORE;
+		newSatisfiedScore = NO_SCORE;
+		oldDissatisfiedScore = NO_SCORE;
+		newDissatisfiedScore = NO_SCORE;
+		oldNotBlockingScore = NO_SCORE;
+		newNotBlockingScore = NO_SCORE;
+		oldBlockingScore = NO_SCORE;
+		newBlockingScore = NO_SCORE;
 
 		bestActionItem = NULL;
 		firstExecutionItem = NULL;
@@ -69,7 +91,7 @@ class SelectionResultType
 /*************************************************************************
  *	"The Lords protects them
  *	and keeps them alive.
- *	and rescues them from their enimies.
+ *	and rescues them from their enemies.
  *	The Lord nurses them when they are sick
  *	and restores them to health." (Psalm 41:2-3)
  *************************************************************************/

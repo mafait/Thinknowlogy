@@ -1,7 +1,7 @@
 /*	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class WriteList extends List
 	{
-	// Constructor / deconstructor
+	// Constructor
 
 	protected WriteList( WordItem myWordItem )
 		{
@@ -43,33 +43,26 @@ class WriteList extends List
 
 	protected byte checkGrammarItemForUsage( GrammarItem unusedGrammarItem )
 		{
-		WriteItem searchItem = firstActiveWriteItem();
+		WriteItem searchWriteItem = firstActiveWriteItem();
 
-		if( unusedGrammarItem != null )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.startOfChoiceOrOptionGrammarItem() == unusedGrammarItem )
-					return startError( 1, null, "The start of choice or option grammar item is still in use" );
-
-				searchItem = searchItem.nextWriteItem();
-				}
-			}
-		else
+		if( unusedGrammarItem == null )
 			return startError( 1, null, "The given unused grammar item is undefined" );
+
+		while( searchWriteItem != null )
+			{
+			if( searchWriteItem.startOfChoiceOrOptionGrammarItem() == unusedGrammarItem )
+				return startError( 1, null, "The start of choice or option grammar item is still in use" );
+
+			searchWriteItem = searchWriteItem.nextWriteItem();
+			}
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte createWriteItem( boolean isSkipped, short grammarLevel, GrammarItem startOfChoiceOrOptionGrammarItem )
 		{
-		if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
-			{
-			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-				return addError( 1, null, "I failed to add an active write item" );
-			}
-		else
-			return startError( 1, null, "The current item number is undefined" );
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to add an active write item" );
 
 		return Constants.RESULT_OK;
 		}
@@ -81,8 +74,8 @@ class WriteList extends List
 	};
 
 /*************************************************************************
- *	"God says, "At the time I have planned,
+ *	God says, "At the time I have planned,
  *	I will bring justice against the wicked.
- *	When the earth quackes and its people live in turmoil,
+ *	When the earth quakes and its people live in turmoil,
  *	I am the one that keeps its foundations firm." (Psalm 75:2-3)
  *************************************************************************/

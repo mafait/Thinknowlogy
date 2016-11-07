@@ -1,0 +1,146 @@
+﻿* 
+* Mijn conclusies:
+< Ouders en kinderen zijn deel van ieder gezin.
+< 
+* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Ieder kind is een meisje, een vrouw, een jongen of een man.
+* 
+* Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een vader.
+< Jan is waarschijnlijk een man.
+< Jan is mogelijk een persoon.
+< Jan is misschien geen vrouw.
+* 
+* Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
+* 
+* 
+* U hebt eerder een gerelateerde vraag gesteld:
+< Is Jan de vader van Paul?
+* 
+* Ik weet alleen:
+< Jan is waarschijnlijk een vader.
+* 
+* Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
+* 
+* 
+* Uw informatie is specifieker dan mijn eerdere veronderstelling:
+< Jan is waarschijnlijk een vader.
+* 
+* Mijn veronderstellingen die bevestigd zijn:
+< Jan is waarschijnlijk een vader.
+* 
+* Uw vragen die beantwoord zijn:
+< Is Jan de vader van Johan?
+* 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Jan is een man.
+* 
+* Mijn veronderstellingen die aangepast zijn:
+< Jan is waarschijnlijk een persoon.
+< Jan is waarschijnlijk geen vrouw.
+* 
+* Mijn conclusies:
+< Paul heeft een vader, genaamd Jan.
+< Paul heeft een moeder, genaamd Anna.
+< Johan heeft een vader, genaamd Jan.
+< Johan heeft een moeder, genaamd Anna.
+< Laura heeft een vader, genaamd Jan.
+< Laura heeft een moeder, genaamd Anna.
+< Anna is een vrouw.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder van Paul, Johan en Laura.
+< Jan is waarschijnlijk deel van een gezin.
+< Jan is waarschijnlijk geen moeder.
+< Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+< Jan heeft mogelijk een dochter, genaamd Laura.
+< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+< Paul is waarschijnlijk een kind van Jan en Anna.
+< Paul is waarschijnlijk deel van een gezin.
+< Paul is mogelijk een persoon.
+< Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+< Johan is waarschijnlijk een kind van Jan en Anna.
+< Johan is waarschijnlijk deel van een gezin.
+< Johan is mogelijk een persoon.
+< Laura heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+< Laura is waarschijnlijk een kind van Jan en Anna.
+< Laura is waarschijnlijk deel van een gezin.
+< Laura is mogelijk een persoon.
+< Laura is mogelijk een dochter van Jan en Anna.
+< Laura is misschien geen jongen en geen man.
+< Laura is misschien geen zoon.
+< Anna is waarschijnlijk een persoon.
+< Anna is waarschijnlijk geen man.
+< Anna is waarschijnlijk een ouder van Paul, Johan en Laura.
+< Anna is waarschijnlijk deel van een gezin.
+< Anna is waarschijnlijk geen vader.
+< Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+< Anna heeft mogelijk een dochter, genaamd Laura.
+* 
+* Mijn vragen:
+< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een zoon of een dochter?
+< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een zoon of een dochter?
+< Is Laura een meisje of een vrouw?
+< 
+* 
+* U hebt deze vraag al eerder gesteld.
+* 
+* Deze vraag is al beantwoord.
+* 
+* Mijn antwoord:
+< Ja, Jan is de vader van Paul, Johan en Laura.
+< 
+* 
+* U hebt eerder een gelijksoortige vraag gesteld:
+< Is Jan de vader van Paul?
+* 
+* Mijn antwoord:
+< Nee, Jan is de vader van Paul, Johan en Laura.
+< Anna is de moeder van Paul, Johan en Laura.
+< 
+* 
+* U hebt deze vraag al eerder gesteld.
+* 
+* Deze vraag is al beantwoord.
+* 
+* Mijn antwoord:
+< Ja, Jan is de vader van Paul, Johan en Laura.
+< 
+* 
+* U hebt eerder een gerelateerde vraag gesteld:
+< Is Jan de vader van Paul?
+* 
+* Mijn antwoord:
+< Ja, Jan is een vader.
+< 
+* 
+* U hebt eerder een gerelateerde vraag gesteld:
+< Is Jan de vader van Paul?
+* 
+* Mijn antwoord:
+< Ja, Jan is de vader van Paul, Johan en Laura.
+< 

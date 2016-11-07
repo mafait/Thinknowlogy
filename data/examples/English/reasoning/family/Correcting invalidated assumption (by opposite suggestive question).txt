@@ -1,4 +1,6 @@
-﻿Read the file "English/reasoning/family/family definition".
+﻿Read the file "English/user/reasoning/family/family definition".
 Is John the mother of Paul?
+Display the justification report about John.
 Is John the father of Paul?
+Display the justification report about John.
 # To continue, click button «Clear your mind.» or «Restart.».

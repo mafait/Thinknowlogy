@@ -1,0 +1,9 @@
+﻿Est a une lettre-minuscule?
+Est A une lettre-majuscule?
+Est g une lettre-minuscule?
+Est G une lettre-majuscule?
+Est y une lettre-majuscule?
+Est Y une lettre-minuscule?
+Est a une lettre?
+Est Q une lettre?
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

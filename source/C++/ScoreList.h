@@ -1,7 +1,7 @@
 /*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,9 +23,6 @@
 
 // Score List header
 
-#ifndef SCORELIST
-#define SCORELIST 1
-
 #include "List.h"
 #include "ScoreItem.cpp"
 #include "SelectionResultType.cpp"
@@ -36,7 +33,7 @@ class ScoreList : private List
 	friend class AdminSolve;
 	friend class WordItem;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	bool hasBetterScore_;
 	bool hasEqualScore_;
@@ -53,7 +50,7 @@ class ScoreList : private List
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	ScoreList( CommonVariables *commonVariables, WordItem *myWordItem );
 	~ScoreList();
@@ -83,7 +80,6 @@ class ScoreList : private List
 
 	ScoreItem *firstPossibility();
 	};
-#endif
 
 /*************************************************************************
  *	"Those who look to him for help will be radiant with joy;

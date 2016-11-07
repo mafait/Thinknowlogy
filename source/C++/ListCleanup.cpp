@@ -1,7 +1,7 @@
 /*	Class:			ListCleanup
  *	Supports class:	List
  *	Purpose:		To cleanup obsolete items in the lists
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,7 +27,7 @@ class ListCleanup
 	{
 	friend class List;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	CommonVariables *commonVariables_;
 	List *myList_;
@@ -36,14 +36,14 @@ class ListCleanup
 
 	// Private functions
 
-	void clearReplacedInfo( Item *searchItem )
+	void clearReplacingInfo( Item *searchItem )
 		{
+		unsigned int currentSentenceNr = commonVariables_->currentSentenceNr;
+
 		while( searchItem != NULL )
 			{
-			searchItem->clearReplacingItem();
-
-			if( searchItem->hasCurrentReplacedSentenceNr() )
-				searchItem->clearReplacedSentenceNr();
+			if( searchItem->replacedSentenceNr() >= currentSentenceNr )
+				searchItem->clearReplacingInfo();
 
 			searchItem = searchItem->nextItem;
 			}
@@ -112,68 +112,56 @@ class ListCleanup
 			{
 			if( searchItem->activeSentenceNr() >= startSentenceNr )
 				{
-				if( searchItem->activeSentenceNr() > startSentenceNr )
-					{
-					if( searchItem->decrementActiveSentenceNr() != RESULT_OK )
-						return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the active sentence number of an item" );
-					}
-				else
+				if( searchItem->activeSentenceNr() <= startSentenceNr )
 					return myList_->startError( functionNameString, moduleNameString_, "I have found an item with an active sentence number equal to the given start sentence number ", startSentenceNr );
+
+				if( searchItem->decrementActiveSentenceNr() != RESULT_OK )
+					return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the active sentence number of an item" );
 				}
 
 			if( searchItem->inactiveSentenceNr() >= startSentenceNr )
 				{
-				if( searchItem->inactiveSentenceNr() > startSentenceNr )
-					{
-					if( searchItem->decrementInactiveSentenceNr() != RESULT_OK )
-						return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the inactive sentence number of an item" );
-					}
-				else
+				if( searchItem->inactiveSentenceNr() <= startSentenceNr )
 					return myList_->startError( functionNameString, moduleNameString_, "I have found an item with an inactive sentence number equal to the given start sentence number ", startSentenceNr );
+
+				if( searchItem->decrementInactiveSentenceNr() != RESULT_OK )
+					return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the inactive sentence number of an item" );
 				}
 
 			if( searchItem->originalSentenceNr() >= startSentenceNr )
 				{
-				if( searchItem->originalSentenceNr() > startSentenceNr )
-					{
-					if( searchItem->decrementOriginalSentenceNr() != RESULT_OK )
-						return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the original sentence number of an item" );
-					}
-				else
+				if( searchItem->originalSentenceNr() <= startSentenceNr )
 					return myList_->startError( functionNameString, moduleNameString_, "I have found an item with an original sentence number equal to the given start sentence number ", startSentenceNr );
+
+				if( searchItem->decrementOriginalSentenceNr() != RESULT_OK )
+					return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the original sentence number of an item" );
 				}
 
 			if( searchItem->creationSentenceNr() >= startSentenceNr )
 				{
-				if( searchItem->creationSentenceNr() > startSentenceNr )
-					{
-					if( searchItem->decrementCreationSentenceNr() != RESULT_OK )
-						return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the creation sentence number of an item" );
-					}
-				else
+				if( searchItem->creationSentenceNr() <= startSentenceNr )
 					return myList_->startError( functionNameString, moduleNameString_, "I have found an item with a creation sentence number equal to the given start sentence number ", startSentenceNr );
+
+				if( searchItem->decrementCreationSentenceNr() != RESULT_OK )
+					return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the creation sentence number of an item" );
 				}
 
 			if( searchItem->archivedSentenceNr() >= startSentenceNr )
 				{
-				if( searchItem->archivedSentenceNr() > startSentenceNr )
-					{
-					if( searchItem->decrementArchivedSentenceNr() != RESULT_OK )
-						return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the archived sentence number of an item" );
-					}
-				else
+				if( searchItem->archivedSentenceNr() <= startSentenceNr )
 					return myList_->startError( functionNameString, moduleNameString_, "I have found an item with an archived sentence number equal to the given start sentence number ", startSentenceNr );
+
+				if( searchItem->decrementArchivedSentenceNr() != RESULT_OK )
+					return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the archived sentence number of an item" );
 				}
 
 			if( searchItem->replacedSentenceNr() >= startSentenceNr )
 				{
-				if( searchItem->replacedSentenceNr() > startSentenceNr )
-					{
-					if( searchItem->decrementReplacedSentenceNr() != RESULT_OK )
-						return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the replaced sentence number of an item" );
-					}
-				else
+				if( searchItem->replacedSentenceNr() <= startSentenceNr )
 					return myList_->startError( functionNameString, moduleNameString_, "I have found an item with a replaced sentence number equal to the given start sentence number ", startSentenceNr );
+
+				if( searchItem->decrementReplacedSentenceNr() != RESULT_OK )
+					return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the replaced sentence number of an item" );
 				}
 
 			searchItem = searchItem->nextItem;
@@ -191,13 +179,11 @@ class ListCleanup
 			if( searchItem->creationSentenceNr() == decrementSentenceNr &&
 			searchItem->itemNr() >= startDecrementItemNr )
 				{
-				if( searchItem->itemNr() > startDecrementItemNr )
-					{
-					if( searchItem->decrementItemNr( decrementOffset ) != RESULT_OK )
-						return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the item number of an item with a certain offset" );
-					}
-				else
+				if( searchItem->itemNr() <= startDecrementItemNr )
 					return myList_->startError( functionNameString, moduleNameString_, "I have found an item number equal to the given start item number" );
+
+				if( searchItem->decrementItemNr( decrementOffset ) != RESULT_OK )
+					return myList_->addError( functionNameString, moduleNameString_, "I failed to decrement the item number of an item with a certain offset" );
 				}
 
 			searchItem = searchItem->nextItem;
@@ -208,7 +194,7 @@ class ListCleanup
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	ListCleanup( CommonVariables *commonVariables, List *myList )
 		{
@@ -241,18 +227,18 @@ class ListCleanup
 
 	// Protected functions
 
-	void clearReplacedInfo()
+	void clearReplacingInfo()
 		{
 		Item *searchItem;
 
 		if( ( searchItem = myList_->firstActiveItem() ) != NULL )
-			clearReplacedInfo( searchItem );
+			clearReplacingInfo( searchItem );
 
 		if( ( searchItem = myList_->firstInactiveItem() ) != NULL )
-			clearReplacedInfo( searchItem );
+			clearReplacingInfo( searchItem );
 
 		if( ( searchItem = myList_->firstArchivedItem() ) != NULL )
-			clearReplacedInfo( searchItem );
+			clearReplacingInfo( searchItem );
 		}
 
 	void setCurrentItemNr()
@@ -309,29 +295,27 @@ class ListCleanup
 		Item *searchItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrs";
 
-		if( startSentenceNr > NO_SENTENCE_NR )
-			{
-			if( ( searchItem = myList_->firstActiveItem() ) != NULL )
-				decrementSentenceNrs( startSentenceNr, searchItem );
-
-			if( commonVariables_->result == RESULT_OK &&
-			( searchItem = myList_->firstInactiveItem() ) != NULL )
-				decrementSentenceNrs( startSentenceNr, searchItem );
-
-			if( commonVariables_->result == RESULT_OK &&
-			( searchItem = myList_->firstArchivedItem() ) != NULL )
-				decrementSentenceNrs( startSentenceNr, searchItem );
-
-			if( commonVariables_->result == RESULT_OK &&
-			( searchItem = myList_->firstReplacedItem() ) != NULL )
-				decrementSentenceNrs( startSentenceNr, searchItem );
-
-			if( commonVariables_->result == RESULT_OK &&
-			( searchItem = myList_->firstDeletedItem() ) != NULL )
-				decrementSentenceNrs( startSentenceNr, searchItem );
-			}
-		else
+		if( startSentenceNr <= NO_SENTENCE_NR )
 			return myList_->startError( functionNameString, moduleNameString_, "The given start sentence number is undefined" );
+
+		if( ( searchItem = myList_->firstActiveItem() ) != NULL )
+			decrementSentenceNrs( startSentenceNr, searchItem );
+
+		if( commonVariables_->result == RESULT_OK &&
+		( searchItem = myList_->firstInactiveItem() ) != NULL )
+			decrementSentenceNrs( startSentenceNr, searchItem );
+
+		if( commonVariables_->result == RESULT_OK &&
+		( searchItem = myList_->firstArchivedItem() ) != NULL )
+			decrementSentenceNrs( startSentenceNr, searchItem );
+
+		if( commonVariables_->result == RESULT_OK &&
+		( searchItem = myList_->firstReplacedItem() ) != NULL )
+			decrementSentenceNrs( startSentenceNr, searchItem );
+
+		if( commonVariables_->result == RESULT_OK &&
+		( searchItem = myList_->firstDeletedItem() ) != NULL )
+			decrementSentenceNrs( startSentenceNr, searchItem );
 
 		return RESULT_OK;
 		}
@@ -341,40 +325,34 @@ class ListCleanup
 		Item *searchItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRange";
 
-		if( decrementSentenceNr >= NO_SENTENCE_NR &&
-		decrementSentenceNr < MAX_SENTENCE_NR )
-			{
-			if( startDecrementItemNr > NO_ITEM_NR )
-				{
-				if( decrementOffset > 0 )
-					{
-					if( ( searchItem = myList_->firstActiveItem() ) != NULL )
-						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
-
-					if( commonVariables_->result == RESULT_OK &&
-					( searchItem = myList_->firstInactiveItem() ) != NULL )
-						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
-
-					if( commonVariables_->result == RESULT_OK &&
-					( searchItem = myList_->firstArchivedItem() ) != NULL )
-						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
-
-					if( commonVariables_->result == RESULT_OK &&
-					( searchItem = myList_->firstReplacedItem() ) != NULL )
-						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
-
-					if( commonVariables_->result == RESULT_OK &&
-					( searchItem = myList_->firstDeletedItem() ) != NULL )
-						decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
-					}
-				else
-					return myList_->startError( functionNameString, moduleNameString_, "The given decrement offset is undefined" );
-				}
-			else
-				return myList_->startError( functionNameString, moduleNameString_, "The given start item number is undefined" );
-			}
-		else
+		if( decrementSentenceNr < NO_SENTENCE_NR ||
+		decrementSentenceNr >= MAX_SENTENCE_NR )
 			return myList_->startError( functionNameString, moduleNameString_, "The given decrement sentence number is undefined" );
+
+		if( startDecrementItemNr <= NO_ITEM_NR )
+			return myList_->startError( functionNameString, moduleNameString_, "The given start item number is undefined" );
+
+		if( decrementOffset <= 0 )
+			return myList_->startError( functionNameString, moduleNameString_, "The given decrement offset is undefined" );
+
+		if( ( searchItem = myList_->firstActiveItem() ) != NULL )
+			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+		if( commonVariables_->result == RESULT_OK &&
+		( searchItem = myList_->firstInactiveItem() ) != NULL )
+			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+		if( commonVariables_->result == RESULT_OK &&
+		( searchItem = myList_->firstArchivedItem() ) != NULL )
+			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+		if( commonVariables_->result == RESULT_OK &&
+		( searchItem = myList_->firstReplacedItem() ) != NULL )
+			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
+
+		if( commonVariables_->result == RESULT_OK &&
+		( searchItem = myList_->firstDeletedItem() ) != NULL )
+			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
 		// Clear error to be able to restart after justification error
 		return RESULT_OK;
@@ -382,130 +360,149 @@ class ListCleanup
 
 	ResultType deleteSentences( unsigned int lowestSentenceNr )
 		{
+		bool isResultOK = ( commonVariables_->result == RESULT_OK );
 		Item *searchItem = myList_->firstActiveItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentences";
 
-		if( lowestSentenceNr > NO_SENTENCE_NR )
+		if( lowestSentenceNr <= NO_SENTENCE_NR )
+			return myList_->startError( functionNameString, moduleNameString_, "The given lowest sentence number is undefined" );
+
+		while( searchItem != NULL )
 			{
-			while( searchItem != NULL )
+			if( searchItem->activeSentenceNr() >= lowestSentenceNr )
 				{
-				if( searchItem->activeSentenceNr() >= lowestSentenceNr )
+				if( searchItem->creationSentenceNr() >= lowestSentenceNr )
 					{
-					if( searchItem->creationSentenceNr() >= lowestSentenceNr )
-						{
-						if( myList_->deleteItem( searchItem ) == RESULT_OK )
-							searchItem = myList_->nextListItem();
-						else
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to delete an active item" );
-						}
-					else
-						{
-						if( searchItem->hasInactiveSentenceNr() )
-							{
-							if( myList_->inactivateItem( searchItem ) == RESULT_OK )
-								searchItem = myList_->nextListItem();
-							else
-								return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate an active item" );
-							}
-						else
-							searchItem = searchItem->nextItem;
-						}
+					if( myList_->deleteItem( searchItem ) != RESULT_OK )
+						return myList_->addError( functionNameString, moduleNameString_, "I failed to delete an active item" );
+
+					searchItem = myList_->nextListItem();
 					}
 				else
-					searchItem = searchItem->nextItem;
-				}
-
-			searchItem = myList_->firstInactiveItem();
-
-			while( searchItem != NULL )
-				{
-				if( searchItem->inactiveSentenceNr() >= lowestSentenceNr )
 					{
-					if( searchItem->creationSentenceNr() >= lowestSentenceNr )
+					if( searchItem->wasInactiveBefore() )
 						{
-						if( myList_->deleteItem( searchItem ) != RESULT_OK )
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to delete an inactive item" );
+						if( myList_->inactivateItem( searchItem ) != RESULT_OK )
+							return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate an active item" );
+
+						searchItem = myList_->nextListItem();
 						}
 					else
+						searchItem = searchItem->nextItem;
+					}
+				}
+			else
+				searchItem = searchItem->nextItem;
+			}
+
+		searchItem = myList_->firstInactiveItem();
+
+		while( searchItem != NULL )
+			{
+			if( searchItem->inactiveSentenceNr() >= lowestSentenceNr )
+				{
+				if( searchItem->creationSentenceNr() >= lowestSentenceNr )
+					{
+					if( myList_->deleteItem( searchItem ) != RESULT_OK )
+						return myList_->addError( functionNameString, moduleNameString_, "I failed to delete an inactive item" );
+					}
+				else
+					{
+					if( myList_->activateItem( searchItem ) != RESULT_OK )
+						return myList_->addError( functionNameString, moduleNameString_, "I failed to activate an inactive item" );
+					}
+
+				searchItem = myList_->nextListItem();
+				}
+			else
+				searchItem = searchItem->nextItem;
+			}
+
+		searchItem = myList_->firstArchivedItem();
+
+		while( searchItem != NULL )
+			{
+			if( searchItem->archivedSentenceNr() >= lowestSentenceNr )
+				{
+				if( searchItem->creationSentenceNr() >= lowestSentenceNr )
+					{
+					if( myList_->deleteItem( searchItem ) != RESULT_OK )
+						return myList_->addError( functionNameString, moduleNameString_, "I failed to delete an archived item" );
+					}
+				else
+					{
+					searchItem->clearArchivedSentenceNr();
+
+					if( searchItem->wasActiveBefore() )
 						{
 						if( myList_->activateItem( searchItem ) != RESULT_OK )
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to activate an inactive item" );
-						}
-
-					searchItem = myList_->nextListItem();
-					}
-				else
-					searchItem = searchItem->nextItem;
-				}
-
-			searchItem = myList_->firstArchivedItem();
-
-			while( searchItem != NULL )
-				{
-				if( searchItem->archivedSentenceNr() >= lowestSentenceNr )
-					{
-					if( searchItem->creationSentenceNr() >= lowestSentenceNr )
-						{
-						if( myList_->deleteItem( searchItem ) != RESULT_OK )
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to delete an archived item" );
+							return myList_->addError( functionNameString, moduleNameString_, "I failed to activate an archived item" );
 						}
 					else
 						{
-						searchItem->clearArchivedSentenceNr();
+						if( !searchItem->wasInactiveBefore() )
+							return myList_->startError( functionNameString, moduleNameString_, "I don't know what to do with this archived item" );
 
-						if( searchItem->wasActiveBefore() )
-							{
-							if( myList_->activateItem( searchItem ) != RESULT_OK )
-								return myList_->addError( functionNameString, moduleNameString_, "I failed to activate an archived item" );
-							}
-						else
+						if( myList_->inactivateItem( searchItem ) != RESULT_OK )
+							return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate an archived item" );
+						}
+					}
+
+				searchItem = myList_->nextListItem();
+				}
+			else
+				searchItem = searchItem->nextItem;
+			}
+
+		searchItem = myList_->firstReplacedItem();
+
+		while( searchItem != NULL )
+			{
+			if( searchItem->replacedSentenceNr() >= lowestSentenceNr )
+				{
+				if( searchItem->creationSentenceNr() >= lowestSentenceNr )
+					{
+					if( myList_->deleteItem( searchItem ) != RESULT_OK )
+						return myList_->addError( functionNameString, moduleNameString_, "I failed to delete a replaced item" );
+					}
+				else
+					{
+					if( !isResultOK &&
+					searchItem->hasCurrentReplacedSentenceNr() )
+						searchItem->clearReplacingInfo();
+
+					if( searchItem->wasActiveBefore() )
+						{
+						if( myList_->activateItem( searchItem ) != RESULT_OK )
+							return myList_->addError( functionNameString, moduleNameString_, "I failed to activate a replaced item" );
+						}
+					else
+						{
+						if( searchItem->wasInactiveBefore() )
 							{
 							if( myList_->inactivateItem( searchItem ) != RESULT_OK )
-								return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate an archived item" );
-							}
-						}
-
-					searchItem = myList_->nextListItem();
-					}
-				else
-					searchItem = searchItem->nextItem;
-				}
-
-			searchItem = myList_->firstReplacedItem();
-
-			while( searchItem != NULL )
-				{
-				if( searchItem->replacedSentenceNr() >= lowestSentenceNr )
-					{
-					if( searchItem->creationSentenceNr() >= lowestSentenceNr )
-						{
-						if( myList_->deleteItem( searchItem ) != RESULT_OK )
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to delete a replaced item" );
-						}
-					else
-						{
-//						searchItem->clearReplacingItem();
-//						searchItem->clearReplacedSentenceNr();
-
-						if( searchItem->wasActiveBefore() )
-							{
-							if( myList_->activateItem( searchItem ) != RESULT_OK )
-								return myList_->addError( functionNameString, moduleNameString_, "I failed to activate a replaced item" );
+								return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate a replaced item" );
 							}
 						else
 							{
-							if( searchItem->wasInactiveBefore() )
-								{
-								if( myList_->inactivateItem( searchItem ) != RESULT_OK )
-									return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate a replaced item" );
-								}
-							else
-								{
-								if( myList_->archiveItem( searchItem ) != RESULT_OK )
-									return myList_->addError( functionNameString, moduleNameString_, "I failed to archive a replaced item" );
-								}
+							if( !searchItem->wasArchivedBefore() )
+								return myList_->startError( functionNameString, moduleNameString_, "I don't know what to do with this replaced item" );
+
+							if( myList_->archiveItem( searchItem ) != RESULT_OK )
+								return myList_->addError( functionNameString, moduleNameString_, "I failed to archive a replaced item" );
 							}
 						}
+					}
+
+				searchItem = myList_->nextListItem();
+				}
+			else
+				{
+				if( !isResultOK &&
+				searchItem->replacedSentenceNr() == lowestSentenceNr - 1 )
+					{
+					if( myList_->deleteItem( searchItem ) != RESULT_OK )
+						return myList_->addError( functionNameString, moduleNameString_, "I failed to delete a replaced item" );
 
 					searchItem = myList_->nextListItem();
 					}
@@ -513,8 +510,6 @@ class ListCleanup
 					searchItem = searchItem->nextItem;
 				}
 			}
-		else
-			return myList_->startError( functionNameString, moduleNameString_, "The given lowest sentence number is undefined" );
 
 		return RESULT_OK;
 		}
@@ -528,22 +523,32 @@ class ListCleanup
 			{
 			if( searchItem->hasCurrentInactiveSentenceNr() )
 				{
-				if( myList_->inactivateItem( searchItem ) == RESULT_OK )
-					searchItem = myList_->nextListItem();
-				else
+				if( myList_->inactivateItem( searchItem ) != RESULT_OK )
 					return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate an active item" );
+
+				searchItem = myList_->nextListItem();
 				}
 			else
 				{
 				if( searchItem->hasCurrentArchivedSentenceNr() )
 					{
-					if( myList_->archiveItem( searchItem ) == RESULT_OK )
-						searchItem = myList_->nextListItem();
-					else
+					if( myList_->archiveItem( searchItem ) != RESULT_OK )
 						return myList_->addError( functionNameString, moduleNameString_, "I failed to archive an active item" );
+
+					searchItem = myList_->nextListItem();
 					}
 				else
-					searchItem = searchItem->nextItem;
+					{
+					if( searchItem->hasCurrentReplacedSentenceNr() )
+						{
+						if( myList_->replaceItem( searchItem ) != RESULT_OK )
+							return myList_->addError( functionNameString, moduleNameString_, "I failed to replace an active item" );
+
+						searchItem = myList_->nextListItem();
+						}
+					else
+						searchItem = searchItem->nextItem;
+					}
 				}
 			}
 
@@ -553,19 +558,19 @@ class ListCleanup
 			{
 			if( searchItem->hasCurrentActiveSentenceNr() )
 				{
-				if( myList_->activateItem( searchItem ) == RESULT_OK )
-					searchItem = myList_->nextListItem();
-				else
+				if( myList_->activateItem( searchItem ) != RESULT_OK )
 					return myList_->addError( functionNameString, moduleNameString_, "I failed to activate an inactive item" );
+
+				searchItem = myList_->nextListItem();
 				}
 			else
 				{
 				if( searchItem->hasCurrentArchivedSentenceNr() )
 					{
-					if( myList_->archiveItem( searchItem ) == RESULT_OK )
-						searchItem = myList_->nextListItem();
-					else
+					if( myList_->archiveItem( searchItem ) != RESULT_OK )
 						return myList_->addError( functionNameString, moduleNameString_, "I failed to archive an inactive item" );
+
+					searchItem = myList_->nextListItem();
 					}
 				else
 					searchItem = searchItem->nextItem;
@@ -578,19 +583,19 @@ class ListCleanup
 			{
 			if( searchItem->hasCurrentActiveSentenceNr() )
 				{
-				if( myList_->activateItem( searchItem ) == RESULT_OK )
-					searchItem = myList_->nextListItem();
-				else
+				if( myList_->activateItem( searchItem ) != RESULT_OK )
 					return myList_->addError( functionNameString, moduleNameString_, "I failed to activate an archived item" );
+
+				searchItem = myList_->nextListItem();
 				}
 			else
 				{
 				if( searchItem->hasCurrentInactiveSentenceNr() )
 					{
-					if( myList_->inactivateItem( searchItem ) == RESULT_OK )
-						searchItem = myList_->nextListItem();
-					else
+					if( myList_->inactivateItem( searchItem ) != RESULT_OK )
 						return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate an archived item" );
+
+					searchItem = myList_->nextListItem();
 					}
 				else
 					searchItem = searchItem->nextItem;
@@ -603,28 +608,28 @@ class ListCleanup
 			{
 			if( searchItem->hasCurrentActiveSentenceNr() )
 				{
-				if( myList_->activateItem( searchItem ) == RESULT_OK )
-					searchItem = myList_->nextListItem();
-				else
+				if( myList_->activateItem( searchItem ) != RESULT_OK )
 					return myList_->addError( functionNameString, moduleNameString_, "I failed to activate a replaced item" );
+
+				searchItem = myList_->nextListItem();
 				}
 			else
 				{
 				if( searchItem->hasCurrentInactiveSentenceNr() )
 					{
-					if( myList_->inactivateItem( searchItem ) == RESULT_OK )
-						searchItem = myList_->nextListItem();
-					else
+					if( myList_->inactivateItem( searchItem ) != RESULT_OK )
 						return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate a replaced item" );
+
+					searchItem = myList_->nextListItem();
 					}
 				else
 					{
 					if( searchItem->hasCurrentArchivedSentenceNr() )
 						{
-						if( myList_->archiveItem( searchItem ) == RESULT_OK )
-							searchItem = myList_->nextListItem();
-						else
+						if( myList_->archiveItem( searchItem ) != RESULT_OK )
 							return myList_->addError( functionNameString, moduleNameString_, "I failed to archive a replaced item" );
+
+						searchItem = myList_->nextListItem();
 						}
 					else
 						searchItem = searchItem->nextItem;
@@ -636,7 +641,7 @@ class ListCleanup
 
 		while( searchItem != NULL )
 			{
-			if( searchItem->hasCurrentOriginalSentenceNr() )
+			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
 				if( searchItem->wasActiveBefore() )
 					{
@@ -652,6 +657,9 @@ class ListCleanup
 						}
 					else
 						{
+						if( !searchItem->wasArchivedBefore() )
+							return myList_->startError( functionNameString, moduleNameString_, "I don't know what to do with this deleted item" );
+
 						if( myList_->archiveItem( searchItem ) != RESULT_OK )
 							return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate a deleted item" );
 						}
@@ -668,7 +676,6 @@ class ListCleanup
 
 	ResultType undoCurrentSentence()
 		{
-		bool isAssignment = myList_->isAssignmentList();
 		Item *searchItem = myList_->firstActiveItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentence";
 
@@ -683,27 +690,11 @@ class ListCleanup
 					}
 				else
 					{
-					if( searchItem->hasInactiveSentenceNr() &&
-					searchItem->hasCurrentActiveSentenceNr() &&
-					searchItem->inactiveSentenceNr() < searchItem->activeSentenceNr() )
-						{
-						if( myList_->inactivateItem( searchItem ) != RESULT_OK )
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate an active item" );
-						}
-					else
-						{
-						// Only assignments can be archived
-						if( isAssignment )
-							{
-							if( myList_->archiveItem( searchItem ) != RESULT_OK )
-								return myList_->addError( functionNameString, moduleNameString_, "I failed to archive an active item" );
-							}
-						else
-							{
-							if( myList_->replaceItem( searchItem ) != RESULT_OK )
-								return myList_->addError( functionNameString, moduleNameString_, "I failed to replace an active item" );
-							}
-						}
+					if( !searchItem->hasInactiveSentenceNr() )
+						return myList_->startError( functionNameString, moduleNameString_, "I don't know what to do with this active item" );
+
+					if( myList_->inactivateItem( searchItem ) != RESULT_OK )
+						return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate an active item" );
 					}
 
 				searchItem = myList_->nextListItem();
@@ -725,17 +716,11 @@ class ListCleanup
 					}
 				else
 					{
-					if( searchItem->hasActiveSentenceNr() &&
-					searchItem->activeSentenceNr() < searchItem->inactiveSentenceNr() )
-						{
-						if( myList_->activateItem( searchItem ) != RESULT_OK )
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to activate an inactive item" );
-						}
-					else
-						{
-						if( myList_->archiveItem( searchItem ) != RESULT_OK )
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to archive an inactive item" );
-						}
+					if( !searchItem->hasActiveSentenceNr() )
+						return myList_->startError( functionNameString, moduleNameString_, "I don't know what to do with this inactive item" );
+
+					if( myList_->activateItem( searchItem ) != RESULT_OK )
+						return myList_->addError( functionNameString, moduleNameString_, "I failed to activate an inactive item" );
 					}
 
 				searchItem = myList_->nextListItem();
@@ -764,6 +749,9 @@ class ListCleanup
 						}
 					else
 						{
+						if( !searchItem->wasInactiveBefore() )
+							return myList_->startError( functionNameString, moduleNameString_, "I don't know what to do with this archived item" );
+
 						if( myList_->inactivateItem( searchItem ) != RESULT_OK )
 							return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate an archived item" );
 						}
@@ -788,16 +776,11 @@ class ListCleanup
 					}
 				else
 					{
-					if( searchItem->wasInactiveBefore() )
-						{
-						if( myList_->inactivateItem( searchItem ) != RESULT_OK )
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate a replaced item" );
-						}
-					else
-						{
-						if( myList_->archiveItem( searchItem ) != RESULT_OK )
-							return myList_->addError( functionNameString, moduleNameString_, "I failed to archive a replaced item" );
-						}
+					if( !searchItem->wasInactiveBefore() )
+						return myList_->startError( functionNameString, moduleNameString_, "I don't know what to do with this replaced item" );
+
+					if( myList_->inactivateItem( searchItem ) != RESULT_OK )
+						return myList_->addError( functionNameString, moduleNameString_, "I failed to inactivate a replaced item" );
 					}
 
 				searchItem = myList_->nextListItem();

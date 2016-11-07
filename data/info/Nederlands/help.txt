@@ -26,10 +26,10 @@ Toon " Toon het auteursrecht.".
 Toon " Toon de GPLv2-licentie.".
 Toon " Toon de garantie.".
 Toon "------------------------------------------------------------------------------".
-#C++#Toon " Voorbeeldbestanden:\t* map: Thinknowlogy2016r1/data/examples/Nederlands/".
+#C++#Toon " Voorbeeldbestanden:\t* map: Thinknowlogy2016r2/data/examples/Nederlands/gebruiker/".
 #Java#Toon " Voorbeeldbestanden:\t* Gebruik knop <meer voorbeelden> of zie".
-#Java#Toon "\t\t\t  map: Thinknowlogy2016r1/data/examples/Nederlands/".
-Toon " Fundamenteel:\t\t* map: Thinknowlogy2016r1/documents/".
-Toon " Ontwerp:\t\t* map: Thinknowlogy2016r1/documents/design/".
-Toon " Schermafdrukken:\t* map: Thinknowlogy2016r1/screenshots/Nederlands/".
+#Java#Toon "\t\t\t  map: Thinknowlogy2016r2/data/examples/Nederlands/gebruiker/".
+Toon " Fundamenteel:\t\t* map: Thinknowlogy2016r2/documents/".
+Toon " Ontwerp:\t\t* map: Thinknowlogy2016r2/documents/design/".
+Toon " Schermafdrukken:\t* map: Thinknowlogy2016r2/screenshots/Nederlands/".
 Toon "------------------------------------------------------------------------------".

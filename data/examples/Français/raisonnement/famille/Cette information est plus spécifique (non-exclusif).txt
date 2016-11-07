@@ -1,4 +1,6 @@
-﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
 Dominique est un père ou une mère.
+Affichez le rapport de justification sur Dominique.
 Dominique est un père.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
+Affichez le rapport de justification sur Dominique.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

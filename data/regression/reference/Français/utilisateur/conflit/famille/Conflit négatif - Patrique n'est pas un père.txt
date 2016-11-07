@@ -1,0 +1,45 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un père est probablement une personne.
+< Un parent est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un fils est probablement une personne.
+< Un enfant est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Patrique est un homme.
+* 
+* Mes hypothèses:
+< Patrique est probablement une personne.
+< Patrique n'est probablement pas une femme.
+< Patrique est probablement un parent.
+< Patrique est probablement partie d'une famille.
+< Patrique n'est probablement pas une mère.
+< Patrique a possible un enfant.
+< 
+! 
+! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec:
+< Patrique n'est probablement pas une mère.
+< Patrique est un père.
+< 

@@ -1,0 +1,54 @@
+﻿* 
+* Mijn conclusies:
+< Paul heeft een ouder, genaamd Jan.
+< 
+* 
+* Mijn conclusies:
+< Jan is een ouder van Paul en Johan.
+< Anna is een ouder van Johan.
+< 
+* 
+* Mijn conclusies:
+< Jan is een ouder van Paul en Johan.
+* 
+* Gerelateerde informatie:
+< Johan heeft 2 ouders, genaamd Jan en Anna.
+< Paul heeft een ouder, genaamd Jan.
+< 
+* 
+* Mijn conclusies:
+< Anna is een ouder van Johan.
+* 
+* Gerelateerde informatie:
+< Johan heeft 2 ouders, genaamd Jan en Anna.
+< 
+* 
+* Mijn conclusies:
+< Paul heeft een ouder, genaamd Jan.
+* 
+* Gerelateerde informatie:
+< Jan is een ouder van Paul en Johan.
+< 
+* 
+* Uw informatie:
+< Johan heeft 2 ouders, genaamd Jan en Anna.
+* 
+* Gerelateerde informatie:
+< Jan is een ouder van Paul en Johan.
+< Anna is een ouder van Johan.
+< 
+* 
+* Mijn conclusies:
+< Jan is een ouder van Paul en Johan. Omdat:
+<	- Johan heeft 2 ouders, genaamd Jan en Anna.
+< 
+* 
+* Mijn conclusies:
+< Anna is een ouder van Johan. Omdat:
+<	- Johan heeft 2 ouders, genaamd Jan en Anna.
+< 
+* 
+* Mijn conclusies:
+< Paul heeft een ouder, genaamd Jan. Omdat:
+<	- Jan is een ouder van Paul en Johan.
+< 

@@ -1,0 +1,3 @@
+﻿Chaque personne est une jeune-fille, une femme, un garçon ou un homme.
+Chaque personne est un homme ou une femme.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

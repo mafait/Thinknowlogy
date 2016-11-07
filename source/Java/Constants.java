@@ -1,6 +1,6 @@
 ﻿/*	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,7 +24,7 @@ class Constants
 	{
 	// Version constants
 	protected static final String	PRODUCT_NAME =													"Thinknowlogy";
-	protected static final String	VERSION_NAME =													"2016r1 (Huguenot)";
+	protected static final String	VERSION_NAME =													"2016r2 (Restyle)";
 
 	// Character constants
 	protected static final char		SPACE_CHAR =													' ';
@@ -51,17 +51,16 @@ class Constants
 	protected static final short	CONSOLE_SUBMENU_AMBIGUITY =										1;
 	protected static final short	CONSOLE_SUBMENU_PROGRAMMING =									2;
 	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 =							3;
-	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_GREETING =							4;
-	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI =					5;
-	protected static final short	CONSOLE_SUBMENU_REASONING =										6;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS =					7;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS =					8;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT =			9;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS =					10;
-	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_SHOW_INFORMATION =				11;
-	protected static final short	CONSOLE_SUBMENU_CHANGE_LANGUAGE =								12;
-	protected static final short	CONSOLE_SUBMENU_CHANGE_FONT =									13;
-	protected static final short	CONSOLE_SUBMENU_HELP =											14;
+	protected static final short	CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI =					4;
+	protected static final short	CONSOLE_SUBMENU_REASONING =										5;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS =					6;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS =					7;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT =			8;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS =					9;
+	protected static final short	CONSOLE_SUBMENU_REASONING_FAMILY_DISPLAY_INFORMATION =			10;
+	protected static final short	CONSOLE_SUBMENU_CHANGE_LANGUAGE =								11;
+	protected static final short	CONSOLE_SUBMENU_CHANGE_FONT =									12;
+	protected static final short	CONSOLE_SUBMENU_HELP =											13;
 
 	protected static final short	CONSOLE_DEFAULT_FONT_SIZE =										13;
 	protected static final short	CONSOLE_MINIMUM_FONT_SIZE =										8;
@@ -159,12 +158,11 @@ class Constants
 	protected static final short	PRESENTATION_PROMPT_READ =										0;
 	protected static final short	PRESENTATION_PROMPT_WRITE =										1;
 	protected static final short	PRESENTATION_PROMPT_WRITE_INDENTED =							2;
-	protected static final short	PRESENTATION_PROMPT_INFO =										4;
-	protected static final short	PRESENTATION_PROMPT_NOTIFICATION =								5;
-	protected static final short	PRESENTATION_PROMPT_WARNING =									6;
-	protected static final short	PRESENTATION_PROMPT_WARNING_INDENTED =							7;
-	protected static final short	PRESENTATION_PROMPT_QUERY =										8;
-//	protected static final short	PRESENTATION_PROMPT_ENTER =										9;
+	protected static final short	PRESENTATION_PROMPT_INFO =										3;
+	protected static final short	PRESENTATION_PROMPT_NOTIFICATION =								4;
+	protected static final short	PRESENTATION_PROMPT_WARNING =									5;
+	protected static final short	PRESENTATION_PROMPT_WARNING_INDENTED =							6;
+	protected static final short	PRESENTATION_PROMPT_QUERY =										7;
 
 	protected static final String	PRESENTATION_PROMPT_READ_STRING =								"> ";
 	protected static final String	PRESENTATION_PROMPT_WRITE_STRING =								"< ";
@@ -174,7 +172,6 @@ class Constants
 	protected static final String	PRESENTATION_PROMPT_WARNING_STRING =							"! ";
 	protected static final String	PRESENTATION_PROMPT_WARNING_INDENTED_STRING =					"!	- ";
 	protected static final String	PRESENTATION_PROMPT_QUERY_STRING =								"? ";
-	protected static final String	PRESENTATION_PROMPT_ENTER_STRING =								": ";
 
 	protected static final String	PRESENTATION_SKIP_COMMENT_STRING =								"#C++#";
 	protected static final String	PRESENTATION_STRIP_COMMENT_STRING =								"#Java#";
@@ -242,7 +239,7 @@ class Constants
 	protected static final char		QUERY_WORD_TYPE_CHAR =											SYMBOL_AT_SIGN;
 	protected static final char		QUERY_PARAMETER_CHAR =											SYMBOL_DOUBLE_COLON;
 	protected static final char		QUERY_ACTIVE_CHAR =												SYMBOL_PLUS;
-	protected static final char		QUERY_INACTIVE_CHAR 	=										SYMBOL_EQUALITY;
+	protected static final char		QUERY_INACTIVE_CHAR	=											SYMBOL_EQUALITY;
 	protected static final char		QUERY_ARCHIVED_CHAR =											SYMBOL_DOLLAR;
 	protected static final char		QUERY_REPLACED_CHAR =											SYMBOL_PERCENT;
 	protected static final char		QUERY_DELETED_CHAR =											SYMBOL_AMPERSAND;
@@ -287,29 +284,21 @@ class Constants
 	protected static final short	ADMIN_READ_LIST =												2;
 	protected static final short	ADMIN_SCORE_LIST =												3;
 	protected static final short	ADMIN_WORD_LIST =												4;
-	protected static final short	ADMIN_CONDITION_LIST =											5;		// SelectionItem
-	protected static final short	ADMIN_ACTION_LIST =												6;		// SelectionItem
-	protected static final short	ADMIN_ALTERNATIVE_LIST =										7;		// SelectionItem
+	protected static final short	ADMIN_CONDITION_LIST =											5;		// SelectionList
+	protected static final short	ADMIN_ACTION_LIST =												6;		// SelectionList
+	protected static final short	ADMIN_ALTERNATIVE_LIST =										7;		// SelectionList
 	protected static final short	NUMBER_OF_ADMIN_LISTS =											8;
-
-	protected static final short	AdminLists[] = {	ADMIN_FILE_LIST,
-														ADMIN_READ_LIST,
-														ADMIN_SCORE_LIST,
-														ADMIN_WORD_LIST,
-														ADMIN_CONDITION_LIST,						// SelectionItem
-														ADMIN_ACTION_LIST,							// SelectionItem
-														ADMIN_ALTERNATIVE_LIST };					// SelectionItem
 
 	protected static final char		ADMIN_FILE_LIST_SYMBOL =										'F';
 	protected static final char		ADMIN_READ_LIST_SYMBOL =										'R';
 	protected static final char		ADMIN_SCORE_LIST_SYMBOL =										'S';
 	protected static final char		ADMIN_WORD_LIST_SYMBOL =										'W';
-	protected static final char		ADMIN_CONDITION_LIST_SYMBOL =									'X';	// SelectionItem
-	protected static final char		ADMIN_ACTION_LIST_SYMBOL =										'Y';	// SelectionItem
-	protected static final char		ADMIN_ALTERNATIVE_LIST_SYMBOL =									'Z';	// SelectionItem
+	protected static final char		ADMIN_CONDITION_LIST_SYMBOL =									'X';	// SelectionList
+	protected static final char		ADMIN_ACTION_LIST_SYMBOL =										'Y';	// SelectionList
+	protected static final char		ADMIN_ALTERNATIVE_LIST_SYMBOL =									'Z';	// SelectionList
 
 	// Word initialization constants
-	protected static final short	WORD_ASSIGNMENT_LIST =											0;		// SpecificationItem
+	protected static final short	WORD_ASSIGNMENT_LIST =											0;		// SpecificationList
 	protected static final short	WORD_COLLECTION_LIST =											1;
 	protected static final short	WORD_GENERALIZATION_LIST =										2;
 	protected static final short	WORD_INTERFACE_LIST =											3;
@@ -322,19 +311,7 @@ class Constants
 	protected static final short	WORD_CONTEXT_LIST = 											10;
 	protected static final short	NUMBER_OF_WORD_LISTS =											11;
 
-	protected static final short	WordLists[] = {	WORD_ASSIGNMENT_LIST,							// SpecificationItem
-													WORD_COLLECTION_LIST,
-													WORD_GENERALIZATION_LIST,
-													WORD_INTERFACE_LIST,
-													WORD_JUSTIFICATION_LIST,
-													WORD_GRAMMAR_LIST,
-													WORD_MULTIPLE_WORD_LIST,
-													WORD_WRITE_LIST,
-													WORD_SPECIFICATION_LIST,
-													WORD_TYPE_LIST,
-													WORD_CONTEXT_LIST };
-
-	protected static final char		WORD_ASSIGNMENT_LIST_SYMBOL =									'a';	// SpecificationItem
+	protected static final char		WORD_ASSIGNMENT_LIST_SYMBOL =									'a';	// SpecificationList
 	protected static final char		WORD_COLLECTION_LIST_SYMBOL =									'c';
 	protected static final char		WORD_GENERALIZATION_LIST_SYMBOL =								'g';
 	protected static final char		WORD_INTERFACE_LIST_SYMBOL =									'i';
@@ -347,18 +324,17 @@ class Constants
 	protected static final char		WORD_CONTEXT_LIST_SYMBOL =										'x';
 
 	// Other initialization constants
-	protected static final short	MAX_ASSUMPTION_LEVEL_RECALCULATIONS =							1000;	// Number of repeated calculations
-	protected static final short	MAX_GRAMMAR_LEVEL =												50;		// Depth of parsing grammar calls
-	protected static final short	MAX_SELECTION_EXECUTIONS =										1000;	// Number of repeated selections
+	protected static final short	MAX_ASSUMPTION_LEVEL_RECALCULATIONS =							250;	// Maximum number of repeated calculations
+	protected static final short	MAX_GRAMMAR_LEVEL =												50;		// Maximum depth of parsing grammar calls
+	protected static final short	MAX_SELECTION_EXECUTIONS =										250;	// Maximum number of repeated selections
 
-	protected static final short	NUMBER_OF_ASSUMPTION_LEVELS =									3;		// Probably, possibly and may be
+	protected static final short	NUMBER_OF_ASSUMPTION_LEVELS =									3;		// Probably, possibly and maybe
 	protected static final short	NUMBER_OF_PHONETIC_VOWELS = 									4;
 
 	protected static final char		PHONETIC_VOWEL[] = {	'a',
 															'e',
 															'i',
 															'o' };
-
 
 	// Justification types
 	protected static final short	JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION =									0;
@@ -389,7 +365,7 @@ class Constants
 
 
 	//	Word types
-	protected static final short	WORD_TYPE_UNDEFINED =									0;
+	protected static final short	NO_WORD_TYPE_NR =										0;
 	protected static final short	WORD_TYPE_SYMBOL =										1;
 	protected static final short	WORD_TYPE_NUMERAL =										2;
 	protected static final short	WORD_TYPE_LETTER_SMALL =								3;
@@ -416,33 +392,6 @@ class Constants
 	protected static final short	WORD_TYPE_SELECTION_WORD =								24;
 	protected static final short	WORD_TYPE_TEXT =										25;
 	protected static final short	NUMBER_OF_WORD_TYPES =									26;
-
-	protected static final short	WordTypes[] = {	WORD_TYPE_UNDEFINED,
-													WORD_TYPE_SYMBOL,
-													WORD_TYPE_NUMERAL,
-													WORD_TYPE_LETTER_SMALL,
-													WORD_TYPE_LETTER_CAPITAL,
-													WORD_TYPE_PROPER_NAME,
-													WORD_TYPE_ADJECTIVE,
-													WORD_TYPE_ADVERB,
-													WORD_TYPE_ANSWER,
-													WORD_TYPE_ARTICLE,
-													WORD_TYPE_CONJUNCTION,
-													WORD_TYPE_NOUN_SINGULAR,
-													WORD_TYPE_NOUN_PLURAL,
-													WORD_TYPE_PERSONAL_PRONOUN_SINGULAR_SUBJECTIVE,
-													WORD_TYPE_PERSONAL_PRONOUN_SINGULAR_OBJECTIVE,
-													WORD_TYPE_POSSESSIVE_DETERMINER_SINGULAR,
-													WORD_TYPE_POSSESSIVE_PRONOUN_SINGULAR,
-													WORD_TYPE_PERSONAL_PRONOUN_PLURAL_SUBJECTIVE,
-													WORD_TYPE_PERSONAL_PRONOUN_PLURAL_OBJECTIVE,
-													WORD_TYPE_POSSESSIVE_DETERMINER_PLURAL,
-													WORD_TYPE_POSSESSIVE_PRONOUN_PLURAL,
-													WORD_TYPE_PREPOSITION,
-													WORD_TYPE_VERB_SINGULAR,
-													WORD_TYPE_VERB_PLURAL,
-													WORD_TYPE_SELECTION_WORD,
-													WORD_TYPE_TEXT };
 
 
 	//	Word Parameters
@@ -593,15 +542,15 @@ class Constants
 	protected static final short	WORD_PARAMETER_SINGULAR_VERB_HAD =										2204;
 	protected static final short	WORD_PARAMETER_SINGULAR_VERB_CAN_HAVE =									2205;
 	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_ADD =							2206;
-	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_MOVE =							2207;
-	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REMOVE =						2208;
-	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_CLEAR =							2209;
-	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_HELP =							2210;
-	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_LOGIN =							2211;
-	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_READ =							2212;
-	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REDO =							2213;
-	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_RESTART =						2214;
-	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_SHOW =							2215;
+	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_DISPLAY =						2207;
+	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_MOVE =							2208;
+	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REMOVE =						2209;
+	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_CLEAR =							2210;
+	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_HELP =							2211;
+	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_LOGIN =							2212;
+	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_READ =							2213;
+	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REDO =							2214;
+	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_RESTART =						2215;
 	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_SOLVE =							2216;
 	protected static final short	WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_UNDO =							2217;
 
@@ -678,32 +627,32 @@ class Constants
 	protected static final String	NO_LANGUAGE_WORD_FOUND =																"<no language word found>";
 
 	// Console (common)
-	protected static final short	INTERFACE_CONSOLE_START_MESSAGE_GUEST =													100;
-	protected static final short	INTERFACE_CONSOLE_START_MESSAGE_EXPERT =												101;
-	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_INPUT =													102;
-	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_SECURE_INPUT =											103;
-	protected static final short	INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START =												104;
-	protected static final short	INTERFACE_CONSOLE_LOGIN_END =															105;
-	protected static final short	INTERFACE_CONSOLE_LOGIN_FAILED =														106;
+	protected static final short	INTERFACE_CONSOLE_INITIAL_MESSAGE_DEMO_BUTTONS =										100;
+	protected static final short	INTERFACE_CONSOLE_INITIAL_MESSAGE_ENTER_SENTENCE =										102;
+	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_INPUT =													103;
+	protected static final short	INTERFACE_CONSOLE_WAITING_FOR_SECURE_INPUT =											104;
+	protected static final short	INTERFACE_CONSOLE_ALREADY_LOGGED_IN_START =												105;
+	protected static final short	INTERFACE_CONSOLE_LOGIN_END =															106;
+	protected static final short	INTERFACE_CONSOLE_LOGIN_FAILED =														107;
 
 	// Console (status and progress)
 	protected static final short	INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START =										110;
 	protected static final short	INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END =										111;
-//	protected static final short	INTERFACE_CONSOLE_I_AM_CLEANING_UP_DELETED_ITEMS =										112;
 
 	// Console (upper menu)
 	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_CLEAR_YOUR_MIND =											120;
 	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_RESTART =													121;
 	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_UNDO =														122;
 	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_REDO =														123;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_LOGIN_AS_EXPERT =											124;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_LOGIN_AS_DEVELOPER =										125;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_STOP_TESTING =												128;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_MORE_EXAMPLES =											130;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START =											131;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_THE_TEST_FILE =										132;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END =											133;
-	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_REGRESSION =												134;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_LOGIN_AS_EXPERT =											128;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_LOGIN_AS_DEVELOPER =										129;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_REGRESSION_TEST_USER =										130;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_REGRESSION_TEST_DEEP =										131;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_STOP_TESTING =												132;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_MORE_EXAMPLES =											133;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START =											134;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_THE_TEST_FILE =										135;
+	protected static final short	INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END =											136;
 
 	// Console (main menu)
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_BOSTON =							200;
@@ -719,7 +668,7 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_CONFLICT_SUBMENU =									210;
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_JUSTIFICATION_REPORT_SUBMENU =						211;
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_QUESTION_SUBMENU =									212;
-	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_SHOW_INFO_SUBMENU =									213;
+	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_FAMILY_DISPLAY_INFORMATION_SUBMENU =						213;
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_BACK =														214;
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_HELP =														215;
 	protected static final short	INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE =											216;
@@ -818,19 +767,19 @@ class Constants
 	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_DAUGHTER =						478;
 	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_PAUL_A_SON_OR_A_DAUGHTER =				479;
 
-	// Console (reasoning/family show information sub-menu)
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_FAMILY =						480;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_PARENT =						481;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_CHILD =						482;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_FATHER =						483;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_MOTHER =						484;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_SON =							485;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_DAUGHTER =					486;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_JOHN =						487;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_ANN =							488;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_PAUL =						489;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_JOE =							490;
-	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_INFORMATION_ABOUT_LAURA =						491;
+	// Console (reasoning/family display information sub-menu)
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_FAMILY =					480;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_PARENT =					481;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_CHILD =					482;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_FATHER =					483;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_MOTHER =					484;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_SON =						485;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_DAUGHTER =					486;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_JOHN =						487;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_ANN =						488;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_PAUL =						489;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_JOE =						490;
+	protected static final short	INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_INFORMATION_ABOUT_LAURA =					491;
 
 	// Console (font size sub-menu)
 	protected static final short	INTERFACE_CONSOLE_FONT_SIZE_DECREASE =													500;
@@ -952,15 +901,17 @@ class Constants
 	protected static final short	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_CONCLUSION =	1433;
 	protected static final short	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONFIRMED =									1434;
 	protected static final short	INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_CONFIRMED =									1435;
-	protected static final short	INTERFACE_LISTING_YOUR_INFO_IS_MORE_SPECIFIC_THAN_MY_ASSUMPTION =						1436;
-	protected static final short	INTERFACE_LISTING_YOUR_INFO_IS_MORE_SPECIFIC_THAN_MY_CONCLUSION =						1437;
-	protected static final short	INTERFACE_LISTING_YOUR_QUESTION_IS_MORE_SPECIFIC_THAN_MY_QUESTION =						1438;
-	protected static final short	INTERFACE_LISTING_THIS_INFO_IS_MORE_SPECIFIC_THAN_YOUR_EARLIER_INFO =					1439;
-	protected static final short	INTERFACE_LISTING_THIS_QUESTION_IS_MORE_SPECIFIC_THAN_YOUR_QUESTION =					1440;
-	protected static final short	INTERFACE_LISTING_YOUR_QUESTIONS_THAT_ARE_ANSWERED =									1441;
-	protected static final short	INTERFACE_LISTING_MY_QUESTIONS_THAT_ARE_ANSWERED =										1442;
-	protected static final short	INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_KNOWLEDGE =								1443;
-	protected static final short	INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_QUESTION =						1444;
+	protected static final short	INTERFACE_LISTING_MY_EARLIER_ASSUMPTIONS_THAT_HAVE_RELATION_WORDS_NOW =					1436;
+	protected static final short	INTERFACE_LISTING_MY_EARLIER_CONCLUSIONS_THAT_HAVE_RELATION_WORDS_NOW =					1437;
+	protected static final short	INTERFACE_LISTING_YOUR_INFO_IS_MORE_SPECIFIC_THAN_MY_ASSUMPTION =						1438;
+	protected static final short	INTERFACE_LISTING_YOUR_INFO_IS_MORE_SPECIFIC_THAN_MY_CONCLUSION =						1439;
+	protected static final short	INTERFACE_LISTING_YOUR_QUESTION_IS_MORE_SPECIFIC_THAN_MY_QUESTION =						1440;
+	protected static final short	INTERFACE_LISTING_THIS_INFO_IS_MORE_SPECIFIC_THAN_YOUR_EARLIER_INFO =					1441;
+	protected static final short	INTERFACE_LISTING_THIS_QUESTION_IS_MORE_SPECIFIC_THAN_YOUR_QUESTION =					1442;
+	protected static final short	INTERFACE_LISTING_YOUR_QUESTIONS_THAT_ARE_ANSWERED =									1443;
+	protected static final short	INTERFACE_LISTING_MY_QUESTIONS_THAT_ARE_ANSWERED =										1444;
+	protected static final short	INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_KNOWLEDGE =								1445;
+	protected static final short	INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_QUESTION =						1446;
 
 	// Question
 	protected static final short	INTERFACE_QUESTION_YOU_HAD_THE_SAME_QUESTION_BEFORE =									1500;
@@ -1003,19 +954,21 @@ class Constants
 	protected static final short	INTERFACE_SENTENCE_WARNING_WORD_CAN_ONLY_BE_USED_IN_CONDITION_OF_SELECTION_START =		1624;
 	protected static final short	INTERFACE_SENTENCE_WARNING_WORD_CAN_ONLY_BE_USED_IN_CONDITION_OF_SELECTION_POSITION =	1625;
 	protected static final short	INTERFACE_SENTENCE_WARNING_WORD_CAN_ONLY_BE_USED_IN_CONDITION_OF_SELECTION_END =		1626;
-	protected static final short	INTERFACE_SENTENCE_WARNING_NOT_ABLE_TO_LINK_YES_NO_TO_QUESTION =						1627;
-	protected static final short	INTERFACE_SENTENCE_WARNING_AMBIGUOUS_SENTENCE_MISSING_RELATION =						1628;
-	protected static final short	INTERFACE_SENTENCE_WARNING_AMBIGUOUS_SENTENCE_MULTIPLE_SPECIFICATIONS_RELATIONS =		1629;
+	protected static final short	INTERFACE_SENTENCE_WARNING_WORD_IS_GENERALIZATION_AS_WELL_AS_RELATION_START =			1627;
+	protected static final short	INTERFACE_SENTENCE_WARNING_WORD_IS_GENERALIZATION_AS_WELL_AS_RELATION_END =				1628;
+	protected static final short	INTERFACE_SENTENCE_WARNING_NOT_ABLE_TO_LINK_YES_NO_TO_QUESTION =						1629;
+	protected static final short	INTERFACE_SENTENCE_WARNING_AMBIGUOUS_SENTENCE_MISSING_RELATION =						1630;
+	protected static final short	INTERFACE_SENTENCE_WARNING_AMBIGUOUS_SENTENCE_MULTIPLE_SPECIFICATIONS_RELATIONS =		1631;
 
 	// Sentence (errors)
-	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE =							1630;
-	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE =								1631;
-	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS =					1632;
-	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START =								1633;
-	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE =									1634;
-	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS =						1635;
-	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START =			1636;
-	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END =				1637;
+	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE =							1640;
+	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE =								1641;
+	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS =					1642;
+	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START =								1643;
+	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE =									1644;
+	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS =						1645;
+	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START =			1646;
+	protected static final short	INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END =				1647;
 	};
 
 /*************************************************************************

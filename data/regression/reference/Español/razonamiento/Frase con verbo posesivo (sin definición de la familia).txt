@@ -4,6 +4,11 @@
 < 
 * 
 * Mis conclusiones:
+< Alfonso es hijo de Jorge. Porque:
+<	- Jorge tiene un hijo, llamado Alfonso.
+< 
+* 
+* Mis conclusiones:
 < Pablo tiene un padre, llamado Juan.
 < Pablo tiene una madre, llamada Ana.
 < José tiene un padre, llamado Juan.
@@ -12,6 +17,18 @@
 < Luisa tiene una madre, llamada Ana.
 < 
 * 
+* Mis conclusiones:
+< Pablo tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
+< Pablo tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
+< 
+* 
 * Mis conclusiones son confirmadas:
 < Pablo tiene un padre, llamado Juan.
+< 
+* 
+* Mis conclusiones:
+< Pablo tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
 < 

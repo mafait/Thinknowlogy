@@ -1,0 +1,8 @@
+﻿* 
+* Mis conclusiones:
+< Una cabeza es parte de una persona.
+< 
+* 
+* No se acepta esta asignación, porque está en conflicto con especificación de definición:
+< Una persona tiene una cabeza.
+< 

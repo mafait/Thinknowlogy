@@ -1,0 +1,28 @@
+﻿* I know nothing about John, but I'll keep this question in mind.
+* 
+< No, my set is D.
+< 
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* You had a similar question before:
+< Is the set a number?
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* You had a similar question before:
+< Is the set A?
+* 
+* This question is already answered.
+* 
+* My answer:
+< No, a set is A, B, C, D, E, F or G.
+< 

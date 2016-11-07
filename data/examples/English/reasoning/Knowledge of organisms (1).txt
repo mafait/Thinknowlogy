@@ -1,0 +1,45 @@
+﻿# Organisms
+A creature is an organism.
+
+# Animals
+An animal is a vertebrate or an invertebrate.
+
+# Vertebrates
+A vertebrate is an amphibian, a bird, a fish, a mammal, or a reptile.
+Caecilians, frogs, newts, salamanders and toads are amphibians.
+#Xxxx are birds.
+#Xxxx are fish.
+#Xxxx are mammals.
+Crocodiles are reptiles.
+
+# Invertebrates
+An invertebrate is an annelid, an arthropod, an echinoderm, a mollusk, or a protozoan.
+Earthworms, roundworms and flatworms are annelids.
+Crabs, spiders and insects are arthropods.
+Starfish, sea-urchins, sand-dollars and sea-cucumbers are echinoderms.
+Cuttlefish, clams, mussels, nautiluses, octopuses, oysters, snails and squids are mollusks.
+#Amoebas and flagellates are protozoa (plural of protozoan).
+
+# Mammals
+A mammal is a cetacean, a marsupial, a primate, or a rodent.
+Whales and dolphins are cetaceans.
+Kangaroos, koalas, opossums and tasmanian-devils are marsupials.
+#Kangaroos, koalas, opossums, and Tasmanian-devils are marsupials.
+Bonobos, chimpanzees, gorillas, marmosets, orangutans and squirrel-monkeys are primates.
+Beavers, guinea-pigs, hamsters, mice, porcupines, rats and squirrels are rodents.
+
+# Arthropods
+An arthropod is an arachnid, crustacean, or insect.
+Mites, ticks, scorpions and spiders are arachnids.
+Crabs, lobsters and barnacles are crustaceans.
+Beetles, moths, bees, wasps and praying-mantises are insectes.
+
+# Human-beings
+A human-being is a vertebrate.
+Display the justification report about human-being.
+A human-being is a mammal.
+Display the justification report about human-being.
+A human-being is a primate.
+Display the justification report about human-being.
+John is a human-being.
+Display the justification report about John.

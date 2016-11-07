@@ -1,0 +1,9 @@
+﻿* 
+* Mes conclusions:
+< Roues sont partie de chaque voiture.
+< 
+* 
+* Mes conclusions:
+< Roues sont partie de chaque voiture. En raison:
+<	- Chaque voiture a roues.
+< 

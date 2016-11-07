@@ -1,0 +1,7 @@
+﻿Un père était un parent.
+Une mère était un parent.
+Affichez le rapport de justification sur parents.
+Un garçon était probablement un enfant.
+Une jeune-fille était possible un enfant.
+Affichez le rapport de justification sur enfants.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

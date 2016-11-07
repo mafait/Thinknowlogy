@@ -1,0 +1,10 @@
+﻿Lirez le fichier "Français/utilisateur/programmation/Puissance 4".
+Mon mouvement est D.
+Mon mouvement est D.
+Mon mouvement est D.
+Mon mouvement est D.
+Mon mouvement est D.
+Mon mouvement est E.
+Mon mouvement est F.
+Mon mouvement est A.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

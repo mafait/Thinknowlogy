@@ -7,8 +7,8 @@
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
 < Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:
@@ -71,3 +71,62 @@
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
+* 
+* Mis suposiciones:
+< Juan es probablemente un padre. Porque:
+<	- ¿Es Juan el padre de Pablo?
+< Juan es probablemente parte de una familia. Porque:
+<	- Juan es probablemente un padre.
+<	- Padres son parte de cada familia.
+< Juan es posiblemente una persona. Porque:
+<	- Juan es probablemente un padre.
+<	- Un padre es probablemente una persona.
+* 	y:
+<	- Cada persona es un hombre o una mujer.
+<	- Juan es probablemente un hombre.
+< Juan es probablemente un hombre. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre es un hombre.
+< Juan no es posiblemente una mujer. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre es una mujer o un hombre.
+<	- Juan es probablemente un hombre.
+* 	y:
+<	- Juan es posiblemente una persona.
+<	- Cada persona es un hombre o una mujer.
+<	- Juan es probablemente un hombre.
+< Juan no es probablemente una madre. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre es un padre o una madre.
+< 
+* 
+* Mis conclusiones:
+< Ana es una mujer. Porque:
+<	- Ana es una madre.
+<	- Cada madre es una mujer.
+< Ana no es un hombre. Porque:
+<	- Ana es probablemente una persona.
+<	- Cada persona es un hombre o una mujer.
+<	- Ana es una mujer.
+* 	y:
+<	- Ana es una madre.
+<	- Cada padre es una mujer o un hombre.
+<	- Ana es una mujer.
+< Ana es parte de una familia. Porque:
+<	- Ana es una madre.
+<	- Padres son parte de cada familia.
+< Ana no es un padre. Porque:
+<	- Cada padre es un padre o una madre.
+<	- Ana es una madre.
+* 
+* Mis suposiciones:
+< Ana es probablemente una persona. Porque:
+<	- Cada persona es un hombre o una mujer.
+<	- Ana es una mujer.
+* 	y:
+<	- Ana es una madre.
+<	- Una madre es probablemente una persona.
+< Ana tiene probablemente un hijo. Porque:
+<	- Ana es una madre.
+<	- Cada familia tiene padres y hijos.
+< 

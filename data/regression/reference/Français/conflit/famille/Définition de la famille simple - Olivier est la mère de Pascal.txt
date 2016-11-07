@@ -1,0 +1,69 @@
+﻿* 
+* Mes hypothèses:
+< Un père est probablement une personne.
+< Un père est probablement un parent.
+< Un parent est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< Une mère est probablement un parent.
+< 
+* 
+* Mes conclusions:
+< Olivier est un homme.
+* 
+* Mes hypothèses:
+< Olivier est probablement un parent.
+< Olivier est probablement une personne.
+< Olivier n'est probablement pas une mère.
+< Olivier n'est probablement pas une femme.
+< 
+* 
+* Mes conclusions:
+< Olivier est un homme. En raison:
+<	- Olivier est un père.
+<	- Chaque père est un homme.
+* 
+* Mes hypothèses:
+< Olivier est probablement un parent. En raison:
+<	- Chaque parent est un père ou une mère.
+<	- Olivier est un père.
+* 	et:
+<	- Chaque parent est une femme ou un homme.
+<	- Olivier est un homme.
+* 	et:
+<	- Olivier est un père.
+<	- Un père est probablement un parent.
+< Olivier est probablement une personne. En raison:
+<	- Olivier est probablement un parent.
+<	- Un parent est probablement une personne.
+* 	et:
+<	- Olivier est un père.
+<	- Un père est probablement une personne.
+* 	et:
+<	- Chaque personne est un homme ou une femme.
+<	- Olivier est un homme.
+< Olivier n'est probablement pas une mère. En raison:
+<	- Olivier est probablement un parent.
+<	- Chaque parent est un père ou une mère.
+<	- Olivier est un père.
+< Olivier n'est probablement pas une femme. En raison:
+<	- Olivier est probablement un parent.
+<	- Chaque parent est une femme ou un homme.
+<	- Olivier est un homme.
+* 	et:
+<	- Olivier est probablement une personne.
+<	- Chaque personne est un homme ou une femme.
+<	- Olivier est un homme.
+< 
+! 
+! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec:
+< Olivier est un père.
+< Olivier n'est probablement pas une mère.
+< Olivier est un homme.
+< Olivier n'est probablement pas une femme.
+< 

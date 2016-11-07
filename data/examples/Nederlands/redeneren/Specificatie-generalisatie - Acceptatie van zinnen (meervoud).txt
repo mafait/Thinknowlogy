@@ -1,0 +1,5 @@
+﻿Walvissen, honden en katten zijn zoogdieren.
+Toon informatie over zoogdieren.
+Vaders en moeders zijn ouders.
+Toon informatie over ouders.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

@@ -1,0 +1,5 @@
+﻿* 
+* Mis conclusiones:
+< Juan es un hombre.
+< Juan no es una madre.
+< 

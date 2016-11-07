@@ -8,4 +8,5 @@ L'option n'est pas 5.
 L'option n'est pas 7.
 L'option n'est pas 8.
 L'option n'est pas 9.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
+Affichez le rapport de justification sur le option.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

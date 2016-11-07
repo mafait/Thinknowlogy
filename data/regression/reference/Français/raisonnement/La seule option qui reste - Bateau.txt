@@ -2,3 +2,9 @@
 * Mes conclusions:
 < Le bateau est un bateau à rames.
 < 
+* 
+* Mes conclusions:
+< Le bateau est un bateau à rames. En raison:
+<	- Un bateau est un bateau à rames, un voilier ou un bateau à moteur.
+<	- Le bateau n'est pas un voilier et pas un bateau à moteur.
+< 

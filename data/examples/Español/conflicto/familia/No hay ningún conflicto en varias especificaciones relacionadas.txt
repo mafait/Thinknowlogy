@@ -1,0 +1,4 @@
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Juan es un padre y un hijo.
+Mostrar el informe de justificación sobre Juan.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

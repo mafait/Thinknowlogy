@@ -1,0 +1,10 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Pascal est un fils de Olivier et Amélie.
+Julien est un fils de Olivier et Amélie.
+Lorraine est une fille de Olivier et Amélie.
+Pascal est une personne.
+Julien est un enfant de Olivier et Amélie.
+Lorraine est un enfant.
+Lorraine est un enfant de Olivier et Amélie.
+Pascal est un enfant de Olivier et Amélie.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

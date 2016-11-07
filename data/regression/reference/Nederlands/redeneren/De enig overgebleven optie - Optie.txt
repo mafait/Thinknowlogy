@@ -2,3 +2,9 @@
 * Mijn conclusies:
 < De optie is 6.
 < 
+* 
+* Mijn conclusies:
+< De optie is 6. Omdat:
+<	- Een optie is 1, 2, 3, 4, 5, 6, 7, 8 of 9.
+<	- De optie is niet 9, niet 8, niet 7, niet 5, niet 4, niet 3, niet 2 en niet 1.
+< 

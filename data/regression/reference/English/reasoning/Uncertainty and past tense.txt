@@ -1,0 +1,55 @@
+﻿* 
+* My assumptions:
+< Peter has possibly no father anymore.
+< Peter had possibly a father, called James.
+< 
+* 
+* My assumptions:
+< Peter has possibly no father anymore. Because:
+<	- Peter had possibly a father, called James.
+< Peter had possibly a father, called James. Because:
+<	- James was possibly the father of Peter.
+< 
+* 
+* I am not sure, but:
+< Richard was possibly a father.
+< 
+* 
+* My assumptions:
+< Ronald was probably a father.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* My assumptions:
+< Ronald was probably a parent.
+< James was possibly a parent.
+< Richard was possibly a parent.
+< John was possibly a parent.
+< 
+* 
+* My assumptions:
+< John was possibly a parent. Because:
+<	- John is possibly a father.
+<	- Every father was a parent.
+< 
+* 
+* My assumptions:
+< Richard was possibly a parent. Because:
+<	- Richard was possibly a father.
+<	- Every father was a parent.
+< 
+* 
+* My assumptions:
+< James was possibly a parent. Because:
+<	- James was possibly the father of Peter.
+<	- Every father was a parent.
+< 
+* 
+* My assumptions:
+< Ronald was probably a parent. Because:
+<	- Ronald was probably a father.
+<	- Every father was a parent.
+< Ronald was probably a father. Because:
+<	- Was Ronald the father of Paul?
+< 

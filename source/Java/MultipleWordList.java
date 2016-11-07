@@ -1,7 +1,7 @@
 /*	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,28 +25,28 @@ class MultipleWordList extends List
 	{
 	// Private methods
 
-	private MultipleWordItem firstActiveMultipleWordItem()
-		{
-		return (MultipleWordItem)firstActiveItem();
-		}
-
 	private boolean hasFoundMultipleWordItem( short wordTypeNr, WordItem multipleWordItem )
 		{
-		MultipleWordItem searchItem = firstActiveMultipleWordItem();
+		MultipleWordItem searchMultipleWordItem = firstActiveMultipleWordItem();
 
-		while( searchItem != null )
+		while( searchMultipleWordItem != null )
 			{
-			if( searchItem.wordTypeNr() == wordTypeNr &&
-			searchItem.multipleWordItem() == multipleWordItem )
+			if( searchMultipleWordItem.wordTypeNr() == wordTypeNr &&
+			searchMultipleWordItem.multipleWordItem() == multipleWordItem )
 				return true;
 
-			searchItem = searchItem.nextMultipleWordItem();
+			searchMultipleWordItem = searchMultipleWordItem.nextMultipleWordItem();
 			}
 
 		return false;
 		}
 
-	// Constructor / deconstructor
+	private MultipleWordItem firstActiveMultipleWordItem()
+		{
+		return (MultipleWordItem)firstActiveItem();
+		}
+
+	// Constructor
 
 	protected MultipleWordList( WordItem myWordItem )
 		{
@@ -59,92 +59,81 @@ class MultipleWordList extends List
 	protected short matchingMultipleSingularNounWordParts( String sentenceString )
 		{
 		short currentLanguageNr = CommonVariables.currentLanguageNr;
-		MultipleWordItem searchItem = firstActiveMultipleWordItem();
+		MultipleWordItem searchMultipleWordItem = firstActiveMultipleWordItem();
 		WordItem multipleWordItem;
 		String multipleWordString;
 
 		if( sentenceString != null )
 			{
-			while( searchItem != null )
+			while( searchMultipleWordItem != null )
 				{
-				if( searchItem.isSingularNoun() &&
-				searchItem.wordTypeLanguageNr() == currentLanguageNr &&
-				( multipleWordItem = searchItem.multipleWordItem() ) != null )
+				if( searchMultipleWordItem.isSingularNoun() &&
+				searchMultipleWordItem.wordTypeLanguageNr() == currentLanguageNr &&
+				( multipleWordItem = searchMultipleWordItem.multipleWordItem() ) != null )
 					{
-					if( ( multipleWordString = multipleWordItem.singularNounString() ) != null )
-						{
-						if( sentenceString.startsWith( multipleWordString ) )
-							return searchItem.nWordParts();
-						}
+					multipleWordString = multipleWordItem.singularNounString();
+
+					if( multipleWordString != null &&
+					sentenceString.startsWith( multipleWordString ) )
+						return searchMultipleWordItem.nWordParts();
 					}
 
-				searchItem = searchItem.nextMultipleWordItem();
+				searchMultipleWordItem = searchMultipleWordItem.nextMultipleWordItem();
 				}
 			}
 
 		return 0;
 		}
 
-	protected byte checkWordItemForUsage( WordItem unusedWordItem )
+	protected byte addMultipleWord( short nWordParts, short wordTypeNr, WordItem multipleWordItem )
 		{
-		MultipleWordItem searchItem = firstActiveMultipleWordItem();
+		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
+		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
+			return startError( 1, null, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
-		if( unusedWordItem != null )
+		if( multipleWordItem == null )
+			return startError( 1, null, "The given multiple word item is undefined" );
+
+		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
 			{
-			while( searchItem != null )
-				{
-				if( searchItem.multipleWordItem() == unusedWordItem )
-					return startError( 1, null, "The multiple word item is still in use" );
-
-				searchItem = searchItem.nextMultipleWordItem();
-				}
+			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, CommonVariables.currentLanguageNr, wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+				return addError( 1, null, "I failed to add an active multiple word item" );
 			}
-		else
-			return startError( 1, null, "The given unused word item is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
-	protected byte addMultipleWord( short nWordParts, short wordTypeNr, WordItem multipleWordItem )
+	protected byte checkWordItemForUsage( WordItem unusedWordItem )
 		{
-		if( wordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
-		wordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
+		MultipleWordItem searchMultipleWordItem = firstActiveMultipleWordItem();
+
+		if( unusedWordItem == null )
+			return startError( 1, null, "The given unused word item is undefined" );
+
+		while( searchMultipleWordItem != null )
 			{
-			if( multipleWordItem != null )
-				{
-				if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
-					{
-					if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
-						{
-						if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, CommonVariables.currentLanguageNr, wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-							return addError( 1, null, "I failed to add an active multiple word item" );
-						}
-					}
-				else
-					return startError( 1, null, "The current item number is undefined" );
-				}
-			else
-				return startError( 1, null, "The given multiple word item is undefined" );
+			if( searchMultipleWordItem.multipleWordItem() == unusedWordItem )
+				return startError( 1, null, "The multiple word item is still in use" );
+
+			searchMultipleWordItem = searchMultipleWordItem.nextMultipleWordItem();
 			}
-		else
-			return startError( 1, null, "The given word type number is undefined or out of bounds" );
 
 		return Constants.RESULT_OK;
 		}
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		MultipleWordItem searchItem = firstActiveMultipleWordItem();
+		MultipleWordItem searchMultipleWordItem = firstActiveMultipleWordItem();
 
-		while( searchItem != null )
+		while( searchMultipleWordItem != null )
 			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
+			if( searchMultipleWordItem.hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem.storeMultipleWordItemInFutureDatabase() != Constants.RESULT_OK )
+				if( searchMultipleWordItem.storeMultipleWordItemInFutureDatabase() != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to store a multiple word item in the database" );
 				}
 
-			searchItem = searchItem.nextMultipleWordItem();
+			searchMultipleWordItem = searchMultipleWordItem.nextMultipleWordItem();
 			}
 
 		return Constants.RESULT_OK;

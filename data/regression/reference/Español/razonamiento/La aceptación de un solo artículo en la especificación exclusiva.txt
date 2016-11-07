@@ -1,0 +1,20 @@
+﻿* 
+* Mis suposiciones:
+< Un animal es probablemente una criatura.
+< 
+* 
+* Mis conclusiones:
+< Un animal es un anfibio, un pájaro, un pescado, un mamífero o un reptil.
+< Una criatura es un anfibio, un pájaro, un pescado, un mamífero, un reptil, un vertebrado o un invertebrado.
+* 
+* Mis suposiciones:
+< Un vertebrado es probablemente una criatura.
+< 
+* 
+* Mis conclusiones:
+< Un animal es un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pescado, un mamífero o un reptil.
+< Una criatura es un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pescado, un mamífero, un reptil, un vertebrado o un invertebrado.
+* 
+* Mis suposiciones:
+< Un invertebrado es probablemente una criatura.
+< 

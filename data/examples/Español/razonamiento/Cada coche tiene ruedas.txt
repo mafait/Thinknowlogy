@@ -1,0 +1,3 @@
+﻿Cada coche tiene ruedas.
+Mostrar el informe de justificación sobre coches.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

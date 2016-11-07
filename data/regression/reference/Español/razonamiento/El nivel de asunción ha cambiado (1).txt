@@ -1,0 +1,30 @@
+﻿* 
+* Mis conclusiones:
+< Pablo tiene un padre, llamado Juan.
+< 
+* 
+* Mis suposiciones:
+< Pablo tiene posiblemente un padre, llamado Juan.
+< 
+* 
+* Mis suposiciones:
+< Pablo tiene posiblemente un padre, llamado Juan. Porque:
+<	- Juan es posiblemente el padre de Pablo.
+< 
+* 
+* Mis conclusiones:
+< Alfonso no tiene un padre nunca-más.
+< Alfonso tenido un padre, llamado Jorge.
+< 
+* 
+* Mis suposiciones:
+< Alfonso no tiene posiblemente un padre nunca-más.
+< Alfonso tenido posiblemente un padre, llamado Jorge.
+< 
+* 
+* Mis suposiciones:
+< Alfonso no tiene posiblemente un padre nunca-más. Porque:
+<	- Alfonso tenido posiblemente un padre, llamado Jorge.
+< Alfonso tenido posiblemente un padre, llamado Jorge. Porque:
+<	- Jorge era posiblemente el padre de Alfonso.
+< 

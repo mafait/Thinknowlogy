@@ -1,6 +1,7 @@
-/*	Class:			WriteResultType
- *	Purpose:		To return write variables of a method
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		WriteResultType
+ *	Purpose:	To return write variables,
+ *				as the result of a method call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,7 +29,7 @@ class WriteResultType
 	protected boolean hasFoundWordToWrite;
 	protected boolean isSkippingClearWriteLevel;
 
-	// Constructor / deconstructor
+	// Constructor
 
 	WriteResultType()
 		{
@@ -41,6 +42,6 @@ class WriteResultType
 /*************************************************************************
  *	"Surely your goodness and unfailing love will pursue me
  *	all the days of my life,
- *	and Iwill live in the house of the Lord
+ *	and I will live in the house of the Lord
  *	forever." (Psalm 23:6)
  *************************************************************************/

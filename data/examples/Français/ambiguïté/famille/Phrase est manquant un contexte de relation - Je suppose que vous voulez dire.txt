@@ -1,0 +1,6 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+# The next sentence will not be accepted. Don't worry: It is a test. In testing mode, the test will continue.
+Olivier est le père.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Olivier est le père.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

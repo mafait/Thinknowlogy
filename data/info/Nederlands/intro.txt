@@ -1,25 +1,24 @@
 ﻿Toon "------------------------------------------------------------------------------".
-Toon " Thinknowlogy is experimentele, op grammatica gebaseerde software,".
-Toon " ontworpen om Natuurwetten van Intelligentie ingebed in Grammatica te benutten,".
-Toon " om op die manier – via natuurlijke taal – intelligentie te creëren in software,".
-Toon " wat gedemonstreerd wordt door:".
+Toon " Ondanks eeuwen aan diepgaand onderzoek, geeft de evolutietheorie nog steeds geen".
+Toon " bevredigende verklaring voor het ontstaan van intelligentie en taal. Laat staan".
+Toon " hoe beide verwant zijn. Volgens het bijbels wereldbeeld heeft God natuurwetten".
+Toon " gecreëerd. Gebaseerd op de Natuurwetten van Intelligentie ingebed in Grammatica,".
+Toon " implementeert alleen Thinknowlogy de natuurlijke betekenis (intelligente functie)".
+#C++#Toon " van woorden als bepaald lidwoord \"de/het\", voegwoord \"of\", bezittelijk werkwoord".
+#C++#Toon " \"hebben\", en werkwoorden in de verleden" tijd \"waren\" en \"hadden\".".
+#Java#Toon " van woorden als bepaald lidwoord “de/het”, voegwoord “of”, bezittelijk werkwoord".
+#Java#Toon " “hebben”, en werkwoorden in de verleden tijd “waren” en “hadden”.".
+Toon "------------------------------------------------------------------------------".
+Toon " Deze Natuurwetten van Intelligentie ingebed in Grammatica worden gedemonstreerd door:".
 Toon " * Programmeren in natuurlijke taal;".
 Toon " * Redeneren in natuurlijke taal:".
 Toon "   - het trekken van conclusies (geavanceerder dan wetenschappelijke oplossingen),".
 Toon "   - het doen van aannames (met zelfregulerend onzekerheidsniveau),".
 Toon "   - het stellen van vragen (over hiaten in de kennis),".
-Toon "   - het detecteren van conflicten en enkele gevallen van semantische ambiguïteit;".
+Toon "   - het detecteren van conflicten en enkele gevallen van semantische ambiguïteit,".
+Toon "   - het tonen van verantwoordingsrapportages voor de zelf-gegenereerde kennis;".
 Toon " * Meertaligheid, wat bewijst: Talen hebben één gemeenschappelijke oorsprong.".
 Toon "------------------------------------------------------------------------------".
-Toon " Ondanks 160 jaar aan onderzoek wordt de evolutietheorie nog niet ondersteund".
-Toon " door concreet bewijs met betrekking tot het ontstaan van intelligentie en taal.".
-Toon " Laat staan, tot de integratie van beide. Volgens het bijbels wereldbeeld heeft".
-Toon " God natuurwetten gecreëerd. Gebaseerd op de natuurwetten van intelligentie,".
-Toon " implementeert alleen Thinknowlogy de natuurlijke betekenis (intelligente functie)".
-#C++#Toon " van woorden als bepaalde lidwoorden \"de\" en \"het\", voegwoord \"of\", bezittelijk".
-#C++#Toon " werkwoord \"hebben\", en werkwoorden in de verleden tijd \"waren\" en \"hadden\".".
-#Java#Toon " van woorden als bepaalde lidwoorden “de” en “het”, voegwoord “of”, bezittelijk".
-#Java#Toon " werkwoord “hebben”, en werkwoorden in de verleden tijd “waren” en “hadden”.".
 Toon " Ik daag iedereen uit om dit systeem te verslaan: http://mafait.org/challenge/".
 Toon "------------------------------------------------------------------------------".
 #C++#Toon " Help.\t\t\t\t\t\t\t * Toon meer help info".

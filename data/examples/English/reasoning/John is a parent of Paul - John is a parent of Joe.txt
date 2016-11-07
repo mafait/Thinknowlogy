@@ -1,0 +1,5 @@
+﻿John is a parent of Paul.
+John is a parent of Joe.
+Display information about John.
+John is a parent of Paul and Joe.
+# To continue, click button «Clear your mind.» or «Restart.».

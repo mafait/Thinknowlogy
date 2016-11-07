@@ -1,0 +1,13 @@
+﻿Juan es posiblemente un padre.
+Santiago era posiblemente un padre.
+Jorge era posiblemente padre de Alfonso.
+Mostrar el informe de justificación sobre Alfonso.
+¿Era Santiago un padre?
+¿Era Ronaldo padre de Pablo?
+# Extraño pasado la prueba tensa
+Cada padre era un parent.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Santiago.
+Mostrar el informe de justificación sobre Jorge.
+Mostrar el informe de justificación sobre Ronaldo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

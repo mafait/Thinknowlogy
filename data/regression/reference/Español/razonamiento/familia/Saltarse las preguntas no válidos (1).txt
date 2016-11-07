@@ -1,0 +1,82 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Pablo es probablemente una persona.
+< Pablo no es probablemente una mujer.
+< 
+* 
+* Mis suposiciones:
+< José es probablemente una persona.
+< José no es probablemente una mujer.
+< 
+* 
+* Mis suposiciones:
+< Ana es probablemente una persona.
+< Ana no es probablemente un hombre.
+< 
+* 
+* Mis suposiciones que se concluyen:
+< Ana no es un hombre.
+* 
+* Mis conclusiones:
+< Juan es parte de una familia.
+< Juan es un hombre.
+< Juan no es una mujer.
+< Juan no es una madre.
+< Pablo tiene 2 padres, llamados Juan y Ana.
+< Pablo tiene un padre, llamado Juan.
+< Pablo tiene una madre, llamada Ana.
+< José tiene 2 padres, llamados Juan y Ana.
+< José tiene un padre, llamado Juan.
+< José tiene una madre, llamada Ana.
+< Luisa tiene 2 padres, llamados Juan y Ana.
+< Luisa tiene un padre, llamado Juan.
+< Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
+< Ana no es un padre.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona.
+< Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
+< Juan tiene posiblemente una hija, llamada Luisa.
+< Pablo es probablemente hijo de Juan y Ana.
+< Pablo es probablemente parte de una familia.
+< Pablo no es probablemente un niño.
+< Pablo no es probablemente una hija.
+< José es probablemente hijo de Juan y Ana.
+< José es probablemente parte de una familia.
+< José no es probablemente un niño.
+< José no es probablemente una hija.
+< Luisa es posiblemente hija de Juan y Ana.
+< Luisa es puede-ser una persona.
+< Luisa es posiblemente parte de una familia.
+< Luisa no es posiblemente un niño y un hombre.
+< Luisa no es posiblemente un hijo.
+< Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
+< Ana tiene posiblemente una hija, llamada Luisa.
+* 
+* Mis preguntas:
+< ¿Es Luisa una niña o una mujer?
+< 

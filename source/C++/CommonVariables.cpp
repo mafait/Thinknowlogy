@@ -1,6 +1,6 @@
 /*	Class:			CommonVariables
  *	Purpose:		To hold the common variables
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -45,7 +45,6 @@ class CommonVariables
 	friend class AdminReadFile;
 	friend class AdminReadGrammar;
 	friend class AdminReadSentence;
-	friend class AdminReasoning;
 	friend class AdminSelection;
 	friend class AdminSolve;
 	friend class AdminSpecification;
@@ -86,6 +85,7 @@ class CommonVariables
 	friend class WordItem;
 	friend class WordList;
 	friend class WordQuestion;
+	friend class WordSelectionCondition;
 	friend class WordSpecification;
 	friend class WordType;
 	friend class WordTypeItem;
@@ -98,11 +98,11 @@ class CommonVariables
 
 	// Protected common variables
 
+	bool hasDisplayedArticleNotification;
+	bool hasDisplayedMessage;
+	bool hasDisplayedWarning;
 	bool hasFoundAnswerToQuestion;
 	bool hasFoundQuery;
-	bool hasShownArticleNotification;
-	bool hasShownMessage;
-	bool hasShownWarning;
 
 	bool isAssignmentChanged;
 	bool isFirstAnswerToQuestion;
@@ -144,7 +144,13 @@ class CommonVariables
 	SelectionList *adminAlternativeList;
 
 	WordItem *currentLanguageWordItem;
+	WordItem *firstAssignmentWordItem;
+	WordItem *firstCollectionWordItem;
+	WordItem *firstContextWordItem;
+	WordItem *firstSpecificationWordItem;
+	WordItem *firstTouchedWordItem;
 	WordItem *firstWordItem;
+	WordItem *firstPredefinedWordItem;
 	WordItem *lastPredefinedWordItem;
 	WordItem *predefinedNounLanguageWordItem;
 	WordItem *predefinedNounUserWordItem;
@@ -156,17 +162,17 @@ class CommonVariables
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	CommonVariables()
 		{
 		// Protected common variables
 
+		hasDisplayedArticleNotification = false;
+		hasDisplayedMessage = false;
+		hasDisplayedWarning = false;
 		hasFoundAnswerToQuestion = false;
 		hasFoundQuery = false;
-		hasShownArticleNotification = false;
-		hasShownMessage = false;
-		hasShownWarning = false;
 
 		isAssignmentChanged = false;
 		isFirstAnswerToQuestion = false;
@@ -179,7 +185,7 @@ class CommonVariables
 		currentUserNr = NO_USER_NR;
 		currentWriteLevel = NO_WRITE_LEVEL;
 
-		matchingWordTypeNr = WORD_TYPE_UNDEFINED;
+		matchingWordTypeNr = NO_WORD_TYPE_NR;
 
 		nDeletedItems = 0;
 		nActiveQueryItems = 0;
@@ -209,7 +215,13 @@ class CommonVariables
 		adminAlternativeList = NULL;
 
 		currentLanguageWordItem = NULL;
+		firstAssignmentWordItem = NULL;
+		firstCollectionWordItem = NULL;
+		firstContextWordItem = NULL;
+		firstSpecificationWordItem = NULL;
+		firstTouchedWordItem = NULL;
 		firstWordItem = NULL;
+		firstPredefinedWordItem = NULL;
 		lastPredefinedWordItem = NULL;
 		predefinedNounLanguageWordItem = NULL;
 		predefinedNounUserWordItem = NULL;

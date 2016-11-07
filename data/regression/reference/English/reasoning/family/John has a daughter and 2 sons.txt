@@ -1,0 +1,79 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A father is probably a person.
+< A parent is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A son is probably a person.
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My assumptions:
+< John is probably a parent.
+< John is probably part of a family.
+< John is possibly a person.
+* 
+* My questions:
+< Is John a man or a woman?
+< Is John a father or a mother?
+< 
+* 
+* My assumptions:
+< John is probably a parent. Because:
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+<	- John has 2 sons and a daughter.
+< John is probably part of a family. Because:
+<	- John is probably a parent.
+<	- Parents are part of every family.
+< John is possibly a person. Because:
+<	- John is probably a parent.
+<	- A parent is probably a person.
+* 
+* My questions:
+< Is John a man or a woman? Because:
+<	- John is possibly a person.
+<	- Every person is a man or a woman.
+* 	and:
+<	- John is probably a parent.
+<	- Every parent is a woman or a man.
+* 	and:
+<	- Is John a father or a mother?
+<	- Every mother is a woman.
+<	- Every father is a man.
+< Is John a father or a mother? Because:
+<	- John is probably a parent.
+<	- Every parent is a father or a mother.
+< 
+* 
+* Your information:
+< John has 2 sons and a daughter.
+* 
+* My assumptions:
+< John is probably a parent.
+< John is probably part of a family.
+< John is possibly a person.
+* 
+* My questions:
+< Is John a man or a woman?
+< Is John a father or a mother?
+< 

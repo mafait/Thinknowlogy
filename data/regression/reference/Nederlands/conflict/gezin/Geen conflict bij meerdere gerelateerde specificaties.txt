@@ -1,0 +1,102 @@
+﻿* 
+* Mijn conclusies:
+< Ouders en kinderen zijn deel van ieder gezin.
+< 
+* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Ieder kind is een meisje, een vrouw, een jongen of een man.
+* 
+* Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Jan is een man.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een persoon.
+< Jan is waarschijnlijk geen vrouw.
+< Jan is waarschijnlijk deel van een gezin.
+< Jan is waarschijnlijk een ouder en een kind.
+< Jan is waarschijnlijk geen meisje, geen vrouw en geen jongen.
+< Jan is waarschijnlijk geen moeder en geen dochter.
+< Jan heeft mogelijk een kind en een ouder.
+< 
+* 
+* Mijn conclusies:
+< Jan is een man. Omdat:
+<	- Jan is een vader.
+<	- Iedere vader is een man.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een persoon. Omdat:
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is een man.
+* 	en:
+<	- Jan is een vader.
+<	- Een vader is waarschijnlijk een persoon.
+* 	en:
+<	- Jan is waarschijnlijk een ouder.
+<	- Een ouder is waarschijnlijk een persoon.
+* 	en:
+<	- Jan is een zoon.
+<	- Een zoon is waarschijnlijk een persoon.
+* 	en:
+<	- Jan is waarschijnlijk een kind.
+<	- Een kind is waarschijnlijk een persoon.
+< Jan is waarschijnlijk geen vrouw. Omdat:
+<	- Jan is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is een man.
+* 	en:
+<	- Jan is waarschijnlijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+<	- Jan is een man.
+< Jan is waarschijnlijk deel van een gezin. Omdat:
+<	- Jan is waarschijnlijk een ouder.
+<	- Ouders zijn deel van ieder gezin.
+* 	en:
+<	- Jan is waarschijnlijk een kind.
+<	- Kinderen zijn deel van ieder gezin.
+< Jan is waarschijnlijk een ouder en een kind. Omdat:
+<	- Ieder kind is een zoon of een dochter.
+<	- Jan is een zoon.
+* 	en:
+<	- Iedere ouder is een vader of een moeder.
+<	- Jan is een vader.
+< Jan is waarschijnlijk geen meisje, geen vrouw en geen jongen. Omdat:
+<	- Jan is waarschijnlijk een kind.
+<	- Ieder kind is een meisje, een vrouw, een jongen of een man.
+<	- Jan is een man.
+< Jan is waarschijnlijk geen moeder en geen dochter. Omdat:
+<	- Jan is waarschijnlijk een kind.
+<	- Ieder kind is een zoon of een dochter.
+<	- Jan is een zoon.
+* 	en:
+<	- Jan is waarschijnlijk een ouder.
+<	- Iedere ouder is een vader of een moeder.
+<	- Jan is een vader.
+< Jan heeft mogelijk een kind en een ouder. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Jan is waarschijnlijk een kind.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Jan is waarschijnlijk een ouder.
+< 

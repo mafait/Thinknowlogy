@@ -1,0 +1,517 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A father is probably a person.
+< A parent is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A son is probably a person.
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< Anna is a mother of Laura.
+< Anna is a woman.
+* 
+* My assumptions:
+< Laura has probably a parent, called Anna.
+< Laura is probably a child of Anna.
+< Laura is probably part of a family.
+< Laura is possibly a person.
+< Laura is possibly a daughter of Anna.
+< Laura is maybe not a boy and not a man.
+< Laura is maybe not a son.
+< Anna is probably a person.
+< Anna is probably not a man.
+< Anna is probably a parent of Laura.
+< Anna is probably part of a family.
+< Anna is probably not a father.
+< Anna has probably a child, called Laura.
+< Anna has possibly a daughter, called Laura.
+* 
+* My questions:
+< Is Laura a girl or a woman?
+< 
+* 
+* My conclusions:
+< Anna is a mother of Laura. Because:
+<	- Laura has a mother, called Anna.
+< Anna is a woman. Because:
+<	- Anna is a mother of Laura.
+<	- Every mother is a woman.
+* 
+* My assumptions:
+< Anna is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Laura has a mother, called Anna.
+<	- A mother is probably a person.
+* 	and:
+<	- Anna is probably a parent of Laura.
+<	- A parent is probably a person.
+* 	and:
+<	- Anna is a mother of Laura.
+<	- A mother is probably a person.
+< Anna is probably not a man. Because:
+<	- Anna is probably a person.
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Anna is probably a parent of Laura.
+<	- Every parent is a woman or a man.
+<	- Anna is a woman.
+< Anna is probably a parent of Laura. Because:
+<	- Laura has probably a parent, called Anna.
+* 	and:
+<	- Every parent is a father or a mother.
+<	- Anna is a mother of Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura is probably a child of Anna.
+< Anna is probably part of a family. Because:
+<	- Anna is probably a parent of Laura.
+<	- Parents are part of every family.
+< Anna is probably not a father. Because:
+<	- Anna is probably a parent of Laura.
+<	- Every parent is a father or a mother.
+<	- Anna is a mother of Laura.
+< Anna has probably a child, called Laura. Because:
+<	- Every family has parents and children.
+<	- Anna is probably a parent of Laura.
+* 	and:
+<	- Laura is probably a child of Anna.
+< Anna has possibly a daughter, called Laura. Because:
+<	- Laura is possibly a daughter of Anna.
+* 	and:
+<	- Laura has a mother, called Anna.
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
+< 
+* 
+* My assumptions:
+< Laura has probably a parent, called Anna. Because:
+<	- Anna is probably a parent of Laura.
+< Laura is probably a child of Anna. Because:
+<	- Every family has parents and children.
+<	- Anna is probably a parent of Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Every parent is a father or a mother.
+<	- Laura has a mother, called Anna.
+* 	and:
+<	- Anna has probably a child, called Laura.
+< Laura is probably part of a family. Because:
+<	- Laura is probably a child of Anna.
+<	- Children are part of every family.
+< Laura is possibly a person. Because:
+<	- Laura is probably a child of Anna.
+<	- A child is probably a person.
+* 	and:
+<	- Laura is possibly a daughter of Anna.
+<	- A daughter is probably a person.
+< Laura is possibly a daughter of Anna. Because:
+<	- Laura is probably a child of Anna.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
+* 	and:
+<	- Anna is a mother of Laura.
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
+< Laura is maybe not a boy and not a man. Because:
+<	- Laura is probably a child of Anna.
+<	- Every child is a girl, a woman, a boy or a man.
+<	- Laura is possibly a daughter of Anna.
+<	- Every daughter is a girl or a woman.
+< Laura is maybe not a son. Because:
+<	- Laura is probably a child of Anna.
+<	- Every child is a son or a daughter.
+<	- Laura is possibly a daughter of Anna.
+* 
+* My questions:
+< Is Laura a girl or a woman? Because:
+<	- Laura is possibly a daughter of Anna.
+<	- Every daughter is a girl or a woman.
+< 
+* 
+* My assumptions that are confirmed:
+< Laura is probably a child of Anna.
+* 
+* My assumptions that are concluded:
+< Laura is part of a family.
+* 
+* My assumptions that are adjusted:
+< Laura is probably a person.
+< Laura is possibly not a boy and not a man.
+< Laura is possibly not a son.
+* 
+* My assumptions that are concluded:
+< Anna has a child, called Laura.
+* 
+* My conclusions:
+< John has a child, called Laura.
+* 
+* My assumptions:
+< Laura has probably 2 parents, called Anna and John.
+< John is probably a parent of Laura.
+< John is probably part of a family.
+< John is possibly a person.
+* 
+* My questions:
+< Is John a man or a woman?
+< Is John a father or a mother?
+< 
+* 
+* My conclusions:
+< John has a child, called Laura. Because:
+<	- Laura is a child of Anna and John.
+* 
+* My assumptions:
+< John is probably a parent of Laura. Because:
+<	- Every family has parents and children.
+<	- Laura is a child of Anna and John.
+* 	and:
+<	- Every family has parents and children.
+<	- John has a child, called Laura.
+* 	and:
+<	- Laura has probably 2 parents, called Anna and John.
+< John is probably part of a family. Because:
+<	- John is probably a parent of Laura.
+<	- Parents are part of every family.
+< John is possibly a person. Because:
+<	- John is probably a parent of Laura.
+<	- A parent is probably a person.
+* 
+* My questions:
+< Is John a man or a woman? Because:
+<	- John is possibly a person.
+<	- Every person is a man or a woman.
+* 	and:
+<	- John is probably a parent of Laura.
+<	- Every parent is a woman or a man.
+* 	and:
+<	- Is John a father or a mother?
+<	- Every mother is a woman.
+<	- Every father is a man.
+< Is John a father or a mother? Because:
+<	- John is probably a parent of Laura.
+<	- Every parent is a father or a mother.
+< 
+* 
+* My conclusions:
+< Anna has a child, called Laura. Because:
+<	- Every family has parents and children.
+<	- Anna is probably a parent of Laura.
+* 	and:
+<	- Laura is a child of Anna and John.
+< Anna is a mother of Laura. Because:
+<	- Laura has a mother, called Anna.
+< Anna is a woman. Because:
+<	- Anna is a mother of Laura.
+<	- Every mother is a woman.
+* 
+* My assumptions:
+< Anna has possibly a daughter, called Laura. Because:
+<	- Laura is possibly a daughter of Anna.
+* 	and:
+<	- Laura has a mother, called Anna.
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
+< Anna is probably a parent of Laura. Because:
+<	- Laura has probably 2 parents, called Anna and John.
+* 	and:
+<	- Every parent is a father or a mother.
+<	- Anna is a mother of Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura is a child of Anna and John.
+* 	and:
+<	- Every family has parents and children.
+<	- Anna has a child, called Laura.
+< Anna is probably part of a family. Because:
+<	- Anna is probably a parent of Laura.
+<	- Parents are part of every family.
+< Anna is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Laura has a mother, called Anna.
+<	- A mother is probably a person.
+* 	and:
+<	- Anna is probably a parent of Laura.
+<	- A parent is probably a person.
+* 	and:
+<	- Anna is a mother of Laura.
+<	- A mother is probably a person.
+< Anna is probably not a man. Because:
+<	- Anna is probably a person.
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Anna is probably a parent of Laura.
+<	- Every parent is a woman or a man.
+<	- Anna is a woman.
+< Anna is probably not a father. Because:
+<	- Anna is probably a parent of Laura.
+<	- Every parent is a father or a mother.
+<	- Anna is a mother of Laura.
+< 
+* 
+* My conclusions:
+< Laura is part of a family. Because:
+<	- Laura is a child of Anna and John.
+<	- Children are part of every family.
+* 
+* My assumptions:
+< Laura is probably a person. Because:
+<	- Laura is a child of Anna and John.
+<	- A child is probably a person.
+* 	and:
+<	- Laura is possibly a daughter of Anna.
+<	- A daughter is probably a person.
+< Laura is possibly a daughter of Anna. Because:
+<	- Laura is a child of Anna and John.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
+* 	and:
+<	- Anna is a mother of Laura.
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
+< Laura is possibly not a boy and not a man. Because:
+<	- Laura is a child of Anna and John.
+<	- Every child is a girl, a woman, a boy or a man.
+<	- Laura is possibly a daughter of Anna.
+<	- Every daughter is a girl or a woman.
+< Laura is possibly not a son. Because:
+<	- Laura is a child of Anna and John.
+<	- Every child is a son or a daughter.
+<	- Laura is possibly a daughter of Anna.
+< Laura has probably 2 parents, called Anna and John. Because:
+<	- Anna is probably a parent of Laura.
+<	- John is probably a parent of Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura is a child of Anna and John.
+* 
+* My questions:
+< Is Laura a girl or a woman? Because:
+<	- Laura is possibly a daughter of Anna.
+<	- Every daughter is a girl or a woman.
+< 
+* 
+* My conclusions:
+< Anna is a mother of Laura and Joe.
+* 
+* My assumptions:
+< Joe has probably a parent, called Anna.
+< Joe is probably a child of Anna.
+< Joe is probably part of a family.
+< Joe is possibly a person.
+< Anna is probably a parent of Laura and Joe.
+< Anna has probably 2 children, called Laura and Joe.
+* 
+* My questions:
+< Is Joe a man, a woman, a girl or a boy?
+< Is Joe a son or a daughter?
+< 
+* 
+* My conclusions:
+< John has a child, called Laura. Because:
+<	- Laura is a child of Anna and John.
+* 
+* My assumptions:
+< John is probably a parent of Laura. Because:
+<	- Every family has parents and children.
+<	- Laura is a child of Anna and John.
+* 	and:
+<	- Every family has parents and children.
+<	- John has a child, called Laura.
+* 	and:
+<	- Laura has probably 2 parents, called Anna and John.
+< John is probably part of a family. Because:
+<	- John is probably a parent of Laura.
+<	- Parents are part of every family.
+< John is possibly a person. Because:
+<	- John is probably a parent of Laura.
+<	- A parent is probably a person.
+* 
+* My questions:
+< Is John a man or a woman? Because:
+<	- John is possibly a person.
+<	- Every person is a man or a woman.
+* 	and:
+<	- John is probably a parent of Laura.
+<	- Every parent is a woman or a man.
+* 	and:
+<	- Is John a father or a mother?
+<	- Every mother is a woman.
+<	- Every father is a man.
+< Is John a father or a mother? Because:
+<	- John is probably a parent of Laura.
+<	- Every parent is a father or a mother.
+< 
+* 
+* My conclusions:
+< Anna is a mother of Laura and Joe. Because:
+<	- Laura has a mother, called Anna.
+<	- Joe has a mother, called Anna.
+< Anna is a woman. Because:
+<	- Anna is a mother of Laura and Joe.
+<	- Every mother is a woman.
+* 
+* My assumptions:
+< Anna is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Laura has a mother, called Anna.
+<	- A mother is probably a person.
+* 	and:
+<	- Anna is probably a parent of Laura and Joe.
+<	- A parent is probably a person.
+* 	and:
+<	- Anna is a mother of Laura and Joe.
+<	- A mother is probably a person.
+* 	and:
+<	- Joe has a mother, called Anna.
+<	- A mother is probably a person.
+< Anna is probably not a man. Because:
+<	- Anna is probably a person.
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Anna is probably a parent of Laura and Joe.
+<	- Every parent is a woman or a man.
+<	- Anna is a woman.
+< Anna is probably a parent of Laura and Joe. Because:
+<	- Joe has probably a parent, called Anna.
+<	- Laura has probably 2 parents, called Anna and John.
+* 	and:
+<	- Every parent is a father or a mother.
+<	- Anna is a mother of Laura and Joe.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura is a child of Anna and John.
+<	- Joe is probably a child of Anna.
+* 	and:
+<	- Every family has parents and children.
+<	- Anna has probably 2 children, called Laura and Joe.
+< Anna is probably part of a family. Because:
+<	- Anna is probably a parent of Laura and Joe.
+<	- Parents are part of every family.
+< Anna is probably not a father. Because:
+<	- Anna is probably a parent of Laura and Joe.
+<	- Every parent is a father or a mother.
+<	- Anna is a mother of Laura and Joe.
+< Anna has possibly a daughter, called Laura. Because:
+<	- Laura is possibly a daughter of Anna.
+* 	and:
+<	- Laura has a mother, called Anna.
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
+< Anna has probably 2 children, called Laura and Joe. Because:
+<	- Every family has parents and children.
+<	- Anna is probably a parent of Laura and Joe.
+* 	and:
+<	- Laura is a child of Anna and John.
+<	- Joe is probably a child of Anna.
+< 
+* I have no justification report about Paul.
+* 
+* 
+* My assumptions:
+< Joe has probably a parent, called Anna. Because:
+<	- Anna is probably a parent of Laura and Joe.
+< Joe is probably a child of Anna. Because:
+<	- Every family has parents and children.
+<	- Anna is probably a parent of Laura and Joe.
+* 	and:
+<	- Every family has parents and children.
+<	- Every parent is a father or a mother.
+<	- Joe has a mother, called Anna.
+* 	and:
+<	- Anna has probably 2 children, called Laura and Joe.
+< Joe is probably part of a family. Because:
+<	- Joe is probably a child of Anna.
+<	- Children are part of every family.
+< Joe is possibly a person. Because:
+<	- Joe is probably a child of Anna.
+<	- A child is probably a person.
+* 
+* My questions:
+< Is Joe a man, a woman, a girl or a boy? Because:
+<	- Joe is probably a child of Anna.
+<	- Every child is a girl, a woman, a boy or a man.
+* 	and:
+<	- Joe is possibly a person.
+<	- Every person is a man or a woman.
+< Is Joe a son or a daughter? Because:
+<	- Joe is probably a child of Anna.
+<	- Every child is a son or a daughter.
+< 
+* 
+* My conclusions:
+< Laura is part of a family. Because:
+<	- Laura is a child of Anna and John.
+<	- Children are part of every family.
+* 
+* My assumptions:
+< Laura has probably 2 parents, called Anna and John. Because:
+<	- Anna is probably a parent of Laura and Joe.
+<	- John is probably a parent of Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura is a child of Anna and John.
+< Laura is possibly a daughter of Anna. Because:
+<	- Laura is a child of Anna and John.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
+* 	and:
+<	- Anna is a mother of Laura and Joe.
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
+< Laura is probably a person. Because:
+<	- Laura is a child of Anna and John.
+<	- A child is probably a person.
+* 	and:
+<	- Laura is possibly a daughter of Anna.
+<	- A daughter is probably a person.
+< Laura is possibly not a boy and not a man. Because:
+<	- Laura is a child of Anna and John.
+<	- Every child is a girl, a woman, a boy or a man.
+<	- Laura is possibly a daughter of Anna.
+<	- Every daughter is a girl or a woman.
+< Laura is possibly not a son. Because:
+<	- Laura is a child of Anna and John.
+<	- Every child is a son or a daughter.
+<	- Laura is possibly a daughter of Anna.
+* 
+* My questions:
+< Is Laura a girl or a woman? Because:
+<	- Laura is possibly a daughter of Anna.
+<	- Every daughter is a girl or a woman.
+< 

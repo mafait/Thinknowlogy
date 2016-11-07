@@ -1,0 +1,5 @@
+﻿Cats are mammals.
+Dogs are mammals.
+Whales are mammals.
+Display information about mammals.
+# To continue, click button «Clear your mind.» or «Restart.».

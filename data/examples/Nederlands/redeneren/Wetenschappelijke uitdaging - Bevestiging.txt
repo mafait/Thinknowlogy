@@ -1,0 +1,25 @@
+﻿Paul is een zoon van Jan.
+Jan heeft een zoon, genaamd Paul.
+Anna heeft een dochter, genaamd Laura.
+Laura is een dochter van Anna.
+
+Iedere auto heeft een motor.
+Een motor is deel van iedere auto.
+Een zeil is deel van iedere zeilboot.
+Iedere zeilboot heeft een zeil.
+
+Johan was de vader van Peter.
+Peter heeft geen vader meer.
+Peter had een vader, genaamd Johan.
+
+Ieder persoon is een man of een vrouw.
+Anne is een persoon.
+Anne is een man of een vrouw.
+
+Bill Clinton is de president van de Verenigde Staten.
+De Verenigde Staten heeft een president, genaamd Bill Clinton.
+Barack Obama is de president van de Verenigde Staten.
+De Verenigde Staten heeft een nieuwe president, genaamd Barack Obama.
+# De volgende zin is al bevestigd
+De Verenigde Staten heeft een vorige president, genaamd Bill Clinton.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

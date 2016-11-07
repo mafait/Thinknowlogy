@@ -1,0 +1,71 @@
+﻿* 
+* Mijn conclusies:
+< Jan heeft een zoon, genaamd Paul.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< Jan heeft een zoon, genaamd Paul.
+< 
+* 
+* Mijn conclusies:
+< Laura is een dochter van Anna.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< Laura is een dochter van Anna.
+< 
+* 
+* Mijn conclusies:
+< Een motor is deel van iedere auto.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< Een motor is deel van iedere auto.
+< 
+* 
+* Mijn conclusies:
+< Iedere zeilboot heeft een zeil.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< Iedere zeilboot heeft een zeil.
+< 
+* 
+* Mijn conclusies:
+< Peter heeft geen vader meer.
+< Peter had een vader, genaamd Johan.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< Peter heeft geen vader meer.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< Peter had een vader, genaamd Johan.
+< 
+* 
+* Mijn vragen:
+< Is Anne een man of een vrouw?
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd Bill Clinton.
+< 
+* 
+* Het woord "Bill Clinton" is semantisch dubbelzinnig:
+* - óf deze entiteit vond opnieuw plaats,
+* - óf er zijn meerdere voorkomens van deze entiteit.
+* 
+* In het laatste geval, verrijk a.u.b. de specificatie van de betrokken entiteiten.
+* 
+* Mijn conclusies die bevestigd zijn:
+< De Verenigde Staten heeft een president, genaamd Bill Clinton.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd Barack Obama.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< De Verenigde Staten heeft een president, genaamd Barack Obama.
+< 

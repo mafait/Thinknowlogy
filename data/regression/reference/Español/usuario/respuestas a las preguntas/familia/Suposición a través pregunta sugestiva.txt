@@ -1,0 +1,75 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Pablo es parte de una familia.
+< Pablo no es una hija.
+< Pablo no es una niña y una mujer.
+< Juan tiene un hijo, llamado Pablo.
+< Ana tiene un hijo, llamado Pablo.
+* 
+* Mis suposiciones:
+< Pablo es probablemente una persona.
+< Pablo tiene posiblemente una madre, llamada Ana.
+< Juan es posiblemente una persona.
+< Juan es probablemente parte de una familia.
+< Ana es posiblemente madre de Pablo.
+< Ana es posiblemente una mujer.
+< Ana es puede-ser una persona.
+< Ana no es puede-ser un hombre.
+< Ana es posiblemente parte de una familia.
+< Ana no es posiblemente un padre.
+* 
+* Mis preguntas:
+< ¿Es Pablo un niño o un hombre?
+< ¿Es Juan una mujer o un hombre?
+< ¿Es Juan un padre o una madre?
+< 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
+< ¿Es Juan un padre o una madre?
+* 
+* Mis preguntas que son contestadas:
+< ¿Es Juan un padre o una madre?
+< ¿Es Juan una mujer o un hombre?
+* 
+* Mis suposiciones:
+< Juan es probablemente un padre.
+< Juan es probablemente un hombre.
+< Juan no es posiblemente una mujer.
+< Juan no es probablemente una madre.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Mis suposiciones:
+< Jorge es probablemente un padre.
+< Jorge es probablemente parte de una familia.
+< Jorge es posiblemente una persona.
+< Jorge es probablemente un hombre.
+< Jorge no es posiblemente una mujer.
+< Jorge no es probablemente una madre.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 

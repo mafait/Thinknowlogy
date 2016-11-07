@@ -1,7 +1,7 @@
 /*	Class:			WordCollection
  *	Supports class:	WordItem
  *	Purpose:		To create collection structures
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class WordCollection
 	{
-	// Private constructible variables
+	// Private constructed variables
 
 	private boolean hasCreatedCollection_;
 
@@ -34,7 +34,7 @@ class WordCollection
 	private String moduleNameString_;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected WordCollection( WordItem myWordItem )
 		{
@@ -72,103 +72,86 @@ class WordCollection
 		boolean hasFoundCollection = false;
 		boolean isDuplicateCollection = false;
 		short collectionOrderNr;
-		short foundCollectionWordTypeNr = Constants.WORD_TYPE_UNDEFINED;
+		short foundCollectionWordTypeNr = Constants.NO_WORD_TYPE_NR;
 		int foundCollectionNr = Constants.NO_COLLECTION_NR;
 
 		foundCollectionWordItem_ = null;
 
-		if( !myWordItem_.isAdminWord() )
+		if( collectionWordItem == null )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The given collected word is undefined" );
+
+		if( commonWordItem == null )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The given common word is undefined" );
+
+		if( collectionWordItem == myWordItem_ )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The given collected word is the same as my word" );
+
+		if( collectionWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL )
+			collectionWordTypeNr = Constants.WORD_TYPE_NOUN_SINGULAR;
+
+		if( !myWordItem_.hasWordType( true, collectionWordTypeNr ) )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "I don't have the requested word type number: " + collectionWordTypeNr );
+
+		if( !collectionWordItem.hasWordType( true, collectionWordTypeNr ) )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The collection word item doesn't have the requested word type number: " + collectionWordTypeNr );
+
+		if( collectionNr == Constants.NO_COLLECTION_NR )
 			{
-			if( collectionWordItem != null )
+			if( ( collectionNr = myWordItem_.highestCollectionNrInAllWords() ) >= Constants.MAX_COLLECTION_NR )
+				return myWordItem_.startCollectionResultSystemErrorInWord( 1, moduleNameString_, "Collection number overflow" );
+
+			collectionResult.createdCollectionNr = ++collectionNr;
+			}
+
+		foundCollectionNr = myWordItem_.collectionNr( collectionWordTypeNr, commonWordItem );
+
+		if( foundCollectionNr > Constants.NO_COLLECTION_NR &&
+		foundCollectionNr != collectionNr )
+			{
+			if( isSpecificationGeneralization )
+				isDuplicateCollection = true;
+			else
 				{
-				if( commonWordItem != null )
+				// Skip if Spanish ambiguous
+				if( commonWordItem != compoundGeneralizationWordItem &&
+				!commonWordItem.isNounWordSpanishAmbiguous() )
 					{
-					if( collectionWordItem != myWordItem_ )
-						{
-						if( collectionWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL )
-							collectionWordTypeNr = Constants.WORD_TYPE_NOUN_SINGULAR;
+					// Detected semantic ambiguity of the specification word
+					if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START, commonWordItem.wordTypeString( true, commonWordTypeNr ), Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD, myWordItem_.wordTypeString( true, foundCollectionWordTypeNr ), Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END ) != Constants.RESULT_OK )
+						return myWordItem_.addCollectionResultErrorInWord( 1, moduleNameString_, "I failed to write the 'ambiguous due to' interface notification" );
 
-						if( myWordItem_.hasWordType( true, collectionWordTypeNr ) )
-							{
-							if( collectionWordItem.hasWordType( true, collectionWordTypeNr ) )
-								{
-								if( collectionNr == Constants.NO_COLLECTION_NR )
-									{
-									if( ( collectionNr = myWordItem_.highestCollectionNrInAllWords() ) < Constants.MAX_COLLECTION_NR )
-										collectionResult.createdCollectionNr = ++collectionNr;
-									else
-										myWordItem_.startSystemErrorInWord( 1, moduleNameString_, "Collection number overflow" );
-									}
-
-								foundCollectionNr = myWordItem_.collectionNr( collectionWordTypeNr, commonWordItem );
-
-								if( foundCollectionNr > Constants.NO_COLLECTION_NR &&
-								foundCollectionNr != collectionNr )
-									{
-									if( isSpecificationGeneralization )
-										isDuplicateCollection = true;
-									else
-										{
-										// Skip if Spanish ambiguous
-										if( commonWordItem != compoundGeneralizationWordItem &&
-										!commonWordItem.isNounWordSpanishAmbiguous() )
-											{
-											// Detected semantic ambiguity of the specification word
-											if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_START, commonWordItem.wordTypeString( true, commonWordTypeNr ), Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_WORD, myWordItem_.wordTypeString( true, foundCollectionWordTypeNr ), Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_DUE_TO_SPECIFICATION_END ) == Constants.RESULT_OK )
-												collectionResult.isAmbiguousCollection = true;
-											else
-												myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write the 'ambiguous due to' interface notification" );
-											}
-										}
-									}
-
-								if( CommonVariables.result == Constants.RESULT_OK &&
-								!isDuplicateCollection )
-									{
-									if( myWordItem_.collectionList == null )
-										{
-										// Create list
-										if( ( myWordItem_.collectionList = new CollectionList( myWordItem_ ) ) != null )
-											myWordItem_.wordListArray[Constants.WORD_COLLECTION_LIST] = myWordItem_.collectionList;
-										else
-											myWordItem_.startErrorInWord( 1, moduleNameString_, "I failed to create a collection list" );
-										}
-									else
-										{
-										if( collectionResult.createdCollectionNr == Constants.NO_COLLECTION_NR )
-											// Check if collection already exists
-											hasFoundCollection = myWordItem_.collectionList.hasCollection( collectionNr, collectionWordItem, commonWordItem );
-										}
-
-									if( CommonVariables.result == Constants.RESULT_OK &&
-									!hasFoundCollection )
-										{
-										if( ( collectionOrderNr = myWordItem_.highestCollectionOrderNrInAllWords( collectionNr ) ) < Constants.MAX_ORDER_NR - 1 )
-											myWordItem_.collectionList.createCollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem );
-										else
-											myWordItem_.startSystemErrorInWord( 1, moduleNameString_, "Collection order number overflow" );
-										}
-									}
-								}
-							else
-								myWordItem_.startErrorInWord( 1, moduleNameString_, "The collection word item doesn't have the requested word type number: " + collectionWordTypeNr );
-							}
-						else
-							myWordItem_.startErrorInWord( 1, moduleNameString_, "I don't have the requested word type number: " + collectionWordTypeNr );
-						}
-					else
-						myWordItem_.startErrorInWord( 1, moduleNameString_, "The given collected word is the same as my word" );
+					collectionResult.isAmbiguousCollection = true;
 					}
-				else
-					myWordItem_.startErrorInWord( 1, moduleNameString_, "The given common word is undefined" );
+				}
+			}
+
+		if( !isDuplicateCollection )
+			{
+			if( myWordItem_.collectionList == null )
+				{
+				// Create list
+				if( ( myWordItem_.collectionList = new CollectionList( myWordItem_ ) ) == null )
+					return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "I failed to create a collection list" );
+
+				myWordItem_.wordListArray[Constants.WORD_COLLECTION_LIST] = myWordItem_.collectionList;
 				}
 			else
-				myWordItem_.startErrorInWord( 1, moduleNameString_, "The given collected word is undefined" );
-			}
-		else
-			myWordItem_.startErrorInWord( 1, moduleNameString_, "The admin word item cannot have collections" );
+				{
+				if( collectionResult.createdCollectionNr == Constants.NO_COLLECTION_NR )
+					// Check if collection already exists
+					hasFoundCollection = myWordItem_.collectionList.hasCollection( collectionNr, collectionWordItem, commonWordItem );
+				}
 
-		collectionResult.result = CommonVariables.result;
+			if( !hasFoundCollection )
+				{
+				// A collection comes in pairs
+				if( ( collectionOrderNr = myWordItem_.highestCollectionOrderNrInAllWords( collectionNr ) ) >= Constants.MAX_ORDER_NR - 1 )
+					return myWordItem_.startCollectionResultSystemErrorInWord( 1, moduleNameString_, "Collection order number overflow" );
+
+				collectionResult.result = myWordItem_.collectionList.createCollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem );
+				}
+			}
+
 		return collectionResult;
 		}
 
@@ -180,83 +163,63 @@ class WordCollection
 
 		hasCreatedCollection_ = false;
 
-		if( generalizationWordItem != null )
+		if( generalizationWordItem == null )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The given generalization word item is undefined" );
+
+		if( generalizationWordItem == myWordItem_ &&
+		!myWordItem_.isNounWordSpanishAmbiguous() )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The given generalization word item is the same as my word" );
+
+		if( collectionWordItem == null )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The given collected word item is undefined" );
+
+		if( collectionWordItem == myWordItem_ )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The given collected word item is the same as my word" );
+
+		if( !myWordItem_.isNounWordType( collectionWordTypeNr ) )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The given collected word type isn't a noun" );
+
+		if( !myWordItem_.isNounWordType( commonWordTypeNr ) )
+			return myWordItem_.startCollectionResultErrorInWord( 1, moduleNameString_, "The given common word type isn't a noun" );
+
+		if( ( currentSpecificationItem = myWordItem_.firstNonQuestionSpecificationItem() ) != null )
 			{
-			if( generalizationWordItem != myWordItem_ ||
-			myWordItem_.isNounWordSpanishAmbiguous() )
-				{
-				if( collectionWordItem != null )
+			do	{
+				if( currentSpecificationItem.isExclusiveSpecification() &&
+				( currentSpecificationWordItem = currentSpecificationItem.specificationWordItem() ) == generalizationWordItem )
 					{
-					if( collectionWordItem != myWordItem_ )
+					if( foundCollectionWordItem_ == null )
 						{
-						if( myWordItem_.isSingularOrPluralNoun( collectionWordTypeNr ) )
-							{
-							if( myWordItem_.isSingularOrPluralNoun( commonWordTypeNr ) )
-								{
-								if( ( currentSpecificationItem = myWordItem_.firstNonQuestionSpecificationItem() ) != null )
-									{
-									do	{
-										if( currentSpecificationItem.isExclusiveSpecification() &&
-										( currentSpecificationWordItem = currentSpecificationItem.specificationWordItem() ) == generalizationWordItem )
-											{
-											if( foundCollectionWordItem_ == null )
-												{
-												foundCollectionWordItem_ = collectionWordItem;
-												foundGeneralizationWordItem_ = currentSpecificationWordItem;
-												}
-											else
-												{
-												if( foundCollectionWordItem_ != collectionWordItem )
-													{
-													if( ( collectionResult = foundCollectionWordItem_.findCollection( false, collectionWordItem, myWordItem_ ) ).result == Constants.RESULT_OK )
-														{
-														if( !collectionResult.isCollected )
-															{
-															if( ( collectionResult = foundCollectionWordItem_.addCollection( false, false, collectionWordTypeNr, commonWordTypeNr, Constants.NO_COLLECTION_NR, collectionWordItem, myWordItem_, null ) ).result == Constants.RESULT_OK )
-																{
-																if( collectionWordItem.addCollection( false, false, collectionWordTypeNr, commonWordTypeNr, collectionResult.createdCollectionNr, foundCollectionWordItem_, myWordItem_, null ).result == Constants.RESULT_OK )
-																	{
-																	hasCreatedCollection_ = true;
-																	foundCollectionWordItem_ = null;
-																	}
-																else
-																	myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to collect word \"" + currentSpecificationWordItem.anyWordTypeString() + "\" with word \"" + collectionWordItem.anyWordTypeString() + "\"" );
-																}
-															else
-																myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to collect word \"" + currentSpecificationWordItem.anyWordTypeString() + "\" with word \"" + collectionWordItem.anyWordTypeString() + "\"" );
-															}
-														}
-													else
-														myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find out if word \"" + collectionWordItem.anyWordTypeString() + "\" is collected with word \"" + foundCollectionWordItem_.anyWordTypeString() + "\"" );
-													}
-												}
-											}
-										}
-									while( CommonVariables.result == Constants.RESULT_OK &&
-									!hasCreatedCollection_ &&
-									( currentSpecificationItem = currentSpecificationItem.nextSelectedSpecificationItem() ) != null );
-									}
-								}
-							else
-								myWordItem_.startErrorInWord( 1, moduleNameString_, "The given common word type isn't a noun" );
-							}
-						else
-							myWordItem_.startErrorInWord( 1, moduleNameString_, "The given collected word type isn't a noun" );
+						foundCollectionWordItem_ = collectionWordItem;
+						foundGeneralizationWordItem_ = currentSpecificationWordItem;
 						}
 					else
-						myWordItem_.startErrorInWord( 1, moduleNameString_, "The given collected word item is the same as my word" );
+						{
+						if( foundCollectionWordItem_ != collectionWordItem )
+							{
+							if( ( collectionResult = foundCollectionWordItem_.findCollection( false, collectionWordItem, myWordItem_ ) ).result != Constants.RESULT_OK )
+								return myWordItem_.addCollectionResultErrorInWord( 1, moduleNameString_, "I failed to find out if word \"" + collectionWordItem.anyWordTypeString() + "\" is collected with word \"" + foundCollectionWordItem_.anyWordTypeString() + "\"" );
+
+							if( !collectionResult.isCollected )
+								{
+								if( ( collectionResult = foundCollectionWordItem_.addCollection( false, false, collectionWordTypeNr, commonWordTypeNr, Constants.NO_COLLECTION_NR, collectionWordItem, myWordItem_, null ) ).result != Constants.RESULT_OK )
+									return myWordItem_.addCollectionResultErrorInWord( 1, moduleNameString_, "I failed to collect word \"" + currentSpecificationWordItem.anyWordTypeString() + "\" with word \"" + collectionWordItem.anyWordTypeString() + "\"" );
+
+								if( collectionWordItem.addCollection( false, false, collectionWordTypeNr, commonWordTypeNr, collectionResult.createdCollectionNr, foundCollectionWordItem_, myWordItem_, null ).result != Constants.RESULT_OK )
+									return myWordItem_.addCollectionResultErrorInWord( 1, moduleNameString_, "I failed to collect word \"" + currentSpecificationWordItem.anyWordTypeString() + "\" with word \"" + collectionWordItem.anyWordTypeString() + "\"" );
+
+								hasCreatedCollection_ = true;
+								foundCollectionWordItem_ = null;
+								}
+							}
+						}
 					}
-				else
-					myWordItem_.startErrorInWord( 1, moduleNameString_, "The given collected word item is undefined" );
 				}
-			else
-				myWordItem_.startErrorInWord( 1, moduleNameString_, "The given generalization word item is the same as my word" );
+			while( !hasCreatedCollection_ &&
+			( currentSpecificationItem = currentSpecificationItem.nextSelectedSpecificationItem() ) != null );
 			}
-		else
-			myWordItem_.startErrorInWord( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		collectionResult.foundGeneralizationWordItem = foundGeneralizationWordItem_;
-		collectionResult.result = CommonVariables.result;
 		return collectionResult;
 		}
 
@@ -270,42 +233,36 @@ class WordCollection
 
 		foundGeneralizationWordItem_ = null;
 
-		if( collectionWordItem != null )
-			{
-			if( !hasCreatedCollection_ &&
-			foundGeneralizationWordItem_ == null &&
-			( currentGeneralizationItem = myWordItem_.firstNounSpecificationGeneralizationItem() ) != null )
-				{
-				do	{
-					if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null )
-						{
-						if( currentGeneralizationWordItem != collectionWordItem )
-							{
-							if( ( collectionResult = currentGeneralizationWordItem.addCollectionByGeneralization( collectionWordTypeNr, commonWordTypeNr, generalizationWordItem, collectionWordItem ) ).result == Constants.RESULT_OK )
-								{
-								foundGeneralizationWordItem = collectionResult.foundGeneralizationWordItem;
-
-								if( foundGeneralizationWordItem != null &&
-								( collectionNr = collectionWordItem.collectionNr( collectionWordTypeNr, currentGeneralizationWordItem ) ) > Constants.NO_COLLECTION_NR )
-									{
-									// Collect by generalization
-									if( foundGeneralizationWordItem.collectGeneralizationsOrSpecifications( isExclusiveGeneralization, false, isQuestion, collectionNr ) != Constants.RESULT_OK )
-										return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to collect generalizations and specifications in word \"" + foundGeneralizationWordItem.anyWordTypeString() + "\"" );
-									}
-								}
-							else
-								return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to add a specification collection by exclusive specification in word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\"" );
-							}
-						}
-					else
-						return myWordItem_.startErrorInWord( 1, moduleNameString_, "I have found an undefined generalization word" );
-					}
-				while( collectionResult.foundGeneralizationWordItem == null &&
-				( currentGeneralizationItem = currentGeneralizationItem.nextNounSpecificationGeneralizationItem() ) != null );
-				}
-			}
-		else
+		if( collectionWordItem == null )
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given collection word item is undefined" );
+
+		if( !hasCreatedCollection_ &&
+		foundGeneralizationWordItem_ == null &&
+		( currentGeneralizationItem = myWordItem_.firstNounSpecificationGeneralizationItem() ) != null )
+			{
+			do	{
+				if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
+					return myWordItem_.startErrorInWord( 1, moduleNameString_, "I have found an undefined generalization word" );
+
+				if( currentGeneralizationWordItem != collectionWordItem )
+					{
+					if( ( collectionResult = currentGeneralizationWordItem.addCollectionByGeneralization( collectionWordTypeNr, commonWordTypeNr, generalizationWordItem, collectionWordItem ) ).result != Constants.RESULT_OK )
+						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to add a specification collection by exclusive specification in word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\"" );
+
+					foundGeneralizationWordItem = collectionResult.foundGeneralizationWordItem;
+
+					if( foundGeneralizationWordItem != null &&
+					( collectionNr = collectionWordItem.collectionNr( collectionWordTypeNr, currentGeneralizationWordItem ) ) > Constants.NO_COLLECTION_NR )
+						{
+						// Collect by generalization
+						if( foundGeneralizationWordItem.collectGeneralizationsOrSpecifications( isExclusiveGeneralization, false, isQuestion, collectionNr ) != Constants.RESULT_OK )
+							return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to collect generalizations and specifications in word \"" + foundGeneralizationWordItem.anyWordTypeString() + "\"" );
+						}
+					}
+				}
+			while( collectionResult.foundGeneralizationWordItem == null &&
+			( currentGeneralizationItem = currentGeneralizationItem.nextNounSpecificationGeneralizationItem() ) != null );
+			}
 
 		return Constants.RESULT_OK;
 		}

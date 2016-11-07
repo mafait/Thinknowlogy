@@ -1,0 +1,17 @@
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+¿Es Pablo una mujer?
+¿Es Pablo un hombre o una mujer?
+¿Es Pablo un hombre?
+¿Es Pablo un hombre o una mujer?
+¿Es Pablo una mujer?
+¿Es Pablo un hombre?
+¿Es José una mujer o un hombre?
+¿Es José una niña, una mujer, un niño o un hombre?
+¿Es José una niña o un niño?
+¿Es José una niña, una mujer, un niño o un hombre?
+¿Es José una mujer o un hombre?
+¿Es José una niña o un niño?
+¿Es Pablo un hijo o una hija?
+¿Es José una hija?
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

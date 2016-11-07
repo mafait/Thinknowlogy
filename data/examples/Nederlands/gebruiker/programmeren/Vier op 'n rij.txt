@@ -1,0 +1,119 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To demonstrate programming in natural language.
+#	Version:		Thinknowlogy 2016r2 (Restyle)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	De spelregels van Vier op 'n rij:
+#----------------------------------------------------------------------------
+#	Het spel wordt gespeeld op een verticaal geplaatst bord bestaand uit
+#	7 kolommen en 6 rijen. Iedere speler beschikt over 21 schijven met een
+#	afwijkende kleur, meestal geel en rood. Het spel wordt gespeeld in
+#	beurten. De spelers laten om de beurt een schijf in één van de nog niet
+#	volle kolommen vallen. De schijf bezet altijd het laagst beschikbare vak
+#	in een kolom. Een speler wint door met vier van zijn eigen schijven een
+#	aaneengesloten rij te vormen. Een rij kan zowel verticaal, horizontaal
+#	als diagonaal worden gevormd en beëindigt het spel.
+#	Het spel eindigt in een gelijkspel als geen van de twee spelers er in
+#	slaagt een aaneengesloten rij te vormen voordat het bord volledig door
+#	schijven is gevuld.
+#----------------------------------------------------------------------------
+#	Bron: http://nl.wikipedia.org/wiki/Vier_op_%27n_rij
+#----------------------------------------------------------------------------
+
+# Initial definitions.
+Een beurt is van jou of van mij.
+Een zet is A, B, C, D, E, F of G.
+Een oplossingsniveau is laag of hoog.
+
+# Los het probleem op.
+Als de zet toegewezen is en de beurt toegewezen is dan als de oplossingsmethode niet bezig is, de oplossingsmethode niet gereed is en het spel niet gelijkspel is dan de zet is leeg en los-op het spel anders de zet is leeg en de oplossingsmethode is niet gereed.
+#Als de zet toegewezen is en de beurt toegewezen is dan als de oplossingsmethode niet bezig is, de oplossingsmethode niet gereed is en het spel geen gelijkspel is dan de zet is leeg en los-op het spel anders de zet is leeg en de oplossingsmethode is niet gereed.
+
+# Keer de oplossingsmethode om.
+Als de zet toegewezen is en de beurt toegewezen is dan als de oplossingsmethode niet bezig is of de oplossingsmethode niet gereed is dan als de oplossingsmethode omgekeerd is dan de oplossingsmethode is niet omgekeerd anders de oplossingsmethode is omgekeerd.
+
+# Toon de beurt.
+Als de beurt toegewezen is dan als de oplossingsmethode niet gereed is of de oplossingsmethode gereed is, het spel toegewezen is en het spel niet ongeldig is dan als de beurt van jou is dan toon "\nHet is jouw beurt.\n\n".
+
+# Wissel de beurt.
+Als de zet toegewezen is, de beurt toegewezen is en het spel niet toegewezen is dan als de oplossingsmethode niet bezig is of de oplossingsmethode niet gereed is dan als de beurt van jou is dan de beurt is van mij anders toon "\nIk heb geselecteerd: ~+'zet'<a>`~.\n" en de beurt is van jou.
+
+# Controleer op gelijkspel.
+Als de zet niet toegewezen is, het spel niet toegewezen is, A6 toegewezen is, B6 toegewezen is, C6 toegewezen is, D6 toegewezen is, E6 toegewezen is, F6 toegewezen is en G6 toegewezen is dan het spel is gelijkspel, de beurt is leeg en toon "Het is een gelijkspel.\n\n".
+#Als de zet niet toegewezen is, het spel niet toegewezen is, A6 toegewezen is, B6 toegewezen is, C6 toegewezen is, D6 toegewezen is, E6 toegewezen is, F6 toegewezen is en G6 toegewezen is dan het spel is een gelijkspel, de beurt is leeg en toon "Het is een gelijkspel.\n\n".
+
+# En de winnaar is ...
+Als de zet is toegewezen, het spel is toegewezen, het spel is niet gelijkspel en het spel is niet ongeldig dan als de beurt is van mij dan toon "\nMijn winnende zet: ~+'zet'<a>`~.\n", de zet is leeg en de beurt is leeg anders toon "\nGefeliciteerd!\n", de zet is leeg en de beurt is leeg.
+#Als de zet toegewezen is, het spel toegewezen is, het spel geen gelijkspel is en het spel is niet ongeldig is dan als de beurt van mij is dan toon "\nMijn winnende zet: ~+'zet'<a>`~.\n", de zet is leeg en de beurt is leeg anders toon "\nGefeliciteerd!\n", de zet is leeg en de beurt is leeg.
+
+# Herstel een ongeldige zet.
+Als de zet ongeldig is dan de zet is leeg.
+
+# Toon het speelbord.
+Als de beurt toegewezen is, de zet niet ongeldig is, het spel niet van jou is en de oplossingsmethode niet gereed is dan toon "\n\t|~+1'A6'<a>`~|~+1'B6'<a>`~|~+1'C6'<a>`~|~+1'D6'<a>`~|~+1'E6'<a>`~|~+1'F6'<a>`~|~+1'G6'<a>`~|\n\t|~+1'A5'<a>`~|~+1'B5'<a>`~|~+1'C5'<a>`~|~+1'D5'<a>`~|~+1'E5'<a>`~|~+1'F5'<a>`~|~+1'G5'<a>`~|\n\t|~+1'A4'<a>`~|~+1'B4'<a>`~|~+1'C4'<a>`~|~+1'D4'<a>`~|~+1'E4'<a>`~|~+1'F4'<a>`~|~+1'G4'<a>`~|\n\t|~+1'A3'<a>`~|~+1'B3'<a>`~|~+1'C3'<a>`~|~+1'D3'<a>`~|~+1'E3'<a>`~|~+1'F3'<a>`~|~+1'G3'<a>`~|\n\t|~+1'A2'<a>`~|~+1'B2'<a>`~|~+1'C2'<a>`~|~+1'D2'<a>`~|~+1'E2'<a>`~|~+1'F2'<a>`~|~+1'G2'<a>`~|\n\t|~+1'A1'<a>`~|~+1'B1'<a>`~|~+1'C1'<a>`~|~+1'D1'<a>`~|~+1'E1'<a>`~|~+1'F1'<a>`~|~+1'G1'<a>`~|\nzet->\t-A-B-C-D-E-F-G-\n".
+Als de beurt niet toegewezen is, de zet niet toegewezen is, het spel toegewezen is en het spel niet ongeldig is dan toon "\n\t|~+1'A6'<a>`~|~+1'B6'<a>`~|~+1'C6'<a>`~|~+1'D6'<a>`~|~+1'E6'<a>`~|~+1'F6'<a>`~|~+1'G6'<a>`~|\n\t|~+1'A5'<a>`~|~+1'B5'<a>`~|~+1'C5'<a>`~|~+1'D5'<a>`~|~+1'E5'<a>`~|~+1'F5'<a>`~|~+1'G5'<a>`~|\n\t|~+1'A4'<a>`~|~+1'B4'<a>`~|~+1'C4'<a>`~|~+1'D4'<a>`~|~+1'E4'<a>`~|~+1'F4'<a>`~|~+1'G4'<a>`~|\n\t|~+1'A3'<a>`~|~+1'B3'<a>`~|~+1'C3'<a>`~|~+1'D3'<a>`~|~+1'E3'<a>`~|~+1'F3'<a>`~|~+1'G3'<a>`~|\n\t|~+1'A2'<a>`~|~+1'B2'<a>`~|~+1'C2'<a>`~|~+1'D2'<a>`~|~+1'E2'<a>`~|~+1'F2'<a>`~|~+1'G2'<a>`~|\n\t|~+1'A1'<a>`~|~+1'B1'<a>`~|~+1'C1'<a>`~|~+1'D1'<a>`~|~+1'E1'<a>`~|~+1'F1'<a>`~|~+1'G1'<a>`~|\nzet->\t-A-B-C-D-E-F-G-\n\nHet spel is gewonnen door ~+'spel'<a>`~.\n\nOm nogmaals het spelen, klik op knop «Wis je geheugen.» en dan op «Lees het bestand \"Nederlands/gebruiker/programmeren/Vier op 'n rij\".».\n\n", de zet is leeg en de beurt is leeg.
+
+# De definities van horizontale mogelijkheden om het spel te winnen.
+# (In de toekomst zal een krachtiger grammatica worden geïmplementeerd om de volgende zinnen tot één zin te reduceren dat de horizontale mogelijkheden beschrijft.)
+
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A1 de waarde van de beurt is, B1 de waarde van de beurt is, C1 de waarde van de beurt is en D1 de waarde van de beurt is of B1 de waarde van de beurt is, C1 de waarde van de beurt is, D1 de waarde van de beurt is en E1 de waarde van de beurt is of C1 de waarde van de beurt is, D1 de waarde van de beurt is, E1 de waarde van de beurt is en F1 de waarde van de beurt is of D1 de waarde van de beurt is, E1 de waarde van de beurt is, F1 de waarde van de beurt is en G1 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A2 de waarde van de beurt is, B2 de waarde van de beurt is, C2 de waarde van de beurt is en D2 de waarde van de beurt is of B2 de waarde van de beurt is, C2 de waarde van de beurt is, D2 de waarde van de beurt is en E2 de waarde van de beurt is of C2 de waarde van de beurt is, D2 de waarde van de beurt is, E2 de waarde van de beurt is en F2 de waarde van de beurt is of D2 de waarde van de beurt is, E2 de waarde van de beurt is, F2 de waarde van de beurt is en G2 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A3 de waarde van de beurt is, B3 de waarde van de beurt is, C3 de waarde van de beurt is en D3 de waarde van de beurt is of B3 de waarde van de beurt is, C3 de waarde van de beurt is, D3 de waarde van de beurt is en E3 de waarde van de beurt is of C3 de waarde van de beurt is, D3 de waarde van de beurt is, E3 de waarde van de beurt is en F3 de waarde van de beurt is of D3 de waarde van de beurt is, E3 de waarde van de beurt is, F3 de waarde van de beurt is en G3 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A4 de waarde van de beurt is, B4 de waarde van de beurt is, C4 de waarde van de beurt is en D4 de waarde van de beurt is of B4 de waarde van de beurt is, C4 de waarde van de beurt is, D4 de waarde van de beurt is en E4 de waarde van de beurt is of C4 de waarde van de beurt is, D4 de waarde van de beurt is, E4 de waarde van de beurt is en F4 de waarde van de beurt is of D4 de waarde van de beurt is, E4 de waarde van de beurt is, F4 de waarde van de beurt is en G4 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A5 de waarde van de beurt is, B5 de waarde van de beurt is, C5 de waarde van de beurt is en D5 de waarde van de beurt is of B5 de waarde van de beurt is, C5 de waarde van de beurt is, D5 de waarde van de beurt is en E5 de waarde van de beurt is of C5 de waarde van de beurt is, D5 de waarde van de beurt is, E5 de waarde van de beurt is en F5 de waarde van de beurt is of D5 de waarde van de beurt is, E5 de waarde van de beurt is, F5 de waarde van de beurt is en G5 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A6 de waarde van de beurt is, B6 de waarde van de beurt is, C6 de waarde van de beurt is en D6 de waarde van de beurt is of B6 de waarde van de beurt is, C6 de waarde van de beurt is, D6 de waarde van de beurt is en E6 de waarde van de beurt is of C6 de waarde van de beurt is, D6 de waarde van de beurt is, E6 de waarde van de beurt is en F6 de waarde van de beurt is of D6 de waarde van de beurt is, E6 de waarde van de beurt is, F6 de waarde van de beurt is en G6 de waarde van de beurt is dan het spel is de waarde van de beurt.
+
+# De definities van vertikale mogelijkheden om het spel te winnen.
+# (In de toekomst zal een krachtiger grammatica worden geïmplementeerd om de volgende zinnen tot één zin te reduceren dat de vertikale mogelijkheden beschrijft.)
+
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A1 de waarde van de beurt is, A2 de waarde van de beurt is, A3 de waarde van de beurt is en A4 de waarde van de beurt is of A2 de waarde van de beurt is, A3 de waarde van de beurt is, A4 de waarde van de beurt is en A5 de waarde van de beurt is of A3 de waarde van de beurt is, A4 de waarde van de beurt is, A5 de waarde van de beurt is en A6 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als B1 de waarde van de beurt is, B2 de waarde van de beurt is, B3 de waarde van de beurt is en B4 de waarde van de beurt is of B2 de waarde van de beurt is, B3 de waarde van de beurt is, B4 de waarde van de beurt is en B5 de waarde van de beurt is of B3 de waarde van de beurt is, B4 de waarde van de beurt is, B5 de waarde van de beurt is en B6 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als C1 de waarde van de beurt is, C2 de waarde van de beurt is, C3 de waarde van de beurt is en C4 de waarde van de beurt is of C2 de waarde van de beurt is, C3 de waarde van de beurt is, C4 de waarde van de beurt is en C5 de waarde van de beurt is of C3 de waarde van de beurt is, C4 de waarde van de beurt is, C5 de waarde van de beurt is en C6 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als D1 de waarde van de beurt is, D2 de waarde van de beurt is, D3 de waarde van de beurt is en D4 de waarde van de beurt is of D2 de waarde van de beurt is, D3 de waarde van de beurt is, D4 de waarde van de beurt is en D5 de waarde van de beurt is of D3 de waarde van de beurt is, D4 de waarde van de beurt is, D5 de waarde van de beurt is en D6 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als E1 de waarde van de beurt is, E2 de waarde van de beurt is, E3 de waarde van de beurt is en E4 de waarde van de beurt is of E2 de waarde van de beurt is, E3 de waarde van de beurt is, E4 de waarde van de beurt is en E5 de waarde van de beurt is of E3 de waarde van de beurt is, E4 de waarde van de beurt is, E5 de waarde van de beurt is en E6 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als F1 de waarde van de beurt is, F2 de waarde van de beurt is, F3 de waarde van de beurt is en F4 de waarde van de beurt is of F2 de waarde van de beurt is, F3 de waarde van de beurt is, F4 de waarde van de beurt is en F5 de waarde van de beurt is of F3 de waarde van de beurt is, F4 de waarde van de beurt is, F5 de waarde van de beurt is en F6 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als G1 de waarde van de beurt is, G2 de waarde van de beurt is, G3 de waarde van de beurt is en G4 de waarde van de beurt is of G2 de waarde van de beurt is, G3 de waarde van de beurt is, G4 de waarde van de beurt is en G5 de waarde van de beurt is of G3 de waarde van de beurt is, G4 de waarde van de beurt is, G5 de waarde van de beurt is en G6 de waarde van de beurt is dan het spel is de waarde van de beurt.
+
+# De definities van diagonale mogelijkheden om het spel te winnen.
+# (In de toekomst zal een krachtiger grammatica worden geïmplementeerd om de volgende zinnen tot één zin te reduceren dat de diagonale mogelijkheden beschrijft.)
+
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A1 de waarde van de beurt is, B2 de waarde van de beurt is, C3 de waarde van de beurt is en D4 de waarde van de beurt is of B1 de waarde van de beurt is, C2 de waarde van de beurt is, D3 de waarde van de beurt is en E4 de waarde van de beurt is of C1 de waarde van de beurt is, D2 de waarde van de beurt is, E3 de waarde van de beurt is en F4 de waarde van de beurt is of D1 de waarde van de beurt is, E2 de waarde van de beurt is, F3 de waarde van de beurt is en G4 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A2 de waarde van de beurt is, B3 de waarde van de beurt is, C4 de waarde van de beurt is en D5 de waarde van de beurt is of B2 de waarde van de beurt is, C3 de waarde van de beurt is, D4 de waarde van de beurt is en E5 de waarde van de beurt is of C2 de waarde van de beurt is, D3 de waarde van de beurt is, E4 de waarde van de beurt is en F5 de waarde van de beurt is of D2 de waarde van de beurt is, E3 de waarde van de beurt is, F4 de waarde van de beurt is en G5 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A3 de waarde van de beurt is, B4 de waarde van de beurt is, C5 de waarde van de beurt is en D6 de waarde van de beurt is of B3 de waarde van de beurt is, C4 de waarde van de beurt is, D5 de waarde van de beurt is en E6 de waarde van de beurt is of C3 de waarde van de beurt is, D4 de waarde van de beurt is, E5 de waarde van de beurt is en F6 de waarde van de beurt is of D3 de waarde van de beurt is, E4 de waarde van de beurt is, F5 de waarde van de beurt is en G6 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A4 de waarde van de beurt is, B3 de waarde van de beurt is, C2 de waarde van de beurt is en D1 de waarde van de beurt is of B4 de waarde van de beurt is, C3 de waarde van de beurt is, D2 de waarde van de beurt is en E1 de waarde van de beurt is of C4 de waarde van de beurt is, D3 de waarde van de beurt is, E2 de waarde van de beurt is en F1 de waarde van de beurt is of D4 de waarde van de beurt is, E3 de waarde van de beurt is, F2 de waarde van de beurt is en G1 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A5 de waarde van de beurt is, B4 de waarde van de beurt is, C3 de waarde van de beurt is en D2 de waarde van de beurt is of B5 de waarde van de beurt is, C4 de waarde van de beurt is, D3 de waarde van de beurt is en E2 de waarde van de beurt is of C5 de waarde van de beurt is, D4 de waarde van de beurt is, E3 de waarde van de beurt is en F2 de waarde van de beurt is of D5 de waarde van de beurt is, E4 de waarde van de beurt is, F3 de waarde van de beurt is en G2 de waarde van de beurt is dan het spel is de waarde van de beurt.
+Als de beurt toegewezen is en het spel niet toegewezen is dan als A6 de waarde van de beurt is, B5 de waarde van de beurt is, C4 de waarde van de beurt is en D3 de waarde van de beurt is of B6 de waarde van de beurt is, C5 de waarde van de beurt is, D4 de waarde van de beurt is en E3 de waarde van de beurt is of C6 de waarde van de beurt is, D5 de waarde van de beurt is, E4 de waarde van de beurt is en F3 de waarde van de beurt is of D6 de waarde van de beurt is, E5 de waarde van de beurt is, F4 de waarde van de beurt is en G3 de waarde van de beurt is dan het spel is de waarde van de beurt.
+
+# Het fiche zal in de gekozen kolom worden gestopt en het zal naar de laagste vrije plaats vallen.
+Als de zet A is en het spel niet toegewezen is dan als A1 niet toegewezen is dan A1 is de waarde van de beurt anders als A2 niet toegewezen is dan A2 is de waarde van de beurt anders als A3 niet toegewezen is dan A3 is de waarde van de beurt anders als A4 niet toegewezen is dan A4 is de waarde van de beurt anders als A5 niet toegewezen is dan A5 is de waarde van de beurt anders als A6 niet toegewezen is dan A6 is de waarde van de beurt anders toon "\nSorry, kolom ~+'zet'<a>`~ is vol.\n" en de zet is ongeldig.
+Als de zet B is en het spel niet toegewezen is dan als B1 niet toegewezen is dan B1 is de waarde van de beurt anders als B2 niet toegewezen is dan B2 is de waarde van de beurt anders als B3 niet toegewezen is dan B3 is de waarde van de beurt anders als B4 niet toegewezen is dan B4 is de waarde van de beurt anders als B5 niet toegewezen is dan B5 is de waarde van de beurt anders als B6 niet toegewezen is dan B6 is de waarde van de beurt anders toon "\nSorry, kolom ~+'zet'<a>`~ is vol.\n" en de zet is ongeldig.
+Als de zet C is en het spel niet toegewezen is dan als C1 niet toegewezen is dan C1 is de waarde van de beurt anders als C2 niet toegewezen is dan C2 is de waarde van de beurt anders als C3 niet toegewezen is dan C3 is de waarde van de beurt anders als C4 niet toegewezen is dan C4 is de waarde van de beurt anders als C5 niet toegewezen is dan C5 is de waarde van de beurt anders als C6 niet toegewezen is dan C6 is de waarde van de beurt anders toon "\nSorry, kolom ~+'zet'<a>`~ is vol.\n" en de zet is ongeldig.
+Als de zet D is en het spel niet toegewezen is dan als D1 niet toegewezen is dan D1 is de waarde van de beurt anders als D2 niet toegewezen is dan D2 is de waarde van de beurt anders als D3 niet toegewezen is dan D3 is de waarde van de beurt anders als D4 niet toegewezen is dan D4 is de waarde van de beurt anders als D5 niet toegewezen is dan D5 is de waarde van de beurt anders als D6 niet toegewezen is dan D6 is de waarde van de beurt anders toon "\nSorry, kolom ~+'zet'<a>`~ is vol.\n" en de zet is ongeldig.
+Als de zet E is en het spel niet toegewezen is dan als E1 niet toegewezen is dan E1 is de waarde van de beurt anders als E2 niet toegewezen is dan E2 is de waarde van de beurt anders als E3 niet toegewezen is dan E3 is de waarde van de beurt anders als E4 niet toegewezen is dan E4 is de waarde van de beurt anders als E5 niet toegewezen is dan E5 is de waarde van de beurt anders als E6 niet toegewezen is dan E6 is de waarde van de beurt anders toon "\nSorry, kolom ~+'zet'<a>`~ is vol.\n" en de zet is ongeldig.
+Als de zet F is en het spel niet toegewezen is dan als F1 niet toegewezen is dan F1 is de waarde van de beurt anders als F2 niet toegewezen is dan F2 is de waarde van de beurt anders als F3 niet toegewezen is dan F3 is de waarde van de beurt anders als F4 niet toegewezen is dan F4 is de waarde van de beurt anders als F5 niet toegewezen is dan F5 is de waarde van de beurt anders als F6 niet toegewezen is dan F6 is de waarde van de beurt anders toon "\nSorry, kolom ~+'zet'<a>`~ is vol.\n" en de zet is ongeldig.
+Als de zet G is en het spel niet toegewezen is dan als G1 niet toegewezen is dan G1 is de waarde van de beurt anders als G2 niet toegewezen is dan G2 is de waarde van de beurt anders als G3 niet toegewezen is dan G3 is de waarde van de beurt anders als G4 niet toegewezen is dan G4 is de waarde van de beurt anders als G5 niet toegewezen is dan G5 is de waarde van de beurt anders als G6 niet toegewezen is dan G6 is de waarde van de beurt anders toon "\nSorry, kolom ~+'zet'<a>`~ is vol.\n" en de zet is ongeldig.
+
+# Controleer of het spel is afgelopen.
+Als het spel toegewezen is, het spel niet ongeldig is en de zet toegewezen is dan toon "\nSorry, het spel is al voorbij.\n\nOm nogmaals het spelen, klik op knop «Wis je geheugen.» en dan op «Lees het bestand \"Nederlands/gebruiker/programmeren/Vier op 'n rij\".».\n\n", de zet is leeg, de beurt is leeg en het spel is ongeldig.
+
+# Waarschuwing: Geen oplossingsniveau.
+Als het oplossingsniveau niet toegewezen is en de beurt toegewezen is dan toon "Waarschuwing: Het oplossingsniveau heeft geen waarde. Wijs a.u.b. een waarde toe aan het oplossingsniveau.\n", de zet is ongeldig en de beurt is leeg.
+
+# Spelconfiguratie.
+#De oplossingsmethode is niet bezig.
+#De oplossingsmethode is niet gereed.
+De oplossingsmethode is omgekeerd.
+De oplossingsstrategie is exclusief.
+Het oplossingsniveau is laag.
+
+# De eigenlijke start van het spel.
+De beurt is van jou.
+#C++## Om een zet te doen, type bv.:	Mijn zet is A.
+#C++## Voor een iets moeilijker spel:	Het oplossingsniveau is hoog.
+#C++## Terug naar gemakkelijk niveau:	Het oplossingsniveau is laag.
+#C++## Informatie over de zetten:	Toon informatie over de zet.
+#Java## Als het speelbord er raar uitziet, wijzig dan het lettertype met knop «wijzig lettertype».

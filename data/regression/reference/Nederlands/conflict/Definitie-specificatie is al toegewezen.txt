@@ -1,0 +1,4 @@
+﻿* 
+* Deze definitie-specificatie is niet geaccepteerd, omdat het al is toegewezen:
+< De man heeft een hoed.
+< 

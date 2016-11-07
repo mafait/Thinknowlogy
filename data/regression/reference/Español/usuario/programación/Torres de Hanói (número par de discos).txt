@@ -1,0 +1,80 @@
+﻿
+El número de discos es par. Por lo tanto, el orden de las reglas es: Mover primero desde el pole de inicio para el polo intercambio, entonces desde el pole de inicio para el polo de objetivo.
+
+Movido un disco desde el polo inicio para el polo de intercambio:
+* polo de inicio:	D, C, B.
+* polo de intercambio:	A.
+* polo de objetivo:	.
+
+Movido un disco desde el polo inicio para el polo de objetivo:
+* polo de inicio:	D, C.
+* polo de intercambio:	A.
+* polo de objetivo:	B.
+
+Movido un disco desde el polo intercambio para el polo de objetivo:
+* polo de inicio:	D, C.
+* polo de intercambio:	.
+* polo de objetivo:	B, A.
+
+Movido un disco desde el polo inicio para el polo de intercambio:
+* polo de inicio:	D.
+* polo de intercambio:	C.
+* polo de objetivo:	B, A.
+
+Movido un disco desde el polo objetivo para el polo de inicio:
+* polo de inicio:	D, A.
+* polo de intercambio:	C.
+* polo de objetivo:	B.
+
+Movido un disco desde el polo objetivo para el polo de intercambio:
+* polo de inicio:	D, A.
+* polo de intercambio:	C, B.
+* polo de objetivo:	.
+
+Movido un disco desde el polo inicio para el polo de intercambio:
+* polo de inicio:	D.
+* polo de intercambio:	C, B, A.
+* polo de objetivo:	.
+
+Movido un disco desde el polo inicio para el polo de objetivo:
+* polo de inicio:	.
+* polo de intercambio:	C, B, A.
+* polo de objetivo:	D.
+
+Movido un disco desde el polo intercambio para el polo de objetivo:
+* polo de inicio:	.
+* polo de intercambio:	C, B.
+* polo de objetivo:	D, A.
+
+Movido un disco desde el polo intercambio para el polo de inicio:
+* polo de inicio:	B.
+* polo de intercambio:	C.
+* polo de objetivo:	D, A.
+
+Movido un disco desde el polo objetivo para el polo de inicio:
+* polo de inicio:	B, A.
+* polo de intercambio:	C.
+* polo de objetivo:	D.
+
+Movido un disco desde el polo intercambio para el polo de objetivo:
+* polo de inicio:	B, A.
+* polo de intercambio:	.
+* polo de objetivo:	D, C.
+
+Movido un disco desde el polo inicio para el polo de intercambio:
+* polo de inicio:	B.
+* polo de intercambio:	A.
+* polo de objetivo:	D, C.
+
+Movido un disco desde el polo inicio para el polo de objetivo:
+* polo de inicio:	.
+* polo de intercambio:	A.
+* polo de objetivo:	D, C, B.
+
+Movido un disco desde el polo intercambio para el polo de objetivo:
+* polo de inicio:	.
+* polo de intercambio:	.
+* polo de objetivo:	D, C, B, A.
+
+Hecho.
+Para iniciar el rompecabezas de nuevo, haga clic en el botón «Despejar la mente.» y entonces «Leer el archivo "Español/usuario/programación/Torres de Hanói".».

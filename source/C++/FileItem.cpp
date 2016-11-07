@@ -1,7 +1,7 @@
 /*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,7 +28,7 @@ class FileItem : private Item
 	friend class AdminReadFile;
 	friend class FileList;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	bool isInfoFile_;
 	bool isTestFile_;
@@ -40,7 +40,7 @@ class FileItem : private Item
 	FILE *writeFile_;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	FileItem( bool isInfoFile, bool isTestFile, char *readFileNameString, char *writeFileNameString, FILE *readFile, FILE *writeFile, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
@@ -48,7 +48,7 @@ class FileItem : private Item
 
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "FileItem", commonVariables, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isInfoFile_ = isInfoFile;
 		isTestFile_ = isTestFile;
@@ -106,7 +106,7 @@ class FileItem : private Item
 
 	// Protected virtual functions
 
-	virtual void showString( bool isReturnQueryToPosition )
+	virtual void displayString( bool isReturnQueryToPosition )
 		{
 		statusString[0] = statusChar();
 
@@ -115,7 +115,7 @@ class FileItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
@@ -128,7 +128,7 @@ class FileItem : private Item
 		{
 		// This is a virtual function. Therefore, the given variables are unreferenced.
 
-		// Add at the beginning of the list
+		// Always add at the beginning of the list
 		return true;
 		}
 

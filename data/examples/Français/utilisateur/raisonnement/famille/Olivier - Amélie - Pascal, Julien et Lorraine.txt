@@ -1,0 +1,7 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Olivier est le père de Pascal, Julien et Lorraine.
+Amélie est la mère de Pascal, Julien et Lorraine.
+Pascal est un fils.
+Julien est un fils.
+Lorraine est une fille.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

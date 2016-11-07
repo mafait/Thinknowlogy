@@ -1,0 +1,43 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To demonstrate automated reasoning in natural language:
+#					Self-generated conclusions, assumptions and questions
+#					and the detection of conflicts and semantic ambiguity
+#	Version:		Thinknowlogy 2016r2 (Restyle)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+# The definition of a family.
+Every person is a man or a woman.
+Every woman is feminine.
+Every man is masculine.
+Every family has parents and children.
+Every parent is a father or a mother.
+Every child is a son or a daughter.
+Every father is a man.
+Every mother is a woman.
+Every girl is feminine.
+Every boy is masculine.
+Every son is a boy or a man.
+Every daughter is a girl or a woman.
+#C++## Now type sentences like these:
+#C++##
+#C++## John is the father and Anna is the mother of Paul, Joe and Laura.
+#C++## Paul is a son.			Paul is a man.
+#C++## Joe is a son.			Joe is a man.
+#C++## Laura is a daughter.		Laura is a woman.
+#C++## John is a father.			John is a parent.
+#C++## Anna is a mother.			Anna is a parent.
+#C++## Display information about John.	Display information about Anna.
+#C++## Display information about Paul.	Display information about Laura.
+#C++## Display information about parents. Display information about children.
+#C++## Paul is a son of John and Anna.
+#C++## Joe is a son of John and Anna.
+#C++## Laura is a daughter of John and Anna.
+#C++##
+#C++## See the text on the buttons of the family screenshots
+#C++## (in subfolder: screenshots) for more examples.
+#C++##
+# Try the sentences in all kind of combinations and in different order.
+# Use button «Clear your mind.», «Undo.» or «Restart.» for a retry.

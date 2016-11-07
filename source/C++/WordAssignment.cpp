@@ -1,7 +1,7 @@
 /*	Class:			WordAssignment
  *	Supports class:	WordItem
  *	Purpose:		To assign specifications
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,7 +28,7 @@ class WordAssignment
 	{
 	friend class WordItem;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	CommonVariables *commonVariables_;
 	WordItem *myWordItem_;
@@ -62,73 +62,57 @@ class WordAssignment
 		WordItem *foundInactiveGeneralizationWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "inactivateOrArchiveCurrentGeneralizationAssignments";
 
-		if( specificationWordItem != NULL )
-			{
-			if( !specificationWordItem->isNounValue() )
-				{
-				if( ( currentGeneralizationItem = specificationWordItem->firstSpecificationGeneralizationItem( false ) ) != NULL )
-					{
-					do	{
-						if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) != NULL )
-							{
-							if( foundActiveAssignmentItem == NULL &&
-							// Skip my word for activate assignments, because this is the one to be assigned
-							currentGeneralizationWordItem != myWordItem_ )
-								foundActiveAssignmentItem = currentGeneralizationWordItem->firstNonQuestionAssignmentItem( true, false, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
-
-							// Allow to find an inactive assignment in my word
-							if( foundInactiveAssignmentItem == NULL )
-								foundInactiveAssignmentItem = currentGeneralizationWordItem->firstNonQuestionAssignmentItem( false, true, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
-							}
-						else
-							return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an undefined generalization word" );
-						}
-					while( ( foundActiveAssignmentItem == NULL ||
-					foundInactiveAssignmentItem == NULL ) &&
-
-					( currentGeneralizationItem = currentGeneralizationItem->nextSpecificationGeneralizationItem() ) != NULL );
-					}
-
-				// Only archive an inactive assignment if an active assignment is being inactivated
-				if( foundActiveAssignmentItem != NULL )
-					{
-					if( foundActiveAssignmentItem->hasGeneralizationCollection() )
-						{
-						if( ( foundActiveGeneralizationWordItem = foundActiveAssignmentItem->generalizationWordItem() ) != NULL )
-							{
-							if( foundActiveGeneralizationWordItem->inactivateActiveAssignment( foundActiveAssignmentItem ) == RESULT_OK )
-								{
-								if( foundInactiveAssignmentItem != NULL )
-									{
-									if( foundInactiveAssignmentItem->hasGeneralizationCollection() )
-										{
-										if( ( foundInactiveGeneralizationWordItem = foundInactiveAssignmentItem->generalizationWordItem() ) != NULL )
-											{
-											if( foundInactiveGeneralizationWordItem->archiveInactiveAssignment( foundInactiveAssignmentItem ) != RESULT_OK )
-												return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to archive an inactive assignment" );
-											}
-										else
-											return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an inactive assignment without generalization word item" );
-										}
-									else
-										return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an inactive assignment without generalization collection number" );
-									}
-								}
-							else
-								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate an active assignment" );
-							}
-						else
-							return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an active assignment without generalization word item" );
-						}
-					else
-						return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an active assignment without generalization collection number" );
-					}
-				}
-			else
-				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "Inactivating or archiving a noun value specification isn't implemented yet" );
-			}
-		else
+		if( specificationWordItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+
+		if( specificationWordItem->isNounValue() )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "Inactivating or archiving a noun value specification isn't implemented yet" );
+
+		if( ( currentGeneralizationItem = specificationWordItem->firstSpecificationGeneralizationItem( false ) ) != NULL )
+			{
+			do	{
+				if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
+					return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an undefined generalization word" );
+
+				if( foundActiveAssignmentItem == NULL &&
+				// Skip my word for activate assignments, because this is the one to be assigned
+				currentGeneralizationWordItem != myWordItem_ )
+					foundActiveAssignmentItem = currentGeneralizationWordItem->firstNonQuestionAssignmentItem( true, false, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
+
+				// Allow to find an inactive assignment in my word
+				if( foundInactiveAssignmentItem == NULL )
+					foundInactiveAssignmentItem = currentGeneralizationWordItem->firstNonQuestionAssignmentItem( false, true, false, isNegative, isPossessive, relationContextNr, specificationWordItem );
+				}
+			while( ( foundActiveAssignmentItem == NULL ||
+			foundInactiveAssignmentItem == NULL ) &&
+
+			( currentGeneralizationItem = currentGeneralizationItem->nextSpecificationGeneralizationItem() ) != NULL );
+			}
+
+		// Only archive an inactive assignment if an active assignment is being inactivated
+		if( foundActiveAssignmentItem != NULL )
+			{
+			if( !foundActiveAssignmentItem->hasGeneralizationCollection() )
+				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an active assignment without generalization collection number" );
+
+			if( ( foundActiveGeneralizationWordItem = foundActiveAssignmentItem->generalizationWordItem() ) == NULL )
+				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an active assignment without generalization word item" );
+
+			if( foundActiveGeneralizationWordItem->inactivateActiveAssignment( foundActiveAssignmentItem ) != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate an active assignment" );
+
+			if( foundInactiveAssignmentItem != NULL )
+				{
+				if( !foundInactiveAssignmentItem->hasGeneralizationCollection() )
+					return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an inactive assignment without generalization collection number" );
+
+				if( ( foundInactiveGeneralizationWordItem = foundInactiveAssignmentItem->generalizationWordItem() ) == NULL )
+					return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an inactive assignment without generalization word item" );
+
+				if( foundInactiveGeneralizationWordItem->archiveInactiveAssignment( foundInactiveAssignmentItem ) != RESULT_OK )
+					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to archive an inactive assignment" );
+				}
+			}
 
 		return RESULT_OK;
 		}
@@ -147,26 +131,24 @@ class WordAssignment
 				{
 				if( isExclusiveSpecification )
 					{
-					if( ( specificationResult = myWordItem_->findRelatedSpecification( true, true, false, isExclusiveSpecification, false, isPossessive, NO_QUESTION_PARAMETER, specificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem ) ).result == RESULT_OK )
-						{
-						relatedSpecificationItem = specificationResult.relatedSpecificationItem;
-
-						if( relatedSpecificationItem != NULL &&
-						// Skip specification
-						relatedSpecificationItem->isUserAssignment() &&
-
-						( ( !isNegative &&
-						// Only option left
-						!isSelfGenerated ) ||
-
-						!relatedSpecificationItem->isNegative() ) )
-							{
-							if( inactivateActiveAssignment( relatedSpecificationItem ) != RESULT_OK )
-								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate a related active assignment" );
-							}
-						}
-					else
+					if( ( specificationResult = myWordItem_->findRelatedSpecification( true, true, false, isExclusiveSpecification, false, isPossessive, NO_QUESTION_PARAMETER, specificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, specificationWordItem ) ).result != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a related assignment" );
+
+					relatedSpecificationItem = specificationResult.relatedSpecificationItem;
+
+					if( relatedSpecificationItem != NULL &&
+					// Skip specification
+					relatedSpecificationItem->isUserAssignment() &&
+
+					( ( !isNegative &&
+					// Only option left
+					!isSelfGenerated ) ||
+
+					!relatedSpecificationItem->isNegative() ) )
+						{
+						if( inactivateActiveAssignment( relatedSpecificationItem ) != RESULT_OK )
+							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate a related active assignment" );
+						}
 					}
 				}
 			else
@@ -216,91 +198,87 @@ class WordAssignment
 		if( !isQuestion )
 			{
 			if( inactivateAssignment( isAmbiguousRelationContext, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) != RESULT_OK )
-				myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate an assignment" );
+				return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate an assignment" );
 			}
 
-		if( commonVariables_->result == RESULT_OK )
+		if( ( foundAssignmentItem = myWordItem_->firstAssignmentItem( true, true, true, isNegative, isPossessive, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem ) ) == NULL )
 			{
-			if( ( foundAssignmentItem = myWordItem_->firstAssignmentItem( true, true, true, isNegative, isPossessive, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem ) ) == NULL )
+			// Didn't find a self-generated assignment. Now try to find a confirmed assignment
+			if( isSelfGenerated &&
+			!isSpecificationGeneralization )
+				foundAssignmentItem = myWordItem_->firstAssignmentItem( true, true, true, isNegative, isPossessive, false, questionParameter, relationContextNr, specificationWordItem );
+			}
+
+		if( foundAssignmentItem != NULL )
+			{
+			specificationResult.foundSpecificationItem = foundAssignmentItem;
+
+			if( foundAssignmentItem->assumptionLevel() != assumptionLevel )
+				hasDifferentAssumptionLevel = true;
+
+			// Ambiguous if assignment has different tense (time): active, inactive or archived.
+			if( foundAssignmentItem->isInactiveAssignment() != isInactiveAssignment ||
+			foundAssignmentItem->isArchivedAssignment() != isArchivedAssignment )
+				isAmbiguous = true;
+			}
+
+		if( isAmbiguous ||
+		foundAssignmentItem == NULL ||
+
+		( !isSelfGenerated &&
+		hasDifferentAssumptionLevel ) )
+			{
+			if( ( specificationResult = myWordItem_->createSpecificationItem( true, isInactiveAssignment, isArchivedAssignment, false, false, false, false, isEveryGeneralization, isExclusiveSpecification, isGeneralizationAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, false, commonVariables_->currentAssignmentLevel, assumptionLevel, commonVariables_->currentLanguageNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationCollectionNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, NULL ) ).result == RESULT_OK )
 				{
-				// Didn't find a self-generated assignment. Now try to find a confirmed assignment
-				if( isSelfGenerated &&
-				!isSpecificationGeneralization )
-					foundAssignmentItem = myWordItem_->firstAssignmentItem( true, true, true, isNegative, isPossessive, false, questionParameter, relationContextNr, specificationWordItem );
-				}
-
-			if( foundAssignmentItem != NULL )
-				{
-				specificationResult.foundSpecificationItem = foundAssignmentItem;
-
-				if( foundAssignmentItem->assumptionLevel() != assumptionLevel )
-					hasDifferentAssumptionLevel = true;
-
-				// Ambiguous if assignment has different tense (time): active, inactive or archived.
-				if( foundAssignmentItem->isInactiveAssignment() != isInactiveAssignment ||
-				foundAssignmentItem->isArchivedAssignment() != isArchivedAssignment )
-					isAmbiguous = true;
-				}
-
-			if( isAmbiguous ||
-			foundAssignmentItem == NULL ||
-
-			( !isSelfGenerated &&
-			hasDifferentAssumptionLevel ) )
-				{
-				if( ( specificationResult = myWordItem_->createSpecificationItem( true, isInactiveAssignment, isArchivedAssignment, false, false, false, false, isEveryGeneralization, isExclusiveSpecification, isGeneralizationAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, false, commonVariables_->currentAssignmentLevel, assumptionLevel, commonVariables_->currentLanguageNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationCollectionNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, NULL ) ).result == RESULT_OK )
+				if( ( createdAssignmentItem = specificationResult.createdSpecificationItem ) != NULL )
 					{
-					if( ( createdAssignmentItem = specificationResult.createdSpecificationItem ) != NULL )
+					if( foundAssignmentItem != NULL )
 						{
-						if( foundAssignmentItem != NULL )
+						if( hasDifferentAssumptionLevel )
 							{
-							if( hasDifferentAssumptionLevel )
+							if( !isQuestion )
 								{
-								if( !isQuestion )
-									{
-									if( myWordItem_->replaceOrDeleteSpecification( foundAssignmentItem, ( foundAssignmentItem->isSelfGenerated() ? createdAssignmentItem : NULL ) ) != RESULT_OK )
-										myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to replace or delete an ambiguous assignment" );
-									}
+								if( myWordItem_->replaceOrDeleteSpecification( false, foundAssignmentItem, ( foundAssignmentItem->isSelfGenerated() ? createdAssignmentItem : NULL ) ) != RESULT_OK )
+									return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to replace or delete an ambiguous assignment" );
+								}
+							}
+						else
+							{
+							if( foundAssignmentItem->isActiveItem() )
+								{
+								if( inactivateActiveAssignment( foundAssignmentItem ) != RESULT_OK )
+									return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate an active assignment" );
 								}
 							else
 								{
-								if( foundAssignmentItem->isActiveItem() )
+								if( foundAssignmentItem->isInactiveAssignment() &&
+								// Avoid archiving inactive assignments that are created during this sentence
+								!foundAssignmentItem->hasCurrentInactiveSentenceNr() )
 									{
-									if( inactivateActiveAssignment( foundAssignmentItem ) != RESULT_OK )
-										myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate an active assignment" );
-									}
-								else
-									{
-									if( foundAssignmentItem->isInactiveAssignment() &&
-									// Avoid archiving inactive assignments that are created during this sentence
-									!foundAssignmentItem->hasCurrentInactiveSentenceNr() )
-										{
-										if( archiveInactiveAssignment( foundAssignmentItem ) != RESULT_OK )
-											myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to archive an inactive assignment" );
-										}
+									if( archiveInactiveAssignment( foundAssignmentItem ) != RESULT_OK )
+										return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to archive an inactive assignment" );
 									}
 								}
 							}
-						}
-					else
-						{
-						if( specificationWordItem == NULL )
-							myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't create an assignment item with specification string \"", specificationString, "\"" );
-						else
-							myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't create an assignment item with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 						}
 					}
 				else
 					{
 					if( specificationWordItem == NULL )
-						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to create an assignment with specification string \"", specificationString, "\"" );
-					else
-						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to create an assignment with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
+						return myWordItem_->startSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I couldn't create an assignment item with specification string \"", specificationString, "\"" );
+
+					return myWordItem_->startSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I couldn't create an assignment item with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 					}
+				}
+			else
+				{
+				if( specificationWordItem == NULL )
+					return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to create an assignment with specification string \"", specificationString, "\"" );
+
+				return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to create an assignment with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 				}
 			}
 
-		specificationResult.result = commonVariables_->result;
 		return specificationResult;
 		}
 
@@ -310,28 +288,24 @@ class WordAssignment
 		SpecificationItem *currentAssignmentItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "assignSpecificationByValue";
 
-		if( specificationWordItem != NULL )
-			{
-			if( ( currentAssignmentItem = specificationWordItem->firstNonQuestionActiveAssignmentItem() ) != NULL )
-				{
-				do	{
-					if( ( specificationResult = assignSpecification( false, currentAssignmentItem->isInactiveAssignment(), currentAssignmentItem->isArchivedAssignment(), currentAssignmentItem->isEveryGeneralization(), currentAssignmentItem->isExclusiveSpecification(), currentAssignmentItem->isGeneralizationAssignment(), currentAssignmentItem->isNegative(), currentAssignmentItem->isPartOf(), currentAssignmentItem->isPossessive(), currentAssignmentItem->isSpecificationGeneralization(), currentAssignmentItem->isUniqueUserRelation(), currentAssignmentItem->assumptionLevel(), currentAssignmentItem->prepositionParameter(), currentAssignmentItem->questionParameter(), currentAssignmentItem->generalizationWordTypeNr(), currentAssignmentItem->specificationWordTypeNr(), currentAssignmentItem->relationWordTypeNr(), currentAssignmentItem->generalizationCollectionNr(), currentAssignmentItem->specificationCollectionNr(), currentAssignmentItem->generalizationContextNr(), currentAssignmentItem->specificationContextNr(), currentAssignmentItem->relationContextNr(), NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, currentAssignmentItem->nContextRelations(), firstJustificationItem, currentAssignmentItem->specificationWordItem(), currentAssignmentItem->specificationString() ) ).result != RESULT_OK )
-						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to assign specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
-					}
-				while( commonVariables_->result == RESULT_OK &&
-				( currentAssignmentItem = currentAssignmentItem->nextSelectedSpecificationItem() ) != NULL );
-				}
-			}
-		else
-			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given specification word item is undefined" );
+		if( specificationWordItem == NULL )
+			return myWordItem_->startSpecificationResultErrorInWord( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 
-		specificationResult.result = commonVariables_->result;
+		if( ( currentAssignmentItem = specificationWordItem->firstNonQuestionActiveAssignmentItem() ) != NULL )
+			{
+			do	{
+				if( ( specificationResult = assignSpecification( false, currentAssignmentItem->isInactiveAssignment(), currentAssignmentItem->isArchivedAssignment(), currentAssignmentItem->isEveryGeneralization(), currentAssignmentItem->isExclusiveSpecification(), currentAssignmentItem->isGeneralizationAssignment(), currentAssignmentItem->isNegative(), currentAssignmentItem->isPartOf(), currentAssignmentItem->isPossessive(), currentAssignmentItem->isSpecificationGeneralization(), currentAssignmentItem->isUniqueUserRelation(), currentAssignmentItem->assumptionLevel(), currentAssignmentItem->prepositionParameter(), currentAssignmentItem->questionParameter(), currentAssignmentItem->generalizationWordTypeNr(), currentAssignmentItem->specificationWordTypeNr(), currentAssignmentItem->relationWordTypeNr(), currentAssignmentItem->generalizationCollectionNr(), currentAssignmentItem->specificationCollectionNr(), currentAssignmentItem->generalizationContextNr(), currentAssignmentItem->specificationContextNr(), currentAssignmentItem->relationContextNr(), NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, currentAssignmentItem->nContextRelations(), firstJustificationItem, currentAssignmentItem->specificationWordItem(), currentAssignmentItem->specificationString() ) ).result != RESULT_OK )
+					return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to assign specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
+				}
+			while( ( currentAssignmentItem = currentAssignmentItem->nextSelectedSpecificationItem() ) != NULL );
+			}
+
 		return specificationResult;
 		}
 
 
 	protected:
-		// Constructor / deconstructor
+		// Constructor
 
 	WordAssignment( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
@@ -368,25 +342,19 @@ class WordAssignment
 		SpecificationList *assignmentList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "inactivateActiveAssignment";
 
-		if( activeAssignmentItem != NULL )
-			{
-			if( activeAssignmentItem->isActiveAssignment() )
-				{
-				if( ( assignmentList = myWordItem_->assignmentList ) != NULL )
-					{
-					if( assignmentList->inactivateItem( activeAssignmentItem ) == RESULT_OK )
-						activeAssignmentItem->markAsGeneralizationAssignment();
-					else
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate an active assignment" );
-					}
-				else
-					return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "My assignment list isn't created yet" );
-				}
-			else
-				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given assignment item isn't active" );
-			}
-		else
+		if( activeAssignmentItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given active assignment item is undefined" );
+
+		if( !activeAssignmentItem->isActiveAssignment() )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given active assignment item isn't active" );
+
+		if( ( assignmentList = myWordItem_->assignmentList ) == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "My assignment list isn't created yet" );
+
+		if( assignmentList->inactivateItem( activeAssignmentItem ) != RESULT_OK )
+			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate an active assignment" );
+
+		activeAssignmentItem->markAsGeneralizationAssignment();
 
 		return RESULT_OK;
 		}
@@ -396,25 +364,19 @@ class WordAssignment
 		SpecificationList *assignmentList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "archiveInactiveAssignment";
 
-		if( inactiveAssignmentItem != NULL )
-			{
-			if( inactiveAssignmentItem->isInactiveAssignment() )
-				{
-				if( ( assignmentList = myWordItem_->assignmentList ) != NULL )
-					{
-					if( assignmentList->archiveItem( inactiveAssignmentItem ) == RESULT_OK )
-						inactiveAssignmentItem->markAsGeneralizationAssignment();
-					else
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to archive the given inactive assignment item" );
-					}
-				else
-					return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "My assignment list isn't created yet" );
-				}
-			else
-				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given assignment item isn't inactive" );
-			}
-		else
+		if( inactiveAssignmentItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given inactive assignment item is undefined" );
+
+		if( !inactiveAssignmentItem->isInactiveAssignment() )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given assignment item isn't inactive" );
+
+		if( ( assignmentList = myWordItem_->assignmentList ) == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "My assignment list isn't created yet" );
+
+		if( assignmentList->archiveItem( inactiveAssignmentItem ) != RESULT_OK )
+			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to archive the given inactive assignment item" );
+
+		inactiveAssignmentItem->markAsGeneralizationAssignment();
 
 		return RESULT_OK;
 		}
@@ -428,28 +390,25 @@ class WordAssignment
 		WordItem *assignmentWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "getAssignmentOrderNr";
 
-		if( myWordItem_->nActiveAssignments() <= 1 )
-			{
-			if( ( orderAssignmentItem = myWordItem_->firstNonQuestionActiveAssignmentItem() ) != NULL )
-				{
-				if( ( assignmentWordItem = orderAssignmentItem->specificationWordItem() ) != NULL &&
-				( currentSpecificationItem = myWordItem_->firstNonQuestionSpecificationItem() ) != NULL )
-					{
-					do	{
-						specificationNr++;
+		if( myWordItem_->nActiveAssignments() > 1 )
+			return myWordItem_->startSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I have more than one assignment at assignment level ", commonVariables_->currentAssignmentLevel );
 
-						if( currentSpecificationItem->specificationWordItem() == assignmentWordItem )
-							specificationResult.assignmentOrderNr = specificationNr;
-						}
-					while( specificationResult.assignmentOrderNr == NO_ORDER_NR &&
-					( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
+		if( ( orderAssignmentItem = myWordItem_->firstNonQuestionActiveAssignmentItem() ) != NULL )
+			{
+			if( ( assignmentWordItem = orderAssignmentItem->specificationWordItem() ) != NULL &&
+			( currentSpecificationItem = myWordItem_->firstNonQuestionSpecificationItem() ) != NULL )
+				{
+				do	{
+					specificationNr++;
+
+					if( currentSpecificationItem->specificationWordItem() == assignmentWordItem )
+						specificationResult.assignmentOrderNr = specificationNr;
 					}
+				while( specificationResult.assignmentOrderNr == NO_ORDER_NR &&
+				( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
 				}
 			}
-		else
-			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have more than one assignment at assignment level ", commonVariables_->currentAssignmentLevel );
 
-		specificationResult.result = commonVariables_->result;
 		return specificationResult;
 		}
 
@@ -460,20 +419,17 @@ class WordAssignment
 		WordItem *specificationWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "getAssignmentWordParameter";
 
-		if( myWordItem_->nActiveAssignments() <= 1 )
-			{
-			if( ( assignmentItem = myWordItem_->firstNonQuestionActiveAssignmentItem() ) != NULL )
-				{
-				if( ( specificationWordItem = assignmentItem->specificationWordItem() ) != NULL )
-					specificationResult.assignmentParameter = specificationWordItem->wordParameter();
-				else
-					myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have found an undefined assignment word at assignment level ", commonVariables_->currentAssignmentLevel );
-				}
-			}
-		else
-			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I have more than one assignment at assignment level ", commonVariables_->currentAssignmentLevel );
+		if( myWordItem_->nActiveAssignments() > 1 )
+			return myWordItem_->startSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I have more than one assignment at assignment level ", commonVariables_->currentAssignmentLevel );
 
-		specificationResult.result = commonVariables_->result;
+		if( ( assignmentItem = myWordItem_->firstNonQuestionActiveAssignmentItem() ) != NULL )
+			{
+			if( ( specificationWordItem = assignmentItem->specificationWordItem() ) == NULL )
+				return myWordItem_->startSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I have found an undefined assignment word at assignment level ", commonVariables_->currentAssignmentLevel );
+
+			specificationResult.assignmentParameter = specificationWordItem->wordParameter();
+			}
+
 		return specificationResult;
 		}
 
@@ -485,13 +441,11 @@ class WordAssignment
 
 		if( isAssignedOrClear )
 			{
-			if( questionParameter == NO_QUESTION_PARAMETER )
-				{
-				if( inactivateCurrentAssignments() != RESULT_OK )
-					myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate my current assignments" );
-				}
-			else
-				myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "A question can only be answered, not be cleared" );
+			if( questionParameter > NO_QUESTION_PARAMETER )
+				return myWordItem_->startSpecificationResultErrorInWord( functionNameString, moduleNameString_, "A question can only be answered, not be cleared" );
+
+			if( inactivateCurrentAssignments() != RESULT_OK )
+				return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate my current assignments" );
 			}
 		else
 			{
@@ -501,38 +455,34 @@ class WordAssignment
 				if( foundSpecificationItem->hasExclusiveGeneralizationCollection() )
 					{
 					if( inactivateOrArchiveCurrentGeneralizationAssignments( isNegative, isPossessive, relationContextNr, specificationWordItem ) != RESULT_OK )
-						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate or archive current generalization assignments" );
+						return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to inactivate or archive current generalization assignments" );
 					}
 
-				if( commonVariables_->result == RESULT_OK )
+				if( foundSpecificationItem->isValueSpecification() )
 					{
-					if( foundSpecificationItem->isValueSpecification() )
+					if( ( specificationResult = assignSpecificationByValue( firstJustificationItem, specificationWordItem ) ).result != RESULT_OK )
+						return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to assign the value of a specification word" );
+					}
+				else
+					{
+					if( ( specificationResult = assignSpecification( isAmbiguousRelationContext, isInactiveAssignment, isArchivedAssignment, foundSpecificationItem->isEveryGeneralization(), foundSpecificationItem->isExclusiveSpecification(), ( foundSpecificationItem->isExclusiveSpecification() && foundSpecificationItem->isGeneralizationProperName() ), isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, foundSpecificationItem->generalizationWordTypeNr(), foundSpecificationItem->specificationWordTypeNr(), relationWordTypeNr, foundSpecificationItem->generalizationCollectionNr(), foundSpecificationItem->specificationCollectionNr(), generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString ) ).result != RESULT_OK )
 						{
-						if( ( specificationResult = assignSpecificationByValue( firstJustificationItem, specificationWordItem ) ).result != RESULT_OK )
-							myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to assign the value of a specification word" );
-						}
-					else
-						{
-						if( ( specificationResult = assignSpecification( isAmbiguousRelationContext, isInactiveAssignment, isArchivedAssignment, foundSpecificationItem->isEveryGeneralization(), foundSpecificationItem->isExclusiveSpecification(), ( foundSpecificationItem->isExclusiveSpecification() && foundSpecificationItem->isGeneralizationProperName() ), isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, foundSpecificationItem->generalizationWordTypeNr(), foundSpecificationItem->specificationWordTypeNr(), relationWordTypeNr, foundSpecificationItem->generalizationCollectionNr(), foundSpecificationItem->specificationCollectionNr(), generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString ) ).result != RESULT_OK )
-							{
-							if( specificationWordItem == NULL )
-								myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to assign specification string \"", specificationString, "\"" );
-							else
-								myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to assign specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
-							}
+						if( specificationWordItem == NULL )
+							return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to assign specification string \"", specificationString, "\"" );
+
+						return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to assign specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 						}
 					}
 				}
 			else
 				{
 				if( specificationWordItem == NULL )
-					myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "String \"", specificationString, "\" isn't one of my specifications" );
-				else
-					myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "Word \"", specificationWordItem->anyWordTypeString(), "\" isn't one of my specifications" );
+					return myWordItem_->startSpecificationResultErrorInWord( functionNameString, moduleNameString_, "String \"", specificationString, "\" isn't one of my specifications" );
+
+				return myWordItem_->startSpecificationResultErrorInWord( functionNameString, moduleNameString_, "Word \"", specificationWordItem->anyWordTypeString(), "\" isn't one of my specifications" );
 				}
 			}
 
-		specificationResult.result = commonVariables_->result;
 		return specificationResult;
 		}
 	};

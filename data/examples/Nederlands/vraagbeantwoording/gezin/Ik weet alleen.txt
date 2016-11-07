@@ -1,6 +1,0 @@
-﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
-Jan is een ouder.
-Jan is een vader.
-Is Jan de vader van Paul?
-Is Jan een ouder van Johan?
-# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

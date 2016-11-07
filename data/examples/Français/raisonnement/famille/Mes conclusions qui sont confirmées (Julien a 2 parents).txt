@@ -1,0 +1,20 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Lorraine a 2 parents, appelés Olivier et Amélie.
+Olivier est un parent.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Lorraine.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Julien.
+Affichez le rapport de justification sur Lorraine.
+Lorraine a un père, appelé Olivier.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Lorraine.
+Julien a 2 parents, appelés Olivier et Amélie.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Julien.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

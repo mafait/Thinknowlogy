@@ -1,0 +1,5 @@
+﻿Juan es padre de Pablo.
+Juan es padre de José.
+Mostrar información sobre Juan.
+Juan es padre de Pablo y José.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

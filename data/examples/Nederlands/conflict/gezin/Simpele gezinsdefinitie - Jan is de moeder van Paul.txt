@@ -1,0 +1,8 @@
+﻿Iedere persoon is een man of een vrouw.
+Iedere ouder is een vader of een moeder.
+Iedere vader is een man.
+Iedere moeder is een vrouw.
+Jan is een vader.
+Toon de verantwoordingsrapportage over Jan.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».
+Jan is de moeder van Paul.

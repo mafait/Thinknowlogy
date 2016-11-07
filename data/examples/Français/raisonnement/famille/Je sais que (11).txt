@@ -1,0 +1,14 @@
+Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Pascal a une mère, appelée Amélie.
+Lorraine est un enfant de Olivier et Amélie.
+Julien est un garçon.
+Lorraine est une femme.
+Pascal est un enfant de Olivier et Amélie.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Julien.
+Affichez le rapport de justification sur Lorraine.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

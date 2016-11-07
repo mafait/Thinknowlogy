@@ -1,0 +1,70 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un père est probablement une personne.
+< Un parent est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un fils est probablement une personne.
+< Un enfant est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Amélie est une mère de Pascal.
+< Amélie est une femme.
+* 
+* Mes hypothèses:
+< Pascal a probablement un parent, appelée Amélie.
+< Pascal est probablement un enfant de Amélie.
+< Pascal est probablement partie d'une famille.
+< Pascal est possible une personne.
+< Amélie est probablement une personne.
+< Amélie n'est probablement pas un homme.
+< Amélie est probablement un parent de Pascal.
+< Amélie est probablement partie d'une famille.
+< Amélie n'est probablement pas un père.
+< Amélie a probablement un enfant, appelé Pascal.
+* 
+* Mes questions:
+< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal un fils ou une fille?
+< 
+* 
+* Mes questions qui sont répondues:
+< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal un fils ou une fille?
+* 
+* Mes hypothèses qui sont ajustés:
+< Pascal est probablement une personne.
+* 
+* Mes hypothèses:
+< Pascal est probablement un fils.
+< Pascal n'est probablement pas une femme.
+< Pascal n'est possible pas une fille.
+< Pascal n'est probablement pas un garçon, pas une jeune-fille et pas une femme.
+< 
+* 
+* Mes hypothèses qui sont confirmées:
+< Pascal est probablement un fils.
+* 
+* Mes hypothèses qui sont ajustés:
+< Pascal n'est probablement pas une fille.
+< 

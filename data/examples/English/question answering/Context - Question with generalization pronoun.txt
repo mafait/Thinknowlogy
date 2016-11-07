@@ -1,0 +1,5 @@
+﻿A drink is hot, warm or cold.
+Coffee is a drink.
+My coffee is hot.
+Is my coffee cold?
+# To continue, click button «Clear your mind.» or «Restart.».

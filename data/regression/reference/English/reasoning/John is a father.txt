@@ -1,0 +1,8 @@
+﻿* 
+* My conclusions:
+< John is a man.
+* 
+* My assumptions:
+< John is probably a parent.
+< John is probably not a mother.
+< 

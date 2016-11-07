@@ -1,0 +1,9 @@
+﻿* 
+* Mes conclusions:
+< Pascal n'a aucun père plus.
+< Pascal avait un père, appelé Olivier.
+< Julien n'a aucun père plus.
+< Julien avait un père, appelé Olivier.
+< Lorraine n'a aucun père plus.
+< Lorraine avait un père, appelé Olivier.
+< 

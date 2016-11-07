@@ -1,0 +1,71 @@
+﻿* 
+* Mis suposiciones:
+< Un animal es probablemente un organismo.
+< 
+* 
+* Mis conclusiones:
+< Un animal es un anfibio, un pájaro, un pez, un mamífero o un reptil.
+< Un organismo es un anfibio, un pájaro, un pez, un mamífero, un reptil, un vertebrado o un invertebrado.
+* 
+* Mis suposiciones:
+< Un vertebrado es probablemente un organismo.
+< 
+* 
+* Mis suposiciones:
+< Cocodrilos son probablemente organismo [plural de 'organismo' es desconocida].
+< 
+* 
+* Mis conclusiones:
+< Un animal es un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero o un reptil.
+< Un organismo es un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero, un reptil, un vertebrado o un invertebrado.
+* 
+* Mis suposiciones:
+< Un invertebrado es probablemente un organismo.
+< 
+* 
+* Mis conclusiones:
+< Un animal es un cetáceo, un marsupial, un primate, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero o un reptil.
+< Un vertebrado es un cetáceo, un marsupial, un primate o un roedor.
+< Un organismo es un cetáceo, un marsupial, un primate, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero, un reptil, un vertebrado o un invertebrado.
+* 
+* Mis suposiciones:
+< Un mamífero es probablemente un organismo.
+< 
+* 
+* Mis conclusiones:
+< Juan es un primate, un mamífero y un vertebrado.
+* 
+* Mis suposiciones:
+< Juan es probablemente un organismo.
+< Juan no es probablemente un cetáceo, un marsupial, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un reptil, un vertebrado y un invertebrado.
+< Juan no es probablemente un animal, un hongo, un microorganismo y una planta.
+< 
+* 
+* Mis conclusiones:
+< Juan es un primate, un mamífero y un vertebrado. Porque:
+<	- Juan es un bienestar-humano.
+<	- Un bienestar-humano es un vertebrado.
+* 	y:
+<	- Juan es un bienestar-humano.
+<	- Un bienestar-humano es un primate, un mamífero.
+* 	y:
+<	- Juan es un bienestar-humano.
+<	- Un bienestar-humano es un mamífero.
+* 
+* Mis suposiciones:
+< Juan es probablemente un organismo. Porque:
+<	- Juan es un mamífero.
+<	- Un mamífero es probablemente un organismo.
+* 	y:
+<	- Juan es un vertebrado.
+<	- Un vertebrado es probablemente un organismo.
+< Juan no es probablemente un cetáceo, un marsupial, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un reptil, un vertebrado y un invertebrado. Porque:
+<	- Juan es probablemente un organismo.
+<	- Un organismo es un cetáceo, un marsupial, un primate, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero, un reptil, un vertebrado o un invertebrado.
+<	- Juan es un bienestar-humano.
+<	- Un bienestar-humano es un primate, un mamífero.
+< Juan no es probablemente un animal, un hongo, un microorganismo y una planta. Porque:
+<	- Juan es probablemente un organismo.
+<	- Un organismo es un animal, un hongo, un bienestar-humano, un microorganismo o una planta.
+<	- Juan es un bienestar-humano.
+< 

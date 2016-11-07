@@ -1,0 +1,24 @@
+﻿* 
+* My conclusions:
+< Paul has a father, called John.
+< Joe has a father, called John.
+< 
+* 
+* My conclusions:
+< Laura has a father, called John.
+< 
+* 
+* My conclusions:
+< Paul has a father, called John. Because:
+<	- John is the father of Paul, Joe and Laura.
+< 
+* 
+* My conclusions:
+< Joe has a father, called John. Because:
+<	- John is the father of Paul, Joe and Laura.
+< 
+* 
+* My conclusions:
+< Laura has a father, called John. Because:
+<	- John is the father of Paul, Joe and Laura.
+< 

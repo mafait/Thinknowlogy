@@ -1,6 +1,7 @@
-/*	Class:			FileResultType
- *	Purpose:		To return file variables of a function
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		FileResultType
+ *	Purpose:	To return file variables,
+ *				as the result of a function call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,9 +30,11 @@ class FileItem;
 class FileResultType
 	{
 	friend class AdminImperative;
-	friend class AdminItem;
 	friend class AdminReadFile;
 	friend class FileList;
+	friend class Item;
+	friend class List;
+
 	protected:
 	// Protected variables
 
@@ -41,7 +44,7 @@ class FileResultType
 	FILE *referenceFile;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	FileResultType()
 		{

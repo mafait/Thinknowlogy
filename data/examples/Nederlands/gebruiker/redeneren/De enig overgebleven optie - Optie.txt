@@ -1,0 +1,11 @@
+﻿Een optie is 1, 2, 3, 4, 5, 6, 7, 8 of 9.
+De optie is niet 1.
+De optie is niet 2.
+De optie is niet 3.
+De optie is niet 4.
+De optie is niet 5.
+#De optie is niet 6.
+De optie is niet 7.
+De optie is niet 8.
+De optie is niet 9.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

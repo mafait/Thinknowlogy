@@ -1,0 +1,53 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To demonstrate programming in natural language.
+#	Version:		Thinknowlogy 2016r2 (Restyle)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	Un résumé du puzzle "Tours de Hanoï":
+#----------------------------------------------------------------------------
+#	Les tours de Hanoï (originellement, la tour d'Hanoïa) sont un jeu de
+#	réflexion imaginé par le mathématicien français Édouard Lucas, et
+#	consistant à déplacer des disques de diamètres différents d'une tour
+#	de « départ » à une tour d'« arrivée » en passant par une tour
+#	« intermédiaire », et ceci en un minimum de coups, tout en respectant
+#	les règles suivantes :
+#
+#	- on ne peut déplacer plus d'un disque à la fois ;
+#	- on ne peut placer un disque que sur un autre disque plus grand que
+#		lui ou sur un emplacement vide.
+#
+#	On suppose que cette dernière règle est également respectée dans la
+#	configuration de départ.
+#----------------------------------------------------------------------------
+#	Voir le texte intégral: https://fr.wikipedia.org/wiki/Tours_de_Hano%C3%AF
+#----------------------------------------------------------------------------
+
+# Définir les mouvements.
+Un mouvement est entre-départ-et-échange, entre-départ-et-objectif, entre-échange-et-objectif, terminé-entre-départ-et-échange, terminé-entre-départ-et-objectif ou terminé-entre-échange-et-objectif.
+
+# Afficher les mouvements.
+Si le mouvement est terminé-entre-départ-et-échange ou le mouvement est terminé-entre-départ-et-objectif ou le mouvement est terminé-entre-échange-et-objectif puis affichez "* Le pôle de départ:\t~+'pôle de départ'<a>`~.\n* Le pôle d'échange:\t~+'pôle de échange'<a>`~.\n* Le pôle d'objectif:\t~+'pôle de objectif'<a>`~.\n\n".
+
+# Les règles de déplacement des disques.
+Si le mouvement est entre-échange-et-objectif puis si le pôle d'échange est assigné et le pôle d'objectif n'est pas assigné ou le pôle d'échange est assigné et la tête du pôle d'échange est plus-petit que la tête du pôle d'objectif puis déplacez la tête du pôle d'échange au pôle d'objectif, le mouvement est terminé-entre-échange-et-objectif et affichez "Je me suis déplacé un disque du pôle d'échange sur le pôle d'objectif:\n" autre déplacez la tête du pôle d'objectif au pôle d'échange, le mouvement est terminé-entre-échange-et-objectif et affichez "Je me suis déplacé un disque du pôle d'objectif sur le pôle d'échange:\n".
+Si le mouvement est entre-départ-et-objectif puis si le pôle de départ est assigné et le pôle d'objectif n'est pas assigné ou le pôle de départ est assigné et la tête du pôle de départ est plus-petit que la tête du pôle d'objectif puis déplacez la tête du pôle de départ au pôle d'objectif, le mouvement est terminé-entre-départ-et-objectif et affichez "Je me suis déplacé un disque du pôle de départ sur le pôle d'objectif:\n" autre déplacez la tête du pôle d'objectif au pôle de départ, le mouvement est terminé-entre-départ-et-objectif et affichez "Je me suis déplacé un disque du pôle d'objectif sur le pôle de départ:\n".
+Si le mouvement est entre-départ-et-échange puis si le pôle de départ est assigné et le pôle d'échange n'est pas assigné ou le pôle de départ est assigné et la tête du pôle de départ est plus-petit que la tête du pôle d'échange puis déplacez la tête du pôle de départ au pôle d'échange, le mouvement est terminé-entre-départ-et-échange et affichez "Je me suis déplacé un disque du pôle de départ sur le pôle d'échange:\n" autre déplacez la tête du pôle d'échange au pôle de départ, le mouvement est terminé-entre-départ-et-échange et affichez "Je me suis déplacé un disque du pôle d'échange sur le pôle de départ:\n".
+
+# Avant chaque nouveau mouvement, l'ordre est défini dans lequel les règles doivent être exécutées.
+Si la sortie de séquence est impaire-en-premier puis si le mouvement n'est pas assigné ou le mouvement est terminé-entre-échange-et-objectif puis le mouvement est entre-départ-et-objectif autre si le mouvement est terminé-entre-départ-et-objectif puis le mouvement est entre-départ-et-échange autre le mouvement est entre-échange-et-objectif.
+Si la sortie de séquence est paire-en-premier puis si le mouvement n'est pas assigné ou le mouvement est terminé-entre-échange-et-objectif puis le mouvement est entre-départ-et-échange autre si le mouvement est terminé-entre-départ-et-échange puis le mouvement est entre-départ-et-objectif autre le mouvement est entre-échange-et-objectif.
+
+# Au début, de déterminer l'ordre dans lequel les règles doivent être exécutées.
+Si le pôle de départ est assigné, le pôle d'échange n'est pas assigné et le pôle d'objectif n'est pas assigné puis si le nombre du pôle de départ est impair puis la sortie de séquence est impaire-en-premier et affichez "\nLe nombre de disques est impair. Donc, sortie de séquence est: Premier déplacer du pôle de départ au pôle d'objectif, puis du pôle de départ au pôle d'échange.\n\n" autre la sortie de séquence est paire-en-premier et affichez "\nLe nombre de disques est pair. Donc, sortie de séquence est: Premier déplacer du pôle de départ au pôle d'échange, puis du pôle de départ au pôle d'objectif.\n\n".
+
+# Définir la fin.
+Si le mouvement est assigné, le pôle de départ n'est pas assigné, le pôle d'échange n'est pas assigné et le pôle d'objectif est assigné puis le mouvement est vide, la sortie de séquence est vide et affichez "Terminé.\nPour recommencer le casse-tête, cliquez sur le bouton «Videz votre esprit.», et puis «Lirez le fichier \"Français/utilisateur/programmation/Tours de Hanoï\".»".
+
+# Maintenant, ajoutez un nombre pair ou impair de disques dans l'ordre inverse,
+# la plus grande d'abord (par exemple D ou E), et le plus petit (A) sur le dessus, comme:
+# - Pour un nombre pair de disques:	Ajoutez D, C, B et A au pôle de départ.
+# - Pour un nombre impair de disques:	Ajoutez E, D, C, B et A au pôle de départ.

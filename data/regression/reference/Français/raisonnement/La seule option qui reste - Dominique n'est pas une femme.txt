@@ -1,0 +1,18 @@
+﻿* 
+* Mes questions:
+< Est Dominique un homme ou une femme?
+< 
+* 
+* Mes questions qui sont répondues:
+< Est Dominique un homme ou une femme?
+* 
+* Mes conclusions:
+< Dominique est un homme.
+< 
+* 
+* Mes conclusions:
+< Dominique est un homme. En raison:
+<	- Dominique est une personne.
+<	- Une personne est un homme ou une femme.
+<	- Dominique n'est pas une femme.
+< 

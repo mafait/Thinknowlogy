@@ -1,7 +1,7 @@
 /*	Class:			AdminSelection
  *	Supports class:	AdminItem
  *	Purpose:		To process selections
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class AdminSelection
 	{
-	// Private constructible variables
+	// Private constructed variables
 
 	private SelectionItem firstSelectionItem_;
 
@@ -39,31 +39,23 @@ class AdminSelection
 		SelectionList alternativeList;
 		SelectionList conditionList;
 
-		if( ( conditionList = adminItem_.conditionList ) != null )
-			{
-			if( ( actionList = adminItem_.actionList ) != null )
-				{
-				if( conditionList.deleteActiveItemsWithCurrentSentenceNr() == Constants.RESULT_OK )
-					{
-					if( actionList.deleteActiveItemsWithCurrentSentenceNr() == Constants.RESULT_OK )
-						{
-						if( ( alternativeList = adminItem_.alternativeList ) != null )
-							{
-							if( alternativeList.deleteActiveItemsWithCurrentSentenceNr() != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to remove the alternative of a selection" );
-							}
-						}
-					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to remove the action of a selection" );
-					}
-				else
-					return adminItem_.addError( 1, moduleNameString_, "I failed to remove the condition of a selection" );
-				}
-			else
-				return adminItem_.startError( 1, moduleNameString_, "The action list isn't created yet" );
-			}
-		else
+		if( ( conditionList = adminItem_.conditionList ) == null )
 			return adminItem_.startError( 1, moduleNameString_, "The condition list isn't created yet" );
+
+		if( ( actionList = adminItem_.actionList ) == null )
+			return adminItem_.startError( 1, moduleNameString_, "The action list isn't created yet" );
+
+		if( conditionList.deleteActiveItemsWithCurrentSentenceNr() != Constants.RESULT_OK )
+			return adminItem_.addError( 1, moduleNameString_, "I failed to remove the condition of a selection" );
+
+		if( actionList.deleteActiveItemsWithCurrentSentenceNr() != Constants.RESULT_OK )
+			return adminItem_.addError( 1, moduleNameString_, "I failed to remove the action of a selection" );
+
+		if( ( alternativeList = adminItem_.alternativeList ) != null )
+			{
+			if( alternativeList.deleteActiveItemsWithCurrentSentenceNr() != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to remove the alternative of a selection" );
+			}
 
 		return Constants.RESULT_OK;
 		}
@@ -79,7 +71,7 @@ class AdminSelection
 		}
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected AdminSelection( AdminItem adminItem )
 		{
@@ -117,138 +109,114 @@ class AdminSelection
 		SelectionList alternativeList;
 		SelectionList conditionList;
 
-		if( ( conditionList = adminItem_.conditionList ) != null )
-			{
-			if( ( actionList = adminItem_.actionList ) != null )
-				{
-				if( ( selectionResult = conditionList.checkDuplicateCondition() ).result == Constants.RESULT_OK )
-					{
-					if( ( duplicateConditionSentenceNr = selectionResult.duplicateConditionSentenceNr ) > Constants.NO_SENTENCE_NR )
-						{
-						if( ( selectionResult = actionList.checkDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result == Constants.RESULT_OK )
-							{
-							if( selectionResult.hasFoundDuplicateSelection )
-								{
-								if( ( alternativeList = adminItem_.alternativeList ) == null )
-									hasFoundDuplicateSelection = true;
-								else
-									{
-									if( ( selectionResult = alternativeList.checkDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result == Constants.RESULT_OK )
-										{
-										if( selectionResult.hasFoundDuplicateSelection )
-											hasFoundDuplicateSelection = true;
-										}
-									else
-										return adminItem_.addError( 1, moduleNameString_, "I failed to check if the alternative selection part is duplicate" );
-									}
-								}
-
-							if( hasFoundDuplicateSelection )
-								{
-								if( removeDuplicateSelection() != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to remove a duplicate selection" );
-								}
-							}
-						else
-							return adminItem_.addError( 1, moduleNameString_, "I failed to check if the action selection part is duplicate" );
-						}
-					}
-				else
-					return adminItem_.addError( 1, moduleNameString_, "I failed to check if the condition selection part is duplicate" );
-				}
-			else
-				return adminItem_.startError( 1, moduleNameString_, "The action list isn't created yet" );
-			}
-		else
+		if( ( conditionList = adminItem_.conditionList ) == null )
 			return adminItem_.startError( 1, moduleNameString_, "The condition list isn't created yet" );
+
+		if( ( actionList = adminItem_.actionList ) == null )
+			return adminItem_.startError( 1, moduleNameString_, "The action list isn't created yet" );
+
+		if( ( selectionResult = conditionList.checkDuplicateCondition() ).result != Constants.RESULT_OK )
+			return adminItem_.addError( 1, moduleNameString_, "I failed to check if the condition selection part is duplicate" );
+
+		if( ( duplicateConditionSentenceNr = selectionResult.duplicateConditionSentenceNr ) > Constants.NO_SENTENCE_NR )
+			{
+			if( ( selectionResult = actionList.checkDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to check if the action selection part is duplicate" );
+
+			if( selectionResult.hasFoundDuplicateSelection )
+				{
+				if( ( alternativeList = adminItem_.alternativeList ) == null )
+					hasFoundDuplicateSelection = true;
+				else
+					{
+					if( ( selectionResult = alternativeList.checkDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result != Constants.RESULT_OK )
+						return adminItem_.addError( 1, moduleNameString_, "I failed to check if the alternative selection part is duplicate" );
+
+					if( selectionResult.hasFoundDuplicateSelection )
+						hasFoundDuplicateSelection = true;
+					}
+				}
+
+			if( hasFoundDuplicateSelection )
+				{
+				if( removeDuplicateSelection() != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to remove a duplicate selection" );
+				}
+			}
 
 		return Constants.RESULT_OK;
 		}
 
-	protected byte createSelectionPart( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short selectionListNr, short imperativeParameter, short prepositionParameter, short specificationWordParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
+	protected byte createSelectionPart( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short selectionListNr, short imperativeVerbParameter, short prepositionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
 		{
 		SelectionResultType selectionResult;
 
-		if( generalizationWordItem != null ||
-		specificationString != null )
-			{
-			switch( selectionListNr )
-				{
-				case Constants.ADMIN_CONDITION_LIST:
-					if( adminItem_.conditionList == null )
-						{
-						// Create list
-						if( ( adminItem_.conditionList = new SelectionList( Constants.ADMIN_CONDITION_LIST_SYMBOL, adminItem_ ) ) != null )
-							{
-							CommonVariables.adminConditionList = adminItem_.conditionList;
-							adminItem_.adminListArray[Constants.ADMIN_CONDITION_LIST] = adminItem_.conditionList;
-							}
-						else
-							return adminItem_.startError( 1, moduleNameString_, "I failed to create an admin condition list" );
-						}
-
-					if( ( selectionResult = adminItem_.conditionList.createSelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result == Constants.RESULT_OK )
-						{
-						if( firstSelectionItem_ == null )
-							firstSelectionItem_ = selectionResult.lastCreatedSelectionItem;
-						}
-					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin condition list" );
-
-					break;
-
-				case Constants.ADMIN_ACTION_LIST:
-					if( adminItem_.actionList == null )
-						{
-						// Create list
-						if( ( adminItem_.actionList = new SelectionList( Constants.ADMIN_ACTION_LIST_SYMBOL, adminItem_ ) ) != null )
-							{
-							CommonVariables.adminActionList = adminItem_.actionList;
-							adminItem_.adminListArray[Constants.ADMIN_ACTION_LIST] = adminItem_.actionList;
-							}
-						else
-							return adminItem_.startError( 1, moduleNameString_, "I failed to create an admin action list" );
-						}
-
-					if( ( selectionResult = adminItem_.actionList.createSelectionItem( false, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result == Constants.RESULT_OK )
-						{
-						if( firstSelectionItem_ == null )
-							firstSelectionItem_ = selectionResult.lastCreatedSelectionItem;
-						}
-					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin action list" );
-
-					break;
-
-				case Constants.ADMIN_ALTERNATIVE_LIST:
-					if( adminItem_.alternativeList == null )
-						{
-						// Create list
-						if( ( adminItem_.alternativeList = new SelectionList( Constants.ADMIN_ALTERNATIVE_LIST_SYMBOL, adminItem_ ) ) != null )
-							{
-							CommonVariables.adminAlternativeList = adminItem_.alternativeList;
-							adminItem_.adminListArray[Constants.ADMIN_ALTERNATIVE_LIST] = adminItem_.alternativeList;
-							}
-						else
-							return adminItem_.startError( 1, moduleNameString_, "I failed to create an admin alternative list" );
-						}
-
-					if( ( selectionResult = adminItem_.alternativeList.createSelectionItem( false, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result == Constants.RESULT_OK )
-						{
-						if( firstSelectionItem_ == null )
-							firstSelectionItem_ = selectionResult.lastCreatedSelectionItem;
-						}
-					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin alternative list" );
-
-					break;
-
-				default:
-					return adminItem_.startError( 1, moduleNameString_, "The given list number is invalid: " + selectionListNr );
-				}
-			}
-		else
+		if( generalizationWordItem == null &&
+		specificationString == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given generalization word or specification string is undefined" );
+
+		switch( selectionListNr )
+			{
+			case Constants.ADMIN_CONDITION_LIST:
+				if( adminItem_.conditionList == null )
+					{
+					// Create list
+					if( ( adminItem_.conditionList = new SelectionList( Constants.ADMIN_CONDITION_LIST_SYMBOL, adminItem_ ) ) == null )
+						return adminItem_.startError( 1, moduleNameString_, "I failed to create an admin condition list" );
+
+					CommonVariables.adminConditionList = adminItem_.conditionList;
+					adminItem_.adminListArray[Constants.ADMIN_CONDITION_LIST] = adminItem_.conditionList;
+					}
+
+				if( ( selectionResult = adminItem_.conditionList.createSelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin condition list" );
+
+				if( firstSelectionItem_ == null )
+					firstSelectionItem_ = selectionResult.lastCreatedSelectionItem;
+
+				break;
+
+			case Constants.ADMIN_ACTION_LIST:
+				if( adminItem_.actionList == null )
+					{
+					// Create list
+					if( ( adminItem_.actionList = new SelectionList( Constants.ADMIN_ACTION_LIST_SYMBOL, adminItem_ ) ) == null )
+						return adminItem_.startError( 1, moduleNameString_, "I failed to create an admin action list" );
+
+					CommonVariables.adminActionList = adminItem_.actionList;
+					adminItem_.adminListArray[Constants.ADMIN_ACTION_LIST] = adminItem_.actionList;
+					}
+
+				if( ( selectionResult = adminItem_.actionList.createSelectionItem( false, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin action list" );
+
+				if( firstSelectionItem_ == null )
+					firstSelectionItem_ = selectionResult.lastCreatedSelectionItem;
+
+				break;
+
+			case Constants.ADMIN_ALTERNATIVE_LIST:
+				if( adminItem_.alternativeList == null )
+					{
+					// Create list
+					if( ( adminItem_.alternativeList = new SelectionList( Constants.ADMIN_ALTERNATIVE_LIST_SYMBOL, adminItem_ ) ) == null )
+						return adminItem_.startError( 1, moduleNameString_, "I failed to create an admin alternative list" );
+
+					CommonVariables.adminAlternativeList = adminItem_.alternativeList;
+					adminItem_.adminListArray[Constants.ADMIN_ALTERNATIVE_LIST] = adminItem_.alternativeList;
+					}
+
+				if( ( selectionResult = adminItem_.alternativeList.createSelectionItem( false, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString ) ).result != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to create a copy of a temporary generalization noun selection item in the admin alternative list" );
+
+				if( firstSelectionItem_ == null )
+					firstSelectionItem_ = selectionResult.lastCreatedSelectionItem;
+
+				break;
+
+			default:
+				return adminItem_.startError( 1, moduleNameString_, "The given list number is invalid: " + selectionListNr );
+			}
 
 		return Constants.RESULT_OK;
 		}
@@ -268,7 +236,7 @@ class AdminSelection
 		short selectionLevel;
 		short nSelectionExecutions = 0;
 		int executionSentenceNr;
-		WordItem conditionWordItem;
+		WordItem generalizationWordItem;
 		SelectionItem conditionSelectionItem;
 		SelectionItem executionSelectionItem;
 		SelectionList actionList;
@@ -310,13 +278,13 @@ class AdminSelection
 							isInitializeVariables = true;
 
 							do	{
-								if( adminItem_.executeImperative( isInitializeVariables, executionListNr, executionSelectionItem.imperativeParameter(), executionSelectionItem.specificationWordParameter(), executionSelectionItem.specificationWordTypeNr(), endSolveProgress, executionSelectionItem.specificationString(), executionSelectionItem.generalizationWordItem(), executionSelectionItem.specificationWordItem(), null, null, executionSelectionItem, actionSelectionItem ) == Constants.RESULT_OK )
-									isInitializeVariables = false;
-								else
+								if( adminItem_.executeImperative( isInitializeVariables, executionListNr, executionSelectionItem.imperativeVerbParameter(), Constants.NO_WORD_PARAMETER, executionSelectionItem.specificationWordTypeNr(), endSolveProgress, executionSelectionItem.specificationString(), executionSelectionItem.generalizationWordItem(), executionSelectionItem.specificationWordItem(), null, null, executionSelectionItem, actionSelectionItem ) != Constants.RESULT_OK )
 									return adminItem_.addError( 1, moduleNameString_, "I failed to execute an imperative" );
+
+								isInitializeVariables = false;
 								}
 							while( !adminItem_.hasRequestedRestart() &&
-							!CommonVariables.hasShownWarning &&
+							!CommonVariables.hasDisplayedWarning &&
 							( executionSelectionItem = executionSelectionItem.nextExecutionItem( executionLevel, executionSentenceNr ) ) != null );
 							}
 
@@ -373,21 +341,17 @@ class AdminSelection
 										isWaitingForExecution = true;
 									else
 										{
-										conditionWordItem = conditionSelectionItem.generalizationWordItem();
+										generalizationWordItem = conditionSelectionItem.generalizationWordItem();
 
-										if( conditionWordItem != null )
-											{
-											if( ( selectionResult = adminItem_.checkCondition( conditionSelectionItem ) ).result == Constants.RESULT_OK )
-												{
-												isSatisfied = selectionResult.isConditionSatisfied;
-												executionLevel = selectionLevel;
-												executionSentenceNr = conditionSelectionItem.activeSentenceNr();
-												}
-											else
-												return adminItem_.addError( 1, moduleNameString_, "I failed to check the condition of word \"" + conditionWordItem.anyWordTypeString() + "\"" );
-											}
-										else
+										if( generalizationWordItem == null )
 											return adminItem_.startError( 1, moduleNameString_, "I have found an undefined condition word" );
+
+										if( ( selectionResult = generalizationWordItem.checkSelectionCondition( conditionSelectionItem ) ).result != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to check the condition of a selection in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+										isSatisfied = selectionResult.isConditionSatisfied;
+										executionLevel = selectionLevel;
+										executionSentenceNr = conditionSelectionItem.activeSentenceNr();
 										}
 									}
 								}
@@ -398,11 +362,11 @@ class AdminSelection
 					}
 				while( !hasDoneLastExecution &&
 				!adminItem_.hasRequestedRestart() &&
-				!CommonVariables.hasShownWarning );
+				!CommonVariables.hasDisplayedWarning );
 				}
 			}
 		while( !adminItem_.hasRequestedRestart() &&
-		!CommonVariables.hasShownWarning &&
+		!CommonVariables.hasDisplayedWarning &&
 		CommonVariables.isAssignmentChanged &&
 		++nSelectionExecutions < Constants.MAX_SELECTION_EXECUTIONS );
 

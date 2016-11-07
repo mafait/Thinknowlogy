@@ -1,0 +1,5 @@
+﻿A cat is a mammal.
+A dog is a mammal.
+A whale is a mammal.
+Display information about mammals.
+# To continue, click button «Clear your mind.» or «Restart.».

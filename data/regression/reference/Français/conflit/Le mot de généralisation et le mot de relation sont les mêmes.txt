@@ -1,0 +1,2 @@
+﻿! Le mot «Olivier» est un mot de généralisation, ainsi qu'un mot de relation. Il suppose qu'il ya plusieurs (différents) des instances de ce mot. Cependant, cette logique de l'enfant n'a pas encore été mis en œuvre.
+! 

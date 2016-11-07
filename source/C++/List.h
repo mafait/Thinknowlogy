@@ -1,6 +1,6 @@
 /*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,8 +29,13 @@
 #include "Item.h"
 
 // Some compilers need these class declarations
+class GeneralizationResultType;
+class GrammarResultType;
+class JustificationResultType;
 class ListCleanup;
 class ListQuery;
+class SelectionResultType;
+class SpecificationResultType;
 
 class List
 	{
@@ -44,7 +49,7 @@ class List
 	friend class WordCleanup;
 	friend class WordItem;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	char listChar_;
 
@@ -74,17 +79,34 @@ class List
 
 	ResultType removeItemFromList( Item *removeItem );
 
-	Item *tailOfList( Item *searchItem );
-
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	List();
 	virtual ~List();
 
 
 	// Protected error functions
+
+	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	CollectionResultType startCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	FileResultType addFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	FileResultType startFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	FileResultType startFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	FileResultType startFileResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	GeneralizationResultType startGeneralizationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	GrammarResultType addGrammarResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	GrammarResultType startGrammarResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	JustificationResultType addJustificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	JustificationResultType startJustificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	ReadResultType addReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	ReadResultType startReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
 	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
@@ -94,12 +116,23 @@ class List
 
 	ResultType startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
+	SelectionResultType addSelectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	SelectionResultType startSelectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	SelectionResultType startSystemSelectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	SpecificationResultType addSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	SpecificationResultType startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	StringResultType addStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	StringResultType startStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	WordResultType addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	WordResultType startWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
 
 	// Protected virtual functions
 
 	virtual bool isTemporaryList();
-
-	virtual ReferenceResultType findWordReference( WordItem *referenceWordItem );
 
 
 	// Protected common functions
@@ -141,7 +174,7 @@ class List
 
 	// Protected cleanup functions
 
-	void clearReplacedInfoInList();
+	void clearReplacingInfoInList();
 	void getHighestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr );
 	void setCurrentItemNrInList();
 
@@ -159,8 +192,7 @@ class List
 	void countQueryInList();
 	void clearQuerySelectionsInList();
 
-	ReferenceResultType compareStrings( char *searchString, char *sourceString );
-
+	ResultType displayQueryResultInList( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth );
 	ResultType itemQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr );
 	ResultType listQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString );
 	ResultType wordTypeQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr );
@@ -168,7 +200,8 @@ class List
 	ResultType wordQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems );
 	ResultType wordReferenceQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString );
 	ResultType stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString );
-	ResultType showQueryResultInList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth );
+
+	StringResultType compareStrings( char *searchString, char *sourceString );
 	};
 #endif
 

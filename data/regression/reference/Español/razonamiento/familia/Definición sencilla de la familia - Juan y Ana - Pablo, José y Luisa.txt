@@ -1,0 +1,65 @@
+﻿* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+< 
+* 
+* Mis conclusiones:
+< Juan es un hombre.
+< Juan no es una mujer.
+< Juan no es una madre.
+< Pablo tiene un padre, llamado Juan.
+< Pablo tiene una madre, llamada Ana.
+< José tiene un padre, llamado Juan.
+< José tiene una madre, llamada Ana.
+< Luisa tiene un padre, llamado Juan.
+< Luisa tiene una madre, llamada Ana.
+< Ana es una mujer.
+< Ana no es un hombre.
+< Ana no es un padre.
+< 
+* 
+* Mis conclusiones:
+< Juan es un hombre. Porque:
+<	- Juan es un padre.
+<	- Cada padre es un hombre.
+< Juan no es una mujer. Porque:
+<	- Juan es un padre.
+<	- Cada padre es una mujer o un hombre.
+< Juan no es una madre. Porque:
+<	- Juan es un padre.
+<	- Cada padre es un padre o una madre.
+< 
+* 
+* Mis conclusiones:
+< Ana es una mujer. Porque:
+<	- Ana es una madre.
+<	- Cada madre es una mujer.
+< Ana no es un hombre. Porque:
+<	- Ana es una madre.
+<	- Cada padre es una mujer o un hombre.
+<	- Ana es una mujer.
+< Ana no es un padre. Porque:
+<	- Ana es una madre.
+<	- Cada padre es un padre o una madre.
+< 
+* 
+* Mis conclusiones:
+< Pablo tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
+< Pablo tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
+< 
+* 
+* Mis conclusiones:
+< José tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
+< José tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
+< 
+* 
+* Mis conclusiones:
+< Luisa tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
+< Luisa tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
+< 

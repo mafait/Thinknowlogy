@@ -1,7 +1,7 @@
 /*	Class:			WordType
  *	Supports class:	WordItem
  *	Purpose:		To create word type structures
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,7 +27,7 @@ class WordType
 	{
 	friend class WordItem;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	bool hasFeminineWordEnding_;
 	bool hasMasculineWordEnding_;
@@ -51,56 +51,48 @@ class WordType
 		hasFeminineWordEnding_ = false;
 		hasMasculineWordEnding_ = false;
 
-		if( wordString != NULL )
+		if( wordString == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given word string is undefined" );
+
+		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The current language word item is undefined" );
+
+		if( ( grammarResult = currentLanguageWordItem->analyzeWordEnding( ( isSingularNoun ? WORD_FEMININE_SINGULAR_NOUN_ENDING : WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result != RESULT_OK )
+			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check on feminine word ending" );
+
+		if( grammarResult.hasFoundWordEnding )
 			{
-			if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
+			hasFeminineWordEnding_ = true;
+
+			if( isSingularNoun )
 				{
-				if( ( grammarResult = currentLanguageWordItem->analyzeWordEnding( ( isSingularNoun ? WORD_FEMININE_SINGULAR_NOUN_ENDING : WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
-					{
-					if( grammarResult.hasFoundWordEnding )
-						{
-						hasFeminineWordEnding_ = true;
-
-						if( isSingularNoun )
-							{
-							if( myWordItem_->markWordAsFeminine() != RESULT_OK )
-								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark my word as feminine" );
-							}
-						}
-					else
-						{
-						if( ( grammarResult = currentLanguageWordItem->analyzeWordEnding( ( isSingularNoun ? WORD_MASCULINE_SINGULAR_NOUN_ENDING : WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result == RESULT_OK )
-							{
-							if( grammarResult.hasFoundWordEnding )
-								{
-								hasMasculineWordEnding_ = true;
-
-								if( isSingularNoun )
-									{
-									if( myWordItem_->markWordAsMasculine() != RESULT_OK )
-										return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark my word as masculine" );
-									}
-								}
-							}
-						else
-							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check on masculine word ending" );
-						}
-					}
-				else
-					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check on feminine word ending" );
+				if( myWordItem_->markWordAsFeminine() != RESULT_OK )
+					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark my word as feminine" );
 				}
-			else
-				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The current language word item is undefined" );
 			}
 		else
-			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given word string is undefined" );
+			{
+			if( ( grammarResult = currentLanguageWordItem->analyzeWordEnding( ( isSingularNoun ? WORD_MASCULINE_SINGULAR_NOUN_ENDING : WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check on masculine word ending" );
+
+			if( grammarResult.hasFoundWordEnding )
+				{
+				hasMasculineWordEnding_ = true;
+
+				if( isSingularNoun )
+					{
+					if( myWordItem_->markWordAsMasculine() != RESULT_OK )
+						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark my word as masculine" );
+					}
+				}
+			}
 
 		return RESULT_OK;
 		}
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	WordType( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
@@ -146,49 +138,39 @@ class WordType
 		hasFeminineWordEnding_ = false;
 		hasMasculineWordEnding_ = false;
 
-		if( !myWordItem_->isAdminWord() )
+		if( myWordItem_->wordTypeList == NULL )
 			{
-			if( myWordItem_->wordTypeList == NULL )
-				{
-				// Create list
-				if( ( myWordItem_->wordTypeList = new WordTypeList( commonVariables_, myWordItem_ ) ) != NULL )
-					myWordItem_->wordListArray[WORD_TYPE_LIST] = myWordItem_->wordTypeList;
-				else
-					myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I failed to create a word type list" );
-				}
-			else
-				{
-				// Check if word type already exists
-				if( ( wordResult = findWordType( false, wordTypeNr, wordTypeString ) ).result != RESULT_OK )
-					myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find the given word type" );
-				}
+			// Create list
+			if( ( myWordItem_->wordTypeList = new WordTypeList( commonVariables_, myWordItem_ ) ) == NULL )
+				return myWordItem_->startWordResultErrorInWord( functionNameString, moduleNameString_, "I failed to create a word type list" );
 
-			// Add word type if it doesn't exist yet
-			if( commonVariables_->result == RESULT_OK &&
-			wordResult.foundWordTypeItem == NULL )
-				{
-				isSingularNoun = ( wordTypeNr == WORD_TYPE_NOUN_SINGULAR );
-
-				if( isSingularNoun ||
-
-				( !isLanguageWord &&
-				wordTypeNr == WORD_TYPE_PROPER_NAME ) )
-					{
-					if( checkOnFeminineAndMasculineWordEnding( isSingularNoun, wordTypeString ) != RESULT_OK )
-						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the string on feminine or masculine word ending" );
-					}
-
-				if( commonVariables_->result == RESULT_OK )
-					{
-					if( ( wordResult = myWordItem_->wordTypeList->createWordTypeItem( ( hasFeminineWordEnding_ && !isMultipleWord ), hasMasculineWordEnding_, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordLength, wordTypeString ) ).result != RESULT_OK )
-						myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to create a word type item" );
-					}
-				}
+			myWordItem_->wordListArray[WORD_TYPE_LIST] = myWordItem_->wordTypeList;
 			}
 		else
-			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The admin word item cannot have word types" );
+			{
+			// Check if word type already exists
+			if( ( wordResult = findWordType( false, wordTypeNr, wordTypeString ) ).result != RESULT_OK )
+				return myWordItem_->addWordResultErrorInWord( functionNameString, moduleNameString_, "I failed to find the given word type" );
+			}
 
-		wordResult.result = commonVariables_->result;
+		// Add word type if it doesn't exist yet
+		if( wordResult.foundWordTypeItem == NULL )
+			{
+			isSingularNoun = ( wordTypeNr == WORD_TYPE_NOUN_SINGULAR );
+
+			if( isSingularNoun ||
+
+			( !isLanguageWord &&
+			wordTypeNr == WORD_TYPE_PROPER_NAME ) )
+				{
+				if( checkOnFeminineAndMasculineWordEnding( isSingularNoun, wordTypeString ) != RESULT_OK )
+					return myWordItem_->addWordResultErrorInWord( functionNameString, moduleNameString_, "I failed to check the string on feminine or masculine word ending" );
+				}
+
+			if( ( wordResult = myWordItem_->wordTypeList->createWordTypeItem( ( hasFeminineWordEnding_ && !isMultipleWord ), hasMasculineWordEnding_, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordLength, wordTypeString ) ).result != RESULT_OK )
+				return myWordItem_->addWordResultErrorInWord( functionNameString, moduleNameString_, "I failed to create a word type item" );
+			}
+
 		return wordResult;
 		}
 
@@ -201,41 +183,33 @@ class WordType
 		WordTypeItem *currentWordTypeItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findWordType";
 
-		if( wordTypeString != NULL )
+		if( wordTypeString == NULL )
+			return myWordItem_->startWordResultErrorInWord( functionNameString, moduleNameString_, "The given word type string is undefined" );
+
+		if( ( wordTypeStringLength = strlen( wordTypeString ) ) == 0 )
+			return myWordItem_->startWordResultErrorInWord( functionNameString, moduleNameString_, "The given word type string is empty" );
+
+		if( ( currentWordTypeItem = myWordItem_->activeWordTypeItem( isCheckingAllLanguages, wordTypeNr ) ) != NULL )
 			{
-			if( ( wordTypeStringLength = strlen( wordTypeString ) ) > 0 )
-				{
-				if( ( currentWordTypeItem = myWordItem_->activeWordTypeItem( isCheckingAllLanguages, wordTypeNr ) ) != NULL )
+			do	{
+				// Skip hidden word type
+				if( ( currentWordTypeString = currentWordTypeItem->itemString() ) != NULL )
 					{
-					do	{
-						// Skip hidden word type
-						if( ( currentWordTypeString = currentWordTypeItem->itemString() ) != NULL )
-							{
-							if( ( currentWordTypeStringLength = strlen( currentWordTypeString ) ) > 0 )
-								{
-								if( wordTypeStringLength == currentWordTypeStringLength &&
-								strcmp( wordTypeString, currentWordTypeString ) == 0 )
-									{
-									wordResult.foundWordItem = myWordItem_;
-									wordResult.foundWordTypeItem = currentWordTypeItem;
-									}
-								}
-							else
-								myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The active word type string is empty" );
-							}
+					if( ( currentWordTypeStringLength = strlen( currentWordTypeString ) ) == 0 )
+						return myWordItem_->startWordResultErrorInWord( functionNameString, moduleNameString_, "The active word type string is empty" );
+
+					if( wordTypeStringLength == currentWordTypeStringLength &&
+					strcmp( wordTypeString, currentWordTypeString ) == 0 )
+						{
+						wordResult.foundWordItem = myWordItem_;
+						wordResult.foundWordTypeItem = currentWordTypeItem;
 						}
-					while( commonVariables_->result == RESULT_OK &&
-					wordResult.foundWordItem == NULL &&
-					( currentWordTypeItem = currentWordTypeItem->nextWordTypeItem( wordTypeNr ) ) != NULL );
 					}
 				}
-			else
-				myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given word type string is empty" );
+			while( wordResult.foundWordItem == NULL &&
+			( currentWordTypeItem = currentWordTypeItem->nextWordTypeItem( wordTypeNr ) ) != NULL );
 			}
-		else
-			myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given word type string is undefined" );
 
-		wordResult.result = commonVariables_->result;
 		return wordResult;
 		}
 

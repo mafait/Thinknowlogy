@@ -1,0 +1,92 @@
+﻿* 
+* Mijn conclusies:
+< Ouders en kinderen zijn deel van ieder gezin.
+< 
+* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Ieder kind is een meisje, een vrouw, een jongen of een man.
+* 
+* Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Jan is een man.
+< Paul heeft een vader, genaamd Jan.
+< Johan heeft een vader, genaamd Jan.
+< Laura heeft een vader, genaamd Jan.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een persoon.
+< Jan is waarschijnlijk geen vrouw.
+< Jan is waarschijnlijk een ouder van Paul, Johan en Laura.
+< Jan is waarschijnlijk deel van een gezin.
+< Jan is waarschijnlijk geen moeder.
+< Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+< Jan heeft mogelijk een dochter, genaamd Laura.
+< Paul heeft waarschijnlijk een ouder, genaamd Jan.
+< Paul is waarschijnlijk een kind van Jan.
+< Paul is waarschijnlijk deel van een gezin.
+< Paul is mogelijk een persoon.
+< Johan heeft waarschijnlijk een ouder, genaamd Jan.
+< Johan is waarschijnlijk een kind van Jan.
+< Johan is waarschijnlijk deel van een gezin.
+< Johan is mogelijk een persoon.
+< Laura heeft waarschijnlijk een ouder, genaamd Jan.
+< Laura is waarschijnlijk een kind van Jan.
+< Laura is waarschijnlijk deel van een gezin.
+< Laura is mogelijk een persoon.
+< Laura is mogelijk een dochter van Jan.
+< Laura is misschien geen jongen en geen man.
+< Laura is misschien geen zoon.
+* 
+* Mijn vragen:
+< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een zoon of een dochter?
+< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een zoon of een dochter?
+< Is Laura een meisje of een vrouw?
+< 
+* 
+* Mijn conclusies:
+< Anna was een vrouw.
+< Paul heeft geen moeder meer.
+< Paul had een moeder, genaamd Anna.
+< Johan heeft geen moeder meer.
+< Johan had een moeder, genaamd Anna.
+< Laura heeft geen moeder meer.
+< Laura had een moeder, genaamd Anna.
+* 
+* Mijn veronderstellingen:
+< Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+< Anna heeft mogelijk een dochter, genaamd Laura.
+< Anna was waarschijnlijk een persoon.
+< Anna was waarschijnlijk geen man.
+< Anna was waarschijnlijk een ouder van Paul, Johan en Laura.
+< Anna was waarschijnlijk deel van een gezin.
+< Anna was waarschijnlijk geen vader.
+< Paul is waarschijnlijk een kind van Jan en Anna.
+< Paul had waarschijnlijk een ouder, genaamd Anna.
+< Johan is waarschijnlijk een kind van Jan en Anna.
+< Johan had waarschijnlijk een ouder, genaamd Anna.
+< Laura is waarschijnlijk een kind van Jan en Anna.
+< Laura is mogelijk een dochter van Jan en Anna.
+< Laura had waarschijnlijk een ouder, genaamd Anna.
+< 

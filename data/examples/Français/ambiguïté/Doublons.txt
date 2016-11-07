@@ -1,0 +1,11 @@
+﻿Lirez le fichier "Français/utilisateur/ambiguïté/Boston".
+#Affichez le rapport de justification sur des États-Unis.
+Affichez le rapport de justification sur les États-Unis.
+#Affichez le rapport de justification sur du Royaume-Uni.
+Affichez le rapport de justification sur le Royaume-Uni.
+Lirez le fichier "Français/utilisateur/ambiguïté/Boston".
+#Affichez le rapport de justification sur des États-Unis.
+Affichez le rapport de justification sur les États-Unis.
+#Affichez le rapport de justification sur du Royaume-Uni.
+Affichez le rapport de justification sur le Royaume-Uni.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

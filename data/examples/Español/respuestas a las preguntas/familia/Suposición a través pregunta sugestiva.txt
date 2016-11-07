@@ -1,5 +1,10 @@
-﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
 Pablo es hijo de Juan y Ana.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Pablo.
 ¿Es Juan el padre de Pablo?
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Pablo.
 ¿Es Jorge el padre de Pablo?
+Mostrar el informe de justificación sobre Jorge.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

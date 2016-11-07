@@ -1,0 +1,99 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Pablo es probablemente un hijo.
+< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente una persona.
+< Pablo no es probablemente una niña, una mujer y un hombre.
+< Pablo no es probablemente una hija.
+< Pablo tiene posiblemente un padre.
+< 
+* 
+* Mis conclusiones:
+< Luisa no es una mujer, un niño y un hombre.
+* 
+* Mis suposiciones:
+< Luisa es probablemente una hija.
+< Luisa es posiblemente una persona.
+< Luisa es probablemente parte de una familia.
+< Luisa no es probablemente un hijo.
+< Luisa tiene posiblemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Pablo es probablemente un hijo. Porque:
+<	- Cada hijo es un niño o un hombre.
+<	- Pablo es un niño.
+< Pablo es probablemente parte de una familia. Porque:
+<	- Pablo es probablemente un hijo.
+<	- Hijos son parte de cada familia.
+< Pablo es posiblemente una persona. Porque:
+<	- Pablo es probablemente un hijo.
+<	- Un hijo es probablemente una persona.
+< Pablo no es probablemente una niña, una mujer y un hombre. Porque:
+<	- Pablo es probablemente un hijo.
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+<	- Pablo es un niño.
+< Pablo no es probablemente una hija. Porque:
+<	- Pablo es probablemente un hijo.
+<	- Cada hijo es un hijo o una hija.
+< Pablo tiene posiblemente un padre. Porque:
+<	- Pablo es probablemente un hijo.
+<	- Cada familia tiene padres y hijos.
+< 
+* 
+* Mis conclusiones:
+< Luisa no es una mujer, un niño y un hombre. Porque:
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+<	- Luisa es una niña.
+* 
+* Mis suposiciones:
+< Luisa es probablemente una hija. Porque:
+<	- Cada hija es una niña o una mujer.
+<	- Luisa es una niña.
+< Luisa es posiblemente una persona. Porque:
+<	- Luisa es probablemente una hija.
+<	- Una hija es probablemente una persona.
+< Luisa es probablemente parte de una familia. Porque:
+<	- Luisa es probablemente una hija.
+<	- Hijos son parte de cada familia.
+< Luisa no es probablemente un hijo. Porque:
+<	- Cada hijo es un hijo o una hija.
+<	- Luisa es probablemente una hija.
+< Luisa tiene posiblemente un padre. Porque:
+<	- Luisa es probablemente una hija.
+<	- Cada hijo es un hijo o una hija.
+<	- Cada familia tiene padres y hijos.
+< 
+! 
+! No se acepta esta frase, porque está en conflicto con:
+< Pablo es un niño.
+< Pablo no es probablemente una niña, una mujer y un hombre.
+< 
+! 
+! No se acepta esta frase, porque está en conflicto con:
+< Luisa es una niña.
+< Luisa no es una mujer, un niño y un hombre.
+< 

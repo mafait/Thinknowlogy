@@ -1,7 +1,7 @@
 /*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class ContextItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private boolean isCompoundCollectionSpanishAmbiguous_;
 
@@ -35,13 +35,13 @@ class ContextItem extends Item
 	private WordItem specificationWordItem_;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected ContextItem( boolean isCompoundCollectionSpanishAmbiguous, short contextWordTypeNr, short specificationWordTypeNr, int contextNr, WordItem specificationWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isCompoundCollectionSpanishAmbiguous_ = isCompoundCollectionSpanishAmbiguous;
 
@@ -56,7 +56,7 @@ class ContextItem extends Item
 
 	// Protected virtual methods
 
-	protected void showWordReferences( boolean isReturnQueryToPosition )
+	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		String wordString;
 
@@ -69,7 +69,7 @@ class ContextItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
@@ -78,7 +78,7 @@ class ContextItem extends Item
 			}
 		}
 
-	protected boolean hasFoundParameter( int queryParameter )
+	protected boolean hasParameter( int queryParameter )
 		{
 		return ( contextNr_ == queryParameter ||
 
@@ -86,30 +86,30 @@ class ContextItem extends Item
 				contextNr_ > Constants.NO_CONTEXT_NR ) );
 		}
 
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( ( specificationWordItem_ == null ? false :
 					( querySentenceNr == Constants.NO_SENTENCE_NR ? true : specificationWordItem_.creationSentenceNr() == querySentenceNr ) &&
 					( queryItemNr == Constants.NO_ITEM_NR ? true : specificationWordItem_.itemNr() == queryItemNr ) ) );
 		}
 
-	protected boolean hasFoundWordType( short queryWordTypeNr )
+	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( contextWordTypeNr_ == queryWordTypeNr ||
 				specificationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	protected ReferenceResultType findMatchingWordReferenceString( String queryString )
+	protected StringResultType findMatchingWordReferenceString( String queryString )
 		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
+		StringResultType stringResult = new StringResultType();
 
 		if( specificationWordItem_ != null )
 			{
-			if( ( referenceResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, "I failed to find a matching word reference string for the specification word" );
+			if( ( stringResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, "I failed to find a matching word reference string for the specification word" );
 			}
 
-		return referenceResult;
+		return stringResult;
 		}
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
@@ -134,7 +134,7 @@ class ContextItem extends Item
 		if( contextNr_ > Constants.NO_CONTEXT_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "contextNr:" + contextNr_ );
 
-		if( specificationWordTypeNr_ > Constants.WORD_TYPE_UNDEFINED )
+		if( specificationWordTypeNr_ > Constants.NO_WORD_TYPE_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordType:" + ( specificationWordTypeString == null ? Constants.EMPTY_STRING : specificationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + specificationWordTypeNr_ );
 
 		if( specificationWordItem_ != null )

@@ -1,6 +1,6 @@
 /*	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -93,6 +93,7 @@ class Thinknowlogy
 			// Start the administrator
 			Console.restart( titleBarHeight_, windowBottomHeight_ );
 			adminItem = new AdminItem( startupLanguageNameString );
+			Console.setAdminItem( adminItem );
 
 			// Interact with the administrator
 			// until a restart or a system error occurs
@@ -111,8 +112,8 @@ class Thinknowlogy
 
 		if( result != Constants.RESULT_OK )
 			{
-			Console.showProgressStatus( "System error: The administrator failed to start." );
-			Console.showError();
+			Console.displayProgressStatus( "System error: The administrator failed to start." );
+			Console.displayError();
 			}
 		}
 

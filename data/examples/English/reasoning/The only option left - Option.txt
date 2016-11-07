@@ -8,4 +8,5 @@ The option is not 5.
 The option is not 7.
 The option is not 8.
 The option is not 9.
+Display the justification report about option.
 # To continue, click button «Clear your mind.» or «Restart.».

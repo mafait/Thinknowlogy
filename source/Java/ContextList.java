@@ -1,7 +1,7 @@
 /*	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,52 +23,75 @@
 
 class ContextList extends List
 	{
+	// Private constructed variables
+
+	private boolean isMarkedAsContextWord_;
+
 	// Private methods
 
 	private boolean hasContext( boolean isCompoundCollectionSpanishAmbiguous, int contextNr, WordItem specificationWordItem )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		// In case of a pronoun context, the given specification word item will be undefined
 
 		if( contextNr > Constants.NO_CONTEXT_NR )
 			{
-			while( searchItem != null )
+			while( searchContextItem != null )
 				{
-				if( searchItem.contextNr() == contextNr &&
-				searchItem.specificationWordItem() == specificationWordItem &&
-				searchItem.isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous )
+				if( searchContextItem.contextNr() == contextNr &&
+				searchContextItem.specificationWordItem() == specificationWordItem &&
+				searchContextItem.isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous )
 					return true;
 
-				searchItem = searchItem.nextContextItem();
+				searchContextItem = searchContextItem.nextContextItem();
 				}
 			}
 
 		return false;
 		}
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected ContextList( WordItem myWordItem )
 		{
+		isMarkedAsContextWord_ = false;
+
 		initializeListVariables( Constants.WORD_CONTEXT_LIST_SYMBOL, myWordItem );
 		}
 
 
 	// Protected methods
 
+	protected void addToContextWordQuickAccessList()
+		{
+		WordItem tempWordItem;
+		WordItem lastContextWordItem = CommonVariables.firstContextWordItem;
+
+		if( lastContextWordItem == null )
+			CommonVariables.firstContextWordItem = myWordItem();
+		else
+			{
+			// Word order is important: Add word at end of context word list
+			while( ( tempWordItem = lastContextWordItem.nextContextWordItem ) != null )
+				lastContextWordItem = tempWordItem;
+
+			lastContextWordItem.nextContextWordItem = myWordItem();
+			}
+		}
+
 	protected boolean hasContext( int contextNr )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		if( contextNr > Constants.NO_CONTEXT_NR )
 			{
-			while( searchItem != null )
+			while( searchContextItem != null )
 				{
-				if( searchItem.contextNr() == contextNr )
+				if( searchContextItem.contextNr() == contextNr )
 					return true;
 
-				searchItem = searchItem.nextContextItem();
+				searchContextItem = searchContextItem.nextContextItem();
 				}
 			}
 
@@ -77,19 +100,19 @@ class ContextList extends List
 
 	protected boolean hasContext( int contextNr, WordItem specificationWordItem )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		// In case of a pronoun context, the given specification word item will be undefined
 
 		if( contextNr > Constants.NO_CONTEXT_NR )
 			{
-			while( searchItem != null )
+			while( searchContextItem != null )
 				{
-				if( searchItem.contextNr() == contextNr &&
-				searchItem.specificationWordItem() == specificationWordItem )
+				if( searchContextItem.contextNr() == contextNr &&
+				searchContextItem.specificationWordItem() == specificationWordItem )
 					return true;
 
-				searchItem = searchItem.nextContextItem();
+				searchContextItem = searchContextItem.nextContextItem();
 				}
 			}
 
@@ -98,20 +121,20 @@ class ContextList extends List
 
 	protected boolean hasContextCurrentlyBeenUpdated( int contextNr, WordItem specificationWordItem )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		// In case of a pronoun context, the given specification word item will be undefined
 
 		if( contextNr > Constants.NO_CONTEXT_NR )
 			{
-			while( searchItem != null )
+			while( searchContextItem != null )
 				{
-				if( searchItem.hasCurrentCreationSentenceNr() &&
-				searchItem.contextNr() == contextNr &&
-				searchItem.specificationWordItem() == specificationWordItem )
+				if( searchContextItem.hasCurrentCreationSentenceNr() &&
+				searchContextItem.contextNr() == contextNr &&
+				searchContextItem.specificationWordItem() == specificationWordItem )
 					return true;
 
-				searchItem = searchItem.nextContextItem();
+				searchContextItem = searchContextItem.nextContextItem();
 				}
 			}
 
@@ -120,18 +143,18 @@ class ContextList extends List
 
 	protected boolean isContextSubset( int subsetContextNr, int fullSetContextNr )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		if( fullSetContextNr > Constants.NO_CONTEXT_NR &&
 		subsetContextNr > Constants.NO_CONTEXT_NR )
 			{
-			while( searchItem != null )
+			while( searchContextItem != null )
 				{
-				if( searchItem.contextNr() == subsetContextNr &&
-				hasContext( fullSetContextNr, searchItem.specificationWordItem() ) )
+				if( searchContextItem.contextNr() == subsetContextNr &&
+				hasContext( fullSetContextNr, searchContextItem.specificationWordItem() ) )
 					return true;
 
-				searchItem = searchItem.nextContextItem();
+				searchContextItem = searchContextItem.nextContextItem();
 				}
 			}
 
@@ -140,16 +163,16 @@ class ContextList extends List
 
 	protected int contextNr( WordItem specificationWordItem )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		// In case of a pronoun context, the given specification word item will be undefined
 
-		while( searchItem != null )
+		while( searchContextItem != null )
 			{
-			if( searchItem.specificationWordItem() == specificationWordItem )
-				return searchItem.contextNr();
+			if( searchContextItem.specificationWordItem() == specificationWordItem )
+				return searchContextItem.contextNr();
 
-			searchItem = searchItem.nextContextItem();
+			searchContextItem = searchContextItem.nextContextItem();
 			}
 
 		return Constants.NO_CONTEXT_NR;
@@ -157,17 +180,17 @@ class ContextList extends List
 
 	protected int contextNr( boolean isCompoundCollectionSpanishAmbiguous, WordItem specificationWordItem )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		// In case of a pronoun context, the given specification word item will be undefined
 
-		while( searchItem != null )
+		while( searchContextItem != null )
 			{
-			if( searchItem.specificationWordItem() == specificationWordItem &&
-			searchItem.isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous )
-				return searchItem.contextNr();
+			if( searchContextItem.specificationWordItem() == specificationWordItem &&
+			searchContextItem.isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous )
+				return searchContextItem.contextNr();
 
-			searchItem = searchItem.nextContextItem();
+			searchContextItem = searchContextItem.nextContextItem();
 			}
 
 		return Constants.NO_CONTEXT_NR;
@@ -176,14 +199,14 @@ class ContextList extends List
 	protected int highestContextNr()
 		{
 		int highestContextNr = Constants.NO_CONTEXT_NR;
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
-		while( searchItem != null )
+		while( searchContextItem != null )
 			{
-			if( searchItem.contextNr() > highestContextNr )
-				highestContextNr = searchItem.contextNr();
+			if( searchContextItem.contextNr() > highestContextNr )
+				highestContextNr = searchContextItem.contextNr();
 
-			searchItem = searchItem.nextContextItem();
+			searchContextItem = searchContextItem.nextContextItem();
 			}
 
 		return highestContextNr;
@@ -191,72 +214,80 @@ class ContextList extends List
 
 	protected byte addContext( boolean isCompoundCollectionSpanishAmbiguous, short contextWordTypeNr, short specificationWordTypeNr, int contextNr, WordItem specificationWordItem )
 		{
-		if( contextNr > Constants.NO_CONTEXT_NR )
-			{
-			if( !hasContext( isCompoundCollectionSpanishAmbiguous, contextNr, specificationWordItem ) )
-				{
-				if( contextWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
-				contextWordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
-					{
-					if( specificationWordItem == null ||
-
-					( specificationWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
-					specificationWordTypeNr < Constants.NUMBER_OF_WORD_TYPES ) )
-						{
-						if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
-							{
-							if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionSpanishAmbiguous, contextWordTypeNr, ( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ? Constants.WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-								return addError( 1, null, "I failed to add an active context item" );
-							}
-						else
-							return startError( 1, null, "The current item number is undefined" );
-						}
-					else
-						return startError( 1, null, "The given specification word type is undefined or out of bounds" );
-					}
-				else
-					return startError( 1, null, "The given context word type is undefined or out of bounds" );
-				}
-			}
-		else
+		if( contextNr == Constants.NO_CONTEXT_NR )
 			return startError( 1, null, "The given context number is undefined" );
+
+		if( !hasContext( isCompoundCollectionSpanishAmbiguous, contextNr, specificationWordItem ) )
+			{
+			if( contextWordTypeNr <= Constants.NO_WORD_TYPE_NR ||
+			contextWordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
+				return startError( 1, null, "The given context word type is undefined or out of bounds: " + contextWordTypeNr );
+
+			if( specificationWordItem != null &&
+
+			( specificationWordTypeNr <= Constants.NO_WORD_TYPE_NR ||
+			specificationWordTypeNr >= Constants.NUMBER_OF_WORD_TYPES ) )
+				return startError( 1, null, "The given specification word type is undefined or out of bounds: " + specificationWordTypeNr );
+
+			if( !isMarkedAsContextWord_ )
+				{
+				isMarkedAsContextWord_ = true;
+				addToContextWordQuickAccessList();
+				}
+
+			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionSpanishAmbiguous, contextWordTypeNr, ( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ? Constants.WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+				return addError( 1, null, "I failed to add an active context item" );
+			}
+
+		return Constants.RESULT_OK;
+		}
+
+	protected byte checkForUnusedContext()
+		{
+		ContextItem searchContextItem = firstActiveContextItem();
+
+		while( searchContextItem != null )
+			{
+			if( !myWordItem().hasContextInSpecificationsInAllWords( searchContextItem.contextNr() ) )
+				return startError( 1, null, "I found unused context number: " + searchContextItem.contextNr() );
+
+			searchContextItem = searchContextItem.nextContextItem();
+			}
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte checkWordItemForUsage( WordItem unusedWordItem )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
-		if( unusedWordItem != null )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.specificationWordItem() == unusedWordItem )
-					return startError( 1, null, "The specification word item is still in use" );
-
-				searchItem = searchItem.nextContextItem();
-				}
-			}
-		else
+		if( unusedWordItem == null )
 			return startError( 1, null, "The given unused word item is undefined" );
+
+		while( searchContextItem != null )
+			{
+			if( searchContextItem.specificationWordItem() == unusedWordItem )
+				return startError( 1, null, "The specification word item is still in use" );
+
+			searchContextItem = searchContextItem.nextContextItem();
+			}
 
 		return Constants.RESULT_OK;
 		}
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
-		while( searchItem != null )
+		while( searchContextItem != null )
 			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
+			if( searchContextItem.hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem.storeContextItemInFutureDatabase() != Constants.RESULT_OK )
+				if( searchContextItem.storeContextItemInFutureDatabase() != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to store a context item in the database" );
 				}
 
-			searchItem = searchItem.nextContextItem();
+			searchContextItem = searchContextItem.nextContextItem();
 			}
 
 		return Constants.RESULT_OK;
@@ -269,16 +300,16 @@ class ContextList extends List
 
 	protected ContextItem contextItem( int contextNr )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		if( contextNr > Constants.NO_CONTEXT_NR )
 			{
-			while( searchItem != null )
+			while( searchContextItem != null )
 				{
-				if( searchItem.contextNr() == contextNr )
-					return searchItem;
+				if( searchContextItem.contextNr() == contextNr )
+					return searchContextItem;
 
-				searchItem = searchItem.nextContextItem();
+				searchContextItem = searchContextItem.nextContextItem();
 				}
 			}
 
@@ -287,16 +318,16 @@ class ContextList extends List
 
 	protected ContextItem contextItem( WordItem specificationWordItem )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		// In case of a pronoun context, the given specification word item will be undefined
 
-		while( searchItem != null )
+		while( searchContextItem != null )
 			{
-			if( searchItem.specificationWordItem() == specificationWordItem )
-				return searchItem;
+			if( searchContextItem.specificationWordItem() == specificationWordItem )
+				return searchContextItem;
 
-			searchItem = searchItem.nextContextItem();
+			searchContextItem = searchContextItem.nextContextItem();
 			}
 
 		return null;
@@ -304,21 +335,21 @@ class ContextList extends List
 
 	protected ContextItem contextItem( boolean isCompoundCollectionSpanishAmbiguous, int nContextWords, WordItem specificationWordItem )
 		{
-		ContextItem searchItem = firstActiveContextItem();
+		ContextItem searchContextItem = firstActiveContextItem();
 		WordItem anyWordItem = myWordItem();
 
 		// In case of a pronoun context, the given specification word item will be undefined
 
 		if( nContextWords > 0 )
 			{
-			while( searchItem != null )
+			while( searchContextItem != null )
 				{
-				if( searchItem.specificationWordItem() == specificationWordItem &&
-				searchItem.isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous &&
-				anyWordItem.nContextWordsInAllWords( searchItem.contextNr(), specificationWordItem ) == nContextWords )
-					return searchItem;
+				if( searchContextItem.specificationWordItem() == specificationWordItem &&
+				searchContextItem.isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous &&
+				anyWordItem.nContextWordsInAllWords( searchContextItem.contextNr(), specificationWordItem ) == nContextWords )
+					return searchContextItem;
 
-				searchItem = searchItem.nextContextItem();
+				searchContextItem = searchContextItem.nextContextItem();
 				}
 			}
 

@@ -1,6 +1,7 @@
 /*	Class:		SpecificationResultType
- *	Purpose:	To return specification item variables of a function
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Purpose:	To return specification variables,
+ *				as the result of a function call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -32,11 +33,12 @@ class SpecificationResultType
 	friend class AdminItem;
 	friend class AdminLanguage;
 	friend class AdminReadFile;
-	friend class AdminReasoning;
 	friend class AdminSolve;
 	friend class AdminSpecification;
+	friend class Item;
 	friend class JustificationItem;
 	friend class JustificationList;
+	friend class List;
 	friend class SpecificationItem;
 	friend class SpecificationList;
 	friend class WordAssignment;
@@ -45,6 +47,7 @@ class SpecificationResultType
 	friend class WordSpecification;
 	friend class WordWrite;
 	friend class WordWriteWords;
+
 	protected:
 	// Protected variables
 
@@ -69,7 +72,7 @@ class SpecificationResultType
 	WordItem *compoundGeneralizationWordItem;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	SpecificationResultType()
 		{

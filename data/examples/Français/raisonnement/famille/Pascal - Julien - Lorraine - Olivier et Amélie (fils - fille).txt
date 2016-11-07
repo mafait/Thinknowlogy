@@ -1,0 +1,24 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Pascal est un fils de Olivier et Amélie.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Julien est un fils de Olivier et Amélie.
+Lorraine est une fille de Olivier et Amélie.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Julien.
+Affichez le rapport de justification sur Lorraine.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Julien.
+Affichez le rapport de justification sur Lorraine.
+# Extra tests
+Olivier a 2 fils, appelés Pascal et Julien.
+Amélie a 2 fils, appelés Pascal et Julien.
+Olivier a 3 enfants, appelés Pascal, Julien et Lorraine.
+Amélie a 3 enfants, appelés Pascal, Julien et Lorraine.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

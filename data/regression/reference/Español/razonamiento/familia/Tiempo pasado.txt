@@ -7,8 +7,8 @@
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
 < Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:
@@ -38,4 +38,54 @@
 * Mis preguntas:
 < ¿Es Rafael una niña, una mujer, un niño o un hombre?
 < ¿Es Rafael un hijo o una hija?
+< 
+* 
+* Mis conclusiones:
+< Hernando era parte de una familia. Porque:
+<	- Hernando era el padre de Rafael.
+<	- Padres son parte de cada familia.
+< Hernando era un hombre. Porque:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre es un hombre.
+< Hernando no era una mujer. Porque:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre es una mujer o un hombre.
+<	- Hernando era un hombre.
+< Hernando no era una madre. Porque:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre es un padre o una madre.
+* 
+* Mis suposiciones:
+< Hernando era probablemente una persona. Porque:
+<	- Hernando era el padre de Rafael.
+<	- Un padre es probablemente una persona.
+* 	y:
+<	- Cada persona es un hombre o una mujer.
+<	- Hernando era un hombre.
+< 
+* 
+* Mis conclusiones:
+< Rafael no tiene un padre nunca-más. Porque:
+<	- Rafael tenido un padre, llamado Hernando.
+< Rafael tenido un padre, llamado Hernando. Porque:
+<	- Hernando era el padre de Rafael.
+* 
+* Mis suposiciones:
+< Rafael es posiblemente una persona. Porque:
+<	- Rafael tenido un padre, llamado Hernando.
+<	- Cada familia tiene padres y hijos.
+<	- Un hijo es probablemente una persona.
+< Rafael es probablemente parte de una familia. Porque:
+<	- ¿Es Rafael un hijo o una hija?
+<	- Hijos son parte de cada familia.
+* 
+* Mis preguntas:
+< ¿Es Rafael una niña, una mujer, un niño o un hombre? Porque:
+<	- Rafael tenido un padre, llamado Hernando.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+< ¿Es Rafael un hijo o una hija? Porque:
+<	- Rafael tenido un padre, llamado Hernando.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es un hijo o una hija.
 < 

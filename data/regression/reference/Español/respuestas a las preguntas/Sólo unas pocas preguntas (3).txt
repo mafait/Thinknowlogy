@@ -1,0 +1,30 @@
+﻿* 
+* Mis suposiciones:
+< Juan es posiblemente un padre.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Juan probablemente el padre de Pablo?
+* 
+* Sólo sé:
+< Juan es posiblemente un padre.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Mis suposiciones:
+< Ana es probablemente una madre.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Ana la madre de Pablo?
+* 
+* Sólo sé:
+< Ana es probablemente una madre.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 

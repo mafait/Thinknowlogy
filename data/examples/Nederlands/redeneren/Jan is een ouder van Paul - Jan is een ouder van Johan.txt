@@ -1,0 +1,5 @@
+﻿Jan is een ouder van Paul.
+Jan is een ouder van Johan.
+Toon informatie over Jan.
+Jan is een ouder van Paul en Johan.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

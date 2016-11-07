@@ -1,0 +1,30 @@
+﻿* 
+* Mes conclusions:
+< Pascal a un père, appelé Olivier.
+< 
+* 
+* Mes hypothèses:
+< Pascal a possible un père, appelé Olivier.
+< 
+* 
+* Mes hypothèses:
+< Pascal a possible un père, appelé Olivier. En raison:
+<	- Olivier est possible le père de Pascal.
+< 
+* 
+* Mes conclusions:
+< Armand n'a aucun père plus.
+< Armand avait un père, appelé Guillaume.
+< 
+* 
+* Mes hypothèses:
+< Armand n'a possible aucun père plus.
+< Armand avait possible un père, appelé Guillaume.
+< 
+* 
+* Mes hypothèses:
+< Armand n'a possible aucun père plus. En raison:
+<	- Armand avait possible un père, appelé Guillaume.
+< Armand avait possible un père, appelé Guillaume. En raison:
+<	- Guillaume était possible le père de Armand.
+< 

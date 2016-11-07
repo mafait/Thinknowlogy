@@ -1,7 +1,7 @@
 /*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -35,7 +35,7 @@ class ReadItem : private Item
 	friend class AdminWriteSpecification;
 	friend class ReadList;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	unsigned short wordOrderNr_;
 	unsigned short wordParameter_;
@@ -45,30 +45,29 @@ class ReadItem : private Item
 
 
 	protected:
-	// Protected constructible variables
+	// Protected constructed variables
 
 	bool hasWordPassedIntegrityCheckOfStoredUserSentence;
 	bool isMarkedBySetGrammarParameter;
-	bool isUnusedReadItem;
 
 	unsigned short grammarParameter;
 
 	GrammarItem *definitionGrammarItem;
 
 
-	// Protected loadable variables
+	// Protected initialized variables
 
 	char *readString;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	ReadItem( unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, size_t readStringLength, char *_readString, WordItem *readWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ReadItem", commonVariables, myList, myWordItem );
 
 
-		// Private loadable variables
+		// Private initialized variables
 
 		wordOrderNr_ = wordOrderNr;
 		wordParameter_ = wordParameter;
@@ -77,18 +76,17 @@ class ReadItem : private Item
 		readWordItem_ = readWordItem;
 
 
-		// Protected constructible variables
+		// Protected constructed variables
 
 		hasWordPassedIntegrityCheckOfStoredUserSentence = false;
 		isMarkedBySetGrammarParameter = false;
-		isUnusedReadItem = false;
 
 		grammarParameter = NO_GRAMMAR_PARAMETER;
 
 		definitionGrammarItem = NULL;
 
 
-		// Protected loadable variables
+		// Protected initialized variables
 
 		readString = NULL;
 
@@ -119,7 +117,7 @@ class ReadItem : private Item
 
 	// Protected virtual functions
 
-	virtual void showString( bool isReturnQueryToPosition )
+	virtual void displayString( bool isReturnQueryToPosition )
 		{
 		statusString[0] = statusChar();
 
@@ -128,7 +126,7 @@ class ReadItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
@@ -137,7 +135,7 @@ class ReadItem : private Item
 			}
 		}
 
-	virtual void showWordReferences( bool isReturnQueryToPosition )
+	virtual void displayWordReferences( bool isReturnQueryToPosition )
 		{
 		char *wordString;
 
@@ -149,7 +147,7 @@ class ReadItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
@@ -158,7 +156,7 @@ class ReadItem : private Item
 			}
 		}
 
-	virtual bool hasFoundParameter( unsigned int queryParameter )
+	virtual bool hasParameter( unsigned int queryParameter )
 		{
 		return ( grammarParameter == queryParameter ||
 				wordOrderNr_ == queryParameter ||
@@ -171,7 +169,7 @@ class ReadItem : private Item
 				wordParameter_ > NO_WORD_PARAMETER ) ) );
 		}
 
-	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
+	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		return ( ( readWordItem_ == NULL ? false :
 					( querySentenceNr == NO_SENTENCE_NR ? true : readWordItem_->creationSentenceNr() == querySentenceNr ) &&
@@ -182,7 +180,7 @@ class ReadItem : private Item
 					( queryItemNr == NO_ITEM_NR ? true : definitionGrammarItem->itemNr() == queryItemNr ) ) );
 		}
 
-	virtual bool hasFoundWordType( unsigned short queryWordTypeNr )
+	virtual bool hasWordType( unsigned short queryWordTypeNr )
 		{
 		return ( wordTypeNr_ == queryWordTypeNr );
 		}
@@ -202,34 +200,18 @@ class ReadItem : private Item
 				wordTypeNr_ > nextSortReadItem->wordTypeNr_ ) ) );
 		}
 
-	virtual ReferenceResultType findMatchingWordReferenceString( char *queryString )
+	virtual StringResultType findMatchingWordReferenceString( char *queryString )
 		{
-		ReferenceResultType referenceResult;
+		StringResultType stringResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
 
 		if( readWordItem_ != NULL )
 			{
-			if( ( referenceResult = readWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addError( functionNameString, NULL, "I failed to find the word reference for the word reference query" );
+			if( ( stringResult = readWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+				return addStringResultError( functionNameString, NULL, "I failed to find the word reference for the word reference query" );
 			}
 
-		return referenceResult;
-		}
-
-	virtual ReferenceResultType findWordReference( WordItem *referenceWordItem )
-		{
-		ReferenceResultType referenceResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findWordReference";
-
-		if( referenceWordItem != NULL )
-			{
-			if( readWordItem_ == referenceWordItem )
-				referenceResult.hasFoundWordReference = true;
-			}
-		else
-			startError( functionNameString, NULL, "The given reference word is undefined" );
-
-		return referenceResult;
+		return stringResult;
 		}
 
 	virtual char *itemString()
@@ -246,12 +228,6 @@ class ReadItem : private Item
 		Item::toString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
-
-		if( isUnusedReadItem )
-			{
-			strcat( queryString, QUERY_SEPARATOR_STRING );
-			strcat( queryString, "isUnusedReadItem" );
-			}
 
 		if( hasWordPassedIntegrityCheckOfStoredUserSentence )
 			{
@@ -322,17 +298,17 @@ class ReadItem : private Item
 
 	bool hasFoundRelationWordInThisList( WordItem *relationWordItem )
 		{
-		ReadItem *searchItem = this;
+		ReadItem *searchReadItem = this;
 
 		if( relationWordItem != NULL )
 			{
-			while( searchItem != NULL )
+			while( searchReadItem != NULL )
 				{
-				if( searchItem->isRelationWord() &&
-				searchItem->readWordItem() == relationWordItem )
+				if( searchReadItem->isRelationWord() &&
+				searchReadItem->readWordItem() == relationWordItem )
 					return true;
 
-				searchItem = searchItem->nextReadItem();
+				searchReadItem = searchReadItem->nextReadItem();
 				}
 			}
 
@@ -359,19 +335,14 @@ class ReadItem : private Item
 		return ( wordTypeNr_ == WORD_TYPE_ARTICLE );
 		}
 
-	bool isSingularOrPluralNounWordType()
+	bool isNoun()
 		{
-		return isSingularOrPluralNoun( wordTypeNr_ );
+		return isNounWordType( wordTypeNr_ );
 		}
 
 	bool isSingularNoun()
 		{
 		return ( wordTypeNr_ == WORD_TYPE_NOUN_SINGULAR );
-		}
-
-	bool isPluralNoun()
-		{
-		return ( wordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
 		}
 
 	bool isMatchingReadWordTypeNr( unsigned short wordTypeNr )
@@ -526,11 +497,6 @@ class ReadItem : private Item
 		return ( grammarParameter == GRAMMAR_SELECTION );
 		}
 
-	bool isImperative()
-		{
-		return ( grammarParameter == GRAMMAR_IMPERATIVE );
-		}
-
 	bool isGeneralizationWord()
 		{
 		return ( grammarParameter == GRAMMAR_GENERALIZATION_WORD );
@@ -577,13 +543,11 @@ class ReadItem : private Item
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "changeReadWord";
 
-		if( newReadWordItem != NULL )
-			{
-			wordTypeNr_ = newWordTypeNr;
-			readWordItem_ = newReadWordItem;
-			}
-		else
+		if( newReadWordItem == NULL )
 			return startError( functionNameString, NULL, "The given new read word item is undefined" );
+
+		wordTypeNr_ = newWordTypeNr;
+		readWordItem_ = newReadWordItem;
 
 		return RESULT_OK;
 		}
@@ -598,14 +562,14 @@ class ReadItem : private Item
 
 	ReadItem *firstRelationWordReadItem()
 		{
-		ReadItem *searchItem = this;
+		ReadItem *searchReadItem = this;
 
-		while( searchItem != NULL )
+		while( searchReadItem != NULL )
 			{
-			if( searchItem->isRelationWord() )
-				return searchItem;
+			if( searchReadItem->isRelationWord() )
+				return searchReadItem;
 
-			searchItem = searchItem->nextReadItem();
+			searchReadItem = searchReadItem->nextReadItem();
 			}
 
 		return NULL;

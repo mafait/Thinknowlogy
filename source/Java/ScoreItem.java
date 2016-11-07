@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To temporarily store scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,7 +24,7 @@
 
 class ScoreItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private short assignmentLevel_;
 
@@ -46,35 +46,35 @@ class ScoreItem extends Item
 
 	// Private methods
 
-	private ScoreItem possibilityItem( boolean isIncludingThisItem )
+	private ScoreItem possibilityScoreItem( boolean isIncludingThisItem )
 		{
 		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
-		ScoreItem searchItem = ( isIncludingThisItem ? this : nextScoreItem() );
+		ScoreItem searchScoreItem = ( isIncludingThisItem ? this : nextScoreItem() );
 
-		while( searchItem != null &&
-		searchItem.assignmentLevel_ >= currentAssignmentLevel )
+		while( searchScoreItem != null &&
+		searchScoreItem.assignmentLevel_ >= currentAssignmentLevel )
 			{
-			if( searchItem.assignmentLevel_ == currentAssignmentLevel )
-				return searchItem;
+			if( searchScoreItem.assignmentLevel_ == currentAssignmentLevel )
+				return searchScoreItem;
 
-			searchItem = searchItem.nextScoreItem();
+			searchScoreItem = searchScoreItem.nextScoreItem();
 			}
 
 		return null;
 		}
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected ScoreItem( boolean _isChecked, short assignmentLevel, int _oldSatisfiedScore, int _newSatisfiedScore, int _oldDissatisfiedScore, int _newDissatisfiedScore, int _oldNotBlockingScore, int _newNotBlockingScore, int _oldBlockingScore, int _newBlockingScore, SelectionItem _selectionReference, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		assignmentLevel_ = assignmentLevel;
 
-		// Protected loadable variables
+		// Protected initialized variables
 
 		isMarked = false;
 		isChecked = _isChecked;
@@ -94,7 +94,7 @@ class ScoreItem extends Item
 
 	// Protected virtual methods
 
-	protected boolean hasFoundParameter( int queryParameter )
+	protected boolean hasParameter( int queryParameter )
 		{
 		return ( assignmentLevel_ == queryParameter ||
 				oldSatisfiedScore == queryParameter ||
@@ -119,7 +119,7 @@ class ScoreItem extends Item
 				newBlockingScore > Constants.NO_SCORE ) ) );
 		}
 
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( referenceSelectionItem == null ? false :
 				( querySentenceNr == Constants.NO_SENTENCE_NR ? true : referenceSelectionItem.creationSentenceNr() == querySentenceNr ) &&
@@ -228,24 +228,19 @@ class ScoreItem extends Item
 		return assignmentLevel_;
 		}
 
-	protected ScoreItem firstPossibilityItem()
+	protected ScoreItem firstPossibilityScoreItem()
 		{
-		return possibilityItem( true );
+		return possibilityScoreItem( true );
 		}
 
-	protected ScoreItem nextPossibilityItem()
+	protected ScoreItem nextPossibilityScoreItem()
 		{
-		return possibilityItem( false );
+		return possibilityScoreItem( false );
 		}
 
 	protected ScoreItem nextScoreItem()
 		{
 		return (ScoreItem)nextItem;
-		}
-
-	protected SelectionItem scoreReference()
-		{
-		return referenceSelectionItem;
 		}
 	};
 

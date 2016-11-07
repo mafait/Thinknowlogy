@@ -1,0 +1,5 @@
+﻿Read the file "English/user/reasoning/family/family definition".
+Laura has 2 parents, called John and Anna.
+Laura is a daughter.
+Display the justification report about Laura.
+# To continue, click button «Clear your mind.» or «Restart.».

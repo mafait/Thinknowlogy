@@ -1,0 +1,14 @@
+﻿Un tour est A, B, C, D, E, F ou G.
+Mon tour est D.
+Est Olivier mon père?
+
+Est le tour A?
+Est le tour un père?
+#Est le tour un certain nombre?
+Est le tour un nombre?
+
+#Est un tour un certain nombre?
+Est un tour un nombre?
+Est un tour rond?
+Est un tour A?
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

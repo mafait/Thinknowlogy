@@ -1,0 +1,201 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Pablo es parte de una familia.
+< Pablo no es una hija.
+< Pablo no es una niña y una mujer.
+< Juan tiene un hijo, llamado Pablo.
+< Ana tiene un hijo, llamado Pablo.
+* 
+* Mis suposiciones:
+< Pablo es probablemente una persona.
+< Pablo tiene posiblemente una madre, llamada Ana.
+< Juan es posiblemente una persona.
+< Juan es probablemente parte de una familia.
+< Ana es posiblemente madre de Pablo.
+< Ana es posiblemente una mujer.
+< Ana es puede-ser una persona.
+< Ana no es puede-ser un hombre.
+< Ana es posiblemente parte de una familia.
+< Ana no es posiblemente un padre.
+* 
+* Mis preguntas:
+< ¿Es Pablo un niño o un hombre?
+< ¿Es Juan una mujer o un hombre?
+< ¿Es Juan un padre o una madre?
+< 
+* 
+* Mis conclusiones:
+< José es parte de una familia.
+< José no es una hija.
+< José no es una niña y una mujer.
+< Juan tiene un hijo, llamado José.
+< Ana tiene un hijo, llamado José.
+* 
+* Mis suposiciones:
+< José es probablemente una persona.
+< José tiene posiblemente una madre, llamada Ana.
+< Ana es posiblemente madre de Pablo y José.
+* 
+* Mis preguntas:
+< ¿Es José un niño o un hombre?
+< 
+* 
+* Mis conclusiones:
+< Juan tiene un hijo, llamado Pablo. Porque:
+<	- Pablo es el hijo de Juan y Ana.
+< Juan tiene un hijo, llamado José. Porque:
+<	- José es hijo de Juan y Ana.
+* 
+* Mis suposiciones:
+< Juan es posiblemente una persona. Porque:
+<	- Juan tiene un hijo, llamado Pablo.
+<	- Cada familia tiene padres y hijos.
+<	- Un padre es probablemente una persona.
+< Juan es probablemente parte de una familia. Porque:
+<	- ¿Es Juan un padre o una madre?
+<	- Padres son parte de cada familia.
+* 
+* Mis preguntas:
+< ¿Es Juan un hombre o una mujer? Porque:
+<	- Juan tiene un hijo, llamado Pablo.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es una mujer o un hombre.
+* 	y:
+<	- Juan es posiblemente una persona.
+<	- Cada persona es un hombre o una mujer.
+* 	y:
+<	- ¿Es Juan un padre o una madre?
+<	- Cada madre es una mujer.
+<	- Cada padre es un hombre.
+< ¿Es Juan un padre o una madre? Porque:
+<	- Juan tiene un hijo, llamado Pablo.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es un padre o una madre.
+< 
+* 
+* Mis conclusiones:
+< Ana tiene un hijo, llamado Pablo. Porque:
+<	- Pablo es el hijo de Juan y Ana.
+< Ana tiene un hijo, llamado José. Porque:
+<	- José es hijo de Juan y Ana.
+* 
+* Mis suposiciones:
+< Ana es posiblemente madre de Pablo y José. Porque:
+<	- Pablo es el hijo de Juan y Ana.
+<	- José es hijo de Juan y Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es un padre o una madre.
+<	- Nombre propio "Ana" es probablemente femenino.
+* 	y:
+<	- Ana tiene un hijo, llamado José.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es un padre o una madre.
+<	- Nombre propio "Ana" es probablemente femenino.
+* 	y:
+<	- Ana tiene un hijo, llamado Pablo.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es un padre o una madre.
+<	- Nombre propio "Ana" es probablemente femenino.
+< Ana es posiblemente una mujer. Porque:
+<	- Ana es posiblemente madre de Pablo y José.
+<	- Cada madre es una mujer.
+< Ana es puede-ser una persona. Porque:
+<	- Cada persona es un hombre o una mujer.
+<	- Ana es posiblemente una mujer.
+* 	y:
+<	- Ana es posiblemente madre de Pablo y José.
+<	- Una madre es probablemente una persona.
+< Ana no es puede-ser un hombre. Porque:
+<	- Ana es puede-ser una persona.
+<	- Cada persona es un hombre o una mujer.
+<	- Ana es posiblemente una mujer.
+< Ana es posiblemente parte de una familia. Porque:
+<	- Ana es posiblemente madre de Pablo y José.
+<	- Padres son parte de cada familia.
+< Ana no es posiblemente un padre. Porque:
+<	- Cada padre es un padre o una madre.
+<	- Ana es posiblemente madre de Pablo y José.
+< 
+* 
+* Mis conclusiones:
+< Pablo es parte de una familia. Porque:
+<	- Pablo es un hijo.
+<	- Hijos son parte de cada familia.
+< Pablo no es una hija. Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo es un hijo o una hija.
+< Pablo no es una niña y una mujer. Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+<	- Cada hijo es un niño o un hombre.
+* 
+* Mis suposiciones:
+< Pablo tiene posiblemente una madre, llamada Ana. Porque:
+<	- Ana es posiblemente madre de Pablo y José.
+* 	y:
+<	- Ana tiene un hijo, llamado Pablo.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es un padre o una madre.
+<	- Nombre propio "Ana" es probablemente femenino.
+< Pablo es probablemente una persona. Porque:
+<	- Pablo es un hijo.
+<	- Un hijo es probablemente una persona.
+* 
+* Mis preguntas:
+< ¿Es Pablo un niño o un hombre? Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo es un niño o un hombre.
+< 
+* 
+* Mis conclusiones:
+< José es parte de una familia. Porque:
+<	- José es hijo de Juan y Ana.
+<	- Hijos son parte de cada familia.
+< José no es una hija. Porque:
+<	- José es hijo de Juan y Ana.
+<	- Cada hijo es un hijo o una hija.
+< José no es una niña y una mujer. Porque:
+<	- José es hijo de Juan y Ana.
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+<	- Cada hijo es un niño o un hombre.
+* 
+* Mis suposiciones:
+< José es probablemente una persona. Porque:
+<	- José es hijo de Juan y Ana.
+<	- Un hijo es probablemente una persona.
+< José tiene posiblemente una madre, llamada Ana. Porque:
+<	- Ana es posiblemente madre de Pablo y José.
+* 	y:
+<	- Ana tiene un hijo, llamado José.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es un padre o una madre.
+<	- Nombre propio "Ana" es probablemente femenino.
+* 
+* Mis preguntas:
+< ¿Es José un niño o un hombre? Porque:
+<	- José es hijo de Juan y Ana.
+<	- Cada hijo es un niño o un hombre.
+< 

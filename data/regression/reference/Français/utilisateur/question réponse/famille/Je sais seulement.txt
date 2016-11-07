@@ -1,0 +1,65 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un père est probablement une personne.
+< Un parent est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un fils est probablement une personne.
+< Un enfant est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Olivier est partie d'une famille.
+* 
+* Mes hypothèses:
+< Olivier est probablement une personne.
+< Olivier a probablement un enfant.
+* 
+* Mes questions:
+< Est Olivier un homme ou une femme?
+< Est Olivier un père ou une mère?
+< 
+* 
+* Mes questions qui sont répondues:
+< Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
+* 
+* Mes conclusions:
+< Olivier est un homme.
+< Olivier n'est pas une femme.
+< Olivier n'est pas une mère.
+< 
+* 
+* Votre question est plus spécifique que ma question antérieure:
+< Est Olivier un père ou une mère?
+* 
+* Je sais seulement:
+< Olivier est un père.
+* 
+* Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
+* 
+* 
+* Je sais seulement:
+< Olivier est un parent.
+* 
+* Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
+* 

@@ -1,0 +1,7 @@
+﻿Cada animal es una criatura.
+Cada caballo es un animal.
+Cada persona es un ser humano.
+Cada ser humano es una criatura.
+Cada criatura tiene un cuerpo.
+Criaturas tienen un cuerpo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

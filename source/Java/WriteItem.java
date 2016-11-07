@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about a word
  *					during the process of writing a sentence
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,29 +24,29 @@
 
 class WriteItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private short grammarLevel_;
 
 	private GrammarItem startOfChoiceOrOptionGrammarItem_;
 
 
-	// Protected loadable variables
+	// Protected initialized variables
 
 	protected boolean isSkipped;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected WriteItem( boolean _isSkipped, short grammarLevel, GrammarItem startOfChoiceOrOptionGrammarItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		grammarLevel_ = grammarLevel;
 
-		// Protected loadable variables
+		// Protected initialized variables
 
 		isSkipped = _isSkipped;
 
@@ -57,7 +57,7 @@ class WriteItem extends Item
 
 	// Protected virtual methods
 
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( startOfChoiceOrOptionGrammarItem_ == null ? false :
 				( querySentenceNr == Constants.NO_SENTENCE_NR ? true : startOfChoiceOrOptionGrammarItem_.creationSentenceNr() == querySentenceNr ) &&

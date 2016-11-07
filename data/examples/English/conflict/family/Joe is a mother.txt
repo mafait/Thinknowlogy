@@ -1,4 +1,7 @@
-﻿Read the file "English/reasoning/family/family definition".
+﻿Read the file "English/user/reasoning/family/family definition".
 Joe is a son of John and Anna.
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Display the justification report about John.
+Display the justification report about Anna.
 # To continue, click button «Clear your mind.» or «Restart.».
 Joe is a mother.

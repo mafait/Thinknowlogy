@@ -1,0 +1,4 @@
+﻿Every parent is a father or a mother.
+Every father is a man.
+John is a father.
+# To continue, click button «Clear your mind.» or «Restart.».

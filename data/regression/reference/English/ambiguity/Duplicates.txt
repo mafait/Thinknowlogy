@@ -1,0 +1,50 @@
+﻿* 
+* My conclusions:
+< The United States has a city, called Boston.
+< 
+* 
+* The word "Boston" is semantically ambiguous. There are multiple instances of this entity.
+* 
+* My conclusions:
+< The United Kingdom has a city, called Boston.
+< 
+* 
+* Your information:
+< Boston is a city of both the United States and the United Kingdom.
+* 
+* Related information:
+< The United Kingdom has a city, called Boston.
+< The United States has a city, called Boston.
+< 
+* 
+* My conclusions:
+< The United States has a city, called Boston. Because:
+<	- Boston is a city of both the United States and the United Kingdom.
+< 
+* 
+* My conclusions:
+< The United Kingdom has a city, called Boston. Because:
+<	- Boston is a city of both the United States and the United Kingdom.
+< 
+* I know.
+* 
+* I know.
+* 
+* 
+* Your information:
+< Boston is a city of both the United States and the United Kingdom.
+* 
+* Related information:
+< The United Kingdom has a city, called Boston.
+< The United States has a city, called Boston.
+< 
+* 
+* My conclusions:
+< The United States has a city, called Boston. Because:
+<	- Boston is a city of both the United States and the United Kingdom.
+< 
+* 
+* My conclusions:
+< The United Kingdom has a city, called Boston. Because:
+<	- Boston is a city of both the United States and the United Kingdom.
+< 

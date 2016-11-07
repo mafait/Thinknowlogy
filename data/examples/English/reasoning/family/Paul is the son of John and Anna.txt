@@ -1,0 +1,8 @@
+﻿Read the file "English/user/reasoning/family/family definition".
+Paul is the son of John and Anna.
+Joe is a son of John and Anna.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+Display the justification report about Joe.
+# To continue, click button «Clear your mind.» or «Restart.».

@@ -1,0 +1,11 @@
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Jorge tiene un hijo, llamado Alfonso.
+Mostrar el informe de justificación sobre Jorge.
+Mostrar el informe de justificación sobre Alfonso.
+Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Pablo.
+Pablo tiene un padre, llamado Juan.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Pablo.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

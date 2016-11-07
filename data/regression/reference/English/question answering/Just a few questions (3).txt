@@ -1,0 +1,30 @@
+﻿* 
+* My assumptions:
+< John is possibly a father.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* You had a similar question before:
+< Is John probably the father of Paul?
+* 
+* I only know:
+< John is possibly a father.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* My assumptions:
+< Anna is probably a mother.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* You had a similar question before:
+< Is Anna the mother of Paul?
+* 
+* I only know:
+< Anna is probably a mother.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 

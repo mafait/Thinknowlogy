@@ -1,0 +1,24 @@
+﻿* 
+* Mes conclusions:
+< Pascal a un père, appelé Olivier.
+< Julien a un père, appelé Olivier.
+< 
+* 
+* Mes conclusions:
+< Lorraine a un père, appelé Olivier.
+< 
+* 
+* Mes conclusions:
+< Pascal a un père, appelé Olivier. En raison:
+<	- Olivier est le père de Pascal, Julien et Lorraine.
+< 
+* 
+* Mes conclusions:
+< Julien a un père, appelé Olivier. En raison:
+<	- Olivier est le père de Pascal, Julien et Lorraine.
+< 
+* 
+* Mes conclusions:
+< Lorraine a un père, appelé Olivier. En raison:
+<	- Olivier est le père de Pascal, Julien et Lorraine.
+< 

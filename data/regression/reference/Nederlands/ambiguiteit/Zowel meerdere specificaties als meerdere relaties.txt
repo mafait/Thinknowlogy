@@ -1,0 +1,2 @@
+﻿! Deze zin is niet geaccepteerd, omdat het semantisch dubbelzinnig is: Het heeft zowel meerdere specificaties als meerdere relaties.
+! 

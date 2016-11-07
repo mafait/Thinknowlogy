@@ -1,0 +1,114 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To demonstrate programming in natural language.
+#	Version:		Thinknowlogy 2016r2 (Restyle)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#	Un resumen del juego Conecta 4:
+#----------------------------------------------------------------------------
+#	El objetivo de "Conecta 4" es alinear cuatro fichas sobre un tablero
+#	formado por seis filas y siete columnas. Cada jugador dispone de
+#	21 fichas de un color (por lo general, rojas o amarillas). Por turnoos,
+#	los jugadores deben introducir una ficha en la columna que prefieran
+#	(siempre que no esté completa) y ésta caerá a la posición más baja.
+#	Gana la partida el primero que consiga alinear cuatro fichas
+#	consecutivas de un mismo color en horizontal, vertical o diagonal.
+#	Si todas las columnas están llenas pero nadie ha hecho una fila válida,
+#	hay empate.
+#----------------------------------------------------------------------------
+#	Vea el texto completo: http://es.wikipedia.org/wiki/Conecta_4
+#----------------------------------------------------------------------------
+
+# Definiciones iniciales.
+Un turno es tuyo o mío.
+Un movimiento es A, B, C, D, E, F o G.
+Un nivel de resolver es baja o alta.
+
+# Resuelve el problema.
+Si el movimiento es asignado y el turno es asignado entonces si el método de resolver no es ocupado, el método de resolver no es hecho y el juego no es empate entonces el movimiento es vacío y resolver el juego sino el movimiento es vacío y el método de resolver no es hecho.
+
+# Invierta el método de resolver.
+Si el movimiento es asignado y el turno es asignado entonces si el método de resolver no es ocupado o el método de resolver no es hecho entonces si el método de resolver es invertida entonces el método de resolver no es invertida sino el método de resolver es invertida.
+
+# Mostrar el turno.
+Si el turno es asignado entonces si el método de resolver no es hecho o el método de resolver es hecho, el juego es asignado y el juego no es inválido entonces si el turno es tuyo entonces mostrar "\nEs tu turno.\n\n".
+
+# Alterne el turno.
+Si el movimiento es asignado, el turno es asignado y el juego no es asignado entonces si el método de resolver no es ocupado o el método de resolver no es hecho entonces si el turno es tuyo entonces el turno es mío sino mostrar "\nYo seleccioné: ~+'movimiento'<a>`~.\n" y el turno es tuyo.
+
+# Compruebe si hay un juego empate.
+Si el movimiento no es asignado, el juego no es asignado, A6 es asignado, B6 es asignado, C6 es asignado, D6 es asignado, E6 es asignado, F6 es asignado y G6 es asignado entonces el juego es empate, el turno es vacío y mostrar "Es un empate.\n\n".
+
+# Game over...
+Si el movimiento es asignado, el juego es asignado, el juego no es empate y el juego no es inválido entonces si el turno es mío entonces mostrar "\nMi juego ganador: ~+'movimiento'<a>`~.\n", el movimiento es vacío y el turno es vacío sino mostrar "\n¡Felicidades!\n", el movimiento es vacío y el turno es vacío.
+
+# Restablecer un movimiento válido.
+Si el movimiento es inválido entonces el movimiento es vacío.
+
+# Mostrar el tablero de juego.
+Si el turno es asignado, el movimiento no es inválido, el juego no es tuyo y el método de resolver no es hecho entonces mostrar "\n\t\t|~+1'A6'<a>`~|~+1'B6'<a>`~|~+1'C6'<a>`~|~+1'D6'<a>`~|~+1'E6'<a>`~|~+1'F6'<a>`~|~+1'G6'<a>`~|\n\t\t|~+1'A5'<a>`~|~+1'B5'<a>`~|~+1'C5'<a>`~|~+1'D5'<a>`~|~+1'E5'<a>`~|~+1'F5'<a>`~|~+1'G5'<a>`~|\n\t\t|~+1'A4'<a>`~|~+1'B4'<a>`~|~+1'C4'<a>`~|~+1'D4'<a>`~|~+1'E4'<a>`~|~+1'F4'<a>`~|~+1'G4'<a>`~|\n\t\t|~+1'A3'<a>`~|~+1'B3'<a>`~|~+1'C3'<a>`~|~+1'D3'<a>`~|~+1'E3'<a>`~|~+1'F3'<a>`~|~+1'G3'<a>`~|\n\t\t|~+1'A2'<a>`~|~+1'B2'<a>`~|~+1'C2'<a>`~|~+1'D2'<a>`~|~+1'E2'<a>`~|~+1'F2'<a>`~|~+1'G2'<a>`~|\n\t\t|~+1'A1'<a>`~|~+1'B1'<a>`~|~+1'C1'<a>`~|~+1'D1'<a>`~|~+1'E1'<a>`~|~+1'F1'<a>`~|~+1'G1'<a>`~|\nmovimiento->\t-A-B-C-D-E-F-G-\n".
+Si el turno no es asignado, el movimiento no es asignado, el juego es asignado y el juego no es inválido entonces mostrar "\n\t\t|~+1'A6'<a>`~|~+1'B6'<a>`~|~+1'C6'<a>`~|~+1'D6'<a>`~|~+1'E6'<a>`~|~+1'F6'<a>`~|~+1'G6'<a>`~|\n\t\t|~+1'A5'<a>`~|~+1'B5'<a>`~|~+1'C5'<a>`~|~+1'D5'<a>`~|~+1'E5'<a>`~|~+1'F5'<a>`~|~+1'G5'<a>`~|\n\t\t|~+1'A4'<a>`~|~+1'B4'<a>`~|~+1'C4'<a>`~|~+1'D4'<a>`~|~+1'E4'<a>`~|~+1'F4'<a>`~|~+1'G4'<a>`~|\n\t\t|~+1'A3'<a>`~|~+1'B3'<a>`~|~+1'C3'<a>`~|~+1'D3'<a>`~|~+1'E3'<a>`~|~+1'F3'<a>`~|~+1'G3'<a>`~|\n\t\t|~+1'A2'<a>`~|~+1'B2'<a>`~|~+1'C2'<a>`~|~+1'D2'<a>`~|~+1'E2'<a>`~|~+1'F2'<a>`~|~+1'G2'<a>`~|\n\t\t|~+1'A1'<a>`~|~+1'B1'<a>`~|~+1'C1'<a>`~|~+1'D1'<a>`~|~+1'E1'<a>`~|~+1'F1'<a>`~|~+1'G1'<a>`~|\nmovimiento->\t-A-B-C-D-E-F-G-\n\nEste juego es ~+'juego'<a>`~.\n\nPara volver a jugar, haga clic en el botón «Despejar la mente.» y entonces «Leer el archivo \"Español/usuario/programación/Conecta 4\".».\n\n", el movimiento es vacío y el turno es vacío.
+
+# La definición de posibilidades horizontales para ganar el juego.
+# (En el futuro se implementará una gramática más fuerte para reducir los próximos frases a una sola frase que describe un juego ganador horizontal.)
+
+Si el turno es asignado y el juego no es asignado entonces si A1 es el valor de el turno, B1 es el valor de el turno, C1 es el valor de el turno y D1 es el valor de el turno o B1 es el valor de el turno, C1 es el valor de el turno, D1 es el valor de el turno y E1 es el valor de el turno o C1 es el valor de el turno, D1 es el valor de el turno, E1 es el valor de el turno y F1 es el valor de el turno o D1 es el valor de el turno, E1 es el valor de el turno, F1 es el valor de el turno y G1 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A2 es el valor de el turno, B2 es el valor de el turno, C2 es el valor de el turno y D2 es el valor de el turno o B2 es el valor de el turno, C2 es el valor de el turno, D2 es el valor de el turno y E2 es el valor de el turno o C2 es el valor de el turno, D2 es el valor de el turno, E2 es el valor de el turno y F2 es el valor de el turno o D2 es el valor de el turno, E2 es el valor de el turno, F2 es el valor de el turno y G2 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A3 es el valor de el turno, B3 es el valor de el turno, C3 es el valor de el turno y D3 es el valor de el turno o B3 es el valor de el turno, C3 es el valor de el turno, D3 es el valor de el turno y E3 es el valor de el turno o C3 es el valor de el turno, D3 es el valor de el turno, E3 es el valor de el turno y F3 es el valor de el turno o D3 es el valor de el turno, E3 es el valor de el turno, F3 es el valor de el turno y G3 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A4 es el valor de el turno, B4 es el valor de el turno, C4 es el valor de el turno y D4 es el valor de el turno o B4 es el valor de el turno, C4 es el valor de el turno, D4 es el valor de el turno y E4 es el valor de el turno o C4 es el valor de el turno, D4 es el valor de el turno, E4 es el valor de el turno y F4 es el valor de el turno o D4 es el valor de el turno, E4 es el valor de el turno, F4 es el valor de el turno y G4 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A5 es el valor de el turno, B5 es el valor de el turno, C5 es el valor de el turno y D5 es el valor de el turno o B5 es el valor de el turno, C5 es el valor de el turno, D5 es el valor de el turno y E5 es el valor de el turno o C5 es el valor de el turno, D5 es el valor de el turno, E5 es el valor de el turno y F5 es el valor de el turno o D5 es el valor de el turno, E5 es el valor de el turno, F5 es el valor de el turno y G5 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A6 es el valor de el turno, B6 es el valor de el turno, C6 es el valor de el turno y D6 es el valor de el turno o B6 es el valor de el turno, C6 es el valor de el turno, D6 es el valor de el turno y E6 es el valor de el turno o C6 es el valor de el turno, D6 es el valor de el turno, E6 es el valor de el turno y F6 es el valor de el turno o D6 es el valor de el turno, E6 es el valor de el turno, F6 es el valor de el turno y G6 es el valor de el turno entonces el juego es el valor de el turno.
+
+# La definición de posibilidades verticales para ganar el juego.
+# (En el futuro se implementará una gramática más fuerte para reducir los próximos frases a una sola frase que describe un juego ganador horizontal.)
+
+Si el turno es asignado y el juego no es asignado entonces si A1 es el valor de el turno, A2 es el valor de el turno, A3 es el valor de el turno y A4 es el valor de el turno o A2 es el valor de el turno, A3 es el valor de el turno, A4 es el valor de el turno y A5 es el valor de el turno o A3 es el valor de el turno, A4 es el valor de el turno, A5 es el valor de el turno y A6 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si B1 es el valor de el turno, B2 es el valor de el turno, B3 es el valor de el turno y B4 es el valor de el turno o B2 es el valor de el turno, B3 es el valor de el turno, B4 es el valor de el turno y B5 es el valor de el turno o B3 es el valor de el turno, B4 es el valor de el turno, B5 es el valor de el turno y B6 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si C1 es el valor de el turno, C2 es el valor de el turno, C3 es el valor de el turno y C4 es el valor de el turno o C2 es el valor de el turno, C3 es el valor de el turno, C4 es el valor de el turno y C5 es el valor de el turno o C3 es el valor de el turno, C4 es el valor de el turno, C5 es el valor de el turno y C6 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si D1 es el valor de el turno, D2 es el valor de el turno, D3 es el valor de el turno y D4 es el valor de el turno o D2 es el valor de el turno, D3 es el valor de el turno, D4 es el valor de el turno y D5 es el valor de el turno o D3 es el valor de el turno, D4 es el valor de el turno, D5 es el valor de el turno y D6 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si E1 es el valor de el turno, E2 es el valor de el turno, E3 es el valor de el turno y E4 es el valor de el turno o E2 es el valor de el turno, E3 es el valor de el turno, E4 es el valor de el turno y E5 es el valor de el turno o E3 es el valor de el turno, E4 es el valor de el turno, E5 es el valor de el turno y E6 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si F1 es el valor de el turno, F2 es el valor de el turno, F3 es el valor de el turno y F4 es el valor de el turno o F2 es el valor de el turno, F3 es el valor de el turno, F4 es el valor de el turno y F5 es el valor de el turno o F3 es el valor de el turno, F4 es el valor de el turno, F5 es el valor de el turno y F6 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si G1 es el valor de el turno, G2 es el valor de el turno, G3 es el valor de el turno y G4 es el valor de el turno o G2 es el valor de el turno, G3 es el valor de el turno, G4 es el valor de el turno y G5 es el valor de el turno o G3 es el valor de el turno, G4 es el valor de el turno, G5 es el valor de el turno y G6 es el valor de el turno entonces el juego es el valor de el turno.
+
+# La definición de posibilidades diagonal para ganar el juego.
+# (En el futuro se implementará una gramática más fuerte para reducir los próximos frases a una sola frase que describe un juego ganador horizontal.)
+
+Si el turno es asignado y el juego no es asignado entonces si A1 es el valor de el turno, B2 es el valor de el turno, C3 es el valor de el turno y D4 es el valor de el turno o B1 es el valor de el turno, C2 es el valor de el turno, D3 es el valor de el turno y E4 es el valor de el turno o C1 es el valor de el turno, D2 es el valor de el turno, E3 es el valor de el turno y F4 es el valor de el turno o D1 es el valor de el turno, E2 es el valor de el turno, F3 es el valor de el turno y G4 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A2 es el valor de el turno, B3 es el valor de el turno, C4 es el valor de el turno y D5 es el valor de el turno o B2 es el valor de el turno, C3 es el valor de el turno, D4 es el valor de el turno y E5 es el valor de el turno o C2 es el valor de el turno, D3 es el valor de el turno, E4 es el valor de el turno y F5 es el valor de el turno o D2 es el valor de el turno, E3 es el valor de el turno, F4 es el valor de el turno y G5 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A3 es el valor de el turno, B4 es el valor de el turno, C5 es el valor de el turno y D6 es el valor de el turno o B3 es el valor de el turno, C4 es el valor de el turno, D5 es el valor de el turno y E6 es el valor de el turno o C3 es el valor de el turno, D4 es el valor de el turno, E5 es el valor de el turno y F6 es el valor de el turno o D3 es el valor de el turno, E4 es el valor de el turno, F5 es el valor de el turno y G6 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A4 es el valor de el turno, B3 es el valor de el turno, C2 es el valor de el turno y D1 es el valor de el turno o B4 es el valor de el turno, C3 es el valor de el turno, D2 es el valor de el turno y E1 es el valor de el turno o C4 es el valor de el turno, D3 es el valor de el turno, E2 es el valor de el turno y F1 es el valor de el turno o D4 es el valor de el turno, E3 es el valor de el turno, F2 es el valor de el turno y G1 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A5 es el valor de el turno, B4 es el valor de el turno, C3 es el valor de el turno y D2 es el valor de el turno o B5 es el valor de el turno, C4 es el valor de el turno, D3 es el valor de el turno y E2 es el valor de el turno o C5 es el valor de el turno, D4 es el valor de el turno, E3 es el valor de el turno y F2 es el valor de el turno o D5 es el valor de el turno, E4 es el valor de el turno, F3 es el valor de el turno y G2 es el valor de el turno entonces el juego es el valor de el turno.
+Si el turno es asignado y el juego no es asignado entonces si A6 es el valor de el turno, B5 es el valor de el turno, C4 es el valor de el turno y D3 es el valor de el turno o B6 es el valor de el turno, C5 es el valor de el turno, D4 es el valor de el turno y E3 es el valor de el turno o C6 es el valor de el turno, D5 es el valor de el turno, E4 es el valor de el turno y F3 es el valor de el turno o D6 es el valor de el turno, E5 es el valor de el turno, F4 es el valor de el turno y G3 es el valor de el turno entonces el juego es el valor de el turno.
+
+# El chip se pondrá en la columna y elegida 'caer' en la celda libre más bajo.
+Si el movimiento es A y el juego no es asignado entonces si A1 no es asignado entonces A1 es el valor de el turno sino si A2 no es asignado entonces A2 es el valor de el turno sino si A3 no es asignado entonces A3 es el valor de el turno sino si A4 no es asignado entonces A4 es el valor de el turno sino si A5 no es asignado entonces A5 es el valor de el turno sino si A6 no es asignado entonces A6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
+Si el movimiento es B y el juego no es asignado entonces si B1 no es asignado entonces B1 es el valor de el turno sino si B2 no es asignado entonces B2 es el valor de el turno sino si B3 no es asignado entonces B3 es el valor de el turno sino si B4 no es asignado entonces B4 es el valor de el turno sino si B5 no es asignado entonces B5 es el valor de el turno sino si B6 no es asignado entonces B6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
+Si el movimiento es C y el juego no es asignado entonces si C1 no es asignado entonces C1 es el valor de el turno sino si C2 no es asignado entonces C2 es el valor de el turno sino si C3 no es asignado entonces C3 es el valor de el turno sino si C4 no es asignado entonces C4 es el valor de el turno sino si C5 no es asignado entonces C5 es el valor de el turno sino si C6 no es asignado entonces C6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
+Si el movimiento es D y el juego no es asignado entonces si D1 no es asignado entonces D1 es el valor de el turno sino si D2 no es asignado entonces D2 es el valor de el turno sino si D3 no es asignado entonces D3 es el valor de el turno sino si D4 no es asignado entonces D4 es el valor de el turno sino si D5 no es asignado entonces D5 es el valor de el turno sino si D6 no es asignado entonces D6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
+Si el movimiento es E y el juego no es asignado entonces si E1 no es asignado entonces E1 es el valor de el turno sino si E2 no es asignado entonces E2 es el valor de el turno sino si E3 no es asignado entonces E3 es el valor de el turno sino si E4 no es asignado entonces E4 es el valor de el turno sino si E5 no es asignado entonces E5 es el valor de el turno sino si E6 no es asignado entonces E6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
+Si el movimiento es F y el juego no es asignado entonces si F1 no es asignado entonces F1 es el valor de el turno sino si F2 no es asignado entonces F2 es el valor de el turno sino si F3 no es asignado entonces F3 es el valor de el turno sino si F4 no es asignado entonces F4 es el valor de el turno sino si F5 no es asignado entonces F5 es el valor de el turno sino si F6 no es asignado entonces F6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
+Si el movimiento es G y el juego no es asignado entonces si G1 no es asignado entonces G1 es el valor de el turno sino si G2 no es asignado entonces G2 es el valor de el turno sino si G3 no es asignado entonces G3 es el valor de el turno sino si G4 no es asignado entonces G4 es el valor de el turno sino si G5 no es asignado entonces G5 es el valor de el turno sino si G6 no es asignado entonces G6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
+
+# Compruebe si hay una victoria 'game over'.
+Si el juego es asignado, el juego no es inválido y el movimiento es asignado entonces mostrar "\nLo sentimos, el juego ya ha terminado.\n\nPara volver a jugar, haga clic en el botón «Despejar la mente.» y entonces «Leer el archivo \"Español/usuario/programación/Conecta 4\".».\n\n", el movimiento es vacío, el turno es vacío y el juego es inválido.
+
+# Advertencia: El nivel de resolver no tiene valor.
+Si el nivel de resolver no es asignado y el turno es asignado entonces mostrar "Advertencia: El nivel de resolver no tiene valor. Por favor, asignar el nivel de resolver.\n", el movimiento es inválido y el turno es vacío.
+
+# Configuración del juego.
+#El método de resolver no es ocupado.
+#El método de resolver no es hecho.
+El método de resolver es invertida.
+El estrategia de resolver es exclusivo.
+El nivel de resolver es baja.
+
+# Inicio real del juego.
+El turno es tuyo.
+#C++## Escriba para un conjunto, por ejemplo:	Mi movimiento es A.
+#C++## Escriba un juego avanzado:		El nivel de resolver es alta.
+#C++## Regreso a nivel de principiantes:	El nivel de resolver es baja.
+#C++## Info sobre el movimientos:		Mostrar información sobre el movimientos.
+#Java## Si el tablero de juego se ve comprimida, por favor cambiar el tipo de letra con el botón «cambiar fuente».

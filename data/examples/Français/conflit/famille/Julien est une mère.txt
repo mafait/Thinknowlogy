@@ -1,4 +1,7 @@
-﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
 Julien est un fils de Olivier et Amélie.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».
 Julien est une mère.

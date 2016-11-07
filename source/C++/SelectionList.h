@@ -1,7 +1,7 @@
 /*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -43,15 +43,10 @@ class SelectionList : private List
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	SelectionList( char _listChar, CommonVariables *commonVariables, WordItem *myWordItem );
 	~SelectionList();
-
-
-	// Protected virtual functions
-
-	virtual ReferenceResultType findWordReference( WordItem *referenceWordItem );
 
 
 	// Protected functions
@@ -64,7 +59,7 @@ class SelectionList : private List
 
 	SelectionResultType checkDuplicateCondition();
 	SelectionResultType checkDuplicateSelectionPart( unsigned int duplicateConditionSentenceNr );
-	SelectionResultType createSelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeParameter, unsigned short prepositionParameter, unsigned short specificationWordParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString );
+	SelectionResultType createSelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString );
 	SelectionResultType findFirstExecutionItem( WordItem *solveWordItem );
 
 	SelectionItem *executionStartEntry( unsigned short executionLevel, unsigned int executionSentenceNr );

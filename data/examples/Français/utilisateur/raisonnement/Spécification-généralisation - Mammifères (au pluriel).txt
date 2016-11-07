@@ -1,0 +1,8 @@
+﻿#Les chats sont des mammifères.
+Chats sont mammifères.
+#Les chiens sont des mammifères.
+Chiens sont mammifères.
+#Les baleines sont des mammifères.
+Baleines sont mammifères.
+Affichez information sur les mammifères.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

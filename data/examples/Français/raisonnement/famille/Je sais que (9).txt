@@ -1,0 +1,7 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Lorraine a un père, appelé Olivier.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Lorraine a une mère, appelée Amélie.
+Pascal est un garçon.
+Amélie est la mère de Pascal, Julien et Lorraine.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

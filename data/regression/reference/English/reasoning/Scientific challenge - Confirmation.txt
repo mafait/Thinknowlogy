@@ -1,0 +1,71 @@
+﻿* 
+* My conclusions:
+< John has a son, called Paul.
+< 
+* 
+* My conclusions that are confirmed:
+< John has a son, called Paul.
+< 
+* 
+* My conclusions:
+< Laura is a daughter of Anna.
+< 
+* 
+* My conclusions that are confirmed:
+< Laura is a daughter of Anna.
+< 
+* 
+* My conclusions:
+< An engine is part of every car.
+< 
+* 
+* My conclusions that are confirmed:
+< An engine is part of every car.
+< 
+* 
+* My conclusions:
+< Every sailboat has a sail.
+< 
+* 
+* My conclusions that are confirmed:
+< Every sailboat has a sail.
+< 
+* 
+* My conclusions:
+< Peter has no father anymore.
+< Peter had a father, called James.
+< 
+* 
+* My conclusions that are confirmed:
+< Peter has no father anymore.
+< 
+* 
+* My conclusions that are confirmed:
+< Peter had a father, called James.
+< 
+* 
+* My questions:
+< Is Addison a man or a woman?
+< 
+* 
+* My conclusions:
+< The United States has a president, called Bill Clinton.
+< 
+* 
+* The word "Bill Clinton" is semantically ambiguous:
+* - either the entity re-occurred,
+* - or there are multiple instances of this entity.
+* 
+* In the latter case, please enhance the specification of the involved entities.
+* 
+* My conclusions that are confirmed:
+< The United States has a president, called Bill Clinton.
+< 
+* 
+* My conclusions:
+< The United States has a president, called Barack Obama.
+< 
+* 
+* My conclusions that are confirmed:
+< The United States has a president, called Barack Obama.
+< 

@@ -1,0 +1,2 @@
+﻿Est 1 un nombre?
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

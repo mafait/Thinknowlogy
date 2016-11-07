@@ -1,0 +1,13 @@
+﻿Olivier est possible un père.
+Fabrice était possible un père.
+Guillaume était possible le père de Armand.
+Affichez le rapport de justification sur Armand.
+Était Fabrice un père?
+Était Ronald le père de Pascal?
+# Étrange essai au passé
+Chaque père était un parent.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Fabrice.
+Affichez le rapport de justification sur Guillaume.
+Affichez le rapport de justification sur Ronald.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

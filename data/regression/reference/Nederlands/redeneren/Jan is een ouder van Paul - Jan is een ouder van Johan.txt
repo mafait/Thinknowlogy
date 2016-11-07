@@ -1,0 +1,20 @@
+﻿* 
+* Mijn conclusies:
+< Paul heeft een ouder, genaamd Jan.
+< 
+* 
+* Het woord "Jan" is semantisch dubbelzinnig. Er zijn meerdere voorkomens van deze entiteit.
+* 
+* Mijn conclusies:
+< Johan heeft een ouder, genaamd Jan.
+< 
+* 
+* Uw informatie:
+< Jan is een ouder van zowel Paul als Johan.
+* 
+* Gerelateerde informatie:
+< Johan heeft een ouder, genaamd Jan.
+< Paul heeft een ouder, genaamd Jan.
+< 
+* Dat weet ik.
+* 

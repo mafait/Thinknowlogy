@@ -1,0 +1,2 @@
+﻿! Word "John" is a generalization word as well as a relation word. It assumes there are multiple (different) instances of this word. However, this kind of logic isn't implemented yet.
+! 

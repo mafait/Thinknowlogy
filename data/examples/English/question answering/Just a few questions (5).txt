@@ -1,0 +1,3 @@
+﻿Is John probably the father of Paul?
+Was James possibly the father of Peter?
+# To continue, click button «Clear your mind.» or «Restart.».

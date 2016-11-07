@@ -1,0 +1,8 @@
+﻿Chaque animal est une créature.
+Chaque cheval est un animal.
+Chaque personne est un être humain.
+Chaque être humain est une créature.
+Chaque créature a un corps.
+#Les créatures ont un corps.
+Créatures ont un corps.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

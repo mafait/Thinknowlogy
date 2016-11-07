@@ -1,0 +1,15 @@
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Juan es un padre.
+Peyo es un padre.
+José es hijo de Juan.
+Ana es madre de Pablo.
+Ana es una madre.
+Jorge era padre de Alfonso.
+
+Juan es un padre.
+Peyo es un padre.
+José es hijo de Juan.
+Ana es madre de Pablo.
+Ana es una madre.
+Jorge era padre de Alfonso.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

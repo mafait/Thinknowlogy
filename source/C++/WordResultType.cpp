@@ -1,6 +1,7 @@
-/*	Class:			WordResultType
- *	Purpose:		To return word variables of a function
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		WordResultType
+ *	Purpose:	To return word variables,
+ *				as the result of a function call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,17 +28,18 @@ class WordTypeItem;
 class WordResultType
 	{
 	friend class AdminAuthorization;
-	friend class AdminItem;
 	friend class AdminLanguage;
 	friend class AdminReadCreateWords;
 	friend class AdminReadGrammar;
 	friend class AdminReadSentence;
-	friend class WordItem;
+	friend class Item;
+	friend class List;
 	friend class WordList;
 	friend class WordSpecification;
 	friend class WordType;
 	friend class WordTypeItem;
 	friend class WordTypeList;
+
 	protected:
 	// Protected variables
 
@@ -52,7 +54,7 @@ class WordResultType
 	WordTypeItem *foundWordTypeItem;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	WordResultType()
 		{

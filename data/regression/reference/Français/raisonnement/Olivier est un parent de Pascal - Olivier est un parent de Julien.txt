@@ -1,0 +1,20 @@
+﻿* 
+* Mes conclusions:
+< Pascal a un parent, appelé Olivier.
+< 
+* 
+* Le mot «Olivier» est sémantiquement ambiguë. Il ya plusieurs instances de cette entité.
+* 
+* Mes conclusions:
+< Julien a un parent, appelé Olivier.
+< 
+* 
+* Vos informations:
+< Olivier est un parent de la-fois Pascal et Julien.
+* 
+* Informations connexes:
+< Julien a un parent, appelé Olivier.
+< Pascal a un parent, appelé Olivier.
+< 
+* Je sais que.
+* 

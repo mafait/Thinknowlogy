@@ -1,0 +1,54 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un père est probablement une personne.
+< Un parent est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Un fils est probablement une personne.
+< Un enfant est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes questions:
+< Est Dominique un homme ou une femme?
+< 
+* 
+* Mes questions:
+< Est Dominique un homme ou une femme? En raison:
+<	- Dominique est une personne.
+<	- Chaque personne est un homme ou une femme.
+< 
+* 
+* Mes hypothèses:
+< Amélie est probablement une femme.
+< Amélie n'est probablement pas un homme.
+< 
+* 
+* Mes hypothèses:
+< Amélie est probablement une femme. En raison:
+<	- Amélie est une personne.
+<	- Chaque personne est un homme ou une femme.
+<	- Nom propre «Amélie» est probablement féminin.
+< Amélie n'est probablement pas un homme. En raison:
+<	- Amélie est une personne.
+<	- Chaque personne est un homme ou une femme.
+<	- Amélie est probablement une femme.
+< 

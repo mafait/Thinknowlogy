@@ -7,8 +7,8 @@
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
 < Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:
@@ -27,10 +27,6 @@
 < Juan es un hombre.
 < Juan no es una mujer.
 < Juan no es una madre.
-< Ana es una mujer.
-< Ana no es un hombre.
-< Ana es parte de una familia.
-< Ana no es un padre.
 < Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene un padre, llamado Juan.
 < Pablo tiene una madre, llamada Ana.
@@ -40,12 +36,14 @@
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
+< Ana es una mujer.
+< Ana no es un hombre.
+< Ana es parte de una familia.
+< Ana no es un padre.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
 < Juan tiene posiblemente una hija, llamada Luisa.
-< Ana es probablemente una persona.
-< Ana tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
 < Pablo es probablemente parte de una familia.
 < José es posiblemente una persona.
@@ -55,6 +53,8 @@
 < Luisa es posiblemente parte de una familia.
 < Luisa no es posiblemente un niño y un hombre.
 < Luisa no es posiblemente un hijo.
+< Ana es probablemente una persona.
+< Ana tiene posiblemente una hija, llamada Luisa.
 * 
 * Mis preguntas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
@@ -83,16 +83,16 @@
 < 
 * 
 * Mis conclusiones:
-< Alfonso tiene un padre, llamado Jorge.
 < Jorge es parte de una familia.
 < Jorge es un hombre.
 < Jorge no es una mujer.
 < Jorge no es una madre.
+< Alfonso tiene un padre, llamado Jorge.
 * 
 * Mis suposiciones:
+< Jorge es probablemente una persona.
 < Alfonso es posiblemente una persona.
 < Alfonso es probablemente parte de una familia.
-< Jorge es probablemente una persona.
 * 
 * Mis preguntas:
 < ¿Es Alfonso una niña, una mujer, un niño o un hombre?
@@ -125,4 +125,155 @@
 * 
 * Sólo sé:
 < Santiago es un padre.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia. Porque:
+<	- Juan es un padre.
+<	- Padres son parte de cada familia.
+< Juan es un hombre. Porque:
+<	- Juan es un padre.
+<	- Cada padre es un hombre.
+< Juan no es una mujer. Porque:
+<	- Juan es un padre.
+<	- Cada padre es una mujer o un hombre.
+<	- Juan es un hombre.
+< Juan no es una madre. Porque:
+<	- Juan es un padre.
+<	- Cada padre es un padre o una madre.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona. Porque:
+<	- Juan es un padre.
+<	- Un padre es probablemente una persona.
+* 	y:
+<	- Cada persona es un hombre o una mujer.
+<	- Juan es un hombre.
+< Juan tiene posiblemente una hija, llamada Luisa. Porque:
+<	- Luisa es posiblemente hija de Juan y Ana.
+* 	y:
+<	- Luisa tiene un padre, llamado Juan.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es un hijo o una hija.
+<	- Nombre propio "Luisa" es probablemente femenino.
+< 
+* 
+* Mis conclusiones:
+< Pablo tiene 2 padres, llamados Juan y Ana. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
+<	- Ana es la madre de Pablo, José y Luisa.
+< Pablo tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
+< Pablo tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Pablo, José y Luisa.
+* 
+* Mis suposiciones:
+< Pablo es posiblemente una persona. Porque:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Un hijo es probablemente una persona.
+* 	y:
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada familia tiene padres y hijos.
+<	- Un hijo es probablemente una persona.
+* 	y:
+<	- Pablo tiene una madre, llamada Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Un hijo es probablemente una persona.
+< Pablo es probablemente parte de una familia. Porque:
+<	- ¿Es Pablo un hijo o una hija?
+<	- Hijos son parte de cada familia.
+* 
+* Mis preguntas:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre? Porque:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+* 	y:
+<	- Pablo tiene una madre, llamada Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+< ¿Es Pablo un hijo o una hija? Porque:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es un hijo o una hija.
+* 	y:
+<	- Pablo tiene una madre, llamada Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es un hijo o una hija.
+< 
+* 
+* Mis conclusiones:
+< Jorge es parte de una familia. Porque:
+<	- Jorge es padre de Alfonso.
+<	- Padres son parte de cada familia.
+< Jorge es un hombre. Porque:
+<	- Jorge es padre de Alfonso.
+<	- Cada padre es un hombre.
+< Jorge no es una mujer. Porque:
+<	- Jorge es padre de Alfonso.
+<	- Cada padre es una mujer o un hombre.
+<	- Jorge es un hombre.
+< Jorge no es una madre. Porque:
+<	- Jorge es padre de Alfonso.
+<	- Cada padre es un padre o una madre.
+* 
+* Mis suposiciones:
+< Jorge es probablemente una persona. Porque:
+<	- Jorge es padre de Alfonso.
+<	- Un padre es probablemente una persona.
+* 	y:
+<	- Cada persona es un hombre o una mujer.
+<	- Jorge es un hombre.
+< 
+* 
+* Mis conclusiones:
+< Santiago es parte de una familia. Porque:
+<	- Santiago es un padre.
+<	- Padres son parte de cada familia.
+< Santiago es un hombre. Porque:
+<	- Santiago es un padre.
+<	- Cada padre es un hombre.
+< Santiago no es una mujer. Porque:
+<	- Santiago es un padre.
+<	- Cada padre es una mujer o un hombre.
+<	- Santiago es un hombre.
+< Santiago no es una madre. Porque:
+<	- Santiago es un padre.
+<	- Cada padre es un padre o una madre.
+* 
+* Mis suposiciones:
+< Santiago es probablemente una persona. Porque:
+<	- Santiago es un padre.
+<	- Un padre es probablemente una persona.
+* 	y:
+<	- Cada persona es un hombre o una mujer.
+<	- Santiago es un hombre.
+< Santiago tiene probablemente un hijo. Porque:
+<	- Santiago es un padre.
+<	- Cada familia tiene padres y hijos.
+< 
+* 
+* Mis conclusiones:
+< Alfonso tiene un padre, llamado Jorge. Porque:
+<	- Jorge es padre de Alfonso.
+* 
+* Mis suposiciones:
+< Alfonso es posiblemente una persona. Porque:
+<	- Alfonso tiene un padre, llamado Jorge.
+<	- Cada familia tiene padres y hijos.
+<	- Un hijo es probablemente una persona.
+< Alfonso es probablemente parte de una familia. Porque:
+<	- ¿Es Alfonso un hijo o una hija?
+<	- Hijos son parte de cada familia.
+* 
+* Mis preguntas:
+< ¿Es Alfonso una niña, una mujer, un niño o un hombre? Porque:
+<	- Alfonso tiene un padre, llamado Jorge.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+< ¿Es Alfonso un hijo o una hija? Porque:
+<	- Alfonso tiene un padre, llamado Jorge.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es un hijo o una hija.
 < 

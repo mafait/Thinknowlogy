@@ -1,0 +1,4 @@
+﻿* 
+* No se acepta esta especificación de definición, porque ya está asignado:
+< El hombre tiene un sombrero.
+< 

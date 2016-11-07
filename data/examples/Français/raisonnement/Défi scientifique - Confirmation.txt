@@ -1,0 +1,25 @@
+﻿Pascal est un fils de Olivier.
+Olivier a un fils, appelé Pascal.
+Amélie a une fille, appelée Lorraine.
+Lorraine est une fille de Amélie.
+
+Chaque voiture a un moteur.
+Un moteur est partie de chaque voiture.
+Une voile est partie de chaque voilier.
+Chaque voilier a une voile.
+
+Philippe était le père de Antoine.
+Antoine n'a aucun père plus.
+Antoine avait un père, appelé Philippe.
+
+Chaque personne est un homme ou une femme.
+Dominique est une personne.
+Dominique est un homme ou une femme.
+
+Bill Clinton est le président des États-Unis.
+Les États-Unis a un président, appelé Bill Clinton.
+Barack Obama est le président des États-Unis.
+Les États-Unis a un nouveau président, appelé Barack Obama.
+# La phrase suivante est déjà confirmée
+Les États-Unis a un précédent président, appelé Bill Clinton.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

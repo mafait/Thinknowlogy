@@ -1,6 +1,6 @@
 /*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -22,7 +22,7 @@
 
 class List
 	{
-	// Private constructible variables
+	// Private constructed variables
 
 	private char listChar_;
 
@@ -68,83 +68,68 @@ class List
 
 	private byte removeItemFromList( Item removeItem )
 		{
-		if( removeItem != null )
+		if( removeItem == null )
+			return startError( 1, null, "The given remove item is undefined" );
+
+		if( removeItem.myList() != this )
+			return startError( 1, null, "The given remove item doesn't belong to my list" );
+
+		// First item in list
+		if( removeItem.previousItem == null )
 			{
-			if( removeItem.myList() == this )
+			switch( removeItem.statusChar() )
 				{
-				// First item in list
-				if( removeItem.previousItem == null )
-					{
-					switch( removeItem.statusChar() )
-						{
-						case Constants.QUERY_ACTIVE_CHAR:
-							activeList_ = removeItem.nextItem;
-							break;
+				case Constants.QUERY_ACTIVE_CHAR:
+					activeList_ = removeItem.nextItem;
+					break;
 
-						case Constants.QUERY_INACTIVE_CHAR:
-							inactiveList_ = removeItem.nextItem;
-							break;
+				case Constants.QUERY_INACTIVE_CHAR:
+					inactiveList_ = removeItem.nextItem;
+					break;
 
-						case Constants.QUERY_ARCHIVED_CHAR:
-							archivedList_ = removeItem.nextItem;
-							break;
+				case Constants.QUERY_ARCHIVED_CHAR:
+					archivedList_ = removeItem.nextItem;
+					break;
 
-						case Constants.QUERY_REPLACED_CHAR:
-							replacedList_ = removeItem.nextItem;
-							break;
+				case Constants.QUERY_REPLACED_CHAR:
+					replacedList_ = removeItem.nextItem;
+					break;
 
-						case Constants.QUERY_DELETED_CHAR:
-							deletedList_ = removeItem.nextItem;
-							break;
+				case Constants.QUERY_DELETED_CHAR:
+					deletedList_ = removeItem.nextItem;
+					break;
 
-						default:
-							return startError( 1, null, "The given remove item has an unknown status character" );
-						}
-
-					if( removeItem.nextItem != null )
-						removeItem.nextItem.previousItem = null;
-					}
-				else
-					{
-					removeItem.previousItem.nextItem = removeItem.nextItem;
-
-					if( removeItem.nextItem != null )
-						removeItem.nextItem.previousItem = removeItem.previousItem;
-					}
-
-				// Remember next item
-				nextListItem_ = removeItem.nextItem;
-
-				// Disconnect item from the list
-				removeItem.previousItem = null;
-				removeItem.nextItem = null;
+				default:
+					return startError( 1, null, "The given remove item has an unknown status character" );
 				}
-			else
-				return startError( 1, null, "The given remove item doesn't belong to my list" );
+
+			if( removeItem.nextItem != null )
+				removeItem.nextItem.previousItem = null;
 			}
 		else
-			return startError( 1, null, "The given remove item is undefined" );
+			{
+			removeItem.previousItem.nextItem = removeItem.nextItem;
+
+			if( removeItem.nextItem != null )
+				removeItem.nextItem.previousItem = removeItem.previousItem;
+			}
+
+		// Remember next item
+		nextListItem_ = removeItem.nextItem;
+
+		// Disconnect item from the list
+		removeItem.previousItem = null;
+		removeItem.nextItem = null;
 
 		return Constants.RESULT_OK;
 		}
 
-	private static Item tailOfList( Item searchItem )
-		{
-		Item nextItem;
 
-		while( searchItem != null &&
-		( nextItem = searchItem.nextItem ) != null )
-			searchItem = nextItem;
-
-		return searchItem;
-		}
-
-
-	// Constructor / deconstructor
+	// Constructor
 
 	protected List()
 		{
-		// Private constructible variables
+		// Private constructed variables
 
 		listChar_ = Constants.QUERY_NO_LIST_CHAR;
 
@@ -165,9 +150,104 @@ class List
 
 	// Protected error methods
 
+	protected CollectionResultType addCollectionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = addError( 1, moduleNameString, errorString );
+		return collectionResult;
+		}
+
+	protected CollectionResultType startCollectionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = startError( 1, moduleNameString, errorString );
+		return collectionResult;
+		}
+
+	protected FileResultType addFileResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		FileResultType fileResult = new FileResultType();
+
+		fileResult.result = addError( 1, moduleNameString, errorString );
+		return fileResult;
+		}
+
+	protected FileResultType startFileResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		FileResultType fileResult = new FileResultType();
+
+		fileResult.result = startError( 1, moduleNameString, errorString );
+		return fileResult;
+		}
+	protected FileResultType startFileResultSystemError( int methodLevel, String moduleNameString, String errorString )
+		{
+		FileResultType fileResult = new FileResultType();
+
+		fileResult.result = startSystemError( 1, moduleNameString, errorString );
+		return fileResult;
+		}
+
+	protected GeneralizationResultType startGeneralizationResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		GeneralizationResultType generalizationResult = new GeneralizationResultType();
+
+		generalizationResult.result = startError( 1, moduleNameString, errorString );
+		return generalizationResult;
+		}
+
+	protected GrammarResultType addGrammarResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		GrammarResultType grammarResult = new GrammarResultType();
+
+		grammarResult.result = addError( 1, moduleNameString, errorString );
+		return grammarResult;
+		}
+
+	protected GrammarResultType startGrammarResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		GrammarResultType grammarResult = new GrammarResultType();
+
+		grammarResult.result = startError( 1, moduleNameString, errorString );
+		return grammarResult;
+		}
+
+	protected JustificationResultType addJustificationResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		JustificationResultType justificationResult = new JustificationResultType();
+
+		justificationResult.result = addError( 1, moduleNameString, errorString );
+		return justificationResult;
+		}
+
+	protected JustificationResultType startJustificationResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		JustificationResultType justificationResult = new JustificationResultType();
+
+		justificationResult.result = startError( 1, moduleNameString, errorString );
+		return justificationResult;
+		}
+
+	protected ReadResultType addReadResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ReadResultType readResult = new ReadResultType();
+
+		readResult.result = addError( 1, moduleNameString, errorString );
+		return readResult;
+		}
+
+	protected ReadResultType startReadResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ReadResultType readResult = new ReadResultType();
+
+		readResult.result = startError( 1, moduleNameString, errorString );
+		return readResult;
+		}
+
 	protected byte addError( int methodLevel, String moduleNameString, String errorString )
 		{
-		Presentation.showError( listChar_, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), ( myWordItem_ == null || myWordItem_.isAdminWord() ? null : myWordItem_.anyWordTypeString() ), ( methodLevel + 1 ), errorString );
+		Presentation.displayError( listChar_, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), ( myWordItem_ == null || myWordItem_.isAdminWord() ? null : myWordItem_.anyWordTypeString() ), ( methodLevel + 1 ), errorString );
 		return CommonVariables.result;
 		}
 
@@ -176,7 +256,6 @@ class List
 		addError( ( methodLevel + 1 ), moduleNameString, errorString );
 
 		CommonVariables.result = Constants.RESULT_ERROR;
-
 		return Constants.RESULT_ERROR;
 		}
 
@@ -189,18 +268,84 @@ class List
 		return Constants.RESULT_SYSTEM_ERROR;
 		}
 
+	protected SelectionResultType addSelectionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		SelectionResultType selectionResult = new SelectionResultType();
+
+		selectionResult.result = addError( 1, moduleNameString, errorString );
+		return selectionResult;
+		}
+
+	protected SelectionResultType startSelectionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		SelectionResultType selectionResult = new SelectionResultType();
+
+		selectionResult.result = startError( 1, moduleNameString, errorString );
+		return selectionResult;
+		}
+
+	protected SelectionResultType startSystemSelectionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		SelectionResultType selectionResult = new SelectionResultType();
+
+		selectionResult.result = startSystemError( 1, moduleNameString, errorString );
+		return selectionResult;
+		}
+
+	protected SpecificationResultType addSpecificationResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		SpecificationResultType specificationResult = new SpecificationResultType();
+
+		specificationResult.result = addError( 1, moduleNameString, errorString );
+		return specificationResult;
+		}
+
+	protected SpecificationResultType startSpecificationResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		SpecificationResultType specificationResult = new SpecificationResultType();
+
+		specificationResult.result = startError( 1, moduleNameString, errorString );
+		return specificationResult;
+		}
+
+	protected StringResultType addStringResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		StringResultType stringResult = new StringResultType();
+
+		stringResult.result = addError( 1, moduleNameString, errorString );
+		return stringResult;
+		}
+
+	protected StringResultType startStringResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		StringResultType stringResult = new StringResultType();
+
+		stringResult.result = startError( 1, moduleNameString, errorString );
+		return stringResult;
+		}
+
+	protected WordResultType addWordResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		WordResultType wordResult = new WordResultType();
+
+		wordResult.result = addError( 1, moduleNameString, errorString );
+		return wordResult;
+		}
+
+	protected WordResultType startWordResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		WordResultType wordResult = new WordResultType();
+
+		wordResult.result = startError( 1, moduleNameString, errorString );
+		return wordResult;
+		}
+
 
 	// Protected virtual methods
 
 	protected boolean isTemporaryList()
 		{
 		return false;
-		}
-
-	protected ReferenceResultType findWordReference( WordItem referenceWordItem )
-		{
-		// This is a virtual method. Therefore, the given variables are unreferenced.
-		return new ReferenceResultType();
 		}
 
 
@@ -229,11 +374,12 @@ class List
 		if( replacedList_ != null )
 			{
 			// Move replaced list to deleted list
-			if( deletedList_ == null )
+			if( searchItem == null )
 				deletedList_ = replacedList_;
 			else
 				{
-				searchItem = tailOfList( searchItem );
+				// Get the tail of the deleted list
+				searchItem = searchItem.tailOfList();
 				searchItem.nextItem = replacedList_;
 				}
 
@@ -243,11 +389,12 @@ class List
 		if( archivedList_ != null )
 			{
 			// Move archived list to deleted list
-			if( deletedList_ == null )
+			if( searchItem == null )
 				deletedList_ = archivedList_;
 			else
 				{
-				searchItem = tailOfList( searchItem );
+				// Get the tail of the deleted list
+				searchItem = searchItem.tailOfList();
 				searchItem.nextItem = archivedList_;
 				}
 
@@ -257,11 +404,12 @@ class List
 		if( inactiveList_ != null )
 			{
 			// Move inactive list to deleted list
-			if( deletedList_ == null )
+			if( searchItem == null )
 				deletedList_ = inactiveList_;
 			else
 				{
-				searchItem = tailOfList( searchItem );
+				// Get the tail of the deleted list
+				searchItem = searchItem.tailOfList();
 				searchItem.nextItem = inactiveList_;
 				}
 
@@ -271,11 +419,12 @@ class List
 		if( activeList_ != null )
 			{
 			// Move active list to deleted list
-			if( deletedList_ == null )
+			if( searchItem == null )
 				deletedList_ = activeList_;
 			else
 				{
-				searchItem = tailOfList( searchItem );
+				// Get the tail of the deleted list
+				searchItem = searchItem.tailOfList();
 				searchItem.nextItem = activeList_;
 				}
 
@@ -312,297 +461,251 @@ class List
 		Item searchItem;
 		Item previousSearchItem = null;
 
-		if( newItem != null )
+		if( newItem == null )
+			return startError( 1, null, "The given new item is undefined" );
+
+		if( newItem.myList() != this )
+			return startError( 1, null, "The given new item doesn't belong to my list" );
+
+		if( newItem.nextItem != null )
+			return startError( 1, null, "The given new item seems to be a part of a list" );
+
+		switch( statusChar )
 			{
-			if( newItem.myList() == this )
+			case Constants.QUERY_ACTIVE_CHAR:
+				newItem.setActiveSentenceNr();
+				newItem.setActiveStatus();
+				searchItem = activeList_;
+				break;
+
+			case Constants.QUERY_INACTIVE_CHAR:
+				newItem.setInactiveSentenceNr();
+				newItem.setInactiveStatus();
+				searchItem = inactiveList_;
+				break;
+
+			case Constants.QUERY_ARCHIVED_CHAR:
+				newItem.setArchivedSentenceNr();
+				newItem.setArchivedStatus();
+				searchItem = archivedList_;
+				break;
+
+			case Constants.QUERY_REPLACED_CHAR:
+				newItem.setReplacedSentenceNr();
+				newItem.setReplacedStatus();
+				searchItem = replacedList_;
+				break;
+
+			case Constants.QUERY_DELETED_CHAR:
+				newItem.setDeletedSentenceNr();
+				newItem.setDeletedStatus();
+				searchItem = deletedList_;
+				break;
+
+			default:
+				return startError( 1, null, "The given status character is unknown" );
+			}
+
+		// Sort item in list
+		if( statusChar == Constants.QUERY_DELETED_CHAR )
+			{
+			newCreationSentenceNr = newItem.creationSentenceNr();
+
+			while( searchItem != null &&
+
+			// 1) Descending creationSentenceNr
+			( searchItem.creationSentenceNr() > newCreationSentenceNr ||
+
+			// 2) Ascending itemNr
+			( searchItem.creationSentenceNr() == newCreationSentenceNr &&
+			searchItem.itemNr() < newItem.itemNr() ) ) )
 				{
-				if( newItem.nextItem == null )
-					{
-					switch( statusChar )
-						{
-						case Constants.QUERY_ACTIVE_CHAR:
-							newItem.setActiveSentenceNr();
-							newItem.setActiveStatus();
-							searchItem = activeList_;
-							break;
-
-						case Constants.QUERY_INACTIVE_CHAR:
-							newItem.setInactiveSentenceNr();
-							newItem.setInactiveStatus();
-							searchItem = inactiveList_;
-							break;
-
-						case Constants.QUERY_ARCHIVED_CHAR:
-							newItem.setArchivedSentenceNr();
-							newItem.setArchivedStatus();
-							searchItem = archivedList_;
-							break;
-
-						case Constants.QUERY_REPLACED_CHAR:
-							newItem.setReplacedSentenceNr();
-							newItem.setReplacedStatus();
-							searchItem = replacedList_;
-							break;
-
-						case Constants.QUERY_DELETED_CHAR:
-							newItem.setDeletedSentenceNr();
-							newItem.setDeletedStatus();
-							searchItem = deletedList_;
-							break;
-
-						default:
-							return startError( 1, null, "The given status character is unknown" );
-						}
-
-					// Sort item in list
-					if( statusChar == Constants.QUERY_DELETED_CHAR )
-						{
-						newCreationSentenceNr = newItem.creationSentenceNr();
-
-						while( searchItem != null &&
-
-						// 1) Descending creationSentenceNr
-						( searchItem.creationSentenceNr() > newCreationSentenceNr ||
-
-						// 2) Ascending itemNr
-						( searchItem.creationSentenceNr() == newCreationSentenceNr &&
-						searchItem.itemNr() < newItem.itemNr() ) ) )
-							{
-							previousSearchItem = searchItem;
-							searchItem = searchItem.nextItem;
-							}
-						}
-					else
-						{
-						while( searchItem != null &&
-						!newItem.isSorted( searchItem ) )
-							{
-							previousSearchItem = searchItem;
-							searchItem = searchItem.nextItem;
-							}
-						}
-
-					if( searchItem == null ||
-					// Check on duplicates
-					searchItem.creationSentenceNr() != newItem.creationSentenceNr() ||
-					// for integrity
-					searchItem.itemNr() != newItem.itemNr() )
-						{
-						newItem.previousItem = previousSearchItem;
-
-						// First item in list
-						if( previousSearchItem == null )
-							{
-							switch( statusChar )
-								{
-								case Constants.QUERY_ACTIVE_CHAR:
-									if( activeList_ != null )
-										activeList_.previousItem = newItem;
-
-									newItem.nextItem = activeList_;
-									activeList_ = newItem;
-									break;
-
-								case Constants.QUERY_INACTIVE_CHAR:
-									if( inactiveList_ != null )
-										inactiveList_.previousItem = newItem;
-
-									newItem.nextItem = inactiveList_;
-									inactiveList_ = newItem;
-									break;
-
-								case Constants.QUERY_ARCHIVED_CHAR:
-									if( archivedList_ != null )
-										archivedList_.previousItem = newItem;
-
-									newItem.nextItem = archivedList_;
-									archivedList_ = newItem;
-									break;
-
-								case Constants.QUERY_REPLACED_CHAR:
-									if( replacedList_ != null )
-										replacedList_.previousItem = newItem;
-
-									newItem.nextItem = replacedList_;
-									replacedList_ = newItem;
-									break;
-
-								case Constants.QUERY_DELETED_CHAR:
-									if( deletedList_ != null )
-										deletedList_.previousItem = newItem;
-
-									newItem.nextItem = deletedList_;
-									deletedList_ = newItem;
-									break;
-
-								default:
-									return startError( 1, null, "The given status character is unknown" );
-								}
-							}
-						else
-							{
-							if( searchItem != null )
-								searchItem.previousItem = newItem;
-
-							newItem.nextItem = previousSearchItem.nextItem;
-							previousSearchItem.nextItem = newItem;
-							}
-						}
-					else
-						return startError( 1, null, "I have found an active item with the same identification" );
-					}
-				else
-					return startError( 1, null, "The given new item seems to be a part of a list" );
+				previousSearchItem = searchItem;
+				searchItem = searchItem.nextItem;
 				}
-			else
-				return startError( 1, null, "The given new item doesn't belong to my list" );
 			}
 		else
-			return startError( 1, null, "The given new item is undefined" );
+			{
+			while( searchItem != null &&
+			!newItem.isSorted( searchItem ) )
+				{
+				previousSearchItem = searchItem;
+				searchItem = searchItem.nextItem;
+				}
+			}
+
+		if( searchItem != null &&
+		// Check on duplicates
+		searchItem.creationSentenceNr() == newItem.creationSentenceNr() &&
+		// for integrity
+		searchItem.itemNr() == newItem.itemNr() )
+			return startError( 1, null, "I have found an active item with the same identification" );
+
+		newItem.previousItem = previousSearchItem;
+
+		// First item in list
+		if( previousSearchItem == null )
+			{
+			switch( statusChar )
+				{
+				case Constants.QUERY_ACTIVE_CHAR:
+					if( activeList_ != null )
+						activeList_.previousItem = newItem;
+
+					newItem.nextItem = activeList_;
+					activeList_ = newItem;
+					break;
+
+				case Constants.QUERY_INACTIVE_CHAR:
+					if( inactiveList_ != null )
+						inactiveList_.previousItem = newItem;
+
+					newItem.nextItem = inactiveList_;
+					inactiveList_ = newItem;
+					break;
+
+				case Constants.QUERY_ARCHIVED_CHAR:
+					if( archivedList_ != null )
+						archivedList_.previousItem = newItem;
+
+					newItem.nextItem = archivedList_;
+					archivedList_ = newItem;
+					break;
+
+				case Constants.QUERY_REPLACED_CHAR:
+					if( replacedList_ != null )
+						replacedList_.previousItem = newItem;
+
+					newItem.nextItem = replacedList_;
+					replacedList_ = newItem;
+					break;
+
+				case Constants.QUERY_DELETED_CHAR:
+					if( deletedList_ != null )
+						deletedList_.previousItem = newItem;
+
+					newItem.nextItem = deletedList_;
+					deletedList_ = newItem;
+					break;
+
+				default:
+					return startError( 1, null, "The given status character is unknown" );
+				}
+			}
+		else
+			{
+			if( searchItem != null )
+				searchItem.previousItem = newItem;
+
+			newItem.nextItem = previousSearchItem.nextItem;
+			previousSearchItem.nextItem = newItem;
+			}
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte activateItem( Item activateItem )
 		{
-		if( activateItem != null )
-			{
-			if( activateItem.statusChar() != Constants.QUERY_ACTIVE_CHAR )
-				{
-				if( removeItemFromList( activateItem ) == Constants.RESULT_OK )
-					{
-					if( addItemToList( Constants.QUERY_ACTIVE_CHAR, activateItem ) == Constants.RESULT_OK )
-						{
-						if( isAssignmentList() &&
-						CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-							CommonVariables.isAssignmentChanged = true;
-						}
-					else
-						return addError( 1, null, "I failed to add an item to the active list" );
-					}
-				else
-					return addError( 1, null, "I failed to remove an item from the archive list" );
-				}
-			else
-				return startError( 1, null, "The given activate item is already an active item" );
-			}
-		else
+		if( activateItem == null )
 			return startError( 1, null, "The given activate item is undefined" );
+
+		if( activateItem.statusChar() == Constants.QUERY_ACTIVE_CHAR )
+			return startError( 1, null, "The given activate item is already an active item" );
+
+		if( removeItemFromList( activateItem ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to remove an item from the archive list" );
+
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, activateItem ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to add an item to the active list" );
+
+		if( isAssignmentList() &&
+		CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+			CommonVariables.isAssignmentChanged = true;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte inactivateItem( Item inactivateItem )
 		{
-		if( inactivateItem != null )
-			{
-			if( inactivateItem.statusChar() != Constants.QUERY_INACTIVE_CHAR )
-				{
-				if( isAssignmentList() ||
-				listChar_ == Constants.ADMIN_READ_LIST_SYMBOL )
-					{
-					if( removeItemFromList( inactivateItem ) == Constants.RESULT_OK )
-						{
-						if( addItemToList( Constants.QUERY_INACTIVE_CHAR, inactivateItem ) == Constants.RESULT_OK )
-							{
-							if( isAssignmentList() &&
-							CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-								CommonVariables.isAssignmentChanged = true;
-							}
-						else
-							return addError( 1, null, "I failed to add an item to the inactive list" );
-						}
-					else
-						return addError( 1, null, "I failed to remove an item from the archive list" );
-					}
-				else
-					return startError( 1, null, "Only assignments, Guide by Grammar items and read items can be inactived" );
-				}
-			else
-				return startError( 1, null, "The given inactivate item is already an inactive item" );
-			}
-		else
+		if( inactivateItem == null )
 			return startError( 1, null, "The given inactivate item is undefined" );
+
+		if( inactivateItem.statusChar() == Constants.QUERY_INACTIVE_CHAR )
+			return startError( 1, null, "The given inactivate item is already an inactive item" );
+
+		if( !isAssignmentList() &&
+		listChar_ != Constants.ADMIN_READ_LIST_SYMBOL )
+			return startError( 1, null, "Only assignments, Guide by Grammar items and read items can be inactived" );
+
+		if( removeItemFromList( inactivateItem ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to remove an item from the archive list" );
+
+		if( addItemToList( Constants.QUERY_INACTIVE_CHAR, inactivateItem ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to add an item to the inactive list" );
+
+		if( isAssignmentList() &&
+		CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+			CommonVariables.isAssignmentChanged = true;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte archiveItem( Item archiveItem )
 		{
-		if( archiveItem != null )
-			{
-			if( archiveItem.statusChar() != Constants.QUERY_ARCHIVED_CHAR )
-				{
-				if( isAssignmentList() )
-					{
-					if( removeItemFromList( archiveItem ) == Constants.RESULT_OK )
-						{
-						archiveItem.previousStatusChar = archiveItem.statusChar();
-
-						if( addItemToList( Constants.QUERY_ARCHIVED_CHAR, archiveItem ) == Constants.RESULT_OK )
-							{
-							if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-								CommonVariables.isAssignmentChanged = true;
-							}
-						else
-							return addError( 1, null, "I failed to add an item to the archived list" );
-						}
-					else
-						return addError( 1, null, "I failed to remove an item from a list" );
-					}
-				else
-					return startError( 1, null, "Only assignments can be archived" );
-				}
-			else
-				return startError( 1, null, "The given archive item is already an archived item" );
-			}
-		else
+		if( archiveItem == null )
 			return startError( 1, null, "The given archive item is undefined" );
+
+		if( archiveItem.statusChar() == Constants.QUERY_ARCHIVED_CHAR )
+			return startError( 1, null, "The given archive item is already an archived item" );
+
+		if( !isAssignmentList() )
+			return startError( 1, null, "Only assignments can be archived" );
+
+		if( removeItemFromList( archiveItem ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to remove an item from a list" );
+
+		archiveItem.previousStatusChar = archiveItem.statusChar();
+
+		if( addItemToList( Constants.QUERY_ARCHIVED_CHAR, archiveItem ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to add an item to the archived list" );
+
+		if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+			CommonVariables.isAssignmentChanged = true;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte replaceItem( Item replaceItem )
 		{
-		if( replaceItem != null )
-			{
-			if( replaceItem.statusChar() != Constants.QUERY_REPLACED_CHAR )
-				{
-				if( removeItemFromList( replaceItem ) == Constants.RESULT_OK )
-					{
-					replaceItem.previousStatusChar = replaceItem.statusChar();
-
-					if( addItemToList( Constants.QUERY_REPLACED_CHAR, replaceItem ) != Constants.RESULT_OK )
-						return addError( 1, null, "I failed to add an item to the replaced list" );
-					}
-				else
-					return addError( 1, null, "I failed to remove an item from a list" );
-				}
-			else
-				return startError( 1, null, "The given replace item is already a replaced item" );
-			}
-		else
+		if( replaceItem == null )
 			return startError( 1, null, "The given replace item is undefined" );
+
+		if( replaceItem.statusChar() == Constants.QUERY_REPLACED_CHAR )
+			return startError( 1, null, "The given replace item is already a replaced item" );
+
+		if( removeItemFromList( replaceItem ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to remove an item from a list" );
+
+		replaceItem.previousStatusChar = replaceItem.statusChar();
+
+		if( addItemToList( Constants.QUERY_REPLACED_CHAR, replaceItem ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to add an item to the replaced list" );
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte deleteItem( Item deleteItem )
 		{
-		if( removeItemFromList( deleteItem ) == Constants.RESULT_OK )
-			{
-			deleteItem.previousStatusChar = deleteItem.statusChar();
-
-			if( deleteItem.statusChar() != Constants.QUERY_DELETED_CHAR )
-				{
-				if( addItemToList( Constants.QUERY_DELETED_CHAR, deleteItem ) != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to add an item to the deleted list" );
-				}
-			else
-				return startError( 1, null, "The given delete item is already a deleted item" );
-			}
-		else
+		if( removeItemFromList( deleteItem ) != Constants.RESULT_OK )
 			return addError( 1, null, "I failed to remove an item from a list" );
+
+		deleteItem.previousStatusChar = deleteItem.statusChar();
+
+		if( deleteItem.statusChar() == Constants.QUERY_DELETED_CHAR )
+			return startError( 1, null, "The given delete item is already a deleted item" );
+
+		if( addItemToList( Constants.QUERY_DELETED_CHAR, deleteItem ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to add an item to the deleted list" );
 
 		return Constants.RESULT_OK;
 		}
@@ -615,10 +718,10 @@ class List
 			{
 			if( searchItem.hasCurrentCreationSentenceNr() )
 				{
-				if( deleteItem( searchItem ) == Constants.RESULT_OK )
-					searchItem = nextListItem_;
-				else
+				if( deleteItem( searchItem ) != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to delete an active item" );
+
+				searchItem = nextListItem_;
 				}
 			else
 				searchItem = searchItem.nextItem;
@@ -633,35 +736,31 @@ class List
 
 		if( removeItem != null )
 			{
-			if( CommonVariables.nDeletedItems == 0 &&
-			CommonVariables.removeSentenceNr == 0 &&
-			CommonVariables.removeStartItemNr == 0 )
-				{
-				CommonVariables.removeSentenceNr = removeItem.creationSentenceNr();
-				CommonVariables.removeStartItemNr = removeItem.itemNr();
-
-				do	{
-					// Disconnect deleted list from item
-					deletedList_ = deletedList_.nextItem;
-
-					if( removeItem.checkForUsage() == Constants.RESULT_OK )
-						{
-						// Disconnect item from the deleted list
-						removeItem.nextItem = null;
-						removeItem = deletedList_;
-						CommonVariables.nDeletedItems++;
-						}
-					else
-						return addError( 1, null, "I failed to check an item for its usage" );
-					}
-				while( removeItem != null &&
-				// Same sentence number
-				removeItem.creationSentenceNr() == CommonVariables.removeSentenceNr &&
-				// Ascending item number
-				removeItem.itemNr() == CommonVariables.removeStartItemNr + CommonVariables.nDeletedItems );
-				}
-			else
+			if( CommonVariables.nDeletedItems != 0 ||
+			CommonVariables.removeSentenceNr != 0 ||
+			CommonVariables.removeStartItemNr != 0 )
 				return startError( 1, null, "There is already a range of deleted items" );
+
+			CommonVariables.removeSentenceNr = removeItem.creationSentenceNr();
+			CommonVariables.removeStartItemNr = removeItem.itemNr();
+
+			do	{
+				// Disconnect deleted list from item
+				deletedList_ = deletedList_.nextItem;
+
+				if( removeItem.checkForUsage() != Constants.RESULT_OK )
+					addError( 1, null, "I failed to check an item for its usage" );
+
+				// Disconnect item from the deleted list
+				removeItem.nextItem = null;
+				removeItem = deletedList_;
+				CommonVariables.nDeletedItems++;
+				}
+			while( removeItem != null &&
+			// Same sentence number
+			removeItem.creationSentenceNr() == CommonVariables.removeSentenceNr &&
+			// Ascending item number
+			removeItem.itemNr() == CommonVariables.removeStartItemNr + CommonVariables.nDeletedItems );
 			}
 
 		return Constants.RESULT_OK;
@@ -705,16 +804,16 @@ class List
 
 	// Protected cleanup methods
 
-	protected void clearReplacedInfoInList()
+	protected void clearReplacingInfoInList()
 		{
-		listCleanup_.clearReplacedInfo();
+		listCleanup_.clearReplacingInfo();
 		}
 
 	protected void getHighestInUseSentenceNrInList( boolean isIncludingDeletedItems, int highestSentenceNr )
 		{
-		int tempSentenceNr;
+		int tempSentenceNr = listCleanup_.highestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
 
-		if( ( tempSentenceNr = listCleanup_.highestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr ) ) > CommonVariables.highestInUseSentenceNr )
+		if( tempSentenceNr > CommonVariables.highestInUseSentenceNr )
 			CommonVariables.highestInUseSentenceNr = tempSentenceNr;
 		}
 
@@ -763,17 +862,14 @@ class List
 			listQuery_.clearQuerySelections();
 		}
 
-	protected ReferenceResultType compareStrings( String searchString, String sourceString )
+	protected byte displayQueryResultInList( boolean isOnlyDisplayingWords, boolean isOnlyDisplayingWordReferences, boolean isOnlyDisplayingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
 		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
+		if( listQuery_ != null )
+			return listQuery_.displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth );
 
-		if( listQuery_ != null ||
-		// Create supporting module
-		( listQuery_ = new ListQuery( this ) ) != null )
-			return listQuery_.compareStrings( searchString, sourceString );
-
-		referenceResult.result = startError( 1, null, "I failed to create my list query module" );
-		return referenceResult;
+		// In case the first query doesn't include admin lists,
+		// the admin list query module isn't created yet
+		return Constants.RESULT_OK;
 		}
 
 	protected byte itemQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
@@ -840,32 +936,32 @@ class List
 
 	protected byte wordReferenceQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
 		{
-		if( listQuery_ != null ||
+		if( listQuery_ == null &&
 		// Create supporting module
-		( listQuery_ = new ListQuery( this ) ) != null )
-			return listQuery_.wordReferenceQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, ( isSelectingAttachedJustifications && isAssignmentOrSpecificationList() ), ( isSelectingJustificationSpecifications && isAssignmentOrSpecificationList() ), wordReferenceNameString );
+		( listQuery_ = new ListQuery( this ) ) == null )
+			return startError( 1, null, "I failed to create my list query module" );
 
-		return startError( 1, null, "I failed to create my list query module" );
+		return listQuery_.wordReferenceQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, ( isSelectingAttachedJustifications && isAssignmentOrSpecificationList() ), ( isSelectingJustificationSpecifications && isAssignmentOrSpecificationList() ), wordReferenceNameString );
 		}
 
 	protected byte stringQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String queryString )
 		{
-		if( listQuery_ != null ||
+		if( listQuery_ == null &&
 		// Create supporting module
-		( listQuery_ = new ListQuery( this ) ) != null )
-			return listQuery_.stringQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString );
+		( listQuery_ = new ListQuery( this ) ) == null )
+			return startError( 1, null, "I failed to create my list query module" );
 
-		return startError( 1, null, "I failed to create my list query module" );
+		return listQuery_.stringQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString );
 		}
 
-	protected byte showQueryResultInList( boolean isOnlyShowingWords, boolean isOnlyShowingWordReferences, boolean isOnlyShowingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
+	protected StringResultType compareStrings( String searchString, String sourceString )
 		{
-		if( listQuery_ != null )
-			return listQuery_.showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth );
+		if( listQuery_ == null &&
+		// Create supporting module
+		( listQuery_ = new ListQuery( this ) ) == null )
+			return startStringResultError( 1, null, "I failed to create my list query module" );
 
-		// In case the first query doesn't include admin lists,
-		// the admin list query module isn't created yet
-		return Constants.RESULT_OK;
+		return listQuery_.compareStrings( searchString, sourceString );
 		}
 	};
 

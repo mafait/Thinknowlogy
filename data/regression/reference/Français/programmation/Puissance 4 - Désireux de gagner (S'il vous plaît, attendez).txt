@@ -1,0 +1,181 @@
+﻿
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: D.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |m| | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | | | | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | | |
+		| | |m|v| | | |
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: G.
+
+		| | | | | | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | | |
+		| | |m|v| | |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | | |
+		| | |m|v| | |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: G.
+
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | |m|
+		| | |m|v| | |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | |m|
+		| | |m|v|v| |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: B.
+
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | |m|
+		| |m|m|v|v| |m|
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |m| | | |
+		| | |m|v| | |m|
+		| |m|m|v|v|v|m|
+mouvement->	-A-B-C-D-E-F-G-
+
+J'ai sélectionné: C.
+
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | |m|m| | | |
+		| | |m|v| | |m|
+		| |m|m|v|v|v|m|
+mouvement->	-A-B-C-D-E-F-G-
+
+C'est ton virage.
+
+
+		| | | |v| | | |
+		| | | |v| | | |
+		| | | |v| | | |
+		| | |m|m| | | |
+		| | |m|v| | |m|
+		|v|m|m|v|v|v|m|
+mouvement->	-A-B-C-D-E-F-G-
+
+Mon coup gagnant: C.
+
+		| | | |v| | | |
+		| | | |v| | | |
+		| | |m|v| | | |
+		| | |m|m| | | |
+		| | |m|v| | |m|
+		|v|m|m|v|v|v|m|
+mouvement->	-A-B-C-D-E-F-G-
+
+Ce jeu est le mien.
+
+Pour jouer à nouveau, cliquez sur le bouton «Videz votre esprit.», et puis «Lirez le fichier "Français/utilisateur/programmation/Puissance 4".».
+

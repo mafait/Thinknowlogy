@@ -1,7 +1,7 @@
 /*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,41 +27,39 @@
 
 	unsigned int SelectionList::getLowerSentenceNr( unsigned int duplicateSentenceNr )
 		{
-		Item *searchItem = firstActiveItem();
+		Item *searchWordItem = firstActiveItem();
 		unsigned int lowerSentenceNr = NO_SENTENCE_NR;
 
-		while( searchItem != NULL )
+		while( searchWordItem != NULL )
 			{
-			if( searchItem->activeSentenceNr() < duplicateSentenceNr &&
-			searchItem->activeSentenceNr() > lowerSentenceNr )
-				lowerSentenceNr = searchItem->activeSentenceNr();
+			if( searchWordItem->activeSentenceNr() < duplicateSentenceNr &&
+			searchWordItem->activeSentenceNr() > lowerSentenceNr )
+				lowerSentenceNr = searchWordItem->activeSentenceNr();
 
-			searchItem = searchItem->nextItem;
+			searchWordItem = searchWordItem->nextItem;
 			}
 
 		return lowerSentenceNr;
 		}
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	SelectionList::SelectionList( char _listChar, CommonVariables *commonVariables, WordItem *myWordItem )
 		{
 		initializeListVariables( _listChar, "SelectionList", commonVariables, myWordItem );
 		}
 
-	// Protected virtual functions
-
 	SelectionList::~SelectionList()
 		{
-		SelectionItem *deleteItem;
-		SelectionItem *searchItem = firstActiveSelectionItem();
+		SelectionItem *deleteSelectionItem;
+		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
 
-		while( searchItem != NULL )
+		while( searchSelectionItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextSelectionItem();
-			delete deleteItem;
+			deleteSelectionItem = searchSelectionItem;
+			searchSelectionItem = searchSelectionItem->nextSelectionItem();
+			delete deleteSelectionItem;
 			}
 
 		if( firstInactiveItem() != NULL )
@@ -73,36 +71,14 @@
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class SelectionList has replaced items." );
 
-		searchItem = (SelectionItem *)firstDeletedItem();
+		searchSelectionItem = (SelectionItem *)firstDeletedItem();
 
-		while( searchItem != NULL )
+		while( searchSelectionItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextSelectionItem();
-			delete deleteItem;
+			deleteSelectionItem = searchSelectionItem;
+			searchSelectionItem = searchSelectionItem->nextSelectionItem();
+			delete deleteSelectionItem;
 			}
-		}
-
-
-	// Protected virtual functions
-
-	ReferenceResultType SelectionList::findWordReference( WordItem *referenceWordItem )
-		{
-		ReferenceResultType referenceResult;
-		SelectionItem *searchItem = firstActiveSelectionItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findWordReference";
-
-		while( commonVariables()->result == RESULT_OK &&
-		searchItem != NULL &&
-		!referenceResult.hasFoundWordReference )
-			{
-			if( ( referenceResult = searchItem->findWordReference( referenceWordItem ) ).result == RESULT_OK )
-				searchItem = searchItem->nextSelectionItem();
-			else
-				addError( functionNameString, NULL, "I failed to check for a reference word item in an active selection item" );
-			}
-
-		return referenceResult;
 		}
 
 
@@ -110,77 +86,73 @@
 
 	void SelectionList::clearConditionChecksForSolving( unsigned short selectionLevel, unsigned int conditionSentenceNr )
 		{
-		SelectionItem *searchItem = firstActiveSelectionItem();
+		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
 
-		while( searchItem != NULL )
+		while( searchSelectionItem != NULL )
 			{
-			if( searchItem->selectionLevel() < selectionLevel &&
-			searchItem->activeSentenceNr() == conditionSentenceNr )
-				searchItem->isConditionCheckedForSolving = false;
+			if( searchSelectionItem->selectionLevel() < selectionLevel &&
+			searchSelectionItem->activeSentenceNr() == conditionSentenceNr )
+				searchSelectionItem->isConditionCheckedForSolving = false;
 
-			searchItem = searchItem->nextSelectionItem();
+			searchSelectionItem = searchSelectionItem->nextSelectionItem();
 			}
 		}
 
 	ResultType SelectionList::checkSelectionItemForUsage( SelectionItem *unusedSelectionItem )
 		{
-		SelectionItem *searchItem = firstActiveSelectionItem();
+		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkSelectionItemForUsage";
 
-		if( unusedSelectionItem != NULL )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->nextExecutionItem() == unusedSelectionItem )
-					return startError( functionNameString, NULL, "The reference selection item is still in use" );
-
-				searchItem = searchItem->nextSelectionItem();
-				}
-			}
-		else
+		if( unusedSelectionItem == NULL )
 			return startError( functionNameString, NULL, "The given unused justification item is undefined" );
+
+		while( searchSelectionItem != NULL )
+			{
+			if( searchSelectionItem->nextExecutionItem() == unusedSelectionItem )
+				return startError( functionNameString, NULL, "The reference selection item is still in use" );
+
+			searchSelectionItem = searchSelectionItem->nextSelectionItem();
+			}
 
 		return RESULT_OK;
 		}
 
 	ResultType SelectionList::checkWordItemForUsage( WordItem *unusedWordItem )
 		{
-		SelectionItem *searchItem = firstActiveSelectionItem();
+		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
 
-		if( unusedWordItem != NULL )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->generalizationWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, "The generalization word item is still in use" );
-
-				if( searchItem->specificationWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, "The specification word item is still in use" );
-
-				searchItem = searchItem->nextSelectionItem();
-				}
-			}
-		else
+		if( unusedWordItem == NULL )
 			return startError( functionNameString, NULL, "The given unused word item is undefined" );
+
+		while( searchSelectionItem != NULL )
+			{
+			if( searchSelectionItem->generalizationWordItem() == unusedWordItem )
+				return startError( functionNameString, NULL, "The generalization word item is still in use" );
+
+			if( searchSelectionItem->specificationWordItem() == unusedWordItem )
+				return startError( functionNameString, NULL, "The specification word item is still in use" );
+
+			searchSelectionItem = searchSelectionItem->nextSelectionItem();
+			}
 
 		return RESULT_OK;
 		}
 /*
 	ResultType SelectionList::storeChangesInFutureDatabase()
 		{
-		SelectionItem *searchItem = firstActiveSelectionItem();
+		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
-		while( searchItem != NULL )
+		while( searchSelectionItem != NULL )
 			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
+			if( searchSelectionItem->hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem->storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != RESULT_OK )
+				if( searchSelectionItem->storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != RESULT_OK )
 					return addError( functionNameString, NULL, "I failed to store a selection item in the database" );
 				}
 
-			searchItem = searchItem->nextSelectionItem();
+			searchSelectionItem = searchSelectionItem->nextSelectionItem();
 			}
 
 		return RESULT_OK;
@@ -197,14 +169,12 @@
 			if( ( selectionResult.duplicateConditionSentenceNr = getLowerSentenceNr( selectionResult.duplicateConditionSentenceNr ) ) > NO_SENTENCE_NR )
 				{
 				if( ( selectionResult = checkDuplicateSelectionPart( selectionResult.duplicateConditionSentenceNr ) ).result != RESULT_OK )
-					addError( functionNameString, NULL, "I failed to check if the alternative selection part is duplicate" );
+					return addSelectionResultError( functionNameString, NULL, "I failed to check if the alternative selection part is duplicate" );
 				}
 			}
-		while( commonVariables()->result == RESULT_OK &&
-		!selectionResult.hasFoundDuplicateSelection &&
+		while( !selectionResult.hasFoundDuplicateSelection &&
 		selectionResult.duplicateConditionSentenceNr > NO_SENTENCE_NR );
 
-		selectionResult.result = commonVariables()->result;
 		return selectionResult;
 		}
 
@@ -212,107 +182,90 @@
 		{
 		SelectionResultType selectionResult;
 		SelectionItem *currentSelectionItem = NULL;
-		SelectionItem *searchItem = firstActiveSelectionItem();
+		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkDuplicateSelectionPart";
 
-		if( duplicateConditionSentenceNr > NO_SENTENCE_NR )
+		if( duplicateConditionSentenceNr <= NO_SENTENCE_NR )
+			return startSelectionResultError( functionNameString, NULL, "The given duplicate sentence number is undefined" );
+
+		if( duplicateConditionSentenceNr >= commonVariables()->currentSentenceNr )
+			return startSelectionResultError( functionNameString, NULL, "The given duplicate sentence number is equal or higher than the current sentence number" );
+
+		selectionResult.hasFoundDuplicateSelection = true;
+
+		while( searchSelectionItem != NULL &&
+		searchSelectionItem->activeSentenceNr() >= duplicateConditionSentenceNr )
 			{
-			if( duplicateConditionSentenceNr < commonVariables()->currentSentenceNr )
+			if( searchSelectionItem->activeSentenceNr() == duplicateConditionSentenceNr )
 				{
-				selectionResult.hasFoundDuplicateSelection = true;
+				currentSelectionItem = firstActiveSelectionItem();
 
-				while( searchItem != NULL &&
-				searchItem->activeSentenceNr() >= duplicateConditionSentenceNr )
-					{
-					if( searchItem->activeSentenceNr() == duplicateConditionSentenceNr )
+				do	{
+					if( currentSelectionItem->isAction() == searchSelectionItem->isAction() &&
+					currentSelectionItem->isAssignedOrClear() == searchSelectionItem->isAssignedOrClear() &&
+					currentSelectionItem->isNegative() == searchSelectionItem->isNegative() &&
+					currentSelectionItem->isNewStart() == searchSelectionItem->isNewStart() &&
+					currentSelectionItem->selectionLevel() == searchSelectionItem->selectionLevel() &&
+					currentSelectionItem->generalizationWordItem() == searchSelectionItem->generalizationWordItem() &&
+					currentSelectionItem->specificationWordItem() == searchSelectionItem->specificationWordItem() )
 						{
-						currentSelectionItem = firstActiveSelectionItem();
-
-						do	{
-							if( currentSelectionItem->isAction() == searchItem->isAction() &&
-							currentSelectionItem->isAssignedOrClear() == searchItem->isAssignedOrClear() &&
-							currentSelectionItem->isNegative() == searchItem->isNegative() &&
-							currentSelectionItem->isNewStart() == searchItem->isNewStart() &&
-							currentSelectionItem->selectionLevel() == searchItem->selectionLevel() &&
-							currentSelectionItem->generalizationWordItem() == searchItem->generalizationWordItem() &&
-							currentSelectionItem->specificationWordItem() == searchItem->specificationWordItem() )
-								{
-								if( currentSelectionItem->specificationString() != NULL &&
-								searchItem->specificationString() != NULL )
-									selectionResult.hasFoundDuplicateSelection = ( strcmp( currentSelectionItem->specificationString(), searchItem->specificationString() ) == 0 );
-								else
-									{
-									if( currentSelectionItem->specificationString() != NULL ||
-									searchItem->specificationString() != NULL )
-										selectionResult.hasFoundDuplicateSelection = false;
-									}
-
-								if( selectionResult.hasFoundDuplicateSelection )
-									{
-									currentSelectionItem = ( currentSelectionItem->nextSelectionItem() != NULL &&
-															currentSelectionItem->nextSelectionItem()->hasCurrentCreationSentenceNr() ? currentSelectionItem->nextSelectionItem() : NULL );
-
-									searchItem = ( searchItem->nextSelectionItem() != NULL &&
-												searchItem->nextSelectionItem()->activeSentenceNr() == duplicateConditionSentenceNr ? searchItem->nextSelectionItem() : NULL );
-									}
-								else
-									searchItem = NULL;
-								}
-							else
-								{
+						if( currentSelectionItem->specificationString() != NULL &&
+						searchSelectionItem->specificationString() != NULL )
+							selectionResult.hasFoundDuplicateSelection = ( strcmp( currentSelectionItem->specificationString(), searchSelectionItem->specificationString() ) == 0 );
+						else
+							{
+							if( currentSelectionItem->specificationString() != NULL ||
+							searchSelectionItem->specificationString() != NULL )
 								selectionResult.hasFoundDuplicateSelection = false;
-								searchItem = NULL;
-								}
 							}
-						while( selectionResult.hasFoundDuplicateSelection &&
-						currentSelectionItem != NULL &&
-						searchItem != NULL );
+
+						if( selectionResult.hasFoundDuplicateSelection )
+							{
+							currentSelectionItem = ( currentSelectionItem->nextSelectionItem() != NULL &&
+													currentSelectionItem->nextSelectionItem()->hasCurrentCreationSentenceNr() ? currentSelectionItem->nextSelectionItem() : NULL );
+
+							searchSelectionItem = ( searchSelectionItem->nextSelectionItem() != NULL &&
+													searchSelectionItem->nextSelectionItem()->activeSentenceNr() == duplicateConditionSentenceNr ? searchSelectionItem->nextSelectionItem() : NULL );
+							}
+						else
+							searchSelectionItem = NULL;
 						}
 					else
-						searchItem = searchItem->nextSelectionItem();
+						{
+						selectionResult.hasFoundDuplicateSelection = false;
+						searchSelectionItem = NULL;
+						}
 					}
+				while( selectionResult.hasFoundDuplicateSelection &&
+				currentSelectionItem != NULL &&
+				searchSelectionItem != NULL );
 				}
 			else
-				startError( functionNameString, NULL, "The given duplicate sentence number is equal or higher than the current sentence number" );
+				searchSelectionItem = searchSelectionItem->nextSelectionItem();
 			}
-		else
-			startError( functionNameString, NULL, "The given duplicate sentence number is undefined" );
 
-		selectionResult.result = commonVariables()->result;
 		return selectionResult;
 		}
 
-	SelectionResultType SelectionList::createSelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeParameter, unsigned short prepositionParameter, unsigned short specificationWordParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
+	SelectionResultType SelectionList::createSelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
 		{
 		SelectionResultType selectionResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createSelectionItem";
 
-		if( generalizationWordTypeNr > WORD_TYPE_UNDEFINED &&
-		generalizationWordTypeNr < NUMBER_OF_WORD_TYPES )
-			{
-			if( specificationWordTypeNr > WORD_TYPE_UNDEFINED &&
-			specificationWordTypeNr < NUMBER_OF_WORD_TYPES )
-				{
-				if( commonVariables()->currentItemNr < MAX_ITEM_NR )
-					{
-					if( ( selectionResult.lastCreatedSelectionItem = new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, commonVariables(), this, myWordItem() ) ) != NULL )
-						{
-						if( addItemToList( QUERY_ACTIVE_CHAR, selectionResult.lastCreatedSelectionItem ) != RESULT_OK )
-							addError( functionNameString, NULL, "I failed to add an active selection item" );
-						}
-					else
-						startError( functionNameString, NULL, "I failed to create a selection item" );
-					}
-				else
-					startError( functionNameString, NULL, "The current item number is undefined" );
-				}
-			else
-				startError( functionNameString, NULL, "The given specification word type number is undefined or out of bounds" );
-			}
-		else
-			startError( functionNameString, NULL, "The given generalization word type number is undefined or out of bounds" );
+		if( generalizationWordTypeNr <= NO_WORD_TYPE_NR ||
+		generalizationWordTypeNr >= NUMBER_OF_WORD_TYPES )
+			return startSelectionResultError( functionNameString, NULL, "The given generalization word type number is undefined or out of bounds" );
 
-		selectionResult.result = commonVariables()->result;
+		if( specificationWordTypeNr <= NO_WORD_TYPE_NR &&
+		specificationWordTypeNr >= NUMBER_OF_WORD_TYPES )
+			return startSelectionResultError( functionNameString, NULL, "The given specification word type number is undefined or out of bounds" );
+
+		if( ( selectionResult.lastCreatedSelectionItem = new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, commonVariables(), this, myWordItem() ) ) == NULL )
+			return startSelectionResultError( functionNameString, NULL, "I failed to create a selection item" );
+
+		if( addItemToList( QUERY_ACTIVE_CHAR, selectionResult.lastCreatedSelectionItem ) != RESULT_OK )
+			return addSelectionResultError( functionNameString, NULL, "I failed to add an active selection item" );
+
 		return selectionResult;
 		}
 
@@ -324,28 +277,27 @@
 
 		if( ( firstSelectionItem = firstActiveSelectionItem() ) != NULL )
 			{
-			if( firstSelectionItem->findNextExecutionSelectionItem( true, solveWordItem ) == RESULT_OK )
-				selectionResult.firstExecutionItem = firstSelectionItem->nextExecutionItem();
-			else
-				addError( functionNameString, NULL, "I failed to find the first execution selection item" );
+			if( firstSelectionItem->findNextExecutionSelectionItem( true, solveWordItem ) != RESULT_OK )
+				return addSelectionResultError( functionNameString, NULL, "I failed to find the first execution selection item" );
+
+			selectionResult.firstExecutionItem = firstSelectionItem->nextExecutionItem();
 			}
 
-		selectionResult.result = commonVariables()->result;
 		return selectionResult;
 		}
 
 	SelectionItem *SelectionList::executionStartEntry( unsigned short executionLevel, unsigned int executionSentenceNr )
 		{
-		SelectionItem *searchItem = firstActiveSelectionItem();
+		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
 
-		while( searchItem != NULL &&
-		searchItem->activeSentenceNr() >= executionSentenceNr )
+		while( searchSelectionItem != NULL &&
+		searchSelectionItem->activeSentenceNr() >= executionSentenceNr )
 			{
-			if( searchItem->activeSentenceNr() == executionSentenceNr &&
-			searchItem->selectionLevel() == executionLevel )
-				return searchItem;
+			if( searchSelectionItem->activeSentenceNr() == executionSentenceNr &&
+			searchSelectionItem->selectionLevel() == executionLevel )
+				return searchSelectionItem;
 
-			searchItem = searchItem->nextSelectionItem();
+			searchSelectionItem = searchSelectionItem->nextSelectionItem();
 			}
 
 		return NULL;
@@ -358,15 +310,15 @@
 
 	SelectionItem *SelectionList::firstConditionSelectionItem( unsigned int conditionSentenceNr )
 		{
-		SelectionItem *searchItem = firstActiveSelectionItem();
+		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
 
-		while( searchItem != NULL &&
-		searchItem->activeSentenceNr() >= conditionSentenceNr )
+		while( searchSelectionItem != NULL &&
+		searchSelectionItem->activeSentenceNr() >= conditionSentenceNr )
 			{
-			if( searchItem->activeSentenceNr() == conditionSentenceNr )
-				return searchItem;
+			if( searchSelectionItem->activeSentenceNr() == conditionSentenceNr )
+				return searchSelectionItem;
 
-			searchItem = searchItem->nextSelectionItem();
+			searchSelectionItem = searchSelectionItem->nextSelectionItem();
 			}
 
 		return NULL;

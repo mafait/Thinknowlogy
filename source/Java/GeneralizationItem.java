@@ -3,7 +3,7 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,7 +25,7 @@
 
 class GeneralizationItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private boolean isLanguageWord_;
 	private boolean isRelation_;
@@ -37,13 +37,13 @@ class GeneralizationItem extends Item
 	private WordItem generalizationWordItem_;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected GeneralizationItem( boolean isLanguageWord, boolean isRelation, short languageNr, short specificationWordTypeNr, short generalizationWordTypeNr, WordItem generalizationWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isLanguageWord_ = isLanguageWord;
 		isRelation_ = isRelation;
@@ -62,7 +62,7 @@ class GeneralizationItem extends Item
 
 	// Protected virtual methods
 
-	protected void showWordReferences( boolean isReturnQueryToPosition )
+	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		String wordString;
 
@@ -75,7 +75,7 @@ class GeneralizationItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
@@ -84,30 +84,30 @@ class GeneralizationItem extends Item
 			}
 		}
 
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( generalizationWordItem_ == null ? false :
 					( querySentenceNr == Constants.NO_SENTENCE_NR ? true : generalizationWordItem_.creationSentenceNr() == querySentenceNr ) &&
 					( queryItemNr == Constants.NO_ITEM_NR ? true : generalizationWordItem_.itemNr() == queryItemNr ) );
 		}
 
-	protected boolean hasFoundWordType( short queryWordTypeNr )
+	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( specificationWordTypeNr_ == queryWordTypeNr ||
 				generalizationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	protected ReferenceResultType findMatchingWordReferenceString( String queryString )
+	protected StringResultType findMatchingWordReferenceString( String queryString )
 		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
+		StringResultType stringResult = new StringResultType();
 
 		if( generalizationWordItem_ != null )
 			{
-			if( ( referenceResult = generalizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, "I failed to find a matching word reference string for the generalization word" );
+			if( ( stringResult = generalizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, "I failed to find a matching word reference string for the generalization word" );
 			}
 
-		return referenceResult;
+		return stringResult;
 		}
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )
@@ -167,28 +167,23 @@ class GeneralizationItem extends Item
 		return languageNr_;
 		}
 
-	protected WordItem generalizationWordItem()
-		{
-		return generalizationWordItem_;
-		}
-
 	protected GeneralizationItem getGeneralizationItem( boolean isIncludingThisItem, boolean isOnlySelectingCurrentLanguage, boolean isOnlySelectingNoun, boolean isRelation )
 		{
 		short currentLanguageNr = CommonVariables.currentLanguageNr;
-		GeneralizationItem searchItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
+		GeneralizationItem searchGeneralizationItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
 
-		while( searchItem != null )
+		while( searchGeneralizationItem != null )
 			{
-			if( searchItem.isRelation_ == isRelation &&
+			if( searchGeneralizationItem.isRelation_ == isRelation &&
 
 			( !isOnlySelectingCurrentLanguage ||
-			searchItem.languageNr_ == currentLanguageNr ) &&
+			searchGeneralizationItem.languageNr_ == currentLanguageNr ) &&
 
 			( !isOnlySelectingNoun ||
-			isSingularOrPluralNoun( searchItem.generalizationWordTypeNr_ ) ) )
-				return searchItem;
+			isNounWordType( searchGeneralizationItem.generalizationWordTypeNr_ ) ) )
+				return searchGeneralizationItem;
 
-			searchItem = searchItem.nextGeneralizationItem();
+			searchGeneralizationItem = searchGeneralizationItem.nextGeneralizationItem();
 			}
 
 		return null;
@@ -212,6 +207,11 @@ class GeneralizationItem extends Item
 	protected GeneralizationItem nextRelationGeneralizationItem()
 		{
 		return getGeneralizationItem( false, false, false, true );
+		}
+
+	protected WordItem generalizationWordItem()
+		{
+		return generalizationWordItem_;
 		}
 	};
 

@@ -1,0 +1,106 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia.
+< Juan es un hombre.
+< Juan no es una mujer.
+< Juan no es una madre.
+< Pablo tiene 2 padres, llamados Juan y Ana.
+< Pablo tiene un padre, llamado Juan.
+< Pablo tiene una madre, llamada Ana.
+< José tiene 2 padres, llamados Juan y Ana.
+< José tiene un padre, llamado Juan.
+< José tiene una madre, llamada Ana.
+< Luisa tiene 2 padres, llamados Juan y Ana.
+< Luisa tiene un padre, llamado Juan.
+< Luisa tiene una madre, llamada Ana.
+< Ana es una mujer.
+< Ana no es un hombre.
+< Ana es parte de una familia.
+< Ana no es un padre.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona.
+< Juan tiene posiblemente una hija, llamada Luisa.
+< Pablo es posiblemente una persona.
+< Pablo es probablemente parte de una familia.
+< José es posiblemente una persona.
+< José es probablemente parte de una familia.
+< Luisa es posiblemente hija de Juan y Ana.
+< Luisa es puede-ser una persona.
+< Luisa es posiblemente parte de una familia.
+< Luisa no es posiblemente un niño y un hombre.
+< Luisa no es posiblemente un hijo.
+< Ana es probablemente una persona.
+< Ana tiene posiblemente una hija, llamada Luisa.
+* 
+* Mis preguntas:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+< ¿Es Pablo un hijo o una hija?
+< ¿Es José una niña, una mujer, un niño o un hombre?
+< ¿Es José un hijo o una hija?
+< ¿Es Luisa una niña o una mujer?
+< 
+* Sé.
+* 
+* 
+* Mis conclusiones son confirmadas:
+< José tiene 2 padres, llamados Juan y Ana.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< José tiene una madre, llamada Ana.
+< 
+* 
+* Mis preguntas que son contestadas:
+< ¿Es Pablo un hijo o una hija?
+* 
+* Mis suposiciones que no son ocultos más:
+< Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
+< Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
+* 
+* Mis suposiciones que se concluyen:
+< Pablo es parte de una familia.
+* 
+* Mis preguntas ajustadas:
+< ¿Es Pablo un niño o un hombre?
+* 
+* Mis suposiciones que se ajustan:
+< Pablo es probablemente una persona.
+* 
+* Mis conclusiones:
+< Pablo no es una hija.
+< Pablo no es una niña y una mujer.
+< Juan tiene un hijo, llamado Pablo.
+< Ana tiene un hijo, llamado Pablo.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Pablo tiene un padre, llamado Juan.
+< 
+* Sé.
+* 
+* Sé.
+* 

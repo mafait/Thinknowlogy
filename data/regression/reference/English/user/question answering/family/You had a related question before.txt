@@ -1,0 +1,52 @@
+﻿* 
+* My conclusions:
+< Parents and children are part of every family.
+< 
+* 
+* My assumptions:
+< A father is probably a person.
+< A parent is probably a person.
+< 
+* 
+* My conclusions:
+< Every parent is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< 
+* 
+* My assumptions:
+< A son is probably a person.
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My assumptions:
+< John is probably a father.
+< John is probably a man.
+< John is possibly a person.
+< John is maybe not a woman.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* You had a related question before:
+< Is John the father of Paul?
+* 
+* I only know:
+< John is probably a father.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* You had a related question before:
+< Is John the father of Joe?
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 

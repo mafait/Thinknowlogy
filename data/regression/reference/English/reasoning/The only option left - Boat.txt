@@ -2,3 +2,9 @@
 * My conclusions:
 < The boat is a rowing boat.
 < 
+* 
+* My conclusions:
+< The boat is a rowing boat. Because:
+<	- A boat is a rowing boat, a sailboat or a motorboat.
+<	- The boat is not a sailboat and not a motorboat.
+< 

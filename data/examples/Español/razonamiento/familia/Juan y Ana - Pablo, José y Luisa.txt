@@ -1,6 +1,23 @@
-﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
 Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Ana.
+Mostrar el informe de justificación sobre Pablo.
+Mostrar el informe de justificación sobre José.
+Mostrar el informe de justificación sobre Luisa.
 Pablo es un hijo.
 José es un hijo.
 Luisa es una hija.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Ana.
+Mostrar el informe de justificación sobre Pablo.
+Mostrar el informe de justificación sobre José.
+Mostrar el informe de justificación sobre Luisa.
+# Extra checks
+Paul es un niño.
+Mostrar el informe de justificación sobre Pablo.
+Joe es un hombre.
+Mostrar el informe de justificación sobre José.
+Laura es una niña.
+Mostrar el informe de justificación sobre Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

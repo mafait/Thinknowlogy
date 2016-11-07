@@ -1,0 +1,160 @@
+﻿
+The number of discs is odd. So, the rule order is: Move first from start to goal, then from start to swap.
+
+Moved a disc from start to goal:
+* start pole:	E, D, C, B.
+* swap pole:	.
+* goal pole:	A.
+
+Moved a disc from start to swap:
+* start pole:	E, D, C.
+* swap pole:	B.
+* goal pole:	A.
+
+Moved a disc from goal to swap:
+* start pole:	E, D, C.
+* swap pole:	B, A.
+* goal pole:	.
+
+Moved a disc from start to goal:
+* start pole:	E, D.
+* swap pole:	B, A.
+* goal pole:	C.
+
+Moved a disc from swap to start:
+* start pole:	E, D, A.
+* swap pole:	B.
+* goal pole:	C.
+
+Moved a disc from swap to goal:
+* start pole:	E, D, A.
+* swap pole:	.
+* goal pole:	C, B.
+
+Moved a disc from start to goal:
+* start pole:	E, D.
+* swap pole:	.
+* goal pole:	C, B, A.
+
+Moved a disc from start to swap:
+* start pole:	E.
+* swap pole:	D.
+* goal pole:	C, B, A.
+
+Moved a disc from goal to swap:
+* start pole:	E.
+* swap pole:	D, A.
+* goal pole:	C, B.
+
+Moved a disc from goal to start:
+* start pole:	E, B.
+* swap pole:	D, A.
+* goal pole:	C.
+
+Moved a disc from swap to start:
+* start pole:	E, B, A.
+* swap pole:	D.
+* goal pole:	C.
+
+Moved a disc from goal to swap:
+* start pole:	E, B, A.
+* swap pole:	D, C.
+* goal pole:	.
+
+Moved a disc from start to goal:
+* start pole:	E, B.
+* swap pole:	D, C.
+* goal pole:	A.
+
+Moved a disc from start to swap:
+* start pole:	E.
+* swap pole:	D, C, B.
+* goal pole:	A.
+
+Moved a disc from goal to swap:
+* start pole:	E.
+* swap pole:	D, C, B, A.
+* goal pole:	.
+
+Moved a disc from start to goal:
+* start pole:	.
+* swap pole:	D, C, B, A.
+* goal pole:	E.
+
+Moved a disc from swap to start:
+* start pole:	A.
+* swap pole:	D, C, B.
+* goal pole:	E.
+
+Moved a disc from swap to goal:
+* start pole:	A.
+* swap pole:	D, C.
+* goal pole:	E, B.
+
+Moved a disc from start to goal:
+* start pole:	.
+* swap pole:	D, C.
+* goal pole:	E, B, A.
+
+Moved a disc from swap to start:
+* start pole:	C.
+* swap pole:	D.
+* goal pole:	E, B, A.
+
+Moved a disc from goal to swap:
+* start pole:	C.
+* swap pole:	D, A.
+* goal pole:	E, B.
+
+Moved a disc from goal to start:
+* start pole:	C, B.
+* swap pole:	D, A.
+* goal pole:	E.
+
+Moved a disc from swap to start:
+* start pole:	C, B, A.
+* swap pole:	D.
+* goal pole:	E.
+
+Moved a disc from swap to goal:
+* start pole:	C, B, A.
+* swap pole:	.
+* goal pole:	E, D.
+
+Moved a disc from start to goal:
+* start pole:	C, B.
+* swap pole:	.
+* goal pole:	E, D, A.
+
+Moved a disc from start to swap:
+* start pole:	C.
+* swap pole:	B.
+* goal pole:	E, D, A.
+
+Moved a disc from goal to swap:
+* start pole:	C.
+* swap pole:	B, A.
+* goal pole:	E, D.
+
+Moved a disc from start to goal:
+* start pole:	.
+* swap pole:	B, A.
+* goal pole:	E, D, C.
+
+Moved a disc from swap to start:
+* start pole:	A.
+* swap pole:	B.
+* goal pole:	E, D, C.
+
+Moved a disc from swap to goal:
+* start pole:	A.
+* swap pole:	.
+* goal pole:	E, D, C, B.
+
+Moved a disc from start to goal:
+* start pole:	.
+* swap pole:	.
+* goal pole:	E, D, C, B, A.
+
+Done.
+To start the puzzle again, click button «Clear your mind.» and then «Read the file "English/user/programming/tower of Hanoi".»

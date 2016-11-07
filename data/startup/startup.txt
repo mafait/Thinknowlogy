@@ -4,6 +4,9 @@
 ~Français
 ~Nederlands
 
+# The grammar rules have been read. Now it's possible
+# to utilize those rules, expressed as natural language
+
 # Read the available users in available languages
 Read the file "data/startup/English/users".
 Leer el archivo "data/startup/Español/usuarios".

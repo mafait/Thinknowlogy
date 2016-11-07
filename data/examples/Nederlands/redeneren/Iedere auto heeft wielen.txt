@@ -1,0 +1,4 @@
+﻿Iedere auto heeft wielen.
+#Toon de verantwoordingsrapportage over auto's.
+Toon de verantwoordingsrapportage over auto.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

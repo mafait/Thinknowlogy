@@ -1,0 +1,15 @@
+﻿Cada padre es un padre.
+Una madre es probablemente un padre.
+Mostrar el informe de justificación sobre los padres.
+#Juan es un padre.
+#Mostrar el informe de justificación sobre Juan.
+#Ana es una madre.
+#Mostrar el informe de justificación sobre Ana.
+Un niño es posiblemente un hijo.
+Una niña es probablemente un hijo.
+Mostrar el informe de justificación para hijos.
+Pablo es un niño.
+Mostrar el informe de justificación sobre Pablo.
+Luisa es probablemente una niña.
+Mostrar el informe de justificación sobre Luisa.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -1,5 +1,12 @@
-﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
-Olivier est le père et Amélie est la mère de Laurent, Julien et Lorraine.
-Laurent a un parent, appelé Olivier.
-Laurent a un parent, appelée Amélie.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Pascal.
+Pascal a un parent, appelé Olivier.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Pascal a un parent, appelée Amélie.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

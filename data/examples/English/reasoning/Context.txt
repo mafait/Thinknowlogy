@@ -1,0 +1,5 @@
+﻿# A context-sensitive definition.
+John is a baker.
+John is the father of Paul, Joe and Laura.
+The father of Paul, Joe and Laura is not a baker.
+# To continue, click button «Clear your mind.» or «Restart.».

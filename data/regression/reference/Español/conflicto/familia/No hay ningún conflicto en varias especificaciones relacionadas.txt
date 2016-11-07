@@ -1,0 +1,75 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia.
+< Juan es un hombre.
+< Juan no es una mujer.
+< Juan no es una niña, una mujer y un niño.
+< Juan no es una madre y una hija.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona.
+< Juan tiene probablemente un hijo y un padre.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia. Porque:
+<	- Juan es un padre.
+<	- Padres son parte de cada familia.
+< Juan es un hombre. Porque:
+<	- Juan es un padre.
+<	- Cada padre es un hombre.
+< Juan no es una mujer. Porque:
+<	- Juan es un padre.
+<	- Cada padre es una mujer o un hombre.
+<	- Juan es un hombre.
+< Juan no es una niña, una mujer y un niño. Porque:
+<	- Juan es un hijo.
+<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+<	- Juan es un hombre.
+< Juan no es una madre y una hija. Porque:
+<	- Juan es un hijo.
+<	- Cada hijo es un hijo o una hija.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre es un padre o una madre.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona. Porque:
+<	- Juan es un padre.
+<	- Un padre es probablemente una persona.
+* 	y:
+<	- Cada persona es un hombre o una mujer.
+<	- Juan es un hombre.
+* 	y:
+<	- Juan es un hijo.
+<	- Un hijo es probablemente una persona.
+< Juan tiene probablemente un hijo y un padre. Porque:
+<	- Juan es un hijo.
+<	- Cada familia tiene padres y hijos.
+* 	y:
+<	- Juan es un padre.
+<	- Cada familia tiene padres y hijos.
+< 

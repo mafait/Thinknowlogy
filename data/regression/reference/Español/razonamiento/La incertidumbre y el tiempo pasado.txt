@@ -1,0 +1,55 @@
+﻿* 
+* Mis suposiciones:
+< Alfonso no tiene posiblemente un padre nunca-más.
+< Alfonso tenido posiblemente un padre, llamado Jorge.
+< 
+* 
+* Mis suposiciones:
+< Alfonso no tiene posiblemente un padre nunca-más. Porque:
+<	- Alfonso tenido posiblemente un padre, llamado Jorge.
+< Alfonso tenido posiblemente un padre, llamado Jorge. Porque:
+<	- Jorge era posiblemente el padre de Alfonso.
+< 
+* 
+* No estoy seguro, pero:
+< Santiago era posiblemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Ronaldo era probablemente un padre.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Mis suposiciones:
+< Ronaldo era probablemente un parent.
+< Jorge era posiblemente un parent.
+< Santiago era posiblemente un parent.
+< Juan era posiblemente un parent.
+< 
+* 
+* Mis suposiciones:
+< Juan era posiblemente un parent. Porque:
+<	- Juan es posiblemente un padre.
+<	- Cada padre era un parent.
+< 
+* 
+* Mis suposiciones:
+< Santiago era posiblemente un parent. Porque:
+<	- Santiago era posiblemente un padre.
+<	- Cada padre era un parent.
+< 
+* 
+* Mis suposiciones:
+< Jorge era posiblemente un parent. Porque:
+<	- Jorge era posiblemente el padre de Alfonso.
+<	- Cada padre era un parent.
+< 
+* 
+* Mis suposiciones:
+< Ronaldo era probablemente un parent. Porque:
+<	- Ronaldo era probablemente un padre.
+<	- Cada padre era un parent.
+< Ronaldo era probablemente un padre. Porque:
+<	- ¿Era Ronaldo el padre de Pablo?
+< 

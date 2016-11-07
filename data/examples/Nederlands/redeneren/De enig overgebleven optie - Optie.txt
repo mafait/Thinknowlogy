@@ -8,4 +8,5 @@ De optie is niet 5.
 De optie is niet 7.
 De optie is niet 8.
 De optie is niet 9.
+Toon de verantwoordingsrapportage over optie.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

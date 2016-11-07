@@ -1,6 +1,7 @@
-/*	Class:			GrammarResultType
- *	Purpose:		To return justification variables of a method
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		GrammarResultType
+ *	Purpose:	To return grammar variables,
+ *				as the result of a method call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,9 +29,6 @@ class GrammarResultType
 
 	protected boolean hasFoundWordEnding;
 
-	protected short guideByGrammarSelectionNr;
-	protected short guideByGrammarWordOrderNr;
-
 	protected int singularNounWordStringLength;
 
 	protected GrammarItem createdGrammarItem;
@@ -38,16 +36,13 @@ class GrammarResultType
 
 	protected String singularNounWordString;
 
-	// Constructor / deconstructor
+	// Constructor
 
 	GrammarResultType()
 		{
 		result = Constants.RESULT_OK;
 
 		hasFoundWordEnding = false;
-
-		guideByGrammarSelectionNr = 0;
-		guideByGrammarWordOrderNr = Constants.NO_ORDER_NR;
 
 		singularNounWordStringLength = 0;
 

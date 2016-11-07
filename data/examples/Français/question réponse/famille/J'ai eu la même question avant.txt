@@ -1,6 +1,0 @@
-﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
-Olivier est le père et Amélie est la mère de Laurent, Julien et Lorraine.
-Est Laurent une jeune-fille, une femme, un garçon, ou un homme?
-Est Julien un fils ou une fille?
-Est Lorraine une jeune-fille ou une femme?
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

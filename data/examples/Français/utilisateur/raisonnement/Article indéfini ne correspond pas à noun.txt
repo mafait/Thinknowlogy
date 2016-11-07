@@ -1,0 +1,9 @@
+﻿Un cheval est correct.
+Une cheval est incorrect.
+Une article est incorrect.
+Un article est correct.
+Un baleine est incorrecte.
+Une baleine est correcte.
+Une maison est correcte.
+Un maison est incorrecte.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

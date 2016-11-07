@@ -1,7 +1,7 @@
 /*	Class:			WordCleanup
  *	Supports class:	WordItem
  *	Purpose:		To cleanup obsolete items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,13 +23,13 @@
 
 class WordCleanup
 	{
-	// Private constructible variables
+	// Private constructed variables
 
 	private WordItem myWordItem_;
 	private String moduleNameString_;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected WordCleanup( WordItem myWordItem )
 		{
@@ -56,11 +56,11 @@ class WordCleanup
 
 	// Protected methods
 
-	protected void clearReplacedInfo()
+	protected void clearReplacingInfo()
 		{
 		List currentWordList;
 
-		for( short wordListNr : Constants.WordLists )
+		for( short wordListNr = 0; wordListNr < Constants.NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
 			currentWordList = myWordItem_.wordListArray[wordListNr];
 
@@ -70,7 +70,7 @@ class WordCleanup
 			( wordListNr != Constants.WORD_GRAMMAR_LIST &&
 			wordListNr != Constants.WORD_INTERFACE_LIST &&
 			!currentWordList.isTemporaryList() ) )
-				currentWordList.clearReplacedInfoInList();
+				currentWordList.clearReplacingInfoInList();
 			}
 		}
 
@@ -105,7 +105,7 @@ class WordCleanup
 		{
 		List currentWordList;
 
-		for( short wordListNr : Constants.WordLists )
+		for( short wordListNr = 0; wordListNr < Constants.NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
 			currentWordList = myWordItem_.wordListArray[wordListNr];
 
@@ -124,7 +124,7 @@ class WordCleanup
 		{
 		List currentWordList;
 
-		for( short wordListNr : Constants.WordLists )
+		for( short wordListNr = 0; wordListNr < Constants.NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
 			currentWordList = myWordItem_.wordListArray[wordListNr];
 
@@ -148,7 +148,7 @@ class WordCleanup
 		{
 		List currentWordList;
 
-		for( short wordListNr : Constants.WordLists )
+		for( short wordListNr = 0; wordListNr < Constants.NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
 			currentWordList = myWordItem_.wordListArray[wordListNr];
 
@@ -172,7 +172,7 @@ class WordCleanup
 		{
 		List currentWordList;
 
-		for( short wordListNr : Constants.WordLists )
+		for( short wordListNr = 0; wordListNr < Constants.NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
 			currentWordList = myWordItem_.wordListArray[wordListNr];
 
@@ -196,7 +196,7 @@ class WordCleanup
 		{
 		List currentWordList;
 
-		for( short wordListNr : Constants.WordLists )
+		for( short wordListNr = 0; wordListNr < Constants.NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
 			// Not needed to redo items in grammar and interface lists
 			if( wordListNr != Constants.WORD_GRAMMAR_LIST &&
@@ -245,7 +245,7 @@ class WordCleanup
 		{
 		List currentWordList;
 
-		for( short wordListNr : Constants.WordLists )
+		for( short wordListNr = 0; wordListNr < Constants.NUMBER_OF_WORD_LISTS; wordListNr++ )
 			{
 			// Not needed to undo items in grammar and interface lists
 			if( wordListNr != Constants.WORD_GRAMMAR_LIST &&
@@ -265,6 +265,6 @@ class WordCleanup
 
 /*************************************************************************
  *	"He has paid a full ransom for his people.
- *	He has guaranteed his convenant with them forever.
+ *	He has guaranteed his covenant with them forever.
  *	What a holy, awe-inspiring name he has!" (Psalm 111:9)
  *************************************************************************/

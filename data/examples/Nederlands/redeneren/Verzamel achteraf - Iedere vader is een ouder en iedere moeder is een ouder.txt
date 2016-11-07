@@ -1,0 +1,7 @@
+﻿Iedere vader is een ouder en iedere moeder is een ouder.
+Jan is een vader.
+Anna is een moeder.
+Een jongen is waarschijnlijk een kind en een meisje is waarschijnlijk een kind.
+Paul is een jongen.
+Laura is een meisje.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

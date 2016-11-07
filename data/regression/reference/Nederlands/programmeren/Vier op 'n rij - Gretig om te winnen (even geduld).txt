@@ -1,0 +1,181 @@
+﻿
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | |j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: C.
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: D.
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | | | | | |
+	| | | |m| | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: C.
+
+	| | | | | | | |
+	| | | | | | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | | | | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | | |
+	| | |m|j| | | |
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: G.
+
+	| | | | | | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | | |
+	| | |m|j| | |m|
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | | |
+	| | |m|j| | |m|
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: G.
+
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | |m|
+	| | |m|j| | |m|
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | |m|
+	| | |m|j|j| |m|
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: B.
+
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | |m|
+	| |m|m|j|j| |m|
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |m| | | |
+	| | |m|j| | |m|
+	| |m|m|j|j|j|m|
+zet->	-A-B-C-D-E-F-G-
+
+Ik heb geselecteerd: C.
+
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | |m|m| | | |
+	| | |m|j| | |m|
+	| |m|m|j|j|j|m|
+zet->	-A-B-C-D-E-F-G-
+
+Het is jouw beurt.
+
+
+	| | | |j| | | |
+	| | | |j| | | |
+	| | | |j| | | |
+	| | |m|m| | | |
+	| | |m|j| | |m|
+	|j|m|m|j|j|j|m|
+zet->	-A-B-C-D-E-F-G-
+
+Mijn winnende zet: C.
+
+	| | | |j| | | |
+	| | | |j| | | |
+	| | |m|j| | | |
+	| | |m|m| | | |
+	| | |m|j| | |m|
+	|j|m|m|j|j|j|m|
+zet->	-A-B-C-D-E-F-G-
+
+Het spel is gewonnen door mij.
+
+Om nogmaals het spelen, klik op knop «Wis je geheugen.» en dan op «Lees het bestand "Nederlands/gebruiker/programmeren/Vier op 'n rij".».
+

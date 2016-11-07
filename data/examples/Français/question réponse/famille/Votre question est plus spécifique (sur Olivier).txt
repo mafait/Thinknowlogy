@@ -1,4 +1,6 @@
-﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
-Laurent est le fils de Olivier.
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Pascal est le fils de Olivier.
 Est Olivier un père?
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
+Affichez information sur Olivier.
+Affichez le rapport de justification sur Olivier.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

@@ -1,0 +1,19 @@
+﻿* 
+* My conclusions:
+< John is a parent of Paul.
+< 
+* 
+* My conclusions:
+< Anna is a parent of Paul.
+< 
+* 
+* Your information:
+< Paul has 2 parent [plural of 'parent' is unknown], called John and Anna.
+* 
+* Related information:
+< Anna is a parent of Paul.
+< John is a parent of Paul.
+< 
+* 
+* You have entered plural noun "parents", which was unknown to me.
+* 

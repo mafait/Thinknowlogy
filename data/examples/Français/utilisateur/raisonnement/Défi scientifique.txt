@@ -1,0 +1,34 @@
+﻿#-----------------------------------------------------------------
+#	Ce test exécute les exemples de mon Défi Scientifique. Pour
+#	plus d'informations, voir le document Défi Scientifique inclus,
+#	ou: http://mafait.org/challenge/
+#-----------------------------------------------------------------
+# Bloque 1: Conversions
+#-----------------------------------------------------------------
+Pascal est un fils de Olivier.
+Amélie a une fille, appelée Lorraine.
+Chaque voiture a un moteur.
+Une voile est partie de chaque voilier.
+#-----------------------------------------------------------------
+# Bloque 2: Regroupement des connaissances
+#-----------------------------------------------------------------
+Olivier est un parent de Pascal.
+Amélie est un parent de Pascal.
+Pascal a 2 parents, appelés Olivier et Amélie.
+#-----------------------------------------------------------------
+# Bloque 3: Raisonnement dans le passé
+#-----------------------------------------------------------------
+Philippe était le père de Antoine.
+#-----------------------------------------------------------------
+# Bloque 4: La détection d'un conflit et de génération d'une question
+#-----------------------------------------------------------------
+Chaque personne est un homme ou une femme.
+Dominique est un homme et une femme.
+Dominique est une personne.
+Dominique n'est pas une femme.
+#-----------------------------------------------------------------
+# Bloque 5: Archivage des connaissances
+#-----------------------------------------------------------------
+Bill Clinton est le président des États-Unis.
+Barack Obama est le président des États-Unis.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

@@ -1,0 +1,15 @@
+﻿Every father is a parent.
+A mother is probably a parent.
+Display the justification report about parents.
+John is a father.
+Display the justification report about John.
+Anna is a mother.
+Display the justification report about Anna.
+A boy is possibly a child.
+A girl is probably a child.
+Display the justification report about children.
+Paul is a boy.
+Display the justification report about Paul.
+Laura is probably a girl.
+Display the justification report about Laura.
+# To continue, click button «Clear your mind.» or «Restart.».

@@ -1,6 +1,7 @@
-/*	Class:			CollectionResultType
- *	Purpose:		To return word type variables of a function
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		CollectionResultType
+ *	Purpose:	To return collection variables,
+ *				as the result of a function call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -20,6 +21,9 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
+#ifndef COLLECTIONRESULTTYPE
+#define COLLECTIONRESULTTYPE 1
+
 #include <string.h>
 #include "Constants.h"
 
@@ -29,12 +33,14 @@ class WordItem;
 class CollectionResultType
 	{
 	friend class AdminCollection;
-	friend class AdminItem;
 	friend class AdminSpecification;
 	friend class CollectionList;
+	friend class Item;
+	friend class List;
 	friend class WordCollection;
 	friend class WordSpecification;
 	friend class WordItem;
+
 	protected:
 	// Protected variables
 
@@ -48,7 +54,7 @@ class CollectionResultType
 	WordItem *foundGeneralizationWordItem;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	CollectionResultType()
 		{
@@ -62,6 +68,7 @@ class CollectionResultType
 		foundGeneralizationWordItem = NULL;
 		}
 	};
+#endif
 
 /*************************************************************************
  *	"Oh, the joys of those who are kind to the poor!

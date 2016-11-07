@@ -1,7 +1,7 @@
 /*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the lines from knowledge files
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,12 +24,13 @@
 #include <time.h>
 #include "AdminItem.h"
 #include "FileList.cpp"
+#include "FileResultType.cpp"
 
 class AdminReadFile
 	{
 	friend class AdminItem;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	bool hasClosedFileDueToError_;
 	bool hasFoundDifferentTestResult_;
@@ -45,20 +46,29 @@ class AdminReadFile
 
 	// Private functions
 
-	bool hasFoundAnyUserSpecification()
+	bool hasAnyUserSpecification()
 		{
-		WordItem *currentWordItem;
+		WordItem *currentSpecificationWordItem;
 
-		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+		if( ( currentSpecificationWordItem = commonVariables_->firstSpecificationWordItem ) != NULL )
 			{
-			// Do for all active words
+			// Do for all specification words
 			do	{
-				if( currentWordItem->hasFoundAnyUserSpecification() &&
-				!currentWordItem->isNeedingAuthorizationForChanges() )
+				if( currentSpecificationWordItem->hasAnyUserSpecification() &&
+				!currentSpecificationWordItem->isAuthorizationRequiredForChanges() )
 					return true;
 				}
-			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			while( ( currentSpecificationWordItem = currentSpecificationWordItem->nextSpecificationWordItem ) != NULL );
 			}
+
+		return false;
+		}
+
+	bool isDisplayingLine()
+		{
+		if( !adminItem_->isSystemStartingUp() &&
+		adminItem_->fileList != NULL )
+			return adminItem_->fileList->isDisplayingLine();
 
 		return false;
 		}
@@ -70,26 +80,19 @@ class AdminReadFile
 				grammarChar == GRAMMAR_WORD_DEFINITION_CHAR );
 		}
 
-	bool isShowingLine()
-		{
-		if( !adminItem_->isSystemStartingUp() &&
-		adminItem_->fileList != NULL )
-			return adminItem_->fileList->isShowingLine();
-
-		return false;
-		}
-
 	FileResultType openFile( bool isAddingSubPath, bool isInfoFile, bool isTestFile, bool isReportingErrorIfFileDoesNotExist, const char *defaultSubpathString, const char *fileNameString, const char *writeSubpathString, const char *referenceSubpathString )
 		{
 		FileResultType fileResult;
 		FileList *fileList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "openFile";
 
-		if( ( fileList = adminItem_->fileList ) != NULL )
-			return fileList->openFile( isAddingSubPath, isInfoFile, isTestFile, isReportingErrorIfFileDoesNotExist, defaultSubpathString, fileNameString, writeSubpathString, referenceSubpathString );
+		if( ( fileList = adminItem_->fileList ) == NULL )
+			{
+			fileResult.result = adminItem_->startError( functionNameString, moduleNameString_, "The file list isn't created yet" );
+			return fileResult;
+			}
 
-		fileResult.result = adminItem_->startError( functionNameString, moduleNameString_, "The file list isn't created yet" );
-		return fileResult;
+		return fileList->openFile( isAddingSubPath, isInfoFile, isTestFile, isReportingErrorIfFileDoesNotExist, defaultSubpathString, fileNameString, writeSubpathString, referenceSubpathString );
 		}
 
 	ResultType readLanguageFile( bool isGrammarFile, char *languageNameString )
@@ -99,45 +102,39 @@ class AdminReadFile
 		FileItem *openedLanguageFileItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "readLanguageFile";
 
-		if( languageNameString != NULL )
+		if( languageNameString == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given language name is undefined" );
+
+		commonVariables_->presentation->displayStatus( languageNameString );
+
+		if( ( fileResult = openFile( true, false, false, false, ( isGrammarFile ? FILE_DATA_GRAMMAR_DIRECTORY_NAME_STRING : FILE_DATA_INTERFACE_DIRECTORY_NAME_STRING ), languageNameString, NULL, NULL ) ).result != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, ( isGrammarFile ? "I failed to open the grammar file: \"" : "I failed to open the interface file: \"" ), languageNameString, "\"" );
+
+		if( ( openedLanguageFileItem = fileResult.createdFileItem ) != NULL )
 			{
-			commonVariables_->presentation->showStatus( languageNameString );
+			if( adminItem_->createLanguage( languageNameString ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create language: \"", languageNameString, "\"" );
 
-			if( ( fileResult = openFile( true, false, false, false, ( isGrammarFile ? FILE_DATA_GRAMMAR_DIRECTORY_NAME_STRING : FILE_DATA_INTERFACE_DIRECTORY_NAME_STRING ), languageNameString, NULL, NULL ) ).result == RESULT_OK )
-				{
-				if( ( openedLanguageFileItem = fileResult.createdFileItem ) != NULL )
-					{
-					if( adminItem_->createLanguage( languageNameString ) == RESULT_OK )
-						{
-						if( readAndExecute() != RESULT_OK )
-							adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened language file" );
+			if( readAndExecute() != RESULT_OK )
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened language file" );
 
-						originalResult = commonVariables_->result;
+			originalResult = commonVariables_->result;
 
-						if( closeCurrentFileItem( openedLanguageFileItem ) != RESULT_OK )
-							adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the language file item" );
+			if( closeCurrentFileItem( openedLanguageFileItem ) != RESULT_OK )
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the language file item" );
 
-						if( originalResult != RESULT_OK )
-							commonVariables_->result = originalResult;
-						}
-					else
-						adminItem_->addError( functionNameString, moduleNameString_, "I failed to create language: \"", languageNameString, "\"" );
-					}
-				else
-					{
-					// When reading special characters goes wrong, the wrong Zip file may be downloaded
-					// The Zip format of special characters up to Windows 7 is different from the Zip format of special characters from Windows 8 and further
-					if( strcmp( languageNameString, FILE_WINDOWS_VERSION_STRING ) == 0 )
-						return adminItem_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, "You have probably downloaded the Zip file for the wrong Windows version.\nPlease check if the downloaded file name matches your Windows version.\nThe Zip format of special characters up to Windows 7 is different from the Zip format of special characters from Windows 8 and further" );
-
-					return adminItem_->startError( functionNameString, moduleNameString_, ( isGrammarFile ? "I couldn't open the grammar file: \"" : "I couldn't open the interface file: \"" ), languageNameString, "\"" );
-					}
-				}
-			else
-				return adminItem_->addError( functionNameString, moduleNameString_, ( isGrammarFile ? "I failed to open the grammar file: \"" : "I failed to open the interface file: \"" ), languageNameString, "\"" );
+			if( originalResult != RESULT_OK )
+				commonVariables_->result = originalResult;
 			}
 		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given language name is undefined" );
+			{
+			// When reading special characters goes wrong, the wrong Zip file may be downloaded
+			// The Zip format of special characters up to Windows 7 is different from the Zip format of special characters from Windows 8 and higher
+			if( strcmp( languageNameString, FILE_WINDOWS_VERSION_STRING ) == 0 )
+				return adminItem_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, "You have probably downloaded the Zip file for the wrong Windows version.\nPlease check if the downloaded file name matches your Windows version.\nThe Zip format of special characters up to Windows 7 is different from the Zip format of special characters from Windows 8 and higher" );
+
+			return adminItem_->startError( functionNameString, moduleNameString_, ( isGrammarFile ? "I couldn't open the grammar file: \"" : "I couldn't open the interface file: \"" ), languageNameString, "\"" );
+			}
 
 		return RESULT_OK;
 		}
@@ -146,163 +143,147 @@ class AdminReadFile
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "incrementCurrentSentenceNr";
 
-		if( commonVariables_->currentSentenceNr < MAX_SENTENCE_NR )
-			{
-			commonVariables_->currentSentenceNr++;
-			// Necessary after changing current sentence number
-			adminItem_->setCurrentItemNr();
-			}
-		else
+		if( commonVariables_->currentSentenceNr >= MAX_SENTENCE_NR )
 			return adminItem_->startSystemError( functionNameString, moduleNameString_, "Sentence number overflow! I can't except anymore input" );
+
+		commonVariables_->currentSentenceNr++;
+		// Necessary after changing current sentence number
+		adminItem_->setCurrentItemNr();
 
 		return RESULT_OK;
 		}
 
 	ResultType executeLine( char *readString )
 		{
+		bool wasQueryCommand = false;
 		bool hasSwitchedLanguage = false;
-		bool wasCurrentCommandUndoOrRedo;
+		bool wasUndoOrRedoCommand;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "executeLine";
 
-		if( readString != NULL )
+		if( readString == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given read string is undefined" );
+
+		// Skip empty line
+		if( strlen( readString ) > 0 &&
+		// and comment line
+		readString[0] != COMMENT_CHAR )
 			{
-			// Skip empty line
-			if( strlen( readString ) > 0 &&
-			// and comment line
-			readString[0] != COMMENT_CHAR )
+			commonVariables_->hasDisplayedMessage = false;
+			commonVariables_->hasDisplayedWarning = false;
+			commonVariables_->isAssignmentChanged = false;
+
+			if( !adminItem_->wasPreviousCommandUndoOrRedo() )
 				{
-				commonVariables_->hasShownMessage = false;
-				commonVariables_->hasShownWarning = false;
-				commonVariables_->isAssignmentChanged = false;
+				if( adminItem_->cleanupDeletedItems() != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
+				}
 
-				if( !adminItem_->wasPreviousCommandUndoOrRedo() )
-					{
-					if( adminItem_->cleanupDeletedItems() != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
-					}
+			hasClosedFileDueToError_ = false;
 
-				hasClosedFileDueToError_ = false;
-
-				// Guide-by-grammar, grammar/language or query
-				if( readString[0] == QUERY_CHAR )
-					{
-					// Guide-by-grammar
-					if( strlen( readString ) == 1 )
+			// Guide by Grammar, grammar/language or query
+			if( readString[0] == QUERY_CHAR )
+				{
+					// Grammar/language
+					if( isalpha( readString[1] ) )
 						{
-						if( incrementCurrentSentenceNr() == RESULT_OK )
+						if( adminItem_->isSystemStartingUp() )
 							{
-							if( adminItem_->processReadSentence( NULL ) != RESULT_OK )
-								adminItem_->addError( functionNameString, moduleNameString_, "I failed to process a read sentence" );
+							if( readGrammarFileAndUserInterfaceFile( &readString[1] ) != RESULT_OK )
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to read the language" );
 							}
 						else
-							adminItem_->addError( functionNameString, moduleNameString_, "I failed to increment the current sentence number for Guide by Grammar" );
+							{
+							// Change language
+							if( adminItem_->assignLanguage( &readString[1] ) == RESULT_OK )
+								hasSwitchedLanguage = true;
+							else
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
+							}
 						}
 					else
 						{
-						// Grammar/language
-						if( isalpha( readString[1] ) )
+						// Query
+						if( readString[0] == QUERY_CHAR )
 							{
-							if( adminItem_->isSystemStartingUp() )
-								{
-								if( readGrammarFileAndUserInterfaceFile( &readString[1] ) != RESULT_OK )
-									adminItem_->addError( functionNameString, moduleNameString_, "I failed to read the language" );
-								}
-							else
-								{
-								// Change language
-								if( adminItem_->assignLanguage( &readString[1] ) == RESULT_OK )
-									hasSwitchedLanguage = true;
-								else
-									adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
-								}
-							}
-						else
-							{
-							// Query
-							if( readString[0] == QUERY_CHAR )
-								{
-								adminItem_->initializeQueryStringPosition();
+							wasQueryCommand = true;
+							adminItem_->initializeQueryStringPosition();
 
-								if( adminItem_->executeQuery( false, true, true, PRESENTATION_PROMPT_QUERY, readString ) != RESULT_OK )
-									adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute query: \"", readString, "\"" );
-								}
+							if( adminItem_->executeQuery( false, true, true, PRESENTATION_PROMPT_QUERY, readString ) != RESULT_OK )
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute query: \"", readString, "\"" );
 							}
 						}
+				}
+			else
+				{
+				// Sentence or grammar definition
+				if( incrementCurrentSentenceNr() != RESULT_OK )
+					adminItem_->addError( functionNameString, moduleNameString_, "I failed to increment the current sentence number" );
+
+				// Grammar definition
+				if( isGrammarChar( readString[0] ) )
+					{
+					if( adminItem_->addGrammar( readString ) != RESULT_OK )
+						adminItem_->addError( functionNameString, moduleNameString_, "I failed to add grammar: \"", readString, "\"" );
 					}
 				else
 					{
-					// Sentence or grammar definition
-					if( incrementCurrentSentenceNr() == RESULT_OK )
+					// Sentence
+					if( adminItem_->processReadSentence( readString ) != RESULT_OK )
+						adminItem_->addError( functionNameString, moduleNameString_, "I failed to process a read sentence" );
+					}
+				}
+
+			if( commonVariables_->result != RESULT_SYSTEM_ERROR &&
+			!adminItem_->hasRequestedRestart() )
+				{
+				wasUndoOrRedoCommand = adminItem_->wasUndoOrRedoCommand();
+
+				if( commonVariables_->result == RESULT_OK &&
+				!commonVariables_->hasDisplayedWarning )
+					{
+					if( adminItem_->hasAnyChangeBeenMadeByThisSentence() )
 						{
-						// Grammar definition
-						if( isGrammarChar( readString[0] ) )
+						if( !hasSwitchedLanguage &&
+
+						( wasUndoOrRedoCommand ||
+						!commonVariables_->hasDisplayedMessage ) )
 							{
-							if( adminItem_->addGrammar( readString ) != RESULT_OK )
-								adminItem_->addError( functionNameString, moduleNameString_, "I failed to add grammar: \"", readString, "\"" );
-							}
-						else
-							{
-							// Sentence
-							if( adminItem_->processReadSentence( readString ) != RESULT_OK )
-								adminItem_->addError( functionNameString, moduleNameString_, "I failed to process a read sentence" );
+							if( adminItem_->executeSelections() != RESULT_OK )
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute selections after reading the sentence" );
 							}
 						}
 					else
-						adminItem_->addError( functionNameString, moduleNameString_, "I failed to increment the current sentence number" );
-					}
-
-				if( commonVariables_->result != RESULT_SYSTEM_ERROR &&
-				!adminItem_->hasRequestedRestart() )
-					{
-					wasCurrentCommandUndoOrRedo = adminItem_->wasCurrentCommandUndoOrRedo();
-
-					if( commonVariables_->result == RESULT_OK &&
-					!commonVariables_->hasShownWarning )
 						{
-						if( adminItem_->hasFoundAnyChangeMadeByThisSentence() )
+						if( !hasSwitchedLanguage &&
+						!commonVariables_->hasDisplayedMessage &&
+						!adminItem_->wasLoginCommand() &&
+						!adminItem_->isSystemStartingUp() )
 							{
-							if( !hasSwitchedLanguage &&
-
-							( wasCurrentCommandUndoOrRedo ||
-							!commonVariables_->hasShownMessage ) )
-								{
-								if( adminItem_->executeSelections() != RESULT_OK )
-									adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute selections after reading the sentence" );
-								}
-							}
-						else
-							{
-							if( !hasSwitchedLanguage &&
-							!commonVariables_->hasShownMessage &&
-							!adminItem_->isSystemStartingUp() )
-								{
-								if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != RESULT_OK )
-									adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I know' interface notification" );
-								}
+							if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != RESULT_OK )
+								adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I know' interface notification" );
 							}
 						}
+					}
 
-					adminItem_->clearAllTemporaryLists();
+				adminItem_->clearTemporaryAdminLists();
 
-					if( !wasCurrentCommandUndoOrRedo )
+				if( !wasQueryCommand &&
+				!wasUndoOrRedoCommand )
+					{
+					if( adminItem_->cleanupDeletedItems() != RESULT_OK )
+						adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
+
+					if( !adminItem_->isSystemStartingUp() )
 						{
-						if( adminItem_->cleanupDeletedItems() != RESULT_OK )
-							adminItem_->addError( functionNameString, moduleNameString_, "I failed to cleanup the deleted items" );
+						// Check for empty sentence
+						adminItem_->setCurrentItemNr();
 
-						if( !adminItem_->isSystemStartingUp() )
-							{
-							// Check for empty sentence
-							adminItem_->setCurrentItemNr();
-
-							if( commonVariables_->currentItemNr == NO_ITEM_NR )
-								adminItem_->decrementCurrentSentenceNr();
-							}
+						if( commonVariables_->currentItemNr == NO_ITEM_NR )
+							adminItem_->decrementCurrentSentenceNr();
 						}
 					}
 				}
 			}
-		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given read string is undefined" );
 
 		return RESULT_OK;
 		}
@@ -314,41 +295,30 @@ class AdminReadFile
 		FileList *fileList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "closeCurrentFileItem";
 
-		if( ( fileList = adminItem_->fileList ) != NULL )
-			{
-			// Get info before closing the file
-			isTestFile = fileList->isCurrentFileTestFile();
-			testFileSentenceNr = fileList->currentFileSentenceNr();
+		if( ( fileList = adminItem_->fileList ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The file list isn't created yet" );
 
-			if( fileList->closeCurrentFile( closeFileItem ) == RESULT_OK )
-				{
-				if( isTestFile )
-					{
-					if( adminItem_->deleteSentences( testFileSentenceNr ) == RESULT_OK )
-						{
-						if( testFileSentenceNr > NO_SENTENCE_NR &&
-						// Not reading from file
-						fileList->currentReadFile() == NULL )
-							{
-							commonVariables_->currentSentenceNr = ( testFileSentenceNr - 1 );
-							// Necessary after changing current sentence number
-							adminItem_->setCurrentItemNr();
-							}
-						}
-					else
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the test sentences added during read the test file" );
-					}
-				else
-					{
-					if( commonVariables_->result != RESULT_OK )
-						hasClosedFileDueToError_ = true;
-					}
-				}
-			else
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to close a file" );
+		// Get info before closing the file
+		isTestFile = fileList->isCurrentFileTestFile();
+		testFileSentenceNr = fileList->currentFileSentenceNr();
+
+		if( fileList->closeCurrentFile( closeFileItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to close a file" );
+
+		if( isTestFile )
+			{
+			if( adminItem_->deleteSentences( testFileSentenceNr ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the test sentences added during read the test file" );
 			}
 		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The file list isn't created yet" );
+			{
+			if( commonVariables_->hasDisplayedWarning ||
+			commonVariables_->result != RESULT_OK )
+				{
+				hasClosedFileDueToError_ = true;
+				commonVariables_->hasDisplayedWarning = false;
+				}
+			}
 
 		return RESULT_OK;
 		}
@@ -360,45 +330,37 @@ class AdminReadFile
 		WordItem *predefinedNounStartupLanguageWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "readGrammarFileAndUserInterfaceFile";
 
-		if( readLanguageNameString != NULL )
-			{
-			// Read the user-interface file
-			if( readLanguageFile( false, readLanguageNameString ) == RESULT_OK )
-				{
-				// Read the grammar file
-				if( readLanguageFile( true, readLanguageNameString ) == RESULT_OK )
-					{
-					if( startupLanguageNameString != NULL &&
-					( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL &&
-					( predefinedNounStartupLanguageWordItem = adminItem_->predefinedNounStartupLanguageWordItem() ) != NULL )
-						{
-						if( predefinedNounStartupLanguageWordItem->addSpecification( false, false, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NAME, WORD_TYPE_UNDEFINED, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, currentLanguageWordItem, NULL, NULL, NULL ).result == RESULT_OK )
-							{
-							if( strcmp( startupLanguageNameString, currentLanguageWordItem->anyWordTypeString() ) == 0 )
-								{
-								if( predefinedNounStartupLanguageWordItem->assignSpecification( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_UNDEFINED, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, currentLanguageWordItem, NULL, NULL ).result != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the predefined noun startup language word" );
-								}
-							}
-						else
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a predefined noun startup language specification" );
-						}
-					}
-				else
-					adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a grammar file" );
-				}
-			else
-				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read an interface file" );
-			}
-		else
+		if( readLanguageNameString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given read language name string is undefined" );
+
+		// Read the user-interface file
+		if( readLanguageFile( false, readLanguageNameString ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read an interface file" );
+
+		// Read the grammar file
+		if( readLanguageFile( true, readLanguageNameString ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a grammar file" );
+
+		if( startupLanguageNameString != NULL &&
+		( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL &&
+		( predefinedNounStartupLanguageWordItem = adminItem_->predefinedNounStartupLanguageWordItem() ) != NULL )
+			{
+			if( predefinedNounStartupLanguageWordItem->addSpecificationInWord( false, false, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NAME, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, currentLanguageWordItem, NULL, NULL, NULL ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a predefined noun startup language specification" );
+
+			if( strcmp( startupLanguageNameString, currentLanguageWordItem->anyWordTypeString() ) == 0 )
+				{
+				if( predefinedNounStartupLanguageWordItem->assignSpecification( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, currentLanguageWordItem, NULL, NULL ).result != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the predefined noun startup language word" );
+				}
+			}
 
 		return RESULT_OK;
 		}
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	AdminReadFile( AdminItem *adminItem, CommonVariables *commonVariables )
 		{
@@ -455,71 +417,59 @@ class AdminReadFile
 
 		hasFoundDifferentTestResult_ = false;
 
-		if( ( fileResult = openFile( true, false, false, true, FILE_DATA_REGRESSION_TEST_OUTPUT_DIRECTORY_NAME_STRING, testFileNameString, NULL, FILE_DATA_REGRESSION_TEST_REFERENCE_DIRECTORY_NAME_STRING ) ).result == RESULT_OK )
-			{
-			if( fileResult.outputFile != NULL )
+		if( ( fileResult = openFile( true, false, false, true, FILE_DATA_REGRESSION_TEST_OUTPUT_DIRECTORY_NAME_STRING, testFileNameString, NULL, FILE_DATA_REGRESSION_TEST_REFERENCE_DIRECTORY_NAME_STRING ) ).result != RESULT_OK )
+			return adminItem_->startError( functionNameString, moduleNameString_, "I failed to open a test file" );
+
+		if( fileResult.outputFile == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The output file is undefined" );
+
+		if( fileResult.referenceFile == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The reference file is undefined" );
+
+		do	{
+			isStop = true;
+			hasFoundDifferentTestResult_ = true;
+
+			if( commonVariables_->presentation->readLine( false, false, false, NULL, outputString, fileResult.outputFile ) != RESULT_OK )
+				return adminItem_->startError( functionNameString, moduleNameString_, "I failed to read a line from the output file" );
+
+			hasReadOutput = commonVariables_->presentation->hasReadLine();
+
+			if( commonVariables_->presentation->readLine( false, false, false, NULL, referenceString, fileResult.referenceFile ) != RESULT_OK )
+				return adminItem_->startError( functionNameString, moduleNameString_, "I failed to read a line from the reference file" );
+
+			hasReadReference = commonVariables_->presentation->hasReadLine();
+
+			if( hasReadOutput &&
+			hasReadReference )
 				{
-				if( fileResult.referenceFile != NULL )
+				if( strcmp( outputString, referenceString ) != 0 )
 					{
-					do	{
-						isStop = true;
-
-						if( commonVariables_->presentation->readLine( false, false, false, false, NULL, outputString, fileResult.outputFile ) == RESULT_OK )
-							{
-							hasReadOutput = commonVariables_->presentation->hasReadLine();
-
-							if( commonVariables_->presentation->readLine( false, false, false, false, NULL, referenceString, fileResult.referenceFile ) == RESULT_OK )
-								{
-								hasReadReference = commonVariables_->presentation->hasReadLine();
-
-								if( hasReadOutput &&
-								hasReadReference )
-							{
-							if( strcmp( outputString, referenceString ) == 0 )
-								{
-								isStop = false;
-								lineNr++;
-								}
-							else
-								sprintf( errorString, "Line number %u is different:\n* test result:\t\t\"%s\"\n* against reference:\t\"%s\"", lineNr, outputString, referenceString );
-							}
-						else
-							{
-							if( hasReadOutput )
-								strcpy( errorString, "The output file is longer than the reference file" );
-
-							if( hasReadReference )
-								strcpy( errorString, "The output file is shorter than the reference file" );
-							}
-								}
-							else
-								strcpy( errorString, "I failed to read a line from the reference file" );
-							}
-						else
-							strcpy( errorString, "I failed to read a line from the output file" );
-						}
-					while( !isStop );
-
-						if( fileResult.outputFile != NULL )
-							fclose( fileResult.outputFile );
-
-						if( fileResult.referenceFile != NULL )
-							fclose( fileResult.referenceFile );
+					sprintf( errorString, "Line number %u is different:\n* test result:\t\t\"%s\"\n* against reference:\t\"%s\"", lineNr, outputString, referenceString );
+					return adminItem_->startError( functionNameString, moduleNameString_, errorString );
 					}
-				else
-					strcpy( errorString, "The reference file is undefined" );
+
+				isStop = false;
+				lineNr++;
 				}
 			else
-				strcpy( errorString, "The output file is undefined" );
-			}
-		else
-			strcpy( errorString, "I failed to open a test file" );
+				{
+				if( hasReadOutput )
+					return adminItem_->startError( functionNameString, moduleNameString_, "The output file is longer than the reference file" );
 
-		if( strlen( errorString ) > 0 )
-			{
-			hasFoundDifferentTestResult_ = true;
-			return adminItem_->startError( functionNameString, moduleNameString_, errorString );
+				if( hasReadReference )
+					return adminItem_->startError( functionNameString, moduleNameString_, "The output file is shorter than the reference file" );
+
+				hasFoundDifferentTestResult_ = false;
+				}
 			}
+		while( !isStop );
+
+			if( fileResult.outputFile != NULL )
+				fclose( fileResult.outputFile );
+
+			if( fileResult.referenceFile != NULL )
+				fclose( fileResult.referenceFile );
 
 		return RESULT_OK;
 		}
@@ -536,18 +486,16 @@ class AdminReadFile
 			isLineExecuted = false;
 			strcpy( readString, EMPTY_STRING );
 
-			if( readLine( false, false, false, ( commonVariables_->currentSentenceNr + 1 ), adminItem_->currentUserName(), readString ) == RESULT_OK )
-				{
-				if( commonVariables_->presentation->hasReadLine() )
-					{
-					if( executeLine( readString ) == RESULT_OK )
-						isLineExecuted = true;
-					else
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute the read line" );
-					}
-				}
-			else
+			if( readLine( false, false, ( commonVariables_->currentSentenceNr + 1 ), adminItem_->currentUserName(), readString ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a line" );
+
+			if( commonVariables_->presentation->hasReadLine() )
+				{
+				if( executeLine( readString ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute the read line" );
+
+				isLineExecuted = true;
+				}
 			}
 		while( isLineExecuted &&
 		!hasFoundDifferentTestResult_ &&
@@ -555,10 +503,10 @@ class AdminReadFile
 
 		// Ignore warnings during testing
 		( adminItem_->isCurrentlyTesting() ||
-		!commonVariables_->hasShownWarning ) );
+		!commonVariables_->hasDisplayedWarning ) );
 
 		if( adminItem_->isSystemStartingUp() &&
-		commonVariables_->hasShownWarning )
+		commonVariables_->hasDisplayedWarning )
 			commonVariables_->result = RESULT_SYSTEM_ERROR;
 
 		return RESULT_OK;
@@ -574,26 +522,24 @@ class AdminReadFile
 		if( exampleFileNameString != NULL )
 			{
 			if( adminItem_->isSystemStartingUp() )
-				commonVariables_->presentation->showStatus( exampleFileNameString );
+				commonVariables_->presentation->displayStatus( exampleFileNameString );
 
-			if( ( fileResult = openFile( !adminItem_->isSystemStartingUp(), false, false, true, FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING, exampleFileNameString, NULL, NULL ) ).result == RESULT_OK )
-				{
-				if( ( openedExampleFileItem = fileResult.createdFileItem ) != NULL )
-					{
-					if( readAndExecute() != RESULT_OK )
-						adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened example file" );
-
-					originalResult = commonVariables_->result;
-
-					if( closeCurrentFileItem( openedExampleFileItem ) != RESULT_OK )
-						adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the example file item" );
-
-					if( originalResult != RESULT_OK )
-						commonVariables_->result = originalResult;
-					}
-				}
-			else
+			if( ( fileResult = openFile( !adminItem_->isSystemStartingUp(), false, false, true, FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING, exampleFileNameString, NULL, NULL ) ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to open an example file" );
+
+			if( ( openedExampleFileItem = fileResult.createdFileItem ) != NULL )
+				{
+				if( readAndExecute() != RESULT_OK )
+					adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened example file" );
+
+				originalResult = commonVariables_->result;
+
+				if( closeCurrentFileItem( openedExampleFileItem ) != RESULT_OK )
+					adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the example file item" );
+
+				if( originalResult != RESULT_OK )
+					commonVariables_->result = originalResult;
+				}
 			}
 		else
 			{
@@ -604,7 +550,7 @@ class AdminReadFile
 		return RESULT_OK;
 		}
 
-	ResultType readLine( bool isPassword, bool isQuestion, bool isText, unsigned int promptSentenceNr, char *promptUserNameString, char *readString )
+	ResultType readLine( bool isPassword, bool isQuestion, unsigned int promptSentenceNr, char *promptUserNameString, char *readString )
 		{
 		char promptString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "readLine";
@@ -620,7 +566,7 @@ class AdminReadFile
 			strcat( promptString, promptUserNameString );
 			}
 
-		if( commonVariables_->presentation->readLine( isPassword, isQuestion, isText, isShowingLine(), promptString, readString, ( adminItem_->fileList == NULL ? NULL : adminItem_->fileList->currentReadFile() ) ) != RESULT_OK )
+		if( commonVariables_->presentation->readLine( isDisplayingLine(), isPassword, isQuestion, promptString, readString, ( adminItem_->fileList == NULL ? NULL : adminItem_->fileList->currentReadFile() ) ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a line from a file or from input" );
 
 		return RESULT_OK;
@@ -636,30 +582,28 @@ class AdminReadFile
 		if( adminItem_->fileList == NULL )
 			{
 			// Create list
-			if( ( adminItem_->fileList = new FileList( commonVariables_, adminItem_ ) ) != NULL )
-				adminItem_->adminListArray[ADMIN_FILE_LIST] = adminItem_->fileList;
-			else
+			if( ( adminItem_->fileList = new FileList( commonVariables_, adminItem_ ) ) == NULL )
 				return adminItem_->startError( functionNameString, moduleNameString_, "I failed to create an admin file list" );
+
+			adminItem_->adminListArray[ADMIN_FILE_LIST] = adminItem_->fileList;
 			}
 
-		if( ( fileResult = openFile( true, false, false, true, FILE_DATA_STARTUP_DIRECTORY_NAME_STRING, FILE_STARTUP_NAME_STRING, NULL, NULL ) ).result == RESULT_OK )
-			{
-			if( ( openedStartupFileItem = fileResult.createdFileItem ) != NULL )
-				{
-				if( readAndExecute() != RESULT_OK )
-					adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened startup file" );
-
-				originalResult = commonVariables_->result;
-
-				if( closeCurrentFileItem( openedStartupFileItem ) != RESULT_OK )
-					adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the startup file item" );
-
-				if( originalResult != RESULT_OK )
-					commonVariables_->result = originalResult;
-				}
-			}
-		else
+		if( ( fileResult = openFile( true, false, false, true, FILE_DATA_STARTUP_DIRECTORY_NAME_STRING, FILE_STARTUP_NAME_STRING, NULL, NULL ) ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to open an startup file" );
+
+		if( ( openedStartupFileItem = fileResult.createdFileItem ) != NULL )
+			{
+			if( readAndExecute() != RESULT_OK )
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened startup file" );
+
+			originalResult = commonVariables_->result;
+
+			if( closeCurrentFileItem( openedStartupFileItem ) != RESULT_OK )
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the startup file item" );
+
+			if( originalResult != RESULT_OK )
+				commonVariables_->result = originalResult;
+			}
 
 		return RESULT_OK;
 		}
@@ -668,65 +612,57 @@ class AdminReadFile
 		{
 		FileResultType fileResult;
 		ResultType originalResult;
-		bool isFirstTestFile = ( commonVariables_->currentSentenceNr == adminItem_->firstSentenceNrOfCurrentUser() );
+		bool isFirstTestFile = !adminItem_->isCurrentlyTesting();
 		FileItem *testFileItem;
 		char testString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "readTestFile";
 
 		// Check if user has already entered sentences
-		if( !hasFoundAnyUserSpecification() )
+		if( hasAnyUserSpecification() )
+			return adminItem_->startError( functionNameString, moduleNameString_, "Some knowledge is already entered. It may disturb the test results. Please, use restart button before testing to ensure no knowledge is present" );
+
+		if( isFirstTestFile )
 			{
-			if( isFirstTestFile )
-				{
-				testFileNr_ = 0;
-				startTime_ = clock();
-				}
-			else
-				testFileNr_++;
-
-			if( ( fileResult = openFile( true, false, true, true, FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING, testFileNameString, FILE_DATA_REGRESSION_TEST_OUTPUT_DIRECTORY_NAME_STRING, NULL ) ).result == RESULT_OK )
-				{
-				if( ( testFileItem = fileResult.createdFileItem ) != NULL )
-					{
-					sprintf( testString, "Testing: %u, %s.\n", testFileNr_, testFileItem->readFileNameString() );
-
-					if( commonVariables_->presentation->writeText( true, true, PRESENTATION_PROMPT_NOTIFICATION, NO_CENTER_WIDTH, testString ) == RESULT_OK )
-						{
-						commonVariables_->presentation->redirectOutputToTestFile( testFileItem->writeFile() );
-
-						if( readAndExecute() != RESULT_OK )
-							adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened test file" );
-
-						if( ( originalResult = commonVariables_->result ) != RESULT_OK )
-							commonVariables_->result = RESULT_OK;
-
-						if( closeCurrentFileItem( testFileItem ) != RESULT_OK )
-							adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the test file item" );
-
-						if( originalResult != RESULT_OK )
-							commonVariables_->result = originalResult;
-						else
-							{
-							if( isFirstTestFile )
-								{
-								sprintf( testString, "Done in: %.3f sec.\n", ( ( clock() - startTime_ ) / (double)CLOCKS_PER_SEC ) );
-
-								if( commonVariables_->presentation->writeText( true, true, PRESENTATION_PROMPT_NOTIFICATION, NO_CENTER_WIDTH, testString ) != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a text" );
-								}
-							}
-						}
-					else
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a text" );
-					}
-				else
-					return adminItem_->startError( functionNameString, moduleNameString_, "The last created file item is undefined" );
-				}
-			else
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to open a test file" );
+			testFileNr_ = 0;
+			startTime_ = clock();
 			}
 		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "Some knowledge is already entered. It may disturb the test results. Please, use restart button before testing to ensure no knowledge is present" );
+			testFileNr_++;
+
+		if( ( fileResult = openFile( true, false, true, true, FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING, testFileNameString, FILE_DATA_REGRESSION_TEST_OUTPUT_DIRECTORY_NAME_STRING, NULL ) ).result != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to open a test file" );
+
+		if( ( testFileItem = fileResult.createdFileItem ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The last created file item is undefined" );
+
+			sprintf( testString, "Test file #%u: %s.\n", testFileNr_, testFileItem->readFileNameString() );
+
+			if( commonVariables_->presentation->writeText( true, true, PRESENTATION_PROMPT_NOTIFICATION, NO_CENTER_WIDTH, testString ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a text" );
+
+			commonVariables_->presentation->redirectOutputToTestFile( testFileItem->writeFile() );
+
+			if( readAndExecute() != RESULT_OK )
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened test file" );
+
+			if( ( originalResult = commonVariables_->result ) != RESULT_OK )
+				commonVariables_->result = RESULT_OK;
+
+			if( closeCurrentFileItem( testFileItem ) != RESULT_OK )
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the test file item" );
+
+			if( originalResult != RESULT_OK )
+				commonVariables_->result = originalResult;
+			else
+				{
+				if( isFirstTestFile )
+					{
+					sprintf( testString, "Done in: %.3f sec.\n", ( ( clock() - startTime_ ) / (double)CLOCKS_PER_SEC ) );
+
+					if( commonVariables_->presentation->writeText( true, true, PRESENTATION_PROMPT_NOTIFICATION, NO_CENTER_WIDTH, testString ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a text" );
+					}
+				}
 
 		return RESULT_OK;
 		}
@@ -740,37 +676,32 @@ class AdminReadFile
 		char infoPathString[MAX_SENTENCE_STRING_LENGTH] = FILE_DATA_INFO_DIRECTORY_NAME_STRING;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "readInfoFile";
 
-		if( infoFileNameString != NULL )
+		if( infoFileNameString == NULL )
+			return adminItem_->startFileResultError( functionNameString, moduleNameString_, "The given info file name string is undefined" );
+
+		if( currentLanguageWordItem != NULL )
 			{
-			if( currentLanguageWordItem != NULL )
-				{
-				strcat( infoPathString, currentLanguageWordItem->anyWordTypeString() );
-				strcat( infoPathString, SLASH_STRING );
-				}
-
-			if( ( fileResult = openFile( true, true, false, isReportingErrorIfFileDoesNotExist, infoPathString, infoFileNameString, NULL, NULL ) ).result == RESULT_OK )
-				{
-				if( ( openedInfoFileItem = fileResult.createdFileItem ) != NULL )
-					{
-					if( readAndExecute() != RESULT_OK )
-						adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened info file" );
-
-					originalResult = commonVariables_->result;
-
-					if( closeCurrentFileItem( openedInfoFileItem ) != RESULT_OK )
-						adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the info file item" );
-
-					if( originalResult != RESULT_OK )
-						commonVariables_->result = originalResult;
-					}
-				}
-			else
-				adminItem_->addError( functionNameString, moduleNameString_, "I failed to open the info file" );
+			strcat( infoPathString, currentLanguageWordItem->anyWordTypeString() );
+			strcat( infoPathString, SLASH_STRING );
 			}
-		else
-			adminItem_->startError( functionNameString, moduleNameString_, "The given info file name string is undefined" );
 
-		fileResult.result = commonVariables_->result;
+		if( ( fileResult = openFile( true, true, false, isReportingErrorIfFileDoesNotExist, infoPathString, infoFileNameString, NULL, NULL ) ).result != RESULT_OK )
+			return adminItem_->addFileResultError( functionNameString, moduleNameString_, "I failed to open the info file" );
+
+		if( ( openedInfoFileItem = fileResult.createdFileItem ) != NULL )
+			{
+			if( readAndExecute() != RESULT_OK )
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened info file" );
+
+			originalResult = commonVariables_->result;
+
+			if( closeCurrentFileItem( openedInfoFileItem ) != RESULT_OK )
+				adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the info file item" );
+
+			if( originalResult != RESULT_OK )
+				commonVariables_->result = originalResult;
+			}
+
 		return fileResult;
 		}
 	};

@@ -1,0 +1,62 @@
+﻿* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een ouder.
+< Een ouder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een persoon.
+< Een moeder is waarschijnlijk een ouder.
+< 
+* 
+* Mijn conclusies:
+< Jan is een man.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder.
+< Jan is waarschijnlijk een persoon.
+< Jan is waarschijnlijk geen moeder.
+< Jan is waarschijnlijk geen vrouw.
+< 
+* 
+* Mijn conclusies:
+< Jan is een man. Omdat:
+<	- Jan is een vader.
+<	- Iedere vader is een man.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder. Omdat:
+<	- Iedere ouder is een vader of een moeder.
+<	- Jan is een vader.
+* 	en:
+<	- Iedere ouder is een vrouw of een man.
+<	- Jan is een man.
+* 	en:
+<	- Jan is een vader.
+<	- Een vader is waarschijnlijk een ouder.
+< Jan is waarschijnlijk een persoon. Omdat:
+<	- Jan is waarschijnlijk een ouder.
+<	- Een ouder is waarschijnlijk een persoon.
+* 	en:
+<	- Jan is een vader.
+<	- Een vader is waarschijnlijk een persoon.
+* 	en:
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is een man.
+< Jan is waarschijnlijk geen moeder. Omdat:
+<	- Jan is waarschijnlijk een ouder.
+<	- Iedere ouder is een vader of een moeder.
+<	- Jan is een vader.
+< Jan is waarschijnlijk geen vrouw. Omdat:
+<	- Jan is waarschijnlijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+<	- Jan is een man.
+* 	en:
+<	- Jan is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is een man.
+< 

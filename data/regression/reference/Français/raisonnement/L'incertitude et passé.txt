@@ -1,0 +1,55 @@
+﻿* 
+* Mes hypothèses:
+< Armand n'a possible aucun père plus.
+< Armand avait possible un père, appelé Guillaume.
+< 
+* 
+* Mes hypothèses:
+< Armand n'a possible aucun père plus. En raison:
+<	- Armand avait possible un père, appelé Guillaume.
+< Armand avait possible un père, appelé Guillaume. En raison:
+<	- Guillaume était possible le père de Armand.
+< 
+* 
+* Je ne suis pas sûr, mais:
+< Fabrice était possible un père.
+< 
+* 
+* Mes hypothèses:
+< Ronald était probablement un père.
+* 
+* Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
+* 
+* 
+* Mes hypothèses:
+< Ronald était probablement un parent.
+< Guillaume était possible un parent.
+< Fabrice était possible un parent.
+< Olivier était possible un parent.
+< 
+* 
+* Mes hypothèses:
+< Olivier était possible un parent. En raison:
+<	- Olivier est possible un père.
+<	- Chaque père était un parent.
+< 
+* 
+* Mes hypothèses:
+< Fabrice était possible un parent. En raison:
+<	- Fabrice était possible un père.
+<	- Chaque père était un parent.
+< 
+* 
+* Mes hypothèses:
+< Guillaume était possible un parent. En raison:
+<	- Guillaume était possible le père de Armand.
+<	- Chaque père était un parent.
+< 
+* 
+* Mes hypothèses:
+< Ronald était probablement un parent. En raison:
+<	- Ronald était probablement un père.
+<	- Chaque père était un parent.
+< Ronald était probablement un père. En raison:
+<	- Était Ronald le père de Pascal?
+< 

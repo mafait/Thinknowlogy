@@ -1,7 +1,7 @@
 /*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -26,7 +26,7 @@ import java.io.BufferedWriter;
 
 class FileItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private boolean isInfoFile_;
 	private boolean isTestFile_;
@@ -37,14 +37,14 @@ class FileItem extends Item
 	private BufferedReader readFile_;
 	private BufferedWriter writeFile_;
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected FileItem( boolean isInfoFile, boolean isTestFile, String readFileNameString, String writeFileNameString, BufferedReader readFile, BufferedWriter writeFile, List myList, WordItem myWordItem )
 		{
 
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isInfoFile_ = isInfoFile;
 		isTestFile_ = isTestFile;
@@ -62,7 +62,7 @@ class FileItem extends Item
 
 	// Protected virtual methods
 
-	protected void showString( boolean isReturnQueryToPosition )
+	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -72,7 +72,7 @@ class FileItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
@@ -85,7 +85,7 @@ class FileItem extends Item
 		{
 		// This is a virtual method. Therefore, the given variables are unreferenced.
 
-		// Add at the beginning of the list
+		// Always add at the beginning of the list
 		return true;
 		}
 

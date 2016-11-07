@@ -1,0 +1,111 @@
+﻿* 
+* My assumptions:
+< A vertebrate is probably an animal.
+< 
+* 
+* My assumptions:
+< Crocodiles are probably animal [plural of 'animal' is unknown].
+< 
+* 
+* My conclusions:
+< An animal is an annelid, an arthropod, an echinoderm, a mollusk, a protozoan, an amphibian, a bird, a fish, a mammal or a reptile.
+* 
+* My assumptions:
+< An invertebrate is probably an animal.
+< 
+* 
+* My conclusions:
+< A vertebrate is a cetacean, a marsupial, a primate or a rodent.
+< An animal is a cetacean, a marsupial, a primate, a rodent, an annelid, an arthropod, an echinoderm, a mollusk, a protozoan, an amphibian, a bird, a fish, a mammal or a reptile.
+* 
+* My assumptions:
+< A mammal is probably an animal.
+< A vertebrate is possibly an animal.
+< 
+* 
+* My conclusions:
+< An invertebrate is an arachnid, a crustacean or an insect.
+< An animal is an arachnid, a crustacean, an insect, a cetacean, a marsupial, a primate, a rodent, an annelid, an arthropod, an echinoderm, a mollusk, a protozoan, an amphibian, a bird, a fish, a mammal or a reptile.
+< 
+* 
+* My assumptions:
+< A human-being is possibly an animal.
+< 
+* 
+* My assumptions:
+< A human-being is possibly an animal. Because:
+<	- A human-being is a vertebrate.
+<	- A vertebrate is possibly an animal.
+< 
+* 
+* My assumptions:
+< A human-being is possibly an animal. Because:
+<	- A human-being is a vertebrate.
+<	- A vertebrate is possibly an animal.
+< 
+* 
+* My assumptions:
+< A human-being is possibly an animal. Because:
+<	- A human-being is a vertebrate.
+<	- A vertebrate is possibly an animal.
+< 
+* 
+* My conclusions:
+< John is not a cetacean and not a marsupial.
+< John is not a cetacean and not a marsupial.
+< John is a vertebrate.
+* 
+* My assumptions:
+< John is probably an animal.
+< John is maybe a crocodile.
+< John is maybe a reptile.
+< John is probably not an arachnid, not a crustacean, not an insect, not a rodent, not an annelid, not an arthropod, not an echinoderm, not a mollusk, not a protozoan, not an amphibian, not a bird and not a fish.
+< John is probably not an invertebrate.
+< 
+* 
+* My conclusions:
+< John is not a cetacean and not a marsupial. Because:
+<	- John is a mammal.
+<	- A mammal is a cetacean, a marsupial, a primate or a rodent.
+< John is not a cetacean and not a marsupial. Because:
+<	- John is a mammal.
+<	- A mammal is a cetacean, a marsupial, a primate or a rodent.
+< John is a vertebrate. Because:
+<	- John is a human-being.
+<	- A human-being is a vertebrate.
+* 
+* My assumptions:
+< John is probably an animal. Because:
+<	- John is a mammal.
+<	- A mammal is probably an animal.
+* 	and:
+<	- John is maybe a crocodile.
+<	- Crocodiles are probably animal [plural of 'animal' is unknown].
+* 	and:
+<	- John is a vertebrate.
+<	- A vertebrate is possibly an animal.
+* 	and:
+<	- John is a vertebrate.
+<	- A vertebrate is probably an animal.
+* 	and:
+<	- John is a human-being.
+<	- A human-being is possibly an animal.
+< John is maybe a crocodile. Because:
+<	- Crocodiles are probably animal [plural of 'animal' is unknown].
+<	- John is probably an animal.
+* 	and:
+<	- Crocodiles are reptiles.
+<	- John is maybe a reptile.
+< John is maybe a reptile. Because:
+<	- John is maybe a crocodile.
+<	- Crocodiles are reptiles.
+< John is probably not an arachnid, not a crustacean, not an insect, not a rodent, not an annelid, not an arthropod, not an echinoderm, not a mollusk, not a protozoan, not an amphibian, not a bird and not a fish. Because:
+<	- John is probably an animal.
+<	- An animal is an arachnid, a crustacean, an insect, a cetacean, a marsupial, a primate, a rodent, an annelid, an arthropod, an echinoderm, a mollusk, a protozoan, an amphibian, a bird, a fish, a mammal or a reptile.
+<	- John is a vertebrate.
+<	- A vertebrate is an amphibian, a bird, a fish, a mammal or a reptile.
+< John is probably not an invertebrate. Because:
+<	- John is probably an animal.
+<	- An animal is a vertebrate or an invertebrate.
+<	- John is a vertebrate.
+< 

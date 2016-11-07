@@ -1,0 +1,2 @@
+﻿! This sentence is not accepted, because it is semantically ambiguous: It has multiple specifications as well as multiple relations.
+! 

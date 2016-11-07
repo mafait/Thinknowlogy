@@ -7,8 +7,8 @@
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
 < Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:
@@ -33,6 +33,30 @@
 < ¿Es Cruz un hombre o una mujer?
 < 
 * 
+* Mis conclusiones:
+< Cruz es parte de una familia. Porque:
+<	- Cruz es un padre o una madre.
+<	- Padres son parte de cada familia.
+* 
+* Mis suposiciones:
+< Cruz es probablemente una persona. Porque:
+<	- Cruz es un padre o una madre.
+<	- Un padre es probablemente una persona.
+<	- Una madre es probablemente una persona.
+< Cruz tiene probablemente un hijo. Porque:
+<	- Cruz es un padre o una madre.
+<	- Cada familia tiene padres y hijos.
+* 
+* Mis preguntas:
+< ¿Es Cruz un hombre o una mujer? Porque:
+<	- Cruz es probablemente una persona.
+<	- Cada persona es un hombre o una mujer.
+* 	y:
+<	- Cruz es un padre o una madre.
+<	- Cada madre es una mujer.
+<	- Cada padre es un hombre.
+< 
+* 
 * Esta información es más específica que la información anterior:
 < Cruz es un padre o una madre.
 * 
@@ -42,4 +66,32 @@
 * Mis conclusiones:
 < Cruz es un hombre.
 < Cruz no es una mujer.
+< 
+* 
+* Mis conclusiones:
+< Cruz es parte de una familia. Porque:
+<	- Cruz es un padre.
+<	- Padres son parte de cada familia.
+< Cruz es un hombre. Porque:
+<	- Cruz es un padre.
+<	- Cada padre es un hombre.
+* 	y:
+<	- Cruz es probablemente una persona.
+<	- Cada persona es un hombre o una mujer.
+< Cruz no es una mujer. Porque:
+<	- Cruz es un padre.
+<	- Cada padre es una mujer o un hombre.
+<	- Cruz es un hombre.
+* 
+* Mis suposiciones:
+< Cruz es probablemente una persona. Porque:
+<	- Cada persona es un hombre o una mujer.
+<	- Cruz es un hombre.
+* 	y:
+<	- Cruz es un padre.
+<	- Un padre es probablemente una persona.
+<	- Una madre es probablemente una persona.
+< Cruz tiene probablemente un hijo. Porque:
+<	- Cruz es un padre.
+<	- Cada familia tiene padres y hijos.
 < 

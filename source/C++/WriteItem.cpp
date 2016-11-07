@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about a word
  *					during the process of writing a sentence
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,7 +29,7 @@ class WriteItem : private Item
 	friend class WriteList;
 	friend class WordWriteSentence;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	unsigned short grammarLevel_;
 
@@ -37,22 +37,22 @@ class WriteItem : private Item
 
 
 	protected:
-	// Protected loadable variables
+	// Protected initialized variables
 
 	bool isSkipped;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	WriteItem( bool _isSkipped, unsigned short grammarLevel, GrammarItem *startOfChoiceOrOptionGrammarItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "WriteItem", commonVariables, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		grammarLevel_ = grammarLevel;
 
-		// Protected loadable variables
+		// Protected initialized variables
 
 		isSkipped = _isSkipped;
 
@@ -67,7 +67,7 @@ class WriteItem : private Item
 
 	// Protected virtual functions
 
-	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
+	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		return ( startOfChoiceOrOptionGrammarItem_ == NULL ? false :
 				( querySentenceNr == NO_SENTENCE_NR ? true : startOfChoiceOrOptionGrammarItem_->creationSentenceNr() == querySentenceNr ) &&

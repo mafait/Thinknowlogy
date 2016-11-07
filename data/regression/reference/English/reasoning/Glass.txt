@@ -1,0 +1,4 @@
+﻿* 
+* Your information:
+< A glass is full, half-full or empty.
+< 

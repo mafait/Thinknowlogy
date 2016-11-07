@@ -1,0 +1,4 @@
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+Marie is geen moeder.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».
+Marie is een moeder.

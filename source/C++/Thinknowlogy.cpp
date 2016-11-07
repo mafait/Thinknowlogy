@@ -1,6 +1,6 @@
 /*	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -85,5 +85,5 @@ int main()
  *	I will not be disgraced.
  *	Therefore, I have set my face like a stone,
  *	determined to do his will.
- *	And I know that I will not be put to shame." (Psalm 50:7)
+ *	And I know that I will not be put to shame." (Isaiah 50:7)
  *************************************************************************/

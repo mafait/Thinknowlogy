@@ -1,0 +1,112 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia.
+< Juan es un hombre.
+< Juan no es una mujer.
+< Juan no es una madre.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona.
+< Juan tiene probablemente un hijo.
+< 
+* 
+* Mis conclusiones:
+< Peyo es parte de una familia.
+< Peyo es un hombre.
+< Peyo no es una mujer.
+< Peyo no es una madre.
+* 
+* Mis suposiciones:
+< Peyo es probablemente una persona.
+< Peyo tiene probablemente un hijo.
+< 
+* 
+* Mis suposiciones que se concluyen:
+< Juan tiene probablemente un hijo.
+* 
+* Mis conclusiones:
+< José es parte de una familia.
+< José no es una hija.
+< José no es una niña y una mujer.
+< Juan tiene un hijo, llamado José.
+* 
+* Mis suposiciones:
+< José es probablemente una persona.
+< José tiene probablemente un padre, llamado Juan.
+< Juan es probablemente padre de José.
+* 
+* Mis preguntas:
+< ¿Es José un niño o un hombre?
+< 
+* 
+* Mis conclusiones:
+< Ana es una mujer.
+< Ana no es un hombre.
+< Ana es parte de una familia.
+< Ana no es un padre.
+< Pablo tiene una madre, llamada Ana.
+* 
+* Mis suposiciones:
+< Ana es probablemente una persona.
+< Pablo es posiblemente una persona.
+< Pablo es probablemente parte de una familia.
+* 
+* Mis preguntas:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+< ¿Es Pablo un hijo o una hija?
+< 
+* Sé.
+* 
+* 
+* Mis conclusiones:
+< Jorge era parte de una familia.
+< Jorge era un hombre.
+< Jorge no era una mujer.
+< Jorge no era una madre.
+< Alfonso no tiene un padre nunca-más.
+< Alfonso tenido un padre, llamado Jorge.
+* 
+* Mis suposiciones:
+< Jorge era probablemente una persona.
+< Alfonso es posiblemente una persona.
+< Alfonso es probablemente parte de una familia.
+* 
+* Mis preguntas:
+< ¿Es Alfonso una niña, una mujer, un niño o un hombre?
+< ¿Es Alfonso un hijo o una hija?
+< 
+* Sé.
+* 
+* Sé.
+* 
+* Sé.
+* 
+* Sé.
+* 
+* Sé.
+* 
+* Sé.
+* 

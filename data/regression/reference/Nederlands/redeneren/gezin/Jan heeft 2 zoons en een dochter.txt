@@ -1,0 +1,79 @@
+﻿* 
+* Mijn conclusies:
+< Ouders en kinderen zijn deel van ieder gezin.
+< 
+* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Ieder kind is een meisje, een vrouw, een jongen of een man.
+* 
+* Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een persoon.
+< 
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder.
+< Jan is waarschijnlijk deel van een gezin.
+< Jan is mogelijk een persoon.
+* 
+* Mijn vragen:
+< Is Jan een man of een vrouw?
+< Is Jan een vader of een moeder?
+< 
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Ieder kind is een zoon of een dochter.
+<	- Jan heeft een dochter en 2 zoons.
+< Jan is waarschijnlijk deel van een gezin. Omdat:
+<	- Jan is waarschijnlijk een ouder.
+<	- Ouders zijn deel van ieder gezin.
+< Jan is mogelijk een persoon. Omdat:
+<	- Jan is waarschijnlijk een ouder.
+<	- Een ouder is waarschijnlijk een persoon.
+* 
+* Mijn vragen:
+< Is Jan een man of een vrouw? Omdat:
+<	- Jan is mogelijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
+<	- Jan is waarschijnlijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+* 	en:
+<	- Is Jan een vader of een moeder?
+<	- Iedere moeder is een vrouw.
+<	- Iedere vader is een man.
+< Is Jan een vader of een moeder? Omdat:
+<	- Jan is waarschijnlijk een ouder.
+<	- Iedere ouder is een vader of een moeder.
+< 
+* 
+* Uw informatie:
+< Jan heeft een dochter en 2 zoons.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder.
+< Jan is waarschijnlijk deel van een gezin.
+< Jan is mogelijk een persoon.
+* 
+* Mijn vragen:
+< Is Jan een man of een vrouw?
+< Is Jan een vader of een moeder?
+< 

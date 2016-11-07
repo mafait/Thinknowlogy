@@ -1,0 +1,8 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Pascal est un garçon.
+Lorraine est une jeune-fille.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Lorraine.
+Pascal est un homme.
+Lorraine est une femme.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

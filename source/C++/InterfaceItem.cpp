@@ -1,8 +1,8 @@
 /*	Class:			InterfaceItem
  *	Parent class:	Item
- *	Purpose:		To store info about the interface messages
- *					in a certain language that can be shown to the user
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Purpose:		To store info about the user-interface messages
+ *					in the available languages
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,7 +28,7 @@ class InterfaceItem : private Item
 	{
 	friend class InterfaceList;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	unsigned short interfaceParameter_;
 
@@ -36,13 +36,13 @@ class InterfaceItem : private Item
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	InterfaceItem( unsigned short interfaceParameter, size_t interfaceStringLength, char *interfaceString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "InterfaceItem", commonVariables, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		interfaceParameter_ = interfaceParameter;
 		interfaceString_ = NULL;
@@ -76,7 +76,7 @@ class InterfaceItem : private Item
 
 	// Protected virtual functions
 
-	virtual void showString( bool isReturnQueryToPosition )
+	virtual void displayString( bool isReturnQueryToPosition )
 		{
 		statusString[0] = statusChar();
 
@@ -85,7 +85,7 @@ class InterfaceItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
@@ -94,7 +94,7 @@ class InterfaceItem : private Item
 			}
 		}
 
-	virtual bool hasFoundParameter( unsigned int queryParameter )
+	virtual bool hasParameter( unsigned int queryParameter )
 		{
 		return ( interfaceParameter_ == queryParameter ||
 

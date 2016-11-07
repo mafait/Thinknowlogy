@@ -1,7 +1,7 @@
 /*	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,32 +28,31 @@ class MultipleWordList : private List
 	{
 	friend class WordItem;
 
-
 	// Private functions
+
+	bool hasFoundMultipleWordItem( unsigned short wordTypeNr, WordItem *multipleWordItem )
+		{
+		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
+
+		while( searchMultipleWordItem != NULL )
+			{
+			if( searchMultipleWordItem->wordTypeNr() == wordTypeNr &&
+			searchMultipleWordItem->multipleWordItem() == multipleWordItem )
+				return true;
+
+			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
+			}
+
+		return false;
+		}
 
 	MultipleWordItem *firstActiveMultipleWordItem()
 		{
 		return (MultipleWordItem *)firstActiveItem();
 		}
 
-	bool hasFoundMultipleWordItem( unsigned short wordTypeNr, WordItem *multipleWordItem )
-		{
-		MultipleWordItem *searchItem = firstActiveMultipleWordItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->wordTypeNr() == wordTypeNr &&
-			searchItem->multipleWordItem() == multipleWordItem )
-				return true;
-
-			searchItem = searchItem->nextMultipleWordItem();
-			}
-
-		return false;
-		}
-
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	MultipleWordList( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
@@ -62,14 +61,14 @@ class MultipleWordList : private List
 
 	~MultipleWordList()
 		{
-		MultipleWordItem *deleteItem;
-		MultipleWordItem *searchItem = firstActiveMultipleWordItem();
+		MultipleWordItem *deleteMultipleWordItem;
+		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
 
-		while( searchItem != NULL )
+		while( searchMultipleWordItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextMultipleWordItem();
-			delete deleteItem;
+			deleteMultipleWordItem = searchMultipleWordItem;
+			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
+			delete deleteMultipleWordItem;
 			}
 
 		if( firstInactiveItem() != NULL )
@@ -81,13 +80,13 @@ class MultipleWordList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class MultipleWordList has replaced items." );
 
-		searchItem = (MultipleWordItem *)firstDeletedItem();
+		searchMultipleWordItem = (MultipleWordItem *)firstDeletedItem();
 
-		while( searchItem != NULL )
+		while( searchMultipleWordItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextMultipleWordItem();
-			delete deleteItem;
+			deleteMultipleWordItem = searchMultipleWordItem;
+			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
+			delete deleteMultipleWordItem;
 			}
 		}
 
@@ -97,96 +96,85 @@ class MultipleWordList : private List
 	unsigned short matchingMultipleSingularNounWordParts( char *sentenceString )
 		{
 		unsigned short currentLanguageNr = commonVariables()->currentLanguageNr;
-		MultipleWordItem *searchItem = firstActiveMultipleWordItem();
+		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
 		WordItem *multipleWordItem;
 		char *multipleWordString;
 
 		if( sentenceString != NULL )
 			{
-			while( searchItem != NULL )
+			while( searchMultipleWordItem != NULL )
 				{
-				if( searchItem->isSingularNoun() &&
-				searchItem->wordTypeLanguageNr() == currentLanguageNr &&
-				( multipleWordItem = searchItem->multipleWordItem() ) != NULL )
+				if( searchMultipleWordItem->isSingularNoun() &&
+				searchMultipleWordItem->wordTypeLanguageNr() == currentLanguageNr &&
+				( multipleWordItem = searchMultipleWordItem->multipleWordItem() ) != NULL )
 					{
-					if( ( multipleWordString = multipleWordItem->singularNounString() ) != NULL )
-						{
-						if( strncmp( sentenceString, multipleWordString, strlen( multipleWordString ) ) == 0 )
-							return searchItem->nWordParts();
-						}
+					multipleWordString = multipleWordItem->singularNounString();
+
+					if( multipleWordString != NULL &&
+					strncmp( sentenceString, multipleWordString, strlen( multipleWordString ) ) == 0 )
+						return searchMultipleWordItem->nWordParts();
 					}
 
-				searchItem = searchItem->nextMultipleWordItem();
+				searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
 				}
 			}
 
 		return 0;
 		}
 
-	ResultType checkWordItemForUsage( WordItem *unusedWordItem )
-		{
-		MultipleWordItem *searchItem = firstActiveMultipleWordItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
-
-		if( unusedWordItem != NULL )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->multipleWordItem() == unusedWordItem )
-					return startError( functionNameString, NULL, "The multiple word item is still in use" );
-
-				searchItem = searchItem->nextMultipleWordItem();
-				}
-			}
-		else
-			return startError( functionNameString, NULL, "The given unused word item is undefined" );
-
-		return RESULT_OK;
-		}
-
 	ResultType addMultipleWord( unsigned short nWordParts, unsigned short wordTypeNr, WordItem *multipleWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addMultipleWord";
 
-		if( wordTypeNr > WORD_TYPE_UNDEFINED &&
-		wordTypeNr < NUMBER_OF_WORD_TYPES )
+		if( wordTypeNr <= NO_WORD_TYPE_NR ||
+		wordTypeNr >= NUMBER_OF_WORD_TYPES )
+			return startError( functionNameString, NULL, "The given word type number is undefined or out of bounds: ", wordTypeNr );
+
+		if( multipleWordItem == NULL )
+			return startError( functionNameString, NULL, "The given multiple word item is undefined" );
+
+		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
 			{
-			if( multipleWordItem != NULL )
-				{
-				if( commonVariables()->currentItemNr < MAX_ITEM_NR )
-					{
-					if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
-						{
-						if( addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, commonVariables()->currentLanguageNr, wordTypeNr, multipleWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-							return addError( functionNameString, NULL, "I failed to add an active multiple word item" );
-						}
-					}
-				else
-					return startError( functionNameString, NULL, "The current item number is undefined" );
-				}
-			else
-				return startError( functionNameString, NULL, "The given multiple word item is undefined" );
+			if( addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, commonVariables()->currentLanguageNr, wordTypeNr, multipleWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to add an active multiple word item" );
 			}
-		else
-			return startError( functionNameString, NULL, "The given word type number is undefined or out of bounds" );
+
+		return RESULT_OK;
+		}
+
+	ResultType checkWordItemForUsage( WordItem *unusedWordItem )
+		{
+		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
+		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
+
+		if( unusedWordItem == NULL )
+			return startError( functionNameString, NULL, "The given unused word item is undefined" );
+
+		while( searchMultipleWordItem != NULL )
+			{
+			if( searchMultipleWordItem->multipleWordItem() == unusedWordItem )
+				return startError( functionNameString, NULL, "The multiple word item is still in use" );
+
+			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
+			}
 
 		return RESULT_OK;
 		}
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		MultipleWordItem *searchItem = firstActiveMultipleWordItem();
+		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
-		while( searchItem != NULL )
+		while( searchMultipleWordItem != NULL )
 			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
+			if( searchMultipleWordItem->hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem->storeMultipleWordItemInFutureDatabase() != RESULT_OK )
+				if( searchMultipleWordItem->storeMultipleWordItemInFutureDatabase() != RESULT_OK )
 					return addError( functionNameString, NULL, "I failed to store a multiple word item in the database" );
 				}
 
-			searchItem = searchItem->nextMultipleWordItem();
+			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
 			}
 
 		return RESULT_OK;

@@ -1,0 +1,5 @@
+﻿A person is a man or a woman.
+Addison is a person.
+Addison is not a woman.
+Display the justification report about Addison.
+# To continue, click button «Clear your mind.» or «Restart.».

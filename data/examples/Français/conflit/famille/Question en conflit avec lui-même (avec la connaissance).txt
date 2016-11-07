@@ -1,5 +1,0 @@
-﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
-Dominique est un père ou une mère.
-Dominique est un père.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
-Est Dominique un homme et une femme?

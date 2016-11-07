@@ -1,0 +1,20 @@
+﻿* 
+* Mes hypothèses:
+< Un animal est probablement une créature.
+< 
+* 
+* Mes conclusions:
+< Un animal est un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
+< Une créature est un amphibien, un oiseau, un poisson, un mammifère, un reptile, un vertébré ou un invertébré.
+* 
+* Mes hypothèses:
+< Un vertébré est probablement une créature.
+< 
+* 
+* Mes conclusions:
+< Un animal est un annélide, un arthropode, un échinoderme, un mollusque, un protozoaire, un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
+< Une créature est un annélide, un arthropode, un échinoderme, un mollusque, un protozoaire, un amphibien, un oiseau, un poisson, un mammifère, un reptile, un vertébré ou un invertébré.
+* 
+* Mes hypothèses:
+< Un invertébré est probablement une créature.
+< 

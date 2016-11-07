@@ -1,7 +1,7 @@
 /*	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class WordTypeItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private boolean hasFeminineWordEnding_;
 	private boolean hasMasculineWordEnding_;
@@ -36,7 +36,7 @@ class WordTypeItem extends Item
 	private short wordTypeNr_;
 
 
-	// Private constructible variables
+	// Private constructed variables
 
 	private short generalizationWriteLevel_;
 	private short specificationWriteLevel_;
@@ -49,7 +49,7 @@ class WordTypeItem extends Item
 
 	// Private methods
 
-	private boolean hasIndefinitePhoneticVowelArticle( short indefiniteArticleParameter )
+	private boolean isIndefinitePhoneticVowelArticle( short indefiniteArticleParameter )
 		{
 		short phoneticVowelIndefiniteArticleParameter = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
 		WordItem phoneticVowelIndefiniteArticleWordItem;
@@ -101,30 +101,22 @@ class WordTypeItem extends Item
 		{
 		WordResultType wordResult = new WordResultType();
 
-		if( isAdjectiveParameter( adjectiveParameter ) )
-			{
-			if( isSingularNoun() )
-				{
-				if( adjectiveParameter_ == Constants.NO_ADJECTIVE_PARAMETER )
-					adjectiveParameter_ = adjectiveParameter;
-				else
-					{
-					if( adjectiveParameter_ != adjectiveParameter )
-						{
-						if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == Constants.RESULT_OK )
-							wordResult.hasFoundDifferentParameter = true;
-						else
-							addError( 1, null, itemString(), "I failed to write an interface notification about the use of a different adjective" );
-						}
-					}
-				}
-			else
-				startError( 1, null, itemString(), "I am not a singular noun" );
-			}
-		else
-			startError( 1, null, itemString(), "The given adjective parameter is not an adjective parameter" );
+		if( !isAdjectiveParameter( adjectiveParameter ) )
+			return startWordResultError( 1, null, itemString(), "The given adjective parameter is not an adjective parameter" );
 
-		wordResult.result = CommonVariables.result;
+		if( adjectiveParameter_ == Constants.NO_ADJECTIVE_PARAMETER )
+			adjectiveParameter_ = adjectiveParameter;
+		else
+			{
+			if( adjectiveParameter_ != adjectiveParameter )
+				{
+				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
+					return addWordResultError( 1, null, itemString(), "I failed to write an interface notification about the use of a different adjective" );
+
+				wordResult.hasFoundDifferentParameter = true;
+				}
+			}
+
 		return wordResult;
 		}
 
@@ -132,41 +124,56 @@ class WordTypeItem extends Item
 		{
 		WordResultType wordResult = new WordResultType();
 
-		if( isDefiniteArticleParameter( definiteArticleParameter ) )
-			{
-			if( isSingularNoun() )
-				{
-				if( definiteArticleParameter_ == Constants.NO_DEFINITE_ARTICLE_PARAMETER )
-					definiteArticleParameter_ = definiteArticleParameter;
-				else
-					{
-					if( definiteArticleParameter_ != definiteArticleParameter )
-						{
-						if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == Constants.RESULT_OK )
-							wordResult.hasFoundDifferentParameter = true;
-						else
-							addError( 1, null, itemString(), "I failed to write an interface notification about the use of a different defnite article" );
-						}
-					}
-				}
-			else
-				startError( 1, null, itemString(), "I am not a singular noun" );
-			}
-		else
-			startError( 1, null, itemString(), "The given definite article parameter is not a definite article parameter" );
+		if( !isDefiniteArticleParameter( definiteArticleParameter ) )
+			return startWordResultError( 1, null, itemString(), "The given definite article parameter is not a definite article parameter" );
 
-		wordResult.result = CommonVariables.result;
+		if( definiteArticleParameter_ == Constants.NO_DEFINITE_ARTICLE_PARAMETER )
+			definiteArticleParameter_ = definiteArticleParameter;
+		else
+			{
+			if( definiteArticleParameter_ != definiteArticleParameter )
+				{
+				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
+					return addWordResultError( 1, null, itemString(), "I failed to write an interface notification about the use of a different defnite article" );
+
+				wordResult.hasFoundDifferentParameter = true;
+				}
+			}
+
+		return wordResult;
+		}
+
+	private WordResultType setIndefiniteArticleParameter( short indefiniteArticleParameter )
+		{
+		WordResultType wordResult = new WordResultType();
+
+		if( !isIndefiniteArticleParameter( indefiniteArticleParameter ) )
+			return startWordResultError( 1, null, itemString(), "The given indefinite article parameter is not an indefinite article parameter" );
+
+		if( indefiniteArticleParameter_ == Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
+			indefiniteArticleParameter_ = indefiniteArticleParameter;
+		else
+			{
+			if( indefiniteArticleParameter_ != indefiniteArticleParameter )
+				{
+				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
+					return addWordResultError( 1, null, itemString(), "I failed to write an interface notification about the use of an indefinite article" );
+
+				wordResult.hasFoundDifferentParameter = true;
+				}
+			}
+
 		return wordResult;
 		}
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected WordTypeItem( boolean hasFeminineWordEnding, boolean hasMasculineWordEnding, boolean isProperNamePrecededByDefiniteArticle, short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, short wordTypeLanguageNr, short wordTypeNr, int wordTypeStringLength, String _wordTypeString, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		hasFeminineWordEnding_ = hasFeminineWordEnding;
 		hasMasculineWordEnding_ = hasMasculineWordEnding;
@@ -178,7 +185,7 @@ class WordTypeItem extends Item
 		wordTypeLanguageNr_ = wordTypeLanguageNr;
 		wordTypeNr_ = wordTypeNr;
 
-		// Private constructible variables
+		// Private constructed variables
 
 		generalizationWriteLevel_ = Constants.NO_WRITE_LEVEL;
 		specificationWriteLevel_ = Constants.NO_WRITE_LEVEL;
@@ -206,7 +213,7 @@ class WordTypeItem extends Item
 
 	// Protected virtual methods
 
-	protected void showString( boolean isReturnQueryToPosition )
+	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -216,7 +223,7 @@ class WordTypeItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
@@ -225,7 +232,7 @@ class WordTypeItem extends Item
 			}
 		}
 
-	protected boolean hasFoundParameter( int queryParameter )
+	protected boolean hasParameter( int queryParameter )
 		{
 		return ( adjectiveParameter_ == queryParameter ||
 				definiteArticleParameter_ == queryParameter ||
@@ -233,6 +240,7 @@ class WordTypeItem extends Item
 				generalizationWriteLevel_ == queryParameter ||
 				specificationWriteLevel_ == queryParameter ||
 				relationWriteLevel_ == queryParameter ||
+				wordTypeLanguageNr_ == queryParameter ||
 
 				( queryParameter == Constants.MAX_QUERY_PARAMETER &&
 
@@ -241,10 +249,11 @@ class WordTypeItem extends Item
 				indefiniteArticleParameter_ > Constants.NO_INDEFINITE_ARTICLE_PARAMETER ||
 				generalizationWriteLevel_ > Constants.NO_WRITE_LEVEL ||
 				specificationWriteLevel_ > Constants.NO_WRITE_LEVEL ||
-				relationWriteLevel_ > Constants.NO_WRITE_LEVEL ) ) );
+				relationWriteLevel_ > Constants.NO_WRITE_LEVEL ||
+				wordTypeLanguageNr_ > Constants.NO_LANGUAGE_NR ) ) );
 		}
 
-	protected boolean hasFoundWordType( short queryWordTypeNr )
+	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( wordTypeNr_ == queryWordTypeNr );
 		}
@@ -328,6 +337,26 @@ class WordTypeItem extends Item
 			relationWriteLevel_ = Constants.NO_WRITE_LEVEL;
 		}
 
+	protected void clearIndefiniteArticleParameter()
+		{
+		indefiniteArticleParameter_ = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
+		}
+
+	protected boolean hasAdjectiveParameter()
+		{
+		return ( adjectiveParameter_ > Constants.NO_ADJECTIVE_PARAMETER );
+		}
+
+	protected boolean hasDefiniteArticleParameter()
+		{
+		return ( definiteArticleParameter_ > Constants.NO_DEFINITE_ARTICLE_PARAMETER );
+		}
+
+	protected boolean hasIndefiniteArticleParameter()
+		{
+		return ( indefiniteArticleParameter_ > Constants.NO_INDEFINITE_ARTICLE_PARAMETER );
+		}
+
 	protected boolean hasFeminineWordEnding()
 		{
 		return hasFeminineWordEnding_;
@@ -336,6 +365,12 @@ class WordTypeItem extends Item
 	protected boolean hasMasculineWordEnding()
 		{
 		return hasMasculineWordEnding_;
+		}
+
+	protected boolean hasFeminineOrMasculineWordEnding()
+		{
+		return ( hasFeminineWordEnding_ ||
+				hasMasculineWordEnding_ );
 		}
 
 	protected boolean hasFeminineDefiniteArticleParameter()
@@ -384,7 +419,7 @@ class WordTypeItem extends Item
 		{
 		boolean isStringStartingWithVowel;
 		boolean isVowelIndefiniteArticle;
-		boolean hasIndefiniteArticleParameter = ( indefiniteArticleParameter_ > Constants.NO_INDEFINITE_ARTICLE_PARAMETER );
+		boolean isIndefiniteArticleParameter = ( indefiniteArticleParameter_ > Constants.NO_INDEFINITE_ARTICLE_PARAMETER );
 
 		if( isCheckingForEqualParameters &&
 		indefiniteArticleParameter_ == indefiniteArticleParameter )
@@ -392,9 +427,9 @@ class WordTypeItem extends Item
 
 		// Typically for English ('a' or 'an')
 		// If undefined, fall back to a simple phonetic vowel rule
-		if( hasIndefinitePhoneticVowelArticle( hasIndefiniteArticleParameter ? indefiniteArticleParameter_ : indefiniteArticleParameter ) )
+		if( isIndefinitePhoneticVowelArticle( isIndefiniteArticleParameter ? indefiniteArticleParameter_ : indefiniteArticleParameter ) )
 			{
-			isStringStartingWithVowel = isStartingWithPhoneticVowel( itemString() );
+			isStringStartingWithVowel = doesStringStartWithPhoneticVowel( itemString() );
 			isVowelIndefiniteArticle = isIndefiniteArticlePhoneticVowelParameter( indefiniteArticleParameter );
 
 			return ( ( !isStringStartingWithVowel &&	// 'a'
@@ -404,17 +439,17 @@ class WordTypeItem extends Item
 					isVowelIndefiniteArticle ) );
 			}
 
-		if( hasIndefiniteArticleParameter )
+		if( isIndefiniteArticleParameter )
 			return !isCheckingForEqualParameters;
 
 		return ( ( definiteArticleParameter_ != Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE &&
 				definiteArticleParameter_ != Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE ) ||
 
-				( ( definiteArticleParameter_ == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE &&
+				( definiteArticleParameter_ == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE &&
 				indefiniteArticleParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_FEMININE ) ||
 
 				( definiteArticleParameter_ == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE &&
-				indefiniteArticleParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE ) ) );
+				indefiniteArticleParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE ) );
 		}
 
 	protected boolean isProperNamePrecededByDefiniteArticle( short definiteArticleParameter )
@@ -473,9 +508,9 @@ class WordTypeItem extends Item
 				isIndefiniteArticleParameter( indefiniteArticleParameter_ ) );
 		}
 
-	protected boolean isSingularOrPluralNounWordType()
+	protected boolean isNoun()
 		{
-		return isSingularOrPluralNoun( wordTypeNr_ );
+		return isNounWordType( wordTypeNr_ );
 		}
 
 	protected boolean isSingularNoun()
@@ -561,136 +596,78 @@ class WordTypeItem extends Item
 		return wordTypeLanguageNr_;
 		}
 
-	protected byte createNewWordTypeString( String newWordTypeString )
-		{
-		if( newWordTypeString != null )
-			{
-			if( newWordTypeString.length() > 0 )
-				wordTypeString_ = newWordTypeString;
-			else
-				return startError( 1, null, itemString(), "The given new word type string is empty" );
-			}
-		else
-			return startError( 1, null, itemString(), "The given new word type string is undefined" );
-
-		return Constants.RESULT_OK;
-		}
-
 	protected byte markGeneralizationWordTypeAsWritten()
 		{
-		if( CommonVariables.currentWriteLevel < Constants.MAX_LEVEL )
-			{
-			if( generalizationWriteLevel_ == Constants.NO_WRITE_LEVEL )
-				generalizationWriteLevel_ = ++CommonVariables.currentWriteLevel;
-			else
-				return startError( 1, null, itemString(), "My write level is already assigned" );
-			}
-		else
+		if( CommonVariables.currentWriteLevel >= Constants.MAX_LEVEL )
 			return startSystemError( 1, null, itemString(), "Current write word level overflow" );
+
+		if( generalizationWriteLevel_ > Constants.NO_WRITE_LEVEL )
+			return startError( 1, null, itemString(), "My write level is already assigned" );
+
+		generalizationWriteLevel_ = ++CommonVariables.currentWriteLevel;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte markSpecificationWordTypeAsWritten()
 		{
-		if( CommonVariables.currentWriteLevel < Constants.MAX_LEVEL )
-			{
-			if( specificationWriteLevel_ == Constants.NO_WRITE_LEVEL )
-				specificationWriteLevel_ = ++CommonVariables.currentWriteLevel;
-			else
-				return startError( 1, null, itemString(), "My write level is already assigned" );
-			}
-		else
+		if( CommonVariables.currentWriteLevel >= Constants.MAX_LEVEL )
 			return startSystemError( 1, null, itemString(), "Current write word level overflow" );
+
+		if( specificationWriteLevel_ > Constants.NO_WRITE_LEVEL )
+			return startError( 1, null, itemString(), "My write level is already assigned" );
+
+		specificationWriteLevel_ = ++CommonVariables.currentWriteLevel;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte markRelationWordTypeAsWritten()
 		{
-		if( CommonVariables.currentWriteLevel < Constants.MAX_LEVEL )
-			{
-			if( relationWriteLevel_ == Constants.NO_WRITE_LEVEL )
-				relationWriteLevel_ = ++CommonVariables.currentWriteLevel;
-			else
-				return startError( 1, null, itemString(), "My write level is already assigned" );
-			}
-		else
+		if( CommonVariables.currentWriteLevel >= Constants.MAX_LEVEL )
 			return startSystemError( 1, null, itemString(), "Current write word level overflow" );
+
+		if( relationWriteLevel_ > Constants.NO_WRITE_LEVEL )
+			return startError( 1, null, itemString(), "My write level is already assigned" );
+
+		relationWriteLevel_ = ++CommonVariables.currentWriteLevel;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte hideWordType( String hideKey )
 		{
-		if( hideKey_ == null )
-			hideKey_ = hideKey;
-		else
+		if( hideKey_ != null )
 			return startError( 1, null, itemString(), "This word type is already hidden" );
+
+		hideKey_ = hideKey;
 
 		return Constants.RESULT_OK;
 		}
 
-	protected WordResultType setIndefiniteArticleParameter( short indefiniteArticleParameter )
+	protected WordResultType setParametersOfSingularNoun( short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter )
 		{
 		WordResultType wordResult = new WordResultType();
 
-		if( indefiniteArticleParameter == Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
-			indefiniteArticleParameter_ = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
-		else
-			{
-			if( isIndefiniteArticleParameter( indefiniteArticleParameter ) )
-				{
-				if( isSingularNoun() )
-					{
-					if( indefiniteArticleParameter_ == Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
-						indefiniteArticleParameter_ = indefiniteArticleParameter;
-					else
-						{
-						if( indefiniteArticleParameter_ != indefiniteArticleParameter )
-							{
-							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) == Constants.RESULT_OK )
-								wordResult.hasFoundDifferentParameter = true;
-							else
-								addError( 1, null, itemString(), "I failed to write an interface notification about the use of an indefinite article" );
-							}
-						}
-					}
-				else
-					startError( 1, null, itemString(), "I am not a singular noun" );
-				}
-			else
-				startError( 1, null, itemString(), "The given indefinite article parameter is not an indefinite article parameter" );
-			}
-
-		wordResult.result = CommonVariables.result;
-		return wordResult;
-		}
-
-	protected WordResultType setParameter( short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter )
-		{
-		WordResultType wordResult = new WordResultType();
+		if( !isSingularNoun() )
+			return startWordResultError( 1, null, itemString(), "I am not a singular noun" );
 
 		if( adjectiveParameter > Constants.NO_ADJECTIVE_PARAMETER )
 			{
 			if( ( wordResult = setAdjectiveParameter( adjectiveParameter ) ).result != Constants.RESULT_OK )
-				addError( 1, null, itemString(), "I failed to set my adjective parameter" );
+				return addWordResultError( 1, null, itemString(), "I failed to set my adjective parameter" );
 			}
-		else
+
+		if( definiteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER )
 			{
-			if( definiteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER )
-				{
-				if( ( wordResult = setDefiniteArticleParameter( definiteArticleParameter ) ).result != Constants.RESULT_OK )
-					addError( 1, null, itemString(), "I failed to set my definite article parameter" );
-				}
-			else
-				{
-				if( indefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
-					{
-					if( ( wordResult = setIndefiniteArticleParameter( indefiniteArticleParameter ) ).result != Constants.RESULT_OK )
-						addError( 1, null, itemString(), "I failed to set the indefinite article parameter of a singular noun" );
-					}
-				}
+			if( ( wordResult = setDefiniteArticleParameter( definiteArticleParameter ) ).result != Constants.RESULT_OK )
+				return addWordResultError( 1, null, itemString(), "I failed to set my definite article parameter" );
+			}
+
+		if( indefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
+			{
+			if( ( wordResult = setIndefiniteArticleParameter( indefiniteArticleParameter ) ).result != Constants.RESULT_OK )
+				return addWordResultError( 1, null, itemString(), "I failed to set my indefinite article parameter" );
 			}
 
 		return wordResult;
@@ -711,15 +688,15 @@ class WordTypeItem extends Item
 
 	protected WordTypeItem nextWordTypeItem( short wordTypeNr )
 		{
-		WordTypeItem searchItem = nextCurrentLanguageWordTypeItem();
+		WordTypeItem searchWordTypeItem = nextCurrentLanguageWordTypeItem();
 
-		while( searchItem != null )
+		while( searchWordTypeItem != null )
 			{
-			if( wordTypeNr == Constants.WORD_TYPE_UNDEFINED ||
-			searchItem.wordTypeNr_ == wordTypeNr )
-				return searchItem;
+			if( wordTypeNr == Constants.NO_WORD_TYPE_NR ||
+			searchWordTypeItem.wordTypeNr_ == wordTypeNr )
+				return searchWordTypeItem;
 
-			searchItem = searchItem.nextCurrentLanguageWordTypeItem();
+			searchWordTypeItem = searchWordTypeItem.nextCurrentLanguageWordTypeItem();
 			}
 
 		return null;

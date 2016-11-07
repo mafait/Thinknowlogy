@@ -1,0 +1,2 @@
+﻿! Esta frase no se aceptada, ya que es semánticamente ambiguas: Tiene múltiples especificaciones, así como múltiples relaciones.
+! 

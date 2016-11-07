@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To temporarily store scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,12 +29,12 @@ class ScoreItem : private Item
 	friend class AdminSolve;
 	friend class ScoreList;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	unsigned short assignmentLevel_;
 
 	protected:
-	// Protected loadable variables
+	// Protected initialized variables
 
 	bool isMarked;
 	bool isChecked;
@@ -54,18 +54,18 @@ class ScoreItem : private Item
 	private:
 	// Private functions
 
-	ScoreItem *possibilityItem( bool isIncludingThisItem )
+	ScoreItem *possibilityScoreItem( bool isIncludingThisItem )
 		{
 		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
-		ScoreItem *searchItem = ( isIncludingThisItem ? this : nextScoreItem() );
+		ScoreItem *searchScoreItem = ( isIncludingThisItem ? this : nextScoreItem() );
 
-		while( searchItem != NULL &&
-		searchItem->assignmentLevel_ >= currentAssignmentLevel )
+		while( searchScoreItem != NULL &&
+		searchScoreItem->assignmentLevel_ >= currentAssignmentLevel )
 			{
-			if( searchItem->assignmentLevel_ == currentAssignmentLevel )
-				return searchItem;
+			if( searchScoreItem->assignmentLevel_ == currentAssignmentLevel )
+				return searchScoreItem;
 
-			searchItem = searchItem->nextScoreItem();
+			searchScoreItem = searchScoreItem->nextScoreItem();
 			}
 
 		return NULL;
@@ -73,17 +73,17 @@ class ScoreItem : private Item
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	ScoreItem( bool _isChecked, unsigned short assignmentLevel, unsigned int _oldSatisfiedScore, unsigned int _newSatisfiedScore, unsigned int _oldDissatisfiedScore, unsigned int _newDissatisfiedScore, unsigned int _oldNotBlockingScore, unsigned int _newNotBlockingScore, unsigned int _oldBlockingScore, unsigned int _newBlockingScore, SelectionItem *_selectionReference, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ScoreItem", commonVariables, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		assignmentLevel_ = assignmentLevel;
 
-		// Protected loadable variables
+		// Protected initialized variables
 
 		isMarked = false;
 		isChecked = _isChecked;
@@ -103,7 +103,7 @@ class ScoreItem : private Item
 
 	// Protected virtual functions
 
-	virtual bool hasFoundParameter( unsigned int queryParameter )
+	virtual bool hasParameter( unsigned int queryParameter )
 		{
 		return ( assignmentLevel_ == queryParameter ||
 				oldSatisfiedScore == queryParameter ||
@@ -128,7 +128,7 @@ class ScoreItem : private Item
 				newBlockingScore > NO_SCORE ) ) );
 		}
 
-	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
+	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		return ( referenceSelectionItem == NULL ? false :
 				( querySentenceNr == NO_SENTENCE_NR ? true : referenceSelectionItem->creationSentenceNr() == querySentenceNr ) &&
@@ -267,24 +267,19 @@ class ScoreItem : private Item
 		return assignmentLevel_;
 		}
 
-	ScoreItem *firstPossibilityItem()
+	ScoreItem *firstPossibilityScoreItem()
 		{
-		return possibilityItem( true );
+		return possibilityScoreItem( true );
 		}
 
-	ScoreItem *nextPossibilityItem()
+	ScoreItem *nextPossibilityScoreItem()
 		{
-		return possibilityItem( false );
+		return possibilityScoreItem( false );
 		}
 
 	ScoreItem *nextScoreItem()
 		{
 		return (ScoreItem *)nextItem;
-		}
-
-	SelectionItem *scoreReference()
-		{
-		return referenceSelectionItem;
 		}
 	};
 

@@ -4,8 +4,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een ouder is waarschijnlijk een persoon.
 < Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -16,8 +16,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een kind is waarschijnlijk een persoon.
 < Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -75,3 +75,59 @@
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een vader. Omdat:
+<	- Is Jan de vader van Paul?
+< Jan is waarschijnlijk een man. Omdat:
+<	- Jan is waarschijnlijk een vader.
+<	- Iedere vader is een man.
+< Jan is mogelijk een persoon. Omdat:
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is waarschijnlijk een man.
+* 	en:
+<	- Jan is waarschijnlijk een vader.
+<	- Een vader is waarschijnlijk een persoon.
+< Jan is misschien geen vrouw. Omdat:
+<	- Jan is mogelijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is waarschijnlijk een man.
+< 
+* 
+* Mijn conclusies:
+< Anna is een vrouw. Omdat:
+<	- Anna is een moeder.
+<	- Iedere moeder is een vrouw.
+* 
+* Mijn veronderstellingen:
+< Anna is waarschijnlijk een persoon. Omdat:
+<	- Iedere persoon is een man of een vrouw.
+<	- Anna is een vrouw.
+* 	en:
+<	- Anna is een moeder.
+<	- Een moeder is waarschijnlijk een persoon.
+* 	en:
+<	- Anna is waarschijnlijk een ouder.
+<	- Een ouder is waarschijnlijk een persoon.
+< Anna is waarschijnlijk geen man. Omdat:
+<	- Anna is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+<	- Anna is een vrouw.
+* 	en:
+<	- Anna is waarschijnlijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+<	- Anna is een vrouw.
+< Anna is waarschijnlijk een ouder. Omdat:
+<	- Iedere ouder is een vader of een moeder.
+<	- Anna is een moeder.
+< Anna is waarschijnlijk deel van een gezin. Omdat:
+<	- Anna is waarschijnlijk een ouder.
+<	- Ouders zijn deel van ieder gezin.
+< Anna is waarschijnlijk geen vader. Omdat:
+<	- Anna is waarschijnlijk een ouder.
+<	- Iedere ouder is een vader of een moeder.
+<	- Anna is een moeder.
+< Anna heeft mogelijk een kind. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Anna is waarschijnlijk een ouder.
+< 

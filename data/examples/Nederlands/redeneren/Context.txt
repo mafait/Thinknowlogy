@@ -1,0 +1,6 @@
+﻿# A context-sensitive definition.
+
+Jan is een baker.
+Jan is de vader van Paul, Johan en Laura.
+De vader of Paul, Johan en Laura is geen baker.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

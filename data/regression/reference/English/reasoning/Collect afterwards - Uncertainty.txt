@@ -1,0 +1,62 @@
+﻿* 
+* My assumptions:
+< A father and a mother are probably parent [plural of 'parent' is unknown].
+< 
+* 
+* My assumptions:
+< A father and a mother are probably parents. Because:
+<	- A mother is probably a parent.
+* 	and:
+<	- Every father is a parent.
+< 
+* 
+* My conclusions:
+< John is a parent.
+< 
+* 
+* My conclusions:
+< John is a parent. Because:
+<	- John is a father.
+<	- Every father is a parent.
+< 
+* 
+* My assumptions:
+< Anna is probably a parent.
+< 
+* 
+* My assumptions:
+< Anna is probably a parent. Because:
+<	- Anna is a mother.
+<	- A mother is probably a parent.
+< 
+* 
+* My assumptions:
+< A boy and a girl are possibly child [plural of 'child' is unknown].
+< 
+* 
+* My assumptions:
+< A boy and a girl are possibly children. Because:
+<	- A girl is probably a child.
+* 	and:
+<	- A boy is possibly a child.
+< 
+* 
+* My assumptions:
+< Paul is possibly a child.
+< 
+* 
+* My assumptions:
+< Paul is possibly a child. Because:
+<	- Paul is a boy.
+<	- A boy is possibly a child.
+< 
+* 
+* My assumptions:
+< Laura is possibly a child.
+< 
+* 
+* My assumptions:
+< Laura is possibly a child. Because:
+<	- Laura is probably a girl.
+<	- A girl is probably a child.
+< 

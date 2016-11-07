@@ -1,0 +1,25 @@
+﻿Paul is a son of John.
+John has a son, called Paul.
+Anna has a daughter, called Laura.
+Laura is a daughter of Anna.
+
+Every car has an engine.
+An engine is part of every car.
+A sail is part of every sailboat.
+Every sailboat has a sail.
+
+James was the father of Peter.
+Peter has no father anymore.
+Peter had a father, called James.
+
+Every person is a man or a woman.
+Addison is a person.
+Addison is a man or a woman.
+
+Bill Clinton is the president of the United States.
+The United States has a president, called Bill Clinton.
+Barack Obama is the president of the United States.
+The United States has a new president, called Barack Obama.
+# The next sentence is already confirmed
+The United States has a previous president, called Bill Clinton.
+# To continue, click button «Clear your mind.» or «Restart.».

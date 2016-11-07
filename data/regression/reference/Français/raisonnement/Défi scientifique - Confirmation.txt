@@ -1,0 +1,71 @@
+﻿* 
+* Mes conclusions:
+< Olivier a un fils, appelé Pascal.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Olivier a un fils, appelé Pascal.
+< 
+* 
+* Mes conclusions:
+< Lorraine est une fille de Amélie.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Lorraine est une fille de Amélie.
+< 
+* 
+* Mes conclusions:
+< Un moteur est partie de chaque voiture.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Un moteur est partie de chaque voiture.
+< 
+* 
+* Mes conclusions:
+< Chaque voilier a une voile.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Chaque voilier a une voile.
+< 
+* 
+* Mes conclusions:
+< Antoine n'a aucun père plus.
+< Antoine avait un père, appelé Philippe.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Antoine n'a aucun père plus.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Antoine avait un père, appelé Philippe.
+< 
+* 
+* Mes questions:
+< Est Dominique un homme ou une femme?
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un président, appelé Bill Clinton.
+< 
+* 
+* Le mot «Bill Clinton» est sémantiquement ambiguë:
+* - Soit l'entité réapparu,
+* - Ou il ya plusieurs instances de cette entité.
+* 
+* Dans ce dernier cas, s'il vous plaît améliorer la spécification des entités impliquées.
+* 
+* Mes conclusions qui sont confirmées:
+< Les États-Unis a un président, appelé Bill Clinton.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un président, appelé Barack Obama.
+< 
+* 
+* Mes conclusions qui sont confirmées:
+< Les États-Unis a un président, appelé Barack Obama.
+< 

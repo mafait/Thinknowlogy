@@ -1,0 +1,6 @@
+﻿Lees het bestand "Nederlands/gebruiker/gezin".
+Johan is een zoon van Jan en Anna.
+Laura is een dochter van Jan en Anna.
+Undo.
+Johan is een zoon van Jan en Anna.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

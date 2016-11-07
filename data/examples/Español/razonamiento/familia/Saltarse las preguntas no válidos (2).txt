@@ -1,0 +1,10 @@
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Luisa es una mujer.
+Ana es la madre de Pablo, José y Luisa.
+# Extra test
+Pablo es el hijo de Juan y Ana.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Ana.
+Mostrar el informe de justificación sobre Pablo.
+Mostrar el informe de justificación sobre Luisa.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

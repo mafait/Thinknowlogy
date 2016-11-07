@@ -1,0 +1,11 @@
+﻿Iedere vader is een ouder.
+Een moeder is waarschijnlijk een ouder.
+Toon de verantwoordingsrapportage over ouders.
+Jan is een vader.
+Anna is een moeder.
+Een jongen is waarschijnlijk een kind.
+Een meisje is mogelijk een kind.
+Toon de verantwoordingsrapportage over kinderen.
+Paul is een jongen.
+Laura is een meisje.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

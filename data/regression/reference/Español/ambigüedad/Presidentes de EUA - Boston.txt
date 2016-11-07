@@ -1,0 +1,76 @@
+﻿* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado George Bush.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un nuevo presidente, llamado Bill Clinton.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+< 
+< 
+< Especificaciones:
+< Bill Clinton es el corriente presidente de los Estados Unidos.
+< George Bush es el anterior presidente de los Estados Unidos.
+< Los Estados Unidos tiene un presidente, llamado Bill Clinton.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+< 
+* Sé.
+* 
+* 
+* La palabra "George Bush" es semánticamente ambiguas:
+* - la entidad que reapareció,
+* - o si hay varias instancias de esta entidad.
+* 
+* En este último caso, por favor, mejorar la especificación de las entidades involucradas.
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un nuevo presidente, llamado George Bush.
+< Los Estados Unidos tiene un anterior presidente, llamado Bill Clinton.
+< Los Estados Unidos tenido un presidente, llamado George Bush.
+< 
+< 
+< Especificaciones:
+< Bill Clinton es el anterior presidente de los Estados Unidos.
+< George Bush es el corriente presidente de los Estados Unidos.
+< George Bush era presidente de los Estados Unidos.
+< Los Estados Unidos tiene un presidente, llamado George Bush.
+< Los Estados Unidos tiene un anterior presidente, llamado Bill Clinton.
+< Los Estados Unidos tenido un presidente, llamado George Bush.
+< 
+* Sé.
+* 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un nuevo presidente, llamado Barack Obama.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+< Los Estados Unidos tenido un presidente, llamado Bill Clinton.
+< 
+< 
+< Especificaciones:
+< Barack Obama es el corriente presidente de los Estados Unidos.
+< Bill Clinton era presidente de los Estados Unidos.
+< George Bush es el anterior presidente de los Estados Unidos.
+< George Bush era presidente de los Estados Unidos.
+< Los Estados Unidos tiene un presidente, llamado Barack Obama.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+< Los Estados Unidos tenido un presidente, llamado George Bush.
+< Los Estados Unidos tenido un presidente, llamado Bill Clinton.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un ciudad, llamado Boston.
+< 
+* 
+* La palabra "Boston" es semánticamente ambiguas. Hay varias instancias de esta entidad.
+* 
+* Mis conclusiones:
+< Los Reino Unido tiene un ciudad, llamado Boston.
+< 
+* 
+* Su información:
+< Boston es ciudad de tanto los Estados Unidos y los Reino Unido.
+* 
+* Información relacionada:
+< Los Reino Unido tiene un ciudad, llamado Boston.
+< Los Estados Unidos tiene un ciudad, llamado Boston.
+< 

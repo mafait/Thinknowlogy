@@ -2,7 +2,7 @@
  *	Supports class:	AdminItem
  *	Purpose:		To write justification reports for the
  *					self-generated knowledge
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,7 +24,7 @@
 
 class AdminWriteJustification
 	{
-	// Private constructible variables
+	// Private constructed variables
 
 	private boolean isWritingSeparator_;
 
@@ -42,23 +42,19 @@ class AdminWriteJustification
 		{
 		WordItem feminineOrMasculineProperNameEndingWordItem;
 
-		if( writeJustificationItem != null )
-			{
-			if( ( feminineOrMasculineProperNameEndingWordItem = ( primarySpecificationItem != null && primarySpecificationItem.isGeneralizationProperName() && primarySpecificationItem.isPossessive() ? primarySpecificationItem.generalizationWordItem() : writeJustificationItem.myWordItem() ) ) != null )
-				{
-				if( feminineOrMasculineProperNameEndingWordItem != lastWrittenFeminineOrMasculineProperNameEndingWordItem_ )
-					{
-					if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_WRITE_INDENTED, Constants.INTERFACE_JUSTIFICATION_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING, feminineOrMasculineProperNameEndingWordItem.anyWordTypeString(), ( feminineOrMasculineProperNameEndingWordItem.hasFeminineProperNameEnding() ? Constants.INTERFACE_JUSTIFICATION_FEMININE_PROPER_NAME_ENDING : Constants.INTERFACE_JUSTIFICATION_MASCULINE_PROPER_NAME_ENDING ) ) == Constants.RESULT_OK )
-						lastWrittenFeminineOrMasculineProperNameEndingWordItem_ = feminineOrMasculineProperNameEndingWordItem;
-					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification sentence start string" );
-					}
-				}
-			else
-				return adminItem_.startError( 1, moduleNameString_, "I couldn't find the feminine or masculine proper name ending word" );
-			}
-		else
+		if( writeJustificationItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given write justification item is undefined" );
+
+		if( ( feminineOrMasculineProperNameEndingWordItem = ( primarySpecificationItem != null && primarySpecificationItem.isGeneralizationProperName() && primarySpecificationItem.isPossessive() ? primarySpecificationItem.generalizationWordItem() : writeJustificationItem.myWordItem() ) ) == null )
+			return adminItem_.startError( 1, moduleNameString_, "I couldn't find the feminine or masculine proper name ending word" );
+
+		if( feminineOrMasculineProperNameEndingWordItem != lastWrittenFeminineOrMasculineProperNameEndingWordItem_ )
+			{
+			if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_WRITE_INDENTED, Constants.INTERFACE_JUSTIFICATION_FEMININE_OR_MASCULINE_PROPER_NAME_ENDING, feminineOrMasculineProperNameEndingWordItem.anyWordTypeString(), ( feminineOrMasculineProperNameEndingWordItem.hasFeminineProperNameEnding() ? Constants.INTERFACE_JUSTIFICATION_FEMININE_PROPER_NAME_ENDING : Constants.INTERFACE_JUSTIFICATION_MASCULINE_PROPER_NAME_ENDING ) ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification sentence start string" );
+
+			lastWrittenFeminineOrMasculineProperNameEndingWordItem_ = feminineOrMasculineProperNameEndingWordItem;
+			}
 
 		return Constants.RESULT_OK;
 		}
@@ -73,94 +69,76 @@ class AdminWriteJustification
 		WordItem generalizationWordItem;
 		WordItem primaryGeneralizationWordItem = null;
 
-		if( writeJustificationItem != null )
-			{
-			if( isWritingPrimarySpecification )
-				{
-				if( ( primarySpecificationItem = writeJustificationItem.primarySpecificationItem() ) != null )
-					{
-					if( ( primaryGeneralizationWordItem = primarySpecificationItem.generalizationWordItem() ) != null )
-						{
-						if( !primarySpecificationItem.isHiddenSpanishSpecification() )
-							{
-							if( primaryGeneralizationWordItem.writeJustificationSpecification( ( !primarySpecificationItem.isExclusiveSpecification() && !primarySpecificationItem.isPossessive() ), primarySpecificationItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to write the definition justification specification" );
-							}
-						else
-							return adminItem_.startError( 1, moduleNameString_, "The primary specification item is a hidden specification" );
-						}
-					else
-						return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given primary specification item is undefined" );
-					}
+		if( writeJustificationItem == null )
+			return adminItem_.startError( 1, moduleNameString_, "The given write justification item is undefined" );
 
-				if( !isOnlyWritingPrimarySpecification &&
-				( anotherPrimarySpecificationItem = writeJustificationItem.anotherPrimarySpecificationItem() ) != null )
-					{
-					if( ( generalizationWordItem = anotherPrimarySpecificationItem.generalizationWordItem() ) != null )
-						{
-						if( !anotherPrimarySpecificationItem.isHiddenSpanishSpecification() )
-							{
-							if( generalizationWordItem.writeJustificationSpecification( false, anotherPrimarySpecificationItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to write the another definition justification specification" );
-							}
-						else
-							return adminItem_.startError( 1, moduleNameString_, "The another primary specification item is a hidden specification" );
-						}
-					else
-						return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given another primary specification item is undefined" );
-					}
+		if( isWritingPrimarySpecification )
+			{
+			if( ( primarySpecificationItem = writeJustificationItem.primarySpecificationItem() ) != null )
+				{
+				if( ( primaryGeneralizationWordItem = primarySpecificationItem.generalizationWordItem() ) == null )
+					return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given primary specification item is undefined" );
+
+				if( primarySpecificationItem.isHiddenSpanishSpecification() )
+					return adminItem_.startError( 1, moduleNameString_, "The primary specification item is a hidden specification" );
+
+				if( primaryGeneralizationWordItem.writeJustificationSpecification( ( !primarySpecificationItem.isExclusiveSpecification() && !primarySpecificationItem.isPossessive() ), primarySpecificationItem ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the definition justification specification" );
 				}
 
-			if( !isOnlyWritingPrimarySpecification )
+			if( !isOnlyWritingPrimarySpecification &&
+			( anotherPrimarySpecificationItem = writeJustificationItem.anotherPrimarySpecificationItem() ) != null )
 				{
-				if( ( secondarySpecificationItem = writeJustificationItem.secondarySpecificationItem() ) != null )
-					{
-					if( ( generalizationWordItem = secondarySpecificationItem.generalizationWordItem() ) != null )
-						{
-						if( !secondarySpecificationItem.isHiddenSpanishSpecification() )
-							{
-							isWritingCurrentSpecificationWordOnly = ( secondarySpecificationItem.isPartOf() ||
+				if( ( generalizationWordItem = anotherPrimarySpecificationItem.generalizationWordItem() ) == null )
+					return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given another primary specification item is undefined" );
 
-																	( !secondarySpecificationItem.isExclusiveSpecification() &&
-																	secondarySpecificationItem.isGeneralizationProperName() &&
-																	!secondarySpecificationItem.isPossessive() ) );
+				if( anotherPrimarySpecificationItem.isHiddenSpanishSpecification() )
+					return adminItem_.startError( 1, moduleNameString_, "The another primary specification item is a hidden specification" );
 
-							if( generalizationWordItem.writeJustificationSpecification( isWritingCurrentSpecificationWordOnly, secondarySpecificationItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to write the secondary justification specification" );
-							}
-						else
-							return adminItem_.startError( 1, moduleNameString_, "The secondary specification item is a hidden specification" );
-						}
-					else
-						return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given secondary specification item is undefined" );
-					}
-
-				if( ( anotherSecondarySpecificationItem = writeJustificationItem.anotherSecondarySpecificationItem() ) != null )
-					{
-					if( ( generalizationWordItem = anotherSecondarySpecificationItem.generalizationWordItem() ) != null )
-						{
-						if( !anotherSecondarySpecificationItem.isHiddenSpanishSpecification() )
-							{
-							if( generalizationWordItem.writeJustificationSpecification( false, anotherSecondarySpecificationItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to write the another secondary justification specification" );
-							}
-						else
-							return adminItem_.startError( 1, moduleNameString_, "The another secondary specification item is a hidden specification" );
-						}
-					else
-						return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given another secondary specification item is undefined" );
-					}
-
-				if( isWritingPrimarySpecification &&
-				writeJustificationItem.hasFeminineOrMasculineProperNameEnding() )
-					{
-					if( writeFeminineOrMasculineProperNameEnding( writeJustificationItem, primarySpecificationItem ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to write the feminine or masculine proper name ending" );
-					}
+				if( generalizationWordItem.writeJustificationSpecification( false, anotherPrimarySpecificationItem ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the another definition justification specification" );
 				}
 			}
-		else
-			return adminItem_.startError( 1, moduleNameString_, "The given write justification item is undefined" );
+
+		if( !isOnlyWritingPrimarySpecification )
+			{
+			if( ( secondarySpecificationItem = writeJustificationItem.secondarySpecificationItem() ) != null )
+				{
+				if( ( generalizationWordItem = secondarySpecificationItem.generalizationWordItem() ) == null )
+					return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given secondary specification item is undefined" );
+
+				if( secondarySpecificationItem.isHiddenSpanishSpecification() )
+					return adminItem_.startError( 1, moduleNameString_, "The secondary specification item is a hidden specification" );
+
+				isWritingCurrentSpecificationWordOnly = ( secondarySpecificationItem.isPartOf() ||
+
+														( !secondarySpecificationItem.isExclusiveSpecification() &&
+														secondarySpecificationItem.isGeneralizationProperName() &&
+														!secondarySpecificationItem.isPossessive() ) );
+
+				if( generalizationWordItem.writeJustificationSpecification( isWritingCurrentSpecificationWordOnly, secondarySpecificationItem ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the secondary justification specification" );
+				}
+
+			if( ( anotherSecondarySpecificationItem = writeJustificationItem.anotherSecondarySpecificationItem() ) != null )
+				{
+				if( ( generalizationWordItem = anotherSecondarySpecificationItem.generalizationWordItem() ) == null )
+					return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given another secondary specification item is undefined" );
+
+				if( anotherSecondarySpecificationItem.isHiddenSpanishSpecification() )
+					return adminItem_.startError( 1, moduleNameString_, "The another secondary specification item is a hidden specification" );
+
+				if( generalizationWordItem.writeJustificationSpecification( false, anotherSecondarySpecificationItem ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the another secondary justification specification" );
+				}
+
+			if( isWritingPrimarySpecification &&
+			writeJustificationItem.hasFeminineOrMasculineProperNameEnding() )
+				{
+				if( writeFeminineOrMasculineProperNameEnding( writeJustificationItem, primarySpecificationItem ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the feminine or masculine proper name ending" );
+				}
+			}
 
 		return Constants.RESULT_OK;
 		}
@@ -179,107 +157,103 @@ class AdminWriteJustification
 		SpecificationItem previousSecondarySpecificationItem = null;
 		WordItem generalizationWordItem;
 
-		if( startJustificationItem != null )
-			{
-			currentJustificationItem = startJustificationItem;
+		if( startJustificationItem == null )
+			return adminItem_.startError( 1, moduleNameString_, "The given start justification item is undefined" );
 
-			do	{
-				isExclusiveSecondarySpecification = false;
-				isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = false;
-				isOnlyWritingPrimarySpecification = false;
-				isQuestionJustification = currentJustificationItem.isQuestionJustification();
+		currentJustificationItem = startJustificationItem;
 
-				primarySpecificationItem = currentJustificationItem.primarySpecificationItem();
+		do	{
+			isExclusiveSecondarySpecification = false;
+			isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = false;
+			isOnlyWritingPrimarySpecification = false;
+			isQuestionJustification = currentJustificationItem.isQuestionJustification();
 
-				if( ( secondarySpecificationItem = currentJustificationItem.secondarySpecificationItem() ) != null )
+			primarySpecificationItem = currentJustificationItem.primarySpecificationItem();
+
+			if( ( secondarySpecificationItem = currentJustificationItem.secondarySpecificationItem() ) != null )
+				{
+				if( secondarySpecificationItem.isExclusiveSpecification() )
+					isExclusiveSecondarySpecification = true;
+				}
+
+			if( !isQuestionJustification &&
+			primarySpecificationItem != null &&
+			primarySpecificationItem.hasRelationContext() )
+				{
+				isWritingPrimarySpecification = true;
+				isOnlyWritingPrimarySpecification = ( currentJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() != null );
+
+				if( primarySpecificationItem.isSpecificationWordSpanishAmbiguous() &&
+				primarySpecificationItem.isPossessiveReversibleConclusion() &&
+				primarySpecificationItem.hasSpecificationNonCompoundCollection() &&
+				primarySpecificationItem.isPossessive() &&
+
+				( currentJustificationItem.isSpecificationSubstitutionAssumption() ||
+				currentJustificationItem.isExclusiveSpecificationSubstitutionAssumption() ) &&
+
+				primarySpecificationItem.hasOnlyOneRelationWord() )
 					{
-					if( secondarySpecificationItem.isExclusiveSpecification() )
-						isExclusiveSecondarySpecification = true;
-					}
-
-				if( !isQuestionJustification &&
-				primarySpecificationItem != null &&
-				primarySpecificationItem.hasRelationContext() )
-					{
-					isWritingPrimarySpecification = true;
-					isOnlyWritingPrimarySpecification = ( currentJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() != null );
-
-					if( primarySpecificationItem.isSpecificationWordSpanishAmbiguous() &&
-					primarySpecificationItem.isPossessiveReversibleConclusion() &&
-					primarySpecificationItem.hasSpecificationNonCompoundCollection() &&
-					primarySpecificationItem.isPossessive() &&
-
-					( currentJustificationItem.isSpecificationSubstitutionAssumption() ||
-					currentJustificationItem.isExclusiveSpecificationSubstitutionAssumption() ) &&
-
-					adminItem_.nContextWordsInAllWords( primarySpecificationItem.relationContextNr(), primarySpecificationItem.specificationWordItem() ) == 1 )
-						{
-						isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = true;
-						isWritingSeparator_ = false;
-						}
-					}
-
-				if( !isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion )
-					{
-					if( isWritingPrimarySpecification ||
-
-					( ( !isQuestionJustification &&
-
-					( primarySpecificationItem == null ||
-
-					( isFirstTime &&
-					primarySpecificationItem != previousPrimarySpecificationItem_ ) ) ) ||
-
-					( !isExclusiveSecondarySpecification &&
-					primarySpecificationItem != null &&
-					secondarySpecificationItem != null &&
-					previousPrimarySpecificationItem_ != null &&
-					!primarySpecificationItem.isCorrectedAssumption() &&
-					secondarySpecificationItem != previousSecondarySpecificationItem &&
-					primarySpecificationItem.specificationCollectionNr() == previousPrimarySpecificationItem_.specificationCollectionNr() &&
-
-					// Skip possessive secondary specifications without relation
-					( !secondarySpecificationItem.isPossessive() ||
-					secondarySpecificationItem.hasRelationContext() ) ) ) )
-						{
-						if( isWritingExtraSeparator )
-							{
-							if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_JUSTIFICATION_AND ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to write an extra justification string" );
-							}
-
-						if( writeSpecificationJustifications( isOnlyWritingPrimarySpecification, isWritingPrimarySpecification, currentJustificationItem ) == Constants.RESULT_OK )
-							{
-							isWritingSeparator_ = true;
-							isFirstTime = false;
-							isWritingPrimarySpecification = false;
-							currentJustificationItem.hasJustificationBeenWritten = true;
-
-							previousPrimarySpecificationItem_ = primarySpecificationItem;
-							previousSecondarySpecificationItem = secondarySpecificationItem;
-
-							if( secondarySpecificationItem != null &&
-							primarySpecificationItem != null &&
-							primarySpecificationItem.isExclusiveSpecification() &&
-							primarySpecificationItem.isQuestion() &&
-							( generalizationWordItem = primarySpecificationItem.generalizationWordItem() ) != null )
-								{
-								if( generalizationWordItem.writeRelatedJustificationSpecifications( currentJustificationItem.justificationTypeNr(), secondarySpecificationItem.specificationCollectionNr() ) != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to write the related justification specifications" );
-								}
-							}
-						else
-							return adminItem_.addError( 1, moduleNameString_, "I failed to write the current justification specification" );
-						}
-					else
-						isStop = true;
+					isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = true;
+					isWritingSeparator_ = false;
 					}
 				}
-			while( !isStop &&
-			( currentJustificationItem = currentJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() ) != null );
+
+			if( !isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion )
+				{
+				if( isWritingPrimarySpecification ||
+
+				( ( !isQuestionJustification &&
+
+				( primarySpecificationItem == null ||
+
+				( isFirstTime &&
+				primarySpecificationItem != previousPrimarySpecificationItem_ ) ) ) ||
+
+				( !isExclusiveSecondarySpecification &&
+				primarySpecificationItem != null &&
+				secondarySpecificationItem != null &&
+				previousPrimarySpecificationItem_ != null &&
+				!primarySpecificationItem.isCorrectedAssumption() &&
+				secondarySpecificationItem != previousSecondarySpecificationItem &&
+				primarySpecificationItem.specificationCollectionNr() == previousPrimarySpecificationItem_.specificationCollectionNr() &&
+
+				// Skip possessive secondary specifications without relation
+				( !secondarySpecificationItem.isPossessive() ||
+				secondarySpecificationItem.hasRelationContext() ) ) ) )
+					{
+					if( isWritingExtraSeparator )
+						{
+						if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_JUSTIFICATION_AND ) != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write an extra justification string" );
+						}
+
+					if( writeSpecificationJustifications( isOnlyWritingPrimarySpecification, isWritingPrimarySpecification, currentJustificationItem ) != Constants.RESULT_OK )
+						return adminItem_.addError( 1, moduleNameString_, "I failed to write the current justification specification" );
+
+					isWritingSeparator_ = true;
+					isFirstTime = false;
+					isWritingPrimarySpecification = false;
+					currentJustificationItem.hasJustificationBeenWritten = true;
+
+					previousPrimarySpecificationItem_ = primarySpecificationItem;
+					previousSecondarySpecificationItem = secondarySpecificationItem;
+
+					if( secondarySpecificationItem != null &&
+					primarySpecificationItem != null &&
+					primarySpecificationItem.isExclusiveSpecification() &&
+					primarySpecificationItem.isQuestion() &&
+					( generalizationWordItem = primarySpecificationItem.generalizationWordItem() ) != null )
+						{
+						if( generalizationWordItem.writeRelatedJustificationSpecifications( currentJustificationItem.justificationTypeNr(), secondarySpecificationItem.specificationCollectionNr() ) != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write the related justification specifications" );
+						}
+					}
+				else
+					isStop = true;
+				}
 			}
-		else
-			return adminItem_.startError( 1, moduleNameString_, "The given start justification item is undefined" );
+		while( !isStop &&
+		( currentJustificationItem = currentJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() ) != null );
 
 		return Constants.RESULT_OK;
 		}
@@ -310,119 +284,111 @@ class AdminWriteJustification
 		previousPrimarySpecificationItem_ = null;
 		lastWrittenFeminineOrMasculineProperNameEndingWordItem_ = null;
 
-		if( writeJustificationItem != null )
+		if( writeJustificationItem == null )
+			return adminItem_.startError( 1, moduleNameString_, "The given write justification is undefined" );
+
+		if( selfGeneratedSpecificationItem == null )
+			return adminItem_.startError( 1, moduleNameString_, "The given self-generated specification item is undefined" );
+
+		if( ( generalizationWordItem = selfGeneratedSpecificationItem.generalizationWordItem() ) == null )
+			return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given self-generated specification item is undefined" );
+
+		if( isFirstJustificationType )
 			{
-			if( selfGeneratedSpecificationItem != null )
-				{
-				if( ( generalizationWordItem = selfGeneratedSpecificationItem.generalizationWordItem() ) != null )
+			if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification sentence" );
+			}
+
+		specificationCollectionNr = selfGeneratedSpecificationItem.specificationCollectionNr();
+
+		if( ( firstSecondarySpecificationItem = writeJustificationItem.secondarySpecificationItem() ) != null )
+			{
+			secondarySpecificationWordItem = firstSecondarySpecificationItem.specificationWordItem();
+
+			if( secondarySpecificationWordItem != null &&
+			secondarySpecificationWordItem.hasNonExclusiveCollection( specificationCollectionNr ) )
+				hasNonExclusiveCollection = true;
+			}
+
+		if( isWritingSeparator_ )
+			{
+			if( Presentation.writeInterfaceText( false, !isFirstJustificationType, Constants.PRESENTATION_PROMPT_NOTIFICATION, ( isFirstJustificationType ? Constants.INTERFACE_JUSTIFICATION_BECAUSE : Constants.INTERFACE_JUSTIFICATION_AND ) ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification start string" );
+			}
+
+		if( writeJustificationSpecifications( true, false, writeJustificationItem ) != Constants.RESULT_OK )
+			return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification specifications" );
+
+		if( ( hasNonExclusiveCollection ||
+		!writeJustificationItem.isNegativeAssumptionOrConclusion() ||
+
+		( !writeJustificationItem.hasAnotherPrimarySpecification() &&
+		writeJustificationItem.isPrimarySpecificationWordSpanishAmbiguous() ) ) &&
+
+		( currentSpecificationItem = generalizationWordItem.firstSelectedSpecificationItem( false, selfGeneratedSpecificationItem.isAssignment(), selfGeneratedSpecificationItem.isInactiveAssignment(), selfGeneratedSpecificationItem.isArchivedAssignment(), selfGeneratedSpecificationItem.questionParameter() ) ) != null )
+			{
+			isExclusiveSpecification = selfGeneratedSpecificationItem.isExclusiveSpecification();
+			isNegative = selfGeneratedSpecificationItem.isNegative();
+			isPossessive = selfGeneratedSpecificationItem.isPossessive();
+			isSelfGenerated = selfGeneratedSpecificationItem.isSelfGenerated();
+
+			assumptionLevel = selfGeneratedSpecificationItem.assumptionLevel();
+			specificationWordTypeNr = selfGeneratedSpecificationItem.specificationWordTypeNr();
+
+			generalizationContextNr = selfGeneratedSpecificationItem.generalizationContextNr();
+			specificationContextNr = selfGeneratedSpecificationItem.specificationContextNr();
+			relationContextNr = selfGeneratedSpecificationItem.relationContextNr();
+
+			do	{
+				// Self-generated
+				if( ( currentJustificationItem = currentSpecificationItem.firstJustificationItem() ) != null &&
+				currentSpecificationItem.isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) )
 					{
-					if( isFirstJustificationType )
+					currentPrimarySpecificationItem = currentJustificationItem.primarySpecificationItem();
+
+					if( currentJustificationItem.hasJustificationBeenWritten )
 						{
-						if( Presentation.writeText( Constants.PRESENTATION_PROMPT_WRITE, CommonVariables.writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification sentence" );
-						}
-
-					specificationCollectionNr = selfGeneratedSpecificationItem.specificationCollectionNr();
-
-					if( ( firstSecondarySpecificationItem = writeJustificationItem.secondarySpecificationItem() ) != null )
-						{
-						secondarySpecificationWordItem = firstSecondarySpecificationItem.specificationWordItem();
-
-						if( secondarySpecificationWordItem != null &&
-						secondarySpecificationWordItem.hasNonExclusiveCollection( specificationCollectionNr ) )
-							hasNonExclusiveCollection = true;
-						}
-
-					if( isWritingSeparator_ )
-						{
-						if( Presentation.writeInterfaceText( false, !isFirstJustificationType, Constants.PRESENTATION_PROMPT_NOTIFICATION, ( isFirstJustificationType ? Constants.INTERFACE_JUSTIFICATION_BECAUSE : Constants.INTERFACE_JUSTIFICATION_AND ) ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification start string" );
-						}
-
-					if( writeJustificationSpecifications( true, false, writeJustificationItem ) == Constants.RESULT_OK )
-						{
-						if( ( hasNonExclusiveCollection ||
-						!writeJustificationItem.isNegativeAssumptionOrConclusion() ||
-
-						( !writeJustificationItem.hasAnotherPrimarySpecification() &&
-						writeJustificationItem.isPrimarySpecificationWordSpanishAmbiguous() ) ) &&
-
-						( currentSpecificationItem = generalizationWordItem.firstSelectedSpecificationItem( false, selfGeneratedSpecificationItem.isAssignment(), selfGeneratedSpecificationItem.isInactiveAssignment(), selfGeneratedSpecificationItem.isArchivedAssignment(), selfGeneratedSpecificationItem.questionParameter() ) ) != null )
+						if( lastWrittenFeminineOrMasculineProperNameEndingWordItem_ != null &&
+						currentPrimarySpecificationItem != null )
 							{
-							isExclusiveSpecification = selfGeneratedSpecificationItem.isExclusiveSpecification();
-							isNegative = selfGeneratedSpecificationItem.isNegative();
-							isPossessive = selfGeneratedSpecificationItem.isPossessive();
-							isSelfGenerated = selfGeneratedSpecificationItem.isSelfGenerated();
-
-							assumptionLevel = selfGeneratedSpecificationItem.assumptionLevel();
-							specificationWordTypeNr = selfGeneratedSpecificationItem.specificationWordTypeNr();
-
-							generalizationContextNr = selfGeneratedSpecificationItem.generalizationContextNr();
-							specificationContextNr = selfGeneratedSpecificationItem.specificationContextNr();
-							relationContextNr = selfGeneratedSpecificationItem.relationContextNr();
-
-							do	{
-								// Self-generated
-								if( ( currentJustificationItem = currentSpecificationItem.firstJustificationItem() ) != null &&
-								currentSpecificationItem.isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) )
-									{
-									currentPrimarySpecificationItem = currentJustificationItem.primarySpecificationItem();
-
-									if( currentJustificationItem.hasJustificationBeenWritten )
-										{
-										if( lastWrittenFeminineOrMasculineProperNameEndingWordItem_ != null &&
-										currentPrimarySpecificationItem != null )
-											{
-											if( writeFeminineOrMasculineProperNameEnding( writeJustificationItem, currentPrimarySpecificationItem ) != Constants.RESULT_OK )
-												return adminItem_.addError( 1, moduleNameString_, "I failed to write the feminine or masculine proper name ending" );
-											}
-										}
-									else
-										{
-										currentSecondarySpecificationItem = currentJustificationItem.secondarySpecificationItem();
-
-										isWritingPrimarySpecificationOrExtraSeparator = ( currentPrimarySpecificationItem == null ||
-																						currentPrimarySpecificationItem.isQuestion() ||
-
-																						( currentSecondarySpecificationItem != null &&
-
-																						( currentSecondarySpecificationItem.isGeneralizationProperName() ||
-
-																						( !currentPrimarySpecificationItem.hasRelationContext() &&
-																						currentPrimarySpecificationItem.isGeneralizationProperName() &&
-																						!selfGeneratedSpecificationItem.isQuestion() ) ||
-
-																						( isFirstTime &&
-																						firstSecondarySpecificationItem != null &&
-																						firstSecondarySpecificationItem.specificationCollectionNr() != currentSecondarySpecificationItem.specificationCollectionNr() ) ) ) );
-
-										if( writeJustificationSpecifications( isWritingPrimarySpecificationOrExtraSeparator, isWritingPrimarySpecificationOrExtraSeparator, currentJustificationItem ) == Constants.RESULT_OK )
-											isFirstTime = false;
-										else
-											return adminItem_.addError( 1, moduleNameString_, "I failed to write the current justification specifications" );
-										}
-									}
-								}
-							while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedSpecificationItem() ) != null );
+							if( writeFeminineOrMasculineProperNameEnding( writeJustificationItem, currentPrimarySpecificationItem ) != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write the feminine or masculine proper name ending" );
 							}
 						}
 					else
-						return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification specifications" );
+						{
+						currentSecondarySpecificationItem = currentJustificationItem.secondarySpecificationItem();
+
+						isWritingPrimarySpecificationOrExtraSeparator = ( currentPrimarySpecificationItem == null ||
+																		currentPrimarySpecificationItem.isQuestion() ||
+
+																		( currentSecondarySpecificationItem != null &&
+
+																		( currentSecondarySpecificationItem.isGeneralizationProperName() ||
+
+																		( !currentPrimarySpecificationItem.hasRelationContext() &&
+																		currentPrimarySpecificationItem.isGeneralizationProperName() &&
+																		!selfGeneratedSpecificationItem.isQuestion() ) ||
+
+																		( isFirstTime &&
+																		firstSecondarySpecificationItem != null &&
+																		firstSecondarySpecificationItem.specificationCollectionNr() != currentSecondarySpecificationItem.specificationCollectionNr() ) ) ) );
+
+						if( writeJustificationSpecifications( isWritingPrimarySpecificationOrExtraSeparator, isWritingPrimarySpecificationOrExtraSeparator, currentJustificationItem ) != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write the current justification specifications" );
+
+						isFirstTime = false;
+						}
 					}
-				else
-					return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given self-generated specification item is undefined" );
 				}
-			else
-				return adminItem_.startError( 1, moduleNameString_, "The given self-generated specification item is undefined" );
+			while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedSpecificationItem() ) != null );
 			}
-		else
-			return adminItem_.startError( 1, moduleNameString_, "The given write justification is undefined" );
 
 		return Constants.RESULT_OK;
 		}
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected AdminWriteJustification( AdminItem adminItem )
 		{
@@ -460,33 +426,27 @@ class AdminWriteJustification
 		JustificationItem currentJustificationItem;
 		WordItem generalizationWordItem;
 
-		if( selfGeneratedSpecificationItem != null )
-			{
-			if( ( firstJustificationItem = selfGeneratedSpecificationItem.firstJustificationItem() ) != null )
-				{
-				if( ( generalizationWordItem = selfGeneratedSpecificationItem.generalizationWordItem() ) != null )
-					{
-					isWritingSeparator_ = true;
-
-					generalizationWordItem.clearJustificationHasBeenWritten();
-					currentJustificationItem = firstJustificationItem;
-
-					do	{
-						if( writeJustificationType( isFirstJustificationType, currentJustificationItem, selfGeneratedSpecificationItem ) == Constants.RESULT_OK )
-							isFirstJustificationType = false;
-						else
-							return adminItem_.addError( 1, moduleNameString_, "I failed to write a justification type of a specification" );
-						}
-					while( ( currentJustificationItem = currentJustificationItem.nextJustificationItemWithDifferentTypeOrOrderNr( firstJustificationItem ) ) != null );
-					}
-				else
-					return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given self-generated specification item is undefined" );
-				}
-			else
-				return adminItem_.startError( 1, moduleNameString_, "The first justification of the given self-generated specification item is undefined" );
-			}
-		else
+		if( selfGeneratedSpecificationItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given self-generated specification item is undefined" );
+
+		if( ( firstJustificationItem = selfGeneratedSpecificationItem.firstJustificationItem() ) == null )
+			return adminItem_.startError( 1, moduleNameString_, "The first justification of the given self-generated specification item is undefined" );
+
+		if( ( generalizationWordItem = selfGeneratedSpecificationItem.generalizationWordItem() ) == null )
+			return adminItem_.startError( 1, moduleNameString_, "The generalization word of the given self-generated specification item is undefined" );
+
+		isWritingSeparator_ = true;
+
+		generalizationWordItem.clearJustificationHasBeenWritten();
+		currentJustificationItem = firstJustificationItem;
+
+		do	{
+			if( writeJustificationType( isFirstJustificationType, currentJustificationItem, selfGeneratedSpecificationItem ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write a justification type of a specification" );
+
+			isFirstJustificationType = false;
+			}
+		while( ( currentJustificationItem = currentJustificationItem.nextJustificationItemWithDifferentTypeOrOrderNr( firstJustificationItem ) ) != null );
 
 		return Constants.RESULT_OK;
 		}

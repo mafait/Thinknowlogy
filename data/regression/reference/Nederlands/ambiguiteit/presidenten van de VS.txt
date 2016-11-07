@@ -2,6 +2,16 @@
 * Mijn conclusies:
 < De Verenigde Staten heeft een president, genaamd George Bush.
 < 
+< 
+< Specificaties:
+< George Bush is de president van de Verenigde Staten.
+< De Verenigde Staten heeft een president, genaamd George Bush.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd George Bush. Omdat:
+<	- George Bush is de president van de Verenigde Staten.
+< 
 * 
 * Mijn conclusies:
 < De Verenigde Staten heeft een nieuwe president, genaamd Bill Clinton.
@@ -13,6 +23,13 @@
 < George Bush is de vorige president van de Verenigde Staten.
 < De Verenigde Staten heeft een president, genaamd Bill Clinton.
 < De Verenigde Staten heeft een vorige president, genaamd George Bush.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd Bill Clinton. Omdat:
+<	- Bill Clinton is de huidige president van de Verenigde Staten.
+< De Verenigde Staten heeft een vorige president, genaamd George Bush. Omdat:
+<	- George Bush is de vorige president van de Verenigde Staten.
 < 
 * Dat weet ik.
 * 
@@ -37,6 +54,15 @@
 < De Verenigde Staten heeft een vorige president, genaamd Bill Clinton.
 < De Verenigde Staten had een president, genaamd George Bush.
 < 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd George Bush. Omdat:
+<	- George Bush is de huidige president van de Verenigde Staten.
+< De Verenigde Staten heeft een vorige president, genaamd Bill Clinton. Omdat:
+<	- Bill Clinton is de vorige president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd George Bush. Omdat:
+<	- George Bush was een president van de Verenigde Staten.
+< 
 * Dat weet ik.
 * 
 * 
@@ -55,4 +81,15 @@
 < De Verenigde Staten heeft een vorige president, genaamd George Bush.
 < De Verenigde Staten had een president, genaamd George Bush.
 < De Verenigde Staten had een president, genaamd Bill Clinton.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd Barack Obama. Omdat:
+<	- Barack Obama is de huidige president van de Verenigde Staten.
+< De Verenigde Staten heeft een vorige president, genaamd George Bush. Omdat:
+<	- George Bush is de vorige president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd George Bush. Omdat:
+<	- George Bush was een president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd Bill Clinton. Omdat:
+<	- Bill Clinton was een president van de Verenigde Staten.
 < 

@@ -1,0 +1,9 @@
+﻿#Baleines, chiens et chats sont des mammifères.
+Baleines, chiens et chats sont mammifères.
+#Affichez information sur des mammifères.
+Affichez information sur mammifères.
+#Pères et mères sont les parents.
+Pères et mères sont parents.
+#Affichez information sur des parents.
+Affichez information sur parents.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

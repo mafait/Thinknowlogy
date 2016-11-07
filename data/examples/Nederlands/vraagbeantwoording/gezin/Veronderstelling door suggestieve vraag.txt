@@ -1,5 +1,10 @@
-﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
 Paul is een zoon van Jan en Anna.
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Paul.
 Is Jan de vader van Paul?
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Paul.
 Is Sjors de vader van André?
+Toon de verantwoordingsrapportage over Sjors.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

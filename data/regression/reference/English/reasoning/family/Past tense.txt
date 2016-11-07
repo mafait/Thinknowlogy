@@ -4,8 +4,8 @@
 < 
 * 
 * My assumptions:
-< A parent is probably a person.
 < A father is probably a person.
+< A parent is probably a person.
 < 
 * 
 * My conclusions:
@@ -16,8 +16,8 @@
 < 
 * 
 * My assumptions:
-< A child is probably a person.
 < A son is probably a person.
+< A child is probably a person.
 < 
 * 
 * My conclusions:
@@ -47,4 +47,84 @@
 * My questions:
 < Is Peter a man, a woman, a girl or a boy?
 < Is Peter a son or a daughter?
+< 
+* 
+* My conclusions:
+< James was a man. Because:
+<	- James was the father of Peter.
+<	- Every father is a man.
+* 
+* My assumptions:
+< James has probably a child, called Peter. Because:
+<	- Peter is probably a child of James.
+* 	and:
+<	- Every family has parents and children.
+<	- James was probably a parent of Peter.
+< James was probably a person. Because:
+<	- Every person is a man or a woman.
+<	- James was a man.
+* 	and:
+<	- James was the father of Peter.
+<	- A father is probably a person.
+* 	and:
+<	- James was probably a parent of Peter.
+<	- A parent is probably a person.
+< James was probably not a woman. Because:
+<	- James was probably a person.
+<	- Every person is a man or a woman.
+<	- James was a man.
+* 	and:
+<	- James was probably a parent of Peter.
+<	- Every parent is a woman or a man.
+<	- James was a man.
+< James was probably a parent of Peter. Because:
+<	- Every family has parents and children.
+<	- Peter is probably a child of James.
+* 	and:
+<	- Every parent is a father or a mother.
+<	- James was the father of Peter.
+< James was probably part of a family. Because:
+<	- James was probably a parent of Peter.
+<	- Parents are part of every family.
+< James was probably not a mother. Because:
+<	- James was probably a parent of Peter.
+<	- Every parent is a father or a mother.
+<	- James was the father of Peter.
+< 
+* 
+* My conclusions:
+< Peter has no father anymore. Because:
+<	- Peter had a father, called James.
+< Peter had a father, called James. Because:
+<	- James was the father of Peter.
+* 
+* My assumptions:
+< Peter is probably a child of James. Because:
+<	- James has probably a child, called Peter.
+* 	and:
+<	- Every family has parents and children.
+<	- Every parent is a father or a mother.
+<	- Peter had a father, called James.
+* 	and:
+<	- Every family has parents and children.
+<	- James was probably a parent of Peter.
+< Peter is probably part of a family. Because:
+<	- Peter is probably a child of James.
+<	- Children are part of every family.
+< Peter is possibly a person. Because:
+<	- Peter is probably a child of James.
+<	- A child is probably a person.
+< Peter had probably a parent, called James. Because:
+<	- James was probably a parent of Peter.
+* 
+* My questions:
+< Is Peter a man, a woman, a girl or a boy? Because:
+<	- Peter is probably a child of James.
+<	- Every child is a girl, a woman, a boy or a man.
+* 	and:
+<	- Peter is possibly a person.
+<	- Every person is a man or a woman.
+< Is Peter a son or a daughter? Because:
+<	- Peter is probably a child of James.
+<	- Every child is a son or a daughter.
 < 

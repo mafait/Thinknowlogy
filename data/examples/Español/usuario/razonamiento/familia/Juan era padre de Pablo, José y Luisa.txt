@@ -1,0 +1,4 @@
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Juan era padre de Pablo, José y Luisa.
+Ana es madre de Pablo, José y Luisa.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

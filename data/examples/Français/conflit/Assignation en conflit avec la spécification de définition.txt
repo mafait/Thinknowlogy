@@ -1,0 +1,3 @@
+﻿Une personne a une tête.
+La personne a une tête.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

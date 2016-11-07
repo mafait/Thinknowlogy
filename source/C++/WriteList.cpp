@@ -1,7 +1,7 @@
 /*	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -30,7 +30,7 @@ class WriteList : private List
 	friend class WordWriteSentence;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	WriteList( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
@@ -39,14 +39,14 @@ class WriteList : private List
 
 	~WriteList()
 		{
-		WriteItem *deleteItem;
-		WriteItem *searchItem = firstActiveWriteItem();
+		WriteItem *deleteWriteItem;
+		WriteItem *searchWriteItem = firstActiveWriteItem();
 
-		while( searchItem != NULL )
+		while( searchWriteItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextWriteItem();
-			delete deleteItem;
+			deleteWriteItem = searchWriteItem;
+			searchWriteItem = searchWriteItem->nextWriteItem();
+			delete deleteWriteItem;
 			}
 
 		if( firstInactiveItem() != NULL )
@@ -58,13 +58,13 @@ class WriteList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class WriteList has replaced items." );
 
-		searchItem = (WriteItem *)firstDeletedItem();
+		searchWriteItem = (WriteItem *)firstDeletedItem();
 
-		while( searchItem != NULL )
+		while( searchWriteItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextWriteItem();
-			delete deleteItem;
+			deleteWriteItem = searchWriteItem;
+			searchWriteItem = searchWriteItem->nextWriteItem();
+			delete deleteWriteItem;
 			}
 		}
 
@@ -81,21 +81,19 @@ class WriteList : private List
 
 	ResultType checkGrammarItemForUsage( GrammarItem *unusedGrammarItem )
 		{
-		WriteItem *searchItem = firstActiveWriteItem();
+		WriteItem *searchWriteItem = firstActiveWriteItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkGrammarItemForUsage";
 
-		if( unusedGrammarItem != NULL )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->startOfChoiceOrOptionGrammarItem() == unusedGrammarItem )
-					return startError( functionNameString, NULL, "The start of choice or option grammar item is still in use" );
-
-				searchItem = searchItem->nextWriteItem();
-				}
-			}
-		else
+		if( unusedGrammarItem == NULL )
 			return startError( functionNameString, NULL, "The given unused grammar item is undefined" );
+
+		while( searchWriteItem != NULL )
+			{
+			if( searchWriteItem->startOfChoiceOrOptionGrammarItem() == unusedGrammarItem )
+				return startError( functionNameString, NULL, "The start of choice or option grammar item is still in use" );
+
+			searchWriteItem = searchWriteItem->nextWriteItem();
+			}
 
 		return RESULT_OK;
 		}
@@ -104,13 +102,8 @@ class WriteList : private List
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createWriteItem";
 
-		if( commonVariables()->currentItemNr < MAX_ITEM_NR )
-			{
-			if( addItemToList( QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to add an active write item" );
-			}
-		else
-			return startError( functionNameString, NULL, "The current item number is undefined" );
+		if( addItemToList( QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to add an active write item" );
 
 		return RESULT_OK;
 		}
@@ -122,8 +115,8 @@ class WriteList : private List
 	};
 
 /*************************************************************************
- *	"God says, "At the time I have planned,
+ *	God says, "At the time I have planned,
  *	I will bring justice against the wicked.
- *	When the earth quackes and its people live in turmoil,
+ *	When the earth quakes and its people live in turmoil,
  *	I am the one that keeps its foundations firm." (Psalm 75:2-3)
  *************************************************************************/

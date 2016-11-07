@@ -1,0 +1,30 @@
+﻿* 
+* My assumptions:
+< Paul has possibly a father, called John.
+< 
+* 
+* My conclusions:
+< Paul has a father, called John.
+< 
+* 
+* My conclusions:
+< Paul has a father, called John. Because:
+<	- John is the father of Paul.
+< 
+* 
+* My assumptions:
+< Peter has possibly no father anymore.
+< Peter had possibly a father, called James.
+< 
+* 
+* My conclusions:
+< Peter has no father anymore.
+< Peter had a father, called James.
+< 
+* 
+* My conclusions:
+< Peter has no father anymore. Because:
+<	- Peter had a father, called James.
+< Peter had a father, called James. Because:
+<	- James was the father of Peter.
+< 

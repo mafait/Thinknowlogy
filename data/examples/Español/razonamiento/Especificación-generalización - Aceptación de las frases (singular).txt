@@ -1,0 +1,5 @@
+﻿Una ballena, un perro y un gato son mamíferos.
+Mostrar información sobre mamíferos.
+Un padre y una madre son padres.
+Mostrar información sobre padres.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

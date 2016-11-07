@@ -1,6 +1,0 @@
-﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
-Laurent a 2 parents, appelés Olivier et Amélie.
-Julien a 2 parents, appelés Olivier et Amélie.
-Lorraine a 2 parents, appelés Olivier et Amélie.
-Olivier est le père et Amélie est la mère de Laurent, Julien et Lorraine.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».

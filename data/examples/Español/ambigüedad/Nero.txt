@@ -1,0 +1,4 @@
+﻿Juan tiene un perro, llamado Nero.
+Nero era un emperador de Rome.
+¿Era Nero un emperador de Rome?
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -1,7 +1,7 @@
 /*	Class:			AdminReadGrammar
  *	Supports class:	AdminItem
  *	Purpose:		To read and process grammar and interface files
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,13 +23,16 @@
 
 #include "AdminItem.h"
 #include "GrammarItem.cpp"
+#include "ReadResultType.cpp"
 #include "WordTypeItem.cpp"
 
 class AdminReadGrammar
 	{
 	friend class AdminItem;
 
-	// Private constructible variables
+	// Private constructed variables
+
+	bool hasUsedPredefinedMultipleWord_;
 
 	WordItem *multipleWordItem_;
 	WordItem *predefinedAdjectiveBusyWordItem_;
@@ -55,7 +58,7 @@ class AdminReadGrammar
 
 		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
 			{
-			// Do for all active words
+			// Do for all (grammar) words
 			do	currentWordItem->predefinedMultipleWordNr = 0;
 			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 			}
@@ -72,50 +75,46 @@ class AdminReadGrammar
 
 		multipleWordItem_ = multipleWordItem;
 
-		if( nMultipleWords > 0 )
+		if( nMultipleWords <= 0 )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given number of multiple words is undefined" );
+
+		while( predefinedMultipleWordNr < nMultipleWords &&
+		( foundMultipleWordItem = predefinedMultipleWordItem( ++predefinedMultipleWordNr ) ) != NULL )
 			{
-			while( predefinedMultipleWordNr < nMultipleWords &&
-			( foundMultipleWordItem = predefinedMultipleWordItem( ++predefinedMultipleWordNr ) ) != NULL )
+			if( ( foundWordTypeItem = foundMultipleWordItem->activeWordTypeItem( wordTypeNr ) ) != NULL )
 				{
-				if( ( foundWordTypeItem = foundMultipleWordItem->activeWordTypeItem( wordTypeNr ) ) != NULL )
-					{
-					if( predefinedMultipleWordNr > 1 )
-						strcat( multipleWordString, SPACE_STRING );
+				if( predefinedMultipleWordNr > 1 )
+					strcat( multipleWordString, SPACE_STRING );
 
-					strcat( multipleWordString, foundWordTypeItem->itemString() );
-					}
+				strcat( multipleWordString, foundWordTypeItem->itemString() );
 				}
+			}
 
-			if( multipleWordItem == NULL ||
-			multipleWordItem->hasCurrentCreationSentenceNr() )
-				{
-				if( ( wordResult = adminItem_->addWord( false, true, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordParameter, wordTypeNr, strlen( multipleWordString ), multipleWordString ) ).result == RESULT_OK )
-					multipleWordItem_ = wordResult.createdWordItem;
-				else
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a predefined grammar word" );
-				}
-			else
-				{
-				if( multipleWordItem->addWordType( true, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, strlen( multipleWordString ), multipleWordString ).result != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "The given multiple word item is undefined" );
-				}
+		if( multipleWordItem == NULL ||
+		multipleWordItem->hasCurrentCreationSentenceNr() )
+			{
+			if( ( wordResult = adminItem_->addWord( false, true, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordParameter, wordTypeNr, strlen( multipleWordString ), multipleWordString ) ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a predefined grammar word" );
 
-			if( multipleWordItem_ != NULL )
-				{
-				predefinedMultipleWordNr = 0;
-
-				while( predefinedMultipleWordNr < nMultipleWords &&
-				( foundMultipleWordItem = predefinedMultipleWordItem( ++predefinedMultipleWordNr ) ) != NULL )
-					{
-					if( foundMultipleWordItem->addMultipleWord( nMultipleWords, wordTypeNr, multipleWordItem_ ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a multiple word" );
-					}
-				}
-			else
-				return adminItem_->startError( functionNameString, moduleNameString_, "The multiple word item is undefined" );
+			multipleWordItem_ = wordResult.createdWordItem;
 			}
 		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given number of multiple words is undefined" );
+			{
+			if( multipleWordItem->addWordType( true, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, strlen( multipleWordString ), multipleWordString ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "The given multiple word item is undefined" );
+			}
+
+		if( multipleWordItem_ == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The multiple word item is undefined" );
+
+		predefinedMultipleWordNr = 0;
+
+		while( predefinedMultipleWordNr < nMultipleWords &&
+		( foundMultipleWordItem = predefinedMultipleWordItem( ++predefinedMultipleWordNr ) ) != NULL )
+			{
+			if( foundMultipleWordItem->addMultipleWord( nMultipleWords, wordTypeNr, multipleWordItem_ ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a multiple word" );
+			}
 
 		return RESULT_OK;
 		}
@@ -124,152 +123,150 @@ class AdminReadGrammar
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "assignPredefinedWord";
 
-		if( createdWordItem != NULL )
-			{
-			switch( grammarParameter )
-				{
-				case WORD_PARAMETER_ADJECTIVE_BUSY:
-					if( predefinedAdjectiveBusyWordItem_ == NULL )
-						predefinedAdjectiveBusyWordItem_ = createdWordItem;
-					else
-						{
-						if( predefinedAdjectiveBusyWordItem_ != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined busy adjective word" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_ADJECTIVE_DONE:
-					if( predefinedAdjectiveDoneWordItem_ == NULL )
-						predefinedAdjectiveDoneWordItem_ = createdWordItem;
-					else
-						{
-						if( predefinedAdjectiveDoneWordItem_ != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined done adjective word" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_ADJECTIVE_INVERTED:
-					if( predefinedAdjectiveInvertedWordItem_ == NULL )
-						predefinedAdjectiveInvertedWordItem_ = createdWordItem;
-					else
-						{
-						if( predefinedAdjectiveInvertedWordItem_ != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined inverted adjective word" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_NOUN_LANGUAGE:
-					if( commonVariables_->predefinedNounLanguageWordItem == NULL )
-						{
-						commonVariables_->predefinedNounLanguageWordItem = createdWordItem;
-
-						// During the creation of the first language,
-						// the predefined noun language word wasn't defined yet
-						// So, create first language specification afterwards
-						if( adminItem_->createLanguageSpecification( createdWordItem ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a language specification" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_NOUN_PASSWORD:
-					if( predefinedNounPasswordWordItem_ == NULL )
-						{
-						predefinedNounPasswordWordItem_ = createdWordItem;
-
-						if( adminItem_->authorizeWord( predefinedNounPasswordWordItem_ ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to authorize the predefined password noun word" );
-						}
-					else
-						{
-						if( predefinedNounPasswordWordItem_ != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined password noun word" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_NOUN_SOLVE_LEVEL:
-					if( predefinedNounSolveLevelWordItem_ == NULL )
-						predefinedNounSolveLevelWordItem_ = createdWordItem;
-					else
-						{
-						if( predefinedNounSolveLevelWordItem_ != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined solve level noun word" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_NOUN_SOLVE_METHOD:
-					if( predefinedNounSolveMethodWordItem_ == NULL )
-						predefinedNounSolveMethodWordItem_ = createdWordItem;
-					else
-						{
-						if( predefinedNounSolveMethodWordItem_ != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined solve method noun word" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_NOUN_SOLVE_STRATEGY:
-					if( predefinedNounSolveStrategyWordItem_ == NULL )
-						predefinedNounSolveStrategyWordItem_ = createdWordItem;
-					else
-						{
-						if( predefinedNounSolveStrategyWordItem_ != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined solve strategy noun word" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_NOUN_STARTUP_LANGUAGE:
-					if( predefinedNounStartupLanguageWordItem_ == NULL )
-						predefinedNounStartupLanguageWordItem_ = createdWordItem;
-					else
-						{
-						if( predefinedNounStartupLanguageWordItem_ != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined startup language word" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_NOUN_USER:
-					if( commonVariables_->predefinedNounUserWordItem == NULL )
-						{
-						commonVariables_->predefinedNounUserWordItem = createdWordItem;
-
-						if( adminItem_->authorizeWord( commonVariables_->predefinedNounUserWordItem ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to authorize the predefined user noun word" );
-						}
-					else
-						{
-						if( commonVariables_->predefinedNounUserWordItem != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined user noun word" );
-						}
-
-					break;
-
-				case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_LOGIN:
-					if( predefinedVerbLoginWordItem_ == NULL )
-						{
-						predefinedVerbLoginWordItem_ = createdWordItem;
-
-						if( adminItem_->authorizeWord( predefinedVerbLoginWordItem_ ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to authorize the predefined login verb word" );
-						}
-					else
-						{
-						if( predefinedVerbLoginWordItem_ != createdWordItem )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined login verb word" );
-						}
-
-					break;
-				}
-			}
-		else
+		if( createdWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given created word item" );
+
+		switch( grammarParameter )
+			{
+			case WORD_PARAMETER_ADJECTIVE_BUSY:
+				if( predefinedAdjectiveBusyWordItem_ == NULL )
+					predefinedAdjectiveBusyWordItem_ = createdWordItem;
+				else
+					{
+					if( predefinedAdjectiveBusyWordItem_ != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined busy adjective word" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_ADJECTIVE_DONE:
+				if( predefinedAdjectiveDoneWordItem_ == NULL )
+					predefinedAdjectiveDoneWordItem_ = createdWordItem;
+				else
+					{
+					if( predefinedAdjectiveDoneWordItem_ != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined done adjective word" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_ADJECTIVE_INVERTED:
+				if( predefinedAdjectiveInvertedWordItem_ == NULL )
+					predefinedAdjectiveInvertedWordItem_ = createdWordItem;
+				else
+					{
+					if( predefinedAdjectiveInvertedWordItem_ != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined inverted adjective word" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_NOUN_LANGUAGE:
+				if( commonVariables_->predefinedNounLanguageWordItem == NULL )
+					{
+					commonVariables_->predefinedNounLanguageWordItem = createdWordItem;
+
+					// During the creation of the first language,
+					// the predefined noun language word wasn't defined yet
+					// So, create first language specification afterwards
+					if( adminItem_->createLanguageSpecification( createdWordItem ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a language specification" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_NOUN_PASSWORD:
+				if( predefinedNounPasswordWordItem_ == NULL )
+					{
+					predefinedNounPasswordWordItem_ = createdWordItem;
+
+					if( adminItem_->authorizeWord( predefinedNounPasswordWordItem_ ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to authorize the predefined password noun word" );
+					}
+				else
+					{
+					if( predefinedNounPasswordWordItem_ != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined password noun word" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_NOUN_SOLVE_LEVEL:
+				if( predefinedNounSolveLevelWordItem_ == NULL )
+					predefinedNounSolveLevelWordItem_ = createdWordItem;
+				else
+					{
+					if( predefinedNounSolveLevelWordItem_ != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined solve level noun word" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_NOUN_SOLVE_METHOD:
+				if( predefinedNounSolveMethodWordItem_ == NULL )
+					predefinedNounSolveMethodWordItem_ = createdWordItem;
+				else
+					{
+					if( predefinedNounSolveMethodWordItem_ != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined solve method noun word" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_NOUN_SOLVE_STRATEGY:
+				if( predefinedNounSolveStrategyWordItem_ == NULL )
+					predefinedNounSolveStrategyWordItem_ = createdWordItem;
+				else
+					{
+					if( predefinedNounSolveStrategyWordItem_ != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined solve strategy noun word" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_NOUN_STARTUP_LANGUAGE:
+				if( predefinedNounStartupLanguageWordItem_ == NULL )
+					predefinedNounStartupLanguageWordItem_ = createdWordItem;
+				else
+					{
+					if( predefinedNounStartupLanguageWordItem_ != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined startup language word" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_NOUN_USER:
+				if( commonVariables_->predefinedNounUserWordItem == NULL )
+					{
+					commonVariables_->predefinedNounUserWordItem = createdWordItem;
+
+					if( adminItem_->authorizeWord( commonVariables_->predefinedNounUserWordItem ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to authorize the predefined user noun word" );
+					}
+				else
+					{
+					if( commonVariables_->predefinedNounUserWordItem != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined user noun word" );
+					}
+
+				break;
+
+			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_LOGIN:
+				if( predefinedVerbLoginWordItem_ == NULL )
+					{
+					predefinedVerbLoginWordItem_ = createdWordItem;
+
+					if( adminItem_->authorizeWord( predefinedVerbLoginWordItem_ ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to authorize the predefined login verb word" );
+					}
+				else
+					{
+					if( predefinedVerbLoginWordItem_ != createdWordItem )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a different predefined login verb word" );
+					}
+
+				break;
+			}
 
 		return RESULT_OK;
 		}
@@ -281,7 +278,7 @@ class AdminReadGrammar
 		if( predefinedMultipleWordNr > 0 &&
 		( currentWordItem = commonVariables_->firstWordItem ) != NULL )
 			{
-			// Do for all active words
+			// Do for all (grammar) words
 			do	{
 				if( currentWordItem->predefinedMultipleWordNr == predefinedMultipleWordNr )
 					return currentWordItem;
@@ -293,11 +290,13 @@ class AdminReadGrammar
 		}
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	AdminReadGrammar( AdminItem *adminItem, CommonVariables *commonVariables )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+
+		hasUsedPredefinedMultipleWord_ = false;
 
 		multipleWordItem_ = NULL;
 		predefinedAdjectiveBusyWordItem_ = NULL;
@@ -346,9 +345,9 @@ class AdminReadGrammar
 		bool hasCreatedInterface = false;
 		bool hasFoundChoiceAlternatives = false;
 		bool hasFoundOnlyOptions = true;
-		bool hasFoundParameter = false;
+		bool hasParameter = false;
 		bool hasFoundPipe = false;
-		bool hasFoundWordTypeNr = false;
+		bool hasWordTypeNr = false;
 		bool hasGrammarWords = false;
 		bool isChoice = false;
 		bool isChoiceCheck = false;
@@ -364,10 +363,8 @@ class AdminReadGrammar
 		bool isSkipOptionForWriting = false;
 		unsigned short grammarParameter = NO_GRAMMAR_PARAMETER;
 		unsigned short predefinedMultipleWordNr = 0;
-		unsigned short wordTypeNr = WORD_TYPE_UNDEFINED;
+		unsigned short wordTypeNr = NO_WORD_TYPE_NR;
 		unsigned int firstCreationItemNr = NO_ITEM_NR;
-		size_t endPosition;
-		size_t tempStringLength;
 		size_t grammarStringLength;
 		size_t grammarPosition = 0;
 		GrammarItem *foundGrammarItem;
@@ -377,510 +374,401 @@ class AdminReadGrammar
 		WordItem *currentLanguageWordItem = commonVariables_->currentLanguageWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addGrammar";
 
-		if( grammarString != NULL )
+		if( grammarString == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given grammar string is undefined" );
+
+		if( ( grammarStringLength = strlen( grammarString ) ) == 0 )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given grammar string is empty" );
+
+		if( currentLanguageWordItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
+
+		if( hasUsedPredefinedMultipleWord_ )
 			{
-			if( ( grammarStringLength = strlen( grammarString ) ) > 0 )
+			hasUsedPredefinedMultipleWord_ = false;
+			clearPredefinedMultipleWordNrInAllWords();
+			}
+
+		do	{
+			if( ( readResult = adminItem_->readWordFromString( true, isMergedWord, false, grammarPosition, 0, grammarString ) ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word from the grammar string" );
+
+			hasFoundWordDefinitionInfo = false;
+
+			switch( grammarString[grammarPosition] )
 				{
-				if( currentLanguageWordItem != NULL )
-					{
-					clearPredefinedMultipleWordNrInAllWords();
+				case QUERY_WORD_TYPE_CHAR:
+					if( hasWordTypeNr )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found more than one word type parameters defined in a grammar definition line" );
 
-					do	{
-						if( ( readResult = adminItem_->readWordFromString( true, isMergedWord, false, grammarPosition, 0, grammarString ) ).result == RESULT_OK )
-							{
-							hasFoundWordDefinitionInfo = false;
-
-							switch( grammarString[grammarPosition] )
-								{
-								case QUERY_WORD_TYPE_CHAR:
-									if( !hasFoundWordTypeNr )
-										{
-										while( grammarPosition + 1 < grammarStringLength &&
-										isdigit( grammarString[grammarPosition + 1] ) )
-											{
-											hasFoundWordTypeNr = true;
-											wordTypeNr = ( wordTypeNr * 10 + grammarString[++grammarPosition] - '0' );
-											}
-
-										if( !hasFoundWordTypeNr )
-											return adminItem_->startError( functionNameString, moduleNameString_, "I failed to get the word type number from a grammar definition line" );
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "I have found more than one word type parameters defined in a grammar definition line" );
-
-									break;
-
-								case QUERY_PARAMETER_CHAR:
-									if( !hasFoundParameter )
-										{
-										// Get paramater from string
-										while( grammarPosition + 1 < grammarStringLength &&
-										isdigit( grammarString[grammarPosition + 1] ) )
-											{
-											hasFoundParameter = true;
-											grammarParameter = ( grammarParameter * 10 + grammarString[++grammarPosition] - '0' );
-
-											if( grammarParameter == WORD_MERGED_WORD )
-												isMergedWord = true;
-											}
-
-										if( !hasFoundParameter )
-											return adminItem_->startError( functionNameString, moduleNameString_, "I failed to get the grammar parameter from a grammar definition line" );
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "I have found more than one values parameters defined in a grammar definition line" );
-
-									break;
-
-								case GRAMMAR_WORD_DEFINITION_CHAR:
-									if( !hasCreatedInterface )
-										{
-										// Add grammar word or grammar definition word
-										if( firstCreationItemNr == NO_ITEM_NR )
-											{
-											if( ( readResult = adminItem_->readWordFromString( false, isMergedWord, false, ++grammarPosition, 0, grammarString ) ).result == RESULT_OK )
-												{
-												if( ( grammarResult = currentLanguageWordItem->findGrammar( ( grammarParameter >= GRAMMAR_SENTENCE ), grammarParameter, readResult.wordLength, &grammarString[grammarPosition] ) ).result == RESULT_OK )
-													{
-													hasFoundWordDefinitionInfo = true;
-
-													if( !hasFoundWordTypeNr ||
-													grammarParameter >= GRAMMAR_SENTENCE ||
-													grammarResult.foundGrammarItem == NULL )
-														{
-														if( ( grammarResult = currentLanguageWordItem->createGrammarItem( true, ( hasFoundParameter && grammarParameter < GRAMMAR_SENTENCE ), false, false, false, wordTypeNr, grammarParameter, readResult.wordLength, &grammarString[grammarPosition], NULL ) ).result == RESULT_OK )
-															{
-															firstCreationItemNr = commonVariables_->currentItemNr;
-															definitionGrammarItem = grammarResult.createdGrammarItem;
-															}
-														else
-															return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar definition word item" );
-														}
-													else
-														{
-														if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_START, grammarResult.foundGrammarItem->grammarParameter(), INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_MIDDLE, currentLanguageWordItem->anyWordTypeString(), INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_END ) != RESULT_OK )
-															return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'grammar parameter defined more than once' interface notification" );
-														}
-													}
-												else
-													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a grammar definition item" );
-												}
-											else
-												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word definition from the grammar string" );
-											}
-										else
-											return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition word must be the first word in the grammar definition" );
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "Interface definition and grammar definitions can not be mixed" );
-
-									break;
-
-								case GRAMMAR_OPTION_READ_NOT_WRITE_START:
-									isSkipOptionForWriting = true;
-
-									// Don't insert a break statement here
-
-								case GRAMMAR_OPTION_START:
-									if( !hasFoundWordTypeNr ||
-									grammarParameter >= GRAMMAR_SENTENCE )
-										{
-										if( commonVariables_->currentItemNr > NO_ITEM_NR )
-											{
-											if( !isOption )
-												{
-												if( !hasFoundPipe )
-													{
-													isOption = true;
-													isNewStart = true;
-													isOptionStart = true;
-													isChoiceCheck = isChoice;
-													}
-												else
-													return adminItem_->startError( functionNameString, moduleNameString_, "Pipes with different levels isn't allowed in the grammar definition" );
-												}
-											else
-												return adminItem_->startError( functionNameString, moduleNameString_, "A grammar opion definition can not be nested" );
-											}
-										else
-											return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition must start with a grammar definition word" );
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
-
-									break;
-
-								case GRAMMAR_OPTION_READ_NOT_WRITE_END:
-									isSkipOptionForWriting = false;
-
-									// Don't insert a break statement here
-
-								case GRAMMAR_OPTION_END:
-									if( isOption )
-										{
-										if( isChoiceCheck == isChoice )
-											{
-											if( !hasFoundPipe )
-												{
-												isOption = false;
-												isNewStart = true;
-												currentLanguageWordItem->markAsOptionEnd();
-												}
-											else
-												return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra pipe character before a square bracket in the grammar definition" );
-											}
-										else
-											{
-											if( isChoice )
-												return adminItem_->startError( functionNameString, moduleNameString_, "Choices are started within an option" );
-
-											return adminItem_->startError( functionNameString, moduleNameString_, "Choices are ended within an option" );
-											}
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra square bracket character in the grammar definition" );
-
-									break;
-
-								case GRAMMAR_CHOICE_START:
-									if( !hasFoundWordTypeNr ||
-									grammarParameter >= GRAMMAR_SENTENCE )
-										{
-										if( commonVariables_->currentItemNr > NO_ITEM_NR )
-											{
-											if( !isChoice )
-												{
-												if( !hasFoundPipe )
-													{
-													isChoice = true;
-													isNewStart = true;
-													isChoiceStart = true;
-													isOptionCheck = isOption;
-													}
-												else
-													return adminItem_->startError( functionNameString, moduleNameString_, "Pipes with different levels isn't allowed in the grammar definition" );
-												}
-											else
-												return adminItem_->startError( functionNameString, moduleNameString_, "Nesting curved brackets isn't allowed" );
-											}
-										else
-											return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition must start with a grammar definition word" );
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
-
-									break;
-
-								case GRAMMAR_CHOICE_END:
-									if( isChoice )
-										{
-										if( isOptionCheck == isOption )
-											{
-											if( !hasFoundPipe )
-												{
-												if( hasFoundChoiceAlternatives )
-													{
-													isChoice = false;
-													isNewStart = true;
-													hasFoundChoiceAlternatives = false;
-													currentLanguageWordItem->markAsChoiceEnd( commonVariables_->currentItemNr );
-													}
-												else
-													return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition choice must have alternatives" );
-												}
-											else
-												return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra pipe character before a curved bracket in the grammar definition" );
-											}
-										else
-											{
-											if( isOption )
-												return adminItem_->startError( functionNameString, moduleNameString_, "An option is started within choices" );
-
-											return adminItem_->startError( functionNameString, moduleNameString_, "An option is ended within choices" );
-											}
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra curved bracket character in the grammar definition" );
-
-									break;
-
-								case SYMBOL_PIPE:
-									if( !hasFoundWordTypeNr ||
-									grammarParameter >= GRAMMAR_SENTENCE )
-										{
-										if( !hasFoundPipe )
-											{
-											if( isOption ||
-											isChoice )
-												{
-												hasFoundPipe = true;
-
-												if( isChoice )
-													hasFoundChoiceAlternatives = true;
-												}
-											else
-												return adminItem_->startError( functionNameString, moduleNameString_, "Pipes are only allowed within grammar definition options or choices" );
-											}
-										else
-											return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra pipe character in the grammar definition" );
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
-
-									break;
-
-								// Either interface definition or Guide by Grammar
-								case SYMBOL_DOUBLE_QUOTE:
-									if( isNewStart &&
-									!hasGrammarWords &&
-									!isChoice &&
-									!isOption )
-										{
-										// Interface definition
-										if( definitionGrammarItem == NULL )
-											{
-											if( hasFoundParameter )
-												{
-												grammarPosition++;
-
-												if( grammarPosition < grammarStringLength ||
-												grammarString[ grammarStringLength - 1 ] == SYMBOL_DOUBLE_QUOTE )
-													{
-													if( currentLanguageWordItem->checkInterface( grammarParameter, &grammarString[grammarPosition] ) == RESULT_OK )
-														{
-														if( currentLanguageWordItem->createInterfaceItem( grammarParameter, ( grammarStringLength - grammarPosition - 1 ), &grammarString[grammarPosition] ) == RESULT_OK )
-															{
-															hasCreatedInterface = true;
-															grammarPosition = ( grammarStringLength - 1 );
-															}
-														else
-															return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an interface definition word item" );
-														}
-													else
-														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an interface definition word item" );
-													}
-												else
-													return adminItem_->startError( functionNameString, moduleNameString_, "I could a corrupte interface definition" );
-												}
-											else
-												return adminItem_->startError( functionNameString, moduleNameString_, "An interface definition must have a parameter" );
-											}
-										else
-											{
-											// Guide by Grammar
-											tempStringLength = 0;
-											endPosition = grammarPosition + 1;
-
-											while( endPosition < grammarStringLength &&
-											// Find end of string
-											grammarString[endPosition] != SYMBOL_DOUBLE_QUOTE )
-												{
-												endPosition++;
-												tempStringLength++;
-												}
-
-											if( endPosition < grammarStringLength )
-												{
-												if( definitionGrammarItem->guideByGrammarString != NULL )
-													delete definitionGrammarItem->guideByGrammarString;
-
-												if( ( definitionGrammarItem->guideByGrammarString = new char[tempStringLength + 1] ) != NULL )
-													{
-													strcpy( definitionGrammarItem->guideByGrammarString, EMPTY_STRING );
-													strncat( definitionGrammarItem->guideByGrammarString, &grammarString[grammarPosition + 1], tempStringLength );
-													}
-												else
-													return adminItem_->startError( functionNameString, moduleNameString_, "I failed to create the Guide by Grammar string" );
-												}
-											else
-												return adminItem_->startError( functionNameString, moduleNameString_, "The Guide by Grammar string is corrupt" );
-											}
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "Grammar definition and interface definitions can not be mixed" );
-
-									break;
-
-								default:
-									if( !hasCreatedInterface )
-										{
-										if( commonVariables_->currentItemNr > NO_ITEM_NR )
-											{
-											if( hasFoundParameter &&
-											grammarParameter < GRAMMAR_SENTENCE )
-												{
-												if( grammarParameter > NO_GRAMMAR_PARAMETER )
-													{
-													if( isMergedWord ||
-													grammarParameter == WORD_PLURAL_NOUN_ENDING )
-														{
-														if( definitionGrammarItem != NULL )
-															{
-															if( ( grammarResult = currentLanguageWordItem->createGrammarItem( false, false, false, false, false, WORD_TYPE_UNDEFINED, grammarParameter, readResult.wordLength, &grammarString[grammarPosition], definitionGrammarItem ) ).result == RESULT_OK )
-																{
-																if( definitionGrammarItem->nextDefinitionGrammarItem == NULL )
-																	definitionGrammarItem->nextDefinitionGrammarItem = grammarResult.createdGrammarItem;
-																else
-																	return adminItem_->startError( functionNameString, moduleNameString_, "The next definition grammar item is undefined" );
-																}
-															else
-																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar definition word item" );
-															}
-														else
-															return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition item is undefined" );
-														}
-													else
-														{
-														foundWordItem = NULL;
-
-														if( ( readResult.wordLength + grammarPosition ) < grammarStringLength )
-															isMultipleWord = true;
-														else
-															{
-															// End of line
-															isEndOfLine = true;
-
-															if( isMultipleWord )
-																isLastPartOfMultipleWord = true;
-
-															foundWordItem = adminItem_->predefinedWordItem( grammarParameter );
-															}
-
-														if( isLastPartOfMultipleWord ||
-														foundWordItem == NULL )
-															{
-															if( ( wordResult = adminItem_->addWord( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, grammarParameter, wordTypeNr, readResult.wordLength, &grammarString[grammarPosition] ) ).result == RESULT_OK )
-																{
-																if( ( createdWordItem = wordResult.createdWordItem ) != NULL )
-																	{
-																	if( isMultipleWord )
-																		{
-																		createdWordItem->predefinedMultipleWordNr = ++predefinedMultipleWordNr;
-
-																		if( isLastPartOfMultipleWord )
-																			{
-																			if( addPredefinedMultipleWord( predefinedMultipleWordNr, grammarParameter, wordTypeNr, foundWordItem ) == RESULT_OK )
-																				{
-																				if( ( createdWordItem = multipleWordItem_ ) == NULL )
-																					return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't create a predefined multiple grammar word" );
-																				}
-																			else
-																				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a predefined multiple grammar word" );
-																			}
-																		}
-
-																	if( isEndOfLine )
-																		{
-																		if( assignPredefinedWord( grammarParameter, createdWordItem ) != RESULT_OK )
-																			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a predefined word" );
-																		}
-																	}
-																else
-																	return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't create a grammar word" );
-																}
-															else
-																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar word" );
-															}
-														else
-															{
-															if( foundWordItem->addWordType( false, false, ( adminItem_->isAdjectiveParameter( grammarParameter ) ? grammarParameter : NO_ADJECTIVE_PARAMETER ), ( adminItem_->isDefiniteArticleParameter( grammarParameter ) ? grammarParameter : NO_DEFINITE_ARTICLE_PARAMETER ), ( adminItem_->isIndefiniteArticleParameter( grammarParameter ) ? grammarParameter : NO_INDEFINITE_ARTICLE_PARAMETER ), wordTypeNr, readResult.wordLength, &grammarString[grammarPosition] ).result != RESULT_OK )
-																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add another word type to grammar word \"", foundWordItem->anyWordTypeString(), "\"" );
-															}
-														}
-													}
-												}
-											else
-												{
-												// Get grammar identification
-												if( ( grammarResult = currentLanguageWordItem->findGrammar( true, NO_GRAMMAR_PARAMETER, readResult.wordLength, &grammarString[grammarPosition] ) ).result == RESULT_OK )
-													{
-													foundGrammarItem = grammarResult.foundGrammarItem;
-
-													if( ( grammarResult = currentLanguageWordItem->createGrammarItem( false, ( hasFoundPipe || isNewStart ), isOptionStart, isChoiceStart, isSkipOptionForWriting, WORD_TYPE_UNDEFINED, NO_GRAMMAR_PARAMETER, readResult.wordLength, &grammarString[grammarPosition], foundGrammarItem ) ).result == RESULT_OK )
-														{
-														isNewStart = false;
-														isOptionStart = false;
-														isChoiceStart = false;
-
-														hasFoundPipe = false;
-														hasGrammarWords = true;
-
-														if( !isOptionStart )
-															hasFoundOnlyOptions = false;
-
-														if( foundGrammarItem != NULL &&
-														!foundGrammarItem->hasCurrentCreationSentenceNr() )
-															foundGrammarItem->isGrammarItemInUse = true;
-														}
-													else
-														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar item" );
-													}
-												else
-													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a grammar definition word item" );
-												}
-											}
-										else
-											return adminItem_->startError( functionNameString, moduleNameString_, "The first grammar word in a grammar definition is the grammar definition word and must start with a grammar character" );
-										}
-									else
-										return adminItem_->startError( functionNameString, moduleNameString_, "Interface definition and grammar definitions can not be mixed" );
-								}
-
-							if( !hasFoundWordDefinitionInfo &&
-							!readResult.hasFoundGrammarDefinition &&
-							readResult.nextWordPosition < grammarStringLength )
-								{
-								if( ( readResult = adminItem_->readWordFromString( false, false, false, grammarPosition, 0, grammarString ) ).result != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a new word from the grammar string" );
-								}
-
-							grammarPosition = readResult.nextWordPosition;
-							}
-						else
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word from the grammar string" );
+					while( grammarPosition + 1 < grammarStringLength &&
+					isdigit( grammarString[grammarPosition + 1] ) )
+						{
+						hasWordTypeNr = true;
+						wordTypeNr = ( wordTypeNr * 10 + grammarString[++grammarPosition] - '0' );
 						}
-					while( readResult.nextWordPosition < grammarStringLength );
+
+					if( !hasWordTypeNr )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I failed to get the word type number from a grammar definition line" );
+
+					break;
+
+				case QUERY_PARAMETER_CHAR:
+					if( hasParameter )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found more than one values parameters defined in a grammar definition line" );
+
+					// Get parameter from string
+					while( grammarPosition + 1 < grammarStringLength &&
+					isdigit( grammarString[grammarPosition + 1] ) )
+						{
+						hasParameter = true;
+						grammarParameter = ( grammarParameter * 10 + grammarString[++grammarPosition] - '0' );
+
+						if( grammarParameter == WORD_MERGED_WORD )
+							isMergedWord = true;
+						}
+
+					if( !hasParameter )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I failed to get the grammar parameter from a grammar definition line" );
+
+					break;
+
+				case GRAMMAR_WORD_DEFINITION_CHAR:
+					if( hasCreatedInterface )
+						return adminItem_->startError( functionNameString, moduleNameString_, "Interface definition and grammar definitions can not be mixed" );
+
+					// Add grammar word or grammar definition word
+					if( firstCreationItemNr != NO_ITEM_NR )
+						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition word must be the first word in the grammar definition" );
+
+					if( ( readResult = adminItem_->readWordFromString( false, isMergedWord, false, ++grammarPosition, 0, grammarString ) ).result != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word definition from the grammar string" );
+
+					if( ( grammarResult = currentLanguageWordItem->findGrammar( ( grammarParameter >= GRAMMAR_SENTENCE ), grammarParameter, readResult.wordLength, &grammarString[grammarPosition] ) ).result != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a grammar definition item" );
+
+					hasFoundWordDefinitionInfo = true;
+
+					if( !hasWordTypeNr ||
+					grammarParameter >= GRAMMAR_SENTENCE ||
+					grammarResult.foundGrammarItem == NULL )
+						{
+						if( ( grammarResult = currentLanguageWordItem->createGrammarItem( true, ( hasParameter && grammarParameter < GRAMMAR_SENTENCE ), false, false, false, wordTypeNr, grammarParameter, readResult.wordLength, &grammarString[grammarPosition], NULL ) ).result != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar definition word item" );
+
+						firstCreationItemNr = commonVariables_->currentItemNr;
+						definitionGrammarItem = grammarResult.createdGrammarItem;
+						}
+					else
+						{
+						if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_START, grammarResult.foundGrammarItem->grammarParameter(), INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_MIDDLE, currentLanguageWordItem->anyWordTypeString(), INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_END ) != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'grammar parameter defined more than once' interface notification" );
+						}
+
+					break;
+
+				case GRAMMAR_OPTION_READ_NOT_WRITE_START:
+					isSkipOptionForWriting = true;
+
+					// Don't insert a break statement here
+
+				case GRAMMAR_OPTION_START:
+					if( hasWordTypeNr &&
+					grammarParameter < GRAMMAR_SENTENCE )
+						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
+
+					if( commonVariables_->currentItemNr <= NO_ITEM_NR )
+						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition must start with a grammar definition word" );
 
 					if( isOption )
-						return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition option isn't closed" );
-
-					if( isChoice )
-						return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition choice isn't closed" );
+						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar opion definition can not be nested" );
 
 					if( hasFoundPipe )
-						return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition ended with an open pipe" );
+						return adminItem_->startError( functionNameString, moduleNameString_, "Pipes with different levels isn't allowed in the grammar definition" );
 
-					if( definitionGrammarItem != NULL )
+					isOption = true;
+					isNewStart = true;
+					isOptionStart = true;
+					isChoiceCheck = isChoice;
+
+					break;
+
+				case GRAMMAR_OPTION_READ_NOT_WRITE_END:
+					isSkipOptionForWriting = false;
+
+					// Don't insert a break statement here
+
+				case GRAMMAR_OPTION_END:
+					if( !isOption )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra square bracket character in the grammar definition" );
+
+					if( isChoiceCheck == isChoice )
 						{
-						if( hasFoundOnlyOptions &&
+						if( hasFoundPipe )
+							return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra pipe character before a square bracket in the grammar definition" );
 
-						( !hasFoundWordTypeNr ||
-						grammarParameter >= GRAMMAR_SENTENCE ) )
-							{
-							if( hasGrammarWords )
-								return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition only exists of options" );
-
-							return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition only exists of a grammar definition word" );
-							}
-
-						// Remove possible duplicate grammar definition
-						if( ( grammarResult = currentLanguageWordItem->checkForDuplicateGrammarDefinition() ).result == RESULT_OK )
-							{
-							if( currentLanguageWordItem->linkLaterDefinedGrammarWords() != RESULT_OK )
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to link later defined grammar words" );
-							}
-						else
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check for a duplicate grammar definition" );
+						isOption = false;
+						isNewStart = true;
+						currentLanguageWordItem->markAsOptionEnd();
 						}
-					}
-				else
-					return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
+					else
+						{
+						if( isChoice )
+							return adminItem_->startError( functionNameString, moduleNameString_, "Choices are started within an option" );
+
+						return adminItem_->startError( functionNameString, moduleNameString_, "Choices are ended within an option" );
+						}
+
+					break;
+
+				case GRAMMAR_CHOICE_START:
+					if( hasWordTypeNr &&
+					grammarParameter < GRAMMAR_SENTENCE )
+						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
+
+					if( commonVariables_->currentItemNr <= NO_ITEM_NR )
+						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition must start with a grammar definition word" );
+
+					if( isChoice )
+						return adminItem_->startError( functionNameString, moduleNameString_, "Nesting curved brackets isn't allowed" );
+
+					if( hasFoundPipe )
+						return adminItem_->startError( functionNameString, moduleNameString_, "Pipes with different levels isn't allowed in the grammar definition" );
+
+					isChoice = true;
+					isNewStart = true;
+					isChoiceStart = true;
+					isOptionCheck = isOption;
+
+					break;
+
+				case GRAMMAR_CHOICE_END:
+					if( !isChoice )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra curved bracket character in the grammar definition" );
+
+					if( isOptionCheck == isOption )
+						{
+						if( hasFoundPipe )
+							return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra pipe character before a curved bracket in the grammar definition" );
+
+						if( !hasFoundChoiceAlternatives )
+							return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition choice must have alternatives" );
+
+						isChoice = false;
+						isNewStart = true;
+						hasFoundChoiceAlternatives = false;
+						currentLanguageWordItem->markAsChoiceEnd( commonVariables_->currentItemNr );
+						}
+					else
+						{
+						if( isOption )
+							return adminItem_->startError( functionNameString, moduleNameString_, "An option is started within choices" );
+
+						return adminItem_->startError( functionNameString, moduleNameString_, "An option is ended within choices" );
+						}
+
+					break;
+
+				case SYMBOL_PIPE:
+					if( hasWordTypeNr &&
+					grammarParameter < GRAMMAR_SENTENCE )
+						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
+
+					if( hasFoundPipe )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I have found an extra pipe character in the grammar definition" );
+
+					if( !isOption &&
+					!isChoice )
+						return adminItem_->startError( functionNameString, moduleNameString_, "Pipes are only allowed within grammar definition options or choices" );
+
+					hasFoundPipe = true;
+
+					if( isChoice )
+						hasFoundChoiceAlternatives = true;
+
+					break;
+
+				// Either interface definition or Guide by Grammar
+				case SYMBOL_DOUBLE_QUOTE:
+					if( !isNewStart ||
+					hasGrammarWords ||
+					isChoice ||
+					isOption )
+						return adminItem_->startError( functionNameString, moduleNameString_, "Grammar definition and interface definitions can not be mixed" );
+
+					// Interface definition
+					if( definitionGrammarItem == NULL )
+						{
+						if( !hasParameter )
+							return adminItem_->startError( functionNameString, moduleNameString_, "An interface definition must have a parameter" );
+
+						grammarPosition++;
+
+						if( grammarPosition >= grammarStringLength ||
+						grammarString[ grammarStringLength - 1 ] != SYMBOL_DOUBLE_QUOTE )
+							return adminItem_->startError( functionNameString, moduleNameString_, "I have found a corrupted interface definition" );
+
+						if( currentLanguageWordItem->checkInterface( grammarParameter, &grammarString[grammarPosition] ) != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an interface definition word item" );
+
+						if( currentLanguageWordItem->createInterfaceItem( grammarParameter, ( grammarStringLength - grammarPosition - 1 ), &grammarString[grammarPosition] ) != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an interface definition word item" );
+
+						hasCreatedInterface = true;
+						grammarPosition = ( grammarStringLength - 1 );
+						}
+
+					break;
+
+				default:
+					if( hasCreatedInterface )
+						return adminItem_->startError( functionNameString, moduleNameString_, "Interface definition and grammar definitions can not be mixed" );
+
+					if( commonVariables_->currentItemNr <= NO_ITEM_NR )
+						return adminItem_->startError( functionNameString, moduleNameString_, "The first grammar word in a grammar definition is the grammar definition word and must start with a grammar character" );
+
+					if( hasParameter &&
+					grammarParameter < GRAMMAR_SENTENCE )
+						{
+						if( grammarParameter > NO_GRAMMAR_PARAMETER )
+							{
+							if( isMergedWord ||
+							grammarParameter == WORD_PLURAL_NOUN_ENDING )
+								{
+								if( definitionGrammarItem == NULL )
+									return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition item is undefined" );
+
+								if( ( grammarResult = currentLanguageWordItem->createGrammarItem( false, false, false, false, false, NO_WORD_TYPE_NR, grammarParameter, readResult.wordLength, &grammarString[grammarPosition], definitionGrammarItem ) ).result != RESULT_OK )
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar definition word item" );
+
+								if( definitionGrammarItem->nextDefinitionGrammarItem != NULL )
+									return adminItem_->startError( functionNameString, moduleNameString_, "The next definition grammar item is already defined" );
+
+								definitionGrammarItem->nextDefinitionGrammarItem = grammarResult.createdGrammarItem;
+								}
+							else
+								{
+								foundWordItem = NULL;
+
+								if( ( readResult.wordLength + grammarPosition ) < grammarStringLength )
+									isMultipleWord = true;
+								else
+									{
+									// End of line
+									isEndOfLine = true;
+
+									if( isMultipleWord )
+										isLastPartOfMultipleWord = true;
+
+									foundWordItem = adminItem_->predefinedWordItem( grammarParameter );
+									}
+
+								if( isLastPartOfMultipleWord ||
+								foundWordItem == NULL )
+									{
+									if( ( wordResult = adminItem_->addWord( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, grammarParameter, wordTypeNr, readResult.wordLength, &grammarString[grammarPosition] ) ).result != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar word" );
+
+									if( ( createdWordItem = wordResult.createdWordItem ) == NULL )
+										return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't create a grammar word" );
+
+									if( isMultipleWord )
+										{
+										hasUsedPredefinedMultipleWord_ = true;
+										createdWordItem->predefinedMultipleWordNr = ++predefinedMultipleWordNr;
+
+										if( isLastPartOfMultipleWord )
+											{
+											if( addPredefinedMultipleWord( predefinedMultipleWordNr, grammarParameter, wordTypeNr, foundWordItem ) != RESULT_OK )
+												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a predefined multiple grammar word" );
+
+											if( ( createdWordItem = multipleWordItem_ ) == NULL )
+												return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't create a predefined multiple grammar word" );
+											}
+										}
+
+									if( isEndOfLine )
+										{
+										if( assignPredefinedWord( grammarParameter, createdWordItem ) != RESULT_OK )
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a predefined word" );
+										}
+									}
+								else
+									{
+									if( foundWordItem->addWordType( false, false, ( adminItem_->isAdjectiveParameter( grammarParameter ) ? grammarParameter : NO_ADJECTIVE_PARAMETER ), ( adminItem_->isDefiniteArticleParameter( grammarParameter ) ? grammarParameter : NO_DEFINITE_ARTICLE_PARAMETER ), ( adminItem_->isIndefiniteArticleParameter( grammarParameter ) ? grammarParameter : NO_INDEFINITE_ARTICLE_PARAMETER ), wordTypeNr, readResult.wordLength, &grammarString[grammarPosition] ).result != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add another word type to grammar word \"", foundWordItem->anyWordTypeString(), "\"" );
+									}
+								}
+							}
+						}
+					else
+						{
+						// Get grammar identification
+						if( ( grammarResult = currentLanguageWordItem->findGrammar( true, NO_GRAMMAR_PARAMETER, readResult.wordLength, &grammarString[grammarPosition] ) ).result != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a grammar definition word item" );
+
+						foundGrammarItem = grammarResult.foundGrammarItem;
+
+						if( ( grammarResult = currentLanguageWordItem->createGrammarItem( false, ( hasFoundPipe || isNewStart ), isOptionStart, isChoiceStart, isSkipOptionForWriting, NO_WORD_TYPE_NR, NO_GRAMMAR_PARAMETER, readResult.wordLength, &grammarString[grammarPosition], foundGrammarItem ) ).result != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar item" );
+
+						isNewStart = false;
+						isOptionStart = false;
+						isChoiceStart = false;
+
+						hasFoundPipe = false;
+						hasGrammarWords = true;
+
+						if( !isOptionStart )
+							hasFoundOnlyOptions = false;
+
+						if( foundGrammarItem != NULL &&
+						!foundGrammarItem->hasCurrentCreationSentenceNr() )
+							foundGrammarItem->isGrammarItemInUse = true;
+						}
 				}
-			else
-				return adminItem_->startError( functionNameString, moduleNameString_, "The given grammar string is empty" );
+
+			if( !hasFoundWordDefinitionInfo &&
+			!readResult.hasFoundGrammarDefinition &&
+			readResult.nextWordPosition < grammarStringLength )
+				{
+				if( ( readResult = adminItem_->readWordFromString( false, false, false, grammarPosition, 0, grammarString ) ).result != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a new word from the grammar string" );
+				}
+
+			grammarPosition = readResult.nextWordPosition;
 			}
-		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given grammar string is undefined" );
+		while( readResult.nextWordPosition < grammarStringLength );
+
+		if( isOption )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition option isn't closed" );
+
+		if( isChoice )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition choice isn't closed" );
+
+		if( hasFoundPipe )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition ended with an open pipe" );
+
+		if( definitionGrammarItem != NULL )
+			{
+			if( hasFoundOnlyOptions &&
+
+			( !hasWordTypeNr ||
+			grammarParameter >= GRAMMAR_SENTENCE ) )
+				{
+				if( hasGrammarWords )
+					return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition only exists of options" );
+
+				return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition only exists of a grammar definition word" );
+				}
+
+			// Remove possible duplicate grammar definition
+			if( currentLanguageWordItem->checkForDuplicateGrammarDefinition() != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check for a duplicate grammar definition" );
+
+			if( currentLanguageWordItem->linkLaterDefinedGrammarWords() != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to link later defined grammar words" );
+			}
 
 		return RESULT_OK;
 		}
@@ -934,6 +822,6 @@ class AdminReadGrammar
 /*************************************************************************
  *	"The Lord is king!
  *	Let the nations tremble!
- *	He sits on his trone between the cherubim.
+ *	He sits on his throne between the cherubim.
  *	Let the whole earth quake!" (Psalm 99:1)
  *************************************************************************/

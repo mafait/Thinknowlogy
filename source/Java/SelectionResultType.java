@@ -1,6 +1,7 @@
 /*	Class:		SelectionResultType
- *	Purpose:	To return selection variables of a method
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Purpose:	To return selection variables,
+ *				as the result of a method call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,11 +32,20 @@ class SelectionResultType
 
 	protected int duplicateConditionSentenceNr;
 
+	protected int oldSatisfiedScore;
+	protected int newSatisfiedScore;
+	protected int oldDissatisfiedScore;
+	protected int newDissatisfiedScore;
+	protected int oldNotBlockingScore;
+	protected int newNotBlockingScore;
+	protected int oldBlockingScore;
+	protected int newBlockingScore;
+
 	protected SelectionItem bestActionItem;
 	protected SelectionItem firstExecutionItem;
 	protected SelectionItem lastCreatedSelectionItem;
 
-	// Constructor / deconstructor
+	// Constructor
 
 	SelectionResultType()
 		{
@@ -46,6 +56,15 @@ class SelectionResultType
 
 		duplicateConditionSentenceNr = Constants.NO_SENTENCE_NR;
 
+		oldSatisfiedScore = Constants.NO_SCORE;
+		newSatisfiedScore = Constants.NO_SCORE;
+		oldDissatisfiedScore = Constants.NO_SCORE;
+		newDissatisfiedScore = Constants.NO_SCORE;
+		oldNotBlockingScore = Constants.NO_SCORE;
+		newNotBlockingScore = Constants.NO_SCORE;
+		oldBlockingScore = Constants.NO_SCORE;
+		newBlockingScore = Constants.NO_SCORE;
+
 		bestActionItem = null;
 		firstExecutionItem = null;
 		lastCreatedSelectionItem = null;
@@ -55,7 +74,7 @@ class SelectionResultType
 /*************************************************************************
  *	"The Lords protects them
  *	and keeps them alive.
- *	and rescues them from their enimies.
+ *	and rescues them from their enemies.
  *	The Lord nurses them when they are sick
  *	and restores them to health." (Psalm 41:2-3)
  *************************************************************************/

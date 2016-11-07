@@ -1,6 +1,6 @@
 /*	Class:		CommonVariables
  *	Purpose:	To hold the common variables
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Version:	Thinknowlogy 2016r2 (Huguenot)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -22,11 +22,11 @@
 
 class CommonVariables
 	{
+	protected static boolean hasDisplayedArticleNotification;
+	protected static boolean hasDisplayedMessage;
+	protected static boolean hasDisplayedWarning;
 	protected static boolean hasFoundAnswerToQuestion;
 	protected static boolean hasFoundQuery;
-	protected static boolean hasShownArticleNotification;
-	protected static boolean hasShownMessage;
-	protected static boolean hasShownWarning;
 
 	protected static boolean isAssignmentChanged;
 	protected static boolean isFirstAnswerToQuestion;
@@ -66,7 +66,13 @@ class CommonVariables
 	protected static SelectionList adminAlternativeList;
 
 	protected static WordItem currentLanguageWordItem;
+	protected static WordItem firstAssignmentWordItem;
+	protected static WordItem firstCollectionWordItem;
+	protected static WordItem firstContextWordItem;
+	protected static WordItem firstSpecificationWordItem;
+	protected static WordItem firstTouchedWordItem;
 	protected static WordItem firstWordItem;
+	protected static WordItem firstPredefinedWordItem;
 	protected static WordItem lastPredefinedWordItem;
 	protected static WordItem predefinedNounLanguageWordItem;
 	protected static WordItem predefinedNounUserWordItem;
@@ -84,11 +90,11 @@ class CommonVariables
 
 	protected static void initialize()
 		{
+		hasDisplayedArticleNotification = false;
+		hasDisplayedMessage = false;
+		hasDisplayedWarning = false;
 		hasFoundAnswerToQuestion = false;
 		hasFoundQuery = false;
-		hasShownArticleNotification = false;
-		hasShownMessage = false;
-		hasShownWarning = false;
 
 		isAssignmentChanged = false;
 		isFirstAnswerToQuestion = false;
@@ -96,7 +102,7 @@ class CommonVariables
 
 		result = Constants.RESULT_OK;
 
-		matchingWordTypeNr = Constants.WORD_TYPE_UNDEFINED;
+		matchingWordTypeNr = Constants.NO_WORD_TYPE_NR;
 
 		currentAssignmentLevel = Constants.NO_ASSIGNMENT_LEVEL;
 		currentLanguageNr = Constants.NO_LANGUAGE_NR;
@@ -129,7 +135,13 @@ class CommonVariables
 		adminAlternativeList = null;
 
 		currentLanguageWordItem = null;
+		firstAssignmentWordItem = null;
+		firstCollectionWordItem = null;
+		firstContextWordItem = null;
+		firstSpecificationWordItem = null;
+		firstTouchedWordItem = null;
 		firstWordItem = null;
+		firstPredefinedWordItem = null;
 		lastPredefinedWordItem = null;
 		predefinedNounLanguageWordItem = null;
 		predefinedNounUserWordItem = null;

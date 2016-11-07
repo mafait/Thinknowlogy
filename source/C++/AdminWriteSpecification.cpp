@@ -1,7 +1,7 @@
 /*	Class:			AdminWriteSpecification
  *	Supports class:	AdminItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,12 +24,13 @@
 #include "AdminItem.h"
 #include "GeneralizationItem.cpp"
 #include "ReadItem.cpp"
+#include "ReadResultType.cpp"
 
 class AdminWriteSpecification
 	{
 	friend class AdminItem;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	bool hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_;
 
@@ -46,12 +47,12 @@ class AdminWriteSpecification
 
 	// Private functions
 
-	ResultType showWordsThatDidntPassIntegrityCheckOfStoredUserSentence()
+	ResultType displayWordsThatDidntPassIntegrityCheckOfStoredUserSentence()
 		{
 		ReadItem *currentReadItem = adminItem_->firstActiveReadItem();
 		char *readWordTypeString;
 		char writeString[MAX_SENTENCE_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "showWordsThatDidntPassIntegrityCheckOfStoredUserSentence";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "displayWordsThatDidntPassIntegrityCheckOfStoredUserSentence";
 
 		do	{
 			if( !currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence &&
@@ -70,162 +71,163 @@ class AdminWriteSpecification
 
 	ResultType writeSpecification( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isWritingCurrentSentenceOnly, bool isWritingJustification, bool isWritingUserSpecifications, bool isWritingSelfGeneratedConclusions, bool isWritingSelfGeneratedAssumptions, bool isWritingUserQuestions, bool isWritingSelfGeneratedQuestions, WordItem *writeWordItem )
 		{
+		bool isCurrentSpecificationWordSpanishAmbiguous;
 		bool isForcingResponseNotBeingFirstSpecification;
 		bool isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion;
 		bool isSelfGenerated;
-		bool hasFoundAnyChangeMadeByThisSentence = adminItem_->hasFoundAnyChangeMadeByThisSentence();
+		bool hasAnyChangeBeenMadeByThisSentence = adminItem_->hasAnyChangeBeenMadeByThisSentence();
 		bool hasHeaderBeenWritten = false;
 		SpecificationItem *currentSpecificationItem;
-		WordItem *relationWordItem;
+		WordItem *singleRelationWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeSpecification";
 
-		if( writeWordItem != NULL )
+		if( writeWordItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given write word item is undefined" );
+
+		if( ( currentSpecificationItem = writeWordItem->firstSelectedSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, ( isWritingUserQuestions || isWritingSelfGeneratedQuestions ) ) ) != NULL )
 			{
-			if( ( currentSpecificationItem = writeWordItem->firstSelectedSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, ( isWritingUserQuestions || isWritingSelfGeneratedQuestions ) ) ) != NULL )
-				{
-				do	{
-					isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = false;
+			do	{
+				isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = false;
 
-					isSelfGenerated = currentSpecificationItem->isSelfGenerated();
+				isCurrentSpecificationWordSpanishAmbiguous = currentSpecificationItem->isSpecificationWordSpanishAmbiguous();
+				isSelfGenerated = currentSpecificationItem->isSelfGenerated();
 
-					if( currentSpecificationItem->isSpecificationWordSpanishAmbiguous() &&
-					currentSpecificationItem->isPossessiveReversibleConclusion() &&
-					currentSpecificationItem->hasSpecificationNonCompoundCollection() &&
-					adminItem_->nContextWordsInAllWords( currentSpecificationItem->relationContextNr(), currentSpecificationItem->specificationWordItem() ) == 1 )
+				if( isCurrentSpecificationWordSpanishAmbiguous &&
+				currentSpecificationItem->isPossessiveReversibleConclusion() &&
+				currentSpecificationItem->hasSpecificationNonCompoundCollection() &&
+				( singleRelationWordItem = currentSpecificationItem->singleRelationWordItem() ) != NULL )
+					{
+					if( singleRelationWordItem->isMale() )
+						isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = true;
+					}
+
+				// Typically for the Spanish language
+				if( !isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion &&
+
+				// Conclusions
+				( ( isWritingSelfGeneratedConclusions &&
+				currentSpecificationItem->isSelfGeneratedConclusion() &&
+
+				// Skip recently concluded assumptions with no new information
+				( !currentSpecificationItem->isConcludedAssumption() ||
+				!currentSpecificationItem->isOlderItem() ||
+				!currentSpecificationItem->hasNewInformation() ) ) ||
+
+				// Assumptions
+				( isWritingSelfGeneratedAssumptions &&
+				currentSpecificationItem->isSelfGeneratedAssumption() ) ||
+
+				// Questions
+				( isWritingSelfGeneratedQuestions &&
+				currentSpecificationItem->isSelfGeneratedQuestion() ) ||
+
+				( ( isWritingUserSpecifications &&
+				currentSpecificationItem->isUserSpecification() &&
+				!currentSpecificationItem->isCorrectedAssumption() ) ||
+
+				( isWritingUserQuestions &&
+				currentSpecificationItem->isUserQuestion() ) ) ) &&
+
+				( !isCurrentSpecificationWordSpanishAmbiguous ||
+				// Typically for the Spanish language
+				!currentSpecificationItem->isHiddenSpanishSpecification() ) &&
+
+				// Filter on current or updated sentences
+				( !isWritingCurrentSentenceOnly ||
+				// If nothing has changed, it will result in the notification: "I know".
+				!hasAnyChangeBeenMadeByThisSentence ||
+				currentSpecificationItem->hasNewInformation() ||
+
+				// Typically for the Spanish language
+				( isCurrentSpecificationWordSpanishAmbiguous &&
+				currentSpecificationItem->wasHiddenSpanishSpecification() ) ) )
+					{
+					isForcingResponseNotBeingFirstSpecification = ( isAssignment &&
+																	isSelfGenerated &&
+																	currentSpecificationItem->isExclusiveSpecification() );
+
+					if( writeWordItem->writeSelectedSpecification( false, isForcingResponseNotBeingFirstSpecification, isWritingCurrentSentenceOnly, false, NO_ANSWER_PARAMETER, currentSpecificationItem ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a selected specification" );
+
+					if( strlen( commonVariables_->writtenSentenceString ) > 0 )
 						{
-						relationWordItem = currentSpecificationItem->relationWordItem();
-
-						if( relationWordItem != NULL &&
-						relationWordItem->isMale() )
-							isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion = true;
-						}
-
-					// Skip hidden specifications
-					if( !isHiddenSingleRelationNonCompoundPossessiveReversibleConclusion &&
-					!currentSpecificationItem->isHiddenSpanishSpecification() &&
-
-					// Conclusions
-					( ( isWritingSelfGeneratedConclusions &&
-					currentSpecificationItem->isSelfGeneratedConclusion() &&
-
-					// Skip recently concluded assumptions with no new information
-					( !currentSpecificationItem->isConcludedAssumption() ||
-					!currentSpecificationItem->isOlderItem() ||
-					!currentSpecificationItem->hasNewInformation() ) ) ||
-
-					// Assumptions
-					( isWritingSelfGeneratedAssumptions &&
-					currentSpecificationItem->isSelfGeneratedAssumption() ) ||
-
-					// Questions
-					( isWritingSelfGeneratedQuestions &&
-					currentSpecificationItem->isSelfGeneratedQuestion() ) ||
-
-					( ( isWritingUserSpecifications &&
-					currentSpecificationItem->isUserSpecification() &&
-					!currentSpecificationItem->isCorrectedAssumption() ) ||
-
-					( isWritingUserQuestions &&
-					currentSpecificationItem->isUserQuestion() ) ) ) &&
-
-					// Filter on current or updated sentences
-					( !isWritingCurrentSentenceOnly ||
-					// If nothing has changed, it will result in the notification: "I know".
-					!hasFoundAnyChangeMadeByThisSentence ||
-					currentSpecificationItem->hasNewInformation() ||
-					currentSpecificationItem->wasHiddenSpanishSpecification() ) )
-						{
-						isForcingResponseNotBeingFirstSpecification = ( isAssignment &&
-																		isSelfGenerated &&
-																		currentSpecificationItem->isExclusiveSpecification() );
-
-						if( writeWordItem->writeSelectedSpecification( false, isForcingResponseNotBeingFirstSpecification, isWritingCurrentSentenceOnly, false, NO_ANSWER_PARAMETER, currentSpecificationItem ) == RESULT_OK )
+						if( isWritingSelfGeneratedConclusions )
 							{
-							if( strlen( commonVariables_->writtenSentenceString ) > 0 )
+							if( isFirstSelfGeneratedConclusion_ )
 								{
-								if( isWritingSelfGeneratedConclusions )
-									{
-									if( isFirstSelfGeneratedConclusion_ )
-										{
-										hasHeaderBeenWritten = true;
-										isFirstSelfGeneratedConclusion_ = false;
-										}
-									}
-								else
-									{
-									if( isWritingSelfGeneratedAssumptions )
-										{
-										if( isFirstSelfGeneratedAssumption_ )
-											{
-											hasHeaderBeenWritten = true;
-											isFirstSelfGeneratedAssumption_ = false;
-											}
-										}
-									else
-										{
-										if( isWritingSelfGeneratedQuestions )
-											{
-											if( isFirstSelfGeneratedQuestion_ )
-												{
-												hasHeaderBeenWritten = true;
-												isFirstSelfGeneratedQuestion_ = false;
-												}
-											}
-										else
-											{
-											if( isWritingUserSpecifications )
-												{
-												if( isFirstUserSpecifications_ )
-													{
-													hasHeaderBeenWritten = true;
-													isFirstUserSpecifications_ = false;
-													}
-												}
-											else
-												{
-												if( isWritingUserQuestions &&
-												isFirstUserQuestion_ )
-													{
-													hasHeaderBeenWritten = true;
-													isFirstUserQuestion_ = false;
-													}
-												}
-											}
-										}
-									}
-
-								if( hasHeaderBeenWritten )
-									{
-									if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( isSelfGenerated ? ( isWritingSelfGeneratedConclusions ? INTERFACE_LISTING_MY_CONCLUSIONS : ( isWritingSelfGeneratedAssumptions ? INTERFACE_LISTING_MY_ASSUMPTIONS : INTERFACE_LISTING_MY_QUESTIONS ) ) : ( isWritingUserSpecifications ? ( isSelfGenerated ? INTERFACE_LISTING_MY_INFORMATION : INTERFACE_LISTING_YOUR_INFORMATION ) : INTERFACE_LISTING_YOUR_QUESTIONS ) ) ) == RESULT_OK )
-										hasHeaderBeenWritten = false;
-									else
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write my conclusions header" );
-									}
-
-								if( isWritingJustification )
-									{
-									if( isSelfGenerated )
-										{
-										if( adminItem_->writeJustificationSpecification( currentSpecificationItem ) != RESULT_OK )
-											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a justification line" );
-										}
-									}
-								else
-									{
-									if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a sentence" );
-									}
+								hasHeaderBeenWritten = true;
+								isFirstSelfGeneratedConclusion_ = false;
 								}
 							}
 						else
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a selected specification" );
+							{
+							if( isWritingSelfGeneratedAssumptions )
+								{
+								if( isFirstSelfGeneratedAssumption_ )
+									{
+									hasHeaderBeenWritten = true;
+									isFirstSelfGeneratedAssumption_ = false;
+									}
+								}
+							else
+								{
+								if( isWritingSelfGeneratedQuestions )
+									{
+									if( isFirstSelfGeneratedQuestion_ )
+										{
+										hasHeaderBeenWritten = true;
+										isFirstSelfGeneratedQuestion_ = false;
+										}
+									}
+								else
+									{
+									if( isWritingUserSpecifications )
+										{
+										if( isFirstUserSpecifications_ )
+											{
+											hasHeaderBeenWritten = true;
+											isFirstUserSpecifications_ = false;
+											}
+										}
+									else
+										{
+										if( isWritingUserQuestions &&
+										isFirstUserQuestion_ )
+											{
+											hasHeaderBeenWritten = true;
+											isFirstUserQuestion_ = false;
+											}
+										}
+									}
+								}
+							}
+
+						if( hasHeaderBeenWritten )
+							{
+							if( commonVariables_->presentation->writeInterfaceText( true, PRESENTATION_PROMPT_NOTIFICATION, ( isSelfGenerated ? ( isWritingSelfGeneratedConclusions ? INTERFACE_LISTING_MY_CONCLUSIONS : ( isWritingSelfGeneratedAssumptions ? INTERFACE_LISTING_MY_ASSUMPTIONS : INTERFACE_LISTING_MY_QUESTIONS ) ) : ( isWritingUserSpecifications ? ( isSelfGenerated ? INTERFACE_LISTING_MY_INFORMATION : INTERFACE_LISTING_YOUR_INFORMATION ) : INTERFACE_LISTING_YOUR_QUESTIONS ) ) ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write my conclusions header" );
+
+							hasHeaderBeenWritten = false;
+							}
+
+						if( isWritingJustification )
+							{
+							if( isSelfGenerated )
+								{
+								if( adminItem_->writeJustificationSpecification( currentSpecificationItem ) != RESULT_OK )
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a justification line" );
+								}
+							}
+						else
+							{
+							if( commonVariables_->presentation->writeText( PRESENTATION_PROMPT_WRITE, commonVariables_->writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a sentence" );
+							}
 						}
 					}
-				while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
 				}
+			while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
 			}
-		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given write word item is undefined" );
 
 		return RESULT_OK;
 		}
@@ -235,26 +237,20 @@ class AdminWriteSpecification
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeSelfGeneratedSpecification";
 
 		// Specifications
-		if( writeSpecification( false, false, false, isWritingCurrentSentenceOnly, isWritingJustification, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, writeWordItem ) == RESULT_OK )
-			{
-			// Active assignments
-			if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, isWritingJustification, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, writeWordItem ) == RESULT_OK )
-				{
-				// Inactive assignments
-				if( writeSpecification( true, true, false, isWritingCurrentSentenceOnly, isWritingJustification, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, writeWordItem ) == RESULT_OK )
-					{
-					// Archived assignments
-					if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, isWritingJustification, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, writeWordItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write self-generated archived assignments" );
-					}
-				else
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write self-generated past-tense assignments" );
-				}
-			else
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write self-generated current-tense assignments" );
-			}
-		else
+		if( writeSpecification( false, false, false, isWritingCurrentSentenceOnly, isWritingJustification, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write self-generated specifications" );
+
+		// Active assignments
+		if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, isWritingJustification, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write self-generated current-tense assignments" );
+
+		// Inactive assignments
+		if( writeSpecification( true, true, false, isWritingCurrentSentenceOnly, isWritingJustification, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write self-generated past-tense assignments" );
+
+		// Archived assignments
+		if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, isWritingJustification, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write self-generated archived assignments" );
 
 		return RESULT_OK;
 		}
@@ -264,26 +260,20 @@ class AdminWriteSpecification
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeUserQuestions";
 
 		// Specifications
-		if( writeSpecification( false, false, false, isWritingCurrentSentenceOnly, false, false, false, false, true, false, writeWordItem ) == RESULT_OK )
-			{
-			// Active assignments
-			if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, false, false, false, false, true, false, writeWordItem ) == RESULT_OK )
-				{
-				// Inactive assignments
-				if( writeSpecification( true, true, false, isWritingCurrentSentenceOnly, false, false, false, false, true, false, writeWordItem ) == RESULT_OK )
-					{
-					// Archived assignments
-					if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, false, false, false, true, false, writeWordItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user questions with archived assignments" );
-					}
-				else
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user questions with past-tense assignments" );
-				}
-			else
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user questions with current-tense assignments" );
-			}
-		else
+		if( writeSpecification( false, false, false, isWritingCurrentSentenceOnly, false, false, false, false, true, false, writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user questions without assignments" );
+
+		// Active assignments
+		if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, false, false, false, false, true, false, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user questions with current-tense assignments" );
+
+		// Inactive assignments
+		if( writeSpecification( true, true, false, isWritingCurrentSentenceOnly, false, false, false, false, true, false, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user questions with past-tense assignments" );
+
+		// Archived assignments
+		if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, false, false, false, true, false, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user questions with archived assignments" );
 
 		return RESULT_OK;
 		}
@@ -293,26 +283,20 @@ class AdminWriteSpecification
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeUserSpecifications";
 
 		// Specifications
-		if( writeSpecification( false, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) == RESULT_OK )
-			{
-			// Active assignments
-			if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) == RESULT_OK )
-				{
-				// Inactive assignments
-				if( writeSpecification( true, true, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) == RESULT_OK )
-					{
-					// Archived assignments
-					if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered archived assignments" );
-					}
-				else
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered past-tense assignments" );
-				}
-			else
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered current-tense assignments" );
-			}
-		else
+		if( writeSpecification( false, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered specifications" );
+
+		// Active assignments
+		if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered current-tense assignments" );
+
+		// Inactive assignments
+		if( writeSpecification( true, true, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered past-tense assignments" );
+
+		// Archived assignments
+		if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered archived assignments" );
 
 		return RESULT_OK;
 		}
@@ -326,56 +310,40 @@ class AdminWriteSpecification
 		if( ( currentGeneralizationItem = writeWordItem->firstSpecificationGeneralizationItem( false ) ) != NULL )
 			{
 			do	{
-				if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) != NULL )
-					{
-					// Respond with active specifications
-					if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( false, false, false, false, writeWordItem ) == RESULT_OK )
-						{
-						// Respond with active specification questions
-						if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( false, false, false, true, writeWordItem ) == RESULT_OK )
-							{
-							// Respond with active assignments
-							if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, false, false, false, writeWordItem ) == RESULT_OK )
-								{
-								// Respond with active assignment questions
-								if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, false, false, true, writeWordItem ) == RESULT_OK )
-									{
-									// Respond with inactive assignments
-									if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, true, false, false, writeWordItem ) == RESULT_OK )
-										{
-										// Respond with inactive assignment questions
-										if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, true, false, true, writeWordItem ) == RESULT_OK )
-											{
-											// Respond with archived assignments
-											if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, false, true, false, writeWordItem ) == RESULT_OK )
-												{
-												// Respond with archive assignment questions
-												if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, false, true, true, writeWordItem ) != RESULT_OK )
-													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write archive assignment questions" );
-												}
-											else
-												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write archived assignments" );
-											}
-										else
-											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write inactive assignment questions" );
-										}
-									else
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write inactive assignments" );
-									}
-								else
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active assignment questions" );
-								}
-							else
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active assignments" );
-							}
-						else
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active specification questions" );
-						}
-					else
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active specifications" );
-					}
-				else
+				if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
 					return adminItem_->startError( functionNameString, moduleNameString_, "I have found an undefined generalization word" );
+
+				// Respond with active specifications
+				if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( false, false, false, false, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active specifications" );
+
+				// Respond with active specification questions
+				if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( false, false, false, true, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active specification questions" );
+
+				// Respond with active assignments
+				if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, false, false, false, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active assignments" );
+
+				// Respond with active assignment questions
+				if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, false, false, true, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active assignment questions" );
+
+				// Respond with inactive assignments
+				if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, true, false, false, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write inactive assignments" );
+
+				// Respond with inactive assignment questions
+				if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, true, false, true, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write inactive assignment questions" );
+
+				// Respond with archived assignments
+				if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, false, true, false, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write archived assignments" );
+
+				// Respond with archive assignment questions
+				if( currentGeneralizationWordItem->writeSelectedSpecificationInfo( true, false, true, true, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write archive assignment questions" );
 				}
 			while( ( currentGeneralizationItem = currentGeneralizationItem->nextSpecificationGeneralizationItem() ) != NULL );
 			}
@@ -392,56 +360,40 @@ class AdminWriteSpecification
 		if( ( currentGeneralizationItem = writeWordItem->firstRelationGeneralizationItem() ) != NULL )
 			{
 			do	{
-				if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) != NULL )
-					{
-					// Respond with active related specifications
-					if( currentGeneralizationWordItem->writeSelectedRelationInfo( false, false, false, false, writeWordItem ) == RESULT_OK )
-						{
-						// Respond with active related specification questions
-						if( currentGeneralizationWordItem->writeSelectedRelationInfo( false, false, false, true, writeWordItem ) == RESULT_OK )
-							{
-							// Respond with active related assignments
-							if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, false, false, false, writeWordItem ) == RESULT_OK )
-								{
-								// Respond with active related assignment questions
-								if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, false, false, true, writeWordItem ) == RESULT_OK )
-									{
-									// Respond with inactive related assignments
-									if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, true, false, false, writeWordItem ) == RESULT_OK )
-										{
-										// Respond with inactive related assignment questions
-										if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, true, false, true, writeWordItem ) == RESULT_OK )
-											{
-											// Respond with archive related assignments
-											if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, false, true, false, writeWordItem ) == RESULT_OK )
-												{
-												// Respond with archive related assignment questions
-												if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, false, true, true, writeWordItem ) != RESULT_OK )
-													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write archive related assignment questions" );
-												}
-											else
-												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write archive related assignment" );
-											}
-										else
-											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write inactive related assignment questions" );
-										}
-									else
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related assignments" );
-									}
-								else
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related assignment assignments" );
-								}
-							else
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related assignments" );
-							}
-						else
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related specification questions" );
-						}
-					else
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related specifications" );
-					}
-				else
+				if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
 					return adminItem_->startError( functionNameString, moduleNameString_, "I have found an undefined generalization word" );
+
+				// Respond with active related specifications
+				if( currentGeneralizationWordItem->writeSelectedRelationInfo( false, false, false, false, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related specifications" );
+
+				// Respond with active related specification questions
+				if( currentGeneralizationWordItem->writeSelectedRelationInfo( false, false, false, true, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related specification questions" );
+
+				// Respond with active related assignments
+				if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, false, false, false, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related assignments" );
+
+				// Respond with active related assignment questions
+				if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, false, false, true, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related assignment assignments" );
+
+				// Respond with inactive related assignments
+				if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, true, false, false, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write active related assignments" );
+
+				// Respond with inactive related assignment questions
+				if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, true, false, true, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write inactive related assignment questions" );
+
+				// Respond with archive related assignments
+				if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, false, true, false, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write archive related assignment" );
+
+				// Respond with archive related assignment questions
+				if( currentGeneralizationWordItem->writeSelectedRelationInfo( true, false, true, true, writeWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write archive related assignment questions" );
 				}
 			while( ( currentGeneralizationItem = currentGeneralizationItem->nextRelationGeneralizationItem() ) != NULL );
 			}
@@ -451,7 +403,7 @@ class AdminWriteSpecification
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	AdminWriteSpecification( AdminItem *adminItem, CommonVariables *commonVariables )
 		{
@@ -504,7 +456,7 @@ class AdminWriteSpecification
 
 	ResultType answerQuestions()
 		{
-		WordItem *currentWordItem;
+		WordItem *currentTouchedWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "answerQuestions";
 
 		if( commonVariables_->isQuestionAlreadyAnswered )
@@ -513,27 +465,22 @@ class AdminWriteSpecification
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'question is already answered' interface notification" );
 			}
 
-		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+		if( ( currentTouchedWordItem = commonVariables_->firstTouchedWordItem ) != NULL )
 			{
-			// Do for all active words for an answer
+			// Do for all words touched during current sentence
 			do	{
-				if( currentWordItem->isWordTouchedDuringCurrentSentence )
-					{
-					if( currentWordItem->findAnswerToNewUserQuestion() != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find an answer to new questions of the user about word \"", currentWordItem->anyWordTypeString(), "\"" );
-					}
+				if( currentTouchedWordItem->findAnswerToNewUserQuestion() != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find an answer to new user questions of word \"", currentTouchedWordItem->anyWordTypeString(), "\"" );
 				}
-			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-
-			if( !commonVariables_->hasFoundAnswerToQuestion &&
-			!commonVariables_->isQuestionAlreadyAnswered )
-				{
-				if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_QUESTION_I_DONT_KNOW_THE_ANSWER_TO_THIS_QUESTION ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I don't know the answer to this question' interface notification" );
-				}
+			while( ( currentTouchedWordItem = currentTouchedWordItem->nextTouchedDuringCurrentSentenceWordItem ) != NULL );
 			}
-		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The first word item is undefined" );
+
+		if( !commonVariables_->hasFoundAnswerToQuestion &&
+		!commonVariables_->isQuestionAlreadyAnswered )
+			{
+			if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_QUESTION_I_DONT_KNOW_THE_ANSWER_TO_THIS_QUESTION ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I don't know the answer to this question' interface notification" );
+			}
 
 		return RESULT_OK;
 		}
@@ -578,20 +525,18 @@ class AdminWriteSpecification
 
 			if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ )
 				{
-				if( showWordsThatDidntPassIntegrityCheckOfStoredUserSentence() == RESULT_OK )
+				if( displayWordsThatDidntPassIntegrityCheckOfStoredUserSentence() != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to display the words that didn't pass the integrity check" );
+
+				if( strlen( commonVariables_->writtenSentenceString ) > 0 )
 					{
-					if( strlen( commonVariables_->writtenSentenceString ) > 0 )
-						{
-						if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START, commonVariables_->writtenSentenceString, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
-						}
+					if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START, commonVariables_->writtenSentenceString, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 					}
-				else
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to show the words that didn't pass the integrity check" );
 				}
 
 			if( adminItem_->isSystemStartingUp() &&
-			commonVariables_->hasShownWarning )
+			commonVariables_->hasDisplayedWarning )
 				return adminItem_->startError( functionNameString, moduleNameString_, "An integrity error occurred during startup" );
 			}
 
@@ -612,134 +557,120 @@ class AdminWriteSpecification
 		WordItem *generalizationWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "markWordsPassingIntegrityCheckOfStoredUserSentence";
 
-		if( userSpecificationItem != NULL )
+		if( userSpecificationItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item is undefined" );
+
+		if( ( currentReadItem = adminItem_->firstActiveReadItem() ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find any read words" );
+
+		if( ( generalizationWordItem = userSpecificationItem->generalizationWordItem() ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The generalization word of the given user specification item is undefined" );
+
+		if( generalizationWordItem->writeSelectedSpecification( true, false, userSpecificationItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the user specification of generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+
+		writtenUserSentenceString = commonVariables_->writtenUserSentenceString;
+
+		if( ( writtenUserSentenceStringLength = strlen( writtenUserSentenceString ) ) > 0 )
 			{
-			if( ( currentReadItem = adminItem_->firstActiveReadItem() ) != NULL )
-				{
-				if( ( generalizationWordItem = userSpecificationItem->generalizationWordItem() ) != NULL )
-					{
-					if( generalizationWordItem->writeSelectedSpecification( true, false, userSpecificationItem ) == RESULT_OK )
+			do	{
+				do	{
+					if( ( readWordTypeString = currentReadItem->readWordTypeString() ) == NULL )
+						// Hidden word type
+						currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence = true;
+					else
 						{
-						writtenUserSentenceString = commonVariables_->writtenUserSentenceString;
+						readWordTypeStringLength = strlen( readWordTypeString );
 
-						if( ( writtenUserSentenceStringLength = strlen( writtenUserSentenceString ) ) > 0 )
+						if( ( readResult = adminItem_->readWordFromString( false, false, false, wordPosition, readWordTypeStringLength, writtenUserSentenceString ) ).result != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word from the written string" );
+
+						if( readResult.wordLength > 0 &&
+						!currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence )
 							{
-							do	{
-								do	{
-									if( ( readWordTypeString = currentReadItem->readWordTypeString() ) == NULL )
-										// Hidden word type
-										currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence = true;
-									else
-										{
-										readWordTypeStringLength = strlen( readWordTypeString );
+							if( readWordTypeStringLength == readResult.wordLength &&
+							strncmp( &writtenUserSentenceString[wordPosition], readWordTypeString, readResult.wordLength ) == 0 )
+								{
+								hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = true;
+								currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence = true;
 
-										if( ( readResult = adminItem_->readWordFromString( false, false, false, wordPosition, readWordTypeStringLength, writtenUserSentenceString ) ).result == RESULT_OK )
-											{
-											if( readResult.wordLength > 0 &&
-											!currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence )
-												{
-												if( readWordTypeStringLength == readResult.wordLength &&
-												strncmp( &writtenUserSentenceString[wordPosition], readWordTypeString, readResult.wordLength ) == 0 )
-													{
-													hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = true;
-													currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence = true;
-
-													if( lastFoundWordOrderNr == NO_ORDER_NR ||
-													lastFoundWordOrderNr + 1 == currentReadItem->wordOrderNr() )
-														{
-														wordPosition = readResult.nextWordPosition;
-														lastFoundWordOrderNr = currentReadItem->wordOrderNr();
-														startNewSpecificationReadItem = currentReadItem->nextReadItem();
-														}
-													}
-												else
-													{
-													// Skip on linked conjunctions.
-													// Example: "Guest is a user and has no password."
-													if( currentReadItem->isLinkedGeneralizationConjunction() ||
-
-													// Skip on grammar conjunctions.
-													// Example: "Expert is a user and his password is expert123."
-													currentReadItem->isSentenceConjunction() ||
-
-													// Skip on extra comma in sentence that isn't written.
-													// See grammar file for: '( symbolComma )'
-													// Example: "A creature is an animal, fungus, human-being, micro-organism, or plant."
-													currentReadItem->isSymbol() ||
-
-													// A singular adjective is given, but a plural adjective is found.
-													// Example, given: "Laurent a un parent, appelée Amélie.",
-													// but found: "Laurent a 2 parent [pluriel de «parent» est inconnue], appelés Olivier et Amélie."
-													( currentReadItem->isAdjectiveCalledSingularFeminineOrMasculine() &&
-													adminItem_->nContextWordsInAllWords( userSpecificationItem->relationContextNr(), userSpecificationItem->specificationWordItem() ) > 1 ) ||
-
-													// Skip if indefinite article doesn't match with noun.
-													// In that case, a warning will be shown.
-													( currentReadItem->isArticle() &&
-
-													( adminItem_->hasFoundDifferentParameter() ||
-													commonVariables_->hasShownArticleNotification ||
-													// And skip when an indefinite article is missing (because of a plural noun)
-													currentReadItem->grammarParameter == GRAMMAR_GENERALIZATION_SPECIFICATION ) ) )
-														// Skip until implemented
-														currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence = true;
-
-													if( startNewSpecificationReadItem == NULL )
-														startNewSpecificationReadItem = currentReadItem;
-													}
-												}
-											}
-										else
-											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word from the written string" );
-										}
+								if( lastFoundWordOrderNr == NO_ORDER_NR ||
+								lastFoundWordOrderNr + 1 == currentReadItem->wordOrderNr() )
+									{
+									wordPosition = readResult.nextWordPosition;
+									lastFoundWordOrderNr = currentReadItem->wordOrderNr();
+									startNewSpecificationReadItem = currentReadItem->nextReadItem();
 									}
-								while( readResult.wordLength > 0 &&
-								( currentReadItem = currentReadItem->nextReadItem() ) != NULL );
-
-								wordPosition = readResult.nextWordPosition;
-								currentReadItem = startNewSpecificationReadItem;
 								}
-							while( readResult.nextWordPosition < writtenUserSentenceStringLength );
+							else
+								{
+								// Skip on linked conjunctions.
+								// Example: "Guest is a user and has no password."
+								if( currentReadItem->isLinkedGeneralizationConjunction() ||
+
+								// Skip on grammar conjunctions.
+								// Example: "Expert is a user and his password is expert123."
+								currentReadItem->isSentenceConjunction() ||
+
+								// Skip on extra comma in sentence that isn't written.
+								// See grammar file for: '( symbolComma )'
+								// Example: "A creature is an animal, fungus, human-being, micro-organism, or plant."
+								currentReadItem->isSymbol() ||
+
+								// A singular adjective is given, but a plural adjective is found.
+								// Example, given: "Laurent a un parent, appelée Amélie.",
+								// but found: "Laurent a 2 parent [pluriel de «parent» est inconnue], appelés Olivier et Amélie."
+								( currentReadItem->isAdjectiveCalledSingularFeminineOrMasculine() &&
+								adminItem_->nContextWordsInAllWords( userSpecificationItem->relationContextNr(), userSpecificationItem->specificationWordItem() ) > 1 ) ||
+
+								// Skip if indefinite article doesn't match with noun.
+								// In that case, a warning will be displayed.
+								( currentReadItem->isArticle() &&
+
+								( adminItem_->hasFoundDifferentParameter() ||
+								commonVariables_->hasDisplayedArticleNotification ||
+								// And skip when an indefinite article is missing (because of a plural noun)
+								currentReadItem->grammarParameter == GRAMMAR_GENERALIZATION_SPECIFICATION ) ) )
+									// Skip until implemented
+									currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence = true;
+
+								if( startNewSpecificationReadItem == NULL )
+									startNewSpecificationReadItem = currentReadItem;
+								}
 							}
 						}
-					else
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the user specification of generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 					}
-				else
-					return adminItem_->startError( functionNameString, moduleNameString_, "The generalization word of the given user specification item is undefined" );
+				while( readResult.wordLength > 0 &&
+				( currentReadItem = currentReadItem->nextReadItem() ) != NULL );
+
+				wordPosition = readResult.nextWordPosition;
+				currentReadItem = startNewSpecificationReadItem;
 				}
-			else
-				return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find any read words" );
+			while( currentReadItem != NULL &&
+			readResult.nextWordPosition < writtenUserSentenceStringLength );
 			}
-		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item is undefined" );
 
 		return RESULT_OK;
 		}
 
 	ResultType writeSelfGeneratedInfo( bool isWritingSelfGeneratedConclusions, bool isWritingSelfGeneratedAssumptions, bool isWritingSelfGeneratedQuestions )
 		{
-		WordItem *currentWordItem;
+		WordItem *currentTouchedWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeSelfGeneratedInfo";
 
 		isFirstSelfGeneratedAssumption_ = true;
 		isFirstSelfGeneratedConclusion_ = true;
 		isFirstSelfGeneratedQuestion_ = true;
 
-		if( ( currentWordItem = commonVariables_->lastPredefinedWordItem ) != NULL )
+		if( ( currentTouchedWordItem = commonVariables_->firstTouchedWordItem ) != NULL )
 			{
-			// Do for all active words for self-generated info
+			// Do for all words touched during current sentence
 			do	{
-				if( currentWordItem->isWordTouchedDuringCurrentSentence )
-					{
-					if( writeInfoAboutWord( true, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, false, false, currentWordItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write info about word \"", currentWordItem->anyWordTypeString(), "\"" );
-					}
+				if( writeInfoAboutWord( true, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, false, isWritingSelfGeneratedQuestions, false, false, currentTouchedWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write selg-generated info of word \"", currentTouchedWordItem->anyWordTypeString(), "\"" );
 				}
-			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			while( ( currentTouchedWordItem = currentTouchedWordItem->nextTouchedDuringCurrentSentenceWordItem ) != NULL );
 			}
-		else
-			return adminItem_->startError( functionNameString, moduleNameString_, "The last predefined word item is undefined" );
 
 		return RESULT_OK;
 		}

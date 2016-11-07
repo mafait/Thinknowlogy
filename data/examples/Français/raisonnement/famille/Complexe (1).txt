@@ -1,0 +1,45 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Amélie est un parent de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Julien.
+Affichez le rapport de justification sur Lorraine.
+Julien a une mère, appelée Amélie.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Julien.
+Pascal est un fils de Olivier et Amélie.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Pascal a un père, appelé Olivier.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Pascal.
+Julien a un père, appelé Olivier.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Julien.
+Olivier est un parent.
+Affichez le rapport de justification sur Olivier.
+Lorraine a une mère, appelée Amélie.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Lorraine.
+Lorraine est une femme.
+Affichez le rapport de justification sur Lorraine.
+Amélie est une femme.
+Affichez le rapport de justification sur Amélie.
+Lorraine est une fille de Olivier et Amélie.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Lorraine.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Julien.
+Affichez le rapport de justification sur Lorraine.
+Julien est un fils de Olivier et Amélie.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Julien.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

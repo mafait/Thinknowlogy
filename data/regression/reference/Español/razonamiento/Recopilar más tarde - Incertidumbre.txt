@@ -1,0 +1,42 @@
+﻿* 
+* Mis suposiciones:
+< Un padre y una madre son probablemente padre [plural de 'padre' es desconocida].
+< 
+* 
+* Mis suposiciones:
+< Un padre y una madre son probablemente padres. Porque:
+<	- Una madre es probablemente un padre.
+* 	y:
+<	- Cada padre es un padre.
+< 
+* 
+* Mis suposiciones:
+< Un niño y una niña son posiblemente hijo [plural de 'hijo' es desconocida].
+< 
+* 
+* Mis suposiciones:
+< Un niño y una niña son posiblemente hijos. Porque:
+<	- Una niña es probablemente un hijo.
+* 	y:
+<	- Un niño es posiblemente un hijo.
+< 
+* 
+* Mis suposiciones:
+< Pablo es posiblemente un hijo.
+< 
+* 
+* Mis suposiciones:
+< Pablo es posiblemente un hijo. Porque:
+<	- Pablo es un niño.
+<	- Un niño es posiblemente un hijo.
+< 
+* 
+* Mis suposiciones:
+< Luisa es posiblemente un hijo.
+< 
+* 
+* Mis suposiciones:
+< Luisa es posiblemente un hijo. Porque:
+<	- Luisa es probablemente una niña.
+<	- Una niña es probablemente un hijo.
+< 

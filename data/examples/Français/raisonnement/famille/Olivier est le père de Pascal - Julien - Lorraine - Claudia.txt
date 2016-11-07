@@ -1,0 +1,11 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Olivier est le père de Pascal.
+Affichez le rapport de justification sur Olivier.
+Olivier est le père de Julien.
+Affichez le rapport de justification sur Olivier.
+Olivier est le père de Lorraine.
+Affichez le rapport de justification sur Olivier.
+Olivier est le père de Claudia.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Claudia.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

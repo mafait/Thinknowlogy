@@ -1,0 +1,20 @@
+﻿* 
+* My assumptions:
+< An animal is probably a creature.
+< 
+* 
+* My conclusions:
+< An animal is an amphibian, a bird, a fish, a mammal or a reptile.
+< A creature is an amphibian, a bird, a fish, a mammal, a reptile, a vertebrate or an invertebrate.
+* 
+* My assumptions:
+< A vertebrate is probably a creature.
+< 
+* 
+* My conclusions:
+< An animal is an annelid, an arthropod, an echinoderm, a mollusk, a protozoan, an amphibian, a bird, a fish, a mammal or a reptile.
+< A creature is an annelid, an arthropod, an echinoderm, a mollusk, a protozoan, an amphibian, a bird, a fish, a mammal, a reptile, a vertebrate or an invertebrate.
+* 
+* My assumptions:
+< An invertebrate is probably a creature.
+< 

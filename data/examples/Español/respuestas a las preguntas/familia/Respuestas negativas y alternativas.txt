@@ -1,4 +1,4 @@
-﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
 Juan es el padre y Ana es la madre de Pablo, José y Luisa.
 ¿Es Juan una madre?
 ¿Es Juan la madre de Pablo?
@@ -8,4 +8,9 @@ Jorge es padre de Alfonso.
 ¿Es Jorge el padre de Pablo?
 Santiago es un padre.
 ¿Es Santiago el padre de Pablo?
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Pablo.
+Mostrar el informe de justificación sobre Jorge.
+Mostrar el informe de justificación sobre Santiago.
+Mostrar el informe de justificación sobre Alfonso.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -1,0 +1,13 @@
+﻿John is possibly a father.
+Richard was possibly a father.
+James was possibly the father of Peter.
+Display the justification report about Peter.
+Was Richard a father?
+Was Ronald the father of Paul?
+# Strange past tense test
+Every father was a parent.
+Display the justification report about John.
+Display the justification report about Richard.
+Display the justification report about James.
+Display the justification report about Ronald.
+# To continue, click button «Clear your mind.» or «Restart.».

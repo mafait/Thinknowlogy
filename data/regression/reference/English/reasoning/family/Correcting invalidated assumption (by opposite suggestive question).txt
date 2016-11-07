@@ -4,8 +4,8 @@
 < 
 * 
 * My assumptions:
-< A parent is probably a person.
 < A father is probably a person.
+< A parent is probably a person.
 < 
 * 
 * My conclusions:
@@ -16,8 +16,8 @@
 < 
 * 
 * My assumptions:
-< A child is probably a person.
 < A son is probably a person.
+< A child is probably a person.
 < 
 * 
 * My conclusions:
@@ -35,6 +35,24 @@
 * 
 * I don't know the answer to this question, but I'll keep it in mind.
 * 
+* 
+* My assumptions:
+< John is probably a mother. Because:
+<	- Is John the mother of Paul?
+< John is probably a woman. Because:
+<	- John is probably a mother.
+<	- Every mother is a woman.
+< John is possibly a person. Because:
+<	- Every person is a man or a woman.
+<	- John is probably a woman.
+* 	and:
+<	- John is probably a mother.
+<	- A mother is probably a person.
+< John is maybe not a man. Because:
+<	- John is possibly a person.
+<	- Every person is a man or a woman.
+<	- John is probably a woman.
+< 
 * 
 * My earlier assumptions that are corrected by an opposite suggestive question:
 < John is probably a mother.
@@ -55,3 +73,25 @@
 * 
 * I don't know the answer to this question, but I'll keep it in mind.
 * 
+* 
+* My assumptions:
+< John is probably a person. Because:
+<	- Is John a mother or a father?
+<	- A mother is probably a person.
+<	- A father is probably a person.
+* 
+* My questions:
+< Is John a woman or a man? Because:
+<	- John is probably a person.
+<	- Every person is a man or a woman.
+* 	and:
+<	- Is John the mother of Paul?
+<	- Every mother is a woman.
+* 	and:
+<	- Is John the father of Paul?
+<	- Every father is a man.
+< Is John a mother or a father? Because:
+<	- Is John the father of Paul?
+* 	and:
+<	- Is John the mother of Paul?
+< 

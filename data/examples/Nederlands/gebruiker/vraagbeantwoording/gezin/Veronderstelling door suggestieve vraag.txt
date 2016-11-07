@@ -1,0 +1,5 @@
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+Paul is een zoon van Jan en Anna.
+Is Jan de vader van Paul?
+Is Sjors de vader van André?
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

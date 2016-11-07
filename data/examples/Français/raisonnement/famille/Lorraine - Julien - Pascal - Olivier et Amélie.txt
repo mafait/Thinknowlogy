@@ -1,0 +1,14 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Lorraine est une fille.
+Affichez le rapport de justification sur Lorraine.
+Julien est un fils.
+Affichez le rapport de justification sur Julien.
+Pascal est un fils.
+Affichez le rapport de justification sur Pascal.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Julien.
+Affichez le rapport de justification sur Lorraine.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

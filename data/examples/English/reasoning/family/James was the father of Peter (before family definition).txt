@@ -1,0 +1,13 @@
+﻿James was the father of Peter.
+James was the father of Peter and Albert.
+Display the justification report about Peter.
+Display the justification report about Albert.
+Read the file "English/user/reasoning/family/family definition".
+Display the justification report about James.
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+Display the justification report about Joe.
+Display the justification report about Laura.
+# To continue, click button «Clear your mind.» or «Restart.».

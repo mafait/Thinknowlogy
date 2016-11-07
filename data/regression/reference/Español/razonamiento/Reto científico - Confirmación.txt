@@ -1,0 +1,71 @@
+﻿* 
+* Mis conclusiones:
+< Juan tiene un hijo, llamado Pablo.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Juan tiene un hijo, llamado Pablo.
+< 
+* 
+* Mis conclusiones:
+< Laura es hija de Ana.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Laura es hija de Ana.
+< 
+* 
+* Mis conclusiones:
+< Un motor es parte de cada coche.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Un motor es parte de cada coche.
+< 
+* 
+* Mis conclusiones:
+< Cada velero tiene una vela.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Cada velero tiene una vela.
+< 
+* 
+* Mis conclusiones:
+< Rafael no tiene un padre nunca-más.
+< Rafael tenido un padre, llamado Hernando.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Rafael no tiene un padre nunca-más.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Rafael tenido un padre, llamado Hernando.
+< 
+* 
+* Mis preguntas:
+< ¿Es Cruz un hombre o una mujer?
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado Bill Clinton.
+< 
+* 
+* La palabra "Bill Clinton" es semánticamente ambiguas:
+* - la entidad que reapareció,
+* - o si hay varias instancias de esta entidad.
+* 
+* En este último caso, por favor, mejorar la especificación de las entidades involucradas.
+* 
+* Mis conclusiones son confirmadas:
+< Los Estados Unidos tiene un presidente, llamado Bill Clinton.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado Barack Obama.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Los Estados Unidos tiene un presidente, llamado Barack Obama.
+< 

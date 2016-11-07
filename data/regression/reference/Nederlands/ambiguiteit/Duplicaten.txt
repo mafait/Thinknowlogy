@@ -1,0 +1,50 @@
+﻿* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een stad, genaamd Boston.
+< 
+* 
+* Het woord "Boston" is semantisch dubbelzinnig. Er zijn meerdere voorkomens van deze entiteit.
+* 
+* Mijn conclusies:
+< Het Verenigd Koninkrijk heeft een stad, genaamd Boston.
+< 
+* 
+* Uw informatie:
+< Boston is een stad in zowel de Verenigde Staten als het Verenigd Koninkrijk.
+* 
+* Gerelateerde informatie:
+< Het Verenigd Koninkrijk heeft een stad, genaamd Boston.
+< De Verenigde Staten heeft een stad, genaamd Boston.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een stad, genaamd Boston. Omdat:
+<	- Boston is een stad in zowel de Verenigde Staten als het Verenigd Koninkrijk.
+< 
+* 
+* Mijn conclusies:
+< Het Verenigd Koninkrijk heeft een stad, genaamd Boston. Omdat:
+<	- Boston is een stad in zowel de Verenigde Staten als het Verenigd Koninkrijk.
+< 
+* Dat weet ik.
+* 
+* Dat weet ik.
+* 
+* 
+* Uw informatie:
+< Boston is een stad in zowel de Verenigde Staten als het Verenigd Koninkrijk.
+* 
+* Gerelateerde informatie:
+< Het Verenigd Koninkrijk heeft een stad, genaamd Boston.
+< De Verenigde Staten heeft een stad, genaamd Boston.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een stad, genaamd Boston. Omdat:
+<	- Boston is een stad in zowel de Verenigde Staten als het Verenigd Koninkrijk.
+< 
+* 
+* Mijn conclusies:
+< Het Verenigd Koninkrijk heeft een stad, genaamd Boston. Omdat:
+<	- Boston is een stad in zowel de Verenigde Staten als het Verenigd Koninkrijk.
+< 

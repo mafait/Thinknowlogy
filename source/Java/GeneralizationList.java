@@ -1,7 +1,7 @@
 /*	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class GeneralizationList extends List
 	{
-	// Constructor / deconstructor
+	// Constructor
 
 	protected GeneralizationList( WordItem myWordItem )
 		{
@@ -36,79 +36,67 @@ class GeneralizationList extends List
 	protected GeneralizationResultType findGeneralization( boolean isRelation, WordItem generalizationWordItem )
 		{
 		GeneralizationResultType generalizationResult = new GeneralizationResultType();
-		GeneralizationItem searchItem = firstActiveGeneralizationItem();
+		GeneralizationItem searchGeneralizationItem = firstActiveGeneralizationItem();
 
-		if( generalizationWordItem != null )
+		if( generalizationWordItem == null )
+			return startGeneralizationResultError( 1, null, "The given generalization word item is undefined" );
+
+		while( searchGeneralizationItem != null &&
+		!generalizationResult.hasFoundGeneralization )
 			{
-			while( searchItem != null &&
-			!generalizationResult.hasFoundGeneralization )
-				{
-				if( searchItem.isRelation() == isRelation &&
-				searchItem.generalizationWordItem() == generalizationWordItem )
-					generalizationResult.hasFoundGeneralization = true;
-				else
-					searchItem = searchItem.nextGeneralizationItem();
-				}
+			if( searchGeneralizationItem.isRelation() == isRelation &&
+			searchGeneralizationItem.generalizationWordItem() == generalizationWordItem )
+				generalizationResult.hasFoundGeneralization = true;
+			else
+				searchGeneralizationItem = searchGeneralizationItem.nextGeneralizationItem();
 			}
-		else
-			startError( 1, null, "The given generalization word item is undefined" );
 
-		generalizationResult.result = CommonVariables.result;
 		return generalizationResult;
 		}
 
 	protected byte checkWordItemForUsage( WordItem unusedWordItem )
 		{
-		GeneralizationItem searchItem = firstActiveGeneralizationItem();
+		GeneralizationItem searchGeneralizationItem = firstActiveGeneralizationItem();
 
-		if( unusedWordItem != null )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.generalizationWordItem() == unusedWordItem )
-					return startError( 1, null, "The generalization word item is still in use" );
-
-				searchItem = searchItem.nextGeneralizationItem();
-				}
-			}
-		else
+		if( unusedWordItem == null )
 			return startError( 1, null, "The given unused word item is undefined" );
+
+		while( searchGeneralizationItem != null )
+			{
+			if( searchGeneralizationItem.generalizationWordItem() == unusedWordItem )
+				return startError( 1, null, "The generalization word item is still in use" );
+
+			searchGeneralizationItem = searchGeneralizationItem.nextGeneralizationItem();
+			}
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte createGeneralizationItem( boolean isLanguageWord, boolean isRelation, short specificationWordTypeNr, short generalizationWordTypeNr, WordItem generalizationWordItem )
 		{
-		if( generalizationWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
-		generalizationWordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
-			{
-			if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
-				{
-				if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, CommonVariables.currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to add an active generalization item" );
-				}
-			else
-				return startError( 1, null, "The current item number is undefined" );
-			}
-		else
-			return startError( 1, null, "The given generalization word type number is undefined or out of bounds" );
+		if( generalizationWordTypeNr <= Constants.NO_WORD_TYPE_NR &&
+		generalizationWordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
+			return startError( 1, null, "The given generalization word type number is undefined or out of bounds: " + generalizationWordTypeNr );
+
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, CommonVariables.currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+			return addError( 1, null, "I failed to add an active generalization item" );
 
 		return Constants.RESULT_OK;
 		}
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		GeneralizationItem searchItem = firstActiveGeneralizationItem();
+		GeneralizationItem searchGeneralizationItem = firstActiveGeneralizationItem();
 
-		while( searchItem != null )
+		while( searchGeneralizationItem != null )
 			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
+			if( searchGeneralizationItem.hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem.storeGeneralizationItemInFutureDatabase() != Constants.RESULT_OK )
+				if( searchGeneralizationItem.storeGeneralizationItemInFutureDatabase() != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to store a generalization item in the database" );
 				}
 
-			searchItem = searchItem.nextGeneralizationItem();
+			searchGeneralizationItem = searchGeneralizationItem.nextGeneralizationItem();
 			}
 
 		return Constants.RESULT_OK;

@@ -1,6 +1,7 @@
-/*	Class:			ReadResultType
- *	Purpose:		To return read word variables of a function
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+/*	Class:		ReadResultType
+ *	Purpose:	To return read word variables,
+ *				as the result of a function call
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,12 +30,14 @@ class ReadItem;
 class ReadResultType
 	{
 	friend class AdminCleanup;
-	friend class AdminItem;
 	friend class AdminReadCreateWords;
 	friend class AdminReadGrammar;
 	friend class AdminReadSentence;
 	friend class AdminWriteSpecification;
+	friend class Item;
+	friend class List;
 	friend class ReadList;
+
 	protected:
 	// Protected variables
 
@@ -54,7 +57,7 @@ class ReadResultType
 	ReadItem *createdReadItem;
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	ReadResultType()
 		{

@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -37,7 +37,7 @@ class GrammarItem : private Item
 	friend class WordWriteWords;
 	friend class WriteItem;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	bool isDefinitionStart_;
 	bool isNewStart_;
@@ -52,7 +52,7 @@ class GrammarItem : private Item
 
 
 	protected:
-	// Protected constructible variables
+	// Protected constructed variables
 
 	bool isOptionEnd;
 	bool isChoiceEnd;
@@ -63,18 +63,18 @@ class GrammarItem : private Item
 	char *guideByGrammarString;
 
 
-	// Protected loadable variables
+	// Protected initialized variables
 
 	GrammarItem *definitionGrammarItem;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
-	GrammarItem( bool isDefinitionStart, bool isNewStart, bool isOptionStart, bool isChoiceStart, bool isSkipOptionForWriting, unsigned short grammarWordTypeNr, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString, GrammarItem *_grammarDefinitionWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	GrammarItem( bool isDefinitionStart, bool isNewStart, bool isOptionStart, bool isChoiceStart, bool isSkipOptionForWriting, unsigned short grammarWordTypeNr, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString, GrammarItem *_definitionGrammarItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GrammarItem", commonVariables, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isDefinitionStart_ = isDefinitionStart;
 		isNewStart_ = isNewStart;
@@ -107,7 +107,7 @@ class GrammarItem : private Item
 			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given grammar string is undefined" );
 
 
-		// Protected constructible variables
+		// Protected constructed variables
 
 		isOptionEnd = false;
 		isChoiceEnd = false;
@@ -117,9 +117,9 @@ class GrammarItem : private Item
 
 		guideByGrammarString = NULL;
 
-		// Protected loadable variables
+		// Protected initialized variables
 
-		definitionGrammarItem = _grammarDefinitionWordItem;
+		definitionGrammarItem = _definitionGrammarItem;
 		}
 
 	~GrammarItem()
@@ -133,7 +133,7 @@ class GrammarItem : private Item
 
 	// Protected virtual functions
 
-	virtual void showString( bool isReturnQueryToPosition )
+	virtual void displayString( bool isReturnQueryToPosition )
 		{
 		char *queryString;
 
@@ -146,7 +146,7 @@ class GrammarItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
@@ -159,7 +159,7 @@ class GrammarItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
@@ -168,7 +168,7 @@ class GrammarItem : private Item
 			}
 		}
 
-	virtual bool hasFoundParameter( unsigned int queryParameter )
+	virtual bool hasParameter( unsigned int queryParameter )
 		{
 		return ( grammarParameter_ == queryParameter ||
 
@@ -176,7 +176,7 @@ class GrammarItem : private Item
 				grammarParameter_ > NO_GRAMMAR_PARAMETER ) );
 		}
 
-	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
+	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		return ( ( definitionGrammarItem == NULL ? false :
 					( querySentenceNr == NO_SENTENCE_NR ? true : definitionGrammarItem->creationSentenceNr() == querySentenceNr ) &&
@@ -187,7 +187,7 @@ class GrammarItem : private Item
 					( queryItemNr == NO_ITEM_NR ? true : nextDefinitionGrammarItem->itemNr() == queryItemNr ) ) );
 		}
 
-	virtual bool hasFoundWordType( unsigned short queryWordTypeNr )
+	virtual bool hasWordType( unsigned short queryWordTypeNr )
 		{
 		return ( grammarWordTypeNr_ == queryWordTypeNr );
 		}
@@ -270,7 +270,7 @@ class GrammarItem : private Item
 			strcat( queryString, tempString );
 			}
 
-		if( grammarWordTypeNr_ > WORD_TYPE_UNDEFINED )
+		if( grammarWordTypeNr_ > NO_WORD_TYPE_NR )
 			{
 			if( grammarWordTypeString == NULL )
 				sprintf( tempString, "%cgrammarWordType:%c%u", QUERY_SEPARATOR_CHAR, QUERY_WORD_TYPE_CHAR, grammarWordTypeNr_ );
@@ -342,7 +342,7 @@ class GrammarItem : private Item
 
 	bool isPredefinedWord()
 		{
-		return ( grammarWordTypeNr_ > WORD_TYPE_UNDEFINED &&
+		return ( grammarWordTypeNr_ > NO_WORD_TYPE_NR &&
 				grammarWordTypeNr_ < WORD_TYPE_TEXT &&
 
 				grammarParameter_ > NO_GRAMMAR_PARAMETER );
@@ -350,7 +350,7 @@ class GrammarItem : private Item
 
 	bool isUserDefinedWord()
 		{
-		return ( grammarWordTypeNr_ > WORD_TYPE_UNDEFINED &&
+		return ( grammarWordTypeNr_ > NO_WORD_TYPE_NR &&
 				grammarParameter_ == NO_GRAMMAR_PARAMETER );
 		}
 
@@ -361,7 +361,7 @@ class GrammarItem : private Item
 
 	bool hasWordType()
 		{
-		return ( grammarWordTypeNr_ > WORD_TYPE_UNDEFINED );
+		return ( grammarWordTypeNr_ > NO_WORD_TYPE_NR );
 		}
 
 	bool isSymbol()
@@ -416,19 +416,19 @@ class GrammarItem : private Item
 	bool isUniqueGrammarDefinition( GrammarItem *checkGrammarItem )
 		{
 		char *checkGrammarString;
-		GrammarItem *searchItem = this;
+		GrammarItem *searchGrammarItem = this;
 
 		if( checkGrammarItem != NULL &&
 		( checkGrammarString = checkGrammarItem->grammarString() ) != NULL )
 			{
-			while( searchItem != NULL )
+			while( searchGrammarItem != NULL )
 				{
-				if( searchItem->isDefinitionStart_ &&
-				searchItem != checkGrammarItem &&
-				strcmp( searchItem->grammarString_, checkGrammarString ) == 0 )
+				if( searchGrammarItem->isDefinitionStart_ &&
+				searchGrammarItem != checkGrammarItem &&
+				strcmp( searchGrammarItem->grammarString_, checkGrammarString ) == 0 )
 					return false;
 
-				searchItem = searchItem->nextGrammarItem();
+				searchGrammarItem = searchGrammarItem->nextGrammarItem();
 				}
 			}
 

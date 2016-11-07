@@ -1,0 +1,20 @@
+﻿* 
+* Mis conclusiones:
+< Pablo tiene un padre, llamado Juan.
+< 
+* 
+* La palabra "Juan" es semánticamente ambiguas. Hay varias instancias de esta entidad.
+* 
+* Mis conclusiones:
+< José tiene un padre, llamado Juan.
+< 
+* 
+* Su información:
+< Juan es padre de tanto Pablo y José.
+* 
+* Información relacionada:
+< José tiene un padre, llamado Juan.
+< Pablo tiene un padre, llamado Juan.
+< 
+* Sé.
+* 

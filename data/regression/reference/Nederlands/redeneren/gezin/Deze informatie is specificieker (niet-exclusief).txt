@@ -4,8 +4,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een ouder is waarschijnlijk een persoon.
 < Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -16,8 +16,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een kind is waarschijnlijk een persoon.
 < Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -37,6 +37,37 @@
 < Is Anne een man of een vrouw?
 < 
 * 
+* Mijn veronderstellingen:
+< Anne is waarschijnlijk een persoon. Omdat:
+<	- Anne is een vader of een moeder.
+<	- Een vader is waarschijnlijk een persoon.
+<	- Een moeder is waarschijnlijk een persoon.
+* 	en:
+<	- Anne is waarschijnlijk een ouder.
+<	- Een ouder is waarschijnlijk een persoon.
+< Anne is waarschijnlijk een ouder. Omdat:
+<	- Iedere ouder is een vader of een moeder.
+<	- Anne is een vader of een moeder.
+< Anne is waarschijnlijk deel van een gezin. Omdat:
+<	- Anne is waarschijnlijk een ouder.
+<	- Ouders zijn deel van ieder gezin.
+< Anne heeft mogelijk een kind. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Anne is waarschijnlijk een ouder.
+* 
+* Mijn vragen:
+< Is Anne een man of een vrouw? Omdat:
+<	- Anne is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
+<	- Anne is waarschijnlijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+* 	en:
+<	- Anne is een vader of een moeder.
+<	- Iedere moeder is een vrouw.
+<	- Iedere vader is een man.
+< 
+* 
 * Deze informatie is specifieker dan uw eerdere informatie:
 < Anne is een vader of een moeder.
 * 
@@ -48,4 +79,41 @@
 * 
 * Mijn veronderstellingen:
 < Anne is waarschijnlijk geen vrouw.
+< 
+* 
+* Mijn conclusies:
+< Anne is een man. Omdat:
+<	- Anne is een vader.
+<	- Iedere vader is een man.
+* 	en:
+<	- Anne is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
+<	- Anne is waarschijnlijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Anne is waarschijnlijk een persoon. Omdat:
+<	- Iedere persoon is een man of een vrouw.
+<	- Anne is een man.
+* 	en:
+<	- Anne is een vader.
+<	- Een vader is waarschijnlijk een persoon.
+<	- Een moeder is waarschijnlijk een persoon.
+* 	en:
+<	- Anne is waarschijnlijk een ouder.
+<	- Een ouder is waarschijnlijk een persoon.
+< Anne is waarschijnlijk een ouder. Omdat:
+<	- Iedere ouder is een vader of een moeder.
+<	- Anne is een vader.
+< Anne is waarschijnlijk deel van een gezin. Omdat:
+<	- Anne is waarschijnlijk een ouder.
+<	- Ouders zijn deel van ieder gezin.
+< Anne heeft mogelijk een kind. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Anne is waarschijnlijk een ouder.
+< Anne is waarschijnlijk geen vrouw. Omdat:
+<	- Anne is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+<	- Anne is een man.
 < 

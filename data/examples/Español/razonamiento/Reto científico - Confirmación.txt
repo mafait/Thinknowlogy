@@ -1,0 +1,25 @@
+﻿Pablo es hijo de Juan.
+Juan tiene un hijo, llamado Pablo.
+Ana tiene una hija, llamada Laura.
+Laura es hija de Ana.
+
+Cada coche tiene un motor.
+Un motor es parte de cada coche.
+Una vela es parte de cada velero.
+Cada velero tiene una vela.
+
+Hernando era padre de Rafael.
+Rafael no tiene un padre nunca-más.
+Rafael tenido un padre, llamado Hernando.
+
+Cada persona es un hombre o una mujer.
+Cruz es una persona.
+Cruz es un hombre o una mujer.
+
+Bill Clinton es el presidente de los Estados Unidos.
+Los Estados Unidos tiene un presidente, llamado Bill Clinton.
+Barack Obama es el presidente de los Estados Unidos.
+Los Estados Unidos tiene un nuevo presidente, llamado Barack Obama.
+# La frase siguiente ya está confirmado
+Los Estados Unidos tiene un anterior presidente, llamado Bill Clinton.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -1,4 +1,7 @@
 ﻿André heeft een zoon, genaamd Peter.
+Toon de verantwoordingsrapportage over Peter.
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
+Toon de verantwoordingsrapportage over Paul.
 Paul heeft een vader, genaamd Jan.
+Toon de verantwoordingsrapportage over Paul.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

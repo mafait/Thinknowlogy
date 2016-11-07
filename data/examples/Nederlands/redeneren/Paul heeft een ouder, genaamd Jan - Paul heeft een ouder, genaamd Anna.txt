@@ -1,0 +1,5 @@
+﻿Paul heeft een ouder, genaamd Jan.
+Paul heeft een ouder, genaamd Anna.
+Toon informatie over Paul.
+Paul heeft 2 ouders, genaamd Jan en Anna.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

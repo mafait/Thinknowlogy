@@ -1,0 +1,181 @@
+﻿
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: D.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | | | | | |
+		| | | |m| | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: C.
+
+		| | | | | | | |
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | | |
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: G.
+
+		| | | | | | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | | |
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: G.
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | |m|
+		| | |m|t| | |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | |m|
+		| | |m|t|t| |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: B.
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | |m|
+		| |m|m|t|t| |m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |m| | | |
+		| | |m|t| | |m|
+		| |m|m|t|t|t|m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Yo seleccioné: C.
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | |m|m| | | |
+		| | |m|t| | |m|
+		| |m|m|t|t|t|m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Es tu turno.
+
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | | |t| | | |
+		| | |m|m| | | |
+		| | |m|t| | |m|
+		|t|m|m|t|t|t|m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Mi juego ganador: C.
+
+		| | | |t| | | |
+		| | | |t| | | |
+		| | |m|t| | | |
+		| | |m|m| | | |
+		| | |m|t| | |m|
+		|t|m|m|t|t|t|m|
+movimiento->	-A-B-C-D-E-F-G-
+
+Este juego es mío.
+
+Para volver a jugar, haga clic en el botón «Despejar la mente.» y entonces «Leer el archivo "Español/usuario/programación/Conecta 4".».
+

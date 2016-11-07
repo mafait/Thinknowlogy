@@ -1,0 +1,70 @@
+﻿* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd George Bush.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een nieuwe president, genaamd Barack Obama.
+< De Verenigde Staten heeft een vorige president, genaamd George Bush.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< De Verenigde Staten heeft een vorige president, genaamd George Bush.
+< 
+* 
+* Mijn conclusies die bevestigd zijn:
+< De Verenigde Staten heeft een president, genaamd Barack Obama.
+< 
+* 
+* Het woord "George Bush" is semantisch dubbelzinnig:
+* - óf deze entiteit vond opnieuw plaats,
+* - óf er zijn meerdere voorkomens van deze entiteit.
+* 
+* In het laatste geval, verrijk a.u.b. de specificatie van de betrokken entiteiten.
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een nieuwe president, genaamd George Bush.
+< 
+< 
+< Specificaties:
+< Barack Obama is de vorige president van de Verenigde Staten.
+< George Bush is de huidige president van de Verenigde Staten.
+< George Bush was een president van de Verenigde Staten.
+< De Verenigde Staten heeft een president, genaamd George Bush.
+< De Verenigde Staten heeft een vorige president, genaamd Barack Obama.
+< De Verenigde Staten had een president, genaamd George Bush.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd George Bush. Omdat:
+<	- George Bush is de huidige president van de Verenigde Staten.
+< 
+* 
+* Het woord "Barack Obama" is semantisch dubbelzinnig:
+* - óf deze entiteit vond opnieuw plaats,
+* - óf er zijn meerdere voorkomens van deze entiteit.
+* 
+* In het laatste geval, verrijk a.u.b. de specificatie van de betrokken entiteiten.
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een nieuwe president, genaamd Barack Obama.
+< De Verenigde Staten heeft een vorige president, genaamd George Bush.
+< 
+< 
+< Specificaties:
+< Barack Obama is de huidige president van de Verenigde Staten.
+< Barack Obama was een president van de Verenigde Staten.
+< George Bush is de vorige president van de Verenigde Staten.
+< George Bush was een president van de Verenigde Staten.
+< De Verenigde Staten heeft een president, genaamd Barack Obama.
+< De Verenigde Staten heeft een vorige president, genaamd George Bush.
+< De Verenigde Staten had een president, genaamd Barack Obama.
+< De Verenigde Staten had een president, genaamd George Bush.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd Barack Obama. Omdat:
+<	- Barack Obama is de huidige president van de Verenigde Staten.
+< De Verenigde Staten heeft een vorige president, genaamd George Bush. Omdat:
+<	- George Bush is de vorige president van de Verenigde Staten.
+< 

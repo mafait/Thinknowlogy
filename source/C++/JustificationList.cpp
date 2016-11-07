@@ -2,7 +2,7 @@
  *	Parent class:	List
  *	Purpose:		To store justification items for the
  *					self-generated knowledge
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,7 +28,7 @@ class JustificationList : private List
 	{
 	friend class WordItem;
 
-	// Private constructible variables
+	// Private constructed variables
 
 	JustificationItem *correctedAssumptionByOppositeQuestionJustificationItem_;
 
@@ -38,15 +38,15 @@ class JustificationList : private List
 	unsigned short highestJustificationOrderNr( unsigned short justificationTypeNr )
 		{
 		unsigned short highestOrderNr = NO_ORDER_NR;
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			if( searchItem->orderNr > highestOrderNr &&
-			searchItem->justificationTypeNr() == justificationTypeNr )
-				highestOrderNr = searchItem->orderNr;
+			if( searchJustificationItem->orderNr > highestOrderNr &&
+			searchJustificationItem->justificationTypeNr() == justificationTypeNr )
+				highestOrderNr = searchJustificationItem->orderNr;
 
-			searchItem = searchItem->nextJustificationItem();
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
 			}
 
 		return highestOrderNr;
@@ -54,19 +54,19 @@ class JustificationList : private List
 
 	unsigned short justificationOrderNr( bool hasFeminineOrMasculineProperNameEnding, bool hasPossessivePrimarySpecification, unsigned short justificationTypeNr, unsigned int primarySpecificationCollectionNr )
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
 		if( primarySpecificationCollectionNr > NO_COLLECTION_NR )
 			{
-			while( searchItem != NULL )
+			while( searchJustificationItem != NULL )
 				{
-				if( searchItem->justificationTypeNr() == justificationTypeNr &&
-				searchItem->hasPossessivePrimarySpecification() == hasPossessivePrimarySpecification &&
-				searchItem->primarySpecificationCollectionNr() == primarySpecificationCollectionNr &&
-				searchItem->hasFeminineOrMasculineProperNameEnding() == hasFeminineOrMasculineProperNameEnding )
-					return searchItem->orderNr;
+				if( searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
+				searchJustificationItem->hasPossessivePrimarySpecification() == hasPossessivePrimarySpecification &&
+				searchJustificationItem->primarySpecificationCollectionNr() == primarySpecificationCollectionNr &&
+				searchJustificationItem->hasFeminineOrMasculineProperNameEnding() == hasFeminineOrMasculineProperNameEnding )
+					return searchJustificationItem->orderNr;
 
-				searchItem = searchItem->nextJustificationItem();
+				searchJustificationItem = searchJustificationItem->nextJustificationItem();
 				}
 			}
 
@@ -76,7 +76,7 @@ class JustificationList : private List
 	unsigned short questionJustificationOrderNr( SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem )
 		{
 		bool isCheckingSpecificationCompoundCollection;
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 		SpecificationItem *foundPrimarySpecificationItem;
 
 		if( primarySpecificationItem != NULL &&
@@ -85,42 +85,42 @@ class JustificationList : private List
 			isCheckingSpecificationCompoundCollection = ( anotherPrimarySpecificationItem == NULL &&
 														primarySpecificationItem->hasSpecificationCompoundCollection() );
 
-			while( searchItem != NULL )
+			while( searchJustificationItem != NULL )
 				{
-				if( searchItem->isQuestionJustification() )
+				if( searchJustificationItem->isQuestionJustification() )
 					{
-					if( searchItem->primarySpecificationItem() == primarySpecificationItem &&
-					searchItem->anotherPrimarySpecificationItem() == anotherPrimarySpecificationItem )
-						return searchItem->orderNr;
+					if( searchJustificationItem->primarySpecificationItem() == primarySpecificationItem &&
+					searchJustificationItem->anotherPrimarySpecificationItem() == anotherPrimarySpecificationItem )
+						return searchJustificationItem->orderNr;
 
 					if( isCheckingSpecificationCompoundCollection &&
-					!searchItem->hasAnotherPrimarySpecification() &&
-					( foundPrimarySpecificationItem = searchItem->primarySpecificationItem() ) != NULL )
+					!searchJustificationItem->hasAnotherPrimarySpecification() &&
+					( foundPrimarySpecificationItem = searchJustificationItem->primarySpecificationItem() ) != NULL )
 						{
 						if( foundPrimarySpecificationItem->specificationCollectionNr() == primarySpecificationItem->specificationCollectionNr() )
-							return searchItem->orderNr;
+							return searchJustificationItem->orderNr;
 						}
 					}
 
-				searchItem = searchItem->nextJustificationItem();
+				searchJustificationItem = searchJustificationItem->nextJustificationItem();
 				}
 			}
 
 		return NO_ORDER_NR;
 		}
 
-	ResultType checkForUnreferencedJustifications( bool isActiveItem )
+	ResultType checkForUnreferencedJustification( bool isActiveItem )
 		{
-		JustificationItem *searchItem = firstJustificationItem( isActiveItem );
+		JustificationItem *searchJustificationItem = firstJustificationItem( isActiveItem );
 		WordItem *generalizationWordItem = myWordItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkForUnreferencedJustifications";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "checkForUnreferencedJustification";
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			if( !generalizationWordItem->isJustificationInUse( searchItem ) )
-				return startError( functionNameString, NULL, "I have found an unreferenced active justification item" );
+			if( !generalizationWordItem->isJustificationInUse( searchJustificationItem ) )
+				return startError( functionNameString, NULL, "I have found an unreferenced justification item" );
 
-			searchItem = searchItem->nextJustificationItem();
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
 			}
 
 		return RESULT_OK;
@@ -128,54 +128,50 @@ class JustificationList : private List
 
 	ResultType checkJustificationForUsage( bool isActiveItem, JustificationItem *unusedJustificationItem )
 		{
-		JustificationItem *searchItem = firstJustificationItem( isActiveItem );
+		JustificationItem *searchJustificationItem = firstJustificationItem( isActiveItem );
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkJustificationForUsage";
 
-		if( unusedJustificationItem != NULL )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->attachedJustificationItem() == unusedJustificationItem )
-					return startError( functionNameString, NULL, "I have found an attached justification item that is still in use" );
-
-				if( searchItem->replacingJustificationItem == unusedJustificationItem )
-					return startError( functionNameString, NULL, "I have found a replacing justification item that is still in use" );
-
-				searchItem = searchItem->nextJustificationItem();
-				}
-			}
-		else
+		if( unusedJustificationItem == NULL )
 			return startError( functionNameString, NULL, "The given unused justification item is undefined" );
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->attachedJustificationItem() == unusedJustificationItem )
+				return startError( functionNameString, NULL, "I have found an attached justification item that is still in use" );
+
+			if( searchJustificationItem->replacingJustificationItem == unusedJustificationItem )
+				return startError( functionNameString, NULL, "I have found a replacing justification item that is still in use" );
+
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
+			}
 
 		return RESULT_OK;
 		}
 
 	ResultType checkSpecificationItemForUsage( bool isActiveItem, SpecificationItem *unusedSpecificationItem )
 		{
-		JustificationItem *searchItem = firstJustificationItem( isActiveItem );
+		JustificationItem *searchJustificationItem = firstJustificationItem( isActiveItem );
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkSpecificationItemForUsage";
 
-		if( unusedSpecificationItem != NULL )
-			{
-			while( searchItem != NULL )
-				{
-				if( searchItem->primarySpecificationItem() == unusedSpecificationItem )
-					return startError( functionNameString, NULL, "The primary specification item is still in use" );
-
-				if( searchItem->anotherPrimarySpecificationItem() == unusedSpecificationItem )
-					return startError( functionNameString, NULL, "The another primary specification item is still in use" );
-
-				if( searchItem->secondarySpecificationItem() == unusedSpecificationItem )
-					return startError( functionNameString, NULL, "The secondary specification item is still in use" );
-
-				if( searchItem->anotherSecondarySpecificationItem() == unusedSpecificationItem )
-					return startError( functionNameString, NULL, "The another secondary specification item is still in use" );
-
-				searchItem = searchItem->nextJustificationItem();
-				}
-			}
-		else
+		if( unusedSpecificationItem == NULL )
 			return startError( functionNameString, NULL, "The given unused specification item is undefined" );
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->primarySpecificationItem() == unusedSpecificationItem )
+				return startError( functionNameString, NULL, "The primary specification item is still in use" );
+
+			if( searchJustificationItem->anotherPrimarySpecificationItem() == unusedSpecificationItem )
+				return startError( functionNameString, NULL, "The another primary specification item is still in use" );
+
+			if( searchJustificationItem->secondarySpecificationItem() == unusedSpecificationItem )
+				return startError( functionNameString, NULL, "The secondary specification item is still in use" );
+
+			if( searchJustificationItem->anotherSecondarySpecificationItem() == unusedSpecificationItem )
+				return startError( functionNameString, NULL, "The another secondary specification item is still in use" );
+
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
+			}
 
 		return RESULT_OK;
 		}
@@ -189,93 +185,89 @@ class JustificationList : private List
 		WordItem *secondarySpecificationWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "replaceJustificationOfCorrectedAssumptionByOppositeQuestion";
 
-		if( obsoleteJustificationItem != NULL )
-			{
-			if( replacingJustificationItem != NULL )
-				{
-				correctedAssumptionByOppositeQuestionJustificationItem_ = replacingJustificationItem;
-
-				if( ( secondarySpecificationWordItem = replacingJustificationItem->secondarySpecificationWordItem() ) != NULL )
-					{
-					if( ( foundSpecificationItem = myWordItem()->firstAssignmentOrSpecificationItem( false, false, false, false, NO_QUESTION_PARAMETER, secondarySpecificationWordItem ) ) != NULL )
-						{
-						if( foundSpecificationItem->attachJustificationToSpecification( replacingJustificationItem ) == RESULT_OK )
-							{
-							foundSpecificationItem = foundSpecificationItem->updatedSpecificationItem();
-
-							if( ( firstJustificationItem = foundSpecificationItem->firstJustificationItem() ) != NULL )
-								{
-								if( ( attachedJustificationItem = firstJustificationItem->attachedJustificationItem() ) != NULL )
-									{
-									// Remove the obsolete justification item from the replacing justification item
-									if( firstJustificationItem->changeAttachedJustification( NULL ) == RESULT_OK )
-										{
-										if( replaceOrDeleteJustification( attachedJustificationItem ) == RESULT_OK )
-											{
-											if( ( justificationResult = copyJustificationItem( attachedJustificationItem->primarySpecificationItem(), attachedJustificationItem->secondarySpecificationItem(), NULL, attachedJustificationItem ) ).result == RESULT_OK )
-												{
-												if( justificationResult.createdJustificationItem != NULL )
-													{
-													if( foundSpecificationItem->attachJustificationToSpecification( justificationResult.createdJustificationItem ) != RESULT_OK )
-														return addError( functionNameString, NULL, "I failed to attach the created justification item to the found specification" );
-													}
-												else
-													return startError( functionNameString, NULL, "I couldn't find or create a justification" );
-												}
-											else
-												return addError( functionNameString, NULL, "I failed to copy the attached justification item" );
-											}
-										else
-											return addError( functionNameString, NULL, "I failed to replace the attached justification item, without an attached justification item" );
-										}
-									else
-										return addError( functionNameString, NULL, "I failed to remove the attached justification item of the replacing justification item" );
-									}
-								}
-							}
-						else
-							return addError( functionNameString, NULL, "I failed to attach the replacing justification item to the found specification" );
-						}
-					}
-				else
-					return startError( functionNameString, NULL, "The given replacing justification item has no secondary specification word item" );
-				}
-			else
-				return startError( functionNameString, NULL, "The given replacing justification item is undefined" );
-			}
-		else
+		if( obsoleteJustificationItem == NULL )
 			return startError( functionNameString, NULL, "The given obsolete justification item is undefined" );
+
+		if( replacingJustificationItem == NULL )
+			return startError( functionNameString, NULL, "The given replacing justification item is undefined" );
+
+		correctedAssumptionByOppositeQuestionJustificationItem_ = replacingJustificationItem;
+
+		if( ( secondarySpecificationWordItem = replacingJustificationItem->secondarySpecificationWordItem() ) == NULL )
+			return startError( functionNameString, NULL, "The given replacing justification item has no secondary specification word item" );
+
+		if( ( foundSpecificationItem = myWordItem()->firstAssignmentOrSpecificationItem( false, false, false, false, NO_QUESTION_PARAMETER, secondarySpecificationWordItem ) ) != NULL )
+			{
+			if( foundSpecificationItem->attachJustificationToSpecification( replacingJustificationItem ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to attach the replacing justification item to the found specification" );
+
+			foundSpecificationItem = foundSpecificationItem->updatedSpecificationItem();
+
+			if( ( firstJustificationItem = foundSpecificationItem->firstJustificationItem() ) != NULL )
+				{
+				if( ( attachedJustificationItem = firstJustificationItem->attachedJustificationItem() ) != NULL )
+					{
+					// Remove the obsolete justification item from the replacing justification item
+					if( firstJustificationItem->changeAttachedJustification( NULL ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to remove the attached justification item of the replacing justification item" );
+
+					if( replaceOrDeleteJustification( attachedJustificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to replace the attached justification item, without an attached justification item" );
+
+					if( ( justificationResult = copyJustificationItem( attachedJustificationItem->primarySpecificationItem(), attachedJustificationItem->secondarySpecificationItem(), NULL, attachedJustificationItem ) ).result != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to copy the attached justification item" );
+
+					if( justificationResult.createdJustificationItem == NULL )
+						return startError( functionNameString, NULL, "I couldn't find or create a justification" );
+
+					if( foundSpecificationItem->attachJustificationToSpecification( justificationResult.createdJustificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to attach the created justification item to the found specification" );
+					}
+				}
+			}
 
 		return RESULT_OK;
 		}
+/*
+	ResultType storeChangesInFutureDatabase( JustificationItem *searchJustificationItem )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->hasCurrentCreationSentenceNr() )
+				{
+				if( searchJustificationItem->storeJustificationItemInFutureDatabase() != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to store a justification item in the database" );
+				}
+
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
+			}
+
+		return RESULT_OK;
+		}
+*/
 	ResultType updateReplacedJustifications( JustificationItem *updateJustificationItem, JustificationItem *replacingJustificationItem )
 		{
-		JustificationItem *searchItem = firstReplacedJustificationItem();
+		JustificationItem *searchJustificationItem = firstReplacedJustificationItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "updateReplacedJustifications";
 
-		if( updateJustificationItem != NULL )
-			{
-			if( replacingJustificationItem != NULL )
-				{
-				if( !replacingJustificationItem->isReplacedItem() )
-					{
-					while( searchItem != NULL )
-						{
-						if( searchItem->replacingJustificationItem == updateJustificationItem )
-							searchItem->replacingJustificationItem = replacingJustificationItem;
-
-						searchItem = searchItem->nextJustificationItem();
-						}
-					}
-				else
-					return startError( functionNameString, NULL, "The replaced justification item of the given update justification item is a replaced item" );
-				}
-			else
-				return startError( functionNameString, NULL, "The given replacing justification item is undefined" );
-			}
-		else
+		if( updateJustificationItem == NULL )
 			return startError( functionNameString, NULL, "The given update justification item is undefined" );
+
+		if( replacingJustificationItem == NULL )
+			return startError( functionNameString, NULL, "The given replacing justification item is undefined" );
+
+		if( replacingJustificationItem->isReplacedItem() )
+			return startError( functionNameString, NULL, "The replaced justification item of the given update justification item is a replaced item" );
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->replacingJustificationItem == updateJustificationItem )
+				searchJustificationItem->replacingJustificationItem = replacingJustificationItem;
+
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
+			}
 
 		return RESULT_OK;
 		}
@@ -297,18 +289,18 @@ class JustificationList : private List
 
 	JustificationItem *getJustificationItem( bool hasFeminineOrMasculineProperNameEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem )
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			if( searchItem->primarySpecificationItem() == primarySpecificationItem &&
-			searchItem->anotherPrimarySpecificationItem() == anotherPrimarySpecificationItem &&
-			searchItem->secondarySpecificationItem() == secondarySpecificationItem &&
-			searchItem->anotherSecondarySpecificationItem() == anotherSecondarySpecificationItem &&
-			searchItem->hasFeminineOrMasculineProperNameEnding() == hasFeminineOrMasculineProperNameEnding )
-				return searchItem;
+			if( searchJustificationItem->primarySpecificationItem() == primarySpecificationItem &&
+			searchJustificationItem->anotherPrimarySpecificationItem() == anotherPrimarySpecificationItem &&
+			searchJustificationItem->secondarySpecificationItem() == secondarySpecificationItem &&
+			searchJustificationItem->anotherSecondarySpecificationItem() == anotherSecondarySpecificationItem &&
+			searchJustificationItem->hasFeminineOrMasculineProperNameEnding() == hasFeminineOrMasculineProperNameEnding )
+				return searchJustificationItem;
 
-			searchItem = searchItem->nextJustificationItem();
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
 			}
 
 		return NULL;
@@ -316,12 +308,11 @@ class JustificationList : private List
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	JustificationList( CommonVariables *commonVariables, WordItem *myWordItem )
 		{
-		// Private constructible variables
-
+		// Private constructed variables
 		correctedAssumptionByOppositeQuestionJustificationItem_ = NULL;
 
 		initializeListVariables( WORD_JUSTIFICATION_LIST_SYMBOL, "JustificationList", commonVariables, myWordItem );
@@ -329,14 +320,14 @@ class JustificationList : private List
 
 	~JustificationList()
 		{
-		JustificationItem *deleteItem;
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *deleteJustificationItem;
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextJustificationItem();
-			delete deleteItem;
+			deleteJustificationItem = searchJustificationItem;
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
+			delete deleteJustificationItem;
 			}
 
 		if( firstInactiveItem() != NULL )
@@ -345,22 +336,22 @@ class JustificationList : private List
 		if( firstArchivedItem() != NULL )
 			fprintf( stderr, "\nError: Class JustificationList has archived items." );
 
-		searchItem = firstReplacedJustificationItem();
+		searchJustificationItem = firstReplacedJustificationItem();
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextJustificationItem();
-			delete deleteItem;
+			deleteJustificationItem = searchJustificationItem;
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
+			delete deleteJustificationItem;
 			}
 
-		searchItem = (JustificationItem *)firstDeletedItem();
+		searchJustificationItem = (JustificationItem *)firstDeletedItem();
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			deleteItem = searchItem;
-			searchItem = searchItem->nextJustificationItem();
-			delete deleteItem;
+			deleteJustificationItem = searchJustificationItem;
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
+			delete deleteJustificationItem;
 			}
 		}
 
@@ -369,12 +360,12 @@ class JustificationList : private List
 
 	void clearJustificationHasBeenWritten()
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			searchItem->hasJustificationBeenWritten = false;
-			searchItem = searchItem->nextJustificationItem();
+			searchJustificationItem->hasJustificationBeenWritten = false;
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
 			}
 		}
 
@@ -387,7 +378,7 @@ class JustificationList : private List
 		{
 		JustificationResultType justificationResult;
 		bool isExclusivePrimarySpecification = false;
-		bool isNeedingIncrement = false;
+		bool isIncrementingOrderNr = false;
 		unsigned short foundJustificationOrderNr;
 		unsigned int primarySpecificationCollectionNr;
 		JustificationItem *foundJustificationItem = NULL;
@@ -397,156 +388,136 @@ class JustificationList : private List
 		SpecificationItem *updatedAnotherSecondarySpecificationItem = ( anotherSecondarySpecificationItem == NULL ? NULL : anotherSecondarySpecificationItem->updatedSpecificationItem() );
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addJustification";
 
-		if( primarySpecificationItem != NULL ||
-		secondarySpecificationItem != NULL )
+		if( primarySpecificationItem == NULL &&
+		secondarySpecificationItem == NULL )
+			return startJustificationResultError( functionNameString, NULL, "Both the given primary specification item and the given secondary specification item are undefined" );
+
+		// Skipping search, forcing to create a new justification item
+		if( !isForcingNewJustification )
+			foundJustificationItem = getJustificationItem( hasFeminineOrMasculineProperNameEnding, updatedPrimarySpecificationItem, updatedAnotherPrimarySpecificationItem, updatedSecondarySpecificationItem, updatedAnotherSecondarySpecificationItem );
+
+		if( foundJustificationItem == NULL ||
+
+		( attachedJustificationItem != NULL &&
+		foundJustificationItem->justificationTypeNr() == justificationTypeNr &&
+		// Avoid looping
+		foundJustificationItem->attachedJustificationItem() != attachedJustificationItem ) )
 			{
-			// Skipping search, forcing to create a new justification item
-			if( !isForcingNewJustification )
-				foundJustificationItem = getJustificationItem( hasFeminineOrMasculineProperNameEnding, updatedPrimarySpecificationItem, updatedAnotherPrimarySpecificationItem, updatedSecondarySpecificationItem, updatedAnotherSecondarySpecificationItem );
-
-			if( foundJustificationItem == NULL ||
-
-			// Exceptions
-			( foundJustificationItem->justificationTypeNr() == justificationTypeNr &&
-
-			( ( attachedJustificationItem != NULL ||
-			foundJustificationItem->isPossessiveReversibleConclusion() ) &&
-
-			foundJustificationItem->attachedJustificationItem() != attachedJustificationItem ) ) )
+			if( orderNr == NO_ORDER_NR )
 				{
-				if( commonVariables()->currentItemNr < MAX_ITEM_NR )
-					{
-					if( orderNr == NO_ORDER_NR )
-						{
-						if( foundJustificationItem == NULL &&
-						updatedPrimarySpecificationItem != NULL &&
-						updatedSecondarySpecificationItem != NULL &&
-						( foundJustificationItem = olderComplexJustificationItem( false, justificationTypeNr, updatedSecondarySpecificationItem->specificationCollectionNr(), updatedPrimarySpecificationItem ) ) != NULL )
-							orderNr = foundJustificationItem->orderNr;
-						else
-							{
-							orderNr = highestJustificationOrderNr( justificationTypeNr );
-
-							if( orderNr > NO_ORDER_NR &&
-							updatedPrimarySpecificationItem != NULL &&
-							updatedSecondarySpecificationItem != NULL )
-								{
-								// Group justification by selecting the order number
-								switch( justificationTypeNr )
-									{
-									case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-										if( updatedPrimarySpecificationItem->isExclusiveSpecification() )
-											isExclusivePrimarySpecification = true;
-
-										// Don't insert a break statement here
-
-									case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-									case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
-										if( ( isExclusivePrimarySpecification ||
-
-										( ( updatedPrimarySpecificationItem->isSpecificationWordSpanishAmbiguous() &&
-										updatedPrimarySpecificationItem->hasRelationContext() &&
-										updatedPrimarySpecificationItem->generalizationWordItem() == myWordItem() ) ||
-
-										( hasFeminineOrMasculineProperNameEnding &&
-										updatedAnotherPrimarySpecificationItem != NULL &&
-										updatedAnotherPrimarySpecificationItem->isSpecificationWordSpanishAmbiguous() ) ) ) &&
-
-										( primarySpecificationCollectionNr = updatedPrimarySpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR )
-											{
-											if( ( foundJustificationOrderNr = justificationOrderNr( hasFeminineOrMasculineProperNameEnding, updatedPrimarySpecificationItem->isPossessive(), justificationTypeNr, primarySpecificationCollectionNr ) ) == NO_ORDER_NR )
-												isNeedingIncrement = true;
-											else
-												orderNr = foundJustificationOrderNr;
-											}
-
-										break;
-
-									case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
-										// Spanish ambiguous
-										if( updatedAnotherSecondarySpecificationItem == NULL )
-											{
-											if( ( foundJustificationOrderNr = questionJustificationOrderNr( updatedPrimarySpecificationItem, updatedAnotherPrimarySpecificationItem, updatedSecondarySpecificationItem ) ) == NO_ORDER_NR )
-												isNeedingIncrement = true;
-											else
-												orderNr = foundJustificationOrderNr;
-											}
-									}
-								}
-
-							if( commonVariables()->result == RESULT_OK &&
-							!isExclusivePrimarySpecification &&
-
-							( orderNr == NO_ORDER_NR ||
-							isNeedingIncrement ||
-							justificationTypeNr == JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION ||
-							justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION ||
-
-							( updatedPrimarySpecificationItem != NULL &&
-
-							( ( justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION &&
-
-							// Skip self-generated question of corrected assumption by opposite question
-							( updatedAnotherPrimarySpecificationItem == NULL ||
-							updatedPrimarySpecificationItem->hasRelationContext() ) ) ||
-
-							( updatedPrimarySpecificationItem->isSpecificationWordSpanishAmbiguous() &&
-
-							( justificationTypeNr == JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION ||
-
-							( hasFeminineOrMasculineProperNameEnding &&
-							justificationTypeNr == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION &&
-							updatedPrimarySpecificationItem->isPossessive() &&
-							// If justification without feminine or masculine proper name ending exists
-							getJustificationItem( false, updatedPrimarySpecificationItem, updatedAnotherPrimarySpecificationItem, updatedSecondarySpecificationItem, updatedAnotherSecondarySpecificationItem ) != NULL ) ) ) ) ) ) )
-								orderNr++;
-							}
-						}
-
-					if( commonVariables()->result == RESULT_OK )
-						{
-						if( orderNr > NO_ORDER_NR )
-							{
-							if( ( justificationResult.createdJustificationItem = new JustificationItem( hasFeminineOrMasculineProperNameEnding, justificationTypeNr, orderNr, originalSentenceNr, updatedPrimarySpecificationItem, updatedAnotherPrimarySpecificationItem, updatedSecondarySpecificationItem, updatedAnotherSecondarySpecificationItem, attachedJustificationItem, commonVariables(), this, myWordItem() ) ) != NULL )
-								{
-								// Add justification item
-								if( addItemToList( QUERY_ACTIVE_CHAR, justificationResult.createdJustificationItem ) != RESULT_OK )
-									addError( functionNameString, NULL, "I failed to add an active justification item" );
-								}
-							else
-								startError( functionNameString, NULL, "I failed to create a justification item" );
-							}
-						else
-							startError( functionNameString, NULL, "The order number is undefined" );
-						}
-					}
+				if( foundJustificationItem == NULL &&
+				updatedPrimarySpecificationItem != NULL &&
+				updatedSecondarySpecificationItem != NULL &&
+				( foundJustificationItem = olderComplexJustificationItem( false, justificationTypeNr, updatedSecondarySpecificationItem->specificationCollectionNr(), updatedPrimarySpecificationItem ) ) != NULL )
+					orderNr = foundJustificationItem->orderNr;
 				else
-					startError( functionNameString, NULL, "The current item number is undefined" );
+					{
+					orderNr = highestJustificationOrderNr( justificationTypeNr );
+
+					if( orderNr > NO_ORDER_NR &&
+					updatedPrimarySpecificationItem != NULL &&
+					updatedSecondarySpecificationItem != NULL )
+						{
+						// Group justification by selecting the order number
+						switch( justificationTypeNr )
+							{
+							case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+								if( updatedPrimarySpecificationItem->isExclusiveSpecification() )
+									isExclusivePrimarySpecification = true;
+
+								// Don't insert a break statement here
+
+							case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+							case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
+								if( ( isExclusivePrimarySpecification ||
+
+								( ( updatedPrimarySpecificationItem->isSpecificationWordSpanishAmbiguous() &&
+								updatedPrimarySpecificationItem->hasRelationContext() &&
+								updatedPrimarySpecificationItem->generalizationWordItem() == myWordItem() ) ||
+
+								( hasFeminineOrMasculineProperNameEnding &&
+								updatedAnotherPrimarySpecificationItem != NULL &&
+								updatedAnotherPrimarySpecificationItem->isSpecificationWordSpanishAmbiguous() ) ) ) &&
+
+								( primarySpecificationCollectionNr = updatedPrimarySpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR )
+									{
+									if( ( foundJustificationOrderNr = justificationOrderNr( hasFeminineOrMasculineProperNameEnding, updatedPrimarySpecificationItem->isPossessive(), justificationTypeNr, primarySpecificationCollectionNr ) ) == NO_ORDER_NR )
+										isIncrementingOrderNr = true;
+									else
+										orderNr = foundJustificationOrderNr;
+									}
+
+								break;
+
+							case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
+								// Spanish ambiguous
+								if( updatedAnotherSecondarySpecificationItem == NULL )
+									{
+									if( ( foundJustificationOrderNr = questionJustificationOrderNr( updatedPrimarySpecificationItem, updatedAnotherPrimarySpecificationItem, updatedSecondarySpecificationItem ) ) == NO_ORDER_NR )
+										isIncrementingOrderNr = true;
+									else
+										orderNr = foundJustificationOrderNr;
+									}
+							}
+						}
+
+					if( !isExclusivePrimarySpecification &&
+
+					( isIncrementingOrderNr ||
+					orderNr == NO_ORDER_NR ||
+					justificationTypeNr == JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION ||
+					justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION ||
+
+					( updatedPrimarySpecificationItem != NULL &&
+
+					( ( justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION &&
+
+					// Skip self-generated question of corrected assumption by opposite question
+					( updatedAnotherPrimarySpecificationItem == NULL ||
+					updatedPrimarySpecificationItem->hasRelationContext() ) ) ||
+
+					( updatedPrimarySpecificationItem->isSpecificationWordSpanishAmbiguous() &&
+
+					( justificationTypeNr == JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION ||
+
+					( hasFeminineOrMasculineProperNameEnding &&
+					justificationTypeNr == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION &&
+					updatedPrimarySpecificationItem->isPossessive() &&
+					// If justification without feminine or masculine proper name ending exists
+					getJustificationItem( false, updatedPrimarySpecificationItem, updatedAnotherPrimarySpecificationItem, updatedSecondarySpecificationItem, updatedAnotherSecondarySpecificationItem ) != NULL ) ) ) ) ) ) )
+						orderNr++;
+					}
 				}
+
+			if( orderNr <= NO_ORDER_NR )
+				return startJustificationResultError( functionNameString, NULL, "The order number is undefined" );
+
+			if( ( justificationResult.createdJustificationItem = new JustificationItem( hasFeminineOrMasculineProperNameEnding, justificationTypeNr, orderNr, originalSentenceNr, updatedPrimarySpecificationItem, updatedAnotherPrimarySpecificationItem, updatedSecondarySpecificationItem, updatedAnotherSecondarySpecificationItem, attachedJustificationItem, commonVariables(), this, myWordItem() ) ) == NULL )
+				return startJustificationResultError( functionNameString, NULL, "I failed to create a justification item" );
+
+			// Add justification item
+			if( addItemToList( QUERY_ACTIVE_CHAR, justificationResult.createdJustificationItem ) != RESULT_OK )
+				return addJustificationResultError( functionNameString, NULL, "I failed to add an active justification item" );
 			}
-		else
-			startError( functionNameString, NULL, "Both the given primary specification item and the given secondary specification item are undefined" );
 
 		justificationResult.foundJustificationItem = foundJustificationItem;
-		justificationResult.result = commonVariables()->result;
 		return justificationResult;
 		}
 
 	JustificationResultType copyJustificationItem( SpecificationItem *newPrimarySpecificationItem, SpecificationItem *newSecondarySpecificationItem, JustificationItem *newAttachedJustificationItem, JustificationItem *originalJustificationItem )
 		{
-		JustificationResultType justificationResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "copyJustificationItem";
 
 		if( originalJustificationItem != NULL )
 			return addJustification( originalJustificationItem->hasFeminineOrMasculineProperNameEnding(), false, originalJustificationItem->justificationTypeNr(), originalJustificationItem->orderNr, originalJustificationItem->originalSentenceNr(), newPrimarySpecificationItem, originalJustificationItem->anotherPrimarySpecificationItem(), newSecondarySpecificationItem, originalJustificationItem->anotherSecondarySpecificationItem(), newAttachedJustificationItem );
 
-		justificationResult.result = startError( functionNameString, NULL, "The given original justification item is undefined" );
-		return justificationResult;
+		return startJustificationResultError( functionNameString, NULL, "The given original justification item is undefined" );
 		}
 
 	ResultType attachJustification( JustificationItem *attachJustificationItem, SpecificationItem *involvedSpecificationItem )
 		{
 		SpecificationResultType specificationResult;
+		bool hasInvolvedSpecificationRelationContext;
 		bool isPrimarySpecificationWordSpanishAmbiguous;
 		bool isSkippingUpdateJustification = false;
 		unsigned short highestOrderNr;
@@ -561,214 +532,192 @@ class JustificationList : private List
 		WordItem *generalizationWordItem = myWordItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "attachJustification";
 
-		if( attachJustificationItem != NULL )
+		if( attachJustificationItem == NULL )
+			return startError( functionNameString, NULL, "The given attached justification item is undefined" );
+
+		if( involvedSpecificationItem == NULL )
+			return startError( functionNameString, NULL, "The given involved specification item is undefined" );
+
+		if( !attachJustificationItem->isActiveItem() )
+			return startError( functionNameString, NULL, "The given attached justification item isn't active" );
+
+		if( involvedSpecificationItem->isReplacedOrDeletedItem() )
+			return startError( functionNameString, NULL, "The given involved specification item is replaced or deleted" );
+
+		hasInvolvedSpecificationRelationContext = involvedSpecificationItem->hasRelationContext();
+		isPrimarySpecificationWordSpanishAmbiguous = attachJustificationItem->isPrimarySpecificationWordSpanishAmbiguous();
+		justificationTypeNr = attachJustificationItem->justificationTypeNr();
+
+		attachedPrimarySpecificationItem = attachJustificationItem->primarySpecificationItem();
+		attachedSecondarySpecificationItem = attachJustificationItem->secondarySpecificationItem();
+
+		if( attachedPrimarySpecificationItem != NULL &&
+
+		( ( !hasInvolvedSpecificationRelationContext &&
+		!involvedSpecificationItem->isExclusiveSpecification() &&
+		!attachedPrimarySpecificationItem->isExclusiveSpecification() &&
+
+		( attachedPrimarySpecificationItem->hasRelationContext() ||
+		!attachedPrimarySpecificationItem->isPossessive() ) ) ||
+
+		( ( ( involvedSpecificationItem->isQuestion() &&
+		attachedPrimarySpecificationItem->isPossessive() ) ||
+
+		( !isPrimarySpecificationWordSpanishAmbiguous &&
+
+		( attachedPrimarySpecificationItem->hasRelationContext() ||
+		attachedPrimarySpecificationItem->isOlderItem() ) ) ) &&
+
+		!involvedSpecificationItem->hasJustificationOfSameType( justificationTypeNr, attachedPrimarySpecificationItem, attachedSecondarySpecificationItem ) ) ) )
 			{
-			if( involvedSpecificationItem != NULL )
+			if( ( highestOrderNr = involvedSpecificationItem->highestAttachedJustificationOrderNr( justificationTypeNr ) ) >= MAX_ORDER_NR )
+				return startSystemError( functionNameString, NULL, "Justification order number overflow" );
+
+			attachJustificationItem->orderNr = ( highestOrderNr + 1 );
+			}
+
+		if( ( firstJustificationItem = involvedSpecificationItem->firstJustificationItem() ) == NULL )
+			return startError( functionNameString, NULL, "The given involved specification item has no justification item" );
+
+		if( attachJustificationItem->secondarySpecificationQuestion() == NULL &&
+		( obsoleteJustificationItem = firstJustificationItem->secondarySpecificationQuestion() ) == NULL )
+			{
+			if( attachedPrimarySpecificationItem != NULL &&
+			!attachedPrimarySpecificationItem->isPossessive() &&
+			attachedPrimarySpecificationItem->hasRelationContext() )
+				obsoleteJustificationItem = firstJustificationItem->primarySpecificationWithoutRelationContextJustificationItem( attachedPrimarySpecificationItem );
+			else
 				{
-				if( attachJustificationItem->isActiveItem() )
+				// Typically for the Spanish language
+				if( attachedSecondarySpecificationItem != NULL &&
+				attachedSecondarySpecificationItem->isUserSpecification() &&
+				
+				( involvedSpecificationItem->isQuestion() ||
+				involvedSpecificationItem->isSpecificationWordSpanishAmbiguous() ) )
+					obsoleteJustificationItem = firstJustificationItem->obsoleteSpanishJustificationItem( attachedPrimarySpecificationItem, attachedSecondarySpecificationItem );
+				}
+
+			if( obsoleteJustificationItem != NULL )
+				{
+				if( obsoleteJustificationItem->isOlderItem() )
 					{
-					if( !involvedSpecificationItem->isReplacedOrDeletedItem() )
-						{
-						justificationTypeNr = attachJustificationItem->justificationTypeNr();
-						isPrimarySpecificationWordSpanishAmbiguous = attachJustificationItem->isPrimarySpecificationWordSpanishAmbiguous();
+					if( !hasInvolvedSpecificationRelationContext &&
 
-						attachedPrimarySpecificationItem = attachJustificationItem->primarySpecificationItem();
-						attachedSecondarySpecificationItem = attachJustificationItem->secondarySpecificationItem();
+					( !isPrimarySpecificationWordSpanishAmbiguous ||
 
-						if( attachedPrimarySpecificationItem != NULL &&
-
-						( ( !involvedSpecificationItem->hasRelationContext() &&
-						!involvedSpecificationItem->isExclusiveSpecification() &&
-						!attachedPrimarySpecificationItem->isExclusiveSpecification() &&
-
-						( attachedPrimarySpecificationItem->hasRelationContext() ||
-						!attachedPrimarySpecificationItem->isPossessive() ) ) ||
-
-						( ( ( involvedSpecificationItem->isQuestion() &&
-						attachedPrimarySpecificationItem->isPossessive() ) ||
-
-						( !isPrimarySpecificationWordSpanishAmbiguous &&
-
-						( attachedPrimarySpecificationItem->hasRelationContext() ||
-						attachedPrimarySpecificationItem->isOlderItem() ) ) ) &&
-
-						!involvedSpecificationItem->hasFoundJustificationOfSameType( justificationTypeNr, attachedPrimarySpecificationItem, attachedSecondarySpecificationItem ) ) ) )
-							{
-							if( ( highestOrderNr = involvedSpecificationItem->highestAttachedJustificationOrderNr( justificationTypeNr ) ) < MAX_ORDER_NR )
-								attachJustificationItem->orderNr = ( highestOrderNr + 1 );
-							else
-								return startSystemError( functionNameString, NULL, "Justification order number overflow" );
-							}
-
-						if( ( firstJustificationItem = involvedSpecificationItem->firstJustificationItem() ) != NULL )
-							{
-							if( attachJustificationItem->secondarySpecificationQuestion() == NULL &&
-							( obsoleteJustificationItem = firstJustificationItem->secondarySpecificationQuestion() ) == NULL )
-								{
-								if( attachedPrimarySpecificationItem != NULL &&
-								!attachedPrimarySpecificationItem->isPossessive() &&
-								attachedPrimarySpecificationItem->hasRelationContext() )
-									obsoleteJustificationItem = firstJustificationItem->primarySpecificationWithoutRelationContextJustificationItem( attachedPrimarySpecificationItem );
-								else
-									{
-									if( attachedSecondarySpecificationItem != NULL &&
-									attachedSecondarySpecificationItem->isUserSpecification() )
-										obsoleteJustificationItem = firstJustificationItem->selfGeneratedSecondarySpecificationJustificationItem( attachedPrimarySpecificationItem, attachedSecondarySpecificationItem );
-									}
-
-								if( obsoleteJustificationItem != NULL )
-									{
-									if( obsoleteJustificationItem->isOlderItem() )
-										{
-										if( !involvedSpecificationItem->hasRelationContext() &&
-
-										( !isPrimarySpecificationWordSpanishAmbiguous ||
-
-										( attachedPrimarySpecificationItem != NULL &&
-										attachedPrimarySpecificationItem->hasAssumptionLevel() ) ) )
-											isSkippingUpdateJustification = true;
-										else
-											{
-											if( replaceJustification( false, obsoleteJustificationItem, attachJustificationItem, involvedSpecificationItem, NULL ) == RESULT_OK )
-												attachJustificationItem->orderNr = obsoleteJustificationItem->orderNr;
-											else
-												return addError( functionNameString, NULL, "I failed to replace the obsolete justification item" );
-											}
-										}
-									else
-										{
-										obsoleteJustificationItem = NULL;
-
-										if( ( highestOrderNr = involvedSpecificationItem->highestAttachedJustificationOrderNr( justificationTypeNr ) ) < MAX_ORDER_NR )
-											attachJustificationItem->orderNr = ( highestOrderNr + 1 );
-										else
-											return startSystemError( functionNameString, NULL, "Justification order number overflow" );
-										}
-									}
-								}
-
-							if( obsoleteJustificationItem == NULL )
-								{
-								// Find a justification item with current sentence number, but without attached justification item
-								lastAttachedJustificationItem = firstJustificationItem;
-
-								while( lastAttachedJustificationItem->hasCurrentCreationSentenceNr() &&
-								( attachedJustificationItem = lastAttachedJustificationItem->attachedJustificationItem() ) != NULL )
-									lastAttachedJustificationItem = attachedJustificationItem;
-
-								if( lastAttachedJustificationItem->hasCurrentCreationSentenceNr() )
-									{
-									if( ( specificationResult = involvedSpecificationItem->getAssumptionLevel() ).result == RESULT_OK )
-										{
-										previousAssumptionLevel = specificationResult.assumptionLevel;
-
-										if( lastAttachedJustificationItem->attachJustification( attachJustificationItem, involvedSpecificationItem ) == RESULT_OK )
-											{
-											if( ( involvedSpecificationItem->isConcludedAssumption() ||
-
-											( justificationTypeNr != JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION &&
-											justificationTypeNr != JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION ) ) &&
-
-											// Skip on multiple relation context words
-											( involvedSpecificationItem->isOlderItem() ||
-											!involvedSpecificationItem->hasRelationContext() ||
-											generalizationWordItem->nContextWordsInAllWords( involvedSpecificationItem->relationContextNr(), involvedSpecificationItem->specificationWordItem() ) == 1 ) )
-												{
-												if( ( specificationResult = involvedSpecificationItem->recalculateAssumptionLevel() ).result == RESULT_OK )
-													{
-													if( involvedSpecificationItem->isOlderItem() &&
-													!involvedSpecificationItem->hasRelationContext() &&
-													specificationResult.assumptionLevel != previousAssumptionLevel &&
-
-													// Avoid updates of high uncertainty mapping,
-													// from 'maybe' of one level to 'maybe' of another level
-													( previousAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ||
-													specificationResult.assumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ) )
-														{
-														// Conclusion
-														if( specificationResult.assumptionLevel == NO_ASSUMPTION_LEVEL )
-															{
-															if( involvedSpecificationItem->markAsConcludedAssumption() != RESULT_OK )
-																return addError( functionNameString, NULL, "I failed to mark the involved specification as concluded assumption" );
-															}
-
-														// Write adjusted specification
-														if( generalizationWordItem->writeUpdatedSpecification( true, false, false, false, involvedSpecificationItem ) != RESULT_OK )
-															return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
-														}
-													}
-												else
-													return addError( functionNameString, NULL, "I failed to recalculate the assumption level" );
-												}
-											}
-										else
-											return addError( functionNameString, NULL, "I failed to attach a justification item" );
-										}
-									else
-										return addError( functionNameString, NULL, "I failed to get the assumption level" );
-									}
-								else
-									{
-									if( !attachJustificationItem->hasAttachedJustification() )
-										{
-										if( involvedSpecificationItem->attachJustificationToSpecification( attachJustificationItem ) != RESULT_OK )
-											return addError( functionNameString, NULL, "I failed to attach the justification item to the given involved specification item" );
-										}
-									}
-								}
-							else
-								{
-								if( !isSkippingUpdateJustification )
-									{
-									if( generalizationWordItem->updateJustificationInSpecifications( false, obsoleteJustificationItem, attachJustificationItem ) != RESULT_OK )
-										return addError( functionNameString, NULL, "I failed to update a question justification item by a conclusion justification item" );
-									}
-								}
-							}
-						else
-							return startError( functionNameString, NULL, "The given involved specification item has no justification item" );
-						}
+					( attachedPrimarySpecificationItem != NULL &&
+					attachedPrimarySpecificationItem->hasAssumptionLevel() ) ) )
+						isSkippingUpdateJustification = true;
 					else
-						return startError( functionNameString, NULL, "The given involved specification item is replaced or deleted" );
+						{
+						if( replaceJustification( false, obsoleteJustificationItem, attachJustificationItem, involvedSpecificationItem, NULL ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to replace the obsolete justification item" );
+
+						attachJustificationItem->orderNr = obsoleteJustificationItem->orderNr;
+						}
 					}
 				else
-					return startError( functionNameString, NULL, "The given attached justification item isn't active" );
+					{
+					obsoleteJustificationItem = NULL;
+
+					if( ( highestOrderNr = involvedSpecificationItem->highestAttachedJustificationOrderNr( justificationTypeNr ) ) >= MAX_ORDER_NR )
+						return startSystemError( functionNameString, NULL, "Justification order number overflow" );
+
+					attachJustificationItem->orderNr = ( highestOrderNr + 1 );
+					}
+				}
+			}
+
+		if( obsoleteJustificationItem == NULL )
+			{
+			// Find a justification item with current sentence number, but without attached justification item
+			lastAttachedJustificationItem = firstJustificationItem;
+
+			while( ( attachedJustificationItem = lastAttachedJustificationItem->attachedJustificationItem() ) != NULL )
+				lastAttachedJustificationItem = attachedJustificationItem;
+
+			if( lastAttachedJustificationItem->hasCurrentCreationSentenceNr() )
+				{
+				if( ( specificationResult = involvedSpecificationItem->getAssumptionLevel() ).result != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to get the assumption level" );
+
+				previousAssumptionLevel = specificationResult.assumptionLevel;
+
+				if( lastAttachedJustificationItem->attachJustification( attachJustificationItem, involvedSpecificationItem ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to attach a justification item" );
+
+				if( !hasInvolvedSpecificationRelationContext ||
+				!involvedSpecificationItem->isOlderItem() )
+					{
+					if( ( specificationResult = involvedSpecificationItem->recalculateAssumptionLevel() ).result != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to recalculate the assumption level" );
+
+					if( !hasInvolvedSpecificationRelationContext &&
+					involvedSpecificationItem->isOlderItem() &&
+					specificationResult.assumptionLevel != previousAssumptionLevel &&
+
+					( previousAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ||
+					// Skip writing adjustments of uncertainty level higher than 'maybe'
+					specificationResult.assumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ) )
+						{
+						// Conclusion
+						if( specificationResult.assumptionLevel == NO_ASSUMPTION_LEVEL )
+							{
+							if( involvedSpecificationItem->markAsConcludedAssumption() != RESULT_OK )
+								return addError( functionNameString, NULL, "I failed to mark the involved specification as concluded assumption" );
+							}
+
+						// Write adjusted specification
+						if( generalizationWordItem->writeUpdatedSpecification( true, false, false, false, false, false, involvedSpecificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
+						}
+					}
 				}
 			else
-				return startError( functionNameString, NULL, "The given involved specification item is undefined" );
+				{
+				if( !attachJustificationItem->hasAttachedJustification() )
+					{
+					if( involvedSpecificationItem->attachJustificationToSpecification( attachJustificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to attach the justification item to the given involved specification item" );
+					}
+				}
 			}
 		else
-			return startError( functionNameString, NULL, "The given attached justification item is undefined" );
+			{
+			if( !isSkippingUpdateJustification )
+				{
+				if( generalizationWordItem->updateJustificationInSpecifications( false, obsoleteJustificationItem, attachJustificationItem ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to update a question justification item by a conclusion justification item" );
+				}
+			}
 
 		return RESULT_OK;
 		}
 
-	ResultType checkForUnreferencedJustifications()
+	ResultType checkForUnreferencedJustification()
 		{
-		if( checkForUnreferencedJustifications( true ) == RESULT_OK )
-			return checkForUnreferencedJustifications( false );
+		if( checkForUnreferencedJustification( true ) == RESULT_OK )
+			return checkForUnreferencedJustification( false );
 
-		return commonVariables()->result;
+		return RESULT_OK;
 		}
 
-	ResultType checkForReplacedOrDeletedSpecifications()
+	ResultType checkForReplacedOrDeletedSpecification()
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem;
 
-		while( commonVariables()->result == RESULT_OK &&
-		searchItem != NULL )
+		if( ( searchJustificationItem = firstActiveJustificationItem() ) != NULL )
 			{
-			searchItem->checkForReplacedOrDeletedSpecifications();
-			searchItem = searchItem->nextJustificationItem();
+			do	;
+			while( searchJustificationItem->checkForReplacedOrDeletedSpecification() == RESULT_OK &&
+			( searchJustificationItem = searchJustificationItem->nextJustificationItem() ) != NULL );
 			}
 
-		searchItem = firstReplacedJustificationItem();
-
-		while( commonVariables()->result == RESULT_OK &&
-		searchItem != NULL )
+		if( ( searchJustificationItem = firstReplacedJustificationItem() ) != NULL )
 			{
-			searchItem->checkForDeletedSpecifications();
-			searchItem = searchItem->nextJustificationItem();
+			do	;
+			while( searchJustificationItem->checkForDeletedSpecifications() == RESULT_OK &&
+			( searchJustificationItem = searchJustificationItem->nextJustificationItem() ) != NULL );
 			}
 
 		return commonVariables()->result;
@@ -797,7 +746,6 @@ class JustificationList : private List
 	ResultType replaceJustification( bool isExclusiveGeneralization, JustificationItem *obsoleteJustificationItem, JustificationItem *replacingJustificationItem, SpecificationItem *involvedSpecificationItem, SpecificationItem *replacingCorrectedAssumptionByKnowledgeSpecificationItem )
 		{
 		SpecificationResultType specificationResult;
-		bool hasCorrectedAssumption;
 		bool hasCorrectedAssumptionByKnowledge;
 		bool hasCorrectedAssumptionByOppositeQuestion;
 		JustificationItem *attachedJustificationItem;
@@ -805,162 +753,142 @@ class JustificationList : private List
 		WordItem *generalizationWordItem = myWordItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "replaceJustification";
 
-		if( obsoleteJustificationItem != NULL )
+		if( obsoleteJustificationItem == NULL )
+			return startError( functionNameString, NULL, "The given obsolete justification item is undefined" );
+
+		if( involvedSpecificationItem == NULL )
+			return startError( functionNameString, NULL, "The given involved specification item is undefined" );
+
+		if( obsoleteJustificationItem->replacingJustificationItem != NULL )
+			return startError( functionNameString, NULL, "The given obsolete justification item is already replaced" );
+
+		if( replacingJustificationItem != NULL &&
+		replacingJustificationItem->replacingJustificationItem != NULL )
+			return startError( functionNameString, NULL, "The given replacing justification item has a replacing justification item itself" );
+
+		if( obsoleteJustificationItem == replacingJustificationItem )
+			return startError( functionNameString, NULL, "The given obsolete justification item and the given replacing justification item are the same justification item" );
+
+		hasCorrectedAssumptionByKnowledge = generalizationWordItem->hasCorrectedAssumptionByKnowledge();
+		hasCorrectedAssumptionByOppositeQuestion = generalizationWordItem->hasCorrectedAssumptionByOppositeQuestion();
+
+		// Corrected assumption
+		if( ( hasCorrectedAssumptionByKnowledge ||
+		hasCorrectedAssumptionByOppositeQuestion ) &&
+
+		replacingJustificationItem != NULL &&
+		replacingJustificationItem->isGeneralizationAssumption() )
 			{
-			if( involvedSpecificationItem != NULL )
+			if( replacingJustificationItem->primarySpecificationWordItem() == involvedSpecificationItem->specificationWordItem() )
 				{
-				if( obsoleteJustificationItem->replacingJustificationItem == NULL )
+				if( generalizationWordItem->writeUpdatedSpecification( false, false, hasCorrectedAssumptionByKnowledge, hasCorrectedAssumptionByOppositeQuestion, false, false, involvedSpecificationItem ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
+
+				// Corrected negative assumption
+				if( ( specificationResult = generalizationWordItem->findRelatedSpecification( false, involvedSpecificationItem->isAssignment(), involvedSpecificationItem->isArchivedAssignment(), involvedSpecificationItem->isExclusiveSpecification(), true, involvedSpecificationItem->isPossessive(), NO_QUESTION_PARAMETER, involvedSpecificationItem->specificationCollectionNr(), involvedSpecificationItem->generalizationContextNr(), involvedSpecificationItem->specificationContextNr(), involvedSpecificationItem->relationContextNr(), involvedSpecificationItem->specificationWordItem() ) ).result != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to find a negative related specification" );
+
+				if( ( relatedSpecificationItem = specificationResult.relatedSpecificationItem ) != NULL )
 					{
-					if( replacingJustificationItem == NULL ||
-					replacingJustificationItem->replacingJustificationItem == NULL )
+					if( generalizationWordItem->writeUpdatedSpecification( false, false, hasCorrectedAssumptionByKnowledge, hasCorrectedAssumptionByOppositeQuestion, false, false, relatedSpecificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to write a corrected negative assumption" );
+
+					if( hasCorrectedAssumptionByOppositeQuestion )
 						{
-						if( obsoleteJustificationItem != replacingJustificationItem )
-							{
-							hasCorrectedAssumptionByKnowledge = generalizationWordItem->hasCorrectedAssumptionByKnowledge();
-							hasCorrectedAssumptionByOppositeQuestion = generalizationWordItem->hasCorrectedAssumptionByOppositeQuestion();
-
-							hasCorrectedAssumption = ( hasCorrectedAssumptionByKnowledge ||
-														hasCorrectedAssumptionByOppositeQuestion );
-
-							// Corrected assumption
-							if( hasCorrectedAssumption &&
-							replacingJustificationItem != NULL &&
-							replacingJustificationItem->isGeneralizationAssumption() )
-								{
-								if( replacingJustificationItem->primarySpecificationWordItem() == involvedSpecificationItem->specificationWordItem() )
-									{
-									if( generalizationWordItem->writeUpdatedSpecification( false, false, hasCorrectedAssumptionByKnowledge, hasCorrectedAssumptionByOppositeQuestion, involvedSpecificationItem ) == RESULT_OK )
-										{
-										// Corrected negative assumption
-										if( ( specificationResult = generalizationWordItem->findRelatedSpecification( false, involvedSpecificationItem->isAssignment(), involvedSpecificationItem->isArchivedAssignment(), involvedSpecificationItem->isExclusiveSpecification(), true, involvedSpecificationItem->isPossessive(), NO_QUESTION_PARAMETER, involvedSpecificationItem->specificationCollectionNr(), involvedSpecificationItem->generalizationContextNr(), involvedSpecificationItem->specificationContextNr(), involvedSpecificationItem->relationContextNr(), involvedSpecificationItem->specificationWordItem() ) ).result == RESULT_OK )
-											{
-											if( ( relatedSpecificationItem = specificationResult.relatedSpecificationItem ) != NULL )
-												{
-												if( generalizationWordItem->writeUpdatedSpecification( false, false, hasCorrectedAssumptionByKnowledge, hasCorrectedAssumptionByOppositeQuestion, relatedSpecificationItem ) == RESULT_OK )
-													{
-													if( hasCorrectedAssumptionByOppositeQuestion )
-														{
-														if( generalizationWordItem->replaceOrDeleteSpecification( relatedSpecificationItem, involvedSpecificationItem->updatedSpecificationItem() ) != RESULT_OK )
-															return addError( functionNameString, NULL, "I failed to replace a corrected negative assumption" );
-														}
-													}
-												else
-													return addError( functionNameString, NULL, "I failed to write a corrected negative assumption" );
-												}
-											}
-										else
-											return addError( functionNameString, NULL, "I failed to find a negative related specification" );
-										}
-									else
-										return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
-									}
-
-								if( ( attachedJustificationItem = replacingJustificationItem->attachedJustificationItem() ) != NULL )
-									{
-									if( !hasCorrectedAssumptionByKnowledge ||
-									!attachedJustificationItem->isUpdatedPrimarySpecificationWordSpanishAmbiguous() )
-										{
-										if( replaceOrDeleteJustification( replacingJustificationItem ) == RESULT_OK )
-											replacingJustificationItem = NULL;
-										else
-											return addError( functionNameString, NULL, "I failed to delete a corrected justification" );
-										}
-									}
-								}
-
-							attachedJustificationItem = obsoleteJustificationItem->attachedJustificationItem();
-
-							// Old justification has an attached justification,
-							if( attachedJustificationItem != NULL &&
-							// that is active,
-							attachedJustificationItem->isActiveItem() &&
-							replacingJustificationItem != NULL &&
-							replacingJustificationItem != attachedJustificationItem &&
-							// but the replacing one is current
-							replacingJustificationItem->hasCurrentActiveSentenceNr() &&
-							// and it has no attached justifications
-							!replacingJustificationItem->hasAttachedJustification() )
-								{
-								if( replacingJustificationItem->changeAttachedJustification( attachedJustificationItem ) != RESULT_OK )
-									return addError( functionNameString, NULL, "I failed to change an attached justification item" );
-								}
-
-							if( attachedJustificationItem == NULL ||
-							!attachedJustificationItem->isActiveItem() ||
-
-							// Replacing justification item has the same attached justification item
-							( replacingJustificationItem != NULL &&
-
-							( replacingJustificationItem == attachedJustificationItem ||
-							replacingJustificationItem->attachedJustificationItem() == attachedJustificationItem ) ) )
-								{
-								if( obsoleteJustificationItem->isActiveItem() )
-									{
-									if( replaceOrDeleteJustification( obsoleteJustificationItem ) == RESULT_OK )
-										{
-										if( generalizationWordItem->updateJustificationInSpecifications( isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == RESULT_OK )
-											{
-											if( replacingJustificationItem != NULL )
-												{
-												if( updateReplacedJustifications( obsoleteJustificationItem, replacingJustificationItem ) == RESULT_OK )
-													obsoleteJustificationItem->replacingJustificationItem = replacingJustificationItem;
-												else
-													return addError( functionNameString, NULL, "I failed to update the replacing justification items of the replaced justification items" );
-												}
-											}
-										else
-											return addError( functionNameString, NULL, "I failed to update a justification in specifications of my word" );
-										}
-									else
-										return addError( functionNameString, NULL, "I failed to replace an active justification item" );
-									}
-								else
-									{
-									if( hasCorrectedAssumptionByOppositeQuestion )
-										{
-										if( replaceJustificationOfCorrectedAssumptionByOppositeQuestion( obsoleteJustificationItem, replacingJustificationItem ) != RESULT_OK )
-											return addError( functionNameString, NULL, "I failed to replace the justification of a corrected assumption by opposite question" );
-										}
-									}
-								}
-							else
-								{
-								if( replacingCorrectedAssumptionByKnowledgeSpecificationItem != NULL )
-									involvedSpecificationItem = replacingCorrectedAssumptionByKnowledgeSpecificationItem;
-
-								if( involvedSpecificationItem->hasCurrentCreationSentenceNr() &&
-								!involvedSpecificationItem->isReplacedItem() &&
-								// Obsolete justification of adjusted question
-								!attachedJustificationItem->isQuestionJustification() )
-									{
-									if( involvedSpecificationItem->changeFirstJustification( attachedJustificationItem ) != RESULT_OK )
-										return addError( functionNameString, NULL, "I failed to change the first justification item of the given corrected specification item to the attached justification item of the given obsolete justification item" );
-									}
-								else
-									{
-									if( hasCorrectedAssumption ||
-									!generalizationWordItem->isJustificationInUse( attachedJustificationItem ) )
-										{
-										if( replaceOrDeleteJustification( attachedJustificationItem ) != RESULT_OK )
-											return addError( functionNameString, NULL, "I failed to replace the attached justification item" );
-										}
-									}
-								}
-							}
-						else
-							return startError( functionNameString, NULL, "The given obsolete justification item and the given replacing justification item are the same justification item" );
+						if( generalizationWordItem->replaceOrDeleteSpecification( false, relatedSpecificationItem, involvedSpecificationItem->updatedSpecificationItem() ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to replace a corrected negative assumption" );
 						}
-					else
-						return startError( functionNameString, NULL, "The given replacing justification item has a replacing justification item itself" );
 					}
-				else
-					return startError( functionNameString, NULL, "The given obsolete justification item is already replaced" );
+				}
+
+			if( ( attachedJustificationItem = replacingJustificationItem->attachedJustificationItem() ) != NULL )
+				{
+				if( !hasCorrectedAssumptionByKnowledge ||
+				!attachedJustificationItem->isUpdatedPrimarySpecificationWordSpanishAmbiguous() )
+					{
+					if( replaceOrDeleteJustification( replacingJustificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to delete a corrected justification" );
+
+					replacingJustificationItem = NULL;
+					}
+				}
+			}
+
+		attachedJustificationItem = obsoleteJustificationItem->attachedJustificationItem();
+
+		// Old justification has an attached justification,
+		if( attachedJustificationItem != NULL &&
+		// that is active,
+		attachedJustificationItem->isActiveItem() &&
+		replacingJustificationItem != NULL &&
+		replacingJustificationItem != attachedJustificationItem &&
+		// but the replacing one is current
+		replacingJustificationItem->hasCurrentActiveSentenceNr() &&
+		// and it has no attached justifications
+		!replacingJustificationItem->hasAttachedJustification() )
+			{
+			if( replacingJustificationItem->changeAttachedJustification( attachedJustificationItem ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to change an attached justification item" );
+			}
+
+		if( attachedJustificationItem == NULL ||
+		!attachedJustificationItem->isActiveItem() ||
+
+		// Replacing justification item has the same attached justification item
+		( replacingJustificationItem != NULL &&
+
+		( replacingJustificationItem == attachedJustificationItem ||
+		replacingJustificationItem->attachedJustificationItem() == attachedJustificationItem ) ) )
+			{
+			if( obsoleteJustificationItem->isActiveItem() )
+				{
+				if( replaceOrDeleteJustification( obsoleteJustificationItem ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to replace an active justification item" );
+
+				if( generalizationWordItem->updateJustificationInSpecifications( isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to update a justification in specifications of my word" );
+
+				if( replacingJustificationItem != NULL )
+					{
+					if( updateReplacedJustifications( obsoleteJustificationItem, replacingJustificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to update the replacing justification items of the replaced justification items" );
+
+					obsoleteJustificationItem->replacingJustificationItem = replacingJustificationItem;
+					}
 				}
 			else
-				return startError( functionNameString, NULL, "The given involved specification item is undefined" );
+				{
+				if( hasCorrectedAssumptionByOppositeQuestion )
+					{
+					if( replaceJustificationOfCorrectedAssumptionByOppositeQuestion( obsoleteJustificationItem, replacingJustificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to replace the justification of a corrected assumption by opposite question" );
+					}
+				}
 			}
 		else
-			return startError( functionNameString, NULL, "The given obsolete justification item is undefined" );
+			{
+			if( replacingCorrectedAssumptionByKnowledgeSpecificationItem != NULL )
+				involvedSpecificationItem = replacingCorrectedAssumptionByKnowledgeSpecificationItem;
+
+			if( involvedSpecificationItem->hasCurrentCreationSentenceNr() &&
+			!involvedSpecificationItem->isReplacedItem() &&
+			// Obsolete justification of adjusted question
+			!attachedJustificationItem->isQuestionJustification() )
+				{
+				if( involvedSpecificationItem->changeFirstJustification( attachedJustificationItem ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to change the first justification item of the given corrected specification item to the attached justification item of the given obsolete justification item" );
+				}
+			else
+				{
+				if( hasCorrectedAssumptionByKnowledge ||
+				hasCorrectedAssumptionByOppositeQuestion ||
+				!generalizationWordItem->isJustificationInUse( attachedJustificationItem ) )
+					{
+					if( replaceOrDeleteJustification( attachedJustificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to replace the attached justification item" );
+					}
+				}
+			}
 
 		return RESULT_OK;
 		}
@@ -969,53 +897,32 @@ class JustificationList : private List
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "replaceOrDeleteJustification";
 
-		if( obsoleteJustificationItem != NULL )
+		if( obsoleteJustificationItem == NULL )
+			return startError( functionNameString, NULL, "The given obsolete justification item is undefined" );
+
+		if( obsoleteJustificationItem->hasCurrentCreationSentenceNr() )
 			{
-			if( obsoleteJustificationItem->hasCurrentCreationSentenceNr() )
-				{
-				if( deleteItem( obsoleteJustificationItem ) != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to delete an obsolete justification" );
-				}
-			else
-				{
-				if( replaceItem( obsoleteJustificationItem ) != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to replace an obsolete justification" );
-				}
+			if( deleteItem( obsoleteJustificationItem ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to delete an obsolete justification" );
 			}
 		else
-			return startError( functionNameString, NULL, "The given obsolete justification item is undefined" );
+			{
+			if( replaceItem( obsoleteJustificationItem ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to replace an obsolete justification" );
+			}
 
 		return RESULT_OK;
 		}
 /*
 	ResultType storeChangesInFutureDatabase()
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem->storeJustificationItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to store a justification item in the database" );
-				}
+		if( storeChangesInFutureDatabase( firstActiveJustificationItem() ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to store active justification items in the database" );
 
-			searchItem = searchItem->nextJustificationItem();
-			}
-
-		searchItem = firstReplacedJustificationItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchItem->storeJustificationItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to modify a replaced justification item in the database" );
-				}
-
-			searchItem = searchItem->nextJustificationItem();
-			}
+		if( storeChangesInFutureDatabase( firstReplacedJustificationItem() ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to store replaced justification items in the database" );
 
 		return RESULT_OK;
 		}
@@ -1034,7 +941,7 @@ class JustificationList : private List
 		bool isExclusiveGeneralization = false;
 		bool isReplacingSpecificationWordSpanishAmbiguous = false;
 		JustificationItem *createdJustificationItem = NULL;
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 		SpecificationItem *primarySpecificationItem;
 		SpecificationItem *anotherPrimarySpecificationItem;
 		SpecificationItem *secondarySpecificationItem;
@@ -1042,149 +949,141 @@ class JustificationList : private List
 		WordItem *generalizationWordItem = myWordItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "updateSpecificationsInJustifications";
 
-		if( obsoleteSpecificationItem != NULL )
+		if( obsoleteSpecificationItem == NULL )
+			return startError( functionNameString, NULL, "The given obsolete specification item is undefined" );
+
+		hasCorrectedAssumption = generalizationWordItem->hasCorrectedAssumption();
+		hasCorrectedAssumptionByKnowledge = generalizationWordItem->hasCorrectedAssumptionByKnowledge();
+		hasObsoleteSpecificationItemRelationContext = obsoleteSpecificationItem->hasRelationContext();
+
+		if( replacingSpecificationItem != NULL )
 			{
-			hasCorrectedAssumption = generalizationWordItem->hasCorrectedAssumption();
-			hasCorrectedAssumptionByKnowledge = generalizationWordItem->hasCorrectedAssumptionByKnowledge();
-			hasObsoleteSpecificationItemRelationContext = obsoleteSpecificationItem->hasRelationContext();
+			hasReplacingSpecificationItemRelationContext = replacingSpecificationItem->hasRelationContext();
 
-			if( replacingSpecificationItem != NULL )
+			if( !obsoleteSpecificationItem->isQuestion() &&
+			replacingSpecificationItem->hasExclusiveGeneralizationCollection() )
+				isExclusiveGeneralization = true;
+
+			if( replacingSpecificationItem->isSpecificationWordSpanishAmbiguous() )
+				isReplacingSpecificationWordSpanishAmbiguous = true;
+			}
+
+		while( searchJustificationItem != NULL )
+			{
+			primarySpecificationItem = searchJustificationItem->primarySpecificationItem();
+			anotherPrimarySpecificationItem = searchJustificationItem->anotherPrimarySpecificationItem();
+			secondarySpecificationItem = searchJustificationItem->secondarySpecificationItem();
+			anotherSecondarySpecificationItem = searchJustificationItem->anotherSecondarySpecificationItem();
+
+			isReplacingPrimarySpecification = ( primarySpecificationItem == obsoleteSpecificationItem );
+			isReplacingAnotherPrimarySpecification = ( anotherPrimarySpecificationItem == obsoleteSpecificationItem );
+			isReplacingSecondarySpecification = ( secondarySpecificationItem == obsoleteSpecificationItem );
+			isReplacingAnotherSecondarySpecification = ( anotherSecondarySpecificationItem == obsoleteSpecificationItem );
+
+			if( ( isReplacingPrimarySpecification ||
+			isReplacingAnotherPrimarySpecification ||
+			isReplacingSecondarySpecification ||
+			isReplacingAnotherSecondarySpecification ) &&
+
+			( isMainWord ||
+			hasReplacingSpecificationItemRelationContext ||
+			!hasObsoleteSpecificationItemRelationContext ||
+			replacingSpecificationItem == NULL ) )
 				{
-				hasReplacingSpecificationItemRelationContext = replacingSpecificationItem->hasRelationContext();
-
-				if( !obsoleteSpecificationItem->isQuestion() &&
-				replacingSpecificationItem->hasExclusiveGeneralizationCollection() )
-					isExclusiveGeneralization = true;
-
-				if( replacingSpecificationItem->isSpecificationWordSpanishAmbiguous() )
-					isReplacingSpecificationWordSpanishAmbiguous = true;
-				}
-
-			while( searchItem != NULL )
-				{
-				primarySpecificationItem = searchItem->primarySpecificationItem();
-				anotherPrimarySpecificationItem = searchItem->anotherPrimarySpecificationItem();
-				secondarySpecificationItem = searchItem->secondarySpecificationItem();
-				anotherSecondarySpecificationItem = searchItem->anotherSecondarySpecificationItem();
-
-				isReplacingPrimarySpecification = ( primarySpecificationItem == obsoleteSpecificationItem );
-				isReplacingAnotherPrimarySpecification = ( anotherPrimarySpecificationItem == obsoleteSpecificationItem );
-				isReplacingSecondarySpecification = ( secondarySpecificationItem == obsoleteSpecificationItem );
-				isReplacingAnotherSecondarySpecification = ( anotherSecondarySpecificationItem == obsoleteSpecificationItem );
-
-				if( ( isReplacingPrimarySpecification ||
-				isReplacingAnotherPrimarySpecification ||
-				isReplacingSecondarySpecification ||
-				isReplacingAnotherSecondarySpecification ) &&
-
-				( isMainWord ||
-				hasReplacingSpecificationItemRelationContext ||
-				!hasObsoleteSpecificationItemRelationContext ||
-				replacingSpecificationItem == NULL ) )
+				if( replacingSpecificationItem != NULL &&
+				searchJustificationItem->hasCurrentCreationSentenceNr() )
 					{
-					if( replacingSpecificationItem != NULL &&
-					searchItem->hasCurrentCreationSentenceNr() )
+					if( isReplacingPrimarySpecification )
 						{
-						if( isReplacingPrimarySpecification )
-							{
-							if( searchItem->changePrimarySpecification( replacingSpecificationItem ) != RESULT_OK )
-								return addError( functionNameString, NULL, "I failed to change the primary specificationItem item of a justification item" );
-							}
-
-						if( isReplacingAnotherPrimarySpecification )
-							{
-							if( searchItem->changeAnotherPrimarySpecification( replacingSpecificationItem ) != RESULT_OK )
-								return addError( functionNameString, NULL, "I failed to change the another primary specificationItem item of a justification item" );
-							}
-
-						if( isReplacingSecondarySpecification )
-							{
-							if( searchItem->changeSecondarySpecification( replacingSpecificationItem ) != RESULT_OK )
-								return addError( functionNameString, NULL, "I failed to change the secondary specificationItem item of a justification item" );
-							}
-
-						if( isReplacingAnotherSecondarySpecification )
-							{
-							if( searchItem->changeAnotherSecondarySpecification( replacingSpecificationItem ) != RESULT_OK )
-								return addError( functionNameString, NULL, "I failed to change the another secondary specificationItem item of a justification item" );
-							}
-
-						searchItem = firstActiveJustificationItem();
+						if( searchJustificationItem->changePrimarySpecification( replacingSpecificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to change the primary specificationItem item of a justification item" );
 						}
-					else
+
+					if( isReplacingAnotherPrimarySpecification )
 						{
-						createdJustificationItem = NULL;
-
-						if( replacingSpecificationItem != NULL &&
-
-						( searchItem->isQuestionJustification() ||
-						// Avoid creating unreferenced justifications
-						generalizationWordItem->isJustificationInUse( searchItem ) ) )
-							{
-							if( ( justificationResult = addJustification( searchItem->hasFeminineOrMasculineProperNameEnding(), ( isReplacingSpecificationWordSpanishAmbiguous && isReplacingSecondarySpecification && searchItem->isPossessiveReversibleAssumptionOrConclusion() ), searchItem->justificationTypeNr(), searchItem->orderNr, searchItem->originalSentenceNr(), ( isReplacingPrimarySpecification ? replacingSpecificationItem : primarySpecificationItem ), ( isReplacingAnotherPrimarySpecification ? replacingSpecificationItem : anotherPrimarySpecificationItem ), ( isReplacingSecondarySpecification ? replacingSpecificationItem : secondarySpecificationItem ), ( isReplacingAnotherSecondarySpecification ? replacingSpecificationItem : anotherSecondarySpecificationItem ), searchItem->attachedJustificationItem() ) ).result == RESULT_OK )
-								{
-								if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == NULL )
-									{
-									if( justificationResult.foundJustificationItem != searchItem )
-										createdJustificationItem = justificationResult.foundJustificationItem;
-									else
-										return addError( functionNameString, NULL, "No justification item is created, and the found justification item is the same as the search item itself" );
-									}
-								}
-							else
-								return addError( functionNameString, NULL, "I failed to add a justification item" );
-							}
-
-						if( replaceJustification( isExclusiveGeneralization, searchItem, createdJustificationItem, obsoleteSpecificationItem, ( hasCorrectedAssumptionByKnowledge ? replacingSpecificationItem : NULL ) ) == RESULT_OK )
-							{
-							searchItem = ( hasCorrectedAssumption ? searchItem->nextJustificationItem() : firstActiveJustificationItem() );
-
-							if( hasCorrectedAssumptionByKnowledge &&
-							searchItem != NULL &&
-							searchItem->hasReplacedPrimarySpecification() )
-								searchItem = firstActiveJustificationItem();
-							}
-						else
-							return addError( functionNameString, NULL, "I failed to replace a justification item" );
+						if( searchJustificationItem->changeAnotherPrimarySpecification( replacingSpecificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to change the another primary specificationItem item of a justification item" );
 						}
+
+					if( isReplacingSecondarySpecification )
+						{
+						if( searchJustificationItem->changeSecondarySpecification( replacingSpecificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to change the secondary specificationItem item of a justification item" );
+						}
+
+					if( isReplacingAnotherSecondarySpecification )
+						{
+						if( searchJustificationItem->changeAnotherSecondarySpecification( replacingSpecificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to change the another secondary specificationItem item of a justification item" );
+						}
+
+					searchJustificationItem = firstActiveJustificationItem();
 					}
 				else
-					searchItem = searchItem->nextJustificationItem();
+					{
+					createdJustificationItem = NULL;
+
+					if( replacingSpecificationItem != NULL &&
+
+					( searchJustificationItem->isQuestionJustification() ||
+					// Avoid creating unreferenced justifications
+					generalizationWordItem->isJustificationInUse( searchJustificationItem ) ) )
+						{
+						if( ( justificationResult = addJustification( searchJustificationItem->hasFeminineOrMasculineProperNameEnding(), ( isReplacingSpecificationWordSpanishAmbiguous && isReplacingSecondarySpecification && searchJustificationItem->isPossessiveReversibleAssumptionOrConclusion() ), searchJustificationItem->justificationTypeNr(), searchJustificationItem->orderNr, searchJustificationItem->originalSentenceNr(), ( isReplacingPrimarySpecification ? replacingSpecificationItem : primarySpecificationItem ), ( isReplacingAnotherPrimarySpecification ? replacingSpecificationItem : anotherPrimarySpecificationItem ), ( isReplacingSecondarySpecification ? replacingSpecificationItem : secondarySpecificationItem ), ( isReplacingAnotherSecondarySpecification ? replacingSpecificationItem : anotherSecondarySpecificationItem ), searchJustificationItem->attachedJustificationItem() ) ).result != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to add a justification item" );
+
+						if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == NULL )
+							{
+							if( justificationResult.foundJustificationItem == searchJustificationItem )
+								return addError( functionNameString, NULL, "No justification item is created, and the found justification item is the same as the search item itself" );
+
+							createdJustificationItem = justificationResult.foundJustificationItem;
+							}
+						}
+
+					if( replaceJustification( isExclusiveGeneralization, searchJustificationItem, createdJustificationItem, obsoleteSpecificationItem, ( hasCorrectedAssumptionByKnowledge ? replacingSpecificationItem : NULL ) ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to replace a justification item" );
+
+					searchJustificationItem = ( hasCorrectedAssumption ? searchJustificationItem->nextJustificationItem() : firstActiveJustificationItem() );
+
+					if( hasCorrectedAssumptionByKnowledge &&
+					searchJustificationItem != NULL &&
+					searchJustificationItem->hasReplacedPrimarySpecification() )
+						searchJustificationItem = firstActiveJustificationItem();
+					}
 				}
+			else
+				searchJustificationItem = searchJustificationItem->nextJustificationItem();
 			}
-		else
-			return startError( functionNameString, NULL, "The given obsolete specification item is undefined" );
 
 		return RESULT_OK;
 		}
 
 	ResultType writeRelatedJustificationSpecifications( unsigned short justificationTypeNr, unsigned int specificationCollectionNr )
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 		SpecificationItem *secondarySpecificationItem;
 		WordItem *generalizationWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeRelatedJustificationSpecifications";
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			if( !searchItem->hasJustificationBeenWritten &&
-			searchItem->justificationTypeNr() == justificationTypeNr &&
-			( secondarySpecificationItem = searchItem->secondarySpecificationItem() ) != NULL )
+			if( !searchJustificationItem->hasJustificationBeenWritten &&
+			searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
+			( secondarySpecificationItem = searchJustificationItem->secondarySpecificationItem() ) != NULL )
 				{
 				if( !secondarySpecificationItem->isExclusiveSpecification() &&
 				secondarySpecificationItem->specificationCollectionNr() == specificationCollectionNr )
 					{
-					if( ( generalizationWordItem = secondarySpecificationItem->generalizationWordItem() ) != NULL )
-						{
-						if( generalizationWordItem->writeJustificationSpecification( false, secondarySpecificationItem ) != RESULT_OK )
-							return addError( functionNameString, NULL, "I failed to write a secondary justification specification" );
-						}
-					else
+					if( ( generalizationWordItem = secondarySpecificationItem->generalizationWordItem() ) == NULL )
 						return startError( functionNameString, NULL, "The generalization word of the given secondary specification item is undefined" );
+
+					if( generalizationWordItem->writeJustificationSpecification( false, secondarySpecificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to write a secondary justification specification" );
 					}
 				}
 
-			searchItem = searchItem->nextJustificationItem();
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
 			}
 
 		return RESULT_OK;
@@ -1197,17 +1096,17 @@ class JustificationList : private List
 
 	JustificationItem *negativeAssumptionOrConclusionJustificationItem( SpecificationItem *anotherPrimarySpecificationItem )
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
 		if( anotherPrimarySpecificationItem != NULL )
 			{
-			while( searchItem != NULL )
+			while( searchJustificationItem != NULL )
 				{
-				if( searchItem->isNegativeAssumptionOrConclusion() &&
-				searchItem->anotherPrimarySpecificationItem() == anotherPrimarySpecificationItem )
-					return searchItem;
+				if( searchJustificationItem->isNegativeAssumptionOrConclusion() &&
+				searchJustificationItem->anotherPrimarySpecificationItem() == anotherPrimarySpecificationItem )
+					return searchJustificationItem;
 
-				searchItem = searchItem->nextJustificationItem();
+				searchJustificationItem = searchJustificationItem->nextJustificationItem();
 				}
 			}
 
@@ -1216,15 +1115,15 @@ class JustificationList : private List
 
 	JustificationItem *obsoleteJustificationItem()
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 		WordItem *generalizationWordItem = myWordItem();
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			if( !generalizationWordItem->isJustificationInUse( searchItem ) )
-				return searchItem;
+			if( !generalizationWordItem->isJustificationInUse( searchJustificationItem ) )
+				return searchJustificationItem;
 
-			searchItem = searchItem->nextJustificationItem();
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
 			}
 
 		return NULL;
@@ -1232,27 +1131,27 @@ class JustificationList : private List
 
 	JustificationItem *olderComplexJustificationItem( bool hasSecondarySpecificationWithoutRelationContext, unsigned short justificationTypeNr, unsigned int secondarySpecificationCollectionNr, SpecificationItem *primarySpecificationItem )
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 		SpecificationItem *secondarySpecificationItem;
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			if( searchItem->justificationTypeNr() == justificationTypeNr &&
+			if( searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
 
-			( searchItem->isOlderItem() ||
+			( searchJustificationItem->isOlderItem() ||
 
 			( !hasSecondarySpecificationWithoutRelationContext &&
-			searchItem->hasPrimaryUserSpecification() ) ) &&
+			searchJustificationItem->hasPrimaryUserSpecification() ) ) &&
 
 			( primarySpecificationItem == NULL ||
-			searchItem->primarySpecificationItem() == primarySpecificationItem ||
+			searchJustificationItem->primarySpecificationItem() == primarySpecificationItem ||
 
 			// If primary specifications have different relation context
-			( searchItem->primarySpecificationItem() != NULL &&
-			searchItem->primarySpecificationItem()->generalizationWordItem() == primarySpecificationItem->generalizationWordItem() &&
-			searchItem->primarySpecificationItem()->isRelatedSpecification( primarySpecificationItem->isExclusiveSpecification(), primarySpecificationItem->isNegative(), primarySpecificationItem->isPossessive(), primarySpecificationItem->specificationWordItem() ) ) ) &&
+			( searchJustificationItem->primarySpecificationItem() != NULL &&
+			searchJustificationItem->primarySpecificationItem()->generalizationWordItem() == primarySpecificationItem->generalizationWordItem() &&
+			searchJustificationItem->primarySpecificationItem()->isRelatedSpecification( primarySpecificationItem->isExclusiveSpecification(), primarySpecificationItem->isNegative(), primarySpecificationItem->isPossessive(), primarySpecificationItem->specificationWordItem() ) ) ) &&
 
-			( secondarySpecificationItem = searchItem->secondarySpecificationItem() ) != NULL )
+			( secondarySpecificationItem = searchJustificationItem->secondarySpecificationItem() ) != NULL )
 				{
 				if( ( !hasSecondarySpecificationWithoutRelationContext ||
 				!secondarySpecificationItem->hasRelationContext() ) &&
@@ -1261,27 +1160,36 @@ class JustificationList : private List
 
 				( !secondarySpecificationItem->isConcludedAssumption() &&
 				secondarySpecificationItem->specificationCollectionNr() == secondarySpecificationCollectionNr ) ) )
-					return searchItem;
+					return searchJustificationItem;
 				}
 
-			searchItem = searchItem->nextJustificationItem();
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
 			}
 
 		return NULL;
 		}
 
-	JustificationItem *possessiveReversibleAssumptionJustificationItem( WordItem *secondarySpecificationWordItem )
+	JustificationItem *possessiveReversibleAssumptionJustificationItem( WordItem *generalizationWordItem, WordItem *secondarySpecificationWordItem )
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
+		SpecificationItem *secondarySpecificationItem;
 
-		if( secondarySpecificationWordItem != NULL )
+		if( generalizationWordItem != NULL &&
+		secondarySpecificationWordItem != NULL )
 			{
-			while( searchItem != NULL )
+			while( searchJustificationItem != NULL )
 				{
-				if( searchItem->isPossessiveReversibleAssumption() &&
-				searchItem->secondarySpecificationWordItem() == secondarySpecificationWordItem )
-					return searchItem;
-				searchItem = searchItem->nextJustificationItem();
+				if( searchJustificationItem->isPossessiveReversibleAssumption() )
+					{
+					secondarySpecificationItem = searchJustificationItem->secondarySpecificationItem();
+
+					if( secondarySpecificationItem != NULL &&
+					secondarySpecificationItem->generalizationWordItem() == generalizationWordItem &&
+					secondarySpecificationItem->specificationWordItem() == secondarySpecificationWordItem )
+						return searchJustificationItem;
+					}
+
+				searchJustificationItem = searchJustificationItem->nextJustificationItem();
 				}
 			}
 
@@ -1290,20 +1198,20 @@ class JustificationList : private List
 
 	JustificationItem *primarySpecificationJustificationItem( bool isSelectingOlderItemOnly, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem )
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
 		if( primarySpecificationItem != NULL )
 			{
-			while( searchItem != NULL )
+			while( searchJustificationItem != NULL )
 				{
 				if( ( !isSelectingOlderItemOnly ||
-				searchItem->isOlderItem() ) &&
+				searchJustificationItem->isOlderItem() ) &&
 
-				searchItem->justificationTypeNr() == justificationTypeNr &&
-				searchItem->primarySpecificationItem() == primarySpecificationItem )
-					return searchItem;
+				searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
+				searchJustificationItem->primarySpecificationItem() == primarySpecificationItem )
+					return searchJustificationItem;
 
-				searchItem = searchItem->nextJustificationItem();
+				searchJustificationItem = searchJustificationItem->nextJustificationItem();
 				}
 			}
 
@@ -1312,20 +1220,20 @@ class JustificationList : private List
 
 	JustificationItem *secondarySpecificationJustificationItem( bool isSelectingOlderItemOnly, unsigned short justificationTypeNr, SpecificationItem *secondarySpecificationItem )
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
 		if( secondarySpecificationItem != NULL )
 			{
-			while( searchItem != NULL )
+			while( searchJustificationItem != NULL )
 				{
 				if( ( !isSelectingOlderItemOnly ||
-				searchItem->isOlderItem() ) &&
+				searchJustificationItem->isOlderItem() ) &&
 
-				searchItem->justificationTypeNr() == justificationTypeNr &&
-				searchItem->secondarySpecificationItem() == secondarySpecificationItem )
-					return searchItem;
+				searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
+				searchJustificationItem->secondarySpecificationItem() == secondarySpecificationItem )
+					return searchJustificationItem;
 
-				searchItem = searchItem->nextJustificationItem();
+				searchJustificationItem = searchJustificationItem->nextJustificationItem();
 				}
 			}
 
@@ -1334,17 +1242,17 @@ class JustificationList : private List
 
 	JustificationItem *specificationSubstitutionPartOfAssumptionJustificationItem( SpecificationItem *secondarySpecificationItem )
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
 		if( secondarySpecificationItem != NULL )
 			{
-			while( searchItem != NULL )
+			while( searchJustificationItem != NULL )
 				{
-				if( searchItem->isSpecificationSubstitutionPartOfAssumption() &&
-				searchItem->secondarySpecificationItem() == secondarySpecificationItem )
-					return searchItem;
+				if( searchJustificationItem->isSpecificationSubstitutionPartOfAssumption() &&
+				searchJustificationItem->secondarySpecificationItem() == secondarySpecificationItem )
+					return searchJustificationItem;
 
-				searchItem = searchItem->nextJustificationItem();
+				searchJustificationItem = searchJustificationItem->nextJustificationItem();
 				}
 			}
 
@@ -1353,19 +1261,19 @@ class JustificationList : private List
 
 	SpecificationItem *olderSuggestiveQuestionAssumptionSecondarySpecificationItem()
 		{
-		JustificationItem *searchItem = firstActiveJustificationItem();
+		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 		SpecificationItem *secondarySpecificationItem;
 
-		while( searchItem != NULL )
+		while( searchJustificationItem != NULL )
 			{
-			if( searchItem->isSuggestiveQuestionAssumption() &&
-			( secondarySpecificationItem = searchItem->secondarySpecificationItem() ) != NULL )
+			if( searchJustificationItem->isSuggestiveQuestionAssumption() &&
+			( secondarySpecificationItem = searchJustificationItem->secondarySpecificationItem() ) != NULL )
 				{
 				if( secondarySpecificationItem->isOlderItem() )
 					return secondarySpecificationItem;
 				}
 
-			searchItem = searchItem->nextJustificationItem();
+			searchJustificationItem = searchJustificationItem->nextJustificationItem();
 			}
 
 		return NULL;

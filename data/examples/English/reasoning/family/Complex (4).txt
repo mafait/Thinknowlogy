@@ -1,0 +1,25 @@
+﻿Read the file "English/user/reasoning/family/family definition".
+Laura has a father, called John.
+Laura has a mother, called Anna.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Laura.
+John is a parent of Paul, Joe and Laura.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+Display the justification report about Joe.
+Display the justification report about Laura.
+Joe has 2 parents, called John and Anna.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+Display the justification report about Joe.
+Display the justification report about Laura.
+Anna is the mother of Paul, Joe and Laura.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+Display the justification report about Joe.
+Display the justification report about Laura.
+# To continue, click button «Clear your mind.» or «Restart.».

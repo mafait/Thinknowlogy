@@ -4,8 +4,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een ouder is waarschijnlijk een persoon.
 < Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -16,8 +16,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een kind is waarschijnlijk een persoon.
 < Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -47,4 +47,84 @@
 * Mijn vragen:
 < Is Kees een man, een vrouw, een meisje of een jongen?
 < Is Kees een zoon of een dochter?
+< 
+* 
+* Mijn conclusies:
+< Cor was een man. Omdat:
+<	- Cor was de vader van Kees.
+<	- Iedere vader is een man.
+* 
+* Mijn veronderstellingen:
+< Cor heeft waarschijnlijk een kind, genaamd Kees. Omdat:
+<	- Kees is waarschijnlijk een kind van Cor.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Cor was waarschijnlijk een ouder van Kees.
+< Cor was waarschijnlijk een persoon. Omdat:
+<	- Iedere persoon is een man of een vrouw.
+<	- Cor was een man.
+* 	en:
+<	- Cor was de vader van Kees.
+<	- Een vader is waarschijnlijk een persoon.
+* 	en:
+<	- Cor was waarschijnlijk een ouder van Kees.
+<	- Een ouder is waarschijnlijk een persoon.
+< Cor was waarschijnlijk geen vrouw. Omdat:
+<	- Cor was waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+<	- Cor was een man.
+* 	en:
+<	- Cor was waarschijnlijk een ouder van Kees.
+<	- Iedere ouder is een vrouw of een man.
+<	- Cor was een man.
+< Cor was waarschijnlijk een ouder van Kees. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Kees is waarschijnlijk een kind van Cor.
+* 	en:
+<	- Iedere ouder is een vader of een moeder.
+<	- Cor was de vader van Kees.
+< Cor was waarschijnlijk deel van een gezin. Omdat:
+<	- Cor was waarschijnlijk een ouder van Kees.
+<	- Ouders zijn deel van ieder gezin.
+< Cor was waarschijnlijk geen moeder. Omdat:
+<	- Cor was waarschijnlijk een ouder van Kees.
+<	- Iedere ouder is een vader of een moeder.
+<	- Cor was de vader van Kees.
+< 
+* 
+* Mijn conclusies:
+< Kees heeft geen vader meer. Omdat:
+<	- Kees had een vader, genaamd Cor.
+< Kees had een vader, genaamd Cor. Omdat:
+<	- Cor was de vader van Kees.
+* 
+* Mijn veronderstellingen:
+< Kees is waarschijnlijk een kind van Cor. Omdat:
+<	- Cor heeft waarschijnlijk een kind, genaamd Kees.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Iedere ouder is een vader of een moeder.
+<	- Kees had een vader, genaamd Cor.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Cor was waarschijnlijk een ouder van Kees.
+< Kees is waarschijnlijk deel van een gezin. Omdat:
+<	- Kees is waarschijnlijk een kind van Cor.
+<	- Kinderen zijn deel van ieder gezin.
+< Kees is mogelijk een persoon. Omdat:
+<	- Kees is waarschijnlijk een kind van Cor.
+<	- Een kind is waarschijnlijk een persoon.
+< Kees had waarschijnlijk een ouder, genaamd Cor. Omdat:
+<	- Cor was waarschijnlijk een ouder van Kees.
+* 
+* Mijn vragen:
+< Is Kees een man, een vrouw, een meisje of een jongen? Omdat:
+<	- Kees is waarschijnlijk een kind van Cor.
+<	- Ieder kind is een meisje, een vrouw, een jongen of een man.
+* 	en:
+<	- Kees is mogelijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+< Is Kees een zoon of een dochter? Omdat:
+<	- Kees is waarschijnlijk een kind van Cor.
+<	- Ieder kind is een zoon of een dochter.
 < 

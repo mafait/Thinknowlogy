@@ -1,7 +1,7 @@
 /*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,23 +27,23 @@ class SelectionList extends List
 
 	private int getLowerSentenceNr( int duplicateSentenceNr )
 		{
-		Item searchItem = firstActiveItem();
+		Item searchWordItem = firstActiveItem();
 		int lowerSentenceNr = Constants.NO_SENTENCE_NR;
 
-		while( searchItem != null )
+		while( searchWordItem != null )
 			{
-			if( searchItem.activeSentenceNr() < duplicateSentenceNr &&
-			searchItem.activeSentenceNr() > lowerSentenceNr )
-				lowerSentenceNr = searchItem.activeSentenceNr();
+			if( searchWordItem.activeSentenceNr() < duplicateSentenceNr &&
+			searchWordItem.activeSentenceNr() > lowerSentenceNr )
+				lowerSentenceNr = searchWordItem.activeSentenceNr();
 
-			searchItem = searchItem.nextItem;
+			searchWordItem = searchWordItem.nextItem;
 			}
 
 		return lowerSentenceNr;
 		}
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected SelectionList( char _listChar, WordItem myWordItem )
 		{
@@ -51,99 +51,74 @@ class SelectionList extends List
 		}
 
 
-	// Protected virtual methods
-
-	protected ReferenceResultType findWordReference( WordItem referenceWordItem )
-		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
-		SelectionItem searchItem = firstActiveSelectionItem();
-
-		while( CommonVariables.result == Constants.RESULT_OK &&
-		searchItem != null &&
-		!referenceResult.hasFoundWordReference )
-			{
-			if( ( referenceResult = searchItem.findWordReference( referenceWordItem ) ).result == Constants.RESULT_OK )
-				searchItem = searchItem.nextSelectionItem();
-			else
-				addError( 1, null, "I failed to check for a reference word item in an active selection item" );
-			}
-
-		return referenceResult;
-		}
-
-
 	// Protected methods
 
 	protected void clearConditionChecksForSolving( short selectionLevel, int conditionSentenceNr )
 		{
-		SelectionItem searchItem = firstActiveSelectionItem();
+		SelectionItem searchSelectionItem = firstActiveSelectionItem();
 
-		while( searchItem != null )
+		while( searchSelectionItem != null )
 			{
-			if( searchItem.selectionLevel() < selectionLevel &&
-			searchItem.activeSentenceNr() == conditionSentenceNr )
-				searchItem.isConditionCheckedForSolving = false;
+			if( searchSelectionItem.selectionLevel() < selectionLevel &&
+			searchSelectionItem.activeSentenceNr() == conditionSentenceNr )
+				searchSelectionItem.isConditionCheckedForSolving = false;
 
-			searchItem = searchItem.nextSelectionItem();
+			searchSelectionItem = searchSelectionItem.nextSelectionItem();
 			}
 		}
 
 	protected byte checkSelectionItemForUsage( SelectionItem unusedSelectionItem )
 		{
-		SelectionItem searchItem = firstActiveSelectionItem();
+		SelectionItem searchSelectionItem = firstActiveSelectionItem();
 
-		if( unusedSelectionItem != null )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.nextExecutionItem() == unusedSelectionItem )
-					return startError( 1, null, "The reference selection item is still in use" );
-
-				searchItem = searchItem.nextSelectionItem();
-				}
-			}
-		else
+		if( unusedSelectionItem == null )
 			return startError( 1, null, "The given unused justification item is undefined" );
+
+		while( searchSelectionItem != null )
+			{
+			if( searchSelectionItem.nextExecutionItem() == unusedSelectionItem )
+				return startError( 1, null, "The reference selection item is still in use" );
+
+			searchSelectionItem = searchSelectionItem.nextSelectionItem();
+			}
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte checkWordItemForUsage( WordItem unusedWordItem )
 		{
-		SelectionItem searchItem = firstActiveSelectionItem();
+		SelectionItem searchSelectionItem = firstActiveSelectionItem();
 
-		if( unusedWordItem != null )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.generalizationWordItem() == unusedWordItem )
-					return startError( 1, null, "The generalization word item is still in use" );
-
-				if( searchItem.specificationWordItem() == unusedWordItem )
-					return startError( 1, null, "The specification word item is still in use" );
-
-				searchItem = searchItem.nextSelectionItem();
-				}
-			}
-		else
+		if( unusedWordItem == null )
 			return startError( 1, null, "The given unused word item is undefined" );
+
+		while( searchSelectionItem != null )
+			{
+			if( searchSelectionItem.generalizationWordItem() == unusedWordItem )
+				return startError( 1, null, "The generalization word item is still in use" );
+
+			if( searchSelectionItem.specificationWordItem() == unusedWordItem )
+				return startError( 1, null, "The specification word item is still in use" );
+
+			searchSelectionItem = searchSelectionItem.nextSelectionItem();
+			}
 
 		return Constants.RESULT_OK;
 		}
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		SelectionItem searchItem = firstActiveSelectionItem();
+		SelectionItem searchSelectionItem = firstActiveSelectionItem();
 
-		while( searchItem != null )
+		while( searchSelectionItem != null )
 			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
+			if( searchSelectionItem.hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem.storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != Constants.RESULT_OK )
+				if( searchSelectionItem.storeFileItemInFutureDatabase( isCondition, isAction, isAlternative ) != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to store a selection item in the database" );
 				}
 
-			searchItem = searchItem.nextSelectionItem();
+			searchSelectionItem = searchSelectionItem.nextSelectionItem();
 			}
 
 		return Constants.RESULT_OK;
@@ -159,14 +134,12 @@ class SelectionList extends List
 			if( ( selectionResult.duplicateConditionSentenceNr = getLowerSentenceNr( selectionResult.duplicateConditionSentenceNr ) ) > Constants.NO_SENTENCE_NR )
 				{
 				if( ( selectionResult = checkDuplicateSelectionPart( selectionResult.duplicateConditionSentenceNr ) ).result != Constants.RESULT_OK )
-					addError( 1, null, "I failed to check if the alternative selection part is duplicate" );
+					return addSelectionResultError( 1, null, "I failed to check if the alternative selection part is duplicate" );
 				}
 			}
-		while( CommonVariables.result == Constants.RESULT_OK &&
-		!selectionResult.hasFoundDuplicateSelection &&
+		while( !selectionResult.hasFoundDuplicateSelection &&
 		selectionResult.duplicateConditionSentenceNr > Constants.NO_SENTENCE_NR );
 
-		selectionResult.result = CommonVariables.result;
 		return selectionResult;
 		}
 
@@ -174,105 +147,88 @@ class SelectionList extends List
 		{
 		SelectionResultType selectionResult = new SelectionResultType();
 		SelectionItem currentSelectionItem = null;
-		SelectionItem searchItem = firstActiveSelectionItem();
+		SelectionItem searchSelectionItem = firstActiveSelectionItem();
 
-		if( duplicateConditionSentenceNr > Constants.NO_SENTENCE_NR )
+		if( duplicateConditionSentenceNr <= Constants.NO_SENTENCE_NR )
+			return startSelectionResultError( 1, null, "The given duplicate sentence number is undefined" );
+
+		if( duplicateConditionSentenceNr >= CommonVariables.currentSentenceNr )
+			return startSelectionResultError( 1, null, "The given duplicate sentence number is equal or higher than the current sentence number" );
+
+		selectionResult.hasFoundDuplicateSelection = true;
+
+		while( searchSelectionItem != null &&
+		searchSelectionItem.activeSentenceNr() >= duplicateConditionSentenceNr )
 			{
-			if( duplicateConditionSentenceNr < CommonVariables.currentSentenceNr )
+			if( searchSelectionItem.activeSentenceNr() == duplicateConditionSentenceNr )
 				{
-				selectionResult.hasFoundDuplicateSelection = true;
+				currentSelectionItem = firstActiveSelectionItem();
 
-				while( searchItem != null &&
-				searchItem.activeSentenceNr() >= duplicateConditionSentenceNr )
-					{
-					if( searchItem.activeSentenceNr() == duplicateConditionSentenceNr )
+				do	{
+					if( currentSelectionItem.isAction() == searchSelectionItem.isAction() &&
+					currentSelectionItem.isAssignedOrClear() == searchSelectionItem.isAssignedOrClear() &&
+					currentSelectionItem.isNegative() == searchSelectionItem.isNegative() &&
+					currentSelectionItem.isNewStart() == searchSelectionItem.isNewStart() &&
+					currentSelectionItem.selectionLevel() == searchSelectionItem.selectionLevel() &&
+					currentSelectionItem.generalizationWordItem() == searchSelectionItem.generalizationWordItem() &&
+					currentSelectionItem.specificationWordItem() == searchSelectionItem.specificationWordItem() )
 						{
-						currentSelectionItem = firstActiveSelectionItem();
-
-						do	{
-							if( currentSelectionItem.isAction() == searchItem.isAction() &&
-							currentSelectionItem.isAssignedOrClear() == searchItem.isAssignedOrClear() &&
-							currentSelectionItem.isNegative() == searchItem.isNegative() &&
-							currentSelectionItem.isNewStart() == searchItem.isNewStart() &&
-							currentSelectionItem.selectionLevel() == searchItem.selectionLevel() &&
-							currentSelectionItem.generalizationWordItem() == searchItem.generalizationWordItem() &&
-							currentSelectionItem.specificationWordItem() == searchItem.specificationWordItem() )
-								{
-								if( currentSelectionItem.specificationString() != null &&
-								searchItem.specificationString() != null )
-									selectionResult.hasFoundDuplicateSelection = ( currentSelectionItem.specificationString().equals( searchItem.specificationString() ) );
-								else
-									{
-									if( currentSelectionItem.specificationString() != null ||
-									searchItem.specificationString() != null )
-										selectionResult.hasFoundDuplicateSelection = false;
-									}
-
-								if( selectionResult.hasFoundDuplicateSelection )
-									{
-									currentSelectionItem = ( currentSelectionItem.nextSelectionItem() != null &&
-															currentSelectionItem.nextSelectionItem().hasCurrentCreationSentenceNr() ? currentSelectionItem.nextSelectionItem() : null );
-
-									searchItem = ( searchItem.nextSelectionItem() != null &&
-												searchItem.nextSelectionItem().activeSentenceNr() == duplicateConditionSentenceNr ? searchItem.nextSelectionItem() : null );
-									}
-								else
-									searchItem = null;
-								}
-							else
-								{
+						if( currentSelectionItem.specificationString() != null &&
+						searchSelectionItem.specificationString() != null )
+							selectionResult.hasFoundDuplicateSelection = ( currentSelectionItem.specificationString().equals( searchSelectionItem.specificationString() ) );
+						else
+							{
+							if( currentSelectionItem.specificationString() != null ||
+							searchSelectionItem.specificationString() != null )
 								selectionResult.hasFoundDuplicateSelection = false;
-								searchItem = null;
-								}
 							}
-						while( selectionResult.hasFoundDuplicateSelection &&
-						currentSelectionItem != null &&
-						searchItem != null );
+
+						if( selectionResult.hasFoundDuplicateSelection )
+							{
+							currentSelectionItem = ( currentSelectionItem.nextSelectionItem() != null &&
+													currentSelectionItem.nextSelectionItem().hasCurrentCreationSentenceNr() ? currentSelectionItem.nextSelectionItem() : null );
+
+							searchSelectionItem = ( searchSelectionItem.nextSelectionItem() != null &&
+													searchSelectionItem.nextSelectionItem().activeSentenceNr() == duplicateConditionSentenceNr ? searchSelectionItem.nextSelectionItem() : null );
+							}
+						else
+							searchSelectionItem = null;
 						}
 					else
-						searchItem = searchItem.nextSelectionItem();
+						{
+						selectionResult.hasFoundDuplicateSelection = false;
+						searchSelectionItem = null;
+						}
 					}
+				while( selectionResult.hasFoundDuplicateSelection &&
+				currentSelectionItem != null &&
+				searchSelectionItem != null );
 				}
 			else
-				startError( 1, null, "The given duplicate sentence number is equal or higher than the current sentence number" );
+				searchSelectionItem = searchSelectionItem.nextSelectionItem();
 			}
-		else
-			startError( 1, null, "The given duplicate sentence number is undefined" );
 
-		selectionResult.result = CommonVariables.result;
 		return selectionResult;
 		}
 
-	protected SelectionResultType createSelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeParameter, short prepositionParameter, short specificationWordParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
+	protected SelectionResultType createSelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeVerbParameter, short prepositionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
 		{
 		SelectionResultType selectionResult = new SelectionResultType();
 
-		if( generalizationWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
-		generalizationWordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
-			{
-			if( specificationWordTypeNr > Constants.WORD_TYPE_UNDEFINED &&
-			specificationWordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
-				{
-				if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
-					{
-					if( ( selectionResult.lastCreatedSelectionItem = new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeParameter, prepositionParameter, specificationWordParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, this, myWordItem() ) ) != null )
-						{
-						if( addItemToList( Constants.QUERY_ACTIVE_CHAR, selectionResult.lastCreatedSelectionItem ) != Constants.RESULT_OK )
-							addError( 1, null, "I failed to add an active selection item" );
-						}
-					else
-						startError( 1, null, "I failed to create a selection item" );
-					}
-				else
-					startError( 1, null, "The current item number is undefined" );
-				}
-			else
-				startError( 1, null, "The given specification word type number is undefined or out of bounds" );
-			}
-		else
-			startError( 1, null, "The given generalization word type number is undefined or out of bounds" );
+		if( generalizationWordTypeNr <= Constants.NO_WORD_TYPE_NR ||
+		generalizationWordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
+			return startSelectionResultError( 1, null, "The given generalization word type number is undefined or out of bounds" );
 
-		selectionResult.result = CommonVariables.result;
+		if( specificationWordTypeNr <= Constants.NO_WORD_TYPE_NR &&
+		specificationWordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
+			return startSelectionResultError( 1, null, "The given specification word type number is undefined or out of bounds" );
+
+		if( ( selectionResult.lastCreatedSelectionItem = new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, this, myWordItem() ) ) == null )
+			return startSelectionResultError( 1, null, "I failed to create a selection item" );
+
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, selectionResult.lastCreatedSelectionItem ) != Constants.RESULT_OK )
+			return addSelectionResultError( 1, null, "I failed to add an active selection item" );
+
 		return selectionResult;
 		}
 
@@ -283,28 +239,27 @@ class SelectionList extends List
 
 		if( ( firstSelectionItem = firstActiveSelectionItem() ) != null )
 			{
-			if( firstSelectionItem.findNextExecutionSelectionItem( true, solveWordItem ) == Constants.RESULT_OK )
-				selectionResult.firstExecutionItem = firstSelectionItem.nextExecutionItem();
-			else
-				addError( 1, null, "I failed to find the first execution selection item" );
+			if( firstSelectionItem.findNextExecutionSelectionItem( true, solveWordItem ) != Constants.RESULT_OK )
+				return addSelectionResultError( 1, null, "I failed to find the first execution selection item" );
+
+			selectionResult.firstExecutionItem = firstSelectionItem.nextExecutionItem();
 			}
 
-		selectionResult.result = CommonVariables.result;
 		return selectionResult;
 		}
 
 	protected SelectionItem executionStartEntry( short executionLevel, int executionSentenceNr )
 		{
-		SelectionItem searchItem = firstActiveSelectionItem();
+		SelectionItem searchSelectionItem = firstActiveSelectionItem();
 
-		while( searchItem != null &&
-		searchItem.activeSentenceNr() >= executionSentenceNr )
+		while( searchSelectionItem != null &&
+		searchSelectionItem.activeSentenceNr() >= executionSentenceNr )
 			{
-			if( searchItem.activeSentenceNr() == executionSentenceNr &&
-			searchItem.selectionLevel() == executionLevel )
-				return searchItem;
+			if( searchSelectionItem.activeSentenceNr() == executionSentenceNr &&
+			searchSelectionItem.selectionLevel() == executionLevel )
+				return searchSelectionItem;
 
-			searchItem = searchItem.nextSelectionItem();
+			searchSelectionItem = searchSelectionItem.nextSelectionItem();
 			}
 
 		return null;
@@ -317,15 +272,15 @@ class SelectionList extends List
 
 	protected SelectionItem firstConditionSelectionItem( int conditionSentenceNr )
 		{
-		SelectionItem searchItem = firstActiveSelectionItem();
+		SelectionItem searchSelectionItem = firstActiveSelectionItem();
 
-		while( searchItem != null &&
-		searchItem.activeSentenceNr() >= conditionSentenceNr )
+		while( searchSelectionItem != null &&
+		searchSelectionItem.activeSentenceNr() >= conditionSentenceNr )
 			{
-			if( searchItem.activeSentenceNr() == conditionSentenceNr )
-				return searchItem;
+			if( searchSelectionItem.activeSentenceNr() == conditionSentenceNr )
+				return searchSelectionItem;
 
-			searchItem = searchItem.nextSelectionItem();
+			searchSelectionItem = searchSelectionItem.nextSelectionItem();
 			}
 
 		return null;

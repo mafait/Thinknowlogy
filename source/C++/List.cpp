@@ -1,6 +1,6 @@
 /*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2016r1 (Huguenot)
+ *	Version:	Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -20,8 +20,12 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
+#include "CollectionResultType.cpp"
+#include "FileResultType.cpp"
 #include "ListCleanup.cpp"
 #include "ListQuery.cpp"
+#include "ReadResultType.cpp"
+#include "SpecificationResultType.cpp"
 
 	// Private functions
 
@@ -53,83 +57,68 @@
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "removeItemFromList";
 
-		if( removeItem != NULL )
+		if( removeItem == NULL )
+			return startError( functionNameString, NULL, "The given remove item is undefined" );
+
+		if( removeItem->myList() != this )
+			return startError( functionNameString, NULL, "The given remove item doesn't belong to my list" );
+
+		// First item in list
+		if( removeItem->previousItem == NULL )
 			{
-			if( removeItem->myList() == this )
+			switch( removeItem->statusChar() )
 				{
-				// First item in list
-				if( removeItem->previousItem == NULL )
-					{
-					switch( removeItem->statusChar() )
-						{
-						case QUERY_ACTIVE_CHAR:
-							activeList_ = removeItem->nextItem;
-							break;
+				case QUERY_ACTIVE_CHAR:
+					activeList_ = removeItem->nextItem;
+					break;
 
-						case QUERY_INACTIVE_CHAR:
-							inactiveList_ = removeItem->nextItem;
-							break;
+				case QUERY_INACTIVE_CHAR:
+					inactiveList_ = removeItem->nextItem;
+					break;
 
-						case QUERY_ARCHIVED_CHAR:
-							archivedList_ = removeItem->nextItem;
-							break;
+				case QUERY_ARCHIVED_CHAR:
+					archivedList_ = removeItem->nextItem;
+					break;
 
-						case QUERY_REPLACED_CHAR:
-							replacedList_ = removeItem->nextItem;
-							break;
+				case QUERY_REPLACED_CHAR:
+					replacedList_ = removeItem->nextItem;
+					break;
 
-						case QUERY_DELETED_CHAR:
-							deletedList_ = removeItem->nextItem;
-							break;
+				case QUERY_DELETED_CHAR:
+					deletedList_ = removeItem->nextItem;
+					break;
 
-						default:
-							return startError( functionNameString, NULL, "The given remove item has an unknown status character" );
-						}
-
-					if( removeItem->nextItem != NULL )
-						removeItem->nextItem->previousItem = NULL;
-					}
-				else
-					{
-					removeItem->previousItem->nextItem = removeItem->nextItem;
-
-					if( removeItem->nextItem != NULL )
-						removeItem->nextItem->previousItem = removeItem->previousItem;
-					}
-
-				// Remember next item
-				nextListItem_ = removeItem->nextItem;
-
-				// Disconnect item from the list
-				removeItem->previousItem = NULL;
-				removeItem->nextItem = NULL;
+				default:
+					return startError( functionNameString, NULL, "The given remove item has an unknown status character" );
 				}
-			else
-				return startError( functionNameString, NULL, "The given remove item doesn't belong to my list" );
+
+			if( removeItem->nextItem != NULL )
+				removeItem->nextItem->previousItem = NULL;
 			}
 		else
-			return startError( functionNameString, NULL, "The given remove item is undefined" );
+			{
+			removeItem->previousItem->nextItem = removeItem->nextItem;
+
+			if( removeItem->nextItem != NULL )
+				removeItem->nextItem->previousItem = removeItem->previousItem;
+			}
+
+		// Remember next item
+		nextListItem_ = removeItem->nextItem;
+
+		// Disconnect item from the list
+		removeItem->previousItem = NULL;
+		removeItem->nextItem = NULL;
 
 		return RESULT_OK;
 		}
 
-	Item *List::tailOfList( Item *searchItem )
-		{
-		Item *nextItem;
 
-		while( searchItem != NULL &&
-		( nextItem = searchItem->nextItem ) != NULL )
-			searchItem = nextItem;
-
-		return searchItem;
-		}
-
-
-	// Constructor / deconstructor
+	// Constructor
 
 	List::List()
 		{
-		// Private constructible variables
+		// Private constructed variables
 
 		listChar_ = QUERY_NO_LIST_CHAR;
 
@@ -163,11 +152,115 @@
 
 	// Protected error functions
 
+	CollectionResultType List::addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		CollectionResultType collectionResult;
+
+		collectionResult.result = addError( functionNameString, moduleNameString, errorString );
+		return collectionResult;
+		}
+
+	CollectionResultType List::startCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		CollectionResultType collectionResult;
+
+		collectionResult.result = startError( functionNameString, moduleNameString, errorString );
+		return collectionResult;
+		}
+
+	FileResultType List::addFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		FileResultType fileResult;
+
+		fileResult.result = addError( functionNameString, moduleNameString, errorString );
+		return fileResult;
+		}
+
+	FileResultType List::startFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		FileResultType fileResult;
+
+		fileResult.result = startError( functionNameString, moduleNameString, errorString );
+		return fileResult;
+		}
+
+	FileResultType List::startFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+		{
+		FileResultType fileResult;
+
+		fileResult.result = startError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
+		return fileResult;
+		}
+
+	FileResultType List::startFileResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		FileResultType fileResult;
+
+		fileResult.result = startSystemError( functionNameString, moduleNameString, errorString );
+		return fileResult;
+		}
+
+	GeneralizationResultType List::startGeneralizationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		GeneralizationResultType generalizationResult;
+
+		generalizationResult.result = startError( functionNameString, moduleNameString, errorString );
+		return generalizationResult;
+		}
+
+	GrammarResultType List::addGrammarResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		GrammarResultType grammarResult;
+
+		grammarResult.result = addError( functionNameString, moduleNameString, errorString );
+		return grammarResult;
+		}
+
+	GrammarResultType List::startGrammarResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		GrammarResultType grammarResult;
+
+		grammarResult.result = startError( functionNameString, moduleNameString, errorString );
+		return grammarResult;
+		}
+
+	JustificationResultType List::addJustificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		JustificationResultType justificationResult;
+
+		justificationResult.result = addError( functionNameString, moduleNameString, errorString );
+		return justificationResult;
+		}
+
+	JustificationResultType List::startJustificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		JustificationResultType justificationResult;
+
+		justificationResult.result = startError( functionNameString, moduleNameString, errorString );
+		return justificationResult;
+		}
+
+	ReadResultType List::addReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		ReadResultType readResult;
+
+		readResult.result = addError( functionNameString, moduleNameString, errorString );
+		return readResult;
+		}
+
+	ReadResultType List::startReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		ReadResultType readResult;
+
+		readResult.result = startError( functionNameString, moduleNameString, errorString );
+		return readResult;
+		}
+
 	ResultType List::addError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		if( commonVariables_ != NULL &&
 		commonVariables_->presentation != NULL )
-			commonVariables_->presentation->showError( listChar_, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), functionNameString, errorString );
+			commonVariables_->presentation->displayError( listChar_, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), functionNameString, errorString );
 		else
 			fprintf( stderr, "\nClass:\t%s\nSubclass:\t%s\nFunction:\t%s\nError:\t\t%s.\n", classNameString_, superClassNameString_, functionNameString, errorString );
 
@@ -180,7 +273,6 @@
 
 		if( commonVariables_ != NULL )
 		commonVariables_->result = RESULT_ERROR;
-
 		return RESULT_ERROR;
 		}
 
@@ -208,19 +300,84 @@
 		return RESULT_SYSTEM_ERROR;
 		}
 
+	SelectionResultType List::addSelectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		SelectionResultType selectionResult;
+
+		selectionResult.result = addError( functionNameString, moduleNameString, errorString );
+		return selectionResult;
+		}
+
+	SelectionResultType List::startSelectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		SelectionResultType selectionResult;
+
+		selectionResult.result = startError( functionNameString, moduleNameString, errorString );
+		return selectionResult;
+		}
+
+	SelectionResultType List::startSystemSelectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		SelectionResultType selectionResult;
+
+		selectionResult.result = startSystemError( functionNameString, moduleNameString, errorString );
+		return selectionResult;
+		}
+
+	SpecificationResultType List::addSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		SpecificationResultType specificationResult;
+
+		specificationResult.result = addError( functionNameString, moduleNameString, errorString );
+		return specificationResult;
+		}
+
+	SpecificationResultType List::startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		SpecificationResultType specificationResult;
+
+		specificationResult.result = startError( functionNameString, moduleNameString, errorString );
+		return specificationResult;
+		}
+
+	StringResultType List::addStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		StringResultType stringResult;
+
+		stringResult.result = addError( functionNameString, moduleNameString, errorString );
+		return stringResult;
+		}
+
+	StringResultType List::startStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		StringResultType stringResult;
+
+		stringResult.result = startError( functionNameString, moduleNameString, errorString );
+		return stringResult;
+		}
+
+	WordResultType List::addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		WordResultType wordResult;
+
+		wordResult.result = addError( functionNameString, moduleNameString, errorString );
+		return wordResult;
+		}
+
+	WordResultType List::startWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		WordResultType wordResult;
+
+		wordResult.result = startError( functionNameString, moduleNameString, errorString );
+		return wordResult;
+		}
+
 
 	// Protected virtual functions
 
 	bool List::isTemporaryList()
 		{
 		return false;
-		}
-
-	ReferenceResultType List::findWordReference( WordItem *referenceWordItem )
-		{
-		// This is a virtual function. Therefore, the given variables are unreferenced.
-		ReferenceResultType referenceResult;
-		return referenceResult;
 		}
 
 
@@ -266,11 +423,12 @@
 		if( replacedList_ != NULL )
 			{
 			// Move replaced list to deleted list
-			if( deletedList_ == NULL )
+			if( searchItem == NULL )
 				deletedList_ = replacedList_;
 			else
 				{
-				searchItem = tailOfList( searchItem );
+				// Get the tail of the deleted list
+				searchItem = searchItem->tailOfList();
 				searchItem->nextItem = replacedList_;
 				}
 
@@ -280,11 +438,12 @@
 		if( archivedList_ != NULL )
 			{
 			// Move archived list to deleted list
-			if( deletedList_ == NULL )
+			if( searchItem == NULL )
 				deletedList_ = archivedList_;
 			else
 				{
-				searchItem = tailOfList( searchItem );
+				// Get the tail of the deleted list
+				searchItem = searchItem->tailOfList();
 				searchItem->nextItem = archivedList_;
 				}
 
@@ -294,11 +453,12 @@
 		if( inactiveList_ != NULL )
 			{
 			// Move inactive list to deleted list
-			if( deletedList_ == NULL )
+			if( searchItem == NULL )
 				deletedList_ = inactiveList_;
 			else
 				{
-				searchItem = tailOfList( searchItem );
+				// Get the tail of the deleted list
+				searchItem = searchItem->tailOfList();
 				searchItem->nextItem = inactiveList_;
 				}
 
@@ -308,11 +468,12 @@
 		if( activeList_ != NULL )
 			{
 			// Move active list to deleted list
-			if( deletedList_ == NULL )
+			if( searchItem == NULL )
 				deletedList_ = activeList_;
 			else
 				{
-				searchItem = tailOfList( searchItem );
+				// Get the tail of the deleted list
+				searchItem = searchItem->tailOfList();
 				searchItem->nextItem = activeList_;
 				}
 
@@ -350,153 +511,145 @@
 		Item *previousSearchItem = NULL;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addItemToList";
 
-		if( newItem != NULL )
+		if( newItem == NULL )
+			return startError( functionNameString, NULL, "The given new item is undefined" );
+
+		if( newItem->myList() != this )
+			return startError( functionNameString, NULL, "The given new item doesn't belong to my list" );
+
+		if( newItem->nextItem != NULL )
+			return startError( functionNameString, NULL, "The given new item seems to be a part of a list" );
+
+		switch( statusChar )
 			{
-			if( newItem->myList() == this )
+			case QUERY_ACTIVE_CHAR:
+				newItem->setActiveSentenceNr();
+				newItem->setActiveStatus();
+				searchItem = activeList_;
+				break;
+
+			case QUERY_INACTIVE_CHAR:
+				newItem->setInactiveSentenceNr();
+				newItem->setInactiveStatus();
+				searchItem = inactiveList_;
+				break;
+
+			case QUERY_ARCHIVED_CHAR:
+				newItem->setArchivedSentenceNr();
+				newItem->setArchivedStatus();
+				searchItem = archivedList_;
+				break;
+
+			case QUERY_REPLACED_CHAR:
+				newItem->setReplacedSentenceNr();
+				newItem->setReplacedStatus();
+				searchItem = replacedList_;
+				break;
+
+			case QUERY_DELETED_CHAR:
+				newItem->setDeletedSentenceNr();
+				newItem->setDeletedStatus();
+				searchItem = deletedList_;
+				break;
+
+			default:
+				return startError( functionNameString, NULL, "The given status character is unknown" );
+			}
+
+		// Sort item in list
+		if( statusChar == QUERY_DELETED_CHAR )
+			{
+			newCreationSentenceNr = newItem->creationSentenceNr();
+
+			while( searchItem != NULL &&
+
+			// 1) Descending creationSentenceNr
+			( searchItem->creationSentenceNr() > newCreationSentenceNr ||
+
+			// 2) Ascending itemNr
+			( searchItem->creationSentenceNr() == newCreationSentenceNr &&
+			searchItem->itemNr() < newItem->itemNr() ) ) )
 				{
-				if( newItem->nextItem == NULL )
-					{
-					switch( statusChar )
-						{
-						case QUERY_ACTIVE_CHAR:
-							newItem->setActiveSentenceNr();
-							newItem->setActiveStatus();
-							searchItem = activeList_;
-							break;
-
-						case QUERY_INACTIVE_CHAR:
-							newItem->setInactiveSentenceNr();
-							newItem->setInactiveStatus();
-							searchItem = inactiveList_;
-							break;
-
-						case QUERY_ARCHIVED_CHAR:
-							newItem->setArchivedSentenceNr();
-							newItem->setArchivedStatus();
-							searchItem = archivedList_;
-							break;
-
-						case QUERY_REPLACED_CHAR:
-							newItem->setReplacedSentenceNr();
-							newItem->setReplacedStatus();
-							searchItem = replacedList_;
-							break;
-
-						case QUERY_DELETED_CHAR:
-							newItem->setDeletedSentenceNr();
-							newItem->setDeletedStatus();
-							searchItem = deletedList_;
-							break;
-
-						default:
-							return startError( functionNameString, NULL, "The given status character is unknown" );
-						}
-
-					// Sort item in list
-					if( statusChar == QUERY_DELETED_CHAR )
-						{
-						newCreationSentenceNr = newItem->creationSentenceNr();
-
-						while( searchItem != NULL &&
-
-						// 1) Descending creationSentenceNr
-						( searchItem->creationSentenceNr() > newCreationSentenceNr ||
-
-						// 2) Ascending itemNr
-						( searchItem->creationSentenceNr() == newCreationSentenceNr &&
-						searchItem->itemNr() < newItem->itemNr() ) ) )
-							{
-							previousSearchItem = searchItem;
-							searchItem = searchItem->nextItem;
-							}
-						}
-					else
-						{
-						while( searchItem != NULL &&
-						!newItem->isSorted( searchItem ) )
-							{
-							previousSearchItem = searchItem;
-							searchItem = searchItem->nextItem;
-							}
-						}
-
-					if( searchItem == NULL ||
-					// Check on duplicates
-					searchItem->creationSentenceNr() != newItem->creationSentenceNr() ||
-					// for integrity
-					searchItem->itemNr() != newItem->itemNr() )
-						{
-						newItem->previousItem = previousSearchItem;
-
-						// First item in list
-						if( previousSearchItem == NULL )
-							{
-							switch( statusChar )
-								{
-								case QUERY_ACTIVE_CHAR:
-									if( activeList_ != NULL )
-										activeList_->previousItem = newItem;
-
-									newItem->nextItem = activeList_;
-									activeList_ = newItem;
-									break;
-
-								case QUERY_INACTIVE_CHAR:
-									if( inactiveList_ != NULL )
-										inactiveList_->previousItem = newItem;
-
-									newItem->nextItem = inactiveList_;
-									inactiveList_ = newItem;
-									break;
-
-								case QUERY_ARCHIVED_CHAR:
-									if( archivedList_ != NULL )
-										archivedList_->previousItem = newItem;
-
-									newItem->nextItem = archivedList_;
-									archivedList_ = newItem;
-									break;
-
-								case QUERY_REPLACED_CHAR:
-									if( replacedList_ != NULL )
-										replacedList_->previousItem = newItem;
-
-									newItem->nextItem = replacedList_;
-									replacedList_ = newItem;
-									break;
-
-								case QUERY_DELETED_CHAR:
-									if( deletedList_ != NULL )
-										deletedList_->previousItem = newItem;
-
-									newItem->nextItem = deletedList_;
-									deletedList_ = newItem;
-									break;
-
-								default:
-									return startError( functionNameString, NULL, "The given status character is unknown" );
-								}
-							}
-						else
-							{
-							if( searchItem != NULL )
-								searchItem->previousItem = newItem;
-
-							newItem->nextItem = previousSearchItem->nextItem;
-							previousSearchItem->nextItem = newItem;
-							}
-						}
-					else
-						return startError( functionNameString, NULL, "I have found an active item with the same identification" );
-					}
-				else
-					return startError( functionNameString, NULL, "The given new item seems to be a part of a list" );
+				previousSearchItem = searchItem;
+				searchItem = searchItem->nextItem;
 				}
-			else
-				return startError( functionNameString, NULL, "The given new item doesn't belong to my list" );
 			}
 		else
-			return startError( functionNameString, NULL, "The given new item is undefined" );
+			{
+			while( searchItem != NULL &&
+			!newItem->isSorted( searchItem ) )
+				{
+				previousSearchItem = searchItem;
+				searchItem = searchItem->nextItem;
+				}
+			}
+
+		if( searchItem != NULL &&
+		// Check on duplicates
+		searchItem->creationSentenceNr() == newItem->creationSentenceNr() &&
+		// for integrity
+		searchItem->itemNr() == newItem->itemNr() )
+			return startError( functionNameString, NULL, "I have found an active item with the same identification" );
+
+		newItem->previousItem = previousSearchItem;
+
+		// First item in list
+		if( previousSearchItem == NULL )
+			{
+			switch( statusChar )
+				{
+				case QUERY_ACTIVE_CHAR:
+					if( activeList_ != NULL )
+						activeList_->previousItem = newItem;
+
+					newItem->nextItem = activeList_;
+					activeList_ = newItem;
+					break;
+
+				case QUERY_INACTIVE_CHAR:
+					if( inactiveList_ != NULL )
+						inactiveList_->previousItem = newItem;
+
+					newItem->nextItem = inactiveList_;
+					inactiveList_ = newItem;
+					break;
+
+				case QUERY_ARCHIVED_CHAR:
+					if( archivedList_ != NULL )
+						archivedList_->previousItem = newItem;
+
+					newItem->nextItem = archivedList_;
+					archivedList_ = newItem;
+					break;
+
+				case QUERY_REPLACED_CHAR:
+					if( replacedList_ != NULL )
+						replacedList_->previousItem = newItem;
+
+					newItem->nextItem = replacedList_;
+					replacedList_ = newItem;
+					break;
+
+				case QUERY_DELETED_CHAR:
+					if( deletedList_ != NULL )
+						deletedList_->previousItem = newItem;
+
+					newItem->nextItem = deletedList_;
+					deletedList_ = newItem;
+					break;
+
+				default:
+					return startError( functionNameString, NULL, "The given status character is unknown" );
+				}
+			}
+		else
+			{
+			if( searchItem != NULL )
+				searchItem->previousItem = newItem;
+
+			newItem->nextItem = previousSearchItem->nextItem;
+			previousSearchItem->nextItem = newItem;
+			}
 
 		return RESULT_OK;
 		}
@@ -505,29 +658,21 @@
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "activateItem";
 
-		if( activateItem != NULL )
-			{
-			if( activateItem->statusChar() != QUERY_ACTIVE_CHAR )
-				{
-				if( removeItemFromList( activateItem ) == RESULT_OK )
-					{
-					if( addItemToList( QUERY_ACTIVE_CHAR, activateItem ) == RESULT_OK )
-						{
-						if( isAssignmentList() &&
-						commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-							commonVariables_->isAssignmentChanged = true;
-						}
-					else
-						return addError( functionNameString, NULL, "I failed to add an item to the active list" );
-					}
-				else
-					return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
-				}
-			else
-				return startError( functionNameString, NULL, "The given activate item is already an active item" );
-			}
-		else
+		if( activateItem == NULL )
 			return startError( functionNameString, NULL, "The given activate item is undefined" );
+
+		if( activateItem->statusChar() == QUERY_ACTIVE_CHAR )
+			return startError( functionNameString, NULL, "The given activate item is already an active item" );
+
+		if( removeItemFromList( activateItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
+
+		if( addItemToList( QUERY_ACTIVE_CHAR, activateItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to add an item to the active list" );
+
+		if( isAssignmentList() &&
+		commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+			commonVariables_->isAssignmentChanged = true;
 
 		return RESULT_OK;
 		}
@@ -536,35 +681,25 @@
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "inactivateItem";
 
-		if( inactivateItem != NULL )
-			{
-			if( inactivateItem->statusChar() != QUERY_INACTIVE_CHAR )
-				{
-				if( isAssignmentList() ||
-				listChar_ == ADMIN_READ_LIST_SYMBOL )
-					{
-					if( removeItemFromList( inactivateItem ) == RESULT_OK )
-						{
-						if( addItemToList( QUERY_INACTIVE_CHAR, inactivateItem ) == RESULT_OK )
-							{
-							if( isAssignmentList() &&
-							commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-								commonVariables_->isAssignmentChanged = true;
-							}
-						else
-							return addError( functionNameString, NULL, "I failed to add an item to the inactive list" );
-						}
-					else
-						return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
-					}
-				else
-					return startError( functionNameString, NULL, "Only assignments, Guide by Grammar items and read items can be inactived" );
-				}
-			else
-				return startError( functionNameString, NULL, "The given inactivate item is already an inactive item" );
-			}
-		else
+		if( inactivateItem == NULL )
 			return startError( functionNameString, NULL, "The given inactivate item is undefined" );
+
+		if( inactivateItem->statusChar() == QUERY_INACTIVE_CHAR )
+			return startError( functionNameString, NULL, "The given inactivate item is already an inactive item" );
+
+		if( !isAssignmentList() &&
+		listChar_ != ADMIN_READ_LIST_SYMBOL )
+			return startError( functionNameString, NULL, "Only assignments, Guide by Grammar items and read items can be inactived" );
+
+		if( removeItemFromList( inactivateItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to remove an item from the archive list" );
+
+		if( addItemToList( QUERY_INACTIVE_CHAR, inactivateItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to add an item to the inactive list" );
+
+		if( isAssignmentList() &&
+		commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+			commonVariables_->isAssignmentChanged = true;
 
 		return RESULT_OK;
 		}
@@ -573,35 +708,25 @@
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "archiveItem";
 
-		if( archiveItem != NULL )
-			{
-			if( archiveItem->statusChar() != QUERY_ARCHIVED_CHAR )
-				{
-				if( isAssignmentList() )
-					{
-					if( removeItemFromList( archiveItem ) == RESULT_OK )
-						{
-						archiveItem->previousStatusChar = archiveItem->statusChar();
-
-						if( addItemToList( QUERY_ARCHIVED_CHAR, archiveItem ) == RESULT_OK )
-							{
-							if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-								commonVariables_->isAssignmentChanged = true;
-							}
-						else
-							return addError( functionNameString, NULL, "I failed to add an item to the archived list" );
-						}
-					else
-						return addError( functionNameString, NULL, "I failed to remove an item from a list" );
-					}
-				else
-					return startError( functionNameString, NULL, "Only assignments can be archived" );
-				}
-			else
-				return startError( functionNameString, NULL, "The given archive item is already an archived item" );
-			}
-		else
+		if( archiveItem == NULL )
 			return startError( functionNameString, NULL, "The given archive item is undefined" );
+
+		if( archiveItem->statusChar() == QUERY_ARCHIVED_CHAR )
+			return startError( functionNameString, NULL, "The given archive item is already an archived item" );
+
+		if( !isAssignmentList() )
+			return startError( functionNameString, NULL, "Only assignments can be archived" );
+
+		if( removeItemFromList( archiveItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to remove an item from a list" );
+
+		archiveItem->previousStatusChar = archiveItem->statusChar();
+
+		if( addItemToList( QUERY_ARCHIVED_CHAR, archiveItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to add an item to the archived list" );
+
+		if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+			commonVariables_->isAssignmentChanged = true;
 
 		return RESULT_OK;
 		}
@@ -610,25 +735,19 @@
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "replaceItem";
 
-		if( replaceItem != NULL )
-			{
-			if( replaceItem->statusChar() != QUERY_REPLACED_CHAR )
-				{
-				if( removeItemFromList( replaceItem ) == RESULT_OK )
-					{
-					replaceItem->previousStatusChar = replaceItem->statusChar();
-
-					if( addItemToList( QUERY_REPLACED_CHAR, replaceItem ) != RESULT_OK )
-						return addError( functionNameString, NULL, "I failed to add an item to the replaced list" );
-					}
-				else
-					return addError( functionNameString, NULL, "I failed to remove an item from a list" );
-				}
-			else
-				return startError( functionNameString, NULL, "The given replace item is already a replaced item" );
-			}
-		else
+		if( replaceItem == NULL )
 			return startError( functionNameString, NULL, "The given replace item is undefined" );
+
+		if( replaceItem->statusChar() == QUERY_REPLACED_CHAR )
+			return startError( functionNameString, NULL, "The given replace item is already a replaced item" );
+
+		if( removeItemFromList( replaceItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to remove an item from a list" );
+
+		replaceItem->previousStatusChar = replaceItem->statusChar();
+
+		if( addItemToList( QUERY_REPLACED_CHAR, replaceItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to add an item to the replaced list" );
 
 		return RESULT_OK;
 		}
@@ -637,20 +756,16 @@
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteItem";
 
-		if( removeItemFromList( deleteItem ) == RESULT_OK )
-			{
-			deleteItem->previousStatusChar = deleteItem->statusChar();
-
-			if( deleteItem->statusChar() != QUERY_DELETED_CHAR )
-				{
-				if( addItemToList( QUERY_DELETED_CHAR, deleteItem ) != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to add an item to the deleted list" );
-				}
-			else
-				return startError( functionNameString, NULL, "The given delete item is already a deleted item" );
-			}
-		else
+		if( removeItemFromList( deleteItem ) != RESULT_OK )
 			return addError( functionNameString, NULL, "I failed to remove an item from a list" );
+
+		deleteItem->previousStatusChar = deleteItem->statusChar();
+
+		if( deleteItem->statusChar() == QUERY_DELETED_CHAR )
+			return startError( functionNameString, NULL, "The given delete item is already a deleted item" );
+
+		if( addItemToList( QUERY_DELETED_CHAR, deleteItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to add an item to the deleted list" );
 
 		return RESULT_OK;
 		}
@@ -664,10 +779,10 @@
 			{
 			if( searchItem->hasCurrentCreationSentenceNr() )
 				{
-				if( deleteItem( searchItem ) == RESULT_OK )
-					searchItem = nextListItem_;
-				else
+				if( deleteItem( searchItem ) != RESULT_OK )
 					return addError( functionNameString, NULL, "I failed to delete an active item" );
+
+				searchItem = nextListItem_;
 				}
 			else
 				searchItem = searchItem->nextItem;
@@ -683,36 +798,32 @@
 
 		if( removeItem != NULL )
 			{
-			if( commonVariables_->nDeletedItems == 0 &&
-			commonVariables_->removeSentenceNr == 0 &&
-			commonVariables_->removeStartItemNr == 0 )
-				{
-				commonVariables_->removeSentenceNr = removeItem->creationSentenceNr();
-				commonVariables_->removeStartItemNr = removeItem->itemNr();
-
-				do	{
-					// Disconnect deleted list from item
-					deletedList_ = deletedList_->nextItem;
-
-					if( removeItem->checkForUsage() == RESULT_OK )
-						{
-						// Disconnect item from the deleted list
-						removeItem->nextItem = NULL;
-						delete removeItem;
-						removeItem = deletedList_;
-						commonVariables_->nDeletedItems++;
-						}
-					else
-						return addError( functionNameString, NULL, "I failed to check an item for its usage" );
-					}
-				while( removeItem != NULL &&
-				// Same sentence number
-				removeItem->creationSentenceNr() == commonVariables_->removeSentenceNr &&
-				// Ascending item number
-				removeItem->itemNr() == commonVariables_->removeStartItemNr + commonVariables_->nDeletedItems );
-				}
-			else
+			if( commonVariables_->nDeletedItems != 0 ||
+			commonVariables_->removeSentenceNr != 0 ||
+			commonVariables_->removeStartItemNr != 0 )
 				return startError( functionNameString, NULL, "There is already a range of deleted items" );
+
+			commonVariables_->removeSentenceNr = removeItem->creationSentenceNr();
+			commonVariables_->removeStartItemNr = removeItem->itemNr();
+
+			do	{
+				// Disconnect deleted list from item
+				deletedList_ = deletedList_->nextItem;
+
+				if( removeItem->checkForUsage() != RESULT_OK )
+					addError( functionNameString, NULL, "I failed to check an item for its usage" );
+
+				// Disconnect item from the deleted list
+				removeItem->nextItem = NULL;
+				delete removeItem;
+				removeItem = deletedList_;
+				commonVariables_->nDeletedItems++;
+				}
+			while( removeItem != NULL &&
+			// Same sentence number
+			removeItem->creationSentenceNr() == commonVariables_->removeSentenceNr &&
+			// Ascending item number
+			removeItem->itemNr() == commonVariables_->removeStartItemNr + commonVariables_->nDeletedItems );
 			}
 
 		return RESULT_OK;
@@ -761,16 +872,16 @@
 
 	// Protected cleanup functions
 
-	void List::clearReplacedInfoInList()
+	void List::clearReplacingInfoInList()
 		{
-		listCleanup_->clearReplacedInfo();
+		listCleanup_->clearReplacingInfo();
 		}
 
 	void List::getHighestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr )
 		{
-		unsigned int tempSentenceNr;
+		unsigned int tempSentenceNr = listCleanup_->highestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
 
-		if( ( tempSentenceNr = listCleanup_->highestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr ) ) > commonVariables_->highestInUseSentenceNr )
+		if( tempSentenceNr > commonVariables_->highestInUseSentenceNr )
 			commonVariables_->highestInUseSentenceNr = tempSentenceNr;
 		}
 
@@ -819,18 +930,14 @@
 			listQuery_->clearQuerySelections();
 		}
 
-	ReferenceResultType List::compareStrings( char *searchString, char *sourceString )
+	ResultType List::displayQueryResultInList( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
 		{
-		ReferenceResultType referenceResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "compareStrings";
+		if( listQuery_ != NULL )
+			return listQuery_->displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth );
 
-		if( listQuery_ != NULL ||
-		// Create supporting module
-		( listQuery_ = new ListQuery( commonVariables_, this ) ) != NULL )
-			return listQuery_->compareStrings( searchString, sourceString );
-
-		referenceResult.result = startError( functionNameString, NULL, "I failed to create my list query module" );
-		return referenceResult;
+		// In case the first query doesn't include admin lists,
+		// the admin list query module isn't created yet
+		return RESULT_OK;
 		}
 
 	ResultType List::itemQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
@@ -908,34 +1015,36 @@
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQueryInList";
 
-		if( listQuery_ != NULL ||
+		if( listQuery_ == NULL &&
 		// Create supporting module
-		( listQuery_ = new ListQuery( commonVariables_, this ) ) != NULL )
-			return listQuery_->wordReferenceQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, ( isSelectingAttachedJustifications && isAssignmentOrSpecificationList() ), ( isSelectingJustificationSpecifications && isAssignmentOrSpecificationList() ), wordReferenceNameString );
+		( listQuery_ = new ListQuery( commonVariables_, this ) ) == NULL )
+			return startError( functionNameString, NULL, "I failed to create my list query module" );
 
-		return startError( functionNameString, NULL, "I failed to create my list query module" );
+		return listQuery_->wordReferenceQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, ( isSelectingAttachedJustifications && isAssignmentOrSpecificationList() ), ( isSelectingJustificationSpecifications && isAssignmentOrSpecificationList() ), wordReferenceNameString );
 		}
 
 	ResultType List::stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "stringQueryInList";
 
-		if( listQuery_ != NULL ||
+		if( listQuery_ == NULL &&
 		// Create supporting module
-		( listQuery_ = new ListQuery( commonVariables_, this ) ) != NULL )
-			return listQuery_->stringQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString );
+		( listQuery_ = new ListQuery( commonVariables_, this ) ) == NULL )
+			return startError( functionNameString, NULL, "I failed to create my list query module" );
 
-		return startError( functionNameString, NULL, "I failed to create my list query module" );
+		return listQuery_->stringQuery( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString );
 		}
 
-	ResultType List::showQueryResultInList( bool isOnlyShowingWords, bool isOnlyShowingWordReferences, bool isOnlyShowingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
+	StringResultType List::compareStrings( char *searchString, char *sourceString )
 		{
-		if( listQuery_ != NULL )
-			return listQuery_->showQueryResult( isOnlyShowingWords, isOnlyShowingWordReferences, isOnlyShowingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth );
+		char functionNameString[FUNCTION_NAME_LENGTH] = "compareStrings";
 
-		// In case the first query doesn't include admin lists,
-		// the admin list query module isn't created yet
-		return RESULT_OK;
+		if( listQuery_ == NULL &&
+		// Create supporting module
+		( listQuery_ = new ListQuery( commonVariables_, this ) ) == NULL )
+			return startStringResultError( functionNameString, NULL, "I failed to create my list query module" );
+
+		return listQuery_->compareStrings( searchString, sourceString );
 		}
 
 /*************************************************************************

@@ -1,24 +1,23 @@
-﻿Mostrar "------------------------------------------------------------------------------".
-Mostrar " Thinknowlogy es un software experimental, basado en la gramática,".
-Mostrar " diseñado para utilizar Leyes Naturales de la Inteligencia encajada en la Gramática,".
-Mostrar " con el fin de crear la inteligencia – a través del lenguaje natural – en software,".
-Mostrar " lo que se demuestra por:".
+Mostrar "------------------------------------------------------------------------------".
+Mostrar " A pesar de siglos de investigación a fondo, la teoría de la evolución todavía".
+Mostrar " no tiene ninguna explicación satisfactoria para el origen de la inteligencia".
+Mostrar " y el lenguaje. Y mucho menos, cómo ambos están relacionados. Según la".
+Mostrar " cosmovisión bíblica, Dios ha creado las leyes de la naturaleza. Basándose".
+Mostrar " en las leyes de la inteligencia, solamente Thinknowlogy implementa el".
+Mostrar " significado natural (función inteligente) de palabras como artículos definidos,".
+#C++#Mostrar " conjunción \"o\", verbos posesivos \"tener\" y los verbos en pasado \"era\" y \"tenido\".".
+#Java#Mostrar " conjunción “o”, verbos posesivos “tener” y los verbos en pasado “era” y “tenido”.".
+Mostrar "------------------------------------------------------------------------------".
+Mostrar " Estas leyes naturales de la inteligencia integrada en la gramática se demuestran por:".
 Mostrar " * Programación en lenguaje natural;".
 Mostrar " * Razonamiento en lenguaje natural:".
 Mostrar "   - sacar conclusiones (más avanzada que las soluciones científicas),".
 Mostrar "   - hacer suposiciones (con el nivel de ajuste automático de la incertidumbre),".
 Mostrar "   - haciendo preguntas (acerca de las brechas en el conocimiento),".
-Mostrar "   - detección de conflictos y algunos casos de ambigüedad semántica;".
+Mostrar "   - detección de conflictos y algunos casos de ambigüedad semántica,".
+Mostrar "   - mostrar los informes de justificación para el conocimiento autogenerado;".
 Mostrar " * El multilingüismo, probando: Los lenguajes naturales tienen un origen común.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " A pesar de los 160 años de investigación, la teoría de la evolución todavía no".
-Mostrar " ha sido apoyada por pruebas concretas en relación con el origen de la".
-Mostrar " inteligencia y el lenguaje. Mucho menos, a la integración de ambos. Según la".
-Mostrar " cosmovisión bíblica, Dios ha creado las leyes de la naturaleza. Basándose en".
-Mostrar " las leyes de la inteligencia, solamente Thinknowlogy implementa el significado".
-Mostrar " natural (función inteligente) de palabras como artículos definidos, conjunción".
-#C++#Mostrar " \"o\", verbos posesivos \"tener\" y los verbos en pasado \"era\" y \"tenido\".".
-#Java#Mostrar " “o”, verbos posesivos “tener” y los verbos en pasado “era” y “tenido”.".
 Mostrar " Reto a cualquiera a vencer este razonador: http://mafait.org/challenge/".
 Mostrar "------------------------------------------------------------------------------".
 #C++#Mostrar " Ayudar.\t\t\t\t\t       * Mostrar más info ayuda".

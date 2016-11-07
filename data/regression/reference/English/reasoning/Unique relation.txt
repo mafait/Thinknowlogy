@@ -1,0 +1,9 @@
+﻿* 
+* My conclusions:
+< Paul has no father anymore.
+< Paul had a father, called John.
+< Joe has no father anymore.
+< Joe had a father, called John.
+< Laura has no father anymore.
+< Laura had a father, called John.
+< 

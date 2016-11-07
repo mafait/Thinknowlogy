@@ -1,7 +1,9 @@
-﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
 Juan es un padre.
 Ana es una madre.
 Juan es un hombre.
 Ana es una mujer.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Ana.
 Juan es el padre y Ana es la madre de Pablo, José y Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

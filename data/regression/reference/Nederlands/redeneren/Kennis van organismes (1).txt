@@ -1,0 +1,66 @@
+﻿* 
+* Mijn veronderstellingen:
+< Een gewervelde is waarschijnlijk een dier.
+< 
+* 
+* Mijn conclusies:
+< Een dier is een annelid, een geleedpotige, een stekelhuidige, een weekdier, een oerdier, een amfibie, een vogel, een vis, een zogende of een reptiel.
+* 
+* Mijn veronderstellingen:
+< Een ongewervelde is waarschijnlijk een dier.
+< 
+* 
+* Mijn conclusies:
+< Een gewervelde is een walvisachtige, een buideldier, een primaat of een knaagdier.
+< Een dier is een walvisachtige, een buideldier, een primaat, een knaagdier, een annelid, een geleedpotige, een stekelhuidige, een weekdier, een oerdier, een amfibie, een vogel, een vis, een zogende of een reptiel.
+* 
+* Mijn veronderstellingen:
+< Een zogende is waarschijnlijk een dier.
+< 
+* 
+* Mijn conclusies:
+< Jan is een primaat en een zogende.
+< Jan is geen walvisachtige en geen buideldier.
+< Jan is geen walvisachtige en geen buideldier.
+< Jan is een gewervelde.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een dier.
+< Jan is waarschijnlijk geen knaagdier, geen annelid, geen geleedpotige, geen stekelhuidige, geen weekdier, geen oerdier, geen amfibie, geen vogel, geen vis en geen reptiel.
+< Jan is waarschijnlijk geen ongewervelde.
+< 
+* 
+* Mijn conclusies:
+< Jan is een primaat en een zogende. Omdat:
+<	- Jan is een mens.
+<	- Een mens is een zogende.
+* 	en:
+<	- Jan is een mens.
+<	- Een mens is een primaat.
+< Jan is geen walvisachtige en geen buideldier. Omdat:
+<	- Jan is een zogende.
+<	- Een zogende is een walvisachtige, een buideldier, een primaat of een knaagdier.
+< Jan is geen walvisachtige en geen buideldier. Omdat:
+<	- Jan is een zogende.
+<	- Een zogende is een walvisachtige, een buideldier, een primaat of een knaagdier.
+< Jan is een gewervelde. Omdat:
+<	- Jan is een mens.
+<	- Een mens is een gewervelde.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een dier. Omdat:
+<	- Jan is een zogende.
+<	- Een zogende is waarschijnlijk een dier.
+* 	en:
+<	- Jan is een gewervelde.
+<	- Een gewervelde is waarschijnlijk een dier.
+< Jan is waarschijnlijk geen knaagdier, geen annelid, geen geleedpotige, geen stekelhuidige, geen weekdier, geen oerdier, geen amfibie, geen vogel, geen vis en geen reptiel. Omdat:
+<	- Jan is waarschijnlijk een dier.
+<	- Een dier is een walvisachtige, een buideldier, een primaat, een knaagdier, een annelid, een geleedpotige, een stekelhuidige, een weekdier, een oerdier, een amfibie, een vogel, een vis, een zogende of een reptiel.
+<	- Jan is een gewervelde.
+<	- Een gewervelde is een amfibie, een vogel, een vis, een zogende of een reptiel.
+< Jan is waarschijnlijk geen ongewervelde. Omdat:
+<	- Jan is waarschijnlijk een dier.
+<	- Een dier is een gewervelde of een ongewervelde.
+<	- Jan is een gewervelde.
+< 

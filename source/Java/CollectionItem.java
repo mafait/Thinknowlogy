@@ -1,7 +1,7 @@
 /*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class CollectionItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private boolean isExclusiveSpecification_;
 
@@ -38,13 +38,13 @@ class CollectionItem extends Item
 	private WordItem compoundGeneralizationWordItem_;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected CollectionItem( boolean isExclusiveSpecification, short collectionOrderNr, short collectionWordTypeNr, short commonWordTypeNr, int collectionNr, WordItem collectionWordItem, WordItem commonWordItem, WordItem compoundGeneralizationWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isExclusiveSpecification_ = isExclusiveSpecification;
 
@@ -62,7 +62,7 @@ class CollectionItem extends Item
 
 	// Protected virtual methods
 
-	protected void showWordReferences( boolean isReturnQueryToPosition )
+	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		StringBuffer queryStringBuffer;
 		String wordString;
@@ -78,7 +78,7 @@ class CollectionItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
@@ -93,7 +93,7 @@ class CollectionItem extends Item
 			queryStringBuffer.length() > 0 )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
@@ -108,7 +108,7 @@ class CollectionItem extends Item
 			queryStringBuffer.length() > 0 )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
@@ -117,7 +117,7 @@ class CollectionItem extends Item
 			}
 		}
 
-	protected boolean hasFoundParameter( int queryParameter )
+	protected boolean hasParameter( int queryParameter )
 		{
 		return ( collectionOrderNr_ == queryParameter ||
 				collectionNr_ == queryParameter ||
@@ -128,7 +128,7 @@ class CollectionItem extends Item
 				collectionNr_ > Constants.NO_COLLECTION_NR ) ) );
 		}
 
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( collectionWordItem_ == null ? false :
 					( querySentenceNr == Constants.NO_SENTENCE_NR ? true : collectionWordItem_.creationSentenceNr() == querySentenceNr ) &&
@@ -143,38 +143,37 @@ class CollectionItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : compoundGeneralizationWordItem_.itemNr() == queryItemNr ) );
 		}
 
-	protected boolean hasFoundWordType( short queryWordTypeNr )
+	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( collectionWordTypeNr_ == queryWordTypeNr ||
 				commonWordTypeNr_ == queryWordTypeNr );
 		}
 
-	protected ReferenceResultType findMatchingWordReferenceString( String queryString )
+	protected StringResultType findMatchingWordReferenceString( String queryString )
 		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
+		StringResultType stringResult = new StringResultType();
 
 		if( collectionWordItem_ != null )
 			{
-			if( ( referenceResult = collectionWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, "I failed to find a matching word reference string for the collected word item" );
+			if( ( stringResult = collectionWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, "I failed to find a matching word reference string for the collected word item" );
 			}
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( !stringResult.hasFoundMatchingStrings &&
 		commonWordItem_ != null )
 			{
-			if( ( referenceResult = commonWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, "I failed to find a matching word reference string for the common word item" );
+			if( ( stringResult = commonWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, "I failed to find a matching word reference string for the common word item" );
 			}
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( !stringResult.hasFoundMatchingStrings &&
 		compoundGeneralizationWordItem_ != null )
 			{
-			if( ( referenceResult = compoundGeneralizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, "I failed to find a matching word reference string for the compound word item" );
+			if( ( stringResult = compoundGeneralizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, "I failed to find a matching word reference string for the compound word item" );
 			}
 
-		referenceResult.result = CommonVariables.result;
-		return referenceResult;
+		return stringResult;
 		}
 
 	protected StringBuffer toStringBuffer( short queryWordTypeNr )

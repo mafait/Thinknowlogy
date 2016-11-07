@@ -1,0 +1,10 @@
+﻿Read the file "English/user/programming/Connect-Four".
+My set is D.
+My set is D.
+My set is D.
+My set is D.
+My set is D.
+My set is E.
+My set is F.
+My set is A.
+# To continue, click button «Clear your mind.» or «Restart.».

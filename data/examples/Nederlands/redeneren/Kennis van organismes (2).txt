@@ -1,0 +1,7 @@
+﻿Ieder dier is een schepsel.
+Ieder paard is een dier.
+Ieder persoon is een mens.
+Ieder mens is een schepsel.
+Ieder schepsel heeft een lichaam.
+Schepsels hebben een lichaam.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

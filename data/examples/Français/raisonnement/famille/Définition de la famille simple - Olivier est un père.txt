@@ -1,0 +1,9 @@
+﻿# Simple definition of a family.
+Chaque personne est un homme ou une femme.
+Chaque parent est un père ou une mère.
+Chaque père est un homme.
+Chaque mère est une femme.
+
+Olivier est un père.
+Affichez le rapport de justification sur Olivier.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

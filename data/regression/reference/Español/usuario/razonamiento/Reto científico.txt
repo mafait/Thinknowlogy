@@ -1,0 +1,56 @@
+﻿* 
+* Mis conclusiones:
+< Juan tiene un hijo, llamado Pablo.
+< 
+* 
+* Mis conclusiones:
+< Laura es hija de Ana.
+< 
+* 
+* Mis conclusiones:
+< Un motor es parte de cada coche.
+< 
+* 
+* Mis conclusiones:
+< Cada velero tiene una vela.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Juan tiene un hijo, llamado Pablo.
+< 
+* 
+* Mis conclusiones:
+< Pablo es hijo de Juan y Ana.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Pablo es hijo de Juan y Ana.
+< 
+* 
+* Mis conclusiones:
+< Rafael no tiene un padre nunca-más.
+< Rafael tenido un padre, llamado Hernando.
+< 
+! 
+! No se acepta esta frase, porque está en conflicto consigo mismo.
+! 
+* 
+* Mis preguntas:
+< ¿Es Cruz un hombre o una mujer?
+< 
+* 
+* Mis preguntas que son contestadas:
+< ¿Es Cruz un hombre o una mujer?
+* 
+* Mis conclusiones:
+< Cruz es un hombre.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado Bill Clinton.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un nuevo presidente, llamado Barack Obama.
+< Los Estados Unidos tiene un anterior presidente, llamado Bill Clinton.
+< 

@@ -1,5 +1,10 @@
-﻿Read the file "English/reasoning/family/family definition".
+﻿Read the file "English/user/reasoning/family/family definition".
 Paul is a son of John and Anna.
+Display the justification report about John.
+Display the justification report about Paul.
 Is John the father of Paul?
+Display the justification report about John.
+Display the justification report about Paul.
 Is Michael the father of Adam?
+Display the justification report about Michael.
 # To continue, click button «Clear your mind.» or «Restart.».

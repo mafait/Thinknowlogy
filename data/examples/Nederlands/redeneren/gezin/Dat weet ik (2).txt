@@ -1,0 +1,8 @@
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
+Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
+Jan is een man.
+Jan is een man.
+Laura is een kind.
+Laura is een kind.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

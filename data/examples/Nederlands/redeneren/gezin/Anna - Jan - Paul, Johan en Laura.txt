@@ -1,0 +1,28 @@
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+Anna is de moeder van Paul, Johan en Laura.
+Toon de verantwoordingsrapportage over Anna.
+Toon de verantwoordingsrapportage over Paul.
+Toon de verantwoordingsrapportage over Johan.
+Toon de verantwoordingsrapportage over Laura.
+Jan is de vader van Paul, Johan en Laura.
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Anna.
+Toon de verantwoordingsrapportage over Paul.
+Toon de verantwoordingsrapportage over Johan.
+Toon de verantwoordingsrapportage over Laura.
+Paul is een zoon.
+Johan is een zoon.
+Laura is een dochter.
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Anna.
+Toon de verantwoordingsrapportage over Paul.
+Toon de verantwoordingsrapportage over Johan.
+Toon de verantwoordingsrapportage over Laura.
+# Extra checks
+Paul is een man.
+Toon de verantwoordingsrapportage over Paul.
+Johan is een jongen.
+Toon de verantwoordingsrapportage over Johan.
+Laura is een vrouw.
+Toon de verantwoordingsrapportage over Laura.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

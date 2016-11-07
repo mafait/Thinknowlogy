@@ -1,0 +1,33 @@
+﻿* 
+* Mes conclusions:
+< Pascal a un père, appelé Olivier.
+< Pascal a une mère, appelée Amélie.
+< Julien a un père, appelé Olivier.
+< Julien a une mère, appelée Amélie.
+< 
+* 
+* Mes conclusions:
+< Lorraine a un père, appelé Olivier.
+< Lorraine a une mère, appelée Amélie.
+< 
+* 
+* Mes conclusions:
+< Pascal a un père, appelé Olivier. En raison:
+<	- Olivier est le père de Pascal, Julien et Lorraine.
+< Pascal a une mère, appelée Amélie. En raison:
+<	- Amélie est la mère de Pascal, Julien et Lorraine.
+< 
+* 
+* Mes conclusions:
+< Julien a un père, appelé Olivier. En raison:
+<	- Olivier est le père de Pascal, Julien et Lorraine.
+< Julien a une mère, appelée Amélie. En raison:
+<	- Amélie est la mère de Pascal, Julien et Lorraine.
+< 
+* 
+* Mes conclusions:
+< Lorraine a un père, appelé Olivier. En raison:
+<	- Olivier est le père de Pascal, Julien et Lorraine.
+< Lorraine a une mère, appelée Amélie. En raison:
+<	- Amélie est la mère de Pascal, Julien et Lorraine.
+< 

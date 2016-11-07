@@ -1,7 +1,13 @@
-﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
 Olivier est un père.
 Amélie est une mère.
-Olivier est le père et Amélie est la mère de Laurent, Julien et Lorraine.
-Laurent est un fils.
-Laurent est un fils de Olivier et Amélie.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
+# Extra checks (next 2)
+Olivier a 3 enfants.
+Amélie a 3 enfants.
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Pascal.
+Pascal est un fils.
+Affichez le rapport de justification sur Pascal.
+Pascal est un fils de Olivier et Amélie.
+Affichez le rapport de justification sur Pascal.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

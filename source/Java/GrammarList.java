@@ -1,7 +1,7 @@
 /*	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class GrammarList extends List
 	{
-	// Private constructible variables
+	// Private constructed variables
 
 	private boolean isNeededToCheckGrammar_;
 
@@ -73,36 +73,29 @@ class GrammarList extends List
 		int tempWordLength;
 		int searchWordEndingStringLength;
 
-		if( searchWordStringLength > 0 )
+		if( searchWordStringLength <= 0 )
+			return startGrammarResultError( 1, null, "The given search word string length is undefined" );
+
+		if( searchWordString == null )
+			return startGrammarResultError( 1, null, "The given search word string is undefined" );
+
+		if( searchWordEndingString == null )
+			return startGrammarResultError( 1, null, "The given search word ending string is undefined" );
+
+		searchWordEndingStringLength = searchWordEndingString.length();
+		tempWordLength = ( searchWordStringLength - searchWordEndingStringLength );
+		grammarResult.singularNounWordStringLength = ( searchWordStringLength + replacingWordStringLength - searchWordEndingStringLength );
+
+		if( tempWordLength >= 0 &&
+		grammarResult.singularNounWordStringLength > 0 )
 			{
-			if( searchWordString != null )
+			if( searchWordString.substring( tempWordLength ).startsWith( searchWordEndingString ) )
 				{
-				if( searchWordEndingString != null )
-					{
-					searchWordEndingStringLength = searchWordEndingString.length();
-					tempWordLength = ( searchWordStringLength - searchWordEndingStringLength );
-					grammarResult.singularNounWordStringLength = ( searchWordStringLength + replacingWordStringLength - searchWordEndingStringLength );
-
-					if( tempWordLength >= 0 &&
-					grammarResult.singularNounWordStringLength > 0 )
-						{
-						if( searchWordString.substring( tempWordLength ).startsWith( searchWordEndingString ) )
-							{
-							grammarResult.hasFoundWordEnding = true;
-							grammarResult.singularNounWordString = searchWordString.substring( 0, tempWordLength ) + ( replacingWordEndingString == null ? Constants.EMPTY_STRING : replacingWordEndingString );
-							}
-						}
-					}
-				else
-					startError( 1, null, "The given search word ending string is undefined" );
+				grammarResult.hasFoundWordEnding = true;
+				grammarResult.singularNounWordString = searchWordString.substring( 0, tempWordLength ) + ( replacingWordEndingString == null ? Constants.EMPTY_STRING : replacingWordEndingString );
 				}
-			else
-				startError( 1, null, "The given search word string is undefined" );
 			}
-		else
-			startError( 1, null, "The given search word string length is undefined" );
 
-		grammarResult.result = CommonVariables.result;
 		return grammarResult;
 		}
 
@@ -138,7 +131,7 @@ class GrammarList extends List
 		}
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected GrammarList( WordItem myWordItem )
 		{
@@ -162,44 +155,39 @@ class GrammarList extends List
 		{
 		boolean hasFound = false;
 		int currentItemNr = CommonVariables.currentItemNr;
-		GrammarItem searchItem = firstActiveGrammarItem();
+		GrammarItem searchGrammarItem = firstActiveGrammarItem();
 
-		while( searchItem != null &&
+		while( searchGrammarItem != null &&
 		!hasFound )
 			{
-			if( searchItem.hasCurrentCreationSentenceNr() &&
-			searchItem.itemNr() == currentItemNr )
+			if( searchGrammarItem.hasCurrentCreationSentenceNr() &&
+			searchGrammarItem.itemNr() == currentItemNr )
 				{
 				hasFound = true;
-				searchItem.isOptionEnd = true;
+				searchGrammarItem.isOptionEnd = true;
 				}
 
-			searchItem = searchItem.nextGrammarItem();
+			searchGrammarItem = searchGrammarItem.nextGrammarItem();
 			}
 		}
 
 	protected void markAsChoiceEnd( int choiceEndItemNr )
 		{
 		boolean hasFound = false;
-		GrammarItem searchItem = firstActiveGrammarItem();
+		GrammarItem searchGrammarItem = firstActiveGrammarItem();
 
-		while( searchItem != null &&
+		while( searchGrammarItem != null &&
 		!hasFound )
 			{
-			if( searchItem.hasCurrentCreationSentenceNr() &&
-			searchItem.itemNr() == choiceEndItemNr )
+			if( searchGrammarItem.hasCurrentCreationSentenceNr() &&
+			searchGrammarItem.itemNr() == choiceEndItemNr )
 				{
 				hasFound = true;
-				searchItem.isChoiceEnd = true;
+				searchGrammarItem.isChoiceEnd = true;
 				}
 
-			searchItem = searchItem.nextGrammarItem();
+			searchGrammarItem = searchGrammarItem.nextGrammarItem();
 			}
-		}
-
-	protected boolean isNeededToCheckGrammar()
-		{
-		return isNeededToCheckGrammar_;
 		}
 
 	protected boolean hasMergedWords()
@@ -207,51 +195,128 @@ class GrammarList extends List
 		return ( firstMergedWordGrammarItem_ != null );
 		}
 
+	protected boolean isNeededToCheckGrammar()
+		{
+		return isNeededToCheckGrammar_;
+		}
+
 	protected GrammarResultType analyzeWordEnding( short grammarParameter, int searchWordStringLength, String searchWordString )
 		{
 		GrammarResultType grammarResult = new GrammarResultType();
 		String replacingWordEndingString = null;
 		GrammarItem replacingWordEndingGrammarItem;
-		GrammarItem searchItem = firstWordEndingGrammarItem( grammarParameter );
+		GrammarItem searchGrammarItem = firstWordEndingGrammarItem( grammarParameter );
 
-		if( isWordEnding( grammarParameter ) )
+		if( !isWordEnding( grammarParameter ) )
+			return startGrammarResultError( 1, null, "The given grammar parameter is not a word ending parameter" );
+
+		// The given type of word ending is defined for the current language
+		if( searchGrammarItem != null )
 			{
-			// The given type of word ending is defined for the current language
-			if( searchItem != null )
-				{
-				if( searchWordString != null )
+			if( searchWordString == null )
+				return startGrammarResultError( 1, null, "The given search word string is undefined" );
+
+			if( searchWordStringLength == 0 )
+				searchWordStringLength = searchWordString.length();
+
+			do	{
+				if( searchGrammarItem.isDefinitionStart() )
 					{
-					if( searchWordStringLength == 0 )
-						searchWordStringLength = searchWordString.length();
+					replacingWordEndingGrammarItem = searchGrammarItem.nextDefinitionGrammarItem;
+					replacingWordEndingString = ( replacingWordEndingGrammarItem == null ? null : replacingWordEndingGrammarItem.grammarString() );
 
-					do	{
-						if( searchItem.isDefinitionStart() )
-							{
-							replacingWordEndingGrammarItem = searchItem.nextDefinitionGrammarItem;
-							replacingWordEndingString = ( replacingWordEndingGrammarItem == null ? null : replacingWordEndingGrammarItem.grammarString() );
-
-							if( ( grammarResult = comparePluralEndingOfWord( searchWordStringLength, ( replacingWordEndingString == null ? 0 : replacingWordEndingString.length() ), searchWordString, searchItem.itemString(), replacingWordEndingString ) ).result != Constants.RESULT_OK )
-								addError( 1, null, "I failed to find the plural ending of an undefined word type" );
-							}
-						}
-					while( CommonVariables.result == Constants.RESULT_OK &&
-					!grammarResult.hasFoundWordEnding &&
-					( searchItem = searchItem.nextWordEndingGrammarItem() ) != null );
+					if( ( grammarResult = comparePluralEndingOfWord( searchWordStringLength, ( replacingWordEndingString == null ? 0 : replacingWordEndingString.length() ), searchWordString, searchGrammarItem.itemString(), replacingWordEndingString ) ).result != Constants.RESULT_OK )
+						return addGrammarResultError( 1, null, "I failed to find the plural ending of an undefined word type" );
 					}
-				else
-					startError( 1, null, "The given search word string is undefined" );
 				}
+			while( !grammarResult.hasFoundWordEnding &&
+			( searchGrammarItem = searchGrammarItem.nextWordEndingGrammarItem() ) != null );
 			}
-		else
-			startError( 1, null, "The given grammar parameter is not a word ending parameter" );
 
-		grammarResult.result = CommonVariables.result;
 		return grammarResult;
 		}
 
-	protected GrammarResultType checkForDuplicateGrammarDefinition()
+	protected GrammarResultType createGrammarItem( boolean isDefinitionStart, boolean isNewStart, boolean isOptionStart, boolean isChoiceStart, boolean isSkipOptionForWriting, short wordTypeNr, short grammarParameter, int grammarStringLength, String grammarString, GrammarItem definitionGrammarItem )
 		{
 		GrammarResultType grammarResult = new GrammarResultType();
+
+		if( wordTypeNr < Constants.NO_WORD_TYPE_NR ||
+		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
+			return startGrammarResultError( 1, null, "The given word type number is out of bounds" );
+
+		if( ( grammarResult.createdGrammarItem = new GrammarItem( isDefinitionStart, isNewStart, isOptionStart, isChoiceStart, isSkipOptionForWriting, wordTypeNr, grammarParameter, grammarStringLength, grammarString, definitionGrammarItem, this, myWordItem() ) ) == null )
+			return startGrammarResultError( 1, null, "I failed to create a grammar item" );
+
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, grammarResult.createdGrammarItem ) != Constants.RESULT_OK )
+			return addGrammarResultError( 1, null, "I failed to add an active grammar item" );
+
+		isNeededToCheckGrammar_ = true;
+
+		if( grammarResult.createdGrammarItem.isDefinitionStart() )
+			{
+			switch( grammarParameter )
+				{
+				case Constants.WORD_FEMININE_PROPER_NAME_ENDING:
+					firstFeminineProperNameEndingGrammarItem_ = grammarResult.createdGrammarItem;
+					break;
+
+				case Constants.WORD_MASCULINE_PROPER_NAME_ENDING:
+					firstMasculineProperNameEndingGrammarItem_ = grammarResult.createdGrammarItem;
+					break;
+
+				case Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING:
+					firstFeminineSingularNounEndingGrammarItem_ = grammarResult.createdGrammarItem;
+					break;
+
+				case Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING:
+					firstMasculineSingularNounEndingGrammarItem_ = grammarResult.createdGrammarItem;
+					break;
+
+				case Constants.WORD_PLURAL_NOUN_ENDING:
+					firstPluralNounEndingGrammarItem_ = grammarResult.createdGrammarItem;
+					break;
+
+				case Constants.WORD_MERGED_WORD:
+					firstMergedWordGrammarItem_ = grammarResult.createdGrammarItem;
+					break;
+				}
+
+			if( grammarResult.createdGrammarItem.isGrammarStart() )
+				firstGrammarItem_ = grammarResult.createdGrammarItem;
+			}
+
+		return grammarResult;
+		}
+
+	protected GrammarResultType findGrammar( boolean isIgnoringGrammarParameter, short grammarParameter, int grammarStringLength, String grammarString )
+		{
+		GrammarResultType grammarResult = new GrammarResultType();
+		GrammarItem searchGrammarItem = firstActiveGrammarItem();
+
+		if( grammarString == null )
+			return startGrammarResultError( 1, null, "The given grammar string is undefined" );
+
+		do	{
+			if( searchGrammarItem.grammarString() == null )
+				return startGrammarResultError( 1, null, "I have found a grammar word without grammar string" );
+
+			if( searchGrammarItem.isDefinitionStart() &&
+
+			( isIgnoringGrammarParameter ||
+			searchGrammarItem.grammarParameter() == grammarParameter ) &&
+
+			grammarStringLength == searchGrammarItem.grammarString().length() &&
+			grammarString.startsWith( searchGrammarItem.grammarString() ) )
+				grammarResult.foundGrammarItem = searchGrammarItem;
+			}
+		while( grammarResult.foundGrammarItem == null &&
+		( searchGrammarItem = searchGrammarItem.nextGrammarItem() ) != null );
+
+		return grammarResult;
+		}
+
+	protected byte checkForDuplicateGrammarDefinition()
+		{
 		boolean isIdentical;
 		String grammarString;
 		String definitionGrammarString;
@@ -260,180 +325,77 @@ class GrammarList extends List
 		GrammarItem nextGrammarItem;
 		GrammarItem definitionGrammarItem = null;
 		GrammarItem duplicateDefinitionGrammarItem = null;
-		GrammarItem searchItem = firstActiveGrammarItem();
+		GrammarItem searchGrammarItem = firstActiveGrammarItem();
 
-		while( searchItem != null &&
+		while( searchGrammarItem != null &&
 		duplicateDefinitionGrammarItem == null )
 			{
-			if( searchItem.isDefinitionStart() )
+			if( searchGrammarItem.isDefinitionStart() )
 				{
-				if( searchItem.hasCurrentCreationSentenceNr() )
-					definitionGrammarItem = searchItem;
+				if( searchGrammarItem.hasCurrentCreationSentenceNr() )
+					definitionGrammarItem = searchGrammarItem;
 				else
 					{
 					if( definitionGrammarItem != null &&
-					searchItem.creationSentenceNr() < CommonVariables.currentSentenceNr )
+					searchGrammarItem.creationSentenceNr() < CommonVariables.currentSentenceNr )
 						{
-						grammarString = searchItem.grammarString();
+						grammarString = searchGrammarItem.grammarString();
 						definitionGrammarString = definitionGrammarItem.grammarString();
 
 						if( grammarString != null &&
 						definitionGrammarString != null &&
 						definitionGrammarString.equals( grammarString ) )
 							{
-							searchItem.isGrammarItemInUse = true;
-							duplicateDefinitionGrammarItem = searchItem;
-							definitionGrammarItem.nextDefinitionGrammarItem = searchItem;
+							searchGrammarItem.isGrammarItemInUse = true;
+							duplicateDefinitionGrammarItem = searchGrammarItem;
+							definitionGrammarItem.nextDefinitionGrammarItem = searchGrammarItem;
 							}
 						}
 					}
 				}
 
-			searchItem = searchItem.nextGrammarItem();
+			searchGrammarItem = searchGrammarItem.nextGrammarItem();
 			}
 
-		if( definitionGrammarItem != null )
+		if( definitionGrammarItem == null )
+			return startError( 1, null, "I couldn't find the last grammar definition word" );
+
+		if( duplicateDefinitionGrammarItem != null )
 			{
-			if( duplicateDefinitionGrammarItem != null )
-				{
+			do	{
+				isIdentical = true;
+				currentGrammarItem = definitionGrammarItem;
+				duplicateGrammarItem = duplicateDefinitionGrammarItem;
+
 				do	{
-					isIdentical = true;
-					currentGrammarItem = definitionGrammarItem;
-					duplicateGrammarItem = duplicateDefinitionGrammarItem;
-
-					do	{
-						if( currentGrammarItem.isIdentical( duplicateGrammarItem ) )
-							{
-							nextGrammarItem = currentGrammarItem.nextGrammarItem();
-
-							currentGrammarItem = ( nextGrammarItem != null &&
-													nextGrammarItem.hasCurrentCreationSentenceNr() ? nextGrammarItem : null );
-
-							nextGrammarItem = duplicateGrammarItem.nextGrammarItem();
-
-							duplicateGrammarItem = ( nextGrammarItem != null &&
-													nextGrammarItem.creationSentenceNr() == duplicateDefinitionGrammarItem.creationSentenceNr() ? nextGrammarItem : null );
-							}
-						else
-							isIdentical = false;
-						}
-					while( isIdentical &&
-					currentGrammarItem != null &&
-					duplicateGrammarItem != null );
-
-					if( isIdentical &&
-					currentGrammarItem == null &&
-					duplicateGrammarItem == null )
-						startError( 1, null, "I have found a duplicate grammar definition" );
-					}
-				while( CommonVariables.result == Constants.RESULT_OK &&
-				( duplicateDefinitionGrammarItem = duplicateDefinitionGrammarItem.nextDefinitionGrammarItem ) != null );
-				}
-			}
-		else
-			startError( 1, null, "I couldn't find the last grammar definition word" );
-
-		grammarResult.result = CommonVariables.result;
-		return grammarResult;
-		}
-
-	protected GrammarResultType createGrammarItem( boolean isDefinitionStart, boolean isNewStart, boolean isOptionStart, boolean isChoiceStart, boolean isSkipOptionForWriting, short wordTypeNr, short grammarParameter, int grammarStringLength, String grammarString, GrammarItem definitionGrammarItem )
-		{
-		GrammarResultType grammarResult = new GrammarResultType();
-
-		if( wordTypeNr >= Constants.WORD_TYPE_UNDEFINED &&
-		wordTypeNr < Constants.NUMBER_OF_WORD_TYPES )
-			{
-			if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
-				{
-				if( ( grammarResult.createdGrammarItem = new GrammarItem( isDefinitionStart, isNewStart, isOptionStart, isChoiceStart, isSkipOptionForWriting, wordTypeNr, grammarParameter, grammarStringLength, grammarString, definitionGrammarItem, this, myWordItem() ) ) != null )
-					{
-					if( addItemToList( Constants.QUERY_ACTIVE_CHAR, grammarResult.createdGrammarItem ) == Constants.RESULT_OK )
+					if( currentGrammarItem.isIdentical( duplicateGrammarItem ) )
 						{
-						isNeededToCheckGrammar_ = true;
+						nextGrammarItem = currentGrammarItem.nextGrammarItem();
 
-						if( grammarResult.createdGrammarItem.isDefinitionStart() )
-							{
-							switch( grammarParameter )
-								{
-								case Constants.WORD_FEMININE_PROPER_NAME_ENDING:
-									firstFeminineProperNameEndingGrammarItem_ = grammarResult.createdGrammarItem;
-									break;
+						currentGrammarItem = ( nextGrammarItem != null &&
+												nextGrammarItem.hasCurrentCreationSentenceNr() ? nextGrammarItem : null );
 
-								case Constants.WORD_MASCULINE_PROPER_NAME_ENDING:
-									firstMasculineProperNameEndingGrammarItem_ = grammarResult.createdGrammarItem;
-									break;
+						nextGrammarItem = duplicateGrammarItem.nextGrammarItem();
 
-								case Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING:
-									firstFeminineSingularNounEndingGrammarItem_ = grammarResult.createdGrammarItem;
-									break;
-
-								case Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING:
-									firstMasculineSingularNounEndingGrammarItem_ = grammarResult.createdGrammarItem;
-									break;
-
-								case Constants.WORD_PLURAL_NOUN_ENDING:
-									firstPluralNounEndingGrammarItem_ = grammarResult.createdGrammarItem;
-									break;
-
-								case Constants.WORD_MERGED_WORD:
-									firstMergedWordGrammarItem_ = grammarResult.createdGrammarItem;
-									break;
-								}
-
-							if( grammarResult.createdGrammarItem.isGrammarStart() )
-								firstGrammarItem_ = grammarResult.createdGrammarItem;
-							}
+						duplicateGrammarItem = ( nextGrammarItem != null &&
+												nextGrammarItem.creationSentenceNr() == duplicateDefinitionGrammarItem.creationSentenceNr() ? nextGrammarItem : null );
 						}
 					else
-						addError( 1, null, "I failed to add an active grammar item" );
+						isIdentical = false;
 					}
-				else
-					startError( 1, null, "I failed to create a grammar item" );
+				while( isIdentical &&
+				currentGrammarItem != null &&
+				duplicateGrammarItem != null );
+
+				if( isIdentical &&
+				currentGrammarItem == null &&
+				duplicateGrammarItem == null )
+					return startError( 1, null, "I have found a duplicate grammar definition" );
 				}
-			else
-				startError( 1, null, "The current item number is undefined" );
+			while( ( duplicateDefinitionGrammarItem = duplicateDefinitionGrammarItem.nextDefinitionGrammarItem ) != null );
 			}
-		else
-			startError( 1, null, "The given collected word type number is undefined or out of bounds" );
 
-		grammarResult.result = CommonVariables.result;
-		return grammarResult;
-		}
-
-	protected GrammarResultType findGrammarItem( boolean ignoreValue, short grammarParameter, int grammarStringLength, String grammarString )
-		{
-		GrammarResultType grammarResult = new GrammarResultType();
-		GrammarItem searchItem = firstActiveGrammarItem();
-
-		if( grammarString != null )
-			{
-			while( CommonVariables.result == Constants.RESULT_OK &&
-			searchItem != null &&
-			grammarResult.foundGrammarItem == null )
-				{
-				if( searchItem.grammarString() != null )
-					{
-					if( searchItem.isDefinitionStart() &&
-
-					( ignoreValue ||
-					searchItem.grammarParameter() == grammarParameter ) &&
-
-					grammarStringLength == searchItem.grammarString().length() &&
-					grammarString.startsWith( searchItem.grammarString() ) )
-						grammarResult.foundGrammarItem = searchItem;
-					else
-						searchItem = searchItem.nextGrammarItem();
-					}
-				else
-					startError( 1, null, "I have found a grammar word without grammar string" );
-				}
-			}
-		else
-			startError( 1, null, "The given grammar string is undefined" );
-
-		grammarResult.result = CommonVariables.result;
-		return grammarResult;
+		return Constants.RESULT_OK;
 		}
 
 	protected byte checkGrammar()
@@ -443,81 +405,77 @@ class GrammarList extends List
 		GrammarItem currentGrammarItem;
 		WordItem currentLangugeWordItem = myWordItem();
 
-		if( ( currentGrammarItem = firstActiveGrammarItem() ) != null )
-			{
-			isNeededToCheckGrammar_ = false;
+		if( ( currentGrammarItem = firstActiveGrammarItem() ) == null )
+			return startError( 1, null, "I couldn't find any grammar item" );
 
-			do	{
-				if( currentGrammarItem.isDefinitionStart() )
+		isNeededToCheckGrammar_ = false;
+
+		do	{
+			if( currentGrammarItem.isDefinitionStart() )
+				{
+				if( currentGrammarItem.isNewStart() &&
+				currentGrammarItem.isUserDefinedWord() &&
+				( grammarWordTypeNr = currentGrammarItem.grammarWordTypeNr() ) <= currentWordTypeNr )
 					{
-					if( currentGrammarItem.isNewStart() &&
-					currentGrammarItem.isUserDefinedWord() &&
-					( grammarWordTypeNr = currentGrammarItem.grammarWordTypeNr() ) <= currentWordTypeNr )
+					if( grammarWordTypeNr < currentWordTypeNr )
 						{
-						if( grammarWordTypeNr < currentWordTypeNr )
+						if( grammarWordTypeNr + 1 == currentWordTypeNr )
 							{
-							if( grammarWordTypeNr + 1 == currentWordTypeNr )
-								{
-								if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_START, currentWordTypeNr, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_MIDDLE, currentLangugeWordItem.anyWordTypeString(), Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) == Constants.RESULT_OK )
-									currentWordTypeNr = grammarWordTypeNr;
-								else
-									return addError( 1, null, "I failed to write the 'grammar word type definition missing' interface notification" );
-								}
-							else
-								{
-								if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_START, ( grammarWordTypeNr + 1 ), Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_TO, currentWordTypeNr, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_MIDDLE, currentLangugeWordItem.anyWordTypeString(), Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) == Constants.RESULT_OK )
-									currentWordTypeNr = grammarWordTypeNr;
-								else
-									return addError( 1, null, "I failed to write the 'grammar word type definitions missing' interface notification" );
-								}
+							if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_START, currentWordTypeNr, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_MIDDLE, currentLangugeWordItem.anyWordTypeString(), Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) != Constants.RESULT_OK )
+								return addError( 1, null, "I failed to write the 'grammar word type definition missing' interface notification" );
+
+							currentWordTypeNr = grammarWordTypeNr;
 							}
+						else
+							{
+							if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_START, ( grammarWordTypeNr + 1 ), Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_TO, currentWordTypeNr, Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_MIDDLE, currentLangugeWordItem.anyWordTypeString(), Constants.INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) != Constants.RESULT_OK )
+								return addError( 1, null, "I failed to write the 'grammar word type definitions missing' interface notification" );
 
-						currentWordTypeNr--;
+							currentWordTypeNr = grammarWordTypeNr;
+							}
 						}
 
-					if( !currentGrammarItem.isGrammarItemInUse &&
-					!currentGrammarItem.isGrammarStart() &&
-					!currentGrammarItem.isUndefinedWord() &&
-					!currentGrammarItem.isUserDefinedWord() &&
-					!isWordEnding( currentGrammarItem.grammarParameter() ) )
-						{
-						if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_START, currentGrammarItem.grammarString(), Constants.INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_MIDDLE, currentLangugeWordItem.anyWordTypeString(), Constants.INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_END ) != Constants.RESULT_OK )
-							return addError( 1, null, "I failed to write the 'grammar definition is not used' interface notification" );
-						}
+					currentWordTypeNr--;
 					}
-				else
+
+				if( !currentGrammarItem.isGrammarItemInUse &&
+				!currentGrammarItem.isGrammarStart() &&
+				!currentGrammarItem.isUndefinedWord() &&
+				!currentGrammarItem.isUserDefinedWord() &&
+				!isWordEnding( currentGrammarItem.grammarParameter() ) )
 					{
-					if( currentGrammarItem.definitionGrammarItem == null )
-						return startError( 1, null, "Grammar word \"" + currentGrammarItem.grammarString() + "\" in " + currentLangugeWordItem.anyWordTypeString() + " is used, but not defined" );
+					if( Presentation.writeInterfaceText( Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_START, currentGrammarItem.grammarString(), Constants.INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_MIDDLE, currentLangugeWordItem.anyWordTypeString(), Constants.INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_END ) != Constants.RESULT_OK )
+						return addError( 1, null, "I failed to write the 'grammar definition is not used' interface notification" );
 					}
 				}
-			while( ( currentGrammarItem = currentGrammarItem.nextGrammarItem() ) != null );
+			else
+				{
+				if( currentGrammarItem.definitionGrammarItem == null )
+					return startError( 1, null, "Grammar word \"" + currentGrammarItem.grammarString() + "\" in " + currentLangugeWordItem.anyWordTypeString() + " is used, but not defined" );
+				}
 			}
-		else
-			return startError( 1, null, "I couldn't find any grammar item" );
+		while( ( currentGrammarItem = currentGrammarItem.nextGrammarItem() ) != null );
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte checkGrammarItemForUsage( GrammarItem unusedGrammarItem )
 		{
-		GrammarItem searchItem = firstActiveGrammarItem();
+		GrammarItem searchGrammarItem = firstActiveGrammarItem();
 
-		if( unusedGrammarItem != null )
-			{
-			while( searchItem != null )
-				{
-				if( searchItem.definitionGrammarItem == unusedGrammarItem )
-					return startError( 1, null, "The definition grammar item is still in use" );
-
-				if( searchItem.nextDefinitionGrammarItem == unusedGrammarItem )
-					return startError( 1, null, "The next definition grammar item is still in use" );
-
-				searchItem = searchItem.nextGrammarItem();
-				}
-			}
-		else
+		if( unusedGrammarItem == null )
 			return startError( 1, null, "The given unused grammar item is undefined" );
+
+		while( searchGrammarItem != null )
+			{
+			if( searchGrammarItem.definitionGrammarItem == unusedGrammarItem )
+				return startError( 1, null, "The definition grammar item is still in use" );
+
+			if( searchGrammarItem.nextDefinitionGrammarItem == unusedGrammarItem )
+				return startError( 1, null, "The next definition grammar item is still in use" );
+
+			searchGrammarItem = searchGrammarItem.nextGrammarItem();
+			}
 
 		return Constants.RESULT_OK;
 		}
@@ -529,40 +487,34 @@ class GrammarList extends List
 		GrammarItem currentGrammarItem;
 		GrammarItem definitionGrammarItem;
 
-		if( ( definitionGrammarItem = firstActiveGrammarItem() ) != null )
-			{
-			if( ( definitionGrammarString = definitionGrammarItem.grammarString() ) != null )
-				{
-				currentGrammarItem = definitionGrammarItem;
+		if( ( definitionGrammarItem = firstActiveGrammarItem() ) == null )
+			return startError( 1, null, "I couldn't find any grammar item" );
 
-				while( ( currentGrammarItem = currentGrammarItem.nextGrammarItem() ) != null )
+		if( ( definitionGrammarString = definitionGrammarItem.grammarString() ) == null )
+			return startError( 1, null, "The grammar string of the grammar definition word is undefined" );
+
+		currentGrammarItem = definitionGrammarItem;
+
+		while( ( currentGrammarItem = currentGrammarItem.nextGrammarItem() ) != null )
+			{
+			if( ( grammarString = currentGrammarItem.grammarString() ) == null )
+				return startError( 1, null, "The grammar string of the grammar definition word is undefined" );
+
+			if( currentGrammarItem.definitionGrammarItem == null )
+				{
+				if( !currentGrammarItem.isDefinitionStart() &&
+				definitionGrammarString.equals( grammarString ) )
 					{
-					if( ( grammarString = currentGrammarItem.grammarString() ) != null )
-						{
-						if( currentGrammarItem.definitionGrammarItem == null )
-							{
-							if( !currentGrammarItem.isDefinitionStart() &&
-							definitionGrammarString.equals( grammarString ) )
-								{
-								definitionGrammarItem.isGrammarItemInUse = true;
-								currentGrammarItem.definitionGrammarItem = definitionGrammarItem;
-								}
-							}
-						else
-							{
-							if( currentGrammarItem.definitionGrammarItem == definitionGrammarItem.nextDefinitionGrammarItem )
-								currentGrammarItem.definitionGrammarItem = definitionGrammarItem;
-							}
-						}
-					else
-						return startError( 1, null, "The grammar string of the grammar definition word is undefined" );
+					definitionGrammarItem.isGrammarItemInUse = true;
+					currentGrammarItem.definitionGrammarItem = definitionGrammarItem;
 					}
 				}
 			else
-				return startError( 1, null, "The grammar string of the grammar definition word is undefined" );
+				{
+				if( currentGrammarItem.definitionGrammarItem == definitionGrammarItem.nextDefinitionGrammarItem )
+					currentGrammarItem.definitionGrammarItem = definitionGrammarItem;
+				}
 			}
-		else
-			return startError( 1, null, "I couldn't find any grammar item" );
 
 		return Constants.RESULT_OK;
 		}
@@ -576,65 +528,57 @@ class GrammarList extends List
 		GrammarItem searchMergedWordGrammarItem;
 		GrammarItem expandMergedWordGrammarItem = firstMergedWordGrammarItem_;
 
-		if( readUserSentenceStringBuffer != null )
-			{
-			CommonVariables.readUserSentenceStringBuffer = readUserSentenceStringBuffer;
+		if( readUserSentenceStringBuffer == null )
+			return startError( 1, null, "The given read user sentence string buffer is undefined" );
 
-			if( ( readUserSentenceStringBufferLength = readUserSentenceStringBuffer.length() ) > 0 )
+		CommonVariables.readUserSentenceStringBuffer = readUserSentenceStringBuffer;
+
+		if( ( readUserSentenceStringBufferLength = readUserSentenceStringBuffer.length() ) == 0 )
+			return startError( 1, null, "The given read user sentence string buffer is empty" );
+
+		if( expandMergedWordGrammarItem == null )
+			return startError( 1, null, "No grammar compound word definition was found" );
+
+		do	{
+			if( expandMergedWordGrammarItem.isDefinitionStart() )
 				{
-				if( expandMergedWordGrammarItem != null )
+				if( ( searchMergedWordGrammarItem = expandMergedWordGrammarItem.nextDefinitionGrammarItem ) == null )
+					return startError( 1, null, "I have found a compound word definition without replacing compound word definition" );
+
+				previousPosition = 0;
+				startPosition = 0;
+
+				while( startPosition < readUserSentenceStringBufferLength &&
+				( offset = readUserSentenceStringBuffer.substring( startPosition ).indexOf( searchMergedWordGrammarItem.grammarString() ) ) >= 0 )
 					{
-					do	{
-						if( expandMergedWordGrammarItem.isDefinitionStart() )
+					startPosition += offset;
+
+					// First position,
+					if( startPosition == 0 ||
+
+					( startPosition > 0 &&
+					// or is preceded by a space character
+					Character.isWhitespace( readUserSentenceStringBuffer.charAt( startPosition - 1 ) ) ) )
+						{
+						if( isText( offset, readUserSentenceStringBuffer.substring( previousPosition ) ) )
+							// Skip match in text string
+							startPosition++;
+						else
 							{
-							if( ( searchMergedWordGrammarItem = expandMergedWordGrammarItem.nextDefinitionGrammarItem ) != null )
-								{
-								previousPosition = 0;
-								startPosition = 0;
+							previousPosition = startPosition;
+							CommonVariables.readUserSentenceStringBuffer = new StringBuffer( readUserSentenceStringBuffer.substring( 0, startPosition ) + expandMergedWordGrammarItem.grammarString() + readUserSentenceStringBuffer.substring( startPosition + searchMergedWordGrammarItem.grammarString().length() ) );
 
-								while( startPosition < readUserSentenceStringBufferLength &&
-								( offset = readUserSentenceStringBuffer.substring( startPosition ).indexOf( searchMergedWordGrammarItem.grammarString() ) ) >= 0 )
-									{
-									startPosition += offset;
-
-									// First position,
-									if( startPosition == 0 ||
-
-									( startPosition > 0 &&
-									// or is preceded by a space character
-									Character.isWhitespace( readUserSentenceStringBuffer.charAt( startPosition - 1 ) ) ) )
-										{
-										if( isText( offset, readUserSentenceStringBuffer.substring( previousPosition ) ) )
-											// Skip match in text string
-											startPosition++;
-										else
-											{
-											previousPosition = startPosition;
-											CommonVariables.readUserSentenceStringBuffer = new StringBuffer( readUserSentenceStringBuffer.substring( 0, startPosition ) + expandMergedWordGrammarItem.grammarString() + readUserSentenceStringBuffer.substring( startPosition + searchMergedWordGrammarItem.grammarString().length() ) );
-
-											readUserSentenceStringBuffer = CommonVariables.readUserSentenceStringBuffer;
-											readUserSentenceStringBufferLength = readUserSentenceStringBuffer.length();
-											}
-										}
-									else
-										// Skip match halfway word
-										startPosition++;
-									}
-								}
-							else
-								return startError( 1, null, "I found a compound word definition without replacing compound word definition" );
+							readUserSentenceStringBuffer = CommonVariables.readUserSentenceStringBuffer;
+							readUserSentenceStringBufferLength = readUserSentenceStringBuffer.length();
 							}
 						}
-					while( ( expandMergedWordGrammarItem = expandMergedWordGrammarItem.nextWordEndingGrammarItem() ) != null );
+					else
+						// Skip match halfway word
+						startPosition++;
 					}
-				else
-					return startError( 1, null, "No grammar compound word definition was found" );
 				}
-			else
-				return startError( 1, null, "The given read user sentence string buffer is empty" );
 			}
-		else
-			return startError( 1, null, "The given read user sentence string buffer is undefined" );
+		while( ( expandMergedWordGrammarItem = expandMergedWordGrammarItem.nextWordEndingGrammarItem() ) != null );
 
 		return Constants.RESULT_OK;
 		}
@@ -649,77 +593,71 @@ class GrammarList extends List
 		GrammarItem shrinkMergedWordGrammarItem;
 		GrammarItem searchMergedWordGrammarItem = firstMergedWordGrammarItem_;
 
-		if( writtenSentenceStringBuffer != null &&
-		( writtenSentenceStringBufferLength = writtenSentenceStringBuffer.length() ) > 0 )
-			{
-			if( searchMergedWordGrammarItem != null )
-				{
-				do	{
-					if( searchMergedWordGrammarItem.isDefinitionStart() )
-						{
-						if( ( shrinkMergedWordGrammarItem = searchMergedWordGrammarItem.nextDefinitionGrammarItem ) != null )
-							{
-							previousPosition = 0;
-							startPosition = 0;
-
-							// Search for compound word
-							while( startPosition < writtenSentenceStringBufferLength &&
-							( offset = writtenSentenceStringBuffer.substring( startPosition ).indexOf( searchMergedWordGrammarItem.grammarString() ) ) >= 0 )
-								{
-								startPosition += offset;
-
-								// First position,
-								if( startPosition == 0 ||
-
-								( startPosition > 0 &&
-								// or is preceded by a space character
-								Character.isWhitespace( writtenSentenceStringBuffer.charAt( startPosition - 1 ) ) ) )
-									{
-									if( isText( offset, writtenSentenceStringBuffer.substring( previousPosition ) ) )
-										// Skip match in text string
-										startPosition++;
-									else
-										{
-										previousPosition = startPosition;
-										CommonVariables.writtenSentenceStringBuffer = new StringBuffer( writtenSentenceStringBuffer.substring( 0, startPosition ) + shrinkMergedWordGrammarItem.grammarString() + writtenSentenceStringBuffer.substring( startPosition + searchMergedWordGrammarItem.grammarString().length() ) );
-
-										writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer;
-										writtenSentenceStringBufferLength = writtenSentenceStringBuffer.length();
-										}
-									}
-								else
-									// Skip match halfway word
-									startPosition++;
-								}
-							}
-						else
-							return startError( 1, null, "I found a compound word definition without replacing compound word definition" );
-						}
-					}
-				while( ( searchMergedWordGrammarItem = searchMergedWordGrammarItem.nextWordEndingGrammarItem() ) != null );
-				}
-			else
-				return startError( 1, null, "No grammar compound word definition was found" );
-			}
-		else
+		if( writtenSentenceStringBuffer == null ||
+		( writtenSentenceStringBufferLength = writtenSentenceStringBuffer.length() ) == 0 )
 			return startError( 1, null, "The write sentence string buffer is empty" );
+
+		if( searchMergedWordGrammarItem == null )
+			return startError( 1, null, "No grammar compound word definition was found" );
+
+		do	{
+			if( searchMergedWordGrammarItem.isDefinitionStart() )
+				{
+				if( ( shrinkMergedWordGrammarItem = searchMergedWordGrammarItem.nextDefinitionGrammarItem ) == null )
+					return startError( 1, null, "I have found a compound word definition without replacing compound word definition" );
+
+				previousPosition = 0;
+				startPosition = 0;
+
+				// Search for compound word
+				while( startPosition < writtenSentenceStringBufferLength &&
+				( offset = writtenSentenceStringBuffer.substring( startPosition ).indexOf( searchMergedWordGrammarItem.grammarString() ) ) >= 0 )
+					{
+					startPosition += offset;
+
+					// First position,
+					if( startPosition == 0 ||
+
+					( startPosition > 0 &&
+					// or is preceded by a space character
+					Character.isWhitespace( writtenSentenceStringBuffer.charAt( startPosition - 1 ) ) ) )
+						{
+						if( isText( offset, writtenSentenceStringBuffer.substring( previousPosition ) ) )
+							// Skip match in text string
+							startPosition++;
+						else
+							{
+							previousPosition = startPosition;
+							CommonVariables.writtenSentenceStringBuffer = new StringBuffer( writtenSentenceStringBuffer.substring( 0, startPosition ) + shrinkMergedWordGrammarItem.grammarString() + writtenSentenceStringBuffer.substring( startPosition + searchMergedWordGrammarItem.grammarString().length() ) );
+
+							writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer;
+							writtenSentenceStringBufferLength = writtenSentenceStringBuffer.length();
+							}
+						}
+					else
+						// Skip match halfway word
+						startPosition++;
+					}
+				}
+			}
+		while( ( searchMergedWordGrammarItem = searchMergedWordGrammarItem.nextWordEndingGrammarItem() ) != null );
 
 		return Constants.RESULT_OK;
 		}
 /*
 	protected byte storeChangesInFutureDatabase()
 		{
-		GrammarItem searchItem = firstActiveGrammarItem();
+		GrammarItem searchGrammarItem = firstActiveGrammarItem();
 
-		while( searchItem != null )
+		while( searchGrammarItem != null )
 			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
+			if( searchGrammarItem.hasCurrentCreationSentenceNr() )
 				{
-				if( searchItem.storeGrammarItemInFutureDatabase() != Constants.RESULT_OK )
+				if( searchGrammarItem.storeGrammarItemInFutureDatabase() != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to store a grammar item in the database" );
 				}
 
-			searchItem = searchItem.nextGrammarItem();
+			searchGrammarItem = searchGrammarItem.nextGrammarItem();
 			}
 
 		return Constants.RESULT_OK;
@@ -730,19 +668,34 @@ class GrammarList extends List
 		return firstGrammarItem_;
 		}
 
+	protected String guideByGrammarString( GrammarItem startGrammarItem )
+		{
+		GrammarItem searchGrammarItem = startGrammarItem;
+
+		while( searchGrammarItem != null &&
+		searchGrammarItem.nextDefinitionGrammarItem != null )
+			searchGrammarItem = searchGrammarItem.nextDefinitionGrammarItem;
+
+		if( searchGrammarItem != null &&
+		searchGrammarItem.guideByGrammarString != null )
+			return searchGrammarItem.guideByGrammarString;
+
+		return null;
+		}
+
 	protected String grammarStringInList( short wordTypeNr )
 		{
-		GrammarItem searchItem = firstActiveGrammarItem();
+		GrammarItem searchGrammarItem = firstActiveGrammarItem();
 
-		while( searchItem != null )
+		while( searchGrammarItem != null )
 			{
-			if( searchItem.isDefinitionStart() &&
-			searchItem.isNewStart() &&
-			searchItem.isUserDefinedWord() &&
-			searchItem.grammarWordTypeNr() == wordTypeNr )
-				return searchItem.grammarString();
+			if( searchGrammarItem.isDefinitionStart() &&
+			searchGrammarItem.isNewStart() &&
+			searchGrammarItem.isUserDefinedWord() &&
+			searchGrammarItem.grammarWordTypeNr() == wordTypeNr )
+				return searchGrammarItem.grammarString();
 
-			searchItem = searchItem.nextGrammarItem();
+			searchGrammarItem = searchGrammarItem.nextGrammarItem();
 			}
 
 		return null;

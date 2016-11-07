@@ -1,7 +1,7 @@
 /*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,7 +23,7 @@
 
 class ReadItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private short wordOrderNr_;
 	private short wordParameter_;
@@ -32,30 +32,29 @@ class ReadItem extends Item
 	private WordItem readWordItem_;
 
 
-	// Protected constructible variables
+	// Protected constructed variables
 
 	protected boolean hasWordPassedIntegrityCheckOfStoredUserSentence;
 	protected boolean isMarkedBySetGrammarParameter;
-	protected boolean isUnusedReadItem;
 
 	protected short grammarParameter;
 
 	protected GrammarItem definitionGrammarItem;
 
 
-	// Protected loadable variables
+	// Protected initialized variables
 
 	protected String readString;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected ReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String _readString, WordItem readWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
 
-		// Private loadable variables
+		// Private initialized variables
 
 		wordOrderNr_ = wordOrderNr;
 		wordParameter_ = wordParameter;
@@ -64,18 +63,17 @@ class ReadItem extends Item
 		readWordItem_ = readWordItem;
 
 
-		// Protected constructible variables
+		// Protected constructed variables
 
 		hasWordPassedIntegrityCheckOfStoredUserSentence = false;
 		isMarkedBySetGrammarParameter = false;
-		isUnusedReadItem = false;
 
 		grammarParameter = Constants.NO_GRAMMAR_PARAMETER;
 
 		definitionGrammarItem = null;
 
 
-		// Protected loadable variables
+		// Protected initialized variables
 
 		if( _readString != null )
 			readString = _readString.substring( 0, readStringLength );
@@ -84,7 +82,7 @@ class ReadItem extends Item
 
 	// Protected virtual methods
 
-	protected void showString( boolean isReturnQueryToPosition )
+	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -94,7 +92,7 @@ class ReadItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
@@ -103,7 +101,7 @@ class ReadItem extends Item
 			}
 		}
 
-	protected void showWordReferences( boolean isReturnQueryToPosition )
+	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		String wordString;
 
@@ -116,7 +114,7 @@ class ReadItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
@@ -125,7 +123,7 @@ class ReadItem extends Item
 			}
 		}
 
-	protected boolean hasFoundParameter( int queryParameter )
+	protected boolean hasParameter( int queryParameter )
 		{
 		return ( grammarParameter == queryParameter ||
 				wordOrderNr_ == queryParameter ||
@@ -138,7 +136,7 @@ class ReadItem extends Item
 				wordParameter_ > Constants.NO_WORD_PARAMETER ) ) );
 		}
 
-	protected boolean hasFoundReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( ( readWordItem_ == null ? false :
 					( querySentenceNr == Constants.NO_SENTENCE_NR ? true : readWordItem_.creationSentenceNr() == querySentenceNr ) &&
@@ -149,7 +147,7 @@ class ReadItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : definitionGrammarItem.itemNr() == queryItemNr ) ) );
 		}
 
-	protected boolean hasFoundWordType( short queryWordTypeNr )
+	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( wordTypeNr_ == queryWordTypeNr );
 		}
@@ -169,32 +167,17 @@ class ReadItem extends Item
 				wordTypeNr_ > nextSortReadItem.wordTypeNr_ ) ) );
 		}
 
-	protected ReferenceResultType findMatchingWordReferenceString( String queryString )
+	protected StringResultType findMatchingWordReferenceString( String queryString )
 		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
+		StringResultType stringResult = new StringResultType();
 
 		if( readWordItem_ != null )
 			{
-			if( ( referenceResult = readWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				addError( 1, null, "I failed to find the word reference for the word reference query" );
+			if( ( stringResult = readWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+				return addStringResultError( 1, null, "I failed to find the word reference for the word reference query" );
 			}
 
-		return referenceResult;
-		}
-
-	protected ReferenceResultType findWordReference( WordItem referenceWordItem )
-		{
-		ReferenceResultType referenceResult = new ReferenceResultType();
-
-		if( referenceWordItem != null )
-			{
-			if( readWordItem_ == referenceWordItem )
-				referenceResult.hasFoundWordReference = true;
-			}
-		else
-			startError( 1, null, "The given reference word is undefined" );
-
-		return referenceResult;
+		return stringResult;
 		}
 
 	protected String itemString()
@@ -214,9 +197,6 @@ class ReadItem extends Item
 			CommonVariables.queryStringBuffer = new StringBuffer();
 
 		queryStringBuffer = CommonVariables.queryStringBuffer;
-
-		if( isUnusedReadItem )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUnusedReadItem" );
 
 		if( hasWordPassedIntegrityCheckOfStoredUserSentence )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasWordPassedIntegrityCheckOfStoredUserSentence" );
@@ -257,17 +237,17 @@ class ReadItem extends Item
 
 	protected boolean hasFoundRelationWordInThisList( WordItem relationWordItem )
 		{
-		ReadItem searchItem = this;
+		ReadItem searchReadItem = this;
 
 		if( relationWordItem != null )
 			{
-			while( searchItem != null )
+			while( searchReadItem != null )
 				{
-				if( searchItem.isRelationWord() &&
-				searchItem.readWordItem() == relationWordItem )
+				if( searchReadItem.isRelationWord() &&
+				searchReadItem.readWordItem() == relationWordItem )
 					return true;
 
-				searchItem = searchItem.nextReadItem();
+				searchReadItem = searchReadItem.nextReadItem();
 				}
 			}
 
@@ -294,19 +274,14 @@ class ReadItem extends Item
 		return ( wordTypeNr_ == Constants.WORD_TYPE_ARTICLE );
 		}
 
-	protected boolean isSingularOrPluralNounWordType()
+	protected boolean isNoun()
 		{
-		return isSingularOrPluralNoun( wordTypeNr_ );
+		return isNounWordType( wordTypeNr_ );
 		}
 
 	protected boolean isSingularNoun()
 		{
 		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR );
-		}
-
-	protected boolean isPluralNoun()
-		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
 	protected boolean isMatchingReadWordTypeNr( short wordTypeNr )
@@ -461,11 +436,6 @@ class ReadItem extends Item
 		return ( grammarParameter == Constants.GRAMMAR_SELECTION );
 		}
 
-	protected boolean isImperative()
-		{
-		return ( grammarParameter == Constants.GRAMMAR_IMPERATIVE );
-		}
-
 	protected boolean isGeneralizationWord()
 		{
 		return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_WORD );
@@ -510,14 +480,11 @@ class ReadItem extends Item
 
 	protected byte changeReadWord( short newWordTypeNr, WordItem newReadWordItem )
 		{
-
-		if( newReadWordItem != null )
-			{
-			wordTypeNr_ = newWordTypeNr;
-			readWordItem_ = newReadWordItem;
-			}
-		else
+		if( newReadWordItem == null )
 			return startError( 1, null, "The given new read word item is undefined" );
+
+		wordTypeNr_ = newWordTypeNr;
+		readWordItem_ = newReadWordItem;
 
 		return Constants.RESULT_OK;
 		}
@@ -532,14 +499,14 @@ class ReadItem extends Item
 
 	protected ReadItem firstRelationWordReadItem()
 		{
-		ReadItem searchItem = this;
+		ReadItem searchReadItem = this;
 
-		while( searchItem != null )
+		while( searchReadItem != null )
 			{
-			if( searchItem.isRelationWord() )
-				return searchItem;
+			if( searchReadItem.isRelationWord() )
+				return searchReadItem;
 
-			searchItem = searchItem.nextReadItem();
+			searchReadItem = searchReadItem.nextReadItem();
 			}
 
 		return null;

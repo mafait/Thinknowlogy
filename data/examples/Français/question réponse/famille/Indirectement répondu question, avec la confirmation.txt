@@ -1,5 +1,16 @@
-﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
-Laurent a une mère, appelée Amélie.
-Laurent est un homme.
-Laurent est un fils.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrez.».
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Pascal a une mère, appelée Amélie.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Pascal est un homme.
+Affichez le rapport de justification sur Pascal.
+Pascal est un fils.
+Affichez le rapport de justification sur Pascal.
+# Extra checks
+Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Julien.
+Affichez le rapport de justification sur Lorraine.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

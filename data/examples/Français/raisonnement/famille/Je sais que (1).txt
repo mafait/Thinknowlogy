@@ -1,0 +1,15 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Olivier est un parent.
+Patrique est un parent.
+Julien est un enfant de Olivier.
+Amélie est la mère de Pascal.
+Amélie est une mère.
+Guillaume était le père de Armand.
+
+Olivier est un parent.
+Patrique est un parent.
+Julien est un enfant de Olivier.
+Amélie est la mère de Pascal.
+Amélie est une mère.
+Guillaume était le père de Armand.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

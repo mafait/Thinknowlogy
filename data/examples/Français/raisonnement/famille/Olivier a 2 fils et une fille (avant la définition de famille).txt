@@ -1,0 +1,4 @@
+﻿Olivier a 2 fils et une fille.
+Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Affichez information sur Olivier.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

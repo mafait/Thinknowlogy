@@ -1,0 +1,35 @@
+﻿Affichez "------------------------------------------------------------------------------".
+#C++#Affichez " \~{languageName}\t\t\t\t\t* Changer la langue".
+#C++#Affichez " Lirez le fichier \"Français/ambiguïté/Boston\".\t\t* Ambiguïté détection".
+#C++#Affichez " Lirez le fichier \"Français/ambiguïté/Présidents des États-Unis\". * Ambiguïté".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Puissance 4\".\t* Jeu Puissance 4".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Voeux\".\t\t* Voeux (salut)".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Tours de Hanoï\".\t * Un puzzle".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/définition de famille\". * Raisonnement".
+#Java#Affichez " Bouton <ambiguïté> utiliser pour en apprendre davantage sur la détection d'ambiguïté.".
+#Java#Affichez " Bouton <programmation> utiliser pour apprendre la programmation en langage naturel.".
+#Java#Affichez " Bouton <raisonnement> utiliser pour en apprendre davantage sur le raisonnement en langage naturel.".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Des exemples de phrases impératives disponibles:".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Lirez le fichier \"{nom de fichier}\".\t* Lire un fichier".
+Affichez " Aide.\t\t\t\t\t* Afficher cette information d'aide".
+Affichez " Annuler.\t\t\t\t* Annuler la dernière phrase".
+Affichez " Refaire.\t\t\t\t* Refaire une peine annulée".
+Affichez " Videz votre esprit.\t\t\t* Oublier connaissances précédente".
+Affichez " Redémarrer.\t\t\t\t* Redémarrez ce programme".
+Affichez " Affichez des informations sur les langues.".
+Affichez " Affichez des informations sur les listes.".
+Affichez " Affichez des informations sur les types de mots.".
+Affichez " Affichez les commandes de requête.".
+Affichez " Affichez le droit d'auteur.".
+Affichez " Affichez la licence-GPLv2.".
+Affichez " Affichez la garantie.".
+Affichez "------------------------------------------------------------------------------".
+#C++#Affichez " Exemples fichiers:\t* dossier: Thinknowlogy2016r2/data/examples/Français/utilisateur/".
+#Java#Affichez " Exemples fichiers:\t* Utilisez le bouton <exemples> ou voir le".
+#Java#Affichez "\t\t\t  dossier: Thinknowlogy2016r2/data/examples/Français/utilisateur/".
+Affichez " Fondamental:\t\t* dossier: Thinknowlogy2016r2/documents/".
+Affichez " Projet:\t\t* dossier: Thinknowlogy2016r2/documents/design/".
+Affichez " Captures d'écran:\t* dossier: Thinknowlogy2016r2/screenshots/Français/".
+Affichez "------------------------------------------------------------------------------".

@@ -4,8 +4,8 @@
 < 
 * 
 * Mes hypothèses:
-< Un parent est probablement une personne.
 < Un père est probablement une personne.
+< Un parent est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -16,8 +16,8 @@
 < 
 * 
 * Mes hypothèses:
-< Un enfant est probablement une personne.
 < Un fils est probablement une personne.
+< Un enfant est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -36,11 +36,29 @@
 * Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
 * 
 * 
+* Mes hypothèses:
+< Olivier est probablement une mère. En raison:
+<	- Est Olivier la mère de Pascal?
+< Olivier est probablement une femme. En raison:
+<	- Olivier est probablement une mère.
+<	- Chaque mère est une femme.
+< Olivier est possible une personne. En raison:
+<	- Chaque personne est un homme ou une femme.
+<	- Olivier est probablement une femme.
+* 	et:
+<	- Olivier est probablement une mère.
+<	- Une mère est probablement une personne.
+< Olivier n'est peut-être pas un homme. En raison:
+<	- Olivier est possible une personne.
+<	- Chaque personne est un homme ou une femme.
+<	- Olivier est probablement une femme.
+< 
+* 
 * Mes hypothèses antérieures qui sont corrigés par une question suggestive opposée:
 < Olivier est probablement une mère.
 * 
 * Vous aviez une question similaire avant:
-< Est Olivier la mère de Laurent?
+< Est Olivier la mère de Pascal?
 * 
 * Mes hypothèses antérieures qui sont corrigés par une question suggestive opposée:
 < Olivier est probablement une femme.
@@ -55,3 +73,25 @@
 * 
 * Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
 * 
+* 
+* Mes hypothèses:
+< Olivier est probablement une personne. En raison:
+<	- Est Olivier une mère ou un père?
+<	- Une mère est probablement une personne.
+<	- Un père est probablement une personne.
+* 
+* Mes questions:
+< Est Olivier une femme ou un homme? En raison:
+<	- Olivier est probablement une personne.
+<	- Chaque personne est un homme ou une femme.
+* 	et:
+<	- Est Olivier la mère de Pascal?
+<	- Chaque mère est une femme.
+* 	et:
+<	- Est Olivier le père de Pascal?
+<	- Chaque père est un homme.
+< Est Olivier une mère ou un père? En raison:
+<	- Est Olivier le père de Pascal?
+* 	et:
+<	- Est Olivier la mère de Pascal?
+< 

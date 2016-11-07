@@ -1,0 +1,5 @@
+﻿Whales, dogs and cats are mammals.
+Display information about mammals.
+Fathers and mothers are parents.
+Display information about parents.
+# To continue, click button «Clear your mind.» or «Restart.».

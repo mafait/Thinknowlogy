@@ -1,0 +1,6 @@
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+Dominique est une personne.
+Affichez le rapport de justification sur Dominique.
+Amélie est une personne.
+Affichez le rapport de justification sur Amélie.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

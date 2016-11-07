@@ -1,0 +1,7 @@
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+Paul is een zoon van Jan en Anna.
+Is Paul een man?
+Is Paul een woman?
+Is Paul een man of een vrouw?
+Paul is geen vrouw.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

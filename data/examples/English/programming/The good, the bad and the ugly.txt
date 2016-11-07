@@ -1,0 +1,8 @@
+﻿Add the good, the bad and the ugly to the movies.
+Add Good, Bad and Ugly to Movies.
+Move the head of the movies to the genres.
+Move the tail of the movies to the genres.
+Move Bad from Movies to Genres.
+Remove the head from the genres.
+Move the head to the best.
+# To continue, click button «Clear your mind.» or «Restart.».

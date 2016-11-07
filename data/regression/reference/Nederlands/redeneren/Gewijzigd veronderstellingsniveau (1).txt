@@ -1,0 +1,30 @@
+﻿* 
+* Mijn conclusies:
+< Paul heeft een vader, genaamd Jan.
+< 
+* 
+* Mijn veronderstellingen:
+< Paul heeft mogelijk een vader, genaamd Jan.
+< 
+* 
+* Mijn veronderstellingen:
+< Paul heeft mogelijk een vader, genaamd Jan. Omdat:
+<	- Jan is mogelijk de vader van Paul.
+< 
+* 
+* Mijn conclusies:
+< André heeft geen vader meer.
+< André had een vader, genaamd Sjors.
+< 
+* 
+* Mijn veronderstellingen:
+< André heeft mogelijk geen vader meer.
+< André had mogelijk een vader, genaamd Sjors.
+< 
+* 
+* Mijn veronderstellingen:
+< André heeft mogelijk geen vader meer. Omdat:
+<	- André had mogelijk een vader, genaamd Sjors.
+< André had mogelijk een vader, genaamd Sjors. Omdat:
+<	- Sjors was mogelijk de vader van André.
+< 

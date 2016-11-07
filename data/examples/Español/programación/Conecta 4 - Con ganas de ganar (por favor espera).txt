@@ -1,0 +1,10 @@
+﻿Leer el archivo "Español/usuario/programación/Conecta 4".
+Mi movimiento es D.
+Mi movimiento es D.
+Mi movimiento es D.
+Mi movimiento es D.
+Mi movimiento es D.
+Mi movimiento es E.
+Mi movimiento es F.
+Mi movimiento es A.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

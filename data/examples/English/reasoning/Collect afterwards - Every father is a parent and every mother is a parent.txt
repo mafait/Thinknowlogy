@@ -1,0 +1,7 @@
+﻿Every father is a parent and every mother is a parent.
+John is a father.
+Anna is a mother.
+A boy is probably a child and a girl is probably a child.
+Paul is a boy.
+Laura is a girl.
+# To continue, click button «Clear your mind.» or «Restart.».

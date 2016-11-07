@@ -4,8 +4,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een ouder is waarschijnlijk een persoon.
 < Een vader is waarschijnlijk een persoon.
+< Een ouder is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -16,8 +16,8 @@
 < 
 * 
 * Mijn veronderstellingen:
-< Een kind is waarschijnlijk een persoon.
 < Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -47,15 +47,103 @@
 < Anna is waarschijnlijk een ouder van Paul.
 < Anna is waarschijnlijk deel van een gezin.
 < Anna is mogelijk een persoon.
+< Anna is mogelijk een moeder van Paul.
 < Anna is mogelijk een vrouw.
 < Anna is misschien geen man.
-< Anna is mogelijk een moeder van Paul.
 < Anna is misschien geen vader.
 * 
 * Mijn vragen:
 < Is Paul een jongen of een man?
 < Is Jan een man of een vrouw?
 < Is Jan een vader of een moeder?
+< 
+* 
+* Mijn conclusies:
+< Jan heeft een zoon, genaamd Paul. Omdat:
+<	- Paul is een zoon van Jan en Anna.
+* 
+* Mijn veronderstellingen:
+< Jan heeft waarschijnlijk een kind, genaamd Paul. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+< Jan is waarschijnlijk een ouder van Paul. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Ieder kind is een zoon of een dochter.
+<	- Jan heeft een zoon, genaamd Paul.
+* 	en:
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+< Jan is waarschijnlijk deel van een gezin. Omdat:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Ouders zijn deel van ieder gezin.
+< Jan is mogelijk een persoon. Omdat:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Een ouder is waarschijnlijk een persoon.
+* 
+* Mijn vragen:
+< Is Jan een man of een vrouw? Omdat:
+<	- Jan is mogelijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Iedere ouder is een vrouw of een man.
+* 	en:
+<	- Is Jan een vader of een moeder?
+<	- Iedere moeder is een vrouw.
+<	- Iedere vader is een man.
+< Is Jan een vader of een moeder? Omdat:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Iedere ouder is een vader of een moeder.
+< 
+* 
+* Mijn veronderstellingen:
+< Paul is waarschijnlijk een persoon. Omdat:
+<	- Paul is een zoon van Jan en Anna.
+<	- Een zoon is waarschijnlijk een persoon.
+* 	en:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+<	- Een kind is waarschijnlijk een persoon.
+< Paul is waarschijnlijk een kind van Jan en Anna. Omdat:
+<	- Anna heeft waarschijnlijk een kind, genaamd Paul.
+<	- Jan heeft waarschijnlijk een kind, genaamd Paul.
+* 	en:
+<	- Ieder kind is een zoon of een dochter.
+<	- Paul is een zoon van Jan en Anna.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Anna is waarschijnlijk een ouder van Paul.
+< Paul is waarschijnlijk deel van een gezin. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+<	- Kinderen zijn deel van ieder gezin.
+< Paul is waarschijnlijk geen meisje en geen vrouw. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+<	- Ieder kind is een meisje, een vrouw, een jongen of een man.
+<	- Paul is een zoon van Jan en Anna.
+<	- Een zoon is een jongen of een man.
+< Paul is waarschijnlijk geen dochter. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+<	- Ieder kind is een zoon of een dochter.
+<	- Paul is een zoon van Jan en Anna.
+< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+* 	en:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Anna is waarschijnlijk een ouder van Paul.
+< Paul heeft mogelijk een moeder, genaamd Anna. Omdat:
+<	- Anna is mogelijk een moeder van Paul.
+* 	en:
+<	- Anna heeft een zoon, genaamd Paul.
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Iedere ouder is een vader of een moeder.
+<	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
+* 
+* Mijn vragen:
+< Is Paul een jongen of een man? Omdat:
+<	- Paul is een zoon van Jan en Anna.
+<	- Een zoon is een jongen of een man.
 < 
 * 
 * Uw vraag is specifieker dan mijn eerdere vraag:
@@ -73,6 +161,94 @@
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
 * 
+* Mijn conclusies:
+< Jan heeft een zoon, genaamd Paul. Omdat:
+<	- Paul is een zoon van Jan en Anna.
+* 
+* Mijn veronderstellingen:
+< Jan is waarschijnlijk een vader. Omdat:
+<	- Is Jan de vader van Paul?
+< Jan is waarschijnlijk een man. Omdat:
+<	- Jan is waarschijnlijk een vader.
+<	- Iedere vader is een man.
+< Jan is mogelijk een persoon. Omdat:
+<	- Jan is waarschijnlijk een vader.
+<	- Een vader is waarschijnlijk een persoon.
+* 	en:
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is waarschijnlijk een man.
+* 	en:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Een ouder is waarschijnlijk een persoon.
+< Jan is misschien geen vrouw. Omdat:
+<	- Jan is mogelijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+<	- Jan is waarschijnlijk een man.
+< Jan heeft waarschijnlijk een kind, genaamd Paul. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+< Jan is waarschijnlijk een ouder van Paul. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Ieder kind is een zoon of een dochter.
+<	- Jan heeft een zoon, genaamd Paul.
+* 	en:
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+< Jan is waarschijnlijk deel van een gezin. Omdat:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Ouders zijn deel van ieder gezin.
+< 
+* 
+* Mijn veronderstellingen:
+< Paul is waarschijnlijk een persoon. Omdat:
+<	- Paul is een zoon van Jan en Anna.
+<	- Een zoon is waarschijnlijk een persoon.
+* 	en:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+<	- Een kind is waarschijnlijk een persoon.
+< Paul is waarschijnlijk een kind van Jan en Anna. Omdat:
+<	- Anna heeft waarschijnlijk een kind, genaamd Paul.
+<	- Jan heeft waarschijnlijk een kind, genaamd Paul.
+* 	en:
+<	- Ieder kind is een zoon of een dochter.
+<	- Paul is een zoon van Jan en Anna.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Anna is waarschijnlijk een ouder van Paul.
+< Paul is waarschijnlijk deel van een gezin. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+<	- Kinderen zijn deel van ieder gezin.
+< Paul is waarschijnlijk geen meisje en geen vrouw. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+<	- Ieder kind is een meisje, een vrouw, een jongen of een man.
+<	- Paul is een zoon van Jan en Anna.
+<	- Een zoon is een jongen of een man.
+< Paul is waarschijnlijk geen dochter. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+<	- Ieder kind is een zoon of een dochter.
+<	- Paul is een zoon van Jan en Anna.
+< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+* 	en:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Anna is waarschijnlijk een ouder van Paul.
+< Paul heeft mogelijk een moeder, genaamd Anna. Omdat:
+<	- Anna is mogelijk een moeder van Paul.
+* 	en:
+<	- Anna heeft een zoon, genaamd Paul.
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Iedere ouder is een vader of een moeder.
+<	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
+* 
+* Mijn vragen:
+< Is Paul een jongen of een man? Omdat:
+<	- Paul is een zoon van Jan en Anna.
+<	- Een zoon is een jongen of een man.
+< 
+* 
 * Mijn veronderstellingen:
 < Sjors is waarschijnlijk een vader.
 < Sjors is waarschijnlijk een man.
@@ -81,3 +257,21 @@
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
+* 
+* Mijn veronderstellingen:
+< Sjors is waarschijnlijk een vader. Omdat:
+<	- Is Sjors de vader van André?
+< Sjors is waarschijnlijk een man. Omdat:
+<	- Sjors is waarschijnlijk een vader.
+<	- Iedere vader is een man.
+< Sjors is mogelijk een persoon. Omdat:
+<	- Iedere persoon is een man of een vrouw.
+<	- Sjors is waarschijnlijk een man.
+* 	en:
+<	- Sjors is waarschijnlijk een vader.
+<	- Een vader is waarschijnlijk een persoon.
+< Sjors is misschien geen vrouw. Omdat:
+<	- Sjors is mogelijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+<	- Sjors is waarschijnlijk een man.
+< 

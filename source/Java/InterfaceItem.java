@@ -1,8 +1,8 @@
 /*	Class:			InterfaceItem
  *	Parent class:	Item
- *	Purpose:		To store info about the interface messages
- *					in a certain language that can be shown to the user
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Purpose:		To store info about the user-interface messages
+ *					in the available languages
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,20 +24,20 @@
 
 class InterfaceItem extends Item
 	{
-	// Private loadable variables
+	// Private initialized variables
 
 	private short interfaceParameter_;
 
 	private String interfaceString_;
 
 
-	// Constructor / deconstructor
+	// Constructor
 
 	protected InterfaceItem( short interfaceParameter, int interfaceStringLength, String interfaceString, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		interfaceParameter_ = interfaceParameter;
 		interfaceString_ = null;
@@ -51,7 +51,7 @@ class InterfaceItem extends Item
 
 	// Protected virtual methods
 
-	protected void showString( boolean isReturnQueryToPosition )
+	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -61,7 +61,7 @@ class InterfaceItem extends Item
 			if( CommonVariables.hasFoundQuery )
 				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				CommonVariables.queryStringBuffer.append( statusChar() );
 
@@ -70,7 +70,7 @@ class InterfaceItem extends Item
 			}
 		}
 
-	protected boolean hasFoundParameter( int queryParameter )
+	protected boolean hasParameter( int queryParameter )
 		{
 		return ( interfaceParameter_ == queryParameter ||
 
@@ -97,6 +97,7 @@ class InterfaceItem extends Item
 		if( interfaceParameter_ > Constants.NO_INTERFACE_PARAMETER )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "interfaceParameter:" + interfaceParameter_ );
 
+		if( interfaceString_ != null )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "interfaceString:" + Constants.QUERY_STRING_START_CHAR + interfaceString_ + Constants.QUERY_STRING_END_CHAR );
 
 		return queryStringBuffer;

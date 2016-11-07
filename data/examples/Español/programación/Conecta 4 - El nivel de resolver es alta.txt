@@ -1,4 +1,4 @@
-﻿Leer el archivo "Español/programación/Conecta 4".
+﻿Leer el archivo "Español/usuario/programación/Conecta 4".
 El nivel de resolver es alta.
 Mi movimiento es D.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

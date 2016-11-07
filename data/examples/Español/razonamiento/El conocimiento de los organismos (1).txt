@@ -1,0 +1,55 @@
+﻿# Organismos
+Una criatura es un organismo.
+Un organismo es un animal, un hongo, un bienestar-humano, un microorganismo o una planta.
+
+# Animales
+Un animal es un vertebrado o un invertebrado.
+
+# Vertebrados
+Un vertebrado es un anfibio, un pájaro, un pez, un mamífero o un reptil.
+Cecilias, ranas, tritones, salamandras y sapos son anfibios.
+#XXXX Son aves.
+#XXXX Son peces.
+#XXXX Son mamíferos.
+#Los cocodrilos son reptiles.
+Cocodrilos son reptiles.
+
+# Invertebrados
+Un invertebrado es un anélido, un artrópodo, un equinodermo, un molusco o un protozoo.
+Cangrejos, arañas y insectos son artrópodos.
+
+Almejas, sepia, mejillones, nautilos, pulpos, ostras, caracoles y calamares son moluscos.
+Amoebas y flagelados son protozoos.
+
+# Mamíferos
+Un mamífero es un cetáceo, un marsupial, un primate o un roedor.
+Ballenas y delfines son cetáceos.
+
+#canguro
+#koala
+#zarigüeya
+#demonios de Tasmania
+#marsupial
+
+Canguros, koalas y zarigüeyas son marsupiales.
+Bonobos, chimpancés, gorilas y orangutanes son primates.
+
+Castores, hámsters, ratones, puercoespines, ratas y ardillas son roedores.
+
+# Artrópodos
+Arácnidos, crustáceos y insectos son artrópodos.
+Ácaros, garrapatas, escorpiones y arañas son arácnidos.
+Cangrejos, langostas y percebes son crustáceos.
+
+#Escarabajos, moscas, mariposas, polillas, libélulas, abejas, avispas y Mantis religiosas son insectos.
+Escarabajos, moscas, mariposas, polillas, libélulas, abejas, avispas y mantis-religiosas son insectos.
+
+# Seres humanos
+Un bienestar-humano es un vertebrado.
+#Mostrar el informe de justificación sobre bienestar-humano.
+Un bienestar-humano es un mamífero.
+#Mostrar el informe de justificación sobre bienestar-humano.
+Un bienestar-humano es un primate.
+#Mostrar el informe de justificación sobre bienestar-humano.
+Juan es un bienestar-humano.
+Mostrar el informe de justificación sobre Juan.

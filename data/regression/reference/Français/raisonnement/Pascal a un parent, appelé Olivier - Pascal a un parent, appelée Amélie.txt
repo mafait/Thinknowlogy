@@ -1,0 +1,19 @@
+﻿* 
+* Mes conclusions:
+< Olivier est un parent de Pascal.
+< 
+* 
+* Mes conclusions:
+< Amélie est un parent de Pascal.
+< 
+* 
+* Vos informations:
+< Pascal a 2 parent [pluriel de «parent» est inconnue], appelés Olivier et Amélie.
+* 
+* Informations connexes:
+< Amélie est un parent de Pascal.
+< Olivier est un parent de Pascal.
+< 
+* 
+* Vous avez entré le nom au pluriel «parents», qui était inconnu pour moi.
+* 

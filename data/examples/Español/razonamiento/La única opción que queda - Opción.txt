@@ -8,4 +8,5 @@ La opción no es 5.
 La opción no es 7.
 La opción no es 8.
 La opción no es 9.
+Mostrar el informe de justificación sobre la opción.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

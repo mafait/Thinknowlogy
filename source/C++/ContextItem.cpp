@@ -1,7 +1,7 @@
 /*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -33,7 +33,7 @@ class ContextItem : private Item
 	friend class WordItem;
 	friend class WordSpecification;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	bool isCompoundCollectionSpanishAmbiguous_;
 
@@ -46,13 +46,13 @@ class ContextItem : private Item
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	ContextItem( bool isCompoundCollectionSpanishAmbiguous, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ContextItem", commonVariables, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isCompoundCollectionSpanishAmbiguous_ = isCompoundCollectionSpanishAmbiguous;
 
@@ -67,7 +67,7 @@ class ContextItem : private Item
 
 	// Protected virtual functions
 
-	virtual void showWordReferences( bool isReturnQueryToPosition )
+	virtual void displayWordReferences( bool isReturnQueryToPosition )
 		{
 		char *wordString;
 
@@ -79,7 +79,7 @@ class ContextItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( commonVariables()->queryString, statusString );
 
@@ -88,7 +88,7 @@ class ContextItem : private Item
 			}
 		}
 
-	virtual bool hasFoundParameter( unsigned int queryParameter )
+	virtual bool hasParameter( unsigned int queryParameter )
 		{
 		return ( contextNr_ == queryParameter ||
 
@@ -96,31 +96,31 @@ class ContextItem : private Item
 				contextNr_ > NO_CONTEXT_NR ) );
 		}
 
-	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
+	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		return ( ( specificationWordItem_ == NULL ? false :
 					( querySentenceNr == NO_SENTENCE_NR ? true : specificationWordItem_->creationSentenceNr() == querySentenceNr ) &&
 					( queryItemNr == NO_ITEM_NR ? true : specificationWordItem_->itemNr() == queryItemNr ) ) );
 		}
 
-	virtual bool hasFoundWordType( unsigned short queryWordTypeNr )
+	virtual bool hasWordType( unsigned short queryWordTypeNr )
 		{
 		return ( contextWordTypeNr_ == queryWordTypeNr ||
 				specificationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	virtual ReferenceResultType findMatchingWordReferenceString( char *queryString )
+	virtual StringResultType findMatchingWordReferenceString( char *queryString )
 		{
-		ReferenceResultType referenceResult;
+		StringResultType stringResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
 
 		if( specificationWordItem_ != NULL )
 			{
-			if( ( referenceResult = specificationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addError( functionNameString, NULL, "I failed to find a matching word reference string for the specification word" );
+			if( ( stringResult = specificationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the specification word" );
 			}
 
-		return referenceResult;
+		return stringResult;
 		}
 
 	virtual char *toString( unsigned short queryWordTypeNr )
@@ -153,7 +153,7 @@ class ContextItem : private Item
 			strcat( queryString, tempString );
 			}
 
-		if( specificationWordTypeNr_ > WORD_TYPE_UNDEFINED )
+		if( specificationWordTypeNr_ > NO_WORD_TYPE_NR )
 			{
 			if( specificationWordTypeString == NULL )
 				sprintf( tempString, "%cspecificationWordType:%c%u", QUERY_SEPARATOR_CHAR, QUERY_WORD_TYPE_CHAR, specificationWordTypeNr_ );

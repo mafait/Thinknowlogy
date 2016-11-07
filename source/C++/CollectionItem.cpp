@@ -1,7 +1,7 @@
 /*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2016r1 (Huguenot)
+ *	Version:		Thinknowlogy 2016r2 (Restyle)
  *************************************************************************/
 /*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,7 +27,7 @@ class CollectionItem : private Item
 	{
 	friend class CollectionList;
 
-	// Private loadable variables
+	// Private initialized variables
 
 	bool isExclusiveSpecification_;
 
@@ -43,13 +43,13 @@ class CollectionItem : private Item
 
 
 	protected:
-	// Constructor / deconstructor
+	// Constructor
 
 	CollectionItem( bool isExclusiveSpecification, unsigned short collectionOrderNr, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "CollectionItem", commonVariables, myList, myWordItem );
 
-		// Private loadable variables
+		// Private initialized variables
 
 		isExclusiveSpecification_ = isExclusiveSpecification;
 
@@ -67,7 +67,7 @@ class CollectionItem : private Item
 
 	// Protected virtual functions
 
-	virtual void showWordReferences( bool isReturnQueryToPosition )
+	virtual void displayWordReferences( bool isReturnQueryToPosition )
 		{
 		char *queryString;
 		char *wordString;
@@ -82,7 +82,7 @@ class CollectionItem : private Item
 			if( commonVariables()->hasFoundQuery )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
@@ -97,7 +97,7 @@ class CollectionItem : private Item
 			strlen( queryString ) > 0 )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
@@ -112,7 +112,7 @@ class CollectionItem : private Item
 			strlen( queryString ) > 0 )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
-			// Show status if not active
+			// Display status if not active
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
@@ -121,7 +121,7 @@ class CollectionItem : private Item
 			}
 		}
 
-	virtual bool hasFoundParameter( unsigned int queryParameter )
+	virtual bool hasParameter( unsigned int queryParameter )
 		{
 		return ( collectionOrderNr_ == queryParameter ||
 				collectionNr_ == queryParameter ||
@@ -132,7 +132,7 @@ class CollectionItem : private Item
 				collectionNr_ > NO_COLLECTION_NR ) ) );
 		}
 
-	virtual bool hasFoundReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
+	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		return ( collectionWordItem_ == NULL ? false :
 					( querySentenceNr == NO_SENTENCE_NR ? true : collectionWordItem_->creationSentenceNr() == querySentenceNr ) &&
@@ -147,39 +147,38 @@ class CollectionItem : private Item
 					( queryItemNr == NO_ITEM_NR ? true : compoundGeneralizationWordItem_->itemNr() == queryItemNr ) );
 		}
 
-	virtual bool hasFoundWordType( unsigned short queryWordTypeNr )
+	virtual bool hasWordType( unsigned short queryWordTypeNr )
 		{
 		return ( collectionWordTypeNr_ == queryWordTypeNr ||
 				commonWordTypeNr_ == queryWordTypeNr );
 		}
 
-	virtual ReferenceResultType findMatchingWordReferenceString( char *queryString )
+	virtual StringResultType findMatchingWordReferenceString( char *queryString )
 		{
-		ReferenceResultType referenceResult;
+		StringResultType stringResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
 
 		if( collectionWordItem_ != NULL )
 			{
-			if( ( referenceResult = collectionWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addError( functionNameString, NULL, "I failed to find a matching word reference string for the collected word item" );
+			if( ( stringResult = collectionWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the collected word item" );
 			}
 
-		if( commonVariables()->result == RESULT_OK &&
+		if( !stringResult.hasFoundMatchingStrings &&
 		commonWordItem_ != NULL )
 			{
-			if( ( referenceResult = commonWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addError( functionNameString, NULL, "I failed to find a matching word reference string for the common word item" );
+			if( ( stringResult = commonWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the common word item" );
 			}
 
-		if( commonVariables()->result == RESULT_OK &&
+		if( !stringResult.hasFoundMatchingStrings &&
 		compoundGeneralizationWordItem_ != NULL )
 			{
-			if( ( referenceResult = compoundGeneralizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				addError( functionNameString, NULL, "I failed to find a matching word reference string for the compound word item" );
+			if( ( stringResult = compoundGeneralizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the compound word item" );
 			}
 
-		referenceResult.result = commonVariables()->result;
-		return referenceResult;
+		return stringResult;
 		}
 
 	virtual char *toString( unsigned short queryWordTypeNr )
