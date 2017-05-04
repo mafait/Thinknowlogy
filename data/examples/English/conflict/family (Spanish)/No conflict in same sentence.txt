@@ -1,5 +1,0 @@
-﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
-John is a father and Anna is a mother.
-Display the justification report about John.
-Display the justification report about Anna.
-# To continue, click button «Clear your mind.» or «Restart.».

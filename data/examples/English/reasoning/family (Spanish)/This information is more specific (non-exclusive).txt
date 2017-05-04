@@ -1,6 +1,0 @@
-﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
-Addison is a father or a mother.
-Display the justification report about Addison.
-Addison is a father.
-Display the justification report about Addison.
-# To continue, click button «Clear your mind.» or «Restart.».

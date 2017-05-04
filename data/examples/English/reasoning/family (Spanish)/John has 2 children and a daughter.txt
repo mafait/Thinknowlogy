@@ -1,5 +1,0 @@
-﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
-John has 2 children and a daughter.
-Display the justification report about John.
-Display information about John.
-# To continue, click button «Clear your mind.» or «Restart.».

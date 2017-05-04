@@ -1,7 +1,0 @@
-﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
-Laura has a father, called John.
-John is the father and Anna is the mother of Paul, Joe and Laura.
-Laura has a mother, called Anna.
-Paul is a boy.
-Anna is the mother of Paul, Joe and Laura.
-# To continue, click button «Clear your mind.» or «Restart.».

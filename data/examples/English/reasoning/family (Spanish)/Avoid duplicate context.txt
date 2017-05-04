@@ -1,5 +1,0 @@
-﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
-John is the father and Anna is the mother of Paul, Joe and Laura.
-Joe is a child of John and Anna.
-Joe has 2 fathers, called John and Anna.
-# To continue, click button «Clear your mind.» or «Restart.».

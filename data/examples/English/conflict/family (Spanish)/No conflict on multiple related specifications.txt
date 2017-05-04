@@ -1,4 +1,0 @@
-﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
-John is a father and a child.
-Display the justification report about John.
-# To continue, click button «Clear your mind.» or «Restart.».

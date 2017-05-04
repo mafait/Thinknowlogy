@@ -1,5 +1,0 @@
-﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
-Laura has 2 fathers, called John and Anna.
-Laura is a daughter.
-Display the justification report about Laura.
-# To continue, click button «Clear your mind.» or «Restart.».

@@ -1,8 +1,0 @@
-﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
-Paul is a boy.
-Laura is a girl.
-Display the justification report about Paul.
-Display the justification report about Laura.
-Paul is a man.
-Laura is a woman.
-# To continue, click button «Clear your mind.» or «Restart.».
