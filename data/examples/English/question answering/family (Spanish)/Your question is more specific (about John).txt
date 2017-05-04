@@ -1,0 +1,6 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+Paul is the child of John.
+Is John a father?
+Display information about John.
+Display the justification report about John.
+# To continue, click button «Clear your mind.» or «Restart.».

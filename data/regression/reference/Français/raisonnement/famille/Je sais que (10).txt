@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier est masculin.
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
 < Julien a un père, appelé Olivier.
@@ -36,6 +37,7 @@
 < Lorraine a un père, appelé Olivier.
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
+< Amélie est féminine.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne.
@@ -69,9 +71,9 @@
 < Amélie a possible une fille, appelée Lorraine.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < Est Lorraine une jeune-fille ou une femme?
 < 
@@ -97,22 +99,28 @@
 < 
 * 
 * Mes questions qui sont répondues:
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 * 
 * Mes hypothèses qui sont ajustés:
 < Julien est probablement une personne.
 * 
+* Mes conclusions:
+< Julien est masculin.
+* 
 * Mes hypothèses:
 < Julien est probablement un fils.
 < Julien n'est probablement pas une femme.
 < Julien n'est possible pas une fille.
-< Julien n'est probablement pas un garçon, pas une jeune-fille et pas une femme.
+< Julien n'est probablement pas un garçon, pas une femme et pas une jeune-fille.
 < 
 * 
 * Mes questions qui sont répondues:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
+* 
+* Mes conclusions:
+< Pascal est masculin.
 * 
 * Mes hypothèses:
 < Pascal est probablement un fils.
@@ -145,8 +153,8 @@
 * Mes hypothèses qui sont ajustés:
 < Lorraine n'est probablement pas une femme, pas un garçon et pas un homme.
 * 
-* Mes hypothèses:
-< Lorraine n'est probablement pas une femme, pas un garçon et pas un homme.
+* Mes conclusions:
+< Lorraine est féminine.
 < 
 * Je sais que.
 * 
@@ -182,9 +190,16 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier est masculin. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme est masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent de Pascal, Julien et Lorraine. En raison:
+<	- Lorraine a probablement 2 parents, appelés Olivier et Amélie.
+<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Olivier est le père de Pascal, Julien et Lorraine.
 * 	et:
@@ -243,6 +258,9 @@
 <	- Amélie est une mère.
 < Amélie est un parent de Pascal. En raison:
 <	- Pascal a 2 parents, appelés Olivier et Amélie.
+< Amélie est féminine. En raison:
+<	- Amélie est une femme.
+<	- Chaque femme est féminine.
 * 
 * Mes hypothèses:
 < Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine. En raison:
@@ -263,6 +281,10 @@
 <	- Chaque enfant est un fils ou une fille.
 <	- Nom propre «Lorraine» est probablement féminin.
 < Amélie est probablement un parent de Pascal, Julien et Lorraine. En raison:
+<	- Lorraine a probablement 2 parents, appelés Olivier et Amélie.
+<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Amélie est la mère de Pascal, Julien et Lorraine.
 * 	et:
@@ -289,6 +311,9 @@
 < 
 * 
 * Mes conclusions:
+< Pascal est masculin. En raison:
+<	- Pascal est un garçon.
+<	- Chaque garçon est masculin.
 < Pascal a un père, appelé Olivier. En raison:
 <	- Olivier est le père de Pascal, Julien et Lorraine.
 * 
@@ -335,6 +360,9 @@
 < 
 * 
 * Mes conclusions:
+< Julien est masculin. En raison:
+<	- Julien est un homme.
+<	- Chaque homme est masculin.
 < Julien a un père, appelé Olivier. En raison:
 <	- Olivier est le père de Pascal, Julien et Lorraine.
 < Julien a une mère, appelée Amélie. En raison:
@@ -360,7 +388,7 @@
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Chaque enfant est un fils ou une fille.
 <	- Julien est un fils.
-< Julien n'est probablement pas un garçon, pas une jeune-fille et pas une femme. En raison:
+< Julien n'est probablement pas un garçon, pas une femme et pas une jeune-fille. En raison:
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 <	- Julien est un homme.
@@ -389,6 +417,9 @@
 < 
 * 
 * Mes conclusions:
+< Lorraine est féminine. En raison:
+<	- Lorraine est une jeune-fille.
+<	- Chaque jeune-fille est féminine.
 < Lorraine a un père, appelé Olivier. En raison:
 <	- Olivier est le père de Pascal, Julien et Lorraine.
 < Lorraine a une mère, appelée Amélie. En raison:
@@ -458,6 +489,9 @@
 < 
 * 
 * Mes conclusions:
+< Lorraine est féminine. En raison:
+<	- Lorraine est une jeune-fille.
+<	- Chaque jeune-fille est féminine.
 < Lorraine a un père, appelé Olivier. En raison:
 <	- Olivier est le père de Pascal, Julien et Lorraine.
 < Lorraine a une mère, appelée Amélie. En raison:

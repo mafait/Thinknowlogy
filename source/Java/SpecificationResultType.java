@@ -1,9 +1,9 @@
 /*	Class:		SpecificationResultType
- *	Purpose:	To return specification variables,
+ *	Purpose:	To return assignment specification variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -27,23 +27,7 @@ class SpecificationResultType
 
 	protected byte result;
 
-	protected boolean isFirstRelatedSpecification;
-	protected boolean isLastRelatedSpecification;
-
-	protected short assignmentOrderNr;
-	protected short assignmentParameter;
-	protected short assumptionLevel;
-	protected short combinedAssumptionLevel;
-
-	protected JustificationItem createdJustificationItem;
-
-	protected SpecificationItem adjustedQuestionSpecificationItem;
-	protected SpecificationItem createdSpecificationItem;
-	protected SpecificationItem foundSpecificationItem;
-	protected SpecificationItem relatedSpecificationItem;
-	protected SpecificationItem replacedAssignmentItem;
-
-	protected WordItem compoundGeneralizationWordItem;
+	protected SpecificationItem specificationItem;
 
 	// Constructor
 
@@ -51,31 +35,13 @@ class SpecificationResultType
 		{
 		result = Constants.RESULT_OK;
 
-		isFirstRelatedSpecification = false;
-		isLastRelatedSpecification = false;
-
-		assignmentOrderNr = Constants.NO_ORDER_NR;
-		assignmentParameter = Constants.NO_ASSIGNMENT_PARAMETER;
-		assumptionLevel = Constants.NO_ASSIGNMENT_LEVEL;
-		combinedAssumptionLevel = Constants.NO_ASSIGNMENT_LEVEL;
-
-		createdJustificationItem = null;
-
-		adjustedQuestionSpecificationItem = null;
-		createdSpecificationItem = null;
-		foundSpecificationItem = null;
-		relatedSpecificationItem = null;
-		replacedAssignmentItem = null;
-
-		compoundGeneralizationWordItem = null;
+		specificationItem = null;
 		}
 	};
 
 /*************************************************************************
- *	"Even when I walk
- *	through the darkest valley,
- *	I will not be afraid,
- *	for you are close beside me.
- *	Your rod and your staff
- *	protect and conform me." (Psalm 23:4)
+ *	"Sing praises to God, sing praises;
+ *	sing praises to our King, sing praises.
+ *	For God is the King over all the earth.
+ *	Praise him with a psalm!" (Psalm 47:6-7)
  *************************************************************************/

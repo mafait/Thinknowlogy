@@ -2,9 +2,9 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the user-interface messages
  *					in the available languages
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -40,7 +40,8 @@ class InterfaceItem extends Item
 		// Private initialized variables
 
 		interfaceParameter_ = interfaceParameter;
-		interfaceString_ = null;
+
+		// Checking private initialized variables
 
 		if( interfaceString != null )
 			interfaceString_ = interfaceString.substring( 0, interfaceStringLength );
@@ -83,11 +84,11 @@ class InterfaceItem extends Item
 		return interfaceString_;
 		}
 
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
 
-		baseToStringBuffer( queryWordTypeNr );
+		itemBaseToStringBuffer( queryWordTypeNr );
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();

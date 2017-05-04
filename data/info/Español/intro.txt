@@ -1,34 +1,38 @@
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " A pesar de siglos de investigación a fondo, la teoría de la evolución todavía".
-Mostrar " no tiene ninguna explicación satisfactoria para el origen de la inteligencia".
-Mostrar " y el lenguaje. Y mucho menos, cómo ambos están relacionados. Según la".
-Mostrar " cosmovisión bíblica, Dios ha creado las leyes de la naturaleza. Basándose".
-Mostrar " en las leyes de la inteligencia, solamente Thinknowlogy implementa el".
-Mostrar " significado natural (función inteligente) de palabras como artículos definidos,".
-#C++#Mostrar " conjunción \"o\", verbos posesivos \"tener\" y los verbos en pasado \"era\" y \"tenido\".".
-#Java#Mostrar " conjunción “o”, verbos posesivos “tener” y los verbos en pasado “era” y “tenido”.".
+Mostrar " Thinknowlogy es el sistema de razonamiento de Lenguaje Controlado más avanzado:".
+#C++#Mostrar " * A pesar de siglos de investigación a fondo, la teoría de la evolución".
+#Java#Mostrar " • A pesar de siglos de investigación a fondo, la teoría de la evolución".
+Mostrar " todavía no tiene ninguna explicación satisfactoria para el origen de la".
+Mostrar " inteligencia y el lenguaje. Y mucho menos, cómo ambos están relacionados;".
+#C++#Mostrar " * Según la cosmovisión bíblica, Dios ha creado las leyes de la naturaleza.".
+#Java#Mostrar " • Según la cosmovisión bíblica, Dios ha creado las leyes de la naturaleza.".
+Mostrar " Basándose en las leyes de la inteligencia, solamente Thinknowlogy implementa".
+#C++#Mostrar " el función inteligente de palabras como artículos definidos, conjunción \"o\",".
+#C++#Mostrar " verbos posesivos \"tener\" y los verbos en pasado \"era\" y \"tenido\".".
+#Java#Mostrar " el función inteligente de palabras como artículos definidos, conjunción “o”,".
+#Java#Mostrar " verbos posesivos “tener” y los verbos en pasado “era” y “tenido”.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Estas leyes naturales de la inteligencia integrada en la gramática se demuestran por:".
-Mostrar " * Programación en lenguaje natural;".
-Mostrar " * Razonamiento en lenguaje natural:".
+Mostrar " La función inteligente de estas palabras se demuestra por:".
+#C++#Mostrar " * Programación en Lengua controlada;".
+#C++#Mostrar " * Razonamiento en Lengua controlada:".
+#Java#Mostrar " • Programación en Lengua controlada;".
+#Java#Mostrar " • Razonamiento en Lengua controlada:".
 Mostrar "   - sacar conclusiones (más avanzada que las soluciones científicas),".
 Mostrar "   - hacer suposiciones (con el nivel de ajuste automático de la incertidumbre),".
 Mostrar "   - haciendo preguntas (acerca de las brechas en el conocimiento),".
 Mostrar "   - detección de conflictos y algunos casos de ambigüedad semántica,".
 Mostrar "   - mostrar los informes de justificación para el conocimiento autogenerado;".
-Mostrar " * El multilingüismo, probando: Los lenguajes naturales tienen un origen común.".
+#C++#Mostrar " * El multilingüismo, probando: Los lenguajes naturales tienen un origen común.".
+#Java#Mostrar " • El multilingüismo, probando: Los lenguajes naturales tienen un origen común.".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Reto a cualquiera a vencer este razonador: http://mafait.org/challenge/".
 Mostrar "------------------------------------------------------------------------------".
 #C++#Mostrar " Ayudar.\t\t\t\t\t       * Mostrar más info ayuda".
 #C++#Mostrar " \~{nombre del idioma}\t\t\t\t\t* Cambiar la idioma".
-#C++#Mostrar " Leer el archivo \"Español/ambigüedad/Boston\".\t\t* Detección ambigüedad".
-#C++#Mostrar " Leer el archivo \"Español/ambigüedad/presidentes de EUA\".* Detección ambigüedad".
-#C++#Mostrar " Leer el archivo \"Español/programación/Conecta 4\".\t* Juego Conecta 4".
-#C++#Mostrar " Leer el archivo \"Español/programación/Saludo\".\t\t* Saludo".
-#C++#Mostrar " Leer el archivo \"Español/programación/Torres de Hanói\".* Resolver rompecabezas".
-#C++#Mostrar " Leer el archivo \"Español/razonamiento/definición de familia\". \t* Razonamiento".
-#Java#Mostrar " Utilice el botón <ambigüedad> para aprender acerca de la detección de la ambigüedad.".
+#C++#Mostrar " Leer el archivo \"Español/usuario/programación/Conecta 4\".".
+#C++#Mostrar " Leer el archivo \"Español/usuario/programación/Torres de Hanói\".".
+#C++#Mostrar " Leer el archivo \"Español/usuario/razonamiento/Reto científico\".".
+#C++#Mostrar " Leer el archivo \"Español/usuario/razonamiento/familia/definición de familia\".".
 #Java#Mostrar " Utilice el botón <programación> para aprender acerca de la programación en lenguaje natural.".
 #Java#Mostrar " Utilice el botón <razonamiento> para aprender acerca de razonamiento en lenguaje natural.".
 Mostrar "------------------------------------------------------------------------------".

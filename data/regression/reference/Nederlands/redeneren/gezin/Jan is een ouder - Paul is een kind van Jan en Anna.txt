@@ -46,17 +46,16 @@
 < Laura is waarschijnlijk een kind van Jan.
 < Laura is waarschijnlijk deel van een gezin.
 < Laura is mogelijk een persoon.
-< Laura is misschien geen man.
 < Laura is mogelijk een dochter van Jan.
 < Laura is misschien geen jongen en geen man.
 < Laura is misschien geen zoon.
 * 
 * Mijn vragen:
-< Is Jan een man of een vrouw?
+< Is Jan een vrouw of een man?
 < Is Jan een vader of een moeder?
-< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
-< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een meisje, een vrouw, een jongen of een man?
 < Is Johan een zoon of een dochter?
 < Is Laura een meisje of een vrouw?
 < 
@@ -79,9 +78,10 @@
 < Anna is waarschijnlijk een ouder van Paul.
 < Anna is waarschijnlijk deel van een gezin.
 < Anna is mogelijk een persoon.
+< Anna is mogelijk een moeder van Paul.
 < Anna is mogelijk een vrouw.
 < Anna is misschien geen man.
-< Anna is mogelijk een moeder van Paul.
+< Anna is mogelijk vrouwelijk.
 < Anna is misschien geen vader.
 < 
 * 
@@ -110,16 +110,16 @@
 <	- Een ouder is waarschijnlijk een persoon.
 * 
 * Mijn vragen:
-< Is Jan een man of een vrouw? Omdat:
-<	- Jan is waarschijnlijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
-* 	en:
+< Is Jan een vrouw of een man? Omdat:
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Iedere ouder is een vrouw of een man.
 * 	en:
+<	- Jan is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
 <	- Is Jan een vader of een moeder?
-<	- Iedere moeder is een vrouw.
 <	- Iedere vader is een man.
+<	- Iedere moeder is een vrouw.
 < Is Jan een vader of een moeder? Omdat:
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Iedere ouder is een vader of een moeder.
@@ -150,11 +150,16 @@
 * 	en:
 <	- Anna is mogelijk een moeder van Paul.
 <	- Een moeder is waarschijnlijk een persoon.
-< Anna is mogelijk een vrouw. Omdat:
-<	- Anna is mogelijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
+< Anna is mogelijk een moeder van Paul. Omdat:
+<	- Anna is waarschijnlijk een ouder van Paul.
+<	- Iedere ouder is een vader of een moeder.
 <	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
 * 	en:
+<	- Paul is een kind van Jan en Anna.
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Iedere ouder is een vader of een moeder.
+<	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
+< Anna is mogelijk een vrouw. Omdat:
 <	- Anna is mogelijk een moeder van Paul.
 <	- Iedere moeder is een vrouw.
 < Anna is misschien geen man. Omdat:
@@ -165,15 +170,9 @@
 <	- Anna is waarschijnlijk een ouder van Paul.
 <	- Iedere ouder is een vrouw of een man.
 <	- Anna is mogelijk een vrouw.
-< Anna is mogelijk een moeder van Paul. Omdat:
-<	- Anna is waarschijnlijk een ouder van Paul.
-<	- Iedere ouder is een vader of een moeder.
-<	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
-* 	en:
-<	- Paul is een kind van Jan en Anna.
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Iedere ouder is een vader of een moeder.
-<	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
+< Anna is mogelijk vrouwelijk. Omdat:
+<	- Anna is mogelijk een vrouw.
+<	- Iedere vrouw is vrouwelijk.
 < Anna is misschien geen vader. Omdat:
 <	- Anna is waarschijnlijk een ouder van Paul.
 <	- Iedere ouder is een vader of een moeder.
@@ -190,8 +189,14 @@
 <	- Paul is een kind van Jan en Anna.
 <	- Een kind is waarschijnlijk een persoon.
 < Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna. Omdat:
-<	- Jan is een ouder van Paul, Johan en Laura.
 <	- Anna is waarschijnlijk een ouder van Paul.
+<	- Jan is een ouder van Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul is een kind van Jan en Anna.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Paul heeft mogelijk een moeder, genaamd Anna. Omdat:
 <	- Anna is mogelijk een moeder van Paul.
 * 	en:
@@ -201,12 +206,9 @@
 <	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
 * 
 * Mijn vragen:
-< Is Paul een man, een vrouw, een meisje of een jongen? Omdat:
+< Is Paul een meisje, een vrouw, een jongen of een man? Omdat:
 <	- Paul is een kind van Jan en Anna.
 <	- Ieder kind is een meisje, een vrouw, een jongen of een man.
-* 	en:
-<	- Paul is waarschijnlijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
 < Is Paul een zoon of een dochter? Omdat:
 <	- Paul is een kind van Jan en Anna.
 <	- Ieder kind is een zoon of een dochter.
@@ -233,12 +235,9 @@
 <	- Een kind is waarschijnlijk een persoon.
 * 
 * Mijn vragen:
-< Is Johan een man, een vrouw, een meisje of een jongen? Omdat:
+< Is Johan een meisje, een vrouw, een jongen of een man? Omdat:
 <	- Johan is waarschijnlijk een kind van Jan.
 <	- Ieder kind is een meisje, een vrouw, een jongen of een man.
-* 	en:
-<	- Johan is mogelijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
 < Is Johan een zoon of een dochter? Omdat:
 <	- Johan is waarschijnlijk een kind van Jan.
 <	- Ieder kind is een zoon of een dochter.
@@ -266,10 +265,6 @@
 * 	en:
 <	- Laura is mogelijk een dochter van Jan.
 <	- Een dochter is waarschijnlijk een persoon.
-< Laura is misschien geen man. Omdat:
-<	- Laura is mogelijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
-<	- Is Laura een meisje of een vrouw?
 < Laura is mogelijk een dochter van Jan. Omdat:
 <	- Laura is waarschijnlijk een kind van Jan.
 <	- Ieder kind is een zoon of een dochter.

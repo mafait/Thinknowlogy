@@ -55,6 +55,7 @@
 * Mis conclusiones:
 < Ana es una mujer.
 < Ana no es un hombre.
+< Ana es femenina.
 < Ana es parte de una familia.
 < Ana no es un padre.
 * 

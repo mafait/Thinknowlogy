@@ -46,17 +46,16 @@
 < Laura is waarschijnlijk een kind van Jan.
 < Laura is waarschijnlijk deel van een gezin.
 < Laura is mogelijk een persoon.
-< Laura is misschien geen man.
 < Laura is mogelijk een dochter van Jan.
 < Laura is misschien geen jongen en geen man.
 < Laura is misschien geen zoon.
 * 
 * Mijn vragen:
-< Is Jan een man of een vrouw?
+< Is Jan een vrouw of een man?
 < Is Jan een vader of een moeder?
-< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
-< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een meisje, een vrouw, een jongen of een man?
 < Is Johan een zoon of een dochter?
 < Is Laura een meisje of een vrouw?
 < 
@@ -100,16 +99,16 @@
 <	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
 * 
 * Mijn vragen:
-< Is Jan een man of een vrouw? Omdat:
-<	- Jan is waarschijnlijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
-* 	en:
+< Is Jan een vrouw of een man? Omdat:
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Iedere ouder is een vrouw of een man.
 * 	en:
+<	- Jan is waarschijnlijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
 <	- Is Jan een vader of een moeder?
-<	- Iedere moeder is een vrouw.
 <	- Iedere vader is een man.
+<	- Iedere moeder is een vrouw.
 < Is Jan een vader of een moeder? Omdat:
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Iedere ouder is een vader of een moeder.

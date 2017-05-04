@@ -26,6 +26,7 @@
 < Juan es parte de una familia.
 < Juan es un hombre.
 < Juan no es una mujer.
+< Juan es masculino.
 < Juan no es una madre.
 < Pablo tiene un padre, llamado Juan.
 < José tiene un padre, llamado Juan.
@@ -35,9 +36,9 @@
 < Juan es probablemente una persona.
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 < José es posiblemente una persona.
-< José es probablemente parte de una familia.
+< José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan.
 < Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
@@ -86,6 +87,9 @@
 <	- Juan es padre de Pablo, José y Luisa.
 <	- Cada padre es una mujer o un hombre.
 <	- Juan es un hombre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 < Juan no es una madre. Porque:
 <	- Juan es padre de Pablo, José y Luisa.
 <	- Cada padre es un padre o una madre.

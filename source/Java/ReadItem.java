@@ -1,9 +1,9 @@
 /*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -72,11 +72,9 @@ class ReadItem extends Item
 
 		definitionGrammarItem = null;
 
-
 		// Protected initialized variables
 
-		if( _readString != null )
-			readString = _readString.substring( 0, readStringLength );
+		readString = ( _readString == null ? null : _readString.substring( 0, readStringLength ) );
 		}
 
 
@@ -156,8 +154,8 @@ class ReadItem extends Item
 		{
 		ReadItem nextSortReadItem = (ReadItem)nextSortItem;
 
+		// Remark: All read items should have the same creationSentenceNr
 		return ( nextSortItem != null &&
-				// Remark: All read items should have the same creationSentenceNr
 
 				// 1) Ascending wordOrderNr_
 				( wordOrderNr_ < nextSortReadItem.wordOrderNr_ ||
@@ -167,31 +165,18 @@ class ReadItem extends Item
 				wordTypeNr_ > nextSortReadItem.wordTypeNr_ ) ) );
 		}
 
-	protected StringResultType findMatchingWordReferenceString( String queryString )
-		{
-		StringResultType stringResult = new StringResultType();
-
-		if( readWordItem_ != null )
-			{
-			if( ( stringResult = readWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, "I failed to find the word reference for the word reference query" );
-			}
-
-		return stringResult;
-		}
-
 	protected String itemString()
 		{
 		return readString;
 		}
 
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
 		String wordString;
 		String wordTypeString = myWordItem().wordTypeNameString( wordTypeNr_ );
 
-		baseToStringBuffer( queryWordTypeNr );
+		itemBaseToStringBuffer( queryWordTypeNr );
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -230,6 +215,14 @@ class ReadItem extends Item
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "definitionGrammarItem" + Constants.QUERY_REF_ITEM_START_CHAR + definitionGrammarItem.creationSentenceNr() + Constants.QUERY_SEPARATOR_CHAR + definitionGrammarItem.itemNr() + Constants.QUERY_REF_ITEM_END_CHAR );
 
 		return queryStringBuffer;
+		}
+
+	protected BoolResultType findMatchingWordReferenceString( String queryString )
+		{
+		if( readWordItem_ != null )
+			return readWordItem_.findMatchingWordReferenceString( queryString );
+
+		return new BoolResultType();
 		}
 
 
@@ -429,11 +422,6 @@ class ReadItem extends Item
 	protected boolean isUserDefined()
 		{
 		return ( wordParameter_ == Constants.NO_WORD_PARAMETER );
-		}
-
-	protected boolean isSelection()
-		{
-		return ( grammarParameter == Constants.GRAMMAR_SELECTION );
 		}
 
 	protected boolean isGeneralizationWord()

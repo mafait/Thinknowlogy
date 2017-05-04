@@ -1,9 +1,9 @@
 /*	Class:		ContextResultType
  *	Purpose:	To return context variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ class ContextResultType
 	protected int contextNr;
 	protected int copiedRelationContextNr;
 
-	protected SpecificationItem conclusionSpecificationItem;
+	protected SpecificationItem confirmedAllRelationWordsOfSpecificationItem;
 
 	// Constructor
 
@@ -45,7 +45,7 @@ class ContextResultType
 		contextNr = Constants.NO_CONTEXT_NR;
 		copiedRelationContextNr = Constants.NO_CONTEXT_NR;
 
-		conclusionSpecificationItem = null;
+		confirmedAllRelationWordsOfSpecificationItem = null;
 		}
 	};
 

@@ -29,6 +29,7 @@
 * 
 * My conclusions:
 < John is a man.
+< John is masculine.
 * 
 * My assumptions:
 < John is probably a person.
@@ -63,11 +64,12 @@
 < Anna is probably a person.
 < Anna is probably a woman.
 < Anna is probably not a man.
+< Anna is probably feminine.
 < Anna is probably a mother of Paul.
 < Anna is probably not a father.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
 < 
 * 
@@ -92,6 +94,9 @@
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
+< John is masculine. Because:
+<	- John is a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < John has probably a child, called Paul. Because:
@@ -133,16 +138,12 @@
 <	- Every person is a man or a woman.
 <	- Anna is probably a woman.
 * 	and:
-<	- Anna is probably a mother of Paul.
-<	- A mother is probably a person.
-* 	and:
 <	- Paul has 2 parents, called John and Anna.
 <	- A parent is probably a person.
-< Anna is probably a woman. Because:
-<	- Anna is probably a person.
-<	- Every person is a man or a woman.
-<	- Proper name "Anna" is probably feminine.
 * 	and:
+<	- Anna is probably a mother of Paul.
+<	- A mother is probably a person.
+< Anna is probably a woman. Because:
 <	- Anna is a parent of Paul.
 <	- Every parent is a woman or a man.
 <	- Proper name "Anna" is probably feminine.
@@ -157,6 +158,9 @@
 <	- Anna is a parent of Paul.
 <	- Every parent is a woman or a man.
 <	- Anna is probably a woman.
+< Anna is probably feminine. Because:
+<	- Anna is probably a woman.
+<	- Every woman is feminine.
 < Anna is probably a mother of Paul. Because:
 <	- Anna is a parent of Paul.
 <	- Every parent is a father or a mother.
@@ -188,13 +192,18 @@
 <	- Anna is probably a mother of Paul.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy? Because:
-<	- Paul is probably a child of John and Anna.
+< Is Paul a girl, a woman, a boy or a man? Because:
+<	- Paul has 2 parents, called John and Anna.
+<	- Every family has parents and children.
 <	- Every child is a girl, a woman, a boy or a man.
 * 	and:
-<	- Paul is possibly a person.
-<	- Every person is a man or a woman.
+<	- Paul is probably a child of John and Anna.
+<	- Every child is a girl, a woman, a boy or a man.
 < Is Paul a son or a daughter? Because:
+<	- Paul has 2 parents, called John and Anna.
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+* 	and:
 <	- Paul is probably a child of John and Anna.
 <	- Every child is a son or a daughter.
 < 

@@ -1,5 +1,0 @@
-﻿* 
-* Generalización palabra "persona" es semánticamente ambiguas, debido a la palabra especificación "hombre".
-* 
-* Generalización palabra "persona" es semánticamente ambiguas, debido a la palabra especificación "mujer".
-* 

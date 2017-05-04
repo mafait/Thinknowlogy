@@ -26,9 +26,11 @@
 < Olivier est probablement un homme.
 < Olivier est possible une personne.
 < Olivier n'est peut-être pas une femme.
+< Olivier est probablement masculin.
 < Philippe était probablement un homme.
 < Philippe était possible une personne.
 < Philippe ne était peut-être pas une femme.
+< Philippe était probablement masculin.
 < 
 * 
 * Mes conclusions:
@@ -66,6 +68,9 @@
 < Olivier est probablement une personne.
 < Olivier n'est probablement pas une femme.
 * 
+* Mes hypothèses qui sont conclus:
+< Olivier est masculin.
+* 
 * Mes conclusions:
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
@@ -74,6 +79,7 @@
 < Lorraine a un père, appelé Olivier.
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
+< Amélie est féminine.
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent de Pascal, Julien et Lorraine.
@@ -105,15 +111,16 @@
 < Amélie a possible une fille, appelée Lorraine.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < Est Lorraine une jeune-fille ou une femme?
 < 
 * 
 * Mes conclusions:
 < Guillaume est un homme.
+< Guillaume est masculin.
 < Armand a un père, appelé Guillaume.
 * 
 * Mes hypothèses:
@@ -129,11 +136,9 @@
 < Armand a probablement un parent, appelé Guillaume.
 * 
 * Mes questions:
-< Est Armand un homme, une femme, une jeune-fille ou un garçon?
+< Est Armand une jeune-fille, une femme, un garçon ou un homme?
 < Est Armand un fils ou une fille?
 < 
-* 
-* Je ne suis pas sûr, mais:
 < Pascal est probablement un enfant de Olivier et Amélie.
 < Julien est probablement un enfant de Olivier et Amélie.
 < 
@@ -144,11 +149,11 @@
 * Vous aviez une question similaire avant:
 < Est Julien un enfant?
 * 
-* Je ne suis pas sûr, mais:
+* Ma réponse:
 < Non, Pascal est probablement un enfant de Olivier et Amélie.
-< Olivier est probablement un parent de Pascal, Julien et Lorraine.
-< Amélie est probablement un parent de Pascal, Julien et Lorraine.
 < Guillaume est probablement un parent de Armand.
+< Amélie est probablement un parent de Pascal, Julien et Lorraine.
+< Olivier est probablement un parent de Pascal, Julien et Lorraine.
 < Julien est probablement un enfant de Olivier et Amélie.
 < 
 * 
@@ -156,7 +161,7 @@
 < Est Pascal un enfant?
 < Est Julien un enfant?
 * 
-* Je ne suis pas sûr, mais:
+* Ma réponse:
 < Non, Pascal est probablement un enfant de Olivier et Amélie.
 < Julien est probablement un enfant de Olivier et Amélie.
 < 
@@ -167,7 +172,7 @@
 * Vous aviez une question connexe avant:
 < Est Julien un enfant de Armand?
 * 
-* Je ne suis pas sûr, mais:
+* Ma réponse:
 < Pascal est probablement un enfant de Olivier et Amélie.
 < Julien est probablement un enfant de Olivier et Amélie.
 < 
@@ -176,7 +181,7 @@
 < Est Pascal un enfant de Olivier?
 < Est Julien un enfant de Olivier?
 * 
-* Je ne suis pas sûr, mais:
+* Ma réponse:
 < Pascal est probablement un enfant de Olivier et Amélie.
 < Julien est probablement un enfant de Olivier et Amélie.
 < 

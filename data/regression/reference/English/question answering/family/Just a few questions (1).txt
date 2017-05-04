@@ -26,9 +26,11 @@
 < John is probably a man.
 < John is possibly a person.
 < John is maybe not a woman.
+< John is probably masculine.
 < James was probably a man.
 < James was possibly a person.
 < James was maybe not a woman.
+< James was probably masculine.
 < 
 * 
 * My conclusions:
@@ -66,6 +68,9 @@
 < John is probably a person.
 < John is probably not a woman.
 * 
+* My assumptions that are concluded:
+< John is masculine.
+* 
 * My conclusions:
 < Paul has a father, called John.
 < Paul has a mother, called Anna.
@@ -74,6 +79,7 @@
 < Laura has a father, called John.
 < Laura has a mother, called Anna.
 < Anna is a woman.
+< Anna is feminine.
 * 
 * My assumptions:
 < John is probably a parent of Paul, Joe and Laura.
@@ -105,15 +111,16 @@
 < Anna has possibly a daughter, called Laura.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
-< Is Joe a man, a woman, a girl or a boy?
+< Is Joe a girl, a woman, a boy or a man?
 < Is Joe a son or a daughter?
 < Is Laura a girl or a woman?
 < 
 * 
 * My conclusions:
 < Michael is a man.
+< Michael is masculine.
 < Adam has a father, called Michael.
 * 
 * My assumptions:
@@ -129,11 +136,9 @@
 < Adam has probably a parent, called Michael.
 * 
 * My questions:
-< Is Adam a man, a woman, a girl or a boy?
+< Is Adam a girl, a woman, a boy or a man?
 < Is Adam a son or a daughter?
 < 
-* 
-* I am not sure, but:
 < Paul is probably a child of John and Anna.
 < Joe is probably a child of John and Anna.
 < 
@@ -144,11 +149,11 @@
 * You had a similar question before:
 < Is Joe a child?
 * 
-* I am not sure, but:
+* My answer:
 < No, Paul is probably a child of John and Anna.
-< John is probably a parent of Paul, Joe and Laura.
-< Anna is probably a parent of Paul, Joe and Laura.
 < Michael is probably a parent of Adam.
+< Anna is probably a parent of Paul, Joe and Laura.
+< John is probably a parent of Paul, Joe and Laura.
 < Joe is probably a child of John and Anna.
 < 
 * 
@@ -156,7 +161,7 @@
 < Is Paul a child?
 < Is Joe a child?
 * 
-* I am not sure, but:
+* My answer:
 < No, Paul is probably a child of John and Anna.
 < Joe is probably a child of John and Anna.
 < 
@@ -167,7 +172,7 @@
 * You had a related question before:
 < Is Joe a child of Adam?
 * 
-* I am not sure, but:
+* My answer:
 < Paul is probably a child of John and Anna.
 < Joe is probably a child of John and Anna.
 < 
@@ -176,7 +181,7 @@
 < Is Paul a child of John?
 < Is Joe a child of John?
 * 
-* I am not sure, but:
+* My answer:
 < Paul is probably a child of John and Anna.
 < Joe is probably a child of John and Anna.
 < 

@@ -1,5 +1,0 @@
-﻿* 
-* Generalisatie-woord "persoon" is semantisch dubbelzinnig, veroorzaakt door specifcatiewoord "man".
-* 
-* Generalisatie-woord "persoon" is semantisch dubbelzinnig, veroorzaakt door specifcatiewoord "vrouw".
-* 

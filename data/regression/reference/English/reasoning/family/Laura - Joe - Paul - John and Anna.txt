@@ -169,6 +169,7 @@
 * 
 * My conclusions:
 < John is a man.
+< John is masculine.
 < Paul has a father, called John.
 < Paul has a mother, called Anna.
 < Joe has a father, called John.
@@ -176,6 +177,7 @@
 < Laura has a father, called John.
 < Laura has a mother, called Anna.
 < Anna is a woman.
+< Anna is feminine.
 * 
 * My assumptions:
 < John is probably a person.
@@ -205,6 +207,9 @@
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
+< John is masculine. Because:
+<	- John is a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < John is probably a person. Because:
@@ -225,6 +230,10 @@
 <	- Every parent is a woman or a man.
 <	- John is a man.
 < John is probably a parent of Paul, Joe and Laura. Because:
+<	- Laura has probably 2 parents, called John and Anna.
+<	- Joe has probably 2 parents, called John and Anna.
+<	- Paul has probably 2 parents, called John and Anna.
+* 	and:
 <	- Every parent is a father or a mother.
 <	- John is the father of Paul, Joe and Laura.
 * 	and:
@@ -259,6 +268,9 @@
 < Anna is a woman. Because:
 <	- Anna is a mother.
 <	- Every mother is a woman.
+< Anna is feminine. Because:
+<	- Anna is a woman.
+<	- Every woman is feminine.
 * 
 * My assumptions:
 < Anna is probably a person. Because:
@@ -279,6 +291,10 @@
 <	- Every parent is a woman or a man.
 <	- Anna is a woman.
 < Anna is probably a parent of Paul, Joe and Laura. Because:
+<	- Laura has probably 2 parents, called John and Anna.
+<	- Joe has probably 2 parents, called John and Anna.
+<	- Paul has probably 2 parents, called John and Anna.
+* 	and:
 <	- Every parent is a father or a mother.
 <	- Anna is the mother of Paul, Joe and Laura.
 * 	and:

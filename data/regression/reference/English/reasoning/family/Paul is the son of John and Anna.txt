@@ -50,12 +50,13 @@
 < Anna is possibly a mother of Paul.
 < Anna is possibly a woman.
 < Anna is maybe not a man.
+< Anna is possibly feminine.
 < Anna is maybe not a father.
 * 
 * My questions:
 < Is Paul a boy or a man?
-< Is John a man or a woman?
 < Is John a father or a mother?
+< Is John a man or a woman?
 < 
 * 
 * My conclusions:
@@ -70,8 +71,8 @@
 < Joe is probably not a daughter.
 < Joe has probably 2 parents, called John and Anna.
 < Joe has possibly a mother, called Anna.
-< John is probably a parent of Paul and Joe.
 < John has probably 2 children, called Paul and Joe.
+< John is probably a parent of Paul and Joe.
 < Anna is probably a parent of Paul and Joe.
 < Anna is possibly a mother of Paul and Joe.
 < Anna has probably 2 children, called Paul and Joe.
@@ -82,10 +83,13 @@
 * 
 * My conclusions:
 < John has 2 son [plural of 'son' is unknown], called Paul and Joe. Because:
-<	- Paul is the son of John and Anna.
 <	- Joe is a son of John and Anna.
+<	- Paul is the son of John and Anna.
 * 
 * My assumptions:
+< John has probably 2 children, called Paul and Joe. Because:
+<	- Joe is probably a child of John and Anna.
+<	- Paul is probably a child of John and Anna.
 < John is probably a parent of Paul and Joe. Because:
 <	- Joe has probably 2 parents, called John and Anna.
 <	- Paul has probably 2 parents, called John and Anna.
@@ -103,21 +107,18 @@
 < John is possibly a person. Because:
 <	- John is probably a parent of Paul and Joe.
 <	- A parent is probably a person.
-< John has probably 2 children, called Paul and Joe. Because:
-<	- Paul is probably a child of John and Anna.
-<	- Joe is probably a child of John and Anna.
 * 
 * My questions:
 < Is John a man or a woman? Because:
+<	- Is John a father or a mother?
+<	- Every mother is a woman.
+<	- Every father is a man.
+* 	and:
 <	- John is possibly a person.
 <	- Every person is a man or a woman.
 * 	and:
 <	- John is probably a parent of Paul and Joe.
 <	- Every parent is a woman or a man.
-* 	and:
-<	- Is John a father or a mother?
-<	- Every mother is a woman.
-<	- Every father is a man.
 < Is John a father or a mother? Because:
 <	- John is probably a parent of Paul and Joe.
 <	- Every parent is a father or a mother.
@@ -125,8 +126,8 @@
 * 
 * My conclusions:
 < Anna has 2 son [plural of 'son' is unknown], called Paul and Joe. Because:
-<	- Paul is the son of John and Anna.
 <	- Joe is a son of John and Anna.
+<	- Paul is the son of John and Anna.
 * 
 * My assumptions:
 < Anna is probably a parent of Paul and Joe. Because:
@@ -161,18 +162,21 @@
 <	- Every parent is a woman or a man.
 <	- Anna is possibly a woman.
 < Anna is possibly a mother of Paul and Joe. Because:
-<	- Anna is probably a parent of Paul and Joe.
+<	- Joe is a son of John and Anna.
+<	- Paul is the son of John and Anna.
+<	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 <	- Proper name "Anna" is probably feminine.
 * 	and:
-<	- Paul is the son of John and Anna.
-<	- Joe is a son of John and Anna.
-<	- Every family has parents and children.
+<	- Anna is probably a parent of Paul and Joe.
 <	- Every parent is a father or a mother.
 <	- Proper name "Anna" is probably feminine.
 < Anna is possibly a woman. Because:
 <	- Anna is possibly a mother of Paul and Joe.
 <	- Every mother is a woman.
+< Anna is possibly feminine. Because:
+<	- Anna is possibly a woman.
+<	- Every woman is feminine.
 < Anna is maybe not a father. Because:
 <	- Anna is probably a parent of Paul and Joe.
 <	- Every parent is a father or a mother.
@@ -184,6 +188,9 @@
 * 
 * My assumptions:
 < Paul is probably a child of John and Anna. Because:
+<	- Anna has probably 2 children, called Paul and Joe.
+<	- John has probably 2 children, called Paul and Joe.
+* 	and:
 <	- Every child is a son or a daughter.
 <	- Paul is the son of John and Anna.
 * 	and:
@@ -236,6 +243,9 @@
 <	- Joe is probably a child of John and Anna.
 <	- A child is probably a person.
 < Joe is probably a child of John and Anna. Because:
+<	- Anna has probably 2 children, called Paul and Joe.
+<	- John has probably 2 children, called Paul and Joe.
+* 	and:
 <	- Every child is a son or a daughter.
 <	- Joe is a son of John and Anna.
 * 	and:

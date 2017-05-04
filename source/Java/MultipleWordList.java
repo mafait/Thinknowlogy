@@ -1,9 +1,9 @@
 /*	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -50,7 +50,7 @@ class MultipleWordList extends List
 
 	protected MultipleWordList( WordItem myWordItem )
 		{
-		initializeListVariables( Constants.WORD_MULTIPLE_WORD_LIST_SYMBOL, myWordItem );
+		initializeListVariables( Constants.WORD_MULTIPLE_WORD_LIST_SYMBOL, "MultipleWordList", myWordItem );
 		}
 
 
@@ -89,16 +89,14 @@ class MultipleWordList extends List
 		{
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
-			return startError( 1, null, "The given word type number is undefined or out of bounds: " + wordTypeNr );
+			return startError( 1, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
 		if( multipleWordItem == null )
-			return startError( 1, null, "The given multiple word item is undefined" );
+			return startError( 1, "The given multiple word item is undefined" );
 
-		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
-			{
-			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, CommonVariables.currentLanguageNr, wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-				return addError( 1, null, "I failed to add an active multiple word item" );
-			}
+		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) &&
+		addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, CommonVariables.currentLanguageNr, wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to add an active multiple word item" );
 
 		return Constants.RESULT_OK;
 		}
@@ -108,37 +106,19 @@ class MultipleWordList extends List
 		MultipleWordItem searchMultipleWordItem = firstActiveMultipleWordItem();
 
 		if( unusedWordItem == null )
-			return startError( 1, null, "The given unused word item is undefined" );
+			return startError( 1, "The given unused word item is undefined" );
 
 		while( searchMultipleWordItem != null )
 			{
 			if( searchMultipleWordItem.multipleWordItem() == unusedWordItem )
-				return startError( 1, null, "The multiple word item is still in use" );
+				return startError( 1, "The multiple word item is still in use" );
 
 			searchMultipleWordItem = searchMultipleWordItem.nextMultipleWordItem();
 			}
 
 		return Constants.RESULT_OK;
 		}
-/*
-	protected byte storeChangesInFutureDatabase()
-		{
-		MultipleWordItem searchMultipleWordItem = firstActiveMultipleWordItem();
-
-		while( searchMultipleWordItem != null )
-			{
-			if( searchMultipleWordItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchMultipleWordItem.storeMultipleWordItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to store a multiple word item in the database" );
-				}
-
-			searchMultipleWordItem = searchMultipleWordItem.nextMultipleWordItem();
-			}
-
-		return Constants.RESULT_OK;
-		}
-*/	};
+	};
 
 /*************************************************************************
  *	"The one thing I ask of the Lord -

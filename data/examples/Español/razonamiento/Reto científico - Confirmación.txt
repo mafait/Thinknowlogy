@@ -16,10 +16,10 @@ Cada persona es un hombre o una mujer.
 Cruz es una persona.
 Cruz es un hombre o una mujer.
 
-Bill Clinton es el presidente de los Estados Unidos.
-Los Estados Unidos tiene un presidente, llamado Bill Clinton.
 Barack Obama es el presidente de los Estados Unidos.
-Los Estados Unidos tiene un nuevo presidente, llamado Barack Obama.
+Los Estados Unidos tiene un presidente, llamado Barack Obama.
+Donald Trump es el presidente de los Estados Unidos.
+Los Estados Unidos tiene un nuevo presidente, llamado Donald Trump.
 # La frase siguiente ya está confirmado
-Los Estados Unidos tiene un anterior presidente, llamado Bill Clinton.
+Los Estados Unidos tiene un anterior presidente, llamado Barack Obama.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

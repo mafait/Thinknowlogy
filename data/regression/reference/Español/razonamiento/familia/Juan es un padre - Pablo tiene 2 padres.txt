@@ -26,6 +26,7 @@
 < Juan es parte de una familia.
 < Juan es un hombre.
 < Juan no es una mujer.
+< Juan es masculino.
 < Juan no es una madre.
 * 
 * Mis suposiciones:
@@ -39,12 +40,13 @@
 * 
 * Mis suposiciones:
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 < Pablo tiene probablemente una madre, llamada Ana.
 < Ana es probablemente una persona.
 < Ana es probablemente madre de Pablo.
 < Ana es probablemente una mujer.
 < Ana no es posiblemente un hombre.
+< Ana es probablemente femenina.
 < Ana no es probablemente un padre.
 * 
 * Mis preguntas:
@@ -65,6 +67,9 @@
 <	- Juan es un padre.
 <	- Cada padre es una mujer o un hombre.
 <	- Juan es un hombre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
@@ -109,6 +114,9 @@
 <	- Ana es probablemente una persona.
 <	- Cada persona es un hombre o una mujer.
 <	- Ana es probablemente una mujer.
+< Ana es probablemente femenina. Porque:
+<	- Ana es probablemente una mujer.
+<	- Cada mujer es femenina.
 < Ana no es probablemente un padre. Porque:
 <	- Cada padre es un padre o una madre.
 <	- Ana es probablemente madre de Pablo.
@@ -119,7 +127,7 @@
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< Pablo es probablemente parte de una familia. Porque:
+< Pablo es posiblemente parte de una familia. Porque:
 <	- ¿Es Pablo un hijo o una hija?
 <	- Hijos son parte de cada familia.
 < Pablo tiene probablemente una madre, llamada Ana. Porque:

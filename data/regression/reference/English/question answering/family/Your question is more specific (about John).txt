@@ -44,8 +44,8 @@
 * 
 * My questions:
 < Is Paul a boy or a man?
-< Is John a man or a woman?
 < Is John a father or a mother?
+< Is John a man or a woman?
 < 
 * 
 * Your question is more specific than my earlier question:
@@ -67,8 +67,8 @@
 < John has probably a child, called Paul.
 * 
 * My questions:
-< Is John a man or a woman?
 < Is John a father or a mother?
+< Is John a man or a woman?
 * 
 * Related information:
 < Paul is probably a child of John.
@@ -100,17 +100,17 @@
 <	- Paul is probably a child of John.
 * 
 * My questions:
+< Is John a father or a mother? Because:
+<	- John is probably a parent of Paul.
+<	- Every parent is a father or a mother.
 < Is John a man or a woman? Because:
+<	- Is John a father or a mother?
+<	- Every mother is a woman.
+<	- Every father is a man.
+* 	and:
 <	- John is possibly a person.
 <	- Every person is a man or a woman.
 * 	and:
 <	- John is probably a parent of Paul.
 <	- Every parent is a woman or a man.
-* 	and:
-<	- Is John a father or a mother?
-<	- Every mother is a woman.
-<	- Every father is a man.
-< Is John a father or a mother? Because:
-<	- John is probably a parent of Paul.
-<	- Every parent is a father or a mother.
 < 

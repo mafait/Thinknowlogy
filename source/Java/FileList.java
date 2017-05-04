@@ -1,9 +1,9 @@
 /*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -31,6 +31,8 @@ import java.io.IOException;
 
 class FileList extends List
 	{
+	// Private methods
+
 	private static boolean doesFileNameContainExtension( String fileNameString )
 		{
 		int position;
@@ -51,22 +53,22 @@ class FileList extends List
 		return false;
 		}
 
+	private FileItem firstActiveFileItem()
+		{
+		return (FileItem)firstActiveItem();
+		}
+
 	private FileResultType createFileItem( boolean isInfoFile, boolean isTestFile, String readFileNameString, String writeFileNameString, BufferedReader readFile, BufferedWriter writeFile )
 		{
 		FileResultType fileResult = new FileResultType();
 
 		if( ( fileResult.createdFileItem = new FileItem( isInfoFile, isTestFile, readFileNameString, writeFileNameString, readFile, writeFile, this, myWordItem() ) ) == null )
-			return startFileResultError( 1, null, "I failed to create a file item" );
+			return startFileResultError( 1, "I failed to create a file item" );
 
 		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, fileResult.createdFileItem ) != Constants.RESULT_OK )
-			return addFileResultError( 1, null, "I failed to add an active file item" );
+			return addFileResultError( 1, "I failed to add an active file item" );
 
 		return fileResult;
-		}
-
-	private FileItem firstActiveFileItem()
-		{
-		return (FileItem)firstActiveItem();
 		}
 
 
@@ -74,11 +76,17 @@ class FileList extends List
 
 	protected FileList( WordItem myWordItem )
 		{
-		initializeListVariables( Constants.ADMIN_FILE_LIST_SYMBOL, myWordItem );
+		initializeListVariables( Constants.ADMIN_FILE_LIST_SYMBOL, "FileList", myWordItem );
 		}
 
 
 	// Protected methods
+
+	protected boolean isCurrentFileTestFile()
+		{
+		FileItem currentFileItem = firstActiveFileItem();
+		return ( currentFileItem == null ? false : currentFileItem.isTestFile() );
+		}
 
 	protected boolean isCurrentlyTesting()
 		{
@@ -93,12 +101,6 @@ class FileList extends List
 			}
 
 		return false;
-		}
-
-	protected boolean isCurrentFileTestFile()
-		{
-		FileItem currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == null ? false : currentFileItem.isTestFile() );
 		}
 
 	protected boolean isDisplayingLine()
@@ -128,11 +130,11 @@ class FileList extends List
 		FileItem currentFileItem = firstActiveFileItem();
 
 		if( currentFileItem == null )
-			return startError( 1, null, "There is no file to close" );
+			return startError( 1, "There is no file to close" );
 
 		// Check to be sure to close the right file
 		if( currentFileItem != closeFileItem )
-			return startError( 1, null, "The given file item isn't the current file" );
+			return startError( 1, "The given file item isn't the current file" );
 
 		try	{
 			if( currentFileItem.readFile() != null )
@@ -143,7 +145,7 @@ class FileList extends List
 			}
 		catch( IOException exception )
 			{
-			return startError( 1, null, "I couldn't close read file: \"" + currentFileItem.readFileNameString() + "\"" );
+			return startError( 1, "I couldn't close read file: \"" + currentFileItem.readFileNameString() + "\"" );
 			}
 
 		try	{
@@ -155,33 +157,27 @@ class FileList extends List
 			}
 		catch( IOException exception )
 			{
-			return startError( 1, null, "I couldn't close write file: \"" + currentFileItem.writeFileNameString() + "\"" );
+			return startError( 1, "I couldn't close write file: \"" + currentFileItem.writeFileNameString() + "\"" );
 			}
 
 		if( deleteItem( currentFileItem ) != Constants.RESULT_OK )
-			return addError( 1, null, "I failed to delete a file item" );
+			return addError( 1, "I failed to delete a file item" );
 
 		return Constants.RESULT_OK;
 		}
-/*
-	protected byte storeChangesInFutureDatabase()
+
+	protected BufferedReader currentReadFile()
 		{
-		FileItem searchFileItem = firstActiveFileItem();
-
-		while( searchFileItem != null )
-			{
-			if( searchFileItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchFileItem.storeFileItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to store a file item in the database" );
-				}
-
-			searchFileItem = searchFileItem.nextFileItem();
-			}
-
-		return Constants.RESULT_OK;
+		FileItem currentFileItem = firstActiveFileItem();
+		return ( currentFileItem == null ? null : currentFileItem.readFile() );
 		}
-*/
+
+	protected BufferedWriter currentWriteFile()
+		{
+		FileItem currentFileItem = firstActiveFileItem();
+		return ( currentFileItem == null ? null : currentFileItem.writeFile() );
+		}
+
 	protected FileResultType openFile( boolean isAddingSubPath, boolean isInfoFile, boolean isTestFile, boolean isReportingErrorIfFileDoesNotExist, String defaultSubPathString, String fileNameString, String testOutputFileSubPathString, String testReferenceFileSubPathString )
 		{
 		FileResultType fileResult = new FileResultType();
@@ -192,13 +188,13 @@ class FileList extends List
 		StringBuffer writeFileNameStringBuffer = new StringBuffer();
 
 		if( defaultSubPathString == null )
-			return startFileResultError( 1, null, "The given default subpath string is undefined" );
+			return startFileResultError( 1, "The given default subpath string is undefined" );
 
 		if( fileNameString == null )
-			return startFileResultError( 1, null, "The given file name string is undefined" );
+			return startFileResultError( 1, "The given file name string is undefined" );
 
 		if( fileNameString.length() == 0 )
-			return startFileResultError( 1, null, "The copied file name string buffer is empty" );
+			return startFileResultError( 1, "The copied file name string buffer is empty" );
 
 		// Skip absolute path
 		if( fileNameString.charAt( 0 ) != Constants.SYMBOL_SLASH &&
@@ -255,7 +251,7 @@ class FileList extends List
 					if( fileResult.createdFileItem != null )
 						closeCurrentFile( fileResult.createdFileItem );
 
-					return addFileResultError( 1, null, "I failed to create a file item" );
+					return addFileResultError( 1, "I failed to create a file item" );
 					}
 				}
 			else
@@ -268,25 +264,13 @@ class FileList extends List
 				{
 				// The startup file is the first file to be read when this Java application is still packed in a Zip file
 				if( fileNameString.equals( Constants.FILE_STARTUP_NAME_STRING ) )
-					return startFileResultSystemError( 1, null, "You are probably trying to start this Java application still being packed in a Zip file.\nYou need to unpack the Zip file to start this Java application" );
+					return startFileResultError( 1, "You are probably trying to start this Java application still being packed in a Zip file.\nYou need to unpack the Zip file to start this Java application" );
 
-				return startFileResultError( 1, null, "I couldn't open " + ( readFile == null ? "file for reading: \"" + readFileNameStringBuffer + "\"" : ( testReferenceFileSubPathString != null && fileResult.referenceFile == null ? ( "reference file for reading: \"" + referenceFileNameStringBuffer + "\"" ) : ( testOutputFileSubPathString == null ? "an unknown file" : ( " file for writing: \"" + writeFileNameStringBuffer + "\"" ) ) ) ) );
+				return startFileResultError( 1, "I couldn't open " + ( readFile == null ? "file for reading: \"" + readFileNameStringBuffer + "\"" : ( testReferenceFileSubPathString != null && fileResult.referenceFile == null ? ( "reference file for reading: \"" + referenceFileNameStringBuffer + "\"" ) : ( testOutputFileSubPathString == null ? "an unknown file" : ( " file for writing: \"" + writeFileNameStringBuffer + "\"" ) ) ) ) );
 				}
 			}
 
 		return fileResult;
-		}
-
-	protected BufferedReader currentReadFile()
-		{
-		FileItem currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == null ? null : currentFileItem.readFile() );
-		}
-
-	protected BufferedWriter currentWriteFile()
-		{
-		FileItem currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == null ? null : currentFileItem.writeFile() );
 		}
 	};
 

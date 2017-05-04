@@ -1,0 +1,92 @@
+﻿* 
+* My conclusions:
+< Fathers and children are part of every family.
+< 
+* 
+* My conclusions:
+< Every father is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< A father is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< Paul is masculine.
+* 
+* My assumptions:
+< Paul is probably a person.
+< Paul is probably not a woman.
+< 
+* 
+* My conclusions:
+< Joe is masculine.
+* 
+* My assumptions:
+< Joe is probably a person.
+< Joe is probably not a woman.
+< 
+* 
+* My conclusions:
+< Anna is feminine.
+* 
+* My assumptions:
+< Anna is probably a person.
+< Anna is probably not a man.
+< 
+* 
+* My assumptions that are concluded:
+< Anna is not a man.
+* 
+* My conclusions:
+< John is part of a family.
+< John is a man.
+< John is not a woman.
+< John is masculine.
+< John is not a mother.
+< Paul has 2 fathers, called John and Anna.
+< Paul has a father, called John.
+< Paul has a mother, called Anna.
+< Joe has 2 fathers, called John and Anna.
+< Joe has a father, called John.
+< Joe has a mother, called Anna.
+< Laura has 2 fathers, called John and Anna.
+< Laura has a father, called John.
+< Laura has a mother, called Anna.
+< Anna is part of a family.
+< Anna is not a father.
+* 
+* My assumptions:
+< John is probably a person.
+< John has probably 3 children, called Paul, Joe and Laura.
+< John has possibly a daughter, called Laura.
+< Paul is probably a child of John and Anna.
+< Paul is probably part of a family.
+< Paul is probably not a boy.
+< Paul is probably not a daughter.
+< Joe is probably a child of John and Anna.
+< Joe is probably part of a family.
+< Joe is probably not a boy.
+< Joe is probably not a daughter.
+< Laura is possibly a daughter of John and Anna.
+< Laura is maybe a person.
+< Laura is possibly part of a family.
+< Laura is possibly not a boy and not a man.
+< Laura is possibly not a child.
+< Anna has probably 3 children, called Paul, Joe and Laura.
+< Anna has possibly a daughter, called Laura.
+* 
+* My questions:
+< Is Laura a girl or a woman?
+< 

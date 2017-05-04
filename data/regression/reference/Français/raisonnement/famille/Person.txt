@@ -39,6 +39,7 @@
 * 
 * Mes hypothèses:
 < Amélie est probablement une femme.
+< Amélie est probablement féminine.
 < Amélie n'est probablement pas un homme.
 < 
 * 
@@ -47,6 +48,9 @@
 <	- Amélie est une personne.
 <	- Chaque personne est un homme ou une femme.
 <	- Nom propre «Amélie» est probablement féminin.
+< Amélie est probablement féminine. En raison:
+<	- Amélie est probablement une femme.
+<	- Chaque femme est féminine.
 < Amélie n'est probablement pas un homme. En raison:
 <	- Amélie est une personne.
 <	- Chaque personne est un homme ou une femme.

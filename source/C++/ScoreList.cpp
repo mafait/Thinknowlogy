@@ -1,9 +1,9 @@
 /*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -21,19 +21,52 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-// Score List header
+#include "List.h"
+#include "ScoreItem.cpp"
+#include "SelectionResultType.cpp"
 
-#include "ScoreList.h"
+class ScoreList : private List
+	{
+	friend class AdminItem;
 
 	// Private functions
 
-	ResultType ScoreList::markAction( SelectionItem *markSelectionReference )
+	void deleteScoreList( ScoreItem *searchScoreItem )
+		{
+		ScoreItem *deleteScoreItem;
+
+		while( searchScoreItem != NULL )
+			{
+			deleteScoreItem = searchScoreItem;
+			searchScoreItem = searchScoreItem->nextScoreItem();
+			delete deleteScoreItem;
+			}
+		}
+
+	bool hasEqualScore( unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore, unsigned int bestOldSatisfiedScore, unsigned int bestNewSatisfiedScore, unsigned int bestOldDissatisfiedScore, unsigned int bestNewDissatisfiedScore, unsigned int bestOldNotBlockingScore, unsigned int bestNewNotBlockingScore, unsigned int bestOldBlockingScore, unsigned int bestNewBlockingScore )
+		{
+		bool isEqualSatisfiedScore = ( oldSatisfiedScore == bestOldSatisfiedScore &&
+										newSatisfiedScore == bestNewSatisfiedScore );
+		bool isEqualDissatisfiedScore = ( oldDissatisfiedScore == bestOldDissatisfiedScore &&
+										newDissatisfiedScore == bestNewDissatisfiedScore );
+		bool isEqualNotBlockingScore = ( oldNotBlockingScore == bestOldNotBlockingScore &&
+										newNotBlockingScore == bestNewNotBlockingScore );
+		bool isEqualBlockingScore = ( oldBlockingScore == bestOldBlockingScore &&
+										newBlockingScore == bestNewBlockingScore );
+
+		return( isEqualSatisfiedScore &&
+				isEqualDissatisfiedScore &&
+				isEqualNotBlockingScore &&
+				isEqualBlockingScore );
+		}
+
+	signed char markAction( SelectionItem *markSelectionReference )
 		{
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "MarkAction";
 
 		if( markSelectionReference == NULL )
-			return startError( functionNameString, NULL, "The given score item is undefined" );
+			return startError( functionNameString, "The given score item is undefined" );
 
 		while( searchScoreItem != NULL )
 			{
@@ -47,13 +80,13 @@
 		return RESULT_OK;
 		}
 
-	ResultType ScoreList::disableAction( bool isIncludingMarkedActions, SelectionItem *disableItem )
+	signed char disableAction( bool isIncludingMarkedActions, SelectionItem *disableItem )
 		{
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "DisableAction";
 
 		if( disableItem == NULL )
-			return startError( functionNameString, NULL, "The given score item is undefined" );
+			return startError( functionNameString, "The given score item is undefined" );
 
 		while( searchScoreItem != NULL )
 			{
@@ -73,14 +106,22 @@
 		return RESULT_OK;
 		}
 
-	ResultType ScoreList::getBestScore( bool isCummulative, unsigned short solveStrategyParameter, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore, unsigned int bestOldSatisfiedScore, unsigned int bestNewSatisfiedScore, unsigned int bestOldDissatisfiedScore, unsigned int bestNewDissatisfiedScore, unsigned int bestOldNotBlockingScore, unsigned int bestNewNotBlockingScore, unsigned int bestOldBlockingScore, unsigned int bestNewBlockingScore )
+	ScoreItem *firstActiveScoreItem()
+		{
+		return (ScoreItem *)firstActiveItem();
+		}
+
+	ScoreItem *nextScoreListItem()
+		{
+		return (ScoreItem *)nextListItem();
+		}
+
+	BoolResultType getBestScore( bool isCummulative, unsigned short solveStrategyParameter, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore, unsigned int bestOldSatisfiedScore, unsigned int bestNewSatisfiedScore, unsigned int bestOldDissatisfiedScore, unsigned int bestNewDissatisfiedScore, unsigned int bestOldNotBlockingScore, unsigned int bestNewNotBlockingScore, unsigned int bestOldBlockingScore, unsigned int bestNewBlockingScore )
 		{
 		bool isEqualSatisfiedScore = ( oldSatisfiedScore == bestOldSatisfiedScore &&
 										newSatisfiedScore == bestNewSatisfiedScore );
 		bool isEqualDissatisfiedScore = ( oldDissatisfiedScore == bestOldDissatisfiedScore &&
 										newDissatisfiedScore == bestNewDissatisfiedScore );
-		bool isEqualNotBlockingScore = ( oldNotBlockingScore == bestOldNotBlockingScore &&
-										newNotBlockingScore == bestNewNotBlockingScore );
 		bool isEqualBlockingScore = ( oldBlockingScore == bestOldBlockingScore &&
 										newBlockingScore == bestNewBlockingScore );
 
@@ -101,87 +142,62 @@
 		bool isHigherDissatisfiedScore = ( dissatisfiedScore > bestDissatisfiedScore );
 		bool isLowerNotBlockingScore = ( notBlockingScore < bestNotBlockingScore );
 		bool isLowerBlockingScore = ( blockingScore < bestBlockingScore );
+		BoolResultType boolResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "getBestScore";
 
 		if( solveStrategyParameter != NO_SOLVE_STRATEGY_PARAMETER &&
 		solveStrategyParameter != WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
 		solveStrategyParameter != WORD_PARAMETER_ADJECTIVE_EXCLUSIVE )
-			return startError( functionNameString, NULL, "The given solve strategy parameter isn't implemented" );
+			return startBoolResultError( functionNameString, "The given solve strategy parameter is invalid" );
 
-		hasBetterScore_ = false;
-		hasEqualScore_ = ( isEqualSatisfiedScore &&
-						isEqualDissatisfiedScore &&
-						isEqualNotBlockingScore &&
-						isEqualBlockingScore );
+		// Has better score
+		boolResult.booleanValue =	( ( solveStrategyParameter == NO_SOLVE_STRATEGY_PARAMETER &&
+									( isHigherSatisfiedScore ||
+									( isEqualSatisfiedScore &&
+									isLowerDissatisfiedScore ) ) ) ||
 
-		hasBetterScore_ =	// Get best satisfying strategy,
-							( ( solveStrategyParameter == NO_SOLVE_STRATEGY_PARAMETER &&
-								( isHigherSatisfiedScore ||
+								( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
+									( isLowerDissatisfiedScore ||
+									( isEqualDissatisfiedScore &&
+									isHigherSatisfiedScore ) ) ) ||
+
+								( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_EXCLUSIVE &&
+									// Has no dissatisfied score and superior satisfied score
+									( ( isSuperiorSatisfiedScore &&
+									( isCummulative ||
+									dissatisfiedScore == NO_SCORE ) ) ||
+
+									// Has no old satisfied score and has new satisfied score and higher dissatisfied score
+									( isHigherDissatisfiedScore &&
+									( isCummulative ||
+									( oldSatisfiedScore == NO_SCORE &&
+									newSatisfiedScore > NO_SCORE ) ) ) ) ) ||
+
+								// else if equal satisfying strategy,
 								( isEqualSatisfiedScore &&
-								isLowerDissatisfiedScore ) ) ) ||
+								isEqualDissatisfiedScore &&
 
-							( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
-								( isLowerDissatisfiedScore ||
-								( isEqualDissatisfiedScore &&
-								isHigherSatisfiedScore ) ) ) ||
+								// Get lowest blocking score, else if equal blocking score, Get lowest not blocking score
+								( isLowerBlockingScore ||
+								( isEqualBlockingScore &&
+								isLowerNotBlockingScore ) ) ) );
 
-							( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_EXCLUSIVE &&
-								// Has no dissatisfied score and superior satisfied score
-								( ( isSuperiorSatisfiedScore &&
-								( isCummulative ||
-								dissatisfiedScore == NO_SCORE ) ) ||
-
-								// Has no old satisfied score and has new satisfied score and higher dissatisfied score
-								( isHigherDissatisfiedScore &&
-								( isCummulative ||
-								( oldSatisfiedScore == NO_SCORE &&
-								newSatisfiedScore > NO_SCORE ) ) ) ) ) ||
-
-							// else if equal satisfying strategy,
-							( isEqualSatisfiedScore &&
-							isEqualDissatisfiedScore &&
-
-							// Get lowest blocking score, else if equal blocking score, Get lowest not blocking score
-							( isLowerBlockingScore ||
-							( isEqualBlockingScore &&
-							isLowerNotBlockingScore ) ) ) );
-
-		return RESULT_OK;
-		}
-
-	ScoreItem *ScoreList::firstActiveScoreItem()
-		{
-		return (ScoreItem *)firstActiveItem();
-		}
-
-	ScoreItem *ScoreList::nextScoreListItem()
-		{
-		return (ScoreItem *)nextListItem();
+		return boolResult;
 		}
 
 
 	// Constructor
 
-	ScoreList::ScoreList( CommonVariables *commonVariables, WordItem *myWordItem )
+	ScoreList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		hasBetterScore_ = false;
-		hasEqualScore_ = false;
-		hasFoundScore_ = false;
+		// Private constructed variables
 
-		initializeListVariables( ADMIN_SCORE_LIST_SYMBOL, "ScoreList", commonVariables, myWordItem );
+		initializeListVariables( ADMIN_SCORE_LIST_SYMBOL, "ScoreList", commonVariables, inputOutput, myWordItem );
 		}
 
-	ScoreList::~ScoreList()
+	~ScoreList()
 		{
-		ScoreItem *deleteScoreItem;
-		ScoreItem *searchScoreItem = firstActiveScoreItem();
-
-		while( searchScoreItem != NULL )
-			{
-			deleteScoreItem = searchScoreItem;
-			searchScoreItem = searchScoreItem->nextScoreItem();
-			delete deleteScoreItem;
-			}
+		deleteScoreList( firstActiveScoreItem() );
 
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class ScoreList has inactive items." );
@@ -192,20 +208,13 @@
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class ScoreList has replaced items." );
 
-		searchScoreItem = (ScoreItem *)firstDeletedItem();
-
-		while( searchScoreItem != NULL )
-			{
-			deleteScoreItem = searchScoreItem;
-			searchScoreItem = searchScoreItem->nextScoreItem();
-			delete deleteScoreItem;
-			}
+		deleteScoreList( (ScoreItem *)firstDeletedItem() );
 		}
 
 
 	// Protected virtual functions
 
-	bool ScoreList::isTemporaryList()
+	bool isTemporaryList()
 		{
 		return true;
 		}
@@ -213,12 +222,7 @@
 
 	// Protected functions
 
-	bool ScoreList::hasFoundScore()
-		{
-		return hasFoundScore_;
-		}
-
-	unsigned int ScoreList::nPossibilities()
+	unsigned int nPossibilities()
 		{
 		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
 		unsigned int nItems = 0;
@@ -236,13 +240,13 @@
 		return nItems;
 		}
 
-	ResultType ScoreList::changeAction( SelectionItem *actionSelectionItem )
+	signed char changeAction( SelectionItem *actionSelectionItem )
 		{
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "changeAction";
 
 		if( actionSelectionItem == NULL )
-			return startError( functionNameString, NULL, "The given action selection item is undefined" );
+			return startError( functionNameString, "The given action selection item is undefined" );
 
 		while( searchScoreItem != NULL )
 			{
@@ -259,57 +263,17 @@
 		return RESULT_OK;
 		}
 
-	ResultType ScoreList::checkSelectionItemForUsage( SelectionItem *unusedSelectionItem )
+	signed char createScoreItem( bool isChecked, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore, SelectionItem *referenceSelectionItem )
 		{
-		ScoreItem *searchScoreItem = firstActiveScoreItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkSelectionItemForUsage";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "createScoreItem";
 
-		if( unusedSelectionItem == NULL )
-			return startError( functionNameString, NULL, "The given unused justification item is undefined" );
-
-		while( searchScoreItem != NULL )
-			{
-			if( searchScoreItem->referenceSelectionItem == unusedSelectionItem )
-				return startError( functionNameString, NULL, "The reference selection item is still in use" );
-
-			searchScoreItem = searchScoreItem->nextScoreItem();
-			}
+		if( addItemToList( QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, commonVariables()->currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add an active score item" );
 
 		return RESULT_OK;
 		}
 
-	ResultType ScoreList::findScore( bool isPreparingSort, SelectionItem *findScoreItem )
-		{
-		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
-		ScoreItem *searchScoreItem = firstActiveScoreItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findScore";
-
-		hasFoundScore_ = false;
-
-		if( findScoreItem == NULL )
-			return startError( functionNameString, NULL, "The given score item is undefined" );
-
-		while( searchScoreItem != NULL &&
-		searchScoreItem->assignmentLevel() >= currentAssignmentLevel )
-			{
-			if( searchScoreItem->assignmentLevel() == currentAssignmentLevel )
-				{
-				if( ( searchScoreItem->isChecked ||
-				currentAssignmentLevel == NO_ASSIGNMENT_LEVEL ) &&
-				searchScoreItem->referenceSelectionItem == findScoreItem )
-					{
-					hasFoundScore_ = true;
-					searchScoreItem->isMarked = isPreparingSort;
-					}
-				}
-
-			searchScoreItem = searchScoreItem->nextScoreItem();
-			}
-
-		return RESULT_OK;
-		}
-
-	ResultType ScoreList::deleteScores()
+	signed char deleteScores()
 		{
 		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
@@ -321,7 +285,7 @@
 			if( searchScoreItem->assignmentLevel() == currentAssignmentLevel )
 				{
 				if( deleteItem( searchScoreItem ) != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to delete an active item" );
+					return addError( functionNameString, "I failed to delete an active item" );
 
 				searchScoreItem = nextScoreListItem();
 				}
@@ -332,7 +296,17 @@
 		return RESULT_OK;
 		}
 
-	ResultType ScoreList::checkScores( bool isInverted, unsigned short solveStrategyParameter, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore )
+	ScoreItem *firstPossibility()
+		{
+		ScoreItem *firstScoreItem;
+
+		if( ( firstScoreItem = firstActiveScoreItem() ) != NULL )
+			return firstScoreItem->firstPossibilityScoreItem();
+
+		return NULL;
+		}
+
+	BoolResultType checkScores( bool isInverted, unsigned short solveStrategyParameter, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore )
 		{
 		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
 		unsigned int checkOldSatisfiedScore = ( isInverted ? oldDissatisfiedScore : oldSatisfiedScore );
@@ -340,9 +314,9 @@
 		unsigned int checkOldDissatisfiedScore = ( isInverted ? oldSatisfiedScore : oldDissatisfiedScore );
 		unsigned int checkNewDissatisfiedScore = ( isInverted ? newSatisfiedScore : newDissatisfiedScore );
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
+		BoolResultType boolCheckResult;
+		BoolResultType boolReturnResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkScores";
-
-		hasFoundScore_ = false;
 
 		if( checkOldSatisfiedScore <= NO_SCORE &&
 		checkNewSatisfiedScore <= NO_SCORE &&
@@ -353,7 +327,7 @@
 		newNotBlockingScore <= NO_SCORE &&
 		oldBlockingScore <= NO_SCORE &&
 		newBlockingScore <= NO_SCORE )
-			return startError( functionNameString, NULL, "None of the given scores has a value parameter" );
+			return startBoolResultError( functionNameString, "None of the given scores has a value parameter" );
 
 		while( searchScoreItem != NULL &&
 		searchScoreItem->assignmentLevel() >= currentAssignmentLevel )
@@ -370,7 +344,8 @@
 				!searchScoreItem->hasOldBlockingScore() &&
 				!searchScoreItem->hasNewBlockingScore() )
 					{
-					hasFoundScore_ = true;
+					// Has found score
+					boolReturnResult.booleanValue = true;
 
 					searchScoreItem->oldSatisfiedScore = checkOldSatisfiedScore;
 					searchScoreItem->newSatisfiedScore = checkNewSatisfiedScore;
@@ -385,12 +360,11 @@
 					{
 					if( searchScoreItem->isMarked )
 						{
-						if( getBestScore( false, solveStrategyParameter, checkOldSatisfiedScore, checkNewSatisfiedScore, checkOldDissatisfiedScore, checkNewDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, searchScoreItem->oldSatisfiedScore, searchScoreItem->newSatisfiedScore, searchScoreItem->oldDissatisfiedScore, searchScoreItem->newDissatisfiedScore, searchScoreItem->oldNotBlockingScore, searchScoreItem->newNotBlockingScore, searchScoreItem->oldBlockingScore, searchScoreItem->newBlockingScore ) != RESULT_OK )
-							return addError( functionNameString, NULL, "I failed to get the best score" );
+						if( ( boolCheckResult = getBestScore( false, solveStrategyParameter, checkOldSatisfiedScore, checkNewSatisfiedScore, checkOldDissatisfiedScore, checkNewDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, searchScoreItem->oldSatisfiedScore, searchScoreItem->newSatisfiedScore, searchScoreItem->oldDissatisfiedScore, searchScoreItem->newDissatisfiedScore, searchScoreItem->oldNotBlockingScore, searchScoreItem->newNotBlockingScore, searchScoreItem->oldBlockingScore, searchScoreItem->newBlockingScore ) ).result != RESULT_OK )
+							return addBoolResultError( functionNameString, "I failed to get the best score" );
 
-						hasFoundScore_ = true;
-
-						if( hasBetterScore_ )
+						// Has better score
+						if( boolCheckResult.booleanValue )
 							{
 							searchScoreItem->oldSatisfiedScore = checkOldSatisfiedScore;
 							searchScoreItem->newSatisfiedScore = checkNewSatisfiedScore;
@@ -401,6 +375,9 @@
 							searchScoreItem->oldBlockingScore = oldBlockingScore;
 							searchScoreItem->newBlockingScore = newBlockingScore;
 							}
+
+						// Has found score
+						boolReturnResult.booleanValue = true;
 						}
 					}
 				}
@@ -408,22 +385,43 @@
 			searchScoreItem = searchScoreItem->nextScoreItem();
 			}
 
-		return RESULT_OK;
+		return boolReturnResult;
 		}
 
-	ResultType ScoreList::createScoreItem( bool isChecked, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore, SelectionItem *referenceSelectionItem )
+	BoolResultType findScore( bool isPreparingSort, SelectionItem *findScoreItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createScoreItem";
+		BoolResultType boolResult;
+		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
+		ScoreItem *searchScoreItem = firstActiveScoreItem();
+		char functionNameString[FUNCTION_NAME_LENGTH] = "findScore";
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, commonVariables()->currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, NULL, "I failed to add an active score item" );
+		if( findScoreItem == NULL )
+			return startBoolResultError( functionNameString, "The given score item is undefined" );
 
-		return RESULT_OK;
+		while( searchScoreItem != NULL &&
+		searchScoreItem->assignmentLevel() >= currentAssignmentLevel )
+			{
+			if( ( currentAssignmentLevel == NO_ASSIGNMENT_LEVEL ||
+			searchScoreItem->isChecked ) &&
+
+			searchScoreItem->assignmentLevel() == currentAssignmentLevel &&
+			searchScoreItem->referenceSelectionItem == findScoreItem )
+				{
+				// Has found score
+				boolResult.booleanValue = true;
+				searchScoreItem->isMarked = isPreparingSort;
+				}
+
+			searchScoreItem = searchScoreItem->nextScoreItem();
+			}
+
+		return boolResult;
 		}
 
-	SelectionResultType ScoreList::getBestAction( bool isCurrentlyTesting, unsigned short solveStrategyParameter )
+	SelectionResultType getBestSelection( bool isCurrentlyTesting, unsigned short solveStrategyParameter )
 		{
 		SelectionResultType selectionResult;
+		bool hasBetterScore = false;
 		bool isCummulate = false;
 		unsigned int nRandomEntries = 0;
 		unsigned int nLocalLosingScores;
@@ -448,10 +446,9 @@
 		unsigned int bestNewBlockingScore = MAX_SCORE;
 		ScoreItem *localScoreItem;
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getBestAction";
-
-		hasEqualScore_ = false;
-		hasBetterScore_ = false;
+		SelectionItem *bestActionSelectionItem = NULL;
+		BoolResultType boolResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "getBestSelection";
 
 		while( searchScoreItem != NULL )
 			{
@@ -495,10 +492,11 @@
 								nLocalLosingScores++;
 							else
 								{
-								if( getBestScore( false, solveStrategyParameter, localScoreItem->oldSatisfiedScore, localScoreItem->newSatisfiedScore, localScoreItem->oldDissatisfiedScore, localScoreItem->newDissatisfiedScore, localScoreItem->oldNotBlockingScore, localScoreItem->newNotBlockingScore, localScoreItem->oldBlockingScore, localScoreItem->newBlockingScore, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore ) != RESULT_OK )
-									return addSelectionResultError( functionNameString, NULL, "I failed to get the best local score" );
+								if( ( boolResult = getBestScore( false, solveStrategyParameter, localScoreItem->oldSatisfiedScore, localScoreItem->newSatisfiedScore, localScoreItem->oldDissatisfiedScore, localScoreItem->newDissatisfiedScore, localScoreItem->oldNotBlockingScore, localScoreItem->newNotBlockingScore, localScoreItem->oldBlockingScore, localScoreItem->newBlockingScore, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore ) ).result != RESULT_OK )
+									return addSelectionResultError( functionNameString, "I failed to get the best local score" );
 
-								if( hasBetterScore_ )
+								// Has better score
+								if( boolResult.booleanValue )
 									{
 									localOldSatisfiedScore = localScoreItem->oldSatisfiedScore;
 									localNewSatisfiedScore = localScoreItem->newSatisfiedScore;
@@ -516,22 +514,25 @@
 					localScoreItem = localScoreItem->nextScoreItem();
 					}
 
-				hasEqualScore_ = ( nLocalWinningScores == nBestWinningScores &&
-				nLocalLosingScores == nBestLosingScores );
-
-				if( hasEqualScore_ )
+				if( nLocalWinningScores == nBestWinningScores &&
+				nLocalLosingScores == nBestLosingScores )
 					{
-					if( getBestScore( false, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) != RESULT_OK )
-						return addSelectionResultError( functionNameString, NULL, "I failed to get the best score" );
+					if( ( boolResult = getBestScore( false, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) ).result != RESULT_OK )
+						return addSelectionResultError( functionNameString, "I failed to get the best score" );
+
+					// Has better score
+					hasBetterScore = boolResult.booleanValue;
 					}
 				else
+					{
 					// Get highest number of winning scores, else if equal: Get lowest number of losing scores
-					hasBetterScore_ = ( nLocalWinningScores > nBestWinningScores ||
+					hasBetterScore = ( nLocalWinningScores > nBestWinningScores ||
 
 										( nLocalWinningScores == nBestWinningScores &&
 										nLocalLosingScores < nBestLosingScores ) );
+					}
 
-				if( hasBetterScore_ )
+				if( hasBetterScore )
 					{
 					isCummulate = false;
 					nBestWinningScores = nLocalWinningScores;
@@ -546,31 +547,29 @@
 					bestOldBlockingScore = localOldBlockingScore;
 					bestNewBlockingScore = localNewBlockingScore;
 
-					if( searchScoreItem->referenceSelectionItem != selectionResult.bestActionItem )
+					if( searchScoreItem->referenceSelectionItem != bestActionSelectionItem )
 						{
-						if( selectionResult.bestActionItem != NULL )
-							{
-							// Previous best action
-							if( disableAction( true, selectionResult.bestActionItem ) != RESULT_OK )
-								return addSelectionResultError( functionNameString, NULL, "I failed to disable the best action" );
-							}
+						if( bestActionSelectionItem != NULL &&
+						// Previous best action
+						disableAction( true, bestActionSelectionItem ) != RESULT_OK )
+							return addSelectionResultError( functionNameString, "I failed to disable the best action" );
 
 						// Current action
 						if( markAction( searchScoreItem->referenceSelectionItem ) != RESULT_OK )
-							return addSelectionResultError( functionNameString, NULL, "I failed to mark an action" );
+							return addSelectionResultError( functionNameString, "I failed to mark an action" );
 						}
 
-					selectionResult.bestActionItem = searchScoreItem->referenceSelectionItem;
+					bestActionSelectionItem = searchScoreItem->referenceSelectionItem;
 					}
 				else
 					{
-					if( searchScoreItem->referenceSelectionItem != selectionResult.bestActionItem )
+					if( searchScoreItem->referenceSelectionItem != bestActionSelectionItem )
 						{
-						if( hasEqualScore_ )
+						if( hasEqualScore( localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) )
 							{
 							// Current action
 							if( markAction( searchScoreItem->referenceSelectionItem ) != RESULT_OK )
-								return addSelectionResultError( functionNameString, NULL, "I failed to mark an action" );
+								return addSelectionResultError( functionNameString, "I failed to mark an action" );
 
 							// Found the same best score with different action
 							isCummulate = true;
@@ -579,7 +578,7 @@
 							{
 							// Previous best action
 							if( disableAction( false, searchScoreItem->referenceSelectionItem ) != RESULT_OK )
-								return addSelectionResultError( functionNameString, NULL, "I failed to disable an action" );
+								return addSelectionResultError( functionNameString, "I failed to disable an action" );
 							}
 						}
 					}
@@ -600,7 +599,7 @@
 			bestOldBlockingScore = MAX_SCORE;
 			bestNewBlockingScore = MAX_SCORE;
 
-			selectionResult.bestActionItem = NULL;
+			bestActionSelectionItem = NULL;
 
 			searchScoreItem = firstActiveScoreItem();
 
@@ -652,28 +651,28 @@
 							!localScoreItem->hasNewDissatisfiedScore() ) ) )
 								{
 								if( MAX_SCORE - localOldSatisfiedScore <= localScoreItem->oldSatisfiedScore )
-									return startSystemSelectionResultError( functionNameString, NULL, "Overflow of the old satisfied cummulate score" );
+									return startSelectionResultSystemError( functionNameString, "Overflow of the old satisfied cummulate score" );
 
 								if( MAX_SCORE - localNewSatisfiedScore <= localScoreItem->newSatisfiedScore )
-									return startSystemSelectionResultError( functionNameString, NULL, "Overflow of the new satisfied cummulate score" );
+									return startSelectionResultSystemError( functionNameString, "Overflow of the new satisfied cummulate score" );
 
 								if( MAX_SCORE - localOldDissatisfiedScore <= localScoreItem->oldDissatisfiedScore )
-									return startSystemSelectionResultError( functionNameString, NULL, "Overflow of the old dissatisfied cummulate score" );
+									return startSelectionResultSystemError( functionNameString, "Overflow of the old dissatisfied cummulate score" );
 
 								if( MAX_SCORE - localNewDissatisfiedScore <= localScoreItem->newDissatisfiedScore )
-									return startSystemSelectionResultError( functionNameString, NULL, "Overflow of the new dissatisfied cummulate score" );
+									return startSelectionResultSystemError( functionNameString, "Overflow of the new dissatisfied cummulate score" );
 
 								if( MAX_SCORE - localOldNotBlockingScore <= localScoreItem->oldNotBlockingScore )
-									return startSystemSelectionResultError( functionNameString, NULL, "Overflow of the old not-blocking cummulate score" );
+									return startSelectionResultSystemError( functionNameString, "Overflow of the old not-blocking cummulate score" );
 
 								if( MAX_SCORE - localNewNotBlockingScore <= localScoreItem->newNotBlockingScore )
-									return startSystemSelectionResultError( functionNameString, NULL, "Overflow of the new not-blocking cummulate score" );
+									return startSelectionResultSystemError( functionNameString, "Overflow of the new not-blocking cummulate score" );
 
 								if( MAX_SCORE - localOldBlockingScore <= localScoreItem->oldBlockingScore )
-									return startSystemSelectionResultError( functionNameString, NULL, "Overflow of the old blocking cummulate score" );
+									return startSelectionResultSystemError( functionNameString, "Overflow of the old blocking cummulate score" );
 
 								if( MAX_SCORE - localNewBlockingScore <= localScoreItem->newBlockingScore )
-									return startSystemSelectionResultError( functionNameString, NULL, "Overflow of the new blocking cummulate score" );
+									return startSelectionResultSystemError( functionNameString, "Overflow of the new blocking cummulate score" );
 
 								localOldSatisfiedScore += localScoreItem->oldSatisfiedScore;
 								localNewSatisfiedScore += localScoreItem->newSatisfiedScore;
@@ -689,10 +688,11 @@
 						localScoreItem = localScoreItem->nextScoreItem();
 						}
 
-					if( getBestScore( true, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) != RESULT_OK )
-						return addSelectionResultError( functionNameString, NULL, "I failed to get the best local score" );
+					if( ( boolResult = getBestScore( true, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) ).result != RESULT_OK )
+						return addSelectionResultError( functionNameString, "I failed to get the best local score" );
 
-					if( hasBetterScore_ )
+					// Has better score
+					if( boolResult.booleanValue )
 						{
 						nRandomEntries = 1;
 
@@ -705,31 +705,29 @@
 						bestOldBlockingScore = localOldBlockingScore;
 						bestNewBlockingScore = localNewBlockingScore;
 
-						if( searchScoreItem->referenceSelectionItem != selectionResult.bestActionItem )
+						if( searchScoreItem->referenceSelectionItem != bestActionSelectionItem )
 							{
-							if( selectionResult.bestActionItem != NULL )
-								{
-								// Previous best action
-								if( disableAction( true, selectionResult.bestActionItem ) != RESULT_OK )
-									return addSelectionResultError( functionNameString, NULL, "I failed to disable the best action" );
-								}
+							if( bestActionSelectionItem != NULL &&
+							// Previous best action
+							disableAction( true, bestActionSelectionItem ) != RESULT_OK )
+								return addSelectionResultError( functionNameString, "I failed to disable the best action" );
 
 							// Current action
 							if( markAction( searchScoreItem->referenceSelectionItem ) != RESULT_OK )
-								return addSelectionResultError( functionNameString, NULL, "I failed to mark an action" );
+								return addSelectionResultError( functionNameString, "I failed to mark an action" );
 							}
 
-						selectionResult.bestActionItem = searchScoreItem->referenceSelectionItem;
+						bestActionSelectionItem = searchScoreItem->referenceSelectionItem;
 						}
 					else
 						{
-						if( searchScoreItem->referenceSelectionItem != selectionResult.bestActionItem )
+						if( searchScoreItem->referenceSelectionItem != bestActionSelectionItem )
 							{
-							if( hasEqualScore_ )
+							if( hasEqualScore( localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) )
 								{
 								// Current action
 								if( markAction( searchScoreItem->referenceSelectionItem ) != RESULT_OK )
-									return addSelectionResultError( functionNameString, NULL, "I failed to mark an action" );
+									return addSelectionResultError( functionNameString, "I failed to mark an action" );
 
 								nRandomEntries++;
 								}
@@ -737,7 +735,7 @@
 								{
 								// Previous best action
 								if( disableAction( false, searchScoreItem->referenceSelectionItem ) != RESULT_OK )
-									return addSelectionResultError( functionNameString, NULL, "I failed to disable an action" );
+									return addSelectionResultError( functionNameString, "I failed to disable an action" );
 								}
 							}
 						}
@@ -775,7 +773,7 @@
 								}
 							}
 						else
-							selectionResult.bestActionItem = searchScoreItem->referenceSelectionItem;
+							bestActionSelectionItem = searchScoreItem->referenceSelectionItem;
 						}
 
 					searchScoreItem = searchScoreItem->nextScoreItem();
@@ -783,20 +781,12 @@
 				}
 			}
 
+		selectionResult.selectionItem = bestActionSelectionItem;
 		return selectionResult;
 		}
-
-	ScoreItem *ScoreList::firstPossibility()
-		{
-		ScoreItem *firstScoreItem;
-
-		if( ( firstScoreItem = firstActiveScoreItem() ) != NULL )
-			return firstScoreItem->firstPossibilityScoreItem();
-
-		return NULL;
-		}
+	};
 
 /*************************************************************************
- *	"He gives food to those who fear him;
- *	he always remembers his covenant." (Psalm 111:5)
+ *	"All he does is just and good,
+ *	and all his commandments are trustworthy." (Psalm 111:7)
  *************************************************************************/

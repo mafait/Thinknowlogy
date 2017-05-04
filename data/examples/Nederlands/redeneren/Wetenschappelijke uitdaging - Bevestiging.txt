@@ -16,10 +16,10 @@ Ieder persoon is een man of een vrouw.
 Anne is een persoon.
 Anne is een man of een vrouw.
 
-Bill Clinton is de president van de Verenigde Staten.
-De Verenigde Staten heeft een president, genaamd Bill Clinton.
 Barack Obama is de president van de Verenigde Staten.
-De Verenigde Staten heeft een nieuwe president, genaamd Barack Obama.
+De Verenigde Staten heeft een president, genaamd Barack Obama.
+Donald Trump is de president van de Verenigde Staten.
+De Verenigde Staten heeft een nieuwe president, genaamd Donald Trump.
 # De volgende zin is al bevestigd
-De Verenigde Staten heeft een vorige president, genaamd Bill Clinton.
+De Verenigde Staten heeft een vorige president, genaamd Barack Obama.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

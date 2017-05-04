@@ -1,8 +1,8 @@
 /*	Class:		Console
  *	Purpose:	To create the GUI and to process the events
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -52,16 +52,13 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static final long serialVersionUID = -2264899695119545018L;
 
 	// Private variables
-	private static boolean hasSelectedAmbiguityBoston_;
-	private static boolean hasSelectedAmbiguityPresidents_;
+	private static boolean hasSelectedMoreExamples_;
 	private static boolean hasSelectedProgrammingConnect4_;
 	private static boolean hasSelectedProgrammingTowerOfHanoi_;
 	private static boolean hasSelectedReasoningScientificChallenge_;
 	private static boolean hasSelectedReasoningFamilyDefinition_;
-	private static boolean hasSelectedMoreExamples_;
 
-	private static boolean isActionPerformed_;
-	private static boolean isGUIavailable_;
+	private static boolean isSubMenuChanged_;
 	private static boolean isStopResizing_;
 	private static boolean isTesting_;
 	private static boolean isTestingCanceled_;
@@ -71,6 +68,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static short nSubMenuButtons_;
 
 	private static int currentFrameHeight_;
+	private static int currentFrameWidth_;
 	private static int titleBarHeight_;
 	private static int wantedPreferredOutputScrollPaneSize_;
 	private static int windowBottomHeight_;
@@ -98,10 +96,9 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static JButton upperMenuRestartButton_;
 	private static JButton upperMenuUndoButton_;
 	private static JButton upperMenuRedoButton_;
-	private static JButton upperMenuLoginAsExpertButton_;
 	private static JButton upperMenuLoginAsDeveloperButton_;
-	private static JButton upperMenuReadTheTestFileRegressionTestUserButton_;
-	private static JButton upperMenuReadTheTestFileRegressionTestDeepButton_;
+	private static JButton upperMenuLoginAsExpertButton_;
+	private static JButton upperMenuReadTheTestFileRegressionTestButton_;
 	private static JButton upperMenuStopTestingButton_;
 	private static JButton upperMenuMoreExamplesButton_;
 
@@ -111,10 +108,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static JFileChooser fileChooser_;
 
 	// Private components - Main menu
-	private static JButton mainMenuAmbiguitySubMenuButton_;
-	private static JButton mainMenuReadTheFileAmbiguityBostonButton_;
-	private static JButton mainMenuReadTheFileAmbiguityPresidentsButton_;
-
 	private static JButton mainMenuProgrammingSubMenuButton_;
 	private static JButton mainMenuReadTheFileProgrammingConnect4Button_;
 	private static JButton mainMenuReadTheFileProgrammingTowerOfHanoiButton_;
@@ -225,29 +218,29 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			{
 			inputString_ = null;
 			outputArea_.setFont( new Font( currentFontString_, Font.PLAIN, currentFontSize_ ) );
-			enableMenus( true, true );
+			enableMenus( true, true, false );
 			setSubMenuButtonTexts();
 			goToEndOfOutputDocument( true );
 			}
 		}
 
-	private static void enableMenus( boolean isEnablingNormalButtons, boolean isEnablingSubMenuButtons )
+	private static void enableMenus( boolean isEnablingNormalButtons, boolean isEnablingSubMenuButtons, boolean isQuestion )
 		{
-		boolean hasSelectedMainButton = ( hasSelectedProgrammingConnect4_ ||
+		boolean hasSelectedMainButton = ( hasSelectedMoreExamples_ ||
+										hasSelectedProgrammingConnect4_ ||
 										hasSelectedProgrammingTowerOfHanoi_ ||
 										hasSelectedReasoningScientificChallenge_ ||
-										hasSelectedReasoningFamilyDefinition_ ||
-										hasSelectedMoreExamples_ );
-		boolean isChangeFontMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_FONT );
-		boolean isChangeLanguageMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
-		boolean isCurrentUserExpert = ( adminItem_ != null &&
-										adminItem_.isCurrentUserExpert() );
-		boolean isCurrentUserDeveloper = ( adminItem_ != null &&
-											adminItem_.isCurrentUserDeveloper() );
+										hasSelectedReasoningFamilyDefinition_ );
+		boolean isFontMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_FONT );
+		boolean isLanguageMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
+		boolean isDeveloperTheCurrentUser = ( adminItem_ != null &&
+											adminItem_.isDeveloperTheCurrentUser() );
+		boolean isExpertTheCurrentUser = ( adminItem_ != null &&
+											adminItem_.isExpertTheCurrentUser() );
 		boolean isHelpMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_HELP );
 		boolean isInitMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_INIT );
-		boolean isInvisible = ( isChangeFontMenu ||
-								isChangeLanguageMenu ||
+		boolean isInvisible = ( isFontMenu ||
+								isLanguageMenu ||
 								isHelpMenu ||
 								isInitMenu );
 
@@ -257,17 +250,13 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		upperMenuUndoButton_.setEnabled( isEnablingNormalButtons );
 		upperMenuRedoButton_.setEnabled( isEnablingNormalButtons );
 
-		upperMenuLoginAsExpertButton_.setEnabled( isEnablingNormalButtons && !isCurrentUserExpert );
-		upperMenuLoginAsDeveloperButton_.setEnabled( isEnablingNormalButtons && isCurrentUserExpert );
-		upperMenuReadTheTestFileRegressionTestUserButton_.setEnabled( isEnablingNormalButtons && isCurrentUserDeveloper );
-		upperMenuReadTheTestFileRegressionTestDeepButton_.setEnabled( isEnablingNormalButtons && isCurrentUserDeveloper );
+		upperMenuLoginAsDeveloperButton_.setEnabled( isEnablingNormalButtons && isExpertTheCurrentUser );
+		upperMenuLoginAsExpertButton_.setEnabled( isEnablingNormalButtons && !isExpertTheCurrentUser );
+		upperMenuReadTheTestFileRegressionTestButton_.setEnabled( isEnablingNormalButtons && isDeveloperTheCurrentUser );
 
 		upperMenuMoreExamplesButton_.setEnabled( !hasSelectedMainButton && isEnablingNormalButtons );
 
 		// Main menu
-		mainMenuAmbiguitySubMenuButton_.setEnabled( isEnablingNormalButtons );
-		setButtonText( isInvisible, Constants.INTERFACE_CONSOLE_MAIN_MENU_AMBIGUITY_SUBMENU, mainMenuAmbiguitySubMenuButton_ );
-
 		mainMenuProgrammingSubMenuButton_.setEnabled( isEnablingNormalButtons );
 		setButtonText( isInvisible, Constants.INTERFACE_CONSOLE_MAIN_MENU_PROGRAMMING_SUBMENU, mainMenuProgrammingSubMenuButton_ );
 
@@ -275,20 +264,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		setButtonText( isInvisible, Constants.INTERFACE_CONSOLE_MAIN_MENU_REASONING_SUBMENU, mainMenuReasoningSubMenuButton_ );
 		
 		mainMenuHelpButton_.setEnabled( isEnablingNormalButtons );
-
-		if( currentSubMenu_ == Constants.CONSOLE_SUBMENU_AMBIGUITY )
-			{
-			mainMenuReadTheFileAmbiguityBostonButton_.setEnabled( !hasSelectedAmbiguityBoston_ && isEnablingNormalButtons );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_BOSTON, mainMenuReadTheFileAmbiguityBostonButton_ );
-
-			mainMenuReadTheFileAmbiguityPresidentsButton_.setEnabled( !hasSelectedAmbiguityPresidents_ && isEnablingNormalButtons );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_PRESIDENTS, mainMenuReadTheFileAmbiguityPresidentsButton_ );
-			}
-		else
-			{
-			mainMenuReadTheFileAmbiguityBostonButton_.setVisible( false );
-			mainMenuReadTheFileAmbiguityPresidentsButton_.setVisible( false );
-			}
 
 		if( currentSubMenu_ == Constants.CONSOLE_SUBMENU_PROGRAMMING ||
 		currentSubMenu_ == Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 ||
@@ -351,7 +326,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			}
 
 		mainMenuBackButton_.setEnabled( isEnablingNormalButtons );
-		setButtonText( ( !isInitMenu && !isChangeLanguageMenu && !isChangeFontMenu && !isHelpMenu ), Constants.INTERFACE_CONSOLE_MAIN_MENU_BACK, mainMenuBackButton_ );
+		setButtonText( ( !isInitMenu && !isLanguageMenu && !isFontMenu && !isHelpMenu ), Constants.INTERFACE_CONSOLE_MAIN_MENU_BACK, mainMenuBackButton_ );
 
 		setButtonText( isEnablingNormalButtons, Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE, mainMenuChangeLanguageButton_ );
 		setButtonText( isEnablingNormalButtons, Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT, mainMenuChangeFontButton_ );
@@ -364,7 +339,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				subMenuButtonArray_[index].setEnabled( isEnablingSubMenuButtons );
 			}
 
-		inputPanel_.setPreferredSize( new Dimension( 0, ( isCurrentUserExpert || isCurrentUserDeveloper ? Constants.CONSOLE_BUTTON_PANE_HEIGHT : 0 ) ) );
+		inputPanel_.setPreferredSize( new Dimension( 0, ( isExpertTheCurrentUser || isDeveloperTheCurrentUser || isQuestion ? Constants.CONSOLE_BUTTON_PANE_HEIGHT : 0 ) ) );
 		inputField_.requestFocus();
 		}
 
@@ -404,26 +379,20 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				isStopResizing_ = true;
 				nSubMenuButtons_--;
 				}
-			else
-				isGUIavailable_ = true;
 			}
 		else
 			{
-			if( isActionPerformed_ )
+			if( difference < 0 )
 				{
 				wantedPreferredOutputScrollPaneSize_ = preferredOutputScrollPaneSize;
 				goToEndOfOutputDocument( true );
 				}
 			else
 				{
-				if( difference > 0 )
-					{
-					if( difference > 9 )
-						wantedPreferredOutputScrollPaneSize_ += ( difference / 5 );
-					else
-						wantedPreferredOutputScrollPaneSize_++;
-
-					}
+				if( difference > 9 )
+					wantedPreferredOutputScrollPaneSize_ += ( difference / 5 );
+				else
+					wantedPreferredOutputScrollPaneSize_++;
 				}
 			}
 
@@ -431,19 +400,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		subMenuPanel_.setPreferredSize( new Dimension( 0, ( Constants.CONSOLE_BUTTON_PANE_HEIGHT + ( nSubMenuButtons_ > 0 && nSubMenuButtons_ <= Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS ? subMenuButtonArray_[nSubMenuButtons_ - 1].getY() : ( initialLabelEnterSentence_.isVisible() ? initialLabelEnterSentence_.getY() : initialLabelDemoButtons_.getY() ) ) ) ) );
 		outputScrollPane_.setPreferredSize( new Dimension( 0, preferredOutputScrollPaneSize ) );
 		subMenuPanel_.revalidate();
-		}
-
-	private static void resizeFrameComponents( ComponentEvent componentEvent )
-		{
-		Component component;
-
-		if( componentEvent != null &&
-		( component = componentEvent.getComponent() ) != null )
-			{
-			isStopResizing_ = false;
-			currentFrameHeight_ = component.getHeight();
-			resizeFrame();
-			}
 		}
 
 	private static void setButtonText( boolean isInvisible, short interfaceParameter, JButton menuButton )
@@ -484,19 +440,15 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_RESTART, upperMenuRestartButton_ );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_UNDO, upperMenuUndoButton_ );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_REDO, upperMenuRedoButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_LOGIN_AS_EXPERT, upperMenuLoginAsExpertButton_ );
+
 			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_LOGIN_AS_DEVELOPER, upperMenuLoginAsDeveloperButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_REGRESSION_TEST_USER, upperMenuReadTheTestFileRegressionTestUserButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_REGRESSION_TEST_DEEP, upperMenuReadTheTestFileRegressionTestDeepButton_ );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_LOGIN_AS_EXPERT, upperMenuLoginAsExpertButton_ );
+			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_REGRESSION_TEST, upperMenuReadTheTestFileRegressionTestButton_ );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_STOP_TESTING, upperMenuStopTestingButton_ );
 
 			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_MORE_EXAMPLES, upperMenuMoreExamplesButton_ );
 
 			// Main menu buttons
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_AMBIGUITY_SUBMENU, mainMenuAmbiguitySubMenuButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_BOSTON, mainMenuReadTheFileAmbiguityBostonButton_ );
-			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_AMBIGUITY_PRESIDENTS, mainMenuReadTheFileAmbiguityPresidentsButton_ );
-
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_PROGRAMMING_SUBMENU, mainMenuProgrammingSubMenuButton_ );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_CONNECT4, mainMenuReadTheFileProgrammingConnect4Button_ );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_MAIN_MENU_READ_THE_FILE_PROGRAMMING_TOWER_OF_HANOI, mainMenuReadTheFileProgrammingTowerOfHanoiButton_ );
@@ -718,7 +670,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				break;
 			}
 
-		initialLabelEnterSentence_.setVisible( nSubMenuButtons_ == 0 && adminItem_ != null && adminItem_.isCurrentUserDeveloperOrExpert() );
+		initialLabelEnterSentence_.setVisible( nSubMenuButtons_ == 0 && adminItem_ != null && adminItem_.isDeveloperOrExpertTheCurrentUser() );
 		}
 
 	private static void setSubMenuVisible( boolean isClearYourMind, short subMenu )
@@ -726,9 +678,12 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		boolean hasNoSubMenuButtons;
 
 		if( !isClearYourMind )
+			{
+			isSubMenuChanged_ = true;
 			currentSubMenu_ = subMenu;
+			}
 
-			setSubMenuButtonTexts();
+		setSubMenuButtonTexts();
 
 		displayProgressStatus( null );
 
@@ -738,25 +693,24 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		hasNoSubMenuButtons = ( nSubMenuButtons_ == 0 );
 
 		initialLabelDemoButtons_.setVisible( hasNoSubMenuButtons );
-		initialLabelEnterSentence_.setVisible( hasNoSubMenuButtons && adminItem_ != null && adminItem_.isCurrentUserDeveloperOrExpert() );
+		initialLabelEnterSentence_.setVisible( hasNoSubMenuButtons && adminItem_ != null && adminItem_.isDeveloperOrExpertTheCurrentUser() );
 		}
 
 	private static void setUpperMenuVisible( boolean isVisible )
 		{
-		boolean isCurrentUserExpert = ( adminItem_ != null &&
-										adminItem_.isCurrentUserExpert() );
-		boolean isCurrentUserDeveloper = ( adminItem_ != null &&
-										adminItem_.isCurrentUserDeveloper() );
+		boolean isDeveloperTheCurrentUser = ( adminItem_ != null &&
+											adminItem_.isDeveloperTheCurrentUser() );
+		boolean isExpertTheCurrentUser = ( adminItem_ != null &&
+											adminItem_.isExpertTheCurrentUser() );
 
 		upperMenuClearYourMindButton_.setVisible( isVisible );
 		upperMenuRestartButton_.setVisible( isVisible );
 		upperMenuUndoButton_.setVisible( isVisible );
 		upperMenuRedoButton_.setVisible( isVisible );
 
-		upperMenuLoginAsExpertButton_.setVisible( isVisible && !isCurrentUserExpert );
-		upperMenuLoginAsDeveloperButton_.setVisible( isVisible && isCurrentUserExpert );
-		upperMenuReadTheTestFileRegressionTestUserButton_.setVisible( isVisible && isCurrentUserDeveloper );
-		upperMenuReadTheTestFileRegressionTestDeepButton_.setVisible( isVisible && isCurrentUserDeveloper );
+		upperMenuLoginAsDeveloperButton_.setVisible( isVisible && isExpertTheCurrentUser );
+		upperMenuLoginAsExpertButton_.setVisible( isVisible && !isExpertTheCurrentUser );
+		upperMenuReadTheTestFileRegressionTestButton_.setVisible( isVisible && isDeveloperTheCurrentUser );
 		upperMenuStopTestingButton_.setVisible( isVisible && isTesting_ );
 
 		upperMenuMoreExamplesButton_.setVisible( isVisible );
@@ -780,7 +734,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 					{
 					if( ++position < textString.length() )
 						{
-						textChar = Presentation.convertDiacriticalChar( textString.charAt( position ) );
+						textChar = InputOutput.convertDiacriticalChar( textString.charAt( position ) );
 						textStringBuffer.append( Constants.EMPTY_STRING + textChar );
 						}
 					}
@@ -797,12 +751,15 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		return textStringBuffer.toString();
 		}
 
-	private static String getInputString()
+	private static String manualInputString()
 		{
 		inputString_ = null;
 
 		do	{
-			resizeFrame();
+			if( isSubMenuChanged_ ||
+			inputPanel_.getHeight() > Constants.CONSOLE_BUTTON_PANE_HEIGHT )
+				// Resize frame while waiting for manual input
+				resizeFrame();
 
 			try {
 				Thread.sleep( Constants.CONSOLE_SLEEP_TIME );
@@ -812,8 +769,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				exception.printStackTrace();
 				}
 			}
-		while( !isActionPerformed_ ||
-		inputString_ == null );
+		while( inputString_ == null );
 
 		return inputString_;
 		}
@@ -875,17 +831,14 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		upperMenuRedoButton_ = new JButton();
 		upperMenuRedoButton_.addActionListener( this );
 
-		upperMenuLoginAsExpertButton_ = new JButton();
-		upperMenuLoginAsExpertButton_.addActionListener( this );
-
 		upperMenuLoginAsDeveloperButton_ = new JButton();
 		upperMenuLoginAsDeveloperButton_.addActionListener( this );
 
-		upperMenuReadTheTestFileRegressionTestUserButton_ = new JButton();
-		upperMenuReadTheTestFileRegressionTestUserButton_.addActionListener( this );
+		upperMenuLoginAsExpertButton_ = new JButton();
+		upperMenuLoginAsExpertButton_.addActionListener( this );
 
-		upperMenuReadTheTestFileRegressionTestDeepButton_ = new JButton();
-		upperMenuReadTheTestFileRegressionTestDeepButton_.addActionListener( this );
+		upperMenuReadTheTestFileRegressionTestButton_ = new JButton();
+		upperMenuReadTheTestFileRegressionTestButton_.addActionListener( this );
 
 		upperMenuStopTestingButton_ = new JButton();
 		upperMenuStopTestingButton_.addActionListener( this );
@@ -904,15 +857,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		upperMenuProgressBar_.setStringPainted( true );
 
 		// Create the Main menu buttons
-		mainMenuAmbiguitySubMenuButton_ = new JButton();
-		mainMenuAmbiguitySubMenuButton_.addActionListener( this );
-
-		mainMenuReadTheFileAmbiguityBostonButton_ = new JButton();
-		mainMenuReadTheFileAmbiguityBostonButton_.addActionListener( this );
-
-		mainMenuReadTheFileAmbiguityPresidentsButton_ = new JButton();
-		mainMenuReadTheFileAmbiguityPresidentsButton_.addActionListener( this );
-
 		mainMenuProgrammingSubMenuButton_ = new JButton();
 		mainMenuProgrammingSubMenuButton_.addActionListener( this );
 
@@ -1005,19 +949,14 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		upperMenuPanel_.add( upperMenuUndoButton_ );
 		upperMenuPanel_.add( upperMenuRedoButton_ );
 
-		upperMenuPanel_.add( upperMenuLoginAsExpertButton_ );
 		upperMenuPanel_.add( upperMenuLoginAsDeveloperButton_ );
-		upperMenuPanel_.add( upperMenuReadTheTestFileRegressionTestUserButton_ );
-		upperMenuPanel_.add( upperMenuReadTheTestFileRegressionTestDeepButton_ );
+		upperMenuPanel_.add( upperMenuLoginAsExpertButton_ );
+		upperMenuPanel_.add( upperMenuReadTheTestFileRegressionTestButton_ );
 		upperMenuPanel_.add( upperMenuStopTestingButton_ );
 
 		upperMenuPanel_.add( upperMenuMoreExamplesButton_ );
 
 		// Add buttons to Main menu panel
-		mainMenuPanel_.add( mainMenuAmbiguitySubMenuButton_ );
-		mainMenuPanel_.add( mainMenuReadTheFileAmbiguityBostonButton_ );
-		mainMenuPanel_.add( mainMenuReadTheFileAmbiguityPresidentsButton_ );
-
 		mainMenuPanel_.add( mainMenuProgrammingSubMenuButton_ );
 		mainMenuPanel_.add( mainMenuReadTheFileProgrammingConnect4Button_ );
 		mainMenuPanel_.add( mainMenuReadTheFileProgrammingTowerOfHanoiButton_ );
@@ -1087,7 +1026,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			errorTextArea.setEditable( false );
 			JScrollPane errorScrollPane = new JScrollPane( errorTextArea );
 			errorScrollPane.setPreferredSize( new Dimension( Constants.CONSOLE_ERROR_PANE_WIDTH, Constants.CONSOLE_ERROR_PANE_HEIGHT ) );
-			JOptionPane.showMessageDialog( null, errorScrollPane, ( errorHeaderString_ == null ? Constants.PRESENTATION_ERROR_INTERNAL_TITLE_STRING : Constants.PRESENTATION_ERROR_INTERNAL_TITLE_STRING + errorHeaderString_ ), JOptionPane.ERROR_MESSAGE );			
+			JOptionPane.showMessageDialog( null, errorScrollPane, ( errorHeaderString_ == null ? Constants.INPUT_OUTPUT_ERROR_INTERNAL_TITLE_STRING : Constants.INPUT_OUTPUT_ERROR_INTERNAL_TITLE_STRING + errorHeaderString_ ), JOptionPane.ERROR_MESSAGE );			
 			errorHeaderString_ = null;
 			errorStringBuffer_ = null;
 			}
@@ -1114,16 +1053,12 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	protected static void restart( int titleBarHeight, int windowBottomHeight )
 		{
 		// Initialize private variables
-		hasSelectedAmbiguityBoston_ = false;
-		hasSelectedAmbiguityPresidents_ = false;
+		hasSelectedMoreExamples_ = false;
 		hasSelectedProgrammingConnect4_ = false;
 		hasSelectedProgrammingTowerOfHanoi_ = false;
 		hasSelectedReasoningScientificChallenge_ = false;
 		hasSelectedReasoningFamilyDefinition_ = false;
-		hasSelectedMoreExamples_ = false;
 
-		isActionPerformed_ = false;
-		isGUIavailable_ = false;
 		isStopResizing_ = false;
 		isTesting_ = false;
 		isTestingCanceled_ = false;
@@ -1146,17 +1081,14 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_INIT );
 
 		// Disable menus
-		enableMenus( false, false );
+		enableMenus( false, false, false );
 
 		// Clear screen
 		outputArea_.setText( Constants.NEW_LINE_STRING );
 
 		// Clear fields
-		inputField_.setVisible( false );
 		inputField_.setText( Constants.EMPTY_STRING );
-
-		do	resizeFrame();
-		while( !isGUIavailable_ );
+		inputField_.setVisible( false );
 		}
 
 	protected static void setAdminItem( AdminItem adminItem )
@@ -1193,24 +1125,22 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		return isTestingCanceled_;
 		}
 
-	protected static short nSubMenuButtons()
-		{
-		return nSubMenuButtons_;
-		}
-
 	protected static String getPassword()
 		{
 		if( errorStringBuffer_ != null )
 			displayError();
 
-		// Switch input field for password field
-		inputField_.setText( Constants.EMPTY_STRING );
+		// Disable menus
+		enableMenus( false, false, true );
+
+		// Switch from input field to password field
 		inputField_.setVisible( false );
-		passwordField_.setVisible( true );
+
 		passwordField_.setText( Constants.EMPTY_STRING );
+		passwordField_.setVisible( true );
 		passwordField_.requestFocus();
 
-		inputString_ = getInputString();
+		inputString_ = manualInputString();
 
 		// Hide password field afterwards
 		passwordField_.setVisible( false );
@@ -1218,7 +1148,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		return inputString_;
 		}
 
-	protected static String readLine( boolean isClearInputField )
+	protected static String readLine( boolean isClearInputField, boolean isQuestion )
 		{
 		boolean isSystemStartingUp = ( adminItem_ == null );
 
@@ -1238,17 +1168,17 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		setUpperMenuVisible( true );
 
 		// Enable menus again
-		enableMenus( !isSystemStartingUp, !isSystemStartingUp );
+		enableMenus( !isSystemStartingUp, !isSystemStartingUp, isQuestion );
 		setSubMenuButtonTexts();
 
 		// Prepare input field
 		inputField_.setEnabled( true );
-		inputField_.setVisible( adminItem_ != null && adminItem_.isCurrentUserDeveloperOrExpert() );
+		inputField_.setVisible( isQuestion || ( adminItem_ != null && adminItem_.isDeveloperOrExpertTheCurrentUser() ) );
 		inputField_.requestFocus();
 
 		// Select all text in input field
 		inputField_.selectAll();
-		inputString_ = getInputString();
+		inputString_ = manualInputString();
 
 		// Disable input field
 		inputField_.setEnabled( false );
@@ -1270,7 +1200,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		String currentUserNounString;
 		String selectedFilePath;
 
-		isActionPerformed_ = false;
+		isSubMenuChanged_ = false;
 
 		if( currentLanguageWordItem_ == null )
 			setInterfaceLanguage();
@@ -1282,7 +1212,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				if( ( actionCommandString = actionEvent.getActionCommand() ) != null )
 					{
 					// Disable menus during action
-					enableMenus( false, false );
+					enableMenus( false, false, false );
 
 					if( actionSource == passwordField_ )
 						inputString_ = String.valueOf( passwordField_.getPassword() );
@@ -1294,13 +1224,11 @@ class Console extends JPanel implements ActionListener, ComponentListener
 							{
 							if( actionSource == upperMenuClearYourMindButton_ )
 								{
-								hasSelectedAmbiguityBoston_ = false;
-								hasSelectedAmbiguityPresidents_ = false;
+								hasSelectedMoreExamples_ = false;
 								hasSelectedProgrammingConnect4_ = false;
 								hasSelectedProgrammingTowerOfHanoi_ = false;
 								hasSelectedReasoningScientificChallenge_ = false;
 								hasSelectedReasoningFamilyDefinition_ = false;
-								hasSelectedMoreExamples_ = false;
 
 								setSubMenuVisible( true, Constants.CONSOLE_SUBMENU_INIT );
 
@@ -1315,8 +1243,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 									}
 								else
 									{
-									if( actionSource == upperMenuReadTheTestFileRegressionTestUserButton_ ||
-									actionSource == upperMenuReadTheTestFileRegressionTestDeepButton_ )
+									if( actionSource == upperMenuReadTheTestFileRegressionTestButton_ )
 										{
 										isTesting_ = true;
 										inputString_ = ( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_THE_TEST_FILE ) + currentLanguageWordItem_.anyWordTypeString() + Constants.SYMBOL_SLASH + actionCommandString + convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) ) );
@@ -1339,7 +1266,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 													( currentDirectoryString = currentDirectory.toString() ) != null &&
 													( currentLanguageString = currentLanguageWordItem_.anyWordTypeString() ) != null )
 														{
-														currentUserNounString = ( adminItem_.isCurrentUserDeveloper() ||
+														currentUserNounString = ( adminItem_.isDeveloperTheCurrentUser() ||
 																				CommonVariables.predefinedNounUserWordItem == null ? null : CommonVariables.predefinedNounUserWordItem.wordTypeString( false, Constants.WORD_TYPE_NOUN_SINGULAR ) );
 
 														// No file selected yet with current language
@@ -1351,155 +1278,126 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		
 												if( fileChooser_.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
 													{
-													if( ( selectedFile = fileChooser_.getSelectedFile() ) != null )
+													if( ( selectedFile = fileChooser_.getSelectedFile() ) != null &&
+													( selectedFilePath = selectedFile.getPath() ) != null )
 														{
-														if( ( selectedFilePath = selectedFile.getPath() ) != null )
-															{
-															hasSelectedMoreExamples_ = true;
-															inputString_ = convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START ) ) + selectedFilePath + convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) );
-															}
+														hasSelectedMoreExamples_ = true;
+														inputString_ = convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START ) ) + selectedFilePath + convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) );
 														}
 													}
 												else
 													// If canceled
-													enableMenus( true, true );
+													enableMenus( true, true, false );
 												}
 											else
 												{
-												if( actionSource == mainMenuAmbiguitySubMenuButton_ )
+												if( actionSource == mainMenuProgrammingSubMenuButton_ )
 													{
-													setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_AMBIGUITY );
-													enableMenus( true, true );
+													setSubMenuVisible( false, ( hasSelectedProgrammingConnect4_ ? Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 : Constants.CONSOLE_SUBMENU_PROGRAMMING ) );
+													enableMenus( true, true, false );
 													}
 												else
 													{
-													if( actionSource == mainMenuReadTheFileAmbiguityBostonButton_ )
+													if( actionSource == mainMenuReadTheFileProgrammingConnect4Button_ )
 														{
-														hasSelectedAmbiguityBoston_ = true;
+														hasSelectedProgrammingConnect4_ = true;
+														setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 );
 														inputString_ = actionCommandString;
 														}
 													else
 														{
-														if( actionSource == mainMenuReadTheFileAmbiguityPresidentsButton_ )
+														if( actionSource == mainMenuReadTheFileProgrammingTowerOfHanoiButton_ )
 															{
-															hasSelectedAmbiguityPresidents_ = true;
+															hasSelectedProgrammingTowerOfHanoi_ = true;
+															setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI );
 															inputString_ = actionCommandString;
 															}
 														else
 															{
-															if( actionSource == mainMenuProgrammingSubMenuButton_ )
+															if( actionSource == mainMenuReasoningSubMenuButton_ )
 																{
-																setSubMenuVisible( false, ( hasSelectedProgrammingConnect4_ ? Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 : Constants.CONSOLE_SUBMENU_PROGRAMMING ) );
-																enableMenus( true, true );
+																setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING );
+																enableMenus( true, true, false );
 																}
 															else
 																{
-																if( actionSource == mainMenuReadTheFileProgrammingConnect4Button_ )
+																if( actionSource == mainMenuReasoningReadTheFileScientificChallengeButton_ )
 																	{
-																	hasSelectedProgrammingConnect4_ = true;
-																	setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 );
+																	hasSelectedReasoningScientificChallenge_ = true;
 																	inputString_ = actionCommandString;
 																	}
 																else
 																	{
-																	if( actionSource == mainMenuReadTheFileProgrammingTowerOfHanoiButton_ )
+																	if( actionSource == mainMenuReasoningReadTheFileFamilyDefinitionButton_ )
 																		{
-																		hasSelectedProgrammingTowerOfHanoi_ = true;
-																		setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_PROGRAMMING_TOWER_OF_HANOI );
+																		hasSelectedReasoningFamilyDefinition_ = true;
+																		setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
 																		inputString_ = actionCommandString;
 																		}
 																	else
 																		{
-																		if( actionSource == mainMenuReasoningSubMenuButton_ )
+																		if( actionSource == mainMenuReasoningFamilyDefinitionsSubMenuButton_ )
 																			{
-																			setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING );
-																			enableMenus( true, true );
+																			setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
+																			enableMenus( true, true, false );
 																			}
 																		else
 																			{
-																			if( actionSource == mainMenuReasoningReadTheFileScientificChallengeButton_ )
+																			if( actionSource == mainMenuReasoningFamilyConflictsSubMenuButton_ )
 																				{
-																				hasSelectedReasoningScientificChallenge_ = true;
-																				inputString_ = actionCommandString;
+																				setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS );
+																				enableMenus( true, true, false );
 																				}
 																			else
 																				{
-																				if( actionSource == mainMenuReasoningReadTheFileFamilyDefinitionButton_ )
+																				if( actionSource == mainMenuReasoningFamilyJustificationSubMenuButton_ )
 																					{
-																					hasSelectedReasoningFamilyDefinition_ = true;
-																					setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
-																					inputString_ = actionCommandString;
+																					setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT );
+																					enableMenus( true, true, false );
 																					}
 																				else
 																					{
-																					if( actionSource == mainMenuReasoningFamilyDefinitionsSubMenuButton_ )
+																					if( actionSource == mainMenuReasoningFamilyQuestionsSubMenuButton_ )
 																						{
-																						setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS );
-																						enableMenus( true, true );
+																						setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS );
+																						enableMenus( true, true, false );
 																						}
 																					else
 																						{
-																						if( actionSource == mainMenuReasoningFamilyConflictsSubMenuButton_ )
+																						if( actionSource == mainMenuReasoningFamilyDisplayInformationSubMenuButton_ )
 																							{
-																							setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS );
-																							enableMenus( true, true );
+																							setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DISPLAY_INFORMATION );
+																							enableMenus( true, true, false );
 																							}
 																						else
 																							{
-																							if( actionSource == mainMenuReasoningFamilyJustificationSubMenuButton_ )
+																							if( actionSource == mainMenuBackButton_ )
 																								{
-																								setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT );
-																								enableMenus( true, true );
+																								setSubMenuVisible( false, ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DISPLAY_INFORMATION ? Constants.CONSOLE_SUBMENU_REASONING : Constants.CONSOLE_SUBMENU_INIT ) );
+																								enableMenus( true, true, false );
 																								}
 																							else
 																								{
-																								if( actionSource == mainMenuReasoningFamilyQuestionsSubMenuButton_ )
+																								if( actionSource == mainMenuChangeLanguageButton_ )
 																									{
-																									setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS );
-																									enableMenus( true, true );
+																									setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
+																									enableMenus( true, true, false );
+																									setSubMenuButtonTexts();
 																									}
 																								else
 																									{
-																									if( actionSource == mainMenuReasoningFamilyDisplayInformationSubMenuButton_ )
+																									if( actionSource == mainMenuChangeFontButton_ )
 																										{
-																										setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DISPLAY_INFORMATION );
-																										enableMenus( true, true );
+																										setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_FONT );
+																										enableMenus( true, true, false );
+																										setSubMenuButtonTexts();
 																										}
 																									else
 																										{
-																										if( actionSource == mainMenuBackButton_ )
-																											{
-																											setSubMenuVisible( false, ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DISPLAY_INFORMATION ? Constants.CONSOLE_SUBMENU_REASONING : Constants.CONSOLE_SUBMENU_INIT ) );
-																											enableMenus( true, true );
-																											}
-																										else
-																											{
-																											if( actionSource == mainMenuChangeLanguageButton_ )
-																												{
-																												setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
-																												enableMenus( true, true );
-																												setSubMenuButtonTexts();
-																												}
-																											else
-																												{
-																												if( actionSource == mainMenuChangeFontButton_ )
-																													{
-																													setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_CHANGE_FONT );
-																													enableMenus( true, true );
-																													setSubMenuButtonTexts();
-																													}
-																												else
-																													{
-																													if( actionSource == mainMenuHelpButton_ )
-																														{
-																														setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_HELP );
-																														inputString_ = actionCommandString;
-																														}
-																													else
-																															inputString_ = actionCommandString;
-																													}
-																												}
-																											}
+																										if( actionSource == mainMenuHelpButton_ )
+																											setSubMenuVisible( false, Constants.CONSOLE_SUBMENU_HELP );
+
+																										inputString_ = actionCommandString;
 																										}
 																									}
 																								}
@@ -1535,8 +1433,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 								}
 							}
 						}
-
-					isActionPerformed_ = true;
 					}
 				else
 					{
@@ -1564,12 +1460,30 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	public void componentMoved( ComponentEvent componentEvent )
 		{
-		resizeFrameComponents( componentEvent );
+		/* This method needs to exist for ComponentListener */
 		}
 
 	public void componentResized( ComponentEvent componentEvent )
 		{
-		resizeFrameComponents( componentEvent );
+		int newHeight;
+		int newWidth;
+		Component component;
+
+		if( componentEvent != null &&
+		( component = componentEvent.getComponent() ) != null )
+			{
+			newHeight = component.getHeight();
+			newWidth = component.getWidth();
+
+			if( newHeight != currentFrameHeight_ ||
+			newWidth != currentFrameWidth_ )
+				{
+				isStopResizing_ = false;
+				currentFrameHeight_ = newHeight;
+				currentFrameWidth_ = newWidth;
+				resizeFrame();
+				}
+			}
 		}
 
 	public void componentShown( ComponentEvent componentEvent )

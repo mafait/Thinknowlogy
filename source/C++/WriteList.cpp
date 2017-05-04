@@ -1,9 +1,9 @@
 /*	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -27,20 +27,12 @@
 class WriteList : private List
 	{
 	friend class WordItem;
-	friend class WordWriteSentence;
 
-	protected:
-	// Constructor
+	// Private functions
 
-	WriteList( CommonVariables *commonVariables, WordItem *myWordItem )
-		{
-		initializeListVariables( WORD_WRITE_LIST_SYMBOL, "WriteList", commonVariables, myWordItem );
-		}
-
-	~WriteList()
+	void deleteWriteList( WriteItem *searchWriteItem )
 		{
 		WriteItem *deleteWriteItem;
-		WriteItem *searchWriteItem = firstActiveWriteItem();
 
 		while( searchWriteItem != NULL )
 			{
@@ -48,6 +40,19 @@ class WriteList : private List
 			searchWriteItem = searchWriteItem->nextWriteItem();
 			delete deleteWriteItem;
 			}
+		}
+
+	protected:
+	// Constructor
+
+	WriteList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+		{
+		initializeListVariables( WORD_WRITE_LIST_SYMBOL, "WriteList", commonVariables, inputOutput, myWordItem );
+		}
+
+	~WriteList()
+		{
+		deleteWriteList( firstActiveWriteItem() );
 
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class WriteList has inactive items." );
@@ -58,14 +63,7 @@ class WriteList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class WriteList has replaced items." );
 
-		searchWriteItem = (WriteItem *)firstDeletedItem();
-
-		while( searchWriteItem != NULL )
-			{
-			deleteWriteItem = searchWriteItem;
-			searchWriteItem = searchWriteItem->nextWriteItem();
-			delete deleteWriteItem;
-			}
+		deleteWriteList( (WriteItem *)firstDeletedItem() );
 		}
 
 
@@ -79,18 +77,18 @@ class WriteList : private List
 
 	// Protected functions
 
-	ResultType checkGrammarItemForUsage( GrammarItem *unusedGrammarItem )
+	signed char checkGrammarItemForUsage( GrammarItem *unusedGrammarItem )
 		{
 		WriteItem *searchWriteItem = firstActiveWriteItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkGrammarItemForUsage";
 
 		if( unusedGrammarItem == NULL )
-			return startError( functionNameString, NULL, "The given unused grammar item is undefined" );
+			return startError( functionNameString, "The given unused grammar item is undefined" );
 
 		while( searchWriteItem != NULL )
 			{
 			if( searchWriteItem->startOfChoiceOrOptionGrammarItem() == unusedGrammarItem )
-				return startError( functionNameString, NULL, "The start of choice or option grammar item is still in use" );
+				return startError( functionNameString, "The start of choice or option grammar item is still in use" );
 
 			searchWriteItem = searchWriteItem->nextWriteItem();
 			}
@@ -98,12 +96,12 @@ class WriteList : private List
 		return RESULT_OK;
 		}
 
-	ResultType createWriteItem( bool isSkipped, unsigned short grammarLevel, GrammarItem *startOfChoiceOrOptionGrammarItem )
+	signed char createWriteItem( bool isSkipped, unsigned short grammarLevel, GrammarItem *startOfChoiceOrOptionGrammarItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createWriteItem";
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, NULL, "I failed to add an active write item" );
+		if( addItemToList( QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add an active write item" );
 
 		return RESULT_OK;
 		}

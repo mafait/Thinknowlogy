@@ -1,8 +1,8 @@
 /*	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -20,11 +20,6 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-// MS Visual Studio
-#ifdef _MSC_VER
-// Defines 'system'
-#include <iostream>
-#endif
 #ifdef linux
 // Necessary to make a Linux native C++ version
 #include <stdlib.h>
@@ -33,7 +28,7 @@
 
 int main()
 	{
-	ResultType result = RESULT_OK;
+	signed char result = RESULT_OK;
 	bool isRestart = false;
 	char startupLanguageNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 	AdminItem *adminItem = NULL;
@@ -70,7 +65,8 @@ int main()
 	if( result != RESULT_OK )
 		// MS Visual Studio
 #ifdef _MSC_VER
-		// If your compiler has problems with this statement, try the next line or remove these few lines
+		// If your compiler has problems with this statement,
+		// try the next line or remove these few lines
 		system( "pause" );
 #else
 		// Bad alternative

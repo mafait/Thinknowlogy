@@ -1,9 +1,9 @@
 /*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -28,24 +28,16 @@
 class SelectionItem : private Item
 	{
 	friend class AdminImperative;
-	friend class AdminSelection;
-	friend class AdminSolve;
 	friend class AdminSpecification;
 	friend class ScoreItem;
 	friend class SelectionList;
-	friend class WordSelectionCondition;
-
-	// Private constructed variables
-
-	SelectionItem *nextExecutionItem_;
-
 
 	// Private initialized variables
 
 	bool isAction_;
-	bool isAssignedOrClear_;
-	bool isInactive_;
-	bool isArchived_;
+	bool isAssignedOrEmpty_;
+	bool isInactiveAssignment_;
+	bool isArchivedAssignment_;
 	bool isFirstComparisonPart_;
 	bool isNewStart_;
 	bool isNegative_;
@@ -76,6 +68,28 @@ class SelectionItem : private Item
 	char *specificationString_;
 
 
+	// Private functions
+
+	SelectionItem *nextSelectionItem( bool isIncludingThisItem, WordItem *solveWordItem )
+		{
+		SelectionItem *searchSelectionItem = ( isIncludingThisItem ? this : nextSelectionItem() );
+
+		if( solveWordItem != NULL )
+			{
+			while( searchSelectionItem != NULL )
+				{
+				if( searchSelectionItem->generalizationWordItem_ == solveWordItem &&
+				searchSelectionItem->specificationWordItem_ != NULL )
+					return searchSelectionItem;
+
+				searchSelectionItem = searchSelectionItem->nextSelectionItem();
+				}
+			}
+
+		return NULL;
+		}
+
+
 	protected:
 	// Protected constructed variables
 
@@ -84,24 +98,20 @@ class SelectionItem : private Item
 
 	// Constructor
 
-	SelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	SelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
 		size_t specificationStringLength;
 
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "SelectionItem", commonVariables, myList, myWordItem );
-
-		// Private constructed variables
-
-		nextExecutionItem_ = NULL;
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "SelectionItem", commonVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
 		isAction_ = isAction;
-		isAssignedOrClear_ = isAssignedOrClear;
+		isAssignedOrEmpty_ = isAssignedOrClear;
 		isNewStart_ = isNewStart;
 
-		isInactive_ = isInactiveAssignment;
-		isArchived_ = isArchivedAssignment;
+		isInactiveAssignment_ = isInactiveAssignment;
+		isArchivedAssignment_ = isArchivedAssignment;
 
 		isFirstComparisonPart_ = isFirstComparisonPart;
 
@@ -127,16 +137,11 @@ class SelectionItem : private Item
 
 		nContextRelations_ = nContextRelations;
 
-		specificationString_ = NULL;
-
 		generalizationWordItem_ = generalizationWordItem;
 		specificationWordItem_ = specificationWordItem;
 		relationWordItem_ = relationWordItem;
 
-
-		// Protected constructed variables
-
-		isConditionCheckedForSolving = false;
+		specificationString_ = NULL;
 
 		if( specificationString != NULL )
 			{
@@ -145,11 +150,15 @@ class SelectionItem : private Item
 				if( ( specificationString_ = new char[specificationStringLength + 1] ) != NULL )
 					strcpy( specificationString_, specificationString );
 				else
-					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create a specification string" );
+					startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create a specification string" );
 				}
 			else
-				startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given specification string is too long" );
+				startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given specification string is too long" );
 			}
+
+		// Protected constructed variables
+
+		isConditionCheckedForSolving = false;
 		}
 
 	~SelectionItem()
@@ -276,45 +285,12 @@ class SelectionItem : private Item
 				relationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	virtual ResultType checkForUsage()
-		{
-		return myWordItem()->checkSelectionForUsageInWord( this );
-		}
-
-	virtual StringResultType findMatchingWordReferenceString( char *queryString )
-		{
-		StringResultType stringResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
-
-		if( generalizationWordItem_ != NULL )
-			{
-			if( ( stringResult = generalizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the generalization word" );
-			}
-
-		if( !stringResult.hasFoundMatchingStrings &&
-		specificationWordItem_ != NULL )
-			{
-			if( ( stringResult = specificationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the specification word" );
-			}
-
-		if( !stringResult.hasFoundMatchingStrings &&
-		relationWordItem_ != NULL )
-			{
-			if( ( stringResult = relationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the relation word" );
-			}
-
-		return stringResult;
-		}
-
 	virtual char *itemString()
 		{
 		return specificationString_;
 		}
 
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *queryString;
 		char *wordString;
@@ -322,7 +298,7 @@ class SelectionItem : private Item
 		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
 		char *relationWordTypeString = myWordItem()->wordTypeNameString( relationWordTypeNr_ );
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 
@@ -332,7 +308,7 @@ class SelectionItem : private Item
 			strcat( queryString, "isAction" );
 			}
 
-		if( isAssignedOrClear_ )
+		if( isAssignedOrEmpty_ )
 			{
 			strcat( queryString, QUERY_SEPARATOR_STRING );
 			strcat( queryString, "isAssignedOrClear" );
@@ -344,13 +320,13 @@ class SelectionItem : private Item
 			strcat( queryString, "isNewStart" );
 			}
 
-		if( isInactive_ )
+		if( isInactiveAssignment_ )
 			{
 			strcat( queryString, QUERY_SEPARATOR_STRING );
 			strcat( queryString, "isInactiveAssignment" );
 			}
 
-		if( isArchived_ )
+		if( isArchivedAssignment_ )
 			{
 			strcat( queryString, QUERY_SEPARATOR_STRING );
 			strcat( queryString, "isArchivedAssignment" );
@@ -512,6 +488,30 @@ class SelectionItem : private Item
 		return queryString;
 		}
 
+	virtual BoolResultType findMatchingWordReferenceString( char *queryString )
+		{
+		BoolResultType boolResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
+
+		if( generalizationWordItem_ != NULL &&
+		( boolResult = generalizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+			return addBoolResultError( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the generalization word" );
+
+		// No matching string
+		if( !boolResult.booleanValue &&
+		specificationWordItem_ != NULL &&
+		( boolResult = specificationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+			return addBoolResultError( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the specification word" );
+
+		// No matching string
+		if( !boolResult.booleanValue &&
+		relationWordItem_ != NULL &&
+		( boolResult = relationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+			return addBoolResultError( functionNameString, NULL, specificationString_, "I failed to find a matching word reference string for the relation word" );
+
+		return boolResult;
+		}
+
 
 	// Protected functions
 
@@ -525,9 +525,9 @@ class SelectionItem : private Item
 		return isAction_;
 		}
 
-	bool isAssignedOrClear()
+	bool isAssignedOrEmpty()
 		{
-		return isAssignedOrClear_;
+		return isAssignedOrEmpty_;
 		}
 
 	bool isNewStart()
@@ -537,12 +537,12 @@ class SelectionItem : private Item
 
 	bool isInactiveAssignment()
 		{
-		return isInactive_;
+		return isInactiveAssignment_;
 		}
 
 	bool isArchivedAssignment()
 		{
-		return isArchived_;
+		return isArchivedAssignment_;
 		}
 
 	bool isFirstComparisonPart()
@@ -625,42 +625,19 @@ class SelectionItem : private Item
 		return nContextRelations_;
 		}
 
-	ResultType findNextExecutionSelectionItem( WordItem *solveGeneralizationWordItem )
-		{
-		return findNextExecutionSelectionItem( false, solveGeneralizationWordItem );
-		}
-
-	ResultType findNextExecutionSelectionItem( bool isIncludingThisItem, WordItem *solveWordItem )
-		{
-		SelectionItem *searchSelectionItem = ( isIncludingThisItem ? this : nextSelectionItem() );
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findNextExecutionSelectionItem";
-
-		nextExecutionItem_ = NULL;
-
-		if( solveWordItem == NULL )
-			return startError( functionNameString, NULL, specificationString_, "The given solve word item is undefined" );
-
-		while( searchSelectionItem != NULL &&
-		nextExecutionItem_ == NULL )
-			{
-			if( searchSelectionItem->generalizationWordItem_ == solveWordItem &&
-			searchSelectionItem->specificationWordItem_ != NULL )
-				nextExecutionItem_ = searchSelectionItem;
-			else
-				searchSelectionItem = searchSelectionItem->nextSelectionItem();
-			}
-
-		return RESULT_OK;
-		}
-
 	char *specificationString()
 		{
 		return specificationString_;
 		}
 
-	SelectionItem *nextExecutionItem()
+	SelectionItem *firstSelectionItem( WordItem *solveWordItem )
 		{
-		return nextExecutionItem_;
+		return nextSelectionItem( true, solveWordItem );
+		}
+
+	SelectionItem *nextSelectionItem( WordItem *solveWordItem )
+		{
+		return nextSelectionItem( false, solveWordItem );
 		}
 
 	SelectionItem *nextSelectionItem()

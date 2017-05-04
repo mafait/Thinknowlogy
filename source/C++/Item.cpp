@@ -1,8 +1,8 @@
 /*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -20,10 +20,25 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#include "CollectionResultType.cpp"
+#include "CompoundResultType.cpp"
+#include "ConditionResultType.cpp"
 #include "ContextResultType.cpp"
+#include "CreateReadWordResultType.cpp"
 #include "FileResultType.cpp"
-#include "ReadResultType.cpp"
+#include "FindSpecificationResultType.cpp"
+#include "ReadWordResultType.cpp"
+#include "SelectionResultType.cpp"
+#include "UserSpecificationResultType.cpp"
+//Java
+//Java
+//Java
+//Java
+//Java
+//Java
+//Java
+//Java
+//Java
+//Java
 
 	// Private functions
 
@@ -56,20 +71,21 @@
 		inactiveSentenceNr_ = NO_SENTENCE_NR;
 		archivedSentenceNr_ = NO_SENTENCE_NR;
 		replacedSentenceNr_ = NO_SENTENCE_NR;
-		deletedSentenceNr_ = NO_SENTENCE_NR;
 
 		itemNr_ = NO_ITEM_NR;
 
 		statusChar_ = QUERY_ACTIVE_CHAR;
 
-		// Private initialized variables
+		strcpy( parentClassNameString_, "Item" );
+		strcpy( classNameString_, EMPTY_STRING );
 
+		// Private initialized variables
+//Java
+
+		commonVariables_ = NULL;
+		inputOutput_ = NULL;
 		myList_ = NULL;
 		myWordItem_ = NULL;
-		commonVariables_ = NULL;
-
-		strcpy( superClassNameString_, "Item" );
-		strcpy( classNameString_, EMPTY_STRING );
 
 		// Protected constructed variables
 
@@ -88,20 +104,235 @@
 
 	// Protected error functions
 
-	CollectionResultType Item::addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+	signed char Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		CollectionResultType collectionResult;
-
-		collectionResult.result = addError( functionNameString, moduleNameString, errorString );
-		return collectionResult;
+		return addError( functionNameString, moduleNameString, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
 		}
 
-	CollectionResultType Item::addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+	signed char Item::addError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString )
 		{
-		CollectionResultType collectionResult;
+		if( inputOutput_ == NULL )
+			fprintf( stderr, "\nClass:\t%s\nParent class:\t%s\nFunction:\t%s\nWordItem:%s\nError:\t\t%s.\n", classNameString_, parentClassNameString_, functionNameString, ( wordItemString == NULL ? ADMIN_USER_NAME_STRING : wordItemString ), errorString );
+		else
+			inputOutput_->displayError( SYMBOL_QUESTION_MARK, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? parentClassNameString_ : NULL ), wordItemString, functionNameString, errorString );
 
-		collectionResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3, errorString4, errorString5 );
-		return collectionResult;
+		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
+		}
+
+	signed char Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number )
+		{
+		sprintf( tempString, "%s%u", errorString, number );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
+		}
+
+	signed char Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
+		{
+		sprintf( tempString, "%s%u%s%u", errorString1, number1, errorString2, number2 );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
+		}
+
+	signed char Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+		{
+		sprintf( tempString, "%s%s%s", errorString1, errorString2, errorString3 );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
+		}
+
+	signed char Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number )
+		{
+		sprintf( tempString, "%s%s%s%u", errorString1, errorString2, errorString3, number );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
+		}
+
+	signed char Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+		{
+		sprintf( tempString, "%s%s%s%s%s", errorString1, errorString2, errorString3, errorString4, errorString5 );
+		return addError( functionNameString, moduleNameString, NULL, tempString );
+		}
+
+	signed char Item::addError( char listChar, const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+		{
+		if( inputOutput_ == NULL )
+			fprintf( stderr, "\nClass:\t%s\nParent class:\t%s\nFunction:\t%s\nError:\t\t%s.\n", classNameString_, parentClassNameString_, functionNameString, errorString );
+		else
+			inputOutput_->displayError( listChar, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? parentClassNameString_ : NULL ), wordNameString, functionNameString, errorString );
+
+		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
+		}
+
+	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		addError( functionNameString, moduleNameString, NULL, errorString );
+
+		if( commonVariables_ != NULL )
+		commonVariables_->result = RESULT_ERROR;
+		return RESULT_ERROR;
+		}
+
+	signed char Item::startError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+		{
+		addError( functionNameString, moduleNameString, wordNameString, errorString );
+
+		if( commonVariables_ != NULL )
+		commonVariables_->result = RESULT_ERROR;
+		return RESULT_ERROR;
+		}
+
+	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number )
+		{
+		sprintf( tempString, "%s%u", errorString, number );
+		return startError( functionNameString, moduleNameString, NULL, tempString );
+		}
+
+	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
+		{
+		sprintf( tempString, "%s%u%s%u", errorString1, number1, errorString2, number2 );
+		return startError( functionNameString, moduleNameString, tempString );
+		}
+
+	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2, const char *errorString3, unsigned int number3 )
+		{
+		sprintf( tempString, "%s%u%s%u%s%u", errorString1, number1, errorString2, number2, errorString3, number3 );
+		return startError( functionNameString, moduleNameString, tempString );
+		}
+
+	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2, char char2, const char *errorString3 )
+		{
+		sprintf( tempString, "%s%c%s%c%s", errorString1, char1, errorString2, char2, errorString3 );
+		return startError( functionNameString, moduleNameString, tempString );
+		}
+
+	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+		{
+		sprintf( tempString, "%s%s%s", errorString1, errorString2, errorString3 );
+		return startError( functionNameString, moduleNameString, tempString );
+		}
+
+	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+		{
+		sprintf( tempString, "%s%s%s%s%s", errorString1, errorString2, errorString3, errorString4, errorString5 );
+		return startError( functionNameString, moduleNameString, tempString );
+		}
+
+	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1, const char *errorString4, unsigned int number2, const char *errorString5, unsigned int number3 )
+		{
+		sprintf( tempString, "%s%s%s%u%s%u%s%u", errorString1, errorString2, errorString3, number1, errorString4, number2, errorString5, number3 );
+		return startError( functionNameString, moduleNameString, tempString );
+		}
+
+	signed char Item::startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		return startSystemError( functionNameString, moduleNameString, NULL, errorString );
+		}
+
+	signed char Item::startSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+		{
+		char textChar;
+		size_t tempStringPosition = 0;
+		size_t errorStringPosition = 0;
+
+		strcpy( tempString, EMPTY_STRING );
+
+		while( errorStringPosition < strlen( errorString ) )
+			{
+			if( errorString[errorStringPosition] == SYMBOL_BACK_SLASH )
+				{
+				errorStringPosition++;
+
+				if( errorStringPosition < strlen( errorString ) &&
+				( textChar = inputOutput_->convertDiacriticalChar( errorString[errorStringPosition] ) ) != NEW_LINE_CHAR )
+					tempString[tempStringPosition++] = textChar;
+				}
+			else
+				tempString[tempStringPosition++] = errorString[errorStringPosition];
+
+			errorStringPosition++;
+			}
+
+		addError( functionNameString, moduleNameString, wordNameString, tempString );
+
+		if( commonVariables_ != NULL )
+		commonVariables_->result = RESULT_SYSTEM_ERROR;
+		return RESULT_SYSTEM_ERROR;
+		}
+
+	BoolResultType Item::addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = addError( functionNameString, moduleNameString, NULL, errorString );
+		return boolResult;
+		}
+
+	BoolResultType Item::addBoolResultError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = addError( functionNameString, moduleNameString, wordItemString, errorString );
+		return boolResult;
+		}
+
+	BoolResultType Item::addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = addError( functionNameString, moduleNameString, errorString, number );
+		return boolResult;
+		}
+
+	BoolResultType Item::addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
+		return boolResult;
+		}
+
+	BoolResultType Item::startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = startError( functionNameString, moduleNameString, errorString );
+		return boolResult;
+		}
+
+	BoolResultType Item::startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = startError( functionNameString, moduleNameString, errorString, number );
+		return boolResult;
+		}
+
+	BoolResultType Item::startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = startError( functionNameString, moduleNameString, errorString1, number1, errorString2, number2 );
+		return boolResult;
+		}
+
+	BoolResultType Item::startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = startError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
+		return boolResult;
+		}
+
+	BoolResultType Item::startBoolResultError( const char *functionNameString, const char *moduleNameString, char *wordTypeNameString, const char *errorString )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = startError( functionNameString, moduleNameString, wordTypeNameString, errorString );
+		return boolResult;
+		}
+
+	BoolResultType Item::startBoolResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = startSystemError( functionNameString, moduleNameString, errorString );
+		return boolResult;
 		}
 
 	CollectionResultType Item::addCollectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
@@ -109,14 +340,6 @@
 		CollectionResultType collectionResult;
 
 		collectionResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
-		return collectionResult;
-		}
-
-	CollectionResultType Item::startCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		CollectionResultType collectionResult;
-
-		collectionResult.result = startError( functionNameString, moduleNameString, errorString );
 		return collectionResult;
 		}
 
@@ -128,20 +351,48 @@
 		return collectionResult;
 		}
 
-	CollectionResultType Item::startCollectionResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+	CompoundResultType Item::addCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		CollectionResultType collectionResult;
+		CompoundResultType compoundResult;
 
-		collectionResult.result = startSystemError( functionNameString, moduleNameString, errorString );
-		return collectionResult;
+		compoundResult.result = addError( functionNameString, moduleNameString, errorString );
+		return compoundResult;
 		}
 
-	CollectionResultType Item::startCollectionResultSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+	CompoundResultType Item::addCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
 		{
-		CollectionResultType collectionResult;
+		sprintf( tempString, "%s%s%s", errorString1, errorString2, errorString3 );
+		return addCompoundResultError( functionNameString, moduleNameString, tempString );
+		}
 
-		collectionResult.result = startSystemError( functionNameString, moduleNameString, wordNameString, errorString );
-		return collectionResult;
+	CompoundResultType Item::addCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+		{
+		sprintf( tempString, "%s%s%s%s%s", errorString1, errorString2, errorString3, errorString4, errorString5 );
+		return addCompoundResultError( functionNameString, moduleNameString, tempString );
+		}
+
+	ConditionResultType Item::addConditionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		ConditionResultType conditionResult;
+
+		conditionResult.result = addError( functionNameString, moduleNameString, errorString );
+		return conditionResult;
+		}
+
+	ConditionResultType Item::startConditionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		ConditionResultType conditionResult;
+
+		conditionResult.result = startError( functionNameString, moduleNameString, errorString );
+		return conditionResult;
+		}
+
+	CompoundResultType Item::startCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		CompoundResultType compoundResult;
+
+		compoundResult.result = startError( functionNameString, moduleNameString, errorString );
+		return compoundResult;
 		}
 
 	ContextResultType Item::addContextResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
@@ -176,6 +427,102 @@
 		return contextResult;
 		}
 
+	CreateAndAssignResultType Item::addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult;
+
+		createAndAssignResult.result = addError( functionNameString, moduleNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	CreateAndAssignResultType Item::addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+		{
+		CreateAndAssignResultType createAndAssignResult;
+
+		createAndAssignResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
+		return createAndAssignResult;
+		}
+
+	CreateAndAssignResultType Item::addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+		{
+		CreateAndAssignResultType createAndAssignResult;
+
+		createAndAssignResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3, errorString4, errorString5 );
+		return createAndAssignResult;
+		}
+
+	CreateAndAssignResultType Item::addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult;
+
+		createAndAssignResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	CreateAndAssignResultType Item::startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult;
+
+		createAndAssignResult.result = startError( functionNameString, moduleNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	CreateAndAssignResultType Item::startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+		{
+		CreateAndAssignResultType createAndAssignResult;
+
+		createAndAssignResult.result = startError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
+		return createAndAssignResult;
+		}
+
+	CreateAndAssignResultType Item::startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+		{
+		CreateAndAssignResultType createAndAssignResult;
+
+		createAndAssignResult.result = startError( functionNameString, moduleNameString, errorString1, errorString2, errorString3, errorString4, errorString5 );
+		return createAndAssignResult;
+		}
+
+	CreateAndAssignResultType Item::startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult;
+
+		createAndAssignResult.result = startError( functionNameString, moduleNameString, wordNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	CreateAndAssignResultType Item::startCreateAndAssignResultSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult;
+
+		createAndAssignResult.result = startSystemError( functionNameString, moduleNameString, wordNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	CreateReadWordResultType Item::addCreateReadWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		CreateReadWordResultType createReadWordResult;
+
+		createReadWordResult.result = addError( functionNameString, moduleNameString, errorString );
+		return createReadWordResult;
+		}
+
+	CreateReadWordResultType Item::startCreateReadWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		CreateReadWordResultType createReadWordResult;
+
+		createReadWordResult.result = startError( functionNameString, moduleNameString, errorString );
+		return createReadWordResult;
+		}
+
+	DuplicateResultType Item::startDuplicateResultError( const char *functionNameString, const char *errorString )
+		{
+		DuplicateResultType duplicateResult;
+
+		duplicateResult.result = startError( functionNameString, NULL, errorString );
+		return duplicateResult;
+		}
+
 	FileResultType Item::addFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		FileResultType fileResult;
@@ -190,6 +537,14 @@
 
 		fileResult.result = startError( functionNameString, moduleNameString, errorString );
 		return fileResult;
+		}
+
+	FindSpecificationResultType Item::startFindSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		FindSpecificationResultType findSpecificationResult;
+
+		findSpecificationResult.result = startError( functionNameString, moduleNameString, errorString );
+		return findSpecificationResult;
 		}
 
 	GrammarResultType Item::startGrammarResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
@@ -208,235 +563,90 @@
 		return justificationResult;
 		}
 
-	ReadResultType Item::addReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+	QueryResultType Item::addQueryResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		ReadResultType readResult;
+		QueryResultType queryResult;
 
-		readResult.result = addError( functionNameString, moduleNameString, errorString );
-		return readResult;
+		queryResult.result = addError( functionNameString, moduleNameString, errorString );
+		return queryResult;
 		}
 
-	ReadResultType Item::addReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+	QueryResultType Item::startQueryResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		ReadResultType readResult;
+		QueryResultType queryResult;
 
-		readResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
-		return readResult;
+		queryResult.result = startError( functionNameString, moduleNameString, errorString );
+		return queryResult;
 		}
 
-	ReadResultType Item::startReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		ReadResultType readResult;
-
-		readResult.result = startError( functionNameString, moduleNameString, errorString );
-		return readResult;
-		}
-
-	ReadResultType Item::startReadResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		ReadResultType readResult;
-
-		readResult.result = startSystemError( functionNameString, moduleNameString, errorString );
-		return readResult;
-		}
-
-	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		return addError( functionNameString, moduleNameString, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
-		}
-
-	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString )
-		{
-		if( commonVariables_ != NULL &&
-		commonVariables_->presentation != NULL )
-			commonVariables_->presentation->displayError( SYMBOL_QUESTION_MARK, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), wordItemString, functionNameString, errorString );
-		else
-			fprintf( stderr, "\nClass:\t%s\nSubclass:\t%s\nFunction:\t%s\nWordItem:%s\nError:\t\t%s.\n", classNameString_, superClassNameString_, functionNameString, wordItemString, errorString );
-
-		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
-		}
-
-	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 )
-		{
-		sprintf( tempString, "%s%u", errorString1, number1 );
-		return addError( functionNameString, moduleNameString, NULL, tempString );
-		}
-
-	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
-		{
-		sprintf( tempString, "%s%u%s%u", errorString1, number1, errorString2, number2 );
-		return addError( functionNameString, moduleNameString, NULL, tempString );
-		}
-
-	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
-		{
-		sprintf( tempString, "%s%s%s", errorString1, errorString2, errorString3 );
-		return addError( functionNameString, moduleNameString, NULL, tempString );
-		}
-
-	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1 )
-		{
-		sprintf( tempString, "%s%s%s%u", errorString1, errorString2, errorString3, number1 );
-		return addError( functionNameString, moduleNameString, NULL, tempString );
-		}
-
-	ResultType Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
-		{
-		sprintf( tempString, "%s%s%s%s%s", errorString1, errorString2, errorString3, errorString4, errorString5 );
-		return addError( functionNameString, moduleNameString, NULL, tempString );
-		}
-
-	ResultType Item::addError( char listChar, const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
-		{
-		if( commonVariables_ != NULL &&
-		commonVariables_->presentation != NULL )
-			commonVariables_->presentation->displayError( listChar, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? superClassNameString_ : NULL ), wordNameString, functionNameString, errorString );
-		else
-			fprintf( stderr, "\nClass:\t%s\nSubclass:\t%s\nFunction:\t%s\nError:\t\t%s.\n", classNameString_, superClassNameString_, functionNameString, errorString );
-
-		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
-		}
-
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		addError( functionNameString, moduleNameString, NULL, errorString );
-
-		if( commonVariables_ != NULL )
-		commonVariables_->result = RESULT_ERROR;
-		return RESULT_ERROR;
-		}
-
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
-		{
-		addError( functionNameString, moduleNameString, wordNameString, errorString );
-
-		if( commonVariables_ != NULL )
-		commonVariables_->result = RESULT_ERROR;
-		return RESULT_ERROR;
-		}
-
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 )
-		{
-		sprintf( tempString, "%s%u", errorString1, number1 );
-		return startError( functionNameString, moduleNameString, NULL, tempString );
-		}
-
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 )
-		{
-		sprintf( tempString, "%s%u%s%u", errorString1, number1, errorString2, number2 );
-		return startError( functionNameString, moduleNameString, tempString );
-		}
-
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2, const char *errorString3, unsigned int number3 )
-		{
-		sprintf( tempString, "%s%u%s%u%s%u", errorString1, number1, errorString2, number2, errorString3, number3 );
-		return startError( functionNameString, moduleNameString, tempString );
-		}
-
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2 )
+	QueryResultType Item::startQueryResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2 )
 		{
 		sprintf( tempString, "%s%c%s", errorString1, char1, errorString2 );
-		return startError( functionNameString, moduleNameString, tempString );
+		return startQueryResultError( functionNameString, moduleNameString, tempString );
 		}
 
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2, char char2, const char *errorString3 )
+	ReadWordResultType Item::startReadWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		sprintf( tempString, "%s%c%s%c%s", errorString1, char1, errorString2, char2, errorString3 );
-		return startError( functionNameString, moduleNameString, tempString );
+		ReadWordResultType readWordResult;
+
+		readWordResult.result = startError( functionNameString, moduleNameString, errorString );
+		return readWordResult;
 		}
 
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+	RelatedResultType Item::addRelatedResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
-		sprintf( tempString, "%s%s%s", errorString1, errorString2, errorString3 );
-		return startError( functionNameString, moduleNameString, tempString );
+		RelatedResultType relatedResult;
+
+		relatedResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
+		return relatedResult;
 		}
 
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+	RelatedResultType Item::startRelatedResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
-		sprintf( tempString, "%s%s%s%s%s", errorString1, errorString2, errorString3, errorString4, errorString5 );
-		return startError( functionNameString, moduleNameString, tempString );
+		RelatedResultType relatedResult;
+
+		relatedResult.result = startError( functionNameString, moduleNameString, wordNameString, errorString );
+		return relatedResult;
 		}
 
-	ResultType Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1, const char *errorString4, unsigned int number2, const char *errorString5, unsigned int number3 )
-		{
-		sprintf( tempString, "%s%s%s%u%s%u%s%u", errorString1, errorString2, errorString3, number1, errorString4, number2, errorString5, number3 );
-		return startError( functionNameString, moduleNameString, tempString );
-		}
-
-	ResultType Item::startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		return startSystemError( functionNameString, moduleNameString, NULL, errorString );
-		}
-
-	ResultType Item::startSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
-		{
-		char textChar;
-		size_t tempStringPosition = 0;
-		size_t errorStringPosition = 0;
-
-		strcpy( tempString, EMPTY_STRING );
-
-		while( errorStringPosition < strlen( errorString ) )
-			{
-			if( errorString[errorStringPosition] == SYMBOL_BACK_SLASH )
-				{
-				errorStringPosition++;
-
-				if( errorStringPosition < strlen( errorString ) &&
-				( textChar = commonVariables_->presentation->convertDiacriticalChar( errorString[errorStringPosition] ) ) != NEW_LINE_CHAR )
-					tempString[tempStringPosition++] = textChar;
-				}
-			else
-				tempString[tempStringPosition++] = errorString[errorStringPosition];
-
-			errorStringPosition++;
-			}
-
-		addError( functionNameString, moduleNameString, wordNameString, tempString );
-
-		if( commonVariables_ != NULL )
-		commonVariables_->result = RESULT_SYSTEM_ERROR;
-		return RESULT_SYSTEM_ERROR;
-		}
-
-	SelectionResultType Item::addSelectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+	SelectionResultType Item::startSelectionResultError( const char *functionNameString, const char *errorString )
 		{
 		SelectionResultType selectionResult;
 
-		selectionResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
+		selectionResult.result = startError( functionNameString, NULL, errorString );
 		return selectionResult;
 		}
 
-	SelectionResultType Item::startSelectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+	ShortResultType Item::addShortResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
-		SelectionResultType selectionResult;
+		ShortResultType shortResult;
 
-		selectionResult.result = startError( functionNameString, moduleNameString, wordNameString, errorString );
-		return selectionResult;
+		shortResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
+		return shortResult;
 		}
 
-	SpecificationResultType Item::addSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+	ShortResultType Item::startShortResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
-		SpecificationResultType specificationResult;
+		ShortResultType shortResult;
 
-		specificationResult.result = addError( functionNameString, moduleNameString, errorString );
-		return specificationResult;
+		shortResult.result = startError( functionNameString, moduleNameString, errorString );
+		return shortResult;
 		}
 
-	SpecificationResultType Item::addSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+	ShortResultType Item::startShortResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number )
 		{
-		SpecificationResultType specificationResult;
+		ShortResultType shortResult;
 
-		specificationResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
-		return specificationResult;
+		shortResult.result = startError( functionNameString, moduleNameString, errorString, number );
+		return shortResult;
 		}
 
-	SpecificationResultType Item::addSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+	ShortResultType Item::startShortResultSystemError( const char *functionNameString, const char *errorString )
 		{
-		SpecificationResultType specificationResult;
+		ShortResultType shortResult;
 
-		specificationResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3, errorString4, errorString5 );
-		return specificationResult;
+		shortResult.result = startSystemError( functionNameString, NULL, errorString );
+		return shortResult;
 		}
 
 	SpecificationResultType Item::addSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
@@ -444,38 +654,6 @@
 		SpecificationResultType specificationResult;
 
 		specificationResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
-		return specificationResult;
-		}
-
-	SpecificationResultType Item::startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		SpecificationResultType specificationResult;
-
-		specificationResult.result = startError( functionNameString, moduleNameString, errorString );
-		return specificationResult;
-		}
-
-	SpecificationResultType Item::startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 )
-		{
-		SpecificationResultType specificationResult;
-
-		specificationResult.result = startError( functionNameString, moduleNameString, errorString1, number1 );
-		return specificationResult;
-		}
-
-	SpecificationResultType Item::startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
-		{
-		SpecificationResultType specificationResult;
-
-		specificationResult.result = startError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
-		return specificationResult;
-		}
-
-	SpecificationResultType Item::startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
-		{
-		SpecificationResultType specificationResult;
-
-		specificationResult.result = startError( functionNameString, moduleNameString, errorString1, errorString2, errorString3, errorString4, errorString5 );
 		return specificationResult;
 		}
 
@@ -487,44 +665,20 @@
 		return specificationResult;
 		}
 
-	SpecificationResultType Item::startSpecificationResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+	UserSpecificationResultType Item::addUserSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
-		SpecificationResultType specificationResult;
+		UserSpecificationResultType userSpecificationResult;
 
-		specificationResult.result = startSystemError( functionNameString, moduleNameString, errorString );
-		return specificationResult;
+		userSpecificationResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
+		return userSpecificationResult;
 		}
 
-	SpecificationResultType Item::startSpecificationResultSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+	UserSpecificationResultType Item::startUserSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
-		SpecificationResultType specificationResult;
+		UserSpecificationResultType userSpecificationResult;
 
-		specificationResult.result = startSystemError( functionNameString, moduleNameString, wordNameString, errorString );
-		return specificationResult;
-		}
-
-	StringResultType Item::addStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		StringResultType stringResult;
-
-		stringResult.result = addError( functionNameString, moduleNameString, errorString );
-		return stringResult;
-		}
-
-	StringResultType Item::addStringResultError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString )
-		{
-		StringResultType stringResult;
-
-		stringResult.result = addError( functionNameString, moduleNameString, wordItemString, errorString );
-		return stringResult;
-		}
-
-	StringResultType Item::startStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
-		{
-		StringResultType stringResult;
-
-		stringResult.result = startError( functionNameString, moduleNameString, errorString );
-		return stringResult;
+		userSpecificationResult.result = startError( functionNameString, moduleNameString, wordNameString, errorString );
+		return userSpecificationResult;
 		}
 
 	WordResultType Item::addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
@@ -551,52 +705,18 @@
 		return wordResult;
 		}
 
-	WordResultType Item::addWordResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+	WordTypeResultType Item::startWordTypeResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
-		WordResultType wordResult;
+		WordTypeResultType wordTypeResult;
 
-		wordResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
-		return wordResult;
-		}
-
-	WordResultType Item::startWordResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
-		{
-		WordResultType wordResult;
-
-		wordResult.result = startError( functionNameString, moduleNameString, wordNameString, errorString );
-		return wordResult;
-		}
-
-	WriteResultType Item::addWriteResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
-		{
-		WriteResultType writeResult;
-
-		writeResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
-		return writeResult;
-		}
-
-	WriteResultType Item::startWriteResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
-		{
-		WriteResultType writeResult;
-
-		writeResult.result = startError( functionNameString, moduleNameString, wordNameString, errorString );
-		return writeResult;
+		wordTypeResult.result = startError( functionNameString, moduleNameString, wordNameString, errorString );
+		return wordTypeResult;
 		}
 
 
 	// Protected virtual functions
 
-	void Item::clearReplacingInfo()
-		{
-		// This is a virtual function. Therefore, it has no body.
-		}
-
-	void Item::selectingAttachedJustifications( bool isSelectingJustificationSpecifications )
-		{
-		// This is a virtual function. Therefore, it has no body, and the given variables are unreferenced.
-		}
-
-	void Item::selectingJustificationSpecifications()
+	void Item::checkForUsage()
 		{
 		// This is a virtual function. Therefore, it has no body.
 		}
@@ -609,6 +729,16 @@
 	void Item::displayWordReferences( bool isReturnQueryToPosition )
 		{
 		// This is a virtual function. Therefore, it has no body, and the given variables are unreferenced.
+		}
+
+	void Item::selectingAttachedJustifications( bool isSelectingJustificationSpecifications )
+		{
+		// This is a virtual function. Therefore, it has no body, and the given variables are unreferenced.
+		}
+
+	void Item::selectingJustificationSpecifications()
+		{
+		// This is a virtual function. Therefore, it has no body.
 		}
 
 	bool Item::hasParameter( unsigned int queryParameter )
@@ -636,30 +766,423 @@
 				creationSentenceNr_ > nextSortItem->creationSentenceNr_ );
 		}
 
-	ResultType Item::checkForUsage()
+	char *Item::itemString()
 		{
+		// This is a virtual function
+		return NULL;
+		}
+
+	char *Item::itemToString( unsigned short queryWordTypeNr )
+		{
+		// This is a virtual function. Therefore, the given variables are unreferenced.
+		return NULL;
+		}
+
+	BoolResultType Item::findMatchingWordReferenceString( char *queryString )
+		{
+		// This is a virtual function. Therefore, the given variables are unreferenced.
+		BoolResultType boolResult;
+		return boolResult;
+		}
+
+
+	// Protected common functions
+
+	void Item::clearArchivedSentenceNr()
+		{
+		archivedSentenceNr_ = NO_SENTENCE_NR;
+		}
+
+	void Item::clearReplacedSentenceNr()
+		{
+		replacedSentenceNr_ = NO_SENTENCE_NR;
+		}
+
+	void Item::setActiveStatus()
+		{
+		statusChar_ = QUERY_ACTIVE_CHAR;
+		}
+
+	void Item::setArchivedStatus()
+		{
+		statusChar_ = QUERY_ARCHIVED_CHAR;
+		}
+
+	void Item::setInactiveStatus()
+		{
+		statusChar_ = QUERY_INACTIVE_CHAR;
+		}
+
+	void Item::setReplacedStatus()
+		{
+		statusChar_ = QUERY_REPLACED_CHAR;
+		}
+
+	void Item::setDeletedStatus()
+		{
+		statusChar_ = QUERY_DELETED_CHAR;
+		}
+
+	void Item::setActiveSentenceNr()
+		{
+		if( activeSentenceNr_ == NO_SENTENCE_NR )
+			activeSentenceNr_ = commonVariables_->currentSentenceNr;
+		}
+
+	void Item::setArchivedSentenceNr()
+		{
+		if( archivedSentenceNr_ == NO_SENTENCE_NR )
+			archivedSentenceNr_ = commonVariables_->currentSentenceNr;
+		}
+
+	void Item::setInactiveSentenceNr()
+		{
+		if( inactiveSentenceNr_ == NO_SENTENCE_NR )
+			inactiveSentenceNr_ = commonVariables_->currentSentenceNr;
+		}
+
+	void Item::setReplacedSentenceNr()
+		{
+		if( replacedSentenceNr_ == NO_SENTENCE_NR )
+			replacedSentenceNr_ = commonVariables_->currentSentenceNr;
+		}
+
+	void Item::displayWords( bool isReturnQueryToPosition, unsigned short queryWordTypeNr )
+		{
+		char *myWordString;
+
+		statusString[0] = statusChar_;
+
+		if( ( myWordString = myWordTypeString( queryWordTypeNr ) ) != NULL )
+			{
+			if( commonVariables_->hasFoundQuery )
+				strcat( commonVariables_->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+
+			// Display status if not active
+			if( !isActiveItem() )
+				strcat( commonVariables_->queryString, statusString );
+
+			commonVariables_->hasFoundQuery = true;
+			strcat( commonVariables_->queryString, myWordString );
+			}
+		}
+
+	// Strictly for initialization of AdminItem
+	void Item::initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem )
+		{
+		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+
+		// Checking private initialized variables
+
+		if( ( commonVariables_ = commonVariables ) == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+
+		if( ( myWordItem_ = myWordItem ) == NULL )
+			strcpy( errorString, "The given my word item is undefined" );
+
+		if( classNameString == NULL )
+			strcpy( errorString, "The given class name string is undefined" );
+		else
+			strcpy( classNameString_, classNameString );
+
+		if( strlen( errorString ) > 0 )
+			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
+		}
+
+	void Item::initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+		{
+		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+//Java
+//Java
+
+		// Checking private initialized variables
+
+		if( ( commonVariables_ = commonVariables ) == NULL )
+			strcpy( errorString, "The given common variables is undefined" );
+		else
+			{
+			userNr_ = commonVariables_->currentUserNr;
+			originalSentenceNr_ = ( originalSentenceNr == NO_SENTENCE_NR ? commonVariables_->currentSentenceNr : originalSentenceNr );
+			creationSentenceNr_ = commonVariables_->currentSentenceNr;
+			activeSentenceNr_ = ( originalSentenceNr == NO_SENTENCE_NR ? commonVariables_->currentSentenceNr : activeSentenceNr );
+			inactiveSentenceNr_ = inactiveSentenceNr;
+			archivedSentenceNr_ = archivedSentenceNr;
+
+			if( commonVariables_->currentItemNr >= NO_ITEM_NR )
+				{
+				if( commonVariables_->currentItemNr < MAX_ITEM_NR )
+					itemNr_ = ++commonVariables_->currentItemNr;
+				else
+					strcpy( errorString, "Current item number overflow" );
+				}
+			else
+				strcpy( errorString, "The given current item number is less than zero" );
+			}
+
+		if( ( inputOutput_ = inputOutput ) == NULL )
+			strcpy( errorString, "The given input-output is undefined" );
+
+		if( ( myList_ = myList ) == NULL )
+			strcpy( errorString, "The given my list is undefined" );
+
+		if( ( myWordItem_ = myWordItem ) == NULL )
+			strcpy( errorString, "The given my word item is undefined" );
+
+		if( classNameString == NULL )
+			strcpy( errorString, "The given class name string is undefined" );
+		else
+			strcpy( classNameString_, classNameString );
+
+		if( strlen( errorString ) > 0 )
+			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
+		}
+
+	bool Item::hasActiveSentenceNr()
+		{
+		return ( activeSentenceNr_ > NO_SENTENCE_NR );
+		}
+
+	bool Item::hasInactiveSentenceNr()
+		{
+		return ( inactiveSentenceNr_ > NO_SENTENCE_NR );
+		}
+
+	bool Item::hasCurrentCreationSentenceNr()
+		{
+		return ( creationSentenceNr_ == commonVariables_->currentSentenceNr );
+		}
+
+	bool Item::hasCurrentOrNewerCreationSentenceNr()
+		{
+		return ( creationSentenceNr_ >= commonVariables_->currentSentenceNr );
+		}
+
+	bool Item::hasCurrentActiveSentenceNr()
+		{
+		return ( activeSentenceNr_ == commonVariables_->currentSentenceNr );
+		}
+
+	bool Item::hasCurrentInactiveSentenceNr()
+		{
+		return ( inactiveSentenceNr_ == commonVariables_->currentSentenceNr );
+		}
+
+	bool Item::hasCurrentArchivedSentenceNr()
+		{
+		return ( archivedSentenceNr_ == commonVariables_->currentSentenceNr );
+		}
+
+	bool Item::hasCurrentReplacedSentenceNr()
+		{
+		return ( replacedSentenceNr_ == commonVariables_->currentSentenceNr );
+		}
+
+	bool Item::hasSentenceNr( unsigned int sentenceNr )
+		{
+		return ( originalSentenceNr_ == sentenceNr ||
+				creationSentenceNr_ == sentenceNr ||
+				activeSentenceNr_ == sentenceNr ||
+				inactiveSentenceNr_ == sentenceNr ||
+				archivedSentenceNr_ == sentenceNr ||
+				replacedSentenceNr_ == sentenceNr );
+		}
+
+	bool Item::isOlderItem()
+		{
+		return ( originalSentenceNr_ < commonVariables_->currentSentenceNr );
+		}
+
+	bool Item::isActiveItem()
+		{
+		return ( statusChar_ == QUERY_ACTIVE_CHAR );
+		}
+
+	bool Item::isInactiveItem()
+		{
+		return ( statusChar_ == QUERY_INACTIVE_CHAR );
+		}
+
+	bool Item::isArchivedItem()
+		{
+		return ( statusChar_ == QUERY_ARCHIVED_CHAR );
+		}
+
+	bool Item::isReplacedItem()
+		{
+		return ( statusChar_ == QUERY_REPLACED_CHAR );
+		}
+
+	bool Item::isDeletedItem()
+		{
+		return ( statusChar_ == QUERY_DELETED_CHAR );
+		}
+
+	bool Item::isReplacedOrDeletedItem()
+		{
+		return ( statusChar_ == QUERY_REPLACED_CHAR ||
+				statusChar_ == QUERY_DELETED_CHAR );
+		}
+
+	bool Item::isMoreRecent( Item *checkItem )
+		{
+		return ( checkItem != NULL &&
+
+				( creationSentenceNr_ > checkItem->creationSentenceNr_ ||
+
+				( creationSentenceNr_ == checkItem->creationSentenceNr_ &&
+				itemNr_ > checkItem->itemNr_ ) ) );
+		}
+
+	bool Item::wasActiveBefore()
+		{
+		return ( previousStatusChar == QUERY_ACTIVE_CHAR );
+		}
+
+	bool Item::wasInactiveBefore()
+		{
+		return ( previousStatusChar == QUERY_INACTIVE_CHAR );
+		}
+
+	bool Item::wasArchivedBefore()
+		{
+		return ( previousStatusChar == QUERY_ARCHIVED_CHAR );
+		}
+
+	unsigned short Item::userNr()
+		{
+		return userNr_;
+		}
+
+	unsigned int Item::activeSentenceNr()
+		{
+		return activeSentenceNr_;
+		}
+
+	unsigned int Item::inactiveSentenceNr()
+		{
+		return inactiveSentenceNr_;
+		}
+
+	unsigned int Item::originalSentenceNr()
+		{
+		return originalSentenceNr_;
+		}
+
+	unsigned int Item::creationSentenceNr()
+		{
+		return creationSentenceNr_;
+		}
+
+	unsigned int Item::archivedSentenceNr()
+		{
+		return archivedSentenceNr_;
+		}
+
+	unsigned int Item::replacedSentenceNr()
+		{
+		return replacedSentenceNr_;
+		}
+
+	unsigned int Item::itemNr()
+		{
+		return itemNr_;
+		}
+
+	signed char Item::decrementActiveSentenceNr()
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementActiveSentenceNr";
+
+		if( activeSentenceNr_ <= NO_SENTENCE_NR )
+			return startError( functionNameString, parentClassNameString_, "The active sentence number is undefined" );
+
+		activeSentenceNr_--;
+
 		return RESULT_OK;
 		}
 
-	StringResultType Item::findMatchingWordReferenceString( char *queryString )
+	signed char Item::decrementInactiveSentenceNr()
 		{
-		// This is a virtual function. Therefore, the given variables are unreferenced.
-		StringResultType stringResult;
-		return stringResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementInactiveSentenceNr";
+
+		if( inactiveSentenceNr_ <= NO_SENTENCE_NR )
+			return startError( functionNameString, parentClassNameString_, "The inactive sentence number is undefined" );
+
+		inactiveSentenceNr_--;
+
+		return RESULT_OK;
 		}
 
-	char *Item::itemString()
+	signed char Item::decrementOriginalSentenceNr()
 		{
-		return NULL;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementOriginalSentenceNr";
+
+		if( originalSentenceNr_ <= NO_SENTENCE_NR )
+			return startError( functionNameString, parentClassNameString_, "The original sentence number is undefined" );
+
+		originalSentenceNr_--;
+
+		return RESULT_OK;
 		}
 
-	char *Item::virtualGuideByGrammarString()
+	signed char Item::decrementCreationSentenceNr()
 		{
-		return NULL;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementCreationSentenceNr";
+
+		if( creationSentenceNr_ <= NO_SENTENCE_NR )
+			return startError( functionNameString, parentClassNameString_, "The creation sentence number is undefined" );
+
+		creationSentenceNr_--;
+
+		return RESULT_OK;
 		}
 
+	signed char Item::decrementArchivedSentenceNr()
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementArchivedSentenceNr";
 
-	char *Item::toString( unsigned short queryWordTypeNr )
+		if( archivedSentenceNr_ <= NO_SENTENCE_NR )
+			return startError( functionNameString, parentClassNameString_, "The archived sentence number is undefined" );
+
+		archivedSentenceNr_--;
+
+		return RESULT_OK;
+		}
+
+	signed char Item::decrementReplacedSentenceNr()
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementReplacedSentenceNr";
+
+		if( replacedSentenceNr_ <= NO_SENTENCE_NR )
+			return startError( functionNameString, parentClassNameString_, "The replaced sentence number is undefined" );
+
+		replacedSentenceNr_--;
+
+		return RESULT_OK;
+		}
+
+	signed char Item::decrementItemNr( unsigned int decrementOffset )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNr";
+
+		if( decrementOffset >= itemNr_ )
+			return startError( functionNameString, parentClassNameString_, "The given decrement offset is higher than the item number itself" );
+
+		itemNr_ -= decrementOffset;
+
+		return RESULT_OK;
+		}
+
+	char Item::statusChar()
+		{
+		return statusChar_;
+		}
+
+	char *Item::classNameString()
+		{
+		return classNameString_;
+		}
+
+	char *Item::itemBaseToString( unsigned short queryWordTypeNr )
 		{
 		char *queryString;
 		char *myWordString = myWordTypeString( queryWordTypeNr );
@@ -744,447 +1267,22 @@
 			strcat( queryString, tempString );
 			}
 
-		if( deletedSentenceNr_ > NO_SENTENCE_NR )
-			{
-			sprintf( tempString, "%cdeletedSentenceNr:%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_ITEM_SENTENCE_NR_START_CHAR, deletedSentenceNr_, QUERY_ITEM_SENTENCE_NR_END_CHAR );
-			strcat( queryString, tempString );
-			}
-
 		return queryString;
 		}
 
-
-	// Protected common functions
-
-	void Item::clearArchivedSentenceNr()
+	char *Item::parentClassNameString()
 		{
-		archivedSentenceNr_ = NO_SENTENCE_NR;
-		}
-
-	void Item::clearReplacedSentenceNr()
-		{
-		replacedSentenceNr_ = NO_SENTENCE_NR;
-		}
-
-	void Item::setActiveStatus()
-		{
-		statusChar_ = QUERY_ACTIVE_CHAR;
-		}
-
-	void Item::setArchivedStatus()
-		{
-		statusChar_ = QUERY_ARCHIVED_CHAR;
-		}
-
-	void Item::setDeletedStatus()
-		{
-		statusChar_ = QUERY_DELETED_CHAR;
-		}
-
-	void Item::setInactiveStatus()
-		{
-		statusChar_ = QUERY_INACTIVE_CHAR;
-		}
-
-	void Item::setReplacedStatus()
-		{
-		statusChar_ = QUERY_REPLACED_CHAR;
-		}
-
-	void Item::setActiveSentenceNr()
-		{
-		if( activeSentenceNr_ == NO_SENTENCE_NR )
-			activeSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::setArchivedSentenceNr()
-		{
-		if( archivedSentenceNr_ == NO_SENTENCE_NR )
-			archivedSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::setDeletedSentenceNr()
-		{
-		deletedSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::setInactiveSentenceNr()
-		{
-		if( inactiveSentenceNr_ == NO_SENTENCE_NR )
-			inactiveSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::setReplacedSentenceNr()
-		{
-		if( replacedSentenceNr_ == NO_SENTENCE_NR )
-			replacedSentenceNr_ = commonVariables_->currentSentenceNr;
-		}
-
-	void Item::displayWords( bool isReturnQueryToPosition, unsigned short queryWordTypeNr )
-		{
-		char *myWordString;
-
-		statusString[0] = statusChar_;
-
-		if( ( myWordString = myWordTypeString( queryWordTypeNr ) ) != NULL )
-			{
-			if( commonVariables_->hasFoundQuery )
-				strcat( commonVariables_->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
-
-			// Display status if not active
-			if( !isActiveItem() )
-				strcat( commonVariables_->queryString, statusString );
-
-			commonVariables_->hasFoundQuery = true;
-			strcat( commonVariables_->queryString, myWordString );
-			}
-		}
-
-	// Strictly for initialization of AdminItem
-	void Item::initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem )
-		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
-
-		// Private constructed variables
-
-//		AdminItem has no constructed variables to be initialized
-
-		// Private initialized variables
-
-		commonVariables_ = commonVariables;
-//		AdminItem has no myList_;
-		myWordItem_ = myWordItem;
-
-		if( commonVariables_ == NULL )
-			strcpy( errorString, "The given common variables is undefined" );
-
-		if( myWordItem_ == NULL )
-			strcpy( errorString, "The given my word is undefined" );
-
-		if( classNameString == NULL )
-			strcpy( errorString, "The given my word is undefined" );
-		else
-			{
-			if( classNameString != NULL )
-				strcpy( classNameString_, classNameString );
-			else
-				strcpy( errorString, "The given class name string is undefined" );
-			}
-
-		if( strlen( errorString ) > 0 )
-			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
-		}
-
-	void Item::initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
-		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
-
-		// Private initialized variables
-
-		commonVariables_ = commonVariables;
-		myList_ = myList;
-		myWordItem_ = myWordItem;
-
-		// Private constructed variables
-
-		if( commonVariables_ == NULL )
-			strcpy( errorString, "The given common variables is undefined" );
-		else
-			{
-		userNr_ = commonVariables_->currentUserNr;
-
-		originalSentenceNr_ = ( originalSentenceNr == NO_SENTENCE_NR ? commonVariables_->currentSentenceNr : originalSentenceNr );
-			creationSentenceNr_ = commonVariables_->currentSentenceNr;
-
-		activeSentenceNr_ = ( originalSentenceNr == NO_SENTENCE_NR ? commonVariables_->currentSentenceNr : activeSentenceNr );
-		inactiveSentenceNr_ = inactiveSentenceNr;
-		archivedSentenceNr_ = archivedSentenceNr;
-
-			if( commonVariables_->currentItemNr >= NO_ITEM_NR )
-				{
-				if( commonVariables_->currentItemNr < MAX_ITEM_NR )
-					itemNr_ = ++commonVariables_->currentItemNr;
-				else
-					strcpy( errorString, "Current item number overflow" );
-				}
-			else
-				strcpy( errorString, "The given current item number is less than zero" );
-			}
-
-		if( myList_ == NULL )
-			strcpy( errorString, "The given my list is undefined" );
-
-		if( myWordItem_ == NULL )
-			strcpy( errorString, "The given my word is undefined" );
-
-		if( classNameString == NULL )
-			strcpy( errorString, "The given my word is undefined" );
-		else
-			{
-			if( classNameString != NULL )
-				strcpy( classNameString_, classNameString );
-			else
-				strcpy( errorString, "The given class name string is undefined" );
-			}
-
-		if( strlen( errorString ) > 0 )
-			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
-		}
-
-	bool Item::hasActiveSentenceNr()
-		{
-		return ( activeSentenceNr_ > NO_SENTENCE_NR );
-		}
-
-	bool Item::hasInactiveSentenceNr()
-		{
-		return ( inactiveSentenceNr_ > NO_SENTENCE_NR );
-		}
-
-	bool Item::hasCurrentCreationSentenceNr()
-		{
-		return ( creationSentenceNr_ == commonVariables_->currentSentenceNr );
-		}
-
-	bool Item::hasCurrentActiveSentenceNr()
-		{
-		return ( activeSentenceNr_ == commonVariables_->currentSentenceNr );
-		}
-
-	bool Item::hasCurrentInactiveSentenceNr()
-		{
-		return ( inactiveSentenceNr_ == commonVariables_->currentSentenceNr );
-		}
-
-	bool Item::hasCurrentArchivedSentenceNr()
-		{
-		return ( archivedSentenceNr_ == commonVariables_->currentSentenceNr );
-		}
-
-	bool Item::hasCurrentReplacedSentenceNr()
-		{
-		return ( replacedSentenceNr_ == commonVariables_->currentSentenceNr );
-		}
-
-	bool Item::hasSentenceNr( unsigned int sentenceNr )
-		{
-		return ( originalSentenceNr_ == sentenceNr ||
-				creationSentenceNr_ == sentenceNr ||
-				activeSentenceNr_ == sentenceNr ||
-				inactiveSentenceNr_ == sentenceNr ||
-				archivedSentenceNr_ == sentenceNr ||
-				replacedSentenceNr_ == sentenceNr ||
-				deletedSentenceNr_ == sentenceNr );
-		}
-
-	bool Item::isOlderItem()
-		{
-		return ( originalSentenceNr_ < commonVariables_->currentSentenceNr );
-		}
-
-	bool Item::isActiveItem()
-		{
-		return ( statusChar_ == QUERY_ACTIVE_CHAR );
-		}
-
-	bool Item::isInactiveItem()
-		{
-		return ( statusChar_ == QUERY_INACTIVE_CHAR );
-		}
-
-	bool Item::isArchivedItem()
-		{
-		return ( statusChar_ == QUERY_ARCHIVED_CHAR );
-		}
-
-	bool Item::isReplacedItem()
-		{
-		return ( statusChar_ == QUERY_REPLACED_CHAR );
-		}
-
-	bool Item::isDeletedItem()
-		{
-		return ( statusChar_ == QUERY_DELETED_CHAR );
-		}
-
-	bool Item::isReplacedOrDeletedItem()
-		{
-		return ( isReplacedItem() ||
-				isDeletedItem() );
-		}
-
-	bool Item::isMoreRecent( Item *checkItem )
-		{
-		return ( checkItem != NULL &&
-
-				( creationSentenceNr_ > checkItem->creationSentenceNr_ ||
-
-				( creationSentenceNr_ == checkItem->creationSentenceNr_ &&
-				itemNr_ > checkItem->itemNr_ ) ) );
-		}
-
-	bool Item::wasActiveBefore()
-		{
-		return ( previousStatusChar == QUERY_ACTIVE_CHAR );
-		}
-
-	bool Item::wasInactiveBefore()
-		{
-		return ( previousStatusChar == QUERY_INACTIVE_CHAR );
-		}
-
-	bool Item::wasArchivedBefore()
-		{
-		return ( previousStatusChar == QUERY_ARCHIVED_CHAR );
-		}
-
-	unsigned short Item::userNr()
-		{
-		return userNr_;
-		}
-
-	unsigned int Item::activeSentenceNr()
-		{
-		return activeSentenceNr_;
-		}
-
-	unsigned int Item::inactiveSentenceNr()
-		{
-		return inactiveSentenceNr_;
-		}
-
-	unsigned int Item::originalSentenceNr()
-		{
-		return originalSentenceNr_;
-		}
-
-	unsigned int Item::creationSentenceNr()
-		{
-		return creationSentenceNr_;
-		}
-
-	unsigned int Item::archivedSentenceNr()
-		{
-		return archivedSentenceNr_;
-		}
-
-	unsigned int Item::replacedSentenceNr()
-		{
-		return replacedSentenceNr_;
-		}
-
-	unsigned int Item::deletedSentenceNr()
-		{
-		return deletedSentenceNr_;
-		}
-
-	unsigned int Item::itemNr()
-		{
-		return itemNr_;
-		}
-
-	ResultType Item::decrementActiveSentenceNr()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementActiveSentenceNr";
-
-		if( activeSentenceNr_ <= NO_SENTENCE_NR )
-			return startError( functionNameString, superClassNameString_, "The active sentence number is undefined" );
-
-		activeSentenceNr_--;
-
-		return RESULT_OK;
-		}
-
-	ResultType Item::decrementInactiveSentenceNr()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementInactiveSentenceNr";
-
-		if( inactiveSentenceNr_ <= NO_SENTENCE_NR )
-			return startError( functionNameString, superClassNameString_, "The inactive sentence number is undefined" );
-
-		inactiveSentenceNr_--;
-
-		return RESULT_OK;
-		}
-
-	ResultType Item::decrementOriginalSentenceNr()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementOriginalSentenceNr";
-
-		if( originalSentenceNr_ <= NO_SENTENCE_NR )
-			return startError( functionNameString, superClassNameString_, "The original sentence number is undefined" );
-
-		originalSentenceNr_--;
-
-		return RESULT_OK;
-		}
-
-	ResultType Item::decrementCreationSentenceNr()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementCreationSentenceNr";
-
-		if( creationSentenceNr_ <= NO_SENTENCE_NR )
-			return startError( functionNameString, superClassNameString_, "The creation sentence number is undefined" );
-
-		creationSentenceNr_--;
-
-		return RESULT_OK;
-		}
-
-	ResultType Item::decrementArchivedSentenceNr()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementArchivedSentenceNr";
-
-		if( archivedSentenceNr_ <= NO_SENTENCE_NR )
-			return startError( functionNameString, superClassNameString_, "The archived sentence number is undefined" );
-
-		archivedSentenceNr_--;
-
-		return RESULT_OK;
-		}
-
-	ResultType Item::decrementReplacedSentenceNr()
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementReplacedSentenceNr";
-
-		if( replacedSentenceNr_ <= NO_SENTENCE_NR )
-			return startError( functionNameString, superClassNameString_, "The replaced sentence number is undefined" );
-
-		replacedSentenceNr_--;
-
-		return RESULT_OK;
-		}
-
-	ResultType Item::decrementItemNr( unsigned int decrementOffset )
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNr";
-
-		if( decrementOffset >= itemNr_ )
-			return startError( functionNameString, superClassNameString_, "The given decrement offset is higher than the item number itself" );
-
-		itemNr_ -= decrementOffset;
-
-		return RESULT_OK;
-		}
-
-	char Item::statusChar()
-		{
-		return statusChar_;
-		}
-
-	char *Item::classNameString()
-		{
-		return classNameString_;
-		}
-
-	char *Item::superClassNameString()
-		{
-		return superClassNameString_;
+		return parentClassNameString_;
 		}
 
 	CommonVariables *Item::commonVariables()
 		{
 		return commonVariables_;
+		}
+
+	InputOutput *Item::inputOutput()
+		{
+		return inputOutput_;
 		}
 
 	List *Item::myList()
@@ -1211,6 +1309,16 @@
 		return myWordItem_;
 		}
 
+
+	// Protected database connection functions
+/*
+	signed char Item::storeChangesInFutureDatabase()
+		{
+		// Save changes of this item to the database
+
+		return RESULT_OK;
+		}
+*/
 
 	// Protected definition functions
 
@@ -1320,12 +1428,6 @@
 				articleParameter == WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE );
 		}
 
-	bool Item::isGeneralizationReasoningWordType( unsigned short wordTypeNr )
-		{
-		return ( wordTypeNr == WORD_TYPE_PROPER_NAME ||
-				isNounWordType( wordTypeNr ) );
-		}
-
 	bool Item::isMatchingWordType( unsigned short firstWordTypeNr, unsigned short secondWordTypeNr )
 		{
 		return	( firstWordTypeNr == secondWordTypeNr ||
@@ -1337,6 +1439,13 @@
 	bool Item::isNounWordType( unsigned short wordTypeNr )
 		{
 		return ( wordTypeNr == WORD_TYPE_NOUN_SINGULAR ||
+				wordTypeNr == WORD_TYPE_NOUN_PLURAL );
+		}
+
+	bool Item::isGeneralizationReasoningWordType( unsigned short wordTypeNr )
+		{
+		return ( wordTypeNr == WORD_TYPE_PROPER_NAME ||
+				wordTypeNr == WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr == WORD_TYPE_NOUN_PLURAL );
 		}
 

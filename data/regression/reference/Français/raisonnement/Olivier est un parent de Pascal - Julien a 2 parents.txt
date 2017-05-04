@@ -3,6 +3,8 @@
 < Pascal a un parent, appelé Olivier.
 < 
 * 
+* Vous avez entré le nom au pluriel «parents», qui était inconnu pour moi.
+* 
 * Mes conclusions:
 < Olivier est un parent de Pascal et Julien.
 < Amélie est un parent de Julien.

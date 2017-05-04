@@ -1,7 +1,6 @@
-﻿Changes in Thinknowlogy 2016r2 (Restyle) compared to Thinknowlogy 2016r1 (Huguenot):
+﻿Changes in Thinknowlogy 2017r1 (Bursts of Laughter) compared to Thinknowlogy 2016r2 (Restyle):
 - Bug fixes;
-- Improved system stability on errors;
-- Slightly improved reasoning;
-- Slightly improved performance (through quick access lists);
-- Added deep regression test for user Developer;
-- Restyled source code.
+- Warning on some integrity problems, instead of errors;
+- Added conclusions/assumptions with adjective specification words;
+- Additional justifications in some conclusions, assumptions and questions;
+- Redesign of asking questions (class AdminReasoningNew), by nested loops. I am planning to redesign the rest of the reasoning (class AdminReasoningOld) in the coming years.

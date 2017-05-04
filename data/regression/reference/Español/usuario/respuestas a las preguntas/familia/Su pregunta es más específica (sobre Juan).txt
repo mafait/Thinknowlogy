@@ -31,7 +31,7 @@
 * Mis suposiciones:
 < Pablo es probablemente una persona.
 < Juan es posiblemente una persona.
-< Juan es probablemente parte de una familia.
+< Juan es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Pablo un niño o un hombre?

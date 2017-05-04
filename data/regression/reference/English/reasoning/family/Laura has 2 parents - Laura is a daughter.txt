@@ -37,7 +37,6 @@
 < Laura is probably a child of John and Anna.
 < Laura is probably part of a family.
 < Laura is possibly a person.
-< Laura is maybe not a man.
 < Laura is possibly a daughter of John and Anna.
 < Laura is maybe not a boy and not a man.
 < Laura is maybe not a son.
@@ -50,13 +49,14 @@
 < Anna is probably a person.
 < Anna is probably a woman.
 < Anna is probably not a man.
+< Anna is probably feminine.
 < Anna is probably a mother of Laura.
 < Anna is probably not a father.
 * 
 * My questions:
 < Is Laura a girl or a woman?
-< Is John a man or a woman?
 < Is John a father or a mother?
+< Is John a man or a woman?
 < 
 * 
 * You have confirmed the specification - but none of its relations - of my earlier assumptions:
@@ -75,10 +75,6 @@
 * 	and:
 <	- Laura is a daughter.
 <	- A daughter is probably a person.
-< Laura is maybe not a man. Because:
-<	- Laura is probably a person.
-<	- Every person is a man or a woman.
-<	- Is Laura a girl or a woman?
 < Laura is probably not a boy and not a man. Because:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.

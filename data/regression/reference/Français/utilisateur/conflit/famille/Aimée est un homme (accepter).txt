@@ -28,6 +28,9 @@
 < 
 * Je m'attendais que le nom propre «Aimée» serait féminine.
 * 
+* Mes conclusions:
+< Aimée est masculin.
+* 
 * Mes hypothèses:
 < Aimée est probablement une personne.
 < Aimée n'est probablement pas une femme.

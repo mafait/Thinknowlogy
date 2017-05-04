@@ -1,71 +1,107 @@
 ﻿* 
-* Mis suposiciones:
-< Un animal es probablemente un organismo.
-< 
-* 
-* Mis conclusiones:
-< Un animal es un anfibio, un pájaro, un pez, un mamífero o un reptil.
-< Un organismo es un anfibio, un pájaro, un pez, un mamífero, un reptil, un vertebrado o un invertebrado.
+* Ha introducido un nombre plural "reptiles", que era desconocido para mí.
 * 
 * Mis suposiciones:
-< Un vertebrado es probablemente un organismo.
+< Cocodrilos son probablemente vertebrado [plural de 'vertebrado' es desconocida].
+< Cocodrilos son posiblemente animal [plural de 'animal' es desconocida].
+< Cocodrilos son puede-ser organismo [plural de 'organismo' es desconocida].
 < 
-* 
-* Mis suposiciones:
-< Cocodrilos son probablemente organismo [plural de 'organismo' es desconocida].
-< 
-* 
-* Mis conclusiones:
-< Un animal es un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero o un reptil.
-< Un organismo es un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero, un reptil, un vertebrado o un invertebrado.
-* 
-* Mis suposiciones:
-< Un invertebrado es probablemente un organismo.
-< 
-* 
-* Mis conclusiones:
-< Un animal es un cetáceo, un marsupial, un primate, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero o un reptil.
-< Un vertebrado es un cetáceo, un marsupial, un primate o un roedor.
-< Un organismo es un cetáceo, un marsupial, un primate, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero, un reptil, un vertebrado o un invertebrado.
 * 
 * Mis suposiciones:
 < Un mamífero es probablemente un organismo.
+< Un vertebrado es posiblemente un organismo.
 < 
 * 
 * Mis conclusiones:
-< Juan es un primate, un mamífero y un vertebrado.
+< Cada mamífero es un vertebrado.
+< Cada organismo es un vertebrado.
+* 
+* Mis suposiciones:
+< Un humano es probablemente un organismo.
+< 
+* 
+* Mis conclusiones:
+< Cada organismo es un mamífero.
+< 
+* 
+* Mis conclusiones:
+< Juan es un mamífero.
+< Juan es un vertebrado.
+< Juan no es un anfibio, un pájaro, un pez y un reptil.
 * 
 * Mis suposiciones:
 < Juan es probablemente un organismo.
-< Juan no es probablemente un cetáceo, un marsupial, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un reptil, un vertebrado y un invertebrado.
 < Juan no es probablemente un animal, un hongo, un microorganismo y una planta.
 < 
 * 
+* Mis suposiciones:
+< Un vertebrado es posiblemente un organismo. Porque:
+<	- Cada vertebrado es un anfibio, un pájaro, un pez, un mamífero o un reptil.
+<	- Un mamífero es probablemente un organismo.
+< 
+* 
 * Mis conclusiones:
-< Juan es un primate, un mamífero y un vertebrado. Porque:
-<	- Juan es un bienestar-humano.
-<	- Un bienestar-humano es un vertebrado.
+< Cada mamífero es un vertebrado. Porque:
+<	- Cada mamífero es un cetáceo, un marsupial, un roedor, un mono o un humano.
+<	- Cada humano es un vertebrado.
+* 
+* Mis suposiciones:
+< Un mamífero es probablemente un organismo. Porque:
+<	- Cada mamífero es un cetáceo, un marsupial, un roedor, un mono o un humano.
+<	- Un humano es probablemente un organismo.
 * 	y:
-<	- Juan es un bienestar-humano.
-<	- Un bienestar-humano es un primate, un mamífero.
+<	- Cada mamífero es un vertebrado.
+<	- Un vertebrado es posiblemente un organismo.
 * 	y:
-<	- Juan es un bienestar-humano.
-<	- Un bienestar-humano es un mamífero.
+<	- Cada organismo es un animal, un hongo, un humano, un microorganismo o una planta.
+<	- Cada mamífero es un cetáceo, un marsupial, un roedor, un mono o un humano.
+< 
+* 
+* Mis suposiciones:
+< Cocodrilos son probablemente vertebrados. Porque:
+<	- Cada vertebrado es un anfibio, un pájaro, un pez, un mamífero o un reptil.
+<	- Cocodrilos son reptiles.
+< Cocodrilos son posiblemente animal [plural de 'animal' es desconocida]. Porque:
+<	- Cada animal es un vertebrado o un invertebrado.
+<	- Cocodrilos son probablemente vertebrados.
+< Cocodrilos son puede-ser organismo [plural de 'organismo' es desconocida]. Porque:
+<	- Cada organismo es un animal, un hongo, un humano, un microorganismo o una planta.
+<	- Cocodrilos son posiblemente animal [plural de 'animal' es desconocida].
+< 
+* 
+* Mis conclusiones:
+< Juan es un mamífero. Porque:
+<	- Juan es un humano.
+<	- Cada humano es un mamífero.
+< Juan es un vertebrado. Porque:
+<	- Juan es un humano.
+<	- Cada humano es un vertebrado.
+< Juan no es un anfibio, un pájaro, un pez y un reptil. Porque:
+<	- Juan es un vertebrado.
+<	- Cada vertebrado es un anfibio, un pájaro, un pez, un mamífero o un reptil.
+<	- Juan es un mamífero.
 * 
 * Mis suposiciones:
 < Juan es probablemente un organismo. Porque:
+<	- Cada organismo es un animal, un hongo, un humano, un microorganismo o una planta.
+<	- Juan es un humano.
+* 	y:
+<	- Cada organismo es un mamífero.
+<	- Juan es un mamífero.
+* 	y:
 <	- Juan es un mamífero.
 <	- Un mamífero es probablemente un organismo.
 * 	y:
+<	- Juan es un humano.
+<	- Un humano es probablemente un organismo.
+* 	y:
+<	- Cada organismo es un vertebrado.
 <	- Juan es un vertebrado.
-<	- Un vertebrado es probablemente un organismo.
-< Juan no es probablemente un cetáceo, un marsupial, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un reptil, un vertebrado y un invertebrado. Porque:
-<	- Juan es probablemente un organismo.
-<	- Un organismo es un cetáceo, un marsupial, un primate, un roedor, un anélido, un artrópodo, un equinodermo, un molusco, un protozoo, un anfibio, un pájaro, un pez, un mamífero, un reptil, un vertebrado o un invertebrado.
-<	- Juan es un bienestar-humano.
-<	- Un bienestar-humano es un primate, un mamífero.
+* 	y:
+<	- Juan es un vertebrado.
+<	- Un vertebrado es posiblemente un organismo.
 < Juan no es probablemente un animal, un hongo, un microorganismo y una planta. Porque:
 <	- Juan es probablemente un organismo.
-<	- Un organismo es un animal, un hongo, un bienestar-humano, un microorganismo o una planta.
-<	- Juan es un bienestar-humano.
+<	- Cada organismo es un animal, un hongo, un humano, un microorganismo o una planta.
+<	- Juan es un humano.
 < 

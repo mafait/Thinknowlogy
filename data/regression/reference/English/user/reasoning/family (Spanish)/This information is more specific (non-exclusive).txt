@@ -1,0 +1,49 @@
+﻿* 
+* My conclusions:
+< Fathers and children are part of every family.
+< 
+* 
+* My conclusions:
+< Every father is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< A father is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< Addison is part of a family.
+* 
+* My assumptions:
+< Addison is probably a person.
+< Addison has probably a child.
+* 
+* My questions:
+< Is Addison a man or a woman?
+< Is Addison a father or a mother?
+< 
+* 
+* This information is more specific than your earlier information:
+< Addison is a father or a mother.
+* 
+* My questions that are answered:
+< Is Addison a father or a mother?
+< Is Addison a man or a woman?
+* 
+* My conclusions:
+< Addison is not a mother.
+< Addison is a man.
+< Addison is not a woman.
+< Addison is masculine.
+< 

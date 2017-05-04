@@ -27,13 +27,15 @@
 < Une fille est probablement une personne.
 < 
 * 
+* Vous avez entré le nom au pluriel «fils», qui était inconnu pour moi.
+* 
 * Mes hypothèses:
 < Olivier est probablement un parent.
 < Olivier est probablement partie d'une famille.
 < Olivier est possible une personne.
 * 
 * Mes questions:
-< Est Olivier un homme ou une femme?
+< Est Olivier une femme ou un homme?
 < Est Olivier un père ou une mère?
 < 
 * 
@@ -50,17 +52,25 @@
 <	- Un parent est probablement une personne.
 * 
 * Mes questions:
-< Est Olivier un homme ou une femme? En raison:
-<	- Olivier est possible une personne.
-<	- Chaque personne est un homme ou une femme.
+< Est Olivier une femme ou un homme? En raison:
+<	- Olivier a une fille et 2 fils.
+<	- Chaque famille a parents et enfants.
+<	- Chaque parent est une femme ou un homme.
 * 	et:
 <	- Olivier est probablement un parent.
 <	- Chaque parent est une femme ou un homme.
 * 	et:
+<	- Olivier est possible une personne.
+<	- Chaque personne est un homme ou une femme.
+* 	et:
 <	- Est Olivier un père ou une mère?
-<	- Chaque mère est une femme.
 <	- Chaque père est un homme.
+<	- Chaque mère est une femme.
 < Est Olivier un père ou une mère? En raison:
+<	- Olivier a une fille et 2 fils.
+<	- Chaque famille a parents et enfants.
+<	- Chaque parent est un père ou une mère.
+* 	et:
 <	- Olivier est probablement un parent.
 <	- Chaque parent est un père ou une mère.
 < 
@@ -74,6 +84,6 @@
 < Olivier est possible une personne.
 * 
 * Mes questions:
-< Est Olivier un homme ou une femme?
+< Est Olivier une femme ou un homme?
 < Est Olivier un père ou une mère?
 < 

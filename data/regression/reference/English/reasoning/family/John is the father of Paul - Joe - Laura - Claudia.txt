@@ -29,6 +29,7 @@
 * 
 * My conclusions:
 < John is a man.
+< John is masculine.
 < Paul has a father, called John.
 * 
 * My assumptions:
@@ -44,7 +45,7 @@
 < Paul has probably a parent, called John.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
 < 
 * 
@@ -52,6 +53,9 @@
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
+< John is masculine. Because:
+<	- John is a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < John is probably a person. Because:
@@ -72,6 +76,8 @@
 <	- Every parent is a woman or a man.
 <	- John is a man.
 < John is probably a parent of Paul. Because:
+<	- Paul has probably a parent, called John.
+* 	and:
 <	- Every family has parents and children.
 <	- Paul is probably a child of John.
 * 	and:
@@ -103,7 +109,7 @@
 < Joe has probably a parent, called John.
 * 
 * My questions:
-< Is Joe a man, a woman, a girl or a boy?
+< Is Joe a girl, a woman, a boy or a man?
 < Is Joe a son or a daughter?
 < 
 * 
@@ -111,9 +117,15 @@
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
+< John is masculine. Because:
+<	- John is a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < John is probably a parent of Paul and Joe. Because:
+<	- Joe has probably a parent, called John.
+<	- Paul has probably a parent, called John.
+* 	and:
 <	- Every family has parents and children.
 <	- Joe is probably a child of John.
 <	- Paul is probably a child of John.
@@ -175,6 +187,9 @@
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
+< John is masculine. Because:
+<	- John is a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < John has possibly a daughter, called Laura. Because:
@@ -185,6 +200,10 @@
 <	- Every child is a son or a daughter.
 <	- Proper name "Laura" is probably feminine.
 < John is probably a parent of Paul, Joe and Laura. Because:
+<	- Laura has probably a parent, called John.
+<	- Joe has probably a parent, called John.
+<	- Paul has probably a parent, called John.
+* 	and:
 <	- Every family has parents and children.
 <	- Laura is probably a child of John.
 <	- Joe is probably a child of John.
@@ -248,6 +267,9 @@
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
+< John is masculine. Because:
+<	- John is a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < John has possibly 2 daughter [plural of 'daughter' is unknown], called Laura and Claudia. Because:
@@ -255,12 +277,17 @@
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
 <	- Proper name "Claudia" is probably feminine.
+<	- Proper name "Laura" is probably feminine.
 * 	and:
 <	- Claudia is possibly a daughter of John.
 <	- Laura is possibly a daughter of John.
 < John is probably a parent of Paul, Joe, Laura and Claudia. Because:
+<	- Claudia has probably a parent, called John.
+<	- Laura has probably a parent, called John.
+<	- Joe has probably a parent, called John.
+<	- Paul has probably a parent, called John.
+* 	and:
 <	- Every family has parents and children.
 <	- Claudia is probably a child of John.
 <	- Laura is probably a child of John.

@@ -50,12 +50,13 @@
 < Amélie est possible une mère de Julien.
 < Amélie est possible une femme.
 < Amélie n'est peut-être pas un homme.
+< Amélie est possible féminine.
 < Amélie n'est peut-être pas un père.
 * 
 * Mes questions:
 < Est Julien un garçon ou un homme?
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 < 
 ! 
 ! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec:

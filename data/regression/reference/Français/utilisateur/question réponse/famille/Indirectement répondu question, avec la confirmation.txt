@@ -30,6 +30,7 @@
 * Mes conclusions:
 < Amélie est une mère de Pascal.
 < Amélie est une femme.
+< Amélie est féminine.
 * 
 * Mes hypothèses:
 < Pascal a probablement un parent, appelée Amélie.
@@ -44,22 +45,25 @@
 < Amélie a probablement un enfant, appelé Pascal.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
 < 
 * 
 * Mes questions qui sont répondues:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
 * 
 * Mes hypothèses qui sont ajustés:
 < Pascal est probablement une personne.
 * 
+* Mes conclusions:
+< Pascal est masculin.
+* 
 * Mes hypothèses:
 < Pascal est probablement un fils.
 < Pascal n'est probablement pas une femme.
 < Pascal n'est possible pas une fille.
-< Pascal n'est probablement pas un garçon, pas une jeune-fille et pas une femme.
+< Pascal n'est probablement pas un garçon, pas une femme et pas une jeune-fille.
 < 
 * 
 * Mes hypothèses qui sont confirmées:

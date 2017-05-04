@@ -3,6 +3,8 @@
 < Pablo tiene un padre, llamado Juan.
 < 
 * 
+* Ha introducido un nombre plural "padres", que era desconocido para mí.
+* 
 * Mis conclusiones:
 < Juan es padre de Pablo y José.
 < Ana es padre de José.

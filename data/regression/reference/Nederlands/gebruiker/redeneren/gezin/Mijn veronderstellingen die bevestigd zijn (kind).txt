@@ -29,6 +29,7 @@
 * 
 * Mijn conclusies:
 < Jan is een man.
+< Jan is mannelijk.
 < Paul heeft een vader, genaamd Jan.
 < Paul heeft een moeder, genaamd Anna.
 < Johan heeft een vader, genaamd Jan.
@@ -36,6 +37,7 @@
 < Laura heeft een vader, genaamd Jan.
 < Laura heeft een moeder, genaamd Anna.
 < Anna is een vrouw.
+< Anna is vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een persoon.
@@ -69,9 +71,9 @@
 < Anna heeft mogelijk een dochter, genaamd Laura.
 * 
 * Mijn vragen:
-< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
-< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een meisje, een vrouw, een jongen of een man?
 < Is Johan een zoon of een dochter?
 < Is Laura een meisje of een vrouw?
 < 
@@ -105,9 +107,9 @@
 * Mijn veronderstellingen die aangepast zijn:
 < Laura is waarschijnlijk een persoon.
 < Laura is waarschijnlijk een dochter van Jan en Anna.
+< Jan heeft waarschijnlijk een dochter, genaamd Laura.
 < Laura is waarschijnlijk geen jongen en geen man.
 < Laura is waarschijnlijk geen zoon.
-< Jan heeft waarschijnlijk een dochter, genaamd Laura.
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
 < Jan heeft 3 kinderen, genaamd Paul, Johan en Laura.

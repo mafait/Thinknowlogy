@@ -29,6 +29,7 @@
 * 
 * My conclusions:
 < James was a man.
+< James was masculine.
 < Peter has no father anymore.
 < Peter had a father, called James.
 * 
@@ -45,6 +46,6 @@
 < Peter had probably a parent, called James.
 * 
 * My questions:
-< Is Peter a man, a woman, a girl or a boy?
+< Is Peter a girl, a woman, a boy or a man?
 < Is Peter a son or a daughter?
 < 

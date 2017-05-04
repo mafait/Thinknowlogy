@@ -55,6 +55,7 @@
 * Mis conclusiones:
 < Ana es una mujer.
 < Ana no es un hombre.
+< Ana es femenina.
 < Ana es parte de una familia.
 < Ana no es un padre.
 * 
@@ -112,6 +113,9 @@
 <	- Ana es una madre.
 <	- Cada padre es una mujer o un hombre.
 <	- Ana es una mujer.
+< Ana es femenina. Porque:
+<	- Ana es una mujer.
+<	- Cada mujer es femenina.
 < Ana es parte de una familia. Porque:
 <	- Ana es una madre.
 <	- Padres son parte de cada familia.

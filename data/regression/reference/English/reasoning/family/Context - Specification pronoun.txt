@@ -29,6 +29,7 @@
 * 
 * My conclusions:
 < John is a man.
+< John is masculine.
 * 
 * My assumptions:
 < John is probably a person.

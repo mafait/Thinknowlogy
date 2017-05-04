@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier est masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne.
@@ -63,11 +64,12 @@
 < Amélie est probablement une personne.
 < Amélie est probablement une femme.
 < Amélie n'est probablement pas un homme.
+< Amélie est probablement féminine.
 < Amélie est probablement une mère de Pascal.
 < Amélie n'est probablement pas un père.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
 < 
 * 
@@ -92,6 +94,9 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier est masculin. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme est masculin.
 * 
 * Mes hypothèses:
 < Olivier a probablement un enfant, appelé Pascal. En raison:
@@ -133,16 +138,12 @@
 <	- Chaque personne est un homme ou une femme.
 <	- Amélie est probablement une femme.
 * 	et:
-<	- Amélie est probablement une mère de Pascal.
-<	- Une mère est probablement une personne.
-* 	et:
 <	- Pascal a 2 parents, appelés Olivier et Amélie.
 <	- Un parent est probablement une personne.
-< Amélie est probablement une femme. En raison:
-<	- Amélie est probablement une personne.
-<	- Chaque personne est un homme ou une femme.
-<	- Nom propre «Amélie» est probablement féminin.
 * 	et:
+<	- Amélie est probablement une mère de Pascal.
+<	- Une mère est probablement une personne.
+< Amélie est probablement une femme. En raison:
 <	- Amélie est un parent de Pascal.
 <	- Chaque parent est une femme ou un homme.
 <	- Nom propre «Amélie» est probablement féminin.
@@ -157,6 +158,9 @@
 <	- Amélie est un parent de Pascal.
 <	- Chaque parent est une femme ou un homme.
 <	- Amélie est probablement une femme.
+< Amélie est probablement féminine. En raison:
+<	- Amélie est probablement une femme.
+<	- Chaque femme est féminine.
 < Amélie est probablement une mère de Pascal. En raison:
 <	- Amélie est un parent de Pascal.
 <	- Chaque parent est un père ou une mère.
@@ -188,13 +192,18 @@
 <	- Amélie est probablement une mère de Pascal.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon? En raison:
-<	- Pascal est probablement un enfant de Olivier et Amélie.
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme? En raison:
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
+<	- Chaque famille a parents et enfants.
 <	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 	et:
-<	- Pascal est possible une personne.
-<	- Chaque personne est un homme ou une femme.
+<	- Pascal est probablement un enfant de Olivier et Amélie.
+<	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 < Est Pascal un fils ou une fille? En raison:
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
+<	- Chaque famille a parents et enfants.
+<	- Chaque enfant est un fils ou une fille.
+* 	et:
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Chaque enfant est un fils ou une fille.
 < 

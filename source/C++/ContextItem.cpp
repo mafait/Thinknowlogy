@@ -1,9 +1,9 @@
 /*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,6 @@
 
 class ContextItem : private Item
 	{
-	friend class AdminContext;
 	friend class AdminSpecification;
 	friend class ContextList;
 	friend class WordItem;
@@ -48,9 +47,9 @@ class ContextItem : private Item
 	protected:
 	// Constructor
 
-	ContextItem( bool isCompoundCollectionSpanishAmbiguous, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	ContextItem( bool isCompoundCollectionSpanishAmbiguous, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ContextItem", commonVariables, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ContextItem", commonVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -109,28 +108,14 @@ class ContextItem : private Item
 				specificationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	virtual StringResultType findMatchingWordReferenceString( char *queryString )
-		{
-		StringResultType stringResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
-
-		if( specificationWordItem_ != NULL )
-			{
-			if( ( stringResult = specificationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the specification word" );
-			}
-
-		return stringResult;
-		}
-
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *wordString;
 		char *queryString;
 		char *contextWordTypeString = myWordItem()->wordTypeNameString( contextWordTypeNr_ );
 		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 
@@ -176,6 +161,16 @@ class ContextItem : private Item
 			}
 
 		return queryString;
+		}
+
+	virtual BoolResultType findMatchingWordReferenceString( char *queryString )
+		{
+		BoolResultType boolResult;
+
+		if( specificationWordItem_ != NULL )
+			return specificationWordItem_->findMatchingWordReferenceString( queryString );
+
+		return boolResult;
 		}
 
 

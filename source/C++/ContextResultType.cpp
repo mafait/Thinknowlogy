@@ -1,9 +1,9 @@
 /*	Class:		ContextResultType
  *	Purpose:	To return context variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -25,23 +25,22 @@
 
 class ContextResultType
 	{
-	friend class AdminConclusion;
-	friend class AdminContext;
 	friend class AdminReadSentence;
+	friend class AdminReasoningOld;
 	friend class AdminSpecification;
 	friend class Item;
 
 	protected:
 	// Protected variables
 
-	ResultType result;
+	signed char result;
 
 	bool isAmbiguousRelationContext;
 
 	unsigned int contextNr;
 	unsigned int copiedRelationContextNr;
 
-	SpecificationItem *conclusionSpecificationItem;
+	SpecificationItem *confirmedAllRelationWordsOfSpecificationItem;
 
 	protected:
 	// Constructor
@@ -55,7 +54,7 @@ class ContextResultType
 		contextNr = NO_CONTEXT_NR;
 		copiedRelationContextNr = NO_CONTEXT_NR;
 
-		conclusionSpecificationItem = NULL;
+		confirmedAllRelationWordsOfSpecificationItem = NULL;
 		}
 	};
 

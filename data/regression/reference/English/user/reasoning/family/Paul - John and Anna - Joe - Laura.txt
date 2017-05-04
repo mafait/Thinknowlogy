@@ -50,12 +50,13 @@
 < Anna is possibly a mother of Paul.
 < Anna is possibly a woman.
 < Anna is maybe not a man.
+< Anna is possibly feminine.
 < Anna is maybe not a father.
 * 
 * My questions:
 < Is Paul a boy or a man?
-< Is John a man or a woman?
 < Is John a father or a mother?
+< Is John a man or a woman?
 < 
 * 
 * My questions that are answered:
@@ -79,10 +80,16 @@
 * 
 * My assumptions that are adjusted:
 < Anna is probably not a man.
+* 
+* My assumptions that are concluded:
+< Anna is feminine.
+* 
+* My assumptions that are adjusted:
 < Anna is probably not a father.
 * 
 * My conclusions:
 < John is a man.
+< John is masculine.
 < Paul has a father, called John.
 < Joe has a father, called John.
 < Joe has a mother, called Anna.
@@ -111,7 +118,7 @@
 < Anna has possibly a daughter, called Laura.
 * 
 * My questions:
-< Is Joe a man, a woman, a girl or a boy?
+< Is Joe a girl, a woman, a boy or a man?
 < Is Joe a son or a daughter?
 < Is Laura a girl or a woman?
 < 
@@ -120,7 +127,7 @@
 < Is Joe a son or a daughter?
 * 
 * My adjusted questions:
-< Is Joe a man or a boy?
+< Is Joe a boy or a man?
 * 
 * My assumptions that are adjusted:
 < Joe is probably a person.

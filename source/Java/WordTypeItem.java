@@ -1,9 +1,9 @@
 /*	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -42,9 +42,8 @@ class WordTypeItem extends Item
 	private short specificationWriteLevel_;
 	private short relationWriteLevel_;
 
+	private String hideKey_;
 	private String wordTypeString_;
-
-	private	String hideKey_;
 
 
 	// Private methods
@@ -97,12 +96,12 @@ class WordTypeItem extends Item
 				wordParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_MASCULINE );
 		}
 
-	private WordResultType setAdjectiveParameter( short adjectiveParameter )
+	private BoolResultType setAdjectiveParameter( short adjectiveParameter )
 		{
-		WordResultType wordResult = new WordResultType();
+		BoolResultType boolResult = new BoolResultType();
 
 		if( !isAdjectiveParameter( adjectiveParameter ) )
-			return startWordResultError( 1, null, itemString(), "The given adjective parameter is not an adjective parameter" );
+			return startBoolResultError( 1, null, itemString(), "The given adjective parameter is not an adjective parameter" );
 
 		if( adjectiveParameter_ == Constants.NO_ADJECTIVE_PARAMETER )
 			adjectiveParameter_ = adjectiveParameter;
@@ -110,22 +109,23 @@ class WordTypeItem extends Item
 			{
 			if( adjectiveParameter_ != adjectiveParameter )
 				{
-				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
-					return addWordResultError( 1, null, itemString(), "I failed to write an interface notification about the use of a different adjective" );
+				if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
+					return addBoolResultError( 1, null, itemString(), "I failed to write an interface notification about the use of a different adjective" );
 
-				wordResult.hasFoundDifferentParameter = true;
+				// Has found different parameter
+				boolResult.booleanValue = true;
 				}
 			}
 
-		return wordResult;
+		return boolResult;
 		}
 
-	private WordResultType setDefiniteArticleParameter( short definiteArticleParameter )
+	private BoolResultType setDefiniteArticleParameter( short definiteArticleParameter )
 		{
-		WordResultType wordResult = new WordResultType();
+		BoolResultType boolResult = new BoolResultType();
 
 		if( !isDefiniteArticleParameter( definiteArticleParameter ) )
-			return startWordResultError( 1, null, itemString(), "The given definite article parameter is not a definite article parameter" );
+			return startBoolResultError( 1, null, itemString(), "The given definite article parameter is not a definite article parameter" );
 
 		if( definiteArticleParameter_ == Constants.NO_DEFINITE_ARTICLE_PARAMETER )
 			definiteArticleParameter_ = definiteArticleParameter;
@@ -133,22 +133,23 @@ class WordTypeItem extends Item
 			{
 			if( definiteArticleParameter_ != definiteArticleParameter )
 				{
-				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
-					return addWordResultError( 1, null, itemString(), "I failed to write an interface notification about the use of a different defnite article" );
+				if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
+					return addBoolResultError( 1, null, itemString(), "I failed to write an interface notification about the use of a different defnite article" );
 
-				wordResult.hasFoundDifferentParameter = true;
+				// Has found different parameter
+				boolResult.booleanValue = true;
 				}
 			}
 
-		return wordResult;
+		return boolResult;
 		}
 
-	private WordResultType setIndefiniteArticleParameter( short indefiniteArticleParameter )
+	private BoolResultType setIndefiniteArticleParameter( short indefiniteArticleParameter )
 		{
-		WordResultType wordResult = new WordResultType();
+		BoolResultType boolResult = new BoolResultType();
 
 		if( !isIndefiniteArticleParameter( indefiniteArticleParameter ) )
-			return startWordResultError( 1, null, itemString(), "The given indefinite article parameter is not an indefinite article parameter" );
+			return startBoolResultError( 1, null, itemString(), "The given indefinite article parameter is not an indefinite article parameter" );
 
 		if( indefiniteArticleParameter_ == Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
 			indefiniteArticleParameter_ = indefiniteArticleParameter;
@@ -156,20 +157,21 @@ class WordTypeItem extends Item
 			{
 			if( indefiniteArticleParameter_ != indefiniteArticleParameter )
 				{
-				if( Presentation.writeInterfaceText( false, Constants.PRESENTATION_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
-					return addWordResultError( 1, null, itemString(), "I failed to write an interface notification about the use of an indefinite article" );
+				if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
+					return addBoolResultError( 1, null, itemString(), "I failed to write an interface notification about the use of an indefinite article" );
 
-				wordResult.hasFoundDifferentParameter = true;
+				// Has found different parameter
+				boolResult.booleanValue = true;
 				}
 			}
 
-		return wordResult;
+		return boolResult;
 		}
 
 
 	// Constructor
 
-	protected WordTypeItem( boolean hasFeminineWordEnding, boolean hasMasculineWordEnding, boolean isProperNamePrecededByDefiniteArticle, short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, short wordTypeLanguageNr, short wordTypeNr, int wordTypeStringLength, String _wordTypeString, List myList, WordItem myWordItem )
+	protected WordTypeItem( boolean hasFeminineWordEnding, boolean hasMasculineWordEnding, boolean isProperNamePrecededByDefiniteArticle, short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, short wordTypeLanguageNr, short wordTypeNr, int wordTypeStringLength, String wordTypeString, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
@@ -194,12 +196,14 @@ class WordTypeItem extends Item
 		hideKey_ = null;
 		wordTypeString_ = null;
 
-		if( _wordTypeString != null )
+		// Checking private initialized variables
+
+		if( wordTypeString != null )
 			{
-			if( _wordTypeString.length() > 0 )
+			if( wordTypeString.length() > 0 )
 				{
 				if( wordTypeStringLength > 0 )
-					wordTypeString_ = ( Character.isUpperCase( _wordTypeString.charAt( 0 ) ) && wordTypeNr != Constants.WORD_TYPE_LETTER_CAPITAL && wordTypeNr != Constants.WORD_TYPE_PROPER_NAME ? Character.toLowerCase( _wordTypeString.charAt( 0 ) ) + _wordTypeString.substring( 1, wordTypeStringLength ) : _wordTypeString.substring( 0, wordTypeStringLength ) );
+					wordTypeString_ = ( Character.isUpperCase( wordTypeString.charAt( 0 ) ) && wordTypeNr != Constants.WORD_TYPE_LETTER_CAPITAL && wordTypeNr != Constants.WORD_TYPE_PROPER_NAME ? Character.toLowerCase( wordTypeString.charAt( 0 ) ) + wordTypeString.substring( 1, wordTypeStringLength ) : wordTypeString.substring( 0, wordTypeStringLength ) );
 				else
 					startSystemError( 1, null, null, "The given word type string length is undefined" );
 				}
@@ -270,14 +274,14 @@ class WordTypeItem extends Item
 		return ( hideKey_ == null ? wordTypeString_ : null );
 		}
 
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
 		String wordString;
 		String wordTypeString = myWordItem().wordTypeNameString( wordTypeNr_ );
 		String languageNameString = myWordItem().languageNameString( wordTypeLanguageNr_ );
 
-		baseToStringBuffer( queryWordTypeNr );
+		itemBaseToStringBuffer( queryWordTypeNr );
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -362,15 +366,15 @@ class WordTypeItem extends Item
 		return hasFeminineWordEnding_;
 		}
 
-	protected boolean hasMasculineWordEnding()
-		{
-		return hasMasculineWordEnding_;
-		}
-
 	protected boolean hasFeminineOrMasculineWordEnding()
 		{
 		return ( hasFeminineWordEnding_ ||
 				hasMasculineWordEnding_ );
+		}
+
+	protected boolean hasMasculineWordEnding()
+		{
+		return hasMasculineWordEnding_;
 		}
 
 	protected boolean hasFeminineDefiniteArticleParameter()
@@ -645,34 +649,6 @@ class WordTypeItem extends Item
 		return Constants.RESULT_OK;
 		}
 
-	protected WordResultType setParametersOfSingularNoun( short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter )
-		{
-		WordResultType wordResult = new WordResultType();
-
-		if( !isSingularNoun() )
-			return startWordResultError( 1, null, itemString(), "I am not a singular noun" );
-
-		if( adjectiveParameter > Constants.NO_ADJECTIVE_PARAMETER )
-			{
-			if( ( wordResult = setAdjectiveParameter( adjectiveParameter ) ).result != Constants.RESULT_OK )
-				return addWordResultError( 1, null, itemString(), "I failed to set my adjective parameter" );
-			}
-
-		if( definiteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER )
-			{
-			if( ( wordResult = setDefiniteArticleParameter( definiteArticleParameter ) ).result != Constants.RESULT_OK )
-				return addWordResultError( 1, null, itemString(), "I failed to set my definite article parameter" );
-			}
-
-		if( indefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
-			{
-			if( ( wordResult = setIndefiniteArticleParameter( indefiniteArticleParameter ) ).result != Constants.RESULT_OK )
-				return addWordResultError( 1, null, itemString(), "I failed to set my indefinite article parameter" );
-			}
-
-		return wordResult;
-		}
-
 	protected WordTypeItem nextWordTypeItem()
 		{
 		return (WordTypeItem)nextItem;
@@ -700,6 +676,23 @@ class WordTypeItem extends Item
 			}
 
 		return null;
+		}
+
+	protected BoolResultType setParametersOfSingularNoun( short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter )
+		{
+		if( !isSingularNoun() )
+			return startBoolResultError( 1, null, itemString(), "I am not a singular noun" );
+
+		if( adjectiveParameter > Constants.NO_ADJECTIVE_PARAMETER )
+			return setAdjectiveParameter( adjectiveParameter );
+
+		if( definiteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER )
+			return setDefiniteArticleParameter( definiteArticleParameter );
+
+		if( indefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
+			return setIndefiniteArticleParameter( indefiniteArticleParameter );
+
+		return new BoolResultType();
 		}
 	};
 

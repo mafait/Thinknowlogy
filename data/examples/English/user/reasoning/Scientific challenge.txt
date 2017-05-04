@@ -3,32 +3,41 @@
 #	For more info, see the included Scientific Challenge document,
 #	or: http://mafait.org/challenge/
 #-----------------------------------------------------------------
-# Block 1: Conversions
+# Block 1: Direct conversions
 #-----------------------------------------------------------------
 Paul is a son of John.
 Anna has a daughter, called Laura.
 Every car has an engine.
 A sail is part of every sailboat.
 #-----------------------------------------------------------------
-# Block 2: Grouping of knowledge
+# Block 2: Indirect conversions
+#-----------------------------------------------------------------
+Every family has a parent and a child.
+Michael is a parent.
+Adam is a child.
+Peter has a parent.
+Ronald has a child.
+#-----------------------------------------------------------------
+# Block 3: Grouping of knowledge
 #-----------------------------------------------------------------
 John is a parent of Paul.
 Anna is a parent of Paul.
 Paul has 2 parents, called John and Anna.
 #-----------------------------------------------------------------
-# Block 3: Past tense reasoning
+# Block 4: Past tense reasoning
 #-----------------------------------------------------------------
 James was the father of Peter.
+Every father is a man.
 #-----------------------------------------------------------------
-# Block 4: Detection of a conflict and generation of a question
+# Block 5: Detection of a conflict and generation of a question
 #-----------------------------------------------------------------
 Every person is a man or a woman.
 Addison is a man and a woman.
 Addison is a person.
 Addison is not a woman.
 #-----------------------------------------------------------------
-# Block 5: Archiving of knowledge
+# Block 6: Archiving of knowledge
 #-----------------------------------------------------------------
-Bill Clinton is the president of the United States.
 Barack Obama is the president of the United States.
+Donald Trump is the president of the United States.
 # To continue, click button «Clear your mind.» or «Restart.».

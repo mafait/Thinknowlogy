@@ -1,8 +1,8 @@
 /*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -27,27 +27,37 @@
 
 #include <limits.h>
 #include <stdio.h>
+#include "BoolResultType.cpp"
 #include "CommonVariables.cpp"
-#include "StringResultType.cpp"
+#include "CollectionResultType.cpp"
+#include "QueryResultType.cpp"
+#include "WordTypeResultType.cpp"
 
-// Some compilers need these class declarations
-class CollectionResultType;
+// Class declarations
+class CompoundResultType;
+class ConditionResultType;
 class ContextResultType;
+class CreateAndAssignResultType;
+class CreateReadWordResultType;
+class DuplicateResultType;
 class FileResultType;
+class FindSpecificationResultType;
 class GrammarResultType;
+class InputOutput;
 class JustificationResultType;
 class List;
-class ReadResultType;
+class ReadWordResultType;
+class RelatedResultType;
 class SelectionResultType;
+class ShortResultType;
 class SpecificationResultType;
+class UserSpecificationResultType;
 class WordResultType;
-class WriteResultType;
+class WordTypeResultType;
 
 class Item
 	{
 	friend class List;
-	friend class ListCleanup;
-	friend class ListQuery;
 	friend class SelectionList;
 
 	// Private constructed variables
@@ -61,19 +71,18 @@ class Item
 	unsigned int inactiveSentenceNr_;
 	unsigned int archivedSentenceNr_;
 	unsigned int replacedSentenceNr_;
-	unsigned int deletedSentenceNr_;
 
 	unsigned int itemNr_;
 
 	char statusChar_;
-
-	char classNameString_[FUNCTION_NAME_LENGTH];
-	char superClassNameString_[FUNCTION_NAME_LENGTH];
-
+	char parentClassNameString_[FUNCTION_NAME_LENGTH];
 
 	// Private initialized variables
 
+	char classNameString_[FUNCTION_NAME_LENGTH];
+
 	CommonVariables *commonVariables_;
+	InputOutput *inputOutput_;
 	List *myList_;
 	WordItem *myWordItem_;
 
@@ -105,95 +114,113 @@ class Item
 
 	// Protected error functions
 
-	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	signed char addError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	signed char addError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString );
+	signed char addError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number );
+	signed char addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
+	signed char addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	signed char addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number );
+	signed char addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	signed char addError( char listChar, const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	signed char startError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	signed char startError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	signed char startError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number );
+	signed char startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
+	signed char startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2, const char *errorString3, unsigned int number3 );
+	signed char startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2, char char2, const char *errorString3 );
+	signed char startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	signed char startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	signed char startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1, const char *errorString4, unsigned int number2, const char *errorString5, unsigned int number3 );
+	signed char startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	signed char startSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+
+	BoolResultType addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	BoolResultType addBoolResultError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString );
+	BoolResultType addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number );
+	BoolResultType addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number );
+	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
+	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, char *wordTypeNameString, const char *errorString );
+	BoolResultType startBoolResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
 	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
-	CollectionResultType startCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	CollectionResultType startCollectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
-	CollectionResultType startCollectionResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	CollectionResultType startCollectionResultSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+
+	CompoundResultType addCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	CompoundResultType addCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	CompoundResultType addCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	CompoundResultType startCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	ConditionResultType addConditionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	ConditionResultType startConditionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
 	ContextResultType addContextResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	ContextResultType addContextResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
 	ContextResultType startContextResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	ContextResultType startContextResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
+	CreateAndAssignResultType addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	CreateAndAssignResultType addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	CreateAndAssignResultType addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	CreateAndAssignResultType addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	CreateAndAssignResultType startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	CreateAndAssignResultType startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	CreateAndAssignResultType startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	CreateAndAssignResultType startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	CreateAndAssignResultType startCreateAndAssignResultSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+
+	CreateReadWordResultType addCreateReadWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	CreateReadWordResultType startCreateReadWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	DuplicateResultType startDuplicateResultError( const char *functionNameString, const char *errorString );
+
 	FileResultType addFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	FileResultType startFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+
+	FindSpecificationResultType startFindSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
 	GrammarResultType startGrammarResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
 	JustificationResultType startJustificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
-	ReadResultType addReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ReadResultType addReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	ReadResultType startReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ReadResultType startReadResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	QueryResultType addQueryResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	QueryResultType startQueryResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	QueryResultType startQueryResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2 );
 
-	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ResultType addError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString );
+	ReadWordResultType startReadWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
-	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 );
-	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
-	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1 );
-	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	RelatedResultType addRelatedResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	RelatedResultType startRelatedResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
-	ResultType addError( char listChar, const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	SelectionResultType startSelectionResultError( const char *functionNameString, const char *errorString );
 
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	ShortResultType addShortResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	ShortResultType startShortResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	ShortResultType startShortResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number );
+	ShortResultType startShortResultSystemError( const char *functionNameString, const char *errorString );
 
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2, const char *errorString3, unsigned int number3 );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2 );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, char char1, const char *errorString2, char char2, const char *errorString3 );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, unsigned int number1, const char *errorString4, unsigned int number2, const char *errorString5, unsigned int number3 );
-
-	ResultType startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ResultType startSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
-
-	SelectionResultType addSelectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
-	SelectionResultType startSelectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
-
-	SpecificationResultType addSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	SpecificationResultType addSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	SpecificationResultType addSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
 	SpecificationResultType addSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
-	SpecificationResultType startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	SpecificationResultType startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1 );
-	SpecificationResultType startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	SpecificationResultType startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
 	SpecificationResultType startSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
-	SpecificationResultType startSpecificationResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	SpecificationResultType startSpecificationResultSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
-	StringResultType addStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	StringResultType addStringResultError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString );
-	StringResultType startStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	UserSpecificationResultType addUserSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	UserSpecificationResultType startUserSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
 	WordResultType addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	WordResultType addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	WordResultType addWordResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 	WordResultType startWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	WordResultType startWordResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
-	WriteResultType addWriteResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
-	WriteResultType startWriteResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	WordTypeResultType startWordTypeResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
 
 	// Protected virtual functions
 
-	virtual void clearReplacingInfo();
-
-	virtual void selectingAttachedJustifications( bool isSelectingJustificationSpecifications );
-	virtual void selectingJustificationSpecifications();
-
+	virtual void checkForUsage();
 	virtual void displayString( bool isReturnQueryToPosition );
 	virtual void displayWordReferences( bool isReturnQueryToPosition );
+	virtual void selectingAttachedJustifications( bool isSelectingJustificationSpecifications );
+	virtual void selectingJustificationSpecifications();
 
 	virtual bool hasParameter( unsigned int queryParameter );
 	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr );
@@ -201,13 +228,10 @@ class Item
 
 	virtual bool isSorted( Item *nextSortItem );
 
-	virtual ResultType checkForUsage();
-
-	virtual StringResultType findMatchingWordReferenceString( char *queryString );
-
 	virtual char *itemString();
-	virtual char *virtualGuideByGrammarString();
-	virtual char *toString( unsigned short queryWordTypeNr );
+	virtual char *itemToString( unsigned short queryWordTypeNr );
+
+	virtual BoolResultType findMatchingWordReferenceString( char *queryString );
 
 
 	// Protected common functions
@@ -217,13 +241,12 @@ class Item
 
 	void setActiveStatus();
 	void setArchivedStatus();
-	void setDeletedStatus();
 	void setInactiveStatus();
 	void setReplacedStatus();
+	void setDeletedStatus();
 
 	void setActiveSentenceNr();
 	void setArchivedSentenceNr();
-	void setDeletedSentenceNr();
 	void setInactiveSentenceNr();
 	void setReplacedSentenceNr();
 
@@ -231,12 +254,13 @@ class Item
 
 	// Strictly for initialization of AdminItem
 	void initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem );
-	void initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem );
+	void initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem );
 
 	bool hasActiveSentenceNr();
 	bool hasInactiveSentenceNr();
 
 	bool hasCurrentCreationSentenceNr();
+	bool hasCurrentOrNewerCreationSentenceNr();
 	bool hasCurrentActiveSentenceNr();
 	bool hasCurrentInactiveSentenceNr();
 	bool hasCurrentArchivedSentenceNr();
@@ -268,30 +292,36 @@ class Item
 
 	unsigned int archivedSentenceNr();
 	unsigned int replacedSentenceNr();
-	unsigned int deletedSentenceNr();
 
 	unsigned int itemNr();
 
-	ResultType decrementActiveSentenceNr();
-	ResultType decrementInactiveSentenceNr();
-	ResultType decrementOriginalSentenceNr();
-	ResultType decrementCreationSentenceNr();
-	ResultType decrementArchivedSentenceNr();
-	ResultType decrementReplacedSentenceNr();
-
-	ResultType decrementItemNr( unsigned int decrementOffset );
+	signed char decrementActiveSentenceNr();
+	signed char decrementInactiveSentenceNr();
+	signed char decrementOriginalSentenceNr();
+	signed char decrementCreationSentenceNr();
+	signed char decrementArchivedSentenceNr();
+	signed char decrementReplacedSentenceNr();
+	signed char decrementItemNr( unsigned int decrementOffset );
 
 	char statusChar();
 
 	char *classNameString();
-	char *superClassNameString();
+	char *itemBaseToString( unsigned short queryWordTypeNr );
+	char *parentClassNameString();
 
 	CommonVariables *commonVariables();
+
+	InputOutput *inputOutput();
 
 	List *myList();
 
 	Item *tailOfList();
 	WordItem *myWordItem();
+
+
+	// Protected database connection functions
+
+//	signed char storeChangesInFutureDatabase();
 
 
 	// Protected definition functions

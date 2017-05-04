@@ -29,6 +29,7 @@
 * 
 * My conclusions:
 < John was a man.
+< John was masculine.
 < Paul has no father anymore.
 < Paul had a father, called John.
 * 
@@ -45,7 +46,7 @@
 < Paul had probably a parent, called John.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
 < 
 ! 

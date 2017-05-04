@@ -1,0 +1,7 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+Paul is a child of John and Anna.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+Paul is a child.
+# To continue, click button «Clear your mind.» or «Restart.».

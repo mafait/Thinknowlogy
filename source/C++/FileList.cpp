@@ -1,9 +1,9 @@
 /*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -28,9 +28,20 @@
 class FileList : private List
 	{
 	friend class AdminItem;
-	friend class AdminReadFile;
 
-	// Private common functions
+	// Private functions
+
+	void deleteFileList( FileItem *searchFileItem )
+		{
+		FileItem *deleteFileItem;
+
+		while( searchFileItem != NULL )
+			{
+			deleteFileItem = searchFileItem;
+			searchFileItem = searchFileItem->nextFileItem();
+			delete deleteFileItem;
+			}
+		}
 
 	bool doesFileNameContainSubPath( const char *fileNameString, const char *subPathString )
 		{
@@ -82,45 +93,37 @@ class FileList : private List
 		return false;
 		}
 
+	FileItem *firstActiveFileItem()
+		{
+		return (FileItem *)firstActiveItem();
+		}
+
 	FileResultType createFileItem( bool isInfoFile, bool isTestFile, char *readFileNameString, char *writeFileNameString, FILE *readFile, FILE *writeFile )
 		{
 		FileResultType fileResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createFileItem";
 
-		if( ( fileResult.createdFileItem = new FileItem( isInfoFile, isTestFile, readFileNameString, writeFileNameString, readFile, writeFile, commonVariables(), this, myWordItem() ) ) == NULL )
-			return startFileResultError( functionNameString, NULL, "I failed to create a file item" );
+		if( ( fileResult.createdFileItem = new FileItem( isInfoFile, isTestFile, readFileNameString, writeFileNameString, readFile, writeFile, commonVariables(), inputOutput(), this, myWordItem() ) ) == NULL )
+			return startFileResultError( functionNameString, "I failed to create a file item" );
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, fileResult.createdFileItem ) != RESULT_OK )
-			return addFileResultError( functionNameString, NULL, "I failed to add an active file item" );
+			return addFileResultError( functionNameString, "I failed to add an active file item" );
 
 		return fileResult;
-		}
-
-	FileItem *firstActiveFileItem()
-		{
-		return (FileItem *)firstActiveItem();
 		}
 
 
 	protected:
 	// Constructor
 
-	FileList( CommonVariables *commonVariables, WordItem *myWordItem )
+	FileList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( ADMIN_FILE_LIST_SYMBOL, "FileList", commonVariables, myWordItem );
+		initializeListVariables( ADMIN_FILE_LIST_SYMBOL, "FileList", commonVariables, inputOutput, myWordItem );
 		}
 
 	~FileList()
 		{
-		FileItem *deleteFileItem;
-		FileItem *searchFileItem = firstActiveFileItem();
-
-		while( searchFileItem != NULL )
-			{
-			deleteFileItem = searchFileItem;
-			searchFileItem = searchFileItem->nextFileItem();
-			delete deleteFileItem;
-			}
+		deleteFileList( firstActiveFileItem() );
 
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class FileList has inactive items." );
@@ -131,18 +134,17 @@ class FileList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class FileList has replaced items." );
 
-		searchFileItem = (FileItem *)firstDeletedItem();
-
-		while( searchFileItem != NULL )
-			{
-			deleteFileItem = searchFileItem;
-			searchFileItem = searchFileItem->nextFileItem();
-			delete deleteFileItem;
-			}
+		deleteFileList( (FileItem *)firstDeletedItem() );
 		}
 
 
 	// Protected functions
+
+	bool isCurrentFileTestFile()
+		{
+		FileItem *currentFileItem = firstActiveFileItem();
+		return ( currentFileItem == NULL ? false : currentFileItem->isTestFile() );
+		}
 
 	bool isCurrentlyTesting()
 		{
@@ -157,12 +159,6 @@ class FileList : private List
 			}
 
 		return false;
-		}
-
-	bool isCurrentFileTestFile()
-		{
-		FileItem *currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == NULL ? false : currentFileItem->isTestFile() );
 		}
 
 	bool isDisplayingLine()
@@ -187,17 +183,17 @@ class FileList : private List
 		return ( currentFileItem == NULL ? NO_SENTENCE_NR : currentFileItem->activeSentenceNr() );
 		}
 
-	ResultType closeCurrentFile( FileItem *closeFileItem )
+	signed char closeCurrentFile( FileItem *closeFileItem )
 		{
 		FileItem *currentFileItem = firstActiveFileItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "closeCurrentFile";
 
 		if( currentFileItem == NULL )
-			return startError( functionNameString, NULL, "There is no file to close" );
+			return startError( functionNameString, "There is no file to close" );
 
 		// Check to be sure to close the right file
 		if( currentFileItem != closeFileItem )
-			return startError( functionNameString, NULL, "The given file item isn't the current file" );
+			return startError( functionNameString, "The given file item isn't the current file" );
 
 			if( currentFileItem->readFile() != NULL )
 				{
@@ -212,30 +208,23 @@ class FileList : private List
 				}
 
 		if( deleteItem( currentFileItem ) != RESULT_OK )
-			return addError( functionNameString, NULL, "I failed to delete a file item" );
+			return addError( functionNameString, "I failed to delete a file item" );
 
 		return RESULT_OK;
 		}
-/*
-	ResultType storeChangesInFutureDatabase()
+
+	FILE *currentReadFile()
 		{
-		FileItem *searchFileItem = firstActiveFileItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
-
-		while( searchFileItem != NULL )
-			{
-			if( searchFileItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchFileItem->storeFileItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to store a file item in the database" );
-				}
-
-			searchFileItem = searchFileItem->nextFileItem();
-			}
-
-		return RESULT_OK;
+		FileItem *currentFileItem = firstActiveFileItem();
+		return ( currentFileItem == NULL ? NULL : currentFileItem->readFile() );
 		}
-*/
+
+	FILE *currentWriteFile()
+		{
+		FileItem *currentFileItem = firstActiveFileItem();
+		return ( currentFileItem == NULL ? NULL : currentFileItem->writeFile() );
+		}
+
 	FileResultType openFile( bool isAddingSubPath, bool isInfoFile, bool isTestFile, bool isReportingErrorIfFileDoesNotExist, const char *defaultSubPathString, const char *fileNameString, const char *testOutputFileSubPathString, const char *testReferenceFileSubPathString )
 		{
 		FileResultType fileResult;
@@ -247,13 +236,13 @@ class FileList : private List
 		char functionNameString[FUNCTION_NAME_LENGTH] = "openFile";
 
 		if( defaultSubPathString == NULL )
-			return startFileResultError( functionNameString, NULL, "The given default subpath string is undefined" );
+			return startFileResultError( functionNameString, "The given default subpath string is undefined" );
 
 		if( fileNameString == NULL )
-			return startFileResultError( functionNameString, NULL, "The given file name string is undefined" );
+			return startFileResultError( functionNameString, "The given file name string is undefined" );
 
 		if( strlen( fileNameString ) == 0 )
-			return startFileResultError( functionNameString, NULL, "The copied file name string is empty" );
+			return startFileResultError( functionNameString, "The copied file name string is empty" );
 
 		if( isAddingSubPath &&
 		// Skip absolute path
@@ -287,7 +276,7 @@ class FileList : private List
 			( fileResult.referenceFile = fopen( referenceFileNameString, FILE_ATTRIBUTES_READ_TEXT_UTF_8 ) ) == NULL )
 				{
 				if( isReportingErrorIfFileDoesNotExist )
-					return startFileResultError( functionNameString, NULL, "I couldn't open reference file for reading: \"", referenceFileNameString, "\"" );
+					return startFileResultError( functionNameString, "I couldn't open reference file for reading: \"", referenceFileNameString, "\"" );
 				}
 
 			if( testOutputFileSubPathString != NULL )
@@ -295,7 +284,7 @@ class FileList : private List
 				if( ( writeFile = fopen( writeFileNameString, FILE_ATTRIBUTES_WRITE_TEXT_UTF_8 ) ) == NULL )
 					{
 					if( isReportingErrorIfFileDoesNotExist )
-						return startFileResultError( functionNameString, NULL, "I failed to open file for writing: \"", writeFileNameString, "\"" );
+						return startFileResultError( functionNameString, "I failed to open file for writing: \"", writeFileNameString, "\"" );
 					}
 #ifndef _MSC_VER
 				else
@@ -313,7 +302,7 @@ class FileList : private List
 					if( fileResult.createdFileItem != NULL )
 						closeCurrentFile( fileResult.createdFileItem );
 
-					return addFileResultError( functionNameString, NULL, "I failed to create a file item" );
+					return addFileResultError( functionNameString, "I failed to create a file item" );
 					}
 				}
 			else
@@ -322,22 +311,10 @@ class FileList : private List
 		else
 			{
 			if( isReportingErrorIfFileDoesNotExist )
-				return startFileResultError( functionNameString, NULL, "I couldn't open file for reading: \"", readFileNameString, "\"" );
+				return startFileResultError( functionNameString, "I couldn't open file for reading: \"", readFileNameString, "\"" );
 			}
 
 		return fileResult;
-		}
-
-	FILE *currentReadFile()
-		{
-		FileItem *currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == NULL ? NULL : currentFileItem->readFile() );
-		}
-
-	FILE *currentWriteFile()
-		{
-		FileItem *currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == NULL ? NULL : currentFileItem->writeFile() );
 		}
 	};
 

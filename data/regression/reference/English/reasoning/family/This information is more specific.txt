@@ -29,6 +29,7 @@
 * 
 * My conclusions:
 < John is a man.
+< John is masculine.
 * 
 * My assumptions:
 < John is probably a person.
@@ -41,6 +42,7 @@
 * 
 * My conclusions:
 < Anna is a woman.
+< Anna is feminine.
 * 
 * My assumptions:
 < Anna is probably a person.
@@ -95,9 +97,9 @@
 < Anna has possibly a daughter, called Laura.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
-< Is Joe a man, a woman, a girl or a boy?
+< Is Joe a girl, a woman, a boy or a man?
 < Is Joe a son or a daughter?
 < Is Laura a girl or a woman?
 < 
@@ -129,12 +131,9 @@
 <	- A child is probably a person.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy? Because:
+< Is Paul a girl, a woman, a boy or a man? Because:
 <	- Paul is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.
-* 	and:
-<	- Paul is possibly a person.
-<	- Every person is a man or a woman.
 < Is Paul a son or a daughter? Because:
 <	- Paul is probably a child of John and Anna.
 <	- Every child is a son or a daughter.

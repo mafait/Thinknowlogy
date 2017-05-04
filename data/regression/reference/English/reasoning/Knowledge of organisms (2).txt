@@ -1,10 +1,11 @@
 ﻿* 
 * My conclusions:
 < Every horse is a creature.
+< A horse and an animal are creature [plural of 'creature' is unknown].
 < 
 * 
 * My conclusions:
-< A horse, a human and a person are creature [plural of 'creature' is unknown].
+< A human, a person, a horse and an animal are creature [plural of 'creature' is unknown].
 < Every person is a creature.
 < 
 * 

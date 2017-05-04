@@ -16,11 +16,50 @@
 < 
 * 
 * Mijn conclusies:
-< Paul heeft een ouder, genaamd Jan.
+< Een ouder en een kind zijn deel van ieder gezin.
 < 
 * 
 * Mijn conclusies:
+< Sjors is deel van een gezin.
+* 
+* Mijn veronderstellingen:
+< Sjors heeft waarschijnlijk een kind.
+< 
+* 
+* Mijn conclusies:
+< André is deel van een gezin.
+* 
+* Mijn veronderstellingen:
+< André heeft waarschijnlijk een ouder.
+< 
+* 
+* Mijn veronderstellingen:
+< Peter is waarschijnlijk een kind.
+< Peter is waarschijnlijk deel van een gezin.
+< 
+* 
+* Mijn veronderstellingen:
+< Willem is waarschijnlijk een ouder.
+< Willem is waarschijnlijk deel van een gezin.
+< 
+* 
+* Mijn conclusies:
+< Jan is deel van een gezin.
+< Paul heeft een ouder, genaamd Jan.
+* 
+* Mijn veronderstellingen:
+< Jan heeft waarschijnlijk een kind, genaamd Paul.
+< Paul is waarschijnlijk een kind van Jan.
+< Paul is waarschijnlijk deel van een gezin.
+< 
+* 
+* Mijn conclusies:
+< Anna is deel van een gezin.
 < Paul heeft 2 ouder [meervoud van 'ouder' is onbekend], genaamd Jan en Anna.
+* 
+* Mijn veronderstellingen:
+< Anna heeft waarschijnlijk een kind, genaamd Paul.
+< Paul is waarschijnlijk een kind van Jan en Anna.
 < 
 * 
 * Mijn conclusies die bevestigd zijn:
@@ -32,6 +71,10 @@
 * Mijn conclusies:
 < Peter heeft geen vader meer.
 < Peter had een vader, genaamd Johan.
+< 
+* 
+* Mijn conclusies:
+< Johan was een man.
 < 
 ! 
 ! Deze zin is niet geaccepteerd, omdat het in conflict is met zichzelf.
@@ -49,10 +92,10 @@
 < 
 * 
 * Mijn conclusies:
-< De Verenigde Staten heeft een president, genaamd Bill Clinton.
+< De Verenigde Staten heeft een president, genaamd Barack Obama.
 < 
 * 
 * Mijn conclusies:
-< De Verenigde Staten heeft een nieuwe president, genaamd Barack Obama.
-< De Verenigde Staten heeft een vorige president, genaamd Bill Clinton.
+< De Verenigde Staten heeft een nieuwe president, genaamd Donald Trump.
+< De Verenigde Staten heeft een vorige president, genaamd Barack Obama.
 < 

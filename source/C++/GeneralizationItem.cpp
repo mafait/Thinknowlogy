@@ -3,9 +3,9 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -29,14 +29,13 @@
 
 class GeneralizationItem : private Item
 	{
-	friend class AdminAssumption;
-	friend class AdminAuthorization;
-	friend class AdminConclusion;
-	friend class AdminContext;
-	friend class AdminWriteSpecification;
+	friend class AdminReadFile;
+	friend class AdminReasoningOld;
+	friend class AdminSpecification;
+	friend class AdminWrite;
+	friend class ContextList;
 	friend class GeneralizationList;
-	friend class WordAssignment;
-	friend class WordCollection;
+	friend class SpecificationList;
 	friend class WordItem;
 	friend class WordSpecification;
 
@@ -55,9 +54,9 @@ class GeneralizationItem : private Item
 	protected:
 	// Constructor
 
-	GeneralizationItem( bool isLanguageWord, bool isRelation, unsigned short languageNr, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	GeneralizationItem( bool isLanguageWord, bool isRelation, unsigned short languageNr, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GeneralizationItem", commonVariables, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GeneralizationItem", commonVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -69,10 +68,10 @@ class GeneralizationItem : private Item
 		specificationWordTypeNr_ = specificationWordTypeNr;
 		generalizationWordTypeNr_ = generalizationWordTypeNr;
 
-		generalizationWordItem_ = generalizationWordItem;
+		// Checking private initialized variables
 
-		if( generalizationWordItem_ == NULL )
-			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given generalization word item is undefined" );
+		if( ( generalizationWordItem_ = generalizationWordItem ) == NULL )
+			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given generalization word item is undefined" );
 		}
 
 
@@ -112,21 +111,7 @@ class GeneralizationItem : private Item
 				generalizationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	virtual StringResultType findMatchingWordReferenceString( char *queryString )
-		{
-		StringResultType stringResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
-
-		if( generalizationWordItem_ != NULL )
-			{
-			if( ( stringResult = generalizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the generalization word" );
-			}
-
-		return stringResult;
-		}
-
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *queryString;
 		char *wordString;
@@ -134,7 +119,7 @@ class GeneralizationItem : private Item
 		char *generalizationWordTypeString = myWordItem()->wordTypeNameString( generalizationWordTypeNr_ );
 		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 
@@ -189,6 +174,16 @@ class GeneralizationItem : private Item
 		return queryString;
 		}
 
+	virtual BoolResultType findMatchingWordReferenceString( char *queryString )
+		{
+		BoolResultType boolResult;
+
+		if( generalizationWordItem_ != NULL )
+			return generalizationWordItem_->findMatchingWordReferenceString( queryString );
+
+		return boolResult;
+		}
+
 
 	// Protected functions
 
@@ -202,12 +197,7 @@ class GeneralizationItem : private Item
 		return generalizationWordTypeNr_;
 		}
 
-	unsigned short languageNr()
-		{
-		return languageNr_;
-		}
-
-	GeneralizationItem *getGeneralizationItem( bool isIncludingThisItem, bool isOnlySelectingCurrentLanguage, bool isOnlySelectingNoun, bool isRelation )
+	GeneralizationItem *generalizationItem( bool isIncludingThisItem, bool isOnlySelectingCurrentLanguage, bool isOnlySelectingNoun, bool isRelation )
 		{
 		unsigned short currentLanguageNr = commonVariables()->currentLanguageNr;
 		GeneralizationItem *searchGeneralizationItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
@@ -236,17 +226,17 @@ class GeneralizationItem : private Item
 
 	GeneralizationItem *nextNounSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false, true, false );
+		return generalizationItem( false, false, true, false );
 		}
 
 	GeneralizationItem *nextSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false, false, false );
+		return generalizationItem( false, false, false, false );
 		}
 
 	GeneralizationItem *nextRelationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false, false, true );
+		return generalizationItem( false, false, false, true );
 		}
 
 	WordItem *generalizationWordItem()

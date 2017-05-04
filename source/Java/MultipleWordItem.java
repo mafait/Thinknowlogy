@@ -1,9 +1,9 @@
 /*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -44,9 +44,9 @@ class MultipleWordItem extends Item
 		wordTypeLanguageNr_ = wordTypeLanguageNr;
 		wordTypeNr_ = wordTypeNr;
 
-		multipleWordItem_ = multipleWordItem;
+		// Checking private initialized variables
 
-		if( multipleWordItem_ == null )
+		if( ( multipleWordItem_ = multipleWordItem ) == null )
 			startSystemError( 1, null, null, "The given multiple word item is undefined" );
 		}
 
@@ -87,27 +87,14 @@ class MultipleWordItem extends Item
 		return ( wordTypeNr_ == queryWordTypeNr );
 		}
 
-	protected StringResultType findMatchingWordReferenceString( String queryString )
-		{
-		StringResultType stringResult = new StringResultType();
-
-		if( multipleWordItem_ != null )
-			{
-			if( ( stringResult = multipleWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, "I failed to find a matching word reference string for the multiple word word" );
-			}
-
-		return stringResult;
-		}
-
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
 		String wordString;
 		String wordTypeString = myWordItem().wordTypeNameString( wordTypeNr_ );
 		String languageNameString = myWordItem().languageNameString( wordTypeLanguageNr_ );
 
-		baseToStringBuffer( queryWordTypeNr );
+		itemBaseToStringBuffer( queryWordTypeNr );
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -130,6 +117,14 @@ class MultipleWordItem extends Item
 			}
 
 		return queryStringBuffer;
+		}
+
+	protected BoolResultType findMatchingWordReferenceString( String queryString )
+		{
+		if( multipleWordItem_ != null )
+			return multipleWordItem_.findMatchingWordReferenceString( queryString );
+
+		return new BoolResultType();
 		}
 
 
@@ -155,14 +150,14 @@ class MultipleWordItem extends Item
 		return wordTypeNr_;
 		}
 
-	protected WordItem multipleWordItem()
-		{
-		return multipleWordItem_;
-		}
-
 	protected MultipleWordItem nextMultipleWordItem()
 		{
 		return (MultipleWordItem)nextItem;
+		}
+
+	protected WordItem multipleWordItem()
+		{
+		return multipleWordItem_;
 		}
 	};
 

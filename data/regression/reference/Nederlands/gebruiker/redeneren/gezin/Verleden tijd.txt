@@ -29,6 +29,7 @@
 * 
 * Mijn conclusies:
 < Cor was een man.
+< Cor was mannelijk.
 < Kees heeft geen vader meer.
 < Kees had een vader, genaamd Cor.
 * 
@@ -45,6 +46,6 @@
 < Kees had waarschijnlijk een ouder, genaamd Cor.
 * 
 * Mijn vragen:
-< Is Kees een man, een vrouw, een meisje of een jongen?
+< Is Kees een meisje, een vrouw, een jongen of een man?
 < Is Kees een zoon of een dochter?
 < 

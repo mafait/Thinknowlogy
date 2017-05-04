@@ -1,9 +1,9 @@
 /*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		To read and analyze sentences
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 
 #include "AdminItem.h"
 #include "ReadList.cpp"
+#include "SelectionList.cpp"
 #include "WordTypeItem.cpp"
 
 class AdminReadSentence
@@ -31,8 +32,9 @@ class AdminReadSentence
 
 	// Private constructed variables
 
+	bool hasAnyChangeBeenMadeByThisSentence_;
+	bool hasFemaleUserSpecificationWord_;
 	bool isAssignment_;
-	bool isActiveAssignment_;
 	bool isInactiveAssignment_;
 	bool isArchivedAssignment_;
 	bool isConditional_;
@@ -69,44 +71,35 @@ class AdminReadSentence
 
 	char originalReadString[MAX_SENTENCE_STRING_LENGTH];
 
+
+	// Private initialized variables
+
+	char moduleNameString_[FUNCTION_NAME_LENGTH];
+
 	AdminItem *adminItem_;
 	CommonVariables *commonVariables_;
-	char moduleNameString_[FUNCTION_NAME_LENGTH];
+	InputOutput *inputOutput_;
 
 
 	// Private functions
 
-	void clearReplacingInfoFromItems()
+	void checkForChangesMadeByThisSentence()
 		{
-		List *currentAdminList;
-		WordItem *currentWordItem;
+		unsigned int currentSentenceNr = commonVariables_->currentSentenceNr;
+		unsigned int highestInUseSentenceNr = adminItem_->highestInUseSentenceNr( false, false, currentSentenceNr );
 
-		wasPreviousCommandUndoOrRedo_ = false;
-
-		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
-			{
-			// Do for all words
-			do	currentWordItem->clearReplacingInfoInWord();
-			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
-			}
-
-		// Admin lists
-		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-			{
-			if( ( currentAdminList = adminItem_->adminListArray[adminListNr] ) != NULL )
-				currentAdminList->clearReplacingInfoInList();
-			}
+		hasAnyChangeBeenMadeByThisSentence_ = ( highestInUseSentenceNr >= currentSentenceNr );
 		}
 
-	void initializeVariablesInAllWords()
+	void clearReplacingInfoInSpecificationWords()
 		{
-		WordItem *currentWordItem;
+		WordItem *currentSpecificationWordItem;
 
-		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+		if( ( currentSpecificationWordItem = commonVariables_->firstSpecificationWordItem ) != NULL )
 			{
-			// Do for all words
-			do	currentWordItem->initializeVariablesInWord();
-			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			// Do for all specification words
+			do	currentSpecificationWordItem->clearReplacingInfoInWord();
+			while( ( currentSpecificationWordItem = currentSpecificationWordItem->nextSpecificationWordItem ) != NULL );
 			}
 		}
 
@@ -167,30 +160,28 @@ class AdminReadSentence
 			}
 		}
 
-	ContextResultType addPronounContext( unsigned short contextWordTypeNr, WordItem *contextWordItem )
+	signed char assignLanguage( unsigned short newLanguageNr )
 		{
-		ContextResultType contextResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "addPronounContext";
+		WordItem *languageWordItem;
+		WordItem *predefinedNounLanguageWordItem;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "assignLanguage";
 
-		if( contextWordItem == NULL )
-			return adminItem_->startContextResultError( functionNameString, moduleNameString_, "The read word of the read ahead item is undefined" );
+		if( ( predefinedNounLanguageWordItem = commonVariables_->predefinedNounLanguageWordItem ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The predefined noun language word item is undefined" );
 
-		if( ( contextResult.contextNr = contextWordItem->contextNr( NULL ) ) == NO_CONTEXT_NR )
-			{
-			if( ( contextResult.contextNr = adminItem_->highestContextNrInAllContextWords() ) >= MAX_CONTEXT_NR )
-				return adminItem_->startContextResultSystemError( functionNameString, moduleNameString_, "Context number overflow" );
+		if( ( languageWordItem = predefinedNounLanguageWordItem->languageWordItemInWord( newLanguageNr ) ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find the requested language" );
 
-			// Create new context number
-			contextResult.contextNr++;
-			}
+		commonVariables_->currentLanguageNr = newLanguageNr;
+		commonVariables_->currentLanguageWordItem = languageWordItem;
 
-		if( contextWordItem->addContext( false, contextWordTypeNr, NO_WORD_TYPE_NR, contextResult.contextNr, NULL ) != RESULT_OK )
-			return adminItem_->addContextResultError( functionNameString, moduleNameString_, "I failed to add a pronoun context to word \"", contextWordItem->anyWordTypeString(), "\"" );
+		if( adminItem_->assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, commonVariables_->currentLanguageWordItem, commonVariables_->predefinedNounLanguageWordItem, NULL ).result != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language with authorization" );
 
-		return contextResult;
+		return RESULT_OK;
 		}
 
-	ResultType addMultipleWord( unsigned short adjectiveParameter, unsigned short definiteArticleParameter, unsigned short indefiniteArticleParameter, ReadItem *firstReadItem, ReadItem *secondReadItem )
+	signed char addMultipleWord( unsigned short adjectiveParameter, unsigned short definiteArticleParameter, unsigned short indefiniteArticleParameter, ReadItem *firstReadItem, ReadItem *secondReadItem )
 		{
 		WordResultType wordResult;
 		bool isFrenchPreposition;
@@ -214,7 +205,6 @@ class AdminReadSentence
 		WordTypeItem *foundWordTypeItem;
 		char existingMultipleWordString[MAX_SENTENCE_STRING_LENGTH];
 		char multipleWordString[MAX_SENTENCE_STRING_LENGTH];
-		ReadList *readList;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addMultipleWord";
 
 		if( firstReadItem == NULL )
@@ -260,7 +250,7 @@ class AdminReadSentence
 			adminItem_->isNounWordType( currentWordTypeNr ) ) )
 				{
 				if( ( currentWordItem = currentReadItem->readWordItem() ) == NULL )
-					return adminItem_->startError( functionNameString, moduleNameString_, "I have found a read item without read word" );
+					return adminItem_->startError( functionNameString, moduleNameString_, "I found a read item without read word" );
 
 				if( ( currentWordTypeItem = currentWordItem->activeWordTypeItem( currentWordTypeNr ) ) == NULL )
 					return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find the word type item of the current read word" );
@@ -293,7 +283,7 @@ class AdminReadSentence
 			currentWordTypeNr = ( hasFoundFrenchPreposition ? firstWordTypeNr : currentReadItem->wordTypeNr() );
 
 			if( ( currentWordItem = currentReadItem->readWordItem() ) == NULL )
-				return adminItem_->startError( functionNameString, moduleNameString_, "I have found a read item without read word" );
+				return adminItem_->startError( functionNameString, moduleNameString_, "I found a read item without read word" );
 
 			createdMultipleWordItem = NULL;
 			createdWordItem = NULL;
@@ -361,10 +351,7 @@ class AdminReadSentence
 			deletedReadItem = currentReadItem;
 			currentReadItem = ( deletedReadItem == lastReadItem ? NULL : currentReadItem->nextReadItem() );
 
-			if( ( readList = adminItem_->readList ) == NULL )
-				return adminItem_->startError( functionNameString, moduleNameString_, "The read list isn't created yet" );
-
-			if( readList->deleteItem( deletedReadItem ) != RESULT_OK )
+			if( adminItem_->deleteReadItem( deletedReadItem ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the second read item" );
 			}
 		while( currentReadItem != NULL );
@@ -372,7 +359,7 @@ class AdminReadSentence
 		return RESULT_OK;
 		}
 
-	ResultType addReadSpecification( bool isAction, bool isNewStart, unsigned short selectionLevel )
+	signed char addReadSpecification( bool isAction, bool isNewStart, unsigned short selectionLevel )
 		{
 		bool isConditional = ( isConditional_ || selectionListNr_ != NO_LIST_NR );
 		unsigned short imperativeVerbParameter = NO_IMPERATIVE_PARAMETER;
@@ -392,14 +379,17 @@ class AdminReadSentence
 		commonVariables_->nUserRelationWords > 1 )
 			{
 			// Ambiguity: Missing relation context
-			if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_WARNING_AMBIGUOUS_SENTENCE_MULTIPLE_SPECIFICATIONS_RELATIONS ) != RESULT_OK )
+			if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_SENTENCE_WARNING_AMBIGUOUS_SENTENCE_MULTIPLE_SPECIFICATIONS_RELATIONS ) != RESULT_OK )
 				return adminItem_->addErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I failed to write an interface warning about ambiguity" );
 			}
 		else
 			{
 			if( wasPreviousCommandUndoOrRedo_ )
+				{
 				// From this point, redo is not possible anymore
-				clearReplacingInfoFromItems();
+				clearReplacingInfoInSpecificationWords();
+				wasPreviousCommandUndoOrRedo_ = false;
+				}
 
 			adminItem_->initializeAdminVariables();
 
@@ -414,11 +404,9 @@ class AdminReadSentence
 						if( adminItem_->addUserSpecifications( isAction, isAssignment_, isConditional, isInactiveAssignment_, isArchivedAssignment_, isEveryGeneralization_, isExclusiveSpecification_, isNegative_, isNewStart, isPartOf_, isPossessive_, isSpecificationGeneralization_, isUniqueUserRelation_, assumptionLevel_, prepositionParameter_, questionParameter_, selectionLevel, selectionListNr_, imperativeVerbParameter, generalizationContextNr_, specificationContextNr_, currentGeneralizationReadItem, startSpecificationWordReadItem_, endSpecificationWordReadItem_, startRelationWordReadItem_, endRelationReadItem_ ) != RESULT_OK )
 							return adminItem_->addErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I failed to add the read user specifications" );
 
-						if( ( userSpecificationItem = adminItem_->userSpecificationItem() ) != NULL )
-							{
-							if( adminItem_->markWordsPassingIntegrityCheckOfStoredUserSentence( userSpecificationItem ) != RESULT_OK )
-								return adminItem_->addErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I failed to mark the words passing the integrity check of the stored user sentence" );
-							}
+						if( ( userSpecificationItem = adminItem_->userSpecificationItem() ) != NULL &&
+						adminItem_->markWordsPassingIntegrityCheckOfStoredUserSentence( userSpecificationItem ) != RESULT_OK )
+							return adminItem_->addErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I failed to mark the words passing the integrity check of the stored user sentence" );
 					}
 				}
 			while( !commonVariables_->hasDisplayedWarning &&
@@ -429,28 +417,189 @@ class AdminReadSentence
 		return RESULT_OK;
 		}
 
-	ResultType checkAllWordsForStructuralIntegrity()
+	signed char checkAllWordsForStructuralIntegrity()
 		{
-		bool wasUndoOrRedoCommand = adminItem_->wasUndoOrRedoCommand();
 		WordItem *currentSpecificationWordItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkForStructuralIntegrity";
 
-		if( ( currentSpecificationWordItem = commonVariables_->firstSpecificationWordItem ) != NULL )
+		if( adminItem_->checkForUnprocessedNegativeConclusion() == RESULT_OK &&
+		( currentSpecificationWordItem = commonVariables_->firstSpecificationWordItem ) != NULL )
 			{
 			// Do for all specification words
 			do	{
-				if( currentSpecificationWordItem->checkWordForStructuralIntegrity( wasUndoOrRedoCommand ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check word \"", currentSpecificationWordItem->anyWordTypeString(), "\" for its structural integrity" );
+				if( currentSpecificationWordItem->checkStructuralIntegrityInWord() != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check the structural integrity in word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 				}
-			while( ( currentSpecificationWordItem = currentSpecificationWordItem->nextSpecificationWordItem ) != NULL );
+			while( !commonVariables_->hasDisplayedIntegrityWarning &&
+			( currentSpecificationWordItem = currentSpecificationWordItem->nextSpecificationWordItem ) != NULL );
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType findGrammarPath( unsigned short grammarLevel, GrammarItem *parseGrammarItem )
+	signed char checkForDuplicateSelection()
 		{
-		ReadResultType readResult;
+		bool hasFoundDuplicateSelection = false;
+		unsigned int duplicateConditionSentenceNr;
+		DuplicateResultType duplicateResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "checkForDuplicateSelection";
+
+		if( ( duplicateResult = adminItem_->checkDuplicateCondition() ).result != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check if the condition selection part is duplicate" );
+
+		if( ( duplicateConditionSentenceNr = duplicateResult.duplicateConditionSentenceNr ) > NO_SENTENCE_NR )
+			{
+			if( ( duplicateResult = adminItem_->checkDuplicateSelectionPart( true, duplicateConditionSentenceNr ) ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check if the action selection part is duplicate" );
+
+			if( duplicateResult.hasFoundDuplicateSelection )
+				{
+				if( commonVariables_->adminAlternativeList == NULL )
+					hasFoundDuplicateSelection = true;
+				else
+					{
+					if( ( duplicateResult = adminItem_->checkDuplicateSelectionPart( false, duplicateConditionSentenceNr ) ).result != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check if the alternative selection part is duplicate" );
+
+					if( duplicateResult.hasFoundDuplicateSelection )
+						hasFoundDuplicateSelection = true;
+					}
+				}
+
+			if( hasFoundDuplicateSelection &&
+			adminItem_->removeDuplicateSelection() != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to remove a duplicate selection" );
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char deleteAllWordTypesOfCurrentSentence()
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteAllWordTypesOfCurrentSentence";
+
+		if( deleteAllWordTypesOfCurrentSentence( true ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete all word types of the active read list" );
+
+		if( deleteAllWordTypesOfCurrentSentence( false ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete all word types of the inactive read list" );
+
+		return RESULT_OK;
+		}
+
+	signed char deleteAllWordTypesOfCurrentSentence( bool isActiveItems )
+		{
+		ReadItem *currentReadItem = ( isActiveItems ? adminItem_->firstActiveReadItem() : adminItem_->firstInactiveReadItem() );
+		WordItem *currentWordItem;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteAllWordTypesOfCurrentSentence";
+
+		while( currentReadItem != NULL )
+			{
+			currentWordItem = currentReadItem->readWordItem();
+
+			// Skip text
+			if( currentWordItem != NULL &&
+			!currentWordItem->isDeletedItem() )
+				{
+				if( currentWordItem->deleteAllWordTypesOfCurrentSentence() != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete all word types of the current sentence in word \"", currentWordItem->anyWordTypeString(), "\"" );
+
+				if( !currentWordItem->hasAnyWordType() &&
+				adminItem_->deleteWordItem( currentWordItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete word \"", currentWordItem->anyWordTypeString(), "\"" );
+				}
+
+			currentReadItem = currentReadItem->nextReadItem();
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char deleteUnusedWordsAndWordTypes()
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteUnusedWordsAndWordTypes";
+
+		// Active read items
+		if( deleteUnusedWordsAndWordTypes( true ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete unused word types in the active read list" );
+
+		// Inactive read items
+		if( deleteUnusedWordsAndWordTypes( false ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete unused word types in the inactive read list" );
+
+		return RESULT_OK;
+		}
+
+	signed char deleteUnusedWordsAndWordTypes( bool isActiveItems )
+		{
+		bool isSameWordOrderNr;
+		unsigned short nReadWordReferences;
+		unsigned short previousWordOrderNr = NO_ORDER_NR;
+		WordTypeItem *currentWordTypeItem;
+		ReadItem *currentReadItem = ( isActiveItems ? adminItem_->firstActiveReadItem() : adminItem_->firstInactiveReadItem() );
+		WordItem *currentReadWordItem;
+		ShortResultType shortResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteUnusedWordsAndWordTypes";
+
+		while( currentReadItem != NULL )
+			{
+			isSameWordOrderNr = ( currentReadItem->wordOrderNr() == previousWordOrderNr );
+			previousWordOrderNr = currentReadItem->wordOrderNr();
+
+			// Skip text
+			if( ( currentReadWordItem = currentReadItem->readWordItem() ) != NULL )
+				{
+				if( !isActiveItems ||
+
+				// More word types for this word number
+				( isSameWordOrderNr &&
+				!currentReadItem->isSingularNoun() ) )
+					{
+					if( ( currentWordTypeItem = currentReadItem->activeReadWordTypeItem() ) == NULL )
+						return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find the word type of an active read word" );
+
+					if( currentWordTypeItem->hasCurrentCreationSentenceNr() )
+						{
+						if( ( shortResult = adminItem_->getNumberOfReadWordReferences( currentReadItem->wordTypeNr(), currentReadWordItem ) ).result != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the number of read word references" );
+
+						if( ( nReadWordReferences = shortResult.shortValue ) < 1 )
+							return adminItem_->startError( functionNameString, moduleNameString_, "I found an invalid number of read word references" );
+
+						if( nReadWordReferences == 1 )
+							{
+							if( currentReadWordItem->deleteWordType( currentWordTypeItem ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete an unused word type item" );
+
+							if( !currentReadWordItem->hasAnyWordType() &&
+							!currentReadWordItem->isDeletedItem() &&
+							currentReadWordItem->hasCurrentCreationSentenceNr() &&
+							adminItem_->deleteWordItem( currentReadWordItem ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete an unused word item" );
+							}
+						}
+					}
+
+				if( !isActiveItems ||
+				isSameWordOrderNr )
+					{
+					if( adminItem_->deleteReadItem( currentReadItem ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete an active read item" );
+
+					currentReadItem = adminItem_->nextReadListItem();
+					}
+				else
+					currentReadItem = currentReadItem->nextReadItem();
+				}
+			else
+				currentReadItem = currentReadItem->nextReadItem();
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char findGrammarPath( unsigned short grammarLevel, GrammarItem *parseGrammarItem )
+		{
 		bool isOption;
 		bool isChoice;
 		bool isWaitingForNewStart;
@@ -459,7 +608,7 @@ class AdminReadSentence
 		unsigned short startWordOrderNr;
 		unsigned short choiceStartWordOrderNr = NO_ORDER_NR;
 		GrammarItem *definitionParseGrammarItem;
-		ReadList *readList;
+		BoolResultType boolResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findGrammarPath";
 
 		if( grammarLevel >= MAX_GRAMMAR_LEVEL )
@@ -467,9 +616,6 @@ class AdminReadSentence
 
 		if( parseGrammarItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given parse grammar item is undefined" );
-
-		if( ( readList = adminItem_->readList ) == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The read list isn't created yet" );
 
 		if( grammarLevel == NO_GRAMMAR_LEVEL )
 			currentParseWordOrderNr_ = NO_ORDER_NR;
@@ -508,10 +654,11 @@ class AdminReadSentence
 
 					if( parseGrammarItem->isDefinitionStart() )
 						{
-						if( ( readResult = readList->selectMatchingWordType( currentParseWordOrderNr_, definitionParseGrammarItem->grammarParameter(), definitionParseGrammarItem->grammarWordTypeNr() ) ).result != RESULT_OK )
+						if( ( boolResult = adminItem_->selectMatchingWordType( currentParseWordOrderNr_, definitionParseGrammarItem->grammarParameter(), definitionParseGrammarItem->grammarWordTypeNr() ) ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to select a matching word type" );
 
-						if( readResult.hasFoundMatchingWordType )
+						// Has found matching word type
+						if( boolResult.booleanValue )
 							currentParseWordOrderNr_++;
 						}
 					else
@@ -539,11 +686,9 @@ class AdminReadSentence
 								currentParseWordOrderNr_ = choiceStartWordOrderNr;
 								}
 
-							if( startWordOrderNr < currentParseWordOrderNr_ )
-								{
-								if( readList->activateInactiveReadWords( currentParseWordOrderNr_ ) != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to activate inactive read words from position: ", currentParseWordOrderNr_ );
-								}
+							if( startWordOrderNr < currentParseWordOrderNr_ &&
+							adminItem_->activateInactiveReadWords( currentParseWordOrderNr_ ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to activate inactive read words from position: ", currentParseWordOrderNr_ );
 							}
 						}
 					}
@@ -588,14 +733,28 @@ class AdminReadSentence
 		( previousWordOrderNr > startWordOrderNr ||
 		currentParseWordOrderNr_ > startWordOrderNr ) )
 			{
-			if( readList->setGrammarParameter( ( currentParseWordOrderNr_ > startWordOrderNr ), startWordOrderNr, ( currentParseWordOrderNr_ > startWordOrderNr ? currentParseWordOrderNr_ : previousWordOrderNr ), definitionParseGrammarItem ) != RESULT_OK )
+			if( adminItem_->setGrammarParameter( ( currentParseWordOrderNr_ > startWordOrderNr ), startWordOrderNr, ( currentParseWordOrderNr_ > startWordOrderNr ? currentParseWordOrderNr_ : previousWordOrderNr ), definitionParseGrammarItem ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to set the grammar parameter of the read words between the positions ", startWordOrderNr, " and ", currentParseWordOrderNr_ );
 			}
 
 		return RESULT_OK;
 		}
 
-	ResultType parseSentence( char *readUserSentenceString )
+	signed char initializeVariablesInAllWords()
+		{
+		WordItem *currentWordItem;
+
+		if( ( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+			{
+			// Do for all words
+			do	currentWordItem->initializeVariablesInWord();
+			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char parseSentence( char *readUserSentenceString )
 		{
 		bool isAction = false;
 		bool isNewStart = true;
@@ -661,7 +820,7 @@ class AdminReadSentence
 						break;
 
 					case GRAMMAR_ANSWER:
-						if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_WARNING_NOT_ABLE_TO_LINK_YES_NO_TO_QUESTION ) != RESULT_OK )
+						if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_SENTENCE_WARNING_NOT_ABLE_TO_LINK_YES_NO_TO_QUESTION ) != RESULT_OK )
 							return adminItem_->addErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I failed to write an interface warning" );
 
 						break;
@@ -681,7 +840,7 @@ class AdminReadSentence
 								break;
 
 							default:
-								return adminItem_->startErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I have found an illegal conjunction word parameter: ", wordParameter );
+								return adminItem_->startErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I found an illegal conjunction word parameter: ", wordParameter );
 							}
 
 						break;
@@ -720,7 +879,7 @@ class AdminReadSentence
 								break;
 
 							default:
-								return adminItem_->startErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I have found an illegal selection word" );
+								return adminItem_->startErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I found an illegal selection word" );
 							}
 
 						break;
@@ -730,9 +889,9 @@ class AdminReadSentence
 
 						( adminItem_->isCurrentlyTesting() ||
 						adminItem_->isSystemStartingUp() ) )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found an unknown word in sentence \"", readUserSentenceString, "\" at position ", wordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", wordParameter );
+							return adminItem_->startError( functionNameString, moduleNameString_, "I found an unknown word in sentence \"", readUserSentenceString, "\" at position ", wordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", wordParameter );
 
-						return adminItem_->startError( functionNameString, moduleNameString_, "I have found an unknown word at position ", wordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", wordParameter );
+						return adminItem_->startError( functionNameString, moduleNameString_, "I found an unknown word at position ", wordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", wordParameter );
 					}
 				}
 			}
@@ -741,27 +900,23 @@ class AdminReadSentence
 		!adminItem_->hasRequestedRestart() &&
 		( currentReadItem_ = currentReadItem_->nextReadItem() ) != NULL );
 
-		if( selectionListNr_ != NO_LIST_NR )
-			{
-			if( adminItem_->checkForDuplicateSelection() != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check on a duplicate selection" );
-			}
+		if( selectionListNr_ != NO_LIST_NR &&
+		checkForDuplicateSelection() != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check on a duplicate selection" );
 
 		return RESULT_OK;
 		}
 
-	ResultType processSentence( char *readUserSentenceString )
+	signed char processSentence( char *readUserSentenceString )
 		{
-		ReadResultType readResult;
 		bool isInterpretationSuccessful;
-		bool hasCreatedAllReadWords = false;
 		unsigned short currentLanguageNr;
 		unsigned short lastCreatedWordOrderNr;
 		unsigned short nLanguages;
 		unsigned short originalLanguageNr = commonVariables_->currentLanguageNr;
 		GrammarItem *firstGrammarItem;
 		WordItem *currentLanguageWordItem;
-		ReadList *readList;
+		BoolResultType boolResult;
 		char errorString[MAX_ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "processSentence";
 
@@ -784,7 +939,7 @@ class AdminReadSentence
 			// Need to switch language
 			if( currentLanguageNr != commonVariables_->currentLanguageNr )
 				{
-				if( adminItem_->assignLanguage( currentLanguageNr ) != RESULT_OK )
+				if( assignLanguage( currentLanguageNr ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
 
 				// Avoid using the expanded read string with other languages
@@ -794,11 +949,9 @@ class AdminReadSentence
 			if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) == NULL )
 				return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
 
-			if( currentLanguageWordItem->isNeededToCheckGrammar() )
-				{
-				if( currentLanguageWordItem->checkGrammar() != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check the grammar" );
-				}
+			if( currentLanguageWordItem->isCheckingGrammarNeeded() &&
+			currentLanguageWordItem->checkGrammar() != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check the grammar" );
 
 			if( readUserSentenceString != NULL &&
 			currentLanguageWordItem->isLanguageWithMergedWords() )
@@ -809,20 +962,15 @@ class AdminReadSentence
 				}
 
 			// Create read words from a given sentence
-			if( ( readResult = adminItem_->createReadWords( readUserSentenceString ) ).result != RESULT_OK )
+			if( ( boolResult = adminItem_->createReadWords( readUserSentenceString ) ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create the read words" );
 
-			hasCreatedAllReadWords = readResult.hasCreatedAllReadWords;
-
-			if( ( readList = adminItem_->readList ) == NULL )
-				return adminItem_->startError( functionNameString, moduleNameString_, "The read list isn't created yet" );
-
 			isInterpretationSuccessful = false;
-			readList->clearLastActivatedWordOrderNr();
+			adminItem_->clearLastActivatedWordOrderNr();
 
-			if( hasCreatedAllReadWords )
+			// Has created all read words
+			if( boolResult.booleanValue )
 				{
-				readResult.hasFoundMoreInterpretations = false;
 				lastCreatedWordOrderNr = adminItem_->lastCreatedWordOrderNr();
 				firstGrammarItem = currentLanguageWordItem->firstGrammarItem();
 
@@ -832,19 +980,18 @@ class AdminReadSentence
 
 					isInterpretationSuccessful = ( currentParseWordOrderNr_ == lastCreatedWordOrderNr );
 
-					if( !isInterpretationSuccessful )
-						{
-						if( ( readResult = readList->findMoreInterpretations() ).result != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find more interpretations" );
-						}
+					if( !isInterpretationSuccessful &&
+					( boolResult = adminItem_->findMoreInterpretations() ).result != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find more interpretations" );
 					}
 				while( !isInterpretationSuccessful &&
-				readResult.hasFoundMoreInterpretations );
+				// Has found another interpretation
+				boolResult.booleanValue );
 				}
 
 			if( isInterpretationSuccessful )
 				{
-				if( adminItem_->deleteUnusedWordsAndWordTypes() != RESULT_OK )
+				if( deleteUnusedWordsAndWordTypes() != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the unused words and word types of the read words" );
 
 				if( parseSentence( readUserSentenceString ) != RESULT_OK )
@@ -852,7 +999,7 @@ class AdminReadSentence
 				}
 			else
 				{
-				if( adminItem_->deleteAllWordTypesOfCurrentSentence() != RESULT_OK )
+				if( deleteAllWordTypesOfCurrentSentence() != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete words and word types of the read words" );
 
 				// Interpretation not successful. Try other languages
@@ -882,22 +1029,23 @@ class AdminReadSentence
 		if( !isInterpretationSuccessful )
 			{
 			if( wasPreviousCommandUndoOrRedo_ )
-				// From this point, redo is not possible anymore
-				clearReplacingInfoFromItems();
-
-			if( commonVariables_->currentLanguageNr != originalLanguageNr )
 				{
-				// Restore the original language
-				if( adminItem_->assignLanguage( originalLanguageNr ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language after an interpretation failure" );
+				// From this point, redo is not possible anymore
+				clearReplacingInfoInSpecificationWords();
+				wasPreviousCommandUndoOrRedo_ = false;
 				}
+
+			if( commonVariables_->currentLanguageNr != originalLanguageNr &&
+			// Restore the original language
+			assignLanguage( originalLanguageNr ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language after an interpretation failure" );
 
 			if( currentParseWordOrderNr_ == NO_ORDER_NR )
 				{
 				if( adminItem_->isSystemStartingUp() )
 					return adminItem_->startSystemError( functionNameString, moduleNameString_, "I don't understand this sentence. Please make sure you enter a sentence within my limited grammar definition" );
 
-				if( commonVariables_->presentation->writeInterfaceText( false, PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_WARNING_NOT_CONFORM_GRAMMAR ) != RESULT_OK )
+				if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_SENTENCE_WARNING_NOT_CONFORM_GRAMMAR ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 				}
 			else
@@ -908,7 +1056,7 @@ class AdminReadSentence
 					return adminItem_->startSystemError( functionNameString, moduleNameString_, errorString );
 					}
 
-				if( commonVariables_->presentation->writeInterfaceText( PRESENTATION_PROMPT_WARNING, INTERFACE_SENTENCE_WARNING_DONT_UNDERSTAND_FROM_WORD_POSITION_START, (unsigned int)currentParseWordOrderNr_, INTERFACE_SENTENCE_WARNING_DONT_UNDERSTAND_FROM_WORD_END ) != RESULT_OK )
+				if( inputOutput_->writeInterfaceText( INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_SENTENCE_WARNING_DONT_UNDERSTAND_FROM_WORD_POSITION_START, (unsigned int)currentParseWordOrderNr_, INTERFACE_SENTENCE_WARNING_DONT_UNDERSTAND_FROM_WORD_END ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 				}
 			}
@@ -916,7 +1064,7 @@ class AdminReadSentence
 		return RESULT_OK;
 		}
 
-	ResultType readImperative( bool isAction, bool isNewStart, unsigned short selectionLevel, char *readUserSentenceString )
+	signed char readImperative( bool isAction, bool isNewStart, unsigned short selectionLevel, char *readUserSentenceString )
 		{
 		unsigned short imperativeVerbParameter = NO_IMPERATIVE_PARAMETER;
 		unsigned short executionNounWordParameter = NO_WORD_PARAMETER;
@@ -951,8 +1099,11 @@ class AdminReadSentence
 			imperativeWordItem->isVerbUndoOrRedo() )
 				wasPreviousCommandUndoOrRedo_ = true;
 			else
+				{
 				// From this point, redo is not possible anymore
-				clearReplacingInfoFromItems();
+				clearReplacingInfoInSpecificationWords();
+				wasPreviousCommandUndoOrRedo_ = false;
+				}
 
 			if( adminItem_->executeImperative( true, NO_LIST_NR, startGeneralizationWordReadItem_->wordParameter(), NO_WORD_PARAMETER, NO_WORD_TYPE_NR, MAX_PROGRESS, startGeneralizationWordReadItem_->readString, startGeneralizationWordReadItem_->readWordItem(), NULL, startRelationWordReadItem_, endRelationReadItem_, NULL, NULL ) != RESULT_OK )
 				{
@@ -1015,7 +1166,7 @@ class AdminReadSentence
 		return RESULT_OK;
 		}
 
-	ResultType scanSpecification( char *readUserSentenceString )
+	signed char scanSpecification( char *readUserSentenceString )
 		{
 		ContextResultType contextResult;
 		bool isFrenchPreposition;
@@ -1036,8 +1187,8 @@ class AdminReadSentence
 		WordTypeItem *generalizationWordTypeItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "scanSpecification";
 
+		hasFemaleUserSpecificationWord_ = false;
 		isAssignment_ = false;
-		isActiveAssignment_ = false;
 		isInactiveAssignment_ = false;
 		isArchivedAssignment_ = false;
 		isConditional_ = false;
@@ -1108,9 +1259,9 @@ class AdminReadSentence
 
 						( adminItem_->isCurrentlyTesting() ||
 						adminItem_->isSystemStartingUp() ) )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I have found an unknown word in sentence \"", readUserSentenceString, "\" at position ", currentWordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", currentWordParameter );
+							return adminItem_->startError( functionNameString, moduleNameString_, "I found an unknown word in sentence \"", readUserSentenceString, "\" at position ", currentWordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", currentWordParameter );
 
-						return adminItem_->startError( functionNameString, moduleNameString_, "I have found an unknown word at position ", currentWordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", currentWordParameter );
+						return adminItem_->startError( functionNameString, moduleNameString_, "I found an unknown word at position ", currentWordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", currentWordParameter );
 						}
 
 					break;
@@ -1260,7 +1411,6 @@ class AdminReadSentence
 				case GRAMMAR_ASSIGNMENT_PART:
 				case GRAMMAR_SPECIFICATION_ASSIGNMENT:
 					isAssignment_ = true;
-					isActiveAssignment_ = true;
 
 					if( currentReadItem_->isDeterminerOrPronoun() )
 						{
@@ -1294,24 +1444,24 @@ class AdminReadSentence
 							!hasGeneralizationArticle )
 								isUniqueUserRelation_ = true;
 
+							if( currentReadWordItem != NULL &&
+							currentReadWordItem->isFemale() )
+								hasFemaleUserSpecificationWord_ = true;
+
 							commonVariables_->nUserSpecificationWords++;
 
 							if( previousGeneralizationWordTypeNr_ == WORD_TYPE_PROPER_NAME &&
 							currentWordTypeNr == WORD_TYPE_NOUN_SINGULAR &&
-							( currentReadWordTypeItem = currentReadItem_->activeReadWordTypeItem() ) != NULL )
-								{
-								if( previousGeneralizationWordItem_ != NULL &&
-								!currentReadWordTypeItem->hasDefiniteArticleParameter() &&
-								!currentReadWordTypeItem->hasIndefiniteArticleParameter() &&
-								( generalizationWordTypeItem = previousGeneralizationWordItem_->activeWordTypeItem( WORD_TYPE_PROPER_NAME ) ) != NULL )
-									{
-									if( generalizationWordTypeItem->hasFeminineOrMasculineWordEnding() )
-										{
-										if( currentReadWordTypeItem->setParametersOfSingularNoun( NO_ADJECTIVE_PARAMETER, ( generalizationWordTypeItem->hasFeminineWordEnding() ? WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE : WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE ), ( generalizationWordTypeItem->hasFeminineWordEnding() ? WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_FEMININE : WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE ) ).result != RESULT_OK )
-											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to set the definite and indefinite article parameters of a singular noun" );
-										}
-									}
-								}
+							previousGeneralizationWordItem_ != NULL &&
+							( currentReadWordTypeItem = currentReadItem_->activeReadWordTypeItem() ) != NULL &&
+							!currentReadWordTypeItem->hasDefiniteArticleParameter() &&
+							!currentReadWordTypeItem->hasIndefiniteArticleParameter() &&
+							( generalizationWordTypeItem = previousGeneralizationWordItem_->activeWordTypeItem( WORD_TYPE_PROPER_NAME ) ) != NULL &&
+							generalizationWordTypeItem->hasFeminineOrMasculineWordEnding() &&
+
+							// Set parameters
+							currentReadWordTypeItem->setParametersOfSingularNoun( NO_ADJECTIVE_PARAMETER, ( generalizationWordTypeItem->hasFeminineWordEnding() ? WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE : WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE ), ( generalizationWordTypeItem->hasFeminineWordEnding() ? WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_FEMININE : WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE ) ).result != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to set the definite and indefinite article parameters of a singular noun" );
 							}
 
 						if( currentReadWordItem != NULL )
@@ -1357,7 +1507,7 @@ class AdminReadSentence
 
 				default:
 					if( previousReadItem == NULL )
-						return adminItem_->startError( functionNameString, moduleNameString_, "I have found a word that doesn't belong to an assignment or a specification" );
+						return adminItem_->startError( functionNameString, moduleNameString_, "I found a word that doesn't belong to an assignment or a specification" );
 
 					isStop = true;
 					currentReadItem_ = previousReadItem;
@@ -1374,16 +1524,42 @@ class AdminReadSentence
 		return RESULT_OK;
 		}
 
+	ContextResultType addPronounContext( unsigned short contextWordTypeNr, WordItem *contextWordItem )
+		{
+		ContextResultType contextResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "addPronounContext";
+
+		if( contextWordItem == NULL )
+			return adminItem_->startContextResultError( functionNameString, moduleNameString_, "The read word of the read ahead item is undefined" );
+
+		if( ( contextResult.contextNr = contextWordItem->contextNr( NULL ) ) == NO_CONTEXT_NR )
+			{
+			if( ( contextResult.contextNr = adminItem_->highestContextNrInAllContextWords() ) >= MAX_CONTEXT_NR )
+				return adminItem_->startContextResultSystemError( functionNameString, moduleNameString_, "Context number overflow" );
+
+			// Create new context number
+			contextResult.contextNr++;
+			}
+
+		if( contextWordItem->addContext( false, contextWordTypeNr, NO_WORD_TYPE_NR, contextResult.contextNr, NULL ) != RESULT_OK )
+			return adminItem_->addContextResultError( functionNameString, moduleNameString_, "I failed to add a pronoun context to word \"", contextWordItem->anyWordTypeString(), "\"" );
+
+		return contextResult;
+		}
+
 
 	protected:
 	// Constructor
 
-	AdminReadSentence( AdminItem *adminItem, CommonVariables *commonVariables )
+	AdminReadSentence( AdminItem *adminItem, CommonVariables *commonVariables, InputOutput *inputOutput )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
+		// Private constructed variables
+
+		hasAnyChangeBeenMadeByThisSentence_ = false;
+		hasFemaleUserSpecificationWord_ = false;
 		isAssignment_ = false;
-		isActiveAssignment_ = false;
 		isInactiveAssignment_ = false;
 		isArchivedAssignment_ = false;
 		isConditional_ = false;
@@ -1420,45 +1596,43 @@ class AdminReadSentence
 
 		strcpy( originalReadString, EMPTY_STRING );
 
-		adminItem_ = adminItem;
-		commonVariables_ = commonVariables;
+		// Private initialized variables
+
 		strcpy( moduleNameString_, "AdminReadSentence" );
 
-		if( commonVariables_ == NULL )
-			strcpy( errorString, "The given common variables is undefined" );
+		// Checking private initialized variables
 
-		if( adminItem_ == NULL )
-			strcpy( errorString, "The given admin is undefined" );
-
-		if( strlen( errorString ) > 0 )
+		if( ( adminItem_ = adminItem ) == NULL )
 			{
-			if( adminItem_ != NULL )
-				adminItem_->startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
-			else
-				{
-			if( commonVariables_ != NULL )
-				commonVariables_->result = RESULT_SYSTEM_ERROR;
-				fprintf( stderr, "\nClass:%s\nFunction:\t%s\nError:\t\t%s.\n", moduleNameString_, PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, errorString );
-				}
+			if( commonVariables != NULL )
+				commonVariables->result = RESULT_SYSTEM_ERROR;
+
+			fprintf( stderr, "\nClass:%s\nFunction:\t%s\nError:\t\tThe given admin item is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
+			}
+		else
+			{
+			if( ( commonVariables_ = commonVariables ) == NULL )
+				strcpy( errorString, "The given common variables is undefined" );
+
+			if( ( inputOutput_ = inputOutput ) == NULL )
+				strcpy( errorString, "The given input-output is undefined" );
+
+			if( strlen( errorString ) > 0 )
+				adminItem_->startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, errorString );
 			}
 		}
 
 
 	// Protected functions
 
-	bool isActiveUserAssignment()
+	bool hasAnyChangeBeenMadeByThisSentence()
 		{
-		return isActiveAssignment_;
+		return hasAnyChangeBeenMadeByThisSentence_;
 		}
 
-	bool isUserQuestion()
+	bool hasFemaleUserSpecificationWord()
 		{
-		return ( questionParameter_ > NO_QUESTION_PARAMETER );
-		}
-
-	bool isUserSelectionSentence()
-		{
-		return ( selectionListNr_ != NO_LIST_NR );
+		return hasFemaleUserSpecificationWord_;
 		}
 
 	bool wasPreviousCommandUndoOrRedo()
@@ -1466,9 +1640,8 @@ class AdminReadSentence
 		return wasPreviousCommandUndoOrRedo_;
 		}
 
-	ResultType processReadSentence( char *readUserSentenceString )
+	signed char processReadSentence( char *readUserSentenceString )
 		{
-		bool hasAnyChangeBeenMadeByThisSentence;
 		unsigned int startSentenceNr = commonVariables_->currentSentenceNr;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "processReadSentence";
 
@@ -1479,14 +1652,15 @@ class AdminReadSentence
 		commonVariables_->hasDisplayedArticleNotification = false;
 		commonVariables_->isFirstAnswerToQuestion = true;
 		commonVariables_->isQuestionAlreadyAnswered = false;
-		commonVariables_->firstTouchedWordItem = NULL;
+		commonVariables_->firstTouchedProperNameWordItem = NULL;
 
 		strcpy( commonVariables_->writtenUserSentenceString, EMPTY_STRING );
 
-		initializeVariablesInAllWords();
-
 		if( readUserSentenceString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given read user sentence string is undefined" );
+
+		if( initializeVariablesInAllWords() != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to initialize variables in all words" );
 
 		if( processSentence( readUserSentenceString ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to process sentence: \"", readUserSentenceString, "\"" );
@@ -1495,25 +1669,22 @@ class AdminReadSentence
 		!adminItem_->hasRequestedRestart() &&
 		startSentenceNr == commonVariables_->currentSentenceNr )
 			{
-			adminItem_->checkForChangesMadeByThisSentence();
-			hasAnyChangeBeenMadeByThisSentence = adminItem_->hasAnyChangeBeenMadeByThisSentence();
+			checkForChangesMadeByThisSentence();
 
 			// Skip integrity check if no changes are made
-			if( hasAnyChangeBeenMadeByThisSentence &&
+			if( hasAnyChangeBeenMadeByThisSentence_ &&
 			!isUserImperativeSentence_ &&
 			selectionListNr_ == NO_LIST_NR &&
 			// User specification is already known (notification: I know)
-			adminItem_->userSpecificationItem() != NULL )
-				{
-				if( adminItem_->checkIntegrityOfStoredUserSentence( readUserSentenceString ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check the integrity of the stored user sentence \"", readUserSentenceString, "\"" );
-				}
+			adminItem_->userSpecificationItem() != NULL &&
+			adminItem_->checkIntegrityOfStoredUserSentence( readUserSentenceString ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check the integrity of the stored user sentence \"", readUserSentenceString, "\"" );
 
 			// Has passed integrity check
 			if( !commonVariables_->hasDisplayedWarning )
 				{
-				// Skip when no changes are made
-				if( hasAnyChangeBeenMadeByThisSentence )
+				// Skip when no change has been made
+				if( hasAnyChangeBeenMadeByThisSentence_ )
 					{
 					// Display self-generated conclusions of the current sentence
 					if( adminItem_->writeSelfGeneratedInfo( true, false, false ) != RESULT_OK )
@@ -1527,22 +1698,17 @@ class AdminReadSentence
 					if( adminItem_->writeSelfGeneratedInfo( false, false, true ) != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the self-generated questions" );
 
-					if( adminItem_->hasUnprocessedNegativeConclusion() )
-						return adminItem_->startError( functionNameString, moduleNameString_, "I have found an unprocessed negative conclusion" );
-
 					if( checkAllWordsForStructuralIntegrity() != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "The system has problem with the structural integrity" );
-
+/*
 					// In case you are planning to save the data in a database
-/*					if( storeChangesInFutureDatabase() != RESULT_OK )
+					if( adminItem_->storeChangesInFutureDatabase() != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to store the changes in a future database" );
 */					}
 
-				if( isUserQuestion() )
-					{
-					if( adminItem_->answerQuestions() != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to answer questions" );
-					}
+				if( questionParameter_ > NO_QUESTION_PARAMETER &&
+				adminItem_->answerQuestions() != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to answer questions" );
 				}
 			}
 

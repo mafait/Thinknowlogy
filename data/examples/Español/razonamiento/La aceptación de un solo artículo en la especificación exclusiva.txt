@@ -1,5 +1,5 @@
-﻿Una criatura es un animal, hongo, bienestar humano, microorganismo o planta.
-Un animal es un vertebrado o invertebrado.
-Un vertebrado es un anfibio, pájaro, pescado, mamífero o reptil.
-Un invertebrado es un anélido, artrópodo, equinodermo, molusco o protozoo.
+﻿Cada organismo es un animal, hongo, humano, microorganismo o planta.
+Cada animal es un vertebrado o invertebrado.
+Cada vertebrado es un anfibio, pájaro, pez, mamífero o reptil.
+Cada invertebrado es un anélido, un artrópodo, un equinodermo, un molusco o un protozoo.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

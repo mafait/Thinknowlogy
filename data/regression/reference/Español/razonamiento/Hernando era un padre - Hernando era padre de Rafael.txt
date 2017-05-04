@@ -1,0 +1,25 @@
+﻿* 
+* Mis conclusiones:
+< Hernando era un hombre.
+< 
+* 
+* Esta información es más específica que la información anterior:
+< Hernando era un padre.
+* 
+* Mis conclusiones:
+< Rafael no tiene un padre nunca-más.
+< Rafael tenido un padre, llamado Hernando.
+< 
+* 
+* Mis conclusiones:
+< Hernando era un hombre. Porque:
+<	- Hernando era un padre.
+<	- Cada padre es un hombre.
+< 
+* 
+* Mis conclusiones:
+< Rafael no tiene un padre nunca-más. Porque:
+<	- Rafael tenido un padre, llamado Hernando.
+< Rafael tenido un padre, llamado Hernando. Porque:
+<	- Hernando era el padre de Rafael.
+< 

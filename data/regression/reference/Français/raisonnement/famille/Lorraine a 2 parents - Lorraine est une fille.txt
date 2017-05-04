@@ -37,7 +37,6 @@
 < Lorraine est probablement un enfant de Olivier et Amélie.
 < Lorraine est probablement partie d'une famille.
 < Lorraine est possible une personne.
-< Lorraine n'est peut-être pas un homme.
 < Lorraine est possible une fille de Olivier et Amélie.
 < Lorraine n'est peut-être pas un garçon et pas un homme.
 < Lorraine n'est peut-être pas un fils.
@@ -50,13 +49,14 @@
 < Amélie est probablement une personne.
 < Amélie est probablement une femme.
 < Amélie n'est probablement pas un homme.
+< Amélie est probablement féminine.
 < Amélie est probablement une mère de Lorraine.
 < Amélie n'est probablement pas un père.
 * 
 * Mes questions:
 < Est Lorraine une jeune-fille ou une femme?
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 < 
 * 
 * Vous avez confirmé la spécification - mais aucun de ses relations - de mes hypothèses antérieures:
@@ -75,10 +75,6 @@
 * 	et:
 <	- Lorraine est une fille.
 <	- Une fille est probablement une personne.
-< Lorraine n'est peut-être pas un homme. En raison:
-<	- Lorraine est probablement une personne.
-<	- Chaque personne est un homme ou une femme.
-<	- Est Lorraine une jeune-fille ou une femme?
 < Lorraine n'est probablement pas un garçon et pas un homme. En raison:
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
 <	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.

@@ -1,0 +1,126 @@
+﻿* 
+* My conclusions:
+< Fathers and children are part of every family.
+< 
+* 
+* My conclusions:
+< Every father is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< A father is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< John is part of a family.
+< John is a man.
+< John is not a woman.
+< John is masculine.
+< John is not a mother.
+< Paul has 2 fathers, called John and Anna.
+< Paul has a father, called John.
+< Paul has a mother, called Anna.
+< Joe has 2 fathers, called John and Anna.
+< Joe has a father, called John.
+< Joe has a mother, called Anna.
+< Laura has 2 fathers, called John and Anna.
+< Laura has a father, called John.
+< Laura has a mother, called Anna.
+< Anna is a woman.
+< Anna is not a man.
+< Anna is feminine.
+< Anna is part of a family.
+< Anna is not a father.
+* 
+* My assumptions:
+< John is probably a person.
+< John has possibly a daughter, called Laura.
+< Paul is possibly a person.
+< Paul is possibly part of a family.
+< Joe is possibly a person.
+< Joe is possibly part of a family.
+< Laura is possibly a daughter of John and Anna.
+< Laura is maybe a person.
+< Laura is possibly part of a family.
+< Laura is possibly not a boy and not a man.
+< Laura is possibly not a child.
+< Anna is probably a person.
+< Anna has possibly a daughter, called Laura.
+* 
+* My questions:
+< Is Paul a girl, a woman, a boy or a man?
+< Is Paul a child or a daughter?
+< Is Joe a girl, a woman, a boy or a man?
+< Is Joe a child or a daughter?
+< Is Laura a girl or a woman?
+< 
+* 
+* Your question is more specific than my earlier question:
+< Is Paul a girl, a woman, a boy or a man?
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* Your question is more specific than my earlier question:
+< Is Paul a girl, a woman, a boy or a man?
+* 
+* You had a similar question before:
+< Is Paul a man?
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* Your question is more specific than my earlier question:
+< Is Joe a girl, a woman, a boy or a man?
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* Your question is more specific than my earlier question:
+< Is Joe a girl, a woman, a boy or a man?
+* 
+* You had a similar question before:
+< Is Joe a woman?
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* Your question is more specific than my earlier question:
+< Is Joe a child or a daughter?
+* 
+* This question is more specific than your earlier question:
+< Is Joe a son or a daughter?
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* I had the same question before.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* Your question is more specific than my earlier question:
+< Is Laura a girl or a woman?
+* 
+* This question is more specific than your earlier question:
+< Is Laura a girl or a woman?
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 

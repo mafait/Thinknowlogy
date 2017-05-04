@@ -1,10 +1,11 @@
 ﻿* 
 * Mis conclusiones:
 < Cada caballo es una criatura.
+< Un caballo y un animal son criatura [plural de 'criatura' es desconocida].
 < 
 * 
 * Mis conclusiones:
-< Un caballo, un ser humano y una persona son criatura [plural de 'criatura' es desconocida].
+< Un ser humano, una persona, un caballo y un animal son criatura [plural de 'criatura' es desconocida].
 < Cada persona es una criatura.
 < 
 * 

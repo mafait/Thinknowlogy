@@ -1,9 +1,9 @@
 /*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -23,17 +23,12 @@
 
 class SelectionItem extends Item
 	{
-	// Private constructed variables
-
-	private SelectionItem nextExecutionItem_;
-
-
 	// Private initialized variables
 
 	private boolean isAction_;
-	private boolean isAssignedOrClear_;
-	private boolean isInactive_;
-	private boolean isArchived_;
+	private boolean isAssignedOrEmpty_;
+	private boolean isInactiveAssignment_;
+	private boolean isArchivedAssignment_;
 	private boolean isFirstComparisonPart_;
 	private boolean isNewStart_;
 	private boolean isNegative_;
@@ -64,6 +59,28 @@ class SelectionItem extends Item
 	private String specificationString_;
 
 
+	// Private methods
+
+	private SelectionItem nextSelectionItem( boolean isIncludingThisItem, WordItem solveWordItem )
+		{
+		SelectionItem searchSelectionItem = ( isIncludingThisItem ? this : nextSelectionItem() );
+
+		if( solveWordItem != null )
+			{
+			while( searchSelectionItem != null )
+				{
+				if( searchSelectionItem.generalizationWordItem_ == solveWordItem &&
+				searchSelectionItem.specificationWordItem_ != null )
+					return searchSelectionItem;
+
+				searchSelectionItem = searchSelectionItem.nextSelectionItem();
+				}
+			}
+
+		return null;
+		}
+
+
 	// Protected constructed variables
 
 	protected boolean isConditionCheckedForSolving;
@@ -75,18 +92,14 @@ class SelectionItem extends Item
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-		// Private constructed variables
-
-		nextExecutionItem_ = null;
-
 		// Private initialized variables
 
 		isAction_ = isAction;
-		isAssignedOrClear_ = isAssignedOrClear;
+		isAssignedOrEmpty_ = isAssignedOrClear;
 		isNewStart_ = isNewStart;
 
-		isInactive_ = isInactiveAssignment;
-		isArchived_ = isArchivedAssignment;
+		isInactiveAssignment_ = isInactiveAssignment;
+		isArchivedAssignment_ = isArchivedAssignment;
 
 		isFirstComparisonPart_ = isFirstComparisonPart;
 
@@ -112,12 +125,11 @@ class SelectionItem extends Item
 
 		nContextRelations_ = nContextRelations;
 
-		specificationString_ = ( specificationString == null ? null : specificationString );
-
 		generalizationWordItem_ = generalizationWordItem;
 		specificationWordItem_ = specificationWordItem;
 		relationWordItem_ = relationWordItem;
 
+		specificationString_ = specificationString;
 
 		// Protected constructed variables
 
@@ -244,44 +256,12 @@ class SelectionItem extends Item
 				relationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	protected byte checkForUsage()
-		{
-		return myWordItem().checkSelectionForUsageInWord( this );
-		}
-
-	protected StringResultType findMatchingWordReferenceString( String queryString )
-		{
-		StringResultType stringResult = new StringResultType();
-
-		if( generalizationWordItem_ != null )
-			{
-			if( ( stringResult = generalizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, specificationString_, "I failed to find a matching word reference string for the generalization word" );
-			}
-
-		if( !stringResult.hasFoundMatchingStrings &&
-		specificationWordItem_ != null )
-			{
-			if( ( stringResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, specificationString_, "I failed to find a matching word reference string for the specification word" );
-			}
-
-		if( !stringResult.hasFoundMatchingStrings &&
-		relationWordItem_ != null )
-			{
-			if( ( stringResult = relationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, specificationString_, "I failed to find a matching word reference string for the relation word" );
-			}
-
-		return stringResult;
-		}
-
 	protected String itemString()
 		{
 		return specificationString_;
 		}
 
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
 		String wordString;
@@ -289,7 +269,7 @@ class SelectionItem extends Item
 		String specificationWordTypeString = myWordItem().wordTypeNameString( specificationWordTypeNr_ );
 		String relationWordTypeString = myWordItem().wordTypeNameString( relationWordTypeNr_ );
 
-		baseToStringBuffer( queryWordTypeNr );
+		itemBaseToStringBuffer( queryWordTypeNr );
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -299,16 +279,16 @@ class SelectionItem extends Item
 		if( isAction_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isAction" );
 
-		if( isAssignedOrClear_ )
+		if( isAssignedOrEmpty_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isAssignedOrClear" );
 
 		if( isNewStart_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isNewStart" );
 
-		if( isInactive_ )
+		if( isInactiveAssignment_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isInactiveAssignment" );
 
-		if( isArchived_ )
+		if( isArchivedAssignment_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isArchivedAssignment" );
 
 		if( isFirstComparisonPart_ )
@@ -392,6 +372,29 @@ class SelectionItem extends Item
 		return queryStringBuffer;
 		}
 
+	protected BoolResultType findMatchingWordReferenceString( String queryString )
+		{
+		BoolResultType boolResult = new BoolResultType();
+
+		if( generalizationWordItem_ != null &&
+		( boolResult = generalizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+			return addBoolResultError( 1, null, specificationString_, "I failed to find a matching word reference string for the generalization word" );
+
+		// No matching string
+		if( !boolResult.booleanValue &&
+		specificationWordItem_ != null &&
+		( boolResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+			return addBoolResultError( 1, null, specificationString_, "I failed to find a matching word reference string for the specification word" );
+
+		// No matching string
+		if( !boolResult.booleanValue &&
+		relationWordItem_ != null &&
+		( boolResult = relationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+			return addBoolResultError( 1, null, specificationString_, "I failed to find a matching word reference string for the relation word" );
+
+		return boolResult;
+		}
+
 
 	// Protected methods
 
@@ -405,9 +408,9 @@ class SelectionItem extends Item
 		return isAction_;
 		}
 
-	protected boolean isAssignedOrClear()
+	protected boolean isAssignedOrEmpty()
 		{
-		return isAssignedOrClear_;
+		return isAssignedOrEmpty_;
 		}
 
 	protected boolean isNewStart()
@@ -417,12 +420,12 @@ class SelectionItem extends Item
 
 	protected boolean isInactiveAssignment()
 		{
-		return isInactive_;
+		return isInactiveAssignment_;
 		}
 
 	protected boolean isArchivedAssignment()
 		{
-		return isArchived_;
+		return isArchivedAssignment_;
 		}
 
 	protected boolean isFirstComparisonPart()
@@ -505,41 +508,19 @@ class SelectionItem extends Item
 		return nContextRelations_;
 		}
 
-	protected byte findNextExecutionSelectionItem( WordItem solveGeneralizationWordItem )
-		{
-		return findNextExecutionSelectionItem( false, solveGeneralizationWordItem );
-		}
-
-	protected byte findNextExecutionSelectionItem( boolean isIncludingThisItem, WordItem solveWordItem )
-		{
-		SelectionItem searchSelectionItem = ( isIncludingThisItem ? this : nextSelectionItem() );
-
-		nextExecutionItem_ = null;
-
-		if( solveWordItem == null )
-			return startError( 1, null, specificationString_, "The given solve word item is undefined" );
-
-		while( searchSelectionItem != null &&
-		nextExecutionItem_ == null )
-			{
-			if( searchSelectionItem.generalizationWordItem_ == solveWordItem &&
-			searchSelectionItem.specificationWordItem_ != null )
-				nextExecutionItem_ = searchSelectionItem;
-			else
-				searchSelectionItem = searchSelectionItem.nextSelectionItem();
-			}
-
-		return Constants.RESULT_OK;
-		}
-
 	protected String specificationString()
 		{
 		return specificationString_;
 		}
 
-	protected SelectionItem nextExecutionItem()
+	protected SelectionItem firstSelectionItem( WordItem solveWordItem )
 		{
-		return nextExecutionItem_;
+		return nextSelectionItem( true, solveWordItem );
+		}
+
+	protected SelectionItem nextSelectionItem( WordItem solveWordItem )
+		{
+		return nextSelectionItem( false, solveWordItem );
 		}
 
 	protected SelectionItem nextSelectionItem()

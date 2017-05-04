@@ -1,0 +1,76 @@
+﻿* 
+* My conclusions:
+< Fathers and children are part of every family.
+< 
+* 
+* My conclusions:
+< Every father is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< A father is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< Paul is part of a family.
+< Paul is not a daughter.
+< Paul is not a girl and not a woman.
+< John has a child, called Paul.
+< Anna has a child, called Paul.
+* 
+* My assumptions:
+< Paul is probably a person.
+< Paul has possibly a mother, called Anna.
+< John is possibly a person.
+< John is possibly part of a family.
+< Anna is possibly a mother of Paul.
+< Anna is possibly a woman.
+< Anna is maybe a person.
+< Anna is maybe not a man.
+< Anna is possibly feminine.
+< Anna is possibly part of a family.
+< Anna is possibly not a father.
+* 
+* My questions:
+< Is Paul a boy or a man?
+< Is John a woman or a man?
+< Is John a father or a mother?
+< 
+* 
+* Your question is more specific than my earlier question:
+< Is John a father or a mother?
+* 
+* My questions that are answered:
+< Is John a father or a mother?
+< Is John a woman or a man?
+* 
+* My assumptions:
+< John is probably a father.
+< John is probably a man.
+< John is possibly not a woman.
+< John is probably not a mother.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* My assumptions:
+< Michael is probably a father.
+< Michael is probably part of a family.
+< Michael is possibly a person.
+< Michael is probably a man.
+< Michael is possibly not a woman.
+< Michael is probably not a mother.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 

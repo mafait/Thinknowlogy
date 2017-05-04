@@ -46,17 +46,16 @@
 < Lorraine est probablement un enfant de Olivier.
 < Lorraine est probablement partie d'une famille.
 < Lorraine est possible une personne.
-< Lorraine n'est peut-être pas un homme.
 < Lorraine est possible une fille de Olivier.
 < Lorraine n'est peut-être pas un garçon et pas un homme.
 < Lorraine n'est peut-être pas un fils.
 * 
 * Mes questions:
-< Est Olivier un homme ou une femme?
+< Est Olivier une femme ou un homme?
 < Est Olivier un père ou une mère?
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < Est Lorraine une jeune-fille ou une femme?
 < 
@@ -100,16 +99,16 @@
 <	- Nom propre «Lorraine» est probablement féminin.
 * 
 * Mes questions:
-< Est Olivier un homme ou une femme? En raison:
-<	- Olivier est probablement une personne.
-<	- Chaque personne est un homme ou une femme.
-* 	et:
+< Est Olivier une femme ou un homme? En raison:
 <	- Olivier est un parent de Pascal, Julien et Lorraine.
 <	- Chaque parent est une femme ou un homme.
 * 	et:
+<	- Olivier est probablement une personne.
+<	- Chaque personne est un homme ou une femme.
+* 	et:
 <	- Est Olivier un père ou une mère?
-<	- Chaque mère est une femme.
 <	- Chaque père est un homme.
+<	- Chaque mère est une femme.
 < Est Olivier un père ou une mère? En raison:
 <	- Olivier est un parent de Pascal, Julien et Lorraine.
 <	- Chaque parent est un père ou une mère.

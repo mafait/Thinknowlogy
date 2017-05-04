@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier est masculin.
 < Pascal a un père, appelé Olivier.
 * 
 * Mes hypothèses:
@@ -44,7 +45,7 @@
 < Pascal a probablement un parent, appelé Olivier.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
 < 
 * 
@@ -52,6 +53,9 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier est masculin. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme est masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne. En raison:
@@ -72,6 +76,8 @@
 <	- Chaque parent est une femme ou un homme.
 <	- Olivier est un homme.
 < Olivier est probablement un parent de Pascal. En raison:
+<	- Pascal a probablement un parent, appelé Olivier.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant de Olivier.
 * 	et:
@@ -103,7 +109,7 @@
 < Julien a probablement un parent, appelé Olivier.
 * 
 * Mes questions:
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < 
 * 
@@ -111,9 +117,15 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier est masculin. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme est masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent de Pascal et Julien. En raison:
+<	- Julien a probablement un parent, appelé Olivier.
+<	- Pascal a probablement un parent, appelé Olivier.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Julien est probablement un enfant de Olivier.
 <	- Pascal est probablement un enfant de Olivier.
@@ -175,6 +187,9 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier est masculin. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme est masculin.
 * 
 * Mes hypothèses:
 < Olivier a possible une fille, appelée Lorraine. En raison:
@@ -185,6 +200,10 @@
 <	- Chaque enfant est un fils ou une fille.
 <	- Nom propre «Lorraine» est probablement féminin.
 < Olivier est probablement un parent de Pascal, Julien et Lorraine. En raison:
+<	- Lorraine a probablement un parent, appelé Olivier.
+<	- Julien a probablement un parent, appelé Olivier.
+<	- Pascal a probablement un parent, appelé Olivier.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Lorraine est probablement un enfant de Olivier.
 <	- Julien est probablement un enfant de Olivier.
@@ -248,6 +267,9 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier est masculin. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme est masculin.
 * 
 * Mes hypothèses:
 < Olivier a possible 2 fille [pluriel de «fille» est inconnue], appelés Lorraine et Claudia. En raison:
@@ -255,12 +277,17 @@
 <	- Lorraine a un père, appelé Olivier.
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Lorraine» est probablement féminin.
 <	- Nom propre «Claudia» est probablement féminin.
+<	- Nom propre «Lorraine» est probablement féminin.
 * 	et:
 <	- Claudia est possible une fille de Olivier.
 <	- Lorraine est possible une fille de Olivier.
 < Olivier est probablement un parent de Pascal, Julien, Lorraine et Claudia. En raison:
+<	- Claudia a probablement un parent, appelé Olivier.
+<	- Lorraine a probablement un parent, appelé Olivier.
+<	- Julien a probablement un parent, appelé Olivier.
+<	- Pascal a probablement un parent, appelé Olivier.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Claudia est probablement un enfant de Olivier.
 <	- Lorraine est probablement un enfant de Olivier.

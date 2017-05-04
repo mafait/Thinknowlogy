@@ -29,6 +29,7 @@
 * 
 * Mijn conclusies:
 < Jan is een man.
+< Jan is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een persoon.
@@ -44,6 +45,9 @@
 < Jan is een man. Omdat:
 <	- Jan is een vader.
 <	- Iedere vader is een man.
+< Jan is mannelijk. Omdat:
+<	- Jan is een man.
+<	- Iedere man is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een persoon. Omdat:

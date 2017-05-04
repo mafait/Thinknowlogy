@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier est masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne.
@@ -41,6 +42,7 @@
 * 
 * Mes conclusions:
 < Amélie est une femme.
+< Amélie est féminine.
 * 
 * Mes hypothèses:
 < Amélie est probablement une personne.
@@ -87,9 +89,9 @@
 < Amélie a possible une fille, appelée Lorraine.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < Est Lorraine une jeune-fille ou une femme?
 < 

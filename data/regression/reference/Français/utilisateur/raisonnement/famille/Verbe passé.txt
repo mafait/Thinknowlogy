@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Philippe était un homme.
+< Philippe était masculin.
 < Antoine n'a aucun père plus.
 < Antoine avait un père, appelé Philippe.
 * 
@@ -45,6 +46,6 @@
 < Antoine avait probablement un parent, appelé Philippe.
 * 
 * Mes questions:
-< Est Antoine un homme, une femme, une jeune-fille ou un garçon?
+< Est Antoine une jeune-fille, une femme, un garçon ou un homme?
 < Est Antoine un fils ou une fille?
 < 

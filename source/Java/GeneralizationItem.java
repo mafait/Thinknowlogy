@@ -3,9 +3,9 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -53,9 +53,9 @@ class GeneralizationItem extends Item
 		specificationWordTypeNr_ = specificationWordTypeNr;
 		generalizationWordTypeNr_ = generalizationWordTypeNr;
 
-		generalizationWordItem_ = generalizationWordItem;
+		// Checking private initialized variables
 
-		if( generalizationWordItem_ == null )
+		if( ( generalizationWordItem_ = generalizationWordItem ) == null )
 			startSystemError( 1, null, null, "The given generalization word item is undefined" );
 		}
 
@@ -97,20 +97,7 @@ class GeneralizationItem extends Item
 				generalizationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	protected StringResultType findMatchingWordReferenceString( String queryString )
-		{
-		StringResultType stringResult = new StringResultType();
-
-		if( generalizationWordItem_ != null )
-			{
-			if( ( stringResult = generalizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, "I failed to find a matching word reference string for the generalization word" );
-			}
-
-		return stringResult;
-		}
-
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
 		String wordString;
@@ -118,7 +105,7 @@ class GeneralizationItem extends Item
 		String generalizationWordTypeString = myWordItem().wordTypeNameString( generalizationWordTypeNr_ );
 		String specificationWordTypeString = myWordItem().wordTypeNameString( specificationWordTypeNr_ );
 
-		baseToStringBuffer( queryWordTypeNr );
+		itemBaseToStringBuffer( queryWordTypeNr );
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -149,6 +136,14 @@ class GeneralizationItem extends Item
 		return queryStringBuffer;
 		}
 
+	protected BoolResultType findMatchingWordReferenceString( String queryString )
+		{
+		if( generalizationWordItem_ != null )
+			return generalizationWordItem_.findMatchingWordReferenceString( queryString );
+
+		return new BoolResultType();
+		}
+
 
 	// Protected methods
 
@@ -162,12 +157,7 @@ class GeneralizationItem extends Item
 		return generalizationWordTypeNr_;
 		}
 
-	protected short languageNr()
-		{
-		return languageNr_;
-		}
-
-	protected GeneralizationItem getGeneralizationItem( boolean isIncludingThisItem, boolean isOnlySelectingCurrentLanguage, boolean isOnlySelectingNoun, boolean isRelation )
+	protected GeneralizationItem generalizationItem( boolean isIncludingThisItem, boolean isOnlySelectingCurrentLanguage, boolean isOnlySelectingNoun, boolean isRelation )
 		{
 		short currentLanguageNr = CommonVariables.currentLanguageNr;
 		GeneralizationItem searchGeneralizationItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
@@ -196,17 +186,17 @@ class GeneralizationItem extends Item
 
 	protected GeneralizationItem nextNounSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false, true, false );
+		return generalizationItem( false, false, true, false );
 		}
 
 	protected GeneralizationItem nextSpecificationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false, false, false );
+		return generalizationItem( false, false, false, false );
 		}
 
 	protected GeneralizationItem nextRelationGeneralizationItem()
 		{
-		return getGeneralizationItem( false, false, false, true );
+		return generalizationItem( false, false, false, true );
 		}
 
 	protected WordItem generalizationWordItem()

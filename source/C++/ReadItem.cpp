@@ -1,9 +1,9 @@
 /*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -27,12 +27,11 @@
 
 class ReadItem : private Item
 	{
-	friend class AdminCleanup;
-	friend class AdminContext;
 	friend class AdminImperative;
+	friend class AdminItem;
 	friend class AdminReadSentence;
 	friend class AdminSpecification;
-	friend class AdminWriteSpecification;
+	friend class AdminWrite;
 	friend class ReadList;
 
 	// Private initialized variables
@@ -62,9 +61,9 @@ class ReadItem : private Item
 
 	// Constructor
 
-	ReadItem( unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, size_t readStringLength, char *_readString, WordItem *readWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	ReadItem( unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, size_t readStringLength, char *_readString, WordItem *readWordItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ReadItem", commonVariables, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ReadItem", commonVariables, inputOutput, myList, myWordItem );
 
 
 		// Private initialized variables
@@ -85,7 +84,6 @@ class ReadItem : private Item
 
 		definitionGrammarItem = NULL;
 
-
 		// Protected initialized variables
 
 		readString = NULL;
@@ -101,10 +99,10 @@ class ReadItem : private Item
 					strncat( readString, _readString, readStringLength );
 					}
 				else
-					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the read string" );
+					startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the read string" );
 				}
 			else
-				startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read string is too long" );
+				startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read string is too long" );
 			}
 		}
 
@@ -189,8 +187,8 @@ class ReadItem : private Item
 		{
 		ReadItem *nextSortReadItem = (ReadItem *)nextSortItem;
 
+		// Remark: All read items should have the same creationSentenceNr
 		return ( nextSortItem != NULL &&
-				// Remark: All read items should have the same creationSentenceNr
 
 				// 1) Ascending wordOrderNr_
 				( wordOrderNr_ < nextSortReadItem->wordOrderNr_ ||
@@ -200,32 +198,18 @@ class ReadItem : private Item
 				wordTypeNr_ > nextSortReadItem->wordTypeNr_ ) ) );
 		}
 
-	virtual StringResultType findMatchingWordReferenceString( char *queryString )
-		{
-		StringResultType stringResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
-
-		if( readWordItem_ != NULL )
-			{
-			if( ( stringResult = readWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, "I failed to find the word reference for the word reference query" );
-			}
-
-		return stringResult;
-		}
-
 	virtual char *itemString()
 		{
 		return readString;
 		}
 
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *queryString;
 		char *wordString;
 		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 
@@ -291,6 +275,16 @@ class ReadItem : private Item
 			}
 
 		return queryString;
+		}
+
+	virtual BoolResultType findMatchingWordReferenceString( char *queryString )
+		{
+		BoolResultType boolResult;
+
+		if( readWordItem_ != NULL )
+			return readWordItem_->findMatchingWordReferenceString( queryString );
+
+		return boolResult;
 		}
 
 
@@ -492,11 +486,6 @@ class ReadItem : private Item
 		return ( wordParameter_ == NO_WORD_PARAMETER );
 		}
 
-	bool isSelection()
-		{
-		return ( grammarParameter == GRAMMAR_SELECTION );
-		}
-
 	bool isGeneralizationWord()
 		{
 		return ( grammarParameter == GRAMMAR_GENERALIZATION_WORD );
@@ -539,7 +528,7 @@ class ReadItem : private Item
 		return wordTypeNr_;
 		}
 
-	ResultType changeReadWord( unsigned short newWordTypeNr, WordItem *newReadWordItem )
+	signed char changeReadWord( unsigned short newWordTypeNr, WordItem *newReadWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "changeReadWord";
 

@@ -54,9 +54,9 @@
 * Mis suposiciones:
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 < José es posiblemente una persona.
-< José es probablemente parte de una familia.
+< José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan.
 < Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.

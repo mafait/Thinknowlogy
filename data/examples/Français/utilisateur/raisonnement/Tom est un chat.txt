@@ -1,0 +1,6 @@
+#Les chats sont des animaux.
+Chats sont animaux.
+#Chaque chat est à la fourrure.
+Chaque chat est à-la-fourrure.
+Tom est un chat.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

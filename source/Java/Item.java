@@ -1,8 +1,8 @@
 /*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -23,36 +23,26 @@
 class Item
 	{
 	// Private constructed variables
-
 	private short userNr_;
-
 	private int activeSentenceNr_;
 	private int inactiveSentenceNr_;
 	private int originalSentenceNr_;
 	private int creationSentenceNr_;
 	private int archivedSentenceNr_;
 	private int replacedSentenceNr_;
-	private int deletedSentenceNr_;
-
 	private int itemNr_;
-
 	private char statusChar_;
-
 	// Private initialized variables
-
 	private List myList_;
 	private WordItem myWordItem_;
 	private String moduleNameString_;
-
 	// Protected constructed variables
-
 	protected boolean isSelectedByQuery;
 	protected boolean isSelectedByJustificationQuery;
-
 	protected char previousStatusChar;
-
 	protected Item previousItem;
 	protected Item nextItem;
+	protected StringBuffer debugStringBuffer;
 
 	// Private methods
 
@@ -85,17 +75,16 @@ class Item
 		inactiveSentenceNr_ = Constants.NO_SENTENCE_NR;
 		archivedSentenceNr_ = Constants.NO_SENTENCE_NR;
 		replacedSentenceNr_ = Constants.NO_SENTENCE_NR;
-		deletedSentenceNr_ = Constants.NO_SENTENCE_NR;
 
 		itemNr_ = Constants.NO_ITEM_NR;
 
 		statusChar_ = Constants.QUERY_ACTIVE_CHAR;
 
 		// Private initialized variables
+		moduleNameString_ = this.getClass().getName();
 
 		myList_ = null;
 		myWordItem_ = null;
-		moduleNameString_ = this.getClass().getName();
 
 		// Protected constructed variables
 
@@ -111,134 +100,6 @@ class Item
 
 	// Protected error methods
 
-	protected CollectionResultType addCollectionResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		CollectionResultType collectionResult = new CollectionResultType();
-
-		collectionResult.result = addError( 1, moduleNameString, errorString );
-		return collectionResult;
-		}
-
-	protected CollectionResultType addCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		CollectionResultType collectionResult = new CollectionResultType();
-
-		collectionResult.result = addError( 1, moduleNameString, wordNameString, errorString );
-		return collectionResult;
-		}
-
-	protected CollectionResultType startCollectionResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		CollectionResultType collectionResult = new CollectionResultType();
-
-		collectionResult.result = startError( 1, moduleNameString, errorString );
-		return collectionResult;
-		}
-
-	protected CollectionResultType startCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		CollectionResultType collectionResult = new CollectionResultType();
-
-		collectionResult.result = startError( 1, moduleNameString, wordNameString, errorString );
-		return collectionResult;
-		}
-
-	protected CollectionResultType startCollectionResultSystemError( int methodLevel, String moduleNameString, String errorString )
-		{
-		CollectionResultType collectionResult = new CollectionResultType();
-
-		collectionResult.result = startSystemError( 1, moduleNameString, errorString );
-		return collectionResult;
-		}
-
-	protected CollectionResultType startCollectionResultSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		CollectionResultType collectionResult = new CollectionResultType();
-
-		collectionResult.result = startSystemError( 1, moduleNameString, wordNameString, errorString );
-		return collectionResult;
-		}
-
-	protected ContextResultType addContextResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		ContextResultType contextResult = new ContextResultType();
-
-		contextResult.result = addError( 1, moduleNameString, errorString );
-		return contextResult;
-		}
-
-	protected ContextResultType startContextResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		ContextResultType contextResult = new ContextResultType();
-
-		contextResult.result = startError( 1, moduleNameString, errorString );
-		return contextResult;
-		}
-
-	protected ContextResultType startContextResultSystemError( int methodLevel, String moduleNameString, String errorString )
-		{
-		ContextResultType contextResult = new ContextResultType();
-
-		contextResult.result = startSystemError( 1, moduleNameString, errorString );
-		return contextResult;
-		}
-
-	protected FileResultType addFileResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		FileResultType fileResult = new FileResultType();
-
-		fileResult.result = addError( 1, moduleNameString, errorString );
-		return fileResult;
-		}
-
-	protected FileResultType startFileResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		FileResultType fileResult = new FileResultType();
-
-		fileResult.result = startError( 1, moduleNameString, errorString );
-		return fileResult;
-		}
-
-	protected GrammarResultType startGrammarResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		GrammarResultType grammarResult = new GrammarResultType();
-
-		grammarResult.result = startError( 1, moduleNameString, wordNameString, errorString );
-		return grammarResult;
-		}
-
-	protected JustificationResultType startJustificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		JustificationResultType justificationResult = new JustificationResultType();
-
-		justificationResult.result = startError( 1, moduleNameString, wordNameString, errorString );
-		return justificationResult;
-		}
-
-	protected ReadResultType addReadResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		ReadResultType readResult = new ReadResultType();
-
-		readResult.result = addError( 1, moduleNameString, errorString );
-		return readResult;
-		}
-
-	protected ReadResultType startReadResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		ReadResultType readResult = new ReadResultType();
-
-		readResult.result = startError( 1, moduleNameString, errorString );
-		return readResult;
-		}
-
-	protected ReadResultType startReadResultSystemError( int methodLevel, String moduleNameString, String errorString )
-		{
-		ReadResultType readResult = new ReadResultType();
-
-		readResult.result = startSystemError( 1, moduleNameString, errorString );
-		return readResult;
-		}
-
 	protected byte addError( int methodLevel, String moduleNameString, String errorString )
 		{
 		return addError( ( methodLevel + 1 ), moduleNameString, ( myWordItem_ == null || myWordItem_.isAdminWord() ? null : myWordItem_.anyWordTypeString() ), errorString );
@@ -246,12 +107,12 @@ class Item
 
 	protected byte addError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
 		{
-		Presentation.displayError( Constants.SYMBOL_QUESTION_MARK, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordItemString, ( methodLevel + 1 ), errorString );
+		InputOutput.displayError( Constants.SYMBOL_QUESTION_MARK, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordItemString, ( methodLevel + 1 ), errorString );
 		return CommonVariables.result;
 		}
 	protected byte addError( char listChar, int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
-		Presentation.displayError( listChar, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordNameString, ( methodLevel + 1 ), errorString );
+		InputOutput.displayError( listChar, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordNameString, ( methodLevel + 1 ), errorString );
 		return CommonVariables.result;
 		}
 
@@ -289,7 +150,7 @@ class Item
 				errorStringPosition++;
 
 				if( errorStringPosition < errorString.length() &&
-				( textChar = Presentation.convertDiacriticalChar( errorString.charAt( errorStringPosition ) ) ) != Constants.NEW_LINE_CHAR )
+				( textChar = InputOutput.convertDiacriticalChar( errorString.charAt( errorStringPosition ) ) ) != Constants.NEW_LINE_CHAR )
 					tempStringBuffer.append( textChar );
 				}
 			else
@@ -304,43 +165,298 @@ class Item
 		return Constants.RESULT_SYSTEM_ERROR;
 		}
 
-	protected SelectionResultType addSelectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected BoolResultType addBoolResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		BoolResultType boolResult = new BoolResultType();
+
+		boolResult.result = addError( ( methodLevel + 1 ), moduleNameString, null, errorString );
+		return boolResult;
+		}
+
+	protected BoolResultType addBoolResultError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
+		{
+		BoolResultType boolResult = new BoolResultType();
+
+		boolResult.result = addError( ( methodLevel + 1 ), moduleNameString, wordItemString, errorString );
+		return boolResult;
+		}
+
+	protected BoolResultType startBoolResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		BoolResultType boolResult = new BoolResultType();
+
+		boolResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return boolResult;
+		}
+
+	protected BoolResultType startBoolResultError( int methodLevel, String moduleNameString, String wordTypeNameString, String errorString )
+		{
+		BoolResultType boolResult = new BoolResultType();
+
+		boolResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordTypeNameString, errorString );
+		return boolResult;
+		}
+
+	protected BoolResultType startBoolResultSystemError( int methodLevel, String moduleNameString, String errorString )
+		{
+		BoolResultType boolResult = new BoolResultType();
+
+		boolResult.result = startSystemError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return boolResult;
+		}
+
+	protected CollectionResultType addCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return collectionResult;
+		}
+
+	protected CollectionResultType startCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return collectionResult;
+		}
+
+	protected CompoundResultType addCompoundResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CompoundResultType compoundResult = new CompoundResultType();
+
+		compoundResult.result = addError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return compoundResult;
+		}
+
+	protected ConditionResultType addConditionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ConditionResultType conditionResult = new ConditionResultType();
+
+		conditionResult.result = addError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return conditionResult;
+		}
+
+	protected ConditionResultType startConditionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ConditionResultType conditionResult = new ConditionResultType();
+
+		conditionResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return conditionResult;
+		}
+
+	protected CompoundResultType startCompoundResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CompoundResultType compoundResult = new CompoundResultType();
+
+		compoundResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return compoundResult;
+		}
+
+	protected ContextResultType addContextResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ContextResultType contextResult = new ContextResultType();
+
+		contextResult.result = addError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return contextResult;
+		}
+
+	protected ContextResultType startContextResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ContextResultType contextResult = new ContextResultType();
+
+		contextResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return contextResult;
+		}
+
+	protected ContextResultType startContextResultSystemError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ContextResultType contextResult = new ContextResultType();
+
+		contextResult.result = startSystemError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return contextResult;
+		}
+
+	protected CreateAndAssignResultType addCreateAndAssignResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
+
+		createAndAssignResult.result = addError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	protected CreateAndAssignResultType addCreateAndAssignResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
+
+		createAndAssignResult.result = addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	protected CreateAndAssignResultType startCreateAndAssignResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
+
+		createAndAssignResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	protected CreateAndAssignResultType startCreateAndAssignResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
+
+		createAndAssignResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	protected CreateAndAssignResultType startCreateAndAssignResultSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
+
+		createAndAssignResult.result = startSystemError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return createAndAssignResult;
+		}
+
+	protected CreateReadWordResultType addCreateReadWordResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CreateReadWordResultType createReadWordResult = new CreateReadWordResultType();
+
+		createReadWordResult.result = addError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return createReadWordResult;
+		}
+
+	protected CreateReadWordResultType startCreateReadWordResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CreateReadWordResultType createReadWordResult = new CreateReadWordResultType();
+
+		createReadWordResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return createReadWordResult;
+		}
+
+	protected DuplicateResultType startDuplicateResultError( int methodLevel, String errorString )
+		{
+		DuplicateResultType duplicateResult = new DuplicateResultType();
+
+		duplicateResult.result = startError( 1, null, errorString );
+		return duplicateResult;
+		}
+
+	protected FileResultType addFileResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		FileResultType fileResult = new FileResultType();
+
+		fileResult.result = addError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return fileResult;
+		}
+
+	protected FileResultType startFileResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		FileResultType fileResult = new FileResultType();
+
+		fileResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return fileResult;
+		}
+
+	protected FindSpecificationResultType startFindSpecificationResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		FindSpecificationResultType findSpecificationResult = new FindSpecificationResultType();
+
+		findSpecificationResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return findSpecificationResult;
+		}
+
+	protected GrammarResultType startGrammarResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		GrammarResultType grammarResult = new GrammarResultType();
+
+		grammarResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return grammarResult;
+		}
+
+	protected JustificationResultType startJustificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		JustificationResultType justificationResult = new JustificationResultType();
+
+		justificationResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return justificationResult;
+		}
+
+	protected QueryResultType addQueryResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		QueryResultType queryResult = new QueryResultType();
+
+		queryResult.result = addError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return queryResult;
+		}
+
+	protected QueryResultType startQueryResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		QueryResultType queryResult = new QueryResultType();
+
+		queryResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return queryResult;
+		}
+	protected ReadWordResultType startReadWordResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		ReadWordResultType readWordResult = new ReadWordResultType();
+
+		readWordResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return readWordResult;
+		}
+
+	protected RelatedResultType addRelatedResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		RelatedResultType relatedResult = new RelatedResultType();
+
+		relatedResult.result = addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return relatedResult;
+		}
+
+	protected RelatedResultType startRelatedResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		RelatedResultType relatedResult = new RelatedResultType();
+
+		relatedResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return relatedResult;
+		}
+
+	protected SelectionResultType startSelectionResultError( int methodLevel, String errorString )
 		{
 		SelectionResultType selectionResult = new SelectionResultType();
 
-		selectionResult.result = addError( 1, moduleNameString, wordNameString, errorString );
+		selectionResult.result = startError( 1, null, errorString );
 		return selectionResult;
 		}
 
-	protected SelectionResultType startSelectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected ShortResultType addShortResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
-		SelectionResultType selectionResult = new SelectionResultType();
+		ShortResultType shortResult = new ShortResultType();
 
-		selectionResult.result = startError( 1, moduleNameString, wordNameString, errorString );
-		return selectionResult;
+		shortResult.result = addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return shortResult;
 		}
 
-	protected SpecificationResultType addSpecificationResultError( int methodLevel, String moduleNameString, String errorString )
+	protected ShortResultType startShortResultError( int methodLevel, String moduleNameString, String errorString )
 		{
-		SpecificationResultType specificationResult = new SpecificationResultType();
+		ShortResultType shortResult = new ShortResultType();
 
-		specificationResult.result = addError( 1, moduleNameString, errorString );
-		return specificationResult;
+		shortResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return shortResult;
+		}
+
+	protected ShortResultType startShortResultSystemError( int methodLevel, String errorString )
+		{
+		ShortResultType shortResult = new ShortResultType();
+
+		shortResult.result = startSystemError( 1, null, errorString );
+		return shortResult;
 		}
 
 	protected SpecificationResultType addSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 
-		specificationResult.result = addError( 1, moduleNameString, wordNameString, errorString );
-		return specificationResult;
-		}
-
-	protected SpecificationResultType startSpecificationResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		SpecificationResultType specificationResult = new SpecificationResultType();
-
-		specificationResult.result = startError( 1, moduleNameString, errorString );
+		specificationResult.result = addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
 		return specificationResult;
 		}
 
@@ -348,55 +464,31 @@ class Item
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 
-		specificationResult.result = startError( 1, moduleNameString, wordNameString, errorString );
+		specificationResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
 		return specificationResult;
 		}
 
-	protected SpecificationResultType startSpecificationResultSystemError( int methodLevel, String moduleNameString, String errorString )
+	protected UserSpecificationResultType addUserSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
-		SpecificationResultType specificationResult = new SpecificationResultType();
+		UserSpecificationResultType userSpecificationResult = new UserSpecificationResultType();
 
-		specificationResult.result = startSystemError( 1, moduleNameString, errorString );
-		return specificationResult;
+		userSpecificationResult.result = addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return userSpecificationResult;
 		}
 
-	protected SpecificationResultType startSpecificationResultSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected UserSpecificationResultType startUserSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
-		SpecificationResultType specificationResult = new SpecificationResultType();
+		UserSpecificationResultType userSpecificationResult = new UserSpecificationResultType();
 
-		specificationResult.result = startSystemError( 1, moduleNameString, wordNameString, errorString );
-		return specificationResult;
-		}
-
-	protected StringResultType addStringResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		StringResultType stringResult = new StringResultType();
-
-		stringResult.result = addError( 1, moduleNameString, errorString );
-		return stringResult;
-		}
-
-	protected StringResultType addStringResultError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
-		{
-		StringResultType stringResult = new StringResultType();
-
-		stringResult.result = addError( 1, moduleNameString, wordItemString, errorString );
-		return stringResult;
-		}
-
-	protected StringResultType startStringResultError( int methodLevel, String moduleNameString, String errorString )
-		{
-		StringResultType stringResult = new StringResultType();
-
-		stringResult.result = startError( 1, moduleNameString, errorString );
-		return stringResult;
+		userSpecificationResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return userSpecificationResult;
 		}
 
 	protected WordResultType addWordResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		WordResultType wordResult = new WordResultType();
 
-		wordResult.result = addError( 1, moduleNameString, errorString );
+		wordResult.result = addError( ( methodLevel + 1 ), moduleNameString, errorString );
 		return wordResult;
 		}
 
@@ -404,56 +496,22 @@ class Item
 		{
 		WordResultType wordResult = new WordResultType();
 
-		wordResult.result = startError( 1, moduleNameString, errorString );
+		wordResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
 		return wordResult;
 		}
 
-	protected WordResultType addWordResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected WordTypeResultType startWordTypeResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
-		WordResultType wordResult = new WordResultType();
+		WordTypeResultType wordTypeResult = new WordTypeResultType();
 
-		wordResult.result = addError( 1, moduleNameString, wordNameString, errorString );
-		return wordResult;
-		}
-
-	protected WordResultType startWordResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		WordResultType wordResult = new WordResultType();
-
-		wordResult.result = startError( 1, moduleNameString, wordNameString, errorString );
-		return wordResult;
-		}
-
-	protected WriteResultType addWriteResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		WriteResultType writeResult = new WriteResultType();
-
-		writeResult.result = addError( 1, moduleNameString, wordNameString, errorString );
-		return writeResult;
-		}
-
-	protected WriteResultType startWriteResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		WriteResultType writeResult = new WriteResultType();
-
-		writeResult.result = startError( 1, moduleNameString, wordNameString, errorString );
-		return writeResult;
+		wordTypeResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return wordTypeResult;
 		}
 
 
 	// Protected virtual methods
 
-	protected void clearReplacingInfo()
-		{
-		// This is a virtual method. Therefore, it has no body.
-		}
-
-	protected void selectingAttachedJustifications( boolean isSelectingJustificationSpecifications )
-		{
-		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
-		}
-
-	protected void selectingJustificationSpecifications()
+	protected void checkForUsage()
 		{
 		// This is a virtual method. Therefore, it has no body.
 		}
@@ -466,6 +524,16 @@ class Item
 	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
+		}
+
+	protected void selectingAttachedJustifications( boolean isSelectingJustificationSpecifications )
+		{
+		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
+		}
+
+	protected void selectingJustificationSpecifications()
+		{
+		// This is a virtual method. Therefore, it has no body.
 		}
 
 	protected boolean hasParameter( int queryParameter )
@@ -493,86 +561,22 @@ class Item
 				creationSentenceNr_ > nextSortItem.creationSentenceNr_ );
 		}
 
-	protected byte checkForUsage()
-		{
-		return Constants.RESULT_OK;
-		}
-
-	protected StringResultType findMatchingWordReferenceString( String queryString )
-		{
-		// This is a virtual method. Therefore, the given variables are unreferenced.
-		return new StringResultType();
-		}
-
 	protected String itemString()
 		{
+		// This is a virtual method
 		return null;
 		}
 
-	protected String virtualGuideByGrammarString()
-		{
-		return null;
-		}
-
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return null;
 		}
 
-	protected StringBuffer baseToStringBuffer( short queryWordTypeNr )
+	protected BoolResultType findMatchingWordReferenceString( String queryString )
 		{
-		StringBuffer queryStringBuffer;
-		String myWordString = myWordTypeString( queryWordTypeNr );
-		String userNameString = ( myWordItem_ == null ? null : myWordItem_.userNameString( userNr_ ) );
-		CommonVariables.queryStringBuffer = new StringBuffer();
-
-		queryStringBuffer = CommonVariables.queryStringBuffer;
-
-		// Display status if not active
-		if( !isActiveItem() )
-			queryStringBuffer.append( statusChar_ );
-
-		if( myWordString != null )
-			queryStringBuffer.append( Constants.QUERY_WORD_START_CHAR + myWordString + Constants.QUERY_WORD_END_CHAR );
-
-		queryStringBuffer.append( Constants.QUERY_LIST_START_STRING + ( myList_ == null ? Constants.QUERY_NO_LIST_CHAR : myList_.listChar() ) + Constants.QUERY_LIST_END_CHAR );
-
-		queryStringBuffer.append( Constants.QUERY_ITEM_START_STRING + creationSentenceNr_ + Constants.QUERY_SEPARATOR_CHAR + itemNr_ + Constants.QUERY_ITEM_END_CHAR );
-/*
-		// Don't display. Is always true during a query
-		if( isSelectedByQuery )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSelectedByQuery" );
-*/
-		if( isArchivedItem() ||
-		isReplacedItem() )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "previousStatusChar:" + previousStatusChar );
-
-		if( userNr_ > Constants.NO_USER_NR )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "user:" + ( userNameString == null ? userNr_ : userNameString ) );
-
-		if( originalSentenceNr_ > Constants.NO_SENTENCE_NR &&
-		originalSentenceNr_ != creationSentenceNr_ )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "originalSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + originalSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( activeSentenceNr_ > Constants.NO_SENTENCE_NR &&
-		activeSentenceNr_ != creationSentenceNr_ )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "activeSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + activeSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( inactiveSentenceNr_ > Constants.NO_SENTENCE_NR &&
-		inactiveSentenceNr_ != creationSentenceNr_ )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "inactiveSentence:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + inactiveSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( archivedSentenceNr_ > Constants.NO_SENTENCE_NR )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "archivedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + archivedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( replacedSentenceNr_ > Constants.NO_SENTENCE_NR )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "replacedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + replacedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		if( deletedSentenceNr_ > Constants.NO_SENTENCE_NR )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "deletedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + deletedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
-
-		return queryStringBuffer;
+		// This is a virtual method. Therefore, the given variables are unreferenced.
+		return new BoolResultType();
 		}
 
 
@@ -598,11 +602,6 @@ class Item
 		statusChar_ = Constants.QUERY_ARCHIVED_CHAR;
 		}
 
-	protected void setDeletedStatus()
-		{
-		statusChar_ = Constants.QUERY_DELETED_CHAR;
-		}
-
 	protected void setInactiveStatus()
 		{
 		statusChar_ = Constants.QUERY_INACTIVE_CHAR;
@@ -611,6 +610,11 @@ class Item
 	protected void setReplacedStatus()
 		{
 		statusChar_ = Constants.QUERY_REPLACED_CHAR;
+		}
+
+	protected void setDeletedStatus()
+		{
+		statusChar_ = Constants.QUERY_DELETED_CHAR;
 		}
 
 	protected void setActiveSentenceNr()
@@ -623,11 +627,6 @@ class Item
 		{
 		if( archivedSentenceNr_ == Constants.NO_SENTENCE_NR )
 			archivedSentenceNr_ = CommonVariables.currentSentenceNr;
-		}
-
-	protected void setDeletedSentenceNr()
-		{
-		deletedSentenceNr_ = CommonVariables.currentSentenceNr;
 		}
 
 	protected void setInactiveSentenceNr()
@@ -666,38 +665,26 @@ class Item
 	// Strictly for initialization of AdminItem
 	protected void initializeItemVariables( WordItem myWordItem )
 		{
-		// Private constructed variables
+		// Checking private initialized variables
 
-//		AdminItem has no constructed variables to be initialized
-
-		// Private initialized variables
-
-//		AdminItem has no myList_;
-		myWordItem_ = myWordItem;
-
-		if( myWordItem_ == null )
-			startSystemError( 1, null, "The given my word is undefined" );
+		if( ( myWordItem_ = myWordItem ) == null )
+			startSystemError( 1, null, "The given my word item is undefined" );
 		}
 
 	protected void initializeItemVariables( int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, List myList, WordItem myWordItem )
 		{
 		// Private initialized variables
-
-		myList_ = myList;
-		myWordItem_ = myWordItem;
-
-		// Private constructed variables
-
 		userNr_ = CommonVariables.currentUserNr;
-
 		originalSentenceNr_ = ( originalSentenceNr == Constants.NO_SENTENCE_NR ? CommonVariables.currentSentenceNr : originalSentenceNr );
 		activeSentenceNr_ = ( originalSentenceNr == Constants.NO_SENTENCE_NR ? CommonVariables.currentSentenceNr : activeSentenceNr );
 		inactiveSentenceNr_ = inactiveSentenceNr;
 		archivedSentenceNr_ = archivedSentenceNr;
 
-		if( myWordItem_ != null )
+		// Checking private initialized variables
+
+		if( ( myWordItem_ = myWordItem ) != null )
 			{
-			if( myList_ != null )
+			if( ( myList_ = myList ) != null )
 				{
 				if( CommonVariables.currentItemNr >= Constants.NO_ITEM_NR )
 					{
@@ -713,7 +700,7 @@ class Item
 				startSystemError( 1, null, myWordItem_.anyWordTypeString(), "The given my list is undefined" );
 			}
 		else
-			startSystemError( 1, null, null, "The given my word is undefined" );
+			startSystemError( 1, null, null, "The given my word item is undefined" );
 		}
 
 	protected boolean hasActiveSentenceNr()
@@ -729,6 +716,11 @@ class Item
 	protected boolean hasCurrentCreationSentenceNr()
 		{
 		return ( creationSentenceNr_ == CommonVariables.currentSentenceNr );
+		}
+
+	protected boolean hasCurrentOrNewerCreationSentenceNr()
+		{
+		return ( creationSentenceNr_ >= CommonVariables.currentSentenceNr );
 		}
 
 	protected boolean hasCurrentActiveSentenceNr()
@@ -758,8 +750,7 @@ class Item
 				activeSentenceNr_ == sentenceNr ||
 				inactiveSentenceNr_ == sentenceNr ||
 				archivedSentenceNr_ == sentenceNr ||
-				replacedSentenceNr_ == sentenceNr ||
-				deletedSentenceNr_ == sentenceNr );
+				replacedSentenceNr_ == sentenceNr );
 		}
 
 	protected boolean isOlderItem()
@@ -794,8 +785,8 @@ class Item
 
 	protected boolean isReplacedOrDeletedItem()
 		{
-		return ( isReplacedItem() ||
-				isDeletedItem() );
+		return ( statusChar_ == Constants.QUERY_REPLACED_CHAR ||
+				statusChar_ == Constants.QUERY_DELETED_CHAR );
 		}
 
 	protected boolean isMoreRecent( Item checkItem )
@@ -856,11 +847,6 @@ class Item
 	protected int replacedSentenceNr()
 		{
 		return replacedSentenceNr_;
-		}
-
-	protected int deletedSentenceNr()
-		{
-		return deletedSentenceNr_;
 		}
 
 	protected int itemNr()
@@ -943,6 +929,58 @@ class Item
 		return statusChar_;
 		}
 
+	protected StringBuffer itemBaseToStringBuffer( short queryWordTypeNr )
+		{
+		StringBuffer queryStringBuffer;
+		String myWordString = myWordTypeString( queryWordTypeNr );
+		String userNameString = ( myWordItem_ == null ? null : myWordItem_.userNameString( userNr_ ) );
+		CommonVariables.queryStringBuffer = new StringBuffer();
+
+		queryStringBuffer = CommonVariables.queryStringBuffer;
+
+		// Display status if not active
+		if( !isActiveItem() )
+			queryStringBuffer.append( statusChar_ );
+
+		if( myWordString != null )
+			queryStringBuffer.append( Constants.QUERY_WORD_START_CHAR + myWordString + Constants.QUERY_WORD_END_CHAR );
+
+		queryStringBuffer.append( Constants.QUERY_LIST_START_STRING + ( myList_ == null ? Constants.QUERY_NO_LIST_CHAR : myList_.listChar() ) + Constants.QUERY_LIST_END_CHAR );
+
+		queryStringBuffer.append( Constants.QUERY_ITEM_START_STRING + creationSentenceNr_ + Constants.QUERY_SEPARATOR_CHAR + itemNr_ + Constants.QUERY_ITEM_END_CHAR );
+/*
+		// Don't display. Is always true during a query
+		if( isSelectedByQuery )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSelectedByQuery" );
+*/
+		if( isArchivedItem() ||
+		isReplacedItem() )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "previousStatusChar:" + previousStatusChar );
+
+		if( userNr_ > Constants.NO_USER_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "user:" + ( userNameString == null ? userNr_ : userNameString ) );
+
+		if( originalSentenceNr_ > Constants.NO_SENTENCE_NR &&
+		originalSentenceNr_ != creationSentenceNr_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "originalSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + originalSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		if( activeSentenceNr_ > Constants.NO_SENTENCE_NR &&
+		activeSentenceNr_ != creationSentenceNr_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "activeSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + activeSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		if( inactiveSentenceNr_ > Constants.NO_SENTENCE_NR &&
+		inactiveSentenceNr_ != creationSentenceNr_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "inactiveSentence:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + inactiveSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		if( archivedSentenceNr_ > Constants.NO_SENTENCE_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "archivedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + archivedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		if( replacedSentenceNr_ > Constants.NO_SENTENCE_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "replacedSentenceNr:" + Constants.QUERY_ITEM_SENTENCE_NR_START_CHAR + replacedSentenceNr_ + Constants.QUERY_ITEM_SENTENCE_NR_END_CHAR );
+
+		return queryStringBuffer;
+		}
+
 	protected List myList()
 		{
 		return myList_;
@@ -967,6 +1005,16 @@ class Item
 		return myWordItem_;
 		}
 
+
+	// Protected database connection methods
+/*
+	byte storeChangesInFutureDatabase()
+		{
+		// Save changes of this item to the database
+
+		return Constants.RESULT_OK;
+		}
+*/
 
 	// Protected definition methods
 
@@ -1076,12 +1124,6 @@ class Item
 				articleParameter == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE );
 		}
 
-	protected boolean isGeneralizationReasoningWordType( short wordTypeNr )
-		{
-		return ( wordTypeNr == Constants.WORD_TYPE_PROPER_NAME ||
-				isNounWordType( wordTypeNr ) );
-		}
-
 	protected boolean isMatchingWordType( short firstWordTypeNr, short secondWordTypeNr )
 		{
 		return	( firstWordTypeNr == secondWordTypeNr ||
@@ -1093,6 +1135,13 @@ class Item
 	protected boolean isNounWordType( short wordTypeNr )
 		{
 		return ( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
+				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
+		}
+
+	protected boolean isGeneralizationReasoningWordType( short wordTypeNr )
+		{
+		return ( wordTypeNr == Constants.WORD_TYPE_PROPER_NAME ||
+				wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 

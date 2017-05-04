@@ -1,10 +1,11 @@
 ﻿* 
 * Mes conclusions:
 < Chaque cheval est une créature.
+< Un cheval et un animal sont créature [pluriel de «créature» est inconnue].
 < 
 * 
 * Mes conclusions:
-< Un cheval, un être humain et une personne sont créature [pluriel de «créature» est inconnue].
+< Un être humain, une personne, un cheval et un animal sont créature [pluriel de «créature» est inconnue].
 < Chaque personne est une créature.
 < 
 * 

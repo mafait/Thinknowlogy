@@ -73,6 +73,7 @@
 * 
 * My conclusions:
 < John is a man.
+< John is masculine.
 < Paul has a father, called John.
 < Paul has a mother, called Anna.
 < Joe has a father, called John.
@@ -80,6 +81,7 @@
 < Laura has a father, called John.
 < Laura has a mother, called Anna.
 < Anna is a woman.
+< Anna is feminine.
 * 
 * My assumptions:
 < John is probably a person.

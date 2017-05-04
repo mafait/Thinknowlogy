@@ -1,0 +1,128 @@
+﻿* 
+* My conclusions:
+< Fathers and children are part of every family.
+< 
+* 
+* My conclusions:
+< Every father is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< A father is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* 
+* My conclusions:
+< Paul is part of a family.
+< Paul is not a daughter.
+< Paul is not a girl and not a woman.
+< John has a child, called Paul.
+< Anna has a child, called Paul.
+* 
+* My assumptions:
+< Paul is probably a person.
+< Paul has possibly a mother, called Anna.
+< John is possibly a person.
+< John is possibly part of a family.
+< Anna is possibly a mother of Paul.
+< Anna is possibly a woman.
+< Anna is maybe a person.
+< Anna is maybe not a man.
+< Anna is possibly feminine.
+< Anna is possibly part of a family.
+< Anna is possibly not a father.
+* 
+* My questions:
+< Is Paul a boy or a man?
+< Is John a woman or a man?
+< Is John a father or a mother?
+< 
+* 
+* My conclusions:
+< Joe is part of a family.
+< Joe is not a daughter.
+< Joe is not a girl and not a woman.
+< John has 2 children, called Paul and Joe.
+< Anna has 2 children, called Paul and Joe.
+* 
+* My assumptions:
+< Joe is probably a person.
+< Joe has possibly a mother, called Anna.
+< Anna is possibly a mother of Paul and Joe.
+* 
+* My questions:
+< Is Joe a boy or a man?
+< 
+* 
+* My conclusions:
+< Laura is part of a family.
+< Laura is not a boy and not a man.
+< Laura is not a child.
+* 
+* My assumptions:
+< Laura is probably a person.
+< Laura has probably a father.
+* 
+* My questions:
+< Is Laura a girl or a woman?
+< 
+* 
+* This information is more specific than your earlier information:
+< Laura is a daughter.
+* 
+* My conclusions:
+< John has a daughter, called Laura.
+< Anna has a daughter, called Laura.
+* 
+* My assumptions:
+< Laura has possibly a mother, called Anna.
+< Anna is possibly a mother of Paul, Joe and Laura.
+< 
+* 
+* My assumptions that are confirmed:
+< Paul is probably a person.
+< 
+* 
+* My assumptions that are confirmed:
+< Joe has possibly a mother, called Anna.
+* 
+* My assumptions that are concluded:
+< Anna is part of a family.
+* 
+* My assumptions that are adjusted:
+< Anna is probably a person.
+* 
+* My conclusions:
+< Anna is a mother of Joe.
+< 
+* 
+* My assumptions that are confirmed:
+< Anna is possibly a mother of Paul, Joe and Laura.
+* 
+* My conclusions that are confirmed:
+< Anna is a mother of Joe.
+* 
+* My assumptions that are adjusted:
+< Anna is possibly not a man.
+* 
+* My assumptions that are concluded:
+< Paul has a mother, called Anna.
+< Laura has a mother, called Anna.
+< Anna is a woman.
+< Anna is not a man.
+< Anna is feminine.
+< Anna is not a father.
+* 
+* My conclusions:
+< Anna has 3 children, called Paul, Joe and Laura.
+< 

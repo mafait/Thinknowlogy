@@ -1,6 +1,5 @@
-﻿#Een wezen is een dier, schimmel, mens, micro-organisme of plant.
-Een dier is een gewerveld of ongewerveld.
-Een gewerveld dier is een amfibie, vogel, vis, zoogdier of reptiel.
-Een ongewervelde is een annelid, geleedpotige, stekelhuidige, weekdier of oerdier.
-Een zoogdier is een walvisachtige, buideldier, primaat of knaagdier.
+﻿Ieder organisme is een dier, schimmel, mens, micro-organisme of plant.
+Ieder dier is een gewervelde of ongewervelde.
+Iedere gewervelde is een amfibie, vogel, vis, zoogdier of reptiel.
+Iedere ongewervelde is een annelid, geleedpotige, stekelhuidige, weekdier of oerdier.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

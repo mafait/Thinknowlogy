@@ -1,0 +1,4 @@
+Cats are animals.
+Every cat is furry.
+Tom is a cat.
+# To continue, click button «Clear your mind.» or «Restart.».

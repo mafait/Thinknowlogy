@@ -3,32 +3,41 @@
 #	Voor meer info, zie het bijgevoegde Wetenschappelijke Uitdaging document,
 #	of: http://mafait.org/challenge/
 #-----------------------------------------------------------------------------
-# Blok 1: Conversies
+# Blok 1: Directe conversies
 #-----------------------------------------------------------------------------
 Paul is een zoon van Jan.
 Anna heeft een dochter, genaamd Laura.
 Iedere auto heeft een motor.
 Een zeil is deel van iedere zeilboot.
 #-----------------------------------------------------------------------------
-# Blok 2: Het groeperen van kennis
+# Blok 2: Indirecte conversies
+#-----------------------------------------------------------------------------
+Ieder gezin heeft een ouder en een kind.
+Sjors is een ouder.
+André is een kind.
+Peter heeft een ouder.
+Willem heeft een kind.
+#-----------------------------------------------------------------------------
+# Blok 3: Het groeperen van kennis
 #-----------------------------------------------------------------------------
 Jan is een ouder van Paul.
 Anna is een ouder van Paul.
 Paul heeft 2 ouders, genaamd Jan en Anna.
 #-----------------------------------------------------------------------------
-# Blok 3: Redeneren in de verleden tijd
+# Blok 4: Redeneren in de verleden tijd
 #-----------------------------------------------------------------------------
 Johan was de vader van Peter.
+Iedere vader is een man.
 #-----------------------------------------------------------------------------
-# Blok 4: Conflictdetectie en het genereren van een vraag
+# Blok 5: Conflictdetectie en het genereren van een vraag
 #-----------------------------------------------------------------------------
 Ieder persoon is een man of een vrouw.
 Anne is een man en een vrouw.
 Anne is een persoon.
 Anne is geen vrouw.
 #-----------------------------------------------------------------------------
-# Blok 5: Het archiveren van kennis
+# Blok 6: Het archiveren van kennis
 #-----------------------------------------------------------------------------
-Bill Clinton is de president van de Verenigde Staten.
 Barack Obama is de president van de Verenigde Staten.
+Donald Trump is de president van de Verenigde Staten.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

@@ -35,17 +35,18 @@
 < Olivier a probablement un enfant.
 * 
 * Mes questions:
-< Est Olivier un homme ou une femme?
+< Est Olivier une femme ou un homme?
 < Est Olivier un père ou une mère?
 < 
 * 
 * Mes questions qui sont répondues:
 < Est Olivier un père ou une mère?
-< Est Olivier un homme ou une femme?
+< Est Olivier une femme ou un homme?
 * 
 * Mes conclusions:
 < Olivier est un homme.
 < Olivier n'est pas une femme.
+< Olivier est masculin.
 < Olivier n'est pas une mère.
 < 
 * 

@@ -3,6 +3,8 @@
 < Paul heeft een ouder, genaamd Jan.
 < 
 * 
+* U heeft meervoudige zelfstandige naamwoord "ouders" ingevoerd, dat onbekend was voor mij.
+* 
 * Mijn conclusies:
 < Jan is een ouder van Paul en Johan.
 < Anna is een ouder van Johan.

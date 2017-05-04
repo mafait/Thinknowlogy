@@ -169,6 +169,7 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier est masculin.
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
 < Julien a un père, appelé Olivier.
@@ -176,6 +177,7 @@
 < Lorraine a un père, appelé Olivier.
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
+< Amélie est féminine.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne.
@@ -205,6 +207,9 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier est masculin. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme est masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne. En raison:
@@ -225,6 +230,10 @@
 <	- Chaque parent est une femme ou un homme.
 <	- Olivier est un homme.
 < Olivier est probablement un parent de Pascal, Julien et Lorraine. En raison:
+<	- Lorraine a probablement 2 parents, appelés Olivier et Amélie.
+<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Olivier est le père de Pascal, Julien et Lorraine.
 * 	et:
@@ -259,6 +268,9 @@
 < Amélie est une femme. En raison:
 <	- Amélie est une mère.
 <	- Chaque mère est une femme.
+< Amélie est féminine. En raison:
+<	- Amélie est une femme.
+<	- Chaque femme est féminine.
 * 
 * Mes hypothèses:
 < Amélie est probablement une personne. En raison:
@@ -279,6 +291,10 @@
 <	- Chaque parent est une femme ou un homme.
 <	- Amélie est une femme.
 < Amélie est probablement un parent de Pascal, Julien et Lorraine. En raison:
+<	- Lorraine a probablement 2 parents, appelés Olivier et Amélie.
+<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Amélie est la mère de Pascal, Julien et Lorraine.
 * 	et:

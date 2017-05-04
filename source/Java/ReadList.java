@@ -1,9 +1,9 @@
 /*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -27,32 +27,9 @@ class ReadList extends List
 
 	private short lastActivatedWordOrderNr_;
 
-	// Constructor
+	// Private methods
 
-	protected ReadList( WordItem myWordItem )
-		{
-		lastActivatedWordOrderNr_ = Constants.NO_ORDER_NR;
-
-		initializeListVariables( Constants.ADMIN_READ_LIST_SYMBOL, myWordItem );
-		}
-
-
-	// Protected virtual methods
-
-	protected boolean isTemporaryList()
-		{
-		return true;
-		}
-
-
-	// Protected methods
-
-	protected void clearLastActivatedWordOrderNr()
-		{
-		lastActivatedWordOrderNr_ = Constants.NO_ORDER_NR;
-		}
-
-	protected boolean hasFoundReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, String readString, WordItem readWordItem )
+	private boolean hasFoundReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, String readString, WordItem readWordItem )
 		{
 		ReadItem searchReadItem = firstActiveReadItem();
 
@@ -76,6 +53,33 @@ class ReadList extends List
 			}
 
 		return false;
+		}
+
+	// Constructor
+
+	protected ReadList( WordItem myWordItem )
+		{
+		// Private constructed variables
+
+		lastActivatedWordOrderNr_ = Constants.NO_ORDER_NR;
+
+		initializeListVariables( Constants.ADMIN_READ_LIST_SYMBOL, "ReadList", myWordItem );
+		}
+
+
+	// Protected virtual methods
+
+	protected boolean isTemporaryList()
+		{
+		return true;
+		}
+
+
+	// Protected methods
+
+	protected void clearLastActivatedWordOrderNr()
+		{
+		lastActivatedWordOrderNr_ = Constants.NO_ORDER_NR;
 		}
 
 	protected boolean isImperativeSentence()
@@ -140,131 +144,6 @@ class ReadList extends List
 		return false;
 		}
 
-	protected ReadResultType createReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String readString, WordItem readWordItem )
-		{
-		ReadResultType readResult = new ReadResultType();
-
-		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
-		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
-			return startReadResultError( 1, null, "The given read word type number is undefined or out of bounds" );
-
-		if( ( readResult.createdReadItem = new ReadItem( wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, this, myWordItem() ) ) == null )
-			return startReadResultError( 1, null, "I failed to create a read item" );
-
-		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, readResult.createdReadItem ) != Constants.RESULT_OK )
-			return addReadResultError( 1, null, "I failed to add an active read item" );
-
-		return readResult;
-		}
-
-	protected ReadResultType findMoreInterpretations()
-		{
-		ReadResultType readResult = new ReadResultType();
-		ReadItem activeReadItem = firstActiveReadItem();
-		ReadItem inactiveReadItem = firstInactiveReadItem();
-
-		// Get last inactive item
-		while( inactiveReadItem != null &&
-		inactiveReadItem.nextReadItem() != null )
-			inactiveReadItem = inactiveReadItem.nextReadItem();
-
-		if( inactiveReadItem != null )
-			{
-			readResult.hasFoundMoreInterpretations = true;
-			lastActivatedWordOrderNr_ = inactiveReadItem.wordOrderNr();
-
-			if( activateItem( inactiveReadItem ) != Constants.RESULT_OK )
-				return addReadResultError( 1, null, "I failed to active an inactive item" );
-
-			// Clear grammar parameters of all active read items
-			while( activeReadItem != null )
-				{
-				activeReadItem.grammarParameter = Constants.NO_GRAMMAR_PARAMETER;
-				activeReadItem = activeReadItem.nextReadItem();
-				}
-			}
-
-		return readResult;
-		}
-
-	protected ReadResultType getNumberOfReadWordReferences( short wordTypeNr, WordItem readWordItem )
-		{
-		ReadResultType readResult = new ReadResultType();
-		ReadItem searchReadItem = firstActiveReadItem();
-
-		if( readWordItem == null )
-			return startReadResultError( 1, null, "The given read word is undefined" );
-
-		while( searchReadItem != null )
-			{
-			if( searchReadItem.wordTypeNr() == wordTypeNr &&
-			searchReadItem.readWordItem() == readWordItem )
-				readResult.nReadWordReferences++;
-
-			searchReadItem = searchReadItem.nextReadItem();
-			}
-
-		searchReadItem = firstInactiveReadItem();
-
-		while( searchReadItem != null )
-			{
-			if( searchReadItem.wordTypeNr() == wordTypeNr &&
-			searchReadItem.readWordItem() == readWordItem )
-				readResult.nReadWordReferences++;
-
-			searchReadItem = searchReadItem.nextReadItem();
-			}
-
-		return readResult;
-		}
-
-	protected ReadResultType selectMatchingWordType( short currentWordOrderNr, short wordParameter, short wordTypeNr )
-		{
-		ReadResultType readResult = new ReadResultType();
-		ReadItem activeReadItem;
-		ReadItem currentReadItem = firstActiveReadItem();
-
-		// Find current word position
-		if( currentWordOrderNr > Constants.NO_ORDER_NR )
-			{
-			while( currentReadItem != null &&
-			currentReadItem.wordOrderNr() <= currentWordOrderNr )
-				currentReadItem = currentReadItem.nextReadItem();
-			}
-
-		if( ( activeReadItem = currentReadItem ) != null )
-			{
-			do	{
-				if( currentReadItem != null )
-					{
-					if( currentReadItem.wordTypeNr() == wordTypeNr &&
-					currentReadItem.wordParameter() == wordParameter )
-						{
-						readResult.hasFoundMatchingWordType = true;
-
-						// Inactivate read items that don't match
-						while( activeReadItem != currentReadItem )
-							{
-							if( inactivateItem( activeReadItem ) != Constants.RESULT_OK )
-								return addReadResultError( 1, null, "I failed to inactive an active item" );
-
-							activeReadItem = nextReadListItem();
-							}
-						}
-					else
-						currentReadItem = currentReadItem.nextReadItem();
-					}
-				}
-			while( !readResult.hasFoundMatchingWordType &&
-			currentReadItem != null &&
-			// Only check this word position
-			currentReadItem.wordOrderNr() == currentWordOrderNr + 1 &&
-			currentReadItem.wordOrderNr() > lastActivatedWordOrderNr_ );
-			}
-
-		return readResult;
-		}
-
 	protected byte activateInactiveReadWords( short wordOrderNr )
 		{
 		ReadItem searchReadItem = firstInactiveReadItem();
@@ -275,7 +154,7 @@ class ReadList extends List
 			searchReadItem.wordOrderNr() > wordOrderNr )
 				{
 				if( activateItem( searchReadItem ) != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to activate an inactive item" );
+					return addError( 1, "I failed to activate an inactive item" );
 
 				searchReadItem = nextReadListItem();
 				}
@@ -286,13 +165,28 @@ class ReadList extends List
 		return Constants.RESULT_OK;
 		}
 
+	protected byte createReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String readString, WordItem readWordItem )
+		{
+		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
+		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
+			return startError( 1, "The given read word type number is undefined or out of bounds" );
+
+		if( hasFoundReadItem( wordOrderNr, wordParameter, wordTypeNr, readString, readWordItem ) )
+			return startError( 1, "The given read item already exists" );
+
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ReadItem( wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to add an active read item" );
+
+		return Constants.RESULT_OK;
+		}
+
 	protected byte deleteReadItemsWithNonMatchingMultipleWordPart( short wordOrderNr, String sentenceString )
 		{
 		ReadItem searchReadItem = firstActiveReadItem();
 		WordItem readWordItem;
 
 		if( sentenceString == null )
-			return startError( 1, null, "The given sentence string is undefined" );
+			return startError( 1, "The given sentence string is undefined" );
 
 		while( searchReadItem != null )
 			{
@@ -304,7 +198,7 @@ class ReadList extends List
 				readWordItem.matchingMultipleSingularNounWordParts( sentenceString ) == 0 )
 					{
 					if( deleteItem( searchReadItem ) != Constants.RESULT_OK )
-						return addError( 1, null, "I failed to delete an active read item" );
+						return addError( 1, "I failed to delete an active read item" );
 
 					searchReadItem = nextReadListItem();
 					}
@@ -327,13 +221,13 @@ class ReadList extends List
 		ReadItem searchReadItem = firstActiveReadItem();
 
 		if( endWordOrderNr <= Constants.NO_ORDER_NR )
-			return startError( 1, null, "The given end word order number is undefined" );
+			return startError( 1, "The given end word order number is undefined" );
 
 		if( startWordOrderNr >= endWordOrderNr )
-			return startError( 1, null, "The given start word order number is equal or higher than the given end word order number" );
+			return startError( 1, "The given start word order number is equal or higher than the given end word order number" );
 
 		if( definitionGrammarItem == null )
-			return startError( 1, null, "The given grammar definition word item is undefined" );
+			return startError( 1, "The given grammar definition word item is undefined" );
 
 		if( isValid )
 			{
@@ -387,7 +281,7 @@ class ReadList extends List
 			}
 
 		if( !hasFound )
-			return startError( 1, null, "I couldn't find any item between the given word order numbers" );
+			return startError( 1, "I couldn't find any item between the given word order numbers" );
 
 		return Constants.RESULT_OK;
 		}
@@ -405,6 +299,119 @@ class ReadList extends List
 	protected ReadItem nextReadListItem()
 		{
 		return (ReadItem)nextListItem();
+		}
+
+	protected BoolResultType findMoreInterpretations()
+		{
+		ReadItem activeReadItem = firstActiveReadItem();
+		ReadItem inactiveReadItem = firstInactiveReadItem();
+		BoolResultType boolResult = new BoolResultType();
+
+		// Get last inactive item
+		while( inactiveReadItem != null &&
+		inactiveReadItem.nextReadItem() != null )
+			inactiveReadItem = inactiveReadItem.nextReadItem();
+
+		if( inactiveReadItem != null )
+			{
+			// Has found another interpretation
+			boolResult.booleanValue = true;
+			lastActivatedWordOrderNr_ = inactiveReadItem.wordOrderNr();
+
+			if( activateItem( inactiveReadItem ) != Constants.RESULT_OK )
+				return addBoolResultError( 1, "I failed to active an inactive item" );
+
+			// Clear grammar parameters of all active read items
+			while( activeReadItem != null )
+				{
+				activeReadItem.grammarParameter = Constants.NO_GRAMMAR_PARAMETER;
+				activeReadItem = activeReadItem.nextReadItem();
+				}
+			}
+
+		return boolResult;
+		}
+
+	protected BoolResultType selectMatchingWordType( short currentWordOrderNr, short wordParameter, short wordTypeNr )
+		{
+		boolean hasFoundMatchingWordType = false;
+		ReadItem activeReadItem;
+		ReadItem currentReadItem = firstActiveReadItem();
+		BoolResultType boolResult = new BoolResultType();
+
+		// Find current word position
+		if( currentWordOrderNr > Constants.NO_ORDER_NR )
+			{
+			while( currentReadItem != null &&
+			currentReadItem.wordOrderNr() <= currentWordOrderNr )
+				currentReadItem = currentReadItem.nextReadItem();
+			}
+
+		if( ( activeReadItem = currentReadItem ) != null )
+			{
+			do	{
+				if( currentReadItem != null )
+					{
+					if( currentReadItem.wordTypeNr() == wordTypeNr &&
+					currentReadItem.wordParameter() == wordParameter )
+						{
+						hasFoundMatchingWordType = true;
+
+						// Inactivate read items that don't match
+						while( activeReadItem != currentReadItem )
+							{
+							if( inactivateItem( activeReadItem ) != Constants.RESULT_OK )
+								return addBoolResultError( 1, "I failed to inactive an active item" );
+
+							activeReadItem = nextReadListItem();
+							}
+						}
+					else
+						currentReadItem = currentReadItem.nextReadItem();
+					}
+				}
+			while( !hasFoundMatchingWordType &&
+			currentReadItem != null &&
+			// Only check this word position
+			currentReadItem.wordOrderNr() == currentWordOrderNr + 1 &&
+			currentReadItem.wordOrderNr() > lastActivatedWordOrderNr_ );
+			}
+
+		boolResult.booleanValue = hasFoundMatchingWordType;
+		return boolResult;
+		}
+
+	protected ShortResultType getNumberOfReadWordReferences( short wordTypeNr, WordItem readWordItem )
+		{
+		short nReadWordReferences = 0;
+		ReadItem searchReadItem = firstActiveReadItem();
+		ShortResultType shortResult = new ShortResultType();
+
+		if( readWordItem == null )
+			return startShortResultError( 1, "The given read word is undefined" );
+
+		while( searchReadItem != null )
+			{
+			if( searchReadItem.wordTypeNr() == wordTypeNr &&
+			searchReadItem.readWordItem() == readWordItem )
+				nReadWordReferences++;
+
+			searchReadItem = searchReadItem.nextReadItem();
+			}
+
+		searchReadItem = firstInactiveReadItem();
+
+		while( searchReadItem != null )
+			{
+			if( searchReadItem.wordTypeNr() == wordTypeNr &&
+			searchReadItem.readWordItem() == readWordItem )
+				nReadWordReferences++;
+
+			searchReadItem = searchReadItem.nextReadItem();
+			}
+
+		shortResult.shortValue = nReadWordReferences;
+		return shortResult;
 		}
 	};
 

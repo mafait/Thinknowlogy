@@ -1,0 +1,5 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+Paul is a child of John and Anna.
+Is John the father of Paul?
+Is Michael the father of Adam?
+# To continue, click button «Clear your mind.» or «Restart.».

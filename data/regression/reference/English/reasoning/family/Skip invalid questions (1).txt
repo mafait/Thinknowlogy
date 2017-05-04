@@ -27,15 +27,24 @@
 < A daughter is probably a person.
 < 
 * 
+* My conclusions:
+< Paul is masculine.
+* 
 * My assumptions:
 < Paul is probably a person.
 < Paul is probably not a woman.
 < 
 * 
+* My conclusions:
+< Joe is masculine.
+* 
 * My assumptions:
 < Joe is probably a person.
 < Joe is probably not a woman.
 < 
+* 
+* My conclusions:
+< Anna is feminine.
 * 
 * My assumptions:
 < Anna is probably a person.
@@ -44,6 +53,7 @@
 * 
 * My conclusions:
 < John is a man.
+< John is masculine.
 < Paul has a father, called John.
 < Paul has a mother, called Anna.
 < Joe has a father, called John.

@@ -27,11 +27,12 @@
 < Juan es parte de una familia.
 < Juan es un hombre.
 < Juan no es una mujer.
+< Juan es masculino.
 < Juan no es una madre.
 * 
 * Mis suposiciones:
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 < Juan es probablemente una persona.
 * 
 * Mis preguntas:
@@ -53,13 +54,14 @@
 < Luisa tiene una madre, llamada Ana.
 < Ana es una mujer.
 < Ana no es un hombre.
+< Ana es femenina.
 < Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
 < Juan tiene posiblemente una hija, llamada Luisa.
 < José es posiblemente una persona.
-< José es probablemente parte de una familia.
+< José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan y Ana.
 < Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.

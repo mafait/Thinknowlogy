@@ -1,9 +1,9 @@
 /*	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,18 @@ class InterfaceList : private List
 
 	// Private functions
 
+	void deleteInterfaceList( InterfaceItem *searchInterfaceItem )
+		{
+		InterfaceItem *deleteInterfaceItem;
+
+		while( searchInterfaceItem != NULL )
+			{
+			deleteInterfaceItem = searchInterfaceItem;
+			searchInterfaceItem = searchInterfaceItem->nextInterfaceItem();
+			delete deleteInterfaceItem;
+			}
+		}
+
 	InterfaceItem *firstActiveInterfaceItem()
 		{
 		return (InterfaceItem *)firstActiveItem();
@@ -38,22 +50,14 @@ class InterfaceList : private List
 	protected:
 	// Constructor
 
-	InterfaceList( CommonVariables *commonVariables, WordItem *myWordItem )
+	InterfaceList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( WORD_INTERFACE_LIST_SYMBOL, "InterfaceList", commonVariables, myWordItem );
+		initializeListVariables( WORD_INTERFACE_LIST_SYMBOL, "InterfaceList", commonVariables, inputOutput, myWordItem );
 		}
 
 	~InterfaceList()
 		{
-		InterfaceItem *deleteInterfaceItem;
-		InterfaceItem *searchInterfaceItem = firstActiveInterfaceItem();
-
-		while( searchInterfaceItem != NULL )
-			{
-			deleteInterfaceItem = searchInterfaceItem;
-			searchInterfaceItem = searchInterfaceItem->nextInterfaceItem();
-			delete deleteInterfaceItem;
-			}
+		deleteInterfaceList( firstActiveInterfaceItem() );
 
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class InterfaceList has inactive items." );
@@ -64,41 +68,35 @@ class InterfaceList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class InterfaceList has replaced items." );
 
-		searchInterfaceItem = (InterfaceItem *)firstDeletedItem();
-
-		while( searchInterfaceItem != NULL )
-			{
-			deleteInterfaceItem = searchInterfaceItem;
-			searchInterfaceItem = searchInterfaceItem->nextInterfaceItem();
-			delete deleteInterfaceItem;
-			}
+		deleteInterfaceList( (InterfaceItem *)firstDeletedItem() );
 		}
 
 
 	// Protected functions
 
-	ResultType checkInterface( unsigned short interfaceParameter, char *interfaceString )
+	signed char checkInterface( unsigned short interfaceParameter, char *interfaceString )
 		{
-		StringResultType stringResult;
 		InterfaceItem *searchInterfaceItem = firstActiveInterfaceItem();
+		BoolResultType boolResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkInterface";
 
 		if( interfaceString == NULL )
-			return startError( functionNameString, NULL, "The given interface string is undefined" );
+			return startError( functionNameString, "The given interface string is undefined" );
 
 		while( searchInterfaceItem != NULL )
 			{
 			if( searchInterfaceItem->interfaceParameter() == interfaceParameter )
-				return startError( functionNameString, NULL, "The given interface parameter already exists" );
+				return startError( functionNameString, "The given interface parameter already exists" );
 
 			if( searchInterfaceItem->interfaceString() == NULL )
-				return startError( functionNameString, NULL, "I have found an undefined interface string" );
+				return startError( functionNameString, "I found an undefined interface string" );
 
-			if( ( stringResult = compareStrings( interfaceString, searchInterfaceItem->interfaceString() ) ).result != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to compare two interface strings" );
+			if( ( boolResult = compareStrings( interfaceString, searchInterfaceItem->interfaceString() ) ).result != RESULT_OK )
+				return addError( functionNameString, "I failed to compare two interface strings" );
 
-			if( stringResult.hasFoundMatchingStrings )
-				return startError( functionNameString, NULL, "The given interface string already exists" );
+			// Matching string
+			if( boolResult.booleanValue )
+				return startError( functionNameString, "The given interface string already exists" );
 
 			searchInterfaceItem = searchInterfaceItem->nextInterfaceItem();
 			}
@@ -106,35 +104,16 @@ class InterfaceList : private List
 		return RESULT_OK;
 		}
 
-	ResultType createInterfaceItem( unsigned short interfaceParameter, size_t interfaceStringLength, char *interfaceString )
+	signed char createInterfaceItem( unsigned short interfaceParameter, size_t interfaceStringLength, char *interfaceString )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createInterfaceItem";
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new InterfaceItem( interfaceParameter, interfaceStringLength, interfaceString, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, NULL, "I failed to add an active interface item" );
+		if( addItemToList( QUERY_ACTIVE_CHAR, new InterfaceItem( interfaceParameter, interfaceStringLength, interfaceString, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add an active interface item" );
 
 		return RESULT_OK;
 		}
-/*
-	ResultType storeChangesInFutureDatabase()
-		{
-		InterfaceItem *searchInterfaceItem = firstActiveInterfaceItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
 
-		while( searchInterfaceItem != NULL )
-			{
-			if( searchInterfaceItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchInterfaceItem->storeInterfaceItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to store an interface item in the database" );
-				}
-
-			searchInterfaceItem = searchInterfaceItem->nextInterfaceItem();
-			}
-
-		return RESULT_OK;
-		}
-*/
 	const char *interfaceString( unsigned short interfaceParameter )
 		{
 		InterfaceItem *searchInterfaceItem = firstActiveInterfaceItem();

@@ -1,0 +1,4 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+Pete is a father.
+# To continue, click button «Clear your mind.» or «Restart.».
+Pete is not a father.

@@ -1,9 +1,9 @@
 /*	Class:		FileResultType
  *	Purpose:	To return file variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 #ifndef FILERESULTTYPE
 #define FILERESULTTYPE 1
 #include "Item.h"
-// Some compilers need these class declarations
+// Class declarations
 class FileItem;
 
 class FileResultType
@@ -38,8 +38,10 @@ class FileResultType
 	protected:
 	// Protected variables
 
-	ResultType result;
+	signed char result;
+
 	FileItem *createdFileItem;
+
 	FILE *outputFile;
 	FILE *referenceFile;
 
@@ -49,6 +51,7 @@ class FileResultType
 	FileResultType()
 		{
 		result = RESULT_OK;
+
 		createdFileItem = NULL;
 		outputFile = NULL;
 		referenceFile = NULL;

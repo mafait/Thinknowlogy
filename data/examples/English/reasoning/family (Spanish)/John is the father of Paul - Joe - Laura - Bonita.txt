@@ -1,0 +1,11 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+John is the father of Paul.
+Display the justification report about John.
+John is the father of Joe.
+Display the justification report about John.
+John is the father of Laura.
+Display the justification report about John.
+John is the father of Bonita.
+Display the justification report about John.
+Display the justification report about Bonita.
+# To continue, click button «Clear your mind.» or «Restart.».

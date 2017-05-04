@@ -29,6 +29,7 @@
 * 
 * My conclusions:
 < Pete is a man.
+< Pete is masculine.
 * 
 * My assumptions:
 < Pete is probably a person.

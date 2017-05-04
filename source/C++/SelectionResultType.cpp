@@ -1,9 +1,9 @@
 /*	Class:		SelectionResultType
  *	Purpose:	To return selection variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -24,41 +24,22 @@
 #ifndef SELECTIONRESULTTYPE
 #define SELECTIONRESULTTYPE 1
 #include "Item.h"
-// Some compilers need these class declarations
+// Class declarations
 class SelectionItem;
 
 class SelectionResultType
 	{
-	friend class AdminSelection;
-	friend class AdminSolve;
+	friend class AdminImperative;
 	friend class Item;
 	friend class List;
 	friend class ScoreList;
-	friend class SelectionList;
-	friend class WordSelectionCondition;
 
 	protected:
 	// Protected variables
 
-	ResultType result;
+	signed char result;
 
-	bool hasFoundDuplicateSelection;
-	bool isConditionSatisfied;
-
-	unsigned int duplicateConditionSentenceNr;
-
-	unsigned int oldSatisfiedScore;
-	unsigned int newSatisfiedScore;
-	unsigned int oldDissatisfiedScore;
-	unsigned int newDissatisfiedScore;
-	unsigned int oldNotBlockingScore;
-	unsigned int newNotBlockingScore;
-	unsigned int oldBlockingScore;
-	unsigned int newBlockingScore;
-
-	SelectionItem *bestActionItem;
-	SelectionItem *firstExecutionItem;
-	SelectionItem *lastCreatedSelectionItem;
+	SelectionItem *selectionItem;
 
 	protected:
 	// Constructor
@@ -67,31 +48,12 @@ class SelectionResultType
 		{
 		result = RESULT_OK;
 
-		hasFoundDuplicateSelection = false;
-		isConditionSatisfied = false;
-
-		duplicateConditionSentenceNr = NO_SENTENCE_NR;
-
-		oldSatisfiedScore = NO_SCORE;
-		newSatisfiedScore = NO_SCORE;
-		oldDissatisfiedScore = NO_SCORE;
-		newDissatisfiedScore = NO_SCORE;
-		oldNotBlockingScore = NO_SCORE;
-		newNotBlockingScore = NO_SCORE;
-		oldBlockingScore = NO_SCORE;
-		newBlockingScore = NO_SCORE;
-
-		bestActionItem = NULL;
-		firstExecutionItem = NULL;
-		lastCreatedSelectionItem = NULL;
+		selectionItem = NULL;
 		}
 	};
 #endif
 
 /*************************************************************************
- *	"The Lords protects them
- *	and keeps them alive.
- *	and rescues them from their enemies.
- *	The Lord nurses them when they are sick
- *	and restores them to health." (Psalm 41:2-3)
+ *	"For the angel of the Lord is a guard;
+ *	he surrounds and defends all who fear him." (Psalm 34:7)
  *************************************************************************/

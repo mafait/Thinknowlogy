@@ -27,6 +27,9 @@
 < A daughter is probably a person.
 < 
 * 
+* My conclusions:
+< Paul is masculine.
+* 
 * My assumptions:
 < Paul is probably a son.
 < Paul is possibly a person.
@@ -37,6 +40,9 @@
 < Paul has possibly a parent.
 < 
 * 
+* My conclusions:
+< Laura is feminine.
+* 
 * My assumptions:
 < Laura is probably a daughter.
 < Laura is possibly a person.
@@ -46,6 +52,11 @@
 < Laura is possibly not a son.
 < Laura has possibly a parent.
 < 
+* 
+* My conclusions:
+< Paul is masculine. Because:
+<	- Paul is a boy.
+<	- Every boy is masculine.
 * 
 * My assumptions:
 < Paul is probably a son. Because:
@@ -75,6 +86,11 @@
 <	- Every family has parents and children.
 <	- Paul is probably a child.
 < 
+* 
+* My conclusions:
+< Laura is feminine. Because:
+<	- Laura is a girl.
+<	- Every girl is feminine.
 * 
 * My assumptions:
 < Laura is probably a daughter. Because:

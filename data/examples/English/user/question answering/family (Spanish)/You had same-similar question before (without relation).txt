@@ -1,0 +1,11 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+Is John a father?
+Is Anna a father or a mother?
+Is Paul a child?
+Is Laura a daughter?
+Is John a father?
+Is John a father or a mother?
+Is Anna a father or a mother?
+Is Paul a child or a daughter?
+Is Laura a child or a daughter?
+# To continue, click button «Clear your mind.» or «Restart.».

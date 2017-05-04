@@ -10,6 +10,7 @@
 * 
 * My conclusions:
 < John was a man.
+< John was masculine.
 * 
 * My assumptions:
 < A father is probably a person.

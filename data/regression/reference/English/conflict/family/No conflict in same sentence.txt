@@ -29,7 +29,9 @@
 * 
 * My conclusions:
 < John is a man.
+< John is masculine.
 < Anna is a woman.
+< Anna is feminine.
 * 
 * My assumptions:
 < John is probably a person.
@@ -50,6 +52,9 @@
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
+< John is masculine. Because:
+<	- John is a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < John is probably a person. Because:
@@ -88,6 +93,9 @@
 < Anna is a woman. Because:
 <	- Anna is a mother.
 <	- Every mother is a woman.
+< Anna is feminine. Because:
+<	- Anna is a woman.
+<	- Every woman is feminine.
 * 
 * My assumptions:
 < Anna is probably a person. Because:

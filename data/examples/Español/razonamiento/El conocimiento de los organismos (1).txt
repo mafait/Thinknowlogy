@@ -1,55 +1,58 @@
 ﻿# Organismos
-Una criatura es un organismo.
-Un organismo es un animal, un hongo, un bienestar-humano, un microorganismo o una planta.
-
+Cada organismo es un animal, un hongo, un humano, un microorganismo o una planta.
 # Animales
-Un animal es un vertebrado o un invertebrado.
-
+Cada animal es un vertebrado o un invertebrado.
 # Vertebrados
-Un vertebrado es un anfibio, un pájaro, un pez, un mamífero o un reptil.
+Cada vertebrado es un anfibio, un pájaro, un pez, un mamífero o un reptil.
+# Invertebrados
+Cada invertebrado es un anélido, un artrópodo, un equinodermo, un molusco o un protozoo.
+# Anfibios
 Cecilias, ranas, tritones, salamandras y sapos son anfibios.
-#XXXX Son aves.
-#XXXX Son peces.
-#XXXX Son mamíferos.
+# Aves
+#Xxxx son aves.
+# Peces
+#Xxxx son peces.
+# Reptiles
 #Los cocodrilos son reptiles.
 Cocodrilos son reptiles.
-
-# Invertebrados
-Un invertebrado es un anélido, un artrópodo, un equinodermo, un molusco o un protozoo.
-Cangrejos, arañas y insectos son artrópodos.
-
-Almejas, sepia, mejillones, nautilos, pulpos, ostras, caracoles y calamares son moluscos.
-Amoebas y flagelados son protozoos.
-
-# Mamíferos
-Un mamífero es un cetáceo, un marsupial, un primate o un roedor.
-Ballenas y delfines son cetáceos.
-
-#canguro
-#koala
-#zarigüeya
-#demonios de Tasmania
-#marsupial
-
-Canguros, koalas y zarigüeyas son marsupiales.
-Bonobos, chimpancés, gorilas y orangutanes son primates.
-
-Castores, hámsters, ratones, puercoespines, ratas y ardillas son roedores.
-
+# Anélidos
+#Las lombrices de tierra, gusanos-redondos y gusanos-planos son anélidos.
+Lombrices-de-tierra, gusanos-redondos y gusanos-planos son anélidos.
 # Artrópodos
-Arácnidos, crustáceos y insectos son artrópodos.
+Cangrejos, arañas y insectos son artrópodos.
+# Equinodermos
+#Estrellas de mar, erizos de mar, arena-dólares y pepinos de mar son equinodermos.
+# Moluscos
+Almejas, sepia, mejillones, nautilos, pulpos, ostras, caracoles y calamares son moluscos.
+# Protozoos
+Amoebas y flagelados son protozoos.
+# Mamíferos
+Cada mamífero es un cetáceo, un marsupial, un roedor, un mono o un humano.
+# Cetáceos
+Ballenas y delfines son cetáceos.
+# Marsupiales
+#Canguros, koalas, zarigüeyas y demonios-de-Tasmania son marsupiales.
+Canguros, koalas y zarigüeyas son marsupiales.
+# Monos
+#Bonobos, chimpancés, gorilas, orangutanes, monos tití y monos ardilla son monos.
+Bonobos, chimpancés, gorilas y orangutanes son monos.
+# Roedores
+Castores, hámsters, ratones, puercoespines, ratas y ardillas son roedores.
+# Artrópodos
+Cada artrópodo es un arácnido, un crustáceo o un insecto.
+# Artrópodos
 Ácaros, garrapatas, escorpiones y arañas son arácnidos.
+# Crustáceos
 Cangrejos, langostas y percebes son crustáceos.
-
+# Insectos
 #Escarabajos, moscas, mariposas, polillas, libélulas, abejas, avispas y Mantis religiosas son insectos.
 Escarabajos, moscas, mariposas, polillas, libélulas, abejas, avispas y mantis-religiosas son insectos.
-
-# Seres humanos
-Un bienestar-humano es un vertebrado.
-#Mostrar el informe de justificación sobre bienestar-humano.
-Un bienestar-humano es un mamífero.
-#Mostrar el informe de justificación sobre bienestar-humano.
-Un bienestar-humano es un primate.
-#Mostrar el informe de justificación sobre bienestar-humano.
-Juan es un bienestar-humano.
+# Humanos
+Cada humano es un vertebrado.
+Cada humano es un mamífero.
+Juan es un humano.
+# Informe de justificación
+Mostrar el informe de justificación sobre los vertebrados.
+Mostrar el informe de justificación sobre los mamíferos.
+Mostrar el informe de justificación sobre los cocodrilos.
 Mostrar el informe de justificación sobre Juan.

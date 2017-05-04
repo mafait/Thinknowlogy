@@ -29,6 +29,7 @@
 * 
 * Mijn conclusies:
 < Jan was een man.
+< Jan was mannelijk.
 < Paul heeft geen vader meer.
 < Paul had een vader, genaamd Jan.
 * 
@@ -45,7 +46,7 @@
 < Paul had waarschijnlijk een ouder, genaamd Jan.
 * 
 * Mijn vragen:
-< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
 < 
 ! 

@@ -50,12 +50,13 @@
 < Amélie est possible une mère de Pascal.
 < Amélie est possible une femme.
 < Amélie n'est peut-être pas un homme.
+< Amélie est possible féminine.
 < Amélie n'est peut-être pas un père.
 * 
 * Mes questions:
 < Est Pascal un garçon ou un homme?
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 < 
 * 
 * Mes conclusions:
@@ -82,19 +83,19 @@
 <	- Un parent est probablement une personne.
 * 
 * Mes questions:
+< Est Olivier un père ou une mère? En raison:
+<	- Olivier est probablement un parent de Pascal.
+<	- Chaque parent est un père ou une mère.
 < Est Olivier un homme ou une femme? En raison:
+<	- Est Olivier un père ou une mère?
+<	- Chaque mère est une femme.
+<	- Chaque père est un homme.
+* 	et:
 <	- Olivier est possible une personne.
 <	- Chaque personne est un homme ou une femme.
 * 	et:
 <	- Olivier est probablement un parent de Pascal.
 <	- Chaque parent est une femme ou un homme.
-* 	et:
-<	- Est Olivier un père ou une mère?
-<	- Chaque mère est une femme.
-<	- Chaque père est un homme.
-< Est Olivier un père ou une mère? En raison:
-<	- Olivier est probablement un parent de Pascal.
-<	- Chaque parent est un père ou une mère.
 < 
 * 
 * Mes hypothèses:

@@ -1,0 +1,57 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Anna is a woman.
+Paul has 2 fathers, called John and Anna.
+Joe is a man.
+Paul is a boy.
+Paul has a mother, called Anna.
+Joe is a child.
+Anna is a mother.
+John is a father.
+Laura is a girl.
+Paul has a mother, called Anna.
+Joe is a child of John and Anna.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+Display the justification report about Joe.
+Display the justification report about Laura.
+John is the father of Paul, Joe and Laura.
+Anna is the mother of Paul, Joe and Laura.
+Paul has a mother, called Anna.
+Anna is a mother.
+Laura has 2 fathers, called John and Anna.
+Display the justification report about Laura.
+John is a man.
+Anna is a woman.
+Joe is a man.
+Laura is a woman.
+Paul is a boy.
+Laura is a girl.
+Laura is a daughter of John and Anna.
+Paul is a child of John and Anna.
+Anna is the mother of Paul, Joe and Laura.
+Anna is a mother.
+Anna is a mother of Paul, Joe and Laura.
+Joe has a mother, called Anna.
+Anna is a mother of Paul, Joe and Laura.
+Anna is a woman.
+John is a father.
+Joe has a father, called John.
+Laura is a daughter of John and Anna.
+John is the father and Anna is the mother of Paul, Joe and Laura.
+John is the father of Paul, Joe and Laura.
+Anna is the mother of Paul, Joe and Laura.
+Paul is a child of John and Anna.
+Paul has a father, called John.
+Laura is a daughter.
+Joe is a child.
+Paul is a child.
+Anna is a mother.
+John is a father.
+Laura is a daughter of John and Anna.
+Joe is a child of John and Anna.
+Paul has a mother, called Anna.
+Anna is a mother.
+Laura has 2 fathers, called John and Anna.
+# To continue, click button «Clear your mind.» or «Restart.».

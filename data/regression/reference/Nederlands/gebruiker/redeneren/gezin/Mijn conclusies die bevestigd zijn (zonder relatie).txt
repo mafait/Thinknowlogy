@@ -35,7 +35,7 @@
 < Jan heeft waarschijnlijk een kind.
 * 
 * Mijn vragen:
-< Is Jan een man of een vrouw?
+< Is Jan een vrouw of een man?
 < Is Jan een vader of een moeder?
 < 
 * 
@@ -46,6 +46,7 @@
 < Anna is waarschijnlijk een persoon.
 < Anna is waarschijnlijk een vrouw.
 < Anna is waarschijnlijk geen man.
+< Anna is waarschijnlijk vrouwelijk.
 < Anna is waarschijnlijk een moeder.
 < Anna is waarschijnlijk geen vader.
 < Anna heeft waarschijnlijk een kind.
@@ -53,11 +54,12 @@
 * 
 * Mijn vragen die beantwoord zijn:
 < Is Jan een vader of een moeder?
-< Is Jan een man of een vrouw?
+< Is Jan een vrouw of een man?
 * 
 * Mijn conclusies:
 < Jan is een man.
 < Jan is geen vrouw.
+< Jan is mannelijk.
 < Jan is geen moeder.
 < 
 * 
@@ -67,6 +69,7 @@
 * Mijn veronderstellingen die geconcludeerd zijn:
 < Anna is een vrouw.
 < Anna is geen man.
+< Anna is vrouwelijk.
 < Anna is geen vader.
 < 
 * 
@@ -114,9 +117,9 @@
 < Anna heeft mogelijk een dochter, genaamd Laura.
 * 
 * Mijn vragen:
-< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
-< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een meisje, een vrouw, een jongen of een man?
 < Is Johan een zoon of een dochter?
 < Is Laura een meisje of een vrouw?
 < 

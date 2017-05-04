@@ -23,6 +23,9 @@
 < 
 * Yo esperaba nombre propio "María" para ser femenina.
 * 
+* Mis conclusiones:
+< María es masculino.
+* 
 * Mis suposiciones:
 < María es probablemente una persona.
 < María no es probablemente una mujer.

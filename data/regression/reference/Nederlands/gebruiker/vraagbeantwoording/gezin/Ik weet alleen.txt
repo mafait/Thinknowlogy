@@ -35,17 +35,18 @@
 < Jan heeft waarschijnlijk een kind.
 * 
 * Mijn vragen:
-< Is Jan een man of een vrouw?
+< Is Jan een vrouw of een man?
 < Is Jan een vader of een moeder?
 < 
 * 
 * Mijn vragen die beantwoord zijn:
 < Is Jan een vader of een moeder?
-< Is Jan een man of een vrouw?
+< Is Jan een vrouw of een man?
 * 
 * Mijn conclusies:
 < Jan is een man.
 < Jan is geen vrouw.
+< Jan is mannelijk.
 < Jan is geen moeder.
 < 
 * 

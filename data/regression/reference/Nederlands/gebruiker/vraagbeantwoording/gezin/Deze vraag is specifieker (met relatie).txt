@@ -57,6 +57,7 @@
 * 
 * Mijn conclusies:
 < Anna is een vrouw.
+< Anna is vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Anna is waarschijnlijk een persoon.

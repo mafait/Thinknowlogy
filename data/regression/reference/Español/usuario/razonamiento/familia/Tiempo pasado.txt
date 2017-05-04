@@ -26,6 +26,7 @@
 < Hernando era parte de una familia.
 < Hernando era un hombre.
 < Hernando no era una mujer.
+< Hernando era masculino.
 < Hernando no era una madre.
 < Rafael no tiene un padre nunca-más.
 < Rafael tenido un padre, llamado Hernando.
@@ -33,7 +34,7 @@
 * Mis suposiciones:
 < Hernando era probablemente una persona.
 < Rafael es posiblemente una persona.
-< Rafael es probablemente parte de una familia.
+< Rafael es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Rafael una niña, una mujer, un niño o un hombre?

@@ -1,45 +1,54 @@
 ﻿# Organisms
-A creature is an organism.
-
+Every organism is an animal, a fungus, a human-being, a micro-organism, or a plant.
 # Animals
-An animal is a vertebrate or an invertebrate.
-
+Every animal is a vertebrate or an invertebrate.
 # Vertebrates
-A vertebrate is an amphibian, a bird, a fish, a mammal, or a reptile.
-Caecilians, frogs, newts, salamanders and toads are amphibians.
-#Xxxx are birds.
-#Xxxx are fish.
-#Xxxx are mammals.
-Crocodiles are reptiles.
-
+Every vertebrate is an amphibian, a bird, a fish, a mammal, or a reptile.
 # Invertebrates
-An invertebrate is an annelid, an arthropod, an echinoderm, a mollusk, or a protozoan.
+Every invertebrate is an annelid, an arthropod, an echinoderm, a mollusk, or a protozoan.
+# Amphibians
+Caecilians, frogs, newts, salamanders and toads are amphibians.
+# Birds
+#Xxxx are birds.
+# Fish
+#Xxxx are fish.
+# Reptiles
+Crocodiles are reptiles.
+# Annelids
 Earthworms, roundworms and flatworms are annelids.
-Crabs, spiders and insects are arthropods.
-Starfish, sea-urchins, sand-dollars and sea-cucumbers are echinoderms.
-Cuttlefish, clams, mussels, nautiluses, octopuses, oysters, snails and squids are mollusks.
-#Amoebas and flagellates are protozoa (plural of protozoan).
-
-# Mammals
-A mammal is a cetacean, a marsupial, a primate, or a rodent.
-Whales and dolphins are cetaceans.
-Kangaroos, koalas, opossums and tasmanian-devils are marsupials.
-#Kangaroos, koalas, opossums, and Tasmanian-devils are marsupials.
-Bonobos, chimpanzees, gorillas, marmosets, orangutans and squirrel-monkeys are primates.
-Beavers, guinea-pigs, hamsters, mice, porcupines, rats and squirrels are rodents.
-
 # Arthropods
-An arthropod is an arachnid, crustacean, or insect.
+Crabs, spiders and insects are arthropods.
+# Echinoderms
+Starfish, sea-urchins, sand-dollars and sea-cucumbers are echinoderms.
+# Mollusks
+Cuttlefish, clams, mussels, nautiluses, octopuses, oysters, snails and squids are mollusks.
+# Protozoa
+#Amoebas and flagellates are protozoa (plural of protozoan).
+# Mammals
+Every mammal is a cetacean, a marsupial, a rodent, a monkey, or a human-being.
+# Cetaceans
+Whales and dolphins are cetaceans.
+# Marsupials
+#Kangaroos, koalas, opossums, and Tasmanian-devils are marsupials.
+Kangaroos, koalas, opossums and tasmanian-devils are marsupials.
+# Monkeys
+Bonobos, chimpanzees, gorillas, marmosets, orangutans and squirrel-monkeys are monkeys.
+# Rodents
+Beavers, guinea-pigs, hamsters, mice, porcupines, rats and squirrels are rodents.
+# Arthropods
+Every arthropod is an arachnid, crustacean, or insect.
+# Arachnids
 Mites, ticks, scorpions and spiders are arachnids.
+# Crustaceans
 Crabs, lobsters and barnacles are crustaceans.
-Beetles, moths, bees, wasps and praying-mantises are insectes.
-
+# Insects
+Beetles, flies, butterflies, moths, dragonflies, bees, wasps and praying-mantises are insects.
 # Human-beings
-A human-being is a vertebrate.
-Display the justification report about human-being.
-A human-being is a mammal.
-Display the justification report about human-being.
-A human-being is a primate.
-Display the justification report about human-being.
+Every human-being is a vertebrate.
+Every human-being is a mammal.
 John is a human-being.
+# Justification reports
+Display the justification report about vertebrates.
+Display the justification report about mammals.
+Display the justification report about crocodiles.
 Display the justification report about John.

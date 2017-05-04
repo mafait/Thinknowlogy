@@ -33,11 +33,12 @@
 < Pablo es probablemente una persona.
 < Pablo tiene posiblemente una madre, llamada Ana.
 < Juan es posiblemente una persona.
-< Juan es probablemente parte de una familia.
+< Juan es posiblemente parte de una familia.
 < Ana es posiblemente madre de Pablo.
 < Ana es posiblemente una mujer.
 < Ana es puede-ser una persona.
 < Ana no es puede-ser un hombre.
+< Ana es posiblemente femenina.
 < Ana es posiblemente parte de una familia.
 < Ana no es posiblemente un padre.
 * 
@@ -56,7 +57,7 @@
 <	- Juan tiene un hijo, llamado Pablo.
 <	- Cada familia tiene padres y hijos.
 <	- Un padre es probablemente una persona.
-< Juan es probablemente parte de una familia. Porque:
+< Juan es posiblemente parte de una familia. Porque:
 <	- ¿Es Juan un padre o una madre?
 <	- Padres son parte de cada familia.
 * 
@@ -66,12 +67,12 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada padre es una mujer o un hombre.
 * 	y:
+<	- Juan es posiblemente una persona.
+<	- Cada persona es un hombre o una mujer.
+* 	y:
 <	- ¿Es Juan un padre o una madre?
 <	- Cada padre es un hombre.
 <	- Cada madre es una mujer.
-* 	y:
-<	- Juan es posiblemente una persona.
-<	- Cada persona es un hombre o una mujer.
 < ¿Es Juan un padre o una madre? Porque:
 <	- Juan tiene un hijo, llamado Pablo.
 <	- Cada familia tiene padres y hijos.
@@ -106,6 +107,9 @@
 <	- Ana es puede-ser una persona.
 <	- Cada persona es un hombre o una mujer.
 <	- Ana es posiblemente una mujer.
+< Ana es posiblemente femenina. Porque:
+<	- Ana es posiblemente una mujer.
+<	- Cada mujer es femenina.
 < Ana es posiblemente parte de una familia. Porque:
 <	- Ana es posiblemente madre de Pablo.
 <	- Padres son parte de cada familia.

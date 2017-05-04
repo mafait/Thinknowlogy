@@ -31,7 +31,7 @@
 * Mis suposiciones:
 < Pablo es probablemente una persona.
 < Juan es posiblemente una persona.
-< Juan es probablemente parte de una familia.
+< Juan es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Pablo un niño o un hombre?
@@ -53,7 +53,7 @@
 * 
 * Mis suposiciones:
 < Juan es posiblemente una persona.
-< Juan es probablemente parte de una familia.
+< Juan es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Juan una mujer o un hombre?
@@ -72,7 +72,7 @@
 <	- Juan tiene un hijo, llamado Pablo.
 <	- Cada familia tiene padres y hijos.
 <	- Un padre es probablemente una persona.
-< Juan es probablemente parte de una familia. Porque:
+< Juan es posiblemente parte de una familia. Porque:
 <	- ¿Es Juan un padre o una madre?
 <	- Padres son parte de cada familia.
 * 
@@ -82,12 +82,12 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada padre es una mujer o un hombre.
 * 	y:
+<	- Juan es posiblemente una persona.
+<	- Cada persona es un hombre o una mujer.
+* 	y:
 <	- ¿Es Juan un padre o una madre?
 <	- Cada padre es un hombre.
 <	- Cada madre es una mujer.
-* 	y:
-<	- Juan es posiblemente una persona.
-<	- Cada persona es un hombre o una mujer.
 < ¿Es Juan un padre o una madre? Porque:
 <	- Juan tiene un hijo, llamado Pablo.
 <	- Cada familia tiene padres y hijos.

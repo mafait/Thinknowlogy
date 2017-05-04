@@ -35,6 +35,7 @@
 * 
 * Mijn vragen:
 < Is Anne een man of een vrouw?
+< Is Anne een vader of een moeder?
 < 
 * 
 * Mijn veronderstellingen:
@@ -66,18 +67,23 @@
 <	- Anne is een vader of een moeder.
 <	- Iedere moeder is een vrouw.
 <	- Iedere vader is een man.
+< Is Anne een vader of een moeder? Omdat:
+<	- Anne is een vader of een moeder.
 < 
 * 
 * Deze informatie is specifieker dan uw eerdere informatie:
 < Anne is een vader of een moeder.
 * 
 * Mijn vragen die beantwoord zijn:
+< Is Anne een vader of een moeder?
 < Is Anne een man of een vrouw?
 * 
 * Mijn conclusies:
 < Anne is een man.
+< Anne is mannelijk.
 * 
 * Mijn veronderstellingen:
+< Anne is waarschijnlijk geen moeder.
 < Anne is waarschijnlijk geen vrouw.
 < 
 * 
@@ -85,24 +91,20 @@
 < Anne is een man. Omdat:
 <	- Anne is een vader.
 <	- Iedere vader is een man.
-* 	en:
-<	- Anne is waarschijnlijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
-* 	en:
-<	- Anne is waarschijnlijk een ouder.
-<	- Iedere ouder is een vrouw of een man.
+< Anne is mannelijk. Omdat:
+<	- Anne is een man.
+<	- Iedere man is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Anne is waarschijnlijk een persoon. Omdat:
-<	- Iedere persoon is een man of een vrouw.
-<	- Anne is een man.
-* 	en:
 <	- Anne is een vader.
 <	- Een vader is waarschijnlijk een persoon.
-<	- Een moeder is waarschijnlijk een persoon.
 * 	en:
 <	- Anne is waarschijnlijk een ouder.
 <	- Een ouder is waarschijnlijk een persoon.
+* 	en:
+<	- Iedere persoon is een man of een vrouw.
+<	- Anne is een man.
 < Anne is waarschijnlijk een ouder. Omdat:
 <	- Iedere ouder is een vader of een moeder.
 <	- Anne is een vader.
@@ -112,6 +114,10 @@
 < Anne heeft mogelijk een kind. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anne is waarschijnlijk een ouder.
+< Anne is waarschijnlijk geen moeder. Omdat:
+<	- Anne is waarschijnlijk een ouder.
+<	- Iedere ouder is een vader of een moeder.
+<	- Anne is een vader.
 < Anne is waarschijnlijk geen vrouw. Omdat:
 <	- Anne is waarschijnlijk een persoon.
 <	- Iedere persoon is een man of een vrouw.

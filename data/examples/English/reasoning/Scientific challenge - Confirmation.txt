@@ -16,10 +16,10 @@ Every person is a man or a woman.
 Addison is a person.
 Addison is a man or a woman.
 
-Bill Clinton is the president of the United States.
-The United States has a president, called Bill Clinton.
 Barack Obama is the president of the United States.
-The United States has a new president, called Barack Obama.
+The United States has a president, called Barack Obama.
+Donald Trump is the president of the United States.
+The United States has a new president, called Donald Trump.
 # The next sentence is already confirmed
-The United States has a previous president, called Bill Clinton.
+The United States has a previous president, called Barack Obama.
 # To continue, click button «Clear your mind.» or «Restart.».

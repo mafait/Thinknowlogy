@@ -28,6 +28,9 @@
 < 
 * Ik had verwacht dat eigennaam "Maria" vrouwelijk zou zijn.
 * 
+* Mijn conclusies:
+< Maria is mannelijk.
+* 
 * Mijn veronderstellingen:
 < Maria is waarschijnlijk een persoon.
 < Maria is waarschijnlijk geen vrouw.

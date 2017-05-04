@@ -1,0 +1,8 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Paul has a father.
+Paul has a mother.
+Joe has a mother.
+Joe has a father.
+Laura has a father and a mother.
+# To continue, click button «Clear your mind.» or «Restart.».

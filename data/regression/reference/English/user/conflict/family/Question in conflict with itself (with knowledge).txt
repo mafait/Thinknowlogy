@@ -35,18 +35,22 @@
 * 
 * My questions:
 < Is Addison a man or a woman?
+< Is Addison a father or a mother?
 < 
 * 
 * This information is more specific than your earlier information:
 < Addison is a father or a mother.
 * 
 * My questions that are answered:
+< Is Addison a father or a mother?
 < Is Addison a man or a woman?
 * 
 * My conclusions:
 < Addison is a man.
+< Addison is masculine.
 * 
 * My assumptions:
+< Addison is probably not a mother.
 < Addison is probably not a woman.
 < 
 ! 

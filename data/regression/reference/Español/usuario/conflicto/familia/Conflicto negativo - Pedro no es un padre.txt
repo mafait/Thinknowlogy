@@ -26,6 +26,7 @@
 < Pedro es parte de una familia.
 < Pedro es un hombre.
 < Pedro no es una mujer.
+< Pedro es masculino.
 < Pedro no es una madre.
 * 
 * Mis suposiciones:

@@ -1,0 +1,15 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+John is a father.
+Pete is a father.
+Joe is a child of John.
+Anna is the mother of Paul.
+Anna is a mother.
+James was the father of Peter.
+
+John is a father.
+Pete is a father.
+Joe is a child of John.
+Anna is the mother of Paul.
+Anna is a mother.
+James was the father of Peter.
+# To continue, click button «Clear your mind.» or «Restart.».

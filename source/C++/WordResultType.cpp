@@ -1,9 +1,9 @@
 /*	Class:		WordResultType
  *	Purpose:	To return word variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -22,35 +22,27 @@
  *************************************************************************/
 
 #include "Item.h"
-// Some compilers need these class declarations
-class WordTypeItem;
 
 class WordResultType
 	{
-	friend class AdminAuthorization;
-	friend class AdminLanguage;
+	friend class AdminItem;
 	friend class AdminReadCreateWords;
-	friend class AdminReadGrammar;
+	friend class AdminReadFile;
 	friend class AdminReadSentence;
 	friend class Item;
 	friend class List;
+	friend class WordItem;
 	friend class WordList;
-	friend class WordSpecification;
-	friend class WordType;
-	friend class WordTypeItem;
 	friend class WordTypeList;
 
 	protected:
 	// Protected variables
 
-	ResultType result;
-
-	bool hasFoundDifferentParameter;
+	signed char result;
 
 	WordItem *createdWordItem;
 	WordItem *foundWordItem;
 
-	WordTypeItem *createdWordTypeItem;
 	WordTypeItem *foundWordTypeItem;
 
 	protected:
@@ -60,12 +52,9 @@ class WordResultType
 		{
 		result = RESULT_OK;
 
-		hasFoundDifferentParameter = false;
-
 		createdWordItem = NULL;
 		foundWordItem = NULL;
 
-		createdWordTypeItem = NULL;
 		foundWordTypeItem = NULL;
 		}
 	};

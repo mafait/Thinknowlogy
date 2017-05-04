@@ -26,6 +26,7 @@
 < Juan es parte de una familia.
 < Juan es un hombre.
 < Juan no es una mujer.
+< Juan es masculino.
 < Juan no es una madre.
 < Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene un padre, llamado Juan.
@@ -38,6 +39,7 @@
 < Luisa tiene una madre, llamada Ana.
 < Ana es una mujer.
 < Ana no es un hombre.
+< Ana es femenina.
 < Ana es parte de una familia.
 < Ana no es un padre.
 * 
@@ -45,9 +47,9 @@
 < Juan es probablemente una persona.
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 < José es posiblemente una persona.
-< José es probablemente parte de una familia.
+< José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan y Ana.
 < Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
@@ -80,6 +82,9 @@
 < Ana es una mujer. Porque:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
+< Ana es femenina. Porque:
+<	- Ana es una mujer.
+<	- Cada mujer es femenina.
 < Ana es parte de una familia. Porque:
 <	- Ana es una madre.
 <	- Padres son parte de cada familia.

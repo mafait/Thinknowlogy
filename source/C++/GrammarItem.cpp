@@ -2,9 +2,9 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -28,13 +28,12 @@
 
 class GrammarItem : private Item
 	{
-	friend class AdminReadGrammar;
+	friend class AdminReadFile;
 	friend class AdminReadSentence;
 	friend class GrammarList;
 	friend class ReadItem;
 	friend class ReadList;
-	friend class WordWriteSentence;
-	friend class WordWriteWords;
+	friend class WordWrite;
 	friend class WriteItem;
 
 	// Private initialized variables
@@ -60,8 +59,6 @@ class GrammarItem : private Item
 
 	GrammarItem *nextDefinitionGrammarItem;
 
-	char *guideByGrammarString;
-
 
 	// Protected initialized variables
 
@@ -70,9 +67,9 @@ class GrammarItem : private Item
 
 	// Constructor
 
-	GrammarItem( bool isDefinitionStart, bool isNewStart, bool isOptionStart, bool isChoiceStart, bool isSkipOptionForWriting, unsigned short grammarWordTypeNr, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString, GrammarItem *_definitionGrammarItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	GrammarItem( bool isDefinitionStart, bool isNewStart, bool isOptionStart, bool isChoiceStart, bool isSkipOptionForWriting, unsigned short grammarWordTypeNr, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString, GrammarItem *_definitionGrammarItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GrammarItem", commonVariables, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GrammarItem", commonVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -85,7 +82,7 @@ class GrammarItem : private Item
 		grammarParameter_ = grammarParameter;
 		grammarWordTypeNr_ = grammarWordTypeNr;
 
-		grammarString_ = NULL;
+		// Checking private initialized variables
 
 		if( grammarString != NULL )
 			{
@@ -98,13 +95,13 @@ class GrammarItem : private Item
 					strncat( grammarString_, grammarString, grammarStringLength );
 					}
 				else
-					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the grammar string" );
+					startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the grammar string" );
 				}
 			else
-				startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given grammar string is too long" );
+				startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given grammar string is too long" );
 			}
 		else
-			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given grammar string is undefined" );
+			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given grammar string is undefined" );
 
 
 		// Protected constructed variables
@@ -115,8 +112,6 @@ class GrammarItem : private Item
 
 		nextDefinitionGrammarItem = NULL;
 
-		guideByGrammarString = NULL;
-
 		// Protected initialized variables
 
 		definitionGrammarItem = _definitionGrammarItem;
@@ -126,12 +121,15 @@ class GrammarItem : private Item
 		{
 		if( grammarString_ != NULL )
 			delete grammarString_;
-		if( guideByGrammarString != NULL )
-			delete guideByGrammarString;
 		}
 
 
 	// Protected virtual functions
+
+	virtual void checkForUsage()
+		{
+		myWordItem()->checkGrammarForUsageInWord( this );
+		}
 
 	virtual void displayString( bool isReturnQueryToPosition )
 		{
@@ -152,19 +150,6 @@ class GrammarItem : private Item
 
 			commonVariables()->hasFoundQuery = true;
 			strcat( queryString, grammarString_ );
-			}
-
-		if( guideByGrammarString != NULL )
-			{
-			if( commonVariables()->hasFoundQuery )
-				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
-
-			// Display status if not active
-			if( !isActiveItem() )
-				strcat( queryString, statusString );
-
-			commonVariables()->hasFoundQuery = true;
-			strcat( queryString, guideByGrammarString );
 			}
 		}
 
@@ -192,27 +177,17 @@ class GrammarItem : private Item
 		return ( grammarWordTypeNr_ == queryWordTypeNr );
 		}
 
-	virtual ResultType checkForUsage()
-		{
-		return myWordItem()->checkGrammarForUsageInWord( this );
-		}
-
 	virtual char *itemString()
 		{
 		return grammarString_;
 		}
 
-	virtual char *virtualGuideByGrammarString()
-		{
-		return guideByGrammarString;
-		}
-
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *queryString;
 		char *grammarWordTypeString = myWordItem()->wordTypeNameString( grammarWordTypeNr_ );
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 
@@ -286,12 +261,6 @@ class GrammarItem : private Item
 			strcat( queryString, tempString );
 			}
 
-		if( guideByGrammarString != NULL )
-			{
-			sprintf( tempString, "%cguideByGrammarString:%c%s%c", QUERY_SEPARATOR_CHAR, QUERY_STRING_START_CHAR, guideByGrammarString, QUERY_STRING_END_CHAR );
-			strcat( queryString, tempString );
-			}
-
 		if( definitionGrammarItem != NULL )
 			{
 			sprintf( tempString, "%cdefinitionGrammarItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, definitionGrammarItem->creationSentenceNr(), QUERY_SEPARATOR_CHAR, definitionGrammarItem->itemNr(), QUERY_REF_ITEM_END_CHAR );
@@ -340,14 +309,6 @@ class GrammarItem : private Item
 		return ( grammarParameter_ >= GRAMMAR_SENTENCE );
 		}
 
-	bool isPredefinedWord()
-		{
-		return ( grammarWordTypeNr_ > NO_WORD_TYPE_NR &&
-				grammarWordTypeNr_ < WORD_TYPE_TEXT &&
-
-				grammarParameter_ > NO_GRAMMAR_PARAMETER );
-		}
-
 	bool isUserDefinedWord()
 		{
 		return ( grammarWordTypeNr_ > NO_WORD_TYPE_NR &&
@@ -364,11 +325,6 @@ class GrammarItem : private Item
 		return ( grammarWordTypeNr_ > NO_WORD_TYPE_NR );
 		}
 
-	bool isSymbol()
-		{
-		return ( grammarWordTypeNr_ == WORD_TYPE_SYMBOL );
-		}
-
 	bool isNumeral()
 		{
 		return ( grammarWordTypeNr_ == WORD_TYPE_NUMERAL );
@@ -382,11 +338,6 @@ class GrammarItem : private Item
 	bool isPluralNoun()
 		{
 		return ( grammarWordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
-		}
-
-	bool isText()
-		{
-		return ( grammarWordTypeNr_ == WORD_TYPE_TEXT );
 		}
 
 	bool isUndefinedWord()
@@ -411,52 +362,6 @@ class GrammarItem : private Item
 				grammarString_ != NULL &&
 				checkGrammarItem->grammarString() != NULL &&
 				strcmp( grammarString_, checkGrammarItem->grammarString() ) == 0 );
-		}
-
-	bool isUniqueGrammarDefinition( GrammarItem *checkGrammarItem )
-		{
-		char *checkGrammarString;
-		GrammarItem *searchGrammarItem = this;
-
-		if( checkGrammarItem != NULL &&
-		( checkGrammarString = checkGrammarItem->grammarString() ) != NULL )
-			{
-			while( searchGrammarItem != NULL )
-				{
-				if( searchGrammarItem->isDefinitionStart_ &&
-				searchGrammarItem != checkGrammarItem &&
-				strcmp( searchGrammarItem->grammarString_, checkGrammarString ) == 0 )
-					return false;
-
-				searchGrammarItem = searchGrammarItem->nextGrammarItem();
-				}
-			}
-
-		return true;
-		}
-
-	unsigned short adjectiveParameter()
-		{
-		if( isAdjectiveParameter( grammarParameter_ ) )
-			return grammarParameter_;
-
-		return NO_ADJECTIVE_PARAMETER;
-		}
-
-	unsigned short definiteArticleParameter()
-		{
-		if( isDefiniteArticleParameter( grammarParameter_ ) )
-			return grammarParameter_;
-
-		return NO_DEFINITE_ARTICLE_PARAMETER;
-		}
-
-	unsigned short indefiniteArticleParameter()
-		{
-		if( isIndefiniteArticleParameter( grammarParameter_ ) )
-			return grammarParameter_;
-
-		return NO_INDEFINITE_ARTICLE_PARAMETER;
 		}
 
 	unsigned short grammarParameter()

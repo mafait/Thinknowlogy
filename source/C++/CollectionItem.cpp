@@ -1,9 +1,9 @@
 /*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -45,9 +45,9 @@ class CollectionItem : private Item
 	protected:
 	// Constructor
 
-	CollectionItem( bool isExclusiveSpecification, unsigned short collectionOrderNr, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	CollectionItem( bool isExclusiveSpecification, unsigned short collectionOrderNr, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "CollectionItem", commonVariables, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "CollectionItem", commonVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -153,42 +153,14 @@ class CollectionItem : private Item
 				commonWordTypeNr_ == queryWordTypeNr );
 		}
 
-	virtual StringResultType findMatchingWordReferenceString( char *queryString )
-		{
-		StringResultType stringResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
-
-		if( collectionWordItem_ != NULL )
-			{
-			if( ( stringResult = collectionWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the collected word item" );
-			}
-
-		if( !stringResult.hasFoundMatchingStrings &&
-		commonWordItem_ != NULL )
-			{
-			if( ( stringResult = commonWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the common word item" );
-			}
-
-		if( !stringResult.hasFoundMatchingStrings &&
-		compoundGeneralizationWordItem_ != NULL )
-			{
-			if( ( stringResult = compoundGeneralizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the compound word item" );
-			}
-
-		return stringResult;
-		}
-
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *wordString;
 		char *queryString;
 		char *collectionWordTypeString = myWordItem()->wordTypeNameString( collectionWordTypeNr_ );
 		char *commonWordTypeString = myWordItem()->wordTypeNameString( commonWordTypeNr_ );
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 
@@ -263,6 +235,30 @@ class CollectionItem : private Item
 		return queryString;
 		}
 
+	virtual BoolResultType findMatchingWordReferenceString( char *queryString )
+		{
+		BoolResultType boolResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
+
+		if( collectionWordItem_ != NULL &&
+		( boolResult = collectionWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+			return addBoolResultError( functionNameString, NULL, NULL, "I failed to find a matching word reference string for the collected word item" );
+
+		// No matching string
+		if( !boolResult.booleanValue &&
+		commonWordItem_ != NULL &&
+		( boolResult = commonWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+			return addBoolResultError( functionNameString, NULL, NULL, "I failed to find a matching word reference string for the common word item" );
+
+		// No matching string
+		if( !boolResult.booleanValue &&
+		compoundGeneralizationWordItem_ != NULL &&
+		( boolResult = compoundGeneralizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
+			return addBoolResultError( functionNameString, NULL, NULL, "I failed to find a matching word reference string for the compound word item" );
+
+		return boolResult;
+		}
+
 
 	// Protected functions
 
@@ -297,14 +293,14 @@ class CollectionItem : private Item
 		return collectionWordTypeNr_;
 		}
 
-	unsigned short commonWordTypeNr()
-		{
-		return commonWordTypeNr_;
-		}
-
 	unsigned int collectionNr()
 		{
 		return collectionNr_;
+		}
+
+	CollectionItem *nextCollectionItem()
+		{
+		return (CollectionItem *)nextItem;
 		}
 
 	WordItem *collectionWordItem()
@@ -320,11 +316,6 @@ class CollectionItem : private Item
 	WordItem *compoundGeneralizationWordItem()
 		{
 		return compoundGeneralizationWordItem_;
-		}
-
-	CollectionItem *nextCollectionItem()
-		{
-		return (CollectionItem *)nextItem;
 		}
 	};
 

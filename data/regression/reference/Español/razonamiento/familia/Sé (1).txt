@@ -26,6 +26,7 @@
 < Juan es parte de una familia.
 < Juan es un hombre.
 < Juan no es una mujer.
+< Juan es masculino.
 < Juan no es una madre.
 * 
 * Mis suposiciones:
@@ -37,6 +38,7 @@
 < Peyo es parte de una familia.
 < Peyo es un hombre.
 < Peyo no es una mujer.
+< Peyo es masculino.
 < Peyo no es una madre.
 * 
 * Mis suposiciones:
@@ -65,6 +67,7 @@
 * Mis conclusiones:
 < Ana es una mujer.
 < Ana no es un hombre.
+< Ana es femenina.
 < Ana es parte de una familia.
 < Ana no es un padre.
 < Pablo tiene una madre, llamada Ana.
@@ -72,7 +75,7 @@
 * Mis suposiciones:
 < Ana es probablemente una persona.
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
@@ -85,6 +88,7 @@
 < Jorge era parte de una familia.
 < Jorge era un hombre.
 < Jorge no era una mujer.
+< Jorge era masculino.
 < Jorge no era una madre.
 < Alfonso no tiene un padre nunca-más.
 < Alfonso tenido un padre, llamado Jorge.
@@ -92,7 +96,7 @@
 * Mis suposiciones:
 < Jorge era probablemente una persona.
 < Alfonso es posiblemente una persona.
-< Alfonso es probablemente parte de una familia.
+< Alfonso es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Alfonso una niña, una mujer, un niño o un hombre?

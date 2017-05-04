@@ -2,9 +2,9 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the user-interface messages
  *					in the available languages
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -38,14 +38,15 @@ class InterfaceItem : private Item
 	protected:
 	// Constructor
 
-	InterfaceItem( unsigned short interfaceParameter, size_t interfaceStringLength, char *interfaceString, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	InterfaceItem( unsigned short interfaceParameter, size_t interfaceStringLength, char *interfaceString, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "InterfaceItem", commonVariables, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "InterfaceItem", commonVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
 		interfaceParameter_ = interfaceParameter;
-		interfaceString_ = NULL;
+
+		// Checking private initialized variables
 
 		if( interfaceString != NULL )
 			{
@@ -58,13 +59,13 @@ class InterfaceItem : private Item
 					strncat( interfaceString_, interfaceString, interfaceStringLength );
 					}
 				else
-					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the interface string" );
+					startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the interface string" );
 				}
 			else
-				startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given interface string is too long" );
+				startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given interface string is too long" );
 			}
 		else
-			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given interface string is undefined" );
+			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given interface string is undefined" );
 		}
 
 	~InterfaceItem()
@@ -107,11 +108,11 @@ class InterfaceItem : private Item
 		return interfaceString_;
 		}
 
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *queryString;
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 

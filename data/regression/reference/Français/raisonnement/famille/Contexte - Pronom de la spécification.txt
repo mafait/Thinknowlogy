@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier est masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne.

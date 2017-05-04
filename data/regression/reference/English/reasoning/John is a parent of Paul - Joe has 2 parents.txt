@@ -3,6 +3,8 @@
 < Paul has a parent, called John.
 < 
 * 
+* You have entered plural noun "parents", which was unknown to me.
+* 
 * My conclusions:
 < John is a parent of Paul and Joe.
 < Anna is a parent of Joe.

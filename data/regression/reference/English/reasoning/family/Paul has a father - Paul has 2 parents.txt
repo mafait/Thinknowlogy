@@ -30,6 +30,7 @@
 * My conclusions:
 < John is a father of Paul.
 < John is a man.
+< John is masculine.
 * 
 * My assumptions:
 < Paul has probably a parent, called John.
@@ -44,7 +45,7 @@
 < John has probably a child, called Paul.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
 < 
 * 
@@ -57,6 +58,7 @@
 < Laura has a father, called John.
 < Laura has a mother, called Anna.
 < Anna is a woman.
+< Anna is feminine.
 < Paul has a mother, called Anna.
 * 
 * My assumptions:
@@ -85,7 +87,7 @@
 < Paul has probably 2 parents, called John and Anna.
 * 
 * My questions:
-< Is Joe a man, a woman, a girl or a boy?
+< Is Joe a girl, a woman, a boy or a man?
 < Is Joe a son or a daughter?
 < Is Laura a girl or a woman?
 < 

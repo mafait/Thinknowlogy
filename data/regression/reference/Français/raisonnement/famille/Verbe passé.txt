@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Philippe était un homme.
+< Philippe était masculin.
 < Antoine n'a aucun père plus.
 < Antoine avait un père, appelé Philippe.
 * 
@@ -45,7 +46,7 @@
 < Antoine avait probablement un parent, appelé Philippe.
 * 
 * Mes questions:
-< Est Antoine un homme, une femme, une jeune-fille ou un garçon?
+< Est Antoine une jeune-fille, une femme, un garçon ou un homme?
 < Est Antoine un fils ou une fille?
 < 
 * 
@@ -53,6 +54,9 @@
 < Philippe était un homme. En raison:
 <	- Philippe était le père de Antoine.
 <	- Chaque père est un homme.
+< Philippe était masculin. En raison:
+<	- Philippe était un homme.
+<	- Chaque homme est masculin.
 * 
 * Mes hypothèses:
 < Philippe a probablement un enfant, appelé Antoine. En raison:
@@ -78,6 +82,8 @@
 <	- Chaque parent est une femme ou un homme.
 <	- Philippe était un homme.
 < Philippe était probablement un parent de Antoine. En raison:
+<	- Antoine avait probablement un parent, appelé Philippe.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Antoine est probablement un enfant de Philippe.
 * 	et:
@@ -118,12 +124,9 @@
 <	- Philippe était probablement un parent de Antoine.
 * 
 * Mes questions:
-< Est Antoine un homme, une femme, une jeune-fille ou un garçon? En raison:
+< Est Antoine une jeune-fille, une femme, un garçon ou un homme? En raison:
 <	- Antoine est probablement un enfant de Philippe.
 <	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
-* 	et:
-<	- Antoine est possible une personne.
-<	- Chaque personne est un homme ou une femme.
 < Est Antoine un fils ou une fille? En raison:
 <	- Antoine est probablement un enfant de Philippe.
 <	- Chaque enfant est un fils ou une fille.

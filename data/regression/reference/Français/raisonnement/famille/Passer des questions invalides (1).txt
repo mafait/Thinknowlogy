@@ -27,15 +27,24 @@
 < Une fille est probablement une personne.
 < 
 * 
+* Mes conclusions:
+< Pascal est masculin.
+* 
 * Mes hypothèses:
 < Pascal est probablement une personne.
 < Pascal n'est probablement pas une femme.
 < 
 * 
+* Mes conclusions:
+< Julien est masculin.
+* 
 * Mes hypothèses:
 < Julien est probablement une personne.
 < Julien n'est probablement pas une femme.
 < 
+* 
+* Mes conclusions:
+< Amélie est féminine.
 * 
 * Mes hypothèses:
 < Amélie est probablement une personne.
@@ -44,6 +53,7 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier est masculin.
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
 < Julien a un père, appelé Olivier.

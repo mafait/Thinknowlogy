@@ -1,72 +1,67 @@
 ﻿* 
-* Mes hypothèses:
-< Un animal est probablement un organisme.
-< 
-* 
-* Mes conclusions:
-< Un animal est un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
-< Un organisme est un amphibien, un oiseau, un poisson, un mammifère, un reptile, un vertébré ou un invertébré.
+* Vous avez entré le nom au pluriel «reptiles», qui était inconnu pour moi.
 * 
 * Mes hypothèses:
-< Un vertébré est probablement un organisme.
+< Crocodiles sont probablement vertébré [pluriel de «vertébré» est inconnue].
+< Crocodiles sont possible animal [pluriel de «animal» est inconnue].
+< Crocodiles sont peut-être organisme [pluriel de «organisme» est inconnue].
 < 
 * 
 * Mes hypothèses:
-< Crocodiles sont probablement organisme [pluriel de «organisme» est inconnue].
+< Un mammifère est probablement un organisme.
+< Un vertébré est possible un organisme.
 < 
 * 
 * Mes conclusions:
-< Un animal est un annélide, un arthropode, un échinoderme, un mollusque, un protozoaire, un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
-< Un organisme est un annélide, un arthropode, un échinoderme, un mollusque, un protozoaire, un amphibien, un oiseau, un poisson, un mammifère, un reptile, un vertébré ou un invertébré.
-* 
-* Mes hypothèses:
-< Un invertébré est probablement un organisme.
-< 
-* 
-* Mes conclusions:
-< Un vertébré est un cétacé, un marsupial, un primate ou un rongeur.
-< Un animal est un cétacé, un marsupial, un primate, un rongeur, un annélide, un arthropode, un échinoderme, un mollusque, un protozoaire, un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
-< Un organisme est un cétacé, un marsupial, un primate, un rongeur, un annélide, un arthropode, un échinoderme, un mollusque, un protozoaire, un amphibien, un oiseau, un poisson, un mammifère, un reptile, un vertébré ou un invertébré.
-< 
-* 
-* Mes conclusions:
-< Olivier n'est pas un cétacé, pas un marsupial et pas un rongeur.
-< Olivier n'est pas un cétacé, pas un marsupial et pas un rongeur.
-< Olivier n'est pas un cétacé, pas un marsupial et pas un rongeur.
-< Olivier est un primate, un mammifère et un vertébré.
+< Olivier est un mammifère.
+< Olivier est un vertébré.
+< Olivier n'est pas un amphibien, pas un oiseau, pas un poisson et pas un reptile.
 * 
 * Mes hypothèses:
 < Olivier est probablement un organisme.
-< Olivier n'est probablement pas un annélide, pas un arthropode, pas un échinoderme, pas un mollusque, pas un protozoaire, pas un amphibien, pas un oiseau, pas un poisson et pas un reptile.
+< 
+* 
+* Mes hypothèses:
+< Un vertébré est possible un organisme. En raison:
+<	- Chaque vertébré est un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
+<	- Un mammifère est probablement un organisme.
+< 
+* 
+* Mes hypothèses:
+< Un mammifère est probablement un organisme. En raison:
+<	- Chaque organisme est un animal, un champignon, un être humain-être, un micro-organisme ou une plante.
+<	- Chaque mammifère est un cétacé, un marsupial, un rongeur, un singe ou un être humain-être.
+< 
+* 
+* Mes hypothèses:
+< Crocodiles sont probablement vertébrés. En raison:
+<	- Chaque vertébré est un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
+<	- Crocodiles sont reptiles.
+< Crocodiles sont possible animal [pluriel de «animal» est inconnue]. En raison:
+<	- Chaque animal est un vertébré ou un invertébré.
+<	- Crocodiles sont probablement vertébrés.
+< Crocodiles sont peut-être organisme [pluriel de «organisme» est inconnue]. En raison:
+<	- Chaque organisme est un animal, un champignon, un être humain-être, un micro-organisme ou une plante.
+<	- Crocodiles sont possible animal [pluriel de «animal» est inconnue].
 < 
 * 
 * Mes conclusions:
-< Olivier n'est pas un cétacé, pas un marsupial et pas un rongeur. En raison:
-<	- Olivier est un mammifère.
-<	- Un mammifère est un cétacé, un marsupial, un primate ou un rongeur.
-< Olivier n'est pas un cétacé, pas un marsupial et pas un rongeur. En raison:
-<	- Olivier est un mammifère.
-<	- Un mammifère est un cétacé, un marsupial, un primate ou un rongeur.
-< Olivier n'est pas un cétacé, pas un marsupial et pas un rongeur. En raison:
-<	- Olivier est un mammifère.
-<	- Un mammifère est un cétacé, un marsupial, un primate ou un rongeur.
-< Olivier est un primate, un mammifère et un vertébré. En raison:
+< Olivier est un mammifère. En raison:
 <	- Olivier est un humain-être.
-<	- Un humain-être est un vertébré.
-* 	et:
+<	- Chaque humain-être est un mammifère.
+< Olivier est un vertébré. En raison:
 <	- Olivier est un humain-être.
-<	- Un humain-être est un primate, un mammifère.
-* 	et:
-<	- Olivier est un humain-être.
-<	- Un humain-être est un mammifère.
+<	- Chaque humain-être est un vertébré.
+< Olivier n'est pas un amphibien, pas un oiseau, pas un poisson et pas un reptile. En raison:
+<	- Olivier est un vertébré.
+<	- Chaque vertébré est un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
+<	- Olivier est un mammifère.
 * 
 * Mes hypothèses:
 < Olivier est probablement un organisme. En raison:
+<	- Olivier est un mammifère.
+<	- Un mammifère est probablement un organisme.
+* 	et:
 <	- Olivier est un vertébré.
-<	- Un vertébré est probablement un organisme.
-< Olivier n'est probablement pas un annélide, pas un arthropode, pas un échinoderme, pas un mollusque, pas un protozoaire, pas un amphibien, pas un oiseau, pas un poisson et pas un reptile. En raison:
-<	- Olivier est probablement un organisme.
-<	- Un organisme est un amphibien, un oiseau, un poisson, un mammifère, un reptile, un vertébré ou un invertébré.
-<	- Olivier est un vertébré.
-<	- Un vertébré est un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
+<	- Un vertébré est possible un organisme.
 < 

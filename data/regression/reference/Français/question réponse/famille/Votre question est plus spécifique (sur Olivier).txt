@@ -44,8 +44,8 @@
 * 
 * Mes questions:
 < Est Pascal un garçon ou un homme?
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 < 
 * 
 * Votre question est plus spécifique que ma question antérieure:
@@ -67,8 +67,8 @@
 < Olivier a probablement un enfant, appelé Pascal.
 * 
 * Mes questions:
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 * 
 * Informations connexes:
 < Pascal est probablement un enfant de Olivier.
@@ -100,17 +100,17 @@
 <	- Pascal est probablement un enfant de Olivier.
 * 
 * Mes questions:
+< Est Olivier un père ou une mère? En raison:
+<	- Olivier est probablement un parent de Pascal.
+<	- Chaque parent est un père ou une mère.
 < Est Olivier un homme ou une femme? En raison:
+<	- Est Olivier un père ou une mère?
+<	- Chaque mère est une femme.
+<	- Chaque père est un homme.
+* 	et:
 <	- Olivier est possible une personne.
 <	- Chaque personne est un homme ou une femme.
 * 	et:
 <	- Olivier est probablement un parent de Pascal.
 <	- Chaque parent est une femme ou un homme.
-* 	et:
-<	- Est Olivier un père ou une mère?
-<	- Chaque mère est une femme.
-<	- Chaque père est un homme.
-< Est Olivier un père ou une mère? En raison:
-<	- Olivier est probablement un parent de Pascal.
-<	- Chaque parent est un père ou une mère.
 < 

@@ -16,6 +16,8 @@
 * No sé nada acerca de José, pero yo seguiré esta pregunta en la mente.
 * 
 * 
+* Ha introducido un nombre plural "padres", que era desconocido para mí.
+* 
 * Mis conclusiones:
 < Padres y hijos son parte de cada familia.
 < 
@@ -84,15 +86,16 @@
 < Luisa tiene una madre, llamada Ana.
 < Ana es una mujer.
 < Ana no es un hombre.
+< Ana es femenina.
 < Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 < José es posiblemente una persona.
-< José es probablemente parte de una familia.
+< José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan y Ana.
 < Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
@@ -113,13 +116,14 @@
 < Jorge es parte de una familia.
 < Jorge es un hombre.
 < Jorge no es una mujer.
+< Jorge es masculino.
 < Jorge no es una madre.
 < Alfonso tiene un padre, llamado Jorge.
 * 
 * Mis suposiciones:
 < Jorge es probablemente una persona.
 < Alfonso es posiblemente una persona.
-< Alfonso es probablemente parte de una familia.
+< Alfonso es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Alfonso una niña, una mujer, un niño o un hombre?
@@ -129,11 +133,9 @@
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
 < No, Pablo tiene 2 padres, llamados Juan y Ana.
-* 
-* No estoy seguro, pero:
-< Hernando es probablemente un padre.
-< Juan es un padre.
 < Jorge es un padre.
+< Juan es un padre.
+< Hernando es probablemente un padre.
 < José tiene 2 padres, llamados Juan y Ana.
 < 
 * 
@@ -143,9 +145,12 @@
 * Tenías una pregunta similar antes:
 < ¿Es José un padre?
 * 
-* Mis suposiciones:
-< Pablo es probablemente un hijo.
-< José es probablemente un hijo.
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Esta pregunta es más específica que la anterior pregunta:
+< ¿Es Pablo un padre?
+< ¿Es José un padre?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
@@ -154,16 +159,5 @@
 < ¿Es Pablo un padre?
 < ¿Es José un padre?
 * 
-* No estoy seguro, pero:
-< No, Pablo es probablemente un hijo.
-< José es probablemente un hijo.
-< 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
-* Esta pregunta es más específica que la anterior pregunta:
-< ¿Es Pablo un padre?
-< ¿Es José un padre?
-* 
-* No estoy seguro, pero:
-< No, Pablo es probablemente un hijo.
-< José es probablemente un hijo.
-< 

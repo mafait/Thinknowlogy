@@ -1,0 +1,9 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Is John the mother?
+Is John a mother?
+Is John a father?
+Is John the father of Paul?
+Is Anna the mother of Laura?
+Is Anna the father of Laura?
+# To continue, click button «Clear your mind.» or «Restart.».

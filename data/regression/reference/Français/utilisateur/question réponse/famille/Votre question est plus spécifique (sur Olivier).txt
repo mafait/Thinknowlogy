@@ -44,8 +44,8 @@
 * 
 * Mes questions:
 < Est Pascal un garçon ou un homme?
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 < 
 * 
 * Votre question est plus spécifique que ma question antérieure:

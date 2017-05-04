@@ -1,9 +1,9 @@
 /*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -21,24 +21,34 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-// Score List header
 
 class ScoreList extends List
 	{
-	// Private constructed variables
-
-	private boolean hasBetterScore_;
-	private boolean hasEqualScore_;
-	private boolean hasFoundScore_;
-
 	// Private methods
+
+	private static boolean hasEqualScore( int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore, int bestOldSatisfiedScore, int bestNewSatisfiedScore, int bestOldDissatisfiedScore, int bestNewDissatisfiedScore, int bestOldNotBlockingScore, int bestNewNotBlockingScore, int bestOldBlockingScore, int bestNewBlockingScore )
+		{
+		boolean isEqualSatisfiedScore = ( oldSatisfiedScore == bestOldSatisfiedScore &&
+										newSatisfiedScore == bestNewSatisfiedScore );
+		boolean isEqualDissatisfiedScore = ( oldDissatisfiedScore == bestOldDissatisfiedScore &&
+										newDissatisfiedScore == bestNewDissatisfiedScore );
+		boolean isEqualNotBlockingScore = ( oldNotBlockingScore == bestOldNotBlockingScore &&
+										newNotBlockingScore == bestNewNotBlockingScore );
+		boolean isEqualBlockingScore = ( oldBlockingScore == bestOldBlockingScore &&
+										newBlockingScore == bestNewBlockingScore );
+
+		return( isEqualSatisfiedScore &&
+				isEqualDissatisfiedScore &&
+				isEqualNotBlockingScore &&
+				isEqualBlockingScore );
+		}
 
 	private byte markAction( SelectionItem markSelectionReference )
 		{
 		ScoreItem searchScoreItem = firstActiveScoreItem();
 
 		if( markSelectionReference == null )
-			return startError( 1, null, "The given score item is undefined" );
+			return startError( 1, "The given score item is undefined" );
 
 		while( searchScoreItem != null )
 			{
@@ -57,7 +67,7 @@ class ScoreList extends List
 		ScoreItem searchScoreItem = firstActiveScoreItem();
 
 		if( disableItem == null )
-			return startError( 1, null, "The given score item is undefined" );
+			return startError( 1, "The given score item is undefined" );
 
 		while( searchScoreItem != null )
 			{
@@ -77,14 +87,22 @@ class ScoreList extends List
 		return Constants.RESULT_OK;
 		}
 
-	private byte getBestScore( boolean isCummulative, short solveStrategyParameter, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore, int bestOldSatisfiedScore, int bestNewSatisfiedScore, int bestOldDissatisfiedScore, int bestNewDissatisfiedScore, int bestOldNotBlockingScore, int bestNewNotBlockingScore, int bestOldBlockingScore, int bestNewBlockingScore )
+	private ScoreItem firstActiveScoreItem()
+		{
+		return (ScoreItem)firstActiveItem();
+		}
+
+	private ScoreItem nextScoreListItem()
+		{
+		return (ScoreItem)nextListItem();
+		}
+
+	private BoolResultType getBestScore( boolean isCummulative, short solveStrategyParameter, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore, int bestOldSatisfiedScore, int bestNewSatisfiedScore, int bestOldDissatisfiedScore, int bestNewDissatisfiedScore, int bestOldNotBlockingScore, int bestNewNotBlockingScore, int bestOldBlockingScore, int bestNewBlockingScore )
 		{
 		boolean isEqualSatisfiedScore = ( oldSatisfiedScore == bestOldSatisfiedScore &&
 										newSatisfiedScore == bestNewSatisfiedScore );
 		boolean isEqualDissatisfiedScore = ( oldDissatisfiedScore == bestOldDissatisfiedScore &&
 										newDissatisfiedScore == bestNewDissatisfiedScore );
-		boolean isEqualNotBlockingScore = ( oldNotBlockingScore == bestOldNotBlockingScore &&
-										newNotBlockingScore == bestNewNotBlockingScore );
 		boolean isEqualBlockingScore = ( oldBlockingScore == bestOldBlockingScore &&
 										newBlockingScore == bestNewBlockingScore );
 
@@ -105,61 +123,46 @@ class ScoreList extends List
 		boolean isHigherDissatisfiedScore = ( dissatisfiedScore > bestDissatisfiedScore );
 		boolean isLowerNotBlockingScore = ( notBlockingScore < bestNotBlockingScore );
 		boolean isLowerBlockingScore = ( blockingScore < bestBlockingScore );
+		BoolResultType boolResult = new BoolResultType();
 
 		if( solveStrategyParameter != Constants.NO_SOLVE_STRATEGY_PARAMETER &&
 		solveStrategyParameter != Constants.WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
 		solveStrategyParameter != Constants.WORD_PARAMETER_ADJECTIVE_EXCLUSIVE )
-			return startError( 1, null, "The given solve strategy parameter isn't implemented" );
+			return startBoolResultError( 1, "The given solve strategy parameter is invalid" );
 
-		hasBetterScore_ = false;
-		hasEqualScore_ = ( isEqualSatisfiedScore &&
-						isEqualDissatisfiedScore &&
-						isEqualNotBlockingScore &&
-						isEqualBlockingScore );
+		// Has better score
+		boolResult.booleanValue =	( ( solveStrategyParameter == Constants.NO_SOLVE_STRATEGY_PARAMETER &&
+									( isHigherSatisfiedScore ||
+									( isEqualSatisfiedScore &&
+									isLowerDissatisfiedScore ) ) ) ||
 
-		hasBetterScore_ =	// Get best satisfying strategy,
-							( ( solveStrategyParameter == Constants.NO_SOLVE_STRATEGY_PARAMETER &&
-								( isHigherSatisfiedScore ||
+								( solveStrategyParameter == Constants.WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
+									( isLowerDissatisfiedScore ||
+									( isEqualDissatisfiedScore &&
+									isHigherSatisfiedScore ) ) ) ||
+
+								( solveStrategyParameter == Constants.WORD_PARAMETER_ADJECTIVE_EXCLUSIVE &&
+									// Has no dissatisfied score and superior satisfied score
+									( ( isSuperiorSatisfiedScore &&
+									( isCummulative ||
+									dissatisfiedScore == Constants.NO_SCORE ) ) ||
+
+									// Has no old satisfied score and has new satisfied score and higher dissatisfied score
+									( isHigherDissatisfiedScore &&
+									( isCummulative ||
+									( oldSatisfiedScore == Constants.NO_SCORE &&
+									newSatisfiedScore > Constants.NO_SCORE ) ) ) ) ) ||
+
+								// else if equal satisfying strategy,
 								( isEqualSatisfiedScore &&
-								isLowerDissatisfiedScore ) ) ) ||
+								isEqualDissatisfiedScore &&
 
-							( solveStrategyParameter == Constants.WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
-								( isLowerDissatisfiedScore ||
-								( isEqualDissatisfiedScore &&
-								isHigherSatisfiedScore ) ) ) ||
+								// Get lowest blocking score, else if equal blocking score, Get lowest not blocking score
+								( isLowerBlockingScore ||
+								( isEqualBlockingScore &&
+								isLowerNotBlockingScore ) ) ) );
 
-							( solveStrategyParameter == Constants.WORD_PARAMETER_ADJECTIVE_EXCLUSIVE &&
-								// Has no dissatisfied score and superior satisfied score
-								( ( isSuperiorSatisfiedScore &&
-								( isCummulative ||
-								dissatisfiedScore == Constants.NO_SCORE ) ) ||
-
-								// Has no old satisfied score and has new satisfied score and higher dissatisfied score
-								( isHigherDissatisfiedScore &&
-								( isCummulative ||
-								( oldSatisfiedScore == Constants.NO_SCORE &&
-								newSatisfiedScore > Constants.NO_SCORE ) ) ) ) ) ||
-
-							// else if equal satisfying strategy,
-							( isEqualSatisfiedScore &&
-							isEqualDissatisfiedScore &&
-
-							// Get lowest blocking score, else if equal blocking score, Get lowest not blocking score
-							( isLowerBlockingScore ||
-							( isEqualBlockingScore &&
-							isLowerNotBlockingScore ) ) ) );
-
-		return Constants.RESULT_OK;
-		}
-
-	private ScoreItem firstActiveScoreItem()
-		{
-		return (ScoreItem)firstActiveItem();
-		}
-
-	private ScoreItem nextScoreListItem()
-		{
-		return (ScoreItem)nextListItem();
+		return boolResult;
 		}
 
 
@@ -167,11 +170,9 @@ class ScoreList extends List
 
 	protected ScoreList( WordItem myWordItem )
 		{
-		hasBetterScore_ = false;
-		hasEqualScore_ = false;
-		hasFoundScore_ = false;
+		// Private constructed variables
 
-		initializeListVariables( Constants.ADMIN_SCORE_LIST_SYMBOL, myWordItem );
+		initializeListVariables( Constants.ADMIN_SCORE_LIST_SYMBOL, "ScoreList", myWordItem );
 		}
 
 
@@ -184,11 +185,6 @@ class ScoreList extends List
 
 
 	// Protected methods
-
-	protected boolean hasFoundScore()
-		{
-		return hasFoundScore_;
-		}
 
 	protected int nPossibilities()
 		{
@@ -213,7 +209,7 @@ class ScoreList extends List
 		ScoreItem searchScoreItem = firstActiveScoreItem();
 
 		if( actionSelectionItem == null )
-			return startError( 1, null, "The given action selection item is undefined" );
+			return startError( 1, "The given action selection item is undefined" );
 
 		while( searchScoreItem != null )
 			{
@@ -230,50 +226,10 @@ class ScoreList extends List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte checkSelectionItemForUsage( SelectionItem unusedSelectionItem )
+	protected byte createScoreItem( boolean isChecked, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore, SelectionItem referenceSelectionItem )
 		{
-		ScoreItem searchScoreItem = firstActiveScoreItem();
-
-		if( unusedSelectionItem == null )
-			return startError( 1, null, "The given unused justification item is undefined" );
-
-		while( searchScoreItem != null )
-			{
-			if( searchScoreItem.referenceSelectionItem == unusedSelectionItem )
-				return startError( 1, null, "The reference selection item is still in use" );
-
-			searchScoreItem = searchScoreItem.nextScoreItem();
-			}
-
-		return Constants.RESULT_OK;
-		}
-
-	protected byte findScore( boolean isPreparingSort, SelectionItem findScoreItem )
-		{
-		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
-		ScoreItem searchScoreItem = firstActiveScoreItem();
-
-		hasFoundScore_ = false;
-
-		if( findScoreItem == null )
-			return startError( 1, null, "The given score item is undefined" );
-
-		while( searchScoreItem != null &&
-		searchScoreItem.assignmentLevel() >= currentAssignmentLevel )
-			{
-			if( searchScoreItem.assignmentLevel() == currentAssignmentLevel )
-				{
-				if( ( searchScoreItem.isChecked ||
-				currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL ) &&
-				searchScoreItem.referenceSelectionItem == findScoreItem )
-					{
-					hasFoundScore_ = true;
-					searchScoreItem.isMarked = isPreparingSort;
-					}
-				}
-
-			searchScoreItem = searchScoreItem.nextScoreItem();
-			}
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, CommonVariables.currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to add an active score item" );
 
 		return Constants.RESULT_OK;
 		}
@@ -289,7 +245,7 @@ class ScoreList extends List
 			if( searchScoreItem.assignmentLevel() == currentAssignmentLevel )
 				{
 				if( deleteItem( searchScoreItem ) != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to delete an active item" );
+					return addError( 1, "I failed to delete an active item" );
 
 				searchScoreItem = nextScoreListItem();
 				}
@@ -300,7 +256,17 @@ class ScoreList extends List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte checkScores( boolean isInverted, short solveStrategyParameter, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore )
+	protected ScoreItem firstPossibility()
+		{
+		ScoreItem firstScoreItem;
+
+		if( ( firstScoreItem = firstActiveScoreItem() ) != null )
+			return firstScoreItem.firstPossibilityScoreItem();
+
+		return null;
+		}
+
+	protected BoolResultType checkScores( boolean isInverted, short solveStrategyParameter, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore )
 		{
 		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
 		int checkOldSatisfiedScore = ( isInverted ? oldDissatisfiedScore : oldSatisfiedScore );
@@ -308,8 +274,8 @@ class ScoreList extends List
 		int checkOldDissatisfiedScore = ( isInverted ? oldSatisfiedScore : oldDissatisfiedScore );
 		int checkNewDissatisfiedScore = ( isInverted ? newSatisfiedScore : newDissatisfiedScore );
 		ScoreItem searchScoreItem = firstActiveScoreItem();
-
-		hasFoundScore_ = false;
+		BoolResultType boolCheckResult;
+		BoolResultType boolReturnResult = new BoolResultType();
 
 		if( checkOldSatisfiedScore <= Constants.NO_SCORE &&
 		checkNewSatisfiedScore <= Constants.NO_SCORE &&
@@ -320,7 +286,7 @@ class ScoreList extends List
 		newNotBlockingScore <= Constants.NO_SCORE &&
 		oldBlockingScore <= Constants.NO_SCORE &&
 		newBlockingScore <= Constants.NO_SCORE )
-			return startError( 1, null, "None of the given scores has a value parameter" );
+			return startBoolResultError( 1, "None of the given scores has a value parameter" );
 
 		while( searchScoreItem != null &&
 		searchScoreItem.assignmentLevel() >= currentAssignmentLevel )
@@ -337,7 +303,8 @@ class ScoreList extends List
 				!searchScoreItem.hasOldBlockingScore() &&
 				!searchScoreItem.hasNewBlockingScore() )
 					{
-					hasFoundScore_ = true;
+					// Has found score
+					boolReturnResult.booleanValue = true;
 
 					searchScoreItem.oldSatisfiedScore = checkOldSatisfiedScore;
 					searchScoreItem.newSatisfiedScore = checkNewSatisfiedScore;
@@ -352,12 +319,11 @@ class ScoreList extends List
 					{
 					if( searchScoreItem.isMarked )
 						{
-						if( getBestScore( false, solveStrategyParameter, checkOldSatisfiedScore, checkNewSatisfiedScore, checkOldDissatisfiedScore, checkNewDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, searchScoreItem.oldSatisfiedScore, searchScoreItem.newSatisfiedScore, searchScoreItem.oldDissatisfiedScore, searchScoreItem.newDissatisfiedScore, searchScoreItem.oldNotBlockingScore, searchScoreItem.newNotBlockingScore, searchScoreItem.oldBlockingScore, searchScoreItem.newBlockingScore ) != Constants.RESULT_OK )
-							return addError( 1, null, "I failed to get the best score" );
+						if( ( boolCheckResult = getBestScore( false, solveStrategyParameter, checkOldSatisfiedScore, checkNewSatisfiedScore, checkOldDissatisfiedScore, checkNewDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, searchScoreItem.oldSatisfiedScore, searchScoreItem.newSatisfiedScore, searchScoreItem.oldDissatisfiedScore, searchScoreItem.newDissatisfiedScore, searchScoreItem.oldNotBlockingScore, searchScoreItem.newNotBlockingScore, searchScoreItem.oldBlockingScore, searchScoreItem.newBlockingScore ) ).result != Constants.RESULT_OK )
+							return addBoolResultError( 1, "I failed to get the best score" );
 
-						hasFoundScore_ = true;
-
-						if( hasBetterScore_ )
+						// Has better score
+						if( boolCheckResult.booleanValue )
 							{
 							searchScoreItem.oldSatisfiedScore = checkOldSatisfiedScore;
 							searchScoreItem.newSatisfiedScore = checkNewSatisfiedScore;
@@ -368,6 +334,9 @@ class ScoreList extends List
 							searchScoreItem.oldBlockingScore = oldBlockingScore;
 							searchScoreItem.newBlockingScore = newBlockingScore;
 							}
+
+						// Has found score
+						boolReturnResult.booleanValue = true;
 						}
 					}
 				}
@@ -375,20 +344,42 @@ class ScoreList extends List
 			searchScoreItem = searchScoreItem.nextScoreItem();
 			}
 
-		return Constants.RESULT_OK;
+		return boolReturnResult;
 		}
 
-	protected byte createScoreItem( boolean isChecked, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore, SelectionItem referenceSelectionItem )
+	protected BoolResultType findScore( boolean isPreparingSort, SelectionItem findScoreItem )
 		{
-		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, CommonVariables.currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-			return addError( 1, null, "I failed to add an active score item" );
+		BoolResultType boolResult = new BoolResultType();
+		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
+		ScoreItem searchScoreItem = firstActiveScoreItem();
 
-		return Constants.RESULT_OK;
+		if( findScoreItem == null )
+			return startBoolResultError( 1, "The given score item is undefined" );
+
+		while( searchScoreItem != null &&
+		searchScoreItem.assignmentLevel() >= currentAssignmentLevel )
+			{
+			if( ( currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL ||
+			searchScoreItem.isChecked ) &&
+
+			searchScoreItem.assignmentLevel() == currentAssignmentLevel &&
+			searchScoreItem.referenceSelectionItem == findScoreItem )
+				{
+				// Has found score
+				boolResult.booleanValue = true;
+				searchScoreItem.isMarked = isPreparingSort;
+				}
+
+			searchScoreItem = searchScoreItem.nextScoreItem();
+			}
+
+		return boolResult;
 		}
 
-	protected SelectionResultType getBestAction( boolean isCurrentlyTesting, short solveStrategyParameter )
+	protected SelectionResultType getBestSelection( boolean isCurrentlyTesting, short solveStrategyParameter )
 		{
 		SelectionResultType selectionResult = new SelectionResultType();
+		boolean hasBetterScore = false;
 		boolean isCummulate = false;
 		int nRandomEntries = 0;
 		int nLocalLosingScores;
@@ -413,9 +404,8 @@ class ScoreList extends List
 		int bestNewBlockingScore = Constants.MAX_SCORE;
 		ScoreItem localScoreItem;
 		ScoreItem searchScoreItem = firstActiveScoreItem();
-
-		hasEqualScore_ = false;
-		hasBetterScore_ = false;
+		SelectionItem bestActionSelectionItem = null;
+		BoolResultType boolResult;
 
 		while( searchScoreItem != null )
 			{
@@ -459,10 +449,11 @@ class ScoreList extends List
 								nLocalLosingScores++;
 							else
 								{
-								if( getBestScore( false, solveStrategyParameter, localScoreItem.oldSatisfiedScore, localScoreItem.newSatisfiedScore, localScoreItem.oldDissatisfiedScore, localScoreItem.newDissatisfiedScore, localScoreItem.oldNotBlockingScore, localScoreItem.newNotBlockingScore, localScoreItem.oldBlockingScore, localScoreItem.newBlockingScore, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore ) != Constants.RESULT_OK )
-									return addSelectionResultError( 1, null, "I failed to get the best local score" );
+								if( ( boolResult = getBestScore( false, solveStrategyParameter, localScoreItem.oldSatisfiedScore, localScoreItem.newSatisfiedScore, localScoreItem.oldDissatisfiedScore, localScoreItem.newDissatisfiedScore, localScoreItem.oldNotBlockingScore, localScoreItem.newNotBlockingScore, localScoreItem.oldBlockingScore, localScoreItem.newBlockingScore, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore ) ).result != Constants.RESULT_OK )
+									return addSelectionResultError( 1, "I failed to get the best local score" );
 
-								if( hasBetterScore_ )
+								// Has better score
+								if( boolResult.booleanValue )
 									{
 									localOldSatisfiedScore = localScoreItem.oldSatisfiedScore;
 									localNewSatisfiedScore = localScoreItem.newSatisfiedScore;
@@ -480,22 +471,25 @@ class ScoreList extends List
 					localScoreItem = localScoreItem.nextScoreItem();
 					}
 
-				hasEqualScore_ = ( nLocalWinningScores == nBestWinningScores &&
-				nLocalLosingScores == nBestLosingScores );
-
-				if( hasEqualScore_ )
+				if( nLocalWinningScores == nBestWinningScores &&
+				nLocalLosingScores == nBestLosingScores )
 					{
-					if( getBestScore( false, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) != Constants.RESULT_OK )
-						return addSelectionResultError( 1, null, "I failed to get the best score" );
+					if( ( boolResult = getBestScore( false, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) ).result != Constants.RESULT_OK )
+						return addSelectionResultError( 1, "I failed to get the best score" );
+
+					// Has better score
+					hasBetterScore = boolResult.booleanValue;
 					}
 				else
+					{
 					// Get highest number of winning scores, else if equal: Get lowest number of losing scores
-					hasBetterScore_ = ( nLocalWinningScores > nBestWinningScores ||
+					hasBetterScore = ( nLocalWinningScores > nBestWinningScores ||
 
 										( nLocalWinningScores == nBestWinningScores &&
 										nLocalLosingScores < nBestLosingScores ) );
+					}
 
-				if( hasBetterScore_ )
+				if( hasBetterScore )
 					{
 					isCummulate = false;
 					nBestWinningScores = nLocalWinningScores;
@@ -510,31 +504,29 @@ class ScoreList extends List
 					bestOldBlockingScore = localOldBlockingScore;
 					bestNewBlockingScore = localNewBlockingScore;
 
-					if( searchScoreItem.referenceSelectionItem != selectionResult.bestActionItem )
+					if( searchScoreItem.referenceSelectionItem != bestActionSelectionItem )
 						{
-						if( selectionResult.bestActionItem != null )
-							{
-							// Previous best action
-							if( disableAction( true, selectionResult.bestActionItem ) != Constants.RESULT_OK )
-								return addSelectionResultError( 1, null, "I failed to disable the best action" );
-							}
+						if( bestActionSelectionItem != null &&
+						// Previous best action
+						disableAction( true, bestActionSelectionItem ) != Constants.RESULT_OK )
+							return addSelectionResultError( 1, "I failed to disable the best action" );
 
 						// Current action
 						if( markAction( searchScoreItem.referenceSelectionItem ) != Constants.RESULT_OK )
-							return addSelectionResultError( 1, null, "I failed to mark an action" );
+							return addSelectionResultError( 1, "I failed to mark an action" );
 						}
 
-					selectionResult.bestActionItem = searchScoreItem.referenceSelectionItem;
+					bestActionSelectionItem = searchScoreItem.referenceSelectionItem;
 					}
 				else
 					{
-					if( searchScoreItem.referenceSelectionItem != selectionResult.bestActionItem )
+					if( searchScoreItem.referenceSelectionItem != bestActionSelectionItem )
 						{
-						if( hasEqualScore_ )
+						if( hasEqualScore( localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) )
 							{
 							// Current action
 							if( markAction( searchScoreItem.referenceSelectionItem ) != Constants.RESULT_OK )
-								return addSelectionResultError( 1, null, "I failed to mark an action" );
+								return addSelectionResultError( 1, "I failed to mark an action" );
 
 							// Found the same best score with different action
 							isCummulate = true;
@@ -543,7 +535,7 @@ class ScoreList extends List
 							{
 							// Previous best action
 							if( disableAction( false, searchScoreItem.referenceSelectionItem ) != Constants.RESULT_OK )
-								return addSelectionResultError( 1, null, "I failed to disable an action" );
+								return addSelectionResultError( 1, "I failed to disable an action" );
 							}
 						}
 					}
@@ -564,7 +556,7 @@ class ScoreList extends List
 			bestOldBlockingScore = Constants.MAX_SCORE;
 			bestNewBlockingScore = Constants.MAX_SCORE;
 
-			selectionResult.bestActionItem = null;
+			bestActionSelectionItem = null;
 
 			searchScoreItem = firstActiveScoreItem();
 
@@ -616,28 +608,28 @@ class ScoreList extends List
 							!localScoreItem.hasNewDissatisfiedScore() ) ) )
 								{
 								if( Constants.MAX_SCORE - localOldSatisfiedScore <= localScoreItem.oldSatisfiedScore )
-									return startSystemSelectionResultError( 1, null, "Overflow of the old satisfied cummulate score" );
+									return startSelectionResultSystemError( 1, "Overflow of the old satisfied cummulate score" );
 
 								if( Constants.MAX_SCORE - localNewSatisfiedScore <= localScoreItem.newSatisfiedScore )
-									return startSystemSelectionResultError( 1, null, "Overflow of the new satisfied cummulate score" );
+									return startSelectionResultSystemError( 1, "Overflow of the new satisfied cummulate score" );
 
 								if( Constants.MAX_SCORE - localOldDissatisfiedScore <= localScoreItem.oldDissatisfiedScore )
-									return startSystemSelectionResultError( 1, null, "Overflow of the old dissatisfied cummulate score" );
+									return startSelectionResultSystemError( 1, "Overflow of the old dissatisfied cummulate score" );
 
 								if( Constants.MAX_SCORE - localNewDissatisfiedScore <= localScoreItem.newDissatisfiedScore )
-									return startSystemSelectionResultError( 1, null, "Overflow of the new dissatisfied cummulate score" );
+									return startSelectionResultSystemError( 1, "Overflow of the new dissatisfied cummulate score" );
 
 								if( Constants.MAX_SCORE - localOldNotBlockingScore <= localScoreItem.oldNotBlockingScore )
-									return startSystemSelectionResultError( 1, null, "Overflow of the old not-blocking cummulate score" );
+									return startSelectionResultSystemError( 1, "Overflow of the old not-blocking cummulate score" );
 
 								if( Constants.MAX_SCORE - localNewNotBlockingScore <= localScoreItem.newNotBlockingScore )
-									return startSystemSelectionResultError( 1, null, "Overflow of the new not-blocking cummulate score" );
+									return startSelectionResultSystemError( 1, "Overflow of the new not-blocking cummulate score" );
 
 								if( Constants.MAX_SCORE - localOldBlockingScore <= localScoreItem.oldBlockingScore )
-									return startSystemSelectionResultError( 1, null, "Overflow of the old blocking cummulate score" );
+									return startSelectionResultSystemError( 1, "Overflow of the old blocking cummulate score" );
 
 								if( Constants.MAX_SCORE - localNewBlockingScore <= localScoreItem.newBlockingScore )
-									return startSystemSelectionResultError( 1, null, "Overflow of the new blocking cummulate score" );
+									return startSelectionResultSystemError( 1, "Overflow of the new blocking cummulate score" );
 
 								localOldSatisfiedScore += localScoreItem.oldSatisfiedScore;
 								localNewSatisfiedScore += localScoreItem.newSatisfiedScore;
@@ -653,10 +645,11 @@ class ScoreList extends List
 						localScoreItem = localScoreItem.nextScoreItem();
 						}
 
-					if( getBestScore( true, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) != Constants.RESULT_OK )
-						return addSelectionResultError( 1, null, "I failed to get the best local score" );
+					if( ( boolResult = getBestScore( true, solveStrategyParameter, localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) ).result != Constants.RESULT_OK )
+						return addSelectionResultError( 1, "I failed to get the best local score" );
 
-					if( hasBetterScore_ )
+					// Has better score
+					if( boolResult.booleanValue )
 						{
 						nRandomEntries = 1;
 
@@ -669,31 +662,29 @@ class ScoreList extends List
 						bestOldBlockingScore = localOldBlockingScore;
 						bestNewBlockingScore = localNewBlockingScore;
 
-						if( searchScoreItem.referenceSelectionItem != selectionResult.bestActionItem )
+						if( searchScoreItem.referenceSelectionItem != bestActionSelectionItem )
 							{
-							if( selectionResult.bestActionItem != null )
-								{
-								// Previous best action
-								if( disableAction( true, selectionResult.bestActionItem ) != Constants.RESULT_OK )
-									return addSelectionResultError( 1, null, "I failed to disable the best action" );
-								}
+							if( bestActionSelectionItem != null &&
+							// Previous best action
+							disableAction( true, bestActionSelectionItem ) != Constants.RESULT_OK )
+								return addSelectionResultError( 1, "I failed to disable the best action" );
 
 							// Current action
 							if( markAction( searchScoreItem.referenceSelectionItem ) != Constants.RESULT_OK )
-								return addSelectionResultError( 1, null, "I failed to mark an action" );
+								return addSelectionResultError( 1, "I failed to mark an action" );
 							}
 
-						selectionResult.bestActionItem = searchScoreItem.referenceSelectionItem;
+						bestActionSelectionItem = searchScoreItem.referenceSelectionItem;
 						}
 					else
 						{
-						if( searchScoreItem.referenceSelectionItem != selectionResult.bestActionItem )
+						if( searchScoreItem.referenceSelectionItem != bestActionSelectionItem )
 							{
-							if( hasEqualScore_ )
+							if( hasEqualScore( localOldSatisfiedScore, localNewSatisfiedScore, localOldDissatisfiedScore, localNewDissatisfiedScore, localOldNotBlockingScore, localNewNotBlockingScore, localOldBlockingScore, localNewBlockingScore, bestOldSatisfiedScore, bestNewSatisfiedScore, bestOldDissatisfiedScore, bestNewDissatisfiedScore, bestOldNotBlockingScore, bestNewNotBlockingScore, bestOldBlockingScore, bestNewBlockingScore ) )
 								{
 								// Current action
 								if( markAction( searchScoreItem.referenceSelectionItem ) != Constants.RESULT_OK )
-									return addSelectionResultError( 1, null, "I failed to mark an action" );
+									return addSelectionResultError( 1, "I failed to mark an action" );
 
 								nRandomEntries++;
 								}
@@ -701,7 +692,7 @@ class ScoreList extends List
 								{
 								// Previous best action
 								if( disableAction( false, searchScoreItem.referenceSelectionItem ) != Constants.RESULT_OK )
-									return addSelectionResultError( 1, null, "I failed to disable an action" );
+									return addSelectionResultError( 1, "I failed to disable an action" );
 								}
 							}
 						}
@@ -739,7 +730,7 @@ class ScoreList extends List
 								}
 							}
 						else
-							selectionResult.bestActionItem = searchScoreItem.referenceSelectionItem;
+							bestActionSelectionItem = searchScoreItem.referenceSelectionItem;
 						}
 
 					searchScoreItem = searchScoreItem.nextScoreItem();
@@ -747,21 +738,12 @@ class ScoreList extends List
 				}
 			}
 
+		selectionResult.selectionItem = bestActionSelectionItem;
 		return selectionResult;
-		}
-
-	protected ScoreItem firstPossibility()
-		{
-		ScoreItem firstScoreItem;
-
-		if( ( firstScoreItem = firstActiveScoreItem() ) != null )
-			return firstScoreItem.firstPossibilityScoreItem();
-
-		return null;
 		}
 	};
 
 /*************************************************************************
- *	"He gives food to those who fear him;
- *	he always remembers his covenant." (Psalm 111:5)
+ *	"All he does is just and good,
+ *	and all his commandments are trustworthy." (Psalm 111:7)
  *************************************************************************/

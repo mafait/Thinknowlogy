@@ -1,35 +1,38 @@
 Affichez "------------------------------------------------------------------------------".
-Affichez " Malgré des siècles d'enquête approfondie, la théorie de l'évolution n'a toujours".
-Affichez " pas d'explication satisfaisante pour l'origine de l'intelligence et de la langue.".
-Affichez " Soit seul, comment les deux sont liés. Selon la vision du monde biblique, Dieu".
-Affichez " a créé lois de la nature, y compris les lois de l'intelligence. Étant basé sur".
-Affichez " les lois de l'intelligence, seulement Thinknowlogy implémente le sens naturel".
-#C++#Affichez " (fonction intelligente) des mots comme les articles définis \"le\" et \"la\",".
-#C++#Affichez " conjonction \"ou\", verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
-#Java#Affichez " (fonction intelligente) des mots comme les articles définis «le» et «la»,".
-#Java#Affichez " conjonction «ou», verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
+Affichez " Thinknowlogy est le système de raisonnement du Langage Contrôlé le plus avancé:".
+#C++#Affichez " * Malgré des siècles d'enquête approfondie, la théorie de l'évolution n'a".
+#Java#Affichez " • Malgré des siècles d'enquête approfondie, la théorie de l'évolution n'a".
+Affichez " toujours pas d'explication satisfaisante pour l'origine de l'intelligence et de".
+Affichez " la langue. Soit seul, comment les deux sont liés;".
+#C++#Affichez " * Selon la vision du monde biblique, Dieu a créé lois de la nature. Étant basé".
+#Java#Affichez " • Selon la vision du monde biblique, Dieu a créé lois de la nature. Étant basé".
+Affichez " sur les lois de l'intelligence, seulement Thinknowlogy implémente le fonction".
+#C++#Affichez " intelligente des mots comme les articles définis \"le\" et \"la\", conjonction \"ou\",".
+#C++#Affichez " verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
+#Java#Affichez " intelligente des mots comme les articles définis «le» et «la», conjonction «ou»,".
+#Java#Affichez " verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
 Affichez "------------------------------------------------------------------------------".
-Affichez " Ces lois naturelles de l'intelligence embarquée dans la grammaire sont démontrées par:".
-Affichez " * Programmation en langage naturel;".
-Affichez " * Raisonnement en langage naturel:".
+Affichez " La fonction intelligente de ces mots est démontrée par:".
+#C++#Affichez " * Programmation en Langue contrôlée;".
+#C++#Affichez " * Raisonnement en Langue contrôlée:".
+#Java#Affichez " • Programmation en Langue contrôlée;".
+#Java#Affichez " • Raisonnement en Langue contrôlée:".
 Affichez "   - tirer des conclusions (plus avancés que les solutions scientifiques),".
 Affichez "   - faire des hypothèses (avec niveau d'incertitude auto-réglage),".
 Affichez "   - poser des questions (environ lacunes dans les connaissances),".
 Affichez "   - détecter les conflits et les quelques cas d'ambiguïté sémantique,".
 Affichez "   - l'affichage de rapports de justification pour la connaissance autoproduite;".
-Affichez " * Multilinguisme, prouver: Langues naturelles ont une origine commune.".
+#C++#Affichez " * Multilinguisme, prouver: Langues naturelles ont une origine commune.".
+#Java#Affichez " • Multilinguisme, prouver: Langues naturelles ont une origine commune.".
 Affichez "------------------------------------------------------------------------------".
 Affichez " Je défie quiconque de battre ce raisonneur: http://mafait.org/challenge/".
 Affichez "------------------------------------------------------------------------------".
 #C++#Affichez " Aide.\t\t\t\t\t\t* Afficher plus d'aide d'info".
 #C++#Affichez " \~{languageName}\t\t\t\t* Changer la langue".
-#C++#Affichez " Lirez le fichier \"Français/ambiguïté/Boston\".\t* Ambiguïté détection".
-#C++#Affichez " Lirez le fichier \"Français/ambiguïté/Présidents des États-Unis\".".
-#C++#Affichez " Lirez le fichier \"Français/programmation/Puissance 4\".\t* Jeu Puissance 4".
-#C++#Affichez " Lirez le fichier \"Français/programmation/Voeux\".\t* Voeux (salut)".
-#C++#Affichez " Lirez le fichier \"Français/programmation/Tours de Hanoï\".\t* Un puzzle".
-#C++#Affichez " Lirez le fichier \"Français/raisonnement/définition de famille\".* Raisonnement".
-#Java#Affichez " Bouton <ambiguïté> utiliser pour en apprendre davantage sur la détection d'ambiguïté.".
+#C++#Affichez " Lirez le fichier \"Français/programmation/utilisateur/Puissance 4\".".
+#C++#Affichez " Lirez le fichier \"Français/programmation/utilisateur/Tours de Hanoï\".".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/utilisateur/raisonnement/Défi scientifique\".".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/utilisateur/famille/définition de famille\".".
 #Java#Affichez " Bouton <programmation> utiliser pour apprendre la programmation en langage naturel.".
 #Java#Affichez " Bouton <raisonnement> utiliser pour en apprendre davantage sur le raisonnement en langage naturel.".
 Affichez "------------------------------------------------------------------------------".

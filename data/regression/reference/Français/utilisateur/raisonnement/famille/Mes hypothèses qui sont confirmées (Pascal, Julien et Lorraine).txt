@@ -50,12 +50,13 @@
 < Amélie est possible une mère de Pascal.
 < Amélie est possible une femme.
 < Amélie n'est peut-être pas un homme.
+< Amélie est possible féminine.
 < Amélie n'est peut-être pas un père.
 * 
 * Mes questions:
 < Est Pascal un garçon ou un homme?
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 < 
 * 
 * Mes conclusions:
@@ -70,8 +71,8 @@
 < Julien n'est probablement pas une fille.
 < Julien a probablement 2 parents, appelés Olivier et Amélie.
 < Julien a possible une mère, appelée Amélie.
-< Olivier est probablement un parent de Pascal et Julien.
 < Olivier a probablement 2 enfants, appelés Pascal et Julien.
+< Olivier est probablement un parent de Pascal et Julien.
 < Amélie est probablement un parent de Pascal et Julien.
 < Amélie est possible une mère de Pascal et Julien.
 < Amélie a probablement 2 enfants, appelés Pascal et Julien.

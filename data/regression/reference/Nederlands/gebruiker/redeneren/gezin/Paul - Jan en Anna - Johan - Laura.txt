@@ -50,12 +50,13 @@
 < Anna is mogelijk een moeder van Paul.
 < Anna is mogelijk een vrouw.
 < Anna is misschien geen man.
+< Anna is mogelijk vrouwelijk.
 < Anna is misschien geen vader.
 * 
 * Mijn vragen:
 < Is Paul een jongen of een man?
-< Is Jan een man of een vrouw?
 < Is Jan een vader of een moeder?
+< Is Jan een man of een vrouw?
 < 
 * 
 * Mijn vragen die beantwoord zijn:
@@ -79,10 +80,16 @@
 * 
 * Mijn veronderstellingen die aangepast zijn:
 < Anna is waarschijnlijk geen man.
+* 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Anna is vrouwelijk.
+* 
+* Mijn veronderstellingen die aangepast zijn:
 < Anna is waarschijnlijk geen vader.
 * 
 * Mijn conclusies:
 < Jan is een man.
+< Jan is mannelijk.
 < Paul heeft een vader, genaamd Jan.
 < Johan heeft een vader, genaamd Jan.
 < Johan heeft een moeder, genaamd Anna.
@@ -111,7 +118,7 @@
 < Anna heeft mogelijk een dochter, genaamd Laura.
 * 
 * Mijn vragen:
-< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een meisje, een vrouw, een jongen of een man?
 < Is Johan een zoon of een dochter?
 < Is Laura een meisje of een vrouw?
 < 
@@ -120,7 +127,7 @@
 < Is Johan een zoon of een dochter?
 * 
 * Mijn aangepaste vragen:
-< Is Johan een man of een jongen?
+< Is Johan een jongen of een man?
 * 
 * Mijn veronderstellingen die aangepast zijn:
 < Johan is waarschijnlijk een persoon.

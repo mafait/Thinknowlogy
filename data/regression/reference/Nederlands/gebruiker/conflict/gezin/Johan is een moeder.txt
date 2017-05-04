@@ -50,12 +50,13 @@
 < Anna is mogelijk een moeder van Johan.
 < Anna is mogelijk een vrouw.
 < Anna is misschien geen man.
+< Anna is mogelijk vrouwelijk.
 < Anna is misschien geen vader.
 * 
 * Mijn vragen:
 < Is Johan een jongen of een man?
-< Is Jan een man of een vrouw?
 < Is Jan een vader of een moeder?
+< Is Jan een man of een vrouw?
 < 
 ! 
 ! Deze zin is niet geaccepteerd, omdat het in conflict is met:

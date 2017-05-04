@@ -1,9 +1,9 @@
 /*	Class:		GrammarResultType
  *	Purpose:	To return grammar variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -22,32 +22,23 @@
  *************************************************************************/
 
 #include "Item.h"
-// Some compilers need these class declarations
+// Class declarations
 class GrammarItem;
 
 class GrammarResultType
 	{
-	friend class AdminReadCreateWords;
-	friend class AdminReadGrammar;
+	friend class AdminReadFile;
 	friend class GrammarList;
 	friend class Item;
 	friend class List;
 	friend class WordItem;
-	friend class WordType;
 
 	protected:
 	// Protected variables
 
-	ResultType result;
+	signed char result;
 
-	bool hasFoundWordEnding;
-
-	size_t singularNounWordStringLength;
-
-	GrammarItem *createdGrammarItem;
-	GrammarItem *foundGrammarItem;
-
-	char singularNounWordString[MAX_WORD_LENGTH];
+	GrammarItem *grammarItem;
 
 	protected:
 	// Constructor
@@ -56,20 +47,11 @@ class GrammarResultType
 		{
 		result = RESULT_OK;
 
-		hasFoundWordEnding = false;
-
-		singularNounWordStringLength = 0;
-
-		createdGrammarItem = NULL;
-		foundGrammarItem = NULL;
-
-		strcpy( singularNounWordString, EMPTY_STRING );
+		grammarItem = NULL;
 		}
 	};
 
 /*************************************************************************
- *	"Sing praises to God, sing praises;
- *	sing praises to our King, sing praises.
- *	For God is the King over all the earth.
- *	Praise him with a psalm!" (Psalm 47:6-7)
+ *	"God has ascended with a mighty shout.
+ *	The Lord has ascended with trumpets blaring." (Psalm 47:5)
  *************************************************************************/

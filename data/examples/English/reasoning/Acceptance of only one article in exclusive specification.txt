@@ -1,5 +1,5 @@
-﻿A creature is an animal, fungus, human-being, micro-organism, or plant.
-An animal is a vertebrate or invertebrate.
-A vertebrate is an amphibian, bird, fish, mammal, or reptile.
-An invertebrate is an annelid, arthropod, echinoderm, mollusk, or protozoan.
+﻿Every organism is an animal, fungus, human-being, micro-organism, or plant.
+Every animal is a vertebrate or invertebrate.
+Every vertebrate is an amphibian, bird, fish, mammal, or reptile.
+Every invertebrate is an annelid, arthropod, echinoderm, mollusk, or protozoan.
 # To continue, click button «Clear your mind.» or «Restart.».

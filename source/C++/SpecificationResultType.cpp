@@ -1,9 +1,9 @@
 /*	Class:		SpecificationResultType
- *	Purpose:	To return specification variables,
+ *	Purpose:	To return assignment specification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -21,55 +21,20 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#include "Item.h"
-#include "JustificationItem.h"
+#include "WordItem.h"
 
 class SpecificationResultType
 	{
-	friend class AdminAssumption;
-	friend class AdminAuthorization;
-	friend class AdminConclusion;
 	friend class AdminImperative;
-	friend class AdminItem;
-	friend class AdminLanguage;
-	friend class AdminReadFile;
-	friend class AdminSolve;
-	friend class AdminSpecification;
 	friend class Item;
-	friend class JustificationItem;
-	friend class JustificationList;
-	friend class List;
-	friend class SpecificationItem;
-	friend class SpecificationList;
-	friend class WordAssignment;
-	friend class WordItem;
-	friend class WordQuestion;
 	friend class WordSpecification;
-	friend class WordWrite;
-	friend class WordWriteWords;
 
 	protected:
 	// Protected variables
 
-	ResultType result;
+	signed char result;
 
-	bool isFirstRelatedSpecification;
-	bool isLastRelatedSpecification;
-
-	unsigned short assignmentOrderNr;
-	unsigned short assignmentParameter;
-	unsigned short assumptionLevel;
-	unsigned short combinedAssumptionLevel;
-
-	JustificationItem *createdJustificationItem;
-
-	SpecificationItem *adjustedQuestionSpecificationItem;
-	SpecificationItem *createdSpecificationItem;
-	SpecificationItem *foundSpecificationItem;
-	SpecificationItem *relatedSpecificationItem;
-	SpecificationItem *replacedAssignmentItem;
-
-	WordItem *compoundGeneralizationWordItem;
+	SpecificationItem *specificationItem;
 
 	protected:
 	// Constructor
@@ -78,31 +43,13 @@ class SpecificationResultType
 		{
 		result = RESULT_OK;
 
-		isFirstRelatedSpecification = false;
-		isLastRelatedSpecification = false;
-
-		assignmentOrderNr = NO_ORDER_NR;
-		assignmentParameter = NO_ASSIGNMENT_PARAMETER;
-		assumptionLevel = NO_ASSIGNMENT_LEVEL;
-		combinedAssumptionLevel = NO_ASSIGNMENT_LEVEL;
-
-		createdJustificationItem = NULL;
-
-		adjustedQuestionSpecificationItem = NULL;
-		createdSpecificationItem = NULL;
-		foundSpecificationItem = NULL;
-		relatedSpecificationItem = NULL;
-		replacedAssignmentItem = NULL;
-
-		compoundGeneralizationWordItem = NULL;
+		specificationItem = NULL;
 		}
 	};
 
 /*************************************************************************
- *	"Even when I walk
- *	through the darkest valley,
- *	I will not be afraid,
- *	for you are close beside me.
- *	Your rod and your staff
- *	protect and conform me." (Psalm 23:4)
+ *	"Sing praises to God, sing praises;
+ *	sing praises to our King, sing praises.
+ *	For God is the King over all the earth.
+ *	Praise him with a psalm!" (Psalm 47:6-7)
  *************************************************************************/

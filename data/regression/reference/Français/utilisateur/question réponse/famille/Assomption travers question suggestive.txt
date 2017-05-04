@@ -50,12 +50,13 @@
 < Amélie est possible une mère de Pascal.
 < Amélie est possible une femme.
 < Amélie n'est peut-être pas un homme.
+< Amélie est possible féminine.
 < Amélie n'est peut-être pas un père.
 * 
 * Mes questions:
 < Est Pascal un garçon ou un homme?
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 < 
 * 
 * Votre question est plus spécifique que ma question antérieure:

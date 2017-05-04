@@ -50,12 +50,13 @@
 < Amélie est possible une mère de Pascal.
 < Amélie est possible une femme.
 < Amélie n'est peut-être pas un homme.
+< Amélie est possible féminine.
 < Amélie n'est peut-être pas un père.
 * 
 * Mes questions:
 < Est Pascal un garçon ou un homme?
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 < 
 * 
 * Mes questions qui sont répondues:
@@ -79,10 +80,16 @@
 * 
 * Mes hypothèses qui sont ajustés:
 < Amélie n'est probablement pas un homme.
+* 
+* Mes hypothèses qui sont conclus:
+< Amélie est féminine.
+* 
+* Mes hypothèses qui sont ajustés:
 < Amélie n'est probablement pas un père.
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier est masculin.
 < Pascal a un père, appelé Olivier.
 < Julien a un père, appelé Olivier.
 < Julien a une mère, appelée Amélie.
@@ -111,7 +118,7 @@
 < Amélie a possible une fille, appelée Lorraine.
 * 
 * Mes questions:
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < Est Lorraine une jeune-fille ou une femme?
 < 
@@ -120,7 +127,7 @@
 < Est Julien un fils ou une fille?
 * 
 * Mes questions ajustés:
-< Est Julien un homme ou un garçon?
+< Est Julien un garçon ou un homme?
 * 
 * Mes hypothèses qui sont ajustés:
 < Julien est probablement une personne.

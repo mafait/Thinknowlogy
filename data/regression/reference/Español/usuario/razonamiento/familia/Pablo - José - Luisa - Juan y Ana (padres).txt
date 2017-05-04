@@ -28,13 +28,14 @@
 * 
 * Mis suposiciones:
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 < Pablo tiene probablemente una madre, llamada Ana.
 < Juan es probablemente una persona.
 < Ana es probablemente una persona.
 < Ana es probablemente madre de Pablo.
 < Ana es probablemente una mujer.
 < Ana no es posiblemente un hombre.
+< Ana es probablemente femenina.
 < Ana no es probablemente un padre.
 * 
 * Mis preguntas:
@@ -46,7 +47,7 @@
 * 
 * Mis suposiciones:
 < José es posiblemente una persona.
-< José es probablemente parte de una familia.
+< José es posiblemente parte de una familia.
 < José tiene probablemente una madre, llamada Ana.
 < Ana es probablemente madre de Pablo y José.
 * 
@@ -77,16 +78,21 @@
 * Mis suposiciones que se confirman:
 < Ana es probablemente madre de Pablo, José y Luisa.
 * 
+* Mis suposiciones que se ajustan:
+< Ana no es probablemente un hombre.
+* 
 * Mis suposiciones que se concluyen:
-< Ana no es un hombre.
-< Ana es una mujer.
-< Ana no es un padre.
 < Pablo tiene una madre, llamada Ana.
 < José tiene una madre, llamada Ana.
 < Luisa tiene una madre, llamada Ana.
+< Ana es una mujer.
+< Ana no es un hombre.
+< Ana es femenina.
+< Ana no es un padre.
 * 
 * Mis conclusiones:
 < Juan es un hombre.
 < Juan no es una mujer.
+< Juan es masculino.
 < Juan no es una madre.
 < 

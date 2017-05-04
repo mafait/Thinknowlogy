@@ -49,23 +49,23 @@
 < 
 * 
 * My conclusions:
-< The United States has a president, called Bill Clinton.
+< The United States has a president, called Barack Obama.
 < 
 * 
-* The word "Bill Clinton" is semantically ambiguous:
+* The word "Barack Obama" is semantically ambiguous:
 * - either the entity re-occurred,
 * - or there are multiple instances of this entity.
 * 
 * In the latter case, please enhance the specification of the involved entities.
 * 
 * My conclusions that are confirmed:
-< The United States has a president, called Bill Clinton.
+< The United States has a president, called Barack Obama.
 < 
 * 
 * My conclusions:
-< The United States has a president, called Barack Obama.
+< The United States has a president, called Donald Trump.
 < 
 * 
 * My conclusions that are confirmed:
-< The United States has a president, called Barack Obama.
+< The United States has a president, called Donald Trump.
 < 

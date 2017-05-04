@@ -1,9 +1,9 @@
 /*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -42,11 +42,11 @@ class FileItem : private Item
 	protected:
 	// Constructor
 
-	FileItem( bool isInfoFile, bool isTestFile, char *readFileNameString, char *writeFileNameString, FILE *readFile, FILE *writeFile, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	FileItem( bool isInfoFile, bool isTestFile, char *readFileNameString, char *writeFileNameString, FILE *readFile, FILE *writeFile, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
 		size_t fileNameStringLength;
 
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "FileItem", commonVariables, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "FileItem", commonVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -68,10 +68,10 @@ class FileItem : private Item
 					if( ( readFileNameString_ = new char[fileNameStringLength + 1] ) != NULL )
 						strcpy( readFileNameString_, readFileNameString );
 					else
-						startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the read file name string" );
+						startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the read file name string" );
 					}
 				else
-					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read file name string is too long" );
+					startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read file name string is too long" );
 				}
 
 			if( writeFileNameString != NULL )
@@ -81,14 +81,14 @@ class FileItem : private Item
 					if( ( writeFileNameString_ = new char[fileNameStringLength + 1] ) != NULL )
 						strcpy( writeFileNameString_, writeFileNameString );
 					else
-						startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the write file name string" );
+						startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "I failed to create the write file name string" );
 					}
 				else
-					startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given write file name string is too long" );
+					startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given write file name string is too long" );
 				}
 			}
 		else
-			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read file is undefined" );
+			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given read file is undefined" );
 		}
 
 	~FileItem()
@@ -132,11 +132,11 @@ class FileItem : private Item
 		return true;
 		}
 
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *queryString;
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 

@@ -1,8 +1,8 @@
 /*	Class:			CommonVariables
  *	Purpose:		To hold the common variables
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -23,33 +23,23 @@
 #include <string.h>
 #include "Constants.h"
 
-// Some compilers need these class declarations
-class Presentation;
+// Class declarations
 class ScoreList;
 class SelectionList;
 class WordItem;
 
 class CommonVariables
 	{
-	friend class AdminAssumption;
-	friend class AdminAuthorization;
-	friend class AdminCleanup;
-	friend class AdminCollection;
-	friend class AdminConclusion;
-	friend class AdminContext;
 	friend class AdminImperative;
 	friend class AdminItem;
-	friend class AdminLanguage;
 	friend class AdminQuery;
 	friend class AdminReadCreateWords;
 	friend class AdminReadFile;
-	friend class AdminReadGrammar;
 	friend class AdminReadSentence;
-	friend class AdminSelection;
-	friend class AdminSolve;
+	friend class AdminReasoningNew;
+	friend class AdminReasoningOld;
 	friend class AdminSpecification;
-	friend class AdminWriteJustification;
-	friend class AdminWriteSpecification;
+	friend class AdminWrite;
 	friend class CollectionItem;
 	friend class CollectionList;
 	friend class ContextItem;
@@ -60,17 +50,15 @@ class CommonVariables
 	friend class GeneralizationList;
 	friend class GrammarItem;
 	friend class GrammarList;
+	friend class InputOutput;
 	friend class InterfaceItem;
 	friend class InterfaceList;
 	friend class Item;
 	friend class JustificationItem;
 	friend class JustificationList;
 	friend class List;
-	friend class ListCleanup;
-	friend class ListQuery;
 	friend class MultipleWordItem;
 	friend class MultipleWordList;
-	friend class Presentation;
 	friend class ReadItem;
 	friend class ReadList;
 	friend class ScoreItem;
@@ -79,42 +67,34 @@ class CommonVariables
 	friend class SelectionList;
 	friend class SpecificationItem;
 	friend class SpecificationList;
-	friend class WordAssignment;
-	friend class WordCleanup;
-	friend class WordCollection;
 	friend class WordItem;
 	friend class WordList;
 	friend class WordQuestion;
-	friend class WordSelectionCondition;
 	friend class WordSpecification;
-	friend class WordType;
 	friend class WordTypeItem;
 	friend class WordTypeList;
 	friend class WordWrite;
-	friend class WordWriteSentence;
-	friend class WordWriteWords;
 	friend class WriteItem;
 	friend class WriteList;
 
 	// Protected common variables
 
 	bool hasDisplayedArticleNotification;
+	bool hasDisplayedIntegrityWarning;
 	bool hasDisplayedMessage;
 	bool hasDisplayedWarning;
 	bool hasFoundAnswerToQuestion;
 	bool hasFoundQuery;
-
 	bool isAssignmentChanged;
 	bool isFirstAnswerToQuestion;
 	bool isQuestionAlreadyAnswered;
 
-	ResultType result;
+	signed char result;
 
 	unsigned short currentAssignmentLevel;
 	unsigned short currentLanguageNr;
 	unsigned short currentUserNr;
 	unsigned short currentWriteLevel;
-
 	unsigned short matchingWordTypeNr;
 
 	unsigned int nDeletedItems;
@@ -123,19 +103,14 @@ class CommonVariables
 	unsigned int nArchivedQueryItems;
 	unsigned int nReplacedQueryItems;
 	unsigned int nDeletedQueryItems;
-
 	unsigned int nUserGeneralizationWords;
 	unsigned int nUserSpecificationWords;
 	unsigned int nUserRelationWords;
-
 	unsigned int currentSentenceNr;
 	unsigned int highestInUseSentenceNr;
 	unsigned int removeSentenceNr;
-
 	unsigned int currentItemNr;
 	unsigned int removeStartItemNr;
-
-	Presentation *presentation;
 
 	ScoreList *adminScoreList;
 
@@ -147,10 +122,13 @@ class CommonVariables
 	WordItem *firstAssignmentWordItem;
 	WordItem *firstCollectionWordItem;
 	WordItem *firstContextWordItem;
-	WordItem *firstSpecificationWordItem;
-	WordItem *firstTouchedWordItem;
-	WordItem *firstWordItem;
+	WordItem *firstPossessiveNounWordItem;
 	WordItem *firstPredefinedWordItem;
+	WordItem *firstSpecificationWordItem;
+	WordItem *firstTouchedProperNameWordItem;
+	WordItem *firstWordItem;
+	WordItem *lastCollectionWordItem;
+	WordItem *lastContextWordItem;
 	WordItem *lastPredefinedWordItem;
 	WordItem *predefinedNounLanguageWordItem;
 	WordItem *predefinedNounUserWordItem;
@@ -169,11 +147,11 @@ class CommonVariables
 		// Protected common variables
 
 		hasDisplayedArticleNotification = false;
+		hasDisplayedIntegrityWarning = false;
 		hasDisplayedMessage = false;
 		hasDisplayedWarning = false;
 		hasFoundAnswerToQuestion = false;
 		hasFoundQuery = false;
-
 		isAssignmentChanged = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
@@ -184,7 +162,6 @@ class CommonVariables
 		currentLanguageNr = NO_LANGUAGE_NR;
 		currentUserNr = NO_USER_NR;
 		currentWriteLevel = NO_WRITE_LEVEL;
-
 		matchingWordTypeNr = NO_WORD_TYPE_NR;
 
 		nDeletedItems = 0;
@@ -193,20 +170,15 @@ class CommonVariables
 		nArchivedQueryItems = 0;
 		nReplacedQueryItems = 0;
 		nDeletedQueryItems = 0;
-
 		nUserGeneralizationWords = 0;
 		nUserSpecificationWords = 0;
 		nUserRelationWords = 0;
-
 		// First sentence
 		currentSentenceNr = 1;
 		highestInUseSentenceNr = NO_SENTENCE_NR;
 		removeSentenceNr = NO_SENTENCE_NR;
-
 		currentItemNr = NO_ITEM_NR;
 		removeStartItemNr = NO_ITEM_NR;
-
-		presentation = NULL;
 
 		adminScoreList = NULL;
 
@@ -218,10 +190,13 @@ class CommonVariables
 		firstAssignmentWordItem = NULL;
 		firstCollectionWordItem = NULL;
 		firstContextWordItem = NULL;
-		firstSpecificationWordItem = NULL;
-		firstTouchedWordItem = NULL;
-		firstWordItem = NULL;
+		firstPossessiveNounWordItem = NULL;
 		firstPredefinedWordItem = NULL;
+		firstSpecificationWordItem = NULL;
+		firstTouchedProperNameWordItem = NULL;
+		firstWordItem = NULL;
+		lastCollectionWordItem = NULL;
+		lastContextWordItem = NULL;
 		lastPredefinedWordItem = NULL;
 		predefinedNounLanguageWordItem = NULL;
 		predefinedNounUserWordItem = NULL;

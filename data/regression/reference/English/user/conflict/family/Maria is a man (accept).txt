@@ -28,6 +28,9 @@
 < 
 * I expected proper name "Maria" to be feminine.
 * 
+* My conclusions:
+< Maria is masculine.
+* 
 * My assumptions:
 < Maria is probably a person.
 < Maria is probably not a woman.

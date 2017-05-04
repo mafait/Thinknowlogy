@@ -35,7 +35,7 @@
 < Jan heeft waarschijnlijk een kind.
 * 
 * Mijn vragen:
-< Is Jan een man of een vrouw?
+< Is Jan een vrouw of een man?
 < Is Jan een vader of een moeder?
 < 
 * 
@@ -47,7 +47,7 @@
 < Peter heeft waarschijnlijk een kind.
 * 
 * Mijn vragen:
-< Is Peter een man of een vrouw?
+< Is Peter een vrouw of een man?
 < Is Peter een vader of een moeder?
 < 
 * 
@@ -64,12 +64,13 @@
 < Jan is waarschijnlijk een ouder van Johan.
 * 
 * Mijn vragen:
-< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een meisje, een vrouw, een jongen of een man?
 < Is Johan een zoon of een dochter?
 < 
 * 
 * Mijn conclusies:
 < Anna is een vrouw.
+< Anna is vrouwelijk.
 < Paul heeft een moeder, genaamd Anna.
 * 
 * Mijn veronderstellingen:
@@ -85,7 +86,7 @@
 < Paul heeft waarschijnlijk een ouder, genaamd Anna.
 * 
 * Mijn vragen:
-< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
 < 
 * Dat weet ik.
@@ -93,6 +94,7 @@
 * 
 * Mijn conclusies:
 < Sjors was een man.
+< Sjors was mannelijk.
 < André heeft geen vader meer.
 < André had een vader, genaamd Sjors.
 * 
@@ -109,7 +111,7 @@
 < André had waarschijnlijk een ouder, genaamd Sjors.
 * 
 * Mijn vragen:
-< Is André een man, een vrouw, een meisje of een jongen?
+< Is André een meisje, een vrouw, een jongen of een man?
 < Is André een zoon of een dochter?
 < 
 * Dat weet ik.

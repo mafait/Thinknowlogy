@@ -26,6 +26,7 @@
 < Juan era parte de una familia.
 < Juan era un hombre.
 < Juan no era una mujer.
+< Juan era masculino.
 < Juan no era una madre.
 < Pablo no tiene un padre nunca-más.
 < Pablo tenido un padre, llamado Juan.
@@ -38,9 +39,9 @@
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Juan era probablemente una persona.
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 < José es posiblemente una persona.
-< José es probablemente parte de una familia.
+< José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan.
 < Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
@@ -66,6 +67,9 @@
 <	- Juan era el padre de Pablo, José y Luisa.
 <	- Cada padre es una mujer o un hombre.
 <	- Juan era un hombre.
+< Juan era masculino. Porque:
+<	- Juan era un hombre.
+<	- Cada hombre es masculino.
 < Juan no era una madre. Porque:
 <	- Juan era el padre de Pablo, José y Luisa.
 <	- Cada padre es un padre o una madre.
@@ -95,7 +99,7 @@
 <	- Pablo tenido un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< Pablo es probablemente parte de una familia. Porque:
+< Pablo es posiblemente parte de una familia. Porque:
 <	- ¿Es Pablo un hijo o una hija?
 <	- Hijos son parte de cada familia.
 * 
@@ -121,7 +125,7 @@
 <	- José tenido un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< José es probablemente parte de una familia. Porque:
+< José es posiblemente parte de una familia. Porque:
 <	- ¿Es José un hijo o una hija?
 <	- Hijos son parte de cada familia.
 * 
@@ -176,6 +180,7 @@
 * Mis conclusiones:
 < Ana es una mujer.
 < Ana no es un hombre.
+< Ana es femenina.
 < Ana es parte de una familia.
 < Ana no es un padre.
 < Pablo tiene una madre, llamada Ana.
@@ -199,6 +204,9 @@
 <	- Juan era el padre de Pablo, José y Luisa.
 <	- Cada padre es una mujer o un hombre.
 <	- Juan era un hombre.
+< Juan era masculino. Porque:
+<	- Juan era un hombre.
+<	- Cada hombre es masculino.
 < Juan no era una madre. Porque:
 <	- Juan era el padre de Pablo, José y Luisa.
 <	- Cada padre es un padre o una madre.
@@ -229,6 +237,9 @@
 <	- Ana es madre de Pablo, José y Luisa.
 <	- Cada padre es una mujer o un hombre.
 <	- Ana es una mujer.
+< Ana es femenina. Porque:
+<	- Ana es una mujer.
+<	- Cada mujer es femenina.
 < Ana es parte de una familia. Porque:
 <	- Ana es madre de Pablo, José y Luisa.
 <	- Padres son parte de cada familia.
@@ -269,7 +280,7 @@
 <	- Pablo tenido un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< Pablo es probablemente parte de una familia. Porque:
+< Pablo es posiblemente parte de una familia. Porque:
 <	- ¿Es Pablo un hijo o una hija?
 <	- Hijos son parte de cada familia.
 * 
@@ -309,7 +320,7 @@
 <	- José tenido un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< José es probablemente parte de una familia. Porque:
+< José es posiblemente parte de una familia. Porque:
 <	- ¿Es José un hijo o una hija?
 <	- Hijos son parte de cada familia.
 * 

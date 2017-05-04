@@ -1,9 +1,9 @@
 /*	Class:		CollectionResultType
  *	Purpose:	To return collection variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -23,31 +23,25 @@
 
 #ifndef COLLECTIONRESULTTYPE
 #define COLLECTIONRESULTTYPE 1
-
 #include <string.h>
 #include "Constants.h"
 
-// Some compilers need these class declarations
+// Class declarations
 class WordItem;
 
 class CollectionResultType
 	{
-	friend class AdminCollection;
 	friend class AdminSpecification;
 	friend class CollectionList;
 	friend class Item;
 	friend class List;
-	friend class WordCollection;
 	friend class WordSpecification;
 	friend class WordItem;
 
 	protected:
 	// Protected variables
 
-	ResultType result;
-
-	bool isAmbiguousCollection;
-	bool isCollected;
+	signed char result;
 
 	unsigned int createdCollectionNr;
 
@@ -59,9 +53,6 @@ class CollectionResultType
 	CollectionResultType()
 		{
 		result = RESULT_OK;
-
-		isAmbiguousCollection = false;
-		isCollected = false;
 
 		createdCollectionNr = NO_COLLECTION_NR;
 

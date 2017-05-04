@@ -1,9 +1,9 @@
 /*	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ class InterfaceList extends List
 
 	protected InterfaceList( WordItem myWordItem )
 		{
-		initializeListVariables( Constants.WORD_INTERFACE_LIST_SYMBOL, myWordItem );
+		initializeListVariables( Constants.WORD_INTERFACE_LIST_SYMBOL, "InterfaceList", myWordItem );
 		}
 
 
@@ -42,25 +42,26 @@ class InterfaceList extends List
 
 	protected byte checkInterface( short interfaceParameter, String interfaceString )
 		{
-		StringResultType stringResult;
 		InterfaceItem searchInterfaceItem = firstActiveInterfaceItem();
+		BoolResultType boolResult;
 
 		if( interfaceString == null )
-			return startError( 1, null, "The given interface string is undefined" );
+			return startError( 1, "The given interface string is undefined" );
 
 		while( searchInterfaceItem != null )
 			{
 			if( searchInterfaceItem.interfaceParameter() == interfaceParameter )
-				return startError( 1, null, "The given interface parameter already exists" );
+				return startError( 1, "The given interface parameter already exists" );
 
 			if( searchInterfaceItem.interfaceString() == null )
-				return startError( 1, null, "I have found an undefined interface string" );
+				return startError( 1, "I found an undefined interface string" );
 
-			if( ( stringResult = compareStrings( interfaceString, searchInterfaceItem.interfaceString() ) ).result != Constants.RESULT_OK )
-				return addError( 1, null, "I failed to compare two interface strings" );
+			if( ( boolResult = compareStrings( interfaceString, searchInterfaceItem.interfaceString() ) ).result != Constants.RESULT_OK )
+				return addError( 1, "I failed to compare two interface strings" );
 
-			if( stringResult.hasFoundMatchingStrings )
-				return startError( 1, null, "The given interface string already exists" );
+			// Matching string
+			if( boolResult.booleanValue )
+				return startError( 1, "The given interface string already exists" );
 
 			searchInterfaceItem = searchInterfaceItem.nextInterfaceItem();
 			}
@@ -71,29 +72,11 @@ class InterfaceList extends List
 	protected byte createInterfaceItem( short interfaceParameter, int interfaceStringLength, String interfaceString )
 		{
 		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new InterfaceItem( interfaceParameter, interfaceStringLength, interfaceString, this, myWordItem() ) ) != Constants.RESULT_OK )
-			return addError( 1, null, "I failed to add an active interface item" );
+			return addError( 1, "I failed to add an active interface item" );
 
 		return Constants.RESULT_OK;
 		}
-/*
-	protected byte storeChangesInFutureDatabase()
-		{
-		InterfaceItem searchInterfaceItem = firstActiveInterfaceItem();
 
-		while( searchInterfaceItem != null )
-			{
-			if( searchInterfaceItem.hasCurrentCreationSentenceNr() )
-				{
-				if( searchInterfaceItem.storeInterfaceItemInFutureDatabase() != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to store an interface item in the database" );
-				}
-
-			searchInterfaceItem = searchInterfaceItem.nextInterfaceItem();
-			}
-
-		return Constants.RESULT_OK;
-		}
-*/
 	protected String interfaceString( short interfaceParameter )
 		{
 		InterfaceItem searchInterfaceItem = firstActiveInterfaceItem();

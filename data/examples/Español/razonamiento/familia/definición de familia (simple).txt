@@ -1,10 +1,10 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To demonstrate automated reasoning in natural language:
-#					Self-generated conclusions, assumptions and questions
+#					Self-generated conclusions, assumptions and questions,
 #					and the detection of conflicts and semantic ambiguity
-#	Version:		Thinknowlogy 2016r2 (Restyle)
+#	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
 #	corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 

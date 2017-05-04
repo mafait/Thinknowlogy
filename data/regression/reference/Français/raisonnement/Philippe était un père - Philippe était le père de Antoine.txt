@@ -1,0 +1,25 @@
+﻿* 
+* Mes conclusions:
+< Philippe était un homme.
+< 
+* 
+* Cette information est plus spécifique que votre information antérieure:
+< Philippe était un père.
+* 
+* Mes conclusions:
+< Antoine n'a aucun père plus.
+< Antoine avait un père, appelé Philippe.
+< 
+* 
+* Mes conclusions:
+< Philippe était un homme. En raison:
+<	- Philippe était un père.
+<	- Chaque père est un homme.
+< 
+* 
+* Mes conclusions:
+< Antoine n'a aucun père plus. En raison:
+<	- Antoine avait un père, appelé Philippe.
+< Antoine avait un père, appelé Philippe. En raison:
+<	- Philippe était le père de Antoine.
+< 

@@ -27,15 +27,24 @@
 < Een dochter is waarschijnlijk een persoon.
 < 
 * 
+* Mijn conclusies:
+< Paul is mannelijk.
+* 
 * Mijn veronderstellingen:
 < Paul is waarschijnlijk een persoon.
 < Paul is waarschijnlijk geen vrouw.
 < 
 * 
+* Mijn conclusies:
+< Johan is mannelijk.
+* 
 * Mijn veronderstellingen:
 < Johan is waarschijnlijk een persoon.
 < Johan is waarschijnlijk geen vrouw.
 < 
+* 
+* Mijn conclusies:
+< Anna is vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Anna is waarschijnlijk een persoon.
@@ -44,6 +53,7 @@
 * 
 * Mijn conclusies:
 < Jan is een man.
+< Jan is mannelijk.
 < Paul heeft een vader, genaamd Jan.
 < Paul heeft een moeder, genaamd Anna.
 < Johan heeft een vader, genaamd Jan.

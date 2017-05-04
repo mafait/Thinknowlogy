@@ -16,11 +16,50 @@
 < 
 * 
 * Mes conclusions:
-< Pascal a un parent, appelé Olivier.
+< Un parent et un enfant sont partie de chaque famille.
 < 
 * 
 * Mes conclusions:
+< Guillaume est partie d'une famille.
+* 
+* Mes hypothèses:
+< Guillaume a probablement un enfant.
+< 
+* 
+* Mes conclusions:
+< Armand est partie d'une famille.
+* 
+* Mes hypothèses:
+< Armand a probablement un parent.
+< 
+* 
+* Mes hypothèses:
+< Fabrice est probablement un enfant.
+< Fabrice est probablement partie d'une famille.
+< 
+* 
+* Mes hypothèses:
+< Ronald est probablement un parent.
+< Ronald est probablement partie d'une famille.
+< 
+* 
+* Mes conclusions:
+< Olivier est partie d'une famille.
+< Pascal a un parent, appelé Olivier.
+* 
+* Mes hypothèses:
+< Olivier a probablement un enfant, appelé Pascal.
+< Pascal est probablement un enfant de Olivier.
+< Pascal est probablement partie d'une famille.
+< 
+* 
+* Mes conclusions:
+< Amélie est partie d'une famille.
 < Pascal a 2 parent [pluriel de «parent» est inconnue], appelés Olivier et Amélie.
+* 
+* Mes hypothèses:
+< Amélie a probablement un enfant, appelé Pascal.
+< Pascal est probablement un enfant de Olivier et Amélie.
 < 
 * 
 * Mes conclusions qui sont confirmées:
@@ -32,6 +71,10 @@
 * Mes conclusions:
 < Antoine n'a aucun père plus.
 < Antoine avait un père, appelé Philippe.
+< 
+* 
+* Mes conclusions:
+< Philippe était un homme.
 < 
 ! 
 ! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec lui-même.
@@ -49,10 +92,10 @@
 < 
 * 
 * Mes conclusions:
-< Les États-Unis a un président, appelé Bill Clinton.
+< Les États-Unis a un président, appelé Barack Obama.
 < 
 * 
 * Mes conclusions:
-< Les États-Unis a un nouveau président, appelé Barack Obama.
-< Les États-Unis a un précédent président, appelé Bill Clinton.
+< Les États-Unis a un nouveau président, appelé Donald Trump.
+< Les États-Unis a un précédent président, appelé Barack Obama.
 < 

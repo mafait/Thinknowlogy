@@ -10,6 +10,7 @@
 * 
 * Mes conclusions:
 < Olivier était un homme.
+< Olivier était masculin.
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.

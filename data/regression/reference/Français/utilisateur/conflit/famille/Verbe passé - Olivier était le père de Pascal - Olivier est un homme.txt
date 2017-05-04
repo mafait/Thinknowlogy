@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Olivier était un homme.
+< Olivier était masculin.
 < Pascal n'a aucun père plus.
 < Pascal avait un père, appelé Olivier.
 * 
@@ -45,7 +46,7 @@
 < Pascal avait probablement un parent, appelé Olivier.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
 < 
 ! 

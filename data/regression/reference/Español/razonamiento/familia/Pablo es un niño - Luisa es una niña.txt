@@ -22,6 +22,9 @@
 < Una hija es probablemente una persona.
 < 
 * 
+* Mis conclusiones:
+< Pablo es masculino.
+* 
 * Mis suposiciones:
 < Pablo es probablemente un hijo.
 < Pablo es probablemente parte de una familia.
@@ -32,6 +35,7 @@
 < 
 * 
 * Mis conclusiones:
+< Luisa es femenina.
 < Luisa no es una mujer, un niño y un hombre.
 * 
 * Mis suposiciones:
@@ -41,6 +45,11 @@
 < Luisa no es probablemente un hijo.
 < Luisa tiene posiblemente un padre.
 < 
+* 
+* Mis conclusiones:
+< Pablo es masculino. Porque:
+<	- Pablo es un niño.
+<	- Cada niño es masculino.
 * 
 * Mis suposiciones:
 < Pablo es probablemente un hijo. Porque:
@@ -65,6 +74,9 @@
 < 
 * 
 * Mis conclusiones:
+< Luisa es femenina. Porque:
+<	- Luisa es una niña.
+<	- Cada niña es femenina.
 < Luisa no es una mujer, un niño y un hombre. Porque:
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 <	- Luisa es una niña.

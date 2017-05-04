@@ -1,9 +1,9 @@
 /*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -149,41 +149,14 @@ class CollectionItem extends Item
 				commonWordTypeNr_ == queryWordTypeNr );
 		}
 
-	protected StringResultType findMatchingWordReferenceString( String queryString )
-		{
-		StringResultType stringResult = new StringResultType();
-
-		if( collectionWordItem_ != null )
-			{
-			if( ( stringResult = collectionWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, "I failed to find a matching word reference string for the collected word item" );
-			}
-
-		if( !stringResult.hasFoundMatchingStrings &&
-		commonWordItem_ != null )
-			{
-			if( ( stringResult = commonWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, "I failed to find a matching word reference string for the common word item" );
-			}
-
-		if( !stringResult.hasFoundMatchingStrings &&
-		compoundGeneralizationWordItem_ != null )
-			{
-			if( ( stringResult = compoundGeneralizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, "I failed to find a matching word reference string for the compound word item" );
-			}
-
-		return stringResult;
-		}
-
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		String wordString;
 		StringBuffer queryStringBuffer;
 		String collectionWordTypeString = myWordItem().wordTypeNameString( collectionWordTypeNr_ );
 		String commonWordTypeString = myWordItem().wordTypeNameString( commonWordTypeNr_ );
 
-		baseToStringBuffer( queryWordTypeNr );
+		itemBaseToStringBuffer( queryWordTypeNr );
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -230,6 +203,29 @@ class CollectionItem extends Item
 		return queryStringBuffer;
 		}
 
+	protected BoolResultType findMatchingWordReferenceString( String queryString )
+		{
+		BoolResultType boolResult = new BoolResultType();
+
+		if( collectionWordItem_ != null &&
+		( boolResult = collectionWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+			return addBoolResultError( 1, null, null, "I failed to find a matching word reference string for the collected word item" );
+
+		// No matching string
+		if( !boolResult.booleanValue &&
+		commonWordItem_ != null &&
+		( boolResult = commonWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+			return addBoolResultError( 1, null, null, "I failed to find a matching word reference string for the common word item" );
+
+		// No matching string
+		if( !boolResult.booleanValue &&
+		compoundGeneralizationWordItem_ != null &&
+		( boolResult = compoundGeneralizationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
+			return addBoolResultError( 1, null, null, "I failed to find a matching word reference string for the compound word item" );
+
+		return boolResult;
+		}
+
 
 	// Protected methods
 
@@ -264,14 +260,14 @@ class CollectionItem extends Item
 		return collectionWordTypeNr_;
 		}
 
-	protected short commonWordTypeNr()
-		{
-		return commonWordTypeNr_;
-		}
-
 	protected int collectionNr()
 		{
 		return collectionNr_;
+		}
+
+	protected CollectionItem nextCollectionItem()
+		{
+		return (CollectionItem)nextItem;
 		}
 
 	protected WordItem collectionWordItem()
@@ -287,11 +283,6 @@ class CollectionItem extends Item
 	protected WordItem compoundGeneralizationWordItem()
 		{
 		return compoundGeneralizationWordItem_;
-		}
-
-	protected CollectionItem nextCollectionItem()
-		{
-		return (CollectionItem)nextItem;
 		}
 	};
 

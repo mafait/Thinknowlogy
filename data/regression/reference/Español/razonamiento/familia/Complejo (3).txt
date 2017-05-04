@@ -22,6 +22,9 @@
 < Una hija es probablemente una persona.
 < 
 * 
+* Mis conclusiones:
+< Juan es masculino.
+* 
 * Mis suposiciones:
 < Juan es probablemente una persona.
 < Juan no es probablemente una mujer.
@@ -51,12 +54,13 @@
 * 
 * Mis suposiciones:
 < José es posiblemente una persona.
-< José es probablemente parte de una familia.
+< José es posiblemente parte de una familia.
 < José tiene probablemente una madre, llamada Ana.
 < Ana es probablemente una persona.
 < Ana es probablemente madre de José.
 < Ana es probablemente una mujer.
 < Ana no es posiblemente un hombre.
+< Ana es probablemente femenina.
 < Ana no es probablemente un padre.
 * 
 * Mis preguntas:
@@ -81,6 +85,9 @@
 < Juan no es una madre. Porque:
 <	- Juan es padre de José.
 <	- Cada padre es un padre o una madre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
@@ -99,7 +106,7 @@
 <	- José tiene 2 padres, llamados Juan y Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< José es probablemente parte de una familia. Porque:
+< José es posiblemente parte de una familia. Porque:
 <	- ¿Es José un hijo o una hija?
 <	- Hijos son parte de cada familia.
 < José tiene probablemente una madre, llamada Ana. Porque:
@@ -148,6 +155,9 @@
 < Juan no es una madre. Porque:
 <	- Juan es padre de José y Pablo.
 <	- Cada padre es un padre o una madre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
@@ -200,11 +210,15 @@
 * Mis suposiciones que se confirman:
 < Ana es probablemente madre de José.
 * 
+* Mis suposiciones que se ajustan:
+< Ana no es probablemente un hombre.
+* 
 * Mis suposiciones que se concluyen:
-< Ana no es un hombre.
-< Ana es una mujer.
-< Ana no es un padre.
 < José tiene una madre, llamada Ana.
+< Ana es una mujer.
+< Ana no es un hombre.
+< Ana es femenina.
+< Ana no es un padre.
 * 
 * Mis conclusiones:
 < Pablo tiene 2 padres, llamados Juan y Ana.
@@ -244,6 +258,9 @@
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
@@ -287,6 +304,9 @@
 <	- Ana es una madre.
 <	- Cada padre es una mujer o un hombre.
 <	- Ana es una mujer.
+< Ana es femenina. Porque:
+<	- Ana es una mujer.
+<	- Cada mujer es femenina.
 < Ana no es un padre. Porque:
 <	- Cada padre es un padre o una madre.
 <	- Ana es una madre.
@@ -361,7 +381,7 @@
 <	- Ana es la madre de José, Pablo y Luisa.
 * 
 * Mis suposiciones:
-< José es probablemente parte de una familia. Porque:
+< José es posiblemente parte de una familia. Porque:
 <	- ¿Es José un hijo o una hija?
 <	- Hijos son parte de cada familia.
 < José es posiblemente una persona. Porque:
@@ -458,6 +478,9 @@
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 * 
 * Mis suposiciones:
 < Juan tiene posiblemente una hija, llamada Luisa. Porque:
@@ -553,6 +576,9 @@
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 * 
 * Mis suposiciones:
 < Juan tiene posiblemente una hija, llamada Luisa. Porque:
@@ -596,6 +622,9 @@
 < Ana es una mujer. Porque:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
+< Ana es femenina. Porque:
+<	- Ana es una mujer.
+<	- Cada mujer es femenina.
 < Ana no es un padre. Porque:
 <	- Cada padre es un padre o una madre.
 <	- Ana es una madre.
@@ -696,6 +725,9 @@
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 * 
 * Mis suposiciones:
 < Juan tiene posiblemente una hija, llamada Luisa. Porque:
@@ -741,6 +773,9 @@
 < Ana es una mujer. Porque:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
+< Ana es femenina. Porque:
+<	- Ana es una mujer.
+<	- Cada mujer es femenina.
 < Ana no es un padre. Porque:
 <	- Cada padre es un padre o una madre.
 <	- Ana es una madre.
@@ -802,6 +837,6 @@
 * 
 * Mis preguntas:
 < ¿Es Pablo un niño o un hombre? Porque:
-<	- Pablo es hijo de Juan y Ana.
+<	- Pablo es un hijo.
 <	- Cada hijo es un niño o un hombre.
 < 

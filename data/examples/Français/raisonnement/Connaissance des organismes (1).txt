@@ -1,50 +1,62 @@
 ﻿# Les organismes
-Une créature est un organisme.
-Un organisme est un animal, un champignon, un être humain-être, un micro-organisme ou une plante.
-
+Chaque organisme est un animal, un champignon, un être humain-être, un micro-organisme ou une plante.
 # Les animaux
-Un animal est un vertébré ou un invertébré.
-
+Chaque animal est un vertébré ou un invertébré.
 # Les vertébrés
-Un vertébré est un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
+Chaque vertébré est un amphibien, un oiseau, un poisson, un mammifère ou un reptile.
+# Les invertébrés
+Chaque invertébré est un annélide, un arthropode, un échinoderme, un mollusque ou un protozoaire.
+# Les amphibiens
 #Les caeciliens, les grenouilles, les tritons, les salamandres et les crapauds sont des amphibiens.
 Caeciliens, grenouilles, tritons, salamandres et crapauds sont amphibiens.
+# Les oiseaux
 #Xxxx sont des oiseaux.
+# Les poissons
 #Xxxx sont des poissons.
-#Xxxx sont des mammifères.
+# Les reptiles
 #Les crocodiles sont des reptiles.
 Crocodiles sont reptiles.
-
-# Les invertébrés
-Un invertébré est un annélide, un arthropode, un échinoderme, un mollusque ou un protozoaire.
-Lombrics et planaires sont annélides.
+# Les annélides
+#Les lombrics, les vers ronds et les vers à plat sont des annélides.
+Lombrics et vers-ronds sont annélides.
+# Les arthropodes
 #Les crabes, les araignées et les insectes sont des arthropodes.
 Crabes, araignées et insectes sont arthropodes.
+# Les échinodermes
+#Les étoiles de mer, les oursins, les dollars de sable et les concombres de mer sont des échinodermes.
+Étoiles-de-mer, oursins, dollars-de-sable et concombres-de-mer sont échinodermes.
+# Les mollusques
 Palourdes, seiches, moules, nautiles, poulpes, huîtres, escargots et calmars sont mollusques.
+# Les protozoaires
 #Les amibes et les flagellés sont des protozoaires.
 Amibes et flagellés sont protozoaires.
-
 # Les mammifères
-Un mammifère est un cétacé, un marsupial, un primate ou un rongeur.
+Chaque mammifère est un cétacé, un marsupial, un rongeur, un singe ou un être humain-être.
+# Les cétacés
 #Les baleines et les dauphins sont des cétacés.
 Baleines et dauphins sont cétacés.
+# Les marsupiaux
 #Kangourous, koalas, opossums et les diables de Tasmanie sont marsupiaux.
 Kangourous, koalas, opossums et diables-de-Tasmanie sont marsupiaux.
-#Les bonobos, les chimpanzés, les gorilles, les ouistitis, les orangs-outans et écureuil singes sont des primates.
-Bonobos, chimpanzés, gorilles, ouistitis, orangs-outans et écureuil-singes sont primates.
+# Les singes
+#Les bonobos, les chimpanzés, les gorilles, les ouistitis, les orangs-outans et écureuil singes sont des singes.
+Bonobos, chimpanzés, gorilles, ouistitis, orangs-outans et écureuil-singes sont singes.
+# Les rongeurs
 Castors, cobayes, hamsters, hérissons, rats et écureuils sont rongeurs.
-
-# Les arthropodes
+# Les arthropode
+Chaque arthropode est un arachnide, un crustacé ou un insecte.
+# Les arachnides
 Acariens, tiques, scorpions et araignées sont arachnides.
+# Les crustacés
 Crabes, homards et bernaches sont crustacés.
+# Les insectes
 Coléoptères, mouches, beurre mouches, papillons, libellules, beilles, guêpes et priaient mantes sont insectes.
-
 # Humain-êtres
-Un humain-être est un vertébré.
-#Affichez le rapport de justification sur humain-êtres.
-Un humain-être est un mammifère.
-#Affichez le rapport de justification sur humain-êtres.
-Un humain-être est un primate.
-#Affichez le rapport de justification sur humain-êtres.
+Chaque humain-être est un vertébré.
+Chaque humain-être est un mammifère.
 Olivier est un humain-être.
+# Le rapport de justification
+Affichez le rapport de justification sur les vertébrés.
+Affichez le rapport de justification sur les mammifères.
+Affichez le rapport de justification sur les crocodiles.
 Affichez le rapport de justification sur Olivier.

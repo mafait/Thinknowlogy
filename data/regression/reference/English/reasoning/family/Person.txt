@@ -39,6 +39,7 @@
 * 
 * My assumptions:
 < Anna is probably a woman.
+< Anna is probably feminine.
 < Anna is probably not a man.
 < 
 * 
@@ -47,6 +48,9 @@
 <	- Anna is a person.
 <	- Every person is a man or a woman.
 <	- Proper name "Anna" is probably feminine.
+< Anna is probably feminine. Because:
+<	- Anna is probably a woman.
+<	- Every woman is feminine.
 < Anna is probably not a man. Because:
 <	- Anna is a person.
 <	- Every person is a man or a woman.

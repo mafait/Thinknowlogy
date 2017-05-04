@@ -29,6 +29,7 @@
 * 
 * Mijn conclusies:
 < Jan is een man.
+< Jan is mannelijk.
 < Paul heeft een vader, genaamd Jan.
 * 
 * Mijn veronderstellingen:
@@ -44,7 +45,7 @@
 < Paul heeft waarschijnlijk een ouder, genaamd Jan.
 * 
 * Mijn vragen:
-< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
 < 
 * 
@@ -52,6 +53,9 @@
 < Jan is een man. Omdat:
 <	- Jan is een vader.
 <	- Iedere vader is een man.
+< Jan is mannelijk. Omdat:
+<	- Jan is een man.
+<	- Iedere man is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een persoon. Omdat:
@@ -72,6 +76,8 @@
 <	- Iedere ouder is een vrouw of een man.
 <	- Jan is een man.
 < Jan is waarschijnlijk een ouder van Paul. Omdat:
+<	- Paul heeft waarschijnlijk een ouder, genaamd Jan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is waarschijnlijk een kind van Jan.
 * 	en:
@@ -103,7 +109,7 @@
 < Johan heeft waarschijnlijk een ouder, genaamd Jan.
 * 
 * Mijn vragen:
-< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een meisje, een vrouw, een jongen of een man?
 < Is Johan een zoon of een dochter?
 < 
 * 
@@ -111,9 +117,15 @@
 < Jan is een man. Omdat:
 <	- Jan is een vader.
 <	- Iedere vader is een man.
+< Jan is mannelijk. Omdat:
+<	- Jan is een man.
+<	- Iedere man is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een ouder van Paul en Johan. Omdat:
+<	- Johan heeft waarschijnlijk een ouder, genaamd Jan.
+<	- Paul heeft waarschijnlijk een ouder, genaamd Jan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Johan is waarschijnlijk een kind van Jan.
 <	- Paul is waarschijnlijk een kind van Jan.
@@ -175,6 +187,9 @@
 < Jan is een man. Omdat:
 <	- Jan is een vader.
 <	- Iedere vader is een man.
+< Jan is mannelijk. Omdat:
+<	- Jan is een man.
+<	- Iedere man is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Jan heeft mogelijk een dochter, genaamd Laura. Omdat:
@@ -185,6 +200,10 @@
 <	- Ieder kind is een zoon of een dochter.
 <	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
 < Jan is waarschijnlijk een ouder van Paul, Johan en Laura. Omdat:
+<	- Laura heeft waarschijnlijk een ouder, genaamd Jan.
+<	- Johan heeft waarschijnlijk een ouder, genaamd Jan.
+<	- Paul heeft waarschijnlijk een ouder, genaamd Jan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Laura is waarschijnlijk een kind van Jan.
 <	- Johan is waarschijnlijk een kind van Jan.
@@ -248,6 +267,9 @@
 < Jan is een man. Omdat:
 <	- Jan is een vader.
 <	- Iedere vader is een man.
+< Jan is mannelijk. Omdat:
+<	- Jan is een man.
+<	- Iedere man is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Jan heeft mogelijk 2 dochter [meervoud van 'dochter' is onbekend], genaamd Laura en Claudia. Omdat:
@@ -255,12 +277,17 @@
 <	- Laura heeft een vader, genaamd Jan.
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
-<	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
 <	- Eigennaam "Claudia" is waarschijnlijk vrouwelijk.
+<	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
 * 	en:
 <	- Claudia is mogelijk een dochter van Jan.
 <	- Laura is mogelijk een dochter van Jan.
 < Jan is waarschijnlijk een ouder van Paul, Johan, Laura en Claudia. Omdat:
+<	- Claudia heeft waarschijnlijk een ouder, genaamd Jan.
+<	- Laura heeft waarschijnlijk een ouder, genaamd Jan.
+<	- Johan heeft waarschijnlijk een ouder, genaamd Jan.
+<	- Paul heeft waarschijnlijk een ouder, genaamd Jan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Claudia is waarschijnlijk een kind van Jan.
 <	- Laura is waarschijnlijk een kind van Jan.

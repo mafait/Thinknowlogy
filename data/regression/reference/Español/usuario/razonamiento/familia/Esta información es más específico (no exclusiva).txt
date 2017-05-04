@@ -31,15 +31,19 @@
 * 
 * Mis preguntas:
 < ¿Es Cruz un hombre o una mujer?
+< ¿Es Cruz un padre o una madre?
 < 
 * 
 * Esta información es más específica que la información anterior:
 < Cruz es un padre o una madre.
 * 
 * Mis preguntas que son contestadas:
+< ¿Es Cruz un padre o una madre?
 < ¿Es Cruz un hombre o una mujer?
 * 
 * Mis conclusiones:
+< Cruz no es una madre.
 < Cruz es un hombre.
 < Cruz no es una mujer.
+< Cruz es masculino.
 < 

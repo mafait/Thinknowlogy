@@ -35,7 +35,7 @@
 < John has probably a child.
 * 
 * My questions:
-< Is John a man or a woman?
+< Is John a woman or a man?
 < Is John a father or a mother?
 < 
 * 
@@ -46,6 +46,7 @@
 < Anna is probably a person.
 < Anna is probably a woman.
 < Anna is probably not a man.
+< Anna is probably feminine.
 < Anna is probably a mother.
 < Anna is probably not a father.
 < Anna has probably a child.
@@ -53,11 +54,12 @@
 * 
 * My questions that are answered:
 < Is John a father or a mother?
-< Is John a man or a woman?
+< Is John a woman or a man?
 * 
 * My conclusions:
 < John is a man.
 < John is not a woman.
+< John is masculine.
 < John is not a mother.
 < 
 * 
@@ -67,6 +69,7 @@
 * My assumptions that are concluded:
 < Anna is a woman.
 < Anna is not a man.
+< Anna is feminine.
 < Anna is not a father.
 < 
 * 
@@ -114,9 +117,9 @@
 < Anna has possibly a daughter, called Laura.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
-< Is Joe a man, a woman, a girl or a boy?
+< Is Joe a girl, a woman, a boy or a man?
 < Is Joe a son or a daughter?
 < Is Laura a girl or a woman?
 < 

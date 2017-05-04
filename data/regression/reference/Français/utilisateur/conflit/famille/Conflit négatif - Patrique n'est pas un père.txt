@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Patrique est un homme.
+< Patrique est masculin.
 * 
 * Mes hypothèses:
 < Patrique est probablement une personne.

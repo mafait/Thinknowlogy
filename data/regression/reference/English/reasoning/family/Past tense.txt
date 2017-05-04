@@ -29,6 +29,7 @@
 * 
 * My conclusions:
 < James was a man.
+< James was masculine.
 < Peter has no father anymore.
 < Peter had a father, called James.
 * 
@@ -45,7 +46,7 @@
 < Peter had probably a parent, called James.
 * 
 * My questions:
-< Is Peter a man, a woman, a girl or a boy?
+< Is Peter a girl, a woman, a boy or a man?
 < Is Peter a son or a daughter?
 < 
 * 
@@ -53,6 +54,9 @@
 < James was a man. Because:
 <	- James was the father of Peter.
 <	- Every father is a man.
+< James was masculine. Because:
+<	- James was a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < James has probably a child, called Peter. Because:
@@ -78,6 +82,8 @@
 <	- Every parent is a woman or a man.
 <	- James was a man.
 < James was probably a parent of Peter. Because:
+<	- Peter had probably a parent, called James.
+* 	and:
 <	- Every family has parents and children.
 <	- Peter is probably a child of James.
 * 	and:
@@ -118,12 +124,9 @@
 <	- James was probably a parent of Peter.
 * 
 * My questions:
-< Is Peter a man, a woman, a girl or a boy? Because:
+< Is Peter a girl, a woman, a boy or a man? Because:
 <	- Peter is probably a child of James.
 <	- Every child is a girl, a woman, a boy or a man.
-* 	and:
-<	- Peter is possibly a person.
-<	- Every person is a man or a woman.
 < Is Peter a son or a daughter? Because:
 <	- Peter is probably a child of James.
 <	- Every child is a son or a daughter.

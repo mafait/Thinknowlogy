@@ -50,12 +50,13 @@
 < Anna is possibly a mother of Joe.
 < Anna is possibly a woman.
 < Anna is maybe not a man.
+< Anna is possibly feminine.
 < Anna is maybe not a father.
 * 
 * My questions:
 < Is Joe a boy or a man?
-< Is John a man or a woman?
 < Is John a father or a mother?
+< Is John a man or a woman?
 < 
 ! 
 ! This sentence is not accepted, because it is in conflict with:

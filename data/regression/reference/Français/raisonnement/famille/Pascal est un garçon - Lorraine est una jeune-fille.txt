@@ -27,6 +27,9 @@
 < Une fille est probablement une personne.
 < 
 * 
+* Mes conclusions:
+< Pascal est masculin.
+* 
 * Mes hypothèses:
 < Pascal est probablement un fils.
 < Pascal est possible une personne.
@@ -37,6 +40,9 @@
 < Pascal a possible un parent.
 < 
 * 
+* Mes conclusions:
+< Lorraine est féminine.
+* 
 * Mes hypothèses:
 < Lorraine est probablement une fille.
 < Lorraine est possible une personne.
@@ -46,6 +52,11 @@
 < Lorraine n'est possible pas un fils.
 < Lorraine a possible un parent.
 < 
+* 
+* Mes conclusions:
+< Pascal est masculin. En raison:
+<	- Pascal est un garçon.
+<	- Chaque garçon est masculin.
 * 
 * Mes hypothèses:
 < Pascal est probablement un fils. En raison:
@@ -75,6 +86,11 @@
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant.
 < 
+* 
+* Mes conclusions:
+< Lorraine est féminine. En raison:
+<	- Lorraine est une jeune-fille.
+<	- Chaque jeune-fille est féminine.
 * 
 * Mes hypothèses:
 < Lorraine est probablement une fille. En raison:

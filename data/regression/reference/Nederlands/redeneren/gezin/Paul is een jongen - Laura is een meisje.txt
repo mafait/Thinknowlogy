@@ -27,6 +27,9 @@
 < Een dochter is waarschijnlijk een persoon.
 < 
 * 
+* Mijn conclusies:
+< Paul is mannelijk.
+* 
 * Mijn veronderstellingen:
 < Paul is waarschijnlijk een zoon.
 < Paul is mogelijk een persoon.
@@ -37,6 +40,9 @@
 < Paul heeft mogelijk een ouder.
 < 
 * 
+* Mijn conclusies:
+< Laura is vrouwelijk.
+* 
 * Mijn veronderstellingen:
 < Laura is waarschijnlijk een dochter.
 < Laura is mogelijk een persoon.
@@ -46,6 +52,11 @@
 < Laura is mogelijk geen zoon.
 < Laura heeft mogelijk een ouder.
 < 
+* 
+* Mijn conclusies:
+< Paul is mannelijk. Omdat:
+<	- Paul is een jongen.
+<	- Iedere jongen is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Paul is waarschijnlijk een zoon. Omdat:
@@ -75,6 +86,11 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is waarschijnlijk een kind.
 < 
+* 
+* Mijn conclusies:
+< Laura is vrouwelijk. Omdat:
+<	- Laura is een meisje.
+<	- Ieder meisje is vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Laura is waarschijnlijk een dochter. Omdat:

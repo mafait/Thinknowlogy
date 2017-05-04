@@ -10,6 +10,7 @@
 * 
 * Mijn conclusies:
 < Jan was een man.
+< Jan was mannelijk.
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.

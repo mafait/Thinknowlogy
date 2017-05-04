@@ -1,0 +1,10 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+Is John a father?
+Is John the father of Paul?
+Is Anna a father or a mother?
+Is Anna a mother?
+Anna is a mother.
+Is Anna the mother of Paul?
+Display the justification report about John.
+Display the justification report about Anna.
+# To continue, click button «Clear your mind.» or «Restart.».

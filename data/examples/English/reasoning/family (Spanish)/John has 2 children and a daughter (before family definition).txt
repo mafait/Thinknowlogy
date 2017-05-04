@@ -1,0 +1,4 @@
+﻿John has 2 children and a daughter.
+Read the file "English/user/reasoning/family (Spanish)/family definition".
+Display information about John.
+# To continue, click button «Clear your mind.» or «Restart.».

@@ -1,9 +1,9 @@
 /*	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,9 @@
  *************************************************************************/
 
 #include "GrammarItem.cpp"
+#include "InputOutput.cpp"
 #include "List.h"
-#include "Presentation.cpp"
+#include "WordEndingResultType.cpp"
 
 class GrammarList : private List
 	{
@@ -31,7 +32,7 @@ class GrammarList : private List
 
 	// Private constructed variables
 
-	bool isNeededToCheckGrammar_;
+	bool isCheckingGrammarNeeded_;
 
 	GrammarItem *firstGrammarItem_;
 	GrammarItem *firstFeminineProperNameEndingGrammarItem_;
@@ -43,6 +44,18 @@ class GrammarList : private List
 
 
 	// Private functions
+
+	void deleteGrammarList( GrammarItem *searchGrammarItem )
+		{
+		GrammarItem *deleteGrammarItem;
+
+		while( searchGrammarItem != NULL )
+			{
+			deleteGrammarItem = searchGrammarItem;
+			searchGrammarItem = searchGrammarItem->nextGrammarItem();
+			delete deleteGrammarItem;
+			}
+		}
 
 	bool isText( size_t endPosition, char *sentenceString )
 		{
@@ -71,44 +84,6 @@ class GrammarList : private List
 				grammarParameter == WORD_MASCULINE_SINGULAR_NOUN_ENDING ||
 				grammarParameter == WORD_PLURAL_NOUN_ENDING ||
 				grammarParameter == WORD_MERGED_WORD );
-		}
-
-	GrammarResultType comparePluralEndingOfWord( size_t searchWordStringLength, size_t replacingWordStringLength, char *searchWordString, char *searchWordEndingString, char *replacingWordEndingString )
-		{
-		GrammarResultType grammarResult;
-		size_t tempWordLength;
-		size_t searchWordEndingStringLength;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "comparePluralEndingOfWord";
-
-		if( searchWordStringLength <= 0 )
-			return startGrammarResultError( functionNameString, NULL, "The given search word string length is undefined" );
-
-		if( searchWordString == NULL )
-			return startGrammarResultError( functionNameString, NULL, "The given search word string is undefined" );
-
-		if( searchWordEndingString == NULL )
-			return startGrammarResultError( functionNameString, NULL, "The given search word ending string is undefined" );
-
-		searchWordEndingStringLength = strlen( searchWordEndingString );
-		tempWordLength = ( searchWordStringLength - searchWordEndingStringLength );
-		grammarResult.singularNounWordStringLength = ( searchWordStringLength + replacingWordStringLength - searchWordEndingStringLength );
-
-		if( tempWordLength >= 0 &&
-		grammarResult.singularNounWordStringLength > 0 )
-			{
-			if( strncmp( &searchWordString[tempWordLength], searchWordEndingString, searchWordEndingStringLength ) == 0 )
-				{
-				grammarResult.hasFoundWordEnding = true;
-
-				strcpy( grammarResult.singularNounWordString, EMPTY_STRING );
-				strncat( grammarResult.singularNounWordString, searchWordString, tempWordLength );
-
-				if( replacingWordEndingString != NULL )
-					strcat( grammarResult.singularNounWordString, replacingWordEndingString );
-				}
-			}
-
-		return grammarResult;
 		}
 
 	GrammarItem *firstActiveGrammarItem()
@@ -142,13 +117,53 @@ class GrammarList : private List
 		return NULL;
 		}
 
+	WordEndingResultType comparePluralWordEnding( size_t searchWordStringLength, size_t replacingWordStringLength, char *searchWordString, char *searchWordEndingString, char *replacingWordEndingString )
+		{
+		WordEndingResultType wordEndingResult;
+		size_t tempWordLength;
+		size_t searchWordEndingStringLength;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "comparePluralWordEnding";
+
+		if( searchWordStringLength <= 0 )
+			return startWordEndingResultError( functionNameString, "The given search word string length is undefined" );
+
+		if( searchWordString == NULL )
+			return startWordEndingResultError( functionNameString, "The given search word string is undefined" );
+
+		if( searchWordEndingString == NULL )
+			return startWordEndingResultError( functionNameString, "The given search word ending string is undefined" );
+
+		searchWordEndingStringLength = strlen( searchWordEndingString );
+		tempWordLength = ( searchWordStringLength - searchWordEndingStringLength );
+		wordEndingResult.singularNounWordStringLength = ( searchWordStringLength + replacingWordStringLength - searchWordEndingStringLength );
+
+		if( tempWordLength >= 0 &&
+		wordEndingResult.singularNounWordStringLength > 0 )
+			{
+			if( strncmp( &searchWordString[tempWordLength], searchWordEndingString, searchWordEndingStringLength ) == 0 )
+				{
+				wordEndingResult.hasFoundWordEnding = true;
+
+				strcpy( wordEndingResult.singularNounWordString, EMPTY_STRING );
+				strncat( wordEndingResult.singularNounWordString, searchWordString, tempWordLength );
+
+				if( replacingWordEndingString != NULL )
+					strcat( wordEndingResult.singularNounWordString, replacingWordEndingString );
+				}
+			}
+
+		return wordEndingResult;
+		}
+
 
 	protected:
 	// Constructor
 
-	GrammarList( CommonVariables *commonVariables, WordItem *myWordItem )
+	GrammarList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		isNeededToCheckGrammar_ = false;
+		// Private constructed variables
+
+		isCheckingGrammarNeeded_ = false;
 
 		firstGrammarItem_ = NULL;
 		firstFeminineProperNameEndingGrammarItem_ = NULL;
@@ -158,20 +173,12 @@ class GrammarList : private List
 		firstPluralNounEndingGrammarItem_ = NULL;
 		firstMergedWordGrammarItem_ = NULL;
 
-		initializeListVariables( WORD_GRAMMAR_LIST_SYMBOL, "GrammarList", commonVariables, myWordItem );
+		initializeListVariables( WORD_GRAMMAR_LIST_SYMBOL, "GrammarList", commonVariables, inputOutput, myWordItem );
 		}
 
 	~GrammarList()
 		{
-		GrammarItem *deleteGrammarItem;
-		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
-
-		while( searchGrammarItem != NULL )
-			{
-			deleteGrammarItem = searchGrammarItem;
-			searchGrammarItem = searchGrammarItem->nextGrammarItem();
-			delete deleteGrammarItem;
-			}
+		deleteGrammarList( firstActiveGrammarItem() );
 
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class GrammarList has inactive items." );
@@ -182,14 +189,7 @@ class GrammarList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class GrammarList has replaced items." );
 
-		searchGrammarItem = (GrammarItem *)firstDeletedItem();
-
-		while( searchGrammarItem != NULL )
-			{
-			deleteGrammarItem = searchGrammarItem;
-			searchGrammarItem = searchGrammarItem->nextGrammarItem();
-			delete deleteGrammarItem;
-			}
+		deleteGrammarList( (GrammarItem *)firstDeletedItem() );
 		}
 
 
@@ -239,130 +239,12 @@ class GrammarList : private List
 		return ( firstMergedWordGrammarItem_ != NULL );
 		}
 
-	bool isNeededToCheckGrammar()
+	bool isCheckingGrammarNeeded()
 		{
-		return isNeededToCheckGrammar_;
+		return isCheckingGrammarNeeded_;
 		}
 
-	GrammarResultType analyzeWordEnding( unsigned short grammarParameter, size_t searchWordStringLength, char *searchWordString )
-		{
-		GrammarResultType grammarResult;
-		char *replacingWordEndingString = NULL;
-		GrammarItem *replacingWordEndingGrammarItem;
-		GrammarItem *searchGrammarItem = firstWordEndingGrammarItem( grammarParameter );
-		char functionNameString[FUNCTION_NAME_LENGTH] = "analyzeWordEnding";
-
-		if( !isWordEnding( grammarParameter ) )
-			return startGrammarResultError( functionNameString, NULL, "The given grammar parameter is not a word ending parameter" );
-
-		// The given type of word ending is defined for the current language
-		if( searchGrammarItem != NULL )
-			{
-			if( searchWordString == NULL )
-				return startGrammarResultError( functionNameString, NULL, "The given search word string is undefined" );
-
-			if( searchWordStringLength == 0 )
-				searchWordStringLength = strlen( searchWordString );
-
-			do	{
-				if( searchGrammarItem->isDefinitionStart() )
-					{
-					replacingWordEndingGrammarItem = searchGrammarItem->nextDefinitionGrammarItem;
-					replacingWordEndingString = ( replacingWordEndingGrammarItem == NULL ? NULL : replacingWordEndingGrammarItem->grammarString() );
-
-					if( ( grammarResult = comparePluralEndingOfWord( searchWordStringLength, ( replacingWordEndingString == NULL ? 0 : strlen( replacingWordEndingString ) ), searchWordString, searchGrammarItem->itemString(), replacingWordEndingString ) ).result != RESULT_OK )
-						return addGrammarResultError( functionNameString, NULL, "I failed to find the plural ending of an undefined word type" );
-					}
-				}
-			while( !grammarResult.hasFoundWordEnding &&
-			( searchGrammarItem = searchGrammarItem->nextWordEndingGrammarItem() ) != NULL );
-			}
-
-		return grammarResult;
-		}
-
-	GrammarResultType createGrammarItem( bool isDefinitionStart, bool isNewStart, bool isOptionStart, bool isChoiceStart, bool isSkipOptionForWriting, unsigned short wordTypeNr, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString, GrammarItem *definitionGrammarItem )
-		{
-		GrammarResultType grammarResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createGrammarItem";
-
-		if( wordTypeNr < NO_WORD_TYPE_NR ||
-		wordTypeNr >= NUMBER_OF_WORD_TYPES )
-			return startGrammarResultError( functionNameString, NULL, "The given word type number is out of bounds" );
-
-		if( ( grammarResult.createdGrammarItem = new GrammarItem( isDefinitionStart, isNewStart, isOptionStart, isChoiceStart, isSkipOptionForWriting, wordTypeNr, grammarParameter, grammarStringLength, grammarString, definitionGrammarItem, commonVariables(), this, myWordItem() ) ) == NULL )
-			return startGrammarResultError( functionNameString, NULL, "I failed to create a grammar item" );
-
-		if( addItemToList( QUERY_ACTIVE_CHAR, grammarResult.createdGrammarItem ) != RESULT_OK )
-			return addGrammarResultError( functionNameString, NULL, "I failed to add an active grammar item" );
-
-		isNeededToCheckGrammar_ = true;
-
-		if( grammarResult.createdGrammarItem->isDefinitionStart() )
-			{
-			switch( grammarParameter )
-				{
-				case WORD_FEMININE_PROPER_NAME_ENDING:
-					firstFeminineProperNameEndingGrammarItem_ = grammarResult.createdGrammarItem;
-					break;
-
-				case WORD_MASCULINE_PROPER_NAME_ENDING:
-					firstMasculineProperNameEndingGrammarItem_ = grammarResult.createdGrammarItem;
-					break;
-
-				case WORD_FEMININE_SINGULAR_NOUN_ENDING:
-					firstFeminineSingularNounEndingGrammarItem_ = grammarResult.createdGrammarItem;
-					break;
-
-				case WORD_MASCULINE_SINGULAR_NOUN_ENDING:
-					firstMasculineSingularNounEndingGrammarItem_ = grammarResult.createdGrammarItem;
-					break;
-
-				case WORD_PLURAL_NOUN_ENDING:
-					firstPluralNounEndingGrammarItem_ = grammarResult.createdGrammarItem;
-					break;
-
-				case WORD_MERGED_WORD:
-					firstMergedWordGrammarItem_ = grammarResult.createdGrammarItem;
-					break;
-				}
-
-			if( grammarResult.createdGrammarItem->isGrammarStart() )
-				firstGrammarItem_ = grammarResult.createdGrammarItem;
-			}
-
-		return grammarResult;
-		}
-
-	GrammarResultType findGrammar( bool isIgnoringGrammarParameter, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString )
-		{
-		GrammarResultType grammarResult;
-		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findGrammar";
-
-		if( grammarString == NULL )
-			return startGrammarResultError( functionNameString, NULL, "The given grammar string is undefined" );
-
-		do	{
-			if( searchGrammarItem->grammarString() == NULL )
-				return startGrammarResultError( functionNameString, NULL, "I have found a grammar word without grammar string" );
-
-			if( searchGrammarItem->isDefinitionStart() &&
-
-			( isIgnoringGrammarParameter ||
-			searchGrammarItem->grammarParameter() == grammarParameter ) &&
-
-			grammarStringLength == strlen( searchGrammarItem->grammarString() ) &&
-			strncmp( grammarString, searchGrammarItem->grammarString(), grammarStringLength ) == 0 )
-				grammarResult.foundGrammarItem = searchGrammarItem;
-			}
-		while( grammarResult.foundGrammarItem == NULL &&
-		( searchGrammarItem = searchGrammarItem->nextGrammarItem() ) != NULL );
-
-		return grammarResult;
-		}
-
-	ResultType checkForDuplicateGrammarDefinition()
+	signed char checkForDuplicateGrammarDefinition()
 		{
 		bool isIdentical;
 		char *grammarString;
@@ -406,7 +288,7 @@ class GrammarList : private List
 			}
 
 		if( definitionGrammarItem == NULL )
-			return startError( functionNameString, NULL, "I couldn't find the last grammar definition word" );
+			return startError( functionNameString, "I couldn't find the last grammar definition word" );
 
 		if( duplicateDefinitionGrammarItem != NULL )
 			{
@@ -438,7 +320,7 @@ class GrammarList : private List
 				if( isIdentical &&
 				currentGrammarItem == NULL &&
 				duplicateGrammarItem == NULL )
-					return startError( functionNameString, NULL, "I have found a duplicate grammar definition" );
+					return startError( functionNameString, "I found a duplicate grammar definition" );
 				}
 			while( ( duplicateDefinitionGrammarItem = duplicateDefinitionGrammarItem->nextDefinitionGrammarItem ) != NULL );
 			}
@@ -446,7 +328,7 @@ class GrammarList : private List
 		return RESULT_OK;
 		}
 
-	ResultType checkGrammar()
+	signed char checkGrammar()
 		{
 		unsigned short grammarWordTypeNr;
 		unsigned short currentWordTypeNr = ( NUMBER_OF_WORD_TYPES - 1 );
@@ -456,9 +338,9 @@ class GrammarList : private List
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkGrammar";
 
 		if( ( currentGrammarItem = firstActiveGrammarItem() ) == NULL )
-			return startError( functionNameString, NULL, "I couldn't find any grammar item" );
+			return startError( functionNameString, "I couldn't find any grammar item" );
 
-		isNeededToCheckGrammar_ = false;
+		isCheckingGrammarNeeded_ = false;
 
 		do	{
 			if( currentGrammarItem->isDefinitionStart() )
@@ -471,15 +353,15 @@ class GrammarList : private List
 						{
 						if( grammarWordTypeNr + 1 == currentWordTypeNr )
 							{
-							if( commonVariables()->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_START, currentWordTypeNr, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_MIDDLE, currentLangugeWordItem->anyWordTypeString(), INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) != RESULT_OK )
-								return addError( functionNameString, NULL, "I failed to write the 'grammar word type definition missing' interface notification" );
+							if( inputOutput()->writeInterfaceText( INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_START, currentWordTypeNr, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_MIDDLE, currentLangugeWordItem->anyWordTypeString(), INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) != RESULT_OK )
+								return addError( functionNameString, "I failed to write the 'grammar word type definition missing' interface notification" );
 
 							currentWordTypeNr = grammarWordTypeNr;
 							}
 						else
 							{
-							if( commonVariables()->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_START, ( grammarWordTypeNr + 1 ), INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_TO, currentWordTypeNr, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_MIDDLE, currentLangugeWordItem->anyWordTypeString(), INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) != RESULT_OK )
-								return addError( functionNameString, NULL, "I failed to write the 'grammar word type definitions missing' interface notification" );
+							if( inputOutput()->writeInterfaceText( INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_START, ( grammarWordTypeNr + 1 ), INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_TO, currentWordTypeNr, INTERFACE_GRAMMAR_WORD_TYPE_DEFINITIONS_MISSING_MIDDLE, currentLangugeWordItem->anyWordTypeString(), INTERFACE_GRAMMAR_WORD_TYPE_DEFINITION_MISSING_END ) != RESULT_OK )
+								return addError( functionNameString, "I failed to write the 'grammar word type definitions missing' interface notification" );
 
 							currentWordTypeNr = grammarWordTypeNr;
 							}
@@ -492,18 +374,17 @@ class GrammarList : private List
 				!currentGrammarItem->isGrammarStart() &&
 				!currentGrammarItem->isUndefinedWord() &&
 				!currentGrammarItem->isUserDefinedWord() &&
-				!isWordEnding( currentGrammarItem->grammarParameter() ) )
-					{
-					if( commonVariables()->presentation->writeInterfaceText( PRESENTATION_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_START, currentGrammarItem->grammarString(), INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_MIDDLE, currentLangugeWordItem->anyWordTypeString(), INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_END ) != RESULT_OK )
-						return addError( functionNameString, NULL, "I failed to write the 'grammar definition is not used' interface notification" );
-					}
+				!isWordEnding( currentGrammarItem->grammarParameter() ) &&
+
+				inputOutput()->writeInterfaceText( INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_START, currentGrammarItem->grammarString(), INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_MIDDLE, currentLangugeWordItem->anyWordTypeString(), INTERFACE_GRAMMAR_DEFINITION_IS_NOT_USED_END ) != RESULT_OK )
+					return addError( functionNameString, "I failed to write the 'grammar definition is not used' interface notification" );
 				}
 			else
 				{
 				if( currentGrammarItem->definitionGrammarItem == NULL )
 					{
 					sprintf( errorString, "Grammar word \"%s\" in \"%s\" is used, but not defined", currentGrammarItem->grammarString(), currentLangugeWordItem->anyWordTypeString() );
-					return startError( functionNameString, NULL, errorString );
+					return startError( functionNameString, errorString );
 					}
 				}
 			}
@@ -512,21 +393,21 @@ class GrammarList : private List
 		return RESULT_OK;
 		}
 
-	ResultType checkGrammarItemForUsage( GrammarItem *unusedGrammarItem )
+	signed char checkGrammarItemForUsage( GrammarItem *unusedGrammarItem )
 		{
 		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkGrammarItemForUsage";
 
 		if( unusedGrammarItem == NULL )
-			return startError( functionNameString, NULL, "The given unused grammar item is undefined" );
+			return startError( functionNameString, "The given unused grammar item is undefined" );
 
 		while( searchGrammarItem != NULL )
 			{
 			if( searchGrammarItem->definitionGrammarItem == unusedGrammarItem )
-				return startError( functionNameString, NULL, "The definition grammar item is still in use" );
+				return startError( functionNameString, "The definition grammar item is still in use" );
 
 			if( searchGrammarItem->nextDefinitionGrammarItem == unusedGrammarItem )
-				return startError( functionNameString, NULL, "The next definition grammar item is still in use" );
+				return startError( functionNameString, "The next definition grammar item is still in use" );
 
 			searchGrammarItem = searchGrammarItem->nextGrammarItem();
 			}
@@ -534,7 +415,7 @@ class GrammarList : private List
 		return RESULT_OK;
 		}
 
-	ResultType linkLaterDefinedGrammarWords()
+	signed char linkLaterDefinedGrammarWords()
 		{
 		char *definitionGrammarString;
 		char *grammarString;
@@ -543,17 +424,17 @@ class GrammarList : private List
 		char functionNameString[FUNCTION_NAME_LENGTH] = "linkLaterDefinedGrammarWords";
 
 		if( ( definitionGrammarItem = firstActiveGrammarItem() ) == NULL )
-			return startError( functionNameString, NULL, "I couldn't find any grammar item" );
+			return startError( functionNameString, "I couldn't find any grammar item" );
 
 		if( ( definitionGrammarString = definitionGrammarItem->grammarString() ) == NULL )
-			return startError( functionNameString, NULL, "The grammar string of the grammar definition word is undefined" );
+			return startError( functionNameString, "The grammar string of the grammar definition word is undefined" );
 
 		currentGrammarItem = definitionGrammarItem;
 
 		while( ( currentGrammarItem = currentGrammarItem->nextGrammarItem() ) != NULL )
 			{
 			if( ( grammarString = currentGrammarItem->grammarString() ) == NULL )
-				return startError( functionNameString, NULL, "The grammar string of the grammar definition word is undefined" );
+				return startError( functionNameString, "The grammar string of the grammar definition word is undefined" );
 
 			if( currentGrammarItem->definitionGrammarItem == NULL )
 				{
@@ -574,7 +455,7 @@ class GrammarList : private List
 		return RESULT_OK;
 		}
 
-	ResultType expandMergedWordsInReadSentence( char *readUserSentenceString )
+	signed char expandMergedWordsInReadSentence( char *readUserSentenceString )
 		{
 		size_t previousPosition;
 		size_t readUserSentenceStringLength;
@@ -586,19 +467,19 @@ class GrammarList : private List
 		char functionNameString[FUNCTION_NAME_LENGTH] = "expandMergedWordsInReadSentence";
 
 		if( readUserSentenceString == NULL )
-			return startError( functionNameString, NULL, "The given read user sentence string is undefined" );
+			return startError( functionNameString, "The given read user sentence string is undefined" );
 
 		if( ( readUserSentenceStringLength = strlen( readUserSentenceString ) ) == 0 )
-			return startError( functionNameString, NULL, "The given read user sentence string is empty" );
+			return startError( functionNameString, "The given read user sentence string is empty" );
 
 		if( expandMergedWordGrammarItem == NULL )
-			return startError( functionNameString, NULL, "No grammar compound word definition was found" );
+			return startError( functionNameString, "No grammar compound word definition was found" );
 
 		do	{
 			if( expandMergedWordGrammarItem->isDefinitionStart() )
 				{
 				if( ( searchMergedWordGrammarItem = expandMergedWordGrammarItem->nextDefinitionGrammarItem ) == NULL )
-					return startError( functionNameString, NULL, "I have found a compound word definition without replacing compound word definition" );
+					return startError( functionNameString, "I found a compound word definition without replacing compound word definition" );
 
 				previousPosition = 0;
 				startPosition = 0;
@@ -640,7 +521,7 @@ class GrammarList : private List
 		return RESULT_OK;
 		}
 
-	ResultType shrinkMergedWordsInWriteSentence()
+	signed char shrinkMergedWordsInWriteSentence()
 		{
 		size_t previousPosition;
 		size_t startPosition;
@@ -653,16 +534,16 @@ class GrammarList : private List
 		char functionNameString[FUNCTION_NAME_LENGTH] = "shrinkMergedWordsInWriteSentence";
 
 		if( ( writtenSentenceStringLength = strlen( writtenSentenceString ) ) == 0 )
-			return startError( functionNameString, NULL, "The write sentence string is empty" );
+			return startError( functionNameString, "The write sentence string is empty" );
 
 		if( searchMergedWordGrammarItem == NULL )
-			return startError( functionNameString, NULL, "No grammar compound word definition was found" );
+			return startError( functionNameString, "No grammar compound word definition was found" );
 
 		do	{
 			if( searchMergedWordGrammarItem->isDefinitionStart() )
 				{
 				if( ( shrinkMergedWordGrammarItem = searchMergedWordGrammarItem->nextDefinitionGrammarItem ) == NULL )
-					return startError( functionNameString, NULL, "I have found a compound word definition without replacing compound word definition" );
+					return startError( functionNameString, "I found a compound word definition without replacing compound word definition" );
 
 				previousPosition = 0;
 				startPosition = 0;
@@ -704,45 +585,6 @@ class GrammarList : private List
 
 		return RESULT_OK;
 		}
-/*
-	ResultType storeChangesInFutureDatabase()
-		{
-		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
-
-		while( searchGrammarItem != NULL )
-			{
-			if( searchGrammarItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchGrammarItem->storeGrammarItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to store a grammar item in the database" );
-				}
-
-			searchGrammarItem = searchGrammarItem->nextGrammarItem();
-			}
-
-		return RESULT_OK;
-		}
-*/
-	GrammarItem *firstGrammarItem()
-		{
-		return firstGrammarItem_;
-		}
-
-	char *guideByGrammarString( GrammarItem *startGrammarItem )
-		{
-		GrammarItem *searchGrammarItem = startGrammarItem;
-
-		while( searchGrammarItem != NULL &&
-		searchGrammarItem->nextDefinitionGrammarItem != NULL )
-			searchGrammarItem = searchGrammarItem->nextDefinitionGrammarItem;
-
-		if( searchGrammarItem != NULL &&
-		searchGrammarItem->guideByGrammarString != NULL )
-			return searchGrammarItem->guideByGrammarString;
-
-		return NULL;
-		}
 
 	char *grammarStringInList( unsigned short wordTypeNr )
 		{
@@ -760,6 +602,131 @@ class GrammarList : private List
 			}
 
 		return NULL;
+		}
+
+	GrammarItem *firstGrammarItem()
+		{
+		return firstGrammarItem_;
+		}
+
+	GrammarResultType createGrammarItem( bool isDefinitionStart, bool isNewStart, bool isOptionStart, bool isChoiceStart, bool isSkipOptionForWriting, unsigned short wordTypeNr, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString, GrammarItem *definitionGrammarItem )
+		{
+		GrammarResultType grammarResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "createGrammarItem";
+
+		if( wordTypeNr < NO_WORD_TYPE_NR ||
+		wordTypeNr >= NUMBER_OF_WORD_TYPES )
+			return startGrammarResultError( functionNameString, "The given word type number is out of bounds" );
+
+		if( ( grammarResult.grammarItem = new GrammarItem( isDefinitionStart, isNewStart, isOptionStart, isChoiceStart, isSkipOptionForWriting, wordTypeNr, grammarParameter, grammarStringLength, grammarString, definitionGrammarItem, commonVariables(), inputOutput(), this, myWordItem() ) ) == NULL )
+			return startGrammarResultError( functionNameString, "I failed to create a grammar item" );
+
+		if( addItemToList( QUERY_ACTIVE_CHAR, grammarResult.grammarItem ) != RESULT_OK )
+			return addGrammarResultError( functionNameString, "I failed to add an active grammar item" );
+
+		isCheckingGrammarNeeded_ = true;
+
+		if( grammarResult.grammarItem->isDefinitionStart() )
+			{
+			switch( grammarParameter )
+				{
+				case WORD_FEMININE_PROPER_NAME_ENDING:
+					firstFeminineProperNameEndingGrammarItem_ = grammarResult.grammarItem;
+					break;
+
+				case WORD_MASCULINE_PROPER_NAME_ENDING:
+					firstMasculineProperNameEndingGrammarItem_ = grammarResult.grammarItem;
+					break;
+
+				case WORD_FEMININE_SINGULAR_NOUN_ENDING:
+					firstFeminineSingularNounEndingGrammarItem_ = grammarResult.grammarItem;
+					break;
+
+				case WORD_MASCULINE_SINGULAR_NOUN_ENDING:
+					firstMasculineSingularNounEndingGrammarItem_ = grammarResult.grammarItem;
+					break;
+
+				case WORD_PLURAL_NOUN_ENDING:
+					firstPluralNounEndingGrammarItem_ = grammarResult.grammarItem;
+					break;
+
+				case WORD_MERGED_WORD:
+					firstMergedWordGrammarItem_ = grammarResult.grammarItem;
+					break;
+				}
+
+			if( grammarResult.grammarItem->isGrammarStart() )
+				firstGrammarItem_ = grammarResult.grammarItem;
+			}
+
+		return grammarResult;
+		}
+
+	GrammarResultType findGrammar( bool isIgnoringGrammarParameter, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString )
+		{
+		GrammarResultType grammarResult;
+		GrammarItem *foundGrammarItem = NULL;
+		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
+		char functionNameString[FUNCTION_NAME_LENGTH] = "findGrammar";
+
+		if( grammarString == NULL )
+			return startGrammarResultError( functionNameString, "The given grammar string is undefined" );
+
+		do	{
+			if( searchGrammarItem->grammarString() == NULL )
+				return startGrammarResultError( functionNameString, "I found a grammar word without grammar string" );
+
+			if( searchGrammarItem->isDefinitionStart() &&
+
+			( isIgnoringGrammarParameter ||
+			searchGrammarItem->grammarParameter() == grammarParameter ) &&
+
+			grammarStringLength == strlen( searchGrammarItem->grammarString() ) &&
+			strncmp( grammarString, searchGrammarItem->grammarString(), grammarStringLength ) == 0 )
+				foundGrammarItem = searchGrammarItem;
+			}
+		while( foundGrammarItem == NULL &&
+		( searchGrammarItem = searchGrammarItem->nextGrammarItem() ) != NULL );
+
+		grammarResult.grammarItem = foundGrammarItem;
+		return grammarResult;
+		}
+
+	WordEndingResultType analyzeWordEnding( unsigned short grammarParameter, size_t searchWordStringLength, char *searchWordString )
+		{
+		WordEndingResultType wordEndingResult;
+		char *replacingWordEndingString = NULL;
+		GrammarItem *replacingWordEndingGrammarItem;
+		GrammarItem *searchGrammarItem = firstWordEndingGrammarItem( grammarParameter );
+		char functionNameString[FUNCTION_NAME_LENGTH] = "analyzeWordEnding";
+
+		if( !isWordEnding( grammarParameter ) )
+			return startWordEndingResultError( functionNameString, "The given grammar parameter is not a word ending parameter" );
+
+		// The given type of word ending is defined for the current language
+		if( searchGrammarItem != NULL )
+			{
+			if( searchWordString == NULL )
+				return startWordEndingResultError( functionNameString, "The given search word string is undefined" );
+
+			if( searchWordStringLength == 0 )
+				searchWordStringLength = strlen( searchWordString );
+
+			do	{
+				if( searchGrammarItem->isDefinitionStart() )
+					{
+					replacingWordEndingGrammarItem = searchGrammarItem->nextDefinitionGrammarItem;
+					replacingWordEndingString = ( replacingWordEndingGrammarItem == NULL ? NULL : replacingWordEndingGrammarItem->grammarString() );
+
+					if( ( wordEndingResult = comparePluralWordEnding( searchWordStringLength, ( replacingWordEndingString == NULL ? 0 : strlen( replacingWordEndingString ) ), searchWordString, searchGrammarItem->itemString(), replacingWordEndingString ) ).result != RESULT_OK )
+						return addWordEndingResultError( functionNameString, "I failed to find the plural ending of an undefined word type" );
+					}
+				}
+			while( !wordEndingResult.hasFoundWordEnding &&
+			( searchGrammarItem = searchGrammarItem->nextWordEndingGrammarItem() ) != NULL );
+			}
+
+		return wordEndingResult;
 		}
 	};
 

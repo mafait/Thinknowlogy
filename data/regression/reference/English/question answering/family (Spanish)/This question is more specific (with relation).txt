@@ -1,0 +1,136 @@
+﻿* 
+* My conclusions:
+< Fathers and children are part of every family.
+< 
+* 
+* My conclusions:
+< Every father is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< A father is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+* I know nothing about John, but I'll keep this question in mind.
+* 
+* 
+* This question is more specific than your earlier question:
+< Is John a father?
+* 
+* Your questions that are answered:
+< Is John a father?
+* 
+* My assumptions:
+< John is probably a father.
+< John is probably part of a family.
+< John is possibly a person.
+< John is probably a man.
+< John is possibly not a woman.
+< John is probably not a mother.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* I know nothing about Anna, but I'll keep this question in mind.
+* 
+* 
+* This question is more specific than your earlier question:
+< Is Anna a father or a mother?
+* I know nothing about Anna, but I'll keep this question in mind.
+* 
+* 
+* Your questions that are answered:
+< Is Anna a mother?
+< Is Anna a father or a mother?
+* 
+* My conclusions:
+< Anna is a woman.
+< Anna is not a man.
+< Anna is feminine.
+< Anna is part of a family.
+< Anna is not a father.
+* 
+* My assumptions:
+< Anna is probably a person.
+< Anna has probably a child.
+< 
+* 
+* This question is more specific than your earlier question:
+< Is Anna a mother?
+* 
+* I only know:
+< Anna is a mother.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* My assumptions:
+< John is probably a father. Because:
+<	- Is John the father of Paul?
+< John is probably part of a family. Because:
+<	- John is probably a father.
+<	- Fathers are part of every family.
+< John is possibly a person. Because:
+<	- John is probably a father.
+<	- A father is probably a person.
+* 	and:
+<	- Every person is a man or a woman.
+<	- John is probably a man.
+< John is probably a man. Because:
+<	- John is probably a father.
+<	- Every father is a man.
+< John is possibly not a woman. Because:
+<	- John is probably a father.
+<	- Every father is a woman or a man.
+<	- John is probably a man.
+* 	and:
+<	- John is possibly a person.
+<	- Every person is a man or a woman.
+<	- John is probably a man.
+< John is probably not a mother. Because:
+<	- John is probably a father.
+<	- Every father is a father or a mother.
+< 
+* 
+* My conclusions:
+< Anna is a woman. Because:
+<	- Anna is a mother.
+<	- Every mother is a woman.
+< Anna is not a man. Because:
+<	- Anna is probably a person.
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Anna is a mother.
+<	- Every father is a woman or a man.
+<	- Anna is a woman.
+< Anna is feminine. Because:
+<	- Anna is a woman.
+<	- Every woman is feminine.
+< Anna is part of a family. Because:
+<	- Anna is a mother.
+<	- Fathers are part of every family.
+< Anna is not a father. Because:
+<	- Every father is a father or a mother.
+<	- Anna is a mother.
+* 
+* My assumptions:
+< Anna is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Anna is a mother.
+<	- A mother is probably a person.
+< Anna has probably a child. Because:
+<	- Anna is a mother.
+<	- Every family has fathers and children.
+< 

@@ -5,21 +5,21 @@
 ~Nederlands
 
 # The grammar rules have been read. Now it's possible
-# to utilize those rules, expressed as natural language
+# to use these rules, expressed as readable sentences
 
-# Read the available users in available languages
+# Read the user file in the available languages
 Read the file "data/startup/English/users".
 Leer el archivo "data/startup/Español/usuarios".
 Lirez le fichier "data/startup/Français/utilisateurs".
 Lees het bestand "data/startup/Nederlands/gebruikers".
 
-# Read common knowledge in available languages
+# Read common knowledge in the available languages
 Read the file "data/startup/English/common knowledge".
 Leer el archivo "data/startup/Español/conocimiento común".
 Lirez le fichier "data/startup/Français/connaissance commune".
 Lees het bestand "data/startup/Nederlands/algemene kennis".
 
-# Display copyright text and intro text
+# Display copyright text and intro text on startup
 If the intro text is started then if the startup language is not assigned or the startup language is English then the intro text is empty, display the copyright and display the intro.
 The intro text is started.
 Si el texto de introducción es inicia entonces si la idioma de inicio es Español entonces el texto de introducción es vacío, mostrar los derechos de autor y mostrar la intro.

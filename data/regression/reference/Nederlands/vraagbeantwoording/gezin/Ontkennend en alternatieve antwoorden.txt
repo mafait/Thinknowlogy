@@ -29,6 +29,7 @@
 * 
 * Mijn conclusies:
 < Jan is een man.
+< Jan is mannelijk.
 < Paul heeft een vader, genaamd Jan.
 < Paul heeft een moeder, genaamd Anna.
 < Johan heeft een vader, genaamd Jan.
@@ -36,6 +37,7 @@
 < Laura heeft een vader, genaamd Jan.
 < Laura heeft een moeder, genaamd Anna.
 < Anna is een vrouw.
+< Anna is vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een persoon.
@@ -69,9 +71,9 @@
 < Anna heeft mogelijk een dochter, genaamd Laura.
 * 
 * Mijn vragen:
-< Is Paul een man, een vrouw, een meisje of een jongen?
+< Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
-< Is Johan een man, een vrouw, een meisje of een jongen?
+< Is Johan een meisje, een vrouw, een jongen of een man?
 < Is Johan een zoon of een dochter?
 < Is Laura een meisje of een vrouw?
 < 
@@ -96,6 +98,7 @@
 * 
 * Mijn conclusies:
 < Sjors is een man.
+< Sjors is mannelijk.
 < André heeft een vader, genaamd Sjors.
 * 
 * Mijn veronderstellingen:
@@ -111,7 +114,7 @@
 < André heeft waarschijnlijk een ouder, genaamd Sjors.
 * 
 * Mijn vragen:
-< Is André een man, een vrouw, een meisje of een jongen?
+< Is André een meisje, een vrouw, een jongen of een man?
 < Is André een zoon of een dochter?
 < 
 * 
@@ -129,6 +132,7 @@
 * 
 * Mijn conclusies:
 < Willem is een man.
+< Willem is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Willem is waarschijnlijk een persoon.
@@ -148,6 +152,9 @@
 < Jan is een man. Omdat:
 <	- Jan is een vader.
 <	- Iedere vader is een man.
+< Jan is mannelijk. Omdat:
+<	- Jan is een man.
+<	- Iedere man is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een persoon. Omdat:
@@ -168,6 +175,10 @@
 <	- Iedere ouder is een vrouw of een man.
 <	- Jan is een man.
 < Jan is waarschijnlijk een ouder van Paul, Johan en Laura. Omdat:
+<	- Laura heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+* 	en:
 <	- Iedere ouder is een vader of een moeder.
 <	- Jan is de vader van Paul, Johan en Laura.
 * 	en:
@@ -228,12 +239,9 @@
 <	- Een kind is waarschijnlijk een persoon.
 * 
 * Mijn vragen:
-< Is Paul een man, een vrouw, een meisje of een jongen? Omdat:
+< Is Paul een meisje, een vrouw, een jongen of een man? Omdat:
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 <	- Ieder kind is een meisje, een vrouw, een jongen of een man.
-* 	en:
-<	- Paul is mogelijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
 < Is Paul een zoon of een dochter? Omdat:
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 <	- Ieder kind is een zoon of een dochter.
@@ -243,17 +251,11 @@
 < Sjors is een man. Omdat:
 <	- Sjors is een vader.
 <	- Iedere vader is een man.
+< Sjors is mannelijk. Omdat:
+<	- Sjors is een man.
+<	- Iedere man is mannelijk.
 * 
 * Mijn veronderstellingen:
-< Sjors is waarschijnlijk een ouder van André. Omdat:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- André is waarschijnlijk een kind van Sjors.
-* 	en:
-<	- Iedere ouder is een vader of een moeder.
-<	- Sjors is de vader van André.
-< Sjors is waarschijnlijk deel van een gezin. Omdat:
-<	- Sjors is waarschijnlijk een ouder van André.
-<	- Ouders zijn deel van ieder gezin.
 < Sjors is waarschijnlijk een persoon. Omdat:
 <	- Iedere persoon is een man of een vrouw.
 <	- Sjors is een man.
@@ -271,6 +273,17 @@
 <	- Sjors is waarschijnlijk een ouder van André.
 <	- Iedere ouder is een vrouw of een man.
 <	- Sjors is een man.
+< Sjors is waarschijnlijk een ouder van André. Omdat:
+<	- André heeft waarschijnlijk een ouder, genaamd Sjors.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- André is waarschijnlijk een kind van Sjors.
+* 	en:
+<	- Iedere ouder is een vader of een moeder.
+<	- Sjors is de vader van André.
+< Sjors is waarschijnlijk deel van een gezin. Omdat:
+<	- Sjors is waarschijnlijk een ouder van André.
+<	- Ouders zijn deel van ieder gezin.
 < Sjors is waarschijnlijk geen moeder. Omdat:
 <	- Sjors is waarschijnlijk een ouder van André.
 <	- Iedere ouder is een vader of een moeder.
@@ -286,6 +299,9 @@
 < Willem is een man. Omdat:
 <	- Willem is een vader.
 <	- Iedere vader is een man.
+< Willem is mannelijk. Omdat:
+<	- Willem is een man.
+<	- Iedere man is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Willem is waarschijnlijk een persoon. Omdat:
@@ -344,12 +360,9 @@
 <	- Sjors is waarschijnlijk een ouder van André.
 * 
 * Mijn vragen:
-< Is André een man, een vrouw, een meisje of een jongen? Omdat:
+< Is André een meisje, een vrouw, een jongen of een man? Omdat:
 <	- André is waarschijnlijk een kind van Sjors.
 <	- Ieder kind is een meisje, een vrouw, een jongen of een man.
-* 	en:
-<	- André is mogelijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
 < Is André een zoon of een dochter? Omdat:
 <	- André is waarschijnlijk een kind van Sjors.
 <	- Ieder kind is een zoon of een dochter.

@@ -46,11 +46,8 @@
 < Jan is waarschijnlijk een vrouw.
 < Jan is misschien geen man.
 * 
-* Mijn veronderstellingen die aangepast zijn:
-< Jan is waarschijnlijk een persoon.
-* 
 * Mijn vragen:
-< Is Jan een vrouw of een man?
+< Is Jan een man of een vrouw?
 < Is Jan een moeder of een vader?
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.

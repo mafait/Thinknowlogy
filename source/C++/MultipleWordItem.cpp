@@ -1,9 +1,9 @@
 /*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -39,9 +39,9 @@ class MultipleWordItem : private Item
 	protected:
 	// Constructor
 
-	MultipleWordItem( unsigned short nWordParts, unsigned short wordTypeLanguageNr, unsigned short wordTypeNr, WordItem *multipleWordItem, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	MultipleWordItem( unsigned short nWordParts, unsigned short wordTypeLanguageNr, unsigned short wordTypeNr, WordItem *multipleWordItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "MultipleWordItem", commonVariables, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "MultipleWordItem", commonVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -49,10 +49,10 @@ class MultipleWordItem : private Item
 		wordTypeLanguageNr_ = wordTypeLanguageNr;
 		wordTypeNr_ = wordTypeNr;
 
-		multipleWordItem_ = multipleWordItem;
+		// Checking private initialized variables
 
-		if( multipleWordItem_ == NULL )
-			startSystemError( PRESENTATION_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given multiple word item is undefined" );
+		if( ( multipleWordItem_ = multipleWordItem ) == NULL )
+			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given multiple word item is undefined" );
 		}
 
 
@@ -91,28 +91,14 @@ class MultipleWordItem : private Item
 		return ( wordTypeNr_ == queryWordTypeNr );
 		}
 
-	virtual StringResultType findMatchingWordReferenceString( char *queryString )
-		{
-		StringResultType stringResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
-
-		if( multipleWordItem_ != NULL )
-			{
-			if( ( stringResult = multipleWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-				return addStringResultError( functionNameString, NULL, "I failed to find a matching word reference string for the multiple word word" );
-			}
-
-		return stringResult;
-		}
-
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *queryString;
 		char *wordString;
 		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
 		char *languageNameString = myWordItem()->languageNameString( wordTypeLanguageNr_ );
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 
@@ -151,6 +137,16 @@ class MultipleWordItem : private Item
 		return queryString;
 		}
 
+	virtual BoolResultType findMatchingWordReferenceString( char *queryString )
+		{
+		BoolResultType boolResult;
+
+		if( multipleWordItem_ != NULL )
+			return multipleWordItem_->findMatchingWordReferenceString( queryString );
+
+		return boolResult;
+		}
+
 
 	// Protected functions
 
@@ -174,14 +170,14 @@ class MultipleWordItem : private Item
 		return wordTypeNr_;
 		}
 
-	WordItem *multipleWordItem()
-		{
-		return multipleWordItem_;
-		}
-
 	MultipleWordItem *nextMultipleWordItem()
 		{
 		return (MultipleWordItem *)nextItem;
+		}
+
+	WordItem *multipleWordItem()
+		{
+		return multipleWordItem_;
 		}
 	};
 

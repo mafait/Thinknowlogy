@@ -26,13 +26,14 @@
 < Juan es parte de una familia.
 < Juan es un hombre.
 < Juan no es una mujer.
+< Juan es masculino.
 < Juan no es una madre.
 < Pablo tiene un padre, llamado Juan.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
 < Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Pablo es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
@@ -50,6 +51,9 @@
 <	- Juan es un padre.
 <	- Cada padre es una mujer o un hombre.
 <	- Juan es un hombre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
@@ -68,7 +72,7 @@
 * 
 * Mis suposiciones:
 < José es posiblemente una persona.
-< José es probablemente parte de una familia.
+< José es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es José una niña, una mujer, un niño o un hombre?
@@ -86,6 +90,9 @@
 <	- Juan es un padre.
 <	- Cada padre es una mujer o un hombre.
 <	- Juan es un hombre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
@@ -125,6 +132,9 @@
 <	- Juan es un padre.
 <	- Cada padre es una mujer o un hombre.
 <	- Juan es un hombre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
@@ -171,21 +181,24 @@
 <	- Juan es un padre.
 <	- Cada padre es una mujer o un hombre.
 <	- Juan es un hombre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
 * 
 * Mis suposiciones:
 < Juan tiene posiblemente 2 hija [plural de 'hija' es desconocida], llamados Luisa y Bonita. Porque:
-<	- Luisa tiene un padre, llamado Juan.
+<	- Bonita es posiblemente hija de Juan.
+<	- Luisa es posiblemente hija de Juan.
+* 	y:
 <	- Bonita tiene un padre, llamado Juan.
+<	- Luisa tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Bonita" es probablemente femenino.
 <	- Nombre propio "Luisa" es probablemente femenino.
-* 	y:
-<	- Luisa es posiblemente hija de Juan.
-<	- Bonita es posiblemente hija de Juan.
 < Juan es probablemente una persona. Porque:
 <	- Juan es un padre.
 <	- Un padre es probablemente una persona.

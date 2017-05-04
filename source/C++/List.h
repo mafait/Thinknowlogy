@@ -1,8 +1,8 @@
 /*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -28,30 +28,17 @@
 #include <stdlib.h>
 #include "Item.h"
 
-// Some compilers need these class declarations
-class GeneralizationResultType;
-class GrammarResultType;
-class JustificationResultType;
-class ListCleanup;
-class ListQuery;
-class SelectionResultType;
-class SpecificationResultType;
+// Class declarations
+class WordEndingResultType;
 
 class List
 	{
-	friend class AdminCleanup;
-	friend class AdminQuery;
-	friend class AdminReadSentence;
+	friend class AdminItem;
 	friend class Item;
-	friend class ListCleanup;
-	friend class ListQuery;
 	friend class SpecificationItem;
-	friend class WordCleanup;
 	friend class WordItem;
 
 	// Private constructed variables
-
-	char listChar_;
 
 	Item *activeList_;
 	Item *inactiveList_;
@@ -61,23 +48,48 @@ class List
 
 	Item *nextListItem_;
 
-	ListCleanup *listCleanup_;
-	ListQuery *listQuery_;
+	// Private initialized variables
+
+	char listChar_;
+	char classNameString_[FUNCTION_NAME_LENGTH];
+	char parentClassNameString_[FUNCTION_NAME_LENGTH];
 
 	CommonVariables *commonVariables_;
+	InputOutput *inputOutput_;
 	WordItem *myWordItem_;
-
-	char classNameString_[FUNCTION_NAME_LENGTH];
-	char superClassNameString_[FUNCTION_NAME_LENGTH];
 
 
 	private:
 	// Private functions
 
-	bool isAssignmentOrSpecificationList();
 	bool isIncludingThisList( char *queryListString );
 
-	ResultType removeItemFromList( Item *removeItem );
+	// Private cleanup functions
+
+	void setCurrentItemNr( Item *searchItem );
+
+	unsigned int highestInUseSentenceNrInList( unsigned int highestSentenceNr, Item *searchItem );
+
+	signed char decrementItemNrRange( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset, Item *searchItem );
+	signed char decrementSentenceNrs( unsigned int startSentenceNr, Item *searchItem );
+	signed char removeItemFromList( Item *removeItem );
+
+	// Private database connection functions
+
+//	signed char storeChangesInFutureDatabase( Item *searchItem );
+
+	// Private query functions
+
+	void clearQuerySelections( Item *searchItem );
+	void itemQuery( bool isSelectingOnFind, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr, Item *queryItem );
+	void listQuery( bool isSelectingOnFind, Item *queryItem );
+	void parameterQuery( bool isSelectingOnFind, unsigned int queryParameter, Item *queryItem );
+	void wordQuery( bool isSelectingOnFind, Item *queryItem );
+	void wordTypeQuery( bool isSelectingOnFind, unsigned short queryWordTypeNr, Item *queryItem );
+
+	signed char displayQueryResult( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, Item *queryItem );
+	signed char stringQuery( bool isSelectingOnFind, char *wordString, Item *queryItem );
+	signed char wordReferenceQuery( bool isSelectingOnFind, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString, Item *queryItem );
 
 
 	protected:
@@ -89,45 +101,50 @@ class List
 
 	// Protected error functions
 
-	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	CollectionResultType startCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	signed char addError( const char *functionNameString, const char *errorString );
+	signed char addError( const char *functionNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	signed char startError( const char *functionNameString, const char *errorString );
+	signed char startError( const char *functionNameString, const char *errorString, unsigned int sentenceNr );
+	signed char startError( const char *functionNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	signed char startSystemError( const char *functionNameString, const char *errorString );
 
-	FileResultType addFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	FileResultType startFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	FileResultType startFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	FileResultType startFileResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	BoolResultType addBoolResultError( const char *functionNameString, const char *errorString );
+	BoolResultType startBoolResultError( const char *functionNameString, const char *errorString );
 
-	GeneralizationResultType startGeneralizationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	CollectionResultType addCollectionResultError( const char *functionNameString, const char *errorString );
+	CollectionResultType startCollectionResultError( const char *functionNameString, const char *errorString );
+	CollectionResultType startCollectionResultError( const char *functionNameString, const char *errorString, unsigned int number );
+	CollectionResultType startCollectionResultSystemError( const char *functionNameString, const char *errorString );
 
-	GrammarResultType addGrammarResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	GrammarResultType startGrammarResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	CreateAndAssignResultType addCreateAndAssignResultError( const char *functionNameString, const char *errorString );
+	CreateAndAssignResultType startCreateAndAssignResultError( const char *functionNameString, const char *errorString );
 
-	JustificationResultType addJustificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	JustificationResultType startJustificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	DuplicateResultType addDuplicateResultError( const char *functionNameString, const char *errorString );
+	DuplicateResultType startDuplicateResultError( const char *functionNameString, const char *errorString );
 
-	ReadResultType addReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ReadResultType startReadResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	FileResultType addFileResultError( const char *functionNameString, const char *errorString );
+	FileResultType startFileResultError( const char *functionNameString, const char *errorString );
+	FileResultType startFileResultError( const char *functionNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
 
-	ResultType addError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	GrammarResultType addGrammarResultError( const char *functionNameString, const char *errorString );
+	GrammarResultType startGrammarResultError( const char *functionNameString, const char *errorString );
 
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int sentenceNr );
-	ResultType startError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	JustificationResultType addJustificationResultError( const char *functionNameString, const char *errorString );
+	JustificationResultType startJustificationResultError( const char *functionNameString, const char *errorString );
 
-	ResultType startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	SelectionResultType addSelectionResultError( const char *functionNameString, const char *errorString );
+	SelectionResultType startSelectionResultSystemError( const char *functionNameString, const char *errorString );
 
-	SelectionResultType addSelectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	SelectionResultType startSelectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	SelectionResultType startSystemSelectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	ShortResultType startShortResultError( const char *functionNameString, const char *errorString );
 
-	SpecificationResultType addSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	SpecificationResultType startSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	WordEndingResultType addWordEndingResultError( const char *functionNameString, const char *errorString );
+	WordEndingResultType startWordEndingResultError( const char *functionNameString, const char *errorString );
 
-	StringResultType addStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	StringResultType startStringResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	WordResultType addWordResultError( const char *functionNameString, const char *errorString );
+	WordResultType startWordResultError( const char *functionNameString, const char *errorString );
 
-	WordResultType addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
-	WordResultType startWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
+	WordTypeResultType addWordTypeResultError( const char *functionNameString, const char *errorString );
+	WordTypeResultType startWordTypeResultError( const char *functionNameString, const char *errorString );
 
 
 	// Protected virtual functions
@@ -137,27 +154,26 @@ class List
 
 	// Protected common functions
 
-	void initializeListVariables( char listChar, const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem );
+	void initializeListVariables( char listChar, const char *classNameString, CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem );
 	void deleteTemporaryList();
 
-	bool hasItems();
+	bool hasActiveItems();
 
 	bool isAdminList();
 	bool isAssignmentList();
 
 	char listChar();
 
-	ResultType addItemToList( char statusChar, Item *newItem );
+	signed char addItemToList( char statusChar, Item *newItem );
+	signed char activateItem( Item *activateItem );
+	signed char inactivateItem( Item *inactivateItem );
+	signed char archiveItem( Item *archiveItem );
+	signed char replaceItem( Item *replaceItem );
+	signed char deleteItem( Item *deleteItem );
+	signed char deleteActiveItemsWithCurrentSentenceNr();
+	signed char removeFirstRangeOfDeletedItemsInList();
 
-	ResultType activateItem( Item *activateItem );
-	ResultType inactivateItem( Item *inactivateItem );
-	ResultType archiveItem( Item *archiveItem );
-	ResultType replaceItem( Item *replaceItem );
-	ResultType deleteItem( Item *deleteItem );
-
-	ResultType deleteActiveItemsWithCurrentSentenceNr();
-
-	ResultType removeFirstRangeOfDeletedItemsInList();
+	BoolResultType compareStrings( char *searchString, char *sourceString );
 
 	Item *firstActiveItem();
 	Item *firstInactiveItem();
@@ -169,39 +185,44 @@ class List
 
 	CommonVariables *commonVariables();
 
+	InputOutput *inputOutput();
+
 	WordItem *myWordItem();
 
 
 	// Protected cleanup functions
 
-	void clearReplacingInfoInList();
 	void getHighestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr );
 	void setCurrentItemNrInList();
 
-	ResultType deleteSentencesInList( unsigned int lowestSentenceNr );
+	signed char decrementSentenceNrsInList( unsigned int startSentenceNr );
+	signed char decrementItemNrRangeInList( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset );
+	signed char deleteSentencesInList( unsigned int lowestSentenceNr );
+	signed char undoCurrentSentenceInList();
+	signed char redoCurrentSentenceInList();
 
-	ResultType decrementSentenceNrsInList( unsigned int startSentenceNr );
-	ResultType decrementItemNrRangeInList( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset );
 
-	ResultType undoCurrentSentenceInList();
-	ResultType redoCurrentSentenceInList();
+	// Protected database connection functions
+
+//	signed char storeChangesInFutureDatabaseInList();
 
 
 	// Protected query functions
 
-	void countQueryInList();
 	void clearQuerySelectionsInList();
+	void countQueryInList();
 
-	ResultType displayQueryResultInList( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth );
-	ResultType itemQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr );
-	ResultType listQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString );
-	ResultType wordTypeQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr );
-	ResultType parameterQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter );
-	ResultType wordQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems );
-	ResultType wordReferenceQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString );
-	ResultType stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString );
+	void itemQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr );
+	void listQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString );
+	void parameterQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter );
+	void wordQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems );
+	void wordTypeQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr );
 
-	StringResultType compareStrings( char *searchString, char *sourceString );
+	unsigned int highestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr );
+
+	signed char displayQueryResultInList( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth );
+	signed char stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString );
+	signed char wordReferenceQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString );
 	};
 #endif
 

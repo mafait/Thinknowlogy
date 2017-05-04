@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier est masculin.
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
 < Julien a un père, appelé Olivier.
@@ -36,6 +37,7 @@
 < Lorraine a un père, appelé Olivier.
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
+< Amélie est féminine.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne.
@@ -69,15 +71,16 @@
 < Amélie a possible une fille, appelée Lorraine.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < Est Lorraine une jeune-fille ou une femme?
 < 
 * 
 * Mes conclusions:
 < Guillaume est un homme.
+< Guillaume est masculin.
 < Armand a un père, appelé Guillaume.
 * 
 * Mes hypothèses:
@@ -93,7 +96,7 @@
 < Armand a probablement un parent, appelé Guillaume.
 * 
 * Mes questions:
-< Est Armand un homme, une femme, une jeune-fille ou un garçon?
+< Est Armand une jeune-fille, une femme, un garçon ou un homme?
 < Est Armand un fils ou une fille?
 < 
 < Oui, Olivier est un père.

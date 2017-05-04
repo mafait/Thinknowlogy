@@ -35,7 +35,7 @@
 < Olivier a probablement un enfant.
 * 
 * Mes questions:
-< Est Olivier un homme ou une femme?
+< Est Olivier une femme ou un homme?
 < Est Olivier un père ou une mère?
 < 
 * 
@@ -46,6 +46,7 @@
 < Amélie est probablement une personne.
 < Amélie est probablement une femme.
 < Amélie n'est probablement pas un homme.
+< Amélie est probablement féminine.
 < Amélie est probablement une mère.
 < Amélie n'est probablement pas un père.
 < Amélie a probablement un enfant.
@@ -53,11 +54,12 @@
 * 
 * Mes questions qui sont répondues:
 < Est Olivier un père ou une mère?
-< Est Olivier un homme ou une femme?
+< Est Olivier une femme ou un homme?
 * 
 * Mes conclusions:
 < Olivier est un homme.
 < Olivier n'est pas une femme.
+< Olivier est masculin.
 < Olivier n'est pas une mère.
 < 
 * 
@@ -67,6 +69,7 @@
 * Mes hypothèses qui sont conclus:
 < Amélie est une femme.
 < Amélie n'est pas un homme.
+< Amélie est féminine.
 < Amélie n'est pas un père.
 < 
 * 
@@ -87,6 +90,9 @@
 <	- Olivier est un parent.
 <	- Chaque parent est une femme ou un homme.
 <	- Olivier est un homme.
+< Olivier est masculin. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme est masculin.
 < Olivier n'est pas une mère. En raison:
 <	- Olivier est un parent.
 <	- Chaque parent est un père ou une mère.
@@ -123,6 +129,9 @@
 <	- Amélie est un parent.
 <	- Chaque parent est une femme ou un homme.
 <	- Amélie est une femme.
+< Amélie est féminine. En raison:
+<	- Amélie est une femme.
+<	- Chaque femme est féminine.
 < Amélie n'est pas un père. En raison:
 <	- Amélie est un parent.
 <	- Chaque parent est un père ou une mère.
@@ -186,9 +195,9 @@
 < Amélie a possible une fille, appelée Lorraine.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < Est Lorraine une jeune-fille ou une femme?
 < 

@@ -64,32 +64,29 @@
 < John is probably a woman.
 < John is maybe not a man.
 * 
-* My assumptions that are adjusted:
-< John is probably a person.
-* 
 * My questions:
-< Is John a woman or a man?
+< Is John a man or a woman?
 < Is John a mother or a father?
 * 
 * I don't know the answer to this question, but I'll keep it in mind.
 * 
 * 
 * My assumptions:
-< John is probably a person. Because:
+< John is possibly a person. Because:
 <	- Is John a mother or a father?
 <	- A mother is probably a person.
 <	- A father is probably a person.
 * 
 * My questions:
-< Is John a woman or a man? Because:
-<	- John is probably a person.
-<	- Every person is a man or a woman.
-* 	and:
+< Is John a man or a woman? Because:
 <	- Is John the mother of Paul?
 <	- Every mother is a woman.
 * 	and:
 <	- Is John the father of Paul?
 <	- Every father is a man.
+* 	and:
+<	- John is possibly a person.
+<	- Every person is a man or a woman.
 < Is John a mother or a father? Because:
 <	- Is John the father of Paul?
 * 	and:

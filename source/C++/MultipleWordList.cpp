@@ -1,9 +1,9 @@
 /*	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,18 @@ class MultipleWordList : private List
 
 	// Private functions
 
+	void deleteMultipleWordList( MultipleWordItem *searchMultipleWordItem )
+		{
+		MultipleWordItem *deleteMultipleWordItem;
+
+		while( searchMultipleWordItem != NULL )
+			{
+			deleteMultipleWordItem = searchMultipleWordItem;
+			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
+			delete deleteMultipleWordItem;
+			}
+		}
+
 	bool hasFoundMultipleWordItem( unsigned short wordTypeNr, WordItem *multipleWordItem )
 		{
 		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
@@ -54,22 +66,14 @@ class MultipleWordList : private List
 	protected:
 	// Constructor
 
-	MultipleWordList( CommonVariables *commonVariables, WordItem *myWordItem )
+	MultipleWordList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( WORD_MULTIPLE_WORD_LIST_SYMBOL, "MultipleWordList", commonVariables, myWordItem );
+		initializeListVariables( WORD_MULTIPLE_WORD_LIST_SYMBOL, "MultipleWordList", commonVariables, inputOutput, myWordItem );
 		}
 
 	~MultipleWordList()
 		{
-		MultipleWordItem *deleteMultipleWordItem;
-		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
-
-		while( searchMultipleWordItem != NULL )
-			{
-			deleteMultipleWordItem = searchMultipleWordItem;
-			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
-			delete deleteMultipleWordItem;
-			}
+		deleteMultipleWordList( firstActiveMultipleWordItem() );
 
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class MultipleWordList has inactive items." );
@@ -80,14 +84,7 @@ class MultipleWordList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class MultipleWordList has replaced items." );
 
-		searchMultipleWordItem = (MultipleWordItem *)firstDeletedItem();
-
-		while( searchMultipleWordItem != NULL )
-			{
-			deleteMultipleWordItem = searchMultipleWordItem;
-			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
-			delete deleteMultipleWordItem;
-			}
+		deleteMultipleWordList( (MultipleWordItem *)firstDeletedItem() );
 		}
 
 
@@ -122,64 +119,43 @@ class MultipleWordList : private List
 		return 0;
 		}
 
-	ResultType addMultipleWord( unsigned short nWordParts, unsigned short wordTypeNr, WordItem *multipleWordItem )
+	signed char addMultipleWord( unsigned short nWordParts, unsigned short wordTypeNr, WordItem *multipleWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addMultipleWord";
 
 		if( wordTypeNr <= NO_WORD_TYPE_NR ||
 		wordTypeNr >= NUMBER_OF_WORD_TYPES )
-			return startError( functionNameString, NULL, "The given word type number is undefined or out of bounds: ", wordTypeNr );
+			return startError( functionNameString, "The given word type number is undefined or out of bounds: ", wordTypeNr );
 
 		if( multipleWordItem == NULL )
-			return startError( functionNameString, NULL, "The given multiple word item is undefined" );
+			return startError( functionNameString, "The given multiple word item is undefined" );
 
-		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) )
-			{
-			if( addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, commonVariables()->currentLanguageNr, wordTypeNr, multipleWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to add an active multiple word item" );
-			}
+		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) &&
+		addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, commonVariables()->currentLanguageNr, wordTypeNr, multipleWordItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add an active multiple word item" );
 
 		return RESULT_OK;
 		}
 
-	ResultType checkWordItemForUsage( WordItem *unusedWordItem )
+	signed char checkWordItemForUsage( WordItem *unusedWordItem )
 		{
 		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
 
 		if( unusedWordItem == NULL )
-			return startError( functionNameString, NULL, "The given unused word item is undefined" );
+			return startError( functionNameString, "The given unused word item is undefined" );
 
 		while( searchMultipleWordItem != NULL )
 			{
 			if( searchMultipleWordItem->multipleWordItem() == unusedWordItem )
-				return startError( functionNameString, NULL, "The multiple word item is still in use" );
+				return startError( functionNameString, "The multiple word item is still in use" );
 
 			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
 			}
 
 		return RESULT_OK;
 		}
-/*
-	ResultType storeChangesInFutureDatabase()
-		{
-		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
-
-		while( searchMultipleWordItem != NULL )
-			{
-			if( searchMultipleWordItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchMultipleWordItem->storeMultipleWordItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to store a multiple word item in the database" );
-				}
-
-			searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
-			}
-
-		return RESULT_OK;
-		}
-*/	};
+	};
 
 /*************************************************************************
  *	"The one thing I ask of the Lord -

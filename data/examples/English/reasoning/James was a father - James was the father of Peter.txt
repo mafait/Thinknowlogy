@@ -1,0 +1,6 @@
+﻿James was a father.
+Every father is a man.
+James was the father of Peter.
+Display the justification report about James.
+Display the justification report about Peter.
+# To continue, click button «Clear your mind.» or «Restart.».

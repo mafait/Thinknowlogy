@@ -49,23 +49,23 @@
 < 
 * 
 * Mijn conclusies:
-< De Verenigde Staten heeft een president, genaamd Bill Clinton.
+< De Verenigde Staten heeft een president, genaamd Barack Obama.
 < 
 * 
-* Het woord "Bill Clinton" is semantisch dubbelzinnig:
+* Het woord "Barack Obama" is semantisch dubbelzinnig:
 * - óf deze entiteit vond opnieuw plaats,
 * - óf er zijn meerdere voorkomens van deze entiteit.
 * 
 * In het laatste geval, verrijk a.u.b. de specificatie van de betrokken entiteiten.
 * 
 * Mijn conclusies die bevestigd zijn:
-< De Verenigde Staten heeft een president, genaamd Bill Clinton.
+< De Verenigde Staten heeft een president, genaamd Barack Obama.
 < 
 * 
 * Mijn conclusies:
-< De Verenigde Staten heeft een president, genaamd Barack Obama.
+< De Verenigde Staten heeft een president, genaamd Donald Trump.
 < 
 * 
 * Mijn conclusies die bevestigd zijn:
-< De Verenigde Staten heeft een president, genaamd Barack Obama.
+< De Verenigde Staten heeft een president, genaamd Donald Trump.
 < 

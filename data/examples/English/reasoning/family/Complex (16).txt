@@ -1,0 +1,20 @@
+Read the file "English/user/reasoning/family/family definition".
+Laura is a child.
+Anna is the mother of Paul, Joe and Laura.
+Paul has 2 parents, called John and Anna.
+Laura is a child of John and Anna.
+Laura is a woman.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+Display the justification report about Joe.
+Display the justification report about Laura.
+Paul is a child.
+Paul is a son of John and Anna.
+John is the father of Paul, Joe and Laura.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+Display the justification report about Joe.
+Display the justification report about Laura.
+# To continue, click button «Clear your mind.» or «Restart.».

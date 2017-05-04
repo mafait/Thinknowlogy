@@ -1,12 +1,9 @@
 ﻿Affichez "------------------------------------------------------------------------------".
 #C++#Affichez " \~{languageName}\t\t\t\t\t* Changer la langue".
-#C++#Affichez " Lirez le fichier \"Français/ambiguïté/Boston\".\t\t* Ambiguïté détection".
-#C++#Affichez " Lirez le fichier \"Français/ambiguïté/Présidents des États-Unis\". * Ambiguïté".
-#C++#Affichez " Lirez le fichier \"Français/programmation/Puissance 4\".\t* Jeu Puissance 4".
-#C++#Affichez " Lirez le fichier \"Français/programmation/Voeux\".\t\t* Voeux (salut)".
-#C++#Affichez " Lirez le fichier \"Français/programmation/Tours de Hanoï\".\t * Un puzzle".
-#C++#Affichez " Lirez le fichier \"Français/raisonnement/définition de famille\". * Raisonnement".
-#Java#Affichez " Bouton <ambiguïté> utiliser pour en apprendre davantage sur la détection d'ambiguïté.".
+#C++#Affichez " Lirez le fichier \"Français/programmation/utilisateur/Puissance 4\".".
+#C++#Affichez " Lirez le fichier \"Français/programmation/utilisateur/Tours de Hanoï\".".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/utilisateur/raisonnement/Défi scientifique\".".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/utilisateur/famille/définition de famille\".".
 #Java#Affichez " Bouton <programmation> utiliser pour apprendre la programmation en langage naturel.".
 #Java#Affichez " Bouton <raisonnement> utiliser pour en apprendre davantage sur le raisonnement en langage naturel.".
 Affichez "------------------------------------------------------------------------------".
@@ -26,10 +23,10 @@ Affichez " Affichez le droit d'auteur.".
 Affichez " Affichez la licence-GPLv2.".
 Affichez " Affichez la garantie.".
 Affichez "------------------------------------------------------------------------------".
-#C++#Affichez " Exemples fichiers:\t* dossier: Thinknowlogy2016r2/data/examples/Français/utilisateur/".
+#C++#Affichez " Exemples fichiers:\t* dossier: Thinknowlogy2017r1/data/examples/Français/utilisateur/".
 #Java#Affichez " Exemples fichiers:\t* Utilisez le bouton <exemples> ou voir le".
-#Java#Affichez "\t\t\t  dossier: Thinknowlogy2016r2/data/examples/Français/utilisateur/".
-Affichez " Fondamental:\t\t* dossier: Thinknowlogy2016r2/documents/".
-Affichez " Projet:\t\t* dossier: Thinknowlogy2016r2/documents/design/".
-Affichez " Captures d'écran:\t* dossier: Thinknowlogy2016r2/screenshots/Français/".
+#Java#Affichez "\t\t\t  dossier: Thinknowlogy2017r1/data/examples/Français/utilisateur/".
+Affichez " Fondamental:\t\t* dossier: Thinknowlogy2017r1/documents/".
+Affichez " Projet:\t\t* dossier: Thinknowlogy2017r1/documents/design/".
+Affichez " Captures d'écran:\t* dossier: Thinknowlogy2017r1/screenshots/Français/".
 Affichez "------------------------------------------------------------------------------".

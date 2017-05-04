@@ -26,6 +26,7 @@
 < Juan es parte de una familia.
 < Juan es un hombre.
 < Juan no es una mujer.
+< Juan es masculino.
 < Juan no es una niña, una mujer y un niño.
 < Juan no es una madre y una hija.
 * 
@@ -45,6 +46,9 @@
 <	- Juan es un padre.
 <	- Cada padre es una mujer o un hombre.
 <	- Juan es un hombre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 < Juan no es una niña, una mujer y un niño. Porque:
 <	- Juan es un hijo.
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.

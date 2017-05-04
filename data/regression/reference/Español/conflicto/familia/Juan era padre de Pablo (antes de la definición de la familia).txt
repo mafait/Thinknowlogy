@@ -4,6 +4,8 @@
 < Pablo tenido un padre, llamado Juan.
 < 
 * 
+* Ha introducido un nombre plural "padres", que era desconocido para mí.
+* 
 * Mis conclusiones:
 < Padres y hijos son parte de cada familia.
 < 

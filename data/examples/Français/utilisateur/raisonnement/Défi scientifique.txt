@@ -3,32 +3,41 @@
 #	plus d'informations, voir le document Défi Scientifique inclus,
 #	ou: http://mafait.org/challenge/
 #-----------------------------------------------------------------
-# Bloque 1: Conversions
+# Bloque 1: Conversions directes
 #-----------------------------------------------------------------
 Pascal est un fils de Olivier.
 Amélie a une fille, appelée Lorraine.
 Chaque voiture a un moteur.
 Une voile est partie de chaque voilier.
 #-----------------------------------------------------------------
-# Bloque 2: Regroupement des connaissances
+# Bloque 2: Conversions indirectes
+#-----------------------------------------------------------------
+Chaque famille a un parent et un enfant.
+Guillaume est un parent.
+Armand est un enfant.
+Fabrice a un parent.
+Ronald a un enfant.
+#-----------------------------------------------------------------
+# Bloque 3: Regroupement des connaissances
 #-----------------------------------------------------------------
 Olivier est un parent de Pascal.
 Amélie est un parent de Pascal.
 Pascal a 2 parents, appelés Olivier et Amélie.
 #-----------------------------------------------------------------
-# Bloque 3: Raisonnement dans le passé
+# Bloque 4: Raisonnement dans le passé
 #-----------------------------------------------------------------
 Philippe était le père de Antoine.
+Chaque père est un homme.
 #-----------------------------------------------------------------
-# Bloque 4: La détection d'un conflit et de génération d'une question
+# Bloque 5: La détection d'un conflit et de génération d'une question
 #-----------------------------------------------------------------
 Chaque personne est un homme ou une femme.
 Dominique est un homme et une femme.
 Dominique est une personne.
 Dominique n'est pas une femme.
 #-----------------------------------------------------------------
-# Bloque 5: Archivage des connaissances
+# Bloque 6: Archivage des connaissances
 #-----------------------------------------------------------------
-Bill Clinton est le président des États-Unis.
 Barack Obama est le président des États-Unis.
+Donald Trump est le président des États-Unis.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

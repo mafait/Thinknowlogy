@@ -57,6 +57,7 @@
 * 
 * Mes conclusions:
 < Amélie est une femme.
+< Amélie est féminine.
 * 
 * Mes hypothèses:
 < Amélie est probablement une personne.
@@ -98,6 +99,9 @@
 < Amélie est une femme. En raison:
 <	- Amélie est une mère.
 <	- Chaque mère est une femme.
+< Amélie est féminine. En raison:
+<	- Amélie est une femme.
+<	- Chaque femme est féminine.
 * 
 * Mes hypothèses:
 < Amélie est probablement une personne. En raison:

@@ -35,18 +35,22 @@
 * 
 * Mes questions:
 < Est Dominique un homme ou une femme?
+< Est Dominique un père ou une mère?
 < 
 * 
 * Cette information est plus spécifique que votre information antérieure:
 < Dominique est un père ou une mère.
 * 
 * Mes questions qui sont répondues:
+< Est Dominique un père ou une mère?
 < Est Dominique un homme ou une femme?
 * 
 * Mes conclusions:
 < Dominique est un homme.
+< Dominique est masculin.
 * 
 * Mes hypothèses:
+< Dominique n'est probablement pas une mère.
 < Dominique n'est probablement pas une femme.
 < 
 ! 

@@ -29,6 +29,7 @@
 * 
 * Mes conclusions:
 < Olivier était un homme.
+< Olivier était masculin.
 < Pascal n'a aucun père plus.
 < Pascal avait un père, appelé Olivier.
 < Julien n'a aucun père plus.
@@ -61,15 +62,16 @@
 < Lorraine avait probablement un parent, appelé Olivier.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < Est Lorraine une jeune-fille ou une femme?
 < 
 * 
 * Mes conclusions:
 < Amélie est une femme.
+< Amélie est féminine.
 < Pascal a une mère, appelée Amélie.
 < Julien a une mère, appelée Amélie.
 < Lorraine a une mère, appelée Amélie.
@@ -82,8 +84,8 @@
 < Amélie n'est probablement pas un père.
 < Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 < Amélie a possible une fille, appelée Lorraine.
-< Pascal est probablement un enfant de Olivier et Amélie.
 < Pascal a probablement un parent, appelée Amélie.
+< Pascal est probablement un enfant de Olivier et Amélie.
 < Julien est probablement un enfant de Olivier et Amélie.
 < Julien a probablement un parent, appelée Amélie.
 < Lorraine est probablement un enfant de Olivier et Amélie.

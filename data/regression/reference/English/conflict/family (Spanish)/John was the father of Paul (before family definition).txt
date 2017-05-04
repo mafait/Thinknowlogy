@@ -1,0 +1,38 @@
+﻿* 
+* My conclusions:
+< Paul has no father anymore.
+< Paul had a father, called John.
+< 
+* 
+* You have entered plural noun "fathers", which was unknown to me.
+* 
+* My conclusions:
+< Fathers and children are part of every family.
+< 
+* 
+* My conclusions:
+< John was part of a family.
+< 
+* 
+* My conclusions:
+< Every father is a woman or a man.
+* 
+* My assumptions:
+< A mother is probably a person.
+< A father is probably a person.
+< 
+* 
+* My assumptions:
+< A child is probably a person.
+< 
+* 
+* My conclusions:
+< Every child is a girl, a woman, a boy or a man.
+* 
+* My assumptions:
+< A daughter is probably a person.
+< 
+! 
+! This sentence is not accepted, because it is in conflict with:
+< John was the father of Paul.
+< 

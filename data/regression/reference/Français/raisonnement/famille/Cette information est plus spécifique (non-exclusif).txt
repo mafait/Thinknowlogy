@@ -35,6 +35,7 @@
 * 
 * Mes questions:
 < Est Dominique un homme ou une femme?
+< Est Dominique un père ou une mère?
 < 
 * 
 * Mes hypothèses:
@@ -66,18 +67,23 @@
 <	- Dominique est un père ou une mère.
 <	- Chaque mère est une femme.
 <	- Chaque père est un homme.
+< Est Dominique un père ou une mère? En raison:
+<	- Dominique est un père ou une mère.
 < 
 * 
 * Cette information est plus spécifique que votre information antérieure:
 < Dominique est un père ou une mère.
 * 
 * Mes questions qui sont répondues:
+< Est Dominique un père ou une mère?
 < Est Dominique un homme ou une femme?
 * 
 * Mes conclusions:
 < Dominique est un homme.
+< Dominique est masculin.
 * 
 * Mes hypothèses:
+< Dominique n'est probablement pas une mère.
 < Dominique n'est probablement pas une femme.
 < 
 * 
@@ -85,24 +91,20 @@
 < Dominique est un homme. En raison:
 <	- Dominique est un père.
 <	- Chaque père est un homme.
-* 	et:
-<	- Dominique est probablement une personne.
-<	- Chaque personne est un homme ou une femme.
-* 	et:
-<	- Dominique est probablement un parent.
-<	- Chaque parent est une femme ou un homme.
+< Dominique est masculin. En raison:
+<	- Dominique est un homme.
+<	- Chaque homme est masculin.
 * 
 * Mes hypothèses:
 < Dominique est probablement une personne. En raison:
-<	- Chaque personne est un homme ou une femme.
-<	- Dominique est un homme.
-* 	et:
 <	- Dominique est un père.
 <	- Un père est probablement une personne.
-<	- Une mère est probablement une personne.
 * 	et:
 <	- Dominique est probablement un parent.
 <	- Un parent est probablement une personne.
+* 	et:
+<	- Chaque personne est un homme ou une femme.
+<	- Dominique est un homme.
 < Dominique est probablement un parent. En raison:
 <	- Chaque parent est un père ou une mère.
 <	- Dominique est un père.
@@ -112,6 +114,10 @@
 < Dominique a possible un enfant. En raison:
 <	- Chaque famille a parents et enfants.
 <	- Dominique est probablement un parent.
+< Dominique n'est probablement pas une mère. En raison:
+<	- Dominique est probablement un parent.
+<	- Chaque parent est un père ou une mère.
+<	- Dominique est un père.
 < Dominique n'est probablement pas une femme. En raison:
 <	- Dominique est probablement une personne.
 <	- Chaque personne est un homme ou une femme.

@@ -44,8 +44,8 @@
 * 
 * Mijn vragen:
 < Is Paul een jongen of een man?
-< Is Jan een man of een vrouw?
 < Is Jan een vader of een moeder?
+< Is Jan een man of een vrouw?
 < 
 * 
 * Uw vraag is specifieker dan mijn eerdere vraag:

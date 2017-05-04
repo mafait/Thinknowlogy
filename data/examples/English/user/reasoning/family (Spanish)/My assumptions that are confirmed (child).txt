@@ -1,0 +1,6 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Paul is a child of John and Anna.
+Joe is a child of John and Anna.
+Laura is a daughter of John and Anna.
+# To continue, click button «Clear your mind.» or «Restart.».

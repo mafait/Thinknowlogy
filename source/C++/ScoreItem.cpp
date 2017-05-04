@@ -2,9 +2,9 @@
  *	Parent class:	Item
  *	Purpose:		To temporarily store scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 
 class ScoreItem : private Item
 	{
-	friend class AdminSolve;
+	friend class AdminImperative;
 	friend class ScoreList;
 
 	// Private initialized variables
@@ -75,9 +75,9 @@ class ScoreItem : private Item
 	protected:
 	// Constructor
 
-	ScoreItem( bool _isChecked, unsigned short assignmentLevel, unsigned int _oldSatisfiedScore, unsigned int _newSatisfiedScore, unsigned int _oldDissatisfiedScore, unsigned int _newDissatisfiedScore, unsigned int _oldNotBlockingScore, unsigned int _newNotBlockingScore, unsigned int _oldBlockingScore, unsigned int _newBlockingScore, SelectionItem *_selectionReference, CommonVariables *commonVariables, List *myList, WordItem *myWordItem )
+	ScoreItem( bool _isChecked, unsigned short assignmentLevel, unsigned int _oldSatisfiedScore, unsigned int _newSatisfiedScore, unsigned int _oldDissatisfiedScore, unsigned int _newDissatisfiedScore, unsigned int _oldNotBlockingScore, unsigned int _newNotBlockingScore, unsigned int _oldBlockingScore, unsigned int _newBlockingScore, SelectionItem *_selectionReference, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ScoreItem", commonVariables, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ScoreItem", commonVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -142,11 +142,11 @@ class ScoreItem : private Item
 				assignmentLevel_ > ( (ScoreItem *)nextSortItem )->assignmentLevel_ );
 		}
 
-	virtual char *toString( unsigned short queryWordTypeNr )
+	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
 		char *queryString;
 
-		Item::toString( queryWordTypeNr );
+		itemBaseToString( queryWordTypeNr );
 
 		queryString = commonVariables()->queryString;
 

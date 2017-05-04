@@ -35,6 +35,7 @@
 * 
 * My questions:
 < Is Addison a man or a woman?
+< Is Addison a father or a mother?
 < 
 * 
 * My assumptions:
@@ -66,18 +67,23 @@
 <	- Addison is a father or a mother.
 <	- Every mother is a woman.
 <	- Every father is a man.
+< Is Addison a father or a mother? Because:
+<	- Addison is a father or a mother.
 < 
 * 
 * This information is more specific than your earlier information:
 < Addison is a father or a mother.
 * 
 * My questions that are answered:
+< Is Addison a father or a mother?
 < Is Addison a man or a woman?
 * 
 * My conclusions:
 < Addison is a man.
+< Addison is masculine.
 * 
 * My assumptions:
+< Addison is probably not a mother.
 < Addison is probably not a woman.
 < 
 * 
@@ -85,24 +91,20 @@
 < Addison is a man. Because:
 <	- Addison is a father.
 <	- Every father is a man.
-* 	and:
-<	- Addison is probably a person.
-<	- Every person is a man or a woman.
-* 	and:
-<	- Addison is probably a parent.
-<	- Every parent is a woman or a man.
+< Addison is masculine. Because:
+<	- Addison is a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < Addison is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- Addison is a man.
-* 	and:
 <	- Addison is a father.
 <	- A father is probably a person.
-<	- A mother is probably a person.
 * 	and:
 <	- Addison is probably a parent.
 <	- A parent is probably a person.
+* 	and:
+<	- Every person is a man or a woman.
+<	- Addison is a man.
 < Addison is probably a parent. Because:
 <	- Every parent is a father or a mother.
 <	- Addison is a father.
@@ -112,6 +114,10 @@
 < Addison has possibly a child. Because:
 <	- Every family has parents and children.
 <	- Addison is probably a parent.
+< Addison is probably not a mother. Because:
+<	- Addison is probably a parent.
+<	- Every parent is a father or a mother.
+<	- Addison is a father.
 < Addison is probably not a woman. Because:
 <	- Addison is probably a person.
 <	- Every person is a man or a woman.

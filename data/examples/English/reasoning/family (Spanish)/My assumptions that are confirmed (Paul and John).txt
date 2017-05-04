@@ -1,0 +1,7 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+Paul has 2 fathers, called John and Anna.
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Paul.
+# To continue, click button «Clear your mind.» or «Restart.».

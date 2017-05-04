@@ -29,6 +29,7 @@
 * 
 * Mijn conclusies:
 < Peter is een man.
+< Peter is mannelijk.
 * 
 * Mijn veronderstellingen:
 < Peter is waarschijnlijk een persoon.

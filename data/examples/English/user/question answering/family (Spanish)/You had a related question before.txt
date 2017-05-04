@@ -1,0 +1,5 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+Is John the father of Paul?
+Is John the father of Joe?
+Is John a father?
+# To continue, click button «Clear your mind.» or «Restart.».

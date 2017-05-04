@@ -1,5 +1,0 @@
-﻿* 
-* Generalization word "person" is semantically ambiguous, due to specification word "man".
-* 
-* Generalization word "person" is semantically ambiguous, due to specification word "woman".
-* 

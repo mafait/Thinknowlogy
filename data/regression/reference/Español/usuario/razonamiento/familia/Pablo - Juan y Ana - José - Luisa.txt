@@ -33,11 +33,12 @@
 < Pablo es probablemente una persona.
 < Pablo tiene posiblemente una madre, llamada Ana.
 < Juan es posiblemente una persona.
-< Juan es probablemente parte de una familia.
+< Juan es posiblemente parte de una familia.
 < Ana es posiblemente madre de Pablo.
 < Ana es posiblemente una mujer.
 < Ana es puede-ser una persona.
 < Ana no es puede-ser un hombre.
+< Ana es posiblemente femenina.
 < Ana es posiblemente parte de una familia.
 < Ana no es posiblemente un padre.
 * 
@@ -65,21 +66,26 @@
 * Mis suposiciones que se confirman:
 < Ana es posiblemente madre de Pablo.
 * 
+* Mis suposiciones que se ajustan:
+< Ana no es posiblemente un hombre.
+* 
 * Mis suposiciones que se concluyen:
-< Ana no es un hombre.
+< Pablo tiene una madre, llamada Ana.
 < Ana es una mujer.
 * 
 * Mis suposiciones que se ajustan:
 < Ana es probablemente una persona.
 * 
 * Mis suposiciones que se concluyen:
+< Ana no es un hombre.
+< Ana es femenina.
 < Ana es parte de una familia.
 < Ana no es un padre.
-< Pablo tiene una madre, llamada Ana.
 * 
 * Mis conclusiones:
 < Juan es un hombre.
 < Juan no es una mujer.
+< Juan es masculino.
 < Juan no es una madre.
 < Pablo tiene un padre, llamado Juan.
 < José tiene 2 padres, llamados Juan y Ana.
@@ -123,8 +129,8 @@
 * Mis conclusiones:
 < José no es una hija.
 < José no es una niña y una mujer.
-< Juan tiene un hijo, llamado José.
-< Ana tiene un hijo, llamado José.
+< Juan tiene 2 hijos, llamados Pablo y José.
+< Ana tiene 2 hijos, llamados Pablo y José.
 < 
 * 
 * Mis suposiciones que se confirman:
@@ -138,5 +144,13 @@
 < Luisa no es un niño y un hombre.
 < Luisa no es un hijo.
 < Juan tiene una hija, llamada Luisa.
+* 
+* Mis suposiciones ocultas que se celebren:
+< Juan tiene 3 hijos, llamados Pablo, José y Luisa.
+* 
+* Mis suposiciones que se concluyen:
 < Ana tiene una hija, llamada Luisa.
+* 
+* Mis suposiciones ocultas que se celebren:
+< Ana tiene 3 hijos, llamados Pablo, José y Luisa.
 < 

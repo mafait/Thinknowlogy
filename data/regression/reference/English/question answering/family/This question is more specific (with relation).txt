@@ -57,6 +57,7 @@
 * 
 * My conclusions:
 < Anna is a woman.
+< Anna is feminine.
 * 
 * My assumptions:
 < Anna is probably a person.
@@ -98,6 +99,9 @@
 < Anna is a woman. Because:
 <	- Anna is a mother.
 <	- Every mother is a woman.
+< Anna is feminine. Because:
+<	- Anna is a woman.
+<	- Every woman is feminine.
 * 
 * My assumptions:
 < Anna is probably a person. Because:

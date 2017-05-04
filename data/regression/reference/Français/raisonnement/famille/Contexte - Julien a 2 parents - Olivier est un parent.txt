@@ -44,14 +44,15 @@
 < Amélie est probablement une personne.
 < Amélie est probablement une femme.
 < Amélie n'est probablement pas un homme.
+< Amélie est probablement féminine.
 < Amélie est probablement une mère de Julien.
 < Amélie n'est probablement pas un père.
 * 
 * Mes questions:
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
-< Est Olivier un homme ou une femme?
 < Est Olivier un père ou une mère?
+< Est Olivier un homme ou une femme?
 < 
 * 
 * Mes conclusions qui sont confirmées:
@@ -70,13 +71,12 @@
 < Lorraine est probablement un enfant de Olivier.
 < Lorraine est probablement partie d'une famille.
 < Lorraine est possible une personne.
-< Lorraine n'est peut-être pas un homme.
 < Lorraine est possible une fille de Olivier.
 < Lorraine n'est peut-être pas un garçon et pas un homme.
 < Lorraine n'est peut-être pas un fils.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
 < Est Lorraine une jeune-fille ou une femme?
 < 
@@ -107,15 +107,15 @@
 * 
 * Mes questions:
 < Est Olivier un homme ou une femme? En raison:
+<	- Est Olivier un père ou une mère?
+<	- Chaque mère est une femme.
+<	- Chaque père est un homme.
+* 	et:
 <	- Olivier est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
 * 	et:
 <	- Olivier est un parent de Julien, Pascal et Lorraine.
 <	- Chaque parent est une femme ou un homme.
-* 	et:
-<	- Est Olivier un père ou une mère?
-<	- Chaque mère est une femme.
-<	- Chaque père est un homme.
 < Est Olivier un père ou une mère? En raison:
 <	- Olivier est un parent de Julien, Pascal et Lorraine.
 <	- Chaque parent est un père ou une mère.
@@ -142,12 +142,9 @@
 <	- Un enfant est probablement une personne.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon? En raison:
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme? En raison:
 <	- Pascal est probablement un enfant de Olivier.
 <	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
-* 	et:
-<	- Pascal est possible une personne.
-<	- Chaque personne est un homme ou une femme.
 < Est Pascal un fils ou une fille? En raison:
 <	- Pascal est probablement un enfant de Olivier.
 <	- Chaque enfant est un fils ou une fille.
@@ -174,13 +171,18 @@
 <	- Amélie est probablement une mère de Julien.
 * 
 * Mes questions:
-< Est Julien un homme, une femme, une jeune-fille ou un garçon? En raison:
-<	- Julien est probablement un enfant de Olivier et Amélie.
+< Est Julien une jeune-fille, une femme, un garçon ou un homme? En raison:
+<	- Julien a 2 parents, appelés Olivier et Amélie.
+<	- Chaque famille a parents et enfants.
 <	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 	et:
-<	- Julien est possible une personne.
-<	- Chaque personne est un homme ou une femme.
+<	- Julien est probablement un enfant de Olivier et Amélie.
+<	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 < Est Julien un fils ou une fille? En raison:
+<	- Julien a 2 parents, appelés Olivier et Amélie.
+<	- Chaque famille a parents et enfants.
+<	- Chaque enfant est un fils ou une fille.
+* 	et:
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Chaque enfant est un fils ou une fille.
 < 

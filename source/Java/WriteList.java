@@ -1,9 +1,9 @@
 /*	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ class WriteList extends List
 
 	protected WriteList( WordItem myWordItem )
 		{
-		initializeListVariables( Constants.WORD_WRITE_LIST_SYMBOL, myWordItem );
+		initializeListVariables( Constants.WORD_WRITE_LIST_SYMBOL, "WriteList", myWordItem );
 		}
 
 
@@ -46,12 +46,12 @@ class WriteList extends List
 		WriteItem searchWriteItem = firstActiveWriteItem();
 
 		if( unusedGrammarItem == null )
-			return startError( 1, null, "The given unused grammar item is undefined" );
+			return startError( 1, "The given unused grammar item is undefined" );
 
 		while( searchWriteItem != null )
 			{
 			if( searchWriteItem.startOfChoiceOrOptionGrammarItem() == unusedGrammarItem )
-				return startError( 1, null, "The start of choice or option grammar item is still in use" );
+				return startError( 1, "The start of choice or option grammar item is still in use" );
 
 			searchWriteItem = searchWriteItem.nextWriteItem();
 			}
@@ -62,7 +62,7 @@ class WriteList extends List
 	protected byte createWriteItem( boolean isSkipped, short grammarLevel, GrammarItem startOfChoiceOrOptionGrammarItem )
 		{
 		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-			return addError( 1, null, "I failed to add an active write item" );
+			return addError( 1, "I failed to add an active write item" );
 
 		return Constants.RESULT_OK;
 		}

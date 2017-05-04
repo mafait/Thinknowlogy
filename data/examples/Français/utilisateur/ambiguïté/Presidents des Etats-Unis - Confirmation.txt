@@ -11,7 +11,7 @@ Les États-Unis a un président, appelé Barack Obama.
 Affichez information sur les présidents.
 Affichez information sur George Bush.
 Affichez information sur Barack Obama.
-# There will be no justification report, because the conclusions are confirmed
+# Il n'y aura pas de rapport de justification car les conclusions sont confirmées
 #Affichez information sur des États-Unis.
 Affichez information sur les États-Unis.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

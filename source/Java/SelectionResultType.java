@@ -1,9 +1,9 @@
 /*	Class:		SelectionResultType
  *	Purpose:	To return selection variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -27,23 +27,7 @@ class SelectionResultType
 
 	protected byte result;
 
-	protected boolean hasFoundDuplicateSelection;
-	protected boolean isConditionSatisfied;
-
-	protected int duplicateConditionSentenceNr;
-
-	protected int oldSatisfiedScore;
-	protected int newSatisfiedScore;
-	protected int oldDissatisfiedScore;
-	protected int newDissatisfiedScore;
-	protected int oldNotBlockingScore;
-	protected int newNotBlockingScore;
-	protected int oldBlockingScore;
-	protected int newBlockingScore;
-
-	protected SelectionItem bestActionItem;
-	protected SelectionItem firstExecutionItem;
-	protected SelectionItem lastCreatedSelectionItem;
+	protected SelectionItem selectionItem;
 
 	// Constructor
 
@@ -51,30 +35,11 @@ class SelectionResultType
 		{
 		result = Constants.RESULT_OK;
 
-		hasFoundDuplicateSelection = false;
-		isConditionSatisfied = false;
-
-		duplicateConditionSentenceNr = Constants.NO_SENTENCE_NR;
-
-		oldSatisfiedScore = Constants.NO_SCORE;
-		newSatisfiedScore = Constants.NO_SCORE;
-		oldDissatisfiedScore = Constants.NO_SCORE;
-		newDissatisfiedScore = Constants.NO_SCORE;
-		oldNotBlockingScore = Constants.NO_SCORE;
-		newNotBlockingScore = Constants.NO_SCORE;
-		oldBlockingScore = Constants.NO_SCORE;
-		newBlockingScore = Constants.NO_SCORE;
-
-		bestActionItem = null;
-		firstExecutionItem = null;
-		lastCreatedSelectionItem = null;
+		selectionItem = null;
 		}
 	};
 
 /*************************************************************************
- *	"The Lords protects them
- *	and keeps them alive.
- *	and rescues them from their enemies.
- *	The Lord nurses them when they are sick
- *	and restores them to health." (Psalm 41:2-3)
+ *	"For the angel of the Lord is a guard;
+ *	he surrounds and defends all who fear him." (Psalm 34:7)
  *************************************************************************/

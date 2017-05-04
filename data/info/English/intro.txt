@@ -1,37 +1,39 @@
 ﻿Display "------------------------------------------------------------------------------".
-Display " Despite centuries of exhaustive research, the theory of evolution still hasn't".
-Display " provided a satisfying explanation for the origin of intelligence and language.".
-Display " Let alone, how both are related. According to the biblical world view, God".
-#C++#Display " has created laws of nature - including laws of intelligence - to make his".
-#Java#Display " has created laws of nature – including laws of intelligence – to make his".
-Display " creation run like clockwork. Being based on the Natural Laws of Intelligence".
-Display " embedded in Grammar, only Thinknowlogy implements the natural meaning".
-#C++#Display " (intelligent function) of words like definite article \"the\", conjunction \"or\",".
+Display " Thinknowlogy is the world's most advanced CNL reasoner:".
+#C++#Display " * Despite centuries of exhaustive research, the theory of evolution still".
+#Java#Display " • Despite centuries of exhaustive research, the theory of evolution still".
+Display " hasn't provided a satisfying explanation for the origin of intelligence and".
+Display " language. Let alone, how both are related;".
+#C++#Display " * According to the biblical world view, God has created laws of nature to".
+#Java#Display " • According to the biblical world view, God has created laws of nature to".
+Display " make his creation run like clockwork. Being based on the Natural Laws of".
+Display " Intelligence embedded in Grammar, only Thinknowlogy implements the".
+#C++#Display " intelligent function of words like definite article \"the\", conjunction \"or\",".
 #C++#Display " possessive verb \"have\", and past tense verbs \"were\" and \"had\".".
-#Java#Display " (intelligent function) of words like definite article “the”, conjunction “or”,".
+#Java#Display " intelligent function of words like definite article “the”, conjunction “or”,".
 #Java#Display " possessive verb “have”, and past tense verbs “were” and “had”.".
 Display "------------------------------------------------------------------------------".
-Display " These Natural Laws of Intelligence embedded in Grammar are demonstrated by:".
-Display " * Programming in natural language;".
-Display " * Reasoning in natural language:".
+Display " The intelligent function of these words is demonstrated by:".
+#C++#Display " * Programming in Controlled Natural Language;".
+#C++#Display " * Reasoning in Controlled Natural Language:".
+#Java#Display " • Programming in Controlled Natural Language;".
+#Java#Display " • Reasoning in Controlled Natural Language:".
 Display "   - drawing conclusions (more advanced than scientific solutions),".
 Display "   - making assumptions (with self-adjusting level of uncertainty),".
 Display "   - asking questions (about gaps in the knowledge),".
 Display "   - detecting conflicts and some cases of semantic ambiguity,".
 Display "   - displaying of justification reports for the self-generated knowledge;".
-Display " * Multilingualism, proving: Natural languages have one common origin.".
+#C++#Display " * Multilingualism, proving: Natural languages have one common origin.".
+#Java#Display " • Multilingualism, proving: Natural languages have one common origin.".
 Display "------------------------------------------------------------------------------".
 Display " I defy anyone to beat this reasoner: http://mafait.org/challenge/".
 Display "------------------------------------------------------------------------------".
-#C++#Display " Help.\t\t\t\t\t\t\t* Display more help info".
+#C++#Display " Help.\t\t\t\t\t\t\t* Display help info".
 #C++#Display " \~{languageName}\t\t\t\t\t* Change language".
-#C++#Display " Read the file \"English/ambiguity/Boston\".\t\t* Detecting ambiguity".
-#C++#Display " Read the file \"English/ambiguity/US presidents\".\t* Detecting ambiguity".
-#C++#Display " Read the file \"English/programming/Connect-Four\".\t* Game Connect-Four".
-#C++#Display " Read the file \"English/programming/Greeting\".\t\t* Greeting (salutation)".
-#C++#Display " Read the file \"English/programming/tower of Hanoi\".\t* Solve a puzzle".
-#C++#Display " Read the file \"English/reasoning/family definition\".\t* Reasoning".
-#Java#Display " Use button <ambiguity> to learn about detection of ambiguity.".
+#C++#Display " Read the file \"English/user/programming/Connect-Four\".\t* Game Connect-Four".
+#C++#Display " Read the file \"English/user/programming/tower of Hanoi\". * Solve a puzzle".
+#C++#Display " Read the file \"English/user/reasoning/Scientific challenge\". * Challenge".
+#C++#Display " Read the file \"English/user/reasoning/family/family definition\". * Reasoning".
 #Java#Display " Use button <programming> to learn about programming in natural language.".
 #Java#Display " Use button <reasoning> to learn about reasoning in natural language.".
 Display "------------------------------------------------------------------------------".

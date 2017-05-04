@@ -35,7 +35,7 @@
 < Olivier a probablement un enfant.
 * 
 * Mes questions:
-< Est Olivier un homme ou une femme?
+< Est Olivier une femme ou un homme?
 < Est Olivier un père ou une mère?
 < 
 * 
@@ -47,7 +47,7 @@
 < Patrique a probablement un enfant.
 * 
 * Mes questions:
-< Est Patrique un homme ou une femme?
+< Est Patrique une femme ou un homme?
 < Est Patrique un père ou une mère?
 < 
 * 
@@ -64,12 +64,13 @@
 < Olivier est probablement un parent de Julien.
 * 
 * Mes questions:
-< Est Julien un homme, une femme, une jeune-fille ou un garçon?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < 
 * 
 * Mes conclusions:
 < Amélie est une femme.
+< Amélie est féminine.
 < Pascal a une mère, appelée Amélie.
 * 
 * Mes hypothèses:
@@ -85,7 +86,7 @@
 < Pascal a probablement un parent, appelée Amélie.
 * 
 * Mes questions:
-< Est Pascal un homme, une femme, une jeune-fille ou un garçon?
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
 < 
 * Je sais que.
@@ -93,6 +94,7 @@
 * 
 * Mes conclusions:
 < Guillaume était un homme.
+< Guillaume était masculin.
 < Armand n'a aucun père plus.
 < Armand avait un père, appelé Guillaume.
 * 
@@ -109,7 +111,7 @@
 < Armand avait probablement un parent, appelé Guillaume.
 * 
 * Mes questions:
-< Est Armand un homme, une femme, une jeune-fille ou un garçon?
+< Est Armand une jeune-fille, une femme, un garçon ou un homme?
 < Est Armand un fils ou une fille?
 < 
 * Je sais que.

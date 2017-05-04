@@ -1,9 +1,9 @@
 /*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -99,27 +99,14 @@ class ContextItem extends Item
 				specificationWordTypeNr_ == queryWordTypeNr );
 		}
 
-	protected StringResultType findMatchingWordReferenceString( String queryString )
-		{
-		StringResultType stringResult = new StringResultType();
-
-		if( specificationWordItem_ != null )
-			{
-			if( ( stringResult = specificationWordItem_.findMatchingWordReferenceString( queryString ) ).result != Constants.RESULT_OK )
-				return addStringResultError( 1, null, "I failed to find a matching word reference string for the specification word" );
-			}
-
-		return stringResult;
-		}
-
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		String wordString;
 		StringBuffer queryStringBuffer;
 		String contextWordTypeString = myWordItem().wordTypeNameString( contextWordTypeNr_ );
 		String specificationWordTypeString = myWordItem().wordTypeNameString( specificationWordTypeNr_ );
 
-		baseToStringBuffer( queryWordTypeNr );
+		itemBaseToStringBuffer( queryWordTypeNr );
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();
@@ -146,6 +133,14 @@ class ContextItem extends Item
 			}
 
 		return queryStringBuffer;
+		}
+
+	protected BoolResultType findMatchingWordReferenceString( String queryString )
+		{
+		if( specificationWordItem_ != null )
+			return specificationWordItem_.findMatchingWordReferenceString( queryString );
+
+		return new BoolResultType();
 		}
 
 

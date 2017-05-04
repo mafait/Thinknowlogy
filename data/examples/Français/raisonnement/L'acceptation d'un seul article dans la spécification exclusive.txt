@@ -1,5 +1,5 @@
-﻿Une créature est un animal, champignon, humain-être, micro-organisme, ou plante.
-Un animal est un vertébré ou invertébré.
-Un vertébré est un amphibien, oiseau, poisson, mammifère ou reptile.
-Un invertébré est un annélide, arthropode, échinoderme, mollusque, ou protozoaire.
+﻿Chaque organisme est un animal, champignon, être humain-être, micro-organisme ou plante.
+Chaque animal est un vertébré ou invertébré.
+Chaque vertébré est un amphibien, oiseau, poisson, mammifère ou reptile.
+Chaque invertébré est un annélide, arthropode, échinoderme, mollusque, ou protozoaire.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

@@ -1,0 +1,25 @@
+﻿* 
+* My conclusions:
+< James was a man.
+< 
+* 
+* This information is more specific than your earlier information:
+< James was a father.
+* 
+* My conclusions:
+< Peter has no father anymore.
+< Peter had a father, called James.
+< 
+* 
+* My conclusions:
+< James was a man. Because:
+<	- James was a father.
+<	- Every father is a man.
+< 
+* 
+* My conclusions:
+< Peter has no father anymore. Because:
+<	- Peter had a father, called James.
+< Peter had a father, called James. Because:
+<	- James was the father of Peter.
+< 

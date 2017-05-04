@@ -1,9 +1,9 @@
 /*	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -28,18 +28,11 @@ class GeneralizationList : private List
 	{
 	friend class WordItem;
 
-	protected:
-	// Constructor
+	// Private functions
 
-	GeneralizationList( CommonVariables *commonVariables, WordItem *myWordItem )
-		{
-		initializeListVariables( WORD_GENERALIZATION_LIST_SYMBOL, "GeneralizationList", commonVariables, myWordItem );
-		}
-
-	~GeneralizationList()
+	void deleteGeneralizationList( GeneralizationItem *searchGeneralizationItem )
 		{
 		GeneralizationItem *deleteGeneralizationItem;
-		GeneralizationItem *searchGeneralizationItem = firstActiveGeneralizationItem();
 
 		while( searchGeneralizationItem != NULL )
 			{
@@ -47,6 +40,19 @@ class GeneralizationList : private List
 			searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();
 			delete deleteGeneralizationItem;
 			}
+		}
+
+	protected:
+	// Constructor
+
+	GeneralizationList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+		{
+		initializeListVariables( WORD_GENERALIZATION_LIST_SYMBOL, "GeneralizationList", commonVariables, inputOutput, myWordItem );
+		}
+
+	~GeneralizationList()
+		{
+		deleteGeneralizationList( firstActiveGeneralizationItem() );
 
 		if( firstInactiveItem() != NULL )
 			fprintf( stderr, "\nError: Class GeneralizationList has inactive items." );
@@ -57,53 +63,24 @@ class GeneralizationList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class GeneralizationList has replaced items." );
 
-		searchGeneralizationItem = (GeneralizationItem *)firstDeletedItem();
-
-		while( searchGeneralizationItem != NULL )
-			{
-			deleteGeneralizationItem = searchGeneralizationItem;
-			searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();
-			delete deleteGeneralizationItem;
-			}
+		deleteGeneralizationList( (GeneralizationItem *)firstDeletedItem() );
 		}
 
 
 	// Protected functions
 
-	GeneralizationResultType findGeneralization( bool isRelation, WordItem *generalizationWordItem )
-		{
-		GeneralizationResultType generalizationResult;
-		GeneralizationItem *searchGeneralizationItem = firstActiveGeneralizationItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findGeneralization";
-
-		if( generalizationWordItem == NULL )
-			return startGeneralizationResultError( functionNameString, NULL, "The given generalization word item is undefined" );
-
-		while( searchGeneralizationItem != NULL &&
-		!generalizationResult.hasFoundGeneralization )
-			{
-			if( searchGeneralizationItem->isRelation() == isRelation &&
-			searchGeneralizationItem->generalizationWordItem() == generalizationWordItem )
-				generalizationResult.hasFoundGeneralization = true;
-			else
-				searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();
-			}
-
-		return generalizationResult;
-		}
-
-	ResultType checkWordItemForUsage( WordItem *unusedWordItem )
+	signed char checkWordItemForUsage( WordItem *unusedWordItem )
 		{
 		GeneralizationItem *searchGeneralizationItem = firstActiveGeneralizationItem();
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
 
 		if( unusedWordItem == NULL )
-			return startError( functionNameString, NULL, "The given unused word item is undefined" );
+			return startError( functionNameString, "The given unused word item is undefined" );
 
 		while( searchGeneralizationItem != NULL )
 			{
 			if( searchGeneralizationItem->generalizationWordItem() == unusedWordItem )
-				return startError( functionNameString, NULL, "The generalization word item is still in use" );
+				return startError( functionNameString, "The generalization word item is still in use" );
 
 			searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();
 			}
@@ -111,39 +88,20 @@ class GeneralizationList : private List
 		return RESULT_OK;
 		}
 
-	ResultType createGeneralizationItem( bool isLanguageWord, bool isRelation, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem )
+	signed char createGeneralizationItem( bool isLanguageWord, bool isRelation, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createGeneralizationItem";
 
 		if( generalizationWordTypeNr <= NO_WORD_TYPE_NR &&
 		generalizationWordTypeNr >= NUMBER_OF_WORD_TYPES )
-			return startError( functionNameString, NULL, "The given generalization word type number is undefined or out of bounds: ", generalizationWordTypeNr );
+			return startError( functionNameString, "The given generalization word type number is undefined or out of bounds: ", generalizationWordTypeNr );
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, commonVariables()->currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, commonVariables(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, NULL, "I failed to add an active generalization item" );
-
-		return RESULT_OK;
-		}
-/*
-	ResultType storeChangesInFutureDatabase()
-		{
-		GeneralizationItem *searchGeneralizationItem = firstActiveGeneralizationItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
-
-		while( searchGeneralizationItem != NULL )
-			{
-			if( searchGeneralizationItem->hasCurrentCreationSentenceNr() )
-				{
-				if( searchGeneralizationItem->storeGeneralizationItemInFutureDatabase() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to store a generalization item in the database" );
-				}
-
-			searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();
-			}
+		if( addItemToList( QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, commonVariables()->currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add an active generalization item" );
 
 		return RESULT_OK;
 		}
-*/
+
 	GeneralizationItem *firstActiveGeneralizationItem()
 		{
 		return (GeneralizationItem *)firstActiveItem();
@@ -153,7 +111,31 @@ class GeneralizationList : private List
 		{
 		GeneralizationItem *firstGeneralizationItem = firstActiveGeneralizationItem();
 
-		return ( firstGeneralizationItem == NULL ? NULL : firstGeneralizationItem->getGeneralizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isRelation ) );
+		return ( firstGeneralizationItem == NULL ? NULL : firstGeneralizationItem->generalizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isRelation ) );
+		}
+
+	BoolResultType findGeneralization( bool isRelation, WordItem *generalizationWordItem )
+		{
+		bool hasFoundGeneralization = false;
+		GeneralizationItem *searchGeneralizationItem = firstActiveGeneralizationItem();
+		BoolResultType boolResult;
+		char functionNameString[FUNCTION_NAME_LENGTH] = "findGeneralization";
+
+		if( generalizationWordItem == NULL )
+			return startBoolResultError( functionNameString, "The given generalization word item is undefined" );
+
+		while( searchGeneralizationItem != NULL &&
+		!hasFoundGeneralization )
+			{
+			if( searchGeneralizationItem->isRelation() == isRelation &&
+			searchGeneralizationItem->generalizationWordItem() == generalizationWordItem )
+				hasFoundGeneralization = true;
+			else
+				searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();
+			}
+
+		boolResult.booleanValue = hasFoundGeneralization;
+		return boolResult;
 		}
 	};
 

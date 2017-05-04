@@ -1,0 +1,25 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To demonstrate automated reasoning in natural language:
+#					Self-generated conclusions, assumptions and questions,
+#					and the detection of conflicts and semantic ambiguity
+#	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+# The definition of a family.
+Every person is a man or a woman.
+Every woman is feminine.
+Every man is masculine.
+Every family has fathers and children.
+Every father is a father or a mother.
+Every child is a child or a daughter.
+Every father is a man.
+Every mother is a woman.
+Every girl is feminine.
+Every boy is masculine.
+Every child is a boy or a man.
+Every daughter is a girl or a woman.
+# Try the sentences in all kind of combinations and in different order.
+# Use button «Clear your mind.», «Undo.» or «Restart.» for a retry.

@@ -44,8 +44,8 @@
 * 
 * Mijn vragen:
 < Is Paul een jongen of een man?
-< Is Jan een man of een vrouw?
 < Is Jan een vader of een moeder?
+< Is Jan een man of een vrouw?
 < 
 * 
 * Uw vraag is specifieker dan mijn eerdere vraag:
@@ -67,8 +67,8 @@
 < Jan heeft waarschijnlijk een kind, genaamd Paul.
 * 
 * Mijn vragen:
-< Is Jan een man of een vrouw?
 < Is Jan een vader of een moeder?
+< Is Jan een man of een vrouw?
 * 
 * Gerelateerde informatie:
 < Paul is waarschijnlijk een kind van Jan.
@@ -100,17 +100,17 @@
 <	- Paul is waarschijnlijk een kind van Jan.
 * 
 * Mijn vragen:
+< Is Jan een vader of een moeder? Omdat:
+<	- Jan is waarschijnlijk een ouder van Paul.
+<	- Iedere ouder is een vader of een moeder.
 < Is Jan een man of een vrouw? Omdat:
+<	- Is Jan een vader of een moeder?
+<	- Iedere moeder is een vrouw.
+<	- Iedere vader is een man.
+* 	en:
 <	- Jan is mogelijk een persoon.
 <	- Iedere persoon is een man of een vrouw.
 * 	en:
 <	- Jan is waarschijnlijk een ouder van Paul.
 <	- Iedere ouder is een vrouw of een man.
-* 	en:
-<	- Is Jan een vader of een moeder?
-<	- Iedere moeder is een vrouw.
-<	- Iedere vader is een man.
-< Is Jan een vader of een moeder? Omdat:
-<	- Jan is waarschijnlijk een ouder van Paul.
-<	- Iedere ouder is een vader of een moeder.
 < 

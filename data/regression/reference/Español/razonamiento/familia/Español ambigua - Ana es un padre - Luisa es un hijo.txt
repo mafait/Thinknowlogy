@@ -27,6 +27,7 @@
 < Ana es parte de una familia.
 < Ana es un hombre.
 < Ana no es una mujer.
+< Ana es masculino.
 < Ana no es una madre.
 * 
 * Mis suposiciones:
@@ -45,6 +46,9 @@
 <	- Ana es un padre.
 <	- Cada padre es una mujer o un hombre.
 <	- Ana es un hombre.
+< Ana es masculino. Porque:
+<	- Ana es un hombre.
+<	- Cada hombre es masculino.
 < Ana no es una madre. Porque:
 <	- Ana es un padre.
 <	- Cada padre es un padre o una madre.

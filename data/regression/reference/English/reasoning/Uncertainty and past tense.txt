@@ -10,8 +10,6 @@
 < Peter had possibly a father, called James. Because:
 <	- James was possibly the father of Peter.
 < 
-* 
-* I am not sure, but:
 < Richard was possibly a father.
 < 
 * 

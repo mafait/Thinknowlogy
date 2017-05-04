@@ -39,6 +39,7 @@
 * 
 * Mijn veronderstellingen:
 < Anna is waarschijnlijk een vrouw.
+< Anna is waarschijnlijk vrouwelijk.
 < Anna is waarschijnlijk geen man.
 < 
 * 
@@ -47,6 +48,9 @@
 <	- Anna is een persoon.
 <	- Iedere persoon is een man of een vrouw.
 <	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
+< Anna is waarschijnlijk vrouwelijk. Omdat:
+<	- Anna is waarschijnlijk een vrouw.
+<	- Iedere vrouw is vrouwelijk.
 < Anna is waarschijnlijk geen man. Omdat:
 <	- Anna is een persoon.
 <	- Iedere persoon is een man of een vrouw.
@@ -55,6 +59,7 @@
 * 
 * Mijn veronderstellingen:
 < Marinus is waarschijnlijk een man.
+< Marinus is waarschijnlijk mannelijk.
 < Marinus is waarschijnlijk geen vrouw.
 < 
 * 
@@ -63,6 +68,9 @@
 <	- Marinus is een persoon.
 <	- Iedere persoon is een man of een vrouw.
 <	- Eigennaam "Marinus" is waarschijnlijk mannelijk.
+< Marinus is waarschijnlijk mannelijk. Omdat:
+<	- Marinus is waarschijnlijk een man.
+<	- Iedere man is mannelijk.
 < Marinus is waarschijnlijk geen vrouw. Omdat:
 <	- Marinus is een persoon.
 <	- Iedere persoon is een man of een vrouw.

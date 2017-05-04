@@ -16,11 +16,50 @@
 < 
 * 
 * My conclusions:
-< Paul has a parent, called John.
+< A parent and a child are part of every family.
 < 
 * 
 * My conclusions:
+< Michael is part of a family.
+* 
+* My assumptions:
+< Michael has probably a child.
+< 
+* 
+* My conclusions:
+< Adam is part of a family.
+* 
+* My assumptions:
+< Adam has probably a parent.
+< 
+* 
+* My assumptions:
+< Peter is probably a child.
+< Peter is probably part of a family.
+< 
+* 
+* My assumptions:
+< Ronald is probably a parent.
+< Ronald is probably part of a family.
+< 
+* 
+* My conclusions:
+< John is part of a family.
+< Paul has a parent, called John.
+* 
+* My assumptions:
+< John has probably a child, called Paul.
+< Paul is probably a child of John.
+< Paul is probably part of a family.
+< 
+* 
+* My conclusions:
+< Anna is part of a family.
 < Paul has 2 parent [plural of 'parent' is unknown], called John and Anna.
+* 
+* My assumptions:
+< Anna has probably a child, called Paul.
+< Paul is probably a child of John and Anna.
 < 
 * 
 * My conclusions that are confirmed:
@@ -32,6 +71,10 @@
 * My conclusions:
 < Peter has no father anymore.
 < Peter had a father, called James.
+< 
+* 
+* My conclusions:
+< James was a man.
 < 
 ! 
 ! This sentence is not accepted, because it is in conflict with itself.
@@ -49,10 +92,10 @@
 < 
 * 
 * My conclusions:
-< The United States has a president, called Bill Clinton.
+< The United States has a president, called Barack Obama.
 < 
 * 
 * My conclusions:
-< The United States has a new president, called Barack Obama.
-< The United States has a previous president, called Bill Clinton.
+< The United States has a new president, called Donald Trump.
+< The United States has a previous president, called Barack Obama.
 < 

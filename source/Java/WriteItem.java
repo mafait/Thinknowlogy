@@ -2,9 +2,9 @@
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about a word
  *					during the process of writing a sentence
- *	Version:		Thinknowlogy 2016r2 (Restyle)
+ *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -50,6 +50,8 @@ class WriteItem extends Item
 
 		isSkipped = _isSkipped;
 
+		// Checking private initialized variables
+
 		if( ( startOfChoiceOrOptionGrammarItem_ = startOfChoiceOrOptionGrammarItem ) == null )
 			startSystemError( 1, null, null, "The given start of grammar choice or option grammar item is undefined" );
 		}
@@ -64,11 +66,11 @@ class WriteItem extends Item
 				( queryItemNr == Constants.NO_ITEM_NR ? true : startOfChoiceOrOptionGrammarItem_.itemNr() == queryItemNr ) );
 		}
 
-	protected StringBuffer toStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
 
-		baseToStringBuffer( queryWordTypeNr );
+		itemBaseToStringBuffer( queryWordTypeNr );
 
 		if( CommonVariables.queryStringBuffer == null )
 			CommonVariables.queryStringBuffer = new StringBuffer();

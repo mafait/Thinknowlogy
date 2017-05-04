@@ -34,6 +34,7 @@
 * 
 * Mis suposiciones:
 < Ana es probablemente una mujer.
+< Ana es probablemente femenina.
 < Ana no es probablemente un hombre.
 < 
 * 
@@ -42,6 +43,9 @@
 <	- Ana es una persona.
 <	- Cada persona es un hombre o una mujer.
 <	- Nombre propio "Ana" es probablemente femenino.
+< Ana es probablemente femenina. Porque:
+<	- Ana es probablemente una mujer.
+<	- Cada mujer es femenina.
 < Ana no es probablemente un hombre. Porque:
 <	- Ana es una persona.
 <	- Cada persona es un hombre o una mujer.

@@ -1,0 +1,6 @@
+﻿Read the file "English/user/reasoning/family (Spanish)/family definition".
+Anna is a father.
+Display the justification report about Anna.
+Laura is a child.
+Display the justification report about Laura.
+# To continue, click button «Clear your mind.» or «Restart.».

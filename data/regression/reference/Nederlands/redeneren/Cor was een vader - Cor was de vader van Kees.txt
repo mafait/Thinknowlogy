@@ -1,0 +1,25 @@
+﻿* 
+* Mijn conclusies:
+< Cor was een man.
+< 
+* 
+* Deze informatie is specifieker dan uw eerdere informatie:
+< Cor was een vader.
+* 
+* Mijn conclusies:
+< Kees heeft geen vader meer.
+< Kees had een vader, genaamd Cor.
+< 
+* 
+* Mijn conclusies:
+< Cor was een man. Omdat:
+<	- Cor was een vader.
+<	- Iedere vader is een man.
+< 
+* 
+* Mijn conclusies:
+< Kees heeft geen vader meer. Omdat:
+<	- Kees had een vader, genaamd Cor.
+< Kees had een vader, genaamd Cor. Omdat:
+<	- Cor was de vader van Kees.
+< 

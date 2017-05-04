@@ -57,6 +57,7 @@
 * 
 * Mes conclusions:
 < Amélie est une femme.
+< Amélie est féminine.
 * 
 * Mes hypothèses:
 < Amélie est probablement une personne.

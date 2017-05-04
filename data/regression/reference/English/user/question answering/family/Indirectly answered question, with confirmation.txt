@@ -30,6 +30,7 @@
 * My conclusions:
 < Anna is a mother of Paul.
 < Anna is a woman.
+< Anna is feminine.
 * 
 * My assumptions:
 < Paul has probably a parent, called Anna.
@@ -44,22 +45,25 @@
 < Anna has probably a child, called Paul.
 * 
 * My questions:
-< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
 < 
 * 
 * My questions that are answered:
-< Is Paul a man, a woman, a girl or a boy?
+< Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
 * 
 * My assumptions that are adjusted:
 < Paul is probably a person.
 * 
+* My conclusions:
+< Paul is masculine.
+* 
 * My assumptions:
 < Paul is probably a son.
 < Paul is probably not a woman.
 < Paul is possibly not a daughter.
-< Paul is probably not a boy, not a girl and not a woman.
+< Paul is probably not a boy, not a woman and not a girl.
 < 
 * 
 * My assumptions that are confirmed:

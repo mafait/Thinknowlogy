@@ -50,12 +50,13 @@
 < Anna is possibly a mother of Paul.
 < Anna is possibly a woman.
 < Anna is maybe not a man.
+< Anna is possibly feminine.
 < Anna is maybe not a father.
 * 
 * My questions:
 < Is Paul a boy or a man?
-< Is John a man or a woman?
 < Is John a father or a mother?
+< Is John a man or a woman?
 < 
 * 
 * My conclusions:
@@ -82,19 +83,19 @@
 <	- A parent is probably a person.
 * 
 * My questions:
+< Is John a father or a mother? Because:
+<	- John is probably a parent of Paul.
+<	- Every parent is a father or a mother.
 < Is John a man or a woman? Because:
+<	- Is John a father or a mother?
+<	- Every mother is a woman.
+<	- Every father is a man.
+* 	and:
 <	- John is possibly a person.
 <	- Every person is a man or a woman.
 * 	and:
 <	- John is probably a parent of Paul.
 <	- Every parent is a woman or a man.
-* 	and:
-<	- Is John a father or a mother?
-<	- Every mother is a woman.
-<	- Every father is a man.
-< Is John a father or a mother? Because:
-<	- John is probably a parent of Paul.
-<	- Every parent is a father or a mother.
 < 
 * 
 * My assumptions:

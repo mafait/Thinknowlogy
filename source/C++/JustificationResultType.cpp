@@ -1,9 +1,9 @@
 /*	Class:		JustificationResultType
  *	Purpose:	To return justification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2016r2 (Restyle)
+ *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
  *************************************************************************/
-/*	Copyright (C) 2009-2016, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -22,22 +22,23 @@
  *************************************************************************/
 
 #include "Item.h"
-// Some compilers need these class declarations
+// Class declarations
 class JustificationItem;
 
 class JustificationResultType
 	{
-	friend class AdminAssumption;
+	friend class AdminReasoningOld;
 	friend class AdminSpecification;
 	friend class Item;
 	friend class JustificationList;
 	friend class List;
 	friend class SpecificationList;
+	friend class WordSpecification;
 
 	protected:
 	// Protected variables
 
-	ResultType result;
+	signed char result;
 
 	JustificationItem *createdJustificationItem;
 	JustificationItem *foundJustificationItem;
