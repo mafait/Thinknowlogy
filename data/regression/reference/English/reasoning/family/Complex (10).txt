@@ -58,6 +58,9 @@
 * My assumptions that are confirmed:
 < Anna is probably a mother.
 * 
+* My earlier assumptions that have relation words now:
+< Anna has probably a child.
+* 
 * My assumptions that are concluded:
 < Anna is a woman.
 < Anna is not a man.
@@ -198,6 +201,9 @@
 <	- Anna is the mother of Paul, Joe and Laura.
 < Anna has probably 3 children, called Paul, Joe and Laura. Because:
 <	- Every family has parents and children.
+<	- Paul has probably a parent, called Anna.
+* 	and:
+<	- Every family has parents and children.
 <	- Anna is probably a parent of Paul, Joe and Laura.
 * 	and:
 <	- Paul is probably a child of Anna.
@@ -210,9 +216,6 @@
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
 <	- Proper name "Laura" is probably feminine.
-< Anna has probably a child. Because:
-<	- Every family has parents and children.
-<	- Anna is a parent.
 < 
 * 
 * My conclusions:

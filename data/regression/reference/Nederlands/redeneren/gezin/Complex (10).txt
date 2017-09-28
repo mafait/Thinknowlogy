@@ -58,6 +58,9 @@
 * Mijn veronderstellingen die bevestigd zijn:
 < Anna is waarschijnlijk een moeder.
 * 
+* Mijn eerdere veronderstellingen die nu relatiewoorden hebben:
+< Anna heeft waarschijnlijk een kind.
+* 
 * Mijn veronderstellingen die geconcludeerd zijn:
 < Anna is een vrouw.
 < Anna is geen man.
@@ -198,6 +201,9 @@
 <	- Anna is de moeder van Paul, Johan en Laura.
 < Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
+<	- Paul heeft waarschijnlijk een ouder, genaamd Anna.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
 <	- Anna is waarschijnlijk een ouder van Paul, Johan en Laura.
 * 	en:
 <	- Paul is waarschijnlijk een kind van Anna.
@@ -210,9 +216,6 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
-< Anna heeft waarschijnlijk een kind. Omdat:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Anna is een ouder.
 < 
 * 
 * Mijn conclusies:

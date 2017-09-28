@@ -85,9 +85,6 @@
 <	- Chaque enfant est un fils ou une fille.
 <	- Lorraine est une fille.
 < Lorraine est probablement un enfant de Olivier et Amélie. En raison:
-<	- Chaque enfant est un fils ou une fille.
-<	- Lorraine est une fille.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Lorraine a 2 parents, appelés Olivier et Amélie.
 * 	et:

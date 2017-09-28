@@ -2,7 +2,7 @@
  *	Parent class:	WordItem
  *	Grand parent:	Item
  *	Purpose:		To process tasks at administration level
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -72,6 +72,7 @@ class AdminItem extends WordItem
 		CommonVariables.firstContextWordItem = null;
 		CommonVariables.firstPossessiveNounWordItem = null;
 		CommonVariables.firstSpecificationWordItem = null;
+		CommonVariables.firstUserProperNameWordItem = null;
 
 		CommonVariables.lastCollectionWordItem = null;
 		CommonVariables.lastContextWordItem = null;
@@ -107,7 +108,7 @@ class AdminItem extends WordItem
 
 		// More than one language available
 		if( CommonVariables.queryStringBuffer.indexOf( Constants.QUERY_SEPARATOR_SPACE_STRING ) > 0 )
-			CommonVariables.interfaceLanguageStringBuffer = new StringBuffer( CommonVariables.queryStringBuffer );
+			CommonVariables.interfaceLanguageStringBuffer = CommonVariables.queryStringBuffer;
 
 		return Constants.RESULT_OK;
 		}
@@ -266,28 +267,29 @@ class AdminItem extends WordItem
 		return highestContextNr;
 		}
 
-	protected int highestInUseSentenceNr( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int highestSentenceNr )
+	protected int highestFoundSentenceNr( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int maxSentenceNr )
 		{
+		int highestFoundSentenceNr = Constants.NO_SENTENCE_NR;
 		List currentAdminList;
-
-		CommonVariables.highestInUseSentenceNr = Constants.NO_SENTENCE_NR;
 
 		// Word lists
 		if( wordList_ != null )
-			wordList_.getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr );
+			highestFoundSentenceNr = wordList_.highestFoundSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, maxSentenceNr );
 
 		// Admin lists
-		for( short adminListNr = 0; ( adminListNr < Constants.NUMBER_OF_ADMIN_LISTS && highestSentenceNr > CommonVariables.highestInUseSentenceNr ); adminListNr++ )
+		for( short adminListNr = 0; ( adminListNr < Constants.NUMBER_OF_ADMIN_LISTS && highestFoundSentenceNr < maxSentenceNr ); adminListNr++ )
 			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != null )
-				{
-				if( isIncludingTemporaryLists ||
-				!currentAdminList.isTemporaryList() )
-					currentAdminList.getHighestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
-				}
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != null &&
+
+			( isIncludingTemporaryLists ||
+			!currentAdminList.isTemporaryList() ) &&
+
+			// For efficiency, only select lists with higher sentence number
+			currentAdminList.highestSentenceNrInList() > highestFoundSentenceNr )
+				highestFoundSentenceNr = currentAdminList.highestFoundSentenceNrInList( isIncludingDeletedItems, highestFoundSentenceNr, maxSentenceNr );
 			}
 
-		return CommonVariables.highestInUseSentenceNr;
+		return highestFoundSentenceNr;
 		}
 
 	protected char adminListChar( short adminListNr )
@@ -395,6 +397,11 @@ class AdminItem extends WordItem
 		return false;
 		}
 
+	protected boolean hasScoreList()
+		{
+		return( scoreList_ != null );
+		}
+
 	protected int nPossibilities()
 		{
 		if( scoreList_ != null )
@@ -420,7 +427,6 @@ class AdminItem extends WordItem
 				return startError( 1, null, null, "I failed to create the admin solve score list" );
 
 			adminListArray_[Constants.ADMIN_SCORE_LIST] = scoreList_;
-			CommonVariables.adminScoreList = scoreList_;
 			}
 
 		return scoreList_.createScoreItem( isChecked, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem );
@@ -465,7 +471,7 @@ class AdminItem extends WordItem
 
 		wasUndoOrRedoCommand_ = true;
 
-		if( highestInUseSentenceNr( true, false, CommonVariables.currentSentenceNr ) == CommonVariables.currentSentenceNr )
+		if( highestFoundSentenceNr( true, false, CommonVariables.currentSentenceNr ) == CommonVariables.currentSentenceNr )
 			{
 			// Important: Redo admin lists first, and the words after that
 			// Because redoing admin words list might redo words
@@ -882,12 +888,12 @@ class AdminItem extends WordItem
 		return null;
 		}
 
-	protected BoolResultType createReadWords( String grammarString )
+	protected BoolResultType createReadWords( String readUserSentenceString )
 		{
 		if( adminReadCreateWords_ == null )
 			return startBoolResultError( 1, null, "The admin read create words module isn't created yet" );
 
-		return adminReadCreateWords_.createReadWords( grammarString );
+		return adminReadCreateWords_.createReadWords( readUserSentenceString );
 		}
 
 	protected ReadWordResultType readWordFromString( boolean isCheckingForGrammarDefinition, boolean isMergedWord, boolean isSkippingTextString, int startWordPosition, int minimumStringLength, String wordString )
@@ -947,7 +953,7 @@ class AdminItem extends WordItem
 			{
 			CommonVariables.currentSentenceNr--;
 			// Necessary after changing current sentence number
-			setCurrentItemNr();
+			CommonVariables.currentSentenceItemNr = highestCurrentSentenceItemNr();
 			}
 		}
 
@@ -962,7 +968,9 @@ class AdminItem extends WordItem
 		// Admin lists
 		for( short adminListNr = 0; adminListNr < Constants.NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != null )
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != null &&
+			// For efficiency, only select lists with decrement sentence number of higher
+			currentAdminList.highestSentenceNrInList() >= decrementSentenceNr )
 				currentAdminList.decrementItemNrRangeInList( decrementSentenceNr, startDecrementItemNr, decrementOffset );
 			}
 		}
@@ -978,7 +986,9 @@ class AdminItem extends WordItem
 		// Admin lists
 		for( short adminListNr = 0; adminListNr < Constants.NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != null )
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != null &&
+			// For efficiency, only select lists with start sentence number of higher
+			currentAdminList.highestSentenceNrInList() >= startSentenceNr )
 				currentAdminList.decrementSentenceNrsInList( startSentenceNr );
 			}
 		}
@@ -994,7 +1004,9 @@ class AdminItem extends WordItem
 		// Admin lists
 		for( short adminListNr = 0; adminListNr < Constants.NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != null )
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != null &&
+			// For efficiency, only select lists with lowest sentence number of higher
+			currentAdminList.highestSentenceNrInList() >= lowestSentenceNr )
 				currentAdminList.deleteSentencesInList( lowestSentenceNr );
 			}
 
@@ -1014,24 +1026,6 @@ class AdminItem extends WordItem
 			{
 			if( ( currentAdminList = adminListArray_[adminListNr] ) != null )
 				currentAdminList.removeFirstRangeOfDeletedItemsInList();
-			}
-		}
-
-	protected void setCurrentItemNr()
-		{
-		List currentAdminList;
-
-		CommonVariables.currentItemNr = Constants.NO_ITEM_NR;
-
-		// Word lists
-		if( wordList_ != null )
-			wordList_.setCurrentItemNrInWordList();
-
-		// Admin lists
-		for( short adminListNr = 0; adminListNr < Constants.NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != null )
-				currentAdminList.setCurrentItemNrInList();
 			}
 		}
 
@@ -1098,6 +1092,28 @@ class AdminItem extends WordItem
 			return adminReadFile_.firstSentenceNrOfCurrentUser();
 
 		return Constants.NO_SENTENCE_NR;
+		}
+
+	protected int highestCurrentSentenceItemNr()
+		{
+		int currentSentenceNr = CommonVariables.currentSentenceNr;
+		int highestItemNr = Constants.NO_ITEM_NR;
+		List currentAdminList;
+
+		// Word lists
+		if( wordList_ != null )
+			highestItemNr = wordList_.highestCurrentSentenceItemNrInWordList( currentSentenceNr, highestItemNr );
+
+		// Admin lists
+		for( short adminListNr = 0; adminListNr < Constants.NUMBER_OF_ADMIN_LISTS; adminListNr++ )
+			{
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != null &&
+			// For efficiency, only select lists with current sentence number or higher
+			currentAdminList.highestSentenceNrInList() >= currentSentenceNr )
+				highestItemNr = currentAdminList.highestCurrentSentenceItemNrInList( currentSentenceNr, highestItemNr );
+			}
+
+		return highestItemNr;
 		}
 
 	protected byte closeCurrentFile( FileItem closeFileItem )
@@ -1223,6 +1239,14 @@ class AdminItem extends WordItem
 		return false;
 		}
 
+	protected boolean isUserQuestion()
+		{
+		if( adminReadSentence_ != null )
+			return adminReadSentence_.isUserQuestion();
+
+		return false;
+		}
+
 	protected boolean wasPreviousCommandUndoOrRedo()
 		{
 		if( adminReadSentence_ != null )
@@ -1255,14 +1279,14 @@ class AdminItem extends WordItem
 		return wordList_.deleteItem( wordItem );
 		}
 
-	protected byte processReadSentence( String readString )
+	protected byte processReadSentence( StringBuffer readStringBuffer )
 		{
 		if( adminReadSentence_ == null &&
 		// Create supporting module
 		( adminReadSentence_ = new AdminReadSentence( this ) ) == null )
 			return startError( 1, null, null, "I failed to create the admin read sentence module" );
 
-		return adminReadSentence_.processReadSentence( readString );
+		return adminReadSentence_.processReadSentence( readStringBuffer );
 		}
 
 	protected byte removeDuplicateSelection()
@@ -1339,12 +1363,36 @@ class AdminItem extends WordItem
 
 	protected byte askQuestions()
 		{
+		if( adminReasoningNew_ == null )
+			return startError( 1, null, null, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_.askQuestions();
+		}
+
+	protected byte correctSuggestiveAssumptionsByOppositeQuestion( boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, int generalizationContextNr, int specificationContextNr, SpecificationItem secondarySpecificationItem, WordItem generalizationWordItem, WordItem specificationWordItem )
+		{
+		if( adminReasoningNew_ == null )
+			return startError( 1, null, null, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_.correctSuggestiveAssumptionsByOppositeQuestion( isArchivedAssignment, isNegative, isPossessive, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem );
+		}
+
+	protected byte drawPossessiveReversibleConclusions( WordItem generalizationWordItem )
+		{
+		if( adminReasoningNew_ == null )
+			return startError( 1, null, null, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_.drawPossessiveReversibleConclusions( generalizationWordItem );
+		}
+
+	protected byte drawProperNamePartOfConclusions( boolean hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore, boolean isArchivedAssignment, WordItem generalizationProperNameWordItem, WordItem specificationWordItem, WordItem spanishRelationWordItem )
+		{
 		if( adminReasoningNew_ == null &&
 		// Create supporting module
 		( adminReasoningNew_ = new AdminReasoningNew( this ) ) == null )
 			return startError( 1, null, null, "I failed to create the admin reasoning new module" );
 
-		return adminReasoningNew_.askQuestions();
+		return adminReasoningNew_.drawProperNamePartOfConclusions( hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore, isArchivedAssignment, generalizationProperNameWordItem, specificationWordItem, spanishRelationWordItem );
 		}
 
 	protected WordItem adjustedQuestionWordItem()
@@ -1448,6 +1496,22 @@ class AdminItem extends WordItem
 		return adminReasoningOld_.makeSuggestiveQuestionAssumption( isArchivedAssignment, isNegative, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem, relationWordItem );
 		}
 
+	protected SpecificationItem oppositePossessiveDefinitionSpecificationItem()
+		{
+		if( adminReasoningOld_ != null )
+			return adminReasoningOld_.oppositePossessiveDefinitionSpecificationItem();
+
+		return null;
+		}
+
+	protected WordItem possessiveDefinitionSpecificationWordItem()
+		{
+		if( adminReasoningOld_ != null )
+			return adminReasoningOld_.possessiveDefinitionSpecificationWordItem();
+
+		return null;
+		}
+
 	protected CompoundResultType drawCompoundSpecificationSubstitutionConclusion( short specificationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, WordItem specificationWordItem )
 		{
 		if( adminReasoningOld_ == null )
@@ -1463,6 +1527,14 @@ class AdminItem extends WordItem
 		{
 		if( adminSpecification_ != null )
 			adminSpecification_.initializeLinkedWord();
+		}
+
+	protected boolean hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore()
+		{
+		if( adminSpecification_ != null )
+			return adminSpecification_.hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore();
+
+		return false;
 		}
 
 	protected byte addUserSpecifications( boolean isAction, boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isNewStart, boolean isPartOf, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, short assumptionLevel, short prepositionParameter, short questionParameter, short selectionLevel, short selectionListNr, short imperativeVerbParameter, int generalizationContextNr, int specificationContextNr, ReadItem generalizationWordItem, ReadItem startSpecificationReadItem, ReadItem endSpecificationReadItem, ReadItem startRelationReadItem, ReadItem endRelationReadItem )

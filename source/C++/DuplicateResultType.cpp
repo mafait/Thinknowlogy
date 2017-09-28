@@ -1,7 +1,7 @@
 /*	Class:		DuplicateResultType
  *	Purpose:	To return duplicate condition variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -21,8 +21,6 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#ifndef DUPLICATERESULTTYPE
-#define DUPLICATERESULTTYPE 1
 #include "Constants.h"
 
 class DuplicateResultType
@@ -54,7 +52,6 @@ class DuplicateResultType
 		duplicateConditionSentenceNr = NO_SENTENCE_NR;
 		}
 	};
-#endif
 
 /*************************************************************************
  *	"The Lords protects them

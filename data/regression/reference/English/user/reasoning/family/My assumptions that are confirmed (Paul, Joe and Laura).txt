@@ -71,8 +71,8 @@
 < Joe is probably not a daughter.
 < Joe has probably 2 parents, called John and Anna.
 < Joe has possibly a mother, called Anna.
-< John has probably 2 children, called Paul and Joe.
 < John is probably a parent of Paul and Joe.
+< John has probably 2 children, called Paul and Joe.
 < Anna is probably a parent of Paul and Joe.
 < Anna is possibly a mother of Paul and Joe.
 < Anna has probably 2 children, called Paul and Joe.
@@ -93,8 +93,8 @@
 < Laura is probably not a son.
 < Laura has probably 2 parents, called John and Anna.
 < Laura has possibly a mother, called Anna.
-< John is probably a parent of Paul, Joe and Laura.
 < John has probably 3 children, called Paul, Joe and Laura.
+< John is probably a parent of Paul, Joe and Laura.
 < Anna is probably a parent of Paul, Joe and Laura.
 < Anna is possibly a mother of Paul, Joe and Laura.
 < Anna has probably 3 children, called Paul, Joe and Laura.

@@ -1,7 +1,7 @@
 /*	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		To create words of the read sentence
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -109,11 +109,11 @@ class AdminReadCreateWords
 
 	CreateReadWordResultType createReadWord( unsigned short wordOrderNr, unsigned short wordTypeNr, size_t textStringStartPosition, char *textString, WordItem *readWordItem )
 		{
-		CreateReadWordResultType createReadWordResult;
-		ReadWordResultType readWordResult;
 		unsigned short wordParameter = ( wordTypeNr == WORD_TYPE_NOUN_PLURAL ||
 										readWordItem == NULL ? NO_WORD_PARAMETER : readWordItem->wordParameter() );
 		char *readString = NULL;
+		CreateReadWordResultType createReadWordResult;
+		ReadWordResultType readWordResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createReadWord";
 
 		if( wordTypeNr <= NO_WORD_TYPE_NR ||
@@ -827,11 +827,11 @@ class AdminReadCreateWords
 
 	ReadWordResultType readWordFromString( bool isCheckingForGrammarDefinition, bool isMergedWord, bool isSkippingTextString, size_t startWordPosition, size_t minimumStringLength, char *wordString )
 		{
-		ReadWordResultType readWordResult;
 		bool isText = false;
 		bool isWordStartingWithDoubleQuote = false;
 		size_t wordStringLength;
 		size_t wordPosition = startWordPosition;
+		ReadWordResultType readWordResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "readWordFromString";
 
 		if( wordString == NULL )
@@ -914,8 +914,6 @@ class AdminReadCreateWords
 
 	WordResultType addWord( bool isLanguageWord, bool isMultipleWord, unsigned short previousWordAdjectiveParameter, unsigned short previousWordDefiniteArticleParameter, unsigned short previousWordIndefiniteArticleParameter, unsigned short wordParameter, unsigned short wordTypeNr, size_t wordTypeStringLength, char *wordTypeString )
 		{
-		WordResultType wordResult;
-		WordTypeResultType wordTypeResult;
 		bool isProperName;
 		bool isProperNamePrecededByDefiniteArticle;
 		bool isNounWordType;
@@ -926,6 +924,8 @@ class AdminReadCreateWords
 		unsigned short definiteArticleParameter = NO_DEFINITE_ARTICLE_PARAMETER;
 		unsigned short indefiniteArticleParameter = NO_INDEFINITE_ARTICLE_PARAMETER;
 		WordItem *createdWordItem;
+		WordResultType wordResult;
+		WordTypeResultType wordTypeResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addWord";
 
 		if( wordTypeString == NULL )
@@ -1024,8 +1024,8 @@ class AdminReadCreateWords
 
 	WordResultType findWordTypeInAllWords( bool isCheckingAllLanguages, unsigned short wordTypeNr, char *wordTypeString, WordItem *previousWordItem )
 		{
-		WordResultType wordResult;
 		WordItem *currentWordItem;
+		WordResultType wordResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findWordTypeInAllWords";
 
 		if( ( currentWordItem = ( previousWordItem == NULL ? commonVariables_->firstWordItem : previousWordItem->nextWordItem() ) ) != NULL )
@@ -1033,9 +1033,11 @@ class AdminReadCreateWords
 			do	{
 				if( ( wordResult = currentWordItem->findWordType( isCheckingAllLanguages, wordTypeNr, wordTypeString ) ).result != RESULT_OK )
 					return adminItem_->addWordResultError( functionNameString, moduleNameString_, "I failed to find a word type in word \"", currentWordItem->anyWordTypeString(), "\"" );
+
+				if( wordResult.foundWordItem != NULL )
+					return wordResult;
 				}
-			while( wordResult.foundWordItem == NULL &&
-			( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
+			while( ( currentWordItem = currentWordItem->nextWordItem() ) != NULL );
 			}
 
 		return wordResult;

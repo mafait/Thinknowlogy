@@ -1,6 +1,6 @@
 /*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -267,6 +267,7 @@ class Item
 	bool hasCurrentReplacedSentenceNr();
 
 	bool hasSentenceNr( unsigned int sentenceNr );
+	bool hasUserNr();
 
 	bool isOlderItem();
 
@@ -282,6 +283,8 @@ class Item
 	bool wasActiveBefore();
 	bool wasInactiveBefore();
 	bool wasArchivedBefore();
+
+	bool isSpanishCurrentLanguage();
 
 	unsigned short userNr();
 

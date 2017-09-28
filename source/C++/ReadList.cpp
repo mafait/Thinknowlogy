@@ -1,7 +1,7 @@
 /*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -124,7 +124,6 @@ class ReadList : private List
 		unsigned short previousWordOrderNr = NO_ORDER_NR;
 		unsigned int nWords = 0;
 		char *readWordString;
-		char *writtenSentenceString;
 		ReadItem *searchReadItem = firstActiveReadItem();
 		ReadItem *startReadItem = NULL;
 
@@ -154,8 +153,6 @@ class ReadList : private List
 			searchReadItem = startReadItem;
 			strcpy( commonVariables()->writtenSentenceString, EMPTY_STRING );
 
-			writtenSentenceString = commonVariables()->writtenSentenceString;
-
 			while( searchReadItem != NULL )
 				{
 				if( ( wordOrderNr = searchReadItem->wordOrderNr() ) > previousWordOrderNr &&
@@ -165,10 +162,10 @@ class ReadList : private List
 					if( previousWordOrderNr > NO_ORDER_NR &&
 					// End of string (colon, question mark, etc)
 					searchReadItem->grammarParameter != GRAMMAR_SENTENCE )
-						strcat( writtenSentenceString, SPACE_STRING );
+						strcat( commonVariables()->writtenSentenceString, SPACE_STRING );
 
 					previousWordOrderNr = wordOrderNr;
-					strcat( writtenSentenceString, readWordString );
+					strcat( commonVariables()->writtenSentenceString, readWordString );
 					}
 
 				searchReadItem = searchReadItem->nextReadItem();

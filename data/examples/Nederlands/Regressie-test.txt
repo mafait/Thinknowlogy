@@ -208,6 +208,10 @@ Lees het testbestand "Nederlands/redeneren/gezin/Complex (15)".
 Lees het testbestand "Nederlands/redeneren/gezin/Complex (16)".
 Lees het testbestand "Nederlands/redeneren/gezin/Complex (17)".
 Lees het testbestand "Nederlands/redeneren/gezin/Complex (18)".
+Lees het testbestand "Nederlands/redeneren/gezin/Complex (19 - gemengd)".
+Lees het testbestand "Nederlands/redeneren/gezin/Complex (19 - vreemd)".
+Lees het testbestand "Nederlands/redeneren/gezin/Complex (20)".
+Lees het testbestand "Nederlands/redeneren/gezin/Complex (21)".
 Lees het testbestand "Nederlands/redeneren/gezin/Context - Johan heeft 2 ouders - Jan is een ouder".
 Lees het testbestand "Nederlands/redeneren/gezin/Context - Specificatie persoonlijk voornaamwoord".
 Lees het testbestand "Nederlands/redeneren/gezin/Corrigeren onjuiste veronderstelling (door kennis)".
@@ -248,6 +252,7 @@ Lees het testbestand "Nederlands/redeneren/gezin/Laura - Johan - Paul - Jan en A
 Lees het testbestand "Nederlands/redeneren/gezin/Laura - Jan en Anna - Johan".
 Lees het testbestand "Nederlands/redeneren/gezin/Laura - Paul - Johan en Anna".
 Lees het testbestand "Nederlands/redeneren/gezin/Laura heeft 2 ouders - Laura is een dochter".
+Lees het testbestand "Nederlands/redeneren/gezin/Laura heeft een vader - Laura is een kind - Jan en Anna".
 Lees het testbestand "Nederlands/redeneren/gezin/Laura is een kind - Jan en Anna".
 Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (kind)".
 Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (ouders)".

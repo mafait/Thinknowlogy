@@ -76,10 +76,10 @@
 * My assumptions:
 < Anna is probably a person.
 < Anna is probably not a man.
+< Anna has probably a child, called Paul.
 < Anna is probably a parent of Paul.
 < Anna is probably part of a family.
 < Anna is probably not a father.
-< Anna has probably a child, called Paul.
 < Paul is probably a child of Anna.
 < Paul is probably part of a family.
 < Paul is possibly a person.

@@ -13,4 +13,6 @@ Johan heeft 2 ouders, genaamd Jan en Anna.
 Toon de verantwoordingsrapportage over Jan.
 Toon de verantwoordingsrapportage over Anna.
 Toon de verantwoordingsrapportage over Johan.
+Johan is een vader.
+Toon de verantwoordingsrapportage over Johan.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

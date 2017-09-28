@@ -1,6 +1,6 @@
 /*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -40,6 +40,8 @@ class List
 
 	// Private constructed variables
 
+	unsigned int highestSentenceNrInList_;
+
 	Item *activeList_;
 	Item *inactiveList_;
 	Item *archivedList_;
@@ -66,9 +68,8 @@ class List
 
 	// Private cleanup functions
 
-	void setCurrentItemNr( Item *searchItem );
-
-	unsigned int highestInUseSentenceNrInList( unsigned int highestSentenceNr, Item *searchItem );
+	unsigned int highestCurrentSentenceItemNr( unsigned int currentSentenceNr, Item *searchItem );
+	unsigned int highestFoundSentenceNrInList( unsigned int highestSentenceNr, Item *searchItem );
 
 	signed char decrementItemNrRange( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset, Item *searchItem );
 	signed char decrementSentenceNrs( unsigned int startSentenceNr, Item *searchItem );
@@ -162,6 +163,8 @@ class List
 	bool isAdminList();
 	bool isAssignmentList();
 
+	unsigned int highestSentenceNrInList();
+
 	char listChar();
 
 	signed char addItemToList( char statusChar, Item *newItem );
@@ -192,8 +195,8 @@ class List
 
 	// Protected cleanup functions
 
-	void getHighestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr );
-	void setCurrentItemNrInList();
+	unsigned int highestCurrentSentenceItemNrInList( unsigned int currentSentenceNr, unsigned int currentSentenceItemNr );
+	unsigned int highestFoundSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestFoundSentenceNr, unsigned int maxSentenceNr );
 
 	signed char decrementSentenceNrsInList( unsigned int startSentenceNr );
 	signed char decrementItemNrRangeInList( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset );
@@ -218,7 +221,7 @@ class List
 	void wordQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems );
 	void wordTypeQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr );
 
-	unsigned int highestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr );
+	unsigned int highestFoundSentenceNrInList( bool isIncludingDeletedItems, unsigned int maxSentenceNr );
 
 	signed char displayQueryResultInList( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth );
 	signed char stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString );

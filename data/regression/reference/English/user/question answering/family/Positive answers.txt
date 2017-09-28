@@ -86,10 +86,10 @@
 * My assumptions:
 < Michael is probably a person.
 < Michael is probably not a woman.
+< Michael has probably a child, called Adam.
 < Michael is probably a parent of Adam.
 < Michael is probably part of a family.
 < Michael is probably not a mother.
-< Michael has probably a child, called Adam.
 < Adam is probably a child of Michael.
 < Adam is probably part of a family.
 < Adam is possibly a person.

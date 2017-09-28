@@ -1,7 +1,7 @@
 /*	Class:		QueryResultType
  *	Purpose:	To return query variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -21,7 +21,7 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#include <string.h>
+#include <string.h>		// Required by some compilers
 #include "Constants.h"
 
 class QueryResultType

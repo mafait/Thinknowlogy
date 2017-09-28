@@ -1,6 +1,6 @@
 /*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -686,10 +686,10 @@ class Item
 			{
 			if( ( myList_ = myList ) != null )
 				{
-				if( CommonVariables.currentItemNr >= Constants.NO_ITEM_NR )
+				if( CommonVariables.currentSentenceItemNr >= Constants.NO_ITEM_NR )
 					{
-					if( CommonVariables.currentItemNr < Constants.MAX_ITEM_NR )
-						itemNr_ = ++CommonVariables.currentItemNr;
+					if( CommonVariables.currentSentenceItemNr < Constants.MAX_ITEM_NR )
+						itemNr_ = ++CommonVariables.currentSentenceItemNr;
 					else
 						startSystemError( 1, null, myWordItem_.anyWordTypeString(), "Current item number overflow" );
 					}
@@ -753,6 +753,11 @@ class Item
 				replacedSentenceNr_ == sentenceNr );
 		}
 
+	protected boolean hasUserNr()
+		{
+		return ( userNr_ > Constants.NO_USER_NR );
+		}
+
 	protected boolean isOlderItem()
 		{
 		return ( originalSentenceNr_ < CommonVariables.currentSentenceNr );
@@ -812,6 +817,14 @@ class Item
 	protected boolean wasArchivedBefore()
 		{
 		return ( previousStatusChar == Constants.QUERY_ARCHIVED_CHAR );
+		}
+
+	protected boolean isSpanishCurrentLanguage()
+		{
+		WordItem currentLanguageWordItem;
+
+		return ( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) != null &&
+				currentLanguageWordItem.isNounWordSpanishAmbiguous() );
 		}
 
 	protected short userNr()
@@ -1162,7 +1175,8 @@ class Item
 				return (short)( hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
 
 			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				return (short)( hasAnotherPrimarySpecification && hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
+				return (short)( hasAnotherPrimarySpecification &&
+						hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
 
 			case Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
 				return (short)( hasFeminineOrMasculineProperNameEnding ? 1 : 0 );
@@ -1170,11 +1184,11 @@ class Item
 			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
 				return (short)( hasPossessivePrimarySpecification ? 1 : 0 );
 
-			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
-				return (short)( hasPrimaryQuestionSpecification ? 1 : 0 );
-
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				return (short)( hasAnotherPrimarySpecification ? 1 : 0 );
+
+			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
+				return (short)( hasPrimaryQuestionSpecification ? 1 : 0 );
 
 			default:
 				return 1;

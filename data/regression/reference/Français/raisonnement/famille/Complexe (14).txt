@@ -39,10 +39,10 @@
 < Lorraine n'est probablement pas un fils.
 < Lorraine a probablement 2 parents, appelés Olivier et Amélie.
 < Lorraine a possible une mère, appelée Amélie.
+< Olivier a probablement un enfant, appelée Lorraine.
 < Olivier est probablement un parent de Lorraine.
 < Olivier est probablement partie d'une famille.
 < Olivier est possible une personne.
-< Olivier a probablement un enfant, appelée Lorraine.
 < Amélie a probablement un enfant, appelée Lorraine.
 < Amélie est probablement un parent de Lorraine.
 < Amélie est probablement partie d'une famille.
@@ -116,8 +116,10 @@
 < Julien a une mère, appelée Amélie.
 * 
 * Mes hypothèses:
-< Pascal est probablement un enfant de Olivier et Amélie.
+< Amélie est probablement un parent de Lorraine, Pascal et Julien.
+< Amélie a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
 < Pascal a probablement 2 parents, appelés Olivier et Amélie.
+< Pascal est probablement un enfant de Olivier et Amélie.
 < Julien est probablement un enfant de Olivier et Amélie.
 < Julien a probablement 2 parents, appelés Olivier et Amélie.
 < 
@@ -208,13 +210,10 @@
 <	- Lorraine est une fille de Olivier et Amélie.
 * 
 * Mes hypothèses:
-< Amélie est probablement un parent de Lorraine. En raison:
+< Amélie est probablement un parent de Lorraine, Pascal et Julien. En raison:
 <	- Julien a probablement 2 parents, appelés Olivier et Amélie.
 <	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
 <	- Lorraine a probablement 2 parents, appelés Olivier et Amélie.
-* 	et:
-<	- Chaque parent est un père ou une mère.
-<	- Amélie est la mère de Lorraine, Pascal et Julien.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
@@ -225,15 +224,18 @@
 <	- Chaque enfant est un fils ou une fille.
 <	- Amélie a une fille, appelée Lorraine.
 <	- Amélie a un fils, appelé Pascal.
-< Amélie a probablement un enfant, appelée Lorraine. En raison:
+* 	et:
+<	- Chaque parent est un père ou une mère.
+<	- Amélie est la mère de Lorraine, Pascal et Julien.
+< Amélie a probablement 3 enfants, appelés Lorraine, Pascal et Julien. En raison:
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Julien est probablement un enfant de Olivier et Amélie.
 * 	et:
 <	- Chaque famille a parents et enfants.
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 < Amélie est probablement une personne. En raison:
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 <	- Un parent est probablement une personne.
 * 	et:
 <	- Chaque personne est un homme ou une femme.
@@ -246,15 +248,15 @@
 <	- Chaque personne est un homme ou une femme.
 <	- Amélie est une femme.
 * 	et:
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 <	- Chaque parent est une femme ou un homme.
 <	- Amélie est une femme.
 < Amélie n'est probablement pas un père. En raison:
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 <	- Chaque parent est un père ou une mère.
 <	- Amélie est une mère.
 < Amélie est probablement partie d'une famille. En raison:
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 <	- Parents sont partie de chaque famille.
 < 
 * 
@@ -266,23 +268,23 @@
 * 
 * Mes hypothèses:
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
-<	- Chaque famille a parents et enfants.
-<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
-* 	et:
 <	- Chaque enfant est un fils ou une fille.
 <	- Pascal est un fils de Olivier et Amélie.
 * 	et:
-<	- Amélie a probablement un enfant, appelée Lorraine.
-<	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est un parent de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 <	- Pascal a un père, appelé Olivier.
 <	- Pascal a une mère, appelée Amélie.
+* 	et:
+<	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
+<	- Amélie a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
 < Pascal est probablement partie d'une famille. En raison:
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Enfants sont partie de chaque famille.
@@ -302,8 +304,8 @@
 <	- Chaque enfant est un fils ou une fille.
 <	- Pascal est un fils de Olivier et Amélie.
 < Pascal a probablement 2 parents, appelés Olivier et Amélie. En raison:
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 <	- Olivier est un parent de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant de Olivier et Amélie.
@@ -323,19 +325,19 @@
 * Mes hypothèses:
 < Julien est probablement un enfant de Olivier et Amélie. En raison:
 <	- Chaque famille a parents et enfants.
-<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
-* 	et:
-<	- Amélie a probablement un enfant, appelée Lorraine.
-<	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
-* 	et:
-<	- Chaque famille a parents et enfants.
 <	- Olivier est un parent de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 <	- Julien a un père, appelé Olivier.
 <	- Julien a une mère, appelée Amélie.
+* 	et:
+<	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
+<	- Amélie a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
 < Julien est probablement partie d'une famille. En raison:
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Enfants sont partie de chaque famille.
@@ -344,7 +346,7 @@
 <	- Un enfant est probablement une personne.
 < Julien a probablement 2 parents, appelés Olivier et Amélie. En raison:
 <	- Olivier est un parent de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 * 
 * Mes questions:
 < Est Julien une jeune-fille, une femme, un garçon ou un homme? En raison:
@@ -371,7 +373,7 @@
 <	- Lorraine a une mère, appelée Amélie.
 <	- Lorraine a un père, appelé Olivier.
 * 	et:
-<	- Amélie a probablement un enfant, appelée Lorraine.
+<	- Amélie a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
 <	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
 * 	et:
 <	- Chaque enfant est un fils ou une fille.
@@ -379,7 +381,13 @@
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est un parent de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
+< Lorraine a probablement 2 parents, appelés Olivier et Amélie. En raison:
+<	- Chaque famille a parents et enfants.
+<	- Lorraine est probablement un enfant de Olivier et Amélie.
+* 	et:
+<	- Olivier est un parent de Lorraine, Pascal et Julien.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 < Lorraine est probablement partie d'une famille. En raison:
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
 <	- Enfants sont partie de chaque famille.
@@ -398,12 +406,6 @@
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
 <	- Chaque enfant est un fils ou une fille.
 <	- Lorraine est une fille de Olivier et Amélie.
-< Lorraine a probablement 2 parents, appelés Olivier et Amélie. En raison:
-<	- Olivier est un parent de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
-* 	et:
-<	- Chaque famille a parents et enfants.
-<	- Lorraine est probablement un enfant de Olivier et Amélie.
 * 
 * Mes questions:
 < Est Lorraine une jeune-fille ou une femme? En raison:
@@ -418,9 +420,6 @@
 < Lorraine est partie d'une famille.
 < Lorraine n'est pas un garçon et pas un homme.
 < Lorraine n'est pas un fils.
-* 
-* Mes hypothèses:
-< Lorraine a probablement 2 parents, appelés Olivier et Amélie.
 < 
 * 
 * Mes conclusions:
@@ -442,21 +441,21 @@
 <	- Olivier est le père de Lorraine, Pascal et Julien.
 * 
 * Mes hypothèses:
+< Lorraine a probablement 2 parents, appelés Olivier et Amélie. En raison:
+<	- Chaque famille a parents et enfants.
+<	- Lorraine est un enfant de Olivier et Amélie.
+* 	et:
+<	- Olivier est un parent de Lorraine, Pascal et Julien.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
 < Lorraine est probablement une personne. En raison:
 <	- Lorraine est une fille de Olivier et Amélie.
 <	- Une fille est probablement une personne.
 * 	et:
 <	- Lorraine est un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
-< Lorraine a probablement 2 parents, appelés Olivier et Amélie. En raison:
-<	- Olivier est un parent de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
-* 	et:
-<	- Chaque famille a parents et enfants.
-<	- Lorraine est un enfant de Olivier et Amélie.
-* 	et:
-<	- Chaque famille a parents et enfants.
-<	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
 * 
 * Mes questions:
 < Est Lorraine une jeune-fille ou une femme? En raison:
@@ -484,16 +483,12 @@
 < Julien est probablement un fils.
 * 
 * Mes hypothèses qui sont ajustés:
-< Julien n'est probablement pas une fille.
 < Julien est probablement une personne.
+< Julien n'est probablement pas une fille.
 * 
 * Mes conclusions:
 < Olivier a 2 fils [pluriel de «fils» est inconnue], appelés Pascal et Julien.
 < Amélie a 2 fils [pluriel de «fils» est inconnue], appelés Pascal et Julien.
-* 
-* Mes hypothèses:
-< Julien est probablement un enfant de Olivier et Amélie.
-< Julien a probablement 2 parents, appelés Olivier et Amélie.
 < 
 * 
 * Mes conclusions:
@@ -515,9 +510,6 @@
 * 
 * Mes hypothèses:
 < Julien est probablement une personne. En raison:
-<	- Julien est probablement un enfant de Olivier et Amélie.
-<	- Un enfant est probablement une personne.
-* 	et:
 <	- Julien est un fils de Olivier et Amélie.
 <	- Un fils est probablement une personne.
 * 	et:
@@ -527,37 +519,24 @@
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Chaque enfant est un fils ou une fille.
 <	- Julien est un fils de Olivier et Amélie.
-* 	et:
-<	- Julien est probablement un enfant de Olivier et Amélie.
-<	- Chaque enfant est un fils ou une fille.
-<	- Julien est un fils de Olivier et Amélie.
 < Julien est probablement un enfant de Olivier et Amélie. En raison:
-<	- Amélie a possible 3 enfants, appelés Lorraine, Pascal et Julien.
-<	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
-* 	et:
-<	- Chaque enfant est un fils ou une fille.
-<	- Julien est un fils de Olivier et Amélie.
-< Julien a probablement 2 parents, appelés Olivier et Amélie. En raison:
-<	- Amélie est la mère de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
-* 	et:
-<	- Chaque famille a parents et enfants.
-<	- Julien est probablement un enfant de Olivier et Amélie.
-< Julien est probablement un enfant de Olivier et Amélie. En raison:
-<	- Chaque famille a parents et enfants.
-<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
-* 	et:
-<	- Amélie a possible 3 enfants, appelés Lorraine, Pascal et Julien.
-<	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est un parent de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 <	- Julien a un père, appelé Olivier.
 <	- Julien a une mère, appelée Amélie.
+* 	et:
+<	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
+<	- Amélie a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
+<	- Chaque enfant est un fils ou une fille.
+<	- Julien est un fils de Olivier et Amélie.
 < Julien n'est probablement pas une jeune-fille et pas une femme. En raison:
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
@@ -567,5 +546,8 @@
 <	- Enfants sont partie de chaque famille.
 < Julien a probablement 2 parents, appelés Olivier et Amélie. En raison:
 <	- Olivier est un parent de Lorraine, Pascal et Julien.
-<	- Amélie est probablement un parent de Lorraine.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Julien est probablement un enfant de Olivier et Amélie.
 < 

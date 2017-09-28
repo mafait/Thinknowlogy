@@ -91,8 +91,8 @@
 <	- John is a parent of Joe, Paul and Laura.
 <	- A parent is probably a person.
 < John has probably 3 children, called Joe, Paul and Laura. Because:
-<	- Joe is probably a child of John and Anna.
 <	- Paul is probably a child of John.
+<	- Joe is probably a child of John and Anna.
 <	- Laura is probably a child of John.
 * 	and:
 <	- Every family has parents and children.

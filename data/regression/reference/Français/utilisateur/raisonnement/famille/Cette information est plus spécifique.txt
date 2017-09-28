@@ -55,7 +55,17 @@
 * 
 * Cette information est plus spécifique que votre information antérieure:
 < Olivier est un père.
+* 
+* Mes hypothèses antérieures qui ont des mots de relation maintenant:
+< Olivier est probablement un parent.
+< Olivier a possible un enfant.
+* 
+* Cette information est plus spécifique que votre information antérieure:
 < Amélie est une mère.
+* 
+* Mes hypothèses antérieures qui ont des mots de relation maintenant:
+< Amélie est probablement un parent.
+< Amélie a possible un enfant.
 * 
 * Mes conclusions:
 < Pascal a un père, appelé Olivier.

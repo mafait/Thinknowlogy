@@ -209,6 +209,10 @@ Read the test file "English/reasoning/family/Complex (15)".
 Read the test file "English/reasoning/family/Complex (16)".
 Read the test file "English/reasoning/family/Complex (17)".
 Read the test file "English/reasoning/family/Complex (18)".
+Read the test file "English/reasoning/family/Complex (19 - mixed)".
+Read the test file "English/reasoning/family/Complex (19 - strange)".
+Read the test file "English/reasoning/family/Complex (20)".
+Read the test file "English/reasoning/family/Complex (21)".
 Read the test file "English/reasoning/family/Context - Joe has 2 parents - John is a parent".
 Read the test file "English/reasoning/family/Context - Specification pronoun".
 Read the test file "English/reasoning/family/Correcting invalidated assumption (by knowledge)".
@@ -249,6 +253,7 @@ Read the test file "English/reasoning/family/Laura - Joe - Paul - John and Anna"
 Read the test file "English/reasoning/family/Laura - John and Anna - Joe".
 Read the test file "English/reasoning/family/Laura - Paul - John and Anna".
 Read the test file "English/reasoning/family/Laura has 2 parents - Laura is a daughter".
+Read the test file "English/reasoning/family/Laura has a father - Laura is a child - John and Anna".
 Read the test file "English/reasoning/family/Laura is a child - John and Anna".
 Read the test file "English/reasoning/family/My assumptions that are confirmed (child)".
 Read the test file "English/reasoning/family/My assumptions that are confirmed (parents)".

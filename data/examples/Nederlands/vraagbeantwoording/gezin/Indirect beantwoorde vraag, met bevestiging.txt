@@ -6,8 +6,9 @@ Paul is een man.
 Toon de verantwoordingsrapportage over Paul.
 Paul is een zoon.
 Toon de verantwoordingsrapportage over Paul.
-#Extra check
+#Extra checks
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
+Johan is een dochter.
 Toon de verantwoordingsrapportage over Jan.
 Toon de verantwoordingsrapportage over Anna.
 Toon de verantwoordingsrapportage over Paul.

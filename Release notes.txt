@@ -1,6 +1,6 @@
-﻿Changes in Thinknowlogy 2017r1 (Bursts of Laughter) compared to Thinknowlogy 2016r2 (Restyle):
+﻿Changes in Thinknowlogy 2017r2 (Science as it should be) compared to 2017r1 (Bursts of Laughter):
 - Bug fixes;
-- Warning on some integrity problems, instead of errors;
-- Added conclusions/assumptions with adjective specification words;
-- Additional justifications in some conclusions, assumptions and questions;
-- Redesign of asking questions (class AdminReasoningNew), by nested loops. I am planning to redesign the rest of the reasoning (class AdminReasoningOld) in the coming years.
+- Improved performance;
+- Improved Spanish reasoning;
+- More justifications are generated;
+- Second part of redesign. More justifications are created by the redesigned reasoning functions. See in classes AdminReasoningNew and AdminReasoningOld.

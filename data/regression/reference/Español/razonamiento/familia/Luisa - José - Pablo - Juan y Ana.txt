@@ -139,7 +139,7 @@
 <	- Cada hijo es un niño o un hombre.
 < 
 * 
-* Mis suposiciones que se concluyen:
+* Mis suposiciones anteriores que tienen palabras de relación ahora:
 < Pablo tiene probablemente un padre.
 < José tiene probablemente un padre.
 < Luisa tiene probablemente un padre.
@@ -159,10 +159,10 @@
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
@@ -206,6 +206,10 @@
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Cada familia tiene padres y hijos.
 * 	y:
+<	- Pablo es probablemente hijo de Juan y Ana.
+<	- José es probablemente hijo de Juan y Ana.
+<	- Luisa es posiblemente hija de Juan y Ana.
+* 	y:
 <	- Pablo tiene un padre, llamado Juan.
 <	- José tiene un padre, llamado Juan.
 <	- Luisa tiene un padre, llamado Juan.
@@ -220,6 +224,9 @@
 < 
 * 
 * Mis conclusiones:
+< Ana es parte de una familia. Porque:
+<	- Ana es una madre.
+<	- Padres son parte de cada familia.
 < Ana es una mujer. Porque:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
@@ -234,9 +241,6 @@
 < Ana es femenina. Porque:
 <	- Ana es una mujer.
 <	- Cada mujer es femenina.
-< Ana es parte de una familia. Porque:
-<	- Ana es una madre.
-<	- Padres son parte de cada familia.
 < Ana no es un padre. Porque:
 <	- Cada padre es un padre o una madre.
 <	- Ana es una madre.
@@ -251,6 +255,10 @@
 < Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa. Porque:
 <	- Ana es la madre de Pablo, José y Luisa.
 <	- Cada familia tiene padres y hijos.
+* 	y:
+<	- Pablo es probablemente hijo de Juan y Ana.
+<	- José es probablemente hijo de Juan y Ana.
+<	- Luisa es posiblemente hija de Juan y Ana.
 * 	y:
 <	- Pablo tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.

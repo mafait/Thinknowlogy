@@ -1,7 +1,7 @@
 /*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -390,9 +390,9 @@ class ScoreList : private List
 
 	BoolResultType findScore( bool isPreparingSort, SelectionItem *findScoreItem )
 		{
-		BoolResultType boolResult;
 		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
+		BoolResultType boolResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findScore";
 
 		if( findScoreItem == NULL )
@@ -420,7 +420,6 @@ class ScoreList : private List
 
 	SelectionResultType getBestSelection( bool isCurrentlyTesting, unsigned short solveStrategyParameter )
 		{
-		SelectionResultType selectionResult;
 		bool hasBetterScore = false;
 		bool isCummulate = false;
 		unsigned int nRandomEntries = 0;
@@ -448,6 +447,7 @@ class ScoreList : private List
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
 		SelectionItem *bestActionSelectionItem = NULL;
 		BoolResultType boolResult;
+		SelectionResultType selectionResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "getBestSelection";
 
 		while( searchScoreItem != NULL )

@@ -373,12 +373,12 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Paul, Johan en Laura.
 < Jan heeft mogelijk een dochter, genaamd Laura. Omdat:
+<	- Laura is mogelijk een dochter van Jan en Anna.
+* 	en:
 <	- Laura heeft 2 ouders, genaamd Jan en Anna.
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
-* 	en:
-<	- Laura is mogelijk een dochter van Jan en Anna.
 < Jan is waarschijnlijk een persoon. Omdat:
 <	- Laura heeft 2 ouders, genaamd Jan en Anna.
 <	- Een ouder is waarschijnlijk een persoon.
@@ -678,14 +678,14 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Paul, Johan en Laura.
 < Jan heeft mogelijk een dochter, genaamd Laura. Omdat:
-<	- Laura heeft 2 ouders, genaamd Jan en Anna.
+<	- Laura heeft een vader, genaamd Jan.
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
 * 	en:
 <	- Laura is mogelijk een dochter van Jan en Anna.
 * 	en:
-<	- Laura heeft een vader, genaamd Jan.
+<	- Laura heeft 2 ouders, genaamd Jan en Anna.
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.

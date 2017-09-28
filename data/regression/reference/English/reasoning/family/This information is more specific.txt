@@ -63,7 +63,15 @@
 * 
 * This information is more specific than your earlier information:
 < John is a father.
+* 
+* My earlier assumptions that have relation words now:
+< John is probably a parent.
+* 
+* This information is more specific than your earlier information:
 < Anna is a mother.
+* 
+* My earlier assumptions that have relation words now:
+< Anna is probably a parent.
 * 
 * My conclusions:
 < Paul has a father, called John.
@@ -123,6 +131,9 @@
 <	- Every parent is a father or a mother.
 <	- Paul has a father, called John.
 <	- Paul has a mother, called Anna.
+* 	and:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
 < Paul is probably part of a family. Because:
 <	- Paul is probably a child of John and Anna.
 <	- Children are part of every family.
@@ -187,6 +198,9 @@
 <	- Every parent is a father or a mother.
 <	- Paul has a father, called John.
 <	- Paul has a mother, called Anna.
+* 	and:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
 < Paul is probably part of a family. Because:
 <	- Paul is probably a child of John and Anna.
 <	- Children are part of every family.
@@ -224,6 +238,9 @@
 <	- Every parent is a father or a mother.
 <	- Paul has a father, called John.
 <	- Paul has a mother, called Anna.
+* 	and:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
 < Paul is probably not a girl and not a woman. Because:
 <	- Paul is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.

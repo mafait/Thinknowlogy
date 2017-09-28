@@ -1,7 +1,7 @@
 /*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -173,9 +173,9 @@ class SelectionList extends List
 
 	protected DuplicateResultType checkDuplicateSelectionPart( int duplicateConditionSentenceNr )
 		{
-		DuplicateResultType duplicateResult = new DuplicateResultType();
 		SelectionItem currentSelectionItem = null;
 		SelectionItem searchSelectionItem = firstActiveSelectionItem();
+		DuplicateResultType duplicateResult = new DuplicateResultType();
 
 		if( duplicateConditionSentenceNr <= Constants.NO_SENTENCE_NR )
 			return startDuplicateResultError( 1, "The given duplicate sentence number is undefined" );

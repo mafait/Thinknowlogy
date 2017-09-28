@@ -37,10 +37,10 @@
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
@@ -51,8 +51,8 @@
 < José es posiblemente una persona.
 < José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan y Ana.
-< Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
 < Luisa no es posiblemente un hijo.
 < Ana es probablemente una persona.
@@ -82,7 +82,50 @@
 * 
 * 
 * Su pregunta es más específica que mi pregunta anterior:
+< ¿Es Pablo un hijo o una hija?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
 < ¿Es José una niña, una mujer, un niño o un hombre?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
+< ¿Es José una niña, una mujer, un niño o un hombre?
+* 
+* Tenías una pregunta similar antes:
+< ¿Es José una mujer?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
+< ¿Es José un hijo o una hija?
+* 
+* Esta pregunta es más específica que la anterior pregunta:
+< ¿Es José un hijo o una hija?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
+< ¿Es Luisa una niña o una mujer?
+* 
+* Esta pregunta es más específica que la anterior pregunta:
+< ¿Es Luisa una niña o una mujer?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 

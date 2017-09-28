@@ -126,10 +126,10 @@
 * Mijn veronderstellingen:
 < Sjors is waarschijnlijk een persoon.
 < Sjors is waarschijnlijk geen vrouw.
+< Sjors heeft waarschijnlijk een kind, genaamd André.
 < Sjors is waarschijnlijk een ouder van André.
 < Sjors is waarschijnlijk deel van een gezin.
 < Sjors is waarschijnlijk geen moeder.
-< Sjors heeft waarschijnlijk een kind, genaamd André.
 < André is waarschijnlijk een kind van Sjors.
 < André is waarschijnlijk deel van een gezin.
 < André is mogelijk een persoon.

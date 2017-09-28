@@ -104,10 +104,10 @@
 * Mes hypothèses:
 < Guillaume est probablement une personne.
 < Guillaume n'est probablement pas une femme.
+< Guillaume a probablement un enfant, appelé Armand.
 < Guillaume est probablement un parent de Armand.
 < Guillaume est probablement partie d'une famille.
 < Guillaume n'est probablement pas une mère.
-< Guillaume a probablement un enfant, appelé Armand.
 < Armand est probablement un enfant de Guillaume.
 < Armand est probablement partie d'une famille.
 < Armand est possible une personne.
@@ -220,9 +220,6 @@
 <	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
 <	- Amélie est probablement un parent de Pascal, Julien et Lorraine.
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
-<	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
-<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
 <	- Amélie est probablement un parent de Pascal, Julien et Lorraine.
@@ -231,6 +228,9 @@
 <	- Chaque parent est un père ou une mère.
 <	- Pascal a un père, appelé Olivier.
 <	- Pascal a une mère, appelée Amélie.
+* 	et:
+<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+<	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 < Pascal est probablement partie d'une famille. En raison:
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Enfants sont partie de chaque famille.
@@ -273,6 +273,11 @@
 <	- Guillaume est probablement un parent de Armand.
 <	- Chaque parent est une femme ou un homme.
 <	- Guillaume est un homme.
+< Guillaume a probablement un enfant, appelé Armand. En raison:
+<	- Armand est probablement un enfant de Guillaume.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Guillaume est probablement un parent de Armand.
 < Guillaume est probablement un parent de Armand. En raison:
 <	- Armand a probablement un parent, appelé Guillaume.
 * 	et:
@@ -288,11 +293,6 @@
 <	- Guillaume est probablement un parent de Armand.
 <	- Chaque parent est un père ou une mère.
 <	- Guillaume est un père.
-< Guillaume a probablement un enfant, appelé Armand. En raison:
-<	- Armand est probablement un enfant de Guillaume.
-* 	et:
-<	- Chaque famille a parents et enfants.
-<	- Guillaume est probablement un parent de Armand.
 < 
 * 
 * Mes conclusions:
@@ -342,11 +342,11 @@
 * 
 * Mes hypothèses:
 < Armand est probablement un enfant de Guillaume. En raison:
-<	- Guillaume a probablement un enfant, appelé Armand.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 <	- Armand a un père, appelé Guillaume.
+* 	et:
+<	- Guillaume a probablement un enfant, appelé Armand.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Guillaume est probablement un parent de Armand.

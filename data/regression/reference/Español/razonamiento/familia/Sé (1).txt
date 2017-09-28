@@ -46,9 +46,6 @@
 < Peyo tiene probablemente un hijo.
 < 
 * 
-* Mis suposiciones que se concluyen:
-< Juan tiene probablemente un hijo.
-* 
 * Mis conclusiones:
 < José es parte de una familia.
 < José no es una hija.
@@ -65,10 +62,10 @@
 < 
 * 
 * Mis conclusiones:
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 < Pablo tiene una madre, llamada Ana.
 * 

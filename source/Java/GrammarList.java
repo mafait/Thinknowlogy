@@ -1,7 +1,7 @@
 /*	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -100,9 +100,9 @@ class GrammarList extends List
 
 	private WordEndingResultType comparePluralWordEnding( int searchWordStringLength, int replacingWordStringLength, String searchWordString, String searchWordEndingString, String replacingWordEndingString )
 		{
-		WordEndingResultType wordEndingResult = new WordEndingResultType();
 		int tempWordLength;
 		int searchWordEndingStringLength;
+		WordEndingResultType wordEndingResult = new WordEndingResultType();
 
 		if( searchWordStringLength <= 0 )
 			return startWordEndingResultError( 1, "The given search word string length is undefined" );
@@ -156,14 +156,14 @@ class GrammarList extends List
 	protected void markAsOptionEnd()
 		{
 		boolean hasFound = false;
-		int currentItemNr = CommonVariables.currentItemNr;
+		int currentSentenceItemNr = CommonVariables.currentSentenceItemNr;
 		GrammarItem searchGrammarItem = firstActiveGrammarItem();
 
 		while( searchGrammarItem != null &&
 		!hasFound )
 			{
 			if( searchGrammarItem.hasCurrentCreationSentenceNr() &&
-			searchGrammarItem.itemNr() == currentItemNr )
+			searchGrammarItem.itemNr() == currentSentenceItemNr )
 				{
 				hasFound = true;
 				searchGrammarItem.isOptionEnd = true;
@@ -475,11 +475,11 @@ class GrammarList extends List
 		int previousPosition;
 		int startPosition;
 		int writtenSentenceStringBufferLength;
-		StringBuffer writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer;
 		GrammarItem shrinkMergedWordGrammarItem;
 		GrammarItem searchMergedWordGrammarItem = firstMergedWordGrammarItem_;
+		StringBuffer writtenSentenceStringBuffer;
 
-		if( writtenSentenceStringBuffer == null ||
+		if( ( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) == null ||
 		( writtenSentenceStringBufferLength = writtenSentenceStringBuffer.length() ) == 0 )
 			return startError( 1, "The write sentence string buffer is empty" );
 
@@ -608,9 +608,9 @@ class GrammarList extends List
 
 	protected GrammarResultType findGrammar( boolean isIgnoringGrammarParameter, short grammarParameter, int grammarStringLength, String grammarString )
 		{
-		GrammarResultType grammarResult = new GrammarResultType();
 		GrammarItem foundGrammarItem = null;
 		GrammarItem searchGrammarItem = firstActiveGrammarItem();
+		GrammarResultType grammarResult = new GrammarResultType();
 
 		if( grammarString == null )
 			return startGrammarResultError( 1, "The given grammar string is undefined" );
@@ -637,10 +637,10 @@ class GrammarList extends List
 
 	protected WordEndingResultType analyzeWordEnding( short grammarParameter, int searchWordStringLength, String searchWordString )
 		{
-		WordEndingResultType wordEndingResult = new WordEndingResultType();
 		String replacingWordEndingString = null;
 		GrammarItem replacingWordEndingGrammarItem;
 		GrammarItem searchGrammarItem = firstWordEndingGrammarItem( grammarParameter );
+		WordEndingResultType wordEndingResult = new WordEndingResultType();
 
 		if( !isWordEnding( grammarParameter ) )
 			return startWordEndingResultError( 1, "The given grammar parameter is not a word ending parameter" );

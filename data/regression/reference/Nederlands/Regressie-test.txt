@@ -19,10 +19,10 @@
  Toon de garantie.
 ------------------------------------------------------------------------------
  Voorbeeldbestanden:	* Gebruik knop <meer voorbeelden> of zie
-			  map: Thinknowlogy2017r1/data/examples/Nederlands/gebruiker/
- Fundamenteel:		* map: Thinknowlogy2017r1/documents/
- Ontwerp:		* map: Thinknowlogy2017r1/documents/design/
- Schermafdrukken:	* map: Thinknowlogy2017r1/screenshots/Nederlands/
+			  map: Thinknowlogy2017r2/data/examples/Nederlands/gebruiker/
+ Fundamenteel:		* map: Thinknowlogy2017r2/documents/
+ Ontwerp:		* map: Thinknowlogy2017r2/documents/design/
+ Schermafdrukken:	* map: Thinknowlogy2017r2/screenshots/Nederlands/
 ------------------------------------------------------------------------------
 < 
 < Specificaties:
@@ -32,7 +32,7 @@
 < English is een taal. (geleerd van gebruiker Admin)
 < 
 ------------------------------------------------------------------------------
- Totaal aantal items:	7450.
+ Totaal aantal items:	7444.
 ------------------------------------------------------------------------------
  Items in administrator:	375.
 ------------------------------------------------------------------------------
@@ -49,23 +49,23 @@
  * Vervangen items:			0.
  * Verwijderde items:			0.
 ------------------------------------------------------------------------------
- Items in woorden:		7075.
+ Items in woorden:		7069.
 ------------------------------------------------------------------------------
- * Actieve items:			7047.
+ * Actieve items:			7040.
     <a> toewijzingen:				6.
     <c> collecties:				232.
     <g> generalisaties:				313.
-    <i> interface:				1112.
+    <i> interface:				1106.
     <j> verantwoordingen:			0.
     <l> grammatica:				4029.
     <m> multiple woord:				77.
-    <s> specificaties:				365.
+    <s> specificaties:				364.
     <r> schrijfwoorden (tijdelijk):		0.
     <w> woordtypes:				913.
     <x> context:				0.
  * Inactieve items:			3.
  * Gearchiveerde items:			20.
- * Vervangen items:			5.
+ * Vervangen items:			6.
  * Verwijderde items:			0.
 ------------------------------------------------------------------------------
 < 

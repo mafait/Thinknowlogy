@@ -126,10 +126,10 @@
 * Mes hypothèses:
 < Guillaume est probablement une personne.
 < Guillaume n'est probablement pas une femme.
+< Guillaume a probablement un enfant, appelé Armand.
 < Guillaume est probablement un parent de Armand.
 < Guillaume est probablement partie d'une famille.
 < Guillaume n'est probablement pas une mère.
-< Guillaume a probablement un enfant, appelé Armand.
 < Armand est probablement un enfant de Guillaume.
 < Armand est probablement partie d'une famille.
 < Armand est possible une personne.

@@ -24,9 +24,9 @@
 * 
 * Mis conclusiones:
 < Ana es madre de Pablo.
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
@@ -42,12 +42,11 @@
 * 
 * Mis preguntas que son contestadas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
+< ¿Es Pablo un hijo o una hija?
 * 
 * Mis suposiciones que no son ocultos más:
 < Ana tiene probablemente un hijo, llamado Pablo.
-* 
-* Mis preguntas que son contestadas:
-< ¿Es Pablo un hijo o una hija?
+< Pablo es probablemente hijo de Ana.
 * 
 * Mis suposiciones que se ajustan:
 < Pablo es probablemente parte de una familia.
@@ -60,7 +59,6 @@
 < Pablo es probablemente un hijo.
 < Pablo no es probablemente una niña, una mujer y un niño.
 < Pablo no es probablemente una hija.
-< Pablo es probablemente hijo de Ana.
 < 
 * 
 * Mis suposiciones que se confirman:

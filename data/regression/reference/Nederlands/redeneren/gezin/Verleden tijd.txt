@@ -106,11 +106,11 @@
 * 
 * Mijn veronderstellingen:
 < Kees is waarschijnlijk een kind van Cor. Omdat:
-<	- Cor heeft waarschijnlijk een kind, genaamd Kees.
-* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
 <	- Kees had een vader, genaamd Cor.
+* 	en:
+<	- Cor heeft waarschijnlijk een kind, genaamd Kees.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Cor was waarschijnlijk een ouder van Kees.

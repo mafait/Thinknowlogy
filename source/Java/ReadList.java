@@ -1,7 +1,7 @@
 /*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -88,7 +88,6 @@ class ReadList extends List
 		short previousWordOrderNr = Constants.NO_ORDER_NR;
 		int nWords = 0;
 		String readWordString;
-		StringBuffer writtenSentenceStringBuffer;
 		ReadItem searchReadItem = firstActiveReadItem();
 		ReadItem startReadItem = null;
 
@@ -118,8 +117,6 @@ class ReadList extends List
 			searchReadItem = startReadItem;
 			CommonVariables.writtenSentenceStringBuffer = new StringBuffer();
 
-			writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer;
-
 			while( searchReadItem != null )
 				{
 				if( ( wordOrderNr = searchReadItem.wordOrderNr() ) > previousWordOrderNr &&
@@ -129,10 +126,10 @@ class ReadList extends List
 					if( previousWordOrderNr > Constants.NO_ORDER_NR &&
 					// End of string (colon, question mark, etc)
 					searchReadItem.grammarParameter != Constants.GRAMMAR_SENTENCE )
-						writtenSentenceStringBuffer.append( Constants.SPACE_STRING );
+						CommonVariables.writtenSentenceStringBuffer.append( Constants.SPACE_STRING );
 
 					previousWordOrderNr = wordOrderNr;
-					writtenSentenceStringBuffer.append( readWordString );
+					CommonVariables.writtenSentenceStringBuffer.append( readWordString );
 					}
 
 				searchReadItem = searchReadItem.nextReadItem();

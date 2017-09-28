@@ -1,7 +1,7 @@
 /*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -349,9 +349,9 @@ class ScoreList extends List
 
 	protected BoolResultType findScore( boolean isPreparingSort, SelectionItem findScoreItem )
 		{
-		BoolResultType boolResult = new BoolResultType();
 		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
 		ScoreItem searchScoreItem = firstActiveScoreItem();
+		BoolResultType boolResult = new BoolResultType();
 
 		if( findScoreItem == null )
 			return startBoolResultError( 1, "The given score item is undefined" );
@@ -378,7 +378,6 @@ class ScoreList extends List
 
 	protected SelectionResultType getBestSelection( boolean isCurrentlyTesting, short solveStrategyParameter )
 		{
-		SelectionResultType selectionResult = new SelectionResultType();
 		boolean hasBetterScore = false;
 		boolean isCummulate = false;
 		int nRandomEntries = 0;
@@ -406,6 +405,7 @@ class ScoreList extends List
 		ScoreItem searchScoreItem = firstActiveScoreItem();
 		SelectionItem bestActionSelectionItem = null;
 		BoolResultType boolResult;
+		SelectionResultType selectionResult = new SelectionResultType();
 
 		while( searchScoreItem != null )
 			{

@@ -35,11 +35,11 @@
 < Juan es posiblemente una persona.
 < Juan es posiblemente parte de una familia.
 < Ana es posiblemente madre de Pablo.
+< Ana es posiblemente parte de una familia.
 < Ana es posiblemente una mujer.
 < Ana es puede-ser una persona.
 < Ana no es puede-ser un hombre.
 < Ana es posiblemente femenina.
-< Ana es posiblemente parte de una familia.
 < Ana no es posiblemente un padre.
 * 
 * Mis preguntas:
@@ -54,6 +54,9 @@
 * Mis preguntas que son contestadas:
 < ¿Es Juan un padre o una madre?
 < ¿Es Juan una mujer o un hombre?
+* 
+* Mis suposiciones que se ajustan:
+< Juan es probablemente parte de una familia.
 * 
 * Mis suposiciones:
 < Juan es probablemente un padre.

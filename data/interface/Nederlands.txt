@@ -1,6 +1,6 @@
 ﻿#----------------------------------------------------------------------------
 #	Purpose:	To define the interface texts in Dutch
-#	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+#	Version:	Thinknowlogy 2017r2 (Science as it should be)
 #----------------------------------------------------------------------------
 #	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
 #	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -260,8 +260,8 @@
 :1414		"\nMijn veronderstellingen:"
 :1415		"\nMijn veronderstellingen die aangepast zijn:"
 :1416		"\nMijn veronderstellingen die geconcludeerd zijn:"
-:1417		"\nMijn verborgen veronderstellingen die geconcludeerd zijn:"
-:1418		"\nMijn veronderstellingen die niet meer verborgen zijn:"
+#:1417		"\nMijn conclusies die niet meer verborgen zijn:"
+#:1418		"\nMijn veronderstellingen die niet meer verborgen zijn:"
 :1419		"\nMijn vragen:"
 :1420		"\nMijn aangepaste vragen:"
 :1421		"\nMijn antwoord:"

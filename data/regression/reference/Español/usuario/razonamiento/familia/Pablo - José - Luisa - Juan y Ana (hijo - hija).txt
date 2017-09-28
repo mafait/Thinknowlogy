@@ -35,11 +35,11 @@
 < Juan es posiblemente una persona.
 < Juan es posiblemente parte de una familia.
 < Ana es posiblemente madre de Pablo.
+< Ana es posiblemente parte de una familia.
 < Ana es posiblemente una mujer.
 < Ana es puede-ser una persona.
 < Ana no es puede-ser un hombre.
 < Ana es posiblemente femenina.
-< Ana es posiblemente parte de una familia.
 < Ana no es posiblemente un padre.
 * 
 * Mis preguntas:
@@ -69,7 +69,9 @@
 < Luisa no es un niño y un hombre.
 < Luisa no es un hijo.
 < Juan tiene una hija, llamada Luisa.
+< Juan tiene 3 hijos, llamados Pablo, José y Luisa.
 < Ana tiene una hija, llamada Luisa.
+< Ana tiene 3 hijos, llamados Pablo, José y Luisa.
 * 
 * Mis suposiciones:
 < Luisa es probablemente una persona.
@@ -83,6 +85,9 @@
 * Mis preguntas que son contestadas:
 < ¿Es Juan un padre o una madre?
 * 
+* Mis suposiciones que se ajustan:
+< Ana es probablemente parte de una familia.
+* 
 * Mis suposiciones que se concluyen:
 < Juan es parte de una familia.
 * 
@@ -92,10 +97,10 @@
 * Mis suposiciones que se ajustan:
 < Juan es probablemente una persona.
 * 
-* Mis suposiciones ocultas que se celebren:
-< Pablo tiene 2 padres, llamados Juan y Ana.
-< José tiene 2 padres, llamados Juan y Ana.
-< Luisa tiene 2 padres, llamados Juan y Ana.
+* Mis suposiciones que no son ocultos más:
+< Pablo tiene probablemente 2 padres, llamados Juan y Ana.
+< José tiene probablemente 2 padres, llamados Juan y Ana.
+< Luisa tiene probablemente 2 padres, llamados Juan y Ana.
 * 
 * Mis suposiciones que se confirman:
 < Ana es posiblemente madre de Pablo, José y Luisa.
@@ -104,9 +109,12 @@
 < Ana no es posiblemente un hombre.
 * 
 * Mis suposiciones que se concluyen:
+< Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene una madre, llamada Ana.
+< José tiene 2 padres, llamados Juan y Ana.
 < José tiene una madre, llamada Ana.
 < Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
 < Ana es una mujer.
 * 
 * Mis suposiciones que se ajustan:
@@ -115,17 +123,15 @@
 * Mis suposiciones que se concluyen:
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
+< Luisa tiene 2 padres, llamados Juan y Ana.
 * 
 * Mis conclusiones:
 < Juan es un hombre.
 < Juan no es una mujer.
 < Juan es masculino.
 < Juan no es una madre.
-< Juan tiene 3 hijos, llamados Pablo, José y Luisa.
 < Pablo tiene un padre, llamado Juan.
 < José tiene un padre, llamado Juan.
 < Luisa tiene un padre, llamado Juan.
-< Ana tiene 3 hijos, llamados Pablo, José y Luisa.
 < 

@@ -140,6 +140,13 @@
 <	- Every woman is feminine.
 * 
 * My assumptions:
+< Anna has probably 3 children, called Paul, Joe and Laura. Because:
+<	- Every family has parents and children.
+<	- Anna is probably a parent of Paul, Joe and Laura.
+* 	and:
+<	- Paul is a child of Anna and John.
+<	- Joe is probably a child of Anna.
+<	- Laura is probably a child of Anna.
 < Anna is probably a parent of Paul, Joe and Laura. Because:
 <	- Laura has probably a parent, called Anna.
 <	- Joe has probably a parent, called Anna.
@@ -179,13 +186,6 @@
 <	- Anna is probably a parent of Paul, Joe and Laura.
 <	- Every parent is a father or a mother.
 <	- Anna is a mother.
-< Anna has probably 3 children, called Paul, Joe and Laura. Because:
-<	- Every family has parents and children.
-<	- Anna is probably a parent of Paul, Joe and Laura.
-* 	and:
-<	- Paul is a child of Anna and John.
-<	- Joe is probably a child of Anna.
-<	- Laura is probably a child of Anna.
 < Anna has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of Anna.
 * 	and:
@@ -207,11 +207,11 @@
 <	- Paul is a child of Anna and John.
 <	- A child is probably a person.
 < Paul has probably 2 parents, called Anna and John. Because:
-<	- Anna is probably a parent of Paul, Joe and Laura.
-<	- John is probably a parent of Paul.
-* 	and:
 <	- Every family has parents and children.
 <	- Paul is a child of Anna and John.
+* 	and:
+<	- John is probably a parent of Paul.
+<	- Anna is probably a parent of Paul, Joe and Laura.
 * 
 * My questions:
 < Is Paul a girl, a woman, a boy or a man? Because:
@@ -230,6 +230,8 @@
 <	- Every woman is feminine.
 * 
 * My assumptions:
+< Laura has probably a parent, called Anna. Because:
+<	- Anna is probably a parent of Paul, Joe and Laura.
 < Laura is probably a child of Anna. Because:
 <	- Every family has parents and children.
 <	- Anna is probably a parent of Paul, Joe and Laura.
@@ -263,8 +265,6 @@
 <	- Laura is probably a child of Anna.
 <	- Every child is a son or a daughter.
 <	- Laura is possibly a daughter of Anna.
-< Laura has probably a parent, called Anna. Because:
-<	- Anna is probably a parent of Paul, Joe and Laura.
 < Laura is possibly a daughter of Anna. Because:
 <	- Anna is the mother of Paul, Joe and Laura.
 <	- Every family has parents and children.

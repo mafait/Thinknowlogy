@@ -85,9 +85,6 @@
 <	- Every child is a son or a daughter.
 <	- Laura is a daughter.
 < Laura is probably a child of John and Anna. Because:
-<	- Every child is a son or a daughter.
-<	- Laura is a daughter.
-* 	and:
 <	- Every family has parents and children.
 <	- Laura has 2 parents, called John and Anna.
 * 	and:

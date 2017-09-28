@@ -76,10 +76,10 @@
 * Mijn veronderstellingen:
 < Anna is waarschijnlijk een persoon.
 < Anna is waarschijnlijk geen man.
+< Anna heeft waarschijnlijk een kind, genaamd Paul.
 < Anna is waarschijnlijk een ouder van Paul.
 < Anna is waarschijnlijk deel van een gezin.
 < Anna is waarschijnlijk geen vader.
-< Anna heeft waarschijnlijk een kind, genaamd Paul.
 < Paul is waarschijnlijk een kind van Anna.
 < Paul is waarschijnlijk deel van een gezin.
 < Paul is mogelijk een persoon.

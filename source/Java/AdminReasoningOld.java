@@ -1,7 +1,7 @@
 /*	Class:			AdminReasoningOld
  *	Supports class:	AdminItem
  *	Purpose:		To provide autonomous reasoning (old design)
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,14 +29,13 @@ class AdminReasoningOld
 
 	private int postponeNegativeConclusionSpecificationCollectionNr_;
 
-	private SpecificationItem alternativeAnotherPrimarySpecificationItem_;
-	private SpecificationItem possessiveDefinitionSpecificationItem_;
+	private SpecificationItem alternativeSpanishAnotherPrimarySpecificationItem_;
 	private SpecificationItem oppositePossessiveDefinitionSpecificationItem_;
+	private SpecificationItem possessiveDefinitionSpecificationItem_;
 	private SpecificationItem postponeNegativeConclusionPrimarySpecificationItem_;
 	private SpecificationItem postponeNegativeConclusionAnotherPrimarySpecificationItem_;
 	private SpecificationItem spanishAmbiguousCompoundPrimarySpecificationItem_;
 	private SpecificationItem spanishAmbiguousCompoundAnotherPrimarySpecificationItem_;
-	private SpecificationItem spanishQuestionPrimarySpecificationItem_;
 
 	private WordItem feminineSpecificationWordItem_;
 	private WordItem generalizationAssumptionWordItem_;
@@ -95,7 +94,7 @@ class AdminReasoningOld
 					( isMaleSpecificationWord &&
 					relationWordItem.hasMasculineProperNameEnding() ) ) ) ||
 
-					// Non-possessive (generalization)
+					// Not possessive (generalization)
 					( !isPossessive &&
 
 					( ( isFemaleSpecificationWord &&
@@ -121,7 +120,7 @@ class AdminReasoningOld
 		boolean isFemaleUserSpecificationWord = false;
 		boolean isMaleUserSpecificationWord = false;
 		int anotherPrimarySpecificationCollectionNr;
-		int nonCompoundCollectionNr;
+		int nonCompoundSpecificationCollectionNr;
 		int specificationCollectionNr;
 		SpecificationItem firstNonCompoundCollectionSpecificationItem;
 		SpecificationItem questionSpecificationItem;
@@ -163,7 +162,7 @@ class AdminReasoningOld
 			specificationCollectionNr = anotherPrimarySpecificationCollectionNr;
 
 		if( ( relatedResult = generalizationWordItem.findRelatedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, Constants.NO_QUESTION_PARAMETER, specificationCollectionNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, anotherPrimarySpecificationWordItem ) ).result != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to find a related specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+			return adminItem_.addError( 1, moduleNameString_, "I failed to find a related specification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
 		isCommonWordWordSpanishAmbiguous = commonWordItem.isNounWordSpanishAmbiguous();
 		isHiddenSpanishPrimarySpecification = primarySpecificationItem.isHiddenSpanishSpecification();
@@ -175,12 +174,12 @@ class AdminReasoningOld
 		if( isCommonWordWordSpanishAmbiguous &&
 		relatedSpecificationItem == null &&
 		!userSpecificationItem.isPossessive() &&
-		( nonCompoundCollectionNr = commonWordItem.nonCompoundCollectionNr( specificationWordTypeNr ) ) > Constants.NO_COLLECTION_NR )
+		( nonCompoundSpecificationCollectionNr = commonWordItem.nonCompoundCollectionNr( specificationWordTypeNr ) ) > Constants.NO_COLLECTION_NR )
 			{
-			if( nonCompoundCollectionNr != specificationCollectionNr )
+			if( nonCompoundSpecificationCollectionNr != specificationCollectionNr )
 				{
-				if( ( relatedResult = generalizationWordItem.findRelatedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, Constants.NO_QUESTION_PARAMETER, nonCompoundCollectionNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, anotherPrimarySpecificationWordItem ) ).result != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to find a related specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" that is Spanish ambiguous" );
+				if( ( relatedResult = generalizationWordItem.findRelatedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, Constants.NO_QUESTION_PARAMETER, nonCompoundSpecificationCollectionNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, anotherPrimarySpecificationWordItem ) ).result != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to find a related specification in word \"" + generalizationWordItem.anyWordTypeString() + "\" that is Spanish ambiguous" );
 
 				relatedSpecificationItem = relatedResult.relatedSpecificationItem;
 				}
@@ -217,7 +216,7 @@ class AdminReasoningOld
 				if( isFemaleUserSpecificationWord ||
 				isMaleUserSpecificationWord )
 					{
-					if( anotherPrimarySpecificationItem.hasSpecificationCompoundCollection() &&
+					if( anotherPrimarySpecificationItem.hasCompoundSpecificationCollection() &&
 
 					( anotherPrimarySpecificationCollectionNr == userSpecificationItem.specificationCollectionNr() ||
 
@@ -248,14 +247,14 @@ class AdminReasoningOld
 				if( ( ( !hasGeneralizationWordFeminineProperNameEnding &&
 				!hasGeneralizationWordMasculineProperNameEnding ) ||
 
-				primarySpecificationItem.hasSpecificationCompoundCollection() ) &&
+				primarySpecificationItem.hasCompoundSpecificationCollection() ) &&
 
 				( !isSpecificationWordSpanishAmbiguous ||
-				anotherPrimarySpecificationItem.hasSpecificationNonCompoundCollection() ||
+				anotherPrimarySpecificationItem.hasNonCompoundSpecificationCollection() ||
 				anotherPrimarySpecificationWordItem.compoundCollectionNr( specificationWordTypeNr ) == anotherPrimarySpecificationCollectionNr ) )
 					{
 					if( isSpecificationWordSpanishAmbiguous )
-						existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem );
+						existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, false, specificationWordItem );
 					else
 						{
 						if( !isNegativeConclusion )
@@ -315,30 +314,26 @@ class AdminReasoningOld
 				isSpecificationWordSpanishAmbiguous &&
 				// specificationWordItem == commonWordItem &&
 				CommonVariables.nUserSpecificationWords == 1 &&
-				!primarySpecificationItem.hasSpecificationNonCompoundCollection() &&
+				!primarySpecificationItem.hasNonCompoundSpecificationCollection() &&
 				primarySpecificationItem.specificationCollectionNr() != anotherPrimarySpecificationCollectionNr &&
 
 				( primarySpecificationItem.isUserSpecification() ||
 				generalizationWordItem.isUserRelationWord ) )
 					{
-					questionSpecificationItem = generalizationWordItem.firstActiveAssignmentOrSpecificationItem( isArchivedAssignment, false, false, Constants.WORD_PARAMETER_SINGULAR_VERB_IS, anotherPrimarySpecificationWordItem );
+					questionSpecificationItem = generalizationWordItem.firstSpecificationItem( false, false, true, anotherPrimarySpecificationWordItem );
 
 					if( ( questionSpecificationItem == null ||
 					questionSpecificationItem.isOlderItem() ) &&
 
-					generalizationWordItem.firstSpecificationItem( false, false, Constants.NO_QUESTION_PARAMETER, anotherPrimarySpecificationWordItem ) == null )
-						{
-						if( adminItem_.askQuestions() != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to ask questions" );
+					generalizationWordItem.firstSpecificationItem( false, false, false, anotherPrimarySpecificationWordItem ) == null &&
 
-						// Clean-up obsolete justifications
-						if( generalizationWordItem.replaceOrDeleteObsoleteJustifications() != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete obsolete justifications in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-						}
+					// Ask Spanish ambiguous questions
+					adminItem_.askQuestions() != Constants.RESULT_OK )
+						return adminItem_.addError( 1, moduleNameString_, "I failed to ask questions" );
 					}
 				else
 					{
-					if( anotherPrimarySpecificationItem.hasSpecificationNonCompoundCollection() ||
+					if( anotherPrimarySpecificationItem.hasNonCompoundSpecificationCollection() ||
 					anotherPrimarySpecificationCollectionNr == userSpecificationItem.specificationCollectionNr() ||
 
 					( !relatedSpecificationItem.isHiddenSpanishSpecification() &&
@@ -366,82 +361,6 @@ class AdminReasoningOld
 		return Constants.RESULT_OK;
 		}
 
-	private byte correctSuggestiveAssumptionsByOppositeQuestion( boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, int generalizationContextNr, int specificationContextNr, SpecificationItem secondarySpecificationItem, WordItem generalizationWordItem, WordItem specificationWordItem )
-		{
-		JustificationItem correctedAssumptionByOppositeQuestionJustificationItem;
-		SpecificationItem createdNewSpecificationItem;
-		SpecificationItem createdOldSpecificationItem;
-		SpecificationItem foundSpecificationItem;
-		SpecificationItem primarySpecificationItem;
-		SpecificationItem oldSuggestiveQuestionAssumptionAssignmentItem;
-		WordItem oldSuggestiveSpecificationWordItem;
-		WordItem secondarySpecificationWordItem;
-		CreateAndAssignResultType createAndAssignResult;
-
-		if( secondarySpecificationItem == null )
-			return adminItem_.startError( 1, moduleNameString_, "The given secondary specification item is undefined" );
-
-		if( !secondarySpecificationItem.isActiveAssignment() )
-			return adminItem_.startError( 1, moduleNameString_, "The given secondary specification item is no assignment" );
-
-		if( generalizationWordItem == null )
-			return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
-
-		if( specificationWordItem == null )
-			return adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
-
-		// Previously, a suggestive question assumption was made.
-		// However, now a question with the opposite specification is asked.
-		// Instead of assuming this new specification, a question is generated to ask which of both specifications is true.
-		if( ( oldSuggestiveQuestionAssumptionAssignmentItem = generalizationWordItem.olderSuggestiveQuestionAssumptionSecondarySpecificationItem() ) == null )
-			return adminItem_.startError( 1, moduleNameString_, "I couldn't find the old suggestive question assumption specification item" );
-
-		if( !oldSuggestiveQuestionAssumptionAssignmentItem.isActiveAssignment() )
-			return adminItem_.startError( 1, moduleNameString_, "The old suggestive question assumption assignment item is no assignment" );
-
-		if( ( oldSuggestiveSpecificationWordItem = oldSuggestiveQuestionAssumptionAssignmentItem.specificationWordItem() ) == null )
-			return adminItem_.startError( 1, moduleNameString_, "The old suggestive question assumption specification item has no specification word item" );
-
-		// Correct old question
-		if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, isNegative, false, isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, Constants.NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, Constants.NO_CONTEXT_NR, null, null, oldSuggestiveQuestionAssumptionAssignmentItem, null, generalizationWordItem, oldSuggestiveSpecificationWordItem, null ) ).result != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to ask a question about a corrected assumption by opposite question in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" with specification word \"" + oldSuggestiveSpecificationWordItem.anyWordTypeString() + "\"" );
-
-		if( ( createdOldSpecificationItem = createAndAssignResult.createdSpecificationItem ) == null )
-			return adminItem_.startError( 1, moduleNameString_, "I couldn't create the old suggestive question assumption" );
-
-		// Correct new question
-		if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, isNegative, false, isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, Constants.NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, Constants.NO_CONTEXT_NR, null, null, secondarySpecificationItem, null, generalizationWordItem, specificationWordItem, null ) ).result != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to ask a question about a corrected assumption by opposite question in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" with specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
-
-		if( ( createdNewSpecificationItem = createAndAssignResult.createdSpecificationItem ) == null )
-			return adminItem_.startError( 1, moduleNameString_, "I couldn't create the new suggestive question assumption" );
-
-		if( ( correctedAssumptionByOppositeQuestionJustificationItem = generalizationWordItem.correctedAssumptionByOppositeQuestionJustificationItem() ) == null )
-			return adminItem_.startError( 1, moduleNameString_, "I couldn't find the old corrected assumption by opposite question justification item in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-
-		// Change primary user specification by primary corrected question specification
-		if( correctedAssumptionByOppositeQuestionJustificationItem.changePrimarySpecification( createdNewSpecificationItem ) != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to change the primary specification of the corrected assumption by opposite question justification item" );
-
-		if( ( secondarySpecificationWordItem = correctedAssumptionByOppositeQuestionJustificationItem.secondarySpecificationWordItem() ) == null )
-			return adminItem_.startError( 1, moduleNameString_, "The old corrected assumption by opposite question justification item has no secondary specification word" );
-
-		// Correct generalization assumption
-		if( ( primarySpecificationItem = specificationWordItem.firstSpecificationItem( isPossessive, false, Constants.NO_QUESTION_PARAMETER, secondarySpecificationWordItem ) ) == null )
-			return adminItem_.startError( 1, moduleNameString_, "I couldn't find any specification substitution assumption justification item" );
-
-		if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, isNegative, false, isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, Constants.NO_CONTEXT_NR, createdOldSpecificationItem, null, primarySpecificationItem, null, generalizationWordItem, secondarySpecificationWordItem, null ) ).result != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to add a specification substitution assumption" );
-
-		if( ( foundSpecificationItem = createAndAssignResult.foundSpecificationItem ) == null )
-			return adminItem_.startError( 1, moduleNameString_, "I couldn't find the corrected generalization assumption" );
-
-		if( foundSpecificationItem.attachJustificationToSpecification( correctedAssumptionByOppositeQuestionJustificationItem ) != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to attach the old corrected assumption by opposite question justification item to the corrected generalization assumption" );
-
-		return Constants.RESULT_OK;
-		}
-
 	private byte drawNegativeConclusion( boolean isArchivedAssignment, boolean isSpecificationWordSpanishAmbiguous, short generalizationWordTypeNr, short specificationWordTypeNr, int generalizationContextNr, int specificationContextNr, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem, WordItem generalizationWordItem )
 		{
 		boolean hasDisplayedMoreSpecificNonExclusiveSpecification;
@@ -455,7 +374,7 @@ class AdminReasoningOld
 		boolean isPostponingNegativeConclusion = false;
 		boolean isUserSpecificationSelected = false;
 		boolean isUserSpecificationWordSpanishAmbiguous = false;
-		int nonCompoundCollectionNr;
+		int nonCompoundSpecificationCollectionNr;
 		int secondarySpecificationCollectionNr;
 		int anotherPrimarySpecificationCollectionNr = Constants.NO_COLLECTION_NR;
 		JustificationItem createdJustificationItem;
@@ -520,7 +439,7 @@ class AdminReasoningOld
 		( tempSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( true, primarySpecificationItem.isArchivedAssignment(), primarySpecificationItem.isNegative(), primarySpecificationItem.isPossessive(), false, primarySpecificationWordItem, null ) ) != null )
 			primarySpecificationItem = tempSpecificationItem;
 
-		existingPositiveSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.NO_QUESTION_PARAMETER, anotherPrimarySpecificationWordItem );
+		existingPositiveSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, false, anotherPrimarySpecificationWordItem );
 
 		hasDisplayedMoreSpecificNonExclusiveSpecification = ( primarySpecificationItem == existingPositiveSpecificationItem &&
 															primarySpecificationItem.isExclusiveSpecification() );
@@ -548,9 +467,9 @@ class AdminReasoningOld
 		anotherPrimarySpecificationWordItem.compoundCollectionNr( specificationWordTypeNr ) == anotherPrimarySpecificationCollectionNr ||
 
 		( anotherPrimarySpecificationItem != null &&
-		anotherPrimarySpecificationItem.hasSpecificationNonCompoundCollection() ) ) &&
+		anotherPrimarySpecificationItem.hasNonCompoundSpecificationCollection() ) ) &&
 
-		( ( existingQuestionSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.WORD_PARAMETER_SINGULAR_VERB_IS, anotherPrimarySpecificationWordItem ) ) == null ||
+		( ( existingQuestionSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, true, anotherPrimarySpecificationWordItem ) ) == null ||
 
 		( isUserGeneralizationWord &&
 		generalizationWordItem.isOlderItem() &&
@@ -564,13 +483,13 @@ class AdminReasoningOld
 
 			if( isPrimarySameAsSecondarySpecification )
 				{
-				if( primarySpecificationItem.hasSpecificationCompoundCollection() &&
+				if( primarySpecificationItem.hasCompoundSpecificationCollection() &&
 				primarySpecificationItem.specificationCollectionNr() != anotherPrimarySpecificationCollectionNr )
 					{
 					if( ( collectionWordItem = collectionWordItemInCollectionWords( anotherPrimarySpecificationCollectionNr, primarySpecificationWordItem ) ) != null &&
-					( anotherSecondarySpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, collectionWordItem ) ) == null &&
-					( anotherSecondarySpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, anotherPrimarySpecificationWordItem ) ) == null )
-						anotherSecondarySpecificationItem = ( !userSpecificationItem.isSpecificationWordSpanishAmbiguous() ? userSpecificationItem : primarySpecificationWordItem.bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, collectionWordItem ) );
+					( anotherSecondarySpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, false, false, false, false, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, collectionWordItem ) ) == null &&
+					( anotherSecondarySpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, false, false, false, false, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, anotherPrimarySpecificationWordItem ) ) == null )
+						anotherSecondarySpecificationItem = ( !userSpecificationItem.isSpecificationWordSpanishAmbiguous() ? userSpecificationItem : primarySpecificationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, false, false, false, false, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, collectionWordItem ) );
 					}
 				else
 					{
@@ -586,16 +505,16 @@ class AdminReasoningOld
 					{
 					if( isHiddenSpanishPrimarySpecification &&
 					anotherPrimarySpecificationItem != null &&
-					anotherPrimarySpecificationItem.hasSpecificationCompoundCollection() &&
+					anotherPrimarySpecificationItem.hasCompoundSpecificationCollection() &&
 					anotherPrimarySpecificationItem.isSelfGenerated() &&
 					generalizationWordItem.isUserRelationWord &&
 					( collectionWordItem = anotherPrimarySpecificationWordItem.collectionWordItem( anotherPrimarySpecificationCollectionNr ) ) != null )
 						{
-						if( ( nonCompoundCollectionNr = collectionWordItem.nonCompoundCollectionNr( specificationWordTypeNr ) ) == Constants.NO_COLLECTION_NR )
-							nonCompoundCollectionNr = anotherPrimarySpecificationWordItem.nonCompoundCollectionNr( specificationWordTypeNr );
+						if( ( nonCompoundSpecificationCollectionNr = collectionWordItem.nonCompoundCollectionNr( specificationWordTypeNr ) ) == Constants.NO_COLLECTION_NR )
+							nonCompoundSpecificationCollectionNr = anotherPrimarySpecificationWordItem.nonCompoundCollectionNr( specificationWordTypeNr );
 
-						if( nonCompoundCollectionNr > Constants.NO_COLLECTION_NR &&
-						( tempSpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, nonCompoundCollectionNr, generalizationContextNr, Constants.NO_CONTEXT_NR, null ) ) != null )
+						if( nonCompoundSpecificationCollectionNr > Constants.NO_COLLECTION_NR &&
+						( tempSpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, isArchivedAssignment, isArchivedAssignment, false, false, nonCompoundSpecificationCollectionNr, generalizationContextNr, Constants.NO_CONTEXT_NR, null ) ) != null )
 							{
 							hasFoundOldSpanishUserSpecification = true;
 							secondarySpecificationItem = tempSpecificationItem;
@@ -604,20 +523,20 @@ class AdminReasoningOld
 
 					if( !hasFoundOldSpanishUserSpecification )
 						{
-						if( ( anotherSecondarySpecificationItem = secondarySpecificationWordItem.bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, Constants.NO_QUESTION_PARAMETER, anotherPrimarySpecificationCollectionNr, generalizationContextNr, Constants.NO_CONTEXT_NR, null ) ) == null )
+						if( ( anotherSecondarySpecificationItem = secondarySpecificationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, false, false, false, false, anotherPrimarySpecificationCollectionNr, generalizationContextNr, Constants.NO_CONTEXT_NR, null ) ) == null )
 							{
-							if( secondarySpecificationItem.hasSpecificationCompoundCollection() &&
+							if( secondarySpecificationItem.hasCompoundSpecificationCollection() &&
 							secondarySpecificationCollectionNr != anotherPrimarySpecificationCollectionNr &&
 							( secondarySpecificationCommonWordItem = secondarySpecificationWordItem.commonWordItem( secondarySpecificationCollectionNr ) ) != null &&
 							secondarySpecificationCommonWordItem != primarySpecificationWordItem )
-								anotherSecondarySpecificationItem = secondarySpecificationCommonWordItem.firstSpecificationItem( false, false, Constants.NO_QUESTION_PARAMETER, secondarySpecificationWordItem );
+								anotherSecondarySpecificationItem = secondarySpecificationCommonWordItem.firstSpecificationItem( false, false, false, secondarySpecificationWordItem );
 							}
 						else
 							{
 							if( !anotherSecondarySpecificationItem.isExclusiveSpecification() &&
 							( collectionWordItem = anotherPrimarySpecificationWordItem.collectionWordItem( anotherPrimarySpecificationCollectionNr ) ) != null )
 								{
-								if( ( tempSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, collectionWordItem ) ) == null )
+								if( ( tempSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, collectionWordItem ) ) == null )
 									isPostponingNegativeConclusion = true;
 								else
 									secondarySpecificationItem = tempSpecificationItem;
@@ -648,7 +567,7 @@ class AdminReasoningOld
 
 						if( !isPrimarySameAsSecondarySpecification &&
 						anotherSecondarySpecificationItem != null &&
-						userSpecificationItem.hasSpecificationCompoundCollection() &&
+						userSpecificationItem.hasCompoundSpecificationCollection() &&
 						userSpecificationWordItem.hasCollectionNr( anotherPrimarySpecificationCollectionNr ) )
 							isCompoundUserSpecification = true;
 						}
@@ -674,7 +593,7 @@ class AdminReasoningOld
 						oppositePossessiveDefinitionSpecificationItem = oppositePossessiveDefinitionSpecificationItem_;
 					}
 
-				existingNegativeSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, true, false, Constants.NO_QUESTION_PARAMETER, anotherPrimarySpecificationWordItem );
+				existingNegativeSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, true, false, false, anotherPrimarySpecificationWordItem );
 
 				if( hasFoundOldSpanishUserSpecification ||
 				isCompoundUserSpecification ||
@@ -684,10 +603,10 @@ class AdminReasoningOld
 				( !isHiddenSpanishPrimarySpecification &&
 
 				( existingNegativeSpecificationItem.isSelfGeneratedAssumption() ||
-				primarySpecificationItem.hasSpecificationCompoundCollection() ) &&
+				primarySpecificationItem.hasCompoundSpecificationCollection() ) &&
 
 				( existingNegativeSpecificationItem.isOlderItem() ||
-				existingNegativeSpecificationItem.hasSpecificationNonCompoundCollection() ) ) ) &&
+				existingNegativeSpecificationItem.hasNonCompoundSpecificationCollection() ) ) ) &&
 
 				generalizationWordItem.primarySpecificationJustificationItem( true, Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION, primarySpecificationItem ) == null ) ||
 
@@ -702,8 +621,10 @@ class AdminReasoningOld
 				( isHiddenSpanishPrimarySpecification &&
 				existingNegativeSpecificationItem != null &&
 
-				( existingNegativeSpecificationItem.isOlderItem() ||
-				existingNegativeSpecificationItem.hasSpecificationNonCompoundCollection() ) ) ) ) )
+				( existingNegativeSpecificationItem.hasNonCompoundSpecificationCollection() ||
+
+				( existingNegativeSpecificationItem.isOlderItem() &&
+				secondarySpecificationItem.isSelfGeneratedAssumption() ) ) ) ) ) )
 					{
 					if( isHiddenSpanishPrimarySpecification )
 						{
@@ -719,10 +640,10 @@ class AdminReasoningOld
 							else
 								{
 								if( ( isUserSpecificationWordSpanishAmbiguous &&
-								userSpecificationItem.hasSpecificationNonCompoundCollection() ) ||
+								userSpecificationItem.hasNonCompoundSpecificationCollection() ) ||
 
 								( anotherPrimarySpecificationItem != null &&
-								anotherPrimarySpecificationItem.hasSpecificationCompoundCollection() ) )
+								anotherPrimarySpecificationItem.hasCompoundSpecificationCollection() ) )
 									{
 									negativeConclusionPrimarySpecificationItem = anotherPrimarySpecificationItem;
 									negativeConclusionAnotherPrimarySpecificationItem = null;
@@ -751,15 +672,15 @@ class AdminReasoningOld
 						if( !isPrimarySameAsSecondarySpecification &&
 						isUserSpecificationSelected &&
 						primarySpecificationItem.isSelfGenerated() &&
-						primarySpecificationItem.hasSpecificationCompoundCollection() &&
+						primarySpecificationItem.hasCompoundSpecificationCollection() &&
 						!userSpecificationItem.isQuestion() &&
-						userSpecificationItem.hasSpecificationCompoundCollection() )
+						userSpecificationItem.hasCompoundSpecificationCollection() )
 							compoundGeneralizationWordItem = anotherPrimarySpecificationWordItem.compoundGeneralizationWordItem( anotherPrimarySpecificationCollectionNr );
 
 						if( compoundGeneralizationWordItem != null &&
 						compoundGeneralizationWordItem.isNounWordSpanishAmbiguous() )
 							{
-							negativeConclusionPrimarySpecificationItem = compoundGeneralizationWordItem.firstAssignmentOrSpecificationItem( false, false, false, false, Constants.NO_QUESTION_PARAMETER, anotherPrimarySpecificationWordItem );
+							negativeConclusionPrimarySpecificationItem = compoundGeneralizationWordItem.firstAssignmentOrSpecificationItem( false, false, false, false, false, anotherPrimarySpecificationWordItem );
 							negativeConclusionAnotherPrimarySpecificationItem = null;
 							negativeConclusionSecondarySpecificationItem = anotherSecondarySpecificationItem;
 							negativeConclusionAnotherSecondarySpecificationItem = null;
@@ -768,7 +689,7 @@ class AdminReasoningOld
 							{
 							if( hasDisplayedMoreSpecificNonExclusiveSpecification )
 								{
-								negativeConclusionPrimarySpecificationItem = ( isUserSpecificationWordSpanishAmbiguous ? anotherSecondarySpecificationItem : generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.NO_QUESTION_PARAMETER, secondarySpecificationCommonWordItem ) );
+								negativeConclusionPrimarySpecificationItem = ( isUserSpecificationWordSpanishAmbiguous ? anotherSecondarySpecificationItem : generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, false, secondarySpecificationCommonWordItem ) );
 								negativeConclusionAnotherPrimarySpecificationItem = ( isUserSpecificationWordSpanishAmbiguous ? null : anotherSecondarySpecificationItem );
 								negativeConclusionSecondarySpecificationItem = userSpecificationItem;
 								negativeConclusionAnotherSecondarySpecificationItem = null;
@@ -778,7 +699,8 @@ class AdminReasoningOld
 								negativeConclusionPrimarySpecificationItem = primarySpecificationItem;
 								negativeConclusionAnotherPrimarySpecificationItem = ( hasRelatedSpecificationsInSameSentence ? null : anotherPrimarySpecificationItem );
 								negativeConclusionSecondarySpecificationItem = ( isCompoundUserSpecification ? userSpecificationItem : ( isPrimarySameAsSecondarySpecification ? ( hasRelatedSpecificationsInSameSentence ? anotherPrimarySpecificationItem : ( primarySpecificationItem != userSpecificationItem && !userSpecificationItem.hasRelationContext() && userSpecificationItem.specificationCollectionNr() == anotherPrimarySpecificationCollectionNr ? userSpecificationItem : anotherSecondarySpecificationItem ) ) : secondarySpecificationItem ) );
-								negativeConclusionAnotherSecondarySpecificationItem = ( isCompoundUserSpecification || isPrimarySameAsSecondarySpecification ? null : anotherSecondarySpecificationItem );
+								negativeConclusionAnotherSecondarySpecificationItem = ( isCompoundUserSpecification ||
+																						isPrimarySameAsSecondarySpecification ? null : anotherSecondarySpecificationItem );
 								}
 							}
 						}
@@ -805,7 +727,7 @@ class AdminReasoningOld
 									{
 									if( createdJustificationItem.isConclusionJustification() )
 										{
-										if( foundSpecificationItem.markAsConcludedAssumption( false ) != Constants.RESULT_OK )
+										if( foundSpecificationItem.markAsConcludedAssumption() != Constants.RESULT_OK )
 											return adminItem_.addError( 1, moduleNameString_, "I failed to mark the found specification as concluded assumption" );
 
 										if( isArchivedAssignment )
@@ -815,7 +737,7 @@ class AdminReasoningOld
 
 											if( negativeArchivedAssignmentItem.isSelfGeneratedAssumption() &&
 											// Also mark the past tense negative assumption assignment as concluded
-											negativeArchivedAssignmentItem.markAsConcludedAssumption( false ) != Constants.RESULT_OK )
+											negativeArchivedAssignmentItem.markAsConcludedAssumption() != Constants.RESULT_OK )
 												return adminItem_.addError( 1, moduleNameString_, "I failed to mark a past tense negative assumption assignment as concluded" );
 											}
 										}
@@ -830,7 +752,7 @@ class AdminReasoningOld
 										if( negativeAssumptionJustificationItem != null &&
 										negativeAssumptionJustificationItem.primarySpecificationItem() == negativeConclusionPrimarySpecificationItem &&
 										generalizationWordItem.replaceJustification( negativeAssumptionJustificationItem, createdJustificationItem, foundSpecificationItem ) != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to replace a negative assumption justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+											return adminItem_.addError( 1, moduleNameString_, "I failed to replace a negative assumption justification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 										}
 									else
 										{
@@ -843,7 +765,7 @@ class AdminReasoningOld
 								{
 								// Replace justification of negative conclusion / assumption
 								if( generalizationWordItem.replaceJustification( negativeAssumptionOrConclusionJustificationItem, createdJustificationItem, foundSpecificationItem ) != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to replace a negative assumption or conclusion justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to replace a negative assumption or conclusion justification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 								}
 							}
 						}
@@ -854,14 +776,16 @@ class AdminReasoningOld
 						if( generalizationWordItem.hasCorrectedAssumptionByKnowledge() )
 							{
 							if( ( relatedResult = generalizationWordItem.findRelatedSpecification( false, createdSpecificationItem ) ).result != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to find out if a negative conclusion in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" is related to the created negative conclusion" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to find out if a negative conclusion in word \"" + generalizationWordItem.anyWordTypeString() + "\" is related to the created negative conclusion" );
 
 							relatedSpecificationItem = relatedResult.relatedSpecificationItem;
 
 							if( relatedSpecificationItem != null &&
 							relatedSpecificationItem.isOlderItem() &&
+
+							// Replace a corrected negative conclusion
 							generalizationWordItem.replaceOrDeleteSpecification( false, relatedSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to replace a corrected negative conclusion in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to replace a corrected negative conclusion in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 							}
 						else
 							{
@@ -870,8 +794,10 @@ class AdminReasoningOld
 							anotherSecondarySpecificationItem != null &&
 							// Check for answered question justification
 							createdSpecificationItem.answeredQuestionJustificationItem() == null &&
+
+							// Change justification of negative assumptions
 							generalizationWordItem.changeJustificationOfNegativeAssumptions( userSpecificationItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to replace a question justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to replace a question justification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 							}
 						}
 					}
@@ -890,32 +816,27 @@ class AdminReasoningOld
 		boolean isUserGeneralizationWord;
 		boolean isSecondarySpecificationWordSpanishAmbiguous;
 		boolean isAssumption = ( userAssumptionLevel > Constants.NO_ASSUMPTION_LEVEL );
-		boolean isReplacingObsoleteJustifications = false;
 		int foundRelationContextNr;
 		int nContextRelations;
 		int generalizationContextNr = Constants.NO_CONTEXT_NR;
 		int spanishAmbiguousSpecificationCollectionNr = Constants.NO_COLLECTION_NR;
-		GeneralizationItem currentGeneralizationItem;
-		JustificationItem conclusionJustificationItem;
 		JustificationItem createdJustificationItem;
 		JustificationItem firstJustificationItem;
+		JustificationItem obsoleteJustificationItem;
 		SpecificationItem assumptionSpecificationItem;
 		SpecificationItem collectedSpecificationItem;
 		SpecificationItem confirmedAllRelationWordsOfSpecificationItem;
-		SpecificationItem conclusionSpecificationItem;
 		SpecificationItem createdOrFoundSpecificationItem;
 		SpecificationItem createdSpecificationItem;
 		SpecificationItem existingSpecificationItem;
 		SpecificationItem existingUserSpecificationItem;
 		SpecificationItem foundSpecificationItem;
-		SpecificationItem justificationSecondarySpecificationItem;
-		SpecificationItem partOfSpecificationItem;
+		SpecificationItem obsoleteSpecificationItem;
 		SpecificationItem secondarySpecificationItem;
 		WordItem collectedWithItselfCommonWordItem;
-		WordItem commonWordItem;
-		WordItem currentGeneralizationWordItem;
+		WordItem masculineSpecificationWordItem;
 		ContextResultType contextResult = new ContextResultType();
-		CreateAndAssignResultType createAndAssignResult;
+		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
 		JustificationResultType justificationResult;
 
 		if( relationContextNr <= Constants.NO_CONTEXT_NR )
@@ -934,7 +855,7 @@ class AdminReasoningOld
 			return adminItem_.startError( 1, moduleNameString_, "The given relation word item is undefined" );
 
 		isUserGeneralizationWord = generalizationWordItem.isUserGeneralizationWord;
-		existingSpecificationItem = relationWordItem.bestMatchingRelationContextNrSpecificationItem( false, !isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem, generalizationWordItem );
+		existingSpecificationItem = relationWordItem.bestMatchingRelationContextNrSpecificationItem( true, true, false, !isPossessive, specificationWordItem, generalizationWordItem );
 
 		if( existingSpecificationItem == null ||
 		// Allow existing conclusion specification to change its relation context
@@ -951,7 +872,7 @@ class AdminReasoningOld
 
 			( foundRelationContextNr = generalizationWordItem.contextNr( specificationWordItem ) ) > Constants.NO_CONTEXT_NR )
 				{
-				if( ( nContextRelations = adminItem_.nContextWordsInContextWords( foundRelationContextNr, specificationWordItem ) ) > 1 )
+				if( ( nContextRelations = adminItem_.nContextWords( foundRelationContextNr, specificationWordItem ) ) > 1 )
 					{
 					if( ( contextResult = adminItem_.getGeneralizationContext( isArchivedAssignment, false, false, false, nContextRelations, relationWordItem, specificationWordItem, generalizationWordItem, null ) ).result != Constants.RESULT_OK )
 						return adminItem_.addError( 1, moduleNameString_, "I failed to get the generalization context number" );
@@ -969,11 +890,10 @@ class AdminReasoningOld
 			if( isSecondarySpecificationWordSpanishAmbiguous )
 				secondarySpecificationItem = generalizationWordItem.firstUserSpecificationItem( false, isPossessive, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, secondarySpecificationWordItem );
 			else
-				secondarySpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, isArchivedAssignment, false, isPossessive, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, secondarySpecificationWordItem );
+				secondarySpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, true, isArchivedAssignment, false, isPossessive, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, secondarySpecificationWordItem );
 
 			// Skip if possessive user specification exists
 			if( secondarySpecificationItem != null &&
-			secondarySpecificationItem.hasNewInformation() &&
 
 			// User specification doesn't exist
 			( ( existingUserSpecificationItem == null &&
@@ -993,7 +913,9 @@ class AdminReasoningOld
 			( isSecondarySpecificationWordSpanishAmbiguous &&
 
 			( !existingUserSpecificationItem.hasRelationContext() ||
-			generalizationWordItem.hasDisplayedMoreSpecificSpecification() ) ) ) ) ) )
+			generalizationWordItem.hasDisplayedMoreSpecificSpecification() ) ) ) ) ) &&
+
+			secondarySpecificationItem.hasNewInformation() )
 				{
 				hasFeminineProperNameEnding = ( isPossessive &&
 												isSecondarySpecificationWordSpanishAmbiguous &&
@@ -1033,11 +955,12 @@ class AdminReasoningOld
 					spanishAmbiguousSpecificationCollectionNr = secondarySpecificationItem.specificationCollectionNr();
 
 				// Draw a possessive reversible conclusion
-				// See design: paragraph 2.3.2 in the theory document or http://mafait.org/theory_2_3_2/
-				if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( hasFeminineProperNameEnding, isAssignment, isArchivedAssignment, false, false, isExclusiveSpecification, isForcingNewJustification, false, false, !isPossessive, isUniqueUserRelation, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, relationWordTypeNr, Constants.WORD_TYPE_NOUN_SINGULAR, generalizationWordTypeNr, spanishAmbiguousSpecificationCollectionNr, Constants.NO_CONTEXT_NR, specificationContextNr, generalizationContextNr, null, null, secondarySpecificationItem, null, relationWordItem, specificationWordItem, generalizationWordItem ) ).result != Constants.RESULT_OK )
+				// See paragraph 2.3.2 in the theory document or http://mafait.org/theory_2_3_2/
+				if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( hasFeminineProperNameEnding, isAssignment, isArchivedAssignment, false, false, isExclusiveSpecification, isForcingNewJustification, false, false, !isPossessive, isUniqueUserRelation, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, relationWordTypeNr, Constants.WORD_TYPE_NOUN_SINGULAR, generalizationWordTypeNr, spanishAmbiguousSpecificationCollectionNr, Constants.NO_CONTEXT_NR, specificationContextNr, generalizationContextNr, null, null, secondarySpecificationItem, ( hasFeminineProperNameEnding ? secondarySpecificationWordItem.firstSpecificationItem( false, false, false, specificationWordItem ) : null ), relationWordItem, specificationWordItem, generalizationWordItem ) ).result != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to add a self-generated possessive reversible specification from relation word \"" + relationWordItem.anyWordTypeString() + "\" to specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
 
-				if( ( foundSpecificationItem = createAndAssignResult.foundSpecificationItem ) != null )
+				if( ( foundSpecificationItem = createAndAssignResult.foundSpecificationItem ) != null &&
+				foundSpecificationItem.isReplacedItem() )
 					foundSpecificationItem = foundSpecificationItem.updatedSpecificationItem();
 
 				if( confirmedAllRelationWordsOfSpecificationItem == null )
@@ -1048,224 +971,226 @@ class AdminReasoningOld
 						foundSpecificationItem != null )
 							{
 							if( existingSpecificationItem.isConcludedAssumption() )
-								isReplacingObsoleteJustifications = true;
+								{
+								if( relationWordItem.replaceOrDeleteUnreferencedJustifications() != Constants.RESULT_OK )
+									return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete unreferenced justifications in word \"" + relationWordItem.anyWordTypeString() + "\"" );
+								}
 							else
 								{
 								if( !isSecondarySpecificationWordSpanishAmbiguous &&
-								!existingSpecificationItem.isReplacedItem() &&
+								!existingSpecificationItem.isReplacedOrDeletedItem() &&
 								existingSpecificationItem.isSelfGeneratedAssumption() &&
 								foundSpecificationItem.isSelfGeneratedConclusion() &&
-								foundSpecificationItem.hasSpecificationCompoundCollection() )
-									{
-									if( relationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, foundSpecificationItem ) != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to replace an assumption specification by a conclusion in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
+								foundSpecificationItem.hasCompoundSpecificationCollection() &&
 
-									isReplacingObsoleteJustifications = true;
-									}
+								// Replace assumption by conclusion
+								relationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, foundSpecificationItem ) != Constants.RESULT_OK )
+									return adminItem_.addError( 1, moduleNameString_, "I failed to replace an assumption specification by a conclusion in word \"" + relationWordItem.anyWordTypeString() + "\"" );
 								}
-
-							if( isReplacingObsoleteJustifications &&
-							// Clean-up obsolete justifications
-							relationWordItem.replaceOrDeleteObsoleteJustifications() != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete obsolete justifications in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
 							}
 						}
 					else
 						{
-						if( !isPossessive &&
-						foundSpecificationItem == null &&
-						secondarySpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) == null &&
-						( conclusionSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, false, false, specificationWordItem, null ) ) != null &&
-						( conclusionJustificationItem = conclusionSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) ) != null &&
-						( justificationSecondarySpecificationItem = conclusionJustificationItem.secondarySpecificationItem() ) != null )
+						if( isPossessive &&
+						createdSpecificationItem.isSpecificationWordSpanishAmbiguous() &&
+						!createdSpecificationItem.isHiddenSpanishSpecification() &&
+						( assumptionSpecificationItem = relationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, false, true, specificationWordItem, generalizationWordItem ) ) != null &&
+						!assumptionSpecificationItem.hasOnlyOneRelationWord() )
 							{
-							// Additional justification
-							if( ( justificationResult = generalizationWordItem.addJustification( false, false, conclusionSpecificationItem.hasSpecificationCollection(), Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, justificationSecondarySpecificationItem, null, secondarySpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+							// Additional justification (isPossessive)
+							if( ( justificationResult = relationWordItem.addJustification( false, true, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, secondarySpecificationItem, null, null ) ).result != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + relationWordItem.anyWordTypeString() + "\"" );
 
 							if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
 								return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-							if( secondarySpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the assumption specification" );
+							if( assumptionSpecificationItem.attachJustificationToSpecification( createdJustificationItem ) != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the assumption specification" );
 							}
 						}
 
 					if( isPossessive &&
 					( createdOrFoundSpecificationItem = ( createdSpecificationItem == null ? foundSpecificationItem : createdSpecificationItem ) ) != null )
 						{
-						if( !createdOrFoundSpecificationItem.hasSpecificationCompoundCollection() &&
+						if( createdOrFoundSpecificationItem.hasNonCompoundSpecificationCollection() &&
 						makePossessiveConditionalSpecificationAssumption( isArchivedAssignment, isExclusiveSpecification, true, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, createdOrFoundSpecificationItem, null, generalizationWordItem, relationWordItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to make an exclusive specification substitution assumption from generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" to specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to make a possessive conditional specification assumption during the drawing of a possessive reversible conclusion in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" to specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
 
-						if( isSecondarySpecificationWordSpanishAmbiguous &&
-						( collectedWithItselfCommonWordItem = createdOrFoundSpecificationItem.collectedWithItselfCommonWordItem() ) != null )
-							{
-							if( !isArchivedAssignment &&
-							// Reversed specification doesn't already exist
-							generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, true, Constants.NO_QUESTION_PARAMETER, specificationWordItem, relationWordItem ) == null &&
-
-							// Generate the reversed specification
-							drawPossessiveReversibleConclusion( false, isExclusiveSpecification, false, false, createdOrFoundSpecificationItem.assumptionLevel(), relationWordTypeNr, specificationWordTypeNr, generalizationWordTypeNr, specificationContextNr, createdOrFoundSpecificationItem.relationContextNr(), relationWordItem, specificationWordItem, generalizationWordItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to draw a possessive reversible conclusion from relation word \"" + relationWordItem.anyWordTypeString() + "\" to specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
-
-							if( ( currentGeneralizationItem = collectedWithItselfCommonWordItem.firstNounSpecificationGeneralizationItem() ) != null )
-								{
-								do	{
-									if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
-										return adminItem_.startError( 1, moduleNameString_, "I found an undefined generalization word" );
-
-									if( ( partOfSpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( isConclusionAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, collectedWithItselfCommonWordItem ) ) != null &&
-									partOfSpecificationItem.isPartOf() &&
-
-									( !createdOrFoundSpecificationItem.hasAssumptionLevel() ||
-									// Skip if 'part of' conclusion exists
-									relationWordItem.firstSelfGeneratedCheckSpecificationItem( true, isArchivedAssignment, false, false, false, currentGeneralizationWordItem, null ) == null ) )
-										{
-										// Draw a 'part of' generalization conclusion
-										// Not yet explained in the design
-										if( adminItem_.addSelfGeneratedSpecification( false, isConclusionAssignment, isArchivedAssignment, false, false, false, false, false, true, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, relationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, createdOrFoundSpecificationItem, null, partOfSpecificationItem, null, relationWordItem, currentGeneralizationWordItem, null ).result != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to add a self-generated reversible 'part of' specification to relation word \"" + relationWordItem.anyWordTypeString() + "\" to specification word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\"" );
-										}
-									}
-								while( ( currentGeneralizationItem = currentGeneralizationItem.nextNounSpecificationGeneralizationItem() ) != null );
-								}
-
-							if( relationWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, true, false, Constants.NO_QUESTION_PARAMETER, collectedWithItselfCommonWordItem ) == null &&
-							( secondarySpecificationItem = collectedWithItselfCommonWordItem.bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, Constants.NO_QUESTION_PARAMETER, createdOrFoundSpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, specificationWordItem ) ) != null &&
-
-							drawNegativeConclusion( isArchivedAssignment, false, relationWordTypeNr, secondarySpecificationItem.specificationWordTypeNr(), Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, secondarySpecificationItem, null, createdOrFoundSpecificationItem, null, relationWordItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to draw a negative conclusion about relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
-							}
-						}
-
-					if( isUserGeneralizationWord &&
-					specificationWordItem.isUserSpecificationWord )
-						{
 						// Typically for the Spanish language
-						if( isSecondarySpecificationWordSpanishAmbiguous )
+						if( ( collectedWithItselfCommonWordItem = createdOrFoundSpecificationItem.collectedWithItselfCommonWordItem() ) != null )
 							{
-							if( ( existingSpecificationItem = relationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, !isPossessive, true, specificationWordItem, null ) ) != null &&
-							existingSpecificationItem.specificationCollectionNr() != spanishAmbiguousSpecificationCollectionNr )
+							if( isSecondarySpecificationWordSpanishAmbiguous )
 								{
-								if( foundSpecificationItem == null )
-									{
-									if( existingSpecificationItem.isHiddenSpanishSpecification() )
-										{
-										// Add context to hidden specification
-										if( generalizationWordItem.addContext( false, relationWordTypeNr, specificationWordTypeNr, existingSpecificationItem.relationContextNr(), specificationWordItem ) != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to add a relation context to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+								if( relationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, true, false, false, collectedWithItselfCommonWordItem ) == null &&
+								( secondarySpecificationItem = collectedWithItselfCommonWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, Constants.NO_QUESTION_PARAMETER, createdOrFoundSpecificationItem.specificationCollectionNr(), specificationWordItem ) ) != null &&
 
-										// Not hidden anymore after addition of context
-										if( !existingSpecificationItem.isHiddenSpanishSpecification() &&
-										relationWordItem.writeUpdatedSpecification( true, false, false, false, false, existingSpecificationItem ) != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to write the hidden assumption in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
-										}
-									}
-								else
-									{
-									if( secondarySpecificationItem != null )
-										{
-										// Additional justification
-										if( ( justificationResult = relationWordItem.addJustification( false, true, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, secondarySpecificationItem, null, null ) ).result != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
-
-										if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
-											return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
-
-										if( existingSpecificationItem.attachJustificationToSpecification( createdJustificationItem ) != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the existing specification" );
-										}
-									}
+								drawNegativeConclusion( isArchivedAssignment, false, relationWordTypeNr, secondarySpecificationItem.specificationWordTypeNr(), Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, secondarySpecificationItem, null, createdOrFoundSpecificationItem, null, relationWordItem ) != Constants.RESULT_OK )
+									return adminItem_.addError( 1, moduleNameString_, "I failed to draw a negative conclusion about relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
 								}
-							}
-						else
-							{
-							if( foundSpecificationItem == null )
+							else
 								{
-								if( isPossessive &&
-								createdSpecificationItem != null &&
-								( assumptionSpecificationItem = relationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, false, true, specificationWordItem, null ) ) != null )
+								if( createdSpecificationItem != null &&
+								foundSpecificationItem != null &&
+								( assumptionSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, false, true, collectedWithItselfCommonWordItem, relationWordItem ) ) != null &&
+								( obsoleteJustificationItem = assumptionSpecificationItem.secondarySpecificationJustificationItem( foundSpecificationItem ) ) != null )
 									{
-									// Additional justification (assumption)
-									if( ( justificationResult = relationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, secondarySpecificationItem, null, assumptionSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
+									if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, createdSpecificationItem, null, null ) ).result != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
 									if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
 										return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-									if( assumptionSpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the assumption specification" );
+									if( generalizationWordItem.replaceJustification( obsoleteJustificationItem, createdJustificationItem, assumptionSpecificationItem ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to replace a negative assumption justification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+									}
+								}
+							}
+						}
 
-									if( generalizationWordItem.addContext( false, relationWordTypeNr, specificationWordTypeNr, assumptionSpecificationItem.relationContextNr(), specificationWordItem ) != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to add a relation context to generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-
-									collectedSpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, false, false, Constants.NO_QUESTION_PARAMETER, assumptionSpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, null );
-
-									if( collectedSpecificationItem != null &&
-									( firstJustificationItem = collectedSpecificationItem.firstJustificationItem() ) != null )
+					if( isUserGeneralizationWord )
+						{
+						if( specificationWordItem.isUserSpecificationWord )
+							{
+							// Typically for the Spanish language
+							if( isSecondarySpecificationWordSpanishAmbiguous )
+								{
+								if( ( existingSpecificationItem = relationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, !isPossessive, true, specificationWordItem, null ) ) != null &&
+								existingSpecificationItem.specificationCollectionNr() != spanishAmbiguousSpecificationCollectionNr )
+									{
+									if( foundSpecificationItem == null )
 										{
-										// Additional justification (another)
-										if( ( justificationResult = relationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, firstJustificationItem.primarySpecificationItem(), null, collectedSpecificationItem, null, assumptionSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
+										if( existingSpecificationItem.isHiddenSpanishSpecification() )
+											{
+											// Add context to hidden specification
+											if( generalizationWordItem.addContext( false, relationWordTypeNr, specificationWordTypeNr, existingSpecificationItem.relationContextNr(), specificationWordItem ) != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to add a relation context to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
-										if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
-											return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+											// Not hidden anymore after addition of context
+											if( !existingSpecificationItem.isHiddenSpanishSpecification() &&
+											relationWordItem.writeUpdatedSpecification( true, false, false, false, false, false, existingSpecificationItem ) != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to write the hidden assumption in word \"" + relationWordItem.anyWordTypeString() + "\"" );
+											}
+										else
+											{
+											if( createdSpecificationItem != null &&
+											!existingSpecificationItem.hasCurrentCreationSentenceNr() &&
 
-										if( assumptionSpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification (again) of the assumption specification" );
+											// Replace an assumption without relation word
+											relationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to replace the existing assumption by the created conclusion" );
+											}
+										}
+									else
+										{
+										if( secondarySpecificationItem != null &&
+										existingSpecificationItem.secondarySpecificationJustificationItem( secondarySpecificationItem ) != null &&
+										generalizationWordItem.hasDisplayedMoreSpecificSpecification() &&
 
-										// Additional justification (collected)
-										if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, firstJustificationItem.primarySpecificationItem(), null, createdSpecificationItem, null, collectedSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-
-										if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
-											return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
-
-										if( collectedSpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the collected specification" );
+										// Draw proper name 'part of' conclusions
+										adminItem_.drawProperNamePartOfConclusions( false, isArchivedAssignment, null, specificationWordItem, relationWordItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to draw proper name 'part of' conclusions" );
 										}
 									}
 								}
 							else
 								{
-								// Typically for the Spanish language
-								if( secondarySpecificationItem != null &&
-								secondarySpecificationItem.hasSpecificationCompoundCollection() &&
-								foundSpecificationItem.isSelfGeneratedAssumption() &&
-								( commonWordItem = specificationWordItem.commonWordItem( foundSpecificationItem.specificationCollectionNr() ) ) != null &&
-								( assumptionSpecificationItem = relationWordItem.bestMatchingRelationContextNrSpecificationItem( false, true, Constants.NO_QUESTION_PARAMETER, commonWordItem, generalizationWordItem ) ) != null &&
-								assumptionSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) != null )
+								if( isPossessive )
 									{
-									// Additional justification (Spanish)
-									if( ( justificationResult = relationWordItem.addJustification( false, true, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, secondarySpecificationItem, null, null ) ).result != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
+									if( createdSpecificationItem != null &&
+									foundSpecificationItem == null &&
+									( assumptionSpecificationItem = relationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, false, true, specificationWordItem, null ) ) != null )
+										{
+										// Additional justification (assumption)
+										if( ( justificationResult = relationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, secondarySpecificationItem, null, assumptionSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + relationWordItem.anyWordTypeString() + "\"" );
 
-									if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
-										return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+										if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+											return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-									if( assumptionSpecificationItem.attachJustificationToSpecification( createdJustificationItem ) != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the assumption specification" );
+										if( assumptionSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the assumption specification" );
+
+										if( generalizationWordItem.addContext( false, relationWordTypeNr, specificationWordTypeNr, assumptionSpecificationItem.relationContextNr(), specificationWordItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to add a relation context to generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+										collectedSpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, Constants.NO_QUESTION_PARAMETER, assumptionSpecificationItem.specificationCollectionNr(), null );
+
+										if( collectedSpecificationItem != null &&
+										( firstJustificationItem = collectedSpecificationItem.firstJustificationItem() ) != null )
+											{
+											// Additional justification (another)
+											if( ( justificationResult = relationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, firstJustificationItem.primarySpecificationItem(), null, collectedSpecificationItem, null, assumptionSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + relationWordItem.anyWordTypeString() + "\"" );
+
+											if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+												return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+											if( assumptionSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification (again) of the assumption specification" );
+
+											// Additional justification (collected)
+											if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, firstJustificationItem.primarySpecificationItem(), null, createdSpecificationItem, null, collectedSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+											if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+												return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+											if( collectedSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the collected specification" );
+											}
+										}
+									}
+								else
+									{
+									if( adminItem_.isSpanishCurrentLanguage() &&
+									createdSpecificationItem != null &&
+									foundSpecificationItem == null &&
+									( masculineSpecificationWordItem = specificationWordItem.masculineCollectionWordItem() ) != null &&
+									( obsoleteSpecificationItem = relationWordItem.noRelationContextSpecificationItem( true, true, masculineSpecificationWordItem ) ) != null )
+										{
+										// Write an assumption without relation word
+										if( relationWordItem.writeUpdatedSpecification( true, false, false, false, true, false, obsoleteSpecificationItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to write an assumption without relation word of word \"" + relationWordItem.anyWordTypeString() + "\"" );
+
+										// Replace an assumption without relation word
+										if( relationWordItem.replaceOrDeleteSpecification( false, obsoleteSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to replace an assumption without relation word" );
+										}
 									}
 								}
-							}
 
-						if( makeExclusiveSpecificationSubstitutionAssumption( isArchivedAssignment, isExclusiveSpecification, false, !isPossessive, relationWordTypeNr, specificationWordTypeNr, generalizationWordTypeNr, specificationContextNr, relationWordItem, specificationWordItem, generalizationWordItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to make an exclusive specification substitution assumption with relation word \"" + relationWordItem.anyWordTypeString() + "\" and specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
+							if( makeExclusiveSpecificationSubstitutionAssumption( isArchivedAssignment, isExclusiveSpecification, false, !isPossessive, relationWordTypeNr, specificationWordTypeNr, generalizationWordTypeNr, specificationContextNr, relationWordItem, specificationWordItem, generalizationWordItem ) != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to make an exclusive specification substitution assumption with relation word \"" + relationWordItem.anyWordTypeString() + "\" and specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
+							}
+						else
+							{
+							if( createdSpecificationItem != null &&
+							foundSpecificationItem != null &&
+							( firstJustificationItem = foundSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) ) != null &&
+							( secondarySpecificationItem = firstJustificationItem.secondarySpecificationItem() ) != null )
+								{
+								// Additional justification (Created Spanish copy)
+								if( ( justificationResult = relationWordItem.addJustification( false, false, true, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, secondarySpecificationItem, null, createdSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+									return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + relationWordItem.anyWordTypeString() + "\"" );
+
+								if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+									return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+								if( createdSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+									return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
+								}
+							}
 						}
 					}
 				else
 					{
 					if( existingSpecificationItem != null )
 						{
-						confirmedAllRelationWordsOfSpecificationItem = confirmedAllRelationWordsOfSpecificationItem.updatedSpecificationItem();
+						if( confirmedAllRelationWordsOfSpecificationItem.isReplacedItem() )
+							confirmedAllRelationWordsOfSpecificationItem = confirmedAllRelationWordsOfSpecificationItem.updatedSpecificationItem();
 
 						if( relationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, confirmedAllRelationWordsOfSpecificationItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete a specification in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
-
-						// Clean-up obsolete justifications
-						if( relationWordItem.replaceOrDeleteObsoleteJustifications() != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete obsolete justifications in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete a specification in word \"" + relationWordItem.anyWordTypeString() + "\"" );
 						}
 					}
 				}
@@ -1313,16 +1238,14 @@ class AdminReasoningOld
 		if( specificationWordItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 
+		if( secondarySpecificationItem.hasCurrentCreationSentenceNr() &&
 		// Skip if user specification already exists
-		if( generalizationWordItem.firstUserSpecificationItem( false, false, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, specificationWordItem ) == null &&
-
+		generalizationWordItem.firstUserSpecificationItem( false, false, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, specificationWordItem ) == null &&
 		// Skip if justification with primary specification already exists
-		( generalizationWordItem.primarySpecificationJustificationItem( false, Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, primarySpecificationItem ) == null ||
-		// Skip if justification with secondary specification already exists
-		generalizationWordItem.secondarySpecificationJustificationItem( false, Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, secondarySpecificationItem ) == null ) )
+		generalizationWordItem.primarySpecificationJustificationItem( false, Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, primarySpecificationItem ) == null )
 			{
 			// Make a generalization assumption
-			// Not yet explained in the design
+			// See paragraph 2.4.1 in the theory document or http://mafait.org/theory_2_4_1/
 			if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, ( generalizationWordTypeNr == Constants.WORD_TYPE_PROPER_NAME ? false : primarySpecificationItem.isEveryGeneralization() ), false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, primarySpecificationItem, null, secondarySpecificationItem, null, generalizationWordItem, specificationWordItem, null ) ).result != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to make a generalization assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
@@ -1332,7 +1255,7 @@ class AdminReasoningOld
 			( olderGeneralizationAssumptionBySpecificationJustificationItem = olderGeneralizationAssumptionBySpecificationItem.olderJustificationItem( Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION ) ) != null &&
 
 			generalizationWordItem.replaceJustification( olderGeneralizationAssumptionBySpecificationJustificationItem, createAndAssignResult.createdJustificationItem, olderGeneralizationAssumptionBySpecificationItem ) != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to replace an older generalization assumption by the created justification item in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to replace an older generalization assumption by the created justification item in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 			}
 
 		return Constants.RESULT_OK;
@@ -1341,7 +1264,6 @@ class AdminReasoningOld
 	private byte makeGeneralizationAssumptionByGeneralization( boolean isArchivedAssignment, short generalizationWordTypeNr, short specificationWordTypeNr, int generalizationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
 		boolean isGeneralizationProperName = ( generalizationWordTypeNr == Constants.WORD_TYPE_PROPER_NAME );
-		short questionParameter = ( isGeneralizationProperName ? Constants.WORD_PARAMETER_SINGULAR_VERB_IS : Constants.NO_QUESTION_PARAMETER );
 		GeneralizationItem currentGeneralizationItem;
 		SpecificationItem primarySpecificationItem;
 		SpecificationItem secondarySpecificationItem;
@@ -1361,6 +1283,7 @@ class AdminReasoningOld
 
 		if( ( currentGeneralizationItem = specificationWordItem.firstNounSpecificationGeneralizationItem() ) != null )
 			{
+			// Do for all generalization noun specification words
 			do	{
 				if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
 					return adminItem_.startError( 1, moduleNameString_, "I found an undefined generalization word" );
@@ -1369,14 +1292,14 @@ class AdminReasoningOld
 				!currentGeneralizationWordItem.hasCollection() &&
 				!currentGeneralizationWordItem.hasPossessiveButNonQuestionSpecification() &&
 				// Get primary specification for justification
-				( primarySpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) ) != null )
+				( primarySpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, false, specificationWordItem ) ) != null )
 					{
 					// Get secondary specification for justification
-					if( ( secondarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) ) != null )
+					if( ( secondarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, false, specificationWordItem ) ) != null )
 						{
 						if( isGeneralizationProperName &&
 						!primarySpecificationItem.isSelfGeneratedAssumption() &&
-						!secondarySpecificationItem.isOlderItem() &&
+						secondarySpecificationItem.hasCurrentCreationSentenceNr() &&
 
 						// Make generalization assumption
 						makeGeneralizationAssumption( false, isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, primarySpecificationItem, secondarySpecificationItem, generalizationWordItem, currentGeneralizationWordItem ) != Constants.RESULT_OK )
@@ -1385,7 +1308,7 @@ class AdminReasoningOld
 					else
 						{
 						// Get secondary question specification for justification
-						if( ( secondarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, questionParameter, specificationWordItem ) ) != null &&
+						if( ( secondarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, isGeneralizationProperName, specificationWordItem ) ) != null &&
 						drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, false, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, generalizationWordItem, currentGeneralizationWordItem, null ) != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to draw a specification substitution conclusion or ask a question about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 						}
@@ -1400,30 +1323,39 @@ class AdminReasoningOld
 
 	private byte makePossessiveConditionalSpecificationAssumption( boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isPossessive, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, SpecificationItem secondarySpecificationItem, SpecificationItem alternativeSecondarySpecificationItem, WordItem generalizationWordItem, WordItem relationWordItem )
 		{
-		boolean hasAnotherPrimarySpecificationCompoundCollection;
+		boolean hasAlternativeSecondarySpecificationCompoundCollection;
 		boolean hasSameSpecificationCollection;
 		boolean isOppositePossessiveSpecificationWordSpanishAmbiguous;
 		boolean isPossessiveReversibleAssumption;
 		boolean isPossessiveSpecificationWordSpanishAmbiguous;
 		boolean isRelationWordUserWordGeneralization;
 		boolean hasFeminineOrMasculineProperNameEnding = false;
+		boolean isExistingHiddenSpanishSpecification = false;
+		boolean isForcingNewJustification = false;
 		short assumptionJustificationTypeNr;
+		short assumptionLevel = Constants.NO_ASSUMPTION_LEVEL;
+		int hiddenSpanishSpecificationCollectionNr = Constants.NO_COLLECTION_NR;
 		JustificationItem createdJustificationItem;
+		JustificationItem duplicateJustificationItem;
 		JustificationItem foundJustificationItem;
 		SpecificationItem assumptionSpecificationItem;
+		SpecificationItem conclusionSpecificationItem;
 		SpecificationItem createdOrFoundSpecificationItem;
 		SpecificationItem createdSpecificationItem;
 		SpecificationItem existingSpecificationItem;
 		SpecificationItem existingUserSpecificationItem;
 		SpecificationItem foundSpecificationItem;
+		SpecificationItem obsoleteSpecificationItem;
+		SpecificationItem userSpecificationItem;
 		SpecificationItem anotherPrimarySpecificationItem = null;
 		SpecificationItem selfGeneratedConclusionSpecificationItem = null;
+		WordItem masculineSpecificationWordItem;
 		WordItem possessiveSpecificationWordItem;
 		WordItem secondaryGeneralizationWordItem;
 		WordItem secondarySpecificationWordItem;
 		WordItem feminineSpecificationWordItem = null;
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
-		JustificationResultType justificationResult;
+		JustificationResultType justificationResult = new JustificationResultType();
 
 		if( !adminItem_.isNounWordType( specificationWordTypeNr ) )
 			return adminItem_.startError( 1, moduleNameString_, "The given specification word type isn't a noun" );
@@ -1447,11 +1379,14 @@ class AdminReasoningOld
 			isPossessiveSpecificationWordSpanishAmbiguous = possessiveSpecificationWordItem.isNounWordSpanishAmbiguous();
 
 			if( isPossessiveSpecificationWordSpanishAmbiguous ||
-			!secondarySpecificationItem.hasSpecificationCompoundCollection() )
+			!secondarySpecificationItem.hasCompoundSpecificationCollection() )
 				{
 				isRelationWordUserWordGeneralization = relationWordItem.isUserGeneralizationWord;
 
-				existingSpecificationItem = relationWordItem.bestMatchingRelationContextNrSpecificationItem( true, true, false, !isPossessive, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, possessiveSpecificationWordItem );
+				if( ( existingSpecificationItem = relationWordItem.bestMatchingRelationContextNrSpecificationItem( true, false, !isPossessive, possessiveSpecificationWordItem ) ) != null &&
+				existingSpecificationItem.isHiddenSpanishSpecification() )
+					isExistingHiddenSpanishSpecification = true;
+
 				existingUserSpecificationItem = relationWordItem.firstUserSpecificationItem( false, !isPossessive, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, possessiveSpecificationWordItem );
 
 				// Skip if possessive user specification exists
@@ -1471,49 +1406,84 @@ class AdminReasoningOld
 				( isPossessiveSpecificationWordSpanishAmbiguous &&
 				alternativeSecondarySpecificationItem != null &&
 				!alternativeSecondarySpecificationItem.isOlderItem() &&
-				alternativeSecondarySpecificationItem.isActiveAssignment() &&
+
+				( ( !isPossessive &&
+				existingUserSpecificationItem != null ) ||
+
+				alternativeSecondarySpecificationItem.isActiveAssignment() ||
+
+				( existingSpecificationItem != null &&
+				existingUserSpecificationItem == null &&
+				!generalizationWordItem.hasActiveQuestionWithCompoundCollection() &&
+
+				// Not hidden
+				( ( !isExistingHiddenSpanishSpecification &&
+				!existingSpecificationItem.isOlderItem() ) ||
+
+				// Hidden
+				( isExistingHiddenSpanishSpecification &&
+				existingSpecificationItem.hasCurrentCreationSentenceNr() &&
+				existingSpecificationItem.isOlderItem() ) ) ) ) &&
 
 				// Skip if possessive user specification exists
 				( existingUserSpecificationItem == null ||
 
 				( existingUserSpecificationItem.isOlderItem() &&
-				existingUserSpecificationItem.hasSpecificationCompoundCollection() ) ) ) )
+				existingUserSpecificationItem.hasCompoundSpecificationCollection() ) ) ) )
 					{
 					isPossessiveReversibleAssumption = ( secondarySpecificationWordItem == possessiveSpecificationWordItem );
 
+					if( isPossessiveSpecificationWordSpanishAmbiguous &&
+					!isPossessive &&
+					isPossessiveReversibleAssumption &&
+					existingSpecificationItem != null )
+						{
+						if( isExistingHiddenSpanishSpecification )
+							{
+							if( existingUserSpecificationItem == null &&
+							existingSpecificationItem.isSelfGeneratedAssumption() &&
+							secondarySpecificationItem.isUserSpecification() )
+								{
+								// Force assumption
+								assumptionLevel++;
+								isForcingNewJustification = true;
+								}
+							}
+						else
+							{
+							if( existingUserSpecificationItem != null )
+								isForcingNewJustification = true;
+							}
+						}
+
 					// Make a possessive conditional specification assumption (normal)
-					// See design: paragraph 2.4.2 in the theory document or http://mafait.org/theory_2_4_2/
-					if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, isExclusiveSpecification, false, false, false, !isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, ( isPossessiveReversibleAssumption ? Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION : Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ), Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, relationWordTypeNr, secondarySpecificationItem.specificationWordTypeNr(), generalizationWordTypeNr, possessiveDefinitionSpecificationItem_.specificationCollectionNr(), Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, ( isPossessive ? possessiveDefinitionSpecificationItem_ : null ), null, ( isPossessiveSpecificationWordSpanishAmbiguous ? alternativeSecondarySpecificationItem : secondarySpecificationItem ), null, relationWordItem, possessiveSpecificationWordItem, generalizationWordItem ) ).result != Constants.RESULT_OK )
+					// See paragraph 2.4.2 in the theory document or http://mafait.org/theory_2_4_2/
+					if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, isExclusiveSpecification, isForcingNewJustification, false, false, !isPossessive, false, false, false, assumptionLevel, ( isPossessiveReversibleAssumption ? Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION : Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ), Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, relationWordTypeNr, secondarySpecificationItem.specificationWordTypeNr(), generalizationWordTypeNr, possessiveDefinitionSpecificationItem_.specificationCollectionNr(), Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, ( isPossessive ? possessiveDefinitionSpecificationItem_ : null ), null, ( isPossessiveSpecificationWordSpanishAmbiguous ? alternativeSecondarySpecificationItem : secondarySpecificationItem ), null, relationWordItem, possessiveSpecificationWordItem, generalizationWordItem ) ).result != Constants.RESULT_OK )
 						return adminItem_.addError( 1, moduleNameString_, "I failed to make a possessive conditional specification assumption about relation word \"" + relationWordItem.anyWordTypeString() + "\" and specification word \"" + possessiveSpecificationWordItem.anyWordTypeString() + "\"" );
 
 					if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == null )
 						{
-						createdOrFoundSpecificationItem = createAndAssignResult.foundSpecificationItem;
-
 						if( isPossessive &&
 						!isRelationWordUserWordGeneralization &&
 						existingSpecificationItem != null &&
 						existingSpecificationItem.isSelfGeneratedAssumption() &&
-						( createdJustificationItem = createAndAssignResult.createdJustificationItem ) != null &&
-						( foundJustificationItem = existingSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) ) != null )
+						( foundJustificationItem = existingSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) ) != null &&
+						( secondaryGeneralizationWordItem = foundJustificationItem.secondaryGeneralizationWordItem() ) != null &&
+						secondaryGeneralizationWordItem != generalizationWordItem &&
+						( foundJustificationItem = relationWordItem.possessiveReversibleAssumptionJustificationItem( secondaryGeneralizationWordItem, secondarySpecificationWordItem ) ) != null )
 							{
-							secondaryGeneralizationWordItem = foundJustificationItem.secondaryGeneralizationWordItem();
+							// Additional justification
+							if( ( justificationResult = relationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, possessiveDefinitionSpecificationItem_, null, foundJustificationItem.secondarySpecificationItem(), null, existingSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + relationWordItem.anyWordTypeString() + "\"" );
 
-							if( secondaryGeneralizationWordItem != null &&
-							secondaryGeneralizationWordItem != generalizationWordItem &&
-							( foundJustificationItem = relationWordItem.possessiveReversibleAssumptionJustificationItem( secondaryGeneralizationWordItem, secondarySpecificationWordItem ) ) != null )
-								{
-								// Additional justification
-								if( ( justificationResult = relationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, possessiveDefinitionSpecificationItem_, null, foundJustificationItem.secondarySpecificationItem(), null, existingSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
+							if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+								return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-								if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
-									return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
-
-								if( existingSpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
-								}
+							if( existingSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
 							}
+
+						createdOrFoundSpecificationItem = createAndAssignResult.foundSpecificationItem;
 						}
 					else
 						{
@@ -1522,38 +1492,62 @@ class AdminReasoningOld
 						if( !isPossessive &&
 						existingSpecificationItem != null )
 							{
-							existingSpecificationItem = existingSpecificationItem.updatedSpecificationItem();
+							if( existingSpecificationItem.isUserSpecification() &&
+							createdSpecificationItem.nRelationContextWords() > 1 )
+								{
+								// Additional Spanish justification (User)
+								if( ( justificationResult = relationWordItem.addJustification( false, false, true, ( existingSpecificationItem.hasAssumptionLevel() ? Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION : Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ), Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, existingSpecificationItem, null, createdSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+									return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + relationWordItem.anyWordTypeString() + "\"" );
 
-							if( !createdSpecificationItem.isHiddenSpanishSpecification() &&
-							createdSpecificationItem.assumptionLevel() < existingSpecificationItem.assumptionLevel() &&
-							relationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to replace the existing specification in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
+								if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+									return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+								if( createdSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+									return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
+								}
+							else
+								{
+								if( existingSpecificationItem.isReplacedItem() )
+									existingSpecificationItem = existingSpecificationItem.updatedSpecificationItem();
+
+								if( !createdSpecificationItem.isHiddenSpanishSpecification() &&
+								createdSpecificationItem.assumptionLevel() < existingSpecificationItem.assumptionLevel() )
+									{
+									// Replace or delete the existing specification
+									if( relationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to replace the existing specification in word \"" + relationWordItem.anyWordTypeString() + "\"" );
+
+									if( !existingSpecificationItem.isDeletedItem() &&
+									relationWordItem.writeUpdatedSpecification( true, false, false, false, true, false, existingSpecificationItem ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to write an assumption, which has relation words now" );
+									}
+								}
 							}
 						}
 
 					if( !isPossessive &&
 					createdOrFoundSpecificationItem != null &&
+					secondarySpecificationItem.hasCurrentCreationSentenceNr() &&
 
 					( createdSpecificationItem != null ||
+					secondarySpecificationItem.secondarySpecificationJustificationItem( createdOrFoundSpecificationItem ) == null ) &&
 
-					( secondarySpecificationItem.secondarySpecificationJustificationItem( createdOrFoundSpecificationItem ) == null &&
-					!secondarySpecificationItem.isSpecificationWordSpanishAmbiguous() ) ) &&
-
-					!generalizationWordItem.hasCorrectedAssumptionByKnowledge() &&
-					// Typically for the Spanish language
-					!secondarySpecificationItem.isActiveAssignment() )
+					// Skip Spanish specifications
+					!secondarySpecificationItem.isUserSpecification() &&
+					!secondarySpecificationItem.isHiddenSpanishSpecification() )
 						{
 						// Additional justification
-						if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, createdOrFoundSpecificationItem, null, secondarySpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+						if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, createdOrFoundSpecificationItem.updatedSpecificationItem(), null, secondarySpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
 						if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
 							return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-						secondarySpecificationItem = secondarySpecificationItem.updatedSpecificationItem();
+						if( secondarySpecificationItem.isReplacedItem() )
+							secondarySpecificationItem = secondarySpecificationItem.updatedSpecificationItem();
 
-						if( secondarySpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the secondary specification" );
+						if( secondarySpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the secondary specification" );
 						}
 					}
 
@@ -1566,29 +1560,26 @@ class AdminReasoningOld
 					// Try to find a self-generated conclusion first
 					( selfGeneratedConclusionSpecificationItem = relationWordItem.firstSelfGeneratedCheckSpecificationItem( true, false, false, isPossessive, false, oppositePossessiveSpecificationWordItem_, null ) ) == null &&
 					// If not found, try to find a self-generated assumption
-					( assumptionSpecificationItem = relationWordItem.bestMatchingRelationContextNrSpecificationItem( false, isPossessive, Constants.NO_QUESTION_PARAMETER, oppositePossessiveSpecificationWordItem_, generalizationWordItem ) ) != null )
+					( assumptionSpecificationItem = relationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, false, isPossessive, oppositePossessiveSpecificationWordItem_, generalizationWordItem ) ) != null )
 						{
 						hasSameSpecificationCollection = ( assumptionSpecificationItem.specificationCollectionNr() == alternativeSecondarySpecificationItem.specificationCollectionNr() );
 
 						if( !assumptionSpecificationItem.hasCurrentCreationSentenceNr() &&
 						!assumptionSpecificationItem.hasNewInformation() &&
 
-						( generalizationWordItem.hasConfirmedSpecification() == hasSameSpecificationCollection ||
+						( generalizationWordItem.hasCurrentlyConfirmedSpecification() == hasSameSpecificationCollection ||
 						alternativeSecondarySpecificationItem.isPossessive() ) )
 							selfGeneratedConclusionSpecificationItem = assumptionSpecificationItem;
 						}
 
-					isOppositePossessiveSpecificationWordSpanishAmbiguous = oppositePossessiveSpecificationWordItem_.isNounWordSpanishAmbiguous();
 
-					if( isOppositePossessiveSpecificationWordSpanishAmbiguous )
-						feminineSpecificationWordItem = oppositePossessiveSpecificationWordItem_.feminineCollectionWordItem();
-					else
-						feminineSpecificationWordItem = oppositePossessiveSpecificationWordItem_.feminineOrMasculineCommonWordItem( isPossessive ? generalizationWordItem.hasFeminineProperNameEnding() : relationWordItem.hasFeminineProperNameEnding() );
+					isOppositePossessiveSpecificationWordSpanishAmbiguous = oppositePossessiveSpecificationWordItem_.isNounWordSpanishAmbiguous();
+					feminineSpecificationWordItem = ( isOppositePossessiveSpecificationWordSpanishAmbiguous ? oppositePossessiveSpecificationWordItem_.feminineCollectionWordItem() : oppositePossessiveSpecificationWordItem_.feminineOrMasculineCommonWordItem( isPossessive ? generalizationWordItem.hasFeminineProperNameEnding() : relationWordItem.hasFeminineProperNameEnding() ) );
 
 					if( feminineSpecificationWordItem != null )
 						{
 						if( isFeminineOrMasculineProperNameEnding( isPossessive, relationWordItem, feminineSpecificationWordItem, generalizationWordItem ) )
-							anotherPrimarySpecificationItem = oppositePossessiveSpecificationWordItem_.firstAssignmentOrSpecificationItem( false, false, false, false, Constants.NO_QUESTION_PARAMETER, feminineSpecificationWordItem );
+							anotherPrimarySpecificationItem = oppositePossessiveSpecificationWordItem_.firstAssignmentOrSpecificationItem( false, false, false, false, false, feminineSpecificationWordItem );
 						else
 							feminineSpecificationWordItem = null;
 						}
@@ -1601,24 +1592,32 @@ class AdminReasoningOld
 					isFeminineOrMasculineProperNameEnding( isPossessive, relationWordItem, oppositePossessiveSpecificationWordItem_, generalizationWordItem ) )
 						hasFeminineOrMasculineProperNameEnding = true;
 
-					hasAnotherPrimarySpecificationCompoundCollection = ( alternativeSecondarySpecificationItem != null &&
-																		alternativeSecondarySpecificationItem.hasSpecificationCompoundCollection() );
+					hasAlternativeSecondarySpecificationCompoundCollection = ( alternativeSecondarySpecificationItem != null &&
+																				alternativeSecondarySpecificationItem.hasCompoundSpecificationCollection() );
+
 					isPossessiveReversibleAssumption = ( secondarySpecificationWordItem == oppositePossessiveSpecificationWordItem_ );
 
 					assumptionJustificationTypeNr = ( isPossessiveReversibleAssumption ? Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION :
-													( isOppositePossessiveSpecificationWordSpanishAmbiguous &&
-													!hasAnotherPrimarySpecificationCompoundCollection &&
-													!hasFeminineOrMasculineProperNameEnding &&
-													isRelationWordUserWordGeneralization ) ? Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION : Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION );
 
-					if( ( selfGeneratedConclusionSpecificationItem == null ||
+													// Typically for the Spanish language
+													( isOppositePossessiveSpecificationWordSpanishAmbiguous &&
+													!hasAlternativeSecondarySpecificationCompoundCollection &&
+													!isPossessive ) ? Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION : Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION );
+
+					if( ( ( selfGeneratedConclusionSpecificationItem == null ||
 					!generalizationWordItem.isOlderItem() ||
 
 					( isRelationWordUserWordGeneralization &&
 					selfGeneratedConclusionSpecificationItem.isSelfGenerated() ) ||
 
 					( isOppositePossessiveSpecificationWordSpanishAmbiguous &&
-					!selfGeneratedConclusionSpecificationItem.hasRelationContext() ) ) &&
+
+					( !selfGeneratedConclusionSpecificationItem.hasRelationContext() ||
+
+					( !isRelationWordUserWordGeneralization &&
+					selfGeneratedConclusionSpecificationItem.isUserSpecification() &&
+					// Relation context doesn't exist
+					!generalizationWordItem.hasContextInWord( selfGeneratedConclusionSpecificationItem.relationContextNr(), oppositePossessiveSpecificationWordItem_ ) ) ) ) ) &&
 
 					( ( !isOppositePossessiveSpecificationWordSpanishAmbiguous &&
 					!secondarySpecificationItem.isConcludedAssumption() &&
@@ -1627,7 +1626,7 @@ class AdminReasoningOld
 
 					( feminineSpecificationWordItem != null &&
 
-					( hasAnotherPrimarySpecificationCompoundCollection ||
+					( hasAlternativeSecondarySpecificationCompoundCollection ||
 					isPossessiveReversibleAssumption ) &&
 
 					// Skip if feminine specification exists as user specification
@@ -1636,75 +1635,234 @@ class AdminReasoningOld
 					( isOppositePossessiveSpecificationWordSpanishAmbiguous &&
 					alternativeSecondarySpecificationItem != null &&
 					// Skip if already exists as self-generated assumption
-					relationWordItem.primarySpecificationJustificationItem( true, assumptionJustificationTypeNr, alternativeSecondarySpecificationItem ) == null ) ) )
+					relationWordItem.primarySpecificationJustificationItem( false, assumptionJustificationTypeNr, alternativeSecondarySpecificationItem ) == null ) ) ) &&
+
+					( !isOppositePossessiveSpecificationWordSpanishAmbiguous ||
+					!isPossessive ||
+					isRelationWordUserWordGeneralization ||
+					anotherPrimarySpecificationItem == null ||
+					( existingUserSpecificationItem = generalizationWordItem.firstUserSpecificationItem( false, isPossessive, anotherPrimarySpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, null ) ) == null ||
+					!existingUserSpecificationItem.isOlderItem() ) )
 						{
+						// Typically for the Spanish language
+						if( isOppositePossessiveSpecificationWordSpanishAmbiguous &&
+						existingSpecificationItem != null &&
+
+						( existingSpecificationItem.isUserSpecification() ||
+						existingSpecificationItem.isHiddenSpanishSpecification() ) )
+							hiddenSpanishSpecificationCollectionNr = possessiveDefinitionSpecificationItem_.specificationCollectionNr();
+
 						// Make a possessive conditional specification assumption (opposite)
-						// See design: paragraph 2.4.2 in the theory document or http://mafait.org/theory_2_4_2/
-						if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, false, false, false, false, isExclusiveSpecification, false, false, false, isPossessive, false, false, false, secondarySpecificationItem.assumptionLevel(), assumptionJustificationTypeNr, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, relationWordTypeNr, Constants.WORD_TYPE_NOUN_SINGULAR, generalizationWordTypeNr, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, ( isPossessiveReversibleAssumption ? null : ( isOppositePossessiveSpecificationWordSpanishAmbiguous ? alternativeSecondarySpecificationItem : possessiveDefinitionSpecificationItem_ ) ), null, ( isOppositePossessiveSpecificationWordSpanishAmbiguous ? ( hasFeminineOrMasculineProperNameEnding && !isPossessive ? anotherPrimarySpecificationItem : possessiveDefinitionSpecificationItem_ ) : secondarySpecificationItem ), null, relationWordItem, oppositePossessiveSpecificationWordItem_, generalizationWordItem ) ).result != Constants.RESULT_OK )
+						// See paragraph 2.4.2 in the theory document or http://mafait.org/theory_2_4_2/
+						if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, false, false, false, false, isExclusiveSpecification, false, false, false, isPossessive, false, false, false, ( assumptionJustificationTypeNr == Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ? secondarySpecificationItem.assumptionLevel() : Constants.NO_ASSUMPTION_LEVEL ), assumptionJustificationTypeNr, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, relationWordTypeNr, Constants.WORD_TYPE_NOUN_SINGULAR, generalizationWordTypeNr, hiddenSpanishSpecificationCollectionNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, ( isPossessiveReversibleAssumption ? null : ( isOppositePossessiveSpecificationWordSpanishAmbiguous ? alternativeSecondarySpecificationItem : possessiveDefinitionSpecificationItem_ ) ), null, ( isOppositePossessiveSpecificationWordSpanishAmbiguous ? ( hasFeminineOrMasculineProperNameEnding && !isPossessive ? anotherPrimarySpecificationItem : possessiveDefinitionSpecificationItem_ ) : secondarySpecificationItem ), null, relationWordItem, oppositePossessiveSpecificationWordItem_, generalizationWordItem ) ).result != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to make a possessive conditional specification assumption from relation word \"" + relationWordItem.anyWordTypeString() + "\" to specification word \"" + oppositePossessiveSpecificationWordItem_.anyWordTypeString() + "\"" );
 
-						if( ( foundSpecificationItem = createAndAssignResult.foundSpecificationItem ) != null )
+						if( ( foundSpecificationItem = createAndAssignResult.foundSpecificationItem ) == null )
 							{
-							foundSpecificationItem = foundSpecificationItem.updatedSpecificationItem();
-
-							if( !isOppositePossessiveSpecificationWordSpanishAmbiguous &&
-							( assumptionSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, !isPossessive, true, oppositePossessiveSpecificationWordItem_, relationWordItem ) ) != null )
+							if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) != null )
 								{
-								// Additional justifications (Generalization word)
-								if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, foundSpecificationItem, null, null ) ).result != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+								// Created, not found
+								if( selfGeneratedConclusionSpecificationItem == null )
+									{
+									// Typically for the Spanish language
+									if( isOppositePossessiveSpecificationWordSpanishAmbiguous &&
+									secondarySpecificationItem.isUserSpecification() &&
+									!createdSpecificationItem.isHiddenSpanishSpecification() &&
+									( obsoleteSpecificationItem = relationWordItem.noRelationContextSpecificationItem( isPossessive, true, oppositePossessiveSpecificationWordItem_ ) ) != null )
+										{
+										// Write an assumption without relation word
+										if( relationWordItem.writeUpdatedSpecification( true, false, false, false, true, false, obsoleteSpecificationItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to write an assumption without relation word of word \"" + relationWordItem.anyWordTypeString() + "\"" );
 
-								if( ( createdJustificationItem = justificationResult.createdJustificationItem ) != null &&
-								generalizationWordItem.attachJustificationInWord( createdJustificationItem, assumptionSpecificationItem ) != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the given assumption specification" );
+										// Replace an assumption without relation word
+										if( relationWordItem.replaceOrDeleteSpecification( false, obsoleteSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to replace an assumption without relation word" );
+										}
+									}
+								else
+									{
+									if( selfGeneratedConclusionSpecificationItem.hasRelationContext() )
+										{
+										// Additional Spanish justification (self-generated conclusion). Test file: "Complejo (19 - extraño)"
+										if( ( justificationResult = relationWordItem.addJustification( false, false, false, ( selfGeneratedConclusionSpecificationItem.hasAssumptionLevel() ? Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION : Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ), Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, selfGeneratedConclusionSpecificationItem, null, null ) ).result != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + relationWordItem.anyWordTypeString() + "\"" );
 
-								// Additional justification (Relation word)
-								if( ( justificationResult = relationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, assumptionSpecificationItem, null, null ) ).result != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + relationWordItem.anyWordTypeString() + "\"" );
+										if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+											return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-								if( ( createdJustificationItem = justificationResult.createdJustificationItem ) != null &&
-								foundSpecificationItem.attachJustificationToSpecification( createdJustificationItem ) != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the found specification" );
+										if( createdSpecificationItem.attachJustificationToSpecification( createdJustificationItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the created specification" );
+										}
+									}
+								}
+							}
+						else	// Found
+							{
+							if( foundSpecificationItem.isReplacedItem() )
+								foundSpecificationItem = foundSpecificationItem.updatedSpecificationItem();
+
+							if( ( assumptionSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, !isPossessive, true, oppositePossessiveSpecificationWordItem_, relationWordItem ) ) == null )
+								{
+								if( isPossessive &&
+								feminineSpecificationWordItem == null &&
+								foundSpecificationItem.hasNonCompoundSpecificationCollection() &&
+								foundSpecificationItem.isOlderItem() &&
+								!foundSpecificationItem.isHiddenSpanishSpecification() &&
+
+								// Cleanup unreferenced justifications
+								relationWordItem.replaceOrDeleteUnreferencedJustifications() != Constants.RESULT_OK )
+									return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete unreferenced justifications in word \"" + relationWordItem.anyWordTypeString() + "\"" );
 								}
 							else
 								{
-								if( isPossessiveSpecificationWordSpanishAmbiguous &&
-								// Clean-up obsolete justifications
-								relationWordItem.replaceOrDeleteObsoleteJustifications() != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete obsolete justifications in relation word \"" + relationWordItem.anyWordTypeString() + "\"" );
+								if( !isOppositePossessiveSpecificationWordSpanishAmbiguous )
+									{
+									if( generalizationWordItem.hasContextInWord( foundSpecificationItem.relationContextNr(), oppositePossessiveSpecificationWordItem_ ) )
+										{
+										// Additional justification (Generalization word)
+										if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, foundSpecificationItem, null, null ) ).result != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+										if( ( createdJustificationItem = justificationResult.createdJustificationItem ) != null &&
+										generalizationWordItem.attachJustificationInWord( createdJustificationItem, assumptionSpecificationItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the given assumption specification" );
+
+										if( createAndAssignResult.createdJustificationItem == null &&
+										( foundJustificationItem = foundSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ) ) != null &&
+										( duplicateJustificationItem = foundSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ) ) != null &&
+										foundJustificationItem.secondarySpecificationItem() == duplicateJustificationItem.secondarySpecificationItem() &&
+
+										// Remove an almost duplicate justification. Difference: justification type
+										relationWordItem.replaceJustification( duplicateJustificationItem, foundJustificationItem, foundSpecificationItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to remove an almost duplicate justification in word \"" + relationWordItem.anyWordTypeString() + "\"" );
+										}
+									else
+										{
+										if( secondarySpecificationItem.isUserSpecification() &&
+										( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) != null &&
+										( foundJustificationItem = foundSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) ) != null &&
+										( existingUserSpecificationItem = foundJustificationItem.secondarySpecificationItem() ) != null )
+											{
+											// Additional justification (User). Test file: "Complex (13)"
+											if( ( justificationResult = relationWordItem.addJustification( false, true, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, existingUserSpecificationItem, null, null ) ).result != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+											if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+												return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+											if( createdSpecificationItem.attachJustificationToSpecification( createdJustificationItem ) != Constants.RESULT_OK )
+												return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the created specification" );
+											}
+										}
+									}
 								}
 							}
 
 						if( alternativeSecondarySpecificationItem != null &&
 						feminineSpecificationWordItem != null )
 							{
-							if( ( existingSpecificationItem = relationWordItem.bestMatchingRelationContextNrSpecificationItem( false, isPossessive, Constants.NO_QUESTION_PARAMETER, feminineSpecificationWordItem, generalizationWordItem ) ) == null ||
+							if( ( existingSpecificationItem = relationWordItem.bestMatchingRelationContextNrSpecificationItem( true, true, false, isPossessive, feminineSpecificationWordItem, generalizationWordItem ) ) == null ||
 
 							( existingSpecificationItem.isSelfGeneratedAssumption() &&
 
-							( !secondarySpecificationItem.isHiddenSpanishSpecification() ||
-
-							( !relationWordItem.hasConfirmedSpecification() &&
-							alternativeSecondarySpecificationItem.hasSpecificationCollection() ) ) ) )
+							( !isOppositePossessiveSpecificationWordSpanishAmbiguous ||
+							relationWordItem.hasContextInWord( alternativeSecondarySpecificationItem.relationContextNr(), alternativeSecondarySpecificationItem.specificationWordItem() ) ) ) )
 								{
 								// Make an opposite possessive feminine proper name ending assumption
 								// Not yet explained in the design
 								if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( true, false, false, false, false, isExclusiveSpecification, false, false, false, isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, relationWordTypeNr, Constants.WORD_TYPE_NOUN_SINGULAR, generalizationWordTypeNr, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, ( existingSpecificationItem == null ? Constants.NO_CONTEXT_NR : existingSpecificationItem.relationContextNr() ), alternativeSecondarySpecificationItem, ( !isPossessive && isOppositePossessiveSpecificationWordSpanishAmbiguous && oppositePossessiveDefinitionSpecificationItem_ != null ? oppositePossessiveDefinitionSpecificationItem_ : possessiveDefinitionSpecificationItem_ ), anotherPrimarySpecificationItem, null, relationWordItem, feminineSpecificationWordItem, generalizationWordItem ) ).result != Constants.RESULT_OK )
 									return adminItem_.addError( 1, moduleNameString_, "I failed to make a feminine possessive conditional specification assumption from relation word \"" + relationWordItem.anyWordTypeString() + "\" to specification word \"" + feminineSpecificationWordItem.anyWordTypeString() + "\"" );
 
-								if( !isPossessive )
+								if( isPossessive )
+									{
+									if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) != null )
+										{
+										// Typically for the Spanish language
+										if( isOppositePossessiveSpecificationWordSpanishAmbiguous )
+											{
+											if( ( masculineSpecificationWordItem = feminineSpecificationWordItem.masculineCollectionWordItem() ) != null &&
+											( obsoleteSpecificationItem = relationWordItem.noRelationContextSpecificationItem( true, true, masculineSpecificationWordItem ) ) != null )
+												{
+												// Write an assumption without relation word
+												if( relationWordItem.writeUpdatedSpecification( true, false, false, false, true, false, obsoleteSpecificationItem ) != Constants.RESULT_OK )
+													return adminItem_.addError( 1, moduleNameString_, "I failed to write an assumption without relation word of word \"" + relationWordItem.anyWordTypeString() + "\"" );
+
+												// Replace an assumption without relation word
+												if( relationWordItem.replaceOrDeleteSpecification( false, obsoleteSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
+													return adminItem_.addError( 1, moduleNameString_, "I failed to replace an assumption without relation word" );
+												}
+											}
+										else
+											{
+											if( alternativeSecondarySpecificationItem.isSelfGenerated() &&
+											( userSpecificationItem = adminItem_.userSpecificationItem() ) != null )
+												{
+												// Additional justification (feminine)
+												if( ( justificationResult = relationWordItem.addJustification( true, false, true, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, userSpecificationItem, possessiveDefinitionSpecificationItem_, anotherPrimarySpecificationItem, null, createdSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+													return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + relationWordItem.anyWordTypeString() + "\"" );
+
+												if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+													return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+												if( createdSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+													return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the assumption specification" );
+												}
+											}
+										}
+									}
+								else
 									{
 									feminineSpecificationWordItem_ = feminineSpecificationWordItem;
 
 									if( !isArchivedAssignment &&
 									( createdOrFoundSpecificationItem = ( createAndAssignResult.createdSpecificationItem == null ? createAndAssignResult.foundSpecificationItem : createAndAssignResult.createdSpecificationItem ) ) != null &&
+									!createdOrFoundSpecificationItem.isReplacedItem() )
+										{
+										if( generalizationWordItem.hasCorrectedAssumptionByKnowledge() )
+											{
+											// Draw possessive reversible conclusion
+											if( drawPossessiveReversibleConclusion( false, isExclusiveSpecification, false, false, createdOrFoundSpecificationItem.assumptionLevel(), relationWordTypeNr, specificationWordTypeNr, generalizationWordTypeNr, createdOrFoundSpecificationItem.specificationContextNr(), createdOrFoundSpecificationItem.relationContextNr(), relationWordItem, feminineSpecificationWordItem, generalizationWordItem ) != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to draw a feminine possessive reversible conclusion from relation word \"" + relationWordItem.anyWordTypeString() + "\" to specification word \"" + feminineSpecificationWordItem.anyWordTypeString() + "\"" );
+											}
+										else
+											{
+											// Typically for the Spanish language
+											if( isOppositePossessiveSpecificationWordSpanishAmbiguous &&
+											existingSpecificationItem == null &&
+											( conclusionSpecificationItem = relationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, isPossessive, false, feminineSpecificationWordItem, null ) ) != null &&
+											conclusionSpecificationItem.hasSpecificationCollection() &&
+											( foundJustificationItem = conclusionSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) ) != null )
+												{
+												// Additional Spanish feminine conclusion justification
+												if( ( justificationResult = relationWordItem.addJustification( false, true, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, foundJustificationItem.secondarySpecificationItem(), null, null ) ).result != Constants.RESULT_OK )
+													return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + relationWordItem.anyWordTypeString() + "\"" );
 
-									( isOppositePossessiveSpecificationWordSpanishAmbiguous ||
-									!createdOrFoundSpecificationItem.isReplacedItem() ) &&
+												if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+													return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-									// Generate the reversed specification
-									drawPossessiveReversibleConclusion( false, isExclusiveSpecification, false, false, createdOrFoundSpecificationItem.assumptionLevel(), relationWordTypeNr, specificationWordTypeNr, generalizationWordTypeNr, createdOrFoundSpecificationItem.specificationContextNr(), createdOrFoundSpecificationItem.relationContextNr(), relationWordItem, feminineSpecificationWordItem, generalizationWordItem ) != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to draw a feminine possessive reversible conclusion from relation word \"" + relationWordItem.anyWordTypeString() + "\" to specification word \"" + feminineSpecificationWordItem.anyWordTypeString() + "\"" );
+												if( createdOrFoundSpecificationItem.attachJustificationToSpecification( createdJustificationItem ) != Constants.RESULT_OK )
+													return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the found specification" );
+												}
+											}
+										}
+									}
+								}
+							else
+								{
+								if( isPossessive &&
+								existingSpecificationItem.isUserSpecification() &&
+								( foundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, false, false, feminineSpecificationWordItem, relationWordItem ) ) != null &&
+								foundSpecificationItem.secondarySpecificationJustificationItem( existingSpecificationItem ) == null )
+									{
+									// Additional justification (User). Test file "John - Anna (before family definition)"
+									if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, ( existingSpecificationItem.hasAssumptionLevel() ? Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION : Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ), Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, existingSpecificationItem, null, foundSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+									if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+										return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+									if( foundSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the found specification" );
 									}
 								}
 							}
@@ -1718,19 +1876,14 @@ class AdminReasoningOld
 
 	private byte makeSpecificationSubstitutionPartOfAssumption( boolean isArchivedAssignment, short generalizationWordTypeNr, short specificationWordTypeNr, int generalizationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
-		boolean hasGeneralizationWordConfirmedSpecification;
 		boolean hasGeneralizationWordFeminineProperNameEnding;
 		boolean hasCorrectedAssumptionByKnowledge;
 		boolean hasCorrectedAssumptionByOppositeQuestion;
-		boolean isGeneralizationProperName;
 		boolean isGeneralizationWordSpanishAmbiguous;
 		boolean isSpecificationWordSpanishAmbiguous;
 		boolean isUserGeneralizationWord;
 		GeneralizationItem currentGeneralizationItem;
-		JustificationItem createdJustificationItem;
-		JustificationItem specificationSubstitutionPartOfAssumptionJustificationItem;
 		SpecificationItem existingSpecificationItem;
-		SpecificationItem primaryPartOfSpecificationItem;
 		SpecificationItem primarySpecificationItem;
 		SpecificationItem secondarySpecificationItem;
 		SpecificationItem simpleUserSpecificationItem;
@@ -1739,7 +1892,6 @@ class AdminReasoningOld
 		WordItem currentGeneralizationWordItem;
 		WordItem feminineCollectionWordItem;
 		WordItem userSpecificationWordItem;
-		CreateAndAssignResultType createAndAssignResult;
 
 		if( !adminItem_.isNounWordType( specificationWordTypeNr ) )
 			return adminItem_.startError( 1, moduleNameString_, "The given specification word type isn't a noun" );
@@ -1755,15 +1907,14 @@ class AdminReasoningOld
 			{
 			hasCorrectedAssumptionByKnowledge = generalizationWordItem.hasCorrectedAssumptionByKnowledge();
 			hasCorrectedAssumptionByOppositeQuestion = generalizationWordItem.hasCorrectedAssumptionByOppositeQuestion();
-			hasGeneralizationWordConfirmedSpecification = generalizationWordItem.hasConfirmedSpecification();
 			hasGeneralizationWordFeminineProperNameEnding = generalizationWordItem.hasFeminineProperNameEnding();
-			isGeneralizationProperName = ( generalizationWordTypeNr == Constants.WORD_TYPE_PROPER_NAME );
 			isGeneralizationWordSpanishAmbiguous = generalizationWordItem.isNounWordSpanishAmbiguous();
 			isSpecificationWordSpanishAmbiguous = specificationWordItem.isNounWordSpanishAmbiguous();
 			isUserGeneralizationWord = generalizationWordItem.isUserGeneralizationWord;
 
 			simpleUserSpecificationItem = adminItem_.simpleUserSpecificationItem();
 
+			// Do for all generalization noun specification words
 			do	{
 				if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
 					return adminItem_.startError( 1, moduleNameString_, "I found an undefined generalization word" );
@@ -1779,16 +1930,16 @@ class AdminReasoningOld
 
 				!currentGeneralizationWordItem.hasPossessiveButNonQuestionSpecification() ) ) )
 					{
-					existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.NO_QUESTION_PARAMETER, currentGeneralizationWordItem );
+					existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, false, currentGeneralizationWordItem );
 
 					// Skip if concluded conclusion exists
 					if( ( existingSpecificationItem == null ||
 					existingSpecificationItem != simpleUserSpecificationItem ) &&
 
 					// Get primary specification for justification
-					( primarySpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) ) != null )
+					( primarySpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, false, specificationWordItem ) ) != null )
 						{
-						alternativeAnotherPrimarySpecificationItem_ = null;
+						alternativeSpanishAnotherPrimarySpecificationItem_ = null;
 						secondarySpecificationItem = null;
 
 						// Get secondary specification for justification
@@ -1806,14 +1957,14 @@ class AdminReasoningOld
 							if( isSpecificationWordSpanishAmbiguous &&
 							hasGeneralizationWordFeminineProperNameEnding &&
 							( feminineCollectionWordItem = specificationWordItem.feminineCollectionWordItem() ) != null )
-								secondarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, feminineCollectionWordItem );
+								secondarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, false, false, feminineCollectionWordItem );
 
 							if( secondarySpecificationItem == null )
 								{
 								// Try to find self-generated conclusion first
 								if( ( tempSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( false, isArchivedAssignment, false, false, false, specificationWordItem, null ) ) == null )
 									// Otherwise, try to find self-generated assumption
-									tempSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, specificationWordItem );
+									tempSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, false, false, specificationWordItem );
 
 								if( tempSpecificationItem != null &&
 
@@ -1824,101 +1975,41 @@ class AdminReasoningOld
 									secondarySpecificationItem = tempSpecificationItem;
 								}
 
-							if( secondarySpecificationItem == null )
+							if( hasGeneralizationWordFeminineProperNameEnding &&
+							!isUserGeneralizationWord &&
+							secondarySpecificationItem == null &&
+							simpleUserSpecificationItem != null &&
+							simpleUserSpecificationItem.isSpecificationWordSpanishAmbiguous() &&
+							simpleUserSpecificationItem.isPossessive() &&
+							( userSpecificationWordItem = simpleUserSpecificationItem.specificationWordItem() ) != null &&
+							( tempSpecificationItem = userSpecificationWordItem.firstSpecificationItem( false, false, false, currentGeneralizationWordItem ) ) != null )
 								{
-								if( hasGeneralizationWordFeminineProperNameEnding &&
-								!isUserGeneralizationWord &&
-								simpleUserSpecificationItem != null &&
-								simpleUserSpecificationItem.isSpecificationWordSpanishAmbiguous() &&
-								simpleUserSpecificationItem.isPossessive() &&
-								( userSpecificationWordItem = simpleUserSpecificationItem.specificationWordItem() ) != null &&
-								( tempSpecificationItem = userSpecificationWordItem.firstSpecificationItem( false, false, Constants.NO_QUESTION_PARAMETER, currentGeneralizationWordItem ) ) != null )
-									{
-									primarySpecificationItem = simpleUserSpecificationItem;
-									secondarySpecificationItem = tempSpecificationItem;
-									}
-								}
-							else
-								{
-								// Typically for the Spanish language
-								if( isSpecificationWordSpanishAmbiguous &&
-								secondarySpecificationItem.isHiddenSpanishSpecification() &&
-								( secondarySpecificationItem = alternativeJustificationSpecificationItem( hasGeneralizationWordFeminineProperNameEnding, false, true, false, true, simpleUserSpecificationItem, generalizationWordItem, specificationWordItem ) ) != null )
-									{
-									if( secondarySpecificationItem.isQuestion() )
-										spanishQuestionPrimarySpecificationItem_ = secondarySpecificationItem;
-									else
-										{
-										if( !secondarySpecificationItem.hasAssumptionLevel() &&
-										secondarySpecificationItem.isSelfGeneratedAssumption() )
-											secondarySpecificationItem.incrementAssumptionLevel();
-										}
-									}
+								primarySpecificationItem = simpleUserSpecificationItem;
+								secondarySpecificationItem = tempSpecificationItem;
 								}
 							}
 
 						if( secondarySpecificationItem != null &&
+						primarySpecificationItem.isExclusiveSpecification() &&
 
 						( !isSpecificationWordSpanishAmbiguous ||
 						existingSpecificationItem == null ||
-						!secondarySpecificationItem.isHiddenSpanishSpecification() ) )
+						!secondarySpecificationItem.isHiddenSpanishSpecification() ) &&
+
+						( !isGeneralizationWordSpanishAmbiguous ||
+						secondarySpecificationItem.isExclusiveSpecification() ) &&
+
+						( !primarySpecificationItem.hasCompoundSpecificationCollection() ||
+
+						// Opposite specification doesn't exist
+						( ( collectionWordItem = specificationWordItem.collectionWordItem( primarySpecificationItem.specificationCollectionNr() ) ) != null &&
+						generalizationWordItem.firstAssignmentOrSpecificationItem( false, false, false, false, false, collectionWordItem ) == null ) ) )
 							{
-							if( primarySpecificationItem.isSpecificationGeneralization() )
-								{
-								if( isGeneralizationProperName &&
-								primarySpecificationItem.isPartOf() &&
-								// Skip creating an assumption, if a conclusion exists
-								generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( true, true, false, false, false, currentGeneralizationWordItem, null ) == null )
-									{
-									// Make a substitution 'part of' assumption
-									// Not yet explained in the design
-									if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, true, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, currentGeneralizationItem.generalizationWordTypeNr(), Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, secondarySpecificationItem, alternativeAnotherPrimarySpecificationItem_, primarySpecificationItem, null, generalizationWordItem, currentGeneralizationWordItem, null ) ).result != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to add a self-generated specification substitution specification to generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+							// Make generalization assumption
+							if( makeGeneralizationAssumption( hasCorrectedAssumptionByKnowledge, isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, primarySpecificationItem, secondarySpecificationItem, generalizationWordItem, currentGeneralizationWordItem ) != Constants.RESULT_OK )
+								return adminItem_.addError( 1, moduleNameString_, "I failed to make a generalization assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" and specification word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\"" );
 
-									if( ( createdJustificationItem = createAndAssignResult.createdJustificationItem ) != null &&
-									( specificationSubstitutionPartOfAssumptionJustificationItem = generalizationWordItem.secondarySpecificationJustificationItem( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION, primarySpecificationItem ) ) != null )
-										{
-										primaryPartOfSpecificationItem = specificationSubstitutionPartOfAssumptionJustificationItem.primarySpecificationItem();
-
-										if( hasGeneralizationWordConfirmedSpecification ||
-										specificationSubstitutionPartOfAssumptionJustificationItem.hasPrimaryAnsweredQuestion() ||
-
-										( primaryPartOfSpecificationItem != null &&
-										primaryPartOfSpecificationItem != secondarySpecificationItem &&
-										secondarySpecificationItem.assumptionLevel() < primaryPartOfSpecificationItem.assumptionLevel() ) )
-											{
-											if( generalizationWordItem.updateJustificationInSpecifications( false, specificationSubstitutionPartOfAssumptionJustificationItem, createdJustificationItem ) != Constants.RESULT_OK )
-												return adminItem_.addError( 1, moduleNameString_, "I failed to update a justification item by a conclusion justification item in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-
-											if( !specificationSubstitutionPartOfAssumptionJustificationItem.isReplacedOrDeletedItem() &&
-											!generalizationWordItem.isJustificationInUse( specificationSubstitutionPartOfAssumptionJustificationItem ) &&
-
-											generalizationWordItem.replaceOrDeleteJustification( specificationSubstitutionPartOfAssumptionJustificationItem ) != Constants.RESULT_OK )
-												return adminItem_.addError( 1, moduleNameString_, "I failed to delete the specification substitution 'part of' assumption justification item in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-											}
-										}
-									}
-								}
-							else
-								{
-								if( primarySpecificationItem.isExclusiveSpecification() &&
-
-								( !isGeneralizationWordSpanishAmbiguous ||
-								secondarySpecificationItem.isExclusiveSpecification() ) &&
-
-								( !primarySpecificationItem.hasSpecificationCompoundCollection() ||
-
-								// Opposite specification doesn't exist
-								( ( collectionWordItem = specificationWordItem.collectionWordItem( primarySpecificationItem.specificationCollectionNr() ) ) != null &&
-								generalizationWordItem.firstAssignmentOrSpecificationItem( false, false, false, false, Constants.NO_QUESTION_PARAMETER, collectionWordItem ) == null ) ) )
-									{
-									// Make generalization assumption
-									if( makeGeneralizationAssumption( hasCorrectedAssumptionByKnowledge, isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, primarySpecificationItem, secondarySpecificationItem, generalizationWordItem, currentGeneralizationWordItem ) != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to make a generalization assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" and specification word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\"" );
-
-									generalizationAssumptionWordItem_ = currentGeneralizationWordItem;
-									}
-								}
+							generalizationAssumptionWordItem_ = currentGeneralizationWordItem;
 							}
 						}
 					}
@@ -1938,7 +2029,7 @@ class AdminReasoningOld
 		generalizationWordItem.firstUserSpecificationItem( false, false, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, generalizationAssumptionWordItem_ ) == null &&
 
 		// Make an exclusive specification substitution assumption
-		// See design: paragraph 2.4.1 in the theory document or http://mafait.org/theory_2_4_1/
+		// See paragraph 2.4.1 in the theory document or http://mafait.org/theory_2_4_1/
 		adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, primarySpecificationItem.isEveryGeneralization(), false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, primarySpecificationItem, null, secondarySpecificationItem, null, generalizationWordItem, generalizationAssumptionWordItem_, null ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to make a generalization assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
@@ -1953,7 +2044,7 @@ class AdminReasoningOld
 		WordItem userGeneralizationWordItem;
 		WordItem userSpecificationWordItem;
 
-		alternativeAnotherPrimarySpecificationItem_ = null;
+		alternativeSpanishAnotherPrimarySpecificationItem_ = null;
 
 		if( userSpecificationItem == null ||
 		generalizationWordItem == null ||
@@ -1968,7 +2059,7 @@ class AdminReasoningOld
 		( userGeneralizationWordItem = userSpecificationItem.generalizationWordItem() ) != null )
 			{
 			// Try to find opposite specification
-			oppositeSpecificationItem = userGeneralizationWordItem.bestMatchingRelationContextNrSpecificationItem( isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem, generalizationWordItem );
+			oppositeSpecificationItem = userGeneralizationWordItem.bestMatchingRelationContextNrSpecificationItem( true, true, isNegative, isPossessive, specificationWordItem, generalizationWordItem );
 
 			if( oppositeSpecificationItem != null &&
 			!oppositeSpecificationItem.isHiddenSpanishSpecification() )
@@ -1977,20 +2068,20 @@ class AdminReasoningOld
 			if( isCheckingForPossessiveSpecification &&
 			( userSpecificationWordItem = userSpecificationItem.specificationWordItem() ) != null )
 				{
-				possessiveSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, isNegative, true, Constants.NO_QUESTION_PARAMETER, userSpecificationWordItem );
+				possessiveSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, isNegative, true, false, userSpecificationWordItem );
 
 				// Try to find a possessive specification
 				if( possessiveSpecificationItem != null &&
 				!possessiveSpecificationItem.isHiddenSpanishSpecification() )
 					{
-					alternativeAnotherPrimarySpecificationItem_ = oppositePossessiveDefinitionSpecificationItem_;
+					alternativeSpanishAnotherPrimarySpecificationItem_ = oppositePossessiveDefinitionSpecificationItem_;
 					return possessiveSpecificationItem;
 					}
 				}
 
 			if( isCheckingForQuestion &&
 			// Try to find question
-			( questionSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, isNegative, false, Constants.WORD_PARAMETER_SINGULAR_VERB_IS, specificationWordItem ) ) != null )
+			( questionSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, isNegative, false, true, specificationWordItem ) ) != null )
 				return questionSpecificationItem;
 			}
 
@@ -2045,7 +2136,7 @@ class AdminReasoningOld
 			do	{
 				if( ( possessiveSpecificationWordItem = possessiveDefinitionSpecificationItem.specificationWordItem() ) != null &&
 				possessiveSpecificationWordItem != higherLevelPossessiveSpecificationWordItem &&
-				possessiveSpecificationWordItem.firstSpecificationItem( false, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) != null )
+				possessiveSpecificationWordItem.firstSpecificationItem( false, false, false, specificationWordItem ) != null )
 					{
 					if( higherLevelPossessiveSpecificationWordItem == null )
 						higherLevelPossessiveSpecificationWordItem = possessiveSpecificationWordItem;
@@ -2108,14 +2199,13 @@ class AdminReasoningOld
 
 		postponeNegativeConclusionSpecificationCollectionNr_ = Constants.NO_COLLECTION_NR;
 
-		alternativeAnotherPrimarySpecificationItem_ = null;
-		possessiveDefinitionSpecificationItem_ = null;
+		alternativeSpanishAnotherPrimarySpecificationItem_ = null;
 		oppositePossessiveDefinitionSpecificationItem_ = null;
+		possessiveDefinitionSpecificationItem_ = null;
 		postponeNegativeConclusionPrimarySpecificationItem_ = null;
 		postponeNegativeConclusionAnotherPrimarySpecificationItem_ = null;
 		spanishAmbiguousCompoundPrimarySpecificationItem_ = null;
 		spanishAmbiguousCompoundAnotherPrimarySpecificationItem_ = null;
-		spanishQuestionPrimarySpecificationItem_ = null;
 
 		feminineSpecificationWordItem_ = null;
 		generalizationAssumptionWordItem_ = null;
@@ -2145,7 +2235,6 @@ class AdminReasoningOld
 
 		spanishAmbiguousCompoundPrimarySpecificationItem_ = null;
 		spanishAmbiguousCompoundAnotherPrimarySpecificationItem_ = null;
-		spanishQuestionPrimarySpecificationItem_ = null;
 
 		feminineSpecificationWordItem_ = null;
 		generalizationAssumptionWordItem_ = null;
@@ -2178,7 +2267,7 @@ class AdminReasoningOld
 		if( ( userSpecificationWordItem = userSpecificationItem.specificationWordItem() ) == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given user specification item has no specification word" );
 
-		if( ( answeredQuestionSpecificationItem = generalizationWordItem.firstRecentlyAnsweredQuestionSpecificationItem( Constants.WORD_PARAMETER_SINGULAR_VERB_IS ) ) == null )
+		if( ( answeredQuestionSpecificationItem = generalizationWordItem.firstRecentlyAnsweredQuestionSpecificationItem() ) == null )
 			return adminItem_.startError( 1, moduleNameString_, "I couldn't find any answered question specification" );
 
 		do	{
@@ -2189,7 +2278,7 @@ class AdminReasoningOld
 
 				// Check if already exists as positive specification
 				if( hasDisplayedMoreSpecificNonExclusiveSpecification ||
-				generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.NO_QUESTION_PARAMETER, answeredQuestionSpecificationWordItem ) == null )
+				generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, false, answeredQuestionSpecificationWordItem ) == null )
 					{
 					if( ( currentJustificationItem = answeredQuestionSpecificationItem.firstJustificationItem() ) == null )
 						return adminItem_.startError( 1, moduleNameString_, "The answered question specification item has no justification" );
@@ -2271,13 +2360,12 @@ class AdminReasoningOld
 			( currentSpecificationItem = currentSpecificationItem.nextSelectedSpecificationItem() ) != null );
 
 			if( firstNegativeOnlyOptionLeftAssignmentItem != null &&
-			foundOnlyOptionLeftSpecificationItem != null )
-				{
-				// Draw an only option left conclusion
-				// Not yet explained in the design
-				if( adminItem_.addSelfGeneratedSpecification( false, true, isArchivedAssignment, false, false, true, false, false, false, foundOnlyOptionLeftSpecificationItem.isPossessive(), false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION, Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, firstOnlyOptionLeftSpecificationItem.generalizationWordTypeNr(), firstOnlyOptionLeftSpecificationItem.specificationWordTypeNr(), Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, firstOnlyOptionLeftSpecificationItem, null, firstNegativeOnlyOptionLeftAssignmentItem, null, generalizationWordItem, foundOnlyOptionLeftSpecificationItem.specificationWordItem(), null ).result != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to draw an only option left conclusion about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-				}
+			foundOnlyOptionLeftSpecificationItem != null &&
+
+			// Draw an only option left conclusion
+			// Not yet explained in the design
+			adminItem_.addSelfGeneratedSpecification( false, true, isArchivedAssignment, false, false, true, false, false, false, foundOnlyOptionLeftSpecificationItem.isPossessive(), false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION, Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, firstOnlyOptionLeftSpecificationItem.generalizationWordTypeNr(), firstOnlyOptionLeftSpecificationItem.specificationWordTypeNr(), Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, firstOnlyOptionLeftSpecificationItem, null, firstNegativeOnlyOptionLeftAssignmentItem, null, generalizationWordItem, foundOnlyOptionLeftSpecificationItem.specificationWordItem(), null ).result != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to draw an only option left conclusion about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 			}
 
 		return Constants.RESULT_OK;
@@ -2299,22 +2387,23 @@ class AdminReasoningOld
 		if( drawPossessiveReversibleConclusion( isArchivedAssignment, isExclusiveSpecification, isPossessive, isUniqueUserRelation, userAssumptionLevel, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationContextNr, relationContextNr, generalizationWordItem, specificationWordItem, specificationWordItem, relationWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to draw a possessive reversible conclusion" );
 
+		// Typically for the Spanish language
 		if( isPossessive &&
 		!isArchivedAssignment &&
 		specificationWordItem.isNounWordSpanishAmbiguous() &&
 		relationWordItem.hasFeminineProperNameEnding() &&
-		( feminineSpecificationWordItem = specificationWordItem.feminineCollectionWordItem() ) != null )
-			{
-			if( drawPossessiveReversibleConclusion( false, isExclusiveSpecification, isPossessive, isUniqueUserRelation, userAssumptionLevel, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationContextNr, relationContextNr, generalizationWordItem, specificationWordItem, feminineSpecificationWordItem, relationWordItem ) != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to draw a feminine possessive reversible conclusion" );
-			}
+		( feminineSpecificationWordItem = specificationWordItem.feminineCollectionWordItem() ) != null &&
+
+		// Draw possessive reversible feminine conclusion
+		drawPossessiveReversibleConclusion( false, isExclusiveSpecification, isPossessive, isUniqueUserRelation, userAssumptionLevel, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationContextNr, relationContextNr, generalizationWordItem, specificationWordItem, feminineSpecificationWordItem, relationWordItem ) != Constants.RESULT_OK )
+			return adminItem_.addError( 1, moduleNameString_, "I failed to draw a possessive reversible feminine conclusion" );
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte drawSimpleNegativeSpanishConclusion( boolean isArchivedAssignment, short generalizationWordTypeNr, short specificationWordTypeNr, int generalizationContextNr, int specificationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
-		int nonCompoundCollectionNr;
+		int nonCompoundSpecificationCollectionNr;
 		int userSpecificationCollectionNr;
 		SpecificationItem anotherPrimarySpecificationItem = null;
 		SpecificationItem simpleUserSpecificationItem = adminItem_.simpleUserSpecificationItem();
@@ -2331,13 +2420,13 @@ class AdminReasoningOld
 		if( simpleUserSpecificationItem != null &&
 		!specificationWordItem.isNounWordSpanishAmbiguous() &&
 		( userSpecificationWordItem = simpleUserSpecificationItem.specificationWordItem() ) != null &&
-		( nonCompoundCollectionNr = specificationWordItem.nonCompoundCollectionNr( specificationWordTypeNr ) ) > Constants.NO_COLLECTION_NR )
+		( nonCompoundSpecificationCollectionNr = specificationWordItem.nonCompoundCollectionNr( specificationWordTypeNr ) ) > Constants.NO_COLLECTION_NR )
 			{
 			if( !userSpecificationWordItem.isNounWordSpanishAmbiguous() &&
-			( collectionWordItem = specificationWordItem.collectionWordItem( nonCompoundCollectionNr ) ) != null )
+			( collectionWordItem = specificationWordItem.collectionWordItem( nonCompoundSpecificationCollectionNr ) ) != null )
 				{
 				if( collectionWordItem.isNounWordSpanishAmbiguous() )
-					anotherPrimarySpecificationItem = collectionWordItem.firstSpecificationItem( false, false, Constants.NO_QUESTION_PARAMETER, collectionWordItem );
+					anotherPrimarySpecificationItem = collectionWordItem.firstSpecificationItem( false, false, false, collectionWordItem );
 				else
 					{
 					userSpecificationCollectionNr = simpleUserSpecificationItem.specificationCollectionNr();
@@ -2346,7 +2435,7 @@ class AdminReasoningOld
 					( commonWordItem = userSpecificationWordItem.commonWordItem( userSpecificationCollectionNr ) ) != null )
 						{
 						if( commonWordItem.isNounWordSpanishAmbiguous() )
-							anotherPrimarySpecificationItem = commonWordItem.firstSelfGeneratedCheckSpecificationItem( true, false, false, false, false, true, Constants.NO_QUESTION_PARAMETER, nonCompoundCollectionNr, Constants.NO_CONTEXT_NR, collectionWordItem );
+							anotherPrimarySpecificationItem = commonWordItem.firstSelfGeneratedCheckSpecificationItem( true, false, false, false, true, Constants.NO_QUESTION_PARAMETER, nonCompoundSpecificationCollectionNr, Constants.NO_CONTEXT_NR, collectionWordItem );
 						}
 					}
 
@@ -2354,7 +2443,7 @@ class AdminReasoningOld
 				anotherPrimarySpecificationItem.hasSpecificationCollection() &&
 
 				askSpecificationSubstitutionQuestionOrDrawNegativeConclusion( isArchivedAssignment, false, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, simpleUserSpecificationItem, anotherPrimarySpecificationItem, generalizationWordItem, userSpecificationWordItem ) != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to ask a specification substitution question or to draw a negative conclusion in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" with specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to ask a specification substitution question or to draw a negative conclusion in word \"" + generalizationWordItem.anyWordTypeString() + "\" with specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
 				}
 			}
 
@@ -2379,6 +2468,7 @@ class AdminReasoningOld
 
 		if( ( currentGeneralizationItem = specificationWordItem.firstNounSpecificationGeneralizationItem() ) != null )
 			{
+			// Do for all generalization noun specification words
 			do	{
 				if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
 					return adminItem_.startError( 1, moduleNameString_, "I found an undefined generalization word" );
@@ -2386,7 +2476,7 @@ class AdminReasoningOld
 				if( ( isSelfGenerated ||
 				currentGeneralizationWordItem != generalizationWordItem ) &&
 
-				( currentSpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) ) != null )
+				( currentSpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, specificationWordItem ) ) != null )
 					{
 					if( !currentSpecificationItem.hasSpecificationCollection() &&
 					!currentSpecificationItem.isExclusiveSpecification() )
@@ -2397,7 +2487,8 @@ class AdminReasoningOld
 						if( adminItem_.collectGeneralizationWordWithPreviousOne( false, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, generalizationWordItem, specificationWordItem ) != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to collect a generalization word with a previous one" );
 
-						currentSpecificationItem = currentSpecificationItem.updatedSpecificationItem();
+						if( currentSpecificationItem.isReplacedItem() )
+							currentSpecificationItem = currentSpecificationItem.updatedSpecificationItem();
 
 						if( currentSpecificationItem.hasCurrentCreationSentenceNr() &&
 						drawSpecificationGeneralizationConclusion( assumptionLevel, currentSpecificationItem ) != Constants.RESULT_OK )
@@ -2436,7 +2527,8 @@ class AdminReasoningOld
 		boolean isUserSpecificationWord;
 		boolean hasUserSpecificationRelationContext = false;
 		boolean hasRelationWord = ( relationWordItem != null );
-		boolean isAssignment = ( isInactiveAssignment || isArchivedAssignment );
+		boolean isAssignment = ( isInactiveAssignment ||
+							isArchivedAssignment );
 		boolean isExclusiveUserSpecification = false;
 		boolean isGeneralizationProperName = ( generalizationWordTypeNr == Constants.WORD_TYPE_PROPER_NAME );
 		boolean isIncludingAdjectives = false;
@@ -2447,11 +2539,10 @@ class AdminReasoningOld
 		boolean isUserSpecificationWordSpanishAmbiguous = false;
 		short currentSpecificationWordTypeNr;
 		int currentSpecificationCollectionNr;
-		int relationContextNr;
 		int userSpecificationCollectionNr = Constants.NO_COLLECTION_NR;
 		JustificationItem createdJustificationItem;
 		JustificationItem firstJustificationItem;
-		SpecificationItem alternativeAnotherPrimarySpecificationItem;
+		SpecificationItem alternativeSpanishAnotherPrimarySpecificationItem;
 		SpecificationItem alternativePrimarySpecificationItem;
 		SpecificationItem archivedAssignmentItem;
 		SpecificationItem bestMatchingRelationSpecificationItem;
@@ -2520,10 +2611,10 @@ class AdminReasoningOld
 			isUserSpecificationWord = specificationWordItem.isUserSpecificationWord;
 
 			if( isSpecificationWordSpanishAmbiguous )
-				collectedWithItselfSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem );
+				collectedWithItselfSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, specificationWordItem );
 
 			do	{
-				// Select non-possessive definition
+				// Select not possessive definition
 				if( ( currentSpecificationWordItem = currentSpecificationItem.specificationWordItem() ) != null &&
 				currentSpecificationWordItem != generalizationWordItem )
 					{
@@ -2531,7 +2622,7 @@ class AdminReasoningOld
 					currentSpecificationCollectionNr = currentSpecificationItem.specificationCollectionNr();
 					hasCurrentSpecificationCollection = ( currentSpecificationCollectionNr > Constants.NO_COLLECTION_NR );
 
-					if( ( bestMatchingRelationSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( true, false, isAssignment, isInactiveAssignment, isArchivedAssignment, false, false, questionParameter, currentSpecificationCollectionNr, Constants.NO_CONTEXT_NR, currentSpecificationWordItem ) ) != null )
+					if( ( bestMatchingRelationSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( true, false, isAssignment, isInactiveAssignment, isArchivedAssignment, false, false, isQuestion, currentSpecificationCollectionNr, Constants.NO_CONTEXT_NR, currentSpecificationWordItem ) ) != null )
 						{
 						if( !isQuestion &&
 						!bestMatchingRelationSpecificationItem.isExclusiveSpecification() )
@@ -2540,14 +2631,14 @@ class AdminReasoningOld
 
 					if( !hasRelationWord ||
 					!isPossessiveUserSpecification ||
-					( foundPrimarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, questionParameter, specificationWordItem, relationWordItem ) ) == null )
-						foundPrimarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( ( isAssignment || hasCorrectedAssumptionByOppositeQuestion ), isArchivedAssignment, false, false, questionParameter, specificationWordItem );
+					( foundPrimarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isAssignment, isArchivedAssignment, false, false, specificationWordItem, relationWordItem ) ) == null )
+						foundPrimarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, isQuestion, specificationWordItem );
 
 					if( foundPrimarySpecificationItem == null )
 						{
 						// Check for specification conflict
 						if( generalizationWordItem.checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, false, false, specificationWordTypeNr, currentSpecificationCollectionNr, currentSpecificationItem.relationContextNr(), currentSpecificationWordItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to check for a specification conflict in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to check for a specification conflict in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 						}
 					else
 						{
@@ -2563,7 +2654,9 @@ class AdminReasoningOld
 														( isFoundPrimaryHiddenSpanishSpecification ||
 														foundPrimarySpecificationItem.hasNewInformation() ) );
 
-							if( ( isIncludingRelationWord ||
+							if( !isFemaleOrMaleGeneralizationWord &&
+
+							( isIncludingRelationWord ||
 
 							( !hasRelationWord &&
 							!isPossessiveUserSpecification ) ||
@@ -2595,57 +2688,44 @@ class AdminReasoningOld
 							// Select correct compound word to avoid assumption to be made if a question should be asked
 							currentSpecificationWordItem.compoundGeneralizationWordItem( currentSpecificationCollectionNr ) != specificationWordItem ) )
 								{
-								if( !isFemaleOrMaleGeneralizationWord )
+								if( isIncludingRelationWord ||
+
+								( isUserGeneralizationWord &&
+
+								( !hasUserSpecificationRelationContext ||
+								foundPrimarySpecificationItem.hasNonCompoundSpecificationCollection() ) ) ||
+
+								( ( hasRelationWord ||
+								generalizationWordItem.isOlderItem() ) &&
+
+								oppositePossessiveDefinitionSpecificationItem_ != null &&
+								oppositePossessiveDefinitionSpecificationItem_.specificationCollectionNr() == userSpecificationCollectionNr ) )
 									{
-									if( isIncludingRelationWord ||
+									// Make a feminine or masculine proper name ending assumption
+									// Not yet explained in the design
+									if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( true, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, foundPrimarySpecificationItem.prepositionParameter(), Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, ( isIncludingRelationWord ? relationWordTypeNr : Constants.NO_WORD_TYPE_NR ), Constants.NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, Constants.NO_CONTEXT_NR, ( isFoundPrimaryHiddenSpanishSpecification ? userSpecificationItem : foundPrimarySpecificationItem ), ( isFoundPrimaryHiddenSpanishSpecification ? oppositePossessiveDefinitionSpecificationItem_ : null ), currentSpecificationItem, null, generalizationWordItem, currentSpecificationWordItem, ( isIncludingRelationWord ? relationWordItem : null ) ) ).result != Constants.RESULT_OK )
+										return adminItem_.addError( 1, moduleNameString_, "I failed to make a feminine or masculine substitution assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" with specification word \"" + currentSpecificationWordItem.anyWordTypeString() + "\"" );
 
-									( isUserGeneralizationWord &&
-
-									( !hasUserSpecificationRelationContext ||
-									foundPrimarySpecificationItem.hasSpecificationNonCompoundCollection() ) ) ||
-
-									( ( hasRelationWord ||
-									generalizationWordItem.isOlderItem() ) &&
-
-									oppositePossessiveDefinitionSpecificationItem_ != null &&
-									oppositePossessiveDefinitionSpecificationItem_.specificationCollectionNr() == userSpecificationCollectionNr ) )
+									if( !isUserSpecificationWordSpanishAmbiguous )
 										{
-										// Make a feminine or masculine proper name ending assumption
-										// Not yet explained in the design
-										if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( true, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, foundPrimarySpecificationItem.prepositionParameter(), Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, ( isIncludingRelationWord ? relationWordTypeNr : Constants.NO_WORD_TYPE_NR ), Constants.NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, Constants.NO_CONTEXT_NR, ( isFoundPrimaryHiddenSpanishSpecification ? userSpecificationItem : foundPrimarySpecificationItem ), ( isFoundPrimaryHiddenSpanishSpecification ? oppositePossessiveDefinitionSpecificationItem_ : null ), currentSpecificationItem, null, generalizationWordItem, currentSpecificationWordItem, ( isIncludingRelationWord ? relationWordItem : null ) ) ).result != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to make a feminine or masculine substitution assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" with specification word \"" + currentSpecificationWordItem.anyWordTypeString() + "\"" );
-
-										if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == null )
+										if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) != null )
 											{
-											if( !feminineOrMasculineSpecificationItem.hasSpecificationCompoundCollection() &&
-											// Clean-up obsolete justifications
-											generalizationWordItem.replaceOrDeleteObsoleteJustifications() != Constants.RESULT_OK )
-												return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete obsolete justifications in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-											}
-										else
-											{
-											if( !isUserSpecificationWordSpanishAmbiguous &&
-
-											( postponeNegativeConclusionSpecificationCollectionNr_ == Constants.NO_COLLECTION_NR ||
-											postponeNegativeConclusionSpecificationCollectionNr_ == currentSpecificationCollectionNr ) )
+											if( postponeNegativeConclusionSpecificationCollectionNr_ == Constants.NO_COLLECTION_NR ||
+											postponeNegativeConclusionSpecificationCollectionNr_ == currentSpecificationCollectionNr )
 												{
-												if( ( foundSpecificationItem = createAndAssignResult.foundSpecificationItem ) != null )
+												if( ( foundSpecificationItem = createAndAssignResult.foundSpecificationItem ) != null &&
+												( firstJustificationItem = foundSpecificationItem.firstJustificationItem() ) != null &&
+												( secondarySpecificationItem = firstJustificationItem.secondarySpecificationItem() ) != null )
 													{
-													firstJustificationItem = foundSpecificationItem.firstJustificationItem();
+													// Additional justification
+													if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, secondarySpecificationItem, null, createdSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+														return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
-													if( firstJustificationItem != null &&
-													( secondarySpecificationItem = firstJustificationItem.secondarySpecificationItem() ) != null )
-														{
-														// Additional justification
-														if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, secondarySpecificationItem, null, createdSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-															return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+													if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+														return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-														if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
-															return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
-
-														if( createdSpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
-															return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
-														}
+													if( createdSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+														return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
 													}
 
 												// Draw missing negative conclusions
@@ -2654,18 +2734,9 @@ class AdminReasoningOld
 												}
 											}
 										}
-									else
-										clearPostponedNegativeConclusionVariables();
 									}
-
-								if( !isArchivedAssignment &&
-								isIncludingRelationWord &&
-								bestMatchingRelationSpecificationItem != null &&
-								!foundPrimarySpecificationItem.isHiddenSpanishSpecification() &&
-								( relationContextNr = bestMatchingRelationSpecificationItem.relationContextNr() ) > Constants.NO_CONTEXT_NR &&
-
-								drawPossessiveReversibleConclusion( false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationContextNr, relationContextNr, generalizationWordItem, currentSpecificationWordItem, relationWordItem ) != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to draw a possessive reversible conclusion from generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" to specification word \"" + currentSpecificationWordItem.anyWordTypeString() + "\"" );
+								else
+									clearPostponedNegativeConclusionVariables();
 								}
 							}
 
@@ -2687,7 +2758,7 @@ class AdminReasoningOld
 						!isUserSpecificationWord &&
 						!currentSpecificationItem.isOlderItem() ) )
 							{
-							hasPrimarySpecificationNonCompoundCollection = foundPrimarySpecificationItem.hasSpecificationNonCompoundCollection();
+							hasPrimarySpecificationNonCompoundCollection = foundPrimarySpecificationItem.hasNonCompoundSpecificationCollection();
 
 							if( ( !isExclusiveSpecification &&
 							isExclusiveCurrentSpecification ) ||
@@ -2734,14 +2805,14 @@ class AdminReasoningOld
 
 								( isUserGeneralizationWord &&
 								!isExclusiveUserSpecification &&
-								currentSpecificationItem.hasSpecificationNonCompoundCollection() ) ) ) ||
+								currentSpecificationItem.hasNonCompoundSpecificationCollection() ) ) ) ||
 
 								// Question
 								hasCorrectedAssumptionByOppositeQuestion ||
 								hasSuggestiveQuestionAssumption_ ) )
 									{
 									if( askSpecificationSubstitutionQuestionOrDrawNegativeConclusion( isArchivedAssignment, isNegativeConclusion, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, foundPrimarySpecificationItem, currentSpecificationItem, generalizationWordItem, specificationWordItem ) != Constants.RESULT_OK )
-										return adminItem_.addError( 1, moduleNameString_, "I failed to ask a specification substitution question or to draw a negative conclusion in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" with specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
+										return adminItem_.addError( 1, moduleNameString_, "I failed to ask a specification substitution question or to draw a negative conclusion in word \"" + generalizationWordItem.anyWordTypeString() + "\" with specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
 									}
 								}
 							else
@@ -2754,25 +2825,26 @@ class AdminReasoningOld
 
 								currentSpecificationWordTypeNr != Constants.WORD_TYPE_ADJECTIVE )
 									{
-									alternativeAnotherPrimarySpecificationItem = null;
+									alternativeSpanishAnotherPrimarySpecificationItem = null;
 									primarySpecificationItem = null;
 
 									if( isSpecificationWordSpanishAmbiguous )
-										primarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem );
+										primarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, specificationWordItem );
 									else
 										{
 										primarySpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( false, isArchivedAssignment, false, false, false, specificationWordItem, null );
 
 										if( primarySpecificationItem == null ||
 										primarySpecificationItem .isUserAssignment() )
-											primarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_CONTEXT_NR, specificationWordItem );
+											primarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isArchivedAssignment, false, false, specificationWordItem );
 										}
 
-									existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, currentSpecificationWordItem );
+									existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, currentSpecificationWordItem );
 
 									if( primarySpecificationItem != null )
 										{
-										alternativePrimarySpecificationItem = ( hasRelationWord || isSpecificationWordSpanishAmbiguous ? alternativeJustificationSpecificationItem( hasGeneralizationWordFeminineProperNameEnding, true, false, false, false, userSpecificationItem, generalizationWordItem, specificationWordItem ) : null );
+										alternativePrimarySpecificationItem = ( hasRelationWord ||
+																				isSpecificationWordSpanishAmbiguous ? alternativeJustificationSpecificationItem( hasGeneralizationWordFeminineProperNameEnding, true, false, false, false, userSpecificationItem, generalizationWordItem, specificationWordItem ) : null );
 
 										if( ( isSpecificationWordSpanishAmbiguous &&
 										primarySpecificationItem.isHiddenSpanishSpecification() ) ||
@@ -2791,17 +2863,17 @@ class AdminReasoningOld
 										!specificationWordItem.isCollectionSpanishAmbiguous( alternativePrimarySpecificationItem.specificationCollectionNr() ) ) ) ) ) )
 											{
 											if( alternativePrimarySpecificationItem != null )
-												alternativeAnotherPrimarySpecificationItem = alternativeAnotherPrimarySpecificationItem_;
+												alternativeSpanishAnotherPrimarySpecificationItem = alternativeSpanishAnotherPrimarySpecificationItem_;
 
 											if( isSpecificationWordSpanishAmbiguous &&
 											isGeneralizationWordUserRelationWord &&
-											alternativeAnotherPrimarySpecificationItem != null &&
+											alternativeSpanishAnotherPrimarySpecificationItem != null &&
 											existingSpecificationItem != null &&
 											userSpecificationItem != null &&
 											primarySpecificationItem.isHiddenSpanishSpecification() &&
 											!userSpecificationItem.isArchivedAssignment() )
 												{
-												primarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, false, false, false, false, true, Constants.NO_QUESTION_PARAMETER, userSpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, userSpecificationItem.specificationWordItem() );
+												primarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, false, false, false, false, true, false, userSpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, userSpecificationItem.specificationWordItem() );
 
 												if( primarySpecificationItem != null &&
 												// Check if justification already exists
@@ -2817,7 +2889,7 @@ class AdminReasoningOld
 											userSpecificationItem.isPossessive() &&
 											primarySpecificationItem.hasAssumptionLevel() )
 												{
-												existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, currentSpecificationWordItem );
+												existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, currentSpecificationWordItem );
 
 												if( existingSpecificationItem != null &&
 												existingSpecificationItem.olderJustificationItem( Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ) != null )
@@ -2854,7 +2926,7 @@ class AdminReasoningOld
 										// Make a compound specification substitution assumption, which is actually an uncertain conclusion
 										// See design:	- paragraph 2.3.1 in the theory document or http://mafait.org/theory_2_3_1/,
 										//				- paragraph 2.3.1.1 in the theory document or http://mafait.org/theory_2_3_1_1/
-										if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, isSpecificationWordSpanishAmbiguous, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, primarySpecificationItem, alternativeAnotherPrimarySpecificationItem, ( archivedAssignmentItem == null ? currentSpecificationItem : archivedAssignmentItem ), null, generalizationWordItem, currentSpecificationWordItem, null ) ).result != Constants.RESULT_OK )
+										if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, isSpecificationWordSpanishAmbiguous, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, primarySpecificationItem, alternativeSpanishAnotherPrimarySpecificationItem, ( archivedAssignmentItem == null ? currentSpecificationItem : archivedAssignmentItem ), null, generalizationWordItem, currentSpecificationWordItem, null ) ).result != Constants.RESULT_OK )
 											return adminItem_.addError( 1, moduleNameString_, "I failed to make a compound specification substitution assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" with specification word \"" + currentSpecificationWordItem.anyWordTypeString() + "\"" );
 
 										if( createAndAssignResult.createdSpecificationItem == null &&
@@ -2863,9 +2935,9 @@ class AdminReasoningOld
 										!primarySpecificationItem.hasRelationContext() ||
 										foundPrimarySpecificationItem.isOlderItem() ) &&
 
-										// Clean-up obsolete justifications
-										generalizationWordItem.replaceOrDeleteObsoleteJustifications() != Constants.RESULT_OK )
-											return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete obsolete justifications in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+										// Cleanup unreferenced justifications
+										generalizationWordItem.replaceOrDeleteUnreferencedJustifications() != Constants.RESULT_OK )
+											return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete unreferenced justifications in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 										}
 									}
 								else
@@ -2884,14 +2956,14 @@ class AdminReasoningOld
 
 									// Check if exclusive conclusion already exists
 									( isExclusiveSpecification &&
-									generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( true, isAssignment, isArchivedAssignment, false, false, true, Constants.NO_QUESTION_PARAMETER, currentSpecificationCollectionNr, Constants.NO_CONTEXT_NR, currentSpecificationWordItem ) == null ) )
+									generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( true, isArchivedAssignment, false, false, true, Constants.NO_QUESTION_PARAMETER, currentSpecificationCollectionNr, Constants.NO_CONTEXT_NR, currentSpecificationWordItem ) == null ) )
 										{
-										primarySpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, false, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, specificationWordItem );
+										primarySpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, specificationWordItem );
 
 										if( primarySpecificationItem != null &&
 										primarySpecificationItem.isHiddenSpanishSpecification() &&
 										( primarySpecificationItem = alternativeJustificationSpecificationItem( hasGeneralizationWordFeminineProperNameEnding, true, false, false, false, userSpecificationItem, generalizationWordItem, specificationWordItem ) ) != null )
-											alternativeAnotherPrimarySpecificationItem = alternativeAnotherPrimarySpecificationItem_;
+											alternativeSpanishAnotherPrimarySpecificationItem = alternativeSpanishAnotherPrimarySpecificationItem_;
 
 										if( primarySpecificationItem == null )
 											return adminItem_.startError( 1, moduleNameString_, "I couldn't find a primary specification item of a conclusion or question" );
@@ -2904,13 +2976,13 @@ class AdminReasoningOld
 
 										( !isExclusiveSpecification ||
 										currentSpecificationWordItem.isFemaleOrMale() ||
-										!currentSpecificationItem.hasSpecificationCompoundCollection() ||
+										!currentSpecificationItem.hasCompoundSpecificationCollection() ||
 
 										// Typically for the Spanish language
 										( isSpanishCurrentLanguage &&
 
 										( generalizationWordItem.isFemaleOrMale() ||
-										currentSpecificationWordItem.firstAssignmentOrSpecificationItem( false, false, false, false, Constants.NO_QUESTION_PARAMETER, generalizationWordItem ) != null ) ) ) ) ) )
+										currentSpecificationWordItem.firstAssignmentOrSpecificationItem( false, false, false, false, false, generalizationWordItem ) != null ) ) ) ) ) )
 											{
 											// Draw a compound specification substitution conclusion
 											// See design:	- paragraph 2.3.1 in the theory document or http://mafait.org/theory_2_3_1/,
@@ -2923,12 +2995,12 @@ class AdminReasoningOld
 												if( hasCorrectedAssumptionByKnowledge )
 													{
 													if( ( relatedResult = generalizationWordItem.findRelatedSpecification( false, createdSpecificationItem ) ).result != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to find out if a specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" is related to the created specification" );
+														return adminItem_.addError( 1, moduleNameString_, "I failed to find out if a specification in word \"" + generalizationWordItem.anyWordTypeString() + "\" is related to the created specification" );
 
 													if( relatedResult.relatedSpecificationItem != null &&
 													// Replace incorrect assumption
 													generalizationWordItem.replaceOrDeleteSpecification( false, relatedResult.relatedSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to replace a corrected specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+														return adminItem_.addError( 1, moduleNameString_, "I failed to replace a corrected specification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 													}
 												else
 													{
@@ -2940,7 +3012,7 @@ class AdminReasoningOld
 														!isExclusiveSpecification &&
 														!isSpecificationWordSpanishAmbiguous &&
 														isUserGeneralizationWord &&
-														primarySpecificationItem.hasSpecificationNonCompoundCollection() &&
+														primarySpecificationItem.hasNonCompoundSpecificationCollection() &&
 
 														// Draw simple negative Spanish conclusions
 														drawSimpleNegativeSpanishConclusion( isArchivedAssignment, generalizationWordTypeNr, currentSpecificationWordTypeNr, currentSpecificationItem.generalizationContextNr(), currentSpecificationItem.specificationContextNr(), generalizationWordItem, currentSpecificationWordItem ) != Constants.RESULT_OK )
@@ -2977,7 +3049,7 @@ class AdminReasoningOld
 	protected byte makeExclusiveSpecificationSubstitutionAssumption( boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem )
 		{
 		boolean hasFeminineOrMasculineProperNameEnding;
-		boolean hasGeneralizationWordConfirmedSpecification;
+		boolean hasGeneralizationWordCurrentlyConfirmedSpecification;
 		boolean isGeneralizationWordUserRelationWord;
 		boolean isHiddenPrimarySpecification;
 		boolean isHiddenSecondarySpecification;
@@ -2992,10 +3064,12 @@ class AdminReasoningOld
 		JustificationItem firstJustificationItem;
 		JustificationItem obsoleteJustificationItem;
 		JustificationItem olderJustificationItem;
+		JustificationItem previousJustificationItem;
 		SpecificationItem additionalSecondarySpecificationItem;
 		SpecificationItem additionalSpecificationItem;
 		SpecificationItem anotherPrimarySpecificationItem;
 		SpecificationItem compoundSpecificationItem;
+		SpecificationItem conclusionSpecificationItem;
 		SpecificationItem createdOrFoundSpecificationItem;
 		SpecificationItem createdSpecificationItem;
 		SpecificationItem definitionSpecificationItem;
@@ -3011,15 +3085,14 @@ class AdminReasoningOld
 		WordItem currentPossessiveNounWordItem;
 		WordItem feminineSpecificationWordItem;
 		WordItem possessiveSpecificationWordItem;
-		WordItem spanishQuestionGeneralizationWordItem;
 		WordItem possessiveDefinitionSpecificationWordItem = null;
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
-		JustificationResultType justificationResult;
+		JustificationResultType justificationResult = new JustificationResultType();
 		FindSpecificationResultType findSpecificationResult;
-		ShortResultType shortResult;
 
-		possessiveDefinitionSpecificationItem_ = null;
 		oppositePossessiveDefinitionSpecificationItem_ = null;
+		possessiveDefinitionSpecificationItem_ = null;
+
 		oppositePossessiveSpecificationWordItem_ = null;
 
 		if( generalizationWordItem == null )
@@ -3028,7 +3101,7 @@ class AdminReasoningOld
 		if( specificationWordItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
 
-		primarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, specificationWordItem, relationWordItem );
+		primarySpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( true, true, isNegative, isPossessive, specificationWordItem, relationWordItem );
 
 		if( primarySpecificationItem != null &&
 
@@ -3041,13 +3114,13 @@ class AdminReasoningOld
 
 		( currentPossessiveNounWordItem = CommonVariables.firstPossessiveNounWordItem ) != null )
 			{
-			hasGeneralizationWordConfirmedSpecification = generalizationWordItem.hasConfirmedSpecification();
+			hasGeneralizationWordCurrentlyConfirmedSpecification = generalizationWordItem.hasCurrentlyConfirmedSpecification();
 			isGeneralizationWordUserRelationWord = generalizationWordItem.isUserRelationWord;
 			isHiddenPrimarySpecification = primarySpecificationItem.isHiddenSpanishSpecification();
 
 			if( relationWordItem != null )
 				{
-				hasRelationWordConfirmedSpecification = relationWordItem.hasConfirmedSpecification();
+				hasRelationWordConfirmedSpecification = relationWordItem.hasCurrentlyConfirmedSpecification();
 				hasRelationWordFeminineOrMasculineProperNameEnding = relationWordItem.hasFeminineOrMasculineProperNameEnding();
 				}
 
@@ -3070,14 +3143,14 @@ class AdminReasoningOld
 						oppositePossessiveDefinitionSpecificationItem_ = foundOppositePossessiveDefinitionSpecificationItem;
 						possessiveDefinitionSpecificationItem_ = foundPossessiveDefinitionSpecificationItem;
 
-						if( ( possessiveSpecificationItem = possessiveDefinitionSpecificationWordItem.firstSpecificationItem( isPossessive, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) ) != null )
+						if( ( possessiveSpecificationItem = possessiveDefinitionSpecificationWordItem.firstSpecificationItem( isPossessive, false, false, specificationWordItem ) ) != null )
 							{
 							isPossessiveSpecificationWordSpanishAmbiguous = possessiveDefinitionSpecificationWordItem.isNounWordSpanishAmbiguous();
 
 							if( primarySpecificationItem != null &&
 
 							( ( !primarySpecificationItem.hasRelationContext() &&
-							generalizationWordItem.hasAnsweredSelfGeneratedQuestion() ) ||
+							generalizationWordItem.hadOnceAnsweredSelfGeneratedQuestion() ) ||
 
 							( isPossessiveSpecificationWordSpanishAmbiguous &&
 							primarySpecificationItem.specificationWordItem() == possessiveDefinitionSpecificationWordItem ) ) )
@@ -3101,7 +3174,7 @@ class AdminReasoningOld
 								( !existingUserSpecificationItem.hasRelationContext() ||
 								!existingUserSpecificationItem.isOlderItem() ||
 								// Confirmed only a few of the entered relation words
-								adminItem_.nContextWordsInContextWords( existingUserSpecificationItem.relationContextNr(), possessiveDefinitionSpecificationWordItem ) < CommonVariables.nUserRelationWords ) ) )
+								adminItem_.nContextWords( existingUserSpecificationItem.relationContextNr(), possessiveDefinitionSpecificationWordItem ) < CommonVariables.nUserRelationWords ) ) )
 									{
 									hasFeminineOrMasculineProperNameEnding = false;
 
@@ -3120,8 +3193,8 @@ class AdminReasoningOld
 										commonWordItem.isFemaleOrMale() &&
 										!commonWordItem.isNounWordSpanishAmbiguous() &&
 										// Specification doesn't exist yet
-										generalizationWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, commonWordItem ) == null &&
-										( definitionSpecificationItem = commonWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, false, false, Constants.NO_QUESTION_PARAMETER, possessiveSpecificationWordItem ) ) != null )
+										generalizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, commonWordItem ) == null &&
+										( definitionSpecificationItem = commonWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, possessiveSpecificationWordItem ) ) != null )
 											{
 											// Make generalization assumption
 											if( makeGeneralizationAssumption( false, isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_CONTEXT_NR, definitionSpecificationItem, primarySpecificationItem, generalizationWordItem, commonWordItem ) != Constants.RESULT_OK )
@@ -3129,7 +3202,7 @@ class AdminReasoningOld
 											}
 										}
 
-									// See design: paragraph 2.4.1 in the theory document or http://mafait.org/theory_2_4_1/
+									// See paragraph 2.4.1 in the theory document or http://mafait.org/theory_2_4_1/
 									if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( hasFeminineOrMasculineProperNameEnding, isArchivedAssignment, isArchivedAssignment, false, false, false, false, isNegative, false, isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, ( hasRelationWord ? relationWordTypeNr : Constants.NO_WORD_TYPE_NR ), foundPossessiveDefinitionSpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, possessiveSpecificationItem, null, primarySpecificationItem, null, generalizationWordItem, possessiveDefinitionSpecificationWordItem, relationWordItem ) ).result != Constants.RESULT_OK )
 										return adminItem_.addError( 1, moduleNameString_, "I failed to make a normal exclusive specification substitution assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" and possessive specification word \"" + possessiveDefinitionSpecificationWordItem.anyWordTypeString() + "\"" );
 
@@ -3160,7 +3233,7 @@ class AdminReasoningOld
 											( createdJustificationItem = createAndAssignResult.createdJustificationItem ) != null )
 												{
 												if( foundSpecificationItem.isSelfGeneratedAssumption() &&
-												( obsoleteJustificationItem = generalizationWordItem.olderComplexJustificationItem( true, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.NO_COLLECTION_NR, null ) ) != null )
+												( obsoleteJustificationItem = generalizationWordItem.olderComplexJustificationItem( true, isPossessive, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.NO_COLLECTION_NR, null ) ) != null )
 													{
 													if( generalizationWordItem.replaceJustification( obsoleteJustificationItem, createdJustificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
 														return adminItem_.addError( 1, moduleNameString_, "I failed to replace the obsolete justification item by the created justification item" );
@@ -3169,11 +3242,11 @@ class AdminReasoningOld
 														return adminItem_.startError( 1, moduleNameString_, "The found specification item has no first justification item" );
 
 													// Attach all justification items of the found specification to the created specification
-													if( createdSpecificationItem.changeFirstJustification( firstJustificationItem ) != Constants.RESULT_OK )
+													if( createdSpecificationItem.changeFirstJustification( true, firstJustificationItem ) != Constants.RESULT_OK )
 														return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification item of the created specification, attaching all justification items of the found specification" );
 
 													if( generalizationWordItem.replaceOrDeleteSpecification( false, foundSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to replace the found specification by the created specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+														return adminItem_.addError( 1, moduleNameString_, "I failed to replace the found specification by the created (normal) specification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 													}
 												else
 													{
@@ -3184,12 +3257,12 @@ class AdminReasoningOld
 															{
 															// Additional justification
 															if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, additionalSecondarySpecificationItem, null, createdSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-																return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+																return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
 															if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
 																return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-															if( createdSpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
+															if( createdSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
 																return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
 															}
 														else
@@ -3230,7 +3303,12 @@ class AdminReasoningOld
 						primarySpecificationItem.isSelfGenerated() ) )
 							{
 							isHiddenSecondarySpecification = secondarySpecificationItem.isHiddenSpanishSpecification();
-							existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( isArchivedAssignment, isArchivedAssignment, isNegative, !isPossessive, Constants.NO_QUESTION_PARAMETER, oppositePossessiveSpecificationWordItem_ );
+
+							// Typically for the Spanish language
+							if( isHiddenSecondarySpecification )
+								existingSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, false, false, isArchivedAssignment, isNegative, !isPossessive, false, foundOppositePossessiveDefinitionSpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, oppositePossessiveSpecificationWordItem_ );
+							else
+								existingSpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( false, isArchivedAssignment, isNegative, !isPossessive, false, oppositePossessiveSpecificationWordItem_ );
 
 							if( ( existingSpecificationItem == null ||
 							!existingSpecificationItem.hasRelationContext() ||
@@ -3249,17 +3327,18 @@ class AdminReasoningOld
 							!secondarySpecificationItem.isSelfGeneratedConclusion() &&
 
 							( !isHiddenSecondarySpecification ||
-							// Typically for the Spanish language
-							primarySpecificationItem.isAssignment() ||
-							primarySpecificationItem.isUserSpecification() ) &&
+							primarySpecificationItem.isUserSpecification() ||
 
-							( hasGeneralizationWordConfirmedSpecification ||
+							// Typically for the Spanish language
+							// Self-generated assignment
+							primarySpecificationItem.isAssignment() ) &&
+
+							( hasGeneralizationWordCurrentlyConfirmedSpecification ||
 							!existingSpecificationItem.isOlderItem() ||
 
 							( anotherPrimarySpecificationItem == null &&
 
-							( hasGeneralizationWordConfirmedSpecification ||
-							primarySpecificationItem == secondarySpecificationItem ||
+							( primarySpecificationItem == secondarySpecificationItem ||
 							existingSpecificationItem.isSelfGeneratedAssumption() ) ) ||
 
 							( relationWordItem != null &&
@@ -3272,8 +3351,11 @@ class AdminReasoningOld
 								{
 								isOppositePossessiveSpecificationWordSpanishAmbiguous = oppositePossessiveSpecificationWordItem_.isNounWordSpanishAmbiguous();
 
+								if( primarySpecificationItem.isReplacedItem() )
+									primarySpecificationItem = primarySpecificationItem.updatedSpecificationItem();
+
 								// Make an exclusive specification substitution assumption (opposite)
-								// See design: paragraph 2.4.1 in the theory document or http://mafait.org/theory_2_4_1/
+								// See paragraph 2.4.1 in the theory document or http://mafait.org/theory_2_4_1/
 								if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, false, false, false, false, false, false, isNegative, false, !isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, Constants.WORD_TYPE_NOUN_SINGULAR, ( hasRelationWord ? relationWordTypeNr : Constants.NO_WORD_TYPE_NR ), foundOppositePossessiveDefinitionSpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, ( isOppositePossessiveSpecificationWordSpanishAmbiguous ? ( isHiddenSecondarySpecification ? primarySpecificationItem : secondarySpecificationItem ) : foundOppositePossessiveDefinitionSpecificationItem ), ( !isReplaceHiddenSpecification && isOppositePossessiveSpecificationWordSpanishAmbiguous ? null : anotherPrimarySpecificationItem ), ( isOppositePossessiveSpecificationWordSpanishAmbiguous ? foundOppositePossessiveDefinitionSpecificationItem : secondarySpecificationItem ), null, generalizationWordItem, oppositePossessiveSpecificationWordItem_, relationWordItem ) ).result != Constants.RESULT_OK )
 									return adminItem_.addError( 1, moduleNameString_, "I failed to make an opposite exclusive specification substitution assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" and opposite possessive specification word \"" + oppositePossessiveSpecificationWordItem_.anyWordTypeString() + "\"" );
 
@@ -3305,21 +3387,21 @@ class AdminReasoningOld
 
 												if( feminineSpecificationWordItem != null &&
 												( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( true, false, false, false, false, false, false, isNegative, false, !isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, Constants.WORD_TYPE_NOUN_SINGULAR, ( hasRelationWord ? relationWordTypeNr : Constants.NO_WORD_TYPE_NR ), Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, primarySpecificationItem, foundOppositePossessiveDefinitionSpecificationItem, anotherPrimarySpecificationItem, null, generalizationWordItem, feminineSpecificationWordItem, relationWordItem ) ).result != Constants.RESULT_OK )
-													return adminItem_.addError( 1, moduleNameString_, "I failed to make an opposite exclusive specification substitution assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" and opposite possessive specification word \"" + feminineSpecificationWordItem.anyWordTypeString() + "\"" );
+													return adminItem_.addError( 1, moduleNameString_, "I failed to make a feminine opposite exclusive specification substitution assumption about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" and opposite possessive specification word \"" + feminineSpecificationWordItem.anyWordTypeString() + "\"" );
 												}
 
-											if( ( compoundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, true, false, true, false, true, Constants.NO_QUESTION_PARAMETER, anotherPrimarySpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, specificationWordItem ) ) != null &&
+											if( ( compoundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, true, false, true, false, true, false, anotherPrimarySpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, specificationWordItem ) ) != null &&
 											compoundSpecificationItem != primarySpecificationItem )
 												{
 												// Make a compound specification exclusive specification substitution assumption (opposite)
-												// Not yet explained in the design
+												// See paragraph 2.3.1.1 in the theory document or http://mafait.org/theory_2_3_1_1/
 												if( ( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, false, false, false, false, false, false, isNegative, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, Constants.WORD_TYPE_NOUN_SINGULAR, ( hasRelationWord ? relationWordTypeNr : Constants.NO_WORD_TYPE_NR ), Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, compoundSpecificationItem, ( hasFeminineOrMasculineProperNameEnding ? foundOppositePossessiveDefinitionSpecificationItem : null ), ( hasFeminineOrMasculineProperNameEnding ? anotherPrimarySpecificationItem : foundOppositePossessiveDefinitionSpecificationItem ), null, generalizationWordItem, oppositePossessiveSpecificationWordItem_, relationWordItem ) ).result != Constants.RESULT_OK )
-													return adminItem_.addError( 1, moduleNameString_, "I failed to make a compound exclusive specification substitution assumption that is Spanish ambiguous in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" and specification word \"" + oppositePossessiveSpecificationWordItem_.anyWordTypeString() + "\"" );
+													return adminItem_.addError( 1, moduleNameString_, "I failed to make a compound exclusive specification substitution assumption that is Spanish ambiguous in word \"" + generalizationWordItem.anyWordTypeString() + "\" and specification word \"" + oppositePossessiveSpecificationWordItem_.anyWordTypeString() + "\"" );
 
 												if( feminineSpecificationWordItem_ != null &&
 												isFeminineOrMasculineProperNameEnding( false, generalizationWordItem, oppositePossessiveSpecificationWordItem_, relationWordItem ) &&
 												( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( true, false, false, false, false, false, false, isNegative, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.WORD_PARAMETER_PREPOSITION_OF, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, Constants.WORD_TYPE_NOUN_SINGULAR, ( hasRelationWord ? relationWordTypeNr : Constants.NO_WORD_TYPE_NR ), Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, ( hasFeminineOrMasculineProperNameEnding ? compoundSpecificationItem : foundOppositePossessiveDefinitionSpecificationItem ), ( hasFeminineOrMasculineProperNameEnding ? foundOppositePossessiveDefinitionSpecificationItem : null ), ( hasFeminineOrMasculineProperNameEnding ? anotherPrimarySpecificationItem : compoundSpecificationItem ), null, generalizationWordItem, feminineSpecificationWordItem_, relationWordItem ) ).result != Constants.RESULT_OK )
-													return adminItem_.addError( 1, moduleNameString_, "I failed to make a feminine compound exclusive specification substitution assumption that is Spanish ambiguous in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" and specification word \"" + feminineSpecificationWordItem_.anyWordTypeString() + "\"" );
+													return adminItem_.addError( 1, moduleNameString_, "I failed to make a feminine compound exclusive specification substitution assumption that is Spanish ambiguous in word \"" + generalizationWordItem.anyWordTypeString() + "\" and specification word \"" + feminineSpecificationWordItem_.anyWordTypeString() + "\"" );
 												}
 											}
 										}
@@ -3332,183 +3414,187 @@ class AdminReasoningOld
 											if( createdSpecificationItem == null )
 												{
 												// Found, but not created
-												secondarySpecificationItem = foundSpecificationItem;
+												secondarySpecificationItem = foundSpecificationItem.updatedSpecificationItem();
 
 												if( anotherPrimarySpecificationItem != null &&
 												primarySpecificationItem.isUserSpecification() &&
-												( additionalSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, true, true, possessiveDefinitionSpecificationWordItem, relationWordItem ) ) != null )
+												( additionalSpecificationItem = generalizationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, true, true, possessiveDefinitionSpecificationWordItem, relationWordItem ) ) != null &&
+												!generalizationWordItem.hasJustification( anotherPrimarySpecificationItem, null, primarySpecificationItem ) )
 													{
 													// Additional justification
 													if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, anotherPrimarySpecificationItem, null, primarySpecificationItem, null, additionalSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+														return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
 													if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
 														return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-													if( additionalSpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
+													if( additionalSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
 														return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the found specification" );
-
-													if( existingSpecificationItem != null &&
-													!existingSpecificationItem.isOlderItem() &&
-
-													// Clean-up obsolete justifications
-													generalizationWordItem.replaceOrDeleteObsoleteJustifications() != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete obsolete justifications in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 													}
 												}
-											else
+											else	// Found and created
 												{
-												// Found and created
-												if( ( firstJustificationItem = foundSpecificationItem.firstJustificationItem() ) == null )
-													return adminItem_.startError( 1, moduleNameString_, "The found specification item has no first justification item" );
-
-												if( foundSpecificationItem.isSelfGeneratedAssumption() )
+												if( !foundSpecificationItem.isDeletedItem() )
 													{
-													// Attach all justification items of the found specification to the created specification
-													if( createdSpecificationItem.changeFirstJustification( firstJustificationItem ) != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification item of the created specification, attaching all justification items of the found specification" );
+													if( ( firstJustificationItem = foundSpecificationItem.firstJustificationItem() ) == null )
+														return adminItem_.startError( 1, moduleNameString_, "The found specification item has no first justification item" );
 
-													if( generalizationWordItem.replaceOrDeleteSpecification( false, foundSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to replace the found specification by the created specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-													}
-												else
-													{
-													// Test file: "Complex (12)"
-													// Adjusted context. Needs to be rewritten
-													primarySpecificationItem.lastWrittenSentenceStringBuffer = null;
-
-													// Replace the secondary specification of a justification
-													if( ( obsoleteJustificationItem = primarySpecificationItem.secondarySpecificationJustificationItem( foundSpecificationItem ) ) != null )
+													if( foundSpecificationItem.isSelfGeneratedAssumption() )
 														{
-														if( ( justificationResult = generalizationWordItem.copyJustification( false, obsoleteJustificationItem.primarySpecificationItem(), createdSpecificationItem, obsoleteJustificationItem.attachedJustificationItem(), obsoleteJustificationItem ) ).result != Constants.RESULT_OK )
-															return adminItem_.addError( 1, moduleNameString_, "I failed to copy an obsolete justification item with a different secondary specification item" );
+														// Attach all justification items of the found specification to the created specification
+														if( createdSpecificationItem.changeFirstJustification( true, firstJustificationItem ) != Constants.RESULT_OK )
+															return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification item of the created specification, attaching all justification items of the found specification" );
 
-														if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
-															return adminItem_.startError( 1, moduleNameString_, "I couldn't copy an obsolete justification" );
-
-														// Replace obsolete justification
-														if( generalizationWordItem.replaceJustification( obsoleteJustificationItem, createdJustificationItem, primarySpecificationItem ) != Constants.RESULT_OK )
-															return adminItem_.addError( 1, moduleNameString_, "I failed to replace an obsolete justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-														}
-
-													if( ( additionalSecondarySpecificationItem = firstJustificationItem.secondarySpecificationItem() ) != null )
-														{
-														// Additional justification
-														if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, additionalSecondarySpecificationItem, null, createdSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-															return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-
-														if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
-															return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
-
-														if( createdSpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
-															return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
+														if( generalizationWordItem.replaceOrDeleteSpecification( false, foundSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
+															return adminItem_.addError( 1, moduleNameString_, "I failed to replace the found specification by the created (opposite) specification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 														}
 													else
-														return adminItem_.startError( 1, moduleNameString_, "The additional secondary specification item is undefined" );
+														{
+														// Test file: "Complex (12)"
+														// Adjusted context. Sentence needs to be rewritten
+														primarySpecificationItem.clearStoredSentenceStringBuffer();
+
+														// Replace the secondary specification of a justification
+														if( ( obsoleteJustificationItem = primarySpecificationItem.secondarySpecificationJustificationItem( foundSpecificationItem ) ) != null )
+															{
+															if( ( justificationResult = generalizationWordItem.copyJustification( false, obsoleteJustificationItem.primarySpecificationItem(), createdSpecificationItem, obsoleteJustificationItem.attachedJustificationItem(), obsoleteJustificationItem ) ).result != Constants.RESULT_OK )
+																return adminItem_.addError( 1, moduleNameString_, "I failed to copy an obsolete justification item with a different secondary specification item" );
+
+															if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+																return adminItem_.startError( 1, moduleNameString_, "I couldn't copy an obsolete justification" );
+
+															// Replace obsolete justification
+															if( generalizationWordItem.replaceJustification( obsoleteJustificationItem, createdJustificationItem, primarySpecificationItem ) != Constants.RESULT_OK )
+																return adminItem_.addError( 1, moduleNameString_, "I failed to replace an obsolete justification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+															}
+
+														if( ( additionalSecondarySpecificationItem = firstJustificationItem.secondarySpecificationItem() ) != null )
+															{
+															// Additional justification
+															if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, additionalSecondarySpecificationItem, null, createdSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+																return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+															if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+																return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+															if( createdSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+																return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
+															}
+														else
+															return adminItem_.startError( 1, moduleNameString_, "The additional secondary specification item is undefined" );
+														}
 													}
 												}
 											}
 										}
 									}
-								else
+								else	// Not possessive
 									{
-									if( createdSpecificationItem == null )
+									if( hasRelationWord &&
+									existingSpecificationItem != null )
 										{
-										if( foundSpecificationItem == null )
-											return adminItem_.startError( 1, moduleNameString_, "I couldn't find any specification item" );
-
-										if( foundSpecificationItem.isOlderItem() )
+										if( createdSpecificationItem == null )
 											{
-											if( createAndAssignResult.createdJustificationItem != null &&
-											!foundSpecificationItem.hasCurrentCreationSentenceNr() &&
-											!foundSpecificationItem.isReplacedOrDeletedItem() &&
+											if( foundSpecificationItem != null &&
+											foundSpecificationItem != existingSpecificationItem &&
+											existingSpecificationItem.hasCompoundSpecificationCollection() )
+												{
+												foundSpecificationItem = foundSpecificationItem.updatedSpecificationItem();
 
-											// Clean-up obsolete justifications
-											generalizationWordItem.replaceOrDeleteObsoleteJustifications() != Constants.RESULT_OK )
-												return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete obsolete justifications in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+												// Additional Spanish justification (Existing). Test file: "Juan es un padre - Pablo es hijo de Juan y Ana"
+												if( ( justificationResult = generalizationWordItem.addJustification( false, false, true, ( existingSpecificationItem.hasAssumptionLevel() ? Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION : Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ), Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, existingSpecificationItem, null, foundSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+													return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+												if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+													return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+												if( foundSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+													return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
+												}
 											}
 										else
 											{
-											if( spanishQuestionPrimarySpecificationItem_ == null )
+											if( existingSpecificationItem.hasRelationContext() )
+												{
+												if( !existingSpecificationItem.isReplacedOrDeletedItem() )
+													{
+													if( isOppositePossessiveSpecificationWordSpanishAmbiguous )
+														{
+														if( ( !createdSpecificationItem.isHiddenSpanishSpecification() ||
+														existingSpecificationItem.isHiddenSpanishSpecification() ) &&
+
+														( existingSpecificationItem.hasNonCompoundSpecificationCollection() ||
+
+														( existingSpecificationItem.hasCompoundSpecificationCollection() &&
+														!existingSpecificationItem.hasOnlyOneRelationWord() ) ) )
+															{
+															// Created specification was hidden
+															if( generalizationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
+																return adminItem_.addError( 1, moduleNameString_, "I failed to replace the existing specification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+															if( ( olderJustificationItem = existingSpecificationItem.olderJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) ) == null )
+																olderJustificationItem = existingSpecificationItem.olderJustificationItem( Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION );
+
+															if( olderJustificationItem != null )
+																{
+																if( generalizationWordItem.attachJustificationInWord( olderJustificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
+																	return adminItem_.addError( 1, moduleNameString_, "I failed to attach an older justification item to the created assumption in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+																if( ( obsoleteJustificationItem = createdSpecificationItem.olderJustificationItem( Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ) ) != null &&
+																( previousJustificationItem = createdSpecificationItem.previousJustificationItem( obsoleteJustificationItem ) ) != null )
+																	{
+																	// Replace obsolete justification from created specification
+																	if( previousJustificationItem.changeAttachedJustification( obsoleteJustificationItem.attachedJustificationItem() ) != Constants.RESULT_OK )
+																		return adminItem_.addError( 1, moduleNameString_, "I failed to change the attached justification item of the previous justification item" );
+
+																	if( generalizationWordItem.replaceOrDeleteJustification( obsoleteJustificationItem ) != Constants.RESULT_OK )
+																		return adminItem_.addError( 1, moduleNameString_, "I failed to replace an obsolete justification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+																	}
+																}
+															}
+														else
+															{
+															if( ( firstJustificationItem = existingSpecificationItem.firstJustificationItem() ) != null )
+																{
+																// Additional Spanish justification. Test file: "Complejo (11)"
+																if( ( justificationResult = generalizationWordItem.addJustification( false, true, false, ( existingSpecificationItem.hasAssumptionLevel() ? Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION : Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ), Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, firstJustificationItem.secondarySpecificationItem(), null, createdSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
+																	return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+																if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
+																	return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
+
+																if( createdSpecificationItem.changeFirstJustification( true, createdJustificationItem ) != Constants.RESULT_OK )
+																	return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the created specification" );
+																}
+															}
+														}
+													else
+														{
+														if( generalizationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
+															return adminItem_.addError( 1, moduleNameString_, "I failed to replace the existing specification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+
+														// Cleanup unreferenced justifications
+														if( generalizationWordItem.replaceOrDeleteUnreferencedJustifications() != Constants.RESULT_OK )
+															return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete unreferenced justifications in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+														}
+													}
+												}
+											else
 												{
 												if( relationWordItem != null &&
-												( additionalSecondarySpecificationItem = relationWordItem.firstUserSpecificationItem( false, isPossessive, primarySpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, null ) ) != null &&
-												additionalSecondarySpecificationItem.hasRelationContext() &&
-												!additionalSecondarySpecificationItem.isSpecificationWordSpanishAmbiguous() )
+												existingSpecificationItem.isReplacedItem() &&
+												( conclusionSpecificationItem = relationWordItem.firstSelfGeneratedCheckSpecificationItem( false, false, false, true, true, Constants.NO_QUESTION_PARAMETER, createdSpecificationItem.specificationCollectionNr(), Constants.NO_CONTEXT_NR, possessiveDefinitionSpecificationWordItem ) ) != null &&
+												!conclusionSpecificationItem.isOlderItem() )
 													{
 													// Additional justification
-													if( ( justificationResult = generalizationWordItem.addJustification( false, false, false, Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, null, null, additionalSecondarySpecificationItem, null, foundSpecificationItem.firstJustificationItem() ) ).result != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+													if( ( justificationResult = generalizationWordItem.addJustification( false, true, false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, Constants.NO_ORDER_NR, CommonVariables.currentSentenceNr, foundPossessiveDefinitionSpecificationItem, null, conclusionSpecificationItem, null, null ) ).result != Constants.RESULT_OK )
+														return adminItem_.addError( 1, moduleNameString_, "I failed to add a justification to word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 
 													if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
 														return adminItem_.startError( 1, moduleNameString_, "I couldn't create an additional justification" );
 
-													if( foundSpecificationItem.changeFirstJustification( createdJustificationItem ) != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification of the found specification" );
-
-													if( ( shortResult = foundSpecificationItem.recalculateAssumptionLevel() ).result != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to recalculate the assumption level of the found specification" );
-
-													if( shortResult.shortValue == Constants.NO_ASSUMPTION_LEVEL &&
-													// Force conclusion
-													foundSpecificationItem.markAsConcludedAssumption( false ) != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to mark the found specification as concluded assumption" );
-													}
-												}
-											else
-												{
-												if( foundSpecificationItem.wasHiddenSpanishSpecification() &&
-												( spanishQuestionGeneralizationWordItem = spanishQuestionPrimarySpecificationItem_.generalizationWordItem() ) != null &&
-
-												// Replace a question in a Spanish justification,
-												// by a specification that is not hidden anymore
-												spanishQuestionGeneralizationWordItem.updateSpecificationsInJustificationInWord( true, spanishQuestionPrimarySpecificationItem_, foundSpecificationItem ) != Constants.RESULT_OK )
-													return adminItem_.addError( 1, moduleNameString_, "I failed to update the justification items in generalization word \"" + spanishQuestionGeneralizationWordItem.anyWordTypeString() + "\"" );
-												}
-											}
-										}
-									else
-										{
-										if( hasRelationWord &&
-										existingSpecificationItem != null &&
-										existingSpecificationItem.hasRelationContext() &&
-										!existingSpecificationItem.isReplacedOrDeletedItem() )
-											{
-											if( isOppositePossessiveSpecificationWordSpanishAmbiguous )
-												{
-												if( ( !createdSpecificationItem.isHiddenSpanishSpecification() ||
-												existingSpecificationItem.isHiddenSpanishSpecification() ) &&
-
-												( existingSpecificationItem.hasSpecificationNonCompoundCollection() ||
-
-												( existingSpecificationItem.hasSpecificationCompoundCollection() &&
-												!existingSpecificationItem.hasOnlyOneRelationWord() ) ) )
-													{
-													// Created specification was hidden
-													if( generalizationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to replace the existing specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-													}
-
-												if( ( olderJustificationItem = existingSpecificationItem.olderJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) ) == null )
-													olderJustificationItem = existingSpecificationItem.olderJustificationItem( Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION );
-
-												if( olderJustificationItem != null &&
-												generalizationWordItem.attachJustificationInWord( olderJustificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
-													return adminItem_.addError( 1, moduleNameString_, "I failed to attach an older justification item to the created assumption in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-												}
-											else
-												{
-												if( !generalizationWordItem.hasDisplayedMoreSpecificSpecification() )
-													{
-													if( generalizationWordItem.replaceOrDeleteSpecification( false, existingSpecificationItem, createdSpecificationItem ) != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to replace the existing specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-
-													if( ( firstJustificationItem = existingSpecificationItem.firstJustificationItem() ) == null )
-														return adminItem_.startError( 1, moduleNameString_, "The existing specification item has no first justification item" );
-
-													// Attach all justification items of the existing specification to the created specification
-													if( createdSpecificationItem.changeFirstJustification( firstJustificationItem ) != Constants.RESULT_OK )
-														return adminItem_.addError( 1, moduleNameString_, "I failed to change the first justification item of the created specification, attaching all justification items of the existing specification" );
+													if( createdSpecificationItem.attachJustificationToSpecification( createdJustificationItem ) != Constants.RESULT_OK )
+														return adminItem_.addError( 1, moduleNameString_, "I failed to attach the created justification to the created specification" );
 													}
 												}
 											}
@@ -3529,23 +3615,23 @@ class AdminReasoningOld
 				{
 				if( primarySpecificationItem.isSpecificationWordSpanishAmbiguous() )
 					{
-					if( primarySpecificationItem.hasSpecificationNonCompoundCollection() &&
+					if( primarySpecificationItem.hasNonCompoundSpecificationCollection() &&
 					( compoundCollectionNr = specificationWordItem.compoundCollectionNr( specificationWordTypeNr ) ) > Constants.NO_COLLECTION_NR &&
-					( compoundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, true, false, true, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, compoundCollectionNr, primarySpecificationItem.relationContextNr(), specificationWordItem ) ) != null )
+					( compoundSpecificationItem = generalizationWordItem.bestMatchingRelationContextNrSpecificationItem( false, false, true, false, true, isNegative, isPossessive, false, compoundCollectionNr, primarySpecificationItem.relationContextNr(), specificationWordItem ) ) != null )
 						primarySpecificationItem = compoundSpecificationItem;
 					}
 				else
 					{
 					if( existingSpecificationItem != null &&
 					primarySpecificationItem == secondarySpecificationItem &&
-					primarySpecificationItem.hasSpecificationCompoundCollection() &&
+					primarySpecificationItem.hasCompoundSpecificationCollection() &&
 					!existingSpecificationItem.isSpecificationWordSpanishAmbiguous() &&
 					relationWordItem.isUserGeneralizationWord )
 						secondarySpecificationItem = existingSpecificationItem;
 					}
 
 				if( makePossessiveConditionalSpecificationAssumption( isArchivedAssignment, isExclusiveSpecification, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, secondarySpecificationItem, ( isHiddenPrimarySpecification ? adminItem_.userSpecificationItem() : primarySpecificationItem ), generalizationWordItem, relationWordItem ) != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to make an exclusive specification substitution assumption from generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" to specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to make a possessive conditional specification assumption during the making an exclusive specification substitution assumption in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" to specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
 				}
 			}
 
@@ -3582,11 +3668,11 @@ class AdminReasoningOld
 				if( ( currentQuestionSpecificationWordItem = currentQuestionSpecificationItem.specificationWordItem() ) != null &&
 				( currentSpecificationCollectionNr = currentQuestionSpecificationItem.specificationCollectionNr() ) > Constants.NO_COLLECTION_NR )
 					{
-					if( ( indirectPrimarySpecificationItem = currentQuestionSpecificationWordItem.firstActiveAssignmentOrSpecificationItem( false, false, false, Constants.NO_QUESTION_PARAMETER, specificationWordItem ) ) != null )
+					if( ( indirectPrimarySpecificationItem = currentQuestionSpecificationWordItem.firstSpecificationItem( false, false, false, specificationWordItem ) ) != null )
 						{
 						// Search first for related specification, before add a new one
 						if( ( relatedResult = generalizationWordItem.findRelatedSpecification( true, isAssignment, isArchivedAssignment, true, false, false, currentQuestionSpecificationItem.questionParameter(), currentSpecificationCollectionNr, generalizationContextNr, specificationContextNr, Constants.NO_CONTEXT_NR, specificationWordItem ) ).result != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to find a related specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" that is Spanish ambiguous" );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to find a related specification in word \"" + generalizationWordItem.anyWordTypeString() + "\" that is Spanish ambiguous" );
 
 						negativeQuestionSpecificationWordItem = ( relatedResult.relatedSpecificationItem == null ? null : relatedResult.relatedSpecificationItem.specificationWordItem() );
 
@@ -3602,16 +3688,13 @@ class AdminReasoningOld
 							if( commonWordItem.isNounWordSpanishAmbiguous() )
 								{
 								if( generalizationWordItem.replaceOrDeleteSpecification( false, currentQuestionSpecificationItem.updatedSpecificationItem(), createdSpecificationItem ) != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to replace the answered question by the created specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-
-								// Clean-up obsolete justifications
-								if( generalizationWordItem.replaceOrDeleteObsoleteJustifications() != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to replace or delete obsolete justifications in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to replace the answered question by the created specification in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 								}
 							else
 								{
-								if( ( primarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, Constants.NO_QUESTION_PARAMETER, commonWordItem ) ) != null &&
-								( anotherPrimarySpecificationItem = commonWordItem.bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, Constants.NO_QUESTION_PARAMETER, currentSpecificationCollectionNr, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, currentQuestionSpecificationWordItem ) ) != null &&
+								if( ( primarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, false, false, commonWordItem ) ) != null &&
+								( anotherPrimarySpecificationItem = commonWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, Constants.NO_QUESTION_PARAMETER, currentSpecificationCollectionNr, currentQuestionSpecificationWordItem ) ) != null &&
+
 								// Draw a negative assumption
 								// Not yet explained in the design
 								( createAndAssignResult = adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, true, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION, Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, currentSpecificationCollectionNr, generalizationContextNr, specificationContextNr, Constants.NO_CONTEXT_NR, primarySpecificationItem, anotherPrimarySpecificationItem, createdSpecificationItem, null, generalizationWordItem, negativeQuestionSpecificationWordItem, null ) ).result != Constants.RESULT_OK )
@@ -3658,7 +3741,7 @@ class AdminReasoningOld
 			do	{
 				if( ( currentQuestionSpecificationWordItem = currentQuestionSpecificationItem.specificationWordItem() ) != null )
 					{
-					if( generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, true, isPossessive, Constants.NO_QUESTION_PARAMETER, currentQuestionSpecificationWordItem ) == null )
+					if( generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, true, isPossessive, false, currentQuestionSpecificationWordItem ) == null )
 						{
 						nOptionsLeft++;
 						onlyOptionLeftSpecificationWordItem = currentQuestionSpecificationWordItem;
@@ -3671,18 +3754,18 @@ class AdminReasoningOld
 			onlyOptionLeftSpecificationWordItem != null &&
 			( currentGeneralizationItem = onlyOptionLeftSpecificationWordItem.firstNounSpecificationGeneralizationItem() ) != null )
 				{
+				// Do for all generalization noun specification words
 				do	{
 					if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
 						return adminItem_.startError( 1, moduleNameString_, "I found an undefined generalization word" );
 
-					if( ( primarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, isPossessive, Constants.NO_QUESTION_PARAMETER, currentGeneralizationWordItem ) ) != null &&
-					( anotherPrimarySpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( false, false, false, isPossessive, Constants.NO_QUESTION_PARAMETER, onlyOptionLeftSpecificationWordItem ) ) != null )
-						{
-						// Make an only option left assumption
-						// Not yet explained in the design
-						if( adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, false, isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION, Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, userSpecificationItem.generalizationWordTypeNr(), userSpecificationItem.specificationWordTypeNr(), Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, primarySpecificationItem, anotherPrimarySpecificationItem, userSpecificationItem, null, generalizationWordItem, onlyOptionLeftSpecificationWordItem, null ).result != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to draw an only option left conclusion about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
-						}
+					if( ( primarySpecificationItem = generalizationWordItem.firstAssignmentOrSpecificationItem( true, true, false, isPossessive, false, currentGeneralizationWordItem ) ) != null &&
+					( anotherPrimarySpecificationItem = currentGeneralizationWordItem.firstAssignmentOrSpecificationItem( false, false, false, isPossessive, false, onlyOptionLeftSpecificationWordItem ) ) != null &&
+
+					// Make an only option left assumption
+					// Not yet explained in the design
+					adminItem_.addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, false, isPossessive, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION, Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, userSpecificationItem.generalizationWordTypeNr(), userSpecificationItem.specificationWordTypeNr(), Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, primarySpecificationItem, anotherPrimarySpecificationItem, userSpecificationItem, null, generalizationWordItem, onlyOptionLeftSpecificationWordItem, null ).result != Constants.RESULT_OK )
+						return adminItem_.addError( 1, moduleNameString_, "I failed to draw an only option left conclusion about generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 					}
 				while( !CommonVariables.hasDisplayedWarning &&
 				( currentGeneralizationItem = currentGeneralizationItem.nextNounSpecificationGeneralizationItem() ) != null );
@@ -3708,7 +3791,7 @@ class AdminReasoningOld
 			return adminItem_.startError( 1, moduleNameString_, "The given relation word item is undefined" );
 
 		secondarySpecificationCollectionNr = secondarySpecificationItem.specificationCollectionNr();
-		existingSpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, false, false, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, secondarySpecificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem );
+		existingSpecificationItem = generalizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, false, false, isNegative, isPossessive, secondarySpecificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem );
 
 		// Check if specification doesn't exist yet
 		if( existingSpecificationItem == null ||
@@ -3717,14 +3800,14 @@ class AdminReasoningOld
 			if( secondarySpecificationCollectionNr > Constants.NO_COLLECTION_NR &&
 			// Check if a related specification exists
 			( relatedResult = generalizationWordItem.findRelatedSpecification( false, false, false, false, isNegative, isPossessive, Constants.NO_QUESTION_PARAMETER, secondarySpecificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem ) ).result != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to find out if a specification in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\" is related to the secondary specification" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to find out if a specification in word \"" + generalizationWordItem.anyWordTypeString() + "\" is related to the secondary specification" );
 
 			if( relatedResult.relatedSpecificationItem == null )
 				{
 				if( generalizationWordItem.hasCorrectedAssumptionByOppositeQuestion() )
 					{
-					if( correctSuggestiveAssumptionsByOppositeQuestion( isArchivedAssignment, isNegative, isPossessive, secondarySpecificationItem.questionParameter(), generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to correct suggestive assumptions by opposite question in generalization word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
+					if( adminItem_.correctSuggestiveAssumptionsByOppositeQuestion( isArchivedAssignment, isNegative, isPossessive, secondarySpecificationItem.questionParameter(), generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem ) != Constants.RESULT_OK )
+						return adminItem_.addError( 1, moduleNameString_, "I failed to correct suggestive assumptions by opposite question in word \"" + generalizationWordItem.anyWordTypeString() + "\"" );
 					}
 				else
 					{
@@ -3748,16 +3831,29 @@ class AdminReasoningOld
 		return Constants.RESULT_OK;
 		}
 
+	protected SpecificationItem oppositePossessiveDefinitionSpecificationItem()
+		{
+		return oppositePossessiveDefinitionSpecificationItem_;
+		}
+
+	protected WordItem possessiveDefinitionSpecificationWordItem()
+		{
+		if( possessiveDefinitionSpecificationItem_ != null )
+			return possessiveDefinitionSpecificationItem_.specificationWordItem();
+
+		return null;
+		}
+
 	protected CompoundResultType drawCompoundSpecificationSubstitutionConclusion( short specificationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, WordItem specificationWordItem )
 		{
-		RelatedResultType relatedResult;
-		CompoundResultType compoundResult = new CompoundResultType();
 		GeneralizationItem currentGeneralizationItem;
 		SpecificationItem foundSpecificationItem;
 		SpecificationItem relatedSpecificationItem;
 		SpecificationItem previousSpecificationItem = null;
 		SpecificationItem lastCreatedSpecificationItem = null;
 		WordItem currentGeneralizationWordItem;
+		CompoundResultType compoundResult = new CompoundResultType();
+		RelatedResultType relatedResult;
 
 		if( !adminItem_.isNounWordType( specificationWordTypeNr ) )
 			return adminItem_.startCompoundResultError( 1, moduleNameString_, "The given specification word type isn't a noun" );
@@ -3770,11 +3866,12 @@ class AdminReasoningOld
 				{
 				previousSpecificationItem = lastCreatedSpecificationItem;
 
+				// Do for all generalization noun specification words
 				do	{
 					if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
 						return adminItem_.startCompoundResultError( 1, moduleNameString_, "I found an undefined generalization word" );
 
-					if( ( foundSpecificationItem = currentGeneralizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, true, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, generalizationContextNr, relationContextNr, specificationWordItem ) ) != null )
+					if( ( foundSpecificationItem = currentGeneralizationWordItem.bestMatchingSpecificationWordSpecificationItem( true, true, true, true, false, false, Constants.NO_COLLECTION_NR, generalizationContextNr, relationContextNr, specificationWordItem ) ) != null )
 						{
 						if( drawSpecificationSubstitutionConclusionOrAskQuestion( foundSpecificationItem.hasAssumptionLevel(), foundSpecificationItem.isInactiveAssignment(), foundSpecificationItem.isArchivedAssignment(), foundSpecificationItem.isExclusiveSpecification(), true, Constants.NO_QUESTION_PARAMETER, foundSpecificationItem.generalizationWordTypeNr(), specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, generalizationContextNr, specificationContextNr, currentGeneralizationWordItem, specificationWordItem, null ) != Constants.RESULT_OK )
 							return adminItem_.addCompoundResultError( 1, moduleNameString_, "I failed to find a specification substitution conclusion or question for generalization word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\" and specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
@@ -3783,7 +3880,7 @@ class AdminReasoningOld
 						foundSpecificationItem.hasSpecificationCollection() )
 							{
 							if( ( relatedResult = currentGeneralizationWordItem.findRelatedSpecification( false, foundSpecificationItem ) ).result != Constants.RESULT_OK )
-								return adminItem_.addCompoundResultError( 1, moduleNameString_, "I failed to find out if a specification in generalization word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\" is related to the found specification" );
+								return adminItem_.addCompoundResultError( 1, moduleNameString_, "I failed to find out if a specification in word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\" is related to the found specification" );
 
 							if( ( relatedSpecificationItem = relatedResult.relatedSpecificationItem ) != null )
 								{

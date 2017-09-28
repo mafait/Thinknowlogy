@@ -1,0 +1,22 @@
+Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+Laura heeft een moeder, genaamd Anna.
+Paul heeft 2 ouders, genaamd Jan en Anna.
+Johan is een zoon van Jan en Anna.
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Anna.
+Toon de verantwoordingsrapportage over Paul.
+Toon de verantwoordingsrapportage over Johan.
+Toon de verantwoordingsrapportage over Laura.
+Laura is een kind.
+Paul is een kind.
+Cor is een ouder.
+Cor is een vader.
+# Vreemd
+Cor is een ouder van Paul, Johan en Laura.
+Toon de verantwoordingsrapportage over Cor.
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Anna.
+Toon de verantwoordingsrapportage over Paul.
+Toon de verantwoordingsrapportage over Johan.
+Toon de verantwoordingsrapportage over Laura.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

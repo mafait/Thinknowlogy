@@ -1,7 +1,7 @@
 /*	Class:			WordWrite
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -100,6 +100,7 @@ class WordWrite
 
 	private byte checkAssumptionLevel( SpecificationItem writeSpecificationItem )
 		{
+		short currentAssumptionLevel;
 		short previousAssumptionLevel;
 		ShortResultType shortResult;
 
@@ -108,13 +109,27 @@ class WordWrite
 
 		previousAssumptionLevel = writeSpecificationItem.assumptionLevel();
 
-		if( ( shortResult = writeSpecificationItem.recalculateAssumptionLevel() ).result != Constants.RESULT_OK )
-			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to recalculate the assumption level of the write specification" );
+		if( myWordItem_.hasCorrectedAssumptionByKnowledge() )
+			{
+			// Normal calculation will go wrong if corrected assumption is rewritten
+			// In other words: If the stored sentence buffer string isn't used
+			if( writeSpecificationItem.recalculateAssumption() != Constants.RESULT_OK )
+				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to calculate the assumption level of the write specification" );
+
+			currentAssumptionLevel = writeSpecificationItem.assumptionLevel();
+			}
+		else
+			{
+			if( ( shortResult = writeSpecificationItem.calculateAssumptionLevel() ).result != Constants.RESULT_OK )
+				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to calculate the assumption level of the write specification" );
+
+			currentAssumptionLevel = shortResult.shortValue;
+			}
 
 		// Difference between recalculated assumption level and previous assumption level
 		// Assumption level is not recalculated after change
-		if( shortResult.shortValue != previousAssumptionLevel &&
-		InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nThe assumption level of the following specification item has changed during the process, but it isn't recalculated.\nSo, this specification may have a recalculation or update issue.\n\tPrevious assumption level: " + previousAssumptionLevel + ", recalculated assumption level: " + shortResult.shortValue + ";\n\tSpecificationItem: " + writeSpecificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n\n" ) != Constants.RESULT_OK )
+		if( currentAssumptionLevel != previousAssumptionLevel &&
+		InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nThe assumption level of the following specification item has changed during the process, but it isn't recalculated.\nSo, this specification may have a recalculation or update issue.\n\tPrevious assumption level: " + previousAssumptionLevel + ", recalculated assumption level: " + currentAssumptionLevel + ";\n\tSpecificationItem: " + writeSpecificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n\n" ) != Constants.RESULT_OK )
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "I failed to write an interface warning" );
 
 		return Constants.RESULT_OK;
@@ -122,8 +137,10 @@ class WordWrite
 
 	private byte cleanupWriteInfo( boolean isWritingCurrentSpecificationWordOnly, short startWriteLevel, int startWordPosition, SpecificationItem clearSpecificationItem )
 		{
-		if( CommonVariables.writtenSentenceStringBuffer == null ||
-		CommonVariables.writtenSentenceStringBuffer.length() <= startWordPosition )
+		StringBuffer writtenSentenceStringBuffer;
+
+		if( ( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) == null ||
+		writtenSentenceStringBuffer.length() <= startWordPosition )
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given start position is equal or smaller than the size of the write sentence string buffer" );
 
 		CommonVariables.writtenSentenceStringBuffer = new StringBuffer( startWordPosition > 0 ? CommonVariables.writtenSentenceStringBuffer.substring( 0, startWordPosition ) : Constants.EMPTY_STRING );
@@ -161,7 +178,6 @@ class WordWrite
 		short assumptionLevel;
 		int specificationCollectionNr;
 		int generalizationContextNr;
-		int specificationContextNr;
 		int relationContextNr;
 		SpecificationItem currentSpecificationItem;
 		WordItem currentContextWordItem;
@@ -186,23 +202,21 @@ class WordWrite
 				if( !isWritingCurrentSpecificationWordOnly &&
 				( specificationCollectionNr = clearSpecificationItem.specificationCollectionNr() ) > Constants.NO_COLLECTION_NR )
 					{
-					// Clear specification write level of related specification words
 					isAnsweredQuestion = clearSpecificationItem.isAnsweredQuestion();
-					isExclusiveSpecification = clearSpecificationItem.isExclusiveSpecification();
-					isNegative = clearSpecificationItem.isNegative();
-					isPossessive = clearSpecificationItem.isPossessive();
-					isSelfGenerated = clearSpecificationItem.isSelfGenerated();
-
-					assumptionLevel = clearSpecificationItem.assumptionLevel();
-
-					generalizationContextNr = clearSpecificationItem.generalizationContextNr();
-					specificationContextNr = clearSpecificationItem.specificationContextNr();
 
 					if( ( currentSpecificationItem = myWordItem_.firstSpecificationItem( isAnsweredQuestion, clearSpecificationItem.isAssignment(), clearSpecificationItem.isInactiveAssignment(), clearSpecificationItem.isArchivedAssignment(), clearSpecificationItem.questionParameter() ) ) != null )
 						{
+						// Clear specification write level of related specification words
+						isExclusiveSpecification = clearSpecificationItem.isExclusiveSpecification();
+						isNegative = clearSpecificationItem.isNegative();
+						isPossessive = clearSpecificationItem.isPossessive();
+						isSelfGenerated = clearSpecificationItem.isSelfGenerated();
+						assumptionLevel = clearSpecificationItem.assumptionLevel();
+						generalizationContextNr = clearSpecificationItem.generalizationContextNr();
+
 						do	{
 							if( currentSpecificationItem != clearSpecificationItem &&
-							( currentSpecificationWordItem = currentSpecificationItem.relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, Constants.NO_WORD_TYPE_NR, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) ) != null )
+							( currentSpecificationWordItem = currentSpecificationItem.relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, Constants.NO_WORD_TYPE_NR, specificationCollectionNr, generalizationContextNr, relationContextNr ) ) != null )
 								currentSpecificationWordItem.clearSpecificationWriteLevel( currentWriteLevel );
 							}
 						while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != null );
@@ -260,9 +274,9 @@ class WordWrite
 
 	private byte writeSpecificationWordToSentence( boolean isPossessive, boolean isWordTypeNumeral, boolean isWordTypePluralNoun, short grammarWordTypeNr, int relationContextNr, SpecificationItem writeSpecificationItem )
 		{
-		boolean isNumberOfRelations = false;
+		boolean hasFoundNumberOfRelations = false;
 		short specificationWordTypeNr;
-		int nContextRelations;
+		int nContextRelations = 0;
 		WordItem specificationWordItem;
 		String specificationWordString;
 
@@ -289,14 +303,11 @@ class WordWrite
 
 			if( !specificationWordItem.isSpecificationWordTypeAlreadyWritten( specificationWordTypeNr ) )
 				{
+				if( isPossessive &&
 				// Number of relation words of user specification item
-				if( ( nContextRelations = writeSpecificationItem.nContextRelations() ) == 0 )
-					{
+				( nContextRelations = writeSpecificationItem.nContextRelations() ) == 0 )
 					// Calculated number of relation words of a self-generated possessive specification
-					if( isPossessive &&
-					relationContextNr > Constants.NO_CONTEXT_NR )
-						nContextRelations = myWordItem_.nContextWordsInContextWords( relationContextNr, specificationWordItem );
-					}
+					nContextRelations = myWordItem_.nContextWords( relationContextNr, specificationWordItem );
 
 				// No relation word
 				if( ( ( nContextRelations == 0 ||
@@ -318,8 +329,8 @@ class WordWrite
 							// To avoid looping in numbers
 							if( lastNumeralWordPosition_ == 0 )
 								{
-								// The word 'number' needs to be converted to the number of relation words
-								isNumberOfRelations = true;
+								// The grammar definition word 'number' needs to be converted to the number of relation words
+								hasFoundNumberOfRelations = true;
 								lastNumeralWordPosition_ = specificationStartWordPosition_;
 								writeWordString_ = ( Constants.EMPTY_STRING + nContextRelations );
 								}
@@ -344,7 +355,7 @@ class WordWrite
 					else
 						writeWordString_ = specificationWordString;
 
-					if( !isNumberOfRelations &&
+					if( !hasFoundNumberOfRelations &&
 					writeWordString_ != null )
 						{
 						if( specificationWordItem.markSpecificationWordTypeAsWritten( writeWordTypeNr_ ) != Constants.RESULT_OK )
@@ -377,7 +388,6 @@ class WordWrite
 		short assumptionLevel;
 		int specificationCollectionNr;
 		int generalizationContextNr;
-		int specificationContextNr;
 		int relationContextNr;
 		SpecificationItem currentSpecificationItem;
 		WordItem lastFoundSpecificationWordItem;
@@ -406,18 +416,15 @@ class WordWrite
 			isExclusiveSpecification = writeSpecificationItem.isExclusiveSpecification();
 			isNegative = writeSpecificationItem.isNegative();
 			isSelfGenerated = writeSpecificationItem.isSelfGenerated();
-
 			assumptionLevel = writeSpecificationItem.assumptionLevel();
-
 			specificationCollectionNr = writeSpecificationItem.specificationCollectionNr();
 			generalizationContextNr = writeSpecificationItem.generalizationContextNr();
-			specificationContextNr = writeSpecificationItem.specificationContextNr();
 
 			if( ( currentSpecificationItem = myWordItem_.firstSpecificationItem( isAnsweredQuestion, writeSpecificationItem.isAssignment(), writeSpecificationItem.isInactiveAssignment(), writeSpecificationItem.isArchivedAssignment(), writeSpecificationItem.questionParameter() ) ) != null )
 				{
 				do	{
 					if( currentSpecificationItem == writeSpecificationItem ||
-					currentSpecificationItem.isRelatedSpecification( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, Constants.NO_WORD_TYPE_NR, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr ) )
+					currentSpecificationItem.relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, Constants.NO_WORD_TYPE_NR, specificationCollectionNr, generalizationContextNr, relationContextNr ) != null )
 						{
 						if( writeSpecificationWordToSentence( isPossessive, isWordTypeNumeral, isWordTypePluralNoun, grammarWordTypeNr, relationContextNr, currentSpecificationItem ) != Constants.RESULT_OK )
 							return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a specification word to the sentence" );
@@ -450,13 +457,13 @@ class WordWrite
 					{
 					hasFoundAllSpecificationWordsBeforeConjunction_ = true;
 					isSpecificationWaitingForConjunction_ = true;
+					lastNumeralWordPosition_ = 0;
 
 					if( !isSpecificationGeneralization )
 						isSkippingClearWriteLevel_ = true;
 
-					lastNumeralWordPosition_ = 0;
-
-					CommonVariables.writtenSentenceStringBuffer = new StringBuffer( previousSpecificationStringBuffer_ );
+					// Recovery after unsuccessful grammar path
+					CommonVariables.writtenSentenceStringBuffer = previousSpecificationStringBuffer_;
 
 					if( ( lastFoundSpecificationWordItem = lastFoundSpecificationItem_.specificationWordItem() ) != null )
 						lastFoundSpecificationWordItem.clearSpecificationWriteLevel( Constants.NO_WRITE_LEVEL );
@@ -601,14 +608,11 @@ class WordWrite
 
 		definitionGrammarParameter = definitionGrammarItem.grammarParameter();
 		definitionGrammarWordTypeNr = definitionGrammarItem.grammarWordTypeNr();
-
 		assumptionLevel = writeSpecificationItem.assumptionLevel();
 		generalizationWordTypeNr = writeSpecificationItem.generalizationWordTypeNr();
-
 		generalizationContextNr = writeSpecificationItem.generalizationContextNr();
 		specificationContextNr = writeSpecificationItem.specificationContextNr();
 		relationContextNr = writeSpecificationItem.relationContextNr();
-
 		specificationWordItem = writeSpecificationItem.specificationWordItem();
 
 		if( definitionGrammarParameter > Constants.NO_GRAMMAR_PARAMETER &&
@@ -619,6 +623,22 @@ class WordWrite
 			{
 			// Symbols
 			case Constants.WORD_PARAMETER_SYMBOL_COMMA:
+				if( isPartOf ||
+				isRelation ||
+				answerParameter > Constants.NO_ANSWER_PARAMETER ||
+
+				( isSpecification &&
+				!isWritingCurrentSpecificationWordOnly &&
+				myWordItem_.nRemainingSpecificationWordsForWriting( isActiveAssignment, isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, writeSpecificationItem.isSelfGenerated(), assumptionLevel, writeSpecificationItem.questionParameter(), writeSpecificationItem.specificationWordTypeNr(), writeSpecificationItem.specificationCollectionNr(), generalizationContextNr, relationContextNr ) != 1 ) )
+					{
+					isInsertingSeparator = false;
+					writeWordString_ = predefinedWordString;
+					}
+				else
+					hasFoundAllSpecificationWordsBeforeConjunction_ = true;
+
+				break;
+
 			case Constants.WORD_PARAMETER_SYMBOL_COLON:
 			case Constants.WORD_PARAMETER_SYMBOL_QUESTION_MARK:
 			case Constants.WORD_PARAMETER_SYMBOL_QUESTION_MARK_INVERTED:
@@ -718,8 +738,8 @@ class WordWrite
 				( writeSpecificationItem.isExclusiveSpecification() ||
 
 				( relationContextNr > Constants.NO_CONTEXT_NR &&
-				myWordItem_.hasConfirmedSpecification() &&
-				myWordItem_.nContextWordsInContextWords( relationContextNr, specificationWordItem ) == 1 ) ) )
+				myWordItem_.hasCurrentlyConfirmedSpecification() &&
+				myWordItem_.nContextWords( relationContextNr, specificationWordItem ) == 1 ) ) )
 					writeWordString_ = predefinedWordString;
 
 				break;
@@ -1197,8 +1217,8 @@ class WordWrite
 
 		if( writeWordString_ != null )
 			{
-			if( CommonVariables.writtenSentenceStringBuffer == null ||
-			CommonVariables.writtenSentenceStringBuffer.length() == 0 )
+			if( ( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) == null ||
+			writtenSentenceStringBuffer.length() == 0 )
 				CommonVariables.writtenSentenceStringBuffer = new StringBuffer( writeWordString_ );
 			else
 				{
@@ -1228,7 +1248,7 @@ class WordWrite
 					{
 					specificationStartWordPosition_ = writtenSentenceStringBuffer.length();
 
-					// Recover an unsuccessful grammar path
+					// Prepare recovery
 					previousSpecificationStringBuffer_ = lastSpecificationStringBuffer_;
 					lastSpecificationStringBuffer_ = new StringBuffer( writtenSentenceStringBuffer );
 					}
@@ -1303,6 +1323,7 @@ class WordWrite
 		GrammarItem definitionGrammarItem = selectedGrammarItem;
 		WordItem currentLanguageWordItem;
 		WriteItem currentWriteItem = null;
+		StringBuffer writtenSentenceStringBuffer;
 
 		hasFoundWordToWrite_ = false;
 
@@ -1466,8 +1487,10 @@ class WordWrite
 				if( !hasFoundWordToWrite_ &&
 				!isSkippingClearWriteLevel_ &&
 				// The sentence has grown
-				CommonVariables.writtenSentenceStringBuffer != null &&
-				CommonVariables.writtenSentenceStringBuffer.length() > startWordPosition &&
+				( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) != null &&
+				writtenSentenceStringBuffer.length() > startWordPosition &&
+
+				// Clean up write info
 				cleanupWriteInfo( isWritingCurrentSpecificationWordOnly, startWriteLevel, startWordPosition, writeSpecificationItem ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to cleanup the write info" );
 				}
@@ -1485,11 +1508,11 @@ class WordWrite
 			if( clearWriteLevel( isWritingCurrentSpecificationWordOnly, Constants.NO_WRITE_LEVEL, writeSpecificationItem ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to clear the write word levels in all words" );
 
-			if( CommonVariables.writtenSentenceStringBuffer != null &&
-			CommonVariables.writtenSentenceStringBuffer.length() > 0 )
+			if( ( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) != null &&
+			writtenSentenceStringBuffer.length() > 0 )
 				{
 				if( isCheckingUserSentenceForIntegrity )
-					CommonVariables.writtenUserSentenceStringBuffer = new StringBuffer( CommonVariables.writtenSentenceStringBuffer );
+					CommonVariables.writtenUserSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer;
 
 				// Typically for French: Compound words
 				currentLanguageWordItem = CommonVariables.currentLanguageWordItem;

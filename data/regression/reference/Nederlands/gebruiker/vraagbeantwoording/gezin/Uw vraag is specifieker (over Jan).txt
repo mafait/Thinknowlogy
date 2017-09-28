@@ -32,11 +32,11 @@
 * 
 * Mijn veronderstellingen:
 < Paul is waarschijnlijk een persoon.
+< Paul heeft waarschijnlijk een ouder, genaamd Jan.
 < Paul is waarschijnlijk een kind van Jan.
 < Paul is waarschijnlijk deel van een gezin.
 < Paul is waarschijnlijk geen meisje en geen vrouw.
 < Paul is waarschijnlijk geen dochter.
-< Paul heeft waarschijnlijk een ouder, genaamd Jan.
 < Jan is waarschijnlijk een ouder van Paul.
 < Jan is waarschijnlijk deel van een gezin.
 < Jan is mogelijk een persoon.

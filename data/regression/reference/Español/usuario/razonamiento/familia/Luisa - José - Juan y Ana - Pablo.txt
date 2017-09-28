@@ -48,7 +48,7 @@
 < ¿Es José un niño o un hombre?
 < 
 * 
-* Mis suposiciones que se concluyen:
+* Mis suposiciones anteriores que tienen palabras de relación ahora:
 < José tiene probablemente un padre.
 < Luisa tiene probablemente un padre.
 * 
@@ -67,10 +67,10 @@
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
@@ -93,6 +93,9 @@
 * Mis preguntas que son contestadas:
 < ¿Es Pablo un hijo o una hija?
 * 
+* Mis suposiciones que no son ocultos más:
+< Pablo es probablemente hijo de Juan y Ana.
+* 
 * Mis suposiciones que se concluyen:
 < Pablo es parte de una familia.
 * 
@@ -105,7 +108,4 @@
 * Mis conclusiones:
 < Pablo no es una hija.
 < Pablo no es una niña y una mujer.
-* 
-* Mis suposiciones:
-< Pablo es probablemente hijo de Juan y Ana.
 < 

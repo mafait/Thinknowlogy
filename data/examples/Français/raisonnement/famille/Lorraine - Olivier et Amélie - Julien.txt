@@ -13,4 +13,6 @@ Julien a 2 parents, appelés Olivier et Amélie.
 Affichez le rapport de justification sur Olivier.
 Affichez le rapport de justification sur Amélie.
 Affichez le rapport de justification sur Julien.
+Julien est un père.
+Affichez le rapport de justification sur Julien.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

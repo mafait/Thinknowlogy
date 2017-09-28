@@ -1,7 +1,7 @@
 /*	Class:		UserSpecificationResultType
  *	Purpose:	To return user specification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -34,12 +34,12 @@ class UserSpecificationResultType
 	signed char result;
 
 	bool isConfirmedExclusive;
+	bool isConfirmedSpecificationButNotItsRelation;
 	bool isNonExclusiveSpecification;
 	bool isSameQuestionFromUser;
 	bool isSimilarOrRelatedQuestion;
 
-	SpecificationItem *confirmedReplacedSpecificationItem;
-	SpecificationItem *confirmedSpecificationButNoRelationReplacedSpecificationItem;
+	SpecificationItem *confirmedSpecificationItem;
 
 	protected:
 	// Constructor
@@ -49,12 +49,12 @@ class UserSpecificationResultType
 		result = RESULT_OK;
 
 		isConfirmedExclusive = false;
+		isConfirmedSpecificationButNotItsRelation = false;
 		isNonExclusiveSpecification = false;
 		isSameQuestionFromUser = false;
 		isSimilarOrRelatedQuestion = false;
 
-		confirmedReplacedSpecificationItem = NULL;
-		confirmedSpecificationButNoRelationReplacedSpecificationItem = NULL;
+		confirmedSpecificationItem = NULL;
 		}
 	};
 

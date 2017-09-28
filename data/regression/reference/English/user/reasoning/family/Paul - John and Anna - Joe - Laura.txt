@@ -106,6 +106,9 @@
 < Joe is probably a child of John and Anna.
 < Joe is probably part of a family.
 < Joe is possibly a person.
+< Anna is probably a parent of Paul, Joe and Laura.
+< Anna has probably 3 children, called Paul, Joe and Laura.
+< Anna has possibly a daughter, called Laura.
 < Laura has probably 2 parents, called John and Anna.
 < Laura is probably a child of John and Anna.
 < Laura is probably part of a family.
@@ -113,9 +116,6 @@
 < Laura is possibly a daughter of John and Anna.
 < Laura is maybe not a boy and not a man.
 < Laura is maybe not a son.
-< Anna is probably a parent of Paul, Joe and Laura.
-< Anna has probably 3 children, called Paul, Joe and Laura.
-< Anna has possibly a daughter, called Laura.
 * 
 * My questions:
 < Is Joe a girl, a woman, a boy or a man?
@@ -144,12 +144,12 @@
 * My assumptions that are confirmed:
 < Laura is possibly a daughter of John and Anna.
 * 
+* My assumptions that are concluded:
+< John has a daughter, called Laura.
+< Anna has a daughter, called Laura.
+* 
 * My assumptions that are adjusted:
 < Laura is probably a person.
 < Laura is probably not a boy and not a man.
 < Laura is probably not a son.
-* 
-* My assumptions that are concluded:
-< John has a daughter, called Laura.
-< Anna has a daughter, called Laura.
 < 

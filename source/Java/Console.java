@@ -1,6 +1,6 @@
 /*	Class:		Console
  *	Purpose:	To create the GUI and to process the events
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -148,13 +148,11 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		if( nSubMenuButtons_ >= 0 &&
 		nSubMenuButtons_ < Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS &&
 		currentLanguageWordItem_ != null &&
-		( interfaceString = currentLanguageWordItem_.interfaceString( interfaceParameter ) ) != null )
+		( interfaceString = currentLanguageWordItem_.interfaceString( interfaceParameter ) ) != null &&
+		!interfaceString.equals( Constants.INTERFACE_STRING_NOT_AVAILABLE ) )
 			{
-			if( !interfaceString.equals( Constants.INTERFACE_STRING_NOT_AVAILABLE ) )
-				{
-				subMenuButtonArray_[nSubMenuButtons_].setEnabled( true );
-				subMenuButtonArray_[nSubMenuButtons_++].setText( interfaceString );
-				}
+			subMenuButtonArray_[nSubMenuButtons_].setEnabled( true );
+			subMenuButtonArray_[nSubMenuButtons_++].setText( interfaceString );
 			}
 		}
 
@@ -361,12 +359,16 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		{
 		int difference;
 		int buttonPaneSize = ( titleBarHeight_ + mainMenuPanel_.getHeight() + subMenuPanel_.getHeight() + inputPanel_.getHeight() + windowBottomHeight_ + Constants.CONSOLE_BUTTON_PANE_HEIGHT );
-		int preferredOutputScrollPaneSize = ( currentFrameHeight_ - buttonPaneSize );
-
+		int currentOutputPaneSize = ( currentFrameHeight_ - buttonPaneSize );
+		int halfFrameHeight = ( currentFrameHeight_ / 2 );
+		// The output pane size must be at least half the frame size 
+		int preferredOutputScrollPaneSize = ( currentOutputPaneSize < halfFrameHeight ? halfFrameHeight : currentOutputPaneSize );
+		
 		if( !isStopResizing_ &&
 		nSubMenuButtons_ > 0 &&
 		nSubMenuButtons_ < Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS &&
 		subMenuButtonArray_[nSubMenuButtons_].isVisible() )
+			// Increasing the number of visible sub-menu buttons of the pane  
 			nSubMenuButtons_++;
 
 		difference = preferredOutputScrollPaneSize - wantedPreferredOutputScrollPaneSize_;
@@ -377,6 +379,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			outputScrollPane_.getHeight() < buttonPaneSize )
 				{
 				isStopResizing_ = true;
+				// Decrease the number of visible sub-menu buttons of the pane  
 				nSubMenuButtons_--;
 				}
 			}
@@ -388,12 +391,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				goToEndOfOutputDocument( true );
 				}
 			else
-				{
-				if( difference > 9 )
-					wantedPreferredOutputScrollPaneSize_ += ( difference / 5 );
-				else
-					wantedPreferredOutputScrollPaneSize_++;
-				}
+				wantedPreferredOutputScrollPaneSize_++;
 			}
 
 		mainMenuPanel_.setPreferredSize( new Dimension( 0, ( Constants.CONSOLE_BUTTON_PANE_HEIGHT + mainMenuHelpButton_.getY() ) ) );

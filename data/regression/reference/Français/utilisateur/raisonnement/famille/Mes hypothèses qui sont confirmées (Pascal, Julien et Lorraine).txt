@@ -71,8 +71,8 @@
 < Julien n'est probablement pas une fille.
 < Julien a probablement 2 parents, appelés Olivier et Amélie.
 < Julien a possible une mère, appelée Amélie.
-< Olivier a probablement 2 enfants, appelés Pascal et Julien.
 < Olivier est probablement un parent de Pascal et Julien.
+< Olivier a probablement 2 enfants, appelés Pascal et Julien.
 < Amélie est probablement un parent de Pascal et Julien.
 < Amélie est possible une mère de Pascal et Julien.
 < Amélie a probablement 2 enfants, appelés Pascal et Julien.
@@ -93,8 +93,8 @@
 < Lorraine n'est probablement pas un fils.
 < Lorraine a probablement 2 parents, appelés Olivier et Amélie.
 < Lorraine a possible une mère, appelée Amélie.
-< Olivier est probablement un parent de Pascal, Julien et Lorraine.
 < Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+< Olivier est probablement un parent de Pascal, Julien et Lorraine.
 < Amélie est probablement un parent de Pascal, Julien et Lorraine.
 < Amélie est possible une mère de Pascal, Julien et Lorraine.
 < Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.

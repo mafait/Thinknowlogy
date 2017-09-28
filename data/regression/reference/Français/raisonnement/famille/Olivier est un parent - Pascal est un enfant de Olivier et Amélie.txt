@@ -189,14 +189,14 @@
 <	- Pascal est un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
 < Pascal a probablement 2 parents, appelés Olivier et Amélie. En raison:
-<	- Amélie est probablement un parent de Pascal.
 <	- Olivier est un parent de Pascal, Julien et Lorraine.
-* 	et:
-<	- Chaque famille a parents et enfants.
-<	- Pascal est un enfant de Olivier et Amélie.
+<	- Amélie est probablement un parent de Pascal.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Pascal est un enfant de Olivier et Amélie.
 < Pascal a possible une mère, appelée Amélie. En raison:
 <	- Amélie est possible une mère de Pascal.
 * 	et:

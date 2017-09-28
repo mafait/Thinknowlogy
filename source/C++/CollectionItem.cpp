@@ -1,7 +1,7 @@
 /*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -241,18 +241,21 @@ class CollectionItem : private Item
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
 
 		if( collectionWordItem_ != NULL &&
+		// Collection word
 		( boolResult = collectionWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
 			return addBoolResultError( functionNameString, NULL, NULL, "I failed to find a matching word reference string for the collected word item" );
 
 		// No matching string
 		if( !boolResult.booleanValue &&
 		commonWordItem_ != NULL &&
+		// Common word
 		( boolResult = commonWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
 			return addBoolResultError( functionNameString, NULL, NULL, "I failed to find a matching word reference string for the common word item" );
 
 		// No matching string
 		if( !boolResult.booleanValue &&
 		compoundGeneralizationWordItem_ != NULL &&
+		// Compound generalization word
 		( boolResult = compoundGeneralizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
 			return addBoolResultError( functionNameString, NULL, NULL, "I failed to find a matching word reference string for the compound word item" );
 
@@ -266,6 +269,12 @@ class CollectionItem : private Item
 		{
 		return ( collectionWordItem_ != NULL &&
 				collectionWordItem_->isFemale() );
+		}
+
+	bool hasMaleCollectionWord()
+		{
+		return ( collectionWordItem_ != NULL &&
+				collectionWordItem_->isMale() );
 		}
 
 	bool isCompoundGeneralization()

@@ -1,7 +1,7 @@
 /*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -122,8 +122,9 @@ class AdminImperative
 
 	private byte executeImperativeDisplay( short executionNounWordParameter, short executionWordTypeNr, WordItem imperativeVerbWordItem, WordItem executionWordItem, String executionString )
 		{
-		FileResultType fileResult;
 		String singularNounString;
+		StringBuffer writtenSentenceStringBuffer;
+		FileResultType fileResult;
 
 		if( imperativeVerbWordItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given imperative verb word item is undefined" );
@@ -173,13 +174,13 @@ class AdminImperative
 				executionWordItem != null )
 					{
 					if( adminItem_.isImperativeSentence() &&
-					CommonVariables.writtenSentenceStringBuffer != null &&
-					CommonVariables.writtenSentenceStringBuffer.length() > 0 )
+					( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) != null &&
+					writtenSentenceStringBuffer.length() > 0 )
 						{
 						if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_NO ) != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'I have no' interface notification" );
 
-						if( InputOutput.writeDiacriticalText( false, false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, CommonVariables.writtenSentenceStringBuffer.toString() ) != Constants.RESULT_OK )
+						if( InputOutput.writeDiacriticalText( false, false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, writtenSentenceStringBuffer.toString() ) != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to write a sentence" );
 						}
 					else
@@ -403,7 +404,7 @@ class AdminImperative
 				return adminItem_.addError( 1, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level " + CommonVariables.currentAssignmentLevel );
 
 			// There already is a scores list at the start
-			if( CommonVariables.adminScoreList != null &&
+			if( adminItem_.hasScoreList() &&
 			CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL &&
 			adminItem_.deleteScores() != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to delete the admin score list" );
@@ -559,12 +560,12 @@ class AdminImperative
 
 	private byte writeInfoTextWithPossibleQueryCommands( String textString )
 		{
-		QueryResultType queryResult;
 		boolean hasFoundNewLine = false;
 		int textStringLength;
 		int position = 0;
 		char textChar = Constants.SYMBOL_QUESTION_MARK;
 		StringBuffer writeStringBuffer = new StringBuffer();
+		QueryResultType queryResult;
 
 		if( textString == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given text string is undefined" );
@@ -757,8 +758,7 @@ class AdminImperative
 				oldGlobalBlockingScore_ > Constants.NO_SCORE ||
 				newGlobalBlockingScore_ > Constants.NO_SCORE ) &&
 
-				// Scores list is created
-				CommonVariables.adminScoreList != null )
+				adminItem_.hasScoreList() )
 					{
 					if( ( boolCheckResult = adminItem_.checkScores( isInverted, solveStrategyParameter, oldGlobalSatisfiedScore_, newGlobalSatisfiedScore_, oldGlobalDissatisfiedScore_, newGlobalDissatisfiedScore_, oldGlobalNotBlockingScore_, newGlobalNotBlockingScore_, oldGlobalBlockingScore_, newGlobalBlockingScore_ ) ).result != Constants.RESULT_OK )
 						return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to check the scores" );
@@ -1095,8 +1095,7 @@ class AdminImperative
 					else
 						{
 						if( !isAllowingDuplicates &&
-						// Scores list is created
-						CommonVariables.adminScoreList != null )
+						adminItem_.hasScoreList() )
 							{
 							if( ( boolCheckResult = adminItem_.findScore( isPreparingSort, conditionSelectionItem ) ).result != Constants.RESULT_OK )
 								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to find a score item" );

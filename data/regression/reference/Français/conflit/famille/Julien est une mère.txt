@@ -106,6 +106,9 @@
 < Pascal est probablement un enfant de Olivier et Amélie.
 < Pascal est probablement partie d'une famille.
 < Pascal est possible une personne.
+< Amélie est probablement un parent de Julien, Pascal et Lorraine.
+< Amélie a probablement 3 enfants, appelés Julien, Pascal et Lorraine.
+< Amélie a possible une fille, appelée Lorraine.
 < Lorraine a probablement 2 parents, appelés Olivier et Amélie.
 < Lorraine est probablement un enfant de Olivier et Amélie.
 < Lorraine est probablement partie d'une famille.
@@ -113,9 +116,6 @@
 < Lorraine est possible une fille de Olivier et Amélie.
 < Lorraine n'est peut-être pas un garçon et pas un homme.
 < Lorraine n'est peut-être pas un fils.
-< Amélie est probablement un parent de Julien, Pascal et Lorraine.
-< Amélie a probablement 3 enfants, appelés Julien, Pascal et Lorraine.
-< Amélie a possible une fille, appelée Lorraine.
 * 
 * Mes questions:
 < Est Pascal une jeune-fille, une femme, un garçon ou un homme?

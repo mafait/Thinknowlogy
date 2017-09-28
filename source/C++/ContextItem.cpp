@@ -1,7 +1,7 @@
 /*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -21,8 +21,6 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#ifndef CONTEXTITEM
-#define CONTEXTITEM 1
 #include "WordItem.h"
 
 class ContextItem : private Item
@@ -30,7 +28,6 @@ class ContextItem : private Item
 	friend class AdminSpecification;
 	friend class ContextList;
 	friend class WordItem;
-	friend class WordSpecification;
 
 	// Private initialized variables
 
@@ -206,7 +203,6 @@ class ContextItem : private Item
 		return specificationWordItem_;
 		}
 	};
-#endif
 
 /*************************************************************************
  *	"Enter his gates with thanksgiving;

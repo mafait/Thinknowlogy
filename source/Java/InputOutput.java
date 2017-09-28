@@ -1,6 +1,6 @@
 /*	Class:		InputOutput
  *	Purpose:	To read and write user information
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -95,7 +95,7 @@ class InputOutput
 					}
 				catch( IOException exception )
 					{
-					Console.writeText( "Failed to write to test file: \"" + outputStringBuffer_.toString() + "\".\n" );
+					Console.writeText( "IOException: Failed to write to test file: \"" + outputStringBuffer_.toString() + "\".\n" );
 					}
 				}
 
@@ -366,7 +366,7 @@ class InputOutput
 	protected static void startProgress( short interfaceParameter1, short shortNumber, short interfaceParameter2, int startProgress, int maxProgress )
 		{
 		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
-		Console.startProgress( startProgress, maxProgress, ( currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND : currentLanguageWordItem.interfaceString( interfaceParameter1 ) + shortNumber + currentLanguageWordItem.interfaceString( interfaceParameter2 ) + "  " + Constants.QUERY_ITEM_START_STRING + CommonVariables.currentSentenceNr + ( CommonVariables.currentItemNr == Constants.NO_SENTENCE_NR ? Constants.EMPTY_STRING : Constants.QUERY_SEPARATOR_STRING + CommonVariables.currentItemNr ) + Constants.QUERY_ITEM_END_CHAR ) );
+		Console.startProgress( startProgress, maxProgress, ( currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND : currentLanguageWordItem.interfaceString( interfaceParameter1 ) + shortNumber + currentLanguageWordItem.interfaceString( interfaceParameter2 ) + "  " + Constants.QUERY_ITEM_START_STRING + CommonVariables.currentSentenceNr + ( CommonVariables.currentSentenceItemNr == Constants.NO_SENTENCE_NR ? Constants.EMPTY_STRING : Constants.QUERY_SEPARATOR_STRING + CommonVariables.currentSentenceItemNr ) + Constants.QUERY_ITEM_END_CHAR ) );
 		}
 
 	protected static void displayProgress( int currentProgress )
@@ -434,7 +434,7 @@ class InputOutput
 
 		errorStringBuffer.append( Constants.INPUT_OUTPUT_ERROR_MESSAGE_END_STRING );
 
-		Console.addError( Constants.INPUT_OUTPUT_ERROR_CURRENT_ID_STRING + Constants.QUERY_ITEM_START_CHAR + CommonVariables.currentSentenceNr + Constants.QUERY_SEPARATOR_CHAR + CommonVariables.currentItemNr + Constants.QUERY_ITEM_END_CHAR, errorStringBuffer.toString() );
+		Console.addError( Constants.INPUT_OUTPUT_ERROR_CURRENT_ID_STRING + Constants.QUERY_ITEM_START_CHAR + CommonVariables.currentSentenceNr + Constants.QUERY_SEPARATOR_CHAR + CommonVariables.currentSentenceItemNr + Constants.QUERY_ITEM_END_CHAR, errorStringBuffer.toString() );
 		}
 
 	protected static boolean hasReadLine()

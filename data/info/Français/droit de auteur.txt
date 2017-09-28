@@ -1,4 +1,5 @@
 ﻿Affichez " Copyright (C) 2009-2017, Menno Mafait".
-Affichez " Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de détails tapez".
-Affichez " \"Affichez le droit d'auteur.\". Ceci est un logiciel libre et vous êtes invité à le redistribuer".
-Affichez " en respectant certaines obligations ; pour plus de détails tapez \"Affichez la licence-GPLv2.\".".
+Affichez " Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de".
+Affichez " détails tapez \"Affichez le droit d'auteur.\". Ceci est un logiciel libre et".
+Affichez " vous êtes invité à le redistribuer en respectant certaines obligations;".
+Affichez " pour plus de détails tapez \"Affichez la licence-GPLv2.\".".

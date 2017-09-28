@@ -1,7 +1,7 @@
 /*	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,7 +29,9 @@ class WordList extends List
 		{
 		while( searchWordItem != null )
 			{
-			if( searchWordItem.deleteSentencesInWord( lowestSentenceNr ) != Constants.RESULT_OK )
+			// For efficiency, only select words with lowest sentence number or higher
+			if( searchWordItem.highestSentenceNrInWord() >= lowestSentenceNr &&
+			searchWordItem.deleteSentencesInWord( lowestSentenceNr ) != Constants.RESULT_OK )
 				// This method can be called during an error situation. So, the result isn't returned
 				addError( 1, "I failed to delete sentences in a word" );
 
@@ -41,7 +43,9 @@ class WordList extends List
 		{
 		while( searchWordItem != null )
 			{
-			if( searchWordItem.decrementSentenceNrsInWord( startSentenceNr ) != Constants.RESULT_OK )
+			// For efficiency, only select words with start sentence number or higher
+			if( searchWordItem.highestSentenceNrInWord() >= startSentenceNr &&
+			searchWordItem.decrementSentenceNrsInWord( startSentenceNr ) != Constants.RESULT_OK )
 				// This method can be called during an error situation. So, the result isn't returned
 				addError( 1, "I failed to decrement the sentence numbers from the current sentence number in a word" );
 
@@ -53,20 +57,12 @@ class WordList extends List
 		{
 		while( searchWordItem != null )
 			{
-			if( searchWordItem.decrementItemNrRangeInWord( decrementSentenceNr, decrementItemNr, decrementOffset ) != Constants.RESULT_OK )
+			// For efficiency, only select words with decrement sentence number or higher
+			if( searchWordItem.highestSentenceNrInWord() >= decrementSentenceNr &&
+			searchWordItem.decrementItemNrRangeInWord( decrementSentenceNr, decrementItemNr, decrementOffset ) != Constants.RESULT_OK )
 				// This method can be called during an error situation. So, the result isn't returned
 				addError( 1, "I failed to decrement item numbers in a word" );
 
-			searchWordItem = searchWordItem.nextWordItem();
-			}
-		}
-
-	private static void getHighestInUseSentenceNrInWordList( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int highestSentenceNr, WordItem searchWordItem )
-		{
-		while( searchWordItem != null &&
-		CommonVariables.highestInUseSentenceNr < highestSentenceNr )
-			{
-			searchWordItem.getHighestInUseSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr );
 			searchWordItem = searchWordItem.nextWordItem();
 			}
 		}
@@ -84,13 +80,33 @@ class WordList extends List
 			}
 		}
 
-	private static void setCurrentItemNrInWordList( WordItem searchWordItem )
+	private static int highestCurrentSentenceItemNrInWordList( int currentSentenceNr, int currentSentenceItemNr, WordItem searchWordItem )
 		{
 		while( searchWordItem != null )
 			{
-			searchWordItem.setCurrentItemNrInWord();
+			// For efficiency, only select words with current sentence number or higher
+			if( searchWordItem.highestSentenceNrInWord() >= currentSentenceNr )
+				currentSentenceItemNr = searchWordItem.highestCurrentSentenceItemNrInWord( currentSentenceNr, currentSentenceItemNr );
+
 			searchWordItem = searchWordItem.nextWordItem();
 			}
+
+		return currentSentenceItemNr;
+		}
+
+	private static int highestFoundSentenceNrInWordList( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int highestFoundSentenceNr, int maxSentenceNr, WordItem searchWordItem )
+		{
+		while( searchWordItem != null &&
+		highestFoundSentenceNr < maxSentenceNr )
+			{
+			// For efficiency, only select words with higher sentence number
+			if( searchWordItem.highestSentenceNrInWord() > highestFoundSentenceNr )
+				highestFoundSentenceNr = searchWordItem.highestFoundSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr );
+
+			searchWordItem = searchWordItem.nextWordItem();
+			}
+
+		return highestFoundSentenceNr;
 		}
 
 
@@ -309,19 +325,6 @@ class WordList extends List
 			deleteSentencesInWordList( lowestSentenceNr, searchWordItem );
 		}
 
-	protected void getHighestInUseSentenceNrInWordList( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int highestSentenceNr )
-		{
-		WordItem searchWordItem;
-
-		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchWordItem );
-
-		if( isIncludingDeletedItems &&
-		( searchWordItem = firstDeletedWordItem() ) != null &&
-		CommonVariables.highestInUseSentenceNr < highestSentenceNr )
-			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchWordItem );
-		}
-
 	protected void removeFirstRangeOfDeletedItemsInWordList()
 		{
 		WordItem searchWordItem;
@@ -333,15 +336,33 @@ class WordList extends List
 			removeFirstRangeOfDeletedItemsInWordList( searchWordItem );
 		}
 
-	protected void setCurrentItemNrInWordList()
+	protected int highestCurrentSentenceItemNrInWordList( int currentSentenceNr, int currentSentenceItemNr )
 		{
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			setCurrentItemNrInWordList( searchWordItem );
+			currentSentenceItemNr = highestCurrentSentenceItemNrInWordList( currentSentenceNr, currentSentenceItemNr, searchWordItem );
 
 		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			setCurrentItemNrInWordList( searchWordItem );
+			return highestCurrentSentenceItemNrInWordList( currentSentenceNr, currentSentenceItemNr, searchWordItem );
+
+		return currentSentenceItemNr;
+		}
+
+	protected int highestFoundSentenceNrInWordList( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int maxSentenceNr )
+		{
+		int highestFoundSentenceNr = Constants.NO_SENTENCE_NR;
+		WordItem searchWordItem;
+
+		if( ( searchWordItem = firstActiveWordItem() ) != null )
+			highestFoundSentenceNr = highestFoundSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr, searchWordItem );
+
+		if( isIncludingDeletedItems &&
+		highestFoundSentenceNr < maxSentenceNr &&
+		( searchWordItem = firstDeletedWordItem() ) != null )
+			return highestFoundSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr, searchWordItem );
+
+		return highestFoundSentenceNr;
 		}
 
 

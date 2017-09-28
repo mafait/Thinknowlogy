@@ -1,6 +1,6 @@
 /*	Class:		InputOutput
  *	Purpose:	To read and write user information
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -42,7 +42,6 @@ class InputOutput
 	friend class AdminReasoningOld;
 	friend class AdminSpecification;
 	friend class AdminWrite;
-	friend class CollectionList;
 	friend class ContextList;
 	friend class GrammarList;
 	friend class Item;
@@ -356,7 +355,8 @@ class InputOutput
 							addStringToOutput( isSkippingInTestFile, isError, false, ( isPrintingPrompt ? promptString : INPUT_OUTPUT_PROMPT_EMPTY_STRING ) );
 
 							isPrintingPrompt = false;
-							currentPosition_ = ( ( isPrintingPrompt && strlen( promptString ) > 0 ? strlen( promptString ) : strlen( INPUT_OUTPUT_PROMPT_EMPTY_STRING ) ) - 1 );
+							currentPosition_ = ( ( isPrintingPrompt &&
+												strlen( promptString ) > 0 ? strlen( promptString ) : strlen( INPUT_OUTPUT_PROMPT_EMPTY_STRING ) ) - 1 );
 							}
 
 						while( leftWidth > NO_CENTER_WIDTH )
@@ -586,7 +586,7 @@ class InputOutput
 		// First error message
 		if( commonVariables_->result == RESULT_OK )
 			{
-			sprintf( tempErrorString_, "%s%c%u%c%u%c%s", INPUT_OUTPUT_ERROR_CURRENT_ID_START_STRING, QUERY_ITEM_START_CHAR, commonVariables_->currentSentenceNr, QUERY_SEPARATOR_CHAR, commonVariables_->currentItemNr, QUERY_ITEM_END_CHAR, INPUT_OUTPUT_ERROR_CURRENT_ID_END_STRING );
+			sprintf( tempErrorString_, "%s%c%u%c%u%c%s", INPUT_OUTPUT_ERROR_CURRENT_ID_START_STRING, QUERY_ITEM_START_CHAR, commonVariables_->currentSentenceNr, QUERY_SEPARATOR_CHAR, commonVariables_->currentSentenceItemNr, QUERY_ITEM_END_CHAR, INPUT_OUTPUT_ERROR_CURRENT_ID_END_STRING );
 			strcat( errorString_, tempErrorString_ );
 			}
 

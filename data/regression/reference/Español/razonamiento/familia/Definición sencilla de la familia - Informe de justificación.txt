@@ -83,10 +83,10 @@
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
@@ -97,11 +97,11 @@
 < José es posiblemente una persona.
 < José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan y Ana.
+< Luisa es posiblemente parte de una familia.
 < Luisa es posiblemente una mujer.
 < Luisa es puede-ser una persona.
 < Luisa no es puede-ser un hombre.
 < Luisa es posiblemente femenina.
-< Luisa es posiblemente parte de una familia.
 < Luisa no es posiblemente un hijo.
 < Ana es probablemente una persona.
 < Ana tiene posiblemente una hija, llamada Luisa.
@@ -148,6 +148,9 @@
 < 
 * 
 * Mis conclusiones:
+< Ana es parte de una familia. Porque:
+<	- Ana es una madre.
+<	- Padres son parte de cada familia.
 < Ana es una mujer. Porque:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
@@ -162,9 +165,6 @@
 < Ana es femenina. Porque:
 <	- Ana es una mujer.
 <	- Cada mujer es femenina.
-< Ana es parte de una familia. Porque:
-<	- Ana es una madre.
-<	- Padres son parte de cada familia.
 < Ana no es un padre. Porque:
 <	- Cada padre es un padre o una madre.
 <	- Ana es una madre.
@@ -332,6 +332,9 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Luisa" es probablemente femenino.
+< Luisa es posiblemente parte de una familia. Porque:
+<	- Luisa es posiblemente hija de Juan y Ana.
+<	- Hijos son parte de cada familia.
 < Luisa es posiblemente una mujer. Porque:
 <	- Luisa es posiblemente hija de Juan y Ana.
 <	- Cada hija es una mujer.
@@ -348,9 +351,6 @@
 < Luisa es posiblemente femenina. Porque:
 <	- Luisa es posiblemente una mujer.
 <	- Cada mujer es femenina.
-< Luisa es posiblemente parte de una familia. Porque:
-<	- Luisa es posiblemente hija de Juan y Ana.
-<	- Hijos son parte de cada familia.
 < Luisa no es posiblemente un hijo. Porque:
 <	- Cada hijo es un hijo o una hija.
 <	- Luisa es posiblemente hija de Juan y Ana.

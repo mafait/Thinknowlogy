@@ -28,8 +28,8 @@
 * 
 * Mis suposiciones:
 < Luisa es posiblemente hija de Juan y Ana.
-< Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
 < Luisa no es posiblemente un hijo.
 < Luisa tiene probablemente una madre, llamada Ana.
@@ -52,11 +52,13 @@
 * Usted ha confirmado la especificación - pero ninguno de sus relaciones - de mis supuestos anteriores:
 < Luisa es posiblemente hija de Juan y Ana.
 * 
+* Mis suposiciones que se concluyen:
+< Luisa es parte de una familia.
+* 
 * Mis suposiciones que se ajustan:
 < Luisa es probablemente una persona.
 * 
 * Mis suposiciones que se concluyen:
-< Luisa es parte de una familia.
 < Luisa no es un niño y un hombre.
 < Luisa no es un hijo.
 < 
@@ -84,6 +86,10 @@
 <	- Nombre propio "Luisa" es probablemente femenino.
 < Luisa tiene probablemente una madre, llamada Ana. Porque:
 <	- Ana es probablemente madre de Luisa.
+* 	y:
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre es un padre o una madre.
+<	- Nombre propio "Ana" es probablemente femenino.
 * 
 * Mis preguntas:
 < ¿Es Luisa una niña o una mujer? Porque:

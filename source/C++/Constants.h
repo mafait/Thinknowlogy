@@ -1,6 +1,6 @@
 ﻿/*	Class:			Constants
  *	Purpose:		Header file to define constants
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,7 +27,7 @@
 
 	// Version constants
 	#define PRODUCT_NAME												"Thinknowlogy"
-	#define VERSION_NAME												"2017r1 (Bursts of Laughter)"
+	#define VERSION_NAME												"2017r2 (Science as it should be)"
 
 	// Character constants
 	#define	SPACE_CHAR													' '
@@ -37,7 +37,7 @@
 	#define	CARRIAGE_RETURN_CHAR										'\r'
 	#define	TAB_CHAR													'\t'
 	#define	MAX_ERROR_STRING_LENGTH										500
-	#define	MAX_SENTENCE_STRING_LENGTH									2000
+	#define	MAX_SENTENCE_STRING_LENGTH									1500
 
 	// File constants
 	#define	FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING					"data/examples/"
@@ -697,7 +697,7 @@
 	#define	INTERFACE_LISTING_MY_ASSUMPTIONS														1414
 	#define	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED										1415
 	#define	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED										1416
-	#define	INTERFACE_LISTING_MY_HIDDEN_ASSUMPTIONS_THAT_ARE_CONCLUDED								1417
+	#define	INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_NOT_HIDDEN_ANYMORE							1417
 	#define	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE							1418
 	#define	INTERFACE_LISTING_MY_QUESTIONS															1419
 	#define	INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS													1420
@@ -709,8 +709,8 @@
 	#define	INTERFACE_LISTING_RELATED_QUESTIONS														1426
 
 	// Listing (old information)
-	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION_BUT_NO_RELATION				1430
-	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION_BUT_NO_RELATION				1431
+	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION_BUT_NOT_ITS_RELATION			1430
+	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION_BUT_NOT_ITS_RELATION			1431
 	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_ASSUMPTION	1432
 	#define	INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_CONCLUSION	1433
 	#define	INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONFIRMED										1434

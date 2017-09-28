@@ -61,7 +61,7 @@
 < ¿Es Pablo un niño o un hombre?
 < 
 * 
-* Mis suposiciones que se concluyen:
+* Mis suposiciones anteriores que tienen palabras de relación ahora:
 < Pablo tiene probablemente un padre.
 < José tiene probablemente un padre.
 < Luisa tiene probablemente un padre.
@@ -81,10 +81,10 @@
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:

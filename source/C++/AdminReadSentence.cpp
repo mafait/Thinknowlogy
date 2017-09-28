@@ -1,7 +1,7 @@
 /*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		To read and analyze sentences
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -69,8 +69,6 @@ class AdminReadSentence
 
 	WordItem *previousGeneralizationWordItem_;
 
-	char originalReadString[MAX_SENTENCE_STRING_LENGTH];
-
 
 	// Private initialized variables
 
@@ -86,9 +84,9 @@ class AdminReadSentence
 	void checkForChangesMadeByThisSentence()
 		{
 		unsigned int currentSentenceNr = commonVariables_->currentSentenceNr;
-		unsigned int highestInUseSentenceNr = adminItem_->highestInUseSentenceNr( false, false, currentSentenceNr );
+		unsigned int highestFoundSentenceNr = adminItem_->highestFoundSentenceNr( false, false, currentSentenceNr );
 
-		hasAnyChangeBeenMadeByThisSentence_ = ( highestInUseSentenceNr >= currentSentenceNr );
+		hasAnyChangeBeenMadeByThisSentence_ = ( highestFoundSentenceNr >= currentSentenceNr );
 		}
 
 	void clearReplacingInfoInSpecificationWords()
@@ -183,7 +181,6 @@ class AdminReadSentence
 
 	signed char addMultipleWord( unsigned short adjectiveParameter, unsigned short definiteArticleParameter, unsigned short indefiniteArticleParameter, ReadItem *firstReadItem, ReadItem *secondReadItem )
 		{
-		WordResultType wordResult;
 		bool isFrenchPreposition;
 		bool hasFoundFrenchPreposition = false;
 		bool hasCurrentWordWithSameWordType = true;
@@ -205,6 +202,7 @@ class AdminReadSentence
 		WordTypeItem *foundWordTypeItem;
 		char existingMultipleWordString[MAX_SENTENCE_STRING_LENGTH];
 		char multipleWordString[MAX_SENTENCE_STRING_LENGTH];
+		WordResultType wordResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addMultipleWord";
 
 		if( firstReadItem == NULL )
@@ -361,7 +359,8 @@ class AdminReadSentence
 
 	signed char addReadSpecification( bool isAction, bool isNewStart, unsigned short selectionLevel )
 		{
-		bool isConditional = ( isConditional_ || selectionListNr_ != NO_LIST_NR );
+		bool isConditional = ( isConditional_ ||
+								selectionListNr_ != NO_LIST_NR );
 		unsigned short imperativeVerbParameter = NO_IMPERATIVE_PARAMETER;
 		ReadItem *currentGeneralizationReadItem = startGeneralizationWordReadItem_;
 		SpecificationItem *userSpecificationItem;
@@ -931,35 +930,22 @@ class AdminReadSentence
 		if( nLanguages < currentLanguageNr )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The current language number exceeds the number of languages" );
 
-		strcpy( originalReadString, readUserSentenceString );
-
 		do	{
 			adminItem_->deleteTemporaryReadList();
 
 			// Need to switch language
-			if( currentLanguageNr != commonVariables_->currentLanguageNr )
-				{
-				if( assignLanguage( currentLanguageNr ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
-
-				// Avoid using the expanded read string with other languages
-				strcpy( readUserSentenceString, originalReadString );
-				}
+			if( currentLanguageNr != commonVariables_->currentLanguageNr &&
+			assignLanguage( currentLanguageNr ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
 
 			if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) == NULL )
 				return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
 
-			if( currentLanguageWordItem->isCheckingGrammarNeeded() &&
-			currentLanguageWordItem->checkGrammar() != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check the grammar" );
 
-			if( readUserSentenceString != NULL &&
-			currentLanguageWordItem->isLanguageWithMergedWords() )
-				{
-				// Typically for French: Compound words
-				if( currentLanguageWordItem->expandMergedWordsInReadSentence( readUserSentenceString ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to expand the compound wordds in the read user sentence string" );
-				}
+			if( currentLanguageWordItem->isLanguageWithMergedWords() &&
+			// Typically for French: Compound words
+			currentLanguageWordItem->expandMergedWordsInReadSentence( readUserSentenceString ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to expand the compound wordds in the read user sentence string" );
 
 			// Create read words from a given sentence
 			if( ( boolResult = adminItem_->createReadWords( readUserSentenceString ) ).result != RESULT_OK )
@@ -1168,7 +1154,6 @@ class AdminReadSentence
 
 	signed char scanSpecification( char *readUserSentenceString )
 		{
-		ContextResultType contextResult;
 		bool isFrenchPreposition;
 		bool isSameWordTypeAsPreviousWord;
 		bool hasGeneralizationArticle = false;
@@ -1185,6 +1170,7 @@ class AdminReadSentence
 		WordItem *currentReadWordItem;
 		WordTypeItem *currentReadWordTypeItem;
 		WordTypeItem *generalizationWordTypeItem;
+		ContextResultType contextResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "scanSpecification";
 
 		hasFemaleUserSpecificationWord_ = false;
@@ -1594,8 +1580,6 @@ class AdminReadSentence
 
 		previousGeneralizationWordItem_ = NULL;
 
-		strcpy( originalReadString, EMPTY_STRING );
-
 		// Private initialized variables
 
 		strcpy( moduleNameString_, "AdminReadSentence" );
@@ -1633,6 +1617,11 @@ class AdminReadSentence
 	bool hasFemaleUserSpecificationWord()
 		{
 		return hasFemaleUserSpecificationWord_;
+		}
+
+	bool isUserQuestion()
+		{
+		return ( questionParameter_ > NO_QUESTION_PARAMETER );
 		}
 
 	bool wasPreviousCommandUndoOrRedo()

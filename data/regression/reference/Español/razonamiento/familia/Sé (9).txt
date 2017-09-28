@@ -32,8 +32,8 @@
 * 
 * Mis suposiciones:
 < Luisa es posiblemente hija de Juan.
-< Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
 < Luisa no es posiblemente un hijo.
 < Juan es probablemente una persona.
@@ -55,10 +55,10 @@
 < José tiene una madre, llamada Ana.
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
@@ -83,13 +83,12 @@
 * 
 * Mis preguntas que son contestadas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
+< ¿Es Pablo un hijo o una hija?
 * 
 * Mis suposiciones que no son ocultos más:
 < Juan tiene probablemente 3 hijos, llamados Luisa, Pablo y José.
+< Pablo es probablemente hijo de Juan y Ana.
 < Ana tiene probablemente 3 hijos, llamados Luisa, Pablo y José.
-* 
-* Mis preguntas que son contestadas:
-< ¿Es Pablo un hijo o una hija?
 * 
 * Mis suposiciones que se ajustan:
 < Pablo es probablemente parte de una familia.
@@ -101,7 +100,6 @@
 < Pablo es probablemente un hijo.
 < Pablo no es probablemente una niña, una mujer y un hombre.
 < Pablo no es probablemente una hija.
-< Pablo es probablemente hijo de Juan y Ana.
 < 
 * Sé.
 * 

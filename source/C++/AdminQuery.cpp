@@ -1,7 +1,7 @@
 /*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -306,7 +306,6 @@ class AdminQuery
 
 	QueryResultType executeQuery( bool isSuppressingMessage, bool isReturningToPosition, bool isWritingQueryResult, unsigned short promptTypeNr, size_t queryCommandStringStartPosition, char *queryCommandString )
 		{
-		QueryResultType queryResult;
 		bool isDisplayingCount = false;
 		bool isEndOfQuery = false;
 		bool isFirstInstruction = true;
@@ -331,6 +330,7 @@ class AdminQuery
 		WordItem *currentLanguageWordItem;
 		char *queryString;
 		char nameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		QueryResultType queryResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "executeQuery";
 
 		if( queryCommandString == NULL )
@@ -355,7 +355,6 @@ class AdminQuery
 		queryString = commonVariables_->queryString;
 
 		commonVariables_->hasFoundQuery = false;
-		commonVariables_->matchingWordTypeNr = NO_WORD_TYPE_NR;
 
 		adminItem_->clearQuerySelections();
 
@@ -545,7 +544,6 @@ class AdminQuery
 								return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to query strings" );
 
 							isFirstInstruction = false;
-							queryWordTypeNr = commonVariables_->matchingWordTypeNr;
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )

@@ -1,0 +1,21 @@
+Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Luisa tiene una madre, llamada Ana.
+Pablo tiene 2 padres, llamados Juan y Ana.
+José es hijo de Juan y Ana.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Ana.
+Mostrar el informe de justificación sobre Pablo.
+Mostrar el informe de justificación sobre José.
+Mostrar el informe de justificación sobre Luisa.
+Luisa es una hija.
+Pablo es un hijo.
+Hernando es un padre.
+# Mixed
+Hernando es padre de Luisa.
+Mostrar el informe de justificación sobre Hernando.
+Mostrar el informe de justificación sobre Juan.
+Mostrar el informe de justificación sobre Ana.
+Mostrar el informe de justificación sobre Pablo.
+Mostrar el informe de justificación sobre José.
+Mostrar el informe de justificación sobre Luisa.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

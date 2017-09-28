@@ -1,7 +1,7 @@
 /*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -53,8 +53,8 @@ class WordTypeList : private List
 
 	signed char checkOnFeminineAndMasculineWordEnding( bool isSingularNoun, char *wordString )
 		{
-		WordEndingResultType wordEndingResult;
 		WordItem *currentLanguageWordItem;
+		WordEndingResultType wordEndingResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkOnFeminineAndMasculineWordEnding";
 
 		if( wordString == NULL )
@@ -136,7 +136,8 @@ class WordTypeList : private List
 		searchWordTypeItem->wordTypeLanguageNr() < currentLanguageNr )
 			searchWordTypeItem = searchWordTypeItem->nextWordTypeItem();
 
-		return ( searchWordTypeItem != NULL && searchWordTypeItem->wordTypeLanguageNr() == currentLanguageNr ? searchWordTypeItem : NULL );
+		return ( searchWordTypeItem != NULL &&
+				searchWordTypeItem->wordTypeLanguageNr() == currentLanguageNr ? searchWordTypeItem : NULL );
 		}
 
 	WordTypeItem *firstDeletedCurrentLanguageWordTypeItem()
@@ -148,7 +149,8 @@ class WordTypeList : private List
 		searchWordTypeItem->wordTypeLanguageNr() < currentLanguageNr )
 			searchWordTypeItem = searchWordTypeItem->nextWordTypeItem();
 
-		return ( searchWordTypeItem != NULL && searchWordTypeItem->wordTypeLanguageNr() == currentLanguageNr ? searchWordTypeItem : NULL );
+		return ( searchWordTypeItem != NULL &&
+				searchWordTypeItem->wordTypeLanguageNr() == currentLanguageNr ? searchWordTypeItem : NULL );
 		}
 
 
@@ -610,48 +612,29 @@ class WordTypeList : private List
 
 	BoolResultType findMatchingWordReferenceString( char *searchString )
 		{
-		bool hasFoundMatchingString = false;
 		WordTypeItem *searchWordTypeItem = firstActiveWordTypeItem();
 		char *itemString;
 		BoolResultType boolResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
 
-		while( !hasFoundMatchingString &&
+		while( !boolResult.booleanValue &&
 		searchWordTypeItem != NULL )
 			{
-			if( ( itemString = searchWordTypeItem->itemString() ) != NULL )
-				{
-				if( ( boolResult = compareStrings( searchString, itemString ) ).result != RESULT_OK )
-					return addBoolResultError( functionNameString, "I failed to compare an active word type string with the query string" );
-
-				// Matching string
-				if( boolResult.booleanValue )
-					{
-					hasFoundMatchingString = true;
-					commonVariables()->matchingWordTypeNr = searchWordTypeItem->wordTypeNr();
-					}
-				}
+			if( ( itemString = searchWordTypeItem->itemString() ) != NULL &&
+			( boolResult = compareStrings( searchString, itemString ) ).result != RESULT_OK )
+				return addBoolResultError( functionNameString, "I failed to compare an active word type string with the query string" );
 
 			searchWordTypeItem = searchWordTypeItem->nextWordTypeItem();
 			}
 
 		searchWordTypeItem = firstDeletedWordTypeItem();
 
-		while( !hasFoundMatchingString &&
+		while( !boolResult.booleanValue &&
 		searchWordTypeItem != NULL )
 			{
-			if( ( itemString = searchWordTypeItem->itemString() ) != NULL )
-				{
-				if( ( boolResult = compareStrings( searchString, itemString ) ).result != RESULT_OK )
-					return addBoolResultError( functionNameString, "I failed to compare a deleted word type string with the query string" );
-
-				// Matching string
-				if( boolResult.booleanValue )
-					{
-					hasFoundMatchingString = true;
-					commonVariables()->matchingWordTypeNr = searchWordTypeItem->wordTypeNr();
-					}
-				}
+			if( ( itemString = searchWordTypeItem->itemString() ) != NULL &&
+			( boolResult = compareStrings( searchString, itemString ) ).result != RESULT_OK )
+				return addBoolResultError( functionNameString, "I failed to compare a deleted word type string with the query string" );
 
 			searchWordTypeItem = searchWordTypeItem->nextWordTypeItem();
 			}
@@ -661,8 +644,8 @@ class WordTypeList : private List
 
 	WordTypeResultType addWordType( bool isLanguageWord, bool isMultipleWord, bool isProperNamePrecededByDefiniteArticle, unsigned short adjectiveParameter, unsigned short definiteArticleParameter, unsigned short indefiniteArticleParameter, unsigned short wordTypeNr, size_t wordLength, char *wordTypeString )
 		{
-		WordTypeResultType wordTypeResult;
 		WordResultType wordResult;
+		WordTypeResultType wordTypeResult;
 		bool isSingularNoun;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addWordType";
 
@@ -706,11 +689,11 @@ class WordTypeList : private List
 
 	WordResultType findWordType( bool isCheckingAllLanguages, unsigned short wordTypeNr, char *wordTypeString )
 		{
-		WordResultType wordResult;
 		size_t currentWordTypeStringLength;
 		size_t wordTypeStringLength;
 		char *currentWordTypeString;
 		WordTypeItem *currentWordTypeItem;
+		WordResultType wordResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findWordType";
 
 		if( wordTypeString == NULL )

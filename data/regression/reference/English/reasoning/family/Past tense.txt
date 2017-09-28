@@ -106,11 +106,11 @@
 * 
 * My assumptions:
 < Peter is probably a child of James. Because:
-<	- James has probably a child, called Peter.
-* 	and:
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 <	- Peter had a father, called James.
+* 	and:
+<	- James has probably a child, called Peter.
 * 	and:
 <	- Every family has parents and children.
 <	- James was probably a parent of Peter.

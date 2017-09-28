@@ -1,5 +1,0 @@
-﻿# A context-sensitive definition.
-Juan es a baker.
-Juan es padre de Pablo, José y Luisa.
-The padre de Pablo, José y Luisa es not a baker.
-# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

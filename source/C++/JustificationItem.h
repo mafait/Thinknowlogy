@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,6 +29,7 @@ class SpecificationItem;
 
 class JustificationItem : private Item
 	{
+	friend class AdminReasoningNew;
 	friend class AdminReasoningOld;
 	friend class AdminSpecification;
 	friend class AdminWrite;
@@ -56,6 +57,7 @@ class JustificationItem : private Item
 
 	bool hasJustification( JustificationItem *checkJustificationItem );
 	bool isContextSimilarInContextWords( unsigned int firstContextNr, unsigned int secondContextNr );
+	bool isExclusiveSpecificationSubstitutionAssumption();
 	bool isSameJustificationType( JustificationItem *referenceJustificationItem );
 
 
@@ -65,8 +67,6 @@ class JustificationItem : private Item
 	bool hasJustificationBeenWritten;
 
 	unsigned short orderNr;
-
-	JustificationItem *replacingJustificationItem;
 
 
 	// Constructor
@@ -91,13 +91,15 @@ class JustificationItem : private Item
 
 	bool hasAttachedJustification();
 	bool hasFeminineOrMasculineProperNameEnding();
+	bool hasJustification( SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
+	bool hasJustification( bool hasFeminineOrMasculineProperNameEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
 	bool hasOnlyExclusiveSpecificationSubstitutionAssumptionsWithoutDefinition();
 
-	bool hasHiddenPrimarySpecification();
+	bool hasNonPossessivePrimaryUserSpecification();
 	bool hasPrimaryAnsweredQuestion();
 	bool hasPrimaryQuestion();
-	bool hasPrimaryUserSpecification();
 	bool hasPossessivePrimarySpecification();
+	bool hasPossessiveSecondarySpecification();
 	bool hasReplacedPrimarySpecification();
 	bool isPrimarySpecificationWordSpanishAmbiguous();
 	bool isUpdatedPrimarySpecificationWordSpanishAmbiguous();
@@ -107,12 +109,12 @@ class JustificationItem : private Item
 	bool isAssumptionJustification();
 	bool isConclusionJustification();
 
-	bool isExclusiveSpecificationSubstitutionAssumption();
 	bool isGeneralizationAssumption();
 	bool isNegativeAssumptionOrConclusion();
 	bool isOppositePossessiveConditionalSpecificationAssumption();
 	bool isPossessiveReversibleAssumption();
 	bool isPossessiveReversibleConclusion();
+	bool isPossessiveReversibleConclusionWithoutRelationContext();
 	bool isPossessiveReversibleAssumptionOrConclusion();
 	bool isQuestionJustification();
 	bool isSpecificationSubstitutionAssumption();
@@ -120,9 +122,10 @@ class JustificationItem : private Item
 
 	unsigned short justificationAssumptionGrade();
 	unsigned short justificationTypeNr();
+	unsigned short updatedJustificationTypeNr( SpecificationItem *secondarySpecificationItem );
 	unsigned short primarySpecificationAssumptionLevel();
 
-	unsigned int nJustificationContextRelations( unsigned int relationContextNr, unsigned int nSpecificationRelationWords );
+	unsigned int nJustificationContextRelations( unsigned int relationContextNr, unsigned int nRelationWords );
 	unsigned int primarySpecificationCollectionNr();
 
 	signed char attachJustification( JustificationItem *attachedJustificationItem, SpecificationItem *mySpecificationItem );
@@ -144,13 +147,16 @@ class JustificationItem : private Item
 	JustificationItem *nextJustificationItemWithDifferentTypeOrOrderNr( JustificationItem *firstJustificationItem );
 
 	JustificationItem *obsoleteSpanishJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
-	JustificationItem *primarySpecificationWithoutRelationContextJustificationItem( SpecificationItem *primarySpecificationItem );
+	JustificationItem *primarySpecificationWithoutRelationContextJustificationItem( WordItem *primarySpecificationWordItem );
 	JustificationItem *secondarySpecificationQuestion();
 
 	SpecificationItem *primarySpecificationItem();
 	SpecificationItem *anotherPrimarySpecificationItem();
 	SpecificationItem *secondarySpecificationItem();
 	SpecificationItem *anotherSecondarySpecificationItem();
+
+	SpecificationItem *updatedPrimarySpecificationItem();
+	SpecificationItem *updatedSecondarySpecificationItem();
 
 	WordItem *generalizationWordItem();
 	WordItem *primarySpecificationWordItem();

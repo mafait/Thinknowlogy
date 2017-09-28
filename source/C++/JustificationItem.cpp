@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -39,6 +39,11 @@
 			}
 
 		return false;
+		}
+
+	bool JustificationItem::isExclusiveSpecificationSubstitutionAssumption()
+		{
+		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION );
 		}
 
 	bool JustificationItem::isContextSimilarInContextWords( unsigned int firstContextNr, unsigned int secondContextNr )
@@ -98,8 +103,6 @@
 		hasJustificationBeenWritten = false;
 
 		orderNr = _orderNr;
-
-		replacingJustificationItem = NULL;
 		}
 
 
@@ -150,11 +153,7 @@
 
 				( attachedJustificationItem_ == NULL ? false :
 					( querySentenceNr == NO_SENTENCE_NR ? true : attachedJustificationItem_->creationSentenceNr() == querySentenceNr ) &&
-					( queryItemNr == NO_ITEM_NR ? true : attachedJustificationItem_->itemNr() == queryItemNr ) ) ||
-
-				( replacingJustificationItem == NULL ? false :
-					( querySentenceNr == NO_SENTENCE_NR ? true : replacingJustificationItem->creationSentenceNr() == querySentenceNr ) &&
-					( queryItemNr == NO_ITEM_NR ? true : replacingJustificationItem->itemNr() == queryItemNr ) ) );
+					( queryItemNr == NO_ITEM_NR ? true : attachedJustificationItem_->itemNr() == queryItemNr ) ) );
 		}
 
 	char *JustificationItem::itemToString( unsigned short queryWordTypeNr )
@@ -324,12 +323,6 @@
 			strcat( queryString, tempString );
 			}
 
-		if( replacingJustificationItem != NULL )
-			{
-			sprintf( tempString, "%creplacingJustificationItem%c%u%c%u%c", QUERY_SEPARATOR_CHAR, QUERY_REF_ITEM_START_CHAR, replacingJustificationItem->creationSentenceNr(), QUERY_SEPARATOR_CHAR, replacingJustificationItem->itemNr(), QUERY_REF_ITEM_END_CHAR );
-			strcat( queryString, tempString );
-			}
-
 		return queryString;
 		}
 
@@ -338,14 +331,8 @@
 
 	void JustificationItem::clearReplacingInfo()
 		{
-		if( hasCurrentReplacedSentenceNr() ||
-
-		( replacingJustificationItem != NULL &&
-		replacingJustificationItem->hasCurrentOrNewerCreationSentenceNr() ) )
-			{
+		if( hasCurrentReplacedSentenceNr() )
 			clearReplacedSentenceNr();
-			replacingJustificationItem = NULL;
-			}
 		}
 
 	bool JustificationItem::hasAttachedJustification()
@@ -356,6 +343,23 @@
 	bool JustificationItem::hasFeminineOrMasculineProperNameEnding()
 		{
 		return hasFeminineOrMasculineProperNameEnding_;
+		}
+
+	bool JustificationItem::hasJustification( SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem )
+		{
+		return ( primarySpecificationItem_ == primarySpecificationItem &&
+				anotherPrimarySpecificationItem_ == anotherPrimarySpecificationItem &&
+				secondarySpecificationItem_ == secondarySpecificationItem &&
+				anotherSecondarySpecificationItem_ == anotherSecondarySpecificationItem );
+		}
+
+	bool JustificationItem::hasJustification( bool hasFeminineOrMasculineProperNameEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem )
+		{
+		return ( hasFeminineOrMasculineProperNameEnding_ == hasFeminineOrMasculineProperNameEnding &&
+				primarySpecificationItem_ == primarySpecificationItem &&
+				anotherPrimarySpecificationItem_ == anotherPrimarySpecificationItem &&
+				secondarySpecificationItem_ == secondarySpecificationItem &&
+				anotherSecondarySpecificationItem_ == anotherSecondarySpecificationItem );
 		}
 
 	bool JustificationItem::hasOnlyExclusiveSpecificationSubstitutionAssumptionsWithoutDefinition()
@@ -374,10 +378,11 @@
 		return true;
 		}
 
-	bool JustificationItem::hasHiddenPrimarySpecification()
+	bool JustificationItem::hasNonPossessivePrimaryUserSpecification()
 		{
 		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isHiddenSpanishSpecification() );
+				!primarySpecificationItem_->isPossessive() &&
+				primarySpecificationItem_->isUserSpecification() );
 		}
 
 	bool JustificationItem::hasPrimaryAnsweredQuestion()
@@ -392,16 +397,16 @@
 				primarySpecificationItem_->isQuestion() );
 		}
 
-	bool JustificationItem::hasPrimaryUserSpecification()
-		{
-		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isUserSpecification() );
-		}
-
 	bool JustificationItem::hasPossessivePrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != NULL &&
 				primarySpecificationItem_->isPossessive() );
+		}
+
+	bool JustificationItem::hasPossessiveSecondarySpecification()
+		{
+		return ( secondarySpecificationItem_ != NULL &&
+				secondarySpecificationItem_->isPossessive() );
 		}
 
 	bool JustificationItem::hasReplacedPrimarySpecification()
@@ -442,11 +447,6 @@
 		return isConclusion( justificationTypeNr_ );
 		}
 
-	bool JustificationItem::isExclusiveSpecificationSubstitutionAssumption()
-		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION );
-		}
-
 	bool JustificationItem::isGeneralizationAssumption()
 		{
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION );
@@ -471,6 +471,13 @@
 	bool JustificationItem::isPossessiveReversibleConclusion()
 		{
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION );
+		}
+
+	bool JustificationItem::isPossessiveReversibleConclusionWithoutRelationContext()
+		{
+		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION &&
+				secondarySpecificationItem_ != NULL &&
+				!secondarySpecificationItem_->hasRelationContext() );
 		}
 
 	bool JustificationItem::isPossessiveReversibleAssumptionOrConclusion()
@@ -517,6 +524,17 @@
 		return justificationTypeNr_;
 		}
 
+	unsigned short JustificationItem::updatedJustificationTypeNr( SpecificationItem *newSecondarySpecificationItem )
+		{
+		if( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION &&
+		newSecondarySpecificationItem != NULL &&
+		!newSecondarySpecificationItem->isPossessive() &&
+		newSecondarySpecificationItem->isUserSpecification() )
+			return JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION;
+
+		return justificationTypeNr_;
+		}
+
 	unsigned short JustificationItem::primarySpecificationAssumptionLevel()
 		{
 		if( primarySpecificationItem_ != NULL )
@@ -525,7 +543,7 @@
 		return NO_ASSUMPTION_LEVEL;
 		}
 
-	unsigned int JustificationItem::nJustificationContextRelations( unsigned int relationContextNr, unsigned int nSpecificationRelationWords )
+	unsigned int JustificationItem::nJustificationContextRelations( unsigned int relationContextNr, unsigned int nRelationWords )
 		{
 		unsigned int primaryRelationContextNr;
 		unsigned int secondaryRelationContextNr;
@@ -534,17 +552,17 @@
 			{
 			if( primarySpecificationItem_ != NULL &&
 			( primaryRelationContextNr = primarySpecificationItem_->relationContextNr() ) > NO_CONTEXT_NR )
-				return myWordItem()->nContextWordsInContextWords( primaryRelationContextNr, primarySpecificationItem_->specificationWordItem() );
+				return myWordItem()->nContextWords( primaryRelationContextNr, primarySpecificationItem_->specificationWordItem() );
 
 			if( secondarySpecificationItem_ != NULL &&
 			( secondaryRelationContextNr = secondarySpecificationItem_->relationContextNr() ) > NO_CONTEXT_NR )
 				{
 				if( anotherPrimarySpecificationItem_ != NULL )
-					return myWordItem()->nContextWordsInContextWords( secondaryRelationContextNr, secondarySpecificationItem_->specificationWordItem() );
+					return myWordItem()->nContextWords( secondaryRelationContextNr, secondarySpecificationItem_->specificationWordItem() );
 
 				if( secondaryRelationContextNr == relationContextNr ||
 				isContextSimilarInContextWords( secondaryRelationContextNr, relationContextNr ) )
-					return nSpecificationRelationWords;
+					return nRelationWords;
 				}
 
 			return 1;
@@ -561,10 +579,8 @@
 		return NO_COLLECTION_NR;
 		}
 
-	signed char JustificationItem::attachJustification( JustificationItem *attachedJustificationItem, SpecificationItem *mySpecificationItem )
+	signed char JustificationItem::attachJustification( JustificationItem *attachedJustificationItem, SpecificationItem *involvedSpecificationItem )
 		{
-		bool isMySpecification = false;
-		JustificationItem *searchJustificationItem;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "attachJustification";
 
 		if( attachedJustificationItem == NULL )
@@ -573,8 +589,8 @@
 		if( attachedJustificationItem == this )
 			return startError( functionNameString, NULL, "The given attached justification item is the same justification item as me" );
 
-		if( mySpecificationItem == NULL )
-			return startError( functionNameString, NULL, "The given my specification item is undefined" );
+		if( involvedSpecificationItem == NULL )
+			return startError( functionNameString, NULL, "The given involved specification item is undefined" );
 
 		if( !hasCurrentCreationSentenceNr() )
 			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
@@ -585,22 +601,8 @@
 		if( attachedJustificationItem_ != NULL )
 			return startError( functionNameString, NULL, "I already have an attached justification item" );
 
-		if( ( searchJustificationItem = mySpecificationItem->firstJustificationItem() ) == NULL )
-			return startError( functionNameString, NULL, "The given my specification item has no justification item" );
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem == this )
-				isMySpecification = true;
-
-			if( searchJustificationItem == attachedJustificationItem )
-				return startError( functionNameString, NULL, "The given attached justification item is already one of the attached justification items of my specification item" );
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem_;
-			}
-
-		if( !isMySpecification )
-			return startError( functionNameString, NULL, "The given my specification item isn't my specification item" );
+		if( involvedSpecificationItem->checkJustification( attachedJustificationItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to check the given attached justification item against the given involved specification item" );
 
 		// Add attached justification item
 		attachedJustificationItem_ = attachedJustificationItem;
@@ -713,7 +715,13 @@
 		if( primarySpecificationItem_ != NULL &&
 		primarySpecificationItem_->isDeletedItem() )
 			{
-			sprintf( errorString, "\nI found a deleted primary specification item:\n\tSpecificationItem: %s;\n\tJustificationItem: %s.\n", primarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ), itemToString( NO_WORD_TYPE_NR ) );
+			strcpy( errorString, "\nI found a deleted primary specification item:\n\tSpecificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, primarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ";\n\tJustificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
 
 			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
@@ -722,7 +730,13 @@
 		if( anotherPrimarySpecificationItem_ != NULL &&
 		anotherPrimarySpecificationItem_->isDeletedItem() )
 			{
-			sprintf( errorString, "\nI found a deleted another primary specification item:\n\tSpecificationItem: %s;\n\tJustificationItem: %s.\n", anotherPrimarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ), itemToString( NO_WORD_TYPE_NR ) );
+			strcpy( errorString, "\nI found a deleted another primary specification item:\n\tSpecificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, anotherPrimarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ";\n\tJustificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
 
 			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
@@ -731,7 +745,13 @@
 		if( secondarySpecificationItem_ != NULL &&
 		secondarySpecificationItem_->isDeletedItem() )
 			{
-			sprintf( errorString, "\nI found a deleted secondary specification item:\n\tSpecificationItem: %s;\n\tJustificationItem: %s.\n", secondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ), itemToString( NO_WORD_TYPE_NR ) );
+			strcpy( errorString, "\nI found a deleted secondary specification item:\n\tSpecificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, secondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ";\n\tJustificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
 
 			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
@@ -740,7 +760,13 @@
 		if( anotherSecondarySpecificationItem_ != NULL &&
 		anotherSecondarySpecificationItem_->isDeletedItem() )
 			{
-			sprintf( errorString, "\nI found a deleted another secondary specification item:\n\tSpecificationItem: %s;\n\tJustificationItem: %s.\n", anotherSecondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ), itemToString( NO_WORD_TYPE_NR ) );
+			strcpy( errorString, "\nI found a deleted another secondary specification item:\n\tSpecificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, anotherSecondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ";\n\tJustificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
 
 			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
@@ -757,7 +783,13 @@
 		if( primarySpecificationItem_ != NULL &&
 		primarySpecificationItem_->isReplacedOrDeletedItem() )
 			{
-			sprintf( errorString, "\nI found a replaced or deleted primary specification item:\n\tSpecificationItem: %s;\n\tJustificationItem: %s.\n", primarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ), itemToString( NO_WORD_TYPE_NR ) );
+			strcpy( errorString, "\nI found a replaced or deleted primary specification item:\n\tSpecificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, primarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ";\n\tJustificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
 
 			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
@@ -766,7 +798,13 @@
 		if( anotherPrimarySpecificationItem_ != NULL &&
 		anotherPrimarySpecificationItem_->isReplacedOrDeletedItem() )
 			{
-			sprintf( errorString, "\nI found a replaced or deleted another primary specification item:\n\tSpecificationItem: %s;\n\tJustificationItem: %s.\n", anotherPrimarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ), itemToString( NO_WORD_TYPE_NR ) );
+			strcpy( errorString, "\nI found a replaced or deleted another primary specification item:\n\tSpecificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, anotherPrimarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ";\n\tJustificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
 
 			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
@@ -775,7 +813,13 @@
 		if( secondarySpecificationItem_ != NULL &&
 		secondarySpecificationItem_->isReplacedOrDeletedItem() )
 			{
-			sprintf( errorString, "\nI found a replaced or deleted secondary specification item:\n\tSpecificationItem: %s;\n\tJustificationItem: %s.\n", secondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ), itemToString( NO_WORD_TYPE_NR ) );
+			strcpy( errorString, "\nI found a replaced or deleted secondary specification item:\n\tSpecificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, secondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ";\n\tJustificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
 
 			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
@@ -784,7 +828,13 @@
 		if( anotherSecondarySpecificationItem_ != NULL &&
 		anotherSecondarySpecificationItem_->isReplacedOrDeletedItem() )
 			{
-			sprintf( errorString, "\nI found a replaced or deleted another secondary specification item:\n\tSpecificationItem: %s;\n\tJustificationItem: %s.\n", anotherSecondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ), itemToString( NO_WORD_TYPE_NR ) );
+			strcpy( errorString, "\nI found a replaced or deleted another secondary specification item:\n\tSpecificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, anotherSecondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ";\n\tJustificationItem: " );
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
 
 			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
@@ -811,10 +861,7 @@
 			}
 
 		return NULL;
-/*
-		// Recursive alternative
-		return ( attachedJustificationItem_ == NULL ? NULL : attachedJustificationItem_ == obsoleteJustificationItem ? this : attachedJustificationItem_->attachedPredecessorOfOldJustificationItem( obsoleteJustificationItem ) );
-*/		}
+		}
 
 	JustificationItem *JustificationItem::nextJustificationItem()
 		{
@@ -889,21 +936,21 @@
 		return NULL;
 		}
 
-	JustificationItem *JustificationItem::primarySpecificationWithoutRelationContextJustificationItem( SpecificationItem *primarySpecificationItem )
+	JustificationItem *JustificationItem::primarySpecificationWithoutRelationContextJustificationItem( WordItem *primarySpecificationWordItem )
 		{
-		if( primarySpecificationItem != NULL )
+		if( primarySpecificationWordItem != NULL )
 			{
 			if( primarySpecificationItem_ != NULL &&
 
 			( primarySpecificationItem_->isReplacedItem() ||
 
 			( !primarySpecificationItem_->hasRelationContext() &&
-			primarySpecificationItem_->specificationWordItem() == primarySpecificationItem->specificationWordItem() ) ) )
+			primarySpecificationItem_->specificationWordItem() == primarySpecificationWordItem ) ) )
 				return this;
 
 			// Recursive, do for all attached justification items
 			if( attachedJustificationItem_ != NULL )
-				return attachedJustificationItem_->primarySpecificationWithoutRelationContextJustificationItem( primarySpecificationItem );
+				return attachedJustificationItem_->primarySpecificationWithoutRelationContextJustificationItem( primarySpecificationWordItem );
 			}
 
 		return NULL;
@@ -922,16 +969,7 @@
 
 			searchJustificationItem = searchJustificationItem->attachedJustificationItem_;
 			}
-/*
-		// Recursive alternative
-		if( secondarySpecificationItem_ != NULL &&
-		secondarySpecificationItem_->isQuestion() )
-			return this;
 
-		// Do for all attached justification items
-		if( attachedJustificationItem_ != NULL )
-			return attachedJustificationItem_->secondarySpecificationQuestion();
-*/
 		return NULL;
 		}
 
@@ -953,6 +991,22 @@
 	SpecificationItem *JustificationItem::anotherSecondarySpecificationItem()
 		{
 		return anotherSecondarySpecificationItem_;
+		}
+
+	SpecificationItem *JustificationItem::updatedPrimarySpecificationItem()
+		{
+		if( primarySpecificationItem_ != NULL )
+			return primarySpecificationItem_->updatedSpecificationItem();
+
+		return NULL;
+		}
+
+	SpecificationItem *JustificationItem::updatedSecondarySpecificationItem()
+		{
+		if( secondarySpecificationItem_ != NULL )
+			return secondarySpecificationItem_->updatedSpecificationItem();
+
+		return NULL;
 		}
 
 	WordItem *JustificationItem::generalizationWordItem()
@@ -986,8 +1040,8 @@
 
 	ShortResultType JustificationItem::getCombinedAssumptionLevel()
 		{
-		ShortResultType shortResult;
 		unsigned int assumptionLevel = NO_ASSUMPTION_LEVEL;
+		ShortResultType shortResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "getCombinedAssumptionLevel";
 
 		if( primarySpecificationItem_ != NULL )

@@ -35,10 +35,10 @@
 * My assumptions:
 < John is probably a person.
 < John is probably not a woman.
+< John has probably a child, called Paul.
 < John is probably a parent of Paul.
 < John is probably part of a family.
 < John is probably not a mother.
-< John has probably a child, called Paul.
 < Paul is probably a child of John.
 < Paul is probably part of a family.
 < Paul is possibly a person.
@@ -75,6 +75,11 @@
 <	- John is probably a parent of Paul.
 <	- Every parent is a woman or a man.
 <	- John is a man.
+< John has probably a child, called Paul. Because:
+<	- Paul is probably a child of John.
+* 	and:
+<	- Every family has parents and children.
+<	- John is probably a parent of Paul.
 < John is probably a parent of Paul. Because:
 <	- Paul has probably a parent, called John.
 * 	and:
@@ -90,19 +95,14 @@
 <	- John is probably a parent of Paul.
 <	- Every parent is a father or a mother.
 <	- John is a father.
-< John has probably a child, called Paul. Because:
-<	- Paul is probably a child of John.
-* 	and:
-<	- Every family has parents and children.
-<	- John is probably a parent of Paul.
 < 
 * 
 * My conclusions:
 < Joe has a father, called John.
 * 
 * My assumptions:
-< John is probably a parent of Paul and Joe.
 < John has probably 2 children, called Paul and Joe.
+< John is probably a parent of Paul and Joe.
 < Joe is probably a child of John.
 < Joe is probably part of a family.
 < Joe is possibly a person.
@@ -122,6 +122,12 @@
 <	- Every man is masculine.
 * 
 * My assumptions:
+< John has probably 2 children, called Paul and Joe. Because:
+<	- Joe is probably a child of John.
+<	- Paul is probably a child of John.
+* 	and:
+<	- Every family has parents and children.
+<	- John is probably a parent of Paul and Joe.
 < John is probably a parent of Paul and Joe. Because:
 <	- Joe has probably a parent, called John.
 <	- Paul has probably a parent, called John.
@@ -156,21 +162,15 @@
 <	- John is probably a parent of Paul and Joe.
 <	- Every parent is a father or a mother.
 <	- John is a father.
-< John has probably 2 children, called Paul and Joe. Because:
-<	- Paul is probably a child of John.
-<	- Joe is probably a child of John.
-* 	and:
-<	- Every family has parents and children.
-<	- John is probably a parent of Paul and Joe.
 < 
 * 
 * My conclusions:
 < Laura has a father, called John.
 * 
 * My assumptions:
-< John has possibly a daughter, called Laura.
-< John is probably a parent of Paul, Joe and Laura.
 < John has probably 3 children, called Paul, Joe and Laura.
+< John is probably a parent of Paul, Joe and Laura.
+< John has possibly a daughter, called Laura.
 < Laura is probably a child of John.
 < Laura is probably part of a family.
 < Laura is possibly a person.
@@ -192,13 +192,13 @@
 <	- Every man is masculine.
 * 
 * My assumptions:
-< John has possibly a daughter, called Laura. Because:
-<	- Laura is possibly a daughter of John.
+< John has probably 3 children, called Paul, Joe and Laura. Because:
+<	- Laura is probably a child of John.
+<	- Joe is probably a child of John.
+<	- Paul is probably a child of John.
 * 	and:
-<	- Laura has a father, called John.
 <	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- John is probably a parent of Paul, Joe and Laura.
 < John is probably a parent of Paul, Joe and Laura. Because:
 <	- Laura has probably a parent, called John.
 <	- Joe has probably a parent, called John.
@@ -235,22 +235,22 @@
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Every parent is a father or a mother.
 <	- John is a father.
-< John has probably 3 children, called Paul, Joe and Laura. Because:
-<	- Paul is probably a child of John.
-<	- Joe is probably a child of John.
-<	- Laura is probably a child of John.
+< John has possibly a daughter, called Laura. Because:
+<	- Laura is possibly a daughter of John.
 * 	and:
+<	- Laura has a father, called John.
 <	- Every family has parents and children.
-<	- John is probably a parent of Paul, Joe and Laura.
+<	- Every child is a son or a daughter.
+<	- Proper name "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
 < Claudia has a father, called John.
 * 
 * My assumptions:
+< John has probably 4 children, called Paul, Joe, Laura and Claudia.
 < John has possibly 2 daughter [plural of 'daughter' is unknown], called Laura and Claudia.
 < John is probably a parent of Paul, Joe, Laura and Claudia.
-< John has probably 4 children, called Paul, Joe, Laura and Claudia.
 < Claudia is probably a child of John.
 < Claudia is probably part of a family.
 < Claudia is possibly a person.
@@ -272,6 +272,14 @@
 <	- Every man is masculine.
 * 
 * My assumptions:
+< John has probably 4 children, called Paul, Joe, Laura and Claudia. Because:
+<	- Claudia is probably a child of John.
+<	- Laura is probably a child of John.
+<	- Joe is probably a child of John.
+<	- Paul is probably a child of John.
+* 	and:
+<	- Every family has parents and children.
+<	- John is probably a parent of Paul, Joe, Laura and Claudia.
 < John has possibly 2 daughter [plural of 'daughter' is unknown], called Laura and Claudia. Because:
 <	- Claudia has a father, called John.
 <	- Laura has a father, called John.
@@ -320,14 +328,6 @@
 <	- John is probably a parent of Paul, Joe, Laura and Claudia.
 <	- Every parent is a father or a mother.
 <	- John is a father.
-< John has probably 4 children, called Paul, Joe, Laura and Claudia. Because:
-<	- Paul is probably a child of John.
-<	- Joe is probably a child of John.
-<	- Laura is probably a child of John.
-<	- Claudia is probably a child of John.
-* 	and:
-<	- Every family has parents and children.
-<	- John is probably a parent of Paul, Joe, Laura and Claudia.
 < 
 * 
 * My conclusions:

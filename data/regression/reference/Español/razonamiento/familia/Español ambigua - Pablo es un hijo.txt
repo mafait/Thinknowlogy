@@ -35,11 +35,11 @@
 < Juan es posiblemente una persona.
 < Juan es posiblemente parte de una familia.
 < Ana es posiblemente madre de Pablo.
+< Ana es posiblemente parte de una familia.
 < Ana es posiblemente una mujer.
 < Ana es puede-ser una persona.
 < Ana no es puede-ser un hombre.
 < Ana es posiblemente femenina.
-< Ana es posiblemente parte de una familia.
 < Ana no es posiblemente un padre.
 * 
 * Mis preguntas:
@@ -94,6 +94,9 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada padre es un padre o una madre.
 <	- Nombre propio "Ana" es probablemente femenino.
+< Ana es posiblemente parte de una familia. Porque:
+<	- Ana es posiblemente madre de Pablo.
+<	- Padres son parte de cada familia.
 < Ana es posiblemente una mujer. Porque:
 <	- Ana es posiblemente madre de Pablo.
 <	- Cada madre es una mujer.
@@ -110,9 +113,6 @@
 < Ana es posiblemente femenina. Porque:
 <	- Ana es posiblemente una mujer.
 <	- Cada mujer es femenina.
-< Ana es posiblemente parte de una familia. Porque:
-<	- Ana es posiblemente madre de Pablo.
-<	- Padres son parte de cada familia.
 < Ana no es posiblemente un padre. Porque:
 <	- Cada padre es un padre o una madre.
 <	- Ana es posiblemente madre de Pablo.

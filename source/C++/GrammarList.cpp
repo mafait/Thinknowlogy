@@ -1,7 +1,7 @@
 /*	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -119,9 +119,9 @@ class GrammarList : private List
 
 	WordEndingResultType comparePluralWordEnding( size_t searchWordStringLength, size_t replacingWordStringLength, char *searchWordString, char *searchWordEndingString, char *replacingWordEndingString )
 		{
-		WordEndingResultType wordEndingResult;
 		size_t tempWordLength;
 		size_t searchWordEndingStringLength;
+		WordEndingResultType wordEndingResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "comparePluralWordEnding";
 
 		if( searchWordStringLength <= 0 )
@@ -198,14 +198,14 @@ class GrammarList : private List
 	void markAsOptionEnd()
 		{
 		bool hasFound = false;
-		unsigned int currentItemNr = commonVariables()->currentItemNr;
+		unsigned int currentSentenceItemNr = commonVariables()->currentSentenceItemNr;
 		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
 
 		while( searchGrammarItem != NULL &&
 		!hasFound )
 			{
 			if( searchGrammarItem->hasCurrentCreationSentenceNr() &&
-			searchGrammarItem->itemNr() == currentItemNr )
+			searchGrammarItem->itemNr() == currentSentenceItemNr )
 				{
 				hasFound = true;
 				searchGrammarItem->isOptionEnd = true;
@@ -527,13 +527,14 @@ class GrammarList : private List
 		size_t startPosition;
 		size_t writtenSentenceStringLength;
 		char *foundString;
-		char *writtenSentenceString = commonVariables()->writtenSentenceString;
 		GrammarItem *shrinkMergedWordGrammarItem;
 		GrammarItem *searchMergedWordGrammarItem = firstMergedWordGrammarItem_;
+		char *writtenSentenceString;
 		char tempString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_LENGTH] = "shrinkMergedWordsInWriteSentence";
 
-		if( ( writtenSentenceStringLength = strlen( writtenSentenceString ) ) == 0 )
+		if( ( writtenSentenceString = commonVariables()->writtenSentenceString ) == NULL ||
+		( writtenSentenceStringLength = strlen( writtenSentenceString ) ) == 0 )
 			return startError( functionNameString, "The write sentence string is empty" );
 
 		if( searchMergedWordGrammarItem == NULL )
@@ -664,9 +665,9 @@ class GrammarList : private List
 
 	GrammarResultType findGrammar( bool isIgnoringGrammarParameter, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString )
 		{
-		GrammarResultType grammarResult;
 		GrammarItem *foundGrammarItem = NULL;
 		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
+		GrammarResultType grammarResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "findGrammar";
 
 		if( grammarString == NULL )
@@ -694,10 +695,10 @@ class GrammarList : private List
 
 	WordEndingResultType analyzeWordEnding( unsigned short grammarParameter, size_t searchWordStringLength, char *searchWordString )
 		{
-		WordEndingResultType wordEndingResult;
 		char *replacingWordEndingString = NULL;
 		GrammarItem *replacingWordEndingGrammarItem;
 		GrammarItem *searchGrammarItem = firstWordEndingGrammarItem( grammarParameter );
+		WordEndingResultType wordEndingResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "analyzeWordEnding";
 
 		if( !isWordEnding( grammarParameter ) )

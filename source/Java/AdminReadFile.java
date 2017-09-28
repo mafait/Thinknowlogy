@@ -1,7 +1,7 @@
 /*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the grammar, user-interface and example files
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -102,7 +102,7 @@ class AdminReadFile
 			// Previous deleted sentence might be empty
 			startRemoveSentenceNr != CommonVariables.removeSentenceNr &&
 			// All items of this sentence are deleted
-			adminItem_.highestInUseSentenceNr( true, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
+			adminItem_.highestFoundSentenceNr( true, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
 				{
 				// So, decrement all higher sentence numbers
 				adminItem_.decrementSentenceNrs( startRemoveSentenceNr );
@@ -116,9 +116,9 @@ class AdminReadFile
 						adminItem_.decrementCurrentSentenceNr();
 					else
 						{
-						CommonVariables.currentSentenceNr = adminItem_.highestInUseSentenceNr( false, false, CommonVariables.currentSentenceNr );
+						CommonVariables.currentSentenceNr = adminItem_.highestFoundSentenceNr( false, false, CommonVariables.currentSentenceNr );
 						// Necessary after changing current sentence number
-						adminItem_.setCurrentItemNr();
+						CommonVariables.currentSentenceItemNr = adminItem_.highestCurrentSentenceItemNr();
 						}
 					}
 				}
@@ -144,8 +144,8 @@ class AdminReadFile
 	private void decrementItemNrRange( int decrementSentenceNr, int startDecrementItemNr, int decrementOffset )
 		{
 		if( CommonVariables.currentSentenceNr == decrementSentenceNr &&
-		CommonVariables.currentItemNr > startDecrementItemNr )
-			CommonVariables.currentItemNr -= decrementOffset;
+		CommonVariables.currentSentenceItemNr > startDecrementItemNr )
+			CommonVariables.currentSentenceItemNr -= decrementOffset;
 
 		adminItem_.decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset );
 		}
@@ -177,9 +177,6 @@ class AdminReadFile
 
 	private byte addGrammar( String grammarString )
 		{
-		GrammarResultType grammarResult = new GrammarResultType();
-		ReadWordResultType readWordResult;
-		WordResultType wordResult;
 		boolean hasFoundWordDefinitionInfo;
 		boolean hasCreatedInterface = false;
 		boolean hasFoundChoiceAlternatives = false;
@@ -211,6 +208,9 @@ class AdminReadFile
 		WordItem foundWordItem;
 		WordItem createdWordItem;
 		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		GrammarResultType grammarResult;
+		ReadWordResultType readWordResult;
+		WordResultType wordResult;
 
 		if( grammarString == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given grammar string is undefined" );
@@ -295,7 +295,7 @@ class AdminReadFile
 						if( ( grammarResult = currentLanguageWordItem.createGrammarItem( true, ( hasParameter && grammarParameter < Constants.GRAMMAR_SENTENCE ), false, false, false, wordTypeNr, grammarParameter, readWordResult.wordLength, grammarString.substring( grammarPosition ), null ) ).result != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to add a grammar definition word item" );
 
-						firstCreationItemNr = CommonVariables.currentItemNr;
+						firstCreationItemNr = CommonVariables.currentSentenceItemNr;
 						definitionGrammarItem = grammarResult.grammarItem;
 						}
 					else
@@ -316,7 +316,7 @@ class AdminReadFile
 					grammarParameter < Constants.GRAMMAR_SENTENCE )
 						return adminItem_.startError( 1, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
 
-					if( CommonVariables.currentItemNr <= Constants.NO_ITEM_NR )
+					if( CommonVariables.currentSentenceItemNr <= Constants.NO_ITEM_NR )
 						return adminItem_.startError( 1, moduleNameString_, "A grammar definition must start with a grammar definition word" );
 
 					if( isOption )
@@ -365,7 +365,7 @@ class AdminReadFile
 					grammarParameter < Constants.GRAMMAR_SENTENCE )
 						return adminItem_.startError( 1, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
 
-					if( CommonVariables.currentItemNr <= Constants.NO_ITEM_NR )
+					if( CommonVariables.currentSentenceItemNr <= Constants.NO_ITEM_NR )
 						return adminItem_.startError( 1, moduleNameString_, "A grammar definition must start with a grammar definition word" );
 
 					if( isChoice )
@@ -396,7 +396,7 @@ class AdminReadFile
 						isChoice = false;
 						isNewStart = true;
 						hasFoundChoiceAlternatives = false;
-						currentLanguageWordItem.markAsChoiceEnd( CommonVariables.currentItemNr );
+						currentLanguageWordItem.markAsChoiceEnd( CommonVariables.currentSentenceItemNr );
 						}
 					else
 						{
@@ -463,7 +463,7 @@ class AdminReadFile
 					if( hasCreatedInterface )
 						return adminItem_.startError( 1, moduleNameString_, "Interface definition and grammar definitions can not be mixed" );
 
-					if( CommonVariables.currentItemNr <= Constants.NO_ITEM_NR )
+					if( CommonVariables.currentSentenceItemNr <= Constants.NO_ITEM_NR )
 						return adminItem_.startError( 1, moduleNameString_, "The first grammar word in a grammar definition is the grammar definition word and must start with a grammar character" );
 
 					if( hasParameter &&
@@ -723,8 +723,8 @@ class AdminReadFile
 
 	private byte createLanguageWord( String languageNameString )
 		{
-		WordResultType wordResult;
 		WordItem languageWordItem;
+		WordResultType wordResult;
 
 		if( ( wordResult = findLanguageByName( languageNameString ) ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to find the language" );
@@ -825,7 +825,7 @@ class AdminReadFile
 				else
 					{
 					// Sentence
-					if( adminItem_.processReadSentence( readStringBuffer.toString() ) != Constants.RESULT_OK )
+					if( adminItem_.processReadSentence( readStringBuffer ) != Constants.RESULT_OK )
 						adminItem_.addError( 1, moduleNameString_, "I failed to process a read sentence" );
 					}
 				}
@@ -855,6 +855,7 @@ class AdminReadFile
 						!wasLoginCommand_ &&
 						!CommonVariables.hasDisplayedMessage &&
 						!adminItem_.isSystemStartingUp() &&
+						!Console.isTestingCanceled() &&
 
 						InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != Constants.RESULT_OK )
 							adminItem_.addError( 1, moduleNameString_, "I failed to write the 'I know' interface notification" );
@@ -871,9 +872,7 @@ class AdminReadFile
 					if( !adminItem_.isSystemStartingUp() )
 						{
 						// Check for empty sentence
-						adminItem_.setCurrentItemNr();
-
-						if( CommonVariables.currentItemNr == Constants.NO_ITEM_NR )
+						if( ( CommonVariables.currentSentenceItemNr = adminItem_.highestCurrentSentenceItemNr() ) == Constants.NO_ITEM_NR )
 							adminItem_.decrementCurrentSentenceNr();
 						}
 					}
@@ -890,16 +889,16 @@ class AdminReadFile
 
 		CommonVariables.currentSentenceNr++;
 		// Necessary after changing current sentence number
-		adminItem_.setCurrentItemNr();
+		CommonVariables.currentSentenceItemNr = adminItem_.highestCurrentSentenceItemNr();
 
 		return Constants.RESULT_OK;
 		}
 
 	private byte readLanguageFile( boolean isGrammarFile, String languageNameString )
 		{
+		FileItem openedLanguageFileItem;
 		FileResultType fileResult = new FileResultType();
 		byte originalResult;
-		FileItem openedLanguageFileItem;
 
 		if( languageNameString == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given language name is undefined" );
@@ -1288,10 +1287,10 @@ class AdminReadFile
 
 	protected byte assignLanguage( String languageNameString )
 		{
-		WordResultType wordResult;
 		boolean hasFoundLanguage = false;
 		SpecificationItem languageSpecificationItem;
 		WordItem foundLanguageWordItem;
+		WordResultType wordResult;
 
 		if( ( wordResult = findLanguageByName( languageNameString ) ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to find the language" );
@@ -1300,7 +1299,7 @@ class AdminReadFile
 			{
 			hasFoundLanguage = true;
 
-			if( ( languageSpecificationItem = foundLanguageWordItem.bestMatchingSpecificationWordSpecificationItem( true, false, false, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, predefinedNounLanguageWordItem_ ) ) != null )
+			if( ( languageSpecificationItem = foundLanguageWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, predefinedNounLanguageWordItem_ ) ) != null )
 				CommonVariables.currentLanguageNr = languageSpecificationItem.languageNr();
 
 			if( CommonVariables.currentLanguageWordItem != foundLanguageWordItem )
@@ -1325,11 +1324,11 @@ class AdminReadFile
 
 	protected byte compareOutputFileAgainstReferenceFile( String testFileNameString )
 		{
-		FileResultType fileResult;
 		boolean isStop = false;
 		int lineNr = 0;
 		String outputString = null;
 		String referenceString = null;
+		FileResultType fileResult;
 
 		hasFoundDifferentTestResult_ = false;
 
@@ -1352,7 +1351,7 @@ class AdminReadFile
 				}
 			catch( IOException exception )
 				{
-				return adminItem_.startError( 1, moduleNameString_, "I couldn't read from the output file or the reference file" );
+				return adminItem_.startError( 1, moduleNameString_, "IOException: I couldn't read from the output file or the reference file" );
 				}
 
 			if( outputString != null &&
@@ -1386,7 +1385,7 @@ class AdminReadFile
 			}
 		catch( IOException exception )
 			{
-			return adminItem_.startError( 1, moduleNameString_, "I couldn't close the output file or the reference file" );
+			return adminItem_.startError( 1, moduleNameString_, "IOException: I couldn't close the output file or the reference file" );
 			}
 
 		return Constants.RESULT_OK;
@@ -1394,7 +1393,6 @@ class AdminReadFile
 
 	protected byte login( WordItem specificationWordItem )
 		{
-		WordResultType wordResult;
 		boolean isAlreadyLoggedInAsGivenUser = false;
 		boolean isCorrectPassword = false;
 		boolean isNoPasswordRequired = false;
@@ -1405,6 +1403,7 @@ class AdminReadFile
 		WordItem foundUserWordItem = null;
 		StringBuffer readPasswordStringBuffer = new StringBuffer();
 		StringBuffer readUserNameStringBuffer = new StringBuffer();
+		WordResultType wordResult;
 
 		wasLoginCommand_ = false;
 
@@ -1419,6 +1418,7 @@ class AdminReadFile
 		// Get first user without password
 		( currentGeneralizationItem = predefinedNounPasswordWordItem_.firstSpecificationGeneralizationItem( true ) ) != null )
 			{
+			// Do for all generalization specification words
 			do	{
 				if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
 					return adminItem_.startSystemError( 1, moduleNameString_, "I found an undefined generalization word" );
@@ -1446,6 +1446,7 @@ class AdminReadFile
 		// Find user word
 		( currentGeneralizationItem = predefinedNounUserWordItem_.firstSpecificationGeneralizationItem( false ) ) != null )
 			{
+			// Do for all generalization specification words
 			do	{
 				if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
 					return adminItem_.startSystemError( 1, moduleNameString_, "I found an undefined generalization word" );
@@ -1472,11 +1473,11 @@ class AdminReadFile
 		else
 			{
 			if( foundUserWordItem != null &&
-			( passwordAssignmentItem = predefinedNounPasswordWordItem_.firstActiveAssignmentItem( false, Constants.NO_QUESTION_PARAMETER, foundUserWordItem ) ) == null )
+			( passwordAssignmentItem = predefinedNounPasswordWordItem_.firstNonPossessiveActiveAssignmentItem( foundUserWordItem ) ) == null )
 				{
 				// No password assignment found
 				// Now, check explicitly if no password is required
-				if( foundUserWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, true, true, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, predefinedNounPasswordWordItem_ ) != null )
+				if( foundUserWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, false, true, true, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, predefinedNounPasswordWordItem_ ) != null )
 					isNoPasswordRequired = true;
 				}
 			else
@@ -1508,10 +1509,10 @@ class AdminReadFile
 				CommonVariables.currentUserNr = predefinedNounUserWordItem_.userNr( foundUserWordItem );
 
 				isDeveloperTheCurrentUser_ = ( predefinedNounDeveloperWordItem_ != null &&
-												foundUserWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, predefinedNounDeveloperWordItem_ ) != null );
+												foundUserWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, predefinedNounDeveloperWordItem_ ) != null );
 
 				isExpertTheCurrentUser_ = ( predefinedNounExpertWordItem_ != null &&
-											foundUserWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, predefinedNounExpertWordItem_ ) != null );
+											foundUserWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, false, Constants.NO_QUESTION_PARAMETER, Constants.NO_COLLECTION_NR, predefinedNounExpertWordItem_ ) != null );
 
 				if( isExpertTheCurrentUser_ &&
 				InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_CONSOLE_WELCOME_MESSAGE_EXPERT ) != Constants.RESULT_OK )
@@ -1576,9 +1577,9 @@ class AdminReadFile
 
 	protected byte readExampleFile( String exampleFileNameString )
 		{
+		FileItem openedExampleFileItem;
 		FileResultType fileResult;
 		byte originalResult;
-		FileItem openedExampleFileItem;
 
 		if( exampleFileNameString != null )
 			{
@@ -1613,9 +1614,9 @@ class AdminReadFile
 
 	protected byte readStartupFile()
 		{
+		FileItem openedStartupFileItem;
 		FileResultType fileResult;
 		byte originalResult;
-		FileItem openedStartupFileItem;
 
 		if( ( fileResult = adminItem_.openFile( true, false, false, true, Constants.FILE_DATA_STARTUP_DIRECTORY_NAME_STRING, Constants.FILE_STARTUP_NAME_STRING, null, null ) ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to open an startup file" );
@@ -1641,9 +1642,9 @@ class AdminReadFile
 		{
 		boolean isFirstTestFile = ( isDeveloperTheCurrentUser_ &&
 								!adminItem_.isCurrentlyTesting() );
-		byte originalResult;
 		long totalTime;
 		FileItem testFileItem;
+		byte originalResult;
 		FileResultType fileResult;
 
 		// Check if user has already entered sentences
@@ -1654,8 +1655,8 @@ class AdminReadFile
 			{
 			testFileNr_ = 0;
 			startTime_ = new Date().getTime();
+
 			CommonVariables.cleaningTime = 0;
-			CommonVariables.parsingTime = 0;
 			CommonVariables.solvingTime = 0;
 			CommonVariables.writingTime = 0;
 			}
@@ -1668,33 +1669,33 @@ class AdminReadFile
 		if( ( testFileItem = fileResult.createdFileItem ) == null )
 			return adminItem_.startError( 1, moduleNameString_, "The last created file item is undefined" );
 
-			if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Test file #" + testFileNr_ + ": " + testFileItem.readFileNameString() + Constants.NEW_LINE_STRING ) != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to write a text" );
+		if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Test file #" + testFileNr_ + ": " + testFileItem.readFileNameString() + Constants.NEW_LINE_STRING ) != Constants.RESULT_OK )
+			return adminItem_.addError( 1, moduleNameString_, "I failed to write a text" );
 
-			InputOutput.redirectOutputToTestFile( testFileItem.writeFile() );
+		InputOutput.redirectOutputToTestFile( testFileItem.writeFile() );
 
-			if( readAndExecute() != Constants.RESULT_OK )
-				adminItem_.addError( 1, moduleNameString_, "I failed to read and execute the opened test file" );
+		if( readAndExecute() != Constants.RESULT_OK )
+			adminItem_.addError( 1, moduleNameString_, "I failed to read and execute the opened test file" );
 
-			if( ( originalResult = CommonVariables.result ) != Constants.RESULT_OK )
-				CommonVariables.result = Constants.RESULT_OK;
+		if( ( originalResult = CommonVariables.result ) != Constants.RESULT_OK )
+			CommonVariables.result = Constants.RESULT_OK;
 
-			if( closeCurrentFileItem( testFileItem ) != Constants.RESULT_OK )
-				adminItem_.addError( 1, moduleNameString_, "I failed to close the test file item" );
+		if( closeCurrentFileItem( testFileItem ) != Constants.RESULT_OK )
+			adminItem_.addError( 1, moduleNameString_, "I failed to close the test file item" );
 
-			if( originalResult != Constants.RESULT_OK )
-				CommonVariables.result = originalResult;
-			else
+		if( originalResult != Constants.RESULT_OK )
+			CommonVariables.result = originalResult;
+		else
+			{
+			if( isFirstTestFile &&
+			!Console.isTestingCanceled() )
 				{
-				if( isFirstTestFile &&
-				!Console.isTestingCanceled() )
-					{
-					totalTime = ( new Date().getTime() - startTime_ );
+				totalTime = ( new Date().getTime() - startTime_ );
 
-					if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Done in: " + String.format( "%.1f", ( totalTime / 1e3 ) ) + " sec.\n- Parsing user sentences: " + String.format( "%.1f", ( CommonVariables.parsingTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( CommonVariables.parsingTime / totalTime / 1e4 ) ) + "%);\n- Solving (Connect 4): " + String.format( "%.1f", ( CommonVariables.solvingTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( CommonVariables.solvingTime / totalTime / 1e4 ) ) + "%);\n- Constructing new sentences: " + String.format( "%.1f", ( CommonVariables.writingTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( CommonVariables.writingTime / totalTime / 1e4 ) ) + "%);\n- Cleaning up after sentences: " + String.format( "%.1f", ( CommonVariables.cleaningTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( CommonVariables.cleaningTime / totalTime / 1e4 ) ) + "%).\n" ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
-					}
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Done in: " + String.format( "%.1f", ( totalTime / 1e3 ) ) + " sec.\n- Solving Connect-Four: " + String.format( "%.1f", ( CommonVariables.solvingTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( CommonVariables.solvingTime / totalTime / 1e4 ) ) + "%);\n- Constructing new sentences: " + String.format( "%.1f", ( CommonVariables.writingTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( CommonVariables.writingTime / totalTime / 1e4 ) ) + "%);\n- Cleaning up after each sentence: " + String.format( "%.1f", ( CommonVariables.cleaningTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( CommonVariables.cleaningTime / totalTime / 1e4 ) ) + "%).\n" ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
 				}
+			}
 
 		return Constants.RESULT_OK;
 		}
@@ -1764,10 +1765,10 @@ class AdminReadFile
 
 	protected FileResultType readInfoFile( boolean isReportingErrorIfFileDoesNotExist, String infoFileNameString )
 		{
-		FileResultType fileResult = new FileResultType();
-		byte originalResult;
 		FileItem openedInfoFileItem;
 		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		FileResultType fileResult = new FileResultType();
+		byte originalResult;
 		StringBuffer infoPathStringBuffer = new StringBuffer( Constants.FILE_DATA_INFO_DIRECTORY_NAME_STRING );
 
 		if( infoFileNameString == null )

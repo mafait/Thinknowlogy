@@ -1,7 +1,7 @@
 /*	Class:		CollectionResultType
  *	Purpose:	To return collection variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -21,8 +21,6 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#ifndef COLLECTIONRESULTTYPE
-#define COLLECTIONRESULTTYPE 1
 #include <string.h>
 #include "Constants.h"
 
@@ -35,8 +33,8 @@ class CollectionResultType
 	friend class CollectionList;
 	friend class Item;
 	friend class List;
-	friend class WordSpecification;
 	friend class WordItem;
+	friend class WordSpecification;
 
 	protected:
 	// Protected variables
@@ -59,7 +57,6 @@ class CollectionResultType
 		foundGeneralizationWordItem = NULL;
 		}
 	};
-#endif
 
 /*************************************************************************
  *	"Oh, the joys of those who are kind to the poor!

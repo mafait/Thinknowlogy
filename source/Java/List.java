@@ -1,6 +1,6 @@
 /*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,7 +24,7 @@ class List
 	{
 	// Private constructed variables
 
-	private char listChar_;
+	private int highestSentenceNrInList_;
 
 	private Item activeList_;
 	private Item inactiveList_;
@@ -34,8 +34,11 @@ class List
 
 	private Item nextListItem_;
 
-	private WordItem myWordItem_;
+	// Private initialized variables
 
+	private char listChar_;
+
+	private WordItem myWordItem_;
 
 	// Private methods
 
@@ -60,59 +63,59 @@ class List
 
 	// Private cleanup methods
 
-	private static void setCurrentItemNr( Item searchItem )
+	private static int highestCurrentSentenceItemNr( int currentSentenceNr, Item searchItem )
 		{
 		int tempItemNr;
-		int currentItemNr = CommonVariables.currentItemNr;
+		int highestItemNr = Constants.NO_ITEM_NR;
 
 		while( searchItem != null )
 			{
-			if( searchItem.hasCurrentCreationSentenceNr() &&
-			( tempItemNr = searchItem.itemNr() ) > currentItemNr )
-				currentItemNr = tempItemNr;
+			if( searchItem.creationSentenceNr() == currentSentenceNr &&
+			( tempItemNr = searchItem.itemNr() ) > highestItemNr )
+				highestItemNr = tempItemNr;
 
 			searchItem = searchItem.nextItem;
 			}
 
-		CommonVariables.currentItemNr = currentItemNr;
+		return highestItemNr;
 		}
 
-	private static int highestInUseSentenceNrInList( int highestSentenceNr, Item searchItem )
+	private static int highestFoundSentenceNrInList( int maxSentenceNr, Item searchItem )
 		{
 		int tempSentenceNr;
-		int highestInUseSentenceNr = Constants.NO_SENTENCE_NR;
+		int highestFoundSentenceNr = Constants.NO_SENTENCE_NR;
 
 		while( searchItem != null &&
-		highestInUseSentenceNr < highestSentenceNr )
+		highestFoundSentenceNr < maxSentenceNr )
 			{
 			tempSentenceNr = searchItem.activeSentenceNr();
 
-			if( tempSentenceNr > highestInUseSentenceNr &&
-			tempSentenceNr <= highestSentenceNr )
-				highestInUseSentenceNr = tempSentenceNr;
+			if( tempSentenceNr > highestFoundSentenceNr &&
+			tempSentenceNr <= maxSentenceNr )
+				highestFoundSentenceNr = tempSentenceNr;
 
 			tempSentenceNr = searchItem.inactiveSentenceNr();
 
-			if( tempSentenceNr > highestInUseSentenceNr &&
-			tempSentenceNr <= highestSentenceNr )
-				highestInUseSentenceNr = tempSentenceNr;
+			if( tempSentenceNr > highestFoundSentenceNr &&
+			tempSentenceNr <= maxSentenceNr )
+				highestFoundSentenceNr = tempSentenceNr;
 
 			tempSentenceNr = searchItem.archivedSentenceNr();
 
-			if( tempSentenceNr > highestInUseSentenceNr &&
-			tempSentenceNr <= highestSentenceNr )
-				highestInUseSentenceNr = tempSentenceNr;
+			if( tempSentenceNr > highestFoundSentenceNr &&
+			tempSentenceNr <= maxSentenceNr )
+				highestFoundSentenceNr = tempSentenceNr;
 
 			tempSentenceNr = searchItem.replacedSentenceNr();
 
-			if( tempSentenceNr > highestInUseSentenceNr &&
-			tempSentenceNr <= highestSentenceNr )
-				highestInUseSentenceNr = tempSentenceNr;
+			if( tempSentenceNr > highestFoundSentenceNr &&
+			tempSentenceNr <= maxSentenceNr )
+				highestFoundSentenceNr = tempSentenceNr;
 
 			searchItem = searchItem.nextItem;
 			}
 
-		return highestInUseSentenceNr;
+		return highestFoundSentenceNr;
 		}
 
 	private byte decrementItemNrRange( int decrementSentenceNr, int startDecrementItemNr, int decrementOffset, Item searchItem )
@@ -539,6 +542,8 @@ class List
 		{
 		// Private constructed variables
 
+		highestSentenceNrInList_ = Constants.NO_SENTENCE_NR;
+
 		activeList_ = null;
 		inactiveList_ = null;
 		archivedList_ = null;
@@ -875,6 +880,11 @@ class List
 		return ( listChar_ == Constants.WORD_ASSIGNMENT_LIST_SYMBOL );
 		}
 
+	protected int highestSentenceNrInList()
+		{
+		return highestSentenceNrInList_;
+		}
+
 	protected char listChar()
 		{
 		return listChar_;
@@ -882,7 +892,7 @@ class List
 
 	protected byte addItemToList( char statusChar, Item newItem )
 		{
-		int newCreationSentenceNr;
+		int creationSentenceNr;
 		Item searchItem;
 		Item previousSearchItem = null;
 
@@ -930,18 +940,18 @@ class List
 				return startError( 1, "The given status character is unknown" );
 			}
 
+		creationSentenceNr = newItem.creationSentenceNr();
+
 		// Sort item in list
 		if( statusChar == Constants.QUERY_DELETED_CHAR )
 			{
-			newCreationSentenceNr = newItem.creationSentenceNr();
-
 			while( searchItem != null &&
 
 			// 1) Descending creationSentenceNr
-			( searchItem.creationSentenceNr() > newCreationSentenceNr ||
+			( searchItem.creationSentenceNr() > creationSentenceNr ||
 
 			// 2) Ascending itemNr
-			( searchItem.creationSentenceNr() == newCreationSentenceNr &&
+			( searchItem.creationSentenceNr() == creationSentenceNr &&
 			searchItem.itemNr() < newItem.itemNr() ) ) )
 				{
 				previousSearchItem = searchItem;
@@ -950,6 +960,14 @@ class List
 			}
 		else
 			{
+			if( creationSentenceNr > highestSentenceNrInList_ )
+				{
+				highestSentenceNrInList_ = creationSentenceNr;
+
+				if( myWordItem_ != null )
+					myWordItem_.setHighestSentenceNr( creationSentenceNr );
+				}
+
 			while( searchItem != null &&
 			!newItem.isSorted( searchItem ) )
 				{
@@ -960,10 +978,10 @@ class List
 
 		if( searchItem != null &&
 		// Check on duplicates
-		searchItem.creationSentenceNr() == newItem.creationSentenceNr() &&
+		searchItem.creationSentenceNr() == creationSentenceNr &&
 		// for integrity
 		searchItem.itemNr() == newItem.itemNr() )
-			return startError( 1, "I found an active item with the same identification" );
+			return startError( 1, "I found another item with the same identification" );
 
 		newItem.previousItem = previousSearchItem;
 
@@ -1156,17 +1174,20 @@ class List
 
 	protected byte removeFirstRangeOfDeletedItemsInList()
 		{
+		int removeSentenceNr;
+		int removeStartItemNr;
+		int nDeletedItems = 0;
 		Item removeItem = deletedList_;
 
 		if( removeItem != null )
 			{
 			if( CommonVariables.nDeletedItems != 0 ||
-			CommonVariables.removeSentenceNr != 0 ||
-			CommonVariables.removeStartItemNr != 0 )
+			CommonVariables.removeSentenceNr > Constants.NO_SENTENCE_NR ||
+			CommonVariables.removeStartItemNr > Constants.NO_ITEM_NR )
 				return startError( 1, "There is already a range of deleted items" );
 
-			CommonVariables.removeSentenceNr = removeItem.creationSentenceNr();
-			CommonVariables.removeStartItemNr = removeItem.itemNr();
+			removeSentenceNr = removeItem.creationSentenceNr();
+			removeStartItemNr = removeItem.itemNr();
 
 			do	{
 				// Disconnect deleted list from item
@@ -1177,13 +1198,17 @@ class List
 				// Disconnect item from the deleted list
 				removeItem.nextItem = null;
 				removeItem = deletedList_;
-				CommonVariables.nDeletedItems++;
+				nDeletedItems++;
 				}
 			while( removeItem != null &&
 			// Same sentence number
-			removeItem.creationSentenceNr() == CommonVariables.removeSentenceNr &&
+			removeItem.creationSentenceNr() == removeSentenceNr &&
 			// Ascending item number
-			removeItem.itemNr() == CommonVariables.removeStartItemNr + CommonVariables.nDeletedItems );
+			removeItem.itemNr() == removeStartItemNr + nDeletedItems );
+
+			CommonVariables.nDeletedItems = nDeletedItems;
+			CommonVariables.removeSentenceNr = removeSentenceNr;
+			CommonVariables.removeStartItemNr = removeStartItemNr;
 			}
 
 		return Constants.RESULT_OK;
@@ -1314,62 +1339,74 @@ class List
 
 	// Protected cleanup methods
 
-	protected void getHighestInUseSentenceNrInList( boolean isIncludingDeletedItems, int highestSentenceNr )
+	protected int highestCurrentSentenceItemNrInList( int currentSentenceNr, int globalHighestItemNr )
 		{
-		int tempSentenceNr;
-		int highestInUseSentenceNr = Constants.NO_SENTENCE_NR;
+		int tempItemNr;
+		int localHighestItemNr = Constants.NO_ITEM_NR;
 		Item searchItem;
 
 		if( ( searchItem = firstActiveItem() ) != null )
-			highestInUseSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem );
+			localHighestItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem );
 
 		if( ( searchItem = firstInactiveItem() ) != null &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
-			highestInUseSentenceNr = tempSentenceNr;
+		( tempItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem ) ) > localHighestItemNr )
+			localHighestItemNr = tempItemNr;
 
 		if( ( searchItem = firstArchivedItem() ) != null &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
-			highestInUseSentenceNr = tempSentenceNr;
+		( tempItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem ) ) > localHighestItemNr )
+			localHighestItemNr = tempItemNr;
 
 		if( ( searchItem = firstReplacedItem() ) != null &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
-			highestInUseSentenceNr = tempSentenceNr;
+		( tempItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem ) ) > localHighestItemNr )
+			localHighestItemNr = tempItemNr;
+
+		if( ( searchItem = firstDeletedItem() ) != null &&
+		( tempItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem ) ) > localHighestItemNr )
+			localHighestItemNr = tempItemNr;
+
+		if( localHighestItemNr >= globalHighestItemNr )
+			return localHighestItemNr;
+
+		return globalHighestItemNr;
+		}
+
+	protected int highestFoundSentenceNrInList( boolean isIncludingDeletedItems, int globalHighestFoundSentenceNr, int maxSentenceNr )
+		{
+		int tempSentenceNr;
+		int localHighestFoundSentenceNr = Constants.NO_SENTENCE_NR;
+		Item searchItem;
+
+		if( ( searchItem = firstActiveItem() ) != null )
+			localHighestFoundSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem );
+
+		if( ( searchItem = firstInactiveItem() ) != null &&
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
+
+		if( ( searchItem = firstArchivedItem() ) != null &&
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
+
+		if( ( searchItem = firstReplacedItem() ) != null &&
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
 
 		if( isIncludingDeletedItems &&
 		( searchItem = firstDeletedItem() ) != null &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
-			highestInUseSentenceNr = tempSentenceNr;
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
 
-		if( highestInUseSentenceNr > CommonVariables.highestInUseSentenceNr )
-			CommonVariables.highestInUseSentenceNr = highestInUseSentenceNr;
-		}
+		if( localHighestFoundSentenceNr >= globalHighestFoundSentenceNr )
+			return localHighestFoundSentenceNr;
 
-	protected void setCurrentItemNrInList()
-		{
-		Item searchItem;
-
-		if( ( searchItem = firstActiveItem() ) != null )
-			setCurrentItemNr( searchItem );
-
-		if( ( searchItem = firstInactiveItem() ) != null )
-			setCurrentItemNr( searchItem );
-
-		if( ( searchItem = firstArchivedItem() ) != null )
-			setCurrentItemNr( searchItem );
-
-		if( ( searchItem = firstReplacedItem() ) != null )
-			setCurrentItemNr( searchItem );
-
-		if( ( searchItem = firstDeletedItem() ) != null )
-			setCurrentItemNr( searchItem );
+		return globalHighestFoundSentenceNr;
 		}
 
 	protected byte decrementItemNrRangeInList( int decrementSentenceNr, int startDecrementItemNr, int decrementOffset )
 		{
 		Item searchItem;
 
-		if( decrementSentenceNr < Constants.NO_SENTENCE_NR ||
-		decrementSentenceNr >= Constants.MAX_SENTENCE_NR )
+		if( decrementSentenceNr < Constants.NO_SENTENCE_NR )
 			return startError( 1, "The given decrement sentence number is undefined" );
 
 		if( startDecrementItemNr <= Constants.NO_ITEM_NR )
@@ -1407,6 +1444,9 @@ class List
 
 		if( startSentenceNr <= Constants.NO_SENTENCE_NR )
 			return startError( 1, "The given start sentence number is undefined" );
+
+		if( highestSentenceNrInList_ == startSentenceNr )
+			highestSentenceNrInList_--;
 
 		if( ( searchItem = firstActiveItem() ) != null )
 			decrementSentenceNrs( startSentenceNr, searchItem );

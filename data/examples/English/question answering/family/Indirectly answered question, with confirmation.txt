@@ -8,6 +8,7 @@ Paul is a son.
 Display the justification report about Paul.
 # Extra checks
 John is the father and Anna is the mother of Paul, Joe and Laura.
+Joe is a daughter.
 Display the justification report about John.
 Display the justification report about Anna.
 Display the justification report about Paul.

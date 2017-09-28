@@ -71,8 +71,8 @@
 < Johan is waarschijnlijk geen dochter.
 < Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 < Johan heeft mogelijk een moeder, genaamd Anna.
-< Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan.
 < Jan is waarschijnlijk een ouder van Paul en Johan.
+< Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan.
 < Anna is waarschijnlijk een ouder van Paul en Johan.
 < Anna is mogelijk een moeder van Paul en Johan.
 < Anna heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan.
@@ -87,13 +87,7 @@
 <	- Paul is de zoon van Jan en Anna.
 * 
 * Mijn veronderstellingen:
-< Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan. Omdat:
-<	- Johan is waarschijnlijk een kind van Jan en Anna.
-<	- Paul is waarschijnlijk een kind van Jan en Anna.
 < Jan is waarschijnlijk een ouder van Paul en Johan. Omdat:
-<	- Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
-<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 <	- Johan is waarschijnlijk een kind van Jan en Anna.
@@ -101,12 +95,18 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Jan heeft 2 zoon [meervoud van 'zoon' is onbekend], genaamd Paul en Johan.
+* 	en:
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 < Jan is waarschijnlijk deel van een gezin. Omdat:
 <	- Jan is waarschijnlijk een ouder van Paul en Johan.
 <	- Ouders zijn deel van ieder gezin.
 < Jan is mogelijk een persoon. Omdat:
 <	- Jan is waarschijnlijk een ouder van Paul en Johan.
 <	- Een ouder is waarschijnlijk een persoon.
+< Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+<	- Johan is waarschijnlijk een kind van Jan en Anna.
 * 
 * Mijn vragen:
 < Is Jan een man of een vrouw? Omdat:
@@ -131,9 +131,6 @@
 * 
 * Mijn veronderstellingen:
 < Anna is waarschijnlijk een ouder van Paul en Johan. Omdat:
-<	- Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
-<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 <	- Johan is waarschijnlijk een kind van Jan en Anna.
@@ -141,6 +138,9 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Anna heeft 2 zoon [meervoud van 'zoon' is onbekend], genaamd Paul en Johan.
+* 	en:
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 < Anna is waarschijnlijk deel van een gezin. Omdat:
 <	- Anna is waarschijnlijk een ouder van Paul en Johan.
 <	- Ouders zijn deel van ieder gezin.
@@ -187,6 +187,19 @@
 < 
 * 
 * Mijn veronderstellingen:
+< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
+* 	en:
+<	- Jan is waarschijnlijk een ouder van Paul en Johan.
+<	- Anna is waarschijnlijk een ouder van Paul en Johan.
+< Paul heeft mogelijk een moeder, genaamd Anna. Omdat:
+<	- Anna is mogelijk een moeder van Paul en Johan.
+* 	en:
+<	- Anna heeft 2 zoon [meervoud van 'zoon' is onbekend], genaamd Paul en Johan.
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Iedere ouder is een vader of een moeder.
+<	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
 < Paul is waarschijnlijk een kind van Jan en Anna. Omdat:
 <	- Anna heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan.
 <	- Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan.
@@ -215,19 +228,6 @@
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 <	- Ieder kind is een zoon of een dochter.
 <	- Paul is een zoon.
-< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna. Omdat:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Paul is waarschijnlijk een kind van Jan en Anna.
-* 	en:
-<	- Jan is waarschijnlijk een ouder van Paul en Johan.
-<	- Anna is waarschijnlijk een ouder van Paul en Johan.
-< Paul heeft mogelijk een moeder, genaamd Anna. Omdat:
-<	- Anna is mogelijk een moeder van Paul en Johan.
-* 	en:
-<	- Anna heeft 2 zoon [meervoud van 'zoon' is onbekend], genaamd Paul en Johan.
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Iedere ouder is een vader of een moeder.
-<	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
 * 
 * Mijn vragen:
 < Is Paul een jongen of een man? Omdat:

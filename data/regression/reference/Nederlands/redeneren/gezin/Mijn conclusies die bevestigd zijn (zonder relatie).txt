@@ -161,7 +161,15 @@
 * 
 * Deze informatie is specifieker dan uw eerdere informatie:
 < Jan is een vader.
+* 
+* Mijn eerdere veronderstellingen die nu relatiewoorden hebben:
+< Jan heeft waarschijnlijk een kind.
+* 
+* Deze informatie is specifieker dan uw eerdere informatie:
 < Anna is een moeder.
+* 
+* Mijn eerdere veronderstellingen die nu relatiewoorden hebben:
+< Anna heeft waarschijnlijk een kind.
 * 
 * Mijn conclusies:
 < Paul heeft een vader, genaamd Jan.

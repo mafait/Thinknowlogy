@@ -1,6 +1,6 @@
 /*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -51,59 +51,59 @@
 
 	// Private cleanup functions
 
-	void List::setCurrentItemNr( Item *searchItem )
+	unsigned int List::highestCurrentSentenceItemNr( unsigned int currentSentenceNr, Item *searchItem )
 		{
 		unsigned int tempItemNr;
-		unsigned int currentItemNr = commonVariables()->currentItemNr;
+		unsigned int highestItemNr = NO_ITEM_NR;
 
 		while( searchItem != NULL )
 			{
-			if( searchItem->hasCurrentCreationSentenceNr() &&
-			( tempItemNr = searchItem->itemNr() ) > currentItemNr )
-				currentItemNr = tempItemNr;
+			if( searchItem->creationSentenceNr() == currentSentenceNr &&
+			( tempItemNr = searchItem->itemNr() ) > highestItemNr )
+				highestItemNr = tempItemNr;
 
 			searchItem = searchItem->nextItem;
 			}
 
-		commonVariables()->currentItemNr = currentItemNr;
+		return highestItemNr;
 		}
 
-	unsigned int List::highestInUseSentenceNrInList( unsigned int highestSentenceNr, Item *searchItem )
+	unsigned int List::highestFoundSentenceNrInList( unsigned int maxSentenceNr, Item *searchItem )
 		{
 		unsigned int tempSentenceNr;
-		unsigned int highestInUseSentenceNr = NO_SENTENCE_NR;
+		unsigned int highestFoundSentenceNr = NO_SENTENCE_NR;
 
 		while( searchItem != NULL &&
-		highestInUseSentenceNr < highestSentenceNr )
+		highestFoundSentenceNr < maxSentenceNr )
 			{
 			tempSentenceNr = searchItem->activeSentenceNr();
 
-			if( tempSentenceNr > highestInUseSentenceNr &&
-			tempSentenceNr <= highestSentenceNr )
-				highestInUseSentenceNr = tempSentenceNr;
+			if( tempSentenceNr > highestFoundSentenceNr &&
+			tempSentenceNr <= maxSentenceNr )
+				highestFoundSentenceNr = tempSentenceNr;
 
 			tempSentenceNr = searchItem->inactiveSentenceNr();
 
-			if( tempSentenceNr > highestInUseSentenceNr &&
-			tempSentenceNr <= highestSentenceNr )
-				highestInUseSentenceNr = tempSentenceNr;
+			if( tempSentenceNr > highestFoundSentenceNr &&
+			tempSentenceNr <= maxSentenceNr )
+				highestFoundSentenceNr = tempSentenceNr;
 
 			tempSentenceNr = searchItem->archivedSentenceNr();
 
-			if( tempSentenceNr > highestInUseSentenceNr &&
-			tempSentenceNr <= highestSentenceNr )
-				highestInUseSentenceNr = tempSentenceNr;
+			if( tempSentenceNr > highestFoundSentenceNr &&
+			tempSentenceNr <= maxSentenceNr )
+				highestFoundSentenceNr = tempSentenceNr;
 
 			tempSentenceNr = searchItem->replacedSentenceNr();
 
-			if( tempSentenceNr > highestInUseSentenceNr &&
-			tempSentenceNr <= highestSentenceNr )
-				highestInUseSentenceNr = tempSentenceNr;
+			if( tempSentenceNr > highestFoundSentenceNr &&
+			tempSentenceNr <= maxSentenceNr )
+				highestFoundSentenceNr = tempSentenceNr;
 
 			searchItem = searchItem->nextItem;
 			}
 
-		return highestInUseSentenceNr;
+		return highestFoundSentenceNr;
 		}
 
 	signed char List::decrementItemNrRange( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset, Item *searchItem )
@@ -542,6 +542,8 @@
 		{
 		// Private constructed variables
 
+		highestSentenceNrInList_ = NO_SENTENCE_NR;
+
 		activeList_ = NULL;
 		inactiveList_ = NULL;
 		archivedList_ = NULL;
@@ -943,6 +945,11 @@
 		return ( listChar_ == WORD_ASSIGNMENT_LIST_SYMBOL );
 		}
 
+	unsigned int List::highestSentenceNrInList()
+		{
+		return highestSentenceNrInList_;
+		}
+
 	char List::listChar()
 		{
 		return listChar_;
@@ -950,7 +957,7 @@
 
 	signed char List::addItemToList( char statusChar, Item *newItem )
 		{
-		unsigned int newCreationSentenceNr;
+		unsigned int creationSentenceNr;
 		Item *searchItem;
 		Item *previousSearchItem = NULL;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "addItemToList";
@@ -999,18 +1006,18 @@
 				return startError( functionNameString, "The given status character is unknown" );
 			}
 
+		creationSentenceNr = newItem->creationSentenceNr();
+
 		// Sort item in list
 		if( statusChar == QUERY_DELETED_CHAR )
 			{
-			newCreationSentenceNr = newItem->creationSentenceNr();
-
 			while( searchItem != NULL &&
 
 			// 1) Descending creationSentenceNr
-			( searchItem->creationSentenceNr() > newCreationSentenceNr ||
+			( searchItem->creationSentenceNr() > creationSentenceNr ||
 
 			// 2) Ascending itemNr
-			( searchItem->creationSentenceNr() == newCreationSentenceNr &&
+			( searchItem->creationSentenceNr() == creationSentenceNr &&
 			searchItem->itemNr() < newItem->itemNr() ) ) )
 				{
 				previousSearchItem = searchItem;
@@ -1019,6 +1026,14 @@
 			}
 		else
 			{
+			if( creationSentenceNr > highestSentenceNrInList_ )
+				{
+				highestSentenceNrInList_ = creationSentenceNr;
+
+				if( myWordItem_ != NULL )
+					myWordItem_->setHighestSentenceNr( creationSentenceNr );
+				}
+
 			while( searchItem != NULL &&
 			!newItem->isSorted( searchItem ) )
 				{
@@ -1029,10 +1044,10 @@
 
 		if( searchItem != NULL &&
 		// Check on duplicates
-		searchItem->creationSentenceNr() == newItem->creationSentenceNr() &&
+		searchItem->creationSentenceNr() == creationSentenceNr &&
 		// for integrity
 		searchItem->itemNr() == newItem->itemNr() )
-			return startError( functionNameString, "I found an active item with the same identification" );
+			return startError( functionNameString, "I found another item with the same identification" );
 
 		newItem->previousItem = previousSearchItem;
 
@@ -1236,18 +1251,21 @@
 
 	signed char List::removeFirstRangeOfDeletedItemsInList()
 		{
+		unsigned int removeSentenceNr;
+		unsigned int removeStartItemNr;
+		unsigned int nDeletedItems = 0;
 		Item *removeItem = deletedList_;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItemsInList";
 
 		if( removeItem != NULL )
 			{
 			if( commonVariables_->nDeletedItems != 0 ||
-			commonVariables_->removeSentenceNr != 0 ||
-			commonVariables_->removeStartItemNr != 0 )
+			commonVariables_->removeSentenceNr > NO_SENTENCE_NR ||
+			commonVariables_->removeStartItemNr > NO_ITEM_NR )
 				return startError( functionNameString, "There is already a range of deleted items" );
 
-			commonVariables_->removeSentenceNr = removeItem->creationSentenceNr();
-			commonVariables_->removeStartItemNr = removeItem->itemNr();
+			removeSentenceNr = removeItem->creationSentenceNr();
+			removeStartItemNr = removeItem->itemNr();
 
 			do	{
 				// Disconnect deleted list from item
@@ -1259,13 +1277,17 @@
 				removeItem->nextItem = NULL;
 				delete removeItem;
 				removeItem = deletedList_;
-				commonVariables_->nDeletedItems++;
+				nDeletedItems++;
 				}
 			while( removeItem != NULL &&
 			// Same sentence number
-			removeItem->creationSentenceNr() == commonVariables_->removeSentenceNr &&
+			removeItem->creationSentenceNr() == removeSentenceNr &&
 			// Ascending item number
-			removeItem->itemNr() == commonVariables_->removeStartItemNr + commonVariables_->nDeletedItems );
+			removeItem->itemNr() == removeStartItemNr + nDeletedItems );
+
+			commonVariables_->nDeletedItems = nDeletedItems;
+			commonVariables_->removeSentenceNr = removeSentenceNr;
+			commonVariables_->removeStartItemNr = removeStartItemNr;
 			}
 
 		return RESULT_OK;
@@ -1407,63 +1429,75 @@
 
 	// Protected cleanup functions
 
-	void List::getHighestInUseSentenceNrInList( bool isIncludingDeletedItems, unsigned int highestSentenceNr )
+	unsigned int List::highestCurrentSentenceItemNrInList( unsigned int currentSentenceNr, unsigned int globalHighestItemNr )
 		{
-		unsigned int tempSentenceNr;
-		unsigned int highestInUseSentenceNr = NO_SENTENCE_NR;
+		unsigned int tempItemNr;
+		unsigned int localHighestItemNr = NO_ITEM_NR;
 		Item *searchItem;
 
 		if( ( searchItem = firstActiveItem() ) != NULL )
-			highestInUseSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem );
+			localHighestItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem );
 
 		if( ( searchItem = firstInactiveItem() ) != NULL &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
-			highestInUseSentenceNr = tempSentenceNr;
+		( tempItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem ) ) > localHighestItemNr )
+			localHighestItemNr = tempItemNr;
 
 		if( ( searchItem = firstArchivedItem() ) != NULL &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
-			highestInUseSentenceNr = tempSentenceNr;
+		( tempItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem ) ) > localHighestItemNr )
+			localHighestItemNr = tempItemNr;
 
 		if( ( searchItem = firstReplacedItem() ) != NULL &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
-			highestInUseSentenceNr = tempSentenceNr;
+		( tempItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem ) ) > localHighestItemNr )
+			localHighestItemNr = tempItemNr;
+
+		if( ( searchItem = firstDeletedItem() ) != NULL &&
+		( tempItemNr = highestCurrentSentenceItemNr( currentSentenceNr, searchItem ) ) > localHighestItemNr )
+			localHighestItemNr = tempItemNr;
+
+		if( localHighestItemNr >= globalHighestItemNr )
+			return localHighestItemNr;
+
+		return globalHighestItemNr;
+		}
+
+	unsigned int List::highestFoundSentenceNrInList( bool isIncludingDeletedItems, unsigned int globalHighestFoundSentenceNr, unsigned int maxSentenceNr )
+		{
+		unsigned int tempSentenceNr;
+		unsigned int localHighestFoundSentenceNr = NO_SENTENCE_NR;
+		Item *searchItem;
+
+		if( ( searchItem = firstActiveItem() ) != NULL )
+			localHighestFoundSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem );
+
+		if( ( searchItem = firstInactiveItem() ) != NULL &&
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
+
+		if( ( searchItem = firstArchivedItem() ) != NULL &&
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
+
+		if( ( searchItem = firstReplacedItem() ) != NULL &&
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
 
 		if( isIncludingDeletedItems &&
 		( searchItem = firstDeletedItem() ) != NULL &&
-		( tempSentenceNr = highestInUseSentenceNrInList( highestSentenceNr, searchItem ) ) > highestInUseSentenceNr )
-			highestInUseSentenceNr = tempSentenceNr;
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
 
-		if( highestInUseSentenceNr > commonVariables_->highestInUseSentenceNr )
-			commonVariables_->highestInUseSentenceNr = highestInUseSentenceNr;
-		}
+		if( localHighestFoundSentenceNr >= globalHighestFoundSentenceNr )
+			return localHighestFoundSentenceNr;
 
-	void List::setCurrentItemNrInList()
-		{
-		Item *searchItem;
-
-		if( ( searchItem = firstActiveItem() ) != NULL )
-			setCurrentItemNr( searchItem );
-
-		if( ( searchItem = firstInactiveItem() ) != NULL )
-			setCurrentItemNr( searchItem );
-
-		if( ( searchItem = firstArchivedItem() ) != NULL )
-			setCurrentItemNr( searchItem );
-
-		if( ( searchItem = firstReplacedItem() ) != NULL )
-			setCurrentItemNr( searchItem );
-
-		if( ( searchItem = firstDeletedItem() ) != NULL )
-			setCurrentItemNr( searchItem );
+		return globalHighestFoundSentenceNr;
 		}
 
 	signed char List::decrementItemNrRangeInList( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset )
 		{
 		Item *searchItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRange";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRangeInList";
 
-		if( decrementSentenceNr < NO_SENTENCE_NR ||
-		decrementSentenceNr >= MAX_SENTENCE_NR )
+		if( decrementSentenceNr < NO_SENTENCE_NR )
 			return startError( functionNameString, "The given decrement sentence number is undefined" );
 
 		if( startDecrementItemNr <= NO_ITEM_NR )
@@ -1498,10 +1532,13 @@
 	signed char List::decrementSentenceNrsInList( unsigned int startSentenceNr )
 		{
 		Item *searchItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrs";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrsInList";
 
 		if( startSentenceNr <= NO_SENTENCE_NR )
 			return startError( functionNameString, "The given start sentence number is undefined" );
+
+		if( highestSentenceNrInList_ == startSentenceNr )
+			highestSentenceNrInList_--;
 
 		if( ( searchItem = firstActiveItem() ) != NULL )
 			decrementSentenceNrs( startSentenceNr, searchItem );
@@ -1529,7 +1566,7 @@
 		{
 		bool isResultOK = ( commonVariables_->result == RESULT_OK );
 		Item *searchItem = firstActiveItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentences";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentencesInList";
 
 		if( lowestSentenceNr <= NO_SENTENCE_NR )
 			return startError( functionNameString, "The given lowest sentence number is undefined" );
@@ -1680,7 +1717,7 @@
 	signed char List::redoCurrentSentenceInList()
 		{
 		Item *searchItem = firstActiveItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentence";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentenceInList";
 
 		while( searchItem != NULL )
 			{
@@ -1840,7 +1877,7 @@
 	signed char List::undoCurrentSentenceInList()
 		{
 		Item *searchItem = firstActiveItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentence";
+		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentenceInList";
 
 		while( searchItem != NULL )
 			{

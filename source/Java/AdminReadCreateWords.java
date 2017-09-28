@@ -1,7 +1,7 @@
 /*	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		To create words of the read sentence
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -94,11 +94,11 @@ class AdminReadCreateWords
 
 	private CreateReadWordResultType createReadWord( short wordOrderNr, short wordTypeNr, int textStringStartPosition, String textString, WordItem readWordItem )
 		{
-		CreateReadWordResultType createReadWordResult = new CreateReadWordResultType();
-		ReadWordResultType readWordResult = new ReadWordResultType();
 		short wordParameter = ( wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ||
 										readWordItem == null ? Constants.NO_WORD_PARAMETER : readWordItem.wordParameter() );
 		String readString = null;
+		CreateReadWordResultType createReadWordResult = new CreateReadWordResultType();
+		ReadWordResultType readWordResult = new ReadWordResultType();
 
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
@@ -789,11 +789,11 @@ class AdminReadCreateWords
 
 	protected ReadWordResultType readWordFromString( boolean isCheckingForGrammarDefinition, boolean isMergedWord, boolean isSkippingTextString, int startWordPosition, int minimumStringLength, String wordString )
 		{
-		ReadWordResultType readWordResult = new ReadWordResultType();
 		boolean isText = false;
 		boolean isWordStartingWithDoubleQuote = false;
 		int wordStringLength;
 		int wordPosition = startWordPosition;
+		ReadWordResultType readWordResult = new ReadWordResultType();
 
 		if( wordString == null )
 			return adminItem_.startReadWordResultError( 1, moduleNameString_, "The given word string is undefined" );
@@ -875,8 +875,6 @@ class AdminReadCreateWords
 
 	protected WordResultType addWord( boolean isLanguageWord, boolean isMultipleWord, short previousWordAdjectiveParameter, short previousWordDefiniteArticleParameter, short previousWordIndefiniteArticleParameter, short wordParameter, short wordTypeNr, int wordTypeStringLength, String wordTypeString )
 		{
-		WordResultType wordResult = new WordResultType();
-		WordTypeResultType wordTypeResult = new WordTypeResultType();
 		boolean isProperName;
 		boolean isProperNamePrecededByDefiniteArticle;
 		boolean isNounWordType;
@@ -887,6 +885,8 @@ class AdminReadCreateWords
 		short definiteArticleParameter = Constants.NO_DEFINITE_ARTICLE_PARAMETER;
 		short indefiniteArticleParameter = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
 		WordItem createdWordItem;
+		WordResultType wordResult = new WordResultType();
+		WordTypeResultType wordTypeResult;
 
 		if( wordTypeString == null )
 			return adminItem_.startWordResultError( 1, moduleNameString_, "The given word type string is undefined" );
@@ -984,20 +984,22 @@ class AdminReadCreateWords
 
 	protected WordResultType findWordTypeInAllWords( boolean isCheckingAllLanguages, short wordTypeNr, String wordTypeString, WordItem previousWordItem )
 		{
-		WordResultType wordResult = new WordResultType();
 		WordItem currentWordItem;
+		WordResultType wordResult;
 
 		if( ( currentWordItem = ( previousWordItem == null ? CommonVariables.firstWordItem : previousWordItem.nextWordItem() ) ) != null )
 			{
 			do	{
 				if( ( wordResult = currentWordItem.findWordType( isCheckingAllLanguages, wordTypeNr, wordTypeString ) ).result != Constants.RESULT_OK )
 					return adminItem_.addWordResultError( 1, moduleNameString_, "I failed to find a word type in word \"" + currentWordItem.anyWordTypeString() + "\"" );
+
+				if( wordResult.foundWordItem != null )
+					return wordResult;
 				}
-			while( wordResult.foundWordItem == null &&
-			( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 			}
 
-		return wordResult;
+		return new WordResultType();
 		}
 	};
 

@@ -91,8 +91,8 @@
 <	- Olivier est un parent de Julien, Pascal et Lorraine.
 <	- Un parent est probablement une personne.
 < Olivier a probablement 3 enfants, appelés Julien, Pascal et Lorraine. En raison:
-<	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Pascal est probablement un enfant de Olivier.
+<	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Lorraine est probablement un enfant de Olivier.
 * 	et:
 <	- Chaque famille a parents et enfants.

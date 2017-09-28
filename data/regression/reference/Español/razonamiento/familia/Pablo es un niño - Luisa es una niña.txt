@@ -40,8 +40,8 @@
 * 
 * Mis suposiciones:
 < Luisa es probablemente una hija.
-< Luisa es posiblemente una persona.
 < Luisa es probablemente parte de una familia.
+< Luisa es posiblemente una persona.
 < Luisa no es probablemente un hijo.
 < Luisa tiene posiblemente un padre.
 < 
@@ -85,12 +85,12 @@
 < Luisa es probablemente una hija. Porque:
 <	- Cada hija es una niña o una mujer.
 <	- Luisa es una niña.
-< Luisa es posiblemente una persona. Porque:
-<	- Luisa es probablemente una hija.
-<	- Una hija es probablemente una persona.
 < Luisa es probablemente parte de una familia. Porque:
 <	- Luisa es probablemente una hija.
 <	- Hijos son parte de cada familia.
+< Luisa es posiblemente una persona. Porque:
+<	- Luisa es probablemente una hija.
+<	- Una hija es probablemente una persona.
 < Luisa no es probablemente un hijo. Porque:
 <	- Cada hijo es un hijo o una hija.
 <	- Luisa es probablemente una hija.

@@ -57,9 +57,6 @@
 * Mis conclusiones:
 < Juan es padre de Pablo. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
-< Juan es parte de una familia. Porque:
-<	- Juan es padre de Pablo.
-<	- Padres son parte de cada familia.
 < Juan es un hombre. Porque:
 <	- Juan es padre de Pablo.
 <	- Cada padre es un hombre.
@@ -70,6 +67,9 @@
 < Juan es masculino. Porque:
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.
+< Juan es parte de una familia. Porque:
+<	- Juan es un padre.
+<	- Padres son parte de cada familia.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
@@ -106,6 +106,7 @@
 <	- Una madre es probablemente una persona.
 < Ana es probablemente madre de Pablo. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre es un padre o una madre.
 <	- Nombre propio "Ana" es probablemente femenino.
 < Ana es probablemente una mujer. Porque:
 <	- Ana es probablemente madre de Pablo.
@@ -132,6 +133,10 @@
 <	- Hijos son parte de cada familia.
 < Pablo tiene probablemente una madre, llamada Ana. Porque:
 <	- Ana es probablemente madre de Pablo.
+* 	y:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre es un padre o una madre.
+<	- Nombre propio "Ana" es probablemente femenino.
 * 
 * Mis preguntas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre? Porque:

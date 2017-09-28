@@ -19,10 +19,10 @@
  Affichez la garantie.
 ------------------------------------------------------------------------------
  Exemples fichiers:	* Utilisez le bouton <exemples> ou voir le
-			  dossier: Thinknowlogy2017r1/data/examples/Français/utilisateur/
- Fondamental:		* dossier: Thinknowlogy2017r1/documents/
- Projet:		* dossier: Thinknowlogy2017r1/documents/design/
- Captures d'écran:	* dossier: Thinknowlogy2017r1/screenshots/Français/
+			  dossier: Thinknowlogy2017r2/data/examples/Français/utilisateur/
+ Fondamental:		* dossier: Thinknowlogy2017r2/documents/
+ Projet:		* dossier: Thinknowlogy2017r2/documents/design/
+ Captures d'écran:	* dossier: Thinknowlogy2017r2/screenshots/Français/
 ------------------------------------------------------------------------------
 < 
 < Spécifications:
@@ -32,7 +32,7 @@
 < English est une langue. (appris de l'utilisateur Admin)
 < 
 ------------------------------------------------------------------------------
- Nombre total d'éléments:	7451.
+ Nombre total d'éléments:	7445.
 ------------------------------------------------------------------------------
  Éléments dans l'administrateur:	375.
 ------------------------------------------------------------------------------
@@ -49,23 +49,23 @@
  * Éléments remplacées:				0.
  * Éléments supprimés:				0.
 ------------------------------------------------------------------------------
- Éléments dans mots:			7076.
+ Éléments dans mots:			7070.
 ------------------------------------------------------------------------------
- * Éléments actifs:				7047.
+ * Éléments actifs:				7040.
     <a> assignations:					6.
     <c> collections:					232.
     <g> généralisations:				313.
-    <i> interface:					1112.
+    <i> interface:					1106.
     <j> justification:					0.
     <l> grammaire:					4029.
     <m> mot multiples:					77.
-    <s> specifications:					365.
+    <s> specifications:					364.
     <r> Écrire des mots (temporaire):			0.
     <w> types de mots:					913.
     <x> contexte:					0.
  * Éléments inactifs:				3.
  * Éléments archivés:				21.
- * Éléments remplacées:				5.
+ * Éléments remplacées:				6.
  * Éléments supprimés:				0.
 ------------------------------------------------------------------------------
 < 
@@ -151,9 +151,10 @@
  Dans les fichiers '~' marquera la fin d'une requête			...~#<W>~...
 ------------------------------------------------------------------------------
  Copyright (C) 2009-2017, Menno Mafait
- Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de détails tapez
- "Affichez le droit d'auteur.". Ceci est un logiciel libre et vous êtes invité à le redistribuer
- en respectant certaines obligations ; pour plus de détails tapez "Affichez la licence-GPLv2.".
+ Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de
+ détails tapez "Affichez le droit d'auteur.". Ceci est un logiciel libre et
+ vous êtes invité à le redistribuer en respectant certaines obligations;
+ pour plus de détails tapez "Affichez la licence-GPLv2.".
 
 		    GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991

@@ -83,7 +83,15 @@
 * 
 * This information is more specific than your earlier information:
 < John is a father.
+* 
+* My earlier assumptions that have relation words now:
+< John has probably a child.
+* 
+* This information is more specific than your earlier information:
 < Anna is a mother.
+* 
+* My earlier assumptions that have relation words now:
+< Anna has probably a child.
 * 
 * My conclusions:
 < Paul has a father, called John.

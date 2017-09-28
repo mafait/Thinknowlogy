@@ -1,7 +1,7 @@
 /*	Class:		BoolResultType
  *	Purpose:	To return word parameter variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,6 +28,7 @@ class BoolResultType
 	friend class AdminImperative;
 	friend class AdminReadCreateWords;
 	friend class AdminReadSentence;
+	friend class AdminReasoningNew;
 	friend class AdminSpecification;
 	friend class CollectionItem;
 	friend class CollectionList;
@@ -43,6 +44,7 @@ class BoolResultType
 	friend class ScoreList;
 	friend class SelectionItem;
 	friend class SpecificationItem;
+	friend class SpecificationList;
 	friend class WordItem;
 	friend class WordSpecification;
 	friend class WordTypeItem;

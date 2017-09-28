@@ -86,9 +86,9 @@
 < Amélie a possible une fille, appelée Lorraine.
 < Pascal a probablement un parent, appelée Amélie.
 < Pascal est probablement un enfant de Olivier et Amélie.
-< Julien est probablement un enfant de Olivier et Amélie.
 < Julien a probablement un parent, appelée Amélie.
+< Julien est probablement un enfant de Olivier et Amélie.
+< Lorraine a probablement un parent, appelée Amélie.
 < Lorraine est probablement un enfant de Olivier et Amélie.
 < Lorraine est possible une fille de Olivier et Amélie.
-< Lorraine a probablement un parent, appelée Amélie.
 < 

@@ -2,7 +2,7 @@
  *	Parent class:	WordItem
  *	Grand parent:	Item
  *	Purpose:		To process tasks at administration level
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -44,6 +44,7 @@
 		commonVariables()->firstContextWordItem = NULL;
 		commonVariables()->firstPossessiveNounWordItem = NULL;
 		commonVariables()->firstSpecificationWordItem = NULL;
+		commonVariables()->firstUserProperNameWordItem = NULL;
 
 		commonVariables()->lastCollectionWordItem = NULL;
 		commonVariables()->lastContextWordItem = NULL;
@@ -286,28 +287,29 @@
 		return highestContextNr;
 		}
 
-	unsigned int AdminItem::highestInUseSentenceNr( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr )
+	unsigned int AdminItem::highestFoundSentenceNr( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int maxSentenceNr )
 		{
+		unsigned int highestFoundSentenceNr = NO_SENTENCE_NR;
 		List *currentAdminList;
-
-		commonVariables()->highestInUseSentenceNr = NO_SENTENCE_NR;
 
 		// Word lists
 		if( wordList_ != NULL )
-			wordList_->getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr );
+			highestFoundSentenceNr = wordList_->highestFoundSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, maxSentenceNr );
 
 		// Admin lists
-		for( unsigned short adminListNr = 0; ( adminListNr < NUMBER_OF_ADMIN_LISTS && highestSentenceNr > commonVariables()->highestInUseSentenceNr ); adminListNr++ )
+		for( unsigned short adminListNr = 0; ( adminListNr < NUMBER_OF_ADMIN_LISTS && highestFoundSentenceNr < maxSentenceNr ); adminListNr++ )
 			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL )
-				{
-				if( isIncludingTemporaryLists ||
-				!currentAdminList->isTemporaryList() )
-					currentAdminList->getHighestInUseSentenceNrInList( isIncludingDeletedItems, highestSentenceNr );
-				}
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL &&
+
+			( isIncludingTemporaryLists ||
+			!currentAdminList->isTemporaryList() ) &&
+
+			// For efficiency, only select lists with higher sentence number
+			currentAdminList->highestSentenceNrInList() > highestFoundSentenceNr )
+				highestFoundSentenceNr = currentAdminList->highestFoundSentenceNrInList( isIncludingDeletedItems, highestFoundSentenceNr, maxSentenceNr );
 			}
 
-		return commonVariables()->highestInUseSentenceNr;
+		return highestFoundSentenceNr;
 		}
 
 	char AdminItem::adminListChar( unsigned short adminListNr )
@@ -461,6 +463,11 @@
 		return false;
 		}
 
+	bool AdminItem::hasScoreList()
+		{
+		return( scoreList_ != NULL );
+		}
+
 	unsigned int AdminItem::nPossibilities()
 		{
 		if( scoreList_ != NULL )
@@ -490,7 +497,6 @@
 				return startError( functionNameString, NULL, NULL, "I failed to create the admin solve score list" );
 
 			adminListArray_[ADMIN_SCORE_LIST] = scoreList_;
-			commonVariables()->adminScoreList = scoreList_;
 			}
 
 		return scoreList_->createScoreItem( isChecked, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem );
@@ -540,7 +546,7 @@
 
 		wasUndoOrRedoCommand_ = true;
 
-		if( highestInUseSentenceNr( true, false, commonVariables()->currentSentenceNr ) == commonVariables()->currentSentenceNr )
+		if( highestFoundSentenceNr( true, false, commonVariables()->currentSentenceNr ) == commonVariables()->currentSentenceNr )
 			{
 			// Important: Redo admin lists first, and the words after that
 			// Because redoing admin words list might redo words
@@ -974,14 +980,14 @@
 		return NULL;
 		}
 
-	BoolResultType AdminItem::createReadWords( char *grammarString )
+	BoolResultType AdminItem::createReadWords( char *readUserSentenceString )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "createReadWords";
 
 		if( adminReadCreateWords_ == NULL )
 			return startBoolResultError( functionNameString, NULL, "The admin read create words module isn't created yet" );
 
-		return adminReadCreateWords_->createReadWords( grammarString );
+		return adminReadCreateWords_->createReadWords( readUserSentenceString );
 		}
 
 	ReadWordResultType AdminItem::readWordFromString( bool isCheckingForGrammarDefinition, bool isMergedWord, bool isSkippingTextString, size_t startWordPosition, size_t minimumStringLength, char *wordString )
@@ -1051,7 +1057,7 @@
 			{
 			commonVariables()->currentSentenceNr--;
 			// Necessary after changing current sentence number
-			setCurrentItemNr();
+			commonVariables()->currentSentenceItemNr = highestCurrentSentenceItemNr();
 			}
 		}
 
@@ -1066,7 +1072,9 @@
 		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL )
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL &&
+			// For efficiency, only select lists with decrement sentence number of higher
+			currentAdminList->highestSentenceNrInList() >= decrementSentenceNr )
 				currentAdminList->decrementItemNrRangeInList( decrementSentenceNr, startDecrementItemNr, decrementOffset );
 			}
 		}
@@ -1082,7 +1090,9 @@
 		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL )
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL &&
+			// For efficiency, only select lists with start sentence number of higher
+			currentAdminList->highestSentenceNrInList() >= startSentenceNr )
 				currentAdminList->decrementSentenceNrsInList( startSentenceNr );
 			}
 		}
@@ -1098,7 +1108,9 @@
 		// Admin lists
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL )
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL &&
+			// For efficiency, only select lists with lowest sentence number of higher
+			currentAdminList->highestSentenceNrInList() >= lowestSentenceNr )
 				currentAdminList->deleteSentencesInList( lowestSentenceNr );
 			}
 
@@ -1118,24 +1130,6 @@
 			{
 			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL )
 				currentAdminList->removeFirstRangeOfDeletedItemsInList();
-			}
-		}
-
-	void AdminItem::setCurrentItemNr()
-		{
-		List *currentAdminList;
-
-		commonVariables()->currentItemNr = NO_ITEM_NR;
-
-		// Word lists
-		if( wordList_ != NULL )
-			wordList_->setCurrentItemNrInWordList();
-
-		// Admin lists
-		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
-			{
-			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL )
-				currentAdminList->setCurrentItemNrInList();
 			}
 		}
 
@@ -1178,6 +1172,28 @@
 			return adminReadFile_->firstSentenceNrOfCurrentUser();
 
 		return NO_SENTENCE_NR;
+		}
+
+	unsigned int AdminItem::highestCurrentSentenceItemNr()
+		{
+		unsigned int currentSentenceNr = commonVariables()->currentSentenceNr;
+		unsigned int highestItemNr = NO_ITEM_NR;
+		List *currentAdminList;
+
+		// Word lists
+		if( wordList_ != NULL )
+			highestItemNr = wordList_->highestCurrentSentenceItemNrInWordList( currentSentenceNr, highestItemNr );
+
+		// Admin lists
+		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
+			{
+			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL &&
+			// For efficiency, only select lists with current sentence number or higher
+			currentAdminList->highestSentenceNrInList() >= currentSentenceNr )
+				highestItemNr = currentAdminList->highestCurrentSentenceItemNrInList( currentSentenceNr, highestItemNr );
+			}
+
+		return highestItemNr;
 		}
 
 	signed char AdminItem::closeCurrentFile( FileItem *closeFileItem )
@@ -1322,6 +1338,14 @@
 		return false;
 		}
 
+	bool AdminItem::isUserQuestion()
+		{
+		if( adminReadSentence_ != NULL )
+			return adminReadSentence_->isUserQuestion();
+
+		return false;
+		}
+
 	bool AdminItem::wasPreviousCommandUndoOrRedo()
 		{
 		if( adminReadSentence_ != NULL )
@@ -1460,12 +1484,42 @@
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "askQuestions";
 
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->askQuestions();
+		}
+
+	signed char AdminItem::correctSuggestiveAssumptionsByOppositeQuestion( bool isArchivedAssignment, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "drawPossessiveReversibleConclusions";
+
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->correctSuggestiveAssumptionsByOppositeQuestion( isArchivedAssignment, isNegative, isPossessive, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem );
+		}
+
+	signed char AdminItem::drawPossessiveReversibleConclusions( WordItem *generalizationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "drawPossessiveReversibleConclusions";
+
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->drawPossessiveReversibleConclusions( generalizationWordItem );
+		}
+
+	signed char AdminItem::drawProperNamePartOfConclusions( bool hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore, bool isArchivedAssignment, WordItem *generalizationProperNameWordItem, WordItem *specificationWordItem, WordItem *spanishRelationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_LENGTH] = "drawProperNamePartOfConclusions";
+
 		if( adminReasoningNew_ == NULL &&
 		// Create supporting module
 		( adminReasoningNew_ = new AdminReasoningNew( this, commonVariables() ) ) == NULL )
 			return startError( functionNameString, NULL, NULL, "I failed to create the admin reasoning new module" );
 
-		return adminReasoningNew_->askQuestions();
+		return adminReasoningNew_->drawProperNamePartOfConclusions( hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore, isArchivedAssignment, generalizationProperNameWordItem, specificationWordItem, spanishRelationWordItem );
 		}
 
 	WordItem *AdminItem::adjustedQuestionWordItem()
@@ -1589,6 +1643,22 @@
 		return adminReasoningOld_->makeSuggestiveQuestionAssumption( isArchivedAssignment, isNegative, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem, relationWordItem );
 		}
 
+	SpecificationItem *AdminItem::oppositePossessiveDefinitionSpecificationItem()
+		{
+		if( adminReasoningOld_ != NULL )
+			return adminReasoningOld_->oppositePossessiveDefinitionSpecificationItem();
+
+		return NULL;
+		}
+
+	WordItem *AdminItem::possessiveDefinitionSpecificationWordItem()
+		{
+		if( adminReasoningOld_ != NULL )
+			return adminReasoningOld_->possessiveDefinitionSpecificationWordItem();
+
+		return NULL;
+		}
+
 	CompoundResultType AdminItem::drawCompoundSpecificationSubstitutionConclusion( unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_LENGTH] = "drawCompoundSpecificationSubstitutionConclusion";
@@ -1606,6 +1676,14 @@
 		{
 		if( adminSpecification_ != NULL )
 			adminSpecification_->initializeLinkedWord();
+		}
+
+	bool AdminItem::hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore()
+		{
+		if( adminSpecification_ != NULL )
+			return adminSpecification_->hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore();
+
+		return false;
 		}
 
 	signed char AdminItem::addUserSpecifications( bool isAction, bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isNewStart, bool isPartOf, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short selectionLevel, unsigned short selectionListNr, unsigned short imperativeVerbParameter, unsigned int generalizationContextNr, unsigned int specificationContextNr, ReadItem *generalizationWordItem, ReadItem *startSpecificationReadItem, ReadItem *endSpecificationReadItem, ReadItem *startRelationReadItem, ReadItem *endRelationReadItem )

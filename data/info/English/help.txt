@@ -23,10 +23,10 @@ Display " Display the copyright.".
 Display " Display the GPLv2-license.".
 Display " Display the warranty.".
 Display "------------------------------------------------------------------------------".
-#C++#Display " Example files:	* folder: Thinknowlogy2017r1/data/examples/English/user/".
+#C++#Display " Example files:	* folder: Thinknowlogy2017r2/data/examples/English/user/".
 #Java#Display " Example files:	* Use button <more examples> or see".
-#Java#Display "		  folder: Thinknowlogy2017r1/data/examples/English/user/".
-Display " Fundamental:	* folder: Thinknowlogy2017r1/documents/".
-Display " Design:	* folder: Thinknowlogy2017r1/documents/design/".
-Display " Screenshots:	* folder: Thinknowlogy2017r1/screenshots/English/".
+#Java#Display "		  folder: Thinknowlogy2017r2/data/examples/English/user/".
+Display " Fundamental:	* folder: Thinknowlogy2017r2/documents/".
+Display " Design:	* folder: Thinknowlogy2017r2/documents/design/".
+Display " Screenshots:	* folder: Thinknowlogy2017r2/screenshots/English/".
 Display "------------------------------------------------------------------------------".

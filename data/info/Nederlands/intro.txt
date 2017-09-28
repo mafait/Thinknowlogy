@@ -1,9 +1,9 @@
 ﻿Toon "------------------------------------------------------------------------------".
 Toon " Thinknowlogy is 's werelds meest geavanceerde CNL redeneersysteem:".
-#C++#Toon " * Ondanks eeuwen aan diepgaand onderzoek, geeft de evolutietheorie nog".
-#Java#Toon " • Ondanks eeuwen aan diepgaand onderzoek, geeft de evolutietheorie nog".
-Toon " steeds geen bevredigende verklaring voor het ontstaan van intelligentie".
-Toon " en taal. Laat staan hoe beide verwant zijn;".
+#C++#Toon " * Ondanks eeuwen aan diepgaand onderzoek, heeft de evolutietheorie nog".
+#Java#Toon " • Ondanks eeuwen aan diepgaand onderzoek, heeft de evolutietheorie nog".
+Toon " steeds geen bevredigende verklaring gegeven voor het ontstaan van".
+Toon " intelligentie, taal en natuurwetten. Laat staan, hoe ze verwant zijn;".
 #C++#Toon " * Volgens het bijbels wereldbeeld heeft God natuurwetten gecreëerd.".
 #Java#Toon " • Volgens het bijbels wereldbeeld heeft God natuurwetten gecreëerd.".
 Toon " Gebaseerd op de Natuurwetten van Intelligentie ingebed in Grammatica,".

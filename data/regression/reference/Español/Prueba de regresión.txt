@@ -19,10 +19,10 @@
  Mostrar la garantía.
 ------------------------------------------------------------------------------
  Archivos de ejemplo: Utilice botón <más ejemplos>
-	    o ver carpeta: Thinknowlogy2017r1/data/examples/Español/usuario/
- Fundamental:		* carpeta: Thinknowlogy2017r1/documents/
- Proyecto:		* carpeta: Thinknowlogy2017r1/documents/design/
- Imágenes:		* carpeta: Thinknowlogy2017r1/screenshots/Español/
+	    o ver carpeta: Thinknowlogy2017r2/data/examples/Español/usuario/
+ Fundamental:		* carpeta: Thinknowlogy2017r2/documents/
+ Proyecto:		* carpeta: Thinknowlogy2017r2/documents/design/
+ Imágenes:		* carpeta: Thinknowlogy2017r2/screenshots/Español/
 ------------------------------------------------------------------------------
 < 
 < Especificaciones:
@@ -32,7 +32,7 @@
 < English es una idioma. (aprendido de usuario Admin)
 < 
 ------------------------------------------------------------------------------
- Número total de elementos:	7451.
+ Número total de elementos:	7445.
 ------------------------------------------------------------------------------
  Elementos de administrador:		375.
 ------------------------------------------------------------------------------
@@ -49,23 +49,23 @@
  * Elementos sustituidos:			0.
  * Elementos eliminados:			0.
 ------------------------------------------------------------------------------
- Elementos de las palabras:		7076.
+ Elementos de las palabras:		7070.
 ------------------------------------------------------------------------------
- * Elementos activos:				7047.
+ * Elementos activos:				7040.
     <a> asignaciones:					6.
     <c> colecciones:					232.
     <g> generalizaciones:				313.
-    <i> interfaz:					1112.
+    <i> interfaz:					1106.
     <j> justificación:					0.
     <l> gramática:					4029.
     <m> varias palabras:				77.
-    <s> especificaciones:				365.
+    <s> especificaciones:				364.
     <r> escribir palabras (temporal):			0.
     <w> tipos de palabra:				913.
     <x> contexto:					0.
  * Elementos inactivos:				3.
  * Elementos archivados:			21.
- * Elementos sustituidos:			5.
+ * Elementos sustituidos:			6.
  * Elementos eliminados:			0.
 ------------------------------------------------------------------------------
 < 

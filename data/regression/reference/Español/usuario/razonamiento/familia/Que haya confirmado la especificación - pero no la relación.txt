@@ -37,10 +37,10 @@
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
@@ -51,8 +51,8 @@
 < José es posiblemente una persona.
 < José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan y Ana.
-< Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
 < Luisa no es posiblemente un hijo.
 < Ana es probablemente una persona.
@@ -67,6 +67,7 @@
 < 
 * 
 * Usted ha confirmado la especificación - pero ninguno de sus relaciones - de mis conclusiones anteriores:
+< Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene un padre, llamado Juan.
 < 
 * 
@@ -79,10 +80,12 @@
 < 
 * 
 * Usted ha confirmado la especificación - pero ninguno de sus relaciones - de mis conclusiones anteriores:
+< José tiene 2 padres, llamados Juan y Ana.
 < José tiene un padre, llamado Juan.
 < 
 * 
 * Usted ha confirmado la especificación - pero ninguno de sus relaciones - de mis conclusiones anteriores:
+< Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
 < 

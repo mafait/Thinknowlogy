@@ -1,7 +1,7 @@
 /*	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -442,6 +442,21 @@ class CollectionList extends List
 		while( searchCollectionItem != null )
 			{
 			if( searchCollectionItem.hasFemaleCollectionWord() )
+				return searchCollectionItem.collectionWordItem();
+
+			searchCollectionItem = searchCollectionItem.nextCollectionItem();
+			}
+
+		return null;
+		}
+
+	protected WordItem masculineCollectionWordItem()
+		{
+		CollectionItem searchCollectionItem = firstActiveCollectionItem();
+
+		while( searchCollectionItem != null )
+			{
+			if( searchCollectionItem.hasMaleCollectionWord() )
 				return searchCollectionItem.collectionWordItem();
 
 			searchCollectionItem = searchCollectionItem.nextCollectionItem();

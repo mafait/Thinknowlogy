@@ -32,11 +32,11 @@
 * 
 * Mijn veronderstellingen:
 < Paul is waarschijnlijk een persoon.
+< Paul heeft waarschijnlijk een ouder, genaamd Jan.
 < Paul is waarschijnlijk een kind van Jan.
 < Paul is waarschijnlijk deel van een gezin.
 < Paul is waarschijnlijk geen meisje en geen vrouw.
 < Paul is waarschijnlijk geen dochter.
-< Paul heeft waarschijnlijk een ouder, genaamd Jan.
 < Jan is waarschijnlijk een ouder van Paul.
 < Jan is waarschijnlijk deel van een gezin.
 < Jan is mogelijk een persoon.
@@ -71,8 +71,8 @@
 < Is Jan een man of een vrouw?
 * 
 * Gerelateerde informatie:
-< Paul is waarschijnlijk een kind van Jan.
 < Paul heeft waarschijnlijk een ouder, genaamd Jan.
+< Paul is waarschijnlijk een kind van Jan.
 < Paul is de zoon van Jan.
 < 
 * 
@@ -82,11 +82,11 @@
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een ouder van Paul. Omdat:
-<	- Paul heeft waarschijnlijk een ouder, genaamd Jan.
-* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Jan heeft een zoon, genaamd Paul.
+* 	en:
+<	- Paul heeft waarschijnlijk een ouder, genaamd Jan.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is waarschijnlijk een kind van Jan.

@@ -1,7 +1,7 @@
 /*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -275,7 +275,6 @@ class AdminQuery
 
 	protected QueryResultType executeQuery( boolean isSuppressingMessage, boolean isReturningToPosition, boolean isWritingQueryResult, short promptTypeNr, int queryCommandStringStartPosition, String queryCommandString )
 		{
-		QueryResultType queryResult = new QueryResultType();
 		boolean isDisplayingCount = false;
 		boolean isEndOfQuery = false;
 		boolean isFirstInstruction = true;
@@ -300,6 +299,7 @@ class AdminQuery
 		WordItem currentLanguageWordItem;
 		StringBuffer queryStringBuffer;
 		StringBuffer nameStringBuffer = new StringBuffer();
+		QueryResultType queryResult = new QueryResultType();
 
 		if( queryCommandString == null )
 			return adminItem_.startQueryResultError( 1, moduleNameString_, "The given query command string is undefined" );
@@ -323,7 +323,6 @@ class AdminQuery
 		queryStringBuffer = CommonVariables.queryStringBuffer;
 
 		CommonVariables.hasFoundQuery = false;
-		CommonVariables.matchingWordTypeNr = Constants.NO_WORD_TYPE_NR;
 
 		adminItem_.clearQuerySelections();
 
@@ -513,7 +512,6 @@ class AdminQuery
 								return adminItem_.addQueryResultError( 1, moduleNameString_, "I failed to query strings" );
 
 							isFirstInstruction = false;
-							queryWordTypeNr = CommonVariables.matchingWordTypeNr;
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )

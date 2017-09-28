@@ -2,7 +2,7 @@
  *	Parent class:	WordItem
  *	Grand parent:	Item
  *	Purpose:		To process tasks at administration level
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -114,7 +114,7 @@ class AdminItem : private WordItem
 	bool wasUndoOrRedoCommand();
 
 	unsigned int highestContextNrInAllContextWords();
-	unsigned int highestInUseSentenceNr( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr );
+	unsigned int highestFoundSentenceNr( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int maxSentenceNr);
 
 	char adminListChar( unsigned short adminListNr );
 	char *startupLanguageNameString();
@@ -142,6 +142,8 @@ class AdminItem : private WordItem
 
 	void clearConditionChecksForSolving( unsigned short selectionLevel, unsigned int conditionSentenceNr );
 	void deleteTemporaryScoreList();
+
+	bool hasScoreList();
 
 	unsigned int nPossibilities();
 
@@ -200,7 +202,7 @@ class AdminItem : private WordItem
 	ReadItem *firstInactiveReadItem();
 	ReadItem *nextReadListItem();
 
-	BoolResultType createReadWords( char *grammarString );
+	BoolResultType createReadWords( char *readUserSentenceString );
 
 	ReadWordResultType readWordFromString( bool isCheckingForGrammarDefinition, bool isMergedWord, bool isSkippingTextString, size_t startWordPosition, size_t minimumStringLength, char *wordString );
 
@@ -218,7 +220,6 @@ class AdminItem : private WordItem
 	void decrementSentenceNrs( unsigned int startSentenceNr );
 	void deleteSentences( unsigned int lowestSentenceNr );
 	void removeFirstRangeOfDeletedItems();
-	void setCurrentItemNr();
 
 	bool isCurrentFileTestFile();
 	bool isCurrentlyTesting();
@@ -226,6 +227,7 @@ class AdminItem : private WordItem
 
 	unsigned int currentFileSentenceNr();
 	unsigned int firstSentenceNrOfCurrentUser();
+	unsigned int highestCurrentSentenceItemNr();
 
 	signed char closeCurrentFile( FileItem *closeFileItem );
 	signed char compareOutputFileAgainstReferenceFile( char *testFileNameString );
@@ -248,6 +250,7 @@ class AdminItem : private WordItem
 
 	bool hasAnyChangeBeenMadeByThisSentence();
 	bool hasFemaleUserSpecificationWord();
+	bool isUserQuestion();
 	bool wasPreviousCommandUndoOrRedo();
 
 	signed char activateInactiveReadWords( unsigned short wordOrderNr );
@@ -267,6 +270,9 @@ class AdminItem : private WordItem
 	// Protected new reasoning functions
 
 	signed char askQuestions();
+	signed char correctSuggestiveAssumptionsByOppositeQuestion( bool isArchivedAssignment, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem );
+	signed char drawPossessiveReversibleConclusions( WordItem *generalizationWordItem );
+	signed char drawProperNamePartOfConclusions( bool hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore, bool isArchivedAssignment, WordItem *generalizationProperNameWordItem, WordItem *specificationWordItem, WordItem *spanishRelationWordItem );
 
 	WordItem *adjustedQuestionWordItem();
 
@@ -285,12 +291,17 @@ class AdminItem : private WordItem
 	signed char makeOnlyOptionLeftAssumption( bool isArchivedAssignment, bool isPossessive, SpecificationItem *createdSpecificationItem, WordItem *generalizationWordItem );
 	signed char makeSuggestiveQuestionAssumption( bool isArchivedAssignment, bool isNegative, bool isPossessive, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem );
 
+	SpecificationItem *oppositePossessiveDefinitionSpecificationItem();
+	WordItem *possessiveDefinitionSpecificationWordItem();
+
 	CompoundResultType drawCompoundSpecificationSubstitutionConclusion( unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem );
 
 
 	// Protected specification functions
 
 	void initializeLinkedWord();
+
+	bool hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore();
 
 	signed char addUserSpecifications( bool isAction, bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isNewStart, bool isPartOf, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short selectionLevel, unsigned short selectionListNr, unsigned short imperativeVerbParameter, unsigned int generalizationContextNr, unsigned int specificationContextNr, ReadItem *generalizationReadItem, ReadItem *startSpecificationReadItem, ReadItem *endSpecificationReadItem, ReadItem *startRelationReadItem, ReadItem *endRelationReadItem );
 	signed char assignSelectionSpecification( SelectionItem *assignmentSelectionItem );

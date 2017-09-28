@@ -106,6 +106,9 @@
 < Johan is waarschijnlijk een kind van Jan en Anna.
 < Johan is waarschijnlijk deel van een gezin.
 < Johan is mogelijk een persoon.
+< Anna is waarschijnlijk een ouder van Paul, Johan en Laura.
+< Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+< Anna heeft mogelijk een dochter, genaamd Laura.
 < Laura heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 < Laura is waarschijnlijk een kind van Jan en Anna.
 < Laura is waarschijnlijk deel van een gezin.
@@ -113,9 +116,6 @@
 < Laura is mogelijk een dochter van Jan en Anna.
 < Laura is misschien geen jongen en geen man.
 < Laura is misschien geen zoon.
-< Anna is waarschijnlijk een ouder van Paul, Johan en Laura.
-< Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
-< Anna heeft mogelijk een dochter, genaamd Laura.
 * 
 * Mijn vragen:
 < Is Johan een meisje, een vrouw, een jongen of een man?
@@ -144,12 +144,12 @@
 * Mijn veronderstellingen die bevestigd zijn:
 < Laura is mogelijk een dochter van Jan en Anna.
 * 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Jan heeft een dochter, genaamd Laura.
+< Anna heeft een dochter, genaamd Laura.
+* 
 * Mijn veronderstellingen die aangepast zijn:
 < Laura is waarschijnlijk een persoon.
 < Laura is waarschijnlijk geen jongen en geen man.
 < Laura is waarschijnlijk geen zoon.
-* 
-* Mijn veronderstellingen die geconcludeerd zijn:
-< Jan heeft een dochter, genaamd Laura.
-< Anna heeft een dochter, genaamd Laura.
 < 

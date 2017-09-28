@@ -8,6 +8,7 @@ Pascal est un fils.
 Affichez le rapport de justification sur Pascal.
 # Extra checks
 Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
+Julien est une fille.
 Affichez le rapport de justification sur Olivier.
 Affichez le rapport de justification sur Amélie.
 Affichez le rapport de justification sur Pascal.

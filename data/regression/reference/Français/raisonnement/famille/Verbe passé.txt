@@ -106,11 +106,11 @@
 * 
 * Mes hypothèses:
 < Antoine est probablement un enfant de Philippe. En raison:
-<	- Philippe a probablement un enfant, appelé Antoine.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 <	- Antoine avait un père, appelé Philippe.
+* 	et:
+<	- Philippe a probablement un enfant, appelé Antoine.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Philippe était probablement un parent de Antoine.

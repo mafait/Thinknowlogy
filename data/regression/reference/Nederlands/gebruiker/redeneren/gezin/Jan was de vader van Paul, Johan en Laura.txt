@@ -86,9 +86,9 @@
 < Anna heeft mogelijk een dochter, genaamd Laura.
 < Paul heeft waarschijnlijk een ouder, genaamd Anna.
 < Paul is waarschijnlijk een kind van Jan en Anna.
-< Johan is waarschijnlijk een kind van Jan en Anna.
 < Johan heeft waarschijnlijk een ouder, genaamd Anna.
+< Johan is waarschijnlijk een kind van Jan en Anna.
+< Laura heeft waarschijnlijk een ouder, genaamd Anna.
 < Laura is waarschijnlijk een kind van Jan en Anna.
 < Laura is mogelijk een dochter van Jan en Anna.
-< Laura heeft waarschijnlijk een ouder, genaamd Anna.
 < 

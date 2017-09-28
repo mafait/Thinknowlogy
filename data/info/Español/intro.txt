@@ -1,9 +1,10 @@
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Thinknowlogy es el sistema de razonamiento de Lenguaje Controlado más avanzado:".
-#C++#Mostrar " * A pesar de siglos de investigación a fondo, la teoría de la evolución".
-#Java#Mostrar " • A pesar de siglos de investigación a fondo, la teoría de la evolución".
-Mostrar " todavía no tiene ninguna explicación satisfactoria para el origen de la".
-Mostrar " inteligencia y el lenguaje. Y mucho menos, cómo ambos están relacionados;".
+#C++#Mostrar " * A pesar de siglos de exhaustiva investigación, la teoría de la evolución".
+#Java#Mostrar " • A pesar de siglos de exhaustiva investigación, la teoría de la evolución".
+Mostrar " todavía no ha proporcionado una explicación satisfactoria para el origen de".
+Mostrar " la inteligencia, el lenguaje y las leyes de la naturaleza. Y mucho menos, cómo".
+Mostrar " están relacionados;".
 #C++#Mostrar " * Según la cosmovisión bíblica, Dios ha creado las leyes de la naturaleza.".
 #Java#Mostrar " • Según la cosmovisión bíblica, Dios ha creado las leyes de la naturaleza.".
 Mostrar " Basándose en las leyes de la inteligencia, solamente Thinknowlogy implementa".

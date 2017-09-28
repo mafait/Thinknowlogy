@@ -35,10 +35,10 @@
 < 
 * 
 * Mis conclusiones:
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
@@ -48,6 +48,9 @@
 * 
 * Esta información es más específica que la información anterior:
 < Ana es una madre.
+* 
+* Mis suposiciones anteriores que tienen palabras de relación ahora:
+< Ana tiene probablemente un hijo.
 * 
 * Mis conclusiones:
 < Pablo tiene una madre, llamada Ana.
@@ -61,8 +64,8 @@
 < José es posiblemente una persona.
 < José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Ana.
-< Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
 < Luisa no es posiblemente un hijo.
 * 
@@ -77,11 +80,13 @@
 * Usted ha confirmado la especificación - pero ninguno de sus relaciones - de mis supuestos anteriores:
 < Luisa es posiblemente hija de Ana.
 * 
+* Mis suposiciones que se concluyen:
+< Luisa es parte de una familia.
+* 
 * Mis suposiciones que se ajustan:
 < Luisa es probablemente una persona.
 * 
 * Mis suposiciones que se concluyen:
-< Luisa es parte de una familia.
 < Luisa no es un niño y un hombre.
 < Luisa no es un hijo.
 < 
@@ -125,6 +130,9 @@
 < 
 * 
 * Mis conclusiones:
+< Ana es parte de una familia. Porque:
+<	- Ana es una madre.
+<	- Padres son parte de cada familia.
 < Ana es una mujer. Porque:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
@@ -139,9 +147,6 @@
 < Ana es femenina. Porque:
 <	- Ana es una mujer.
 <	- Cada mujer es femenina.
-< Ana es parte de una familia. Porque:
-<	- Ana es una madre.
-<	- Padres son parte de cada familia.
 < Ana no es un padre. Porque:
 <	- Cada padre es un padre o una madre.
 <	- Ana es una madre.
@@ -160,9 +165,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Una madre es probablemente una persona.
-< Ana tiene probablemente un hijo. Porque:
-<	- Ana es una madre.
-<	- Cada familia tiene padres y hijos.
 < 
 * 
 * Mis conclusiones:

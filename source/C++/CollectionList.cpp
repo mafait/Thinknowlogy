@@ -1,7 +1,7 @@
 /*	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -22,7 +22,6 @@
  *************************************************************************/
 
 #include "CollectionItem.cpp"
-#include "InputOutput.cpp"
 #include "List.h"
 
 class CollectionList : private List
@@ -478,6 +477,21 @@ class CollectionList : private List
 		while( searchCollectionItem != NULL )
 			{
 			if( searchCollectionItem->hasFemaleCollectionWord() )
+				return searchCollectionItem->collectionWordItem();
+
+			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+			}
+
+		return NULL;
+		}
+
+	WordItem *masculineCollectionWordItem()
+		{
+		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
+
+		while( searchCollectionItem != NULL )
+			{
+			if( searchCollectionItem->hasMaleCollectionWord() )
 				return searchCollectionItem->collectionWordItem();
 
 			searchCollectionItem = searchCollectionItem->nextCollectionItem();

@@ -1,6 +1,6 @@
 ﻿/*	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,7 +24,7 @@ class Constants
 	{
 	// Version constants
 	protected static final String PRODUCT_NAME =												"Thinknowlogy";
-	protected static final String VERSION_NAME =												"2017r1 (Bursts of Laughter)";
+	protected static final String VERSION_NAME =												"2017r2 (Science as it should be)";
 
 	// Character constants
 	protected static final char SPACE_CHAR =													' ';
@@ -35,14 +35,12 @@ class Constants
 	protected static final char TAB_CHAR =														'\t';
 
 	// Console constants
-	protected static final short CONSOLE_SLEEP_TIME =											5;		// in milliseconds
+	protected static final short CONSOLE_SLEEP_TIME =											10;		// in milliseconds
 
-	protected static final short CONSOLE_BORDER_SIZE =											4;		// in pixels
-	protected static final short CONSOLE_BUTTON_PANE_HEIGHT =									35;		// in pixels
+	protected static final short CONSOLE_BORDER_SIZE =											2;		// in pixels
+	protected static final short CONSOLE_BUTTON_PANE_HEIGHT =									30;		// in pixels
 	protected static final short CONSOLE_ERROR_PANE_HEIGHT =									400;	// in pixels
 	protected static final short CONSOLE_ERROR_PANE_WIDTH =										600;	// in pixels
-	protected static final short CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_HEIGHT =				100;	// in pixels
-	protected static final short CONSOLE_CONNECT_FOUR_INTERFERENCE_PANE_WIDTH =					600;	// in pixels
 	protected static final short CONSOLE_MAXIMUM_FRAME_WIDTH_AT_STARTUP =						1280;	// in pixels
 	protected static final short CONSOLE_TOP_BOTTOM_SPACE =										75;		// in pixels (space between top of screen and top of GUI and between bottom of GUI and bottom of screen)
 	protected static final short CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS =						50;
@@ -71,8 +69,6 @@ class Constants
 	protected static final String CONSOLE_FONT_MONOSPACED =										"monospaced";
 	protected static final String CONSOLE_FONT_TIMES_NEW_ROMAN =								"Times New Roman";
 	protected static final String CONSOLE_FONT_VERDANA =										"Verdana";
-
-	protected static final String CONSOLE_CONNECT_FOUR_INTERFERENCE_MESSAGE_STRING =			"Notification";
 
 	// File constants
 	protected static final String FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING =					"data/examples/";
@@ -187,6 +183,10 @@ class Constants
 	protected static final String CHANGE_LANGUAGE_STRING =										"~";
 
 	// Symbol constants
+	private static final char 	SYMBOL_HASH =													'#';
+	private static final char	SYMBOL_SWUNG_DASH =												'~';
+	private static final char 	SYMBOL_QUOTE =													'\'';
+	private static final char 	SYMBOL_BACK_QUOTE =												'`';
 	protected static final char SYMBOL_COMMA =													',';
 	protected static final char SYMBOL_COLON =													'.';
 	protected static final char SYMBOL_SEMI_COLON =												';';
@@ -199,16 +199,12 @@ class Constants
 	protected static final char SYMBOL_EQUALITY =												'=';
 	protected static final char SYMBOL_PIPE =													'|';
 	protected static final char SYMBOL_AMPERSAND =												'&';
-	private static final char 	SYMBOL_HASH =													'#';
-	private static final char	SYMBOL_SWUNG_DASH =												'~';
 	protected static final char SYMBOL_AT_SIGN =												'@';
 	protected static final char SYMBOL_ASTERISK =												'*';
 	protected static final char SYMBOL_PERCENT =												'%';
 	protected static final char SYMBOL_DOLLAR =													'$';
 	protected static final char SYMBOL_SLASH =													'/';
 	protected static final char SYMBOL_BACK_SLASH =												'\\';
-	private static final char 	SYMBOL_QUOTE =													'\'';
-	private static final char 	SYMBOL_BACK_QUOTE =												'`';
 	protected static final char SYMBOL_DOUBLE_QUOTE =											'"';
 	protected static final char SYMBOL_OPEN_ROUNDED_BRACKET =									'(';
 	protected static final char SYMBOL_CLOSE_ROUNDED_BRACKET =									')';
@@ -878,7 +874,7 @@ class Constants
 	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS =															1414;
 	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED =										1415;
 	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED =										1416;
-	protected static final short INTERFACE_LISTING_MY_HIDDEN_ASSUMPTIONS_THAT_ARE_CONCLUDED =								1417;
+	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1417;
 	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1418;
 	protected static final short INTERFACE_LISTING_MY_QUESTIONS =															1419;
 	protected static final short INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS =													1420;
@@ -890,8 +886,8 @@ class Constants
 	protected static final short INTERFACE_LISTING_RELATED_QUESTIONS =														1426;
 
 	// Listing (old information)
-	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION_BUT_NO_RELATION =				1430;
-	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION_BUT_NO_RELATION =				1431;
+	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION_BUT_NOT_ITS_RELATION =			1430;
+	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION_BUT_NOT_ITS_RELATION =			1431;
 	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_ASSUMPTION =		1432;
 	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_CONCLUSION =		1433;
 	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONFIRMED =										1434;

@@ -1,7 +1,7 @@
 /*	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -21,8 +21,6 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#ifndef WORDLIST
-#define WORDLIST 1
 #include "List.h"
 #include "WordItem.h"
 
@@ -50,7 +48,9 @@ class WordList : private List
 
 		while( searchWordItem != NULL )
 			{
-			if( searchWordItem->deleteSentencesInWord( lowestSentenceNr ) != RESULT_OK )
+			// For efficiency, only select words with lowest sentence number or higher
+			if( searchWordItem->highestSentenceNrInWord() >= lowestSentenceNr &&
+			searchWordItem->deleteSentencesInWord( lowestSentenceNr ) != RESULT_OK )
 				// This function can be called during an error situation. So, the result isn't returned
 				addError( functionNameString, "I failed to delete sentences in a word" );
 
@@ -64,7 +64,9 @@ class WordList : private List
 
 		while( searchWordItem != NULL )
 			{
-			if( searchWordItem->decrementSentenceNrsInWord( startSentenceNr ) != RESULT_OK )
+			// For efficiency, only select words with start sentence number or higher
+			if( searchWordItem->highestSentenceNrInWord() >= startSentenceNr &&
+			searchWordItem->decrementSentenceNrsInWord( startSentenceNr ) != RESULT_OK )
 				// This function can be called during an error situation. So, the result isn't returned
 				addError( functionNameString, "I failed to decrement the sentence numbers from the current sentence number in a word" );
 
@@ -78,20 +80,12 @@ class WordList : private List
 
 		while( searchWordItem != NULL )
 			{
-			if( searchWordItem->decrementItemNrRangeInWord( decrementSentenceNr, decrementItemNr, decrementOffset ) != RESULT_OK )
+			// For efficiency, only select words with decrement sentence number or higher
+			if( searchWordItem->highestSentenceNrInWord() >= decrementSentenceNr &&
+			searchWordItem->decrementItemNrRangeInWord( decrementSentenceNr, decrementItemNr, decrementOffset ) != RESULT_OK )
 				// This function can be called during an error situation. So, the result isn't returned
 				addError( functionNameString, "I failed to decrement item numbers in a word" );
 
-			searchWordItem = searchWordItem->nextWordItem();
-			}
-		}
-
-	void getHighestInUseSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr, WordItem *searchWordItem )
-		{
-		while( searchWordItem != NULL &&
-		commonVariables()->highestInUseSentenceNr < highestSentenceNr )
-			{
-			searchWordItem->getHighestInUseSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr );
 			searchWordItem = searchWordItem->nextWordItem();
 			}
 		}
@@ -111,13 +105,33 @@ class WordList : private List
 			}
 		}
 
-	void setCurrentItemNrInWordList( WordItem *searchWordItem )
+	unsigned int highestCurrentSentenceItemNrInWordList( unsigned int currentSentenceNr, unsigned int currentSentenceItemNr, WordItem *searchWordItem )
 		{
 		while( searchWordItem != NULL )
 			{
-			searchWordItem->setCurrentItemNrInWord();
+			// For efficiency, only select words with current sentence number or higher
+			if( searchWordItem->highestSentenceNrInWord() >= currentSentenceNr )
+				currentSentenceItemNr = searchWordItem->highestCurrentSentenceItemNrInWord( currentSentenceNr, currentSentenceItemNr );
+
 			searchWordItem = searchWordItem->nextWordItem();
 			}
+
+		return currentSentenceItemNr;
+		}
+
+	unsigned int highestFoundSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestFoundSentenceNr, unsigned int maxSentenceNr, WordItem *searchWordItem )
+		{
+		while( searchWordItem != NULL &&
+		highestFoundSentenceNr < maxSentenceNr )
+			{
+			// For efficiency, only select words with higher sentence number
+			if( searchWordItem->highestSentenceNrInWord() > highestFoundSentenceNr )
+				highestFoundSentenceNr = searchWordItem->highestFoundSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr );
+
+			searchWordItem = searchWordItem->nextWordItem();
+			}
+
+		return highestFoundSentenceNr;
 		}
 
 
@@ -367,19 +381,6 @@ class WordList : private List
 			deleteSentencesInWordList( lowestSentenceNr, searchWordItem );
 		}
 
-	void getHighestInUseSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestSentenceNr )
-		{
-		WordItem *searchWordItem;
-
-		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
-			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchWordItem );
-
-		if( isIncludingDeletedItems &&
-		( searchWordItem = firstDeletedWordItem() ) != NULL &&
-		commonVariables()->highestInUseSentenceNr < highestSentenceNr )
-			getHighestInUseSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestSentenceNr, searchWordItem );
-		}
-
 	void removeFirstRangeOfDeletedItemsInWordList()
 		{
 		WordItem *searchWordItem;
@@ -391,15 +392,33 @@ class WordList : private List
 			removeFirstRangeOfDeletedItemsInWordList( searchWordItem );
 		}
 
-	void setCurrentItemNrInWordList()
+	unsigned int highestCurrentSentenceItemNrInWordList( unsigned int currentSentenceNr, unsigned int currentSentenceItemNr )
 		{
 		WordItem *searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
-			setCurrentItemNrInWordList( searchWordItem );
+			currentSentenceItemNr = highestCurrentSentenceItemNrInWordList( currentSentenceNr, currentSentenceItemNr, searchWordItem );
 
 		if( ( searchWordItem = firstDeletedWordItem() ) != NULL )
-			setCurrentItemNrInWordList( searchWordItem );
+			return highestCurrentSentenceItemNrInWordList( currentSentenceNr, currentSentenceItemNr, searchWordItem );
+
+		return currentSentenceItemNr;
+		}
+
+	unsigned int highestFoundSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int maxSentenceNr )
+		{
+		unsigned int highestFoundSentenceNr = NO_SENTENCE_NR;
+		WordItem *searchWordItem;
+
+		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
+			highestFoundSentenceNr = highestFoundSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr, searchWordItem );
+
+		if( isIncludingDeletedItems &&
+		highestFoundSentenceNr < maxSentenceNr &&
+		( searchWordItem = firstDeletedWordItem() ) != NULL )
+			return highestFoundSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr, searchWordItem );
+
+		return highestFoundSentenceNr;
 		}
 
 
@@ -593,7 +612,6 @@ class WordList : private List
 		return wordResult;
 		}
 	};
-#endif
 
 /*************************************************************************
  *	"They share freely and give generously to those in need.

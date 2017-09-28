@@ -189,14 +189,14 @@
 <	- Paul is a child of John and Anna.
 <	- A child is probably a person.
 < Paul has probably 2 parents, called John and Anna. Because:
-<	- Anna is probably a parent of Paul.
 <	- John is a parent of Paul, Joe and Laura.
-* 	and:
-<	- Every family has parents and children.
-<	- Paul is a child of John and Anna.
+<	- Anna is probably a parent of Paul.
 * 	and:
 <	- Every family has parents and children.
 <	- John has probably 3 children, called Paul, Joe and Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Paul is a child of John and Anna.
 < Paul has possibly a mother, called Anna. Because:
 <	- Anna is possibly a mother of Paul.
 * 	and:

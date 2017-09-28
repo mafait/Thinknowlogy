@@ -85,9 +85,6 @@
 <	- Ieder kind is een zoon of een dochter.
 <	- Laura is een dochter.
 < Laura is waarschijnlijk een kind van Jan en Anna. Omdat:
-<	- Ieder kind is een zoon of een dochter.
-<	- Laura is een dochter.
-* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Laura heeft 2 ouders, genaamd Jan en Anna.
 * 	en:

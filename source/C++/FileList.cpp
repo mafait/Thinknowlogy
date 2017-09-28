@@ -1,7 +1,7 @@
 /*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -195,17 +195,17 @@ class FileList : private List
 		if( currentFileItem != closeFileItem )
 			return startError( functionNameString, "The given file item isn't the current file" );
 
-			if( currentFileItem->readFile() != NULL )
-				{
-				fclose( currentFileItem->readFile() );
-				currentFileItem->clearReadFile();
-				}
+		if( currentFileItem->readFile() != NULL )
+			{
+			fclose( currentFileItem->readFile() );
+			currentFileItem->clearReadFile();
+			}
 
-			if( currentFileItem->writeFile() != NULL )
-				{
-				fclose( currentFileItem->writeFile() );
-				currentFileItem->clearWriteFile();
-				}
+		if( currentFileItem->writeFile() != NULL )
+			{
+			fclose( currentFileItem->writeFile() );
+			currentFileItem->clearWriteFile();
+			}
 
 		if( deleteItem( currentFileItem ) != RESULT_OK )
 			return addError( functionNameString, "I failed to delete a file item" );
@@ -227,12 +227,12 @@ class FileList : private List
 
 	FileResultType openFile( bool isAddingSubPath, bool isInfoFile, bool isTestFile, bool isReportingErrorIfFileDoesNotExist, const char *defaultSubPathString, const char *fileNameString, const char *testOutputFileSubPathString, const char *testReferenceFileSubPathString )
 		{
-		FileResultType fileResult;
 		FILE *readFile;
 		FILE *writeFile = NULL;
 		char readFileNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char referenceFileNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char writeFileNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		FileResultType fileResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "openFile";
 
 		if( defaultSubPathString == NULL )

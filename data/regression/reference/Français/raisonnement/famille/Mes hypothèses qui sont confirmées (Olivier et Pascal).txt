@@ -154,9 +154,6 @@
 < 
 * 
 * Mes conclusions:
-< Amélie est partie d'une famille. En raison:
-<	- Amélie est un parent de Pascal.
-<	- Parents sont partie de chaque famille.
 < Amélie n'est pas un homme. En raison:
 <	- Amélie est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
@@ -171,6 +168,9 @@
 <	- Amélie est une mère.
 < Amélie est un parent de Pascal. En raison:
 <	- Pascal a 2 parents, appelés Olivier et Amélie.
+< Amélie est partie d'une famille. En raison:
+<	- Amélie est un parent de Pascal.
+<	- Parents sont partie de chaque famille.
 < Amélie est une femme. En raison:
 <	- Amélie est une mère.
 <	- Chaque mère est une femme.
@@ -228,12 +228,6 @@
 * Mes hypothèses:
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
 <	- Chaque famille a parents et enfants.
-<	- Pascal a 2 parents, appelés Olivier et Amélie.
-* 	et:
-<	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
-<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
-* 	et:
-<	- Chaque famille a parents et enfants.
 <	- Olivier est un parent de Pascal, Julien et Lorraine.
 <	- Amélie est un parent de Pascal.
 * 	et:
@@ -241,6 +235,12 @@
 <	- Chaque parent est un père ou une mère.
 <	- Pascal a un père, appelé Olivier.
 <	- Pascal a une mère, appelée Amélie.
+* 	et:
+<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+<	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
 < Pascal est probablement partie d'une famille. En raison:
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Enfants sont partie de chaque famille.

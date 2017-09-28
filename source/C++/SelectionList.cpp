@@ -1,7 +1,7 @@
 /*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -211,9 +211,9 @@ class SelectionList : private List
 
 	DuplicateResultType checkDuplicateSelectionPart( unsigned int duplicateConditionSentenceNr )
 		{
-		DuplicateResultType duplicateResult;
 		SelectionItem *currentSelectionItem = NULL;
 		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
+		DuplicateResultType duplicateResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "checkDuplicateSelectionPart";
 
 		if( duplicateConditionSentenceNr <= NO_SENTENCE_NR )

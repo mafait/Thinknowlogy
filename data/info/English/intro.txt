@@ -2,16 +2,16 @@
 Display " Thinknowlogy is the world's most advanced CNL reasoner:".
 #C++#Display " * Despite centuries of exhaustive research, the theory of evolution still".
 #Java#Display " • Despite centuries of exhaustive research, the theory of evolution still".
-Display " hasn't provided a satisfying explanation for the origin of intelligence and".
-Display " language. Let alone, how both are related;".
+Display " hasn't provided a satisfactory explanation for the origin of intelligence,".
+Display " language and laws of nature. Let alone, how they are related;".
 #C++#Display " * According to the biblical world view, God has created laws of nature to".
 #Java#Display " • According to the biblical world view, God has created laws of nature to".
 Display " make his creation run like clockwork. Being based on the Natural Laws of".
 Display " Intelligence embedded in Grammar, only Thinknowlogy implements the".
-#C++#Display " intelligent function of words like definite article \"the\", conjunction \"or\",".
-#C++#Display " possessive verb \"have\", and past tense verbs \"were\" and \"had\".".
-#Java#Display " intelligent function of words like definite article “the”, conjunction “or”,".
-#Java#Display " possessive verb “have”, and past tense verbs “were” and “had”.".
+#C++#Display " intelligent function of words like definite article \"the\", conjunction".
+#C++#Display " \"or\", possessive verb \"have\", and past tense verbs \"were\" and \"had\".".
+#Java#Display " intelligent function of words like definite article “the”, conjunction".
+#Java#Display " “or”, possessive verb “have”, and past tense verbs “were” and “had”.".
 Display "------------------------------------------------------------------------------".
 Display " The intelligent function of these words is demonstrated by:".
 #C++#Display " * Programming in Controlled Natural Language;".

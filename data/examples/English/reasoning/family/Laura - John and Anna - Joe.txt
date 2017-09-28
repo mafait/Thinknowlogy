@@ -13,4 +13,6 @@ Joe has 2 parents, called John and Anna.
 Display the justification report about John.
 Display the justification report about Anna.
 Display the justification report about Joe.
+Joe is a father.
+Display the justification report about Joe.
 # To continue, click button «Clear your mind.» or «Restart.».

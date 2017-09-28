@@ -1,7 +1,7 @@
 /*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -35,8 +35,8 @@ class WordTypeList extends List
 
 	private byte checkOnFeminineAndMasculineWordEnding( boolean isSingularNoun, String wordString )
 		{
-		WordEndingResultType wordEndingResult = new WordEndingResultType();
 		WordItem currentLanguageWordItem;
+		WordEndingResultType wordEndingResult = new WordEndingResultType();
 
 		if( wordString == null )
 			return startError( 1, "The given word string is undefined" );
@@ -117,7 +117,8 @@ class WordTypeList extends List
 		searchWordTypeItem.wordTypeLanguageNr() < currentLanguageNr )
 			searchWordTypeItem = searchWordTypeItem.nextWordTypeItem();
 
-		return ( searchWordTypeItem != null && searchWordTypeItem.wordTypeLanguageNr() == currentLanguageNr ? searchWordTypeItem : null );
+		return ( searchWordTypeItem != null &&
+				searchWordTypeItem.wordTypeLanguageNr() == currentLanguageNr ? searchWordTypeItem : null );
 		}
 
 	private WordTypeItem firstDeletedCurrentLanguageWordTypeItem()
@@ -129,7 +130,8 @@ class WordTypeList extends List
 		searchWordTypeItem.wordTypeLanguageNr() < currentLanguageNr )
 			searchWordTypeItem = searchWordTypeItem.nextWordTypeItem();
 
-		return ( searchWordTypeItem != null && searchWordTypeItem.wordTypeLanguageNr() == currentLanguageNr ? searchWordTypeItem : null );
+		return ( searchWordTypeItem != null &&
+				searchWordTypeItem.wordTypeLanguageNr() == currentLanguageNr ? searchWordTypeItem : null );
 		}
 
 
@@ -566,47 +568,28 @@ class WordTypeList extends List
 
 	protected BoolResultType findMatchingWordReferenceString( String searchString )
 		{
-		boolean hasFoundMatchingString = false;
 		WordTypeItem searchWordTypeItem = firstActiveWordTypeItem();
 		String itemString;
 		BoolResultType boolResult = new BoolResultType();
 
-		while( !hasFoundMatchingString &&
+		while( !boolResult.booleanValue &&
 		searchWordTypeItem != null )
 			{
-			if( ( itemString = searchWordTypeItem.itemString() ) != null )
-				{
-				if( ( boolResult = compareStrings( searchString, itemString ) ).result != Constants.RESULT_OK )
-					return addBoolResultError( 1, "I failed to compare an active word type string with the query string" );
-
-				// Matching string
-				if( boolResult.booleanValue )
-					{
-					hasFoundMatchingString = true;
-					CommonVariables.matchingWordTypeNr = searchWordTypeItem.wordTypeNr();
-					}
-				}
+			if( ( itemString = searchWordTypeItem.itemString() ) != null &&
+			( boolResult = compareStrings( searchString, itemString ) ).result != Constants.RESULT_OK )
+				return addBoolResultError( 1, "I failed to compare an active word type string with the query string" );
 
 			searchWordTypeItem = searchWordTypeItem.nextWordTypeItem();
 			}
 
 		searchWordTypeItem = firstDeletedWordTypeItem();
 
-		while( !hasFoundMatchingString &&
+		while( !boolResult.booleanValue &&
 		searchWordTypeItem != null )
 			{
-			if( ( itemString = searchWordTypeItem.itemString() ) != null )
-				{
-				if( ( boolResult = compareStrings( searchString, itemString ) ).result != Constants.RESULT_OK )
-					return addBoolResultError( 1, "I failed to compare a deleted word type string with the query string" );
-
-				// Matching string
-				if( boolResult.booleanValue )
-					{
-					hasFoundMatchingString = true;
-					CommonVariables.matchingWordTypeNr = searchWordTypeItem.wordTypeNr();
-					}
-				}
+			if( ( itemString = searchWordTypeItem.itemString() ) != null &&
+			( boolResult = compareStrings( searchString, itemString ) ).result != Constants.RESULT_OK )
+				return addBoolResultError( 1, "I failed to compare a deleted word type string with the query string" );
 
 			searchWordTypeItem = searchWordTypeItem.nextWordTypeItem();
 			}
@@ -616,8 +599,8 @@ class WordTypeList extends List
 
 	protected WordTypeResultType addWordType( boolean isLanguageWord, boolean isMultipleWord, boolean isProperNamePrecededByDefiniteArticle, short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, short wordTypeNr, int wordLength, String wordTypeString )
 		{
+		WordResultType wordResult;
 		WordTypeResultType wordTypeResult = new WordTypeResultType();
-		WordResultType wordResult = new WordResultType();
 		boolean isSingularNoun;
 
 		hasFeminineWordEnding_ = false;
@@ -660,11 +643,11 @@ class WordTypeList extends List
 
 	protected WordResultType findWordType( boolean isCheckingAllLanguages, short wordTypeNr, String wordTypeString )
 		{
-		WordResultType wordResult = new WordResultType();
 		int currentWordTypeStringLength;
 		int wordTypeStringLength;
 		String currentWordTypeString;
 		WordTypeItem currentWordTypeItem;
+		WordResultType wordResult = new WordResultType();
 
 		if( wordTypeString == null )
 			return startWordResultError( 1, "The given word type string is undefined" );

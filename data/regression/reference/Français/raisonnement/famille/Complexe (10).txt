@@ -58,6 +58,9 @@
 * Mes hypothèses qui sont confirmées:
 < Amélie est probablement une mère.
 * 
+* Mes hypothèses antérieures qui ont des mots de relation maintenant:
+< Amélie a probablement un enfant.
+* 
 * Mes hypothèses qui sont conclus:
 < Amélie est une femme.
 < Amélie n'est pas un homme.
@@ -198,6 +201,9 @@
 <	- Amélie est la mère de Pascal, Julien et Lorraine.
 < Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine. En raison:
 <	- Chaque famille a parents et enfants.
+<	- Pascal a probablement un parent, appelée Amélie.
+* 	et:
+<	- Chaque famille a parents et enfants.
 <	- Amélie est probablement un parent de Pascal, Julien et Lorraine.
 * 	et:
 <	- Pascal est probablement un enfant de Amélie.
@@ -210,9 +216,6 @@
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
 <	- Nom propre «Lorraine» est probablement féminin.
-< Amélie a probablement un enfant. En raison:
-<	- Chaque famille a parents et enfants.
-<	- Amélie est un parent.
 < 
 * 
 * Mes conclusions:

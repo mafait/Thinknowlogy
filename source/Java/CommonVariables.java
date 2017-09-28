@@ -1,6 +1,6 @@
 /*	Class:		CommonVariables
  *	Purpose:	To hold the common variables
- *	Version:	Thinknowlogy 2017r1 (Huguenot)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -38,13 +38,9 @@ class CommonVariables
 	protected static short currentLanguageNr;
 	protected static short currentUserNr;
 	protected static short currentWriteLevel;
-	protected static short matchingWordTypeNr;
 
 	protected static int currentSentenceNr;
-	protected static int highestInUseSentenceNr;
-	protected static int removeSentenceNr;
-	protected static int currentItemNr;
-	protected static int removeStartItemNr;
+	protected static int currentSentenceItemNr;
 
 	protected static int nActiveQueryItems;
 	protected static int nInactiveQueryItems;
@@ -57,12 +53,12 @@ class CommonVariables
 	protected static int nUserSpecificationWords;
 	protected static int nUserRelationWords;
 
+	protected static int removeSentenceNr;
+	protected static int removeStartItemNr;
+
 	protected static long cleaningTime;
-	protected static long parsingTime;
 	protected static long solvingTime;
 	protected static long writingTime;
-
-	protected static ScoreList adminScoreList;
 
 	protected static SelectionList adminConditionList;
 	protected static SelectionList adminActionList;
@@ -76,6 +72,7 @@ class CommonVariables
 	protected static WordItem firstPredefinedWordItem;
 	protected static WordItem firstSpecificationWordItem;
 	protected static WordItem firstTouchedProperNameWordItem;
+	protected static WordItem firstUserProperNameWordItem;
 	protected static WordItem firstWordItem;
 	protected static WordItem lastCollectionWordItem;
 	protected static WordItem lastContextWordItem;
@@ -108,18 +105,13 @@ class CommonVariables
 
 		result = Constants.RESULT_OK;
 
-		matchingWordTypeNr = Constants.NO_WORD_TYPE_NR;
 		currentAssignmentLevel = Constants.NO_ASSIGNMENT_LEVEL;
 		currentLanguageNr = Constants.NO_LANGUAGE_NR;
 		currentUserNr = Constants.NO_USER_NR;
 		currentWriteLevel = Constants.NO_WRITE_LEVEL;
 
-		// First sentence
-		currentSentenceNr = 1;
-		highestInUseSentenceNr = Constants.NO_SENTENCE_NR;
-		removeSentenceNr = Constants.NO_SENTENCE_NR;
-		currentItemNr = Constants.NO_ITEM_NR;
-		removeStartItemNr = Constants.NO_ITEM_NR;
+		currentSentenceNr = 1;	// First sentence
+		currentSentenceItemNr = Constants.NO_ITEM_NR;
 
 		nActiveQueryItems = 0;
 		nInactiveQueryItems = 0;
@@ -132,12 +124,12 @@ class CommonVariables
 		nUserSpecificationWords = 0;
 		nUserRelationWords = 0;
 
+		removeSentenceNr = Constants.NO_SENTENCE_NR;
+		removeStartItemNr = Constants.NO_ITEM_NR;
+
 		cleaningTime = 0;
-		parsingTime = 0;
 		solvingTime = 0;
 		writingTime = 0;
-
-		adminScoreList = null;
 
 		adminConditionList = null;
 		adminActionList = null;
@@ -151,6 +143,7 @@ class CommonVariables
 		firstPredefinedWordItem = null;
 		firstSpecificationWordItem = null;
 		firstTouchedProperNameWordItem = null;
+		firstUserProperNameWordItem = null;
 		firstWordItem = null;
 		lastCollectionWordItem = null;
 		lastContextWordItem = null;

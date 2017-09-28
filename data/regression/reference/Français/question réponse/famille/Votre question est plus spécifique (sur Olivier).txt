@@ -32,11 +32,11 @@
 * 
 * Mes hypothèses:
 < Pascal est probablement une personne.
+< Pascal a probablement un parent, appelé Olivier.
 < Pascal est probablement un enfant de Olivier.
 < Pascal est probablement partie d'une famille.
 < Pascal n'est probablement pas une jeune-fille et pas une femme.
 < Pascal n'est probablement pas une fille.
-< Pascal a probablement un parent, appelé Olivier.
 < Olivier est probablement un parent de Pascal.
 < Olivier est probablement partie d'une famille.
 < Olivier est possible une personne.
@@ -71,8 +71,8 @@
 < Est Olivier un homme ou une femme?
 * 
 * Informations connexes:
-< Pascal est probablement un enfant de Olivier.
 < Pascal a probablement un parent, appelé Olivier.
+< Pascal est probablement un enfant de Olivier.
 < Pascal est le fils de Olivier.
 < 
 * 
@@ -82,11 +82,11 @@
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent de Pascal. En raison:
-<	- Pascal a probablement un parent, appelé Olivier.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
 <	- Olivier a un fils, appelé Pascal.
+* 	et:
+<	- Pascal a probablement un parent, appelé Olivier.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant de Olivier.

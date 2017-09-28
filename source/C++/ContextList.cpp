@@ -1,7 +1,7 @@
 /*	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -57,6 +57,7 @@ class ContextList : private List
 		if( contextNr > NO_CONTEXT_NR &&
 		( currentGeneralizationItem = myWordItem()->firstGeneralizationItem() ) != NULL )
 			{
+			// Do for all generalization words
 			do	{
 				currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem();
 
@@ -372,7 +373,7 @@ class ContextList : private List
 
 				( !isCompoundCollectionSpanishAmbiguous &&
 				!searchContextItem->isCompoundCollectionSpanishAmbiguous() &&
-				anyWordItem->nContextWordsInContextWords( searchContextItem->contextNr(), specificationWordItem ) == nContextWords ) ) )
+				anyWordItem->nContextWords( searchContextItem->contextNr(), specificationWordItem ) == nContextWords ) ) )
 					return searchContextItem;
 
 				searchContextItem = searchContextItem->nextContextItem();

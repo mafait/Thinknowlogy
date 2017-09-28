@@ -39,6 +39,9 @@
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
+* 	y:
+<	- Juan es un hijo.
+<	- Hijos son parte de cada familia.
 < Juan es un hombre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.

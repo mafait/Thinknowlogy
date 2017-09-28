@@ -1,7 +1,7 @@
 /*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		To read and analyze sentences
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -62,8 +62,6 @@ class AdminReadSentence
 
 	private WordItem previousGeneralizationWordItem_;
 
-	private StringBuffer originalReadStringBuffer;
-
 
 	// Private initialized variables
 
@@ -77,9 +75,9 @@ class AdminReadSentence
 	private void checkForChangesMadeByThisSentence()
 		{
 		int currentSentenceNr = CommonVariables.currentSentenceNr;
-		int highestInUseSentenceNr = adminItem_.highestInUseSentenceNr( false, false, currentSentenceNr );
+		int highestFoundSentenceNr = adminItem_.highestFoundSentenceNr( false, false, currentSentenceNr );
 
-		hasAnyChangeBeenMadeByThisSentence_ = ( highestInUseSentenceNr >= currentSentenceNr );
+		hasAnyChangeBeenMadeByThisSentence_ = ( highestFoundSentenceNr >= currentSentenceNr );
 		}
 
 	private static void clearReplacingInfoInSpecificationWords()
@@ -173,7 +171,6 @@ class AdminReadSentence
 
 	private byte addMultipleWord( short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, ReadItem firstReadItem, ReadItem secondReadItem )
 		{
-		WordResultType wordResult;
 		boolean isFrenchPreposition;
 		boolean hasFoundFrenchPreposition = false;
 		boolean hasCurrentWordWithSameWordType = true;
@@ -195,6 +192,7 @@ class AdminReadSentence
 		WordTypeItem foundWordTypeItem;
 		StringBuffer existingMultipleWordStringBuffer;
 		StringBuffer multipleWordStringBuffer;
+		WordResultType wordResult;
 
 		if( firstReadItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given first read item is undefined" );
@@ -347,7 +345,8 @@ class AdminReadSentence
 
 	private byte addReadSpecification( boolean isAction, boolean isNewStart, short selectionLevel )
 		{
-		boolean isConditional = ( isConditional_ || selectionListNr_ != Constants.NO_LIST_NR );
+		boolean isConditional = ( isConditional_ ||
+								selectionListNr_ != Constants.NO_LIST_NR );
 		short imperativeVerbParameter = Constants.NO_IMPERATIVE_PARAMETER;
 		ReadItem currentGeneralizationReadItem = startGeneralizationWordReadItem_;
 		SpecificationItem userSpecificationItem;
@@ -730,7 +729,7 @@ class AdminReadSentence
 		return Constants.RESULT_OK;
 		}
 
-	private byte parseSentence( String readUserSentenceString )
+	private byte parseSentence( StringBuffer readUserSentenceStringBuffer )
 		{
 		boolean isAction = false;
 		boolean isNewStart = true;
@@ -774,7 +773,7 @@ class AdminReadSentence
 					case Constants.GRAMMAR_QUESTION_VERB:
 					case Constants.GRAMMAR_SPECIFICATION_GENERALIZATION_VERB:
 					case Constants.GRAMMAR_SPECIFICATION_GENERALIZATION_QUESTION_VERB:
-						if( scanSpecification( readUserSentenceString ) != Constants.RESULT_OK )
+						if( scanSpecification( readUserSentenceStringBuffer ) != Constants.RESULT_OK )
 							return adminItem_.addErrorWithAdminListNr( selectionListNr_, 1, moduleNameString_, "I failed to scan the generalization-specification" );
 
 						if( addReadSpecification( isAction, isNewStart, selectionLevel ) != Constants.RESULT_OK )
@@ -785,7 +784,7 @@ class AdminReadSentence
 						break;
 
 					case Constants.GRAMMAR_IMPERATIVE:
-						if( readImperative( isAction, isNewStart, selectionLevel, readUserSentenceString ) != Constants.RESULT_OK )
+						if( readImperative( isAction, isNewStart, selectionLevel, readUserSentenceStringBuffer ) != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to read an imperative" );
 
 						isNewStart = false;
@@ -856,11 +855,11 @@ class AdminReadSentence
 						break;
 
 					default:
-						if( readUserSentenceString != null &&
+						if( readUserSentenceStringBuffer != null &&
 
 						( adminItem_.isCurrentlyTesting() ||
 						adminItem_.isSystemStartingUp() ) )
-							return adminItem_.startError( 1, moduleNameString_, "I found an unknown word in sentence \"" + readUserSentenceString + "\" at position " + wordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + wordParameter );
+							return adminItem_.startError( 1, moduleNameString_, "I found an unknown word in sentence \"" + readUserSentenceStringBuffer + "\" at position " + wordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + wordParameter );
 
 						return adminItem_.startError( 1, moduleNameString_, "I found an unknown word at position " + wordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + wordParameter );
 					}
@@ -878,20 +877,19 @@ class AdminReadSentence
 		return Constants.RESULT_OK;
 		}
 
-	private byte processSentence( String readUserSentenceString )
+	private byte processSentence( StringBuffer readUserSentenceStringBuffer )
 		{
 		boolean isInterpretationSuccessful;
 		short currentLanguageNr;
 		short lastCreatedWordOrderNr;
 		short nLanguages;
 		short originalLanguageNr = CommonVariables.currentLanguageNr;
-		long startNanoTime = System.nanoTime();
 		GrammarItem firstGrammarItem;
 		WordItem currentLanguageWordItem;
-		BoolResultType boolResult = new BoolResultType();
+		BoolResultType boolResult;
 
-		if( readUserSentenceString == null )
-			return adminItem_.startError( 1, moduleNameString_, "The given read user sentence string is undefined" );
+		if( readUserSentenceStringBuffer == null )
+			return adminItem_.startError( 1, moduleNameString_, "The given read user sentence string buffer is undefined" );
 
 		if( ( nLanguages = adminItem_.nLanguages() ) <= Constants.NO_LANGUAGE_NR )
 			return adminItem_.startError( 1, moduleNameString_, "I couldn't find any language" );
@@ -901,20 +899,13 @@ class AdminReadSentence
 		if( nLanguages < currentLanguageNr )
 			return adminItem_.startError( 1, moduleNameString_, "The current language number exceeds the number of languages" );
 
-		originalReadStringBuffer = new StringBuffer( readUserSentenceString );
-
 		do	{
 			adminItem_.deleteTemporaryReadList();
 
 			// Need to switch language
-			if( currentLanguageNr != CommonVariables.currentLanguageNr )
-				{
-				if( assignLanguage( currentLanguageNr ) != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to assign the language" );
-
-				// Avoid using the expanded read string with other languages
-				readUserSentenceString = originalReadStringBuffer.toString();
-				}
+			if( currentLanguageNr != CommonVariables.currentLanguageNr &&
+			assignLanguage( currentLanguageNr ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to assign the language" );
 
 			if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) == null )
 				return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
@@ -923,19 +914,18 @@ class AdminReadSentence
 			currentLanguageWordItem.checkGrammar() != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to check the grammar" );
 
-			if( readUserSentenceString != null &&
-			currentLanguageWordItem.isLanguageWithMergedWords() )
+			if( currentLanguageWordItem.isLanguageWithMergedWords() )
 				{
 				// Typically for French: Compound words
-				if( currentLanguageWordItem.expandMergedWordsInReadSentence( new StringBuffer( readUserSentenceString ) ) != Constants.RESULT_OK )
+				if( currentLanguageWordItem.expandMergedWordsInReadSentence( readUserSentenceStringBuffer ) != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to expand the compound wordds in the read user sentence string" );
 
 				if( CommonVariables.readUserSentenceStringBuffer != null )
-					readUserSentenceString = CommonVariables.readUserSentenceStringBuffer.toString();
+					readUserSentenceStringBuffer = CommonVariables.readUserSentenceStringBuffer;
 				}
 
 			// Create read words from a given sentence
-			if( ( boolResult = adminItem_.createReadWords( readUserSentenceString ) ).result != Constants.RESULT_OK )
+			if( ( boolResult = adminItem_.createReadWords( readUserSentenceStringBuffer.toString() ) ).result != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to create the read words" );
 
 			isInterpretationSuccessful = false;
@@ -962,14 +952,12 @@ class AdminReadSentence
 				boolResult.booleanValue );
 				}
 
-			CommonVariables.parsingTime += ( System.nanoTime() - startNanoTime );
-
 			if( isInterpretationSuccessful )
 				{
 				if( deleteUnusedWordsAndWordTypes() != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to delete the unused words and word types of the read words" );
 
-				if( parseSentence( readUserSentenceString ) != Constants.RESULT_OK )
+				if( parseSentence( readUserSentenceStringBuffer ) != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to parse the sentence" );
 				}
 			else
@@ -1036,7 +1024,7 @@ class AdminReadSentence
 		return Constants.RESULT_OK;
 		}
 
-	private byte readImperative( boolean isAction, boolean isNewStart, short selectionLevel, String readUserSentenceString )
+	private byte readImperative( boolean isAction, boolean isNewStart, short selectionLevel, StringBuffer readUserSentenceStringBuffer )
 		{
 		short imperativeVerbParameter = Constants.NO_IMPERATIVE_PARAMETER;
 		short executionNounWordParameter = Constants.NO_WORD_PARAMETER;
@@ -1047,7 +1035,7 @@ class AdminReadSentence
 		startGeneralizationWordReadItem_ = null;
 		endGeneralizationWordReadItem_ = null;
 
-		if( scanSpecification( readUserSentenceString ) != Constants.RESULT_OK )
+		if( scanSpecification( readUserSentenceStringBuffer ) != Constants.RESULT_OK )
 			return adminItem_.addErrorWithAdminListNr( selectionListNr_, 1, moduleNameString_, "I failed to scan the generalization-specification" );
 
 		if( endGeneralizationWordReadItem_ == null ||
@@ -1137,9 +1125,8 @@ class AdminReadSentence
 		return Constants.RESULT_OK;
 		}
 
-	private byte scanSpecification( String readUserSentenceString )
+	private byte scanSpecification( StringBuffer readUserSentenceStringBuffer )
 		{
-		ContextResultType contextResult;
 		boolean isFrenchPreposition;
 		boolean isSameWordTypeAsPreviousWord;
 		boolean hasGeneralizationArticle = false;
@@ -1156,6 +1143,7 @@ class AdminReadSentence
 		WordItem currentReadWordItem;
 		WordTypeItem currentReadWordTypeItem;
 		WordTypeItem generalizationWordTypeItem;
+		ContextResultType contextResult;
 
 		hasFemaleUserSpecificationWord_ = false;
 		isAssignment_ = false;
@@ -1225,11 +1213,11 @@ class AdminReadSentence
 				case Constants.GRAMMAR_SENTENCE:
 					if( !currentReadItem_.isSeparator() )
 						{
-						if( readUserSentenceString != null &&
+						if( readUserSentenceStringBuffer != null &&
 
 						( adminItem_.isCurrentlyTesting() ||
 						adminItem_.isSystemStartingUp() ) )
-							return adminItem_.startError( 1, moduleNameString_, "I found an unknown word in sentence \"" + readUserSentenceString + "\" at position " + currentWordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + currentWordParameter );
+							return adminItem_.startError( 1, moduleNameString_, "I found an unknown word in sentence \"" + readUserSentenceStringBuffer + "\" at position " + currentWordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + currentWordParameter );
 
 						return adminItem_.startError( 1, moduleNameString_, "I found an unknown word at position " + currentWordOrderNr + " with grammar parameter " + currentReadItem_.grammarParameter + " and word parameter " + currentWordParameter );
 						}
@@ -1560,8 +1548,6 @@ class AdminReadSentence
 
 		previousGeneralizationWordItem_ = null;
 
-		originalReadStringBuffer = new StringBuffer();
-
 		// Private initialized variables
 
 		moduleNameString_ = this.getClass().getName();
@@ -1588,12 +1574,17 @@ class AdminReadSentence
 		return hasFemaleUserSpecificationWord_;
 		}
 
+	protected boolean isUserQuestion()
+		{
+		return ( questionParameter_ > Constants.NO_QUESTION_PARAMETER );
+		}
+
 	protected boolean wasPreviousCommandUndoOrRedo()
 		{
 		return wasPreviousCommandUndoOrRedo_;
 		}
 
-	protected byte processReadSentence( String readUserSentenceString )
+	protected byte processReadSentence( StringBuffer readUserSentenceStringBuffer )
 		{
 		int startSentenceNr = CommonVariables.currentSentenceNr;
 
@@ -1608,14 +1599,14 @@ class AdminReadSentence
 
 		CommonVariables.writtenUserSentenceStringBuffer = new StringBuffer();
 
-		if( readUserSentenceString == null )
-			return adminItem_.startError( 1, moduleNameString_, "The given read user sentence string is undefined" );
+		if( readUserSentenceStringBuffer == null )
+			return adminItem_.startError( 1, moduleNameString_, "The given read user sentence string buffer is undefined" );
 
 		if( initializeVariablesInAllWords() != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to initialize variables in all words" );
 
-		if( processSentence( readUserSentenceString ) != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to process sentence: \"" + readUserSentenceString + "\"" );
+		if( processSentence( readUserSentenceStringBuffer ) != Constants.RESULT_OK )
+			return adminItem_.addError( 1, moduleNameString_, "I failed to process sentence: \"" + readUserSentenceStringBuffer + "\"" );
 
 		if( !CommonVariables.hasDisplayedWarning &&
 		!adminItem_.hasRequestedRestart() &&
@@ -1629,8 +1620,8 @@ class AdminReadSentence
 			selectionListNr_ == Constants.NO_LIST_NR &&
 			// User specification is already known (notification: I know)
 			adminItem_.userSpecificationItem() != null &&
-			adminItem_.checkIntegrityOfStoredUserSentence( readUserSentenceString ) != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to check the integrity of the stored user sentence \"" + readUserSentenceString + "\"" );
+			adminItem_.checkIntegrityOfStoredUserSentence( readUserSentenceStringBuffer.toString() ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to check the integrity of the stored user sentence \"" + readUserSentenceStringBuffer + "\"" );
 
 			// Has passed integrity check
 			if( !CommonVariables.hasDisplayedWarning )

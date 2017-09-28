@@ -1,7 +1,7 @@
 /*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -135,8 +135,9 @@ class AdminImperative
 
 	signed char executeImperativeDisplay( unsigned short executionNounWordParameter, unsigned short executionWordTypeNr, WordItem *imperativeVerbWordItem, WordItem *executionWordItem, char *executionString )
 		{
-		FileResultType fileResult;
 		char *singularNounString;
+		char *writtenSentenceString;
+		FileResultType fileResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "executeImperativeDisplay";
 
 		if( imperativeVerbWordItem == NULL )
@@ -187,12 +188,13 @@ class AdminImperative
 				executionWordItem != NULL )
 					{
 					if( adminItem_->isImperativeSentence() &&
-					strlen( commonVariables_->writtenSentenceString ) > 0 )
+					( writtenSentenceString = commonVariables_->writtenSentenceString ) != NULL &&
+					strlen( writtenSentenceString ) > 0 )
 						{
 						if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_NO ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I have no' interface notification" );
 
-						if( inputOutput_->writeDiacriticalText( false, false, INPUT_OUTPUT_PROMPT_NOTIFICATION, commonVariables_->writtenSentenceString ) != RESULT_OK )
+						if( inputOutput_->writeDiacriticalText( false, false, INPUT_OUTPUT_PROMPT_NOTIFICATION, writtenSentenceString ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a sentence" );
 						}
 					else
@@ -421,7 +423,7 @@ class AdminImperative
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level ", commonVariables_->currentAssignmentLevel );
 
 			// There already is a scores list at the start
-			if( commonVariables_->adminScoreList != NULL &&
+			if( adminItem_->hasScoreList() &&
 			commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
 			adminItem_->deleteScores() != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the admin score list" );
@@ -577,13 +579,13 @@ class AdminImperative
 
 	signed char writeInfoTextWithPossibleQueryCommands( char *textString )
 		{
-		QueryResultType queryResult;
 		bool hasFoundNewLine = false;
 		size_t textStringLength;
 		size_t position = 0;
 		char textChar = SYMBOL_QUESTION_MARK;
 		char charString[2] = SPACE_STRING;
 		char writeString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		QueryResultType queryResult;
 		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInfoTextWithPossibleQueryCommands";
 
 		if( textString == NULL )
@@ -780,8 +782,7 @@ class AdminImperative
 				oldGlobalBlockingScore_ > NO_SCORE ||
 				newGlobalBlockingScore_ > NO_SCORE ) &&
 
-				// Scores list is created
-				commonVariables_->adminScoreList != NULL )
+				adminItem_->hasScoreList() )
 					{
 					if( ( boolCheckResult = adminItem_->checkScores( isInverted, solveStrategyParameter, oldGlobalSatisfiedScore_, newGlobalSatisfiedScore_, oldGlobalDissatisfiedScore_, newGlobalDissatisfiedScore_, oldGlobalNotBlockingScore_, newGlobalNotBlockingScore_, oldGlobalBlockingScore_, newGlobalBlockingScore_ ) ).result != RESULT_OK )
 						return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to check the scores" );
@@ -1125,8 +1126,7 @@ class AdminImperative
 					else
 						{
 						if( !isAllowingDuplicates &&
-						// Scores list is created
-						commonVariables_->adminScoreList != NULL )
+						adminItem_->hasScoreList() )
 							{
 							if( ( boolCheckResult = adminItem_->findScore( isPreparingSort, conditionSelectionItem ) ).result != RESULT_OK )
 								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to find a score item" );

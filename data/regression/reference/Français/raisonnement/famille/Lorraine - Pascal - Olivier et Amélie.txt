@@ -113,8 +113,8 @@
 < Olivier n'est probablement pas une mère.
 < Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.
 < Olivier a possible une fille, appelée Lorraine.
-< Pascal est probablement un enfant de Olivier et Amélie.
 < Pascal a probablement 2 parents, appelés Olivier et Amélie.
+< Pascal est probablement un enfant de Olivier et Amélie.
 < Julien a probablement 2 parents, appelés Olivier et Amélie.
 < Julien est probablement un enfant de Olivier et Amélie.
 < Julien est probablement partie d'une famille.
@@ -159,13 +159,13 @@
 <	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
 <	- Lorraine a probablement 2 parents, appelés Olivier et Amélie.
 * 	et:
-<	- Chaque parent est un père ou une mère.
-<	- Olivier est le père de Lorraine, Pascal et Julien.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Lorraine est un enfant de Olivier et Amélie.
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Julien est probablement un enfant de Olivier et Amélie.
+* 	et:
+<	- Chaque parent est un père ou une mère.
+<	- Olivier est le père de Lorraine, Pascal et Julien.
 < Olivier est probablement partie d'une famille. En raison:
 <	- Olivier est probablement un parent de Lorraine, Pascal et Julien.
 <	- Parents sont partie de chaque famille.
@@ -181,6 +181,11 @@
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Lorraine, Pascal et Julien.
 < Olivier a possible une fille, appelée Lorraine. En raison:
+<	- Olivier est le père de Lorraine, Pascal et Julien.
+<	- Chaque famille a parents et enfants.
+<	- Chaque enfant est un fils ou une fille.
+<	- Nom propre «Lorraine» est probablement féminin.
+* 	et:
 <	- Lorraine a un père, appelé Olivier.
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
@@ -243,6 +248,11 @@
 <	- Chaque famille a parents et enfants.
 <	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 < Amélie a possible une fille, appelée Lorraine. En raison:
+<	- Amélie est la mère de Lorraine, Pascal et Julien.
+<	- Chaque famille a parents et enfants.
+<	- Chaque enfant est un fils ou une fille.
+<	- Nom propre «Lorraine» est probablement féminin.
+* 	et:
 <	- Lorraine a une mère, appelée Amélie.
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
@@ -254,6 +264,12 @@
 <	- Olivier est le père de Lorraine, Pascal et Julien.
 * 
 * Mes hypothèses:
+< Pascal a probablement 2 parents, appelés Olivier et Amélie. En raison:
+<	- Olivier est probablement un parent de Lorraine, Pascal et Julien.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
+* 	et:
+<	- Chaque parent est un père ou une mère.
+<	- Pascal a une mère, appelée Amélie.
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
 <	- Chaque famille a parents et enfants.
 <	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
@@ -272,12 +288,6 @@
 < Pascal est possible une personne. En raison:
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
-< Pascal a probablement 2 parents, appelés Olivier et Amélie. En raison:
-<	- Chaque parent est un père ou une mère.
-<	- Pascal a une mère, appelée Amélie.
-* 	et:
-<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
-<	- Olivier est probablement un parent de Lorraine, Pascal et Julien.
 * 
 * Mes questions:
 < Est Pascal une jeune-fille, une femme, un garçon ou un homme? En raison:
@@ -307,11 +317,11 @@
 * 
 * Mes hypothèses:
 < Lorraine a probablement 2 parents, appelés Olivier et Amélie. En raison:
-<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
-<	- Olivier est probablement un parent de Lorraine, Pascal et Julien.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Lorraine est un enfant de Olivier et Amélie.
+* 	et:
+<	- Olivier est probablement un parent de Lorraine, Pascal et Julien.
+<	- Amélie est probablement un parent de Lorraine, Pascal et Julien.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier a probablement 3 enfants, appelés Lorraine, Pascal et Julien.

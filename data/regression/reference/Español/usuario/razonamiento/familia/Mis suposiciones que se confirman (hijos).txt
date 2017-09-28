@@ -37,10 +37,10 @@
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana es parte de una familia.
 < Ana no es un padre.
 * 
 * Mis suposiciones:
@@ -51,8 +51,8 @@
 < José es posiblemente una persona.
 < José es posiblemente parte de una familia.
 < Luisa es posiblemente hija de Juan y Ana.
-< Luisa es puede-ser una persona.
 < Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
 < Luisa no es posiblemente un hijo.
 < Ana es probablemente una persona.
@@ -71,10 +71,16 @@
 * 
 * Mis suposiciones que no son ocultos más:
 < Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
-< Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
+* 
+* Mis suposiciones que se ajustan:
+< Luisa es probablemente parte de una familia.
+< José es probablemente parte de una familia.
 * 
 * Mis suposiciones que se concluyen:
 < Pablo es parte de una familia.
+* 
+* Mis suposiciones que no son ocultos más:
+< Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
 * 
 * Mis preguntas ajustadas:
 < ¿Es Pablo un niño o un hombre?
@@ -85,8 +91,6 @@
 * Mis conclusiones:
 < Pablo no es una hija.
 < Pablo no es una niña y una mujer.
-< Juan tiene un hijo, llamado Pablo.
-< Ana tiene un hijo, llamado Pablo.
 < 
 * 
 * Mis preguntas que son contestadas:
@@ -104,20 +108,22 @@
 * Mis conclusiones:
 < José no es una hija.
 < José no es una niña y una mujer.
-< Juan tiene 2 hijos, llamados Pablo y José.
-< Ana tiene 2 hijos, llamados Pablo y José.
 < 
 * 
 * Mis suposiciones que se confirman:
 < Luisa es posiblemente hija de Juan y Ana.
 * 
+* Mis suposiciones que se concluyen:
+< Juan tiene una hija, llamada Luisa.
+< Ana tiene una hija, llamada Luisa.
+< Luisa es parte de una familia.
+* 
 * Mis suposiciones que se ajustan:
 < Luisa es probablemente una persona.
 * 
 * Mis suposiciones que se concluyen:
-< Luisa es parte de una familia.
 < Luisa no es un niño y un hombre.
 < Luisa no es un hijo.
-< Juan tiene una hija, llamada Luisa.
-< Ana tiene una hija, llamada Luisa.
+< Juan tiene 3 hijos, llamados Pablo, José y Luisa.
+< Ana tiene 3 hijos, llamados Pablo, José y Luisa.
 < 

@@ -1,6 +1,6 @@
 /*	Class:			CommonVariables
  *	Purpose:		To hold the common variables
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -95,7 +95,9 @@ class CommonVariables
 	unsigned short currentLanguageNr;
 	unsigned short currentUserNr;
 	unsigned short currentWriteLevel;
-	unsigned short matchingWordTypeNr;
+
+	unsigned int currentSentenceNr;
+	unsigned int currentSentenceItemNr;
 
 	unsigned int nDeletedItems;
 	unsigned int nActiveQueryItems;
@@ -103,16 +105,13 @@ class CommonVariables
 	unsigned int nArchivedQueryItems;
 	unsigned int nReplacedQueryItems;
 	unsigned int nDeletedQueryItems;
+
 	unsigned int nUserGeneralizationWords;
 	unsigned int nUserSpecificationWords;
 	unsigned int nUserRelationWords;
-	unsigned int currentSentenceNr;
-	unsigned int highestInUseSentenceNr;
-	unsigned int removeSentenceNr;
-	unsigned int currentItemNr;
-	unsigned int removeStartItemNr;
 
-	ScoreList *adminScoreList;
+	unsigned int removeSentenceNr;
+	unsigned int removeStartItemNr;
 
 	SelectionList *adminConditionList;
 	SelectionList *adminActionList;
@@ -126,6 +125,7 @@ class CommonVariables
 	WordItem *firstPredefinedWordItem;
 	WordItem *firstSpecificationWordItem;
 	WordItem *firstTouchedProperNameWordItem;
+	WordItem *firstUserProperNameWordItem;
 	WordItem *firstWordItem;
 	WordItem *lastCollectionWordItem;
 	WordItem *lastContextWordItem;
@@ -162,7 +162,9 @@ class CommonVariables
 		currentLanguageNr = NO_LANGUAGE_NR;
 		currentUserNr = NO_USER_NR;
 		currentWriteLevel = NO_WRITE_LEVEL;
-		matchingWordTypeNr = NO_WORD_TYPE_NR;
+
+		currentSentenceNr = 1;	// First sentence
+		currentSentenceItemNr = NO_ITEM_NR;
 
 		nDeletedItems = 0;
 		nActiveQueryItems = 0;
@@ -170,17 +172,13 @@ class CommonVariables
 		nArchivedQueryItems = 0;
 		nReplacedQueryItems = 0;
 		nDeletedQueryItems = 0;
+
 		nUserGeneralizationWords = 0;
 		nUserSpecificationWords = 0;
 		nUserRelationWords = 0;
-		// First sentence
-		currentSentenceNr = 1;
-		highestInUseSentenceNr = NO_SENTENCE_NR;
-		removeSentenceNr = NO_SENTENCE_NR;
-		currentItemNr = NO_ITEM_NR;
-		removeStartItemNr = NO_ITEM_NR;
 
-		adminScoreList = NULL;
+		removeSentenceNr = NO_SENTENCE_NR;
+		removeStartItemNr = NO_ITEM_NR;
 
 		adminConditionList = NULL;
 		adminActionList = NULL;
@@ -194,6 +192,7 @@ class CommonVariables
 		firstPredefinedWordItem = NULL;
 		firstSpecificationWordItem = NULL;
 		firstTouchedProperNameWordItem = NULL;
+		firstUserProperNameWordItem = NULL;
 		firstWordItem = NULL;
 		lastCollectionWordItem = NULL;
 		lastContextWordItem = NULL;

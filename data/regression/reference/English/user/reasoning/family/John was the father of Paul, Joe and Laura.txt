@@ -86,9 +86,9 @@
 < Anna has possibly a daughter, called Laura.
 < Paul has probably a parent, called Anna.
 < Paul is probably a child of John and Anna.
-< Joe is probably a child of John and Anna.
 < Joe has probably a parent, called Anna.
+< Joe is probably a child of John and Anna.
+< Laura has probably a parent, called Anna.
 < Laura is probably a child of John and Anna.
 < Laura is possibly a daughter of John and Anna.
-< Laura has probably a parent, called Anna.
 < 

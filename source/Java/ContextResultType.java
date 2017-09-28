@@ -1,7 +1,7 @@
 /*	Class:		ContextResultType
  *	Purpose:	To return context variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,6 +28,7 @@ class ContextResultType
 	protected byte result;
 
 	protected boolean isAmbiguousRelationContext;
+	protected boolean isNewContext;
 
 	protected int contextNr;
 	protected int copiedRelationContextNr;
@@ -41,6 +42,7 @@ class ContextResultType
 		result = Constants.RESULT_OK;
 
 		isAmbiguousRelationContext = false;
+		isNewContext = false;
 
 		contextNr = Constants.NO_CONTEXT_NR;
 		copiedRelationContextNr = Constants.NO_CONTEXT_NR;

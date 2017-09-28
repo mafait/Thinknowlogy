@@ -10,10 +10,10 @@ Leer el archivo de prueba "Español/usuario/programación/Saludo".
 Leer el archivo de prueba "Español/usuario/programación/Torres de Hanói (número par de discos)".
 Leer el archivo de prueba "Español/usuario/programación/Torres de Hanói (número impar de discos)".
 
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Especificación generalización - Pregunta (a través de las definiciones)".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Especificación generalización - Pregunta (letra)".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Especificación-generalización - Pregunta (número)".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Esta pregunta es más específica (sin relación)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Especificación generalización - Pregunta (a través de las definiciones)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Especificación generalización - Pregunta (letra)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Especificación-generalización - Pregunta (número)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Esta pregunta es más específica (sin relación)".
 
 Leer el archivo de prueba "Español/usuario/razonamiento/Artículo indefinido no coincide con el sustantivo".
 Leer el archivo de prueba "Español/usuario/razonamiento/Mis conclusiones que se confirman (con relación, sin definición de la familia)".
@@ -42,31 +42,31 @@ Leer el archivo de prueba "Español/usuario/conflicto/familia/Pablo tiene un pad
 Leer el archivo de prueba "Español/usuario/conflicto/familia/Pablo es un niño - Pablo es un hombre (normal)".
 Leer el archivo de prueba "Español/usuario/conflicto/familia/Pablo es una hija".
 Leer el archivo de prueba "Español/usuario/conflicto/familia/Pablo es un hombre (normal) - Pablo es un niño".
-Leer el archivo de prueba "Español/usuario/conflicto/familia/Pregunta en conflicto consigo misma (sin conocimiento previo)".
-Leer el archivo de prueba "Español/usuario/conflicto/familia/Pregunta en conflicto consigo misma (con conocimiento)".
+#Java#Leer el archivo de prueba "Español/usuario/conflicto/familia/Pregunta en conflicto consigo misma (sin conocimiento previo)".
+#Java#Leer el archivo de prueba "Español/usuario/conflicto/familia/Pregunta en conflicto consigo misma (con conocimiento)".
 Leer el archivo de prueba "Español/usuario/conflicto/familia/Sentencia en conflicto consigo misma".
 
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Suposición a través pregunta sugestiva".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Pregunta exclusivo".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/No estoy seguro".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tuve la misma pregunta antes".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Sólo sé".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Suposición a través pregunta sugestiva".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Pregunta exclusivo".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/No estoy seguro".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tuve la misma pregunta antes".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Sólo sé".
 Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Pregunta indirecta respondió, con la confirmación".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Respuestas negativas y alternativas".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Respuestas positivas".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Relación pregunta es subconjunto de relación de respuesta".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Preguntas mismas y similares".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Esta pregunta es más específica (con relación)".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tenías una pregunta relacionada antes".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tenías igual-similar pregunta antes (con relación)".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tenías igual-similar pregunta antes (sin relación)".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tenías mismo-similar-relacionado pregunta antes (con relación)".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Juan)".
-Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Pablo y José)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Respuestas negativas y alternativas".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Respuestas positivas".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Relación pregunta es subconjunto de relación de respuesta".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Preguntas mismas y similares".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Esta pregunta es más específica (con relación)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tenías una pregunta relacionada antes".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tenías igual-similar pregunta antes (con relación)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tenías igual-similar pregunta antes (sin relación)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Tenías mismo-similar-relacionado pregunta antes (con relación)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Juan)".
+#Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Pablo y José)".
 
 Leer el archivo de prueba "Español/usuario/razonamiento/familia/Ana era madre de Pablo, José y Luisa".
-Leer el archivo de prueba "Español/usuario/razonamiento/familia/Corrección supuesto invalidado (por el conocimiento)".
-Leer el archivo de prueba "Español/usuario/razonamiento/familia/Corrección supuesto invalidado (por la pregunta sugestiva contrario)".
+#Java#Leer el archivo de prueba "Español/usuario/razonamiento/familia/Corrección supuesto invalidado (por el conocimiento)".
+#Java#Leer el archivo de prueba "Español/usuario/razonamiento/familia/Corrección supuesto invalidado (por la pregunta sugestiva contrario)".
 Leer el archivo de prueba "Español/usuario/razonamiento/familia/Juan - Ana - Pablo, José y Luisa".
 Leer el archivo de prueba "Español/usuario/razonamiento/familia/Juan y Ana - Pablo, José y Luisa".
 Leer el archivo de prueba "Español/usuario/razonamiento/familia/Juan era padre de Pablo, José y Luisa".
@@ -100,7 +100,7 @@ Leer el archivo de prueba "Español/ambigüedad/Aceptación - Subconjunto de rec
 Leer el archivo de prueba "Español/ambigüedad/Aceptación - Ampliación de la colección".
 Leer el archivo de prueba "Español/ambigüedad/Duplicados".
 Leer el archivo de prueba "Español/ambigüedad/Múltiples especificaciones, así como múltiples relaciones".
-Leer el archivo de prueba "Español/ambigüedad/Nero".
+#Java#Leer el archivo de prueba "Español/ambigüedad/Nero".
 Leer el archivo de prueba "Español/ambigüedad/Presidentes de EUA".
 Leer el archivo de prueba "Español/ambigüedad/Presidentes de EUA - Boston".
 Leer el archivo de prueba "Español/ambigüedad/Presidentes de EUA - Imaginaria reelección (con confirmación)".
@@ -111,19 +111,19 @@ Leer el archivo de prueba "Español/conflicto/Especificación de definición ya 
 Leer el archivo de prueba "Español/conflicto/La palabra generalización y la palabra relación son los mismos".
 Leer el archivo de prueba "Español/conflicto/Looping - Cada hombre es una persona".
 Leer el archivo de prueba "Español/conflicto/Looping - Cada mujer es una persona".
-Leer el archivo de prueba "Español/conflicto/No hay ningún conflicto en la recogida no exclusiva".
+#Java#Leer el archivo de prueba "Español/conflicto/No hay ningún conflicto en la recogida no exclusiva".
 
 Leer el archivo de prueba "Español/programación/Conecta 4 - La columna está llena".
 Leer el archivo de prueba "Español/programación/Conecta 4 - Con ganas de ganar".
 Leer el archivo de prueba "Español/programación/Conecta 4 - El nivel de resolver es alta".
 Leer el archivo de prueba "Español/programación/El bueno, El Malo y El Feo".
 
-Leer el archivo de prueba "Español/respuestas a las preguntas/Contexto - Pregunta con pronombre generalización".
-Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (1)".
-Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (2)".
-Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (3)".
-Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (4)".
-Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (5)".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/Contexto - Pregunta con pronombre generalización".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (1)".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (2)".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (3)".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (4)".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/Sólo unas pocas preguntas (5)".
 
 #Leer el archivo de prueba "Español/razonamiento/Acceptance - A small letter is small".
 Leer el archivo de prueba "Español/razonamiento/Aceptación - Juan es una persona, Juan es alto y Juan es un niño".
@@ -156,13 +156,13 @@ Leer el archivo de prueba "Español/razonamiento/Especificación-generalización
 Leer el archivo de prueba "Español/razonamiento/Especificación-generalización - Aceptación de las frases (singular)".
 Leer el archivo de prueba "Español/razonamiento/Especificación-generalización - Especificación individual".
 Leer el archivo de prueba "Español/razonamiento/Cambiar de idioma".
-Leer el archivo de prueba "Español/razonamiento/La incertidumbre y el tiempo pasado".
+#Java#Leer el archivo de prueba "Español/razonamiento/La incertidumbre y el tiempo pasado".
 Leer el archivo de prueba "Español/razonamiento/Relación única".
 
 #----------------------------
 # Familia (profundo)
 #----------------------------
-Leer el archivo de prueba "Español/ambigüedad/familia/Pregunta que le falta un contexto relación".
+#Java#Leer el archivo de prueba "Español/ambigüedad/familia/Pregunta que le falta un contexto relación".
 Leer el archivo de prueba "Español/ambigüedad/familia/Frase que le falta un contexto relación - Supongo que te refieres".
 
 Leer el archivo de prueba "Español/conflicto/familia/Ana es un padre de Pablo, José y Luisa".
@@ -174,14 +174,14 @@ Leer el archivo de prueba "Español/conflicto/familia/Juan era padre de Pablo (a
 Leer el archivo de prueba "Español/conflicto/familia/No hay ningún conflicto en varias especificaciones relacionadas".
 Leer el archivo de prueba "Español/conflicto/familia/Definición sencilla de la familia - Juan es madre de Pablo".
 
-Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Suposición a través pregunta sugestiva".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Suposición a través pregunta sugestiva".
 Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Pregunta indirecta respondió, con la confirmación".
-Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Es Pablo una mujer".
-Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Sólo unas pocas preguntas (1)".
-Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Sólo unas pocas preguntas (2)".
-Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Respuestas negativas y alternativas".
-Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Esta pregunta es más específica (con relación)".
-Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Juan)".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Es Pablo una mujer".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Sólo unas pocas preguntas (1)".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Sólo unas pocas preguntas (2)".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Respuestas negativas y alternativas".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Esta pregunta es más específica (con relación)".
+#Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Juan)".
 
 Leer el archivo de prueba "Español/razonamiento/familia/Aceptación de una extraña definición familiar".
 Leer el archivo de prueba "Español/razonamiento/familia/Ana - Juan - Pablo, José y Luisa".
@@ -208,10 +208,14 @@ Leer el archivo de prueba "Español/razonamiento/familia/Complejo (15)".
 Leer el archivo de prueba "Español/razonamiento/familia/Complejo (16)".
 Leer el archivo de prueba "Español/razonamiento/familia/Complejo (17)".
 Leer el archivo de prueba "Español/razonamiento/familia/Complejo (18)".
+Leer el archivo de prueba "Español/razonamiento/familia/Complejo (19 - mezclado)".
+Leer el archivo de prueba "Español/razonamiento/familia/Complejo (19 - extraño)".
+Leer el archivo de prueba "Español/razonamiento/familia/Complejo (20)".
+Leer el archivo de prueba "Español/razonamiento/familia/Complejo (21)".
 Leer el archivo de prueba "Español/razonamiento/familia/Contexto - José tiene 2 padres - Juan es un padre".
 Leer el archivo de prueba "Español/razonamiento/familia/Contexto - Pronombre especificación".
-Leer el archivo de prueba "Español/razonamiento/familia/Corrección supuesto invalidado (por el conocimiento)".
-Leer el archivo de prueba "Español/razonamiento/familia/Corrección supuesto invalidado (por la pregunta sugestiva contrario)".
+#Java#Leer el archivo de prueba "Español/razonamiento/familia/Corrección supuesto invalidado (por el conocimiento)".
+#Java#Leer el archivo de prueba "Español/razonamiento/familia/Corrección supuesto invalidado (por la pregunta sugestiva contrario)".
 Leer el archivo de prueba "Español/razonamiento/familia/Sé (1)".
 Leer el archivo de prueba "Español/razonamiento/familia/Sé (2)".
 Leer el archivo de prueba "Español/razonamiento/familia/Sé (3)".
@@ -248,8 +252,9 @@ Leer el archivo de prueba "Español/razonamiento/familia/Luisa - José - Pablo -
 Leer el archivo de prueba "Español/razonamiento/familia/Luisa - Juan y Ana - José".
 Leer el archivo de prueba "Español/razonamiento/familia/Luisa - Pablo - Juan y Ana".
 Leer el archivo de prueba "Español/razonamiento/familia/Luisa tiene 2 padres - Luisa es una hija".
+Leer el archivo de prueba "Español/razonamiento/familia/Luisa tiene un padre - Luisa es hija - Juan y Ana".
 Leer el archivo de prueba "Español/razonamiento/familia/Luisa es hija - Juan y Ana".
-Leer el archivo de prueba "Español/razonamiento/familia/Mis suposiciones que se confirman (hijo)".
+Leer el archivo de prueba "Español/razonamiento/familia/Mis suposiciones que se confirman (hijos)".
 Leer el archivo de prueba "Español/razonamiento/familia/Mis suposiciones que se confirman (padres)".
 Leer el archivo de prueba "Español/razonamiento/familia/Mis suposiciones que se confirman (Juan y Ana)".
 Leer el archivo de prueba "Español/razonamiento/familia/Mis suposiciones que se confirman (Juan y Pablo)".
@@ -282,7 +287,10 @@ Leer el archivo de prueba "Español/razonamiento/familia/Que haya confirmado al 
 Leer el archivo de prueba "Español/razonamiento/familia/Que haya confirmado la especificación - pero no la relación".
 
 Leer el archivo de prueba "Español/razonamiento/familia/Español ambigua - Ana es un padre - Luisa es un hijo".
+Leer el archivo de prueba "Español/razonamiento/familia/Español ambigua - José - Pablo - Juan".
 Leer el archivo de prueba "Español/razonamiento/familia/Español ambigua - Juan es un padre".
+Leer el archivo de prueba "Español/razonamiento/familia/Español ambigua - Luisa - Pablo - Luisa".
+Leer el archivo de prueba "Español/razonamiento/familia/Español ambigua - Luisa es una niña".
 Leer el archivo de prueba "Español/razonamiento/familia/Español ambigua - Pablo es un hijo".
 
 #----------------------------

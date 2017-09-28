@@ -35,11 +35,11 @@
 < Juan es posiblemente una persona.
 < Juan es posiblemente parte de una familia.
 < Ana es posiblemente madre de Pablo.
+< Ana es posiblemente parte de una familia.
 < Ana es posiblemente una mujer.
 < Ana es puede-ser una persona.
 < Ana no es puede-ser un hombre.
 < Ana es posiblemente femenina.
-< Ana es posiblemente parte de una familia.
 < Ana no es posiblemente un padre.
 * 
 * Mis preguntas:
@@ -80,9 +80,14 @@
 * Esta información es más específica que la información anterior:
 < Luisa es una hija.
 * 
+* Mis suposiciones anteriores que tienen palabras de relación ahora:
+< Luisa tiene probablemente un padre.
+* 
 * Mis conclusiones:
 < Juan tiene una hija, llamada Luisa.
+< Juan tiene 3 hijos, llamados Pablo, José y Luisa.
 < Ana tiene una hija, llamada Luisa.
+< Ana tiene 3 hijos, llamados Pablo, José y Luisa.
 * 
 * Mis suposiciones:
 < Luisa tiene posiblemente una madre, llamada Ana.
@@ -122,7 +127,4 @@
 < Ana no es un hombre.
 < Ana es femenina.
 < Ana no es un padre.
-* 
-* Mis conclusiones:
-< Ana tiene 3 hijos, llamados Pablo, José y Luisa.
 < 

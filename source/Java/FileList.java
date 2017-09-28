@@ -1,7 +1,7 @@
 /*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:		Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -145,7 +145,7 @@ class FileList extends List
 			}
 		catch( IOException exception )
 			{
-			return startError( 1, "I couldn't close read file: \"" + currentFileItem.readFileNameString() + "\"" );
+			return startError( 1, "IOException: I couldn't close read file: \"" + currentFileItem.readFileNameString() + "\"" );
 			}
 
 		try	{
@@ -157,7 +157,7 @@ class FileList extends List
 			}
 		catch( IOException exception )
 			{
-			return startError( 1, "I couldn't close write file: \"" + currentFileItem.writeFileNameString() + "\"" );
+			return startError( 1, "IOException: I couldn't close write file: \"" + currentFileItem.writeFileNameString() + "\"" );
 			}
 
 		if( deleteItem( currentFileItem ) != Constants.RESULT_OK )
@@ -180,12 +180,12 @@ class FileList extends List
 
 	protected FileResultType openFile( boolean isAddingSubPath, boolean isInfoFile, boolean isTestFile, boolean isReportingErrorIfFileDoesNotExist, String defaultSubPathString, String fileNameString, String testOutputFileSubPathString, String testReferenceFileSubPathString )
 		{
-		FileResultType fileResult = new FileResultType();
 		BufferedReader readFile = null;
 		BufferedWriter writeFile = null;
 		StringBuffer readFileNameStringBuffer = new StringBuffer();
 		StringBuffer referenceFileNameStringBuffer = new StringBuffer();
 		StringBuffer writeFileNameStringBuffer = new StringBuffer();
+		FileResultType fileResult = new FileResultType();
 
 		if( defaultSubPathString == null )
 			return startFileResultError( 1, "The given default subpath string is undefined" );

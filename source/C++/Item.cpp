@@ -1,6 +1,6 @@
 /*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2017r1 (Bursts of Laughter)
+ *	Version:	Thinknowlogy 2017r2 (Science as it should be)
  *************************************************************************/
 /*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -908,10 +908,10 @@
 			inactiveSentenceNr_ = inactiveSentenceNr;
 			archivedSentenceNr_ = archivedSentenceNr;
 
-			if( commonVariables_->currentItemNr >= NO_ITEM_NR )
+			if( commonVariables_->currentSentenceItemNr >= NO_ITEM_NR )
 				{
-				if( commonVariables_->currentItemNr < MAX_ITEM_NR )
-					itemNr_ = ++commonVariables_->currentItemNr;
+				if( commonVariables_->currentSentenceItemNr < MAX_ITEM_NR )
+					itemNr_ = ++commonVariables_->currentSentenceItemNr;
 				else
 					strcpy( errorString, "Current item number overflow" );
 				}
@@ -987,6 +987,11 @@
 				replacedSentenceNr_ == sentenceNr );
 		}
 
+	bool Item::hasUserNr()
+		{
+		return ( userNr_ > NO_USER_NR );
+		}
+
 	bool Item::isOlderItem()
 		{
 		return ( originalSentenceNr_ < commonVariables_->currentSentenceNr );
@@ -1046,6 +1051,14 @@
 	bool Item::wasArchivedBefore()
 		{
 		return ( previousStatusChar == QUERY_ARCHIVED_CHAR );
+		}
+
+	bool Item::isSpanishCurrentLanguage()
+		{
+		WordItem *currentLanguageWordItem;
+
+		return ( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL &&
+				currentLanguageWordItem->isNounWordSpanishAmbiguous() );
 		}
 
 	unsigned short Item::userNr()
@@ -1187,7 +1200,6 @@
 		char *queryString;
 		char *myWordString = myWordTypeString( queryWordTypeNr );
 		char *userNameString = ( myWordItem_ == NULL ? NULL : myWordItem_->userNameString( userNr_ ) );
-		char statusString[2] = SPACE_STRING;
 
 		statusString[0] = statusChar_;
 		strcpy( commonVariables_->queryString, EMPTY_STRING );
@@ -1466,7 +1478,8 @@
 				return ( hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
 
 			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				return ( hasAnotherPrimarySpecification && hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
+				return ( hasAnotherPrimarySpecification &&
+						hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
 
 			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
 				return ( hasFeminineOrMasculineProperNameEnding ? 1 : 0 );
@@ -1474,11 +1487,11 @@
 			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
 				return ( hasPossessivePrimarySpecification ? 1 : 0 );
 
-			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
-				return ( hasPrimaryQuestionSpecification ? 1 : 0 );
-
 			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				return ( hasAnotherPrimarySpecification ? 1 : 0 );
+
+			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
+				return ( hasPrimaryQuestionSpecification ? 1 : 0 );
 
 			default:
 				return 1;

@@ -19,10 +19,10 @@
  Display the warranty.
 ------------------------------------------------------------------------------
  Example files:	* Use button <more examples> or see
-		  folder: Thinknowlogy2017r1/data/examples/English/user/
- Fundamental:	* folder: Thinknowlogy2017r1/documents/
- Design:	* folder: Thinknowlogy2017r1/documents/design/
- Screenshots:	* folder: Thinknowlogy2017r1/screenshots/English/
+		  folder: Thinknowlogy2017r2/data/examples/English/user/
+ Fundamental:	* folder: Thinknowlogy2017r2/documents/
+ Design:	* folder: Thinknowlogy2017r2/documents/design/
+ Screenshots:	* folder: Thinknowlogy2017r2/screenshots/English/
 ------------------------------------------------------------------------------
 < 
 < Specifications:
@@ -32,7 +32,7 @@
 < English is the current language. (learned from user Admin)
 < 
 ------------------------------------------------------------------------------
- Total number of items: 7449.
+ Total number of items: 7443.
 ------------------------------------------------------------------------------
  Items in administrator:	375.
 ------------------------------------------------------------------------------
@@ -49,13 +49,13 @@
  * Replaced items:			0.
  * Deleted items:			0.
 ------------------------------------------------------------------------------
- Items in words:		7074.
+ Items in words:		7068.
 ------------------------------------------------------------------------------
- * Active items:			7045.
+ * Active items:			7039.
     <a> assignments:				5.
     <c> collections:				232.
     <g> generalizations:			313.
-    <i> interface:				1112.
+    <i> interface:				1106.
     <j> justification:				0.
     <l> grammar:				4029.
     <m> multiple word:				77.
