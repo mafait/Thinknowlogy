@@ -1,9 +1,9 @@
-/*	Class:		ShortResultType
+﻿/*	Class:		ShortResultType
  *	Purpose:	To return specification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,6 @@ class ShortResultType
 	friend class AdminImperative;
 	friend class AdminReadCreateWords;
 	friend class AdminReadSentence;
-	friend class AdminReasoningOld;
 	friend class AdminSpecification;
 	friend class Item;
 	friend class JustificationItem;
@@ -44,7 +43,6 @@ class ShortResultType
 	// Protected variables
 
 	signed char result;
-
 	unsigned short shortValue;
 
 	protected:
@@ -53,7 +51,6 @@ class ShortResultType
 	ShortResultType()
 		{
 		result = RESULT_OK;
-
 		shortValue = 0;
 		}
 	};

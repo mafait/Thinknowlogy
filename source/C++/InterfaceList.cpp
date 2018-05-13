@@ -1,9 +1,9 @@
-/*	Class:			InterfaceList
+﻿/*	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -50,9 +50,9 @@ class InterfaceList : private List
 	protected:
 	// Constructor
 
-	InterfaceList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	InterfaceList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( WORD_INTERFACE_LIST_SYMBOL, "InterfaceList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( WORD_INTERFACE_LIST_SYMBOL, "InterfaceList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~InterfaceList()
@@ -78,7 +78,7 @@ class InterfaceList : private List
 		{
 		InterfaceItem *searchInterfaceItem = firstActiveInterfaceItem();
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkInterface";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkInterface";
 
 		if( interfaceString == NULL )
 			return startError( functionNameString, "The given interface string is undefined" );
@@ -106,9 +106,9 @@ class InterfaceList : private List
 
 	signed char createInterfaceItem( unsigned short interfaceParameter, size_t interfaceStringLength, char *interfaceString )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createInterfaceItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createInterfaceItem";
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new InterfaceItem( interfaceParameter, interfaceStringLength, interfaceString, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+		if( addItemToList( QUERY_ACTIVE_CHAR, new InterfaceItem( interfaceParameter, interfaceStringLength, interfaceString, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
 			return addError( functionNameString, "I failed to add an active interface item" );
 
 		return RESULT_OK;
@@ -126,7 +126,7 @@ class InterfaceList : private List
 			searchInterfaceItem = searchInterfaceItem->nextInterfaceItem();
 			}
 
-		return INTERFACE_STRING_NOT_AVAILABLE;
+		return NULL;
 		}
 	};
 

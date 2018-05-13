@@ -17,7 +17,7 @@ Cecilias, ranas, tritones, salamandras y sapos son anfibios.
 Cocodrilos son reptiles.
 # Anélidos
 #Las lombrices de tierra, gusanos-redondos y gusanos-planos son anélidos.
-Lombrices-de-tierra, gusanos-redondos y gusanos-planos son anélidos.
+Lombrices, gusanos-redondos y gusanos-planos son anélidos.
 # Artrópodos
 Cangrejos, arañas y insectos son artrópodos.
 # Equinodermos

@@ -1,0 +1,4 @@
+﻿* 
+* This definition specification is not accepted, because it is already assigned:
+< 该男有帽子。
+< 

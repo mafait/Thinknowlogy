@@ -1,10 +1,10 @@
-/*	Class:			JustificationItem
+﻿/*	Class:			JustificationItem
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ class JustificationItem extends Item
 	{
 	// Private initialized variables
 
-	boolean hasFeminineOrMasculineProperNameEnding_;
+	boolean hasFeminineOrMasculineProperNounEnding_;
 
 	private short justificationTypeNr_;
 
@@ -74,7 +74,7 @@ class JustificationItem extends Item
 		if( firstContextNr > Constants.NO_CONTEXT_NR &&
 		secondContextNr > Constants.NO_CONTEXT_NR &&
 		firstContextNr != secondContextNr &&
-		( currentContextWordItem = CommonVariables.firstContextWordItem ) != null )
+		( currentContextWordItem = GlobalVariables.firstContextWordItem ) != null )
 			{
 			// Do for all context words
 			do	{
@@ -102,13 +102,13 @@ class JustificationItem extends Item
 
 	// Constructor
 
-	protected JustificationItem( boolean hasFeminineOrMasculineProperNameEnding, short justificationTypeNr, short _orderNr, int originalSentenceNr, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem, JustificationItem attachedJustificationItem, List myList, WordItem myWordItem )
+	protected JustificationItem( boolean hasFeminineOrMasculineProperNounEnding, short justificationTypeNr, short _orderNr, int originalSentenceNr, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem, JustificationItem attachedJustificationItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( originalSentenceNr, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
 		// Private initialized variables
 
-		hasFeminineOrMasculineProperNameEnding_ = hasFeminineOrMasculineProperNameEnding;
+		hasFeminineOrMasculineProperNounEnding_ = hasFeminineOrMasculineProperNounEnding;
 
 		justificationTypeNr_ = justificationTypeNr;
 
@@ -183,13 +183,13 @@ class JustificationItem extends Item
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
-		if( hasFeminineOrMasculineProperNameEnding_ )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasFeminineOrMasculineProperNameEnding" );
+		if( hasFeminineOrMasculineProperNounEnding_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasFeminineOrMasculineProperNounEnding" );
 
 		switch( justificationTypeNr_ )
 			{
@@ -321,9 +321,9 @@ class JustificationItem extends Item
 		return ( attachedJustificationItem_ != null );
 		}
 
-	protected boolean hasFeminineOrMasculineProperNameEnding()
+	protected boolean hasFeminineOrMasculineProperNounEnding()
 		{
-		return hasFeminineOrMasculineProperNameEnding_;
+		return hasFeminineOrMasculineProperNounEnding_;
 		}
 
 	protected boolean hasJustification( SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem )
@@ -334,9 +334,9 @@ class JustificationItem extends Item
 				anotherSecondarySpecificationItem_ == anotherSecondarySpecificationItem );
 		}
 
-	protected boolean hasJustification( boolean hasFeminineOrMasculineProperNameEnding, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem )
+	protected boolean hasJustification( boolean hasFeminineOrMasculineProperNounEnding, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem )
 		{
-		return ( hasFeminineOrMasculineProperNameEnding_ == hasFeminineOrMasculineProperNameEnding &&
+		return ( hasFeminineOrMasculineProperNounEnding_ == hasFeminineOrMasculineProperNounEnding &&
 				primarySpecificationItem_ == primarySpecificationItem &&
 				anotherPrimarySpecificationItem_ == anotherPrimarySpecificationItem &&
 				secondarySpecificationItem_ == secondarySpecificationItem &&
@@ -489,7 +489,7 @@ class JustificationItem extends Item
 
 		if( primarySpecificationItem_ != null )
 			{
-			if( primarySpecificationItem_.isGeneralizationProperName() &&
+			if( primarySpecificationItem_.isGeneralizationProperNoun() &&
 			primarySpecificationItem_.isPossessive() )
 				hasPossessivePrimarySpecification = true;
 
@@ -497,7 +497,7 @@ class JustificationItem extends Item
 				hasPrimaryQuestionSpecification = true;
 			}
 
-		return assumptionGrade( ( anotherPrimarySpecificationItem_ != null ), hasFeminineOrMasculineProperNameEnding_, hasPossessivePrimarySpecification, hasPrimaryQuestionSpecification, justificationTypeNr_ );
+		return assumptionGrade( ( anotherPrimarySpecificationItem_ != null ), hasFeminineOrMasculineProperNounEnding_, hasPossessivePrimarySpecification, hasPrimaryQuestionSpecification, justificationTypeNr_ );
 		}
 
 	protected short justificationTypeNr()
@@ -768,8 +768,8 @@ class JustificationItem extends Item
 
 	protected JustificationItem nextJustificationItemWithDifferentTypeOrOrderNr( JustificationItem firstJustificationItem )
 		{
-		JustificationItem usedTypeJustificationItem;
 		JustificationItem nextTypeJustificationItem = attachedJustificationItem_;
+		JustificationItem usedTypeJustificationItem;
 
 		if( firstJustificationItem != null )
 			{

@@ -3,7 +3,6 @@
 #----------------------------
 Lees het testbestand "Nederlands/gebruiker/ambiguiteit/Boston".
 Lees het testbestand "Nederlands/gebruiker/ambiguiteit/presidenten van de VS".
-Lees het testbestand "Nederlands/gebruiker/ambiguiteit/presidenten van de VS - Bevestiging".
 
 Lees het testbestand "Nederlands/gebruiker/programmeren/Vier op 'n rij - Toon informatie over de zet".
 Lees het testbestand "Nederlands/gebruiker/programmeren/Groeten".
@@ -15,6 +14,8 @@ Lees het testbestand "Nederlands/gebruiker/vraagbeantwoording/Specificatie-gener
 Lees het testbestand "Nederlands/gebruiker/vraagbeantwoording/Specificatie-generalisatie - Vraag (getal)".
 Lees het testbestand "Nederlands/gebruiker/vraagbeantwoording/Deze vraag is specifieker (zonder relatie)".
 
+Lees het testbestand "Nederlands/gebruiker/redeneren/Kookpunt".
+Lees het testbestand "Nederlands/gebruiker/redeneren/Condensatiepunt".
 Lees het testbestand "Nederlands/gebruiker/redeneren/Bepaald lidwoord komt niet overeen met zelfstandig naamwoord".
 Lees het testbestand "Nederlands/gebruiker/redeneren/Mijn conclusies die bevestigd zijn (met relatie, zonder gezinsdefinitie)".
 Lees het testbestand "Nederlands/gebruiker/redeneren/Wetenschappelijke uitdaging".
@@ -24,6 +25,7 @@ Lees het testbestand "Nederlands/gebruiker/redeneren/Specificatie-generalisatie 
 Lees het testbestand "Nederlands/gebruiker/redeneren/De enig overgebleven optie - Boot".
 Lees het testbestand "Nederlands/gebruiker/redeneren/De enig overgebleven optie - Optie".
 Lees het testbestand "Nederlands/gebruiker/redeneren/Tom is een kat".
+Lees het testbestand "Nederlands/gebruiker/redeneren/presidenten van de VS - Bevestiging".
 
 #----------------------------
 # Gezin (gebruiker)
@@ -129,6 +131,7 @@ Lees het testbestand "Nederlands/redeneren/Acceptatie - Een kleine letter is kle
 Lees het testbestand "Nederlands/redeneren/Acceptatie - Jan is een persoon, Jan is lang en Jan is een jongen".
 Lees het testbestand "Nederlands/redeneren/Acceptatie van slechts één lidwoord in exclusieve specificatie".
 Lees het testbestand "Nederlands/redeneren/Acceptatie van zin eindigend zonder punt".
+Lees het testbestand "Nederlands/redeneren/Aanvullende test".
 Lees het testbestand "Nederlands/redeneren/Bijvoeglijk naamwoord".
 Lees het testbestand "Nederlands/redeneren/Gewijzigd veronderstellingsniveau (1)".
 Lees het testbestand "Nederlands/redeneren/Gewijzigd veronderstellingsniveau (2)".

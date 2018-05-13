@@ -1,9 +1,9 @@
-/*	Class:			AdminReadCreateWords
+﻿/*	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		To create words of the read sentence
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,6 @@ class AdminReadCreateWords
 	{
 	// Private constructed variables
 
-	private boolean hasFoundDifferentParameter_;
-
 	private short lastCreatedWordOrderNr_;
 
 
@@ -46,6 +44,25 @@ class AdminReadCreateWords
 				character == Constants.GRAMMAR_WORD_DEFINITION_CHAR );
 		}
 
+	private static boolean isMatchingChineseWord( String wordString )
+		{
+		WordItem currentWordItem;
+
+		// Do for all words
+		if( wordString != null &&
+		( currentWordItem = GlobalVariables.firstWordItem ) != null )
+			{
+			// Do for all words
+			do	{
+				if( currentWordItem.isMatchingChineseWord( wordString ) )
+					return true;
+				}
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
+			}
+
+		return false;
+		}
+
 	private static boolean isSymbol( char character )
 		{
 		return ( character == Constants.SYMBOL_COMMA ||
@@ -53,50 +70,43 @@ class AdminReadCreateWords
 				character == Constants.SYMBOL_SEMI_COLON ||
 				character == Constants.SYMBOL_DOUBLE_COLON ||
 				character == Constants.SYMBOL_EXCLAMATION_MARK ||
-				character == Constants.SYMBOL_EXCLAMATION_MARK_INVERTED ||
 				character == Constants.SYMBOL_QUESTION_MARK ||
-				character == Constants.SYMBOL_QUESTION_MARK_INVERTED ||
-				character == Constants.SYMBOL_PLUS ||
-				character == Constants.SYMBOL_EQUALITY ||
-				character == Constants.SYMBOL_PIPE ||
-				character == Constants.SYMBOL_AMPERSAND ||
-				character == Constants.SYMBOL_ASTERISK ||
-				character == Constants.SYMBOL_PERCENT ||
-				character == Constants.SYMBOL_DOLLAR ||
+				character == Constants.SYMBOL_CHINESE_COMMA ||
+				character == Constants.SYMBOL_CHINESE_COLON ||
+				character == Constants.SYMBOL_SPANISH_INVERTED_EXCLAMATION_MARK ||
+				character == Constants.SYMBOL_SPANISH_INVERTED_QUESTION_MARK ||
 				character == Constants.SYMBOL_SLASH ||
 				character == Constants.SYMBOL_BACK_SLASH ||
-				// Don't add Constants.SYMBOL_QUOTE to avoid analyzing compound words
+				// Don't add Constants.SYMBOL_QUOTE to avoid analyzing merged words
 				// Don't add Constants.SYMBOL_DOUBLE_QUOTE to avoid analyzing text strings
 				character == Constants.SYMBOL_OPEN_ROUNDED_BRACKET ||
-				character == Constants.SYMBOL_CLOSE_ROUNDED_BRACKET ||
-				character == Constants.SYMBOL_OPEN_CURVED_BRACKET ||
-				character == Constants.SYMBOL_CLOSE_CURVED_BRACKET ||
-				character == Constants.SYMBOL_OPEN_HOOKED_BRACKET ||
-				character == Constants.SYMBOL_CLOSE_HOOKED_BRACKET ||
-				character == Constants.SYMBOL_OPEN_SQUARE_BRACKET ||
-				character == Constants.SYMBOL_CLOSE_SQUARE_BRACKET );
+				character == Constants.SYMBOL_CLOSE_ROUNDED_BRACKET );
 		}
 
-	private static int skipSpaces( int wordPosition, String wordString )
+	private static int bestMatchingChineseWordLength( String wordString )
 		{
-		int wordStringLength;
+		int bestMatchingChineseWordLength = 0;
+		int currentMatchingWordLength;
+		WordItem currentWordItem;
 
 		if( wordString != null &&
-		( wordStringLength = wordString.length() ) > 0 )
+		( currentWordItem = GlobalVariables.firstWordItem ) != null )
 			{
-			while( wordPosition < wordStringLength &&
-			Character.isWhitespace( wordString.charAt( wordPosition ) ) )
-				wordPosition++;
+			// Do for all words
+			do	{
+				if( ( currentMatchingWordLength = currentWordItem.bestMatchingChineseWordLength( wordString ) ) > bestMatchingChineseWordLength )
+					bestMatchingChineseWordLength = currentMatchingWordLength;
+				}
+			while( ( currentWordItem = currentWordItem.nextWordItem() ) != null );
 			}
 
-		return wordPosition;
+		return bestMatchingChineseWordLength;
 		}
 
-	private CreateReadWordResultType createReadWord( short wordOrderNr, short wordTypeNr, int textStringStartPosition, String textString, WordItem readWordItem )
+	private CreateReadWordResultType createReadWord( boolean isUncountableGeneralizationNoun, short wordOrderNr, short wordTypeNr, int textStringStartPosition, String textString, WordItem readWordItem )
 		{
 		short wordParameter = ( wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ||
 										readWordItem == null ? Constants.NO_WORD_PARAMETER : readWordItem.wordParameter() );
-		String readString = null;
 		CreateReadWordResultType createReadWordResult = new CreateReadWordResultType();
 		ReadWordResultType readWordResult = new ReadWordResultType();
 
@@ -110,17 +120,13 @@ class AdminReadCreateWords
 
 		if( textString != null )
 			{
-			if( ( readWordResult = readWordFromString( false, false, true, textStringStartPosition, 0, textString ) ).result != Constants.RESULT_OK )
+			if( ( readWordResult = readWordFromString( false, false, false, true, 0, textString.substring( textStringStartPosition ) ) ).result != Constants.RESULT_OK )
 				return adminItem_.addCreateReadWordResultError( 1, moduleNameString_, "I failed to read a word from a text string" );
 
-			if( readWordResult.startWordPosition >= textString.length() )
-				return adminItem_.startCreateReadWordResultError( 1, moduleNameString_, "The found start word position is invalid" );
-
-			createReadWordResult.nextTextStringPosition = readWordResult.nextWordPosition;
-			readString = textString.substring( readWordResult.startWordPosition );
+			createReadWordResult.offset = readWordResult.offset;
 			}
 
-		if( adminItem_.createReadItem( wordOrderNr, wordParameter, wordTypeNr, readWordResult.wordLength, readString, readWordItem ) != Constants.RESULT_OK )
+		if( adminItem_.createReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readWordResult.wordLength, ( textString == null ? null : textString.substring( textStringStartPosition + readWordResult.startWordPosition ) ), readWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addCreateReadWordResultError( 1, moduleNameString_, "I failed to create a read word item" );
 
 		lastCreatedWordOrderNr_ = wordOrderNr;
@@ -129,9 +135,10 @@ class AdminReadCreateWords
 		return createReadWordResult;
 		}
 
-	private ShortResultType getWordTypeNr( boolean isCheckingProperName, int wordTypeStringLength, String wordTypeString )
+	private ShortResultType getWordTypeNr( boolean isCheckingProperNoun, boolean isForcingChineseProperNoun, int wordTypeStringLength, String wordTypeString )
 		{
-		int wordPosition = 0;
+		char wordTypeChar;
+		int index = 0;
 		ShortResultType shortResult = new ShortResultType();
 
 		if( wordTypeString == null )
@@ -140,26 +147,32 @@ class AdminReadCreateWords
 		if( wordTypeStringLength <= 0 )
 			return adminItem_.startShortResultError( 1, moduleNameString_, "The given word type string is empty" );
 
-		if( Character.isLetter( wordTypeString.charAt( wordPosition ) ) )
+		wordTypeChar = wordTypeString.charAt( 0 );
+
+		if( Character.isLetter( wordTypeChar ) )
 			{
 			if( wordTypeStringLength == 1 )
-				shortResult.shortValue = ( Character.isUpperCase( wordTypeString.charAt( wordPosition ) ) ? Constants.WORD_TYPE_LETTER_CAPITAL : Constants.WORD_TYPE_LETTER_SMALL );
+				shortResult.shortValue = ( Character.isUpperCase( wordTypeChar ) ? Constants.WORD_TYPE_LETTER_CAPITAL : ( Character.isLowerCase( wordTypeChar ) ? Constants.WORD_TYPE_LETTER_SMALL : ( isCheckingProperNoun ? ( isForcingChineseProperNoun ? Constants.WORD_TYPE_PROPER_NOUN : Constants.WORD_TYPE_NOUN_SINGULAR ) : Constants.WORD_TYPE_NUMERAL ) ) );
 			else
 				{
-				if( isCheckingProperName &&
-				Character.isUpperCase( wordTypeString.charAt( wordPosition ) ) )
-					shortResult.shortValue = Constants.WORD_TYPE_PROPER_NAME;
+				if( isCheckingProperNoun &&
+
+				( isForcingChineseProperNoun ||
+				Character.isUpperCase( wordTypeChar ) ) )
+					shortResult.shortValue = Constants.WORD_TYPE_PROPER_NOUN;
 				}
 			}
 		else
 			{
-			while( wordPosition < wordTypeStringLength &&
-			Character.isDigit( wordTypeString.charAt( wordPosition ) ) )
-				wordPosition++;
+			// Check for number
+			while( index < wordTypeStringLength &&
+			Character.isDigit( wordTypeString.charAt( index ) ) )
+				index++;
 
-			if( wordPosition == wordTypeStringLength )
+			if( index == wordTypeStringLength )
 				shortResult.shortValue = Constants.WORD_TYPE_NUMERAL;
 			}
+
 
 		return shortResult;
 		}
@@ -171,8 +184,6 @@ class AdminReadCreateWords
 		{
 		// Private constructed variables
 
-		hasFoundDifferentParameter_ = false;
-
 		lastCreatedWordOrderNr_ = Constants.NO_ORDER_NR;
 
 		// Private initialized variables
@@ -183,7 +194,7 @@ class AdminReadCreateWords
 
 		if( ( adminItem_ = adminItem ) == null )
 			{
-			CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
+			GlobalVariables.result = Constants.RESULT_SYSTEM_ERROR;
 			Console.addError( "\nClass:" + moduleNameString_ + "\nMethod:\t" + Constants.INPUT_OUTPUT_ERROR_CONSTRUCTOR_METHOD_NAME + "\nError:\t\tThe given admin item is undefined.\n" );
 			}
 		}
@@ -191,72 +202,125 @@ class AdminReadCreateWords
 
 	// Protected methods
 
-	protected boolean hasFoundDifferentParameter()
-		{
-		return hasFoundDifferentParameter_;
-		}
-
 	protected short lastCreatedWordOrderNr()
 		{
 		return lastCreatedWordOrderNr_;
 		}
 
-	protected BoolResultType createReadWords( String readUserSentenceString )
+	protected int convertChineseNumbers( char chineseChar )
 		{
+		switch( chineseChar )
+			{
+			case Constants.SYMBOL_CHINESE_ZERO:
+				return 0;
+
+			case Constants.SYMBOL_CHINESE_ONE:
+				return 1;
+
+			case Constants.SYMBOL_CHINESE_TWO:
+				return 2;
+
+			case Constants.SYMBOL_CHINESE_THREE:
+				return 3;
+
+			case Constants.SYMBOL_CHINESE_FOUR:
+				return 4;
+
+			case Constants.SYMBOL_CHINESE_FIVE:
+				return 5;
+
+			case Constants.SYMBOL_CHINESE_SIX:
+				return 6;
+
+			case Constants.SYMBOL_CHINESE_SEVEN:
+				return 7;
+
+			case Constants.SYMBOL_CHINESE_EIGHT:
+				return 8;
+
+			case Constants.SYMBOL_CHINESE_NINE:
+				return 9;
+			}
+
+		return -1;
+		}
+
+	protected BoolResultType createReadWords( boolean isChineseCurrentLanguage, String readUserSentenceString )
+		{
+		boolean hasFoundAdjectiveEvery = false;
+		boolean hasFoundChineseBasicVerb = false;
+		boolean hasFoundChineseDefiniteArticle = false;
+		boolean hasFoundChineseSingularNoun = false;
+		boolean hasFoundLowerCase;
+		boolean hasFoundProperNoun = false;
 		boolean hasFoundSingularNoun;
-		boolean isAdverb;
-		boolean isCapitalSingularNoun;
-		boolean isCapitalVerb;
-		boolean isExactWord;
-		boolean isFirstFind;
-		boolean isPartOfMultipleWord;
-		boolean wasPreviousWordAdjective;
-		boolean wasPreviousWordArticle;
-		boolean wasPreviousWordBasicVerb;
-		boolean wasPreviousWordConjunction;
-		boolean wasPreviousWordExactNoun;
-		boolean wasPreviousWordNumeral;
-		boolean wasPreviousWordPossessiveDeterminer;
-		boolean wasPreviousWordPreposition;
-		boolean wasPreviousWordProperName;
-		boolean wasPreviousWordSymbol;
-		boolean wasPreviousWordUndefined;
+		boolean hasFoundWordEnding;
 		boolean isAdjective = false;
+		boolean isAdverb;
 		boolean isArticle = false;
 		boolean isBasicVerb = false;
+		boolean isCapitalPluralVerb;
+		boolean isCapitalSingularVerb;
+		boolean isCheckingProperNoun;
+		boolean isChineseAdjectiveCalled = false;
+		boolean isChineseImperativeVerbDisplay = false;
+		boolean isChineseProperNoun = false;
 		boolean isConjunction = false;
+		boolean isCreatedSingularNoun = false;
 		boolean isExactPluralNoun = false;
 		boolean isExactSingularNoun = false;
-		boolean isNumeral = false;
+		boolean isExactWord;
+		boolean isFirstFind;
+		boolean isFirstWord = true;
+		boolean isForcingChineseProperNoun;
+		boolean isFrenchNumeral = false;
+		boolean isPartOfMultipleWord;
 		boolean isPossessiveDeterminer = false;
 		boolean isPossessivePronoun = false;
 		boolean isPreposition = false;
-		boolean isProperName = false;
+		boolean isSelection = false;
 		boolean isSymbol = false;
+		boolean isUncountableGeneralizationNoun;
 		boolean isUndefinedWord = false;
-		boolean isFirstWord = true;
-		short foundWordTypeNr;
-		short previousWordAdjectiveParameter;
-		short previousWordDefiniteArticleParameter;
-		short previousWordIndefiniteArticleParameter;
+		boolean isUpperChar;
+		boolean wasPreviousWordAdjective;
+		boolean wasPreviousWordArticle;
+		boolean wasPreviousWordBasicVerb;
+		boolean wasPreviousWordChineseAdjectiveCalled;
+		boolean wasPreviousWordChineseImperativeVerbDisplay;
+		boolean wasPreviousWordChineseProperNoun;
+		boolean wasPreviousWordConjunction;
+		boolean wasPreviousWordCreatedSingularNoun;
+		boolean wasPreviousWordExactNoun;
+		boolean wasPreviousWordFrenchNumeral;
+		boolean wasPreviousWordPossessiveDeterminer;
+		boolean wasPreviousWordPreposition;
+		boolean wasPreviousWordSymbol;
+		boolean wasPreviousWordUndefined;
+		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		short currentWordAdjectiveParameter = Constants.NO_ADJECTIVE_PARAMETER;
 		short currentWordDefiniteArticleParameter = Constants.NO_DEFINITE_ARTICLE_PARAMETER;
 		short currentWordIndefiniteArticleParameter = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
 		short currentWordOrderNr = Constants.NO_ORDER_NR;
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
+		short foundWordTypeNr;
+		short previousWordAdjectiveParameter;
+		short previousWordDefiniteArticleParameter;
+		short previousWordIndefiniteArticleParameter;
 		short wordTypeNr = Constants.NO_WORD_TYPE_NR;
+		char currentChar;
+		char firstChar;
+		int currentPosition = 0;
 		int readUserSentenceStringLength;
 		int wordStringLength;
-		int nextWordPosition = 0;
-		int readPosition = 0;
 		WordItem createdWordItem;
-		WordItem currentLanguageWordItem;
 		WordItem foundWordItem;
 		WordItem pluralNounWordItem;
 		WordItem singularNounWordItem;
 		WordTypeItem foundWordTypeItem;
+		WordTypeItem tempWordTypeItem;
 		String exactWordString = null;
 		String lowercaseWordString = null;
+		String singularNounWordString = null;
 		BoolResultType boolResult = new BoolResultType();
 		CreateReadWordResultType createReadWordResult = new CreateReadWordResultType();
 		ReadWordResultType readWordResult;
@@ -265,40 +329,51 @@ class AdminReadCreateWords
 		WordResultType wordResult;
 
 		// Set to pass while loop for the first time
-		hasFoundDifferentParameter_ = false;
-
 		if( readUserSentenceString == null )
-			return adminItem_.startBoolResultError( 1, moduleNameString_, null, "The given read user sentence string is undefined" );
+			return adminItem_.startBoolResultError( 1, moduleNameString_, "The given read user sentence string is undefined" );
 
 		if( ( readUserSentenceStringLength = readUserSentenceString.length() ) == 0 )
-			return adminItem_.startBoolResultError( 1, moduleNameString_, null, "The given read user sentence string is empty" );
+			return adminItem_.startBoolResultError( 1, moduleNameString_, "The given read user sentence string is empty" );
 
-		if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) == null )
-			return adminItem_.startBoolResultError( 1, moduleNameString_, null, "The current language word item is undefined" );
+		if( !isChineseCurrentLanguage )
+			{
+			firstChar = readUserSentenceString.charAt( 0 );
+
+			if( !Character.isUpperCase( firstChar ) &&
+			!Character.isLowerCase( firstChar ) &&
+			firstChar != Constants.SYMBOL_SPANISH_INVERTED_QUESTION_MARK &&
+			firstChar != Constants.SYMBOL_SPANISH_INVERTED_EXCLAMATION_MARK )
+				isChineseCurrentLanguage = true;
+			}
 
 		do	{
+			createReadWordResult.hasCreatedReadWord = false;
+
 			if( ++currentWordOrderNr >= Constants.MAX_ORDER_NR )
 				return adminItem_.startBoolResultSystemError( 1, moduleNameString_, "Word order number overflow! I can't accept more words" );
 
-			if( readUserSentenceString.charAt( readPosition ) == Constants.QUERY_STRING_START_CHAR )
+			if( ( currentChar = readUserSentenceString.charAt( currentPosition ) ) == Constants.QUERY_STRING_START_CHAR )
 				{
-				if( ( createReadWordResult = createReadWord( currentWordOrderNr, Constants.WORD_TYPE_TEXT, readPosition, readUserSentenceString, null ) ).result != Constants.RESULT_OK )
+				if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, Constants.WORD_TYPE_TEXT, currentPosition, readUserSentenceString, null ) ).result != Constants.RESULT_OK )
 					return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a read word" );
 
-				nextWordPosition = createReadWordResult.nextTextStringPosition;
+				currentPosition += createReadWordResult.offset;
 				}
 			else
 				{
 				wasPreviousWordAdjective = isAdjective;
 				wasPreviousWordArticle = isArticle;
 				wasPreviousWordBasicVerb = isBasicVerb;
+				wasPreviousWordChineseAdjectiveCalled = isChineseAdjectiveCalled;
+				wasPreviousWordChineseImperativeVerbDisplay = isChineseImperativeVerbDisplay;
+				wasPreviousWordChineseProperNoun = isChineseProperNoun;
 				wasPreviousWordConjunction = isConjunction;
+				wasPreviousWordCreatedSingularNoun = isCreatedSingularNoun;
 				wasPreviousWordExactNoun = ( isExactSingularNoun ||
 											isExactPluralNoun );
-				wasPreviousWordNumeral = isNumeral;
+				wasPreviousWordFrenchNumeral = isFrenchNumeral;
 				wasPreviousWordPossessiveDeterminer = isPossessiveDeterminer;
 				wasPreviousWordPreposition = isPreposition;
-				wasPreviousWordProperName = isProperName;
 				wasPreviousWordSymbol = isSymbol;
 				wasPreviousWordUndefined = isUndefinedWord;
 
@@ -306,22 +381,27 @@ class AdminReadCreateWords
 				previousWordDefiniteArticleParameter = currentWordDefiniteArticleParameter;
 				previousWordIndefiniteArticleParameter = currentWordIndefiniteArticleParameter;
 
+				hasFoundLowerCase = false;
 				isAdjective = false;
 				isAdverb = false;
 				isArticle = false;
 				isBasicVerb = false;
-				isCapitalVerb = false;
-				isCapitalSingularNoun = false;
+				isCapitalPluralVerb = false;
+				isCapitalSingularVerb = false;
+				isChineseAdjectiveCalled = false;
+				isChineseImperativeVerbDisplay = false;
+				isChineseProperNoun = false;
 				isConjunction = false;
+				isCreatedSingularNoun = false;
 				isExactPluralNoun = false;
 				isExactSingularNoun = false;
 				isExactWord = false;
-				isNumeral = false;
+				isForcingChineseProperNoun = false;
+				isFrenchNumeral = false;
 				isPartOfMultipleWord = true;
 				isPossessiveDeterminer = false;
 				isPossessivePronoun = false;
 				isPreposition = false;
-				isProperName = false;
 				isSymbol = false;
 				isUndefinedWord = false;
 
@@ -334,17 +414,16 @@ class AdminReadCreateWords
 				pluralNounWordItem = null;
 				singularNounWordItem = null;
 
-				if( ( readWordResult = readWordFromString( false, false, false, readPosition, 0, readUserSentenceString ) ).result != Constants.RESULT_OK )
+				if( ( readWordResult = readWordFromString( false, isChineseCurrentLanguage, false, false, 0, readUserSentenceString.substring( currentPosition ) ) ).result != Constants.RESULT_OK )
 					return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to read a word from the word string" );
 
-				nextWordPosition = readWordResult.nextWordPosition;
 				wordStringLength = readWordResult.wordLength;
 
 				// Create exact word string
-				exactWordString = readUserSentenceString.substring( readPosition, ( readPosition + readWordResult.wordLength ) );
+				exactWordString = readUserSentenceString.substring( currentPosition, ( currentPosition + wordStringLength ) );
 
 				// Create lowercase word string
-				lowercaseWordString = readUserSentenceString.substring( readPosition, ( readPosition + readWordResult.wordLength ) ).toLowerCase();
+				lowercaseWordString = readUserSentenceString.substring( currentPosition, ( currentPosition + wordStringLength ) ).toLowerCase();
 
 				// Step 1: Find exact word types in all words
 				do	{
@@ -353,109 +432,206 @@ class AdminReadCreateWords
 
 					// Found exact word
 					if( ( foundWordItem = wordResult.foundWordItem ) != null &&
-					( foundWordTypeItem = wordResult.foundWordTypeItem ) != null &&
-
-					// Typically for the Spanish language: Skip answer, when there was an adverb too
-					( !isAdverb ||
-					!foundWordTypeItem.isAnswer() ) )
+					( foundWordTypeItem = wordResult.foundWordTypeItem ) != null )
 						{
 						hasFoundSingularNoun = foundWordTypeItem.isSingularNoun();
 
-						if( ( createReadWordResult = createReadWord( currentWordOrderNr, ( hasFoundSingularNoun && wasPreviousWordNumeral ? Constants.WORD_TYPE_NOUN_PLURAL : foundWordTypeItem.wordTypeNr() ), 0, null, foundWordItem ) ).result != Constants.RESULT_OK )
-							return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create another read word" );
+						if( ( !isAdverb ||
+						// Typically for Spanish: Skip answer, when an adverb was found too
+						!foundWordTypeItem.isAnswer() ) &&
 
-						isExactWord = true;
+						( !isChineseCurrentLanguage ||
+						// Typically for Chinese
+						// Chinese test file: "Connect Four"
+						// Chinese test file: "Acceptance - John is a person, John is tall and John is a boy"
+						isFirstWord ||
+						isSelection ||
+						wordStringLength > 1 ||
 
-						if( foundWordTypeItem.isAdjective() )
+						( !foundWordItem.isAdjectiveComparison() &&
+
+						( hasFoundAdjectiveEvery ||
+						!hasFoundSingularNoun ||
+						!wasPreviousWordSymbol ||
+						readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_QUESTION_MARK ) > 1 ) ) ) )
 							{
-							isAdjective = true;
+							foundWordTypeNr = foundWordTypeItem.wordTypeNr();
 
-							if( wordResult.foundWordItem != null &&
-							// Adjective 'no' can be used as article
-							wordResult.foundWordItem.isAdjectiveNo() )
-								isArticle = true;
+							// Typically for Chinese: Possessive pronoun and possessive determiner are the same
+							// Chinese test file: "Connect Four"
+							if( isChineseCurrentLanguage &&
+							foundWordTypeNr == Constants.WORD_TYPE_POSSESSIVE_DETERMINER_SINGULAR &&
 
-							if( !wasPreviousWordArticle )
-								currentWordAdjectiveParameter = foundWordTypeItem.adjectiveParameter();
-							}
+							( hasFoundAdjectiveEvery ||
+							hasFoundChineseDefiniteArticle ) &&
 
-						if( foundWordTypeItem.isAdverb() )
-							isAdverb = true;
-
-						if( foundWordTypeItem.isArticle() )
-							{
-							isArticle = true;
-
-							if( foundWordTypeItem.isDefiniteArticle() )
-								currentWordDefiniteArticleParameter = foundWordTypeItem.definiteArticleParameter();
-
-							if( foundWordTypeItem.isIndefiniteArticle() )
-								currentWordIndefiniteArticleParameter = foundWordTypeItem.indefiniteArticleParameter();
-							}
-
-						if( foundWordItem.isBasicVerb() )
-							isBasicVerb = true;
-
-						if( foundWordTypeItem.isConjunction() )
-							isConjunction = true;
-
-						if( foundWordTypeItem.isNumeral() )
-							isNumeral = true;
-
-						if( foundWordTypeItem.isVerb() )
-							// Multiple word ends at reaching a verb
-							isPartOfMultipleWord = false;
-
-						if( hasFoundSingularNoun )
-							{
-							isExactSingularNoun = true;
-
-							if( wasPreviousWordNumeral )
+							( tempWordTypeItem = foundWordItem.activeWordTypeItem( Constants.WORD_TYPE_POSSESSIVE_PRONOUN_SINGULAR ) ) != null )
 								{
-								// Typically for French: Skip singular/plural noun mismatch of word 'fils'
-								if( foundWordItem.addWordType( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString ).result != Constants.RESULT_OK )
-									return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add a plural noun word type item for word \"" + foundWordItem.anyWordTypeString() + "\"" );
+								// Force Chinese possessive pronoun
+								foundWordTypeNr = Constants.WORD_TYPE_POSSESSIVE_PRONOUN_SINGULAR;
+								foundWordTypeItem = tempWordTypeItem;
 								}
-							else
+
+							if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, ( hasFoundSingularNoun && wasPreviousWordFrenchNumeral ? Constants.WORD_TYPE_NOUN_PLURAL : foundWordTypeNr ), 0, null, foundWordItem ) ).result != Constants.RESULT_OK )
+								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create another read word" );
+
+							isExactWord = true;
+
+							switch( foundWordTypeNr )
 								{
-								if( foundWordItem.isMultipleWord() )
+								case Constants.WORD_TYPE_SYMBOL:
+									isSymbol = true;
+									break;
+
+								case Constants.WORD_TYPE_NUMERAL:
+									// Typically for French
+									if( !isChineseCurrentLanguage )
+										isFrenchNumeral = true;
+
+									break;
+
+								case Constants.WORD_TYPE_PROPER_NOUN:
+									hasFoundProperNoun = true;
+									break;
+
+								case Constants.WORD_TYPE_ADJECTIVE:
+									isAdjective = true;
+
+									switch( foundWordItem.wordParameter() )
+										{
+										case Constants.WORD_PARAMETER_ADJECTIVE_NO:
+											// Adjective 'no' can be used as article
+											isArticle = true;
+											break;
+
+										case Constants.WORD_PARAMETER_ADJECTIVE_CALLED_NEUTRAL:
+											isChineseAdjectiveCalled = true;
+											break;
+
+										case Constants.WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL:
+											hasFoundAdjectiveEvery = true;
+										}
+
+									if( !wasPreviousWordArticle )
+										currentWordAdjectiveParameter = foundWordTypeItem.adjectiveParameter();
+
+									break;
+
+								case Constants.WORD_TYPE_ADVERB:
+									isAdverb = true;
+									break;
+
+								case Constants.WORD_TYPE_ARTICLE:
+									isArticle = true;
+
+									if( foundWordTypeItem.isDefiniteArticle() )
+										{
+										hasFoundChineseDefiniteArticle = true;
+										currentWordDefiniteArticleParameter = foundWordTypeItem.definiteArticleParameter();
+										}
+									else
+										{
+										if( foundWordTypeItem.isIndefiniteArticle() )
+											currentWordIndefiniteArticleParameter = foundWordTypeItem.indefiniteArticleParameter();
+										}
+
+									break;
+
+								case Constants.WORD_TYPE_CONJUNCTION:
+									isConjunction = true;
+									break;
+
+								case Constants.WORD_TYPE_NOUN_SINGULAR:
+									hasFoundChineseSingularNoun = true;
+									break;
+
+								case Constants.WORD_TYPE_NOUN_PLURAL:
+									isExactPluralNoun = true;
+									break;
+
+								case Constants.WORD_TYPE_POSSESSIVE_DETERMINER_SINGULAR:
+								case Constants.WORD_TYPE_POSSESSIVE_DETERMINER_PLURAL:
+									isPossessiveDeterminer = true;
+									break;
+
+								case Constants.WORD_TYPE_POSSESSIVE_PRONOUN_SINGULAR:
+								case Constants.WORD_TYPE_POSSESSIVE_PRONOUN_PLURAL:
+									isPossessivePronoun = true;
+									break;
+
+								case Constants.WORD_TYPE_PREPOSITION:
+									isPreposition = true;
+									break;
+
+								case Constants.WORD_TYPE_VERB_SINGULAR:
+									// Multiple word ends at reaching a verb
+									isPartOfMultipleWord = false;
+
+									if( foundWordItem.isBasicVerb() )
+										{
+										isBasicVerb = true;
+										hasFoundChineseBasicVerb = true;
+										}
+									else
+										{
+										// Typically for Chinese
+										if( isChineseCurrentLanguage &&
+										foundWordItem.isImperativeVerbDisplay() )
+											isChineseImperativeVerbDisplay = true;
+										}
+
+									break;
+
+								case Constants.WORD_TYPE_SELECTION_WORD:
+									isSelection = true;
+								}
+
+							if( hasFoundSingularNoun )
+								{
+								isExactSingularNoun = true;
+
+								if( wasPreviousWordFrenchNumeral )
 									{
-									if( wasPreviousWordBasicVerb )
-										// Not the first part of a multiple word, but an adjective
-										isExactWord = false;
+									// Typically for French: Skip singular/plural noun mismatch of word 'fils'
+									if( foundWordItem.addWordType( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString ).result != Constants.RESULT_OK )
+										return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add a plural noun word type item for word \"" + foundWordItem.anyWordTypeString() + "\"" );
 									}
 								else
 									{
-									isPartOfMultipleWord = false;
-
-									if( previousWordAdjectiveParameter > Constants.NO_ADJECTIVE_PARAMETER ||
-									previousWordDefiniteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER ||
-									previousWordIndefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
+									if( foundWordItem.isMultipleWord() )
 										{
-										if( ( boolResult = foundWordTypeItem.setParametersOfSingularNoun( previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter ) ).result != Constants.RESULT_OK )
-											return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to set the definite article parameter of a singular noun" );
+										if( wasPreviousWordBasicVerb )
+											// Not the first part of a multiple word, but an adjective
+											isExactWord = false;
+										}
+									else
+										{
+										isPartOfMultipleWord = false;
 
-										if( boolResult.booleanValue )
-											hasFoundDifferentParameter_ = true;
+										if( previousWordAdjectiveParameter > Constants.NO_ADJECTIVE_PARAMETER )
+											{
+											if( !isChineseCurrentLanguage &&
+											foundWordTypeItem.setAdjectiveParameter( previousWordAdjectiveParameter ) != Constants.RESULT_OK )
+												return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to set the adjective parameter of a singular noun" );
+											}
+										else
+											{
+											if( previousWordDefiniteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER )
+												{
+												if( foundWordTypeItem.setDefiniteArticleParameter( previousWordDefiniteArticleParameter ) != Constants.RESULT_OK )
+													return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to set the definite article parameter of a singular noun" );
+												}
+											else
+												{
+												if( previousWordIndefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER &&
+												foundWordTypeItem.setIndefiniteArticleParameter( previousWordIndefiniteArticleParameter ) != Constants.RESULT_OK )
+													return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to set the indefinite article parameter of a singular noun" );
+												}
+											}
 										}
 									}
 								}
 							}
-
-						if( foundWordTypeItem.isPluralNoun() )
-							isExactPluralNoun = true;
-
-						if( foundWordTypeItem.isPossessiveDeterminer() )
-							isPossessiveDeterminer = true;
-
-						if( foundWordTypeItem.isPossessivePronoun() )
-							isPossessivePronoun = true;
-
-						if( foundWordTypeItem.isPreposition() )
-							isPreposition = true;
-
-						if( foundWordTypeItem.isSymbol() )
-							isSymbol = true;
 						}
 					}
 				// Allow multiple finds
@@ -464,13 +640,20 @@ class AdminReadCreateWords
 				if( !isBasicVerb &&
 				!isPartOfMultipleWord &&
 				!wasPreviousWordExactNoun &&
-				adminItem_.deleteReadItemsWithNonMatchingMultipleWordPart( currentWordOrderNr, readUserSentenceString.substring( readPosition ) ) != Constants.RESULT_OK )
+
+				// Delete obsolete read items, that where part of a mutliple word
+				adminItem_.deleteReadItemsWithNonMatchingMultipleWordPart( currentWordOrderNr, readUserSentenceString.substring( currentPosition ) ) != Constants.RESULT_OK )
 					return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to delete the read items with a non-matching multiple word part" );
 
+				isUpperChar = Character.isUpperCase( currentChar );
+
 				if( isFirstWord &&
-				Character.isUpperCase( readUserSentenceString.charAt( readPosition ) ) )
+				isUpperChar &&
+
+				( !isExactWord ||
+				wordStringLength == 1 ) )
 					{
-					if( ( shortResult = getWordTypeNr( false, wordStringLength, lowercaseWordString ) ).result != Constants.RESULT_OK )
+					if( ( shortResult = getWordTypeNr( false, false, wordStringLength, lowercaseWordString ) ).result != Constants.RESULT_OK )
 						return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to get the word type number of a lowercase word" );
 
 					if( ( wordTypeNr = shortResult.shortValue ) == Constants.NO_WORD_TYPE_NR )
@@ -485,52 +668,75 @@ class AdminReadCreateWords
 						if( ( foundWordItem = wordResult.foundWordItem ) != null &&
 						( foundWordTypeItem = wordResult.foundWordTypeItem ) != null )
 							{
+							hasFoundLowerCase = true;
 							foundWordTypeNr = foundWordTypeItem.wordTypeNr();
 
 							if( foundWordTypeNr == wordTypeNr &&
 							foundWordTypeItem.wordTypeLanguageNr() != currentLanguageNr &&
+
 							// Create same word type for different language
 							foundWordItem.addWordType( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, wordStringLength, lowercaseWordString ).result != Constants.RESULT_OK )
 								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add a word type with lowercase first letter" );
 
-							if( ( createReadWordResult = createReadWord( currentWordOrderNr, foundWordTypeNr, 0, null, foundWordItem ) ).result != Constants.RESULT_OK )
+							if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, foundWordTypeNr, 0, null, foundWordItem ) ).result != Constants.RESULT_OK )
 								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a read word with a word type with difference case of the first letter" );
 
-							if( foundWordTypeItem.isAdjective() )
+							switch( foundWordTypeNr )
 								{
-								isAdjective = true;
+								case Constants.WORD_TYPE_ADJECTIVE:
+									isAdjective = true;
 
-								if( wordResult.foundWordItem != null &&
-								// Adjective 'no' can be used as article
-								wordResult.foundWordItem.isAdjectiveNo() )
+									switch( foundWordItem.wordParameter() )
+										{
+										case Constants.WORD_PARAMETER_ADJECTIVE_NO:
+											// Adjective 'no' can be used as article
+											isArticle = true;
+											break;
+
+										case Constants.WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL:
+											hasFoundAdjectiveEvery = true;
+										}
+
+									if( !wasPreviousWordArticle )
+										currentWordAdjectiveParameter = foundWordTypeItem.adjectiveParameter();
+
+									break;
+
+								case Constants.WORD_TYPE_ARTICLE:
 									isArticle = true;
 
-								if( !wasPreviousWordArticle )
-									currentWordAdjectiveParameter = foundWordTypeItem.adjectiveParameter();
+									if( foundWordTypeItem.isDefiniteArticle() )
+										currentWordDefiniteArticleParameter = foundWordTypeItem.definiteArticleParameter();
+									else
+										{
+										if( foundWordTypeItem.isIndefiniteArticle() )
+											currentWordIndefiniteArticleParameter = foundWordTypeItem.indefiniteArticleParameter();
+										}
+
+									break;
+
+								case Constants.WORD_TYPE_POSSESSIVE_DETERMINER_SINGULAR:
+								case Constants.WORD_TYPE_POSSESSIVE_DETERMINER_PLURAL:
+									isPossessiveDeterminer = true;
+									break;
+
+								case Constants.WORD_TYPE_POSSESSIVE_PRONOUN_SINGULAR:
+								case Constants.WORD_TYPE_POSSESSIVE_PRONOUN_PLURAL:
+									isPossessivePronoun = true;
+									break;
+
+								case Constants.WORD_TYPE_VERB_SINGULAR:
+									isCapitalSingularVerb = true;
+
+									// Don't insert a break statement here
+
+								case Constants.WORD_TYPE_VERB_PLURAL:
+									isCapitalPluralVerb = true;
+									break;
+
+								case Constants.WORD_TYPE_SELECTION_WORD:
+									isSelection = true;
 								}
-
-							if( foundWordTypeItem.isArticle() )
-								{
-								isArticle = true;
-
-								if( foundWordTypeItem.isDefiniteArticle() )
-									currentWordDefiniteArticleParameter = foundWordTypeItem.definiteArticleParameter();
-
-								if( foundWordTypeItem.isIndefiniteArticle() )
-									currentWordIndefiniteArticleParameter = foundWordTypeItem.indefiniteArticleParameter();
-								}
-
-							if( foundWordTypeItem.isVerb() )
-								isCapitalVerb = true;
-
-							if( foundWordTypeItem.isSingularNoun() )
-								isCapitalSingularNoun = true;
-
-							if( foundWordTypeItem.isPossessiveDeterminer() )
-								isPossessiveDeterminer = true;
-
-							if( foundWordTypeItem.isPossessivePronoun() )
-								isPossessivePronoun = true;
 							}
 						}
 					// Allow multiple finds
@@ -549,29 +755,29 @@ class AdminReadCreateWords
 								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add word with lowercase letter" );
 
 							if( ( createdWordItem = wordResult.createdWordItem ) == null )
-								return adminItem_.startBoolResultError( 1, moduleNameString_, null, "The created word with lowercase letter is undefined" );
+								return adminItem_.startBoolResultError( 1, moduleNameString_, "The created word with lowercase letter is undefined" );
 
-							if( ( createReadWordResult = createReadWord( currentWordOrderNr, wordTypeNr, 0, null, createdWordItem ) ).result != Constants.RESULT_OK )
+							if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, wordTypeNr, 0, null, createdWordItem ) ).result != Constants.RESULT_OK )
 								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a read word with lowercase letter" );
 							}
 						}
 					}
 
-				// Proper name
-				if( ( ( !isExactWord &&
+				// Proper noun
+				if( ( !isExactWord &&
 
 				// Skip 'Undo' and 'Redo'
-				( !isCapitalVerb ||
+				( !isCapitalPluralVerb ||
 				wordStringLength == 1 ) ) ||
 
 				// Small letters, capital letters and numerals
 				( wasPreviousWordSymbol &&
 				wordStringLength == 1 &&
 
-				// Typically for the Spanish language: 'o' and 'y' are letters as well as conjunctions
+				// Typically for Spanish: 'o' and 'y' are letters as well as conjunctions
 				( isConjunction ||
 				// Typically for Dutch: 'u' is a letter as well as a possessive pronoun
-				isPossessivePronoun ) ) ) )
+				isPossessivePronoun ) ) )
 					{
 					isFirstFind = true;
 
@@ -590,21 +796,99 @@ class AdminReadCreateWords
 						// Skip if later runs have no result
 						foundWordTypeItem != null ) )
 							{
-							if( ( shortResult = getWordTypeNr( true, wordStringLength, exactWordString ) ).result != Constants.RESULT_OK )
+							isCheckingProperNoun = ( !isChineseCurrentLanguage ||
+													// Typically for Chinese
+													convertChineseNumbers( currentChar ) < 0 );
+
+							// Typically for Chinese
+							isForcingChineseProperNoun = ( isChineseCurrentLanguage &&
+
+															// One character
+															( ( wordStringLength == 1 &&
+
+															( isFirstWord ||
+
+															( hasFoundProperNoun &&
+															!wasPreviousWordPreposition &&
+
+															( ( hasFoundChineseBasicVerb &&
+															wasPreviousWordSymbol ) ||
+
+															( !hasFoundChineseBasicVerb &&
+
+															( wasPreviousWordConjunction ||
+															readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_ADJECTIVE_CALLED ) > 1 ) ) ||
+
+															( wordTypeNr != Constants.WORD_TYPE_NUMERAL &&
+															readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_PREPOSITION_OF ) > 1 ) ) ) ) ) ||
+
+															// Multiple characters
+															( wordStringLength > 1 &&
+
+															( isFirstWord ||
+															wasPreviousWordChineseAdjectiveCalled ||
+															wasPreviousWordConjunction ) &&
+
+															readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_COMMA ) < 0 &&
+															readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_NUMERAL_ALL ) < 0 &&
+															readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_VERB_HAS ) < 0 ) ) );
+
+							if( ( shortResult = getWordTypeNr( isCheckingProperNoun, isForcingChineseProperNoun, wordStringLength, exactWordString ) ).result != Constants.RESULT_OK )
 								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to get the word type number of an exact word" );
 
-							if( ( wordTypeNr = shortResult.shortValue ) == Constants.NO_WORD_TYPE_NR )
+							wordTypeNr = shortResult.shortValue;
+
+							// Typically for Chinese
+							if( isChineseCurrentLanguage &&
+							wordTypeNr == Constants.NO_WORD_TYPE_NR &&
+							!isSelection &&
+							wordStringLength > 1 )
+								{
+								if( hasFoundChineseSingularNoun )
+									wordTypeNr = Constants.WORD_TYPE_NOUN_SINGULAR;
+								else
+									{
+									if( wasPreviousWordChineseProperNoun ||
+
+									// First word
+									( isFirstWord &&
+
+									( readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_VERB_HAS ) > 1 ||
+									readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_CONJUNCTION_AND ) < 0 ) ) ||
+
+									( wasPreviousWordBasicVerb &&
+									readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_PREPOSITION_OF ) > 1 &&
+									readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_QUESTION_MARK ) < 0 ) )
+										wordTypeNr = Constants.WORD_TYPE_PROPER_NOUN;
+									}
+								}
+
+							if( wordTypeNr == Constants.NO_WORD_TYPE_NR )
 								isUndefinedWord = true;
 							else
 								{
+								// Not found
 								if( foundWordItem == null )
 									{
-									// Small letters, capital letters, numerals and proper names
+									// Small letter, capital letter, numeral, proper noun and singular noun
 									if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.NO_WORD_PARAMETER, wordTypeNr, wordStringLength, exactWordString ) ).result != Constants.RESULT_OK )
 										return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add an exact word" );
 
 									if( ( createdWordItem = wordResult.createdWordItem ) == null )
-										return adminItem_.startBoolResultError( 1, moduleNameString_, null, "I couldn't create an exact word" );
+										return adminItem_.startBoolResultError( 1, moduleNameString_, "I couldn't create an exact word" );
+
+									if( wordTypeNr == Constants.WORD_TYPE_PROPER_NOUN )
+										{
+										hasFoundProperNoun = true;
+										// Typically for Chinese
+										isChineseProperNoun = true;
+										}
+									else
+										{
+										// Typically for Chinese
+										if( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR )
+											hasFoundChineseSingularNoun = true;
+										}
 									}
 								else
 									{
@@ -622,13 +906,10 @@ class AdminReadCreateWords
 
 								if( createdWordItem != null )
 									{
-									if( ( createReadWordResult = createReadWord( currentWordOrderNr, wordTypeNr, 0, null, createdWordItem ) ).result != Constants.RESULT_OK )
+									if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, wordTypeNr, 0, null, createdWordItem ) ).result != Constants.RESULT_OK )
 										return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create an exact read word" );
 
 									isFirstFind = false;
-
-									if( wordTypeNr == Constants.WORD_TYPE_PROPER_NAME )
-										isProperName = true;
 									}
 								}
 							}
@@ -641,38 +922,64 @@ class AdminReadCreateWords
 				if( !isAdjective &&
 				!isArticle &&
 				!isBasicVerb &&
-				!isCapitalVerb &&
+				!isCapitalPluralVerb &&
 				!isConjunction &&
-				!isNumeral &&
 				!isPossessiveDeterminer &&
 				!isPossessivePronoun &&
 				!isSymbol &&
-				wordStringLength > 2 &&
 
-				( isExactSingularNoun ||
-				isUndefinedWord ||
-				wasPreviousWordArticle ) &&
+				( ( wordStringLength > 1 &&
+
+				( ( !isUpperChar &&
+				wasPreviousWordArticle ) ||
+
+				( isUndefinedWord &&
 
 				( isFirstWord ||
-				!Character.isUpperCase( readUserSentenceString.charAt( readPosition ) ) ) )
+				!isUpperChar ) ) ||
+
+				// Typically for English. Test files: "Boiling point" and "Condensation point"
+				( hasFoundAdjectiveEvery &&
+				isPreposition &&
+				wasPreviousWordCreatedSingularNoun ) ) ) ||
+
+				// Typically for Chinese
+				( isChineseCurrentLanguage &&
+				isFirstWord &&
+				wordTypeNr == Constants.WORD_TYPE_PROPER_NOUN &&
+
+				( readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_COMMA ) > 1 ||
+				readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_ADJECTIVE_EVERY ) > 1 ||
+				readUserSentenceString.indexOf( Constants.SYMBOL_CHINESE_NUMERAL_ALL ) > 1 ) ) ) )
 					{
-					if( ( wordEndingResult = currentLanguageWordItem.analyzeWordEnding( Constants.WORD_PLURAL_NOUN_ENDING, wordStringLength, exactWordString ) ).result != Constants.RESULT_OK )
+					if( ( wordEndingResult = adminItem_.analyzeWordEndingWithCurrentLanguage( Constants.WORD_PLURAL_NOUN_ENDING, wordStringLength, exactWordString ) ).result != Constants.RESULT_OK )
 						return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to check the plural noun ending" );
 
-					if( wasPreviousWordAdjective ||
+					hasFoundWordEnding = wordEndingResult.hasFoundWordEnding;
+
+					// First word can be a singular noun (without article). Example: "Water ...".
+					isUncountableGeneralizationNoun = ( isFirstWord &&
+														isUndefinedWord );
+
+					if( hasFoundProperNoun ||
+					hasFoundWordEnding ||
+					wasPreviousWordAdjective ||
 					wasPreviousWordArticle ||
-					wasPreviousWordBasicVerb ||
-					wasPreviousWordConjunction ||
-					wasPreviousWordNumeral ||
-					wasPreviousWordPossessiveDeterminer ||
+					wasPreviousWordCreatedSingularNoun ||
 					wasPreviousWordPreposition ||
-					wasPreviousWordProperName ||
-					wasPreviousWordSymbol ||
-					wordEndingResult.hasFoundWordEnding )
+
+					// Typically for Chinese
+					( isChineseCurrentLanguage && 
+
+					( isUncountableGeneralizationNoun ||
+					wasPreviousWordPossessiveDeterminer ||
+					wasPreviousWordChineseImperativeVerbDisplay ) ) )
 						{
-						if( wordEndingResult.hasFoundWordEnding )
+						if( hasFoundWordEnding )
 							{
-							if( ( wordResult = findWordTypeInAllWords( false, Constants.WORD_TYPE_NOUN_SINGULAR, wordEndingResult.singularNounWordString, null ) ).result != Constants.RESULT_OK )
+							singularNounWordString = ( hasFoundLowerCase ? wordEndingResult.wordString : wordEndingResult.wordString.toLowerCase() );
+
+							if( ( wordResult = findWordTypeInAllWords( false, Constants.WORD_TYPE_NOUN_SINGULAR, singularNounWordString, null ) ).result != Constants.RESULT_OK )
 								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to find if a singular noun word already exists" );
 
 							if( ( foundWordItem = wordResult.foundWordItem ) == null )
@@ -681,13 +988,13 @@ class AdminReadCreateWords
 									return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add a singular noun word" );
 
 								if( ( pluralNounWordItem = wordResult.createdWordItem ) == null )
-									return adminItem_.startBoolResultError( 1, moduleNameString_, null, "The created word item is undefined" );
+									return adminItem_.startBoolResultError( 1, moduleNameString_, "The created word item is undefined" );
 
-								if( pluralNounWordItem.addWordType( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.WORD_TYPE_NOUN_SINGULAR, wordEndingResult.singularNounWordStringLength, wordEndingResult.singularNounWordString ).result != Constants.RESULT_OK )
+								if( pluralNounWordItem.addWordType( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.WORD_TYPE_NOUN_SINGULAR, wordEndingResult.wordStringLength, singularNounWordString ).result != Constants.RESULT_OK )
 									return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add a singular noun word type item for plural noun word \"" + pluralNounWordItem.anyWordTypeString() + "\"" );
 
-								if( wordStringLength == wordEndingResult.singularNounWordStringLength &&
-								exactWordString.equals( wordEndingResult.singularNounWordString ) )
+								if( wordStringLength == wordEndingResult.wordStringLength &&
+								exactWordString.equals( singularNounWordString ) )
 									singularNounWordItem = pluralNounWordItem;
 								}
 							else
@@ -704,12 +1011,12 @@ class AdminReadCreateWords
 							}
 						else
 							{
-							if( !isCapitalSingularNoun &&
+							if( !isCapitalSingularVerb &&
 							!isExactSingularNoun )
 								{
-								// Typically for French: Singular and plural noun 'fils' are the same
-								if( wasPreviousWordNumeral )
+								if( wasPreviousWordFrenchNumeral )
 									{
+									// Typically for French: Singular and plural noun 'fils' are the same
 									if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString ) ).result != Constants.RESULT_OK )
 										return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add a singular noun word" );
 
@@ -718,12 +1025,18 @@ class AdminReadCreateWords
 								else
 									{
 									if( !isExactWord ||
+									// Typically for English. Test files: "Boiling point" and "Condensation point"
+									isPreposition ||
 									previousWordIndefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER )
 										{
 										if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_NOUN_SINGULAR, wordStringLength, exactWordString ) ).result != Constants.RESULT_OK )
 											return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add a singular noun word" );
 
+										isCreatedSingularNoun = true;
 										singularNounWordItem = wordResult.createdWordItem;
+
+										if( isUndefinedWord )
+											hasFoundChineseSingularNoun = true;
 										}
 									}
 								}
@@ -731,152 +1044,196 @@ class AdminReadCreateWords
 
 						if( singularNounWordItem != null &&
 						// Singular noun
-						( createReadWordResult = createReadWord( currentWordOrderNr, Constants.WORD_TYPE_NOUN_SINGULAR, 0, null, singularNounWordItem ) ).result != Constants.RESULT_OK )
+						( createReadWordResult = createReadWord( isUncountableGeneralizationNoun, currentWordOrderNr, Constants.WORD_TYPE_NOUN_SINGULAR, 0, null, singularNounWordItem ) ).result != Constants.RESULT_OK )
 							return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a singular noun read word" );
 
 						if( pluralNounWordItem != null &&
 
-						( wordEndingResult.hasFoundWordEnding ||
-						wasPreviousWordNumeral ) )
-							{
-							// Plural noun
-							if( ( createReadWordResult = createReadWord( currentWordOrderNr, Constants.WORD_TYPE_NOUN_PLURAL, 0, null, pluralNounWordItem ) ).result != Constants.RESULT_OK )
-								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a plural noun read word" );
-							}
+						( hasFoundWordEnding ||
+						wasPreviousWordFrenchNumeral ) &&
+
+						// Plural noun
+						( createReadWordResult = createReadWord( false, currentWordOrderNr, Constants.WORD_TYPE_NOUN_PLURAL, 0, null, pluralNounWordItem ) ).result != Constants.RESULT_OK )
+							return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a plural noun read word" );
 						}
 
 					// Step 7: Create an adjective
-					if( !isExactWord &&
+					if( isUndefinedWord &&
 					!wasPreviousWordUndefined &&
+					pluralNounWordItem == null &&
 
-					( wasPreviousWordConjunction ||
-					wasPreviousWordSymbol ||
-					pluralNounWordItem == null ) )
+					( isFirstWord ||
+					isSelection ||
+					wasPreviousWordBasicVerb ||
+					wasPreviousWordConjunction ||
+					wasPreviousWordExactNoun ||
+					wasPreviousWordSymbol ) )
 						{
 						if( ( wordResult = addWord( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_ADJECTIVE, wordStringLength, lowercaseWordString ) ).result != Constants.RESULT_OK )
 							return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add an adjective word" );
 
 						if( ( createdWordItem = wordResult.createdWordItem ) == null )
-							return adminItem_.startBoolResultError( 1, moduleNameString_, null, "The last created adjective word is undefined" );
+							return adminItem_.startBoolResultError( 1, moduleNameString_, "The last created adjective word is undefined" );
 
-						if( ( createReadWordResult = createReadWord( currentWordOrderNr, Constants.WORD_TYPE_ADJECTIVE, 0, null, createdWordItem ) ).result != Constants.RESULT_OK )
+						if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, Constants.WORD_TYPE_ADJECTIVE, 0, null, createdWordItem ) ).result != Constants.RESULT_OK )
 							return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create an adjective read word" );
 
 						isAdjective = true;
 						}
 					}
+
+				currentPosition += readWordResult.offset;
 				}
 
 			// Don't mark Spanish reversed question mark as first word
 			if( !isSymbol )
 				isFirstWord = false;
-
-			readPosition = nextWordPosition;
 			}
 		while( createReadWordResult.hasCreatedReadWord &&
-		readPosition < readUserSentenceStringLength );
-
-		// The read sentence isn't ended by a colon.
-		// So, add the missing colon.
-		if( !isSymbol &&
-		createReadWord( ++currentWordOrderNr, Constants.WORD_TYPE_SYMBOL, 0, null, adminItem_.predefinedWordItem( Constants.WORD_PARAMETER_SYMBOL_COLON ) ).result != Constants.RESULT_OK )
-			return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a read word for a missing colon" );
+		currentPosition < readUserSentenceStringLength );
 
 		// Has created all read words
 		boolResult.booleanValue = createReadWordResult.hasCreatedReadWord;
 		return boolResult;
 		}
 
-	protected ReadWordResultType readWordFromString( boolean isCheckingForGrammarDefinition, boolean isMergedWord, boolean isSkippingTextString, int startWordPosition, int minimumStringLength, String wordString )
+	protected ReadWordResultType readWordFromString( boolean isCheckingForGrammarDefinition, boolean isChineseCurrentLanguage, boolean isMergedWord, boolean isSkippingTextString, int minimumStringLength, String wordString )
 		{
 		boolean isText = false;
 		boolean isWordStartingWithDoubleQuote = false;
+		char currentChar;
+		char previousChar = Constants.SPACE_CHAR;
+		int bestMatchingChineseWordLength = 0;
+		int index = 0;
 		int wordStringLength;
-		int wordPosition = startWordPosition;
 		ReadWordResultType readWordResult = new ReadWordResultType();
 
 		if( wordString == null )
 			return adminItem_.startReadWordResultError( 1, moduleNameString_, "The given word string is undefined" );
 
-		wordStringLength = wordString.length();
+		if( ( wordStringLength = wordString.length() ) <= 0 )
+			return adminItem_.startReadWordResultError( 1, moduleNameString_, "The given word string is empty" );
 
-		if( wordPosition >= wordStringLength )
-			return adminItem_.startReadWordResultError( 1, moduleNameString_, "The given start word position is invalid" );
+		currentChar = wordString.charAt( 0 );
 
-		if( ( wordPosition = skipSpaces( wordPosition, wordString ) ) < wordStringLength )
+		if( isSymbol( currentChar ) &&
+
+		( !isCheckingForGrammarDefinition ||
+		!isGrammarDefinitionSymbol( currentChar ) ) )
 			{
-			readWordResult.startWordPosition = wordPosition;
+			index++;
+			readWordResult.wordLength++;
+			}
+		else
+			{
+			if( isSkippingTextString &&
+			currentChar == Constants.SYMBOL_DOUBLE_QUOTE )
+				isWordStartingWithDoubleQuote = true;
 
-			if( isSymbol( wordString.charAt( wordPosition ) ) &&
+			// Typically for Chinese
+			if( isChineseCurrentLanguage &&
+			!Character.isLowerCase( currentChar ) &&
+			!Character.isUpperCase( currentChar ) &&
+			!Character.isDigit( currentChar ) &&
 
-			( !isCheckingForGrammarDefinition ||
-			!isGrammarDefinitionSymbol( wordString.charAt( wordPosition ) ) ) )
+			// Chinese family definition
+			( ( currentChar != Constants.SYMBOL_CHINESE_NOUN_MAN &&
+			// Chinese family definition
+			currentChar != Constants.SYMBOL_CHINESE_NOUN_WOMAN &&
+			( bestMatchingChineseWordLength = bestMatchingChineseWordLength( wordString ) ) > 0 ) ||
+
+			( bestMatchingChineseWordLength = bestMatchingChineseWordLength( wordString ) ) > 1 ) )
 				{
-				wordPosition++;
-				readWordResult.wordLength++;
+				index = bestMatchingChineseWordLength;
+				readWordResult.wordLength = bestMatchingChineseWordLength;
 				}
 			else
 				{
-				if( isSkippingTextString &&
-				wordString.charAt( wordPosition ) == Constants.SYMBOL_DOUBLE_QUOTE )
-					isWordStartingWithDoubleQuote = true;
-
-				while( wordPosition < wordStringLength &&
+				while( index < wordStringLength &&
 
 				( isText ||
 				readWordResult.wordLength < minimumStringLength ||
 
-				( ( !Character.isWhitespace( wordString.charAt( wordPosition ) ) ||
+				// Grammar / interface file
+				( ( !isSymbol( currentChar ) ||
 
-				( isMergedWord &&
-				// Typically for French: Include spaces in grammar compound word definition
-				wordString.charAt( wordPosition ) == Constants.SPACE_CHAR ) ) &&
-
-				( !isSymbol( wordString.charAt( wordPosition ) ) ||
-
+				// Grammar / interface file
 				( isCheckingForGrammarDefinition &&
-				isGrammarDefinitionSymbol( wordString.charAt( wordPosition ) ) ) ) ) ) )
+				isGrammarDefinitionSymbol( currentChar ) ) ) &&
+
+				// Typically for French: Include spaces in grammar merged word definition
+				( ( isMergedWord &&
+				currentChar == Constants.SPACE_CHAR ) ||
+
+				( !Character.isWhitespace( currentChar ) &&
+
+				( isCheckingForGrammarDefinition ||
+				isText ||
+				index < 1 ||
+
+				// Grammar / interface file
+				currentChar == Constants.SYMBOL_UNDERSCORE ||
+				currentChar == Constants.SYMBOL_APOSTROPHE ||
+				currentChar == Constants.SYMBOL_MINUS ||
+				Character.isLowerCase( currentChar ) ||
+				Character.isUpperCase( currentChar ) ||
+				Character.isDigit( currentChar ) ||
+
+				// Typically for Chinese
+				( isChineseCurrentLanguage &&
+
+				( previousChar == Constants.SYMBOL_CHINESE_DOT ||
+				!isMatchingChineseWord( wordString.substring( index ) ) ) ) ) ) ) ) ) )
 					{
 					if( isCheckingForGrammarDefinition &&
-					isGrammarDefinitionSymbol( wordString.charAt( wordPosition ) ) )
+					isGrammarDefinitionSymbol( currentChar ) )
 						readWordResult.hasFoundGrammarDefinition = true;
 
-					if( wordString.charAt( wordPosition ) == Constants.SYMBOL_DOUBLE_QUOTE &&
+					if( currentChar == Constants.SYMBOL_DOUBLE_QUOTE &&
 
-					( wordPosition == 0 ||
+					( index == 0 ||
 					// Skip escaped double quote character
-					wordString.charAt( wordPosition - 1 ) != Constants.SYMBOL_BACK_SLASH ) )
+					previousChar != Constants.SYMBOL_BACK_SLASH ) )
 						isText = !isText;
 
-					wordPosition++;
 					readWordResult.wordLength++;
-					}
 
-				if( isWordStartingWithDoubleQuote &&
-				readWordResult.wordLength > 1 )
-					readWordResult.wordLength--;
-
-				if( isSkippingTextString &&
-				wordPosition > 1 &&
-				readWordResult.wordLength > 1 &&
-				wordString.charAt( wordPosition - 1 ) == Constants.QUERY_STRING_END_CHAR )
-					{
-					readWordResult.wordLength--;
-					readWordResult.startWordPosition++;
+					// Get new word string character
+					if( ++index < wordStringLength )
+						{
+						previousChar = currentChar;
+						currentChar = wordString.charAt( index );
+						}
 					}
 				}
 
-			wordPosition = skipSpaces( wordPosition, wordString );
+			if( isWordStartingWithDoubleQuote &&
+			readWordResult.wordLength > 1 )
+				readWordResult.wordLength--;
+
+			if( isSkippingTextString &&
+			index > 1 &&
+			readWordResult.wordLength > 1 &&
+			wordString.charAt( index - 1 ) == Constants.QUERY_STRING_END_CHAR )
+				{
+				readWordResult.wordLength--;
+				readWordResult.startWordPosition++;
+				}
 			}
 
-		readWordResult.nextWordPosition = wordPosition;
+		// Skip spaces
+		while( index < wordStringLength &&
+		Character.isWhitespace( wordString.charAt( index ) ) )
+			index++;
+
+		readWordResult.offset = index;
 		return readWordResult;
 		}
 
 	protected WordResultType addWord( boolean isLanguageWord, boolean isMultipleWord, short previousWordAdjectiveParameter, short previousWordDefiniteArticleParameter, short previousWordIndefiniteArticleParameter, short wordParameter, short wordTypeNr, int wordTypeStringLength, String wordTypeString )
 		{
-		boolean isProperName;
-		boolean isProperNamePrecededByDefiniteArticle;
+		boolean isProperNoun;
+		boolean isProperNounPrecededByDefiniteArticle;
 		boolean isNounWordType;
 		boolean wasPreviousWordAdjective = ( previousWordAdjectiveParameter > Constants.NO_ADJECTIVE_PARAMETER );
 		boolean wasPreviousWordDefiniteArticle = ( previousWordDefiniteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER );
@@ -912,23 +1269,23 @@ class AdminReadCreateWords
 			if( ( createdWordItem = wordResult.createdWordItem ) == null )
 				return adminItem_.startWordResultError( 1, moduleNameString_, "The last created word item is undefined" );
 
-			if( CommonVariables.firstWordItem == null )
+			if( GlobalVariables.firstWordItem == null )
 				// Remember the first word
-				CommonVariables.firstWordItem = createdWordItem;
+				GlobalVariables.firstWordItem = createdWordItem;
 
 			if( wordParameter > Constants.NO_WORD_PARAMETER )
 				{
 				// Remember the first predefined word
-				if( CommonVariables.firstPredefinedWordItem == null )
-					CommonVariables.firstPredefinedWordItem = createdWordItem;
+				if( GlobalVariables.firstPredefinedWordItem == null )
+					GlobalVariables.firstPredefinedWordItem = createdWordItem;
 
 				// Remember the last predefined word
-				CommonVariables.lastPredefinedWordItem = createdWordItem;
+				GlobalVariables.lastPredefinedWordItem = createdWordItem;
 				}
 
-			isProperName = ( wordTypeNr == Constants.WORD_TYPE_PROPER_NAME );
+			isProperNoun = ( wordTypeNr == Constants.WORD_TYPE_PROPER_NOUN );
 
-			isProperNamePrecededByDefiniteArticle = ( isProperName &&
+			isProperNounPrecededByDefiniteArticle = ( isProperNoun &&
 													wasPreviousWordDefiniteArticle );
 
 			isNounWordType = adminItem_.isNounWordType( wordTypeNr );
@@ -948,7 +1305,7 @@ class AdminReadCreateWords
 				{
 				if( wasPreviousWordDefiniteArticle &&
 
-				( isProperName ||
+				( isProperNoun ||
 				isNounWordType ) )
 					definiteArticleParameter = previousWordDefiniteArticleParameter;
 				}
@@ -962,19 +1319,17 @@ class AdminReadCreateWords
 					indefiniteArticleParameter = previousWordIndefiniteArticleParameter;
 				}
 
-			if( ( wordTypeResult = createdWordItem.addWordType( isMultipleWord, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordTypeStringLength, wordTypeString ) ).result != Constants.RESULT_OK )
+			if( ( wordTypeResult = createdWordItem.addWordType( isMultipleWord, isProperNounPrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordTypeStringLength, wordTypeString ) ).result != Constants.RESULT_OK )
 				return adminItem_.addWordResultError( 1, moduleNameString_, "I failed to add a word type to a new word" );
 
 			if( isNounWordType &&
 			indefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER &&
 			wordTypeResult.wordTypeItem != null &&
-			!wordTypeResult.wordTypeItem.isCorrectIndefiniteArticle( false, indefiniteArticleParameter ) )
-				{
-				if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, wordTypeString, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
-					return adminItem_.addWordResultError( 1, moduleNameString_, "I failed to write the 'different indefinite article used' interface notification" );
+			!wordTypeResult.wordTypeItem.isCorrectIndefiniteArticle( false, indefiniteArticleParameter ) &&
 
-				hasFoundDifferentParameter_ = true;
-				}
+			// Write 'different indefinite article used' notification
+			InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, wordTypeString, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
+				return adminItem_.addWordResultError( 1, moduleNameString_, "I failed to write the 'different indefinite article used' interface notification" );
 			}
 
 		wordResult.foundWordItem = wordResult.foundWordItem;
@@ -987,7 +1342,7 @@ class AdminReadCreateWords
 		WordItem currentWordItem;
 		WordResultType wordResult;
 
-		if( ( currentWordItem = ( previousWordItem == null ? CommonVariables.firstWordItem : previousWordItem.nextWordItem() ) ) != null )
+		if( ( currentWordItem = ( previousWordItem == null ? GlobalVariables.firstWordItem : previousWordItem.nextWordItem() ) ) != null )
 			{
 			do	{
 				if( ( wordResult = currentWordItem.findWordType( isCheckingAllLanguages, wordTypeNr, wordTypeString ) ).result != Constants.RESULT_OK )

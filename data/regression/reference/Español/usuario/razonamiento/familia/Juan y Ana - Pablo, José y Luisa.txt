@@ -3,12 +3,15 @@
 < Padres y hijos son parte de cada familia.
 < 
 * 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
-< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:

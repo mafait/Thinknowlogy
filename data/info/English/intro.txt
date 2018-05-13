@@ -1,30 +1,27 @@
 ﻿Display "------------------------------------------------------------------------------".
-Display " Thinknowlogy is the world's most advanced CNL reasoner:".
-#C++#Display " * Despite centuries of exhaustive research, the theory of evolution still".
-#Java#Display " • Despite centuries of exhaustive research, the theory of evolution still".
-Display " hasn't provided a satisfactory explanation for the origin of intelligence,".
+Display " Thinknowlogy is the world's most advanced Controlled Natural".
+Display " Language (CNL) reasoner. It is based on natural laws of intelligence.".
+Display " However, this logic of language is not described by scientists:".
+Display " * Despite exhaustive research, the theory of evolution still hasn't".
+Display " provided a satisfactory explanation for the origin of intelligence,".
 Display " language and laws of nature. Let alone, how they are related;".
-#C++#Display " * According to the biblical world view, God has created laws of nature to".
-#Java#Display " • According to the biblical world view, God has created laws of nature to".
-Display " make his creation run like clockwork. Being based on the Natural Laws of".
-Display " Intelligence embedded in Grammar, only Thinknowlogy implements the".
-#C++#Display " intelligent function of words like definite article \"the\", conjunction".
-#C++#Display " \"or\", possessive verb \"have\", and past tense verbs \"were\" and \"had\".".
-#Java#Display " intelligent function of words like definite article “the”, conjunction".
-#Java#Display " “or”, possessive verb “have”, and past tense verbs “were” and “had”.".
+Display " * According to the biblical world view, God has created laws of nature to".
+Display " make his creation run like clockwork. Being based on the Natural Laws".
+Display " of Intelligence embedded in Grammar, only Thinknowlogy implements the".
+#C++#Display " intelligent function of words like definite article \"the\", conjunction \"or\",".
+#C++#Display " possessive verb \"have\", and past tense verbs \"were\" and \"had\".".
+#Java#Display " intelligent function of words like definite article “the”, conjunction “or”,".
+#Java#Display " possessive verb “have”, and past tense verbs “were” and “had”.".
 Display "------------------------------------------------------------------------------".
 Display " The intelligent function of these words is demonstrated by:".
-#C++#Display " * Programming in Controlled Natural Language;".
-#C++#Display " * Reasoning in Controlled Natural Language:".
-#Java#Display " • Programming in Controlled Natural Language;".
-#Java#Display " • Reasoning in Controlled Natural Language:".
+Display " * Programming in Controlled Natural Language;".
+Display " * Reasoning in Controlled Natural Language:".
 Display "   - drawing conclusions (more advanced than scientific solutions),".
 Display "   - making assumptions (with self-adjusting level of uncertainty),".
 Display "   - asking questions (about gaps in the knowledge),".
 Display "   - detecting conflicts and some cases of semantic ambiguity,".
 Display "   - displaying of justification reports for the self-generated knowledge;".
-#C++#Display " * Multilingualism, proving: Natural languages have one common origin.".
-#Java#Display " • Multilingualism, proving: Natural languages have one common origin.".
+Display " * Multilingualism, proving: Natural languages have a common and logical origin.".
 Display "------------------------------------------------------------------------------".
 Display " I defy anyone to beat this reasoner: http://mafait.org/challenge/".
 Display "------------------------------------------------------------------------------".

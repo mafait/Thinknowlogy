@@ -1,6 +1,5 @@
-﻿Changes in Thinknowlogy 2017r2 (Science as it should be) compared to 2017r1 (Bursts of Laughter):
+﻿Changes in Thinknowlogy 2018r1 (ShangDi 上帝) compared to 2017r2 (Science as it should be):
 - Bug fixes;
-- Improved performance;
-- Improved Spanish reasoning;
-- More justifications are generated;
-- Second part of redesign. More justifications are created by the redesigned reasoning functions. See in classes AdminReasoningNew and AdminReasoningOld.
+- Added the Chinese language. (Not available in the C++ version);
+- Significantly improved performance on writing sentences;
+- Added two examples: "Boiling point" and "Condensation point".

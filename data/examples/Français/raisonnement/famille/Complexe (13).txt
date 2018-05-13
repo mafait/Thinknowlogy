@@ -1,4 +1,4 @@
-Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
 Pascal a 2 parents, appelés Olivier et Amélie.
 Julien est un enfant de Olivier et Amélie.
 Lorraine est un enfant de Olivier et Amélie.

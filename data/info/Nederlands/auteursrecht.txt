@@ -1,4 +1,4 @@
-﻿Toon " Copyright (C) 2009-2017, Menno Mafait".
-Toon " Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details type \"Toon de".
-Toon " garantie.\". Dit is vrije software en het is u toegestaan deze te verspreiden".
+﻿Toon " Copyright (C) 2009-2018, Menno Mafait".
+Toon " Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details type \"Toon".
+Toon " de garantie.\". Dit is vrije software en het is u toegestaan deze te verspreiden".
 Toon " onder bepaalde voorwaarden; type \"Toon de GPLv2-licentie.\" voor meer details.".

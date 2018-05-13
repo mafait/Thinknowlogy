@@ -1,9 +1,9 @@
-/*	Class:		CollectionResultType
+﻿/*	Class:		CollectionResultType
  *	Purpose:	To return collection variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -26,9 +26,7 @@ class CollectionResultType
 	// Protected variables
 
 	protected byte result;
-
 	protected int createdCollectionNr;
-
 	protected WordItem foundGeneralizationWordItem;
 
 	// Constructor
@@ -36,9 +34,7 @@ class CollectionResultType
 	CollectionResultType()
 		{
 		result = Constants.RESULT_OK;
-
 		createdCollectionNr = Constants.NO_COLLECTION_NR;
-
 		foundGeneralizationWordItem = null;
 		}
 	};

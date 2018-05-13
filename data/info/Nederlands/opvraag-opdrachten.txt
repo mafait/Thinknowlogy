@@ -1,40 +1,40 @@
 ﻿Toon "------------------------------------------------------------------------------".
-Toon " De beschikbare opvraag-opdrachten zijn:				Voorbeelden:".
+Toon " De beschikbare opvraag-opdrachten zijn:			Voorbeelden:".
 Toon "------------------------------------------------------------------------------".
-Toon " \~(zinNr)		item-identificatie				\~(123)".
-Toon " \~(zinNr,itemNr)	item-identificatie				\~(123,1)".
-Toon " \~(,itemNr)		item-identificatie				\~(,3)".
-Toon " \~[zinNr]		referentie naar een item-identificatie		\~[123]".
-Toon " \~[zinNr,itemNr]	referentie naar een item-identificatie		\~[123,1]".
-Toon " \~[,itemNr]		referentie naar een item-identificatie		\~[,3]".
-Toon " \~<adminListChar>	administrator-lijst				\~<W>".
-Toon " \~<wordListChar>	woordlijst					\~<w>".
-Toon " \~<listCharlistChar>	meerdere lijsten				\~<Xas>".
-Toon " \~'woord'		woord						\~'Nederlands'".
-Toon " \~`woordReferentie`	referentie naar een woord			\~`Nederlands`".
-Toon " \~\"tekst\"		tekst						\~\"zin\"".
+Toon " \~(zinNr)		item-identificatie		\~(123)".
+Toon " \~(zinNr,itemNr)	item-identificatie		\~(123,1)".
+Toon " \~(,itemNr)		item-identificatie		\~(,3)".
+Toon " \~[zinNr]		referentie naar een item-identificatie	\~[123]".
+Toon " \~[zinNr,itemNr]	referentie naar een item-identificatie	\~[123,1]".
+Toon " \~[,itemNr]		referentie naar een item-identificatie	\~[,3]".
+Toon " \~<adminListChar>	administrator-lijst		\~<W>".
+Toon " \~<wordListChar>	woordlijst			\~<w>".
+Toon " \~<listCharlistChar>	meerdere lijsten		\~<Xas>".
+Toon " \~'woord'		woord			\~'Nederlands'".
+Toon " \~`woordReferentie`	referentie naar een woord		\~`Nederlands`".
+Toon " \~\"tekst\"		tekst			\~\"zin\"".
 Toon "------------------------------------------------------------------------------".
 Toon " Beide jokers '?' en '*' kunnen gebruikt worden in:".
-Toon "			* woorden					\~'Ned?rlands'".
-Toon "			* referenties naar een woord			\~`Ned*lands`".
-Toon "			* teksten					\~\"gr?m*\"".
+Toon "  * woorden					\~'Ned?rlands'".
+Toon "  * referenties naar een woord				\~`Ned*lands`".
+Toon "  * teksten					\~\"gr?m*\"".
 Toon "------------------------------------------------------------------------------".
-Toon " Lege item-specificatie toont alle items				\~()".
-Toon " Lege lijst-specificatie toont alle items				\~<>".
+Toon " Lege item-specificatie toont alle items			\~()".
+Toon " Lege lijst-specificatie toont alle items			\~<>".
 Toon "------------------------------------------------------------------------------".
-Toon " Toevoegen van '#' geeft telfunctionaliteit				\~#(123)".
-Toon " Toevoegen van '+' selecteert alleen actieve items			\~+(123)".
-Toon " Toevoegen van '=' selecteert alleen inactieve items			\~=(123)".
+Toon " Toevoegen van '#' geeft telfunctionaliteit			\~#(123)".
+Toon " Toevoegen van '+' selecteert alleen actieve items		\~+(123)".
+Toon " Toevoegen van '=' selecteert alleen inactieve items		\~=(123)".
 Toon " Toevoegen van '$' selecteert alleen gearchiveerde items		\~$(123)".
-Toon " Toevoegen van '%' selecteert alleen vervangen items			\~%(123)".
-Toon " Toevoegen van '&' selecteert alleen verwijderde items			\~&(123)".
+Toon " Toevoegen van '%' selecteert alleen vervangen items		\~%(123)".
+Toon " Toevoegen van '&' selecteert alleen verwijderde items		\~&(123)".
 Toon " Aaneenschakeling van opvraag-opdrachten geeft 'EN'-functionaliteit	\~(123)<s>".
 Toon " Toevoegen van '*' selecteert ook gelinkte verantwoordings-items	\~*'Laura'<s>`dochter`".
 Toon " Toevoegen van '**' selecteert ook verantwoordings-specificaties	\~**'Laura'<s>`dochter`".
 Toon "------------------------------------------------------------------------------".
-Toon " Toevoegen van ' aan het einde, toont alleen woorden			\~(123)'".
+Toon " Toevoegen van ' aan het einde, toont alleen woorden		\~(123)'".
 Toon " Toevoegen van ` aan het einde, toont alleen woordreferenties		\~(123)`".
-Toon " Toevoegen van \" aan het einde, toont alleen teksten			\~(123)\"".
+Toon " Toevoegen van \" aan het einde, toont alleen teksten		\~(123)\"".
 Toon " Toevoegen van '' toon alleen woorden, op de volgende regel		\~(123)''".
 Toon " Toevoegen van `` toon alleen woordreferenties, op de volgende regel	\~(123)``".
 Toon " Toevoegen van \"\" toon alleen teksten, op de volgende regel		\~(123)\"\"".

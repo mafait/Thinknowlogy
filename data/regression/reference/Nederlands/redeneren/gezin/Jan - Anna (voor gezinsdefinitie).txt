@@ -11,7 +11,7 @@
 < Paul heeft 2 ouder [meervoud van 'ouder' is onbekend], genaamd Anna en Jan.
 < 
 * 
-* U heeft meervoudige zelfstandige naamwoord "ouders" ingevoerd, dat onbekend was voor mij.
+* U hebt meervoudige zelfstandige naamwoord "ouders" ingevoerd, dat onbekend was voor mij.
 * 
 * Mijn conclusies:
 < Ouders en kinderen zijn deel van ieder gezin.

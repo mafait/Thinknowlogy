@@ -1,0 +1,5 @@
+﻿Ouders en kinderen zijn deel van ieder gezin.
+Iedere persoon is een man of een vrouw.
+# Een vraag zal worden gegenereerd, omdat zelfstandig naamwoorden "man" en "vrouw" niet gedefinieerd zijn als mannelijk and vrouwelijk.
+Anna is een persoon.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

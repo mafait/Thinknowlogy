@@ -1,9 +1,9 @@
-/*	Class:			SelectionItem
+﻿/*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -98,11 +98,11 @@ class SelectionItem : private Item
 
 	// Constructor
 
-	SelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	SelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
 		size_t specificationStringLength;
 
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "SelectionItem", commonVariables, inputOutput, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "SelectionItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -176,15 +176,15 @@ class SelectionItem : private Item
 
 		if( specificationString_ != NULL )
 			{
-			if( commonVariables()->hasFoundQuery )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+			if( globalVariables()->hasFoundQuery )
+				strcat( globalVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( globalVariables()->queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, specificationString_ );
+			globalVariables()->hasFoundQuery = true;
+			strcat( globalVariables()->queryString, specificationString_ );
 			}
 		}
 
@@ -195,26 +195,26 @@ class SelectionItem : private Item
 
 		statusString[0] = statusChar();
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( generalizationWordItem_ != NULL &&
 		( wordString = generalizationWordItem_->wordTypeString( true, generalizationWordTypeNr_ ) ) != NULL )
 			{
-			if( commonVariables()->hasFoundQuery )
+			if( globalVariables()->hasFoundQuery )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
+			globalVariables()->hasFoundQuery = true;
 			strcat( queryString, wordString );
 			}
 
 		if( specificationWordItem_ != NULL &&
 		( wordString = specificationWordItem_->wordTypeString( true, specificationWordTypeNr_ ) ) != NULL )
 			{
-			if( commonVariables()->hasFoundQuery ||
+			if( globalVariables()->hasFoundQuery ||
 			strlen( queryString ) > 0 )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
@@ -222,14 +222,14 @@ class SelectionItem : private Item
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
+			globalVariables()->hasFoundQuery = true;
 			strcat( queryString, wordString );
 			}
 
 		if( relationWordItem_ != NULL &&
 		( wordString = relationWordItem_->wordTypeString( true, specificationWordTypeNr_ ) ) != NULL )
 			{
-			if( commonVariables()->hasFoundQuery ||
+			if( globalVariables()->hasFoundQuery ||
 			strlen( queryString ) > 0 )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
@@ -237,7 +237,7 @@ class SelectionItem : private Item
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
+			globalVariables()->hasFoundQuery = true;
 			strcat( queryString, wordString );
 			}
 		}
@@ -300,7 +300,7 @@ class SelectionItem : private Item
 
 		itemBaseToString( queryWordTypeNr );
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( isAction_ )
 			{
@@ -491,7 +491,7 @@ class SelectionItem : private Item
 	virtual BoolResultType findMatchingWordReferenceString( char *queryString )
 		{
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findMatchingWordReferenceString";
 
 		if( generalizationWordItem_ != NULL &&
 		( boolResult = generalizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )

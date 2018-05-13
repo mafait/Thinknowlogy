@@ -1,11 +1,11 @@
 ﻿Un tour est A, B, C, D, E, F ou G.
-Mon tour est D.
+Sien tour est D.
 Est Olivier mon père?
 
-Est le tour A?
-Est le tour un père?
-#Est le tour un certain nombre?
-Est le tour un nombre?
+Est sien tour A?
+Est sien tour un père?
+#Est sien tour un certain nombre?
+Est sien tour un nombre?
 
 #Est un tour un certain nombre?
 Est un tour un nombre?

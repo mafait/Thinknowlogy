@@ -1,0 +1,18 @@
+﻿* 
+* 我的结论：
+< 美国的城市叫波士顿。
+< 
+* 
+* The word "波士顿" is semantically ambiguous. There are multiple instances of this entity.
+* 
+* 我的结论：
+< 英国的城市叫波士顿。
+< 
+* 
+* 你的信息：
+< 波士顿是美国和英国的城市。
+* 
+* 相关信息：
+< 英国的城市叫波士顿。
+< 美国的城市叫波士顿。
+< 

@@ -1,8 +1,8 @@
-/*	Class:		InputOutput
+﻿/*	Class:		InputOutput
  *	Purpose:	To read and write user information
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -50,7 +50,6 @@ class InputOutput
 	friend class List;
 	friend class SpecificationItem;
 	friend class SpecificationList;
-	friend class WordItem;
 	friend class WordQuestion;
 	friend class WordSpecification;
 	friend class WordTypeItem;
@@ -66,11 +65,13 @@ class InputOutput
 	unsigned short lastUsedPromptTypeNr_;
 
 	size_t currentPosition_;
-	size_t progressLength_;
-	size_t statusLength_;
+	size_t progressBarLength_;
+	size_t progressTextStringLength_;
 
 	unsigned int maximumProgress_;
 	unsigned int previousProgress_;
+
+	WordItem *adminWordItem_;
 
 	char currentProgressString_[MAX_SENTENCE_STRING_LENGTH];
 	char currentStatusString_[MAX_SENTENCE_STRING_LENGTH];
@@ -83,25 +84,25 @@ class InputOutput
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_LENGTH];
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
 
-	CommonVariables *commonVariables_;
+	GlobalVariables *globalVariables_;
 
 
 	// Private functions
 
-	void clearStatus()
+	void clearProgressText()
 		{
-		if( statusLength_ > 0 )
+		if( progressTextStringLength_ > 0 )
 			{
 			addStringToOutput( true, false, false, CARRIAGE_RETURN_STRING );
 
-			for( size_t i = 0; i < statusLength_; i++ )
+			for( size_t i = 0; i < progressTextStringLength_; i++ )
 				addStringToOutput( true, false, false, SPACE_STRING );
 
 			addStringToOutput( true, false, true, CARRIAGE_RETURN_STRING );
 
-			statusLength_ = 0;
+			progressTextStringLength_ = 0;
 			currentPosition_ = 0;
 			strcpy( currentStatusString_, EMPTY_STRING );
 			}
@@ -208,13 +209,12 @@ class InputOutput
 				character == SYMBOL_DOUBLE_COLON ||
 				character == SYMBOL_EXCLAMATION_MARK ||
 #ifdef _MSC_VER
-				character == SYMBOL_EXCLAMATION_MARK_INVERTED ||
+				character == SYMBOL_SPANISH_INVERTED_EXCLAMATION_MARK ||
 #endif
 				character == SYMBOL_QUESTION_MARK ||
 #ifdef _MSC_VER
-				character == SYMBOL_QUESTION_MARK_INVERTED ||
+				character == SYMBOL_SPANISH_INVERTED_QUESTION_MARK ||
 #endif
-				character == SYMBOL_PIPE ||
 				character == SYMBOL_SLASH ||
 				character == SYMBOL_BACK_SLASH ||
 				character == SYMBOL_CLOSE_ROUNDED_BRACKET ||
@@ -227,12 +227,13 @@ class InputOutput
 		{
 		bool isPrintingPrompt = true;
 		bool isStartingNewLine = false;
-		size_t wordPosition;
+		size_t firstAlphaPosition = 0;
 		size_t i = 0;
 		size_t length = 0;
-		size_t firstAlphaPosition = 0;
+		size_t promptStringLength;
+		size_t wordPosition;
 		char textString[MAX_SENTENCE_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeText";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeText";
 
 		if( writeString != NULL )
 			{
@@ -272,10 +273,11 @@ class InputOutput
 				leftWidth > NO_CENTER_WIDTH )
 					{
 					if( currentPosition_ == 0 &&
-					promptString != NULL )
+					promptString != NULL &&
+					( promptStringLength = strlen( promptString ) ) > 0 )
 						{
 						isPrintingPrompt = false;
-						currentPosition_ = ( strlen( promptString ) - 1 );
+						currentPosition_ = ( promptStringLength - 1 );
 						addStringToOutput( isSkippingInTestFile, isError, false, promptString );
 						}
 
@@ -294,22 +296,10 @@ class InputOutput
 								}
 							while( i < printStringLength &&
 							!isspace( textString[i] ) &&
-							!isBreakCharacter( textString[i] ) &&
-
-							( !isSkippingInTestFile ||
-							( strlen( promptString ) + length ) < NUMBER_OF_CONSOLE_COLUMNS ) );
+							!isBreakCharacter( textString[i] ) );
 
 							if( i < printStringLength &&
-							isBreakCharacter( textString[i] ) &&
 
-							( !isSkippingInTestFile ||
-							( strlen( promptString ) + length ) < NUMBER_OF_CONSOLE_COLUMNS ) )
-								{
-								i++;
-								length++;
-								}
-
-							if( i < printStringLength &&
 							( textString[i] == NEW_LINE_CHAR ||
 							textString[i] == CARRIAGE_RETURN_CHAR ) )
 								length--;
@@ -318,11 +308,9 @@ class InputOutput
 							}
 
 						if( i < printStringLength &&
-						( textString[i] == NEW_LINE_CHAR ||
-						textString[i] == CARRIAGE_RETURN_CHAR ||
 
-						( isSkippingInTestFile &&
-						( currentPosition_ + length + 1 ) >= NUMBER_OF_CONSOLE_COLUMNS ) ) )
+						( textString[i] == NEW_LINE_CHAR ||
+						textString[i] == CARRIAGE_RETURN_CHAR ) )
 							{
 							if( textString[i] == NEW_LINE_CHAR ||
 							textString[i] == CARRIAGE_RETURN_CHAR )
@@ -356,7 +344,7 @@ class InputOutput
 
 							isPrintingPrompt = false;
 							currentPosition_ = ( ( isPrintingPrompt &&
-												strlen( promptString ) > 0 ? strlen( promptString ) : strlen( INPUT_OUTPUT_PROMPT_EMPTY_STRING ) ) - 1 );
+												( promptStringLength = strlen( promptString ) ) > 0 ? promptStringLength : strlen( INPUT_OUTPUT_PROMPT_EMPTY_STRING ) ) - 1 );
 							}
 
 						while( leftWidth > NO_CENTER_WIDTH )
@@ -404,26 +392,26 @@ class InputOutput
 				{
 				sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tThe given text string is empty.\n", moduleNameString_, functionNameString );
 				addStringToOutput( true, true, true, tempErrorString_ );
-				commonVariables_->result = RESULT_ERROR;
+				globalVariables_->result = RESULT_ERROR;
 				}
 			}
 		else
 			{
 			sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tThe given write string is undefined.\n", moduleNameString_, functionNameString );
 			addStringToOutput( true, true, true, tempErrorString_ );
-			commonVariables_->result = RESULT_ERROR;
+			globalVariables_->result = RESULT_ERROR;
 			}
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char writeText( bool isSkippingInTestFile, bool isFirstCharacterToUpperCase, bool isReturningToPosition, unsigned short promptTypeNr, size_t queryWidth, const char *promptString, const char *textString )
 		{
-		size_t widthDifference;
-		size_t textStringLength;
 		size_t leftWidth = NO_CENTER_WIDTH;
 		size_t rightWidth = NO_CENTER_WIDTH;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeText";
+		size_t textStringLength;
+		size_t widthDifference;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeText";
 
 		if( textString != NULL )
 			{
@@ -432,17 +420,17 @@ class InputOutput
 			if( textStringLength > 0 ||
 			queryWidth > NO_CENTER_WIDTH )
 				{
-				clearStatus();
 				clearProgress();
+				clearProgressText();
 
 				if( promptTypeNr == INPUT_OUTPUT_PROMPT_WARNING )
-					commonVariables_->hasDisplayedWarning = true;
+					globalVariables_->hasDisplayedWarning = true;
 				else
 					{
 					if( promptTypeNr == INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY )
-						commonVariables_->hasDisplayedIntegrityWarning = true;
+						globalVariables_->hasDisplayedIntegrityWarning = true;
 					else
-						commonVariables_->hasDisplayedMessage = true;
+						globalVariables_->hasDisplayedMessage = true;
 					}
 
 				if( queryWidth > NO_CENTER_WIDTH &&
@@ -467,16 +455,16 @@ class InputOutput
 			else
 				{
 				displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The given write string is empty" );
-				commonVariables_->result = RESULT_ERROR;
+				globalVariables_->result = RESULT_ERROR;
 				}
 			}
 		else
 			{
 			displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The given write string is undefined" );
-			commonVariables_->result = RESULT_ERROR;
+			globalVariables_->result = RESULT_ERROR;
 			}
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	const char *getPromptString( unsigned short promptTypeNr )
@@ -513,7 +501,7 @@ class InputOutput
 	protected:
 	// Constructor
 
-	InputOutput( CommonVariables *commonVariables )
+	InputOutput( GlobalVariables *globalVariables, WordItem *adminWordItem )
 		{
 		// Private constructed variables
 
@@ -524,8 +512,8 @@ class InputOutput
 		lastUsedPromptTypeNr_ = INPUT_OUTPUT_PROMPT_QUERY;
 
 		currentPosition_ = 0;
-		progressLength_ = 0;
-		statusLength_ = 0;
+		progressBarLength_ = 0;
+		progressTextStringLength_ = 0;
 
 		maximumProgress_ = 0;
 		previousProgress_ = 0;
@@ -544,9 +532,15 @@ class InputOutput
 
 		// Checking private initialized variables
 
-		if( ( commonVariables_ = commonVariables ) == NULL )
+		if( ( globalVariables_ = globalVariables ) == NULL )
 			{
-			sprintf( tempErrorString_, "\nClass:%s\nFunction:\t%s\nError:\tThe given common variables is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
+			sprintf( tempErrorString_, "\nClass:%s\nFunction:\t%s\nError:\tThe given global variables is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
+			addStringToOutput( true, true, true, tempErrorString_ );
+			}
+
+		if( ( adminWordItem_ = adminWordItem ) == NULL )
+			{
+			sprintf( tempErrorString_, "\nClass:%s\nFunction:\t%s\nError:\tThe given admin word Item is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
 			addStringToOutput( true, true, true, tempErrorString_ );
 			}
 		}
@@ -556,7 +550,7 @@ class InputOutput
 
 	void clearProgress()
 		{
-		if( progressLength_ > 0 )
+		if( progressBarLength_ > 0 )
 			{
 			addStringToOutput( true, false, false, CARRIAGE_RETURN_STRING );
 
@@ -565,7 +559,7 @@ class InputOutput
 
 			addStringToOutput( true, false, true, CARRIAGE_RETURN_STRING );
 
-			progressLength_ = 0;
+			progressBarLength_ = 0;
 			currentPosition_ = 0;
 			previousProgress_ = 0;
 			strcpy( currentProgressString_, EMPTY_STRING );
@@ -579,14 +573,14 @@ class InputOutput
 
 	void displayError( char functionListChar, const char *classNameString, const char *parentClassNameString, const char *wordNameString, const char *functionString, const char *errorString )
 		{
-		signed char originalErrorResult = commonVariables_->result;
+		signed char originalErrorResult = globalVariables_->result;
 
 		strcpy( errorString_, EMPTY_STRING );
 
 		// First error message
-		if( commonVariables_->result == RESULT_OK )
+		if( globalVariables_->result == RESULT_OK )
 			{
-			sprintf( tempErrorString_, "%s%c%u%c%u%c%s", INPUT_OUTPUT_ERROR_CURRENT_ID_START_STRING, QUERY_ITEM_START_CHAR, commonVariables_->currentSentenceNr, QUERY_SEPARATOR_CHAR, commonVariables_->currentSentenceItemNr, QUERY_ITEM_END_CHAR, INPUT_OUTPUT_ERROR_CURRENT_ID_END_STRING );
+			sprintf( tempErrorString_, "%s%c%u%c%u%c%s", INPUT_OUTPUT_ERROR_CURRENT_ID_START_STRING, QUERY_ITEM_START_CHAR, globalVariables_->currentSentenceNr, QUERY_SEPARATOR_CHAR, globalVariables_->currentSentenceItemNr, QUERY_ITEM_END_CHAR, INPUT_OUTPUT_ERROR_CURRENT_ID_END_STRING );
 			strcat( errorString_, tempErrorString_ );
 			}
 
@@ -629,8 +623,8 @@ class InputOutput
 
 		strcat( errorString_, COLON_STRING );
 
-		originalErrorResult = commonVariables_->result;
-		commonVariables_->result = RESULT_OK;
+		originalErrorResult = globalVariables_->result;
+		globalVariables_->result = RESULT_OK;
 
 		if( writeText( true, true, true, INPUT_OUTPUT_PROMPT_WARNING, NO_CENTER_WIDTH, NULL, errorString_ ) != RESULT_OK )
 			{
@@ -638,74 +632,20 @@ class InputOutput
 			addStringToOutput( true, true, true, tempErrorString_ );
 			}
 
-		commonVariables_->result = originalErrorResult;
+		globalVariables_->result = originalErrorResult;
 		}
 
-	void displayStatus( unsigned short interfaceParameter )
+	void displayProgressBar( unsigned int currentProgress )
 		{
-		WordItem *currentLanguageWordItem;
-		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
-
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) == NULL )
-			displayStatus( NO_LANGUAGE_WORD_FOUND );
-		else
-			{
-			sprintf( interfaceString, "%s...", currentLanguageWordItem->interfaceString( interfaceParameter ) );
-			displayStatus( interfaceString );
-			}
-		}
-
-	void displayStatus( const char *newStatusString )
-		{
-		size_t oldStatusLength = statusLength_;
-		char outputString[MAX_SENTENCE_STRING_LENGTH];
-		char statusString[MAX_SENTENCE_STRING_LENGTH];
-
-		if( progressLength_ == 0 )
-			{
-			if( newStatusString == NULL )
-				clearStatus();
-			else
-				{
-				if( ( statusLength_ = strlen( newStatusString ) ) < NUMBER_OF_CONSOLE_COLUMNS )
-					strcpy( statusString, newStatusString );
-				else
-					{
-					statusLength_ = ( NUMBER_OF_CONSOLE_COLUMNS - 1 );
-					strcpy( statusString, EMPTY_STRING );
-					strncat( statusString, newStatusString, statusLength_ );
-					}
-
-				// Different string
-				if( strcmp( statusString, currentStatusString_ ) != 0 )
-					{
-					if( currentPosition_ > 0 )
-						returnOutputToPosition( false, false, true );
-
-					sprintf( outputString, "\r%s", statusString );
-					addStringToOutput( true, false, false, outputString );
-
-					for( size_t i = statusLength_; i < oldStatusLength; i++ )
-						addStringToOutput( true, false, false, SPACE_STRING );
-
-					addStringToOutput( true, false, true, CARRIAGE_RETURN_STRING );
-					strcpy( currentStatusString_, statusString );
-					}
-				}
-			}
-		}
-
-	void displayProgress( unsigned int currentProgress )
-		{
-		char outputString[MAX_SENTENCE_STRING_LENGTH];
+		char outputString[ENTENDED_SENTENCE_STRING_LENGTH];
 		unsigned int progress;
 
-		if( progressLength_ > 0 )
+		if( progressBarLength_ > 0 )
 			{
 			if( currentProgress > maximumProgress_ )
 				currentProgress = maximumProgress_;
 
-			progress = (unsigned int)( (long double)( progressLength_ ) * (long double)( currentProgress ) / maximumProgress_ );
+			progress = (unsigned int)( (long double)( progressBarLength_ ) * (long double)( currentProgress ) / maximumProgress_ );
 
 			if( currentProgress == 0 ||
 			progress < previousProgress_ )
@@ -714,7 +654,7 @@ class InputOutput
 				sprintf( outputString, "\r%s: ", currentProgressString_ );
 				addStringToOutput( true, false, false, outputString );
 
-				for( size_t i = 0; i < progressLength_; i++ )
+				for( size_t i = 0; i < progressBarLength_; i++ )
 					addStringToOutput( true, false, false, COLON_STRING );
 
 				sprintf( outputString, "\r%s ", currentProgressString_ );
@@ -732,32 +672,66 @@ class InputOutput
 			}
 		}
 
+	void displayProgressText( const char *newProgressTextString )
+		{
+		size_t oldProgressTextString = progressTextStringLength_;
+		char outputString[MAX_SENTENCE_STRING_LENGTH];
+		char progressTextString[MAX_SENTENCE_STRING_LENGTH];
+
+		if( progressBarLength_ == 0 )
+			{
+			if( newProgressTextString == NULL )
+				clearProgressText();
+			else
+				{
+				if( ( progressTextStringLength_ = strlen( newProgressTextString ) ) < NUMBER_OF_CONSOLE_COLUMNS )
+					strcpy( progressTextString, newProgressTextString );
+				else
+					{
+					progressTextStringLength_ = ( NUMBER_OF_CONSOLE_COLUMNS - 1 );
+					strcpy( progressTextString, EMPTY_STRING );
+					strncat( progressTextString, newProgressTextString, progressTextStringLength_ );
+					}
+
+				// Different string
+				if( strcmp( progressTextString, currentStatusString_ ) != 0 )
+					{
+					if( currentPosition_ > 0 )
+						returnOutputToPosition( false, false, true );
+
+					sprintf( outputString, "\r%s", progressTextString );
+					addStringToOutput( true, false, false, outputString );
+
+					for( size_t i = progressTextStringLength_; i < oldProgressTextString; i++ )
+						addStringToOutput( true, false, false, SPACE_STRING );
+
+					addStringToOutput( true, false, true, CARRIAGE_RETURN_STRING );
+					strcpy( currentStatusString_, progressTextString );
+					}
+				}
+			}
+		}
+
 	void startProgress( unsigned short interfaceParameter1, unsigned short shortNumber, unsigned short interfaceParameter2, unsigned int startProgress, unsigned int maxProgress )
 		{
-		WordItem *currentLanguageWordItem;
-		char newProgressString[MAX_SENTENCE_STRING_LENGTH];
+		char newProgressString[ENTENDED_SENTENCE_STRING_LENGTH];
 
-		if( statusLength_ > 0 )
-			clearStatus();
+		if( progressTextStringLength_ > 0 )
+			clearProgressText();
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) == NULL )
-			strcpy( newProgressString, NO_LANGUAGE_WORD_FOUND );
-		else
-			{
-			sprintf( newProgressString, "%s%u%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), shortNumber, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
-			displayStatus( newProgressString );
-			}
+		sprintf( newProgressString, "%s%u%s", adminWordItem_->interfaceString( interfaceParameter1 ), shortNumber, adminWordItem_->interfaceString( interfaceParameter2 ) );
+		displayProgressText( newProgressString );
 
 		strcpy( currentProgressString_, EMPTY_STRING );
 		strncat( currentProgressString_, newProgressString, NUMBER_OF_CONSOLE_COLUMNS - 4 );
 
 		maximumProgress_ = maxProgress;
-		progressLength_ = ( NUMBER_OF_CONSOLE_COLUMNS - 3 - strlen( currentProgressString_ ) );
+		progressBarLength_ = ( NUMBER_OF_CONSOLE_COLUMNS - 3 - strlen( currentProgressString_ ) );
 
 		if( currentPosition_ > 0 )
 			returnOutputToPosition( false, false, true );
 
-		displayProgress( startProgress );
+		displayProgressBar( startProgress );
 		}
 
 	bool hasReadLine()
@@ -803,7 +777,7 @@ class InputOutput
 		// MS Visual Studio
 		wchar_t inputWideString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_WIDE_STRING;
 #endif
-		char functionNameString[FUNCTION_NAME_LENGTH] = "readLine";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readLine";
 
 		hasReadLine_ = false;
 		lastDisplayedInterfaceParameter_ = NO_INTERFACE_PARAMETER;
@@ -840,7 +814,7 @@ class InputOutput
 					}
 				}
 
-			if( commonVariables_->result == RESULT_OK )
+			if( globalVariables_->result == RESULT_OK )
 				{
 				if( isPassword ||
 				readFile == NULL )
@@ -910,7 +884,7 @@ class InputOutput
 							{
 							sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to get an input string.\n", moduleNameString_, functionNameString );
 							addStringToOutput( true, true, true, tempErrorString_ );
-							commonVariables_->result = RESULT_ERROR;
+							globalVariables_->result = RESULT_ERROR;
 							}
 						}
 					}
@@ -963,10 +937,10 @@ class InputOutput
 			{
 			sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tThe given read string is undefined.\n", moduleNameString_, functionNameString );
 			addStringToOutput( true, true, true, tempErrorString_ );
-			commonVariables_->result = RESULT_ERROR;
+			globalVariables_->result = RESULT_ERROR;
 			}
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char writeDiacriticalText( unsigned short promptTypeNr, const char *diacriticalTextString )
@@ -981,7 +955,7 @@ class InputOutput
 		char textChar = SYMBOL_QUESTION_MARK;
 		char charString[2] = SPACE_STRING;
 		char textString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeDiacriticalText";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeDiacriticalText";
 
 		if( diacriticalTextString != NULL )
 			{
@@ -990,7 +964,7 @@ class InputOutput
 			if( diacriticalTextString[0] == QUERY_STRING_START_CHAR )
 				position++;
 
-			while( commonVariables_->result == RESULT_OK &&
+			while( globalVariables_->result == RESULT_OK &&
 			position < strlen( diacriticalTextString ) )
 				{
 				if( diacriticalTextString[position] == SYMBOL_BACK_SLASH )
@@ -1003,13 +977,13 @@ class InputOutput
 					else
 						{
 						displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The text string ended with a diacritical sign" );
-						commonVariables_->result = RESULT_ERROR;
+						globalVariables_->result = RESULT_ERROR;
 						}
 					}
 				else
 					textChar = diacriticalTextString[position];
 
-				if( commonVariables_->result == RESULT_OK )
+				if( globalVariables_->result == RESULT_OK )
 					{
 					position++;
 					charString[0] = textChar;
@@ -1036,7 +1010,7 @@ class InputOutput
 					}
 				}
 
-			if( commonVariables_->result == RESULT_OK &&
+			if( globalVariables_->result == RESULT_OK &&
 			strlen( textString ) > 0 &&
 			writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, NO_CENTER_WIDTH, NULL, textString ) != RESULT_OK )
 				{
@@ -1047,10 +1021,10 @@ class InputOutput
 		else
 			{
 			displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The given diacritical text string is undefined" );
-			commonVariables_->result = RESULT_ERROR;
+			globalVariables_->result = RESULT_ERROR;
 			}
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char writeInterfaceText( bool isCheckingForDuplicateInterfaceParameter, unsigned short promptTypeNr, unsigned short interfaceParameter )
@@ -1060,164 +1034,89 @@ class InputOutput
 
 	signed char writeInterfaceText( bool isCheckingForDuplicateInterfaceParameter, bool isReturningToPosition, unsigned short promptTypeNr, unsigned short interfaceParameter )
 		{
-		WordItem *currentLanguageWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
-
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
+		if( !isCheckingForDuplicateInterfaceParameter ||
+		interfaceParameter != lastDisplayedInterfaceParameter_ )
 			{
-			if( !isCheckingForDuplicateInterfaceParameter ||
-			interfaceParameter != lastDisplayedInterfaceParameter_ )
-				{
-				lastDisplayedInterfaceParameter_ = interfaceParameter;
-				return writeDiacriticalText( true, isReturningToPosition, promptTypeNr, currentLanguageWordItem->interfaceString( interfaceParameter ) );
-				}
-			}
-		else
-			{
-			displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The current language word item is undefined" );
-			commonVariables_->result = RESULT_ERROR;
+			lastDisplayedInterfaceParameter_ = interfaceParameter;
+			return writeDiacriticalText( true, isReturningToPosition, promptTypeNr, adminWordItem_->interfaceString( interfaceParameter ) );
 			}
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, unsigned int intNumber, unsigned short interfaceParameter2 )
 		{
-		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
-			{
-			sprintf( interfaceString, "%s%u%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), intNumber, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
-			return writeDiacriticalText( promptTypeNr, interfaceString );
-			}
-
-		displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The current language word item is undefined" );
-		commonVariables_->result = RESULT_ERROR;
-		return commonVariables_->result;
+		sprintf( interfaceString, "%s%u%s", adminWordItem_->interfaceString( interfaceParameter1 ), intNumber, adminWordItem_->interfaceString( interfaceParameter2 ) );
+		return writeDiacriticalText( promptTypeNr, interfaceString );
 		}
 
 	signed char writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, unsigned int intNumber, unsigned short interfaceParameter2, char *textString, unsigned short interfaceParameter3 )
 		{
-		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
-			{
-			sprintf( interfaceString, "%s%u%s%s%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), intNumber, currentLanguageWordItem->interfaceString( interfaceParameter2 ), textString, currentLanguageWordItem->interfaceString( interfaceParameter3 ) );
-			return writeDiacriticalText( promptTypeNr, interfaceString );
-			}
-
-		displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The current language word item is undefined" );
-		commonVariables_->result = RESULT_ERROR;
-		return commonVariables_->result;
+		sprintf( interfaceString, "%s%u%s%s%s", adminWordItem_->interfaceString( interfaceParameter1 ), intNumber, adminWordItem_->interfaceString( interfaceParameter2 ), textString, adminWordItem_->interfaceString( interfaceParameter3 ) );
+		return writeDiacriticalText( promptTypeNr, interfaceString );
 		}
 
 	signed char writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, unsigned int intNumber1, unsigned short interfaceParameter2, unsigned int intNumber2, unsigned short interfaceParameter3, char *textString, unsigned short interfaceParameter4 )
 		{
-		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
-			{
-			sprintf( interfaceString, "%s%u%s%u%s%s%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), intNumber1, currentLanguageWordItem->interfaceString( interfaceParameter2 ), intNumber2, currentLanguageWordItem->interfaceString( interfaceParameter3 ), textString, currentLanguageWordItem->interfaceString( interfaceParameter4 ) );
-			return writeDiacriticalText( promptTypeNr, interfaceString );
-			}
-
-		displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The current language word item is undefined" );
-		commonVariables_->result = RESULT_ERROR;
-		return commonVariables_->result;
+		sprintf( interfaceString, "%s%u%s%u%s%s%s", adminWordItem_->interfaceString( interfaceParameter1 ), intNumber1, adminWordItem_->interfaceString( interfaceParameter2 ), intNumber2, adminWordItem_->interfaceString( interfaceParameter3 ), textString, adminWordItem_->interfaceString( interfaceParameter4 ) );
+		return writeDiacriticalText( promptTypeNr, interfaceString );
 		}
 
 	signed char writeInterfaceText( bool isCheckingForDuplicateInterfaceParameter, unsigned short promptTypeNr, unsigned short interfaceParameter1, const char *textString, unsigned short interfaceParameter2 )
 		{
-		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
+		if( !isCheckingForDuplicateInterfaceParameter ||
+		interfaceParameter1 != lastDisplayedInterfaceParameter_ )
 			{
-			if( !isCheckingForDuplicateInterfaceParameter ||
-			interfaceParameter1 != lastDisplayedInterfaceParameter_ )
-				{
-				lastDisplayedInterfaceParameter_ = interfaceParameter1;
+			lastDisplayedInterfaceParameter_ = interfaceParameter1;
 
-				strcpy( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter1 ) );
-				strcat( interfaceString, textString );
-				strcat( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
+			strcpy( interfaceString, adminWordItem_->interfaceString( interfaceParameter1 ) );
+			strcat( interfaceString, textString );
+			strcat( interfaceString, adminWordItem_->interfaceString( interfaceParameter2 ) );
 
-				return writeDiacriticalText( promptTypeNr, interfaceString );
-				}
-			}
-		else
-			{
-			displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The current language word item is undefined" );
-			commonVariables_->result = RESULT_ERROR;
+			return writeDiacriticalText( promptTypeNr, interfaceString );
 			}
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, char *textString, unsigned short interfaceParameter2, unsigned int longNumber, unsigned short interfaceParameter3 )
 		{
-		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
-			{
-			sprintf( interfaceString, "%s%s%s%u%s", currentLanguageWordItem->interfaceString( interfaceParameter1 ), textString, currentLanguageWordItem->interfaceString( interfaceParameter2 ), longNumber, currentLanguageWordItem->interfaceString( interfaceParameter3 ) );
-			return writeDiacriticalText( promptTypeNr, interfaceString );
-			}
-
-		displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The current language word item is undefined" );
-		commonVariables_->result = RESULT_ERROR;
-		return commonVariables_->result;
+		sprintf( interfaceString, "%s%s%s%u%s", adminWordItem_->interfaceString( interfaceParameter1 ), textString, adminWordItem_->interfaceString( interfaceParameter2 ), longNumber, adminWordItem_->interfaceString( interfaceParameter3 ) );
+		return writeDiacriticalText( promptTypeNr, interfaceString );
 		}
 
 	signed char writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, const char *textString, unsigned short interfaceParameter2 )
 		{
-		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
-			{
-			strcpy( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter1 ) );
-			strcat( interfaceString, textString );
-			strcat( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
+		strcpy( interfaceString, adminWordItem_->interfaceString( interfaceParameter1 ) );
+		strcat( interfaceString, textString );
+		strcat( interfaceString, adminWordItem_->interfaceString( interfaceParameter2 ) );
 
-			return writeDiacriticalText( promptTypeNr, interfaceString );
-			}
-
-		displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The current language word item is undefined" );
-		commonVariables_->result = RESULT_ERROR;
-		return commonVariables_->result;
+		return writeDiacriticalText( promptTypeNr, interfaceString );
 		}
 
 	signed char writeInterfaceText( unsigned short promptTypeNr, unsigned short interfaceParameter1, const char *textString1, unsigned short interfaceParameter2, const char *textString2, unsigned short interfaceParameter3 )
 		{
-		WordItem *currentLanguageWordItem;
 		char interfaceString[MAX_SENTENCE_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInterfaceText";
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
-			{
-			strcpy( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter1 ) );
-			strcat( interfaceString, textString1 );
-			strcat( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter2 ) );
-			strcat( interfaceString, textString2 );
-			strcat( interfaceString, currentLanguageWordItem->interfaceString( interfaceParameter3 ) );
+		strcpy( interfaceString, adminWordItem_->interfaceString( interfaceParameter1 ) );
+		strcat( interfaceString, textString1 );
+		strcat( interfaceString, adminWordItem_->interfaceString( interfaceParameter2 ) );
+		strcat( interfaceString, textString2 );
+		strcat( interfaceString, adminWordItem_->interfaceString( interfaceParameter3 ) );
 
-			return writeDiacriticalText( promptTypeNr, interfaceString );
-			}
-
-		displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The current language word item is undefined" );
-		commonVariables_->result = RESULT_ERROR;
-		return commonVariables_->result;
+		return writeDiacriticalText( promptTypeNr, interfaceString );
 		}
 
 	signed char writeText( unsigned short promptTypeNr, const char *textString1, const char *textString2 )
@@ -1231,7 +1130,7 @@ class InputOutput
 				return writeText( false, true, false, promptTypeNr, NO_CENTER_WIDTH, NULL, textString2 );
 			}
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char writeText( bool isReturningToPosition, unsigned short promptTypeNr, size_t queryWidth, const char *textString )

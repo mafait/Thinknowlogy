@@ -1,158 +1,160 @@
 ﻿------------------------------------------------------------------------------
- Gebruik knop <programmeren>	voor het programmeren in natuurlijke taal
- Gebruik knop <redeneren>	voor het redeneren in natuurlijke taal
+ Gebruik knop <programmeren> voor het programmeren in natuurlijke taal
+ Gebruik knop <redeneren>	   voor het redeneren in natuurlijke taal
 ------------------------------------------------------------------------------
  Voorbeelden van beschikbare gebiedende wijs zinnen:
 ------------------------------------------------------------------------------
  Lees het bestand "{bestandsnaam}".	* Lees een bestand
- Help.					* Toon deze help informatie
- Ongedaan-maken.			* Vorige zin ongedaan maken
- Herstellen.				* Herstel vorige zin
- Wis je geheugen.			* Vergeet de ingevoerde kennis
- Herstart.				* Herstart dit programma
- Toon info over de talen.
- Toon info over de lijsten.
- Toon info over de woordtypes.
+ Help.			* Toon deze help informatie
+ Ongedaan-maken.		* Vorige zin ongedaan maken
+ Herstellen.			* Herstel vorige zin
+ Wis je geheugen.		* Vergeet de ingevoerde kennis
+ Herstart.			* Herstart dit programma
+ Toon informatie over de talen.
+ Toon informatie over de lijsten.
+ Toon informatie over de gebruikers.
+ Toon informatie over de woordtypes.
  Toon de opvraagopdrachten.
  Toon het auteursrecht.
  Toon de GPLv2-licentie.
  Toon de garantie.
 ------------------------------------------------------------------------------
- Voorbeeldbestanden:	* Gebruik knop <meer voorbeelden> of zie
-			  map: Thinknowlogy2017r2/data/examples/Nederlands/gebruiker/
- Fundamenteel:		* map: Thinknowlogy2017r2/documents/
- Ontwerp:		* map: Thinknowlogy2017r2/documents/design/
- Schermafdrukken:	* map: Thinknowlogy2017r2/screenshots/Nederlands/
+ Voorbeeldbestanden: * Gebruik knop <meer voorbeelden>
+	    of zie map: Thinknowlogy2018r1/data/examples/Nederlands/gebruiker/
+ Fundamenteel:          * map: Thinknowlogy2018r1/documents/
+ Ontwerp:	          * map: Thinknowlogy2018r1/documents/design/
+ Schermafdrukken:     * map: Thinknowlogy2018r1/screenshots/Nederlands/
 ------------------------------------------------------------------------------
 < 
 < Specificaties:
-< Nederlands is de huidige taal. (geleerd van gebruiker Admin)
-< Français is een taal. (geleerd van gebruiker Admin)
-< Español is de vorige taal. (geleerd van gebruiker Admin)
-< English is een taal. (geleerd van gebruiker Admin)
+< 中文 is de vorige taal. {geleerd van gebruiker Admin}
+< Nederlands is de huidige taal. {geleerd van gebruiker Admin}
+< Français is een taal. {geleerd van gebruiker Admin}
+< Español is een taal. {geleerd van gebruiker Admin}
+< English is een taal. {geleerd van gebruiker Admin}
 < 
 ------------------------------------------------------------------------------
- Totaal aantal items:	7444.
+ Totaal aantal items: 8606.
 ------------------------------------------------------------------------------
- Items in administrator:	375.
+ Items in administrator:	420.
 ------------------------------------------------------------------------------
- * Actieve items:			375.
-    <F> Bestanden:				2.
-    <R> Leeswoorden (tijdelijk):		3.
+ * Actieve items:	       420.
+    <F> Bestanden:		2.
+    <R> Leeswoorden (tijdelijk):	3.
     <S> Oplospunten (tijdelijk):		0.
-    <W> Woorden:				349, (voorgedefinieerd: 183).
-    <X> Condities:				9.
-    <Y> Acties:					12.
-    <Z> Alternatieven:				0.
- * Inactieve items:			0.
- * Gearchiveerde items:			0.
- * Vervangen items:			0.
- * Verwijderde items:			0.
+    <W> Woorden:		389, (voorgedefinieerd: 189).
+    <X> Condities:		11.
+    <Y> Acties:			15.
+    <Z> Alternatieven:		0.
+ * Inactieve items:	       0.
+ * Gearchiveerde items:	       0.
+ * Vervangen items:	       0.
+ * Verwijderde items:	       0.
 ------------------------------------------------------------------------------
- Items in woorden:		7069.
+ Items in woorden:	8186.
 ------------------------------------------------------------------------------
- * Actieve items:			7040.
-    <a> toewijzingen:				6.
-    <c> collecties:				232.
-    <g> generalisaties:				313.
-    <i> interface:				1106.
-    <j> verantwoordingen:			0.
-    <l> grammatica:				4029.
-    <m> multiple woord:				77.
-    <s> specificaties:				364.
-    <r> schrijfwoorden (tijdelijk):		0.
-    <w> woordtypes:				913.
-    <x> context:				0.
- * Inactieve items:			3.
- * Gearchiveerde items:			20.
- * Vervangen items:			6.
- * Verwijderde items:			0.
+ * Actieve items:	       8143.
+    <a> toewijzingen:		7.
+    <c> collecties:		276.
+    <g> generalisaties:		345.
+    <i> interface:		1242.
+    <j> verantwoordingen:		0.
+    <l> grammatica:		4802.
+    <m> multiple woord:		69.
+    <s> specificaties:		401.
+    <r> schrijfwoorden (tijdelijk):	0.
+    <w> woordtypes:		1001.
+    <x> context:		0.
+ * Inactieve items:	       3.
+ * Gearchiveerde items:	       33.
+ * Vervangen items:	       7.
+ * Verwijderde items:	       0.
 ------------------------------------------------------------------------------
 < 
 < Specificaties:
-< Gast is een gebruiker. (geleerd van gebruiker Admin)
-< Ontwikkelaar is de huidige gebruiker. (geleerd van gebruiker Expert)
-< Expert is de vorige gebruiker. (geleerd van gebruiker Gast)
+< Gast is een gebruiker. {geleerd van gebruiker Admin}
+< Ontwikkelaar is de huidige gebruiker. {geleerd van gebruiker Expert}
+< Expert is de vorige gebruiker. {geleerd van gebruiker Gast}
 < 
 ------------------------------------------------------------------------------
- Totaal aantal woordtype items:			916, (alle talen inbegrepen).
+ Totaal aantal woordtype items:	1004, (alle talen inbegrepen).
 ------------------------------------------------------------------------------
- * Actieve woordtype items:				916.
-   (@1)  Symbolen:						18.
-   (@2)  Cijfers/telwoorden:					43.
-   (@3)  Kleine letters:					104.
-   (@4)  Hoofdletters:						104.
-   (@5)  Eigennamen:						16.
-   (@6)  Bijvoeglijk naamwoorden:				165.
-   (@7)  Bijwoorden:						25.
-   (@8)  Antwoorden:						8.
-   (@9)  Lidwoorden:						18.
-   (@10) Voegwoorden:						15.
-   (@11) Enkelvoudige zelfstandig naamwoorden:			170.
-   (@12) Meervoudige zelfstandig naamwoorden:			23.
-   (@13) Persoonlijk voornaamwoord enkelvoud (subjectief):	0.
-   (@14) Persoonlijk voornaamwoord enkelvoud (objectief):	0.
-   (@15) Bezittelijk voornaamwoord enkelvoud:			20.
-   (@16) Bezittelijk voornaamwoord enkelvoud (na voorzetsel):	19.
-   (@17) Persoonlijk voornaamwoord meervoud (subjectief):	0.
-   (@18) Persoonlijk voornaamwoord meervoud (objectief):	0.
-   (@19) Bezittelijk voornaamwoord meervoud:			19.
-   (@20) Bezittelijk voornaamwoord meervoud (na voorzetsel):	21.
-   (@21) Voorzetsels:						18.
-   (@22) Enkelvoudige werkwoorden:				74.
-   (@23) Meervoudige werkwoorden:				24.
-   (@24) Selectie woorden:					12.
- * Inactieve woordtype items:				0.
- * Gearchiveerde woordtype items:			0.
- * Vervangen woordtype items:				0.
- * Verwijderde woordtype items:				0.
+ * Actieve woordtype items:			1004.
+   (@1)  Symbolen:				24.
+   (@2)  Cijfers/telwoorden:				54.
+   (@3)  Kleine letters:				104.
+   (@4)  Hoofdletters:				104.
+   (@5)  Eigennamen:				20.
+   (@6)  Bijvoeglijk naamwoorden:			200.
+   (@7)  Bijwoorden:				32.
+   (@8)  Antwoorden:				10.
+   (@9)  Lidwoorden:				20.
+   (@10) Voegwoorden:				18.
+   (@11) Enkelvoudige zelfstandig naamwoorden:		212.
+   (@12) Meervoudige zelfstandig naamwoorden:		23.
+   (@13) Persoonlijk voornaamwoord enkelvoud (subjectief):		0.
+   (@14) Persoonlijk voornaamwoord enkelvoud (objectief):		0.
+   (@15) Bezittelijk voornaamwoord enkelvoud:		23.
+   (@16) Bezittelijk voornaamwoord enkelvoud (na voorzetsel):	10.
+   (@17) Persoonlijk voornaamwoord meervoud (subjectief):		1.
+   (@18) Persoonlijk voornaamwoord meervoud (objectief):		0.
+   (@19) Bezittelijk voornaamwoord meervoud:		0.
+   (@20) Bezittelijk voornaamwoord meervoud (na voorzetsel):	0.
+   (@21) Voorzetsels:				28.
+   (@22) Enkelvoudige werkwoorden:			83.
+   (@23) Meervoudige werkwoorden:			23.
+   (@24) Selectie woorden:				15.
+ * Inactieve woordtype items:			0.
+ * Gearchiveerde woordtype items:		0.
+ * Vervangen woordtype items:		0.
+ * Verwijderde woordtype items:		0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
- De beschikbare opvraag-opdrachten zijn:				Voorbeelden:
+ De beschikbare opvraag-opdrachten zijn:			Voorbeelden:
 ------------------------------------------------------------------------------
- ~(zinNr)		item-identificatie				~(123)
- ~(zinNr,itemNr)	item-identificatie				~(123,1)
- ~(,itemNr)		item-identificatie				~(,3)
- ~[zinNr]		referentie naar een item-identificatie		~[123]
- ~[zinNr,itemNr]	referentie naar een item-identificatie		~[123,1]
- ~[,itemNr]		referentie naar een item-identificatie		~[,3]
- ~<adminListChar>	administrator-lijst				~<W>
- ~<wordListChar>	woordlijst					~<w>
- ~<listCharlistChar>	meerdere lijsten				~<Xas>
- ~'woord'		woord						~'Nederlands'
- ~`woordReferentie`	referentie naar een woord			~`Nederlands`
- ~"tekst"		tekst						~"zin"
+ ~(zinNr)		item-identificatie		~(123)
+ ~(zinNr,itemNr)	item-identificatie		~(123,1)
+ ~(,itemNr)		item-identificatie		~(,3)
+ ~[zinNr]		referentie naar een item-identificatie	~[123]
+ ~[zinNr,itemNr]	referentie naar een item-identificatie	~[123,1]
+ ~[,itemNr]		referentie naar een item-identificatie	~[,3]
+ ~<adminListChar>	administrator-lijst		~<W>
+ ~<wordListChar>	woordlijst			~<w>
+ ~<listCharlistChar>	meerdere lijsten		~<Xas>
+ ~'woord'		woord			~'Nederlands'
+ ~`woordReferentie`	referentie naar een woord		~`Nederlands`
+ ~"tekst"		tekst			~"zin"
 ------------------------------------------------------------------------------
  Beide jokers '?' en '*' kunnen gebruikt worden in:
-			* woorden					~'Ned?rlands'
-			* referenties naar een woord			~`Ned*lands`
-			* teksten					~"gr?m*"
+  * woorden					~'Ned?rlands'
+  * referenties naar een woord				~`Ned*lands`
+  * teksten					~"gr?m*"
 ------------------------------------------------------------------------------
- Lege item-specificatie toont alle items				~()
- Lege lijst-specificatie toont alle items				~<>
+ Lege item-specificatie toont alle items			~()
+ Lege lijst-specificatie toont alle items			~<>
 ------------------------------------------------------------------------------
- Toevoegen van '#' geeft telfunctionaliteit				~#(123)
- Toevoegen van '+' selecteert alleen actieve items			~+(123)
- Toevoegen van '=' selecteert alleen inactieve items			~=(123)
+ Toevoegen van '#' geeft telfunctionaliteit			~#(123)
+ Toevoegen van '+' selecteert alleen actieve items		~+(123)
+ Toevoegen van '=' selecteert alleen inactieve items		~=(123)
  Toevoegen van '$' selecteert alleen gearchiveerde items		~$(123)
- Toevoegen van '%' selecteert alleen vervangen items			~%(123)
- Toevoegen van '&' selecteert alleen verwijderde items			~&(123)
+ Toevoegen van '%' selecteert alleen vervangen items		~%(123)
+ Toevoegen van '&' selecteert alleen verwijderde items		~&(123)
  Aaneenschakeling van opvraag-opdrachten geeft 'EN'-functionaliteit	~(123)<s>
  Toevoegen van '*' selecteert ook gelinkte verantwoordings-items	~*'Laura'<s>`dochter`
  Toevoegen van '**' selecteert ook verantwoordings-specificaties	~**'Laura'<s>`dochter`
 ------------------------------------------------------------------------------
- Toevoegen van ' aan het einde, toont alleen woorden			~(123)'
+ Toevoegen van ' aan het einde, toont alleen woorden		~(123)'
  Toevoegen van ` aan het einde, toont alleen woordreferenties		~(123)`
- Toevoegen van " aan het einde, toont alleen teksten			~(123)"
+ Toevoegen van " aan het einde, toont alleen teksten		~(123)"
  Toevoegen van '' toon alleen woorden, op de volgende regel		~(123)''
  Toevoegen van `` toon alleen woordreferenties, op de volgende regel	~(123)``
  Toevoegen van "" toon alleen teksten, op de volgende regel		~(123)""
 ------------------------------------------------------------------------------
  In bestanden markeert '~' het einde van de opvraag-opdracht		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2017, Menno Mafait
- Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details type "Toon de
- garantie.". Dit is vrije software en het is u toegestaan deze te verspreiden
+ Copyright (C) 2009-2018, Menno Mafait
+ Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details type "Toon
+ de garantie.". Dit is vrije software en het is u toegestaan deze te verspreiden
  onder bepaalde voorwaarden; type "Toon de GPLv2-licentie." voor meer details.
 English disclaimer
 This is an unofficial translation of the GNU General
@@ -237,7 +239,7 @@ zulk programma of werk, en een "werk gebaseerd op het programma" verwijst naar
 het Programma of eender welk ander afgeleid werk onder de wet van het
 auteursrecht: dit wil zeggen, een werk dat het Programma of een deel ervan
 bevat, letterlijk oftewel gewijzigd en/of vertaald naar een andere taal.
-(Hierna vallen vertalingen zonder beperking onder de term 
+(Hierna vallen vertalingen zonder beperking onder de term "wijziging".)
 Elke licentiehouder wordt geadresseerd als "u".
 
 Andere handelingen dan kopiëren,

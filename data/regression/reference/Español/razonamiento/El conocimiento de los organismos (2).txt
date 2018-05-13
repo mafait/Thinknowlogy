@@ -13,6 +13,5 @@
 < Un cuerpo es parte de cada criatura.
 < 
 * 
-* Mis conclusiones:
-< Un cuerpo es parte de una criatura.
-< 
+* Ha introducido un nombre plural "criaturas", que era desconocido para mí.
+* 

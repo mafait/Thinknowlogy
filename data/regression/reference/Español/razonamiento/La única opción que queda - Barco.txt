@@ -1,10 +1,10 @@
 ﻿* 
 * Mis conclusiones:
-< El barco es un barco de remos.
+< Su barco es un barco de remos.
 < 
 * 
 * Mis conclusiones:
-< El barco es un barco de remos. Porque:
+< Su barco es un barco de remos. Porque:
 <	- Un barco es un barco de remos, un velero o una lancha.
-<	- El barco no es un velero y una lancha.
+<	- Su barco no es un velero y una lancha.
 < 

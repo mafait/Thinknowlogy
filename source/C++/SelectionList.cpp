@@ -1,9 +1,9 @@
-/*	Class:			SelectionList
+﻿/*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -63,9 +63,9 @@ class SelectionList : private List
 
 	// Constructor
 
-	SelectionList( char _listChar, CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	SelectionList( char _listChar, GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( _listChar, "SelectionList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( _listChar, "SelectionList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~SelectionList()
@@ -104,7 +104,7 @@ class SelectionList : private List
 	signed char checkWordItemForUsage( WordItem *unusedWordItem )
 		{
 		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkWordItemForUsage";
 
 		if( unusedWordItem == NULL )
 			return startError( functionNameString, "The given unused word item is undefined" );
@@ -125,7 +125,7 @@ class SelectionList : private List
 
 	signed char createSelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createSelectionItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createSelectionItem";
 
 		if( generalizationWordTypeNr <= NO_WORD_TYPE_NR ||
 		generalizationWordTypeNr >= NUMBER_OF_WORD_TYPES )
@@ -135,7 +135,7 @@ class SelectionList : private List
 		specificationWordTypeNr >= NUMBER_OF_WORD_TYPES )
 			return startError( functionNameString, "The given specification word type number is undefined or out of bounds" );
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+		if( addItemToList( QUERY_ACTIVE_CHAR, new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
 			return addError( functionNameString, "I failed to add an active selection item" );
 
 		return RESULT_OK;
@@ -189,19 +189,17 @@ class SelectionList : private List
 		return NULL;
 		}
 
-	DuplicateResultType checkDuplicateCondition()
+	DuplicateResultType checkForDuplicateCondition()
 		{
 		DuplicateResultType duplicateResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkDuplicateCondition";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForDuplicateCondition";
 
-		duplicateResult.duplicateConditionSentenceNr = commonVariables()->currentSentenceNr;
+		duplicateResult.duplicateConditionSentenceNr = globalVariables()->currentSentenceNr;
 
 		do	{
-			if( ( duplicateResult.duplicateConditionSentenceNr = getLowerSentenceNr( duplicateResult.duplicateConditionSentenceNr ) ) > NO_SENTENCE_NR )
-				{
-				if( ( duplicateResult = checkDuplicateSelectionPart( duplicateResult.duplicateConditionSentenceNr ) ).result != RESULT_OK )
-					return addDuplicateResultError( functionNameString, "I failed to check if the alternative selection part is duplicate" );
-				}
+			if( ( duplicateResult.duplicateConditionSentenceNr = getLowerSentenceNr( duplicateResult.duplicateConditionSentenceNr ) ) > NO_SENTENCE_NR &&
+			( duplicateResult = checkForDuplicateSelectionPart( duplicateResult.duplicateConditionSentenceNr ) ).result != RESULT_OK )
+				return addDuplicateResultError( functionNameString, "I failed to check if the alternative selection part is duplicate" );
 			}
 		while( !duplicateResult.hasFoundDuplicateSelection &&
 		duplicateResult.duplicateConditionSentenceNr > NO_SENTENCE_NR );
@@ -209,17 +207,19 @@ class SelectionList : private List
 		return duplicateResult;
 		}
 
-	DuplicateResultType checkDuplicateSelectionPart( unsigned int duplicateConditionSentenceNr )
+	DuplicateResultType checkForDuplicateSelectionPart( unsigned int duplicateConditionSentenceNr )
 		{
+		char *currentSpecificationString;
+		char *searchSpecificationString;
 		SelectionItem *currentSelectionItem = NULL;
 		SelectionItem *searchSelectionItem = firstActiveSelectionItem();
 		DuplicateResultType duplicateResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkDuplicateSelectionPart";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForDuplicateSelectionPart";
 
 		if( duplicateConditionSentenceNr <= NO_SENTENCE_NR )
 			return startDuplicateResultError( functionNameString, "The given duplicate sentence number is undefined" );
 
-		if( duplicateConditionSentenceNr >= commonVariables()->currentSentenceNr )
+		if( duplicateConditionSentenceNr >= globalVariables()->currentSentenceNr )
 			return startDuplicateResultError( functionNameString, "The given duplicate sentence number is equal or higher than the current sentence number" );
 
 		duplicateResult.hasFoundDuplicateSelection = true;
@@ -240,18 +240,23 @@ class SelectionList : private List
 					currentSelectionItem->generalizationWordItem() == searchSelectionItem->generalizationWordItem() &&
 					currentSelectionItem->specificationWordItem() == searchSelectionItem->specificationWordItem() )
 						{
-						if( currentSelectionItem->specificationString() != NULL &&
-						searchSelectionItem->specificationString() != NULL )
-							duplicateResult.hasFoundDuplicateSelection = ( strcmp( currentSelectionItem->specificationString(), searchSelectionItem->specificationString() ) == 0 );
+						currentSpecificationString = currentSelectionItem->specificationString();
+						searchSpecificationString = searchSelectionItem->specificationString();
+
+						if( currentSpecificationString != NULL &&
+						searchSpecificationString != NULL )
+							duplicateResult.hasFoundDuplicateSelection = ( strcmp( currentSpecificationString, searchSpecificationString ) == 0 );
 						else
 							{
-							if( currentSelectionItem->specificationString() != NULL ||
-							searchSelectionItem->specificationString() != NULL )
+							if( currentSpecificationString != NULL ||
+							searchSpecificationString != NULL )
 								duplicateResult.hasFoundDuplicateSelection = false;
 							}
 
 						if( duplicateResult.hasFoundDuplicateSelection )
 							{
+							duplicateResult.duplicateConditionSentenceNr = searchSelectionItem->creationSentenceNr();
+
 							currentSelectionItem = ( currentSelectionItem->nextSelectionItem() != NULL &&
 													currentSelectionItem->nextSelectionItem()->hasCurrentCreationSentenceNr() ? currentSelectionItem->nextSelectionItem() : NULL );
 

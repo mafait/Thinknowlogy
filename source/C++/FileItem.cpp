@@ -1,9 +1,9 @@
-/*	Class:			FileItem
+﻿/*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -42,11 +42,11 @@ class FileItem : private Item
 	protected:
 	// Constructor
 
-	FileItem( bool isInfoFile, bool isTestFile, char *readFileNameString, char *writeFileNameString, FILE *readFile, FILE *writeFile, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	FileItem( bool isInfoFile, bool isTestFile, char *readFileNameString, char *writeFileNameString, FILE *readFile, FILE *writeFile, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
 		size_t fileNameStringLength;
 
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "FileItem", commonVariables, inputOutput, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "FileItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -112,15 +112,15 @@ class FileItem : private Item
 
 		if( readFileNameString_ != NULL )
 			{
-			if( commonVariables()->hasFoundQuery )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+			if( globalVariables()->hasFoundQuery )
+				strcat( globalVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( globalVariables()->queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, readFileNameString_ );
+			globalVariables()->hasFoundQuery = true;
+			strcat( globalVariables()->queryString, readFileNameString_ );
 			}
 		}
 
@@ -138,7 +138,7 @@ class FileItem : private Item
 
 		itemBaseToString( queryWordTypeNr );
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( isInfoFile_ )
 			{

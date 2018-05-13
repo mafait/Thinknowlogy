@@ -26,7 +26,7 @@
 * My assumptions:
 < A daughter is probably a person.
 < 
-* I expected proper name "Maria" to be feminine.
+* I expected proper noun "Maria" to be feminine.
 * 
 * My conclusions:
 < Maria is masculine.

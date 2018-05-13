@@ -1,4 +1,4 @@
 ﻿* 
 * Mis conclusiones:
-< El barco es un barco de remos.
+< Su barco es un barco de remos.
 < 

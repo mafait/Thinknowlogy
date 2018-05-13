@@ -1,9 +1,9 @@
-/*	Class:			WordSpecification
+﻿/*	Class:			WordSpecification
  *	Supports class:	WordItem
  *	Purpose:		To create specification structures
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ class WordSpecification
 	private boolean hasDisplayedMoreSpecificNonExclusiveSpecification_;
 	private boolean hasDisplayedMoreSpecificQuestion_;
 	private boolean isOnlyCheckingForConflicts_;
-	private boolean isThisProperNameWordTouchedDuringCurrentSentence_;
+	private boolean isWordTouchedDuringCurrentSentence_;
 
 	private int spanishCompoundSpecificationCollectionNr_;
 	private int userSpecificationCollectionNr_;
@@ -54,20 +54,25 @@ class WordSpecification
 
 	// Private methods
 
-	private void addToTouchedDuringCurrentSentenceProperNameWordList()
+	private void addMyWordToTouchedDuringCurrentSentenceList()
 		{
-		WordItem tempProperNameWordItem;
-		WordItem lastTouchedProperNameWordItem = CommonVariables.firstTouchedProperNameWordItem;
+		WordItem lastTouchedWordItem = GlobalVariables.firstTouchedWordItem;
+		WordItem tempTouchedWordItem;
 
-		if( lastTouchedProperNameWordItem == null )
-			CommonVariables.firstTouchedProperNameWordItem = myWordItem_;
-		else
+		if( !isWordTouchedDuringCurrentSentence_ )
 			{
-			// Word order is important: Add word at end of temporary touched word list
-			while( ( tempProperNameWordItem = lastTouchedProperNameWordItem.nextTouchedProperNameWordItem ) != null )
-				lastTouchedProperNameWordItem = tempProperNameWordItem;
+			isWordTouchedDuringCurrentSentence_ = true;
 
-			lastTouchedProperNameWordItem.nextTouchedProperNameWordItem = myWordItem_;
+			if( lastTouchedWordItem == null )
+				GlobalVariables.firstTouchedWordItem = myWordItem_;
+			else
+				{
+				// Word order is important: Add word at end of temporary touched word list
+				while( ( tempTouchedWordItem = lastTouchedWordItem.nextTouchedWordItem ) != null )
+					lastTouchedWordItem = tempTouchedWordItem;
+
+				lastTouchedWordItem.nextTouchedWordItem = myWordItem_;
+				}
 			}
 		}
 
@@ -77,7 +82,7 @@ class WordSpecification
 		WordItem currentCollectionWordItem;
 
 		if( compoundCollectionNr > Constants.NO_COLLECTION_NR &&
-		( currentCollectionWordItem = CommonVariables.firstCollectionWordItem ) != null )
+		( currentCollectionWordItem = GlobalVariables.firstCollectionWordItem ) != null )
 			{
 			// Do for all collection words
 			do	{
@@ -121,7 +126,7 @@ class WordSpecification
 		foundQuestionSpecificationItem.isAnsweredQuestion() &&
 		foundQuestionSpecificationItem.isExclusiveSpecification() == isExclusiveSpecification &&
 		foundQuestionSpecificationItem.relationContextNr() == relationContextNr )
-			CommonVariables.isQuestionAlreadyAnswered = true;
+			GlobalVariables.isQuestionAlreadyAnswered = true;
 
 		if( foundQuestionSpecificationItem == null ||
 		!foundQuestionSpecificationItem.isQuestion() )
@@ -203,7 +208,6 @@ class WordSpecification
 
 	private byte processPreviouslyUnknownPluralNoun( WordItem specificationWordItem )
 		{
-		WordItem currentLanguageWordItem;
 		WordItem currentSpecificationWordItem;
 		WordTypeItem pluralNounWordTypeItem;
 		String unknownPluralNounString;
@@ -211,20 +215,15 @@ class WordSpecification
 		if( specificationWordItem == null )
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given specification word item is undefined" );
 
-		pluralNounWordTypeItem = specificationWordItem.activeWordTypeItem( Constants.WORD_TYPE_NOUN_PLURAL );
-
-		if( pluralNounWordTypeItem != null &&
+		if( ( pluralNounWordTypeItem = specificationWordItem.activeWordTypeItem( Constants.WORD_TYPE_NOUN_PLURAL ) ) != null &&
 		// Skip announcement for new occurrences
 		!pluralNounWordTypeItem.isOlderItem() )
 			{
 			if( InputOutput.writeInterfaceText( true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_START, pluralNounWordTypeItem.itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_YOU_ENTERED_UNKNOWN_PLURAL_OF_SINGULAR_NOUN_END ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a notification text" );
 
-			currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
-
-			if( currentLanguageWordItem != null &&
-			( currentSpecificationWordItem = CommonVariables.firstSpecificationWordItem ) != null &&
-			( unknownPluralNounString = currentLanguageWordItem.interfaceString( Constants.INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_START ) ) != null )
+			if( ( currentSpecificationWordItem = GlobalVariables.firstSpecificationWordItem ) != null &&
+			( unknownPluralNounString = myWordItem_.interfaceString( Constants.INTERFACE_GRAMMAR_UNKNOWN_PLURAL_NOUN_START ) ) != null )
 				{
 				// Do for all specification words
 				do	{
@@ -316,14 +315,14 @@ class WordSpecification
 		if( myWordItem_.writeSelectedSpecification( false, !olderSpecificationItem.isExclusiveSpecification(), olderSpecificationItem ) != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write the given older specification" );
 
-		if( ( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) == null ||
+		if( ( writtenSentenceStringBuffer = GlobalVariables.writtenSentenceStringBuffer ) == null ||
 		writtenSentenceStringBuffer.length() == 0 )
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "I couldn't write the given older specification" );
 
 		if( InputOutput.writeInterfaceText( true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, ( olderSpecificationItem.isQuestion() ? ( olderSpecificationItem.isSelfGenerated() ? Constants.INTERFACE_LISTING_YOUR_QUESTION_IS_MORE_SPECIFIC_THAN_MY_QUESTION : Constants.INTERFACE_LISTING_THIS_QUESTION_IS_MORE_SPECIFIC_THAN_YOUR_QUESTION ) : ( olderSpecificationItem.isSelfGenerated() ? ( olderSpecificationItem.isSelfGeneratedAssumption() ? Constants.INTERFACE_LISTING_YOUR_INFO_IS_MORE_SPECIFIC_THAN_MY_ASSUMPTION : Constants.INTERFACE_LISTING_YOUR_INFO_IS_MORE_SPECIFIC_THAN_MY_CONCLUSION ) : Constants.INTERFACE_LISTING_THIS_INFO_IS_MORE_SPECIFIC_THAN_YOUR_EARLIER_INFO ) ) ) != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an interface listing text" );
 
-		if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+		if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, GlobalVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a sentence" );
 
 		return Constants.RESULT_OK;
@@ -410,19 +409,19 @@ class WordSpecification
 		return relatedResult;
 		}
 
-	private SpecificationResultType checkSpecificationWordForConflict( boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isGeneralizationProperName, boolean isNegative, boolean isPossessive, short specificationWordTypeNr, int specificationCollectionNr, int relationContextNr, WordItem specificationWordItem )
+	private SpecificationResultType checkSpecificationWordForConflict( boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isGeneralizationProperNoun, boolean isNegative, boolean isPossessive, short specificationWordTypeNr, int specificationCollectionNr, int relationContextNr, WordItem specificationWordItem )
 		{
-		boolean isSpecificationWordSpanishAmbiguous;
 		boolean hasFoundCompoundConflict = false;
 		boolean hasSpecificationCollection = ( specificationCollectionNr > Constants.NO_COLLECTION_NR );
-		int nonCompoundSpecificationCollectionNr;
+		boolean isSpecificationWordSpanishAmbiguous;
 		int compoundSpecificationCollectionNr = Constants.NO_COLLECTION_NR;
+		int nonCompoundSpecificationCollectionNr;
 		SpecificationItem anotherConflictingSpecificationItem;
+		SpecificationItem conflictingSpecificationItem = null;
 		SpecificationItem foundSpecificationItem;
+		SpecificationItem pastTenseAssignmentItem = null;
 		SpecificationItem relatedSpecificationItem;
 		SpecificationItem tempConflictingSpecificationItem;
-		SpecificationItem conflictingSpecificationItem = null;
-		SpecificationItem pastTenseAssignmentItem = null;
 		RelatedResultType relatedResult = new RelatedResultType();
 		SpecificationResultType specificationResult = new SpecificationResultType();
 
@@ -520,7 +519,7 @@ class WordSpecification
 			if( conflictingSpecificationItem.isOlderItem() )
 				{
 				if( ( !hasSpecificationCollection ||
-				isGeneralizationProperName ) &&
+				isGeneralizationProperNoun ) &&
 
 				// Write conflicting specification
 				conflictingSpecificationItem.writeSpecificationConflict() != Constants.RESULT_OK )
@@ -530,7 +529,7 @@ class WordSpecification
 				{
 				if( hasSpecificationCollection &&
 				// Sentence can only be in conflict with itself if it has at least 2 specification words
-				CommonVariables.nUserSpecificationWords > 1 &&
+				GlobalVariables.nUserSpecificationWords > 1 &&
 				!conflictingSpecificationItem.hasNonExclusiveSpecificationCollection() &&
 
 				// Sentence in conflict with itself
@@ -543,20 +542,20 @@ class WordSpecification
 		return specificationResult;
 		}
 
-	private UserSpecificationResultType checkUserSpecification( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isGeneralizationProperName, boolean isNegative, boolean isPossessive, boolean isSelection, boolean isSpecificationWordSpanishAmbiguous, boolean isValueSpecification, short specificationWordTypeNr, int specificationCollectionNr, int relationContextNr, SpecificationItem foundSpecificationItem, WordItem specificationWordItem, WordItem relationWordItem )
+	private UserSpecificationResultType checkUserSpecification( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isGeneralizationProperNoun, boolean isNegative, boolean isPossessive, boolean isSelection, boolean isSpecificationWordSpanishAmbiguous, boolean isValueSpecification, short generalizationWordTypeNr, short specificationWordTypeNr, int specificationCollectionNr, int relationContextNr, SpecificationItem foundSpecificationItem, WordItem specificationWordItem, WordItem relationWordItem )
 		{
 		boolean hasFoundRelationContext;
-		boolean isFoundSpecificationExclusive;
 		boolean hasRelationContext = ( relationContextNr > Constants.NO_CONTEXT_NR );
+		boolean isFoundSpecificationExclusive;
 		int foundRelationContextNr;
 		JustificationItem nextJustificationItem;
 		JustificationItem obsoleteJustificationItem;
 		JustificationItem predecessorObsoleteJustificationItem;
 		SpecificationItem assumptionSpecificationItem;
+		SpecificationItem oldUserSpecificationItem = null;
 		SpecificationItem relatedSpecificationItem;
 		SpecificationItem secondarySpecificationItem;
 		SpecificationItem userSpecificationItem;
-		SpecificationItem oldUserSpecificationItem = null;
 		JustificationResultType justificationResult;
 		RelatedResultType relatedResult;
 		UserSpecificationResultType userSpecificationResult = new UserSpecificationResultType();
@@ -593,7 +592,8 @@ class WordSpecification
 			( assumptionSpecificationItem = myWordItem_.firstAssignmentOrSpecificationItem( true, true, false, false, false, secondarySpecificationItem.specificationWordItem() ) ) != null &&
 			( predecessorObsoleteJustificationItem = assumptionSpecificationItem.firstJustificationItem() ) != null )
 				{
-				while( ( nextJustificationItem = predecessorObsoleteJustificationItem.attachedJustificationItem() ) != obsoleteJustificationItem )
+				while( ( nextJustificationItem = predecessorObsoleteJustificationItem.attachedJustificationItem() ) != null &&
+				nextJustificationItem != obsoleteJustificationItem )
 					predecessorObsoleteJustificationItem = nextJustificationItem;
 
 				if( predecessorObsoleteJustificationItem != obsoleteJustificationItem )
@@ -632,7 +632,7 @@ class WordSpecification
 						specificationWordItem.isMale() != relationWordItem.isMale() &&
 
 						// Check for specification conflict
-						checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, specificationWordItem ) != Constants.RESULT_OK )
+						checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperNoun, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, specificationWordItem ) != Constants.RESULT_OK )
 							return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to check for a specification conflict" );
 						}
 
@@ -643,7 +643,7 @@ class WordSpecification
 					( !foundSpecificationItem.isExclusiveGeneralization() &&
 					// An self-generated assumption was found,
 					// but there is also a user speciciation without relation word
-					( oldUserSpecificationItem = myWordItem_.firstSelfGeneratedCheckSpecificationItem( false, false, isPossessive, false, Constants.NO_QUESTION_PARAMETER, specificationWordTypeNr, specificationCollectionNr, specificationWordItem ) ) != null &&
+					( oldUserSpecificationItem = myWordItem_.firstSelfGeneratedCheckSpecificationItem( false, false, isPossessive, false, Constants.NO_QUESTION_PARAMETER, specificationCollectionNr, specificationWordItem ) ) != null &&
 					!oldUserSpecificationItem.hasRelationContext() ) ) )
 						{
 						if( writeMoreSpecificSpecification( oldUserSpecificationItem == null ? foundSpecificationItem : oldUserSpecificationItem ) != Constants.RESULT_OK )
@@ -654,12 +654,12 @@ class WordSpecification
 					}
 				else
 					{
-					if( checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, specificationWordItem ) != Constants.RESULT_OK )
+					if( checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperNoun, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, specificationWordItem ) != Constants.RESULT_OK )
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to check for a specification conflict" );
 					}
 				}
 
-			if( !CommonVariables.hasDisplayedWarning )
+			if( !GlobalVariables.hasDisplayedWarning )
 				{
 				foundRelationContextNr = foundSpecificationItem.relationContextNr();
 
@@ -670,7 +670,7 @@ class WordSpecification
 
 				( !hasRelationContext ||
 				// Current user specification has less relation words than the found specification
-				CommonVariables.nUserRelationWords < myWordItem_.nContextWords( foundRelationContextNr, specificationWordItem ) ) )
+				GlobalVariables.nUserRelationWords < myWordItem_.nContextWords( foundRelationContextNr, specificationWordItem ) ) )
 					{
 					if( !foundSpecificationItem.isHiddenSpanishSpecification() &&
 
@@ -706,7 +706,7 @@ class WordSpecification
 
 					if( foundSpecificationItem == null )
 						{
-						// Typically for the Spanish language
+						// Typically for Spanish
 						if( isSpecificationWordSpanishAmbiguous &&
 						hasCurrentlyConfirmedSpecification_ &&
 						( foundSpecificationItem = myWordItem_.firstSelfGeneratedCheckSpecificationItem( false, false, false, isPossessive, true, specificationWordItem, relationWordItem ) ) != null &&
@@ -723,10 +723,10 @@ class WordSpecification
 					else
 						{
 						// Confirmation: Replace a self-generated by a user-entered specification
-						if( foundSpecificationItem.isSelfGenerated() &&
+						if( ( hasRelationContext ||
+						!isFoundSpecificationExclusive ) &&
 
-						( hasRelationContext ||
-						!isFoundSpecificationExclusive ) )
+						foundSpecificationItem.isSelfGenerated() )
 							{
 							if( isFoundSpecificationExclusive )
 								userSpecificationResult.isConfirmedExclusive = true;
@@ -742,10 +742,16 @@ class WordSpecification
 							userSpecificationResult.confirmedSpecificationItem = foundSpecificationItem;
 							}
 
-						if( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL &&
-						foundSpecificationItem.specificationWordTypeNr() == Constants.WORD_TYPE_NOUN_SINGULAR )
+						if( ( ( generalizationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL &&
+						foundSpecificationItem.generalizationWordTypeNr() == Constants.WORD_TYPE_NOUN_SINGULAR ) ||
+
+						( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL &&
+						foundSpecificationItem.specificationWordTypeNr() == Constants.WORD_TYPE_NOUN_SINGULAR ) ) &&
+
+						// Typically for Chinese: No plural nouns
+						!myWordItem_.isChineseCurrentLanguage() )
 							{
-							if( processPreviouslyUnknownPluralNoun( specificationWordItem ) != Constants.RESULT_OK )
+							if( processPreviouslyUnknownPluralNoun( generalizationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ? myWordItem_ : specificationWordItem ) != Constants.RESULT_OK )
 								return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to process a previously unknown plural noun" );
 
 							userSpecificationResult.confirmedSpecificationItem = foundSpecificationItem;
@@ -758,11 +764,11 @@ class WordSpecification
 		return userSpecificationResult;
 		}
 
-	private UserSpecificationResultType checkUserSpecificationOrQuestion( boolean hasRelationContext, boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isGeneralizationProperName, boolean isNegative, boolean isPossessive, boolean isSelection, boolean isSpecificationGeneralization, boolean isSpecificationWordSpanishAmbiguous, boolean isValueSpecification, short assumptionLevel, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, WordItem specificationWordItem, WordItem relationWordItem )
+	private UserSpecificationResultType checkUserSpecificationOrQuestion( boolean hasRelationContext, boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isGeneralizationProperNoun, boolean isNegative, boolean isPossessive, boolean isSelection, boolean isSpecificationGeneralization, boolean isSpecificationWordSpanishAmbiguous, boolean isValueSpecification, short assumptionLevel, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, WordItem specificationWordItem, WordItem relationWordItem )
 		{
 		boolean hasFeminineSingularNounEnding;
-		boolean isSingularNounGeneralizationWord = ( generalizationWordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR );
 		boolean isQuestion = ( questionParameter > Constants.NO_QUESTION_PARAMETER );
+		boolean isSingularNounGeneralizationWord = ( generalizationWordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR );
 		SpecificationItem foundSpecificationItem;
 		SpecificationItem relatedSpecificationItem;
 		WordTypeItem foundWordTypeItem;
@@ -788,7 +794,7 @@ class WordSpecification
 		// User specification is looping
 		if( boolResult.booleanValue )
 			{
-			if( checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationWordItem ) != Constants.RESULT_OK )
+			if( checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperNoun, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationWordItem ) != Constants.RESULT_OK )
 				return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to check for a specification looping conflict" );
 			}
 		else
@@ -800,7 +806,7 @@ class WordSpecification
 				isArchivedAssignment != foundSpecificationItem.isArchivedAssignment() &&
 
 				// Check for specification conflict
-				checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationWordItem ) != Constants.RESULT_OK )
+				checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperNoun, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationWordItem ) != Constants.RESULT_OK )
 					return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to check for a specification conflict" );
 				}
 
@@ -817,7 +823,7 @@ class WordSpecification
 				if( foundSpecificationItem == null )
 					foundSpecificationItem = myWordItem_.bestMatchingSpecificationWordSpecificationItem( true, true, true, true, isNegative, isPossessive, Constants.NO_COLLECTION_NR, generalizationContextNr, Constants.NO_CONTEXT_NR, specificationWordItem );
 
-				if( generalizationWordTypeNr == Constants.WORD_TYPE_PROPER_NAME )
+				if( generalizationWordTypeNr == Constants.WORD_TYPE_PROPER_NOUN )
 					{
 					// Exclusive specifications are not conflicting
 					if( !isExclusiveSpecification &&
@@ -826,10 +832,10 @@ class WordSpecification
 					foundSpecificationItem == null )
 						{
 						if( !myWordItem_.isFemaleOrMale() &&
-						myWordItem_.hasFeminineProperNameEnding() != specificationWordItem.isFemale() &&
-						myWordItem_.hasMasculineProperNameEnding() != specificationWordItem.isMale() &&
-						InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_PROPER_NAME_TO_BE, myWordItem_.anyWordTypeString(), ( myWordItem_.hasFeminineProperNameEnding() ? Constants.INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE : Constants.INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE ) ) != Constants.RESULT_OK )
-							return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write an interface notification about a proper name expected to be feminine or masculine" );
+						myWordItem_.hasFeminineProperNounEnding() != specificationWordItem.isFemale() &&
+						myWordItem_.hasMasculineProperNounEnding() != specificationWordItem.isMale() &&
+						InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_PROPER_NOUN_TO_BE, myWordItem_.anyWordTypeString(), ( myWordItem_.hasFeminineProperNounEnding() ? Constants.INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE : Constants.INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE ) ) != Constants.RESULT_OK )
+							return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write an interface notification about a proper noun expected to be feminine or masculine" );
 
 						if( specificationCollectionNr > Constants.NO_COLLECTION_NR )
 							{
@@ -871,14 +877,14 @@ class WordSpecification
 								myWordItem_.firstSpecificationItem( false, false, true, specificationWordItem ) == null )
 									{
 									// Check for specification conflict
-									if( checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, specificationWordItem ) != Constants.RESULT_OK )
+									if( checkForSpecificationConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperNoun, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, specificationWordItem ) != Constants.RESULT_OK )
 										return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to check for a specification conflict" );
 									}
 								}
 							}
 						}
 
-					if( !CommonVariables.hasDisplayedWarning &&
+					if( !GlobalVariables.hasDisplayedWarning &&
 					!hasRelationContext &&
 					isAssignment &&
 					!isInactiveAssignment &&
@@ -886,10 +892,12 @@ class WordSpecification
 					!isNegative &&
 					!isValueSpecification &&
 					specificationContextNr == Constants.NO_CONTEXT_NR &&
+					specificationWordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR &&
 					!myWordItem_.isLanguageWord() &&
-					myWordItem_.isNounWordType( specificationWordTypeNr ) &&
 					// Negative specification doesn't exist
 					myWordItem_.bestMatchingSpecificationWordSpecificationItem( true, true, true, true, true, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem ) == null &&
+
+					// Write warning
 					InputOutput.writeInterfaceText( true, Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_WARNING_AMBIGUOUS_SENTENCE_MISSING_RELATION ) != Constants.RESULT_OK )
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write an interface warning about ambiguity" );
 					}
@@ -908,8 +916,6 @@ class WordSpecification
 
 							if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_SINGULAR_NOUN_TO_BE, myWordItem_.anyWordTypeString(), ( hasFeminineSingularNounEnding ? Constants.INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_FEMININE : Constants.INTERFACE_SENTENCE_NOTIFICATION_I_EXPECTED_MASCULINE ) ) != Constants.RESULT_OK )
 								return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write an interface notification about a singular noun expected to be feminine or masculine" );
-
-							CommonVariables.hasDisplayedArticleNotification = true;
 							}
 						}
 					}
@@ -926,14 +932,14 @@ class WordSpecification
 					if( myWordItem_.writeSelectedSpecification( false, true, foundSpecificationItem ) != Constants.RESULT_OK )
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write a sentence with an assumption about the relation" );
 
-					if( ( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) == null ||
+					if( ( writtenSentenceStringBuffer = GlobalVariables.writtenSentenceStringBuffer ) == null ||
 					writtenSentenceStringBuffer.length() == 0 )
 						return myWordItem_.startUserSpecificationResultErrorInWord( 1, moduleNameString_, "I couldn't write a sentence with an assumption about the relation" );
 
 					if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_MISSING_RELATION_I_ASSUME_YOU_MEAN ) != Constants.RESULT_OK )
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write an interface notification about a missing relation" );
 
-					if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+					if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, GlobalVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write a sentence with an assumption about the relation" );
 
 					// Force 'I know' notification
@@ -942,7 +948,7 @@ class WordSpecification
 					}
 				}
 
-			if( !CommonVariables.hasDisplayedWarning )
+			if( !GlobalVariables.hasDisplayedWarning )
 				{
 				if( isQuestion )
 					{
@@ -950,11 +956,11 @@ class WordSpecification
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to check the user question" );
 
 					// Find self-generated question
-					if( ( userSpecificationResult = findSameSimilarOrRelatedQuestion( isAssignment, isExclusiveSpecification, isNegative, isOnlyCheckingForConflicts_, isPossessive, true, isSpecificationGeneralization, assumptionLevel, questionParameter, specificationWordTypeNr, specificationCollectionNr, relationContextNr ) ).result != Constants.RESULT_OK )
+					if( ( userSpecificationResult = findSameSimilarOrRelatedQuestion( isAssignment, isExclusiveSpecification, isNegative, isOnlyCheckingForConflicts_, isPossessive, true, isSpecificationGeneralization, assumptionLevel, questionParameter, specificationCollectionNr, relationContextNr ) ).result != Constants.RESULT_OK )
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to find a same, similar, related, more specific and conflicting self-generated question" );
 
 					if( !isOnlyCheckingForConflicts_ &&
-					CommonVariables.nUserSpecificationWords > 1 &&
+					GlobalVariables.nUserSpecificationWords > 1 &&
 					myWordItem_.sameUserQuestionSpecificationItem( questionParameter ) != null )
 						{
 						if( InputOutput.writeInterfaceText( true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_QUESTION_YOU_HAD_THE_SAME_QUESTION_BEFORE ) != Constants.RESULT_OK )
@@ -965,7 +971,7 @@ class WordSpecification
 					else
 						{
 						// Find user question
-						if( ( userSpecificationResult = findSameSimilarOrRelatedQuestion( isAssignment, isExclusiveSpecification, isNegative, isOnlyCheckingForConflicts_, isPossessive, false, isSpecificationGeneralization, assumptionLevel, questionParameter, specificationWordTypeNr, specificationCollectionNr, relationContextNr ) ).result != Constants.RESULT_OK )
+						if( ( userSpecificationResult = findSameSimilarOrRelatedQuestion( isAssignment, isExclusiveSpecification, isNegative, isOnlyCheckingForConflicts_, isPossessive, false, isSpecificationGeneralization, assumptionLevel, questionParameter, specificationCollectionNr, relationContextNr ) ).result != Constants.RESULT_OK )
 							return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to find a same, similar, related, more specific and conflicting user question" );
 						}
 
@@ -975,21 +981,20 @@ class WordSpecification
 					{
 					if( foundSpecificationItem == null )
 						{
-						if( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL )
-							{
-							// Find singular word type
-							singularNounWordTypeItem = specificationWordItem.activeWordTypeItem( Constants.WORD_TYPE_NOUN_SINGULAR );
+						if( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL &&
+						// Find singular word type
+						( singularNounWordTypeItem = specificationWordItem.activeWordTypeItem( Constants.WORD_TYPE_NOUN_SINGULAR ) ) != null &&
+						// Skip currently created singular noun
+						singularNounWordTypeItem.isOlderItem() &&
+						// Typically for Chinese: No plural nouns
+						!myWordItem_.isChineseCurrentLanguage() &&
 
-							if( singularNounWordTypeItem != null &&
-							// Skip currently created singular noun
-							singularNounWordTypeItem.isOlderItem() &&
-							processPreviouslyUnknownPluralNoun( specificationWordItem ) != Constants.RESULT_OK )
-								return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to process a previously unknown plural noun" );
-							}
+						processPreviouslyUnknownPluralNoun( specificationWordItem ) != Constants.RESULT_OK )
+							return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to process a previously unknown plural noun" );
 						}
 					else
 						{
-						if( ( userSpecificationResult = checkUserSpecification( isAssignment, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, isNegative, isPossessive, isSelection, isSpecificationWordSpanishAmbiguous, isValueSpecification, specificationWordTypeNr, specificationCollectionNr, relationContextNr, foundSpecificationItem, specificationWordItem, relationWordItem ) ).result != Constants.RESULT_OK )
+						if( ( userSpecificationResult = checkUserSpecification( isAssignment, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperNoun, isNegative, isPossessive, isSelection, isSpecificationWordSpanishAmbiguous, isValueSpecification, generalizationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, relationContextNr, foundSpecificationItem, specificationWordItem, relationWordItem ) ).result != Constants.RESULT_OK )
 							return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to check the user specification" );
 						}
 					}
@@ -999,11 +1004,10 @@ class WordSpecification
 		return userSpecificationResult;
 		}
 
-	private UserSpecificationResultType findSameSimilarOrRelatedQuestion( boolean isAssignment, boolean isExclusiveSpecification, boolean isNegative, boolean isOnlyCheckingForConflicts, boolean isPossessive, boolean isSelfGenerated, boolean isSpecificationGeneralization, short assumptionLevel, short questionParameter, short specificationWordTypeNr, int specificationCollectionNr, int relationContextNr )
+	private UserSpecificationResultType findSameSimilarOrRelatedQuestion( boolean isAssignment, boolean isExclusiveSpecification, boolean isNegative, boolean isOnlyCheckingForConflicts, boolean isPossessive, boolean isSelfGenerated, boolean isSpecificationGeneralization, short assumptionLevel, short questionParameter, int specificationCollectionNr, int relationContextNr )
 		{
-		boolean hasFoundQuestion;
-		boolean isUserSpecificationWord;
 		boolean hasFoundOlderSpecification = false;
+		boolean hasFoundQuestion;
 		boolean hasFoundSpecificationRelationContext = false;
 		boolean hasRelationContext = ( relationContextNr > Constants.NO_CONTEXT_NR );
 		boolean hasSpecificationCollection = ( specificationCollectionNr > Constants.NO_COLLECTION_NR );
@@ -1014,13 +1018,14 @@ class WordSpecification
 		boolean isSameRelationContext = false;
 		boolean isSameQuestion = true;
 		boolean isSimilarQuestion = false;
+		boolean isUserSpecificationWord;
 		SpecificationItem currentQuestionSpecificationItem;
 		SpecificationItem foundQuestionSpecificationItem = null;
 		WordItem currentWordItem;
 		StringBuffer writtenSentenceStringBuffer;
 		UserSpecificationResultType userSpecificationResult = new UserSpecificationResultType();
 
-		if( ( currentWordItem = CommonVariables.firstWordItem ) == null )
+		if( ( currentWordItem = GlobalVariables.firstWordItem ) == null )
 			return myWordItem_.startUserSpecificationResultErrorInWord( 1, moduleNameString_, "The first word item is undefined" );
 
 		// Do for all words, including predefined words
@@ -1028,7 +1033,7 @@ class WordSpecification
 			hasFoundQuestion = false;
 			isUserSpecificationWord = currentWordItem.isUserSpecificationWord;
 
-			if( ( currentQuestionSpecificationItem = myWordItem_.firstSelfGeneratedCheckSpecificationItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationWordTypeNr, specificationCollectionNr, currentWordItem ) ) != null )
+			if( ( currentQuestionSpecificationItem = myWordItem_.firstSelfGeneratedCheckSpecificationItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, currentWordItem ) ) != null )
 				{
 				hasFoundQuestion = true;
 
@@ -1138,14 +1143,14 @@ class WordSpecification
 					if( myWordItem_.writeSelectedSpecification( false, false, foundQuestionSpecificationItem ) != Constants.RESULT_OK )
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write the found specification" );
 
-					if( ( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) == null ||
+					if( ( writtenSentenceStringBuffer = GlobalVariables.writtenSentenceStringBuffer ) == null ||
 					writtenSentenceStringBuffer.length() == 0 )
 						return myWordItem_.startUserSpecificationResultErrorInWord( 1, moduleNameString_, "I couldn't write the found specification" );
 
 					if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, ( isSelfGenerated ? ( isSimilarQuestion && !isRelatedQuestion ? Constants.INTERFACE_QUESTION_I_HAD_A_SIMILAR_QUESTION_BEFORE : Constants.INTERFACE_QUESTION_I_HAD_A_RELATED_QUESTION_BEFORE ) : ( isSimilarQuestion && !isRelatedQuestion ? Constants.INTERFACE_QUESTION_YOU_HAD_A_SIMILAR_QUESTION_BEFORE : Constants.INTERFACE_QUESTION_YOU_HAD_A_RELATED_QUESTION_BEFORE ) ) ) != Constants.RESULT_OK )
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write an interface notification about a related question" );
 
-					if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+					if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, GlobalVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 						return myWordItem_.addUserSpecificationResultErrorInWord( 1, moduleNameString_, "I failed to write a sentence about the same, a similar or a relation question" );
 
 					userSpecificationResult.isSimilarOrRelatedQuestion = true;
@@ -1164,7 +1169,7 @@ class WordSpecification
 
 						// Skip displaying announcement if question is in conflict with itself
 						if( ( isExclusiveSpecification ||
-						CommonVariables.nUserSpecificationWords == 1 ) &&
+						GlobalVariables.nUserSpecificationWords == 1 ) &&
 
 						// Write more specific specification
 						writeMoreSpecificSpecification( foundQuestionSpecificationItem ) != Constants.RESULT_OK )
@@ -1200,7 +1205,7 @@ class WordSpecification
 		hasDisplayedMoreSpecificNonExclusiveSpecification_ = false;
 		hasDisplayedMoreSpecificQuestion_ = false;
 		isOnlyCheckingForConflicts_ = false;
-		isThisProperNameWordTouchedDuringCurrentSentence_ = false;
+		isWordTouchedDuringCurrentSentence_ = false;
 
 		spanishCompoundSpecificationCollectionNr_ = Constants.NO_COLLECTION_NR;
 		userSpecificationCollectionNr_ = Constants.NO_COLLECTION_NR;
@@ -1218,7 +1223,7 @@ class WordSpecification
 
 		if( ( myWordItem_ = myWordItem ) == null )
 			{
-			CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
+			GlobalVariables.result = Constants.RESULT_SYSTEM_ERROR;
 			Console.addError( "\nClass:" + moduleNameString_ + "\nMethod:\t" + Constants.INPUT_OUTPUT_ERROR_CONSTRUCTOR_METHOD_NAME + "\nError:\t\tThe given my word item is undefined.\n" );
 			}
 		}
@@ -1236,7 +1241,7 @@ class WordSpecification
 		hasDisplayedMoreSpecificNonExclusiveSpecification_ = false;
 		hasDisplayedMoreSpecificQuestion_ = false;
 		isOnlyCheckingForConflicts_ = false;
-		isThisProperNameWordTouchedDuringCurrentSentence_ = false;
+		isWordTouchedDuringCurrentSentence_ = false;
 
 		spanishCompoundSpecificationCollectionNr_ = Constants.NO_COLLECTION_NR;
 		userSpecificationCollectionNr_ = Constants.NO_COLLECTION_NR;
@@ -1290,12 +1295,12 @@ class WordSpecification
 		return hasDisplayedMoreSpecificQuestion_;
 		}
 
-	protected byte checkForSpecificationConflict( boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isGeneralizationProperName, boolean isNegative, boolean isPossessive, short specificationWordTypeNr, int specificationCollectionNr, int relationContextNr, WordItem specificationWordItem )
+	protected byte checkForSpecificationConflict( boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isGeneralizationProperNoun, boolean isNegative, boolean isPossessive, short specificationWordTypeNr, int specificationCollectionNr, int relationContextNr, WordItem specificationWordItem )
 		{
 		SpecificationItem conflictingSpecificationItem;
 		SpecificationResultType specificationResult;
 
-		if( ( specificationResult = checkSpecificationWordForConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, specificationWordItem ) ).result != Constants.RESULT_OK )
+		if( ( specificationResult = checkSpecificationWordForConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperNoun, isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, specificationWordItem ) ).result != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to check for a specification conflict" );
 
 		conflictingSpecificationItem = specificationResult.specificationItem;
@@ -1308,7 +1313,7 @@ class WordSpecification
 		conflictingSpecificationItem.hasCompoundSpecificationCollection() ) &&
 
 		// Opposite negative of conflicting specification word
-		checkSpecificationWordForConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, !isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, conflictingSpecificationItem.specificationWordItem() ).result != Constants.RESULT_OK )
+		checkSpecificationWordForConflict( isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperNoun, !isNegative, isPossessive, specificationWordTypeNr, specificationCollectionNr, relationContextNr, conflictingSpecificationItem.specificationWordItem() ).result != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to check for the opposite negative specification conflict" );
 
 		return Constants.RESULT_OK;
@@ -1329,7 +1334,7 @@ class WordSpecification
 			if( myWordItem_.writeSelectedSpecification( false, true, writeSpecificationItem ) != Constants.RESULT_OK )
 				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a sentence with an assumption about the relation" );
 
-			writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer;
+			writtenSentenceStringBuffer = GlobalVariables.writtenSentenceStringBuffer;
 			}
 
 		if( writtenSentenceStringBuffer.length() == 0 )
@@ -1338,45 +1343,39 @@ class WordSpecification
 		if( InputOutput.writeInterfaceText( true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, interfaceParameter ) != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an interface notification about a confirmation" );
 
-		if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+		if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, GlobalVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a sentence about the same, a similar or a relation question" );
 
 		return Constants.RESULT_OK;
 		}
 
-	protected CreateAndAssignResultType addSpecificationInWord( boolean isAssignment, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSelection, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int copiedRelationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
+	protected CreateAndAssignResultType addSpecificationInWord( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isCharacteristicFor, boolean isConditional, boolean isEveryGeneralization, boolean isExclusiveGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSelection, boolean isSpecific, boolean isSpecificationGeneralization, boolean isUncountableGeneralizationNoun, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int copiedRelationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
 		{
-		boolean hasExistingSpecificationRelationContext;
-		boolean hasSpecificationCollection;
-		boolean isExistingHiddenSpanishSpecification;
 		boolean hasCopiedRelationContext = ( copiedRelationContextNr > Constants.NO_CONTEXT_NR );
+		boolean hasExistingSpecificationRelationContext;
 		boolean hasFoundSpecificationWithDifferentRelationContext = false;
 		boolean hasRelationContext = ( relationContextNr > Constants.NO_CONTEXT_NR );
-		boolean isGeneralizationProperName = ( generalizationWordTypeNr == Constants.WORD_TYPE_PROPER_NAME );
+		boolean hasSpecificationCollection;
+		boolean isExistingHiddenSpanishSpecification;
+		boolean isGeneralizationProperNoun = ( generalizationWordTypeNr == Constants.WORD_TYPE_PROPER_NOUN );
 		boolean isQuestion = ( questionParameter > Constants.NO_QUESTION_PARAMETER );
 		boolean isSelfGenerated = ( firstJustificationItem != null );
 		boolean isSpecificationWordSpanishAmbiguous = false;
 		boolean isUserRelationWord = myWordItem_.isUserRelationWord;
+		int compoundSpecificationCollectionNr = Constants.NO_COLLECTION_NR;
 		int nonCompoundSpecificationCollectionNr;
 		int originalSentenceNr;
-		int compoundSpecificationCollectionNr = Constants.NO_COLLECTION_NR;
+		SpecificationItem confirmedSpecificationItem = null;
 		SpecificationItem createdSpecificationItem;
 		SpecificationItem existingSpecificationItem;
+		SpecificationItem foundSpecificationItem = null;
 		SpecificationItem foundUserSpecificationItem;
 		SpecificationItem noRelationContextSpecificationItem;
-		SpecificationItem confirmedSpecificationItem = null;
-		SpecificationItem foundSpecificationItem = null;
 		SpecificationItem obsoleteAssumptionSpecificationItem = null;
 		SpecificationItem obsoleteHiddenSpanishSpecificationItem = null;
 		SpecificationItem obsoleteSpecificationItem = null;
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
 		UserSpecificationResultType userSpecificationResult = new UserSpecificationResultType();
-
-		if( !isThisProperNameWordTouchedDuringCurrentSentence_ )
-			{
-			isThisProperNameWordTouchedDuringCurrentSentence_ = true;
-			addToTouchedDuringCurrentSentenceProperNameWordList();
-			}
 
 		correctedAssumptionReplacedSpecificationItem_ = null;
 		replacedAssignmentItem_ = null;
@@ -1398,6 +1397,8 @@ class WordSpecification
 		!relationWordItem.hasWordType( false, relationWordTypeNr ) ) )
 			return myWordItem_.startCreateAndAssignResultErrorInWord( 1, moduleNameString_, "The relation variables aren't matching" );
 
+		addMyWordToTouchedDuringCurrentSentenceList();
+
 		if( specificationWordItem != null )
 			{
 			// Check specification word type
@@ -1415,6 +1416,8 @@ class WordSpecification
 			specificationWordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR &&
 			!specificationWordItem.isOlderItem() &&
 			!specificationWordItem.hasCollection() &&
+
+			// Collect specifications
 			collectSpecifications( isAssignment, isQuestion, specificationWordTypeNr, generalizationWordTypeNr, myWordItem_, specificationWordItem ) != Constants.RESULT_OK )
 				return myWordItem_.addCreateAndAssignResultErrorInWord( 1, moduleNameString_, "I failed to collect myself with specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
 
@@ -1453,7 +1456,7 @@ class WordSpecification
 					!isPossessive &&
 					!isSelfGenerated &&
 					compoundSpecificationCollectionNr > Constants.NO_COLLECTION_NR &&
-					CommonVariables.nUserSpecificationWords > 2 ) ) ) ) )
+					GlobalVariables.nUserSpecificationWords > 2 ) ) ) ) )
 						specificationCollectionNr = nonCompoundSpecificationCollectionNr;
 					else
 						specificationCollectionNr = compoundSpecificationCollectionNr;
@@ -1473,16 +1476,16 @@ class WordSpecification
 				if( hasSpecificationCollection &&
 
 				( !isAssignment ||
-				isGeneralizationProperName ) )
+				isGeneralizationProperNoun ) )
 					userSpecificationCollectionNr_ = specificationCollectionNr;
 
-				if( ( userSpecificationResult = checkUserSpecificationOrQuestion( hasRelationContext, isAssignment, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperName, isNegative, isPossessive, isSelection, isSpecificationGeneralization, isSpecificationWordSpanishAmbiguous, isValueSpecification, assumptionLevel, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem, relationWordItem ) ).result != Constants.RESULT_OK )
+				if( ( userSpecificationResult = checkUserSpecificationOrQuestion( hasRelationContext, isAssignment, isInactiveAssignment, isArchivedAssignment, isExclusiveSpecification, isGeneralizationProperNoun, isNegative, isPossessive, isSelection, isSpecificationGeneralization, isSpecificationWordSpanishAmbiguous, isValueSpecification, assumptionLevel, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem, relationWordItem ) ).result != Constants.RESULT_OK )
 					return myWordItem_.addCreateAndAssignResultErrorInWord( 1, moduleNameString_, "I failed to check a user specification or question with specification word \"" + specificationWordItem.anyWordTypeString() + "\"" );
 
 				confirmedSpecificationItem = userSpecificationResult.confirmedSpecificationItem;
 				}
 
-			if( !CommonVariables.hasDisplayedWarning )
+			if( !GlobalVariables.hasDisplayedWarning )
 				{
 				// Try to find specification
 				// Start with finding user specification
@@ -1576,7 +1579,7 @@ class WordSpecification
 							// Found specification has same relation context
 							if( foundSpecificationItem.relationContextNr() == relationContextNr )
 								{
-								if( isGeneralizationProperName &&
+								if( isGeneralizationProperNoun &&
 								firstJustificationItem != null &&
 								foundSpecificationItem.isOlderItem() )
 									{
@@ -1594,7 +1597,7 @@ class WordSpecification
 										// Conclusion doesn't exist
 										myWordItem_.firstSelfGeneratedCheckSpecificationItem( true, isArchivedAssignment, isNegative, isPossessive, false, specificationWordItem, null ) == null ) ||
 
-										// Typically for the Spanish language
+										// Typically for Spanish
 										( isSpecificationWordSpanishAmbiguous &&
 										!foundSpecificationItem.isHiddenSpanishSpecification() &&
 										foundSpecificationItem.olderJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION ) == null ) ) ) ) )
@@ -1735,7 +1738,7 @@ class WordSpecification
 				}
 			}
 
-		if( !CommonVariables.hasDisplayedWarning )
+		if( !GlobalVariables.hasDisplayedWarning )
 			{
 			if( foundSpecificationItem == null ||
 
@@ -1806,10 +1809,10 @@ class WordSpecification
 
 				originalSentenceNr = ( hasRelationContext ||
 										isQuestion ||
-										foundSpecificationItem == null ? ( obsoleteHiddenSpanishSpecificationItem == null ? CommonVariables.currentSentenceNr : obsoleteHiddenSpanishSpecificationItem.creationSentenceNr() ) : foundSpecificationItem.originalSentenceNr() );
+										foundSpecificationItem == null ? ( obsoleteHiddenSpanishSpecificationItem == null ? GlobalVariables.currentSentenceNr : obsoleteHiddenSpanishSpecificationItem.creationSentenceNr() ) : foundSpecificationItem.originalSentenceNr() );
 
 				// Create the actual specification
-				if( ( createAndAssignResult = myWordItem_.createSpecificationItem( false, false, false, false, false, isConditional, ( hasCorrectedAssumptionByKnowledge_ || hasCorrectedAssumptionByOppositeQuestion_ ), isEveryGeneralization, isExclusiveGeneralization, isExclusiveSpecification, ( isAssignment && !isSelfGenerated ? false : isNegative ), isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, Constants.NO_ASSIGNMENT_LEVEL, assumptionLevel, CommonVariables.currentLanguageNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, ( isAssignment ? Constants.NO_WORD_TYPE_NR : relationWordTypeNr ), specificationCollectionNr, generalizationContextNr, Constants.NO_CONTEXT_NR, ( isAssignment ? Constants.NO_CONTEXT_NR : relationContextNr ), originalSentenceNr, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, ( isAssignment ? 0 : nContextRelations ), firstJustificationItem, specificationWordItem, specificationString, null, null ) ).result != Constants.RESULT_OK )
+				if( ( createAndAssignResult = myWordItem_.createSpecificationItem( false, false, false, false, isCharacteristicFor, false, isConditional, ( hasCorrectedAssumptionByKnowledge_ || hasCorrectedAssumptionByOppositeQuestion_ ), isEveryGeneralization, isExclusiveGeneralization, isExclusiveSpecification, ( isAssignment && !isSelfGenerated ? false : isNegative ), isPartOf, isPossessive, isSpecific, isSpecificationGeneralization, isUncountableGeneralizationNoun, isUniqueUserRelation, isValueSpecification, Constants.NO_ASSIGNMENT_LEVEL, assumptionLevel, GlobalVariables.currentLanguageNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, ( isAssignment ? Constants.NO_WORD_TYPE_NR : relationWordTypeNr ), specificationCollectionNr, generalizationContextNr, Constants.NO_CONTEXT_NR, ( isAssignment ? Constants.NO_CONTEXT_NR : relationContextNr ), originalSentenceNr, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, ( isAssignment ? 0 : nContextRelations ), firstJustificationItem, specificationWordItem, specificationString, null, null ) ).result != Constants.RESULT_OK )
 					return myWordItem_.addCreateAndAssignResultErrorInWord( 1, moduleNameString_, "I failed to create a specification item" );
 
 				if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == null )
@@ -1852,7 +1855,7 @@ class WordSpecification
 
 					if( !isSelfGenerated &&
 
-					( isGeneralizationProperName ||
+					( isGeneralizationProperNoun ||
 					generalizationWordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ) &&
 
 					!myWordItem_.isFemaleOrMale() )
@@ -1875,7 +1878,6 @@ class WordSpecification
 
 		createAndAssignResult.foundSpecificationItem = foundSpecificationItem;
 		createAndAssignResult.replacedAssignmentItem = replacedAssignmentItem_;
-
 		return createAndAssignResult;
 		}
 

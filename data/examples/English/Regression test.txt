@@ -3,7 +3,6 @@
 #----------------------------
 Read the test file "English/user/ambiguity/Boston".
 Read the test file "English/user/ambiguity/US presidents".
-Read the test file "English/user/ambiguity/US presidents - Confirmation".
 
 Read the test file "English/user/programming/Connect-Four - Display information about the set".
 Read the test file "English/user/programming/Greeting".
@@ -15,6 +14,8 @@ Read the test file "English/user/question answering/Specification-generalization
 Read the test file "English/user/question answering/Specification-generalization - Question (number)".
 Read the test file "English/user/question answering/This question is more specific (without relation)".
 
+Read the test file "English/user/reasoning/Boiling point".
+Read the test file "English/user/reasoning/Condensation point".
 Read the test file "English/user/reasoning/Indefinite article doesn't match with noun".
 Read the test file "English/user/reasoning/My conclusions that are confirmed (with relation, without family definition)".
 Read the test file "English/user/reasoning/Scientific challenge".
@@ -24,6 +25,7 @@ Read the test file "English/user/reasoning/Specification-generalization - Mammal
 Read the test file "English/user/reasoning/The only option left - Boat".
 Read the test file "English/user/reasoning/The only option left - Option".
 Read the test file "English/user/reasoning/Tom is a cat".
+Read the test file "English/user/reasoning/US presidents - Confirmation".
 
 #----------------------------
 # Family (user)
@@ -129,6 +131,7 @@ Read the test file "English/reasoning/Acceptance - A small letter is small".
 Read the test file "English/reasoning/Acceptance - John is a person, John is tall and John is a boy".
 Read the test file "English/reasoning/Acceptance of only one article in exclusive specification".
 Read the test file "English/reasoning/Acceptance of sentence ending without colon".
+Read the test file "English/reasoning/Additional test".
 Read the test file "English/reasoning/Adjective".
 Read the test file "English/reasoning/Changed assumption level (1)".
 Read the test file "English/reasoning/Changed assumption level (2)".

@@ -61,13 +61,13 @@ Display "   TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION".
 Display "\n".
 Display "  0. This License applies to any program or other work which contains".
 Display "a notice placed by the copyright holder saying it may be distributed".
-Display "under the terms of this General Public License.  The "Program", below,".
+Display "under the terms of this General Public License.  The \"Program\", below,".
 Display "refers to any such program or work, and a \"work based on the Program\"".
 Display "means either the Program or any derivative work under copyright law:".
 Display "that is to say, a work containing the Program or a portion of it,".
 Display "either verbatim or with modifications and/or translated into another".
 Display "language.  (Hereinafter, translation is included without limitation in".
-Display "the term "modification".)  Each licensee is addressed as \"you\".".
+Display "the term \"modification\".)  Each licensee is addressed as \"you\".".
 Display "\n".
 Display "Activities other than copying, distribution and modification are not".
 Display "covered by this License; they are outside its scope.  The act of".

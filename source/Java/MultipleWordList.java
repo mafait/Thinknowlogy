@@ -1,9 +1,9 @@
-/*	Class:			MultipleWordList
+﻿/*	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@ class MultipleWordList extends List
 
 	protected short matchingMultipleSingularNounWordParts( String sentenceString )
 		{
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
+		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		MultipleWordItem searchMultipleWordItem = firstActiveMultipleWordItem();
 		WordItem multipleWordItem;
 		String multipleWordString;
@@ -95,7 +95,7 @@ class MultipleWordList extends List
 			return startError( 1, "The given multiple word item is undefined" );
 
 		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) &&
-		addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, CommonVariables.currentLanguageNr, wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+		addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, GlobalVariables.currentLanguageNr, wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
 			return addError( 1, "I failed to add an active multiple word item" );
 
 		return Constants.RESULT_OK;

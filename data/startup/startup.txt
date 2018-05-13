@@ -3,8 +3,9 @@
 ~Español
 ~Français
 ~Nederlands
+#Java#~中文
 
-# The grammar rules have been read. Now it's possible
+# The grammar rules have been read. Now it is possible
 # to use these rules, expressed as readable sentences
 
 # Read the user file in the available languages
@@ -12,12 +13,14 @@ Read the file "data/startup/English/users".
 Leer el archivo "data/startup/Español/usuarios".
 Lirez le fichier "data/startup/Français/utilisateurs".
 Lees het bestand "data/startup/Nederlands/gebruikers".
+#Java#阅读文档"data/startup/中文/用户"。
 
 # Read common knowledge in the available languages
 Read the file "data/startup/English/common knowledge".
 Leer el archivo "data/startup/Español/conocimiento común".
 Lirez le fichier "data/startup/Français/connaissance commune".
 Lees het bestand "data/startup/Nederlands/algemene kennis".
+#Java#阅读文档"data/startup/中文/般的知识"。
 
 # Display copyright text and intro text on startup
 If the intro text is started then if the startup language is not assigned or the startup language is English then the intro text is empty, display the copyright and display the intro.
@@ -28,3 +31,5 @@ Si le texte d'introduction est démarré puis si la langue de démarrage est Fra
 Le texte d'introduction est démarré.
 Als de intro tekst is gestart dan als de opstarttaal is Nederlands dan de intro tekst is leeg, toon het auteursrecht en toon de intro.
 De intro tekst is gestart.
+#Java#如果该文字介绍是开始那么如果该启动时的语言是中文那么该文字介绍是空的、呈现版权和呈现介绍。
+#Java#该文字介绍是开始。

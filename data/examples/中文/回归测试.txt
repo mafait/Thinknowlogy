@@ -1,0 +1,304 @@
+﻿#----------------------------
+# General (user)
+#----------------------------
+阅读测试文档"中文/用户/歧义/Boston"。
+阅读测试文档"中文/用户/歧义/US presidents"。
+
+阅读测试文档"中文/用户/程序设计/Connect-Four - Display information about the set"。
+阅读测试文档"中文/用户/程序设计/Greeting"。
+阅读测试文档"中文/用户/程序设计/Tower of Hanoi (even number of discs)"。
+阅读测试文档"中文/用户/程序设计/Tower of Hanoi (odd number of discs)"。
+
+阅读测试文档"中文/用户/问题的回答/Specification-generalization - Question (across definitions)"。
+#阅读测试文档"中文/用户/问题的回答/Specification-generalization - Question (letter)"。
+阅读测试文档"中文/用户/问题的回答/Specification-generalization - Question (number)"。
+阅读测试文档"中文/用户/问题的回答/This question is more specific (without relation)"。
+
+阅读测试文档"中文/用户/推理/Boiling point"。
+阅读测试文档"中文/用户/推理/Condensation point"。
+#阅读测试文档"中文/用户/推理/Indefinite article doesn't match with noun"。
+阅读测试文档"中文/用户/推理/My conclusions that are confirmed (with relation, without family definition)"。
+阅读测试文档"中文/用户/推理/科学挑战"。
+阅读测试文档"中文/用户/推理/Sentence with possessive verb (without family definition)"。
+#阅读测试文档"中文/用户/推理/Specification-generalization - Mammals (plural)"。
+阅读测试文档"中文/用户/推理/Specification-generalization - Mammals (singular)"。
+阅读测试文档"中文/用户/推理/The only option left - Boat"。
+阅读测试文档"中文/用户/推理/The only option left - Option"。
+阅读测试文档"中文/用户/推理/Tom is a cat"。
+阅读测试文档"中文/用户/推理/US presidents - Confirmation"。
+
+#----------------------------
+# Family (user)
+#----------------------------
+阅读测试文档"中文/用户/冲突/家庭/Anna is a son"。
+阅读测试文档"中文/用户/冲突/家庭/Joe is a mother"。
+阅读测试文档"中文/用户/冲突/家庭/John is a woman"。
+阅读测试文档"中文/用户/冲突/家庭/John is the mother of Paul"。
+阅读测试文档"中文/用户/冲突/家庭/Maria is a man (accept)"。
+阅读测试文档"中文/用户/冲突/家庭/Negative conflict - John is not a father"。
+阅读测试文档"中文/用户/冲突/家庭/Negative conflict - Mary is a mother"。
+阅读测试文档"中文/用户/冲突/家庭/Negative conflict - Pete is not a father"。
+阅读测试文档"中文/用户/冲突/家庭/Negative conflict - Sue is the mother of Paul, Joe and Laura"。
+阅读测试文档"中文/用户/冲突/家庭/Past tense - John was the father of Paul - John is a man"。
+阅读测试文档"中文/用户/冲突/家庭/Paul has a father, called Anna"。
+阅读测试文档"中文/用户/冲突/家庭/Paul is a boy - Paul is a man (normal)"。
+阅读测试文档"中文/用户/冲突/家庭/Paul is a daughter"。
+阅读测试文档"中文/用户/冲突/家庭/Paul is a man (normal) - Paul is a boy"。
+阅读测试文档"中文/用户/冲突/家庭/Question in conflict with itself (no prior knowledge)"。
+阅读测试文档"中文/用户/冲突/家庭/Question in conflict with itself (with knowledge)"。
+阅读测试文档"中文/用户/冲突/家庭/Sentence in conflict with itself"。
+
+阅读测试文档"中文/用户/问题的回答/家庭/Assumption through suggestive question"。
+阅读测试文档"中文/用户/问题的回答/家庭/Exclusive question"。
+阅读测试文档"中文/用户/问题的回答/家庭/I am not sure"。
+阅读测试文档"中文/用户/问题的回答/家庭/I had the same question before"。
+阅读测试文档"中文/用户/问题的回答/家庭/I only know"。
+阅读测试文档"中文/用户/问题的回答/家庭/Indirectly answered question, with confirmation"。
+阅读测试文档"中文/用户/问题的回答/家庭/Negative and alternative answers"。
+阅读测试文档"中文/用户/问题的回答/家庭/Positive answers"。
+阅读测试文档"中文/用户/问题的回答/家庭/Question relation is subset of answer relation"。
+阅读测试文档"中文/用户/问题的回答/家庭/Same and similar questions"。
+阅读测试文档"中文/用户/问题的回答/家庭/This question is more specific (with relation)"。
+阅读测试文档"中文/用户/问题的回答/家庭/You had a related question before"。
+阅读测试文档"中文/用户/问题的回答/家庭/You had same-similar question before (with relation)"。
+阅读测试文档"中文/用户/问题的回答/家庭/You had same-similar question before (without relation)"。
+阅读测试文档"中文/用户/问题的回答/家庭/You had same-similar-related question before (with relation)"。
+阅读测试文档"中文/用户/问题的回答/家庭/Your question is more specific (about John)"。
+阅读测试文档"中文/用户/问题的回答/家庭/Your question is more specific (about Paul and Joe)"。
+
+阅读测试文档"中文/用户/推理/家庭/Anna was the mother of Paul, Joe and Laura"。
+阅读测试文档"中文/用户/推理/家庭/Correcting invalidated assumption (by knowledge)"。
+阅读测试文档"中文/用户/推理/家庭/Correcting invalidated assumption (by opposite suggestive question)"。
+阅读测试文档"中文/用户/推理/家庭/John - Anna - Paul, Joe and Laura"。
+阅读测试文档"中文/用户/推理/家庭/John and Anna - Paul, Joe and Laura"。
+阅读测试文档"中文/用户/推理/家庭/John was the father of Paul, Joe and Laura"。
+阅读测试文档"中文/用户/推理/家庭/Justification report"。
+阅读测试文档"中文/用户/推理/家庭/Laura - Joe - John and Anna - Paul"。
+阅读测试文档"中文/用户/推理/家庭/Laura - Joe - Paul - John and Anna"。
+阅读测试文档"中文/用户/推理/家庭/My assumptions that are confirmed (child)"。
+阅读测试文档"中文/用户/推理/家庭/My assumptions that are confirmed (parents)"。
+阅读测试文档"中文/用户/推理/家庭/My assumptions that are confirmed (John and Anna)"。
+阅读测试文档"中文/用户/推理/家庭/My assumptions that are confirmed (Paul, Joe and Laura)"。
+阅读测试文档"中文/用户/推理/家庭/My assumptions that are confirmed (without relation)"。
+阅读测试文档"中文/用户/推理/家庭/My conclusions that are confirmed (father and mother)"。
+阅读测试文档"中文/用户/推理/家庭/My conclusions that are confirmed (with relation)"。
+阅读测试文档"中文/用户/推理/家庭/My conclusions that are confirmed (without relation)"。
+阅读测试文档"中文/用户/推理/家庭/Paul - Joe - Laura - John and Anna (parents)"。
+阅读测试文档"中文/用户/推理/家庭/Paul - Joe - Laura - John and Anna (son - daughter)"。
+阅读测试文档"中文/用户/推理/家庭/Paul - John and Anna - Joe - Laura"。
+阅读测试文档"中文/用户/推理/家庭/Past tense"。
+阅读测试文档"中文/用户/推理/家庭/Sentence with possessive verb"。
+阅读测试文档"中文/用户/推理/家庭/This information is more specific (non-exclusive)"。
+阅读测试文档"中文/用户/推理/家庭/This information is more specific"。
+阅读测试文档"中文/用户/推理/家庭/You have confirmed at least one relation word"。
+阅读测试文档"中文/用户/推理/家庭/You have confirmed the specification - but not the relation"。
+
+#----------------------------
+# General (deep)
+#----------------------------
+阅读测试文档"中文/歧义/Acceptance - Boston - United States - United Kingdom"。
+阅读测试文档"中文/歧义/Acceptance - Collection in different order"。
+阅读测试文档"中文/歧义/Acceptance - Collection subset"。
+阅读测试文档"中文/歧义/Acceptance - Expanded collection"。
+阅读测试文档"中文/歧义/Duplicates"。
+阅读测试文档"中文/歧义/Multiple specifications as well as multiple relations"。
+阅读测试文档"中文/歧义/Nero"。
+阅读测试文档"中文/歧义/US presidents"。
+阅读测试文档"中文/歧义/US presidents - Boston"。
+阅读测试文档"中文/歧义/US presidents - Imaginary re-election (with confirmation)"。
+阅读测试文档"中文/歧义/US presidents - Imaginary re-election"。
+
+阅读测试文档"中文/冲突/Assignment in conflict with definition specification"。
+阅读测试文档"中文/冲突/Definition specification is already assigned"。
+阅读测试文档"中文/冲突/Generalization word and relation word are the same"。
+阅读测试文档"中文/冲突/Looping - Every father is a parent"。
+阅读测试文档"中文/冲突/Looping - Every mother is a parent"。
+阅读测试文档"中文/冲突/No conflict on non-exclusive collection"。
+
+阅读测试文档"中文/程序设计/Connect-Four - Column is full"。
+阅读测试文档"中文/程序设计/Connect-Four - Eager to win"。
+阅读测试文档"中文/程序设计/Connect-Four - The solve level is high"。
+阅读测试文档"中文/程序设计/The good, the bad and the ugly"。
+
+阅读测试文档"中文/问题的回答/Context - Question with generalization pronoun"。
+阅读测试文档"中文/问题的回答/Just a few questions (1)"。
+阅读测试文档"中文/问题的回答/Just a few questions (2)"。
+阅读测试文档"中文/问题的回答/Just a few questions (3)"。
+阅读测试文档"中文/问题的回答/Just a few questions (4)"。
+阅读测试文档"中文/问题的回答/Just a few questions (5)"。
+
+阅读测试文档"中文/推理/Acceptance - A small letter is small"。
+阅读测试文档"中文/推理/Acceptance - John is a person, John is tall and John is a boy"。
+阅读测试文档"中文/推理/Acceptance of only one article in exclusive specification"。
+阅读测试文档"中文/推理/Acceptance of sentence ending without colon"。
+阅读测试文档"中文/推理/Additional test"。
+阅读测试文档"中文/推理/Adjective"。
+阅读测试文档"中文/推理/Changed assumption level (1)"。
+阅读测试文档"中文/推理/Changed assumption level (2)"。
+阅读测试文档"中文/推理/Collect afterwards - Every father is a parent - Every mother is a parent"。
+阅读测试文档"中文/推理/Collect afterwards - Every father is a parent and every mother is a parent"。
+阅读测试文档"中文/推理/Collect afterwards - John-Anna-Paul-Joe - John-Anna-Laura"。
+阅读测试文档"中文/推理/Collect afterwards - John-Paul-Joe - John-Laura"。
+阅读测试文档"中文/推理/Collect afterwards - Past tense"。
+阅读测试文档"中文/推理/Collect afterwards - Uncertainty"。
+阅读测试文档"中文/推理/Every car has wheels"。
+阅读测试文档"中文/推理/James was a father - James was the father of Peter"。
+阅读测试文档"中文/推理/John is a father"。
+阅读测试文档"中文/推理/John is a parent of Paul - Joe has 2 parents"。
+阅读测试文档"中文/推理/John is a parent of Paul - John is a parent of Joe"。
+阅读测试文档"中文/推理/Knowledge of organisms (1)"。
+阅读测试文档"中文/推理/Knowledge of organisms (2)"。
+阅读测试文档"中文/推理/My conclusions that are confirmed (with relation, without family definition)"。
+阅读测试文档"中文/推理/Paul has a parent, called John - Paul has a parent, called Anna"。
+阅读测试文档"中文/推理/The only option left - Boat"。
+阅读测试文档"中文/推理/The only option left - Addison is not a woman"。
+阅读测试文档"中文/推理/The only option left - Option"。
+阅读测试文档"中文/推理/Scientific challenge - Confirmation"。
+阅读测试文档"中文/推理/Sentence with possessive verb (without family definition)"。
+#阅读测试文档"中文/推理/Specification-generalization - Acceptance of sentences (plural)"。
+阅读测试文档"中文/推理/Specification-generalization - Acceptance of sentences (singular)"。
+阅读测试文档"中文/推理/Specification-generalization - Single specification"。
+阅读测试文档"中文/推理/Switch language"。
+阅读测试文档"中文/推理/Uncertainty and past tense"。
+阅读测试文档"中文/推理/Unique relation"。
+
+#----------------------------
+# Family (deep)
+#----------------------------
+阅读测试文档"中文/歧义/家庭/Question missing relation context"。
+阅读测试文档"中文/歧义/家庭/Sentence missing relation context - I assume you mean"。
+
+阅读测试文档"中文/冲突/家庭/Anna is the father of Paul, Joe and Laura"。
+阅读测试文档"中文/冲突/家庭/Joe is a mother"。
+阅读测试文档"中文/冲突/家庭/John is a boy and a man"。
+阅读测试文档"中文/冲突/家庭/John is a man and a boy"。
+阅读测试文档"中文/冲突/家庭/John was the father of Paul (before family definition)"。
+阅读测试文档"中文/冲突/家庭/No conflict in same sentence"。
+阅读测试文档"中文/冲突/家庭/No conflict on multiple related specifications"。
+阅读测试文档"中文/冲突/家庭/Simple family definition - John is the mother of Paul"。
+
+阅读测试文档"中文/问题的回答/家庭/Assumption through suggestive question"。
+阅读测试文档"中文/问题的回答/家庭/Indirectly answered question, with confirmation"。
+阅读测试文档"中文/问题的回答/家庭/Is Paul a woman"。
+阅读测试文档"中文/问题的回答/家庭/Just a few questions (1)"。
+阅读测试文档"中文/问题的回答/家庭/Just a few questions (2)"。
+阅读测试文档"中文/问题的回答/家庭/Negative and alternative answers"。
+阅读测试文档"中文/问题的回答/家庭/This question is more specific (with relation)"。
+阅读测试文档"中文/问题的回答/家庭/Your question is more specific (about John)"。
+
+阅读测试文档"中文/推理/家庭/Acceptance of a strange family definition"。
+阅读测试文档"中文/推理/家庭/Anna - John - Paul, Joe and Laura"。
+阅读测试文档"中文/推理/家庭/Anna was the mother of Paul, Joe and Laura"。
+阅读测试文档"中文/推理/家庭/Avoid duplicate context"。
+阅读测试文档"中文/推理/家庭/Collect afterwards - Joe-Anna - Laura-John John-Anna-Paul-Joe-Laura"。
+阅读测试文档"中文/推理/家庭/Collect afterwards - John-Anna-Paul-Joe - John-Anna-Laura.txt"。
+阅读测试文档"中文/推理/家庭/Complex (1)"。
+阅读测试文档"中文/推理/家庭/Complex (2)"。
+阅读测试文档"中文/推理/家庭/Complex (3)"。
+阅读测试文档"中文/推理/家庭/Complex (4)"。
+阅读测试文档"中文/推理/家庭/Complex (5)"。
+阅读测试文档"中文/推理/家庭/Complex (6)"。
+阅读测试文档"中文/推理/家庭/Complex (7 - Becky)"。
+阅读测试文档"中文/推理/家庭/Complex (7 - Claudia)"。
+阅读测试文档"中文/推理/家庭/Complex (8)"。
+阅读测试文档"中文/推理/家庭/Complex (9)"。
+阅读测试文档"中文/推理/家庭/Complex (10)"。
+阅读测试文档"中文/推理/家庭/Complex (11)"。
+阅读测试文档"中文/推理/家庭/Complex (12)"。
+阅读测试文档"中文/推理/家庭/Complex (13)"。
+阅读测试文档"中文/推理/家庭/Complex (14)"。
+阅读测试文档"中文/推理/家庭/Complex (15)"。
+阅读测试文档"中文/推理/家庭/Complex (16)"。
+阅读测试文档"中文/推理/家庭/Complex (17)"。
+阅读测试文档"中文/推理/家庭/Complex (18)"。
+阅读测试文档"中文/推理/家庭/Complex (19 - mixed)"。
+阅读测试文档"中文/推理/家庭/Complex (19 - strange)"。
+阅读测试文档"中文/推理/家庭/Complex (20)"。
+阅读测试文档"中文/推理/家庭/Complex (21)"。
+阅读测试文档"中文/推理/家庭/Context - Joe has 2 parents - John is a parent"。
+阅读测试文档"中文/推理/家庭/Context - Specification pronoun"。
+阅读测试文档"中文/推理/家庭/Correcting invalidated assumption (by knowledge)"。
+阅读测试文档"中文/推理/家庭/Correcting invalidated assumption (by opposite suggestive question)"。
+阅读测试文档"中文/推理/家庭/I know (1)"。
+阅读测试文档"中文/推理/家庭/I know (2)"。
+阅读测试文档"中文/推理/家庭/I know (3)"。
+阅读测试文档"中文/推理/家庭/I know (4)"。
+阅读测试文档"中文/推理/家庭/I know (5)"。
+阅读测试文档"中文/推理/家庭/I know (6)"。
+阅读测试文档"中文/推理/家庭/I know (7)"。
+阅读测试文档"中文/推理/家庭/I know (8)"。
+阅读测试文档"中文/推理/家庭/I know (9)"。
+阅读测试文档"中文/推理/家庭/I know (10)"。
+阅读测试文档"中文/推理/家庭/I know (11)"。
+阅读测试文档"中文/推理/家庭/James was the father of Peter (before family definition)"。
+阅读测试文档"中文/推理/家庭/Joe has 2 parents - Joe is a child"。
+阅读测试文档"中文/推理/家庭/Joe has 2 parents - Joe is a son"。
+阅读测试文档"中文/推理/家庭/Joe is a child - Joe has 2 parents"。
+阅读测试文档"中文/推理/家庭/Joe is a child - John and Anna"。
+阅读测试文档"中文/推理/家庭/Joe is a son - Joe has 2 parents"。
+阅读测试文档"中文/推理/家庭/Joe is a son of John and Anna"。
+阅读测试文档"中文/推理/家庭/John - Anna (before family definition)"。
+阅读测试文档"中文/推理/家庭/John - Anna - Paul, Joe and Laura"。
+阅读测试文档"中文/推理/家庭/John - John and Anna"。
+阅读测试文档"中文/推理/家庭/John - Laura - John and Anna"。
+阅读测试文档"中文/推理/家庭/John and Anna - Paul, Joe and Laura"。
+阅读测试文档"中文/推理/家庭/John has 2 sons and a daughter"。
+阅读测试文档"中文/推理/家庭/John has 2 sons and a daughter (before family definition)"。
+阅读测试文档"中文/推理/家庭/John has a daughter and 2 sons"。
+阅读测试文档"中文/推理/家庭/John is a father - Paul has 2 parents"。
+阅读测试文档"中文/推理/家庭/John is a parent - Paul is a child of John and Anna"。
+阅读测试文档"中文/推理/家庭/John is a parent - Paul is a son"。
+阅读测试文档"中文/推理/家庭/John is the father of Paul - Joe - Laura - Claudia"。
+阅读测试文档"中文/推理/家庭/John was the father of Paul, Joe and Laura"。
+阅读测试文档"中文/推理/家庭/Laura - Joe - John and Anna - Paul"。
+阅读测试文档"中文/推理/家庭/Laura - Joe - Paul - John and Anna"。
+阅读测试文档"中文/推理/家庭/Laura - John and Anna - Joe"。
+阅读测试文档"中文/推理/家庭/Laura - Paul - John and Anna"。
+阅读测试文档"中文/推理/家庭/Laura has 2 parents - Laura is a daughter"。
+阅读测试文档"中文/推理/家庭/Laura has a father - Laura is a child - John and Anna"。
+阅读测试文档"中文/推理/家庭/Laura is a child - John and Anna"。
+阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (child)"。
+阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (parents)"。
+阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (John and Anna)"。
+阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (John and Anna - reversed)"。
+阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (John and Paul)"。
+阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (Paul and John)"。
+阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (Paul, Joe and Laura)"。
+阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (without relation)"。
+阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (father and mother)"。
+阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (Joe has 2 parents)"。
+阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (with relation)"。
+阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (without relation)"。
+阅读测试文档"中文/推理/家庭/Paul - Joe - Laura - John and Anna (parents)"。
+阅读测试文档"中文/推理/家庭/Paul - Joe - Laura - John and Anna (son - daughter)"。
+阅读测试文档"中文/推理/家庭/Paul - John and Anna - Joe - Laura"。
+阅读测试文档"中文/推理/家庭/Paul has a father - Paul has 2 parents"。
+阅读测试文档"中文/推理/家庭/Paul is a boy - Laura is a girl"。
+阅读测试文档"中文/推理/家庭/Paul is a child - John and Anna"。
+阅读测试文档"中文/推理/家庭/Paul is the son of John and Anna"。
+阅读测试文档"中文/推理/家庭/Past tense"。
+阅读测试文档"中文/推理/家庭/Person"。
+阅读测试文档"中文/推理/家庭/Sentence with possessive verb"。
+阅读测试文档"中文/推理/家庭/Simple family definition - Complex (7 - Claudia).txt"。
+阅读测试文档"中文/推理/家庭/Simple family definition - John and Anna - Paul, Joe and Laura"。
+阅读测试文档"中文/推理/家庭/Simple family definition - John is a father"。
+阅读测试文档"中文/推理/家庭/Simple family definition - Justification report.txt"。
+阅读测试文档"中文/推理/家庭/Skip invalid questions (1)"。
+阅读测试文档"中文/推理/家庭/Skip invalid questions (2)"。
+阅读测试文档"中文/推理/家庭/This information is more specific (non-exclusive)"。
+阅读测试文档"中文/推理/家庭/This information is more specific"。
+阅读测试文档"中文/推理/家庭/You have confirmed at least one relation word"。
+阅读测试文档"中文/推理/家庭/You have confirmed the specification - but not the relation"。
+
+#----------------------------
+# Info
+#----------------------------
+帮助。
+呈现语言的信息。
+呈现名单的信息。
+呈现用户的信息。
+呈现单词类型的信息。
+呈现查询命令。
+呈现版权。
+呈现GNU 通用公共授权。
+呈现保证。

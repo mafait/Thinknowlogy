@@ -422,11 +422,6 @@
 <	- Chaque famille a parents et enfants.
 <	- Olivier est un parent de Pascal.
 < Olivier a possible une fille, appelée Lorraine. En raison:
-<	- Olivier est le père de Pascal, Julien et Lorraine.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Lorraine» est probablement féminin.
-* 	et:
 <	- Lorraine a un père, appelé Olivier.
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
@@ -501,11 +496,6 @@
 <	- Chaque famille a parents et enfants.
 <	- Amélie est un parent de Pascal.
 < Amélie a possible une fille, appelée Lorraine. En raison:
-<	- Amélie est la mère de Pascal, Julien et Lorraine.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Lorraine» est probablement féminin.
-* 	et:
 <	- Lorraine a une mère, appelée Amélie.
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.

@@ -1,9 +1,9 @@
-/*	Class:			GeneralizationList
+﻿/*	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -45,9 +45,9 @@ class GeneralizationList : private List
 	protected:
 	// Constructor
 
-	GeneralizationList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	GeneralizationList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( WORD_GENERALIZATION_LIST_SYMBOL, "GeneralizationList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( WORD_GENERALIZATION_LIST_SYMBOL, "GeneralizationList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~GeneralizationList()
@@ -72,7 +72,7 @@ class GeneralizationList : private List
 	signed char checkWordItemForUsage( WordItem *unusedWordItem )
 		{
 		GeneralizationItem *searchGeneralizationItem = firstActiveGeneralizationItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkWordItemForUsage";
 
 		if( unusedWordItem == NULL )
 			return startError( functionNameString, "The given unused word item is undefined" );
@@ -90,13 +90,13 @@ class GeneralizationList : private List
 
 	signed char createGeneralizationItem( bool isLanguageWord, bool isRelation, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createGeneralizationItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createGeneralizationItem";
 
 		if( generalizationWordTypeNr <= NO_WORD_TYPE_NR &&
 		generalizationWordTypeNr >= NUMBER_OF_WORD_TYPES )
 			return startError( functionNameString, "The given generalization word type number is undefined or out of bounds: ", generalizationWordTypeNr );
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, commonVariables()->currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+		if( addItemToList( QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, globalVariables()->currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
 			return addError( functionNameString, "I failed to add an active generalization item" );
 
 		return RESULT_OK;
@@ -119,7 +119,7 @@ class GeneralizationList : private List
 		bool hasFoundGeneralization = false;
 		GeneralizationItem *searchGeneralizationItem = firstActiveGeneralizationItem();
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findGeneralization";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findGeneralization";
 
 		if( generalizationWordItem == NULL )
 			return startBoolResultError( functionNameString, "The given generalization word item is undefined" );

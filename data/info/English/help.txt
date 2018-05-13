@@ -5,28 +5,29 @@
 #C++#Display " Read the file \"English/user/reasoning/Scientific challenge\". * Challenge".
 #C++#Display " Read the file \"English/user/reasoning/family/family definition\". * Reasoning".
 #Java#Display " Use button <programming>	to learn about programming in natural language".
-#Java#Display " Use button <reasoning>		to learn about reasoning in natural language".
+#Java#Display " Use button <reasoning>	to learn about reasoning in natural language".
 Display "------------------------------------------------------------------------------".
 Display " Examples of available imperative sentences:".
 Display "------------------------------------------------------------------------------".
-Display " Read the file \"{filename}\".\t* Read a file".
-Display " Help.\t\t\t\t* Displays this help information".
-Display " Undo.\t\t\t\t* Undo the last sentence".
-Display " Redo.\t\t\t\t* Redo an undone sentence".
-Display " Clear your mind.\t\t* Forget previous knowledge".
-Display " Restart.\t\t\t* Restart this program".
-Display " Display info about the languages.".
-Display " Display info about the lists.".
-Display " Display info about the word types.".
+Display " Read the file \"{filename}\".	* Read a file".
+Display " Help.		* Displays this help information".
+Display " Undo.		* Undo the last sentence".
+Display " Redo.		* Redo an undone sentence".
+Display " Clear your mind.	* Forget previous knowledge".
+Display " Restart.		* Restart this program".
+Display " Display information about the languages.".
+Display " Display information about the lists.".
+Display " Display information about the users.".
+Display " Display information about the word types.".
 Display " Display the query commands.".
 Display " Display the copyright.".
 Display " Display the GPLv2-license.".
 Display " Display the warranty.".
 Display "------------------------------------------------------------------------------".
-#C++#Display " Example files:	* folder: Thinknowlogy2017r2/data/examples/English/user/".
-#Java#Display " Example files:	* Use button <more examples> or see".
-#Java#Display "		  folder: Thinknowlogy2017r2/data/examples/English/user/".
-Display " Fundamental:	* folder: Thinknowlogy2017r2/documents/".
-Display " Design:	* folder: Thinknowlogy2017r2/documents/design/".
-Display " Screenshots:	* folder: Thinknowlogy2017r2/screenshots/English/".
+#C++#Display " Example files:	* folder: Thinknowlogy2018r1/data/examples/English/user/".
+#Java#Display " Example files:	* Use button <more examples>".
+#Java#Display "              or see folder: Thinknowlogy2018r1/data/examples/English/user/".
+Display " Fundamental:	* folder: Thinknowlogy2018r1/documents/".
+Display " Design:	* folder: Thinknowlogy2018r1/documents/design/".
+Display " Screenshots:	* folder: Thinknowlogy2018r1/screenshots/English/".
 Display "------------------------------------------------------------------------------".

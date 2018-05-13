@@ -1,11 +1,12 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To demonstrate automated reasoning in natural language:
-#					Self-generated conclusions, assumptions and questions,
-#					and the detection of conflicts and semantic ambiguity
-#	Version:	Thinknowlogy 2017r2 (Science as it should be)
+# Purpose: To demonstrate automated reasoning in natural language:
+# - Drawing conclusions, making assumptions, asking questions,
+# - detecting conflicts and some cases of semantic ambiguity, and
+# - displaying of justification reports for the self-generated knowledge
+# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 # The simple definition of a family.

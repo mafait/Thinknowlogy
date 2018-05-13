@@ -13,6 +13,5 @@
 < Un corps est partie de chaque créature.
 < 
 * 
-* Mes conclusions:
-< Un corps est partie d'un créature.
-< 
+* Vous avez entré le nom au pluriel «créatures», qui était inconnu pour moi.
+* 

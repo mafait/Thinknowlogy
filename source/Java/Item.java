@@ -1,8 +1,8 @@
-/*	Class:		Item
+﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -69,7 +69,7 @@ class Item
 		userNr_ = Constants.NO_USER_NR;
 
 		originalSentenceNr_ = Constants.NO_SENTENCE_NR;
-		creationSentenceNr_ = CommonVariables.currentSentenceNr;
+		creationSentenceNr_ = GlobalVariables.currentSentenceNr;
 
 		activeSentenceNr_ = Constants.NO_SENTENCE_NR;
 		inactiveSentenceNr_ = Constants.NO_SENTENCE_NR;
@@ -108,19 +108,19 @@ class Item
 	protected byte addError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
 		{
 		InputOutput.displayError( Constants.SYMBOL_QUESTION_MARK, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordItemString, ( methodLevel + 1 ), errorString );
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 	protected byte addError( char listChar, int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		InputOutput.displayError( listChar, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordNameString, ( methodLevel + 1 ), errorString );
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte startError( int methodLevel, String moduleNameString, String errorString )
 		{
 		addError( ( methodLevel + 1 ), moduleNameString, null, errorString );
 
-		CommonVariables.result = Constants.RESULT_ERROR;
+		GlobalVariables.result = Constants.RESULT_ERROR;
 		return Constants.RESULT_ERROR;
 		}
 
@@ -128,7 +128,7 @@ class Item
 		{
 		addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
 
-		CommonVariables.result = Constants.RESULT_ERROR;
+		GlobalVariables.result = Constants.RESULT_ERROR;
 		return Constants.RESULT_ERROR;
 		}
 
@@ -161,7 +161,7 @@ class Item
 
 		addError( ( methodLevel + 1 ), moduleNameString, wordNameString, tempStringBuffer.toString() );
 
-		CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
+		GlobalVariables.result = Constants.RESULT_SYSTEM_ERROR;
 		return Constants.RESULT_SYSTEM_ERROR;
 		}
 
@@ -186,14 +186,6 @@ class Item
 		BoolResultType boolResult = new BoolResultType();
 
 		boolResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
-		return boolResult;
-		}
-
-	protected BoolResultType startBoolResultError( int methodLevel, String moduleNameString, String wordTypeNameString, String errorString )
-		{
-		BoolResultType boolResult = new BoolResultType();
-
-		boolResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordTypeNameString, errorString );
 		return boolResult;
 		}
 
@@ -484,6 +476,14 @@ class Item
 		return userSpecificationResult;
 		}
 
+	protected WordEndingResultType startWordEndingResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+		{
+		WordEndingResultType wordEndingResult = new WordEndingResultType();
+
+		wordEndingResult.result = startError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
+		return wordEndingResult;
+		}
+
 	protected WordResultType addWordResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		WordResultType wordResult = new WordResultType();
@@ -620,45 +620,45 @@ class Item
 	protected void setActiveSentenceNr()
 		{
 		if( activeSentenceNr_ == Constants.NO_SENTENCE_NR )
-			activeSentenceNr_ = CommonVariables.currentSentenceNr;
+			activeSentenceNr_ = GlobalVariables.currentSentenceNr;
 		}
 
 	protected void setArchivedSentenceNr()
 		{
 		if( archivedSentenceNr_ == Constants.NO_SENTENCE_NR )
-			archivedSentenceNr_ = CommonVariables.currentSentenceNr;
+			archivedSentenceNr_ = GlobalVariables.currentSentenceNr;
 		}
 
 	protected void setInactiveSentenceNr()
 		{
 		if( inactiveSentenceNr_ == Constants.NO_SENTENCE_NR )
-			inactiveSentenceNr_ = CommonVariables.currentSentenceNr;
+			inactiveSentenceNr_ = GlobalVariables.currentSentenceNr;
 		}
 
 	protected void setReplacedSentenceNr()
 		{
 		if( replacedSentenceNr_ == Constants.NO_SENTENCE_NR )
-			replacedSentenceNr_ = CommonVariables.currentSentenceNr;
+			replacedSentenceNr_ = GlobalVariables.currentSentenceNr;
 		}
 
 	protected void displayWords( boolean isReturnQueryToPosition, short queryWordTypeNr )
 		{
 		String myWordString;
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
 		if( ( myWordString = myWordTypeString( queryWordTypeNr ) ) != null )
 			{
-			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+			if( GlobalVariables.hasFoundQuery )
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar_ );
+				GlobalVariables.queryStringBuffer.append( statusChar_ );
 
-			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( myWordString );
+			GlobalVariables.hasFoundQuery = true;
+			GlobalVariables.queryStringBuffer.append( myWordString );
 			}
 		}
 
@@ -674,9 +674,9 @@ class Item
 	protected void initializeItemVariables( int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, List myList, WordItem myWordItem )
 		{
 		// Private initialized variables
-		userNr_ = CommonVariables.currentUserNr;
-		originalSentenceNr_ = ( originalSentenceNr == Constants.NO_SENTENCE_NR ? CommonVariables.currentSentenceNr : originalSentenceNr );
-		activeSentenceNr_ = ( originalSentenceNr == Constants.NO_SENTENCE_NR ? CommonVariables.currentSentenceNr : activeSentenceNr );
+		userNr_ = GlobalVariables.currentUserNr;
+		originalSentenceNr_ = ( originalSentenceNr == Constants.NO_SENTENCE_NR ? GlobalVariables.currentSentenceNr : originalSentenceNr );
+		activeSentenceNr_ = ( originalSentenceNr == Constants.NO_SENTENCE_NR ? GlobalVariables.currentSentenceNr : activeSentenceNr );
 		inactiveSentenceNr_ = inactiveSentenceNr;
 		archivedSentenceNr_ = archivedSentenceNr;
 
@@ -686,10 +686,10 @@ class Item
 			{
 			if( ( myList_ = myList ) != null )
 				{
-				if( CommonVariables.currentSentenceItemNr >= Constants.NO_ITEM_NR )
+				if( GlobalVariables.currentSentenceItemNr >= Constants.NO_ITEM_NR )
 					{
-					if( CommonVariables.currentSentenceItemNr < Constants.MAX_ITEM_NR )
-						itemNr_ = ++CommonVariables.currentSentenceItemNr;
+					if( GlobalVariables.currentSentenceItemNr < Constants.MAX_ITEM_NR )
+						itemNr_ = ++GlobalVariables.currentSentenceItemNr;
 					else
 						startSystemError( 1, null, myWordItem_.anyWordTypeString(), "Current item number overflow" );
 					}
@@ -715,32 +715,32 @@ class Item
 
 	protected boolean hasCurrentCreationSentenceNr()
 		{
-		return ( creationSentenceNr_ == CommonVariables.currentSentenceNr );
+		return ( creationSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
 	protected boolean hasCurrentOrNewerCreationSentenceNr()
 		{
-		return ( creationSentenceNr_ >= CommonVariables.currentSentenceNr );
+		return ( creationSentenceNr_ >= GlobalVariables.currentSentenceNr );
 		}
 
 	protected boolean hasCurrentActiveSentenceNr()
 		{
-		return ( activeSentenceNr_ == CommonVariables.currentSentenceNr );
+		return ( activeSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
 	protected boolean hasCurrentInactiveSentenceNr()
 		{
-		return ( inactiveSentenceNr_ == CommonVariables.currentSentenceNr );
+		return ( inactiveSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
 	protected boolean hasCurrentArchivedSentenceNr()
 		{
-		return ( archivedSentenceNr_ == CommonVariables.currentSentenceNr );
+		return ( archivedSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
 	protected boolean hasCurrentReplacedSentenceNr()
 		{
-		return ( replacedSentenceNr_ == CommonVariables.currentSentenceNr );
+		return ( replacedSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
 	protected boolean hasSentenceNr( int sentenceNr )
@@ -760,7 +760,7 @@ class Item
 
 	protected boolean isOlderItem()
 		{
-		return ( originalSentenceNr_ < CommonVariables.currentSentenceNr );
+		return ( originalSentenceNr_ < GlobalVariables.currentSentenceNr );
 		}
 
 	protected boolean isActiveItem()
@@ -817,14 +817,6 @@ class Item
 	protected boolean wasArchivedBefore()
 		{
 		return ( previousStatusChar == Constants.QUERY_ARCHIVED_CHAR );
-		}
-
-	protected boolean isSpanishCurrentLanguage()
-		{
-		WordItem currentLanguageWordItem;
-
-		return ( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) != null &&
-				currentLanguageWordItem.isNounWordSpanishAmbiguous() );
 		}
 
 	protected short userNr()
@@ -944,12 +936,12 @@ class Item
 
 	protected StringBuffer itemBaseToStringBuffer( short queryWordTypeNr )
 		{
-		StringBuffer queryStringBuffer;
 		String myWordString = myWordTypeString( queryWordTypeNr );
+		StringBuffer queryStringBuffer;
 		String userNameString = ( myWordItem_ == null ? null : myWordItem_.userNameString( userNr_ ) );
-		CommonVariables.queryStringBuffer = new StringBuffer();
+		GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		// Display status if not active
 		if( !isActiveItem() )
@@ -1001,8 +993,8 @@ class Item
 
 	protected Item tailOfList()
 		{
-		Item searchItem = nextItem;
 		Item previousSearchItem = this;
+		Item searchItem = nextItem;
 
 		while( searchItem != null )
 			{
@@ -1153,12 +1145,12 @@ class Item
 
 	protected boolean isGeneralizationReasoningWordType( short wordTypeNr )
 		{
-		return ( wordTypeNr == Constants.WORD_TYPE_PROPER_NAME ||
+		return ( wordTypeNr == Constants.WORD_TYPE_PROPER_NOUN ||
 				wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
-	protected short assumptionGrade( boolean hasAnotherPrimarySpecification, boolean hasFeminineOrMasculineProperNameEnding, boolean hasPossessivePrimarySpecification, boolean hasPrimaryQuestionSpecification, short justificationTypeNr )
+	protected short assumptionGrade( boolean hasAnotherPrimarySpecification, boolean hasFeminineOrMasculineProperNounEnding, boolean hasPossessivePrimarySpecification, boolean hasPrimaryQuestionSpecification, short justificationTypeNr )
 		{
 		switch( justificationTypeNr )
 			{
@@ -1172,14 +1164,14 @@ class Item
 				return 0;
 
 			case Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
-				return (short)( hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
+				return (short)( hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
 
 			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				return (short)( hasAnotherPrimarySpecification &&
-						hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
+						hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
 
 			case Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
-				return (short)( hasFeminineOrMasculineProperNameEnding ? 1 : 0 );
+				return (short)( hasFeminineOrMasculineProperNounEnding ? 1 : 0 );
 
 			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
 				return (short)( hasPossessivePrimarySpecification ? 1 : 0 );

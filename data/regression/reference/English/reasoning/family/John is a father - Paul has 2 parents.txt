@@ -146,7 +146,7 @@
 < Anna is probably a woman. Because:
 <	- Anna is a parent of Paul.
 <	- Every parent is a woman or a man.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Anna is probably a mother of Paul.
 <	- Every mother is a woman.
@@ -164,7 +164,7 @@
 < Anna is probably a mother of Paul. Because:
 <	- Anna is a parent of Paul.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 < Anna is probably not a father. Because:
 <	- Anna is a parent of Paul.
 <	- Every parent is a father or a mother.

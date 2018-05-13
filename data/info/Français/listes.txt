@@ -1,37 +1,37 @@
 ﻿Affichez "------------------------------------------------------------------------------".
-Affichez " Nombre total d'éléments:	~#<>~.".
+Affichez " Nombre total d'éléments: ~#<>~.".
 Affichez "------------------------------------------------------------------------------".
-Affichez " Éléments dans l'administrateur:	~#<FRSWXYZ>~.".
+Affichez " Éléments dans l'administrateur: ~#<FRSWXYZ>~.".
 Affichez "------------------------------------------------------------------------------".
-Affichez " * Éléments actifs:				~+#<FRSWXYZ>~.".
-Affichez "    <F> Fichers:					~+#<F>~.".
-Affichez "    <R> Lire mots (temporaire):				~+#<R>~.".
-Affichez "    <S> Résolvez scores (temporaire):			~+#<S>~.".
-Affichez "    <W> Mots:						~+#<W>~, (prédéfini: ~+#<W>:*~).".
-Affichez "    <X> Conditions:					~+#<X>~.".
-Affichez "    <Y> Actes:						~+#<Y>~.".
-Affichez "    <Z> Alternatives:					~+#<Z>~.".
-Affichez " * Éléments inactifs:				~=#<FRSWXYZ>~.".
-Affichez " * Éléments archivés:				~$#<FRSWXYZ>~.".
-Affichez " * Éléments remplacées:				~%#<FRSWXYZ>~.".
-Affichez " * Éléments supprimés:				~&#<FRSWXYZ>~.".
+Affichez " * Éléments actifs:		~+#<FRSWXYZ>~.".
+Affichez "    <F> Fichers:			~+#<F>~.".
+Affichez "    <R> Lire mots (temporaire):		~+#<R>~.".
+Affichez "    <S> Résolvez scores (temporaire):		~+#<S>~.".
+Affichez "    <W> Mots:				~+#<W>~, (prédéfini: ~+#<W>:*~).".
+Affichez "    <X> Conditions:			~+#<X>~.".
+Affichez "    <Y> Actes:				~+#<Y>~.".
+Affichez "    <Z> Alternatives:			~+#<Z>~.".
+Affichez " * Éléments inactifs:		~=#<FRSWXYZ>~.".
+Affichez " * Éléments archivés:		~$#<FRSWXYZ>~.".
+Affichez " * Éléments remplacées:		~%#<FRSWXYZ>~.".
+Affichez " * Éléments supprimés:		~&#<FRSWXYZ>~.".
 Affichez "------------------------------------------------------------------------------".
-Affichez " Éléments dans mots:			~#<acgijlmrswx>~.".
+Affichez " Éléments dans mots:	    ~#<acgijlmrswx>~.".
 Affichez "------------------------------------------------------------------------------".
-Affichez " * Éléments actifs:				~+#<acgijlmrswx>~.".
-Affichez "    <a> assignations:					~+#<a>~.".
-Affichez "    <c> collections:					~+#<c>~.".
-Affichez "    <g> généralisations:				~+#<g>~.".
-Affichez "    <i> interface:					~+#<i>~.".
-Affichez "    <j> justification:					~+#<j>~.".
-Affichez "    <l> grammaire:					~+#<l>~.".
-Affichez "    <m> mot multiples:					~+#<m>~.".
-Affichez "    <s> specifications:					~+#<s>~.".
-Affichez "    <r> Écrire des mots (temporaire):			~+#<r>~.".
-Affichez "    <w> types de mots:					~+#<w>~.".
-Affichez "    <x> contexte:					~+#<x>~.".
-Affichez " * Éléments inactifs:				~=#<acgijlmrswx>~.".
-Affichez " * Éléments archivés:				~$#<acgijlmrswx>~.".
-Affichez " * Éléments remplacées:				~%#<acgijlmrswx>~.".
-Affichez " * Éléments supprimés:				~&#<acgijlmrswx>~.".
+Affichez " * Éléments actifs:		~+#<acgijlmrswx>~.".
+Affichez "    <a> assignations:			~+#<a>~.".
+Affichez "    <c> collections:			~+#<c>~.".
+Affichez "    <g> généralisations:			~+#<g>~.".
+Affichez "    <i> interface:			~+#<i>~.".
+Affichez "    <j> justification:			~+#<j>~.".
+Affichez "    <l> grammaire:			~+#<l>~.".
+Affichez "    <m> mot multiples:			~+#<m>~.".
+Affichez "    <s> specifications:			~+#<s>~.".
+Affichez "    <r> Écrire des mots (temporaire):		~+#<r>~.".
+Affichez "    <w> types de mots:			~+#<w>~.".
+Affichez "    <x> contexte:			~+#<x>~.".
+Affichez " * Éléments inactifs:		~=#<acgijlmrswx>~.".
+Affichez " * Éléments archivés:		~$#<acgijlmrswx>~.".
+Affichez " * Éléments remplacées:		~%#<acgijlmrswx>~.".
+Affichez " * Éléments supprimés:		~&#<acgijlmrswx>~.".
 Affichez "------------------------------------------------------------------------------".

@@ -1,4 +1,4 @@
-Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
 Amélie est un parent.
 Lorraine est un enfant de Olivier et Amélie.
 Amélie est une femme.

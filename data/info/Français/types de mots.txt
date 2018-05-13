@@ -1,33 +1,33 @@
 ﻿Affichez "------------------------------------------------------------------------------".
-Affichez " Nombre total éléments de type mots:	~#<w>~,	(toutes langues confondues).".
+Affichez " Nombre total éléments de type mots: ~#<w>~, (toutes langues confondues).".
 Affichez "------------------------------------------------------------------------------".
-Affichez " * Éléments de type mot actifs:			~+#<w>~.".
-Affichez "   (@1)  Symboles:					~+#<w>@1~.".
-Affichez "   (@2)  Chiffres:					~+#<w>@2~.".
-Affichez "   (@3)  Minuscules:					~+#<w>@3~.".
-Affichez "   (@4)  Majuscules:					~+#<w>@4~.".
-Affichez "   (@5)  Noms propres:					~+#<w>@5~.".
-Affichez "   (@6)  Adjectifs:					~+#<w>@6~.".
-Affichez "   (@7)  Adverbes:					~+#<w>@7~.".
-Affichez "   (@8)  Mots de réponses:				~+#<w>@8~.".
-Affichez "   (@9)  Articles:					~+#<w>@9~.".
-Affichez "   (@10) Conjonctions:					~+#<w>@10~.".
-Affichez "   (@11) Substantif singulier:				~+#<w>@11~.".
-Affichez "   (@12) Substantif pluriel:				~+#<w>@12~.".
+Affichez " * Éléments de type mot actifs:	~+#<w>~.".
+Affichez "   (@1)  Symboles:			~+#<w>@1~.".
+Affichez "   (@2)  Chiffres:			~+#<w>@2~.".
+Affichez "   (@3)  Minuscules:			~+#<w>@3~.".
+Affichez "   (@4)  Majuscules:			~+#<w>@4~.".
+Affichez "   (@5)  Noms propres:			~+#<w>@5~.".
+Affichez "   (@6)  Adjectifs:			~+#<w>@6~.".
+Affichez "   (@7)  Adverbes:			~+#<w>@7~.".
+Affichez "   (@8)  Mots de réponses:			~+#<w>@8~.".
+Affichez "   (@9)  Articles:			~+#<w>@9~.".
+Affichez "   (@10) Conjonctions:			~+#<w>@10~.".
+Affichez "   (@11) Substantif singulier:			~+#<w>@11~.".
+Affichez "   (@12) Substantif pluriel:			~+#<w>@12~.".
 Affichez "   (@13) Pronom personnel singulier (subjective):	~+#<w>@13~.".
-Affichez "   (@14) Pronom personnel singulier (objectif):		~+#<w>@14~.".
+Affichez "   (@14) Pronom personnel singulier (objectif):	~+#<w>@14~.".
 Affichez "   (@15) Déterminant possessif singulier:		~+#<w>@15~.".
-Affichez "   (@16) Pronom possessif singulier:			~+#<w>@16~.".
-Affichez "   (@17) Pronom personnel pluriel (subjective):		~+#<w>@17~.".
+Affichez "   (@16) Pronom possessif singulier:		~+#<w>@16~.".
+Affichez "   (@17) Pronom personnel pluriel (subjective):	~+#<w>@17~.".
 Affichez "   (@18) Pronom personnel pluriel (objectif):		~+#<w>@18~.".
-Affichez "   (@19) Déterminant possessif pluriel:			~+#<w>@19~.".
-Affichez "   (@20) Pronom possessif pluriel:			~+#<w>@20~.".
-Affichez "   (@21) Prépositions:					~+#<w>@21~.".
-Affichez "   (@22) Verbes singuliers:				~+#<w>@22~.".
-Affichez "   (@23) Verbes au pluriel:				~+#<w>@23~.".
-Affichez "   (@24) Mots de sélection:				~+#<w>@24~.".
-Affichez " * Éléments de type mot inactifs:		~=#<w>~.".
-Affichez " * Éléments de type mot archivés:		~$#<w>~.".
-Affichez " * Éléments de type mot remplacées:		~%#<w>~.".
-Affichez " * Éléments de type mot supprimés:		~&#<w>~.".
+Affichez "   (@19) Déterminant possessif pluriel:		~+#<w>@19~.".
+Affichez "   (@20) Pronom possessif pluriel:		~+#<w>@20~.".
+Affichez "   (@21) Prépositions:			~+#<w>@21~.".
+Affichez "   (@22) Verbes singuliers:			~+#<w>@22~.".
+Affichez "   (@23) Verbes au pluriel:			~+#<w>@23~.".
+Affichez "   (@24) Mots de sélection:			~+#<w>@24~.".
+Affichez " * Éléments de type mot inactifs:	~=#<w>~.".
+Affichez " * Éléments de type mot archivés:	~$#<w>~.".
+Affichez " * Éléments de type mot remplacées:	~%#<w>~.".
+Affichez " * Éléments de type mot supprimés:	~&#<w>~.".
 Affichez "------------------------------------------------------------------------------".

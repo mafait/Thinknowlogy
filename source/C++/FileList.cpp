@@ -1,9 +1,9 @@
-/*	Class:			FileList
+﻿/*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -45,10 +45,10 @@ class FileList : private List
 
 	bool doesFileNameContainSubPath( const char *fileNameString, const char *subPathString )
 		{
-		size_t position = 0;
 		size_t fileNameStringLength;
-		size_t subPathStringLength;
 		size_t lengthDifference;
+		size_t position = 0;
+		size_t subPathStringLength;
 
 		if( fileNameString != NULL &&
 		subPathString != NULL )
@@ -101,9 +101,9 @@ class FileList : private List
 	FileResultType createFileItem( bool isInfoFile, bool isTestFile, char *readFileNameString, char *writeFileNameString, FILE *readFile, FILE *writeFile )
 		{
 		FileResultType fileResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createFileItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createFileItem";
 
-		if( ( fileResult.createdFileItem = new FileItem( isInfoFile, isTestFile, readFileNameString, writeFileNameString, readFile, writeFile, commonVariables(), inputOutput(), this, myWordItem() ) ) == NULL )
+		if( ( fileResult.createdFileItem = new FileItem( isInfoFile, isTestFile, readFileNameString, writeFileNameString, readFile, writeFile, globalVariables(), inputOutput(), this, myWordItem() ) ) == NULL )
 			return startFileResultError( functionNameString, "I failed to create a file item" );
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, fileResult.createdFileItem ) != RESULT_OK )
@@ -116,9 +116,9 @@ class FileList : private List
 	protected:
 	// Constructor
 
-	FileList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	FileList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( ADMIN_FILE_LIST_SYMBOL, "FileList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( ADMIN_FILE_LIST_SYMBOL, "FileList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~FileList()
@@ -186,7 +186,7 @@ class FileList : private List
 	signed char closeCurrentFile( FileItem *closeFileItem )
 		{
 		FileItem *currentFileItem = firstActiveFileItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "closeCurrentFile";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "closeCurrentFile";
 
 		if( currentFileItem == NULL )
 			return startError( functionNameString, "There is no file to close" );
@@ -233,7 +233,7 @@ class FileList : private List
 		char referenceFileNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char writeFileNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		FileResultType fileResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "openFile";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "openFile";
 
 		if( defaultSubPathString == NULL )
 			return startFileResultError( functionNameString, "The given default subpath string is undefined" );

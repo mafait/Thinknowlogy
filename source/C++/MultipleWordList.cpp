@@ -1,9 +1,9 @@
-/*	Class:			MultipleWordList
+﻿/*	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -66,9 +66,9 @@ class MultipleWordList : private List
 	protected:
 	// Constructor
 
-	MultipleWordList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	MultipleWordList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( WORD_MULTIPLE_WORD_LIST_SYMBOL, "MultipleWordList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( WORD_MULTIPLE_WORD_LIST_SYMBOL, "MultipleWordList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~MultipleWordList()
@@ -92,7 +92,7 @@ class MultipleWordList : private List
 
 	unsigned short matchingMultipleSingularNounWordParts( char *sentenceString )
 		{
-		unsigned short currentLanguageNr = commonVariables()->currentLanguageNr;
+		unsigned short currentLanguageNr = globalVariables()->currentLanguageNr;
 		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
 		WordItem *multipleWordItem;
 		char *multipleWordString;
@@ -121,7 +121,7 @@ class MultipleWordList : private List
 
 	signed char addMultipleWord( unsigned short nWordParts, unsigned short wordTypeNr, WordItem *multipleWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "addMultipleWord";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addMultipleWord";
 
 		if( wordTypeNr <= NO_WORD_TYPE_NR ||
 		wordTypeNr >= NUMBER_OF_WORD_TYPES )
@@ -131,7 +131,7 @@ class MultipleWordList : private List
 			return startError( functionNameString, "The given multiple word item is undefined" );
 
 		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) &&
-		addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, commonVariables()->currentLanguageNr, wordTypeNr, multipleWordItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+		addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, globalVariables()->currentLanguageNr, wordTypeNr, multipleWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
 			return addError( functionNameString, "I failed to add an active multiple word item" );
 
 		return RESULT_OK;
@@ -140,7 +140,7 @@ class MultipleWordList : private List
 	signed char checkWordItemForUsage( WordItem *unusedWordItem )
 		{
 		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkWordItemForUsage";
 
 		if( unusedWordItem == NULL )
 			return startError( functionNameString, "The given unused word item is undefined" );

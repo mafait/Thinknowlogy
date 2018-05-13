@@ -1,10 +1,10 @@
-/*	Class:			GrammarItem
+﻿/*	Class:			GrammarItem
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -102,21 +102,21 @@ class GrammarItem extends Item
 		{
 		StringBuffer queryStringBuffer;
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		if( grammarString_ != null )
 			{
-			if( CommonVariables.hasFoundQuery )
+			if( GlobalVariables.hasFoundQuery )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
+			GlobalVariables.hasFoundQuery = true;
 			queryStringBuffer.append( grammarString_ );
 			}
 		}
@@ -157,10 +157,10 @@ class GrammarItem extends Item
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		if( isDefinitionStart_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isDefinitionStart" );
@@ -253,21 +253,6 @@ class GrammarItem extends Item
 		return ( grammarWordTypeNr_ > Constants.NO_WORD_TYPE_NR );
 		}
 
-	protected boolean isNumeral()
-		{
-		return ( grammarWordTypeNr_ == Constants.WORD_TYPE_NUMERAL );
-		}
-
-	protected boolean isSingularNoun()
-		{
-		return ( grammarWordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR );
-		}
-
-	protected boolean isPluralNoun()
-		{
-		return ( grammarWordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
-		}
-
 	protected boolean isUndefinedWord()
 		{
 		// Last item in the list
@@ -290,6 +275,45 @@ class GrammarItem extends Item
 				grammarString_ != null &&
 				checkGrammarItem.grammarString() != null &&
 				grammarString_.equals( checkGrammarItem.grammarString() ) );
+		}
+
+	protected boolean isUsefulGrammarDefinition( boolean isAssignment, boolean isArchivedAssignment, boolean isChineseCurrentLanguage, boolean isPossessive, boolean isQuestion, boolean isSpecificationGeneralization )
+		{		// Statement
+		return ( ( !isQuestion &&
+
+				( grammarParameter_ < Constants.GRAMMAR_STATEMENT_ASSIGNMENT ||
+				grammarParameter_ > Constants.GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ||
+
+				( !isSpecificationGeneralization &&
+
+				( ( !isAssignment &&
+				grammarParameter_ == Constants.GRAMMAR_STATEMENT_SPECIFICATION ) ||
+
+				( isAssignment &&
+
+				( isPossessive ||
+				isChineseCurrentLanguage ||
+				grammarParameter_ == Constants.GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ||
+
+				( isArchivedAssignment &&
+				!isPossessive ) ||
+
+				( isSpecificationGeneralization &&
+				grammarParameter_ == Constants.GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ) ) ||
+
+				// Question
+				( isQuestion &&
+
+				( grammarParameter_ < Constants.GRAMMAR_QUESTION_SPECIFICATION ||
+				grammarParameter_ > Constants.GRAMMAR_QUESTION_SPECIFICATION_GENERALIZATION ||
+
+				( !isSpecificationGeneralization &&
+
+				( isAssignment ||
+				grammarParameter_ == Constants.GRAMMAR_QUESTION_SPECIFICATION ) ) ||
+
+				( isSpecificationGeneralization &&
+				grammarParameter_ == Constants.GRAMMAR_QUESTION_SPECIFICATION_GENERALIZATION ) ) ) );
 		}
 
 	protected short grammarParameter()

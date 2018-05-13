@@ -1,9 +1,9 @@
-/*	Class:			WordQuestion
+﻿/*	Class:			WordQuestion
  *	Supports class:	WordItem
  *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -41,9 +41,9 @@ class WordQuestion
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_LENGTH];
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
 
-	CommonVariables *commonVariables_;
+	GlobalVariables *globalVariables_;
 	InputOutput *inputOutput_;
 	WordItem *myWordItem_;
 
@@ -56,16 +56,16 @@ class WordQuestion
 		bool isAssignment;
 		bool isExclusiveSpecification;
 		bool isNegative;
-		bool isPossessive;
 		bool isNegativeAnswer = false;
 		bool isPositiveAnswer = false;
+		bool isPossessive;
 		bool isUncertainAboutRelation = false;
-		unsigned int specificationCollectionNr;
 		unsigned int generalizationContextNr;
 		unsigned int relationContextNr;
+		unsigned int specificationCollectionNr;
 		SpecificationItem *answerSpecificationItem = NULL;
 		WordItem *specificationWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findAnswerToQuestion";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAnswerToQuestion";
 
 		if( questionSpecificationItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given question specification item is undefined" );
@@ -76,9 +76,9 @@ class WordQuestion
 		isNegative = questionSpecificationItem->isNegative();
 		isPossessive = questionSpecificationItem->isPossessive();
 
-		specificationCollectionNr = questionSpecificationItem->specificationCollectionNr();
 		generalizationContextNr = questionSpecificationItem->generalizationContextNr();
 		relationContextNr = questionSpecificationItem->relationContextNr();
+		specificationCollectionNr = questionSpecificationItem->specificationCollectionNr();
 		specificationWordItem = questionSpecificationItem->specificationWordItem();
 
 		// Find correct answer
@@ -138,12 +138,11 @@ class WordQuestion
 
 			!hasRelationContext &&
 			answerSpecificationItem->isAssignment() &&
-			answerSpecificationItem->hasRelationContext() )
-				{
-				// Ambiguity: Missing relation context
-				if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_QUESTION_MISSING_RELATION ) != RESULT_OK )
-					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the 'ambiguous question missing relation' interface notification" );
-				}
+			answerSpecificationItem->hasRelationContext() &&
+
+			// Ambiguity: Missing relation context
+			inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_QUESTION_MISSING_RELATION ) != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the 'ambiguous question missing relation' interface notification" );
 			}
 
 		if( answerSpecificationItem != NULL &&
@@ -162,13 +161,13 @@ class WordQuestion
 		bool isAssignment;
 		bool isNegative;
 		bool isPossessive;
-		unsigned int specificationCollectionNr;
 		unsigned int generalizationContextNr;
 		unsigned int relationContextNr;
+		unsigned int specificationCollectionNr;
 		SpecificationItem *currentSpecificationItem;
 		WordItem *currentSpecificationWordItem;
 		WordItem *specificationWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findAlternativeAnswerToQuestion";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAlternativeAnswerToQuestion";
 
 		hasFoundSpecificationGeneralizationAnswer_ = false;
 
@@ -182,9 +181,9 @@ class WordQuestion
 
 			isNegative = questionSpecificationItem->isNegative();
 			isPossessive = questionSpecificationItem->isPossessive();
-			specificationCollectionNr = questionSpecificationItem->specificationCollectionNr();
 			generalizationContextNr = questionSpecificationItem->generalizationContextNr();
 			relationContextNr = questionSpecificationItem->relationContextNr();
+			specificationCollectionNr = questionSpecificationItem->specificationCollectionNr();
 			specificationWordItem = questionSpecificationItem->specificationWordItem();
 
 			do	{
@@ -242,7 +241,7 @@ class WordQuestion
 		SpecificationItem *foundSpecificationItem;
 		WordItem *currentSpecificationWordItem;
 		WordItem *specificationWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findAlternativeAnswerToQuestionInOtherWords";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAlternativeAnswerToQuestionInOtherWords";
 
 		if( questionSpecificationItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given question specification item is undefined" );
@@ -256,7 +255,7 @@ class WordQuestion
 		relationContextNr = questionSpecificationItem->relationContextNr();
 		specificationWordItem = questionSpecificationItem->specificationWordItem();
 
-		if( ( currentSpecificationWordItem = commonVariables_->firstSpecificationWordItem ) == NULL )
+		if( ( currentSpecificationWordItem = globalVariables_->firstSpecificationWordItem ) == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The first specification word is undefined" );
 
 		isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
@@ -264,18 +263,17 @@ class WordQuestion
 		// Do for all specification words
 		do	{
 			if( currentSpecificationWordItem != myWordItem_ &&
-			( foundSpecificationItem = currentSpecificationWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, isArchivedAssignment, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
+			( foundSpecificationItem = currentSpecificationWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, isArchivedAssignment, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, relationContextNr, specificationWordItem ) ) != NULL &&
+
+			( hasFoundSpecificationGeneralizationAnswer ||
+
+			( ( !isSpecificationWordSpanishAmbiguous ||
+			!foundSpecificationItem->isHiddenSpanishSpecification() ) &&
+
+			( foundSpecificationItem->isRelatedSpecification( isNegative, isPossessive, generalizationWordTypeNr ) ) ) ) )
 				{
-				if( hasFoundSpecificationGeneralizationAnswer ||
-
-				( ( !isSpecificationWordSpanishAmbiguous ||
-				!foundSpecificationItem->isHiddenSpanishSpecification() ) &&
-
-				( foundSpecificationItem->isRelatedSpecification( isNegative, isPossessive, generalizationWordTypeNr ) ) ) )
-					{
-					if( currentSpecificationWordItem->writeAnswerToQuestion( !hasFoundDeeperPositiveAnswer_, hasFoundDeeperPositiveAnswer_, false, foundSpecificationItem ) != RESULT_OK )
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
-					}
+				if( currentSpecificationWordItem->writeAnswerToQuestion( !hasFoundDeeperPositiveAnswer_, hasFoundDeeperPositiveAnswer_, false, foundSpecificationItem ) != RESULT_OK )
+					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
 				}
 			}
 		while( ( currentSpecificationWordItem = currentSpecificationWordItem->nextSpecificationWordItem ) != NULL );
@@ -286,13 +284,13 @@ class WordQuestion
 	signed char findAnswerToNewUserQuestion( SpecificationItem *questionSpecificationItem )
 		{
 		char *writtenSentenceString;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findAnswerToNewUserQuestion";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAnswerToNewUserQuestion";
 
 		hasFoundDeeperPositiveAnswer_ = false;
 		isNegativeAnswer_ = false;
 		uncertainAboutAnswerRelationSpecificationItem_ = NULL;
 
-		commonVariables_->hasFoundAnswerToQuestion = false;
+		globalVariables_->hasFoundAnswerToQuestion = false;
 
 		if( questionSpecificationItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given question specification item is undefined" );
@@ -303,7 +301,7 @@ class WordQuestion
 		if( findAnswerToQuestion( questionSpecificationItem ) != RESULT_OK )
 			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find an answer to a question" );
 
-		if( !commonVariables_->hasFoundAnswerToQuestion &&
+		if( !globalVariables_->hasFoundAnswerToQuestion &&
 		// Check collections for an alternative current-tense assignment answer to the question
 		findAlternativeAnswerToQuestion( questionSpecificationItem ) != RESULT_OK )
 			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find an alternative answer to a question" );
@@ -312,7 +310,7 @@ class WordQuestion
 		hasFoundSpecificationGeneralizationAnswer_ ||
 		uncertainAboutAnswerRelationSpecificationItem_ != NULL ||
 
-		( !commonVariables_->hasFoundAnswerToQuestion &&
+		( !globalVariables_->hasFoundAnswerToQuestion &&
 		questionSpecificationItem->isAssignment() ) )
 			{
 			// Check other words for an alternative answer to the question
@@ -320,7 +318,7 @@ class WordQuestion
 				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find an alternative answer to a question" );
 			}
 
-		if( commonVariables_->hasFoundAnswerToQuestion &&
+		if( globalVariables_->hasFoundAnswerToQuestion &&
 		uncertainAboutAnswerRelationSpecificationItem_ == NULL )
 			{
 			if( markQuestionAsAnswered( false, questionSpecificationItem ) != RESULT_OK )
@@ -336,7 +334,7 @@ class WordQuestion
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the 'I don't know anything about word' interface notification" );
 
 				hasFoundNoAnswerInThisWord_ = true;
-				commonVariables_->hasFoundAnswerToQuestion = true;
+				globalVariables_->hasFoundAnswerToQuestion = true;
 				}
 			else
 				{
@@ -346,14 +344,14 @@ class WordQuestion
 					if( myWordItem_->writeSelectedSpecification( false, false, true, true, false, false, false, NO_ANSWER_PARAMETER, uncertainAboutAnswerRelationSpecificationItem_ ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a selected answer to a question" );
 
-					if( ( writtenSentenceString = commonVariables_->writtenSentenceString ) == NULL ||
+					if( ( writtenSentenceString = globalVariables_->writtenSentenceString ) == NULL ||
 					strlen( writtenSentenceString ) == 0 )
 						return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I couldn't write the selected answer to a question" );
 
 					if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_LISTING_I_ONLY_KNOW ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a header" );
 
-					if( inputOutput_->writeText( INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+					if( inputOutput_->writeText( INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceString, globalVariables_->learnedFromUserString ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
 					}
 				}
@@ -370,7 +368,7 @@ class WordQuestion
 		unsigned int answerSpecificationCollectionNr;
 		SpecificationItem *currentQuestionSpecificationItem;
 		WordItem *answerSpecificationWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findAnswersToQuestions";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAnswersToQuestions";
 
 		if( answerSpecificationItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given answer specification item is undefined" );
@@ -379,7 +377,7 @@ class WordQuestion
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given answer specification item is a question" );
 
 		if( ( !answerSpecificationItem->isExclusiveSpecification() ||
-		commonVariables_->nUserSpecificationWords == 1 ) &&
+		globalVariables_->nUserSpecificationWords == 1 ) &&
 
 		( currentQuestionSpecificationItem = myWordItem_->firstSpecificationItem( isAssignment, false, isArchivedAssignment, true ) ) != NULL )
 			{
@@ -411,7 +409,7 @@ class WordQuestion
 
 	signed char markQuestionAsAnswered( SpecificationItem *questionSpecificationItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "markQuestionAsAnswered";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "markQuestionAsAnswered";
 
 		if( questionSpecificationItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given question specification item is undefined" );
@@ -442,7 +440,7 @@ class WordQuestion
 		{
 		SpecificationItem *relatedSpecificationItem;
 		RelatedResultType relatedResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "markQuestionAsAnswered";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "markQuestionAsAnswered";
 
 		if( questionSpecificationItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given question specification item is undefined" );
@@ -486,8 +484,8 @@ class WordQuestion
 
 	SpecificationItem *firstActiveNewUserQuestion()
 		{
-		SpecificationItem *firstQuestionSpecificationItem;
 		SpecificationItem *firstNewUserQuestion = NULL;
+		SpecificationItem *firstQuestionSpecificationItem;
 
 		// Try to find an assignment first
 		if( ( firstQuestionSpecificationItem = myWordItem_->firstQuestionAssignmentItem() ) != NULL )
@@ -505,7 +503,7 @@ class WordQuestion
 	protected:
 	// Constructor
 
-	WordQuestion( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	WordQuestion( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
@@ -528,15 +526,15 @@ class WordQuestion
 
 		if( ( myWordItem_ = myWordItem ) == NULL )
 			{
-			if( commonVariables != NULL )
-				commonVariables->result = RESULT_SYSTEM_ERROR;
+			if( globalVariables != NULL )
+				globalVariables->result = RESULT_SYSTEM_ERROR;
 
 			fprintf( stderr, "\nClass:%s\nFunction:\t%s\nError:\t\tThe given my word item is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
 			}
 		else
 			{
-			if( ( commonVariables_ = commonVariables ) == NULL )
-				strcpy( errorString, "The given common variables is undefined" );
+			if( ( globalVariables_ = globalVariables ) == NULL )
+				strcpy( errorString, "The given global variables is undefined" );
 
 			if( ( inputOutput_ = inputOutput ) == NULL )
 				strcpy( errorString, "The given input-output is undefined" );
@@ -567,7 +565,7 @@ class WordQuestion
 
 	signed char findAnswersToQuestions( unsigned int compoundSpecificationCollectionNr, SpecificationItem *answerSpecificationItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findAnswersToQuestions";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAnswersToQuestions";
 
 		// Find answers in active assignments
 		if( findAnswersToQuestions( true, false, compoundSpecificationCollectionNr, answerSpecificationItem ) != RESULT_OK )
@@ -587,7 +585,7 @@ class WordQuestion
 	signed char findAnswerToNewUserQuestion()
 		{
 		SpecificationItem *questionSpecificationItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findAnswerToNewUserQuestion";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAnswerToNewUserQuestion";
 
 		hasFoundNoAnswerInThisWord_ = false;
 
@@ -606,9 +604,8 @@ class WordQuestion
 	signed char writeAnswerToQuestion( bool isNegativeAnswer, bool isPositiveAnswer, bool isUncertainAboutRelation, SpecificationItem *answerSpecificationItem )
 		{
 		unsigned short answerParameter;
-		WordItem *currentLanguageWordItem = commonVariables_->currentLanguageWordItem;
 		char *writtenSentenceString;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeAnswerToQuestion";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeAnswerToQuestion";
 
 		if( answerSpecificationItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given answer specification item is undefined" );
@@ -623,10 +620,7 @@ class WordQuestion
 
 			if( isPositiveAnswer )
 				{
-				if( currentLanguageWordItem == NULL )
-					return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The current language word item is undefined" );
-
-				if( myWordItem_->writeSpecificationSentence( false, false, WORD_PARAMETER_INTERJECTION_YES, NO_GRAMMAR_LEVEL, currentLanguageWordItem->firstGrammarItem(), answerSpecificationItem ) != RESULT_OK )
+				if( myWordItem_->writeSpecificationSentence( answerSpecificationItem->isAssignment(), answerSpecificationItem->isArchivedAssignment(), false, answerSpecificationItem->isPossessive(), false, answerSpecificationItem->isSpecificationGeneralization(), false, WORD_PARAMETER_INTERJECTION_YES, NO_GRAMMAR_LEVEL, myWordItem_->firstCurrentLanguageWritingGrammarItem( false ), answerSpecificationItem ) != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer" );
 
 				answerSpecificationItem->hasSpecificationBeenWrittenAsAnswer = true;
@@ -644,7 +638,7 @@ class WordQuestion
 				else
 					{
 					answerParameter = ( isNegativeAnswer &&
-										commonVariables_->isFirstAnswerToQuestion ? WORD_PARAMETER_INTERJECTION_NO : NO_ANSWER_PARAMETER );
+										globalVariables_->isFirstAnswerToQuestion ? WORD_PARAMETER_INTERJECTION_NO : NO_ANSWER_PARAMETER );
 
 					if( myWordItem_->writeSelectedSpecification( false, false, true, true, false, false, answerSpecificationItem->isNegative(), answerParameter, answerSpecificationItem ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a selected answer to a question" );
@@ -654,24 +648,24 @@ class WordQuestion
 				}
 
 			if( !isUncertainAboutRelation &&
-			( writtenSentenceString = commonVariables_->writtenSentenceString ) != NULL &&
+			( writtenSentenceString = globalVariables_->writtenSentenceString ) != NULL &&
 			strlen( writtenSentenceString ) > 0 )
 				{
-				if( commonVariables_->hasDisplayedMessage &&
-				commonVariables_->isFirstAnswerToQuestion &&
+				if( globalVariables_->hasDisplayedMessage &&
+				globalVariables_->isFirstAnswerToQuestion &&
 
 				// Display notification 'My answer:'
 				inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_LISTING_MY_ANSWER ) != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a listing header" );
 
-				if( inputOutput_->writeText( INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceString, commonVariables_->learnedFromUserString ) != RESULT_OK )
+				if( inputOutput_->writeText( INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceString, globalVariables_->learnedFromUserString ) != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
 
 				if( isNegativeAnswer )
 					isNegativeAnswer_ = true;
 
-				commonVariables_->hasFoundAnswerToQuestion = true;
-				commonVariables_->isFirstAnswerToQuestion = false;
+				globalVariables_->hasFoundAnswerToQuestion = true;
+				globalVariables_->isFirstAnswerToQuestion = false;
 				}
 			}
 

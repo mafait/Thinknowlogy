@@ -1,9 +1,9 @@
-/*	Class:			ScoreList
+﻿/*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ class ScoreList extends List
 		boolean isEqualBlockingScore = ( oldBlockingScore == bestOldBlockingScore &&
 										newBlockingScore == bestNewBlockingScore );
 
-		return( isEqualSatisfiedScore &&
+		return ( isEqualSatisfiedScore &&
 				isEqualDissatisfiedScore &&
 				isEqualNotBlockingScore &&
 				isEqualBlockingScore );
@@ -188,7 +188,7 @@ class ScoreList extends List
 
 	protected int nPossibilities()
 		{
-		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
+		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
 		int nItems = 0;
 		ScoreItem searchScoreItem = firstActiveScoreItem();
 
@@ -228,7 +228,7 @@ class ScoreList extends List
 
 	protected byte createScoreItem( boolean isChecked, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore, SelectionItem referenceSelectionItem )
 		{
-		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, CommonVariables.currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, GlobalVariables.currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, this, myWordItem() ) ) != Constants.RESULT_OK )
 			return addError( 1, "I failed to add an active score item" );
 
 		return Constants.RESULT_OK;
@@ -236,7 +236,7 @@ class ScoreList extends List
 
 	protected byte deleteScores()
 		{
-		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
+		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
 		ScoreItem searchScoreItem = firstActiveScoreItem();
 
 		while( searchScoreItem != null &&
@@ -268,7 +268,7 @@ class ScoreList extends List
 
 	protected BoolResultType checkScores( boolean isInverted, short solveStrategyParameter, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore )
 		{
-		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
+		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
 		int checkOldSatisfiedScore = ( isInverted ? oldDissatisfiedScore : oldSatisfiedScore );
 		int checkNewSatisfiedScore = ( isInverted ? newDissatisfiedScore : newSatisfiedScore );
 		int checkOldDissatisfiedScore = ( isInverted ? oldSatisfiedScore : oldDissatisfiedScore );
@@ -349,7 +349,7 @@ class ScoreList extends List
 
 	protected BoolResultType findScore( boolean isPreparingSort, SelectionItem findScoreItem )
 		{
-		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
+		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
 		ScoreItem searchScoreItem = firstActiveScoreItem();
 		BoolResultType boolResult = new BoolResultType();
 
@@ -380,19 +380,6 @@ class ScoreList extends List
 		{
 		boolean hasBetterScore = false;
 		boolean isCummulate = false;
-		int nRandomEntries = 0;
-		int nLocalLosingScores;
-		int nLocalWinningScores;
-		int nBestWinningScores = 0;
-		int nBestLosingScores = Constants.MAX_NUMBER;
-		int localOldSatisfiedScore;
-		int localNewSatisfiedScore;
-		int localOldDissatisfiedScore;
-		int localNewDissatisfiedScore;
-		int localOldNotBlockingScore;
-		int localNewNotBlockingScore;
-		int localOldBlockingScore;
-		int localNewBlockingScore;
 		int bestOldSatisfiedScore = Constants.NO_SCORE;
 		int bestNewSatisfiedScore = Constants.NO_SCORE;
 		int bestOldDissatisfiedScore = ( solveStrategyParameter == Constants.NO_SOLVE_STRATEGY_PARAMETER ? Constants.MAX_SCORE : Constants.NO_SCORE );
@@ -401,6 +388,19 @@ class ScoreList extends List
 		int bestNewNotBlockingScore = Constants.MAX_SCORE;
 		int bestOldBlockingScore = Constants.MAX_SCORE;
 		int bestNewBlockingScore = Constants.MAX_SCORE;
+		int localOldSatisfiedScore;
+		int localNewSatisfiedScore;
+		int localOldDissatisfiedScore;
+		int localNewDissatisfiedScore;
+		int localOldNotBlockingScore;
+		int localNewNotBlockingScore;
+		int localOldBlockingScore;
+		int localNewBlockingScore;
+		int nBestLosingScores = Constants.MAX_NUMBER;
+		int nBestWinningScores = 0;
+		int nLocalLosingScores;
+		int nLocalWinningScores;
+		int nRandomEntries = 0;
 		ScoreItem localScoreItem;
 		ScoreItem searchScoreItem = firstActiveScoreItem();
 		SelectionItem bestActionSelectionItem = null;

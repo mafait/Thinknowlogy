@@ -1,9 +1,9 @@
-/*	Class:		QueryResultType
+﻿/*	Class:		QueryResultType
  *	Purpose:	To return query variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,6 @@ class QueryResultType
 	// Protected variables
 
 	protected byte result;
-
 	protected int queryCommandStringPosition;
 
 	// Constructor
@@ -34,7 +33,6 @@ class QueryResultType
 	QueryResultType()
 		{
 		result = Constants.RESULT_OK;
-
 		queryCommandStringPosition = 0;
 		}
 	};

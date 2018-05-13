@@ -1,10 +1,10 @@
-/*	Class:			JustificationItem
+﻿/*	Class:			JustificationItem
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ class JustificationItem : private Item
 
 	// Private initialized variables
 
-	bool hasFeminineOrMasculineProperNameEnding_;
+	bool hasFeminineOrMasculineProperNounEnding_;
 
 	unsigned short justificationTypeNr_;
 
@@ -71,7 +71,7 @@ class JustificationItem : private Item
 
 	// Constructor
 
-	JustificationItem( bool hasFeminineOrMasculineProperNameEnding, unsigned short justificationTypeNr, unsigned short orderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, JustificationItem *attachedJustificationItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem );
+	JustificationItem( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, unsigned short orderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, JustificationItem *attachedJustificationItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem );
 
 
 	// Protected virtual functions
@@ -90,9 +90,9 @@ class JustificationItem : private Item
 	void clearReplacingInfo();
 
 	bool hasAttachedJustification();
-	bool hasFeminineOrMasculineProperNameEnding();
+	bool hasFeminineOrMasculineProperNounEnding();
 	bool hasJustification( SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
-	bool hasJustification( bool hasFeminineOrMasculineProperNameEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
+	bool hasJustification( bool hasFeminineOrMasculineProperNounEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
 	bool hasOnlyExclusiveSpecificationSubstitutionAssumptionsWithoutDefinition();
 
 	bool hasNonPossessivePrimaryUserSpecification();

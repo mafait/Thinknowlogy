@@ -1,0 +1,5 @@
+﻿< 沒有、黑色、蓝色、棕色、绿色、灰色、橙色、粉色、紫色、红色、白色和黄色都是颜色。 {learned from user Admin}
+< 一、二、三、四、五、六、七、八、九和零都是数字。 {learned from user Admin}
+< 
+< 沒有、一、二、三、四、五、六、七、八、九和零都是数字。 {learned from user Admin}
+< 

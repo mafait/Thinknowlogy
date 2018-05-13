@@ -27,7 +27,7 @@
 < Een dochter is waarschijnlijk een persoon.
 < 
 * 
-* U heeft meervoudige zelfstandige naamwoord "zoons" ingevoerd, dat onbekend was voor mij.
+* U hebt meervoudige zelfstandige naamwoord "zoons" ingevoerd, dat onbekend was voor mij.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een ouder.
@@ -43,7 +43,7 @@
 < Jan is waarschijnlijk een ouder. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
-<	- Jan heeft 2 zoons en een dochter.
+<	- Jan heeft een dochter en 2 zoons.
 < Jan is waarschijnlijk deel van een gezin. Omdat:
 <	- Jan is waarschijnlijk een ouder.
 <	- Ouders zijn deel van ieder gezin.
@@ -53,7 +53,7 @@
 * 
 * Mijn vragen:
 < Is Jan een vrouw of een man? Omdat:
-<	- Jan heeft 2 zoons en een dochter.
+<	- Jan heeft een dochter en 2 zoons.
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vrouw of een man.
 * 	en:
@@ -67,7 +67,7 @@
 <	- Iedere vader is een man.
 <	- Iedere moeder is een vrouw.
 < Is Jan een vader of een moeder? Omdat:
-<	- Jan heeft 2 zoons en een dochter.
+<	- Jan heeft een dochter en 2 zoons.
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
 * 	en:
@@ -76,7 +76,7 @@
 < 
 * 
 * Uw informatie:
-< Jan heeft 2 zoons en een dochter.
+< Jan heeft een dochter en 2 zoons.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een ouder.

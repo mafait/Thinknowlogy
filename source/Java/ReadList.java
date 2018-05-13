@@ -1,9 +1,9 @@
-/*	Class:			ReadList
+﻿/*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -82,65 +82,6 @@ class ReadList extends List
 		lastActivatedWordOrderNr_ = Constants.NO_ORDER_NR;
 		}
 
-	protected boolean isImperativeSentence()
-		{
-		short wordOrderNr;
-		short previousWordOrderNr = Constants.NO_ORDER_NR;
-		int nWords = 0;
-		String readWordString;
-		ReadItem searchReadItem = firstActiveReadItem();
-		ReadItem startReadItem = null;
-
-		while( searchReadItem != null )
-			{
-			if( ( nWords > 0 ||
-			// Trigger
-			searchReadItem.isSpecificationWord() ) &&
-
-			// First appearance of new word
-			( wordOrderNr = searchReadItem.wordOrderNr() ) > previousWordOrderNr )
-				{
-				nWords++;
-				previousWordOrderNr = wordOrderNr;
-
-				if( startReadItem == null )
-					startReadItem = searchReadItem;
-				}
-
-			searchReadItem = searchReadItem.nextReadItem();
-			}
-
-		// Start creation of imperative sentence
-		if( nWords > 2 )
-			{
-			previousWordOrderNr = Constants.NO_ORDER_NR;
-			searchReadItem = startReadItem;
-			CommonVariables.writtenSentenceStringBuffer = new StringBuffer();
-
-			while( searchReadItem != null )
-				{
-				if( ( wordOrderNr = searchReadItem.wordOrderNr() ) > previousWordOrderNr &&
-				!searchReadItem.isText() &&
-				( readWordString = searchReadItem.readWordTypeString() ) != null )
-					{
-					if( previousWordOrderNr > Constants.NO_ORDER_NR &&
-					// End of string (colon, question mark, etc)
-					searchReadItem.grammarParameter != Constants.GRAMMAR_SENTENCE )
-						CommonVariables.writtenSentenceStringBuffer.append( Constants.SPACE_STRING );
-
-					previousWordOrderNr = wordOrderNr;
-					CommonVariables.writtenSentenceStringBuffer.append( readWordString );
-					}
-
-				searchReadItem = searchReadItem.nextReadItem();
-				}
-
-			return true;
-			}
-
-		return false;
-		}
-
 	protected byte activateInactiveReadWords( short wordOrderNr )
 		{
 		ReadItem searchReadItem = firstInactiveReadItem();
@@ -162,7 +103,7 @@ class ReadList extends List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte createReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String readString, WordItem readWordItem )
+	protected byte createReadItem( boolean isUncountableGeneralizationNoun, short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String readString, WordItem readWordItem )
 		{
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
@@ -171,7 +112,7 @@ class ReadList extends List
 		if( hasFoundReadItem( wordOrderNr, wordParameter, wordTypeNr, readString, readWordItem ) )
 			return startError( 1, "The given read item already exists" );
 
-		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ReadItem( wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
 			return addError( 1, "I failed to add an active read item" );
 
 		return Constants.RESULT_OK;

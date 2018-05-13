@@ -1,37 +1,37 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
 Mostrar " Número total de elementos:	~#<>~.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Elementos de administrador:		~#<FRSWXYZ>~.".
+Mostrar " Elementos de administrador:	        ~#<FRSWXYZ>~.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " * Elementos activos:				~+#<FRSWXYZ>~.".
-Mostrar "    <F> Archivos:					~+#<F>~.".
-Mostrar "    <R> Leer palabras (temporal):			~+#<R>~.".
+Mostrar " * Elementos activos:		~+#<FRSWXYZ>~.".
+Mostrar "    <F> Archivos:			~+#<F>~.".
+Mostrar "    <R> Leer palabras (temporal):		~+#<R>~.".
 Mostrar "    <S> Resolver las puntuaciones (temporal):		~+#<S>~.".
-Mostrar "    <W> Palabras:					~+#<W>~, (predefinido: ~+#<W>:*~).".
-Mostrar "    <X> Condiciones:					~+#<X>~.".
-Mostrar "    <Y> Acciones:					~+#<Y>~.".
-Mostrar "    <Z> Alternativas:					~+#<Z>~.".
-Mostrar " * Elementos inactivos:				~=#<FRSWXYZ>~.".
-Mostrar " * Elementos archivados:			~$#<FRSWXYZ>~.".
-Mostrar " * Elementos sustituidos:			~%#<FRSWXYZ>~.".
-Mostrar " * Elementos eliminados:			~&#<FRSWXYZ>~.".
+Mostrar "    <W> Palabras:			~+#<W>~, (predefinido: ~+#<W>:*~).".
+Mostrar "    <X> Condiciones:			~+#<X>~.".
+Mostrar "    <Y> Acciones:			~+#<Y>~.".
+Mostrar "    <Z> Alternativas:			~+#<Z>~.".
+Mostrar " * Elementos inactivos:		~=#<FRSWXYZ>~.".
+Mostrar " * Elementos archivados:		~$#<FRSWXYZ>~.".
+Mostrar " * Elementos sustituidos:		~%#<FRSWXYZ>~.".
+Mostrar " * Elementos eliminados:		~&#<FRSWXYZ>~.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Elementos de las palabras:		~#<acgijlmrswx>~.".
+Mostrar " Elementos de las palabras:	        ~#<acgijlmrswx>~.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " * Elementos activos:				~+#<acgijlmrswx>~.".
-Mostrar "    <a> asignaciones:					~+#<a>~.".
-Mostrar "    <c> colecciones:					~+#<c>~.".
-Mostrar "    <g> generalizaciones:				~+#<g>~.".
-Mostrar "    <i> interfaz:					~+#<i>~.".
-Mostrar "    <j> justificación:					~+#<j>~.".
-Mostrar "    <l> gramática:					~+#<l>~.".
-Mostrar "    <m> varias palabras:				~+#<m>~.".
-Mostrar "    <s> especificaciones:				~+#<s>~.".
-Mostrar "    <r> escribir palabras (temporal):			~+#<r>~.".
-Mostrar "    <w> tipos de palabra:				~+#<w>~.".
-Mostrar "    <x> contexto:					~+#<x>~.".
-Mostrar " * Elementos inactivos:				~=#<acgijlmrswx>~.".
-Mostrar " * Elementos archivados:			~$#<acgijlmrswx>~.".
-Mostrar " * Elementos sustituidos:			~%#<acgijlmrswx>~.".
-Mostrar " * Elementos eliminados:			~&#<acgijlmrswx>~.".
+Mostrar " * Elementos activos:		~+#<acgijlmrswx>~.".
+Mostrar "    <a> asignaciones:			~+#<a>~.".
+Mostrar "    <c> colecciones:			~+#<c>~.".
+Mostrar "    <g> generalizaciones:			~+#<g>~.".
+Mostrar "    <i> interfaz:				~+#<i>~.".
+Mostrar "    <j> justificación:			~+#<j>~.".
+Mostrar "    <l> gramática:			~+#<l>~.".
+Mostrar "    <m> varias palabras:			~+#<m>~.".
+Mostrar "    <s> especificaciones:			~+#<s>~.".
+Mostrar "    <r> escribir palabras (temporal):		~+#<r>~.".
+Mostrar "    <w> tipos de palabra:			~+#<w>~.".
+Mostrar "    <x> contexto:			~+#<x>~.".
+Mostrar " * Elementos inactivos:		~=#<acgijlmrswx>~.".
+Mostrar " * Elementos archivados:		~$#<acgijlmrswx>~.".
+Mostrar " * Elementos sustituidos:		~%#<acgijlmrswx>~.".
+Mostrar " * Elementos eliminados:		~&#<acgijlmrswx>~.".
 Mostrar "------------------------------------------------------------------------------".

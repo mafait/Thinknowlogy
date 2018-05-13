@@ -1,8 +1,8 @@
-/*	Class:		List
+﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -28,9 +28,6 @@
 #include <stdlib.h>
 #include "Item.h"
 
-// Class declarations
-class WordEndingResultType;
-
 class List
 	{
 	friend class AdminItem;
@@ -53,10 +50,10 @@ class List
 	// Private initialized variables
 
 	char listChar_;
-	char classNameString_[FUNCTION_NAME_LENGTH];
-	char parentClassNameString_[FUNCTION_NAME_LENGTH];
+	char classNameString_[FUNCTION_NAME_STRING_LENGTH];
+	char parentClassNameString_[FUNCTION_NAME_STRING_LENGTH];
 
-	CommonVariables *commonVariables_;
+	GlobalVariables *globalVariables_;
 	InputOutput *inputOutput_;
 	WordItem *myWordItem_;
 
@@ -138,7 +135,6 @@ class List
 
 	ShortResultType startShortResultError( const char *functionNameString, const char *errorString );
 
-	WordEndingResultType addWordEndingResultError( const char *functionNameString, const char *errorString );
 	WordEndingResultType startWordEndingResultError( const char *functionNameString, const char *errorString );
 
 	WordResultType addWordResultError( const char *functionNameString, const char *errorString );
@@ -155,7 +151,7 @@ class List
 
 	// Protected common functions
 
-	void initializeListVariables( char listChar, const char *classNameString, CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem );
+	void initializeListVariables( char listChar, const char *classNameString, GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem );
 	void deleteTemporaryList();
 
 	bool hasActiveItems();
@@ -186,7 +182,7 @@ class List
 
 	Item *nextListItem();
 
-	CommonVariables *commonVariables();
+	GlobalVariables *globalVariables();
 
 	InputOutput *inputOutput();
 

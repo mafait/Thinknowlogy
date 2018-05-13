@@ -1,9 +1,9 @@
-/*	Class:			AdminImperative
+﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -60,10 +60,10 @@ class AdminImperative
 	WordItem *predefinedNounSolveMethodWordItem_;
 	WordItem *predefinedNounSolveStrategyWordItem_;
 
-	char moduleNameString_[FUNCTION_NAME_LENGTH];
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
 
 	AdminItem *adminItem_;
-	CommonVariables *commonVariables_;
+	GlobalVariables *globalVariables_;
 	InputOutput *inputOutput_;
 
 
@@ -71,8 +71,8 @@ class AdminImperative
 
 	bool isNumeralString( char *checkString )
 		{
-		size_t stringLength;
 		size_t position = 0;
+		size_t stringLength;
 
 		if( checkString != NULL &&
 		( stringLength = strlen( checkString ) ) > 0 )
@@ -89,15 +89,15 @@ class AdminImperative
 
 	signed char addWordToVirtualList( bool isSelection, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "addWordToVirtualList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addWordToVirtualList";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
-		if( generalizationWordItem->addSpecificationInWord( true, false, false, false, false, false, false, false, false, false, false, isSelection, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, specificationWordItem, NULL, NULL, NULL ).result != RESULT_OK )
+		if( generalizationWordItem->addSpecificationInWord( true, false, false, false, false, false, false, false, false, false, false, false, isSelection, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, specificationWordItem, NULL, NULL, NULL ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a virtual list specification" );
 
-		if( generalizationWordItem->assignSpecification( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, specificationWordItem, NULL, NULL ).result != RESULT_OK )
+		if( generalizationWordItem->assignSpecification( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, specificationWordItem, NULL, NULL ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a virtual list word" );
 
 		return RESULT_OK;
@@ -107,7 +107,7 @@ class AdminImperative
 		{
 		WordItem *currentAssignmentWordItem;
 
-		if( ( currentAssignmentWordItem = commonVariables_->firstAssignmentWordItem ) != NULL )
+		if( ( currentAssignmentWordItem = globalVariables_->firstAssignmentWordItem ) != NULL )
 			{
 			// Do for all assignment words
 			do	;
@@ -115,14 +115,14 @@ class AdminImperative
 			( currentAssignmentWordItem = currentAssignmentWordItem->nextAssignmentWordItem ) != NULL );
 			}
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char deleteAssignmentLevelInAssignmentWords()
 		{
 		WordItem *currentAssignmentWordItem;
 
-		if( ( currentAssignmentWordItem = commonVariables_->firstAssignmentWordItem ) != NULL )
+		if( ( currentAssignmentWordItem = globalVariables_->firstAssignmentWordItem ) != NULL )
 			{
 			// Do for all assignment words
 			do	;
@@ -130,15 +130,14 @@ class AdminImperative
 			( currentAssignmentWordItem = currentAssignmentWordItem->nextAssignmentWordItem ) != NULL );
 			}
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char executeImperativeDisplay( unsigned short executionNounWordParameter, unsigned short executionWordTypeNr, WordItem *imperativeVerbWordItem, WordItem *executionWordItem, char *executionString )
 		{
 		char *singularNounString;
-		char *writtenSentenceString;
 		FileResultType fileResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "executeImperativeDisplay";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "executeImperativeDisplay";
 
 		if( imperativeVerbWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given imperative verb word item is undefined" );
@@ -149,7 +148,7 @@ class AdminImperative
 			if( executionString != NULL &&
 			executionWordTypeNr == WORD_TYPE_TEXT )
 				{
-				if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
+				if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
 				writeInfoTextWithPossibleQueryCommands( executionString ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the execution string" );
 				}
@@ -165,8 +164,15 @@ class AdminImperative
 
 						break;
 
+					case WORD_PARAMETER_NOUN_INFORMATION:
+						// Try to display all knowledge about this specification
+						if( adminItem_->writeInfoAboutWord( false, true, true, true, true, true, true, true, executionWordItem ) != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write info about a word" );
+
+						// Don't insert a break statement here
+
 					default:
-						// Try to read the info file with the specification name
+						// Try to read the info file with the given specification name
 						if( executionWordItem == NULL )
 							return adminItem_->startError( functionNameString, moduleNameString_, "The specification word item is undefined" );
 
@@ -176,33 +182,14 @@ class AdminImperative
 						if( fileResult.createdFileItem == NULL &&
 						executionWordTypeNr == WORD_TYPE_NOUN_PLURAL &&
 						( singularNounString = executionWordItem->singularNounString() ) != NULL &&
+						// In case of a plural noun, also try a singular noun
 						adminItem_->readInfoFile( false, singularNounString ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read the info file with a singular noun word" );
-
-						// Try to display all knowledge about this specification
-						if( adminItem_->writeInfoAboutWord( false, true, true, true, true, true, true, true, executionWordItem ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write info about a word" );
 					}
 
-				if( !commonVariables_->hasDisplayedMessage &&
-				executionWordItem != NULL )
-					{
-					if( adminItem_->isImperativeSentence() &&
-					( writtenSentenceString = commonVariables_->writtenSentenceString ) != NULL &&
-					strlen( writtenSentenceString ) > 0 )
-						{
-						if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_NO ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I have no' interface notification" );
-
-						if( inputOutput_->writeDiacriticalText( false, false, INPUT_OUTPUT_PROMPT_NOTIFICATION, writtenSentenceString ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a sentence" );
-						}
-					else
-						{
-						if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_START, executionWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_END ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
-						}
-					}
+				if( !globalVariables_->hasDisplayedMessage &&
+				inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_I_DONT_HAVE_THE_REQUESTED_INFO ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 				}
 			}
 		else
@@ -214,12 +201,12 @@ class AdminImperative
 		return RESULT_OK;
 		}
 
-	signed char executeVirtualListImperative( unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, WordItem *imperativeVerbWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
+	signed char executeVirtualListImperativePart( unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, WordItem *imperativeVerbWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
 		{
 		bool hasFoundHeadOrTail = false;
 		bool hasFoundVirtualListAction = false;
 		SpecificationItem *localVirtualListAssignmentItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "executeVirtualListImperative";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "executeVirtualListImperativePart";
 
 		if( imperativeVerbWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given imperative verb word item is undefined" );
@@ -297,6 +284,10 @@ class AdminImperative
 						break;
 
 					case WORD_PARAMETER_PREPOSITION_TO:
+					// Typically for Chinese
+					case WORD_PARAMETER_PREPOSITION_CHINESE_VERB_ADD:
+					case WORD_PARAMETER_PREPOSITION_CHINESE_VERB_MOVE:
+					case WORD_PARAMETER_PREPOSITION_CHINESE_VERB_REMOVE:
 						// Global virtual assignment list
 						if( virtualListAssignmentItem_ == NULL )
 							{
@@ -335,19 +326,29 @@ class AdminImperative
 		return RESULT_OK;
 		}
 
-	signed char executeVirtualListImperative( unsigned short imperativeVerbParameter, unsigned short specificationWordTypeNr, WordItem *imperativeVerbWordItem, WordItem *specificationWordItem, ReadItem *startRelationWordReadItem, ReadItem *endRelationReadItem )
+	signed char executeVirtualListImperative( unsigned short imperativeVerbParameter, unsigned short specificationWordTypeNr, WordItem *imperativeVerbWordItem, WordItem *specificationWordItem, ReadItem *startRelationReadItem, ReadItem *endRelationReadItem )
 		{
 		unsigned short prepositionParameter = NO_PREPOSITION_PARAMETER;
-		ReadItem *currentReadItem = startRelationWordReadItem;
+		ReadItem *currentReadItem = startRelationReadItem;
 		WordItem *relationWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "executeVirtualListImperative";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "executeVirtualListImperative";
 
 		if( imperativeVerbWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given imperative verb word item is undefined" );
 
-		if( specificationWordItem != NULL )
+		if( specificationWordItem == NULL )
 			{
-			if( startRelationWordReadItem != NULL )
+			if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, imperativeVerbWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+			}
+		else
+			{
+			if( startRelationReadItem == NULL )
+				{
+				if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_NEEDS_A_LIST_TO_BE_SPECIFIED ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+				}
+			else
 				{
 				do	{
 					if( currentReadItem->isPreposition() )
@@ -356,43 +357,15 @@ class AdminImperative
 						{
 						if( currentReadItem->isRelationWord() &&
 						( relationWordItem = currentReadItem->readWordItem() ) != NULL &&
-						executeVirtualListImperative( imperativeVerbParameter, prepositionParameter, specificationWordTypeNr, currentReadItem->wordTypeNr(), imperativeVerbWordItem, specificationWordItem, relationWordItem ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute a virtual list imperative" );
+
+						executeVirtualListImperativePart( imperativeVerbParameter, prepositionParameter, specificationWordTypeNr, currentReadItem->wordTypeNr(), imperativeVerbWordItem, specificationWordItem, relationWordItem ) != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute a virtual list imperative part" );
 						}
 					}
 				while( currentReadItem != endRelationReadItem &&
 				( currentReadItem = currentReadItem->nextReadItem() ) != NULL );
 				}
-			else
-				{
-				if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_NEEDS_A_LIST_TO_BE_SPECIFIED ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
-				}
 			}
-		else
-			{
-			if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, imperativeVerbWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
-			}
-
-		return RESULT_OK;
-		}
-
-	signed char executeVirtualListSelectionImperative( unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, WordItem *imperativeVerbWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
-		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "executeVirtualListSelectionImperative";
-
-		if( imperativeVerbWordItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given imperative verb word item is undefined" );
-
-		if( specificationWordItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given specification word item is undefined" );
-
-		if( relationWordItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given relation word item is undefined" );
-
-		if( executeVirtualListImperative( imperativeVerbParameter, prepositionParameter, specificationWordTypeNr, relationWordTypeNr, imperativeVerbWordItem, specificationWordItem, relationWordItem ) != RESULT_OK )
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute a virtual list imperative" );
 
 		return RESULT_OK;
 		}
@@ -408,7 +381,7 @@ class AdminImperative
 		BoolResultType boolResult;
 		SelectionResultType selectionResult;
 		ShortResultType shortResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "solveWord";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "solveWord";
 
 		if( solveWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given solve word is undefined" );
@@ -416,15 +389,15 @@ class AdminImperative
 		// Word has no active assignments
 		if( solveWordItem->firstNonQuestionActiveAssignmentItem() == NULL )
 			{
-			if( commonVariables_->currentAssignmentLevel > solveLevel )
-				return adminItem_->startError( functionNameString, moduleNameString_, "The given assignment level of ", commonVariables_->currentAssignmentLevel, " is higher than the given solve level ", solveLevel );
+			if( globalVariables_->currentAssignmentLevel > solveLevel )
+				return adminItem_->startError( functionNameString, moduleNameString_, "The given assignment level of ", globalVariables_->currentAssignmentLevel, " is higher than the given solve level ", solveLevel );
 
 			if( adminItem_->assignSpecification( predefinedNounSolveMethodWordItem_, predefinedAdjectiveBusyWordItem_ ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level ", commonVariables_->currentAssignmentLevel );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level ", globalVariables_->currentAssignmentLevel );
 
 			// There already is a scores list at the start
 			if( adminItem_->hasScoreList() &&
-			commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
+			globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
 			adminItem_->deleteScores() != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the admin score list" );
 
@@ -432,18 +405,18 @@ class AdminImperative
 
 			// Get solve strategy parameter
 			if( ( shortResult = getAssignmentWordParameter( predefinedNounSolveStrategyWordItem_ ) ).result != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", commonVariables_->currentAssignmentLevel );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", globalVariables_->currentAssignmentLevel );
 
-			if( ( boolResult = findSelectionToSolveWord( true, ( commonVariables_->currentAssignmentLevel == solveLevel ), isInverted, ( commonVariables_->currentAssignmentLevel + 1 < solveLevel ), shortResult.shortValue, solveWordItem ) ).result != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a selection to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+			if( ( boolResult = findSelectionToSolveWord( true, ( globalVariables_->currentAssignmentLevel == solveLevel ), isInverted, ( globalVariables_->currentAssignmentLevel + 1 < solveLevel ), shortResult.shortValue, solveWordItem ) ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a selection to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", globalVariables_->currentAssignmentLevel );
 
 			// Has found possibility to solve word
 			if( boolResult.booleanValue )
 				{
-				if( commonVariables_->currentAssignmentLevel < solveLevel )
+				if( globalVariables_->currentAssignmentLevel < solveLevel )
 					{
 					if( ( nPossibilities = adminItem_->nPossibilities() ) <= 0 )
-						return adminItem_->startError( functionNameString, moduleNameString_, "There are no possibilities at assignment level ", commonVariables_->currentAssignmentLevel );
+						return adminItem_->startError( functionNameString, moduleNameString_, "There are no possibilities at assignment level ", globalVariables_->currentAssignmentLevel );
 
 					solveProgressStep = ( nPossibilities == 0 ? MAX_PROGRESS : ( ( endSolveProgressLevel - currentSolveProgressLevel ) / nPossibilities ) );
 
@@ -451,33 +424,33 @@ class AdminImperative
 						inputOutput_->startProgress( INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START, solveLevel, INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END, currentSolveProgressLevel, MAX_PROGRESS );
 
 					if( ( possibilityScoreItem = adminItem_->firstPossibility() ) == NULL )
-						return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find any possibility item at assignment level ", commonVariables_->currentAssignmentLevel );
+						return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find any possibility item at assignment level ", globalVariables_->currentAssignmentLevel );
 
 					do	{
 						// Copy solve action of NO_ASSIGNMENT_LEVEL to higher levels
-						if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+						if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
 							actionSelectionItem = possibilityScoreItem->referenceSelectionItem;
 
 						if( createNewAssignmentLevelInAssignmentWords() != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a new assignment level: ", commonVariables_->currentAssignmentLevel );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a new assignment level: ", globalVariables_->currentAssignmentLevel );
 
-						commonVariables_->currentAssignmentLevel++;
+						globalVariables_->currentAssignmentLevel++;
 
 						if( adminItem_->assignSelectionSpecification( possibilityScoreItem->referenceSelectionItem ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a selection specifcation at assignment level: ", commonVariables_->currentAssignmentLevel );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a selection specifcation at assignment level: ", globalVariables_->currentAssignmentLevel );
 
 						nextSolveProgressLevel = currentSolveProgressLevel + solveProgressStep;
 
 						if( executeSelection( ( currentSolveProgressLevel + solveProgressStep / 2L ), actionSelectionItem ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute a selection during the solving of word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute a selection during the solving of word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", globalVariables_->currentAssignmentLevel );
 
 						// Word has active assignments
 						if( solveWordItem->firstNonQuestionActiveAssignmentItem() == NULL )
 							{
 							if( solveWord( solveLevel, currentSolveProgressLevel, nextSolveProgressLevel, solveWordItem, actionSelectionItem ) != RESULT_OK )
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", globalVariables_->currentAssignmentLevel );
 
-							if( commonVariables_->currentAssignmentLevel == 1 &&
+							if( globalVariables_->currentAssignmentLevel == 1 &&
 							adminItem_->changeAction( actionSelectionItem ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to change an action" );
 							}
@@ -487,26 +460,26 @@ class AdminImperative
 							isInverted = ( predefinedNounSolveMethodWordItem_->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, predefinedAdjectiveInvertedWordItem_ ) != NULL );
 
 							if( !isInverted &&
-							commonVariables_->currentAssignmentLevel < solveLevel )
+							globalVariables_->currentAssignmentLevel < solveLevel )
 								{
 								if( adminItem_->deleteScores() != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the scores with an assignment level higher than ", commonVariables_->currentAssignmentLevel );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the scores with an assignment level higher than ", globalVariables_->currentAssignmentLevel );
 
 								// Don't solve any deeper
-								solveLevel = commonVariables_->currentAssignmentLevel;
+								solveLevel = globalVariables_->currentAssignmentLevel;
 								}
 
 							// Create winning or losing score
 							if( adminItem_->createScoreItem( false, NO_SCORE, ( isInverted ? NO_SCORE : WINNING_SCORE ), NO_SCORE, ( isInverted ? WINNING_SCORE : NO_SCORE ), NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, actionSelectionItem ) != RESULT_OK )
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a winning or losing score of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a winning or losing score of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", globalVariables_->currentAssignmentLevel );
 							}
 
 						currentSolveProgressLevel = nextSolveProgressLevel;
 
 						if( deleteAssignmentLevelInAssignmentWords() != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the assignments of level ", commonVariables_->currentAssignmentLevel );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the assignments of level ", globalVariables_->currentAssignmentLevel );
 
-						commonVariables_->currentAssignmentLevel--;
+						globalVariables_->currentAssignmentLevel--;
 						possibilityScoreItem = possibilityScoreItem->nextPossibilityScoreItem();
 
 						if( ++possibilityNumber <= nPossibilities )
@@ -525,44 +498,44 @@ class AdminImperative
 
 					if( nPossibilities > 1 ||
 					// Higher level has possibilities
-					commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL )
+					globalVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL )
 						{
 						if( adminItem_->deleteScores() != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the scores with assignment level ", commonVariables_->currentAssignmentLevel );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the scores with assignment level ", globalVariables_->currentAssignmentLevel );
 						}
 					}
 
 				currentSolveProgressLevel = endSolveProgressLevel;
 
 				if( solveLevel > 1 )
-					inputOutput_->displayProgress( currentSolveProgressLevel );
+					inputOutput_->displayProgressBar( currentSolveProgressLevel );
 
-				if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+				if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
 					{
 					// Get solve strategy parameter
 					if( ( shortResult = getAssignmentWordParameter( predefinedNounSolveStrategyWordItem_ ) ).result != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", commonVariables_->currentAssignmentLevel );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", globalVariables_->currentAssignmentLevel );
 
 					// Get best selection
 					if( ( selectionResult = adminItem_->getBestSelection( adminItem_->isCurrentlyTesting(), shortResult.shortValue ) ).result != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the best selection action of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", commonVariables_->currentAssignmentLevel );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the best selection action of solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", globalVariables_->currentAssignmentLevel );
 
 					if( ( actionSelectionItem = selectionResult.selectionItem ) == NULL )
 						return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't get the best action selection item" );
 
 					// Assign best selection
 					if( adminItem_->assignSelectionSpecification( actionSelectionItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a selection specification at assignment level ", commonVariables_->currentAssignmentLevel );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a selection specification at assignment level ", globalVariables_->currentAssignmentLevel );
 
 					// Set solve method to 'done'
 					if( adminItem_->assignSpecification( predefinedNounSolveMethodWordItem_, predefinedAdjectiveDoneWordItem_ ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the done flag to the solve method at assignment level ", commonVariables_->currentAssignmentLevel );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the done flag to the solve method at assignment level ", globalVariables_->currentAssignmentLevel );
 					}
 				}
 			else
 				{
 				// Display warning
-				if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
+				if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
 				inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_START, solveWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_END ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 				}
@@ -580,13 +553,13 @@ class AdminImperative
 	signed char writeInfoTextWithPossibleQueryCommands( char *textString )
 		{
 		bool hasFoundNewLine = false;
-		size_t textStringLength;
 		size_t position = 0;
+		size_t textStringLength;
 		char textChar = SYMBOL_QUESTION_MARK;
 		char charString[2] = SPACE_STRING;
 		char writeString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		QueryResultType queryResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "writeInfoTextWithPossibleQueryCommands";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeInfoTextWithPossibleQueryCommands";
 
 		if( textString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given text string is undefined" );
@@ -652,19 +625,19 @@ class AdminImperative
 
 	BoolResultType backTrackSelectionConditions( bool isInitializeScores, bool isInverted, bool isAllowingDuplicates, bool isPreparingSort, unsigned short executionLevel, unsigned short solveStrategyParameter, unsigned int conditionSentenceNr )
 		{
+		bool hasFoundScore = false;
 		bool isNewStart;
 		bool isWaitingForNewLevel;
 		bool isWaitingForNewStart;
-		bool hasFoundScore = false;
-		unsigned short selectionLevel;
 		unsigned short handledSelectionLevel;
 		unsigned short previousSelectionLevel;
+		unsigned short selectionLevel;
 		unsigned short unhandledSelectionLevel;
 		SelectionItem *conditionSelectionItem;
 		SelectionItem *previousConditionSelectionItem;
 		BoolResultType boolCheckResult;
 		BoolResultType boolReturnResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "backTrackSelectionConditions";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "backTrackSelectionConditions";
 
 		adminItem_->clearConditionChecksForSolving( MAX_LEVEL, conditionSentenceNr );
 
@@ -769,7 +742,7 @@ class AdminImperative
 
 			if( isAllowingDuplicates &&
 			isInitializeScores &&
-			commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL )
+			globalVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL )
 				{
 				hasFoundScore = false;
 
@@ -803,14 +776,14 @@ class AdminImperative
 	BoolResultType canWordBeSolved( WordItem *solveWordItem )
 		{
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "canWordBeSolved";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "canWordBeSolved";
 
 		if( ( boolResult = canWordBeSolved( true, solveWordItem ) ).result != RESULT_OK )
 			return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to find out if a word can be solved by an action" );
 
 		// Word can't be solved
 		if( !boolResult.booleanValue &&
-		!commonVariables_->hasDisplayedWarning &&
+		!globalVariables_->hasDisplayedWarning &&
 		( boolResult = canWordBeSolved( false, solveWordItem ) ).result != RESULT_OK )
 			return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to find out if a word can be solved by an alternative action" );
 
@@ -823,7 +796,7 @@ class AdminImperative
 		SelectionItem *currentExecutionSelectionItem;
 		WordItem *specificationWordItem;
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "canWordBeSolved";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "canWordBeSolved";
 
 		if( solveWordItem == NULL )
 			return adminItem_->startBoolResultError( functionNameString, moduleNameString_, "The given solve word item is undefined" );
@@ -863,12 +836,12 @@ class AdminImperative
 		char *firstString = NULL;
 		char *secondString = NULL;
 		SpecificationItem *comparisonAssignmentItem;
+		WordItem *comparisonAssignmentSpecificationWordItem = NULL;
 		WordItem *firstSpecificationWordItem;
 		WordItem *secondSpecificationWordItem;
-		WordItem *comparisonAssignmentSpecificationWordItem = NULL;
 		BoolResultType boolResult;
 		SpecificationResultType specificationResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkComparison";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkComparison";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startBoolResultError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
@@ -958,7 +931,7 @@ class AdminImperative
 		{
 		unsigned int nAssignments;
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkOddOrEvenComparison";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkOddOrEvenComparison";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startBoolResultError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
@@ -996,7 +969,7 @@ class AdminImperative
 		{
 		BoolResultType boolCheckResult;
 		BoolResultType boolReturnResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findSelectionToSolveWord";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findSelectionToSolveWord";
 
 		if( solveWordItem == NULL )
 			return adminItem_->startBoolResultError( functionNameString, moduleNameString_, "The given solve word is undefined" );
@@ -1007,7 +980,7 @@ class AdminImperative
 		solveWordItem->isWordCheckedForSolving = true;
 
 		// Selection available
-		if( commonVariables_->adminActionList != NULL )
+		if( globalVariables_->adminActionList != NULL )
 			{
 			// Check selection actions
 			if( ( boolCheckResult = findSelectionToSolveWord( true, isInitializeScores, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, solveWordItem ) ).result != RESULT_OK )
@@ -1016,8 +989,8 @@ class AdminImperative
 			if( boolCheckResult.booleanValue )
 				boolReturnResult.booleanValue = true;
 
-			if( !commonVariables_->hasDisplayedWarning &&
-			commonVariables_->adminAlternativeList != NULL )
+			if( !globalVariables_->hasDisplayedWarning &&
+			globalVariables_->adminAlternativeList != NULL )
 				{
 				// Check selection alternatives
 				if( ( boolCheckResult = findSelectionToSolveWord( false, isInitializeScores, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, solveWordItem ) ).result != RESULT_OK )
@@ -1038,7 +1011,7 @@ class AdminImperative
 		SelectionItem *currentExecutionSelectionItem;
 		BoolResultType boolCheckResult;
 		BoolResultType boolReturnResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findSelectionToSolveWord";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findSelectionToSolveWord";
 
 		if( solveWordItem == NULL )
 			return adminItem_->startBoolResultError( functionNameString, moduleNameString_, "The given solve word is undefined" );
@@ -1072,7 +1045,7 @@ class AdminImperative
 		BoolResultType boolCheckResult;
 		BoolResultType boolReturnResult;
 		ConditionResultType conditionPartResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "scoreSelectionCondition";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "scoreSelectionCondition";
 
 		if( conditionSelectionItem == NULL )
 			return adminItem_->startBoolResultError( functionNameString, moduleNameString_, "The given condition selection item is undefined" );
@@ -1136,7 +1109,7 @@ class AdminImperative
 
 						if( !hasFoundScore )
 							{
-							if( adminItem_->createScoreItem( ( commonVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL ), NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, conditionSelectionItem ) != RESULT_OK )
+							if( adminItem_->createScoreItem( ( globalVariables_->currentAssignmentLevel > NO_ASSIGNMENT_LEVEL ), NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, NO_SCORE, conditionSelectionItem ) != RESULT_OK )
 								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to create an empty solve score" );
 
 							// Has created score
@@ -1148,7 +1121,7 @@ class AdminImperative
 			}
 
 		if( isAddingScoresOfConditionPart &&
-		!commonVariables_->hasDisplayedWarning )
+		!globalVariables_->hasDisplayedWarning )
 			{
 			oldGlobalSatisfiedScore_ += conditionPartResult.oldSatisfiedScore;
 			newGlobalSatisfiedScore_ += conditionPartResult.newSatisfiedScore;
@@ -1171,7 +1144,7 @@ class AdminImperative
 		BoolResultType boolResult;
 		ConditionResultType conditionPartResult;
 		ConditionResultType conditionReturnResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkSelectionCondition";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkSelectionCondition";
 
 		if( conditionSelectionItem == NULL )
 			return adminItem_->startConditionResultError( functionNameString, moduleNameString_, "The given condition selection item is undefined" );
@@ -1259,11 +1232,11 @@ class AdminImperative
 	ConditionResultType checkValueConditionPart( bool isNegative, bool isPossessive, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
 		bool isSatisfiedScore;
-		SpecificationItem *foundAssignmentItem;
 		SpecificationItem *currentSpecificationItem;
+		SpecificationItem *foundAssignmentItem;
 		ConditionResultType conditionPartResult;
 		ConditionResultType conditionReturnResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkValueConditionPart";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkValueConditionPart";
 
 		conditionReturnResult.isConditionPartSatisfied = true;
 
@@ -1299,7 +1272,7 @@ class AdminImperative
 		bool hasFoundBlockingAssignment = false;
 		SpecificationItem *currentAssignmentItem;
 		ConditionResultType conditionResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findBlockingScores";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findBlockingScores";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startConditionResultError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
@@ -1340,7 +1313,7 @@ class AdminImperative
 		bool hasFoundScoringAssignment = false;
 		SpecificationItem *currentAssignmentItem;
 		ConditionResultType conditionResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findSatisfyingScores";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findSatisfyingScores";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startConditionResultError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
@@ -1383,17 +1356,17 @@ class AdminImperative
 		{
 		unsigned short assignmentOrderNr = 0;
 		unsigned short specificationNr = 0;
-		SpecificationItem *orderAssignmentItem;
 		SpecificationItem *currentSpecificationItem;
+		SpecificationItem *orderAssignmentItem;
 		WordItem *assignmentWordItem;
 		ShortResultType shortResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getAssignmentOrderNr";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getAssignmentOrderNr";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startShortResultError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		if( generalizationWordItem->nActiveAssignments() > 1 )
-			return adminItem_->startShortResultError( functionNameString, moduleNameString_, "I have more than one assignment at assignment level ", commonVariables_->currentAssignmentLevel );
+			return adminItem_->startShortResultError( functionNameString, moduleNameString_, "I have more than one assignment at assignment level ", globalVariables_->currentAssignmentLevel );
 
 		orderAssignmentItem = generalizationWordItem->firstNonQuestionActiveAssignmentItem();
 
@@ -1420,18 +1393,18 @@ class AdminImperative
 		SpecificationItem *assignmentItem;
 		WordItem *specificationWordItem;
 		ShortResultType shortResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getAssignmentWordParameter";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getAssignmentWordParameter";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startShortResultError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
 		if( generalizationWordItem->nActiveAssignments() > 1 )
-			return adminItem_->startShortResultError( functionNameString, moduleNameString_, "I have more than one assignment at assignment level ", commonVariables_->currentAssignmentLevel );
+			return adminItem_->startShortResultError( functionNameString, moduleNameString_, "I have more than one assignment at assignment level ", globalVariables_->currentAssignmentLevel );
 
 		if( ( assignmentItem = generalizationWordItem->firstNonQuestionActiveAssignmentItem() ) != NULL )
 			{
 			if( ( specificationWordItem = assignmentItem->specificationWordItem() ) == NULL )
-				return adminItem_->startShortResultError( functionNameString, moduleNameString_, "I found an undefined assignment word at assignment level ", commonVariables_->currentAssignmentLevel );
+				return adminItem_->startShortResultError( functionNameString, moduleNameString_, "I found an undefined assignment word at assignment level ", globalVariables_->currentAssignmentLevel );
 
 			shortResult.shortValue = specificationWordItem->wordParameter();
 			}
@@ -1442,7 +1415,7 @@ class AdminImperative
 	SpecificationResultType getComparisonAssignment( bool isNumeralRelation, WordItem *specificationWordItem, WordItem *relationWordItem )
 		{
 		SpecificationResultType specificationResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getComparisonAssignment";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getComparisonAssignment";
 
 		if( specificationWordItem == NULL )
 			return adminItem_->startSpecificationResultError( functionNameString, moduleNameString_, NULL, "The given specification word item is undefined" );
@@ -1477,7 +1450,7 @@ class AdminImperative
 	protected:
 	// Constructor
 
-	AdminImperative( AdminItem *adminItem, CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *predefinedAdjectiveBusyWordItem, WordItem *predefinedAdjectiveDoneWordItem, WordItem *predefinedAdjectiveInvertedWordItem, WordItem *predefinedNounSolveLevelWordItem, WordItem *predefinedNounSolveMethodWordItem, WordItem *predefinedNounSolveStrategyWordItem )
+	AdminImperative( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *predefinedAdjectiveBusyWordItem, WordItem *predefinedAdjectiveDoneWordItem, WordItem *predefinedAdjectiveInvertedWordItem, WordItem *predefinedNounSolveLevelWordItem, WordItem *predefinedNounSolveMethodWordItem, WordItem *predefinedNounSolveStrategyWordItem )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
@@ -1526,15 +1499,15 @@ class AdminImperative
 
 		if( ( adminItem_ = adminItem ) == NULL )
 			{
-			if( commonVariables != NULL )
-				commonVariables->result = RESULT_SYSTEM_ERROR;
+			if( globalVariables != NULL )
+				globalVariables->result = RESULT_SYSTEM_ERROR;
 
 			fprintf( stderr, "\nClass:%s\nFunction:\t%s\nError:\t\tThe given admin item is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
 			}
 		else
 			{
-			if( ( commonVariables_ = commonVariables ) == NULL )
-				strcpy( errorString, "The given common variables is undefined" );
+			if( ( globalVariables_ = globalVariables ) == NULL )
+				strcpy( errorString, "The given global variables is undefined" );
 
 			if( ( inputOutput_ = inputOutput ) == NULL )
 				strcpy( errorString, "The given input-output is undefined" );
@@ -1552,21 +1525,25 @@ class AdminImperative
 		return hasRequestedRestart_;
 		}
 
-	signed char executeImperative( bool isInitializeVariables, unsigned short executionListNr, unsigned short imperativeVerbParameter, unsigned short executionNounWordParameter, unsigned short specificationWordTypeNr, unsigned int endSolveProgressLevel, char *executionString, WordItem *imperativeVerbWordItem, WordItem *specificationWordItem, ReadItem *startRelationWordReadItem, ReadItem *endRelationReadItem, SelectionItem *executionSelectionItem, SelectionItem *actionSelectionItem )
+	signed char executeImperative( bool isInitializeVariables, unsigned short executionListNr, unsigned short executionNounWordParameter, unsigned short imperativeVerbParameter, unsigned short specificationWordTypeNr, unsigned int endSolveProgressLevel, char *executionString, WordItem *imperativeVerbWordItem, WordItem *specificationWordItem, ReadItem *startRelationReadItem, ReadItem *endRelationReadItem, SelectionItem *executionSelectionItem, SelectionItem *actionSelectionItem )
 		{
 		bool isDisplayingRelationWarning = false;
+		unsigned int firstSentenceNrOfCurrentUser;
 		ShortResultType shortResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "executeImperative";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "executeImperative";
 
 		if( isInitializeVariables )
 			virtualListAssignmentItem_ = NULL;
+
+		if( imperativeVerbWordItem == NULL )
+			return adminItem_->startErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "The given imperative verb word item is undefined" );
 
 		switch( imperativeVerbParameter )
 			{
 			// Selection
 			case NO_IMPERATIVE_PARAMETER:
 				if( adminItem_->assignSelectionSpecification( executionSelectionItem ) != RESULT_OK )
-					return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to assign an imperative selection specification at assignment level ", commonVariables_->currentAssignmentLevel );
+					return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to assign an imperative selection specification at assignment level ", globalVariables_->currentAssignmentLevel );
 
 				break;
 
@@ -1575,27 +1552,26 @@ class AdminImperative
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REMOVE:
 				if( executionSelectionItem == NULL )
 					{
-					if( executeVirtualListImperative( imperativeVerbParameter, specificationWordTypeNr, imperativeVerbWordItem, specificationWordItem, startRelationWordReadItem, endRelationReadItem ) != RESULT_OK )
+					if( executeVirtualListImperative( imperativeVerbParameter, specificationWordTypeNr, imperativeVerbWordItem, specificationWordItem, startRelationReadItem, endRelationReadItem ) != RESULT_OK )
 						return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to execute a virtual list imperative" );
 					}
 				else
 					{
-					if( executeVirtualListSelectionImperative( imperativeVerbParameter, executionSelectionItem->prepositionParameter(), specificationWordTypeNr, executionSelectionItem->relationWordTypeNr(), imperativeVerbWordItem, specificationWordItem, executionSelectionItem->relationWordItem() ) != RESULT_OK )
+					if( executeVirtualListImperativePart( imperativeVerbParameter, executionSelectionItem->prepositionParameter(), specificationWordTypeNr, executionSelectionItem->relationWordTypeNr(), imperativeVerbWordItem, specificationWordItem, executionSelectionItem->relationWordItem() ) != RESULT_OK )
 						return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to execute a selection virtual list imperative" );
 					}
 
 				break;
 
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_CLEAR:
-				if( imperativeVerbWordItem == NULL )
-					return adminItem_->startErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "The given imperative verb word item is undefined" );
-
-				if( startRelationWordReadItem == NULL )
+				if( startRelationReadItem == NULL )
 					{
 					switch( executionNounWordParameter )
 						{
 						case WORD_PARAMETER_NOUN_MIND:
-							adminItem_->deleteSentences( adminItem_->firstSentenceNrOfCurrentUser() );
+							firstSentenceNrOfCurrentUser = adminItem_->firstSentenceNrOfCurrentUser();
+							adminItem_->deleteSentences( firstSentenceNrOfCurrentUser );
+							globalVariables_->currentSentenceNr = firstSentenceNrOfCurrentUser;
 
 							if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_IMPERATIVE_NOTIFICATION_MY_MIND_IS_CLEAR ) != RESULT_OK )
 								return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to write the 'my mind is clear' interface notification about clearing my mind" );
@@ -1613,10 +1589,7 @@ class AdminImperative
 				break;
 
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_HELP:
-				if( imperativeVerbWordItem == NULL )
-					return adminItem_->startErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "The given imperative verb word item is undefined" );
-
-				if( startRelationWordReadItem == NULL )
+				if( startRelationReadItem == NULL )
 					{
 					if( adminItem_->readInfoFile( true, imperativeVerbWordItem->anyWordTypeString() ).result != RESULT_OK )
 						return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to read the info help file" );
@@ -1627,7 +1600,7 @@ class AdminImperative
 				break;
 
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_LOGIN:
-				if( startRelationWordReadItem == NULL )
+				if( startRelationReadItem == NULL )
 					{
 					if( adminItem_->login( specificationWordItem ) != RESULT_OK )
 						return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to login" );
@@ -1638,7 +1611,7 @@ class AdminImperative
 				break;
 
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_READ:
-				if( startRelationWordReadItem == NULL )
+				if( startRelationReadItem == NULL )
 					{
 					switch( executionNounWordParameter )
 						{
@@ -1662,7 +1635,7 @@ class AdminImperative
 							// Stop redirecting to test results
 							inputOutput_->redirectOutputToTestFile( NULL );
 
-							if( commonVariables_->result == RESULT_OK &&
+							if( globalVariables_->result == RESULT_OK &&
 							adminItem_->compareOutputFileAgainstReferenceFile( closedTestFileNameString_ ) != RESULT_OK )
 								return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to compare the test file against the reference file" );
 
@@ -1670,7 +1643,7 @@ class AdminImperative
 							inputOutput_->redirectOutputToTestFile( adminItem_->currentWriteFile() );
 
 							// Now check the result
-							if( commonVariables_->result != RESULT_OK )
+							if( globalVariables_->result != RESULT_OK )
 								{
 								inputOutput_->clearProgress();
 								return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to read a test file" );
@@ -1679,10 +1652,10 @@ class AdminImperative
 							break;
 
 						default:
-							if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+							if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
 								return adminItem_->startErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I don't know how to execute imperative 'read'. Unknown specification parameter: ", executionNounWordParameter );
 
-							return adminItem_->startErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I don't know how to execute imperative 'read'. Unknown specification parameter: ", executionNounWordParameter, " at assignment level ", commonVariables_->currentAssignmentLevel );
+							return adminItem_->startErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I don't know how to execute imperative 'read'. Unknown specification parameter: ", executionNounWordParameter, " at assignment level ", globalVariables_->currentAssignmentLevel );
 						}
 					}
 				else
@@ -1726,7 +1699,7 @@ class AdminImperative
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the solve level" );
 
 					if( solveWord( shortResult.shortValue, 0, endSolveProgressLevel, specificationWordItem, actionSelectionItem ) != RESULT_OK )
-						return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to solve a word at assignment level ", commonVariables_->currentAssignmentLevel );
+						return adminItem_->addErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I failed to solve a word at assignment level ", globalVariables_->currentAssignmentLevel );
 					}
 				else
 					{
@@ -1737,10 +1710,10 @@ class AdminImperative
 				break;
 
 			default:
-				if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+				if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
 					return adminItem_->startErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I don't know how to execute the imperative with word parameter: ", imperativeVerbParameter );
 
-				return adminItem_->startErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I don't know how to execute the imperative with word parameter: ", imperativeVerbParameter, ", at assignment level ", commonVariables_->currentAssignmentLevel );
+				return adminItem_->startErrorWithAdminListNr( executionListNr, functionNameString, moduleNameString_, "I don't know how to execute the imperative with word parameter: ", imperativeVerbParameter, ", at assignment level ", globalVariables_->currentAssignmentLevel );
 			}
 
 		if( isDisplayingRelationWarning &&
@@ -1760,18 +1733,17 @@ class AdminImperative
 		bool isWaitingForNewLevel;
 		bool isWaitingForExecution;
 		unsigned short executionLevel;
-		unsigned short executionListNr;
-		unsigned short selectionLevel;
 		unsigned short nSelectionInterations = 0;
+		unsigned short selectionLevel;
 		unsigned int executionSentenceNr;
 		SelectionItem *conditionSelectionItem;
 		SelectionItem *executionSelectionItem;
 		ConditionResultType conditionResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "executeSelection";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "executeSelection";
 
 		do	{
 			hasDoneLastExecution = false;
-			commonVariables_->isAssignmentChanged = false;
+			globalVariables_->isAssignmentChanged = false;
 
 			if( ( conditionSelectionItem = adminItem_->firstConditionItem() ) != NULL )
 				{
@@ -1786,25 +1758,25 @@ class AdminImperative
 					if( conditionSelectionItem == NULL ||
 					executionSentenceNr != conditionSelectionItem->activeSentenceNr() )
 						{
-						executionListNr = ( isConditionSatisfied ? ADMIN_ACTION_LIST : ADMIN_ALTERNATIVE_LIST );
-
 						if( ( executionSelectionItem = adminItem_->executionStartEntry( isConditionSatisfied, executionLevel, executionSentenceNr ) ) != NULL )
 							{
 							isInitializeVariables = true;
 
 							do	{
-								if( adminItem_->executeImperative( isInitializeVariables, executionListNr, executionSelectionItem->imperativeVerbParameter(), NO_WORD_PARAMETER, executionSelectionItem->specificationWordTypeNr(), endSolveProgressLevel, executionSelectionItem->specificationString(), executionSelectionItem->generalizationWordItem(), executionSelectionItem->specificationWordItem(), NULL, NULL, executionSelectionItem, actionSelectionItem ) != RESULT_OK )
+								if( executeImperative( isInitializeVariables, ( isConditionSatisfied ? ADMIN_ACTION_LIST : ADMIN_ALTERNATIVE_LIST ), NO_WORD_PARAMETER, executionSelectionItem->imperativeVerbParameter(), executionSelectionItem->specificationWordTypeNr(), endSolveProgressLevel, executionSelectionItem->specificationString(), executionSelectionItem->generalizationWordItem(), executionSelectionItem->specificationWordItem(), NULL, NULL, executionSelectionItem, actionSelectionItem ) != RESULT_OK )
 									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute an imperative" );
 
 								isInitializeVariables = false;
 								}
 							while( !hasRequestedRestart_ &&
-							!commonVariables_->hasDisplayedWarning &&
+							!globalVariables_->hasDisplayedWarning &&
 							( executionSelectionItem = executionSelectionItem->nextExecutionItem( executionLevel, executionSentenceNr ) ) != NULL );
 							}
 
 						// Found new condition
-						if( conditionSelectionItem != NULL )
+						if( conditionSelectionItem == NULL )
+							hasDoneLastExecution = true;
+						else
 							{
 							isConditionSatisfied = false;
 							isWaitingForNewStart = false;
@@ -1814,9 +1786,7 @@ class AdminImperative
 							}
 						}
 
-					if( conditionSelectionItem == NULL )
-						hasDoneLastExecution = true;
-					else
+					if( conditionSelectionItem != NULL )
 						{
 						isNewStart = conditionSelectionItem->isNewStart();
 						selectionLevel = conditionSelectionItem->selectionLevel();
@@ -1872,15 +1842,15 @@ class AdminImperative
 					}
 				while( !hasDoneLastExecution &&
 				!hasRequestedRestart_ &&
-				!commonVariables_->hasDisplayedWarning );
+				!globalVariables_->hasDisplayedWarning );
 				}
 			}
 		while( !hasRequestedRestart_ &&
-		!commonVariables_->hasDisplayedWarning &&
-		commonVariables_->isAssignmentChanged &&
+		!globalVariables_->hasDisplayedWarning &&
+		globalVariables_->isAssignmentChanged &&
 		++nSelectionInterations < MAX_SELECTION_ITERATIONS );
 
-		if( commonVariables_->isAssignmentChanged &&
+		if( globalVariables_->isAssignmentChanged &&
 		nSelectionInterations == MAX_SELECTION_ITERATIONS )
 			return adminItem_->startError( functionNameString, moduleNameString_, "There is probably an endless loop in the selections" );
 

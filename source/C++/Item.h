@@ -1,8 +1,8 @@
-/*	Class:		Item
+﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -28,8 +28,8 @@
 #include <limits.h>
 #include <stdio.h>
 #include "BoolResultType.cpp"
-#include "CommonVariables.cpp"
 #include "CollectionResultType.cpp"
+#include "GlobalVariables.cpp"
 #include "QueryResultType.cpp"
 #include "WordTypeResultType.cpp"
 
@@ -52,6 +52,7 @@ class SelectionResultType;
 class ShortResultType;
 class SpecificationResultType;
 class UserSpecificationResultType;
+class WordEndingResultType;
 class WordResultType;
 class WordTypeResultType;
 
@@ -75,13 +76,13 @@ class Item
 	unsigned int itemNr_;
 
 	char statusChar_;
-	char parentClassNameString_[FUNCTION_NAME_LENGTH];
+	char parentClassNameString_[FUNCTION_NAME_STRING_LENGTH];
 
 	// Private initialized variables
 
-	char classNameString_[FUNCTION_NAME_LENGTH];
+	char classNameString_[FUNCTION_NAME_STRING_LENGTH];
 
-	CommonVariables *commonVariables_;
+	GlobalVariables *globalVariables_;
 	InputOutput *inputOutput_;
 	List *myList_;
 	WordItem *myWordItem_;
@@ -104,7 +105,7 @@ class Item
 	Item *nextItem;
 
 	char statusString[2];
-	char tempString[MAX_SENTENCE_STRING_LENGTH];
+	char tempString[ENTENDED_SENTENCE_STRING_LENGTH];
 
 
 	// Constructor
@@ -142,7 +143,6 @@ class Item
 	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number );
 	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
 	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
-	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, char *wordTypeNameString, const char *errorString );
 	BoolResultType startBoolResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
 	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
@@ -207,6 +207,8 @@ class Item
 	UserSpecificationResultType addUserSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 	UserSpecificationResultType startUserSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
+	WordEndingResultType startWordEndingResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+
 	WordResultType addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	WordResultType addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
 	WordResultType startWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
@@ -253,8 +255,8 @@ class Item
 	void displayWords( bool isReturnQueryToPosition, unsigned short queryWordTypeNr );
 
 	// Strictly for initialization of AdminItem
-	void initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem );
-	void initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem );
+	void initializeItemVariables( const char *classNameString, GlobalVariables *globalVariables, WordItem *myWordItem );
+	void initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem );
 
 	bool hasActiveSentenceNr();
 	bool hasInactiveSentenceNr();
@@ -284,8 +286,6 @@ class Item
 	bool wasInactiveBefore();
 	bool wasArchivedBefore();
 
-	bool isSpanishCurrentLanguage();
-
 	unsigned short userNr();
 
 	unsigned int activeSentenceNr();
@@ -312,7 +312,7 @@ class Item
 	char *itemBaseToString( unsigned short queryWordTypeNr );
 	char *parentClassNameString();
 
-	CommonVariables *commonVariables();
+	GlobalVariables *globalVariables();
 
 	InputOutput *inputOutput();
 
@@ -345,7 +345,7 @@ class Item
 	bool isMatchingWordType( unsigned short firstWordTypeNr, unsigned short secondWordTypeNr );
 	bool isNounWordType( unsigned short wordTypeNr );
 
-	unsigned short assumptionGrade( bool hasAnotherPrimarySpecification, bool hasFeminineOrMasculineProperNameEnding, bool hasPossessivePrimarySpecification, bool hasPrimaryQuestionSpecification, unsigned short justificationTypeNr );
+	unsigned short assumptionGrade( bool hasAnotherPrimarySpecification, bool hasFeminineOrMasculineProperNounEnding, bool hasPossessivePrimarySpecification, bool hasPrimaryQuestionSpecification, unsigned short justificationTypeNr );
 	};
 #endif
 

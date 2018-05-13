@@ -1,30 +1,30 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To demonstrate programming in natural language.
-#	Version:	Thinknowlogy 2017r2 (Science as it should be)
+# Purpose: To demonstrate programming in natural language.
+# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Un resumen del juego Conecta 4:
+# Un resumen del juego Conecta 4:
 #----------------------------------------------------------------------------
-#	El objetivo de "Conecta 4" es alinear cuatro fichas sobre un tablero
-#	formado por seis filas y siete columnas. Cada jugador dispone de
-#	21 fichas de un color (por lo general, rojas o amarillas). Por turnoos,
-#	los jugadores deben introducir una ficha en la columna que prefieran
-#	(siempre que no esté completa) y ésta caerá a la posición más baja.
-#	Gana la partida el primero que consiga alinear cuatro fichas
-#	consecutivas de un mismo color en horizontal, vertical o diagonal.
-#	Si todas las columnas están llenas pero nadie ha hecho una fila válida,
-#	hay empate.
+# El objetivo de "Conecta 4" es alinear cuatro fichas sobre un tablero
+# formado por seis filas y siete columnas. Cada jugador dispone de
+# 21 fichas de un color (por lo general, rojas o amarillas). Por turnoos,
+# los jugadores deben introducir una ficha en la columna que prefieran
+# (siempre que no esté completa) y ésta caerá a la posición más baja.
+# Gana la partida el primero que consiga alinear cuatro fichas
+# consecutivas de un mismo color en horizontal, vertical o diagonal.
+# Si todas las columnas están llenas pero nadie ha hecho una fila válida,
+# hay empate.
 #----------------------------------------------------------------------------
-#	Vea el texto completo: http://es.wikipedia.org/wiki/Conecta_4
+# Vea el texto completo: http://es.wikipedia.org/wiki/Conecta_4
 #----------------------------------------------------------------------------
 
 # Definiciones iniciales.
-Un turno es tuyo o mío.
-Un movimiento es A, B, C, D, E, F o G.
+Cada turno es tuyo o mío.
+Cada movimiento es A, B, C, D, E, F o G.
 Un nivel de resolver es baja o alta.
 
 # Resuelve el problema.
@@ -83,7 +83,7 @@ Si el turno es asignado y el juego no es asignado entonces si A4 es el valor de 
 Si el turno es asignado y el juego no es asignado entonces si A5 es el valor de el turno, B4 es el valor de el turno, C3 es el valor de el turno y D2 es el valor de el turno o B5 es el valor de el turno, C4 es el valor de el turno, D3 es el valor de el turno y E2 es el valor de el turno o C5 es el valor de el turno, D4 es el valor de el turno, E3 es el valor de el turno y F2 es el valor de el turno o D5 es el valor de el turno, E4 es el valor de el turno, F3 es el valor de el turno y G2 es el valor de el turno entonces el juego es el valor de el turno.
 Si el turno es asignado y el juego no es asignado entonces si A6 es el valor de el turno, B5 es el valor de el turno, C4 es el valor de el turno y D3 es el valor de el turno o B6 es el valor de el turno, C5 es el valor de el turno, D4 es el valor de el turno y E3 es el valor de el turno o C6 es el valor de el turno, D5 es el valor de el turno, E4 es el valor de el turno y F3 es el valor de el turno o D6 es el valor de el turno, E5 es el valor de el turno, F4 es el valor de el turno y G3 es el valor de el turno entonces el juego es el valor de el turno.
 
-# El chip se pondrá en la columna y elegida 'caer' en la celda libre más bajo.
+# El chip se pondrá en la columna y elegida caer en la celda libre más bajo.
 Si el movimiento es A y el juego no es asignado entonces si A1 no es asignado entonces A1 es el valor de el turno sino si A2 no es asignado entonces A2 es el valor de el turno sino si A3 no es asignado entonces A3 es el valor de el turno sino si A4 no es asignado entonces A4 es el valor de el turno sino si A5 no es asignado entonces A5 es el valor de el turno sino si A6 no es asignado entonces A6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
 Si el movimiento es B y el juego no es asignado entonces si B1 no es asignado entonces B1 es el valor de el turno sino si B2 no es asignado entonces B2 es el valor de el turno sino si B3 no es asignado entonces B3 es el valor de el turno sino si B4 no es asignado entonces B4 es el valor de el turno sino si B5 no es asignado entonces B5 es el valor de el turno sino si B6 no es asignado entonces B6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
 Si el movimiento es C y el juego no es asignado entonces si C1 no es asignado entonces C1 es el valor de el turno sino si C2 no es asignado entonces C2 es el valor de el turno sino si C3 no es asignado entonces C3 es el valor de el turno sino si C4 no es asignado entonces C4 es el valor de el turno sino si C5 no es asignado entonces C5 es el valor de el turno sino si C6 no es asignado entonces C6 es el valor de el turno sino mostrar "\nLo sentimos, la columna ~+'movimiento'<a>`~ está llena.\n" y el movimiento es inválido.
@@ -111,4 +111,4 @@ El turno es tuyo.
 #C++## Escriba un juego avanzado:		El nivel de resolver es alta.
 #C++## Regreso a nivel de principiantes:	El nivel de resolver es baja.
 #C++## Info sobre el movimientos:		Mostrar información sobre el movimientos.
-#Java## Si el tablero de juego se ve comprimida, por favor cambiar el tipo de letra con el botón «cambiar fuente».
+#Java## Nota: La fuente se ajusta para mostrar el tablero de juego es una manera correcta.

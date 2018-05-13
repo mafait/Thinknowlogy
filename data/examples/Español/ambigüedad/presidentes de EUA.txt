@@ -1,4 +1,4 @@
-﻿# En 1989 George H.W. Bush fue investido como presidente de los Estados Unidos.
+﻿# En 1989, George H.W. Bush fue investido como presidente de los Estados Unidos.
 George Bush es el presidente de los Estados Unidos.
 Mostrar información sobre los presidentes.
 Mostrar el informe de justificación sobre los Estados Unidos.
@@ -8,15 +8,15 @@ Mostrar información sobre los presidentes.
 Mostrar el informe de justificación sobre los Estados Unidos.
 # En 1997, Bill Clinton, fue re-inaugurado como presidente de los Estados Unidos.
 Bill Clinton es el presidente de los Estados Unidos.
-# En 2001 George W. Bush - hijo de George HW Bush - fue inaugurado como presidente de los Estados Unidos.
+# En 2001, George W. Bush - hijo de George HW Bush - fue inaugurado como presidente de los Estados Unidos.
 George Bush es el presidente de los Estados Unidos.
 Mostrar información sobre los presidentes.
 Mostrar el informe de justificación sobre los Estados Unidos.
-# En 2005 George W. Bush fue re-inaugurado como presidente de los Estados Unidos.
+# En 2005, George W. Bush fue re-inaugurado como presidente de los Estados Unidos.
 George Bush es el presidente de los Estados Unidos.
-# En 2009 Barack Obama fue investido como presidente de los Estados Unidos.
+# En 2009, Barack Obama fue investido como presidente de los Estados Unidos.
 Barack Obama es el presidente de los Estados Unidos.
 Mostrar información sobre los presidentes.
 Mostrar el informe de justificación sobre los Estados Unidos.
-# En 2013 ...
+# En 2013, ...
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

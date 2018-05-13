@@ -1,9 +1,9 @@
-/*	Class:			CollectionList
+﻿/*	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -55,13 +55,13 @@ class CollectionList : private List
 	protected:
 	// Constructor
 
-	CollectionList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	CollectionList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
 		// Private constructed variables
 
 		isMarkedAsCollectionWord_ = false;
 
-		initializeListVariables( WORD_COLLECTION_LIST_SYMBOL, "CollectionList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( WORD_COLLECTION_LIST_SYMBOL, "CollectionList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~CollectionList()
@@ -85,15 +85,15 @@ class CollectionList : private List
 
 	void addToCollectionWordQuickAccessList()
 		{
-		WordItem *lastCollectionWordItem = commonVariables()->lastCollectionWordItem;
+		WordItem *lastCollectionWordItem = globalVariables()->lastCollectionWordItem;
 
 		if( lastCollectionWordItem == NULL )
-			commonVariables()->firstCollectionWordItem = myWordItem();
+			globalVariables()->firstCollectionWordItem = myWordItem();
 		else
 			// Word order is important: Add word at end of collection word list
 			lastCollectionWordItem->nextCollectionWordItem = myWordItem();
 
-		commonVariables()->lastCollectionWordItem = myWordItem();
+		globalVariables()->lastCollectionWordItem = myWordItem();
 		}
 
 	bool hasCollectionNr( unsigned int collectionNr )
@@ -391,7 +391,7 @@ class CollectionList : private List
 	signed char checkWordItemForUsage( WordItem *unusedWordItem )
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkWordItemForUsage";
 
 		if( unusedWordItem == NULL )
 			return startError( functionNameString, "The given unused word item is undefined" );
@@ -505,7 +505,7 @@ class CollectionList : private List
 		bool isCollected = false;
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findCollection";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findCollection";
 
 		if( commonWordItem == NULL )
 			return startBoolResultError( functionNameString, "The given collected word is undefined" );
@@ -538,7 +538,7 @@ class CollectionList : private List
 		unsigned short collectionOrderNr;
 		unsigned int foundCollectionNr = NO_COLLECTION_NR;
 		CollectionResultType collectionResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "addCollection";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addCollection";
 
 		if( collectionWordTypeNr <= NO_WORD_TYPE_NR ||
 		collectionWordTypeNr >= NUMBER_OF_WORD_TYPES )
@@ -595,7 +595,7 @@ class CollectionList : private List
 				addToCollectionWordQuickAccessList();
 				}
 
-			if( addItemToList( QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, _collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+			if( addItemToList( QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, _collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
 				return addCollectionResultError( functionNameString, "I failed to add an active collection item" );
 			}
 

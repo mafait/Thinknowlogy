@@ -24,7 +24,7 @@ Lombrics et vers-ronds sont annélides.
 Crabes, araignées et insectes sont arthropodes.
 # Les échinodermes
 #Les étoiles de mer, les oursins, les dollars de sable et les concombres de mer sont des échinodermes.
-Étoiles-de-mer, oursins, dollars-de-sable et concombres-de-mer sont échinodermes.
+Étoiles, oursins, dollars et concombres sont échinodermes.
 # Les mollusques
 Palourdes, seiches, moules, nautiles, poulpes, huîtres, escargots et calmars sont mollusques.
 # Les protozoaires
@@ -37,7 +37,7 @@ Chaque mammifère est un cétacé, un marsupial, un rongeur, un singe ou un êtr
 Baleines et dauphins sont cétacés.
 # Les marsupiaux
 #Kangourous, koalas, opossums et les diables de Tasmanie sont marsupiaux.
-Kangourous, koalas, opossums et diables-de-Tasmanie sont marsupiaux.
+Kangourous, koalas, opossums et diables sont marsupiaux.
 # Les singes
 #Les bonobos, les chimpanzés, les gorilles, les ouistitis, les orangs-outans et écureuil singes sont des singes.
 Bonobos, chimpanzés, gorilles, ouistitis, orangs-outans et écureuil-singes sont singes.

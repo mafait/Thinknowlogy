@@ -1,4 +1,4 @@
-Cada gato es peludo.
+﻿Cada gato es peludo.
 Los gatos son animales.
 Tom es un gato.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -4,6 +4,9 @@
 * Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
 * 
 * 
+* Vous aviez une question similaire avant:
+< Est un tour un nombre?
+* 
 * Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
 * 
 < Non, un tour est A, B, C, D, E, F ou G.
@@ -29,11 +32,11 @@
 * Cette question est déjà répondu.
 * 
 * Ma réponse:
-< Non, mon tour est D.
+< Non, sien tour est D.
 < 
 * 
 * Vous aviez une question similaire avant:
-< Est le tour A?
+< Est sien tour A?
 * 
 * Cette question est déjà répondu.
 * 

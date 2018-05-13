@@ -1,4 +1,4 @@
-Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
 Pablo tiene una madre, llamada Ana.
 Luisa es hija de Juan y Ana.
 José es un niño.

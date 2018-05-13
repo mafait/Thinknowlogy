@@ -14,12 +14,16 @@
 < Juan era parte de una familia.
 < 
 * 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Juan era probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
-< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:

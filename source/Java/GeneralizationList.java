@@ -1,9 +1,9 @@
-/*	Class:			GeneralizationList
+﻿/*	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -57,7 +57,7 @@ class GeneralizationList extends List
 		generalizationWordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
 			return startError( 1, "The given generalization word type number is undefined or out of bounds: " + generalizationWordTypeNr );
 
-		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, CommonVariables.currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, GlobalVariables.currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
 			return addError( 1, "I failed to add an active generalization item" );
 
 		return Constants.RESULT_OK;

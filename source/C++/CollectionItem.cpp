@@ -1,9 +1,9 @@
-/*	Class:			CollectionItem
+﻿/*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -45,9 +45,9 @@ class CollectionItem : private Item
 	protected:
 	// Constructor
 
-	CollectionItem( bool isExclusiveSpecification, unsigned short collectionOrderNr, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	CollectionItem( bool isExclusiveSpecification, unsigned short collectionOrderNr, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "CollectionItem", commonVariables, inputOutput, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "CollectionItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -74,26 +74,26 @@ class CollectionItem : private Item
 
 		statusString[0] = statusChar();
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( collectionWordItem_ != NULL &&
 		( wordString = collectionWordItem_->wordTypeString( true, collectionWordTypeNr_ ) ) != NULL )
 			{
-			if( commonVariables()->hasFoundQuery )
+			if( globalVariables()->hasFoundQuery )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
+			globalVariables()->hasFoundQuery = true;
 			strcat( queryString, wordString );
 			}
 
 		if( commonWordItem_ != NULL &&
 		( wordString = commonWordItem_->wordTypeString( true, commonWordTypeNr_ ) ) != NULL )
 			{
-			if( commonVariables()->hasFoundQuery ||
+			if( globalVariables()->hasFoundQuery ||
 			strlen( queryString ) > 0 )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
@@ -101,14 +101,14 @@ class CollectionItem : private Item
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
+			globalVariables()->hasFoundQuery = true;
 			strcat( queryString, wordString );
 			}
 
 		if( compoundGeneralizationWordItem_ != NULL &&
 		( wordString = compoundGeneralizationWordItem_->wordTypeString( true, commonWordTypeNr_ ) ) != NULL )
 			{
-			if( commonVariables()->hasFoundQuery ||
+			if( globalVariables()->hasFoundQuery ||
 			strlen( queryString ) > 0 )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
@@ -116,7 +116,7 @@ class CollectionItem : private Item
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
+			globalVariables()->hasFoundQuery = true;
 			strcat( queryString, wordString );
 			}
 		}
@@ -155,14 +155,14 @@ class CollectionItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		char *wordString;
-		char *queryString;
 		char *collectionWordTypeString = myWordItem()->wordTypeNameString( collectionWordTypeNr_ );
 		char *commonWordTypeString = myWordItem()->wordTypeNameString( commonWordTypeNr_ );
+		char *queryString;
+		char *wordString;
 
 		itemBaseToString( queryWordTypeNr );
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( isExclusiveSpecification_ )
 			{
@@ -238,7 +238,7 @@ class CollectionItem : private Item
 	virtual BoolResultType findMatchingWordReferenceString( char *queryString )
 		{
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findMatchingWordReferenceString";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findMatchingWordReferenceString";
 
 		if( collectionWordItem_ != NULL &&
 		// Collection word

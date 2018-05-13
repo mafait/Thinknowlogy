@@ -1,0 +1,4 @@
+﻿Iedere soort vloeistof heeft een specifiek kookpunt.
+Water heeft een kookpunt van 100 graden Celsius.
+Toon de verantwoordingsrapportage over water.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

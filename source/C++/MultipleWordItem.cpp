@@ -1,9 +1,9 @@
-/*	Class:			MultipleWordItem
+﻿/*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -39,9 +39,9 @@ class MultipleWordItem : private Item
 	protected:
 	// Constructor
 
-	MultipleWordItem( unsigned short nWordParts, unsigned short wordTypeLanguageNr, unsigned short wordTypeNr, WordItem *multipleWordItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	MultipleWordItem( unsigned short nWordParts, unsigned short wordTypeLanguageNr, unsigned short wordTypeNr, WordItem *multipleWordItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "MultipleWordItem", commonVariables, inputOutput, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "MultipleWordItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -67,15 +67,15 @@ class MultipleWordItem : private Item
 		if( multipleWordItem_ != NULL &&
 		( wordString = multipleWordItem_->wordTypeString( true, wordTypeNr_ ) ) != NULL )
 			{
-			if( commonVariables()->hasFoundQuery )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+			if( globalVariables()->hasFoundQuery )
+				strcat( globalVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( globalVariables()->queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, wordString );
+			globalVariables()->hasFoundQuery = true;
+			strcat( globalVariables()->queryString, wordString );
 			}
 		}
 
@@ -93,14 +93,14 @@ class MultipleWordItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
+		char *languageNameString = myWordItem()->languageNameString( wordTypeLanguageNr_ );
 		char *queryString;
 		char *wordString;
 		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
-		char *languageNameString = myWordItem()->languageNameString( wordTypeLanguageNr_ );
 
 		itemBaseToString( queryWordTypeNr );
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		sprintf( tempString, "%cnWordParts:%u", QUERY_SEPARATOR_CHAR, nWordParts_ );
 		strcat( queryString, tempString );

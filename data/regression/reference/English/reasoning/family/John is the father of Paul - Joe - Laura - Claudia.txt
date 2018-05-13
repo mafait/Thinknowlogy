@@ -241,7 +241,7 @@
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
@@ -285,8 +285,8 @@
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Claudia" is probably feminine.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Claudia" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Claudia is possibly a daughter of John.
 <	- Laura is possibly a daughter of John.
@@ -356,12 +356,12 @@
 < Claudia is possibly a daughter of John. Because:
 <	- Claudia is probably a child of John.
 <	- Every child is a son or a daughter.
-<	- Proper name "Claudia" is probably feminine.
+<	- Proper noun "Claudia" is probably feminine.
 * 	and:
 <	- John is the father of Paul, Joe, Laura and Claudia.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Claudia" is probably feminine.
+<	- Proper noun "Claudia" is probably feminine.
 < Claudia is maybe not a boy and not a man. Because:
 <	- Claudia is probably a child of John.
 <	- Every child is a girl, a woman, a boy or a man.

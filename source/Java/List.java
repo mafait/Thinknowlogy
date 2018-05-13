@@ -1,8 +1,8 @@
-/*	Class:		List
+﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -65,8 +65,8 @@ class List
 
 	private static int highestCurrentSentenceItemNr( int currentSentenceNr, Item searchItem )
 		{
-		int tempItemNr;
 		int highestItemNr = Constants.NO_ITEM_NR;
+		int tempItemNr;
 
 		while( searchItem != null )
 			{
@@ -82,8 +82,8 @@ class List
 
 	private static int highestFoundSentenceNrInList( int maxSentenceNr, Item searchItem )
 		{
-		int tempSentenceNr;
 		int highestFoundSentenceNr = Constants.NO_SENTENCE_NR;
+		int tempSentenceNr;
 
 		while( searchItem != null &&
 		highestFoundSentenceNr < maxSentenceNr )
@@ -317,7 +317,7 @@ class List
 				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
 					{
-					CommonVariables.hasFoundQuery = true;
+					GlobalVariables.hasFoundQuery = true;
 					queryItem.isSelectedByQuery = true;
 					}
 				}
@@ -340,7 +340,7 @@ class List
 				{
 				if( !queryItem.isSelectedByQuery )
 					{
-					CommonVariables.hasFoundQuery = true;
+					GlobalVariables.hasFoundQuery = true;
 					queryItem.isSelectedByQuery = true;
 					}
 				}
@@ -363,7 +363,7 @@ class List
 				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
 					{
-					CommonVariables.hasFoundQuery = true;
+					GlobalVariables.hasFoundQuery = true;
 					queryItem.isSelectedByQuery = true;
 					}
 				}
@@ -386,7 +386,7 @@ class List
 				{
 				if( !queryItem.isSelectedByQuery )
 					{
-					CommonVariables.hasFoundQuery = true;
+					GlobalVariables.hasFoundQuery = true;
 					queryItem.isSelectedByQuery = true;
 					}
 				}
@@ -409,7 +409,7 @@ class List
 				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
 					{
-					CommonVariables.hasFoundQuery = true;
+					GlobalVariables.hasFoundQuery = true;
 					queryItem.isSelectedByQuery = true;
 					}
 				}
@@ -479,7 +479,7 @@ class List
 				if( isSelectingOnFind &&
 				!queryItem.isSelectedByQuery )
 					{
-					CommonVariables.hasFoundQuery = true;
+					GlobalVariables.hasFoundQuery = true;
 					queryItem.isSelectedByQuery = true;
 					}
 				}
@@ -517,7 +517,7 @@ class List
 					{
 					if( isSelectingOnFind )
 						{
-						CommonVariables.hasFoundQuery = true;
+						GlobalVariables.hasFoundQuery = true;
 						queryItem.isSelectedByQuery = true;
 						}
 					}
@@ -565,14 +565,14 @@ class List
 	protected byte addError( int methodLevel, String errorString )
 		{
 		InputOutput.displayError( listChar_, this.getClass().getName(), this.getClass().getSuperclass().getName(), ( myWordItem_ == null || myWordItem_.isAdminWord() ? null : myWordItem_.anyWordTypeString() ), ( methodLevel + 1 ), errorString );
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte startError( int methodLevel, String errorString )
 		{
 		addError( ( methodLevel + 1 ), errorString );
 
-		CommonVariables.result = Constants.RESULT_ERROR;
+		GlobalVariables.result = Constants.RESULT_ERROR;
 		return Constants.RESULT_ERROR;
 		}
 
@@ -580,7 +580,7 @@ class List
 		{
 		addError( ( methodLevel + 1 ), errorString );
 
-		CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
+		GlobalVariables.result = Constants.RESULT_SYSTEM_ERROR;
 
 		return Constants.RESULT_SYSTEM_ERROR;
 		}
@@ -727,14 +727,6 @@ class List
 
 		shortResult.result = startError( ( methodLevel + 1 ), errorString );
 		return shortResult;
-		}
-
-	protected WordEndingResultType addWordEndingResultError( int methodLevel, String errorString )
-		{
-		WordEndingResultType wordEndingResult = new WordEndingResultType();
-
-		wordEndingResult.result = addError( ( methodLevel + 1 ), errorString );
-		return wordEndingResult;
 		}
 
 	protected WordEndingResultType startWordEndingResultError( int methodLevel, String errorString )
@@ -893,8 +885,8 @@ class List
 	protected byte addItemToList( char statusChar, Item newItem )
 		{
 		int creationSentenceNr;
-		Item searchItem;
 		Item previousSearchItem = null;
+		Item searchItem;
 
 		if( newItem == null )
 			return startError( 1, "The given new item is undefined" );
@@ -1061,8 +1053,8 @@ class List
 			return addError( 1, "I failed to add an item to the active list" );
 
 		if( isAssignmentList() &&
-		CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-			CommonVariables.isAssignmentChanged = true;
+		GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+			GlobalVariables.isAssignmentChanged = true;
 
 		return Constants.RESULT_OK;
 		}
@@ -1086,8 +1078,8 @@ class List
 			return addError( 1, "I failed to add an item to the inactive list" );
 
 		if( isAssignmentList() &&
-		CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-			CommonVariables.isAssignmentChanged = true;
+		GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+			GlobalVariables.isAssignmentChanged = true;
 
 		return Constants.RESULT_OK;
 		}
@@ -1111,8 +1103,8 @@ class List
 		if( addItemToList( Constants.QUERY_ARCHIVED_CHAR, archiveItem ) != Constants.RESULT_OK )
 			return addError( 1, "I failed to add an item to the archived list" );
 
-		if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-			CommonVariables.isAssignmentChanged = true;
+		if( GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+			GlobalVariables.isAssignmentChanged = true;
 
 		return Constants.RESULT_OK;
 		}
@@ -1152,38 +1144,18 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte deleteActiveItemsWithCurrentSentenceNr()
-		{
-		Item searchItem = activeList_;
-
-		while( searchItem != null )
-			{
-			if( searchItem.hasCurrentCreationSentenceNr() )
-				{
-				if( deleteItem( searchItem ) != Constants.RESULT_OK )
-					return addError( 1, "I failed to delete an active item" );
-
-				searchItem = nextListItem_;
-				}
-			else
-				searchItem = searchItem.nextItem;
-			}
-
-		return Constants.RESULT_OK;
-		}
-
 	protected byte removeFirstRangeOfDeletedItemsInList()
 		{
+		int nDeletedItems = 0;
 		int removeSentenceNr;
 		int removeStartItemNr;
-		int nDeletedItems = 0;
 		Item removeItem = deletedList_;
 
 		if( removeItem != null )
 			{
-			if( CommonVariables.nDeletedItems != 0 ||
-			CommonVariables.removeSentenceNr > Constants.NO_SENTENCE_NR ||
-			CommonVariables.removeStartItemNr > Constants.NO_ITEM_NR )
+			if( GlobalVariables.nDeletedItems != 0 ||
+			GlobalVariables.removeSentenceNr > Constants.NO_SENTENCE_NR ||
+			GlobalVariables.removeStartItemNr > Constants.NO_ITEM_NR )
 				return startError( 1, "There is already a range of deleted items" );
 
 			removeSentenceNr = removeItem.creationSentenceNr();
@@ -1206,9 +1178,9 @@ class List
 			// Ascending item number
 			removeItem.itemNr() == removeStartItemNr + nDeletedItems );
 
-			CommonVariables.nDeletedItems = nDeletedItems;
-			CommonVariables.removeSentenceNr = removeSentenceNr;
-			CommonVariables.removeStartItemNr = removeStartItemNr;
+			GlobalVariables.nDeletedItems = nDeletedItems;
+			GlobalVariables.removeSentenceNr = removeSentenceNr;
+			GlobalVariables.removeStartItemNr = removeStartItemNr;
 			}
 
 		return Constants.RESULT_OK;
@@ -1251,8 +1223,8 @@ class List
 
 	protected BoolResultType compareStrings( String searchString, String sourceString )
 		{
-		boolean isStop;
 		boolean hasFoundMatchingString = true;
+		boolean isStop;
 		int searchStringPosition = 0;
 		int sourceStringPosition = 0;
 		BoolResultType boolResult = new BoolResultType();
@@ -1341,8 +1313,8 @@ class List
 
 	protected int highestCurrentSentenceItemNrInList( int currentSentenceNr, int globalHighestItemNr )
 		{
-		int tempItemNr;
 		int localHighestItemNr = Constants.NO_ITEM_NR;
+		int tempItemNr;
 		Item searchItem;
 
 		if( ( searchItem = firstActiveItem() ) != null )
@@ -1372,8 +1344,8 @@ class List
 
 	protected int highestFoundSentenceNrInList( boolean isIncludingDeletedItems, int globalHighestFoundSentenceNr, int maxSentenceNr )
 		{
-		int tempSentenceNr;
 		int localHighestFoundSentenceNr = Constants.NO_SENTENCE_NR;
+		int tempSentenceNr;
 		Item searchItem;
 
 		if( ( searchItem = firstActiveItem() ) != null )
@@ -1418,19 +1390,19 @@ class List
 		if( ( searchItem = firstActiveItem() ) != null )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstInactiveItem() ) != null )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstArchivedItem() ) != null )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstReplacedItem() ) != null )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstDeletedItem() ) != null )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
@@ -1451,19 +1423,19 @@ class List
 		if( ( searchItem = firstActiveItem() ) != null )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstInactiveItem() ) != null )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstArchivedItem() ) != null )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstReplacedItem() ) != null )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstDeletedItem() ) != null )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
@@ -1472,7 +1444,7 @@ class List
 
 	protected byte deleteSentencesInList( int lowestSentenceNr )
 		{
-		boolean isResultOK = ( CommonVariables.result == Constants.RESULT_OK );
+		boolean isResultOK = ( GlobalVariables.result == Constants.RESULT_OK );
 		Item searchItem = firstActiveItem();
 
 		if( lowestSentenceNr <= Constants.NO_SENTENCE_NR )
@@ -1907,23 +1879,23 @@ class List
 		if( ( searchItem = firstActiveItem() ) != null )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstInactiveItem() ) != null )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstArchivedItem() ) != null )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstReplacedItem() ) != null )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstDeletedItem() ) != null )
 			storeChangesInFutureDatabase( searchItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 */
 
@@ -1956,7 +1928,7 @@ class List
 		while( searchItem != null )
 			{
 			if( searchItem.isSelectedByQuery )
-				CommonVariables.nActiveQueryItems++;
+				GlobalVariables.nActiveQueryItems++;
 
 			searchItem = searchItem.nextItem;
 			}
@@ -1966,7 +1938,7 @@ class List
 		while( searchItem != null )
 			{
 			if( searchItem.isSelectedByQuery )
-				CommonVariables.nInactiveQueryItems++;
+				GlobalVariables.nInactiveQueryItems++;
 
 			searchItem = searchItem.nextItem;
 			}
@@ -1976,7 +1948,7 @@ class List
 		while( searchItem != null )
 			{
 			if( searchItem.isSelectedByQuery )
-				CommonVariables.nArchivedQueryItems++;
+				GlobalVariables.nArchivedQueryItems++;
 
 			searchItem = searchItem.nextItem;
 			}
@@ -1986,7 +1958,7 @@ class List
 		while( searchItem != null )
 			{
 			if( searchItem.isSelectedByQuery )
-				CommonVariables.nReplacedQueryItems++;
+				GlobalVariables.nReplacedQueryItems++;
 
 			searchItem = searchItem.nextItem;
 			}
@@ -1996,7 +1968,7 @@ class List
 		while( searchItem != null )
 			{
 			if( searchItem.isSelectedByQuery )
-				CommonVariables.nDeletedQueryItems++;
+				GlobalVariables.nDeletedQueryItems++;
 
 			searchItem = searchItem.nextItem;
 			}
@@ -2143,23 +2115,23 @@ class List
 		if( ( searchItem = firstActiveItem() ) != null )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstInactiveItem() ) != null )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstArchivedItem() ) != null )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstReplacedItem() ) != null )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchItem = firstDeletedItem() ) != null )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte stringQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String queryString )
@@ -2170,27 +2142,27 @@ class List
 		( searchItem = firstActiveItem() ) != null )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		isSelectingInactiveItems &&
 		( searchItem = firstInactiveItem() ) != null )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		isSelectingArchivedItems &&
 		( searchItem = firstArchivedItem() ) != null )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != null )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		isSelectingDeletedItems &&
 		( searchItem = firstDeletedItem() ) != null )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte wordReferenceQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
@@ -2201,27 +2173,27 @@ class List
 		( searchItem = firstActiveItem() ) != null )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		isSelectingInactiveItems &&
 		( searchItem = firstInactiveItem() ) != null )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		isSelectingArchivedItems &&
 		( searchItem = firstArchivedItem() ) != null )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != null )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		isSelectingDeletedItems &&
 		( searchItem = firstDeletedItem() ) != null )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 	};
 

@@ -1,28 +1,31 @@
 ﻿* No sé nada acerca de Juan, pero yo seguiré esta pregunta en la mente.
 * 
-< No, mi movimiento es D.
+< No, su movimiento es D.
 < 
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
 * 
 * Tenías una pregunta similar antes:
-< ¿Es el movimiento un padre?
+< ¿Es su movimiento un padre?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
 * 
 * Tenías una pregunta similar antes:
-< ¿Es el movimiento un número?
-* 
-* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
-* 
+< ¿Es su movimiento un número?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
 * 
 * Tenías una pregunta similar antes:
-< ¿Es el movimiento A?
+< ¿Es su movimiento un número?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tenías una pregunta similar antes:
+< ¿Es su movimiento A?
 * 
 * Esta pregunta ya ha sido respondida.
 * 

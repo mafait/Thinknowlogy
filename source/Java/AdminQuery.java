@@ -1,9 +1,9 @@
-/*	Class:			AdminQuery
+﻿/*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,9 @@ class AdminQuery
 	{
 	// Private constructed variables
 
+	private int queryCommandStringPosition_;
 	private int queryItemNr_;
 	private int querySentenceNr_;
-
-	private int queryCommandStringPosition_;
 
 	// Private initialized variables
 
@@ -43,19 +42,19 @@ class AdminQuery
 		{
 		int nFoundCategories = 0;
 
-		if( CommonVariables.nActiveQueryItems > 0 )
+		if( GlobalVariables.nActiveQueryItems > 0 )
 			nFoundCategories++;
 
-		if( CommonVariables.nInactiveQueryItems > 0 )
+		if( GlobalVariables.nInactiveQueryItems > 0 )
 			nFoundCategories++;
 
-		if( CommonVariables.nArchivedQueryItems > 0 )
+		if( GlobalVariables.nArchivedQueryItems > 0 )
 			nFoundCategories++;
 
-		if( CommonVariables.nReplacedQueryItems > 0 )
+		if( GlobalVariables.nReplacedQueryItems > 0 )
 			nFoundCategories++;
 
-		if( CommonVariables.nDeletedQueryItems > 0 )
+		if( GlobalVariables.nDeletedQueryItems > 0 )
 			nFoundCategories++;
 
 		return ( nFoundCategories > 1 );
@@ -89,19 +88,19 @@ class AdminQuery
 
 	private int nTotalCountQuery()
 		{
-		CommonVariables.nActiveQueryItems = 0;
-		CommonVariables.nInactiveQueryItems = 0;
-		CommonVariables.nArchivedQueryItems = 0;
-		CommonVariables.nReplacedQueryItems = 0;
-		CommonVariables.nDeletedQueryItems = 0;
+		GlobalVariables.nActiveQueryItems = 0;
+		GlobalVariables.nInactiveQueryItems = 0;
+		GlobalVariables.nArchivedQueryItems = 0;
+		GlobalVariables.nReplacedQueryItems = 0;
+		GlobalVariables.nDeletedQueryItems = 0;
 
 		adminItem_.countQuery();
 
-		return ( CommonVariables.nActiveQueryItems +
-				CommonVariables.nInactiveQueryItems +
-				CommonVariables.nArchivedQueryItems +
-				CommonVariables.nReplacedQueryItems +
-				CommonVariables.nDeletedQueryItems );
+		return ( GlobalVariables.nActiveQueryItems +
+				GlobalVariables.nInactiveQueryItems +
+				GlobalVariables.nArchivedQueryItems +
+				GlobalVariables.nReplacedQueryItems +
+				GlobalVariables.nDeletedQueryItems );
 		}
 
 	private byte getIdFromQuery( boolean hasEndChar, String queryCommandString, char startChar, char endChar )
@@ -229,19 +228,14 @@ class AdminQuery
 
 	private byte itemQuery( boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSuppressingMessage, StringBuffer textStringBuffer )
 		{
-		WordItem currentLanguageWordItem;
-
 		if( textStringBuffer == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given text string buffer is undefined" );
 
 		adminItem_.itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, Constants.NO_SENTENCE_NR, Constants.NO_ITEM_NR );
 
-		if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) == null )
-			return adminItem_.startError( 1, moduleNameString_, "The current language word item is undefined" );
-
 		if( !isSuppressingMessage &&
 		nTotalCountQuery() == 0 )
-			textStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
+			textStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
 
 		return Constants.RESULT_OK;
 		}
@@ -252,10 +246,9 @@ class AdminQuery
 		{
 		// Private constructed variables
 
+		queryCommandStringPosition_ = 0;
 		queryItemNr_ = Constants.NO_ITEM_NR;
 		querySentenceNr_ = Constants.NO_SENTENCE_NR;
-
-		queryCommandStringPosition_ = 0;
 
 		// Private initialized variables
 
@@ -265,7 +258,7 @@ class AdminQuery
 
 		if( ( adminItem_ = adminItem ) == null )
 			{
-			CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
+			GlobalVariables.result = Constants.RESULT_SYSTEM_ERROR;
 			Console.addError( "\nClass:" + moduleNameString_ + "\nMethod:\t" + Constants.INPUT_OUTPUT_ERROR_CONSTRUCTOR_METHOD_NAME + "\nError:\t\tThe given admin item is undefined.\n" );
 			}
 		}
@@ -291,12 +284,11 @@ class AdminQuery
 		boolean isSelectingAttachedJustifications = false;
 		boolean isSelectingJustificationSpecifications = false;
 		short queryWordTypeNr = Constants.NO_WORD_TYPE_NR;
-		int nTotalCount = 0;
 		int listStringPosition;
 		int nameStringBufferLength;
+		int nTotalCount = 0;
 		int queryCommandStringLength;
 		int queryWidth = Constants.NO_CENTER_WIDTH;
-		WordItem currentLanguageWordItem;
 		StringBuffer queryStringBuffer;
 		StringBuffer nameStringBuffer = new StringBuffer();
 		QueryResultType queryResult = new QueryResultType();
@@ -311,23 +303,20 @@ class AdminQuery
 		queryCommandStringStartPosition >= queryCommandStringLength )
 			return adminItem_.startQueryResultError( 1, moduleNameString_, "The given query command string start position is not within the range of the given query command string" );
 
-		if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) == null )
-			return adminItem_.startQueryResultError( 1, moduleNameString_, "The current language word item is undefined" );
-
 		querySentenceNr_ = Constants.NO_SENTENCE_NR;
 		queryItemNr_ = Constants.NO_ITEM_NR;
 
 		queryCommandStringPosition_ = queryCommandStringStartPosition;
 
-		CommonVariables.queryStringBuffer = new StringBuffer();
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		GlobalVariables.queryStringBuffer = new StringBuffer();
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
-		CommonVariables.hasFoundQuery = false;
+		GlobalVariables.hasFoundQuery = false;
 
 		adminItem_.clearQuerySelections();
 
 		while( !isEndOfQuery &&
-		CommonVariables.queryStringBuffer.length() == 0 &&
+		GlobalVariables.queryStringBuffer.length() == 0 &&
 		queryCommandStringPosition_ < queryCommandStringLength )
 			{
 			switch( queryCommandString.charAt( queryCommandStringPosition_ ) )
@@ -342,7 +331,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_ITEM_WAS_FOUND ) );
+						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_ITEM_WAS_FOUND ) );
 
 					break;
 
@@ -356,7 +345,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_REFERENCE_ITEM_WAS_FOUND ) );
+						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_REFERENCE_ITEM_WAS_FOUND ) );
 
 					break;
 
@@ -376,7 +365,7 @@ class AdminQuery
 						!isAdminListChar( nameStringBuffer.charAt( listStringPosition ) ) )
 							{
 							isInvalidChar = true;
-							queryStringBuffer.append( currentLanguageWordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_INVALID_CHARACTER_IN_LIST ) );
+							queryStringBuffer.append( adminItem_.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_INVALID_CHARACTER_IN_LIST ) );
 							}
 						}
 					while( !isInvalidChar &&
@@ -391,7 +380,7 @@ class AdminQuery
 
 						if( !isSuppressingMessage &&
 						nTotalCountQuery() == 0 )
-							queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_LIST_WAS_FOUND ) );
+							queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_LIST_WAS_FOUND ) );
 						}
 
 					break;
@@ -409,7 +398,7 @@ class AdminQuery
 							{
 							if( queryCommandStringPosition_ < queryCommandStringLength &&
 							queryCommandString.charAt( queryCommandStringPosition_ ) != Constants.QUERY_CHAR )
-								queryStringBuffer.append( currentLanguageWordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_SPECIFICATION ) );
+								queryStringBuffer.append( adminItem_.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_SPECIFICATION ) );
 							else
 								{
 								isOnlyDisplayingWords = true;
@@ -425,7 +414,7 @@ class AdminQuery
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )
-								queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_WAS_FOUND ) );
+								queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_WAS_FOUND ) );
 							}
 						}
 					else
@@ -450,7 +439,7 @@ class AdminQuery
 							{
 							if( queryCommandStringPosition_ < queryCommandStringLength &&
 							queryCommandString.charAt( queryCommandStringPosition_ ) != Constants.QUERY_CHAR )
-								queryStringBuffer.append( currentLanguageWordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_REFERENCE ) );
+								queryStringBuffer.append( adminItem_.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_REFERENCE ) );
 							else
 								{
 								isReturnQueryToPosition = true;
@@ -466,7 +455,7 @@ class AdminQuery
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )
-								queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_REFERENCE_WAS_FOUND ) );
+								queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_REFERENCE_WAS_FOUND ) );
 							}
 						}
 					else
@@ -499,7 +488,7 @@ class AdminQuery
 							{
 							if( queryCommandStringPosition_ < queryCommandStringLength &&
 							queryCommandString.charAt( queryCommandStringPosition_ ) != Constants.QUERY_CHAR )
-								queryStringBuffer.append( currentLanguageWordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_STRING_SPECIFICATION ) );
+								queryStringBuffer.append( adminItem_.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_STRING_SPECIFICATION ) );
 							else
 								{
 								isOnlyDisplayingStrings = true;
@@ -515,7 +504,7 @@ class AdminQuery
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )
-								queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_STRING_WAS_FOUND ) );
+								queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_STRING_WAS_FOUND ) );
 							}
 						}
 					else
@@ -544,7 +533,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_TYPE_WAS_FOUND ) );
+						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_TYPE_WAS_FOUND ) );
 
 					break;
 
@@ -563,7 +552,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_PARAMETER_WAS_FOUND ) );
+						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_PARAMETER_WAS_FOUND ) );
 
 					break;
 
@@ -766,75 +755,75 @@ class AdminQuery
 				else
 					{
 					if( nTotalCount == 0 )
-						queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
+						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
 					else
 						{
 						if( isDisplayingTotal() )
 							queryStringBuffer.append( "total:" + nTotalCount );
 
-						if( CommonVariables.nActiveQueryItems > 0 )
+						if( GlobalVariables.nActiveQueryItems > 0 )
 							{
 							if( queryStringBuffer.length() > 0 )
 								queryStringBuffer.append( Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-							queryStringBuffer.append( "active:" + CommonVariables.nActiveQueryItems );
+							queryStringBuffer.append( "active:" + GlobalVariables.nActiveQueryItems );
 							}
 
-						if( CommonVariables.nInactiveQueryItems > 0 )
+						if( GlobalVariables.nInactiveQueryItems > 0 )
 							{
 							if( queryStringBuffer.length() > 0 )
 								queryStringBuffer.append( Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-							queryStringBuffer.append( "inactive:" + CommonVariables.nInactiveQueryItems );
+							queryStringBuffer.append( "inactive:" + GlobalVariables.nInactiveQueryItems );
 							}
 
-						if( CommonVariables.nArchivedQueryItems > 0 )
+						if( GlobalVariables.nArchivedQueryItems > 0 )
 							{
 							if( queryStringBuffer.length() > 0 )
 								queryStringBuffer.append( Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-							queryStringBuffer.append( "archived:" + CommonVariables.nArchivedQueryItems );
+							queryStringBuffer.append( "archived:" + GlobalVariables.nArchivedQueryItems );
 							}
 
-						if( CommonVariables.nReplacedQueryItems > 0 )
+						if( GlobalVariables.nReplacedQueryItems > 0 )
 							{
 							if( queryStringBuffer.length() > 0 )
 								queryStringBuffer.append( Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-							queryStringBuffer.append( "replaced:" + CommonVariables.nReplacedQueryItems );
+							queryStringBuffer.append( "replaced:" + GlobalVariables.nReplacedQueryItems );
 							}
 
-						if( CommonVariables.nDeletedQueryItems > 0 )
+						if( GlobalVariables.nDeletedQueryItems > 0 )
 							{
 							if( queryStringBuffer.length() > 0 )
 								queryStringBuffer.append( Constants.QUERY_SEPARATOR_SPACE_STRING );
 
-							queryStringBuffer.append( "deleted:" + CommonVariables.nDeletedQueryItems );
+							queryStringBuffer.append( "deleted:" + GlobalVariables.nDeletedQueryItems );
 							}
 						}
 					}
 				}
 			else
 				{
-				CommonVariables.hasFoundQuery = false;
+				GlobalVariables.hasFoundQuery = false;
 
 				if( adminItem_.displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) != Constants.RESULT_OK )
 					return adminItem_.addQueryResultError( 1, moduleNameString_, "I failed to display the query result" );
 
 				if( !isSuppressingMessage &&
-				!CommonVariables.hasFoundQuery &&
+				!GlobalVariables.hasFoundQuery &&
 				queryStringBuffer.length() == 0 )
 					{
 					if( isOnlyDisplayingWords )
-						queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORDS_WERE_FOUND ) );
+						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORDS_WERE_FOUND ) );
 					else
 						{
 						if( isOnlyDisplayingWordReferences )
-							queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_REFERENCES_WERE_FOUND ) );
+							queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_REFERENCES_WERE_FOUND ) );
 						else
 							{
 							if( isOnlyDisplayingStrings )
-								queryStringBuffer.append( currentLanguageWordItem.interfaceString( Constants.INTERFACE_QUERY_NO_STRINGS_WERE_FOUND ) );
+								queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_STRINGS_WERE_FOUND ) );
 							}
 						}
 					}
@@ -844,8 +833,8 @@ class AdminQuery
 		if( isDisplayingCount &&
 		nTotalCount > 0 &&
 		queryWidth == Constants.NO_CENTER_WIDTH &&
-		!CommonVariables.hasFoundQuery )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		!GlobalVariables.hasFoundQuery )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 		else
 			{
 			if( isWritingQueryResult &&
@@ -854,7 +843,7 @@ class AdminQuery
 			queryStringBuffer.length() > 0 ) &&
 
 			// Display comment on empty query
-			InputOutput.writeText( ( !isSuppressingMessage && !CommonVariables.hasFoundQuery && queryWidth == Constants.NO_CENTER_WIDTH ), promptTypeNr, queryWidth, queryStringBuffer ) != Constants.RESULT_OK )
+			InputOutput.writeText( ( !isSuppressingMessage && !GlobalVariables.hasFoundQuery && queryWidth == Constants.NO_CENTER_WIDTH ), promptTypeNr, queryWidth, queryStringBuffer ) != Constants.RESULT_OK )
 				return adminItem_.addQueryResultError( 1, moduleNameString_, "I failed to write the query result" );
 			}
 

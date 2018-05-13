@@ -1,2 +1,2 @@
-A small letter is small.
+﻿A small letter is small.
 # To continue, click button «Clear your mind.» or «Restart.».

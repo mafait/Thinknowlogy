@@ -1,5 +1,4 @@
 ﻿Una bebida es caliente, warm o frío.
-El café es una bebida.
 Mi café es caliente.
 ¿Es mi café frío?
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

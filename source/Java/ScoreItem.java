@@ -1,10 +1,10 @@
-/*	Class:			ScoreItem
+﻿/*	Class:			ScoreItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ class ScoreItem extends Item
 
 	private ScoreItem possibilityScoreItem( boolean isIncludingThisItem )
 		{
-		short currentAssignmentLevel = CommonVariables.currentAssignmentLevel;
+		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
 		ScoreItem searchScoreItem = ( isIncludingThisItem ? this : nextScoreItem() );
 
 		while( searchScoreItem != null &&
@@ -139,10 +139,10 @@ class ScoreItem extends Item
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		if( isMarked )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "Marked" );

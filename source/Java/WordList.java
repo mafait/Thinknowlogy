@@ -1,9 +1,9 @@
-/*	Class:			WordList
+﻿/*	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ class WordList extends List
 		{
 		while( searchWordItem != null )
 			{
-			// For efficiency, only select words with lowest sentence number or higher
+			// Efficiency: Only select words with lowest sentence number or higher
 			if( searchWordItem.highestSentenceNrInWord() >= lowestSentenceNr &&
 			searchWordItem.deleteSentencesInWord( lowestSentenceNr ) != Constants.RESULT_OK )
 				// This method can be called during an error situation. So, the result isn't returned
@@ -43,7 +43,7 @@ class WordList extends List
 		{
 		while( searchWordItem != null )
 			{
-			// For efficiency, only select words with start sentence number or higher
+			// Efficiency: Only select words with start sentence number or higher
 			if( searchWordItem.highestSentenceNrInWord() >= startSentenceNr &&
 			searchWordItem.decrementSentenceNrsInWord( startSentenceNr ) != Constants.RESULT_OK )
 				// This method can be called during an error situation. So, the result isn't returned
@@ -57,7 +57,7 @@ class WordList extends List
 		{
 		while( searchWordItem != null )
 			{
-			// For efficiency, only select words with decrement sentence number or higher
+			// Efficiency: Only select words with decrement sentence number or higher
 			if( searchWordItem.highestSentenceNrInWord() >= decrementSentenceNr &&
 			searchWordItem.decrementItemNrRangeInWord( decrementSentenceNr, decrementItemNr, decrementOffset ) != Constants.RESULT_OK )
 				// This method can be called during an error situation. So, the result isn't returned
@@ -70,7 +70,7 @@ class WordList extends List
 	private void removeFirstRangeOfDeletedItemsInWordList( WordItem searchWordItem )
 		{
 		while( searchWordItem != null &&
-		CommonVariables.nDeletedItems == 0 )
+		GlobalVariables.nDeletedItems == 0 )
 			{
 			if( searchWordItem.removeFirstRangeOfDeletedItemsInWord() != Constants.RESULT_OK )
 				// This method can be called during an error situation. So, the result isn't returned
@@ -84,7 +84,7 @@ class WordList extends List
 		{
 		while( searchWordItem != null )
 			{
-			// For efficiency, only select words with current sentence number or higher
+			// Efficiency: Only select words with current sentence number or higher
 			if( searchWordItem.highestSentenceNrInWord() >= currentSentenceNr )
 				currentSentenceItemNr = searchWordItem.highestCurrentSentenceItemNrInWord( currentSentenceNr, currentSentenceItemNr );
 
@@ -99,7 +99,7 @@ class WordList extends List
 		while( searchWordItem != null &&
 		highestFoundSentenceNr < maxSentenceNr )
 			{
-			// For efficiency, only select words with higher sentence number
+			// Efficiency: Only select words with higher sentence number
 			if( searchWordItem.highestSentenceNrInWord() > highestFoundSentenceNr )
 				highestFoundSentenceNr = searchWordItem.highestFoundSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr );
 
@@ -375,11 +375,11 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			storeChangesInFutureDatabaseInWordList( searchWordItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != null )
 			storeChangesInFutureDatabaseInWordList( searchWordItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 */
 
@@ -392,11 +392,11 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			redoCurrentSentenceInWordList( searchWordItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != null )
 			redoCurrentSentenceInWordList( searchWordItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte undoCurrentSentenceInWordList()
@@ -406,11 +406,11 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			undoCurrentSentenceInWordList( searchWordItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != null )
 			undoCurrentSentenceInWordList( searchWordItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 
@@ -489,11 +489,11 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			displayQueryResultInWordList( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchWordItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != null )
 			displayQueryResultInWordList( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchWordItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte stringQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String queryString )
@@ -503,11 +503,11 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchWordItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != null )
 			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchWordItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte wordQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String wordNameString )
@@ -517,11 +517,11 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchWordItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != null )
 			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchWordItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte wordReferenceQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
@@ -531,11 +531,11 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchWordItem );
 
-		if( CommonVariables.result == Constants.RESULT_OK &&
+		if( GlobalVariables.result == Constants.RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != null )
 			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchWordItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 

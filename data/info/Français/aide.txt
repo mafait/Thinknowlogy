@@ -9,24 +9,25 @@
 Affichez "------------------------------------------------------------------------------".
 Affichez " Des exemples de phrases impératives disponibles:".
 Affichez "------------------------------------------------------------------------------".
-Affichez " Lirez le fichier \"{nom de fichier}\".\t* Lire un fichier".
-Affichez " Aide.\t\t\t\t\t* Afficher cette information d'aide".
-Affichez " Annuler.\t\t\t\t* Annuler la dernière phrase".
-Affichez " Refaire.\t\t\t\t* Refaire une peine annulée".
-Affichez " Videz votre esprit.\t\t\t* Oublier connaissances précédente".
-Affichez " Redémarrer.\t\t\t\t* Redémarrez ce programme".
-Affichez " Affichez des informations sur les langues.".
-Affichez " Affichez des informations sur les listes.".
-Affichez " Affichez des informations sur les types de mots.".
+Affichez " Lirez le fichier \"{nom de fichier}\".	* Lire un fichier".
+Affichez " Aide.			* Afficher cette information d'aide".
+Affichez " Annuler.			* Annuler la dernière phrase".
+Affichez " Refaire.			* Refaire une peine annulée".
+Affichez " Videz votre esprit.		* Oublier connaissances précédente".
+Affichez " Redémarrer.			* Redémarrez ce programme".
+Affichez " Affichez information sur les langues.".
+Affichez " Affichez information sur les listes.".
+Affichez " Affichez information sur les utilisateurs.".
+Affichez " Affichez information sur les types de mots.".
 Affichez " Affichez les commandes de requête.".
 Affichez " Affichez le droit d'auteur.".
 Affichez " Affichez la licence-GPLv2.".
 Affichez " Affichez la garantie.".
 Affichez "------------------------------------------------------------------------------".
-#C++#Affichez " Exemples fichiers:\t* dossier: Thinknowlogy2017r2/data/examples/Français/utilisateur/".
-#Java#Affichez " Exemples fichiers:\t* Utilisez le bouton <exemples> ou voir le".
-#Java#Affichez "\t\t\t  dossier: Thinknowlogy2017r2/data/examples/Français/utilisateur/".
-Affichez " Fondamental:\t\t* dossier: Thinknowlogy2017r2/documents/".
-Affichez " Projet:\t\t* dossier: Thinknowlogy2017r2/documents/design/".
-Affichez " Captures d'écran:\t* dossier: Thinknowlogy2017r2/screenshots/Français/".
+#C++#Affichez " Exemples fichiers: * dossier: Thinknowlogy2018r1/data/examples/Français/utilisateur/".
+#Java#Affichez " Exemples fichiers: * Utilisez le bouton <exemples>".
+#Java#Affichez "                 ou voir le dossier: Thinknowlogy2018r1/data/examples/Français/utilisateur/".
+Affichez " Fondamental:        * dossier: Thinknowlogy2018r1/documents/".
+Affichez " Projet:	       * dossier: Thinknowlogy2018r1/documents/design/".
+Affichez " Captures d'écran:   * dossier: Thinknowlogy2018r1/screenshots/Français/".
 Affichez "------------------------------------------------------------------------------".

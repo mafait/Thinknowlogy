@@ -845,7 +845,7 @@
 * Mijn conclusies die bevestigd zijn:
 < Jan heeft 2 zoon [meervoud van 'zoon' is onbekend], genaamd Paul en Johan.
 * 
-* U heeft meervoudige zelfstandige naamwoord "zoons" ingevoerd, dat onbekend was voor mij.
+* U hebt meervoudige zelfstandige naamwoord "zoons" ingevoerd, dat onbekend was voor mij.
 * 
 * 
 * Mijn conclusies die bevestigd zijn:

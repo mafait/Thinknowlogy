@@ -1,9 +1,9 @@
-/*	Class:		BoolResultType
+﻿/*	Class:		BoolResultType
  *	Purpose:	To return word parameter variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -47,14 +47,12 @@ class BoolResultType
 	friend class SpecificationList;
 	friend class WordItem;
 	friend class WordSpecification;
-	friend class WordTypeItem;
 	friend class WordTypeList;
 
 	protected:
 	// Protected variables
 
 	signed char result;
-
 	bool booleanValue;
 
 	protected:
@@ -63,7 +61,6 @@ class BoolResultType
 	BoolResultType()
 		{
 		result = RESULT_OK;
-
 		booleanValue = false;
 		}
 	};

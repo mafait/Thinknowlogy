@@ -1,4 +1,4 @@
-Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
 Jan is een ouder van Paul, Johan en Laura.
 Toon de verantwoordingsrapportage over Jan.
 Toon de verantwoordingsrapportage over Paul.

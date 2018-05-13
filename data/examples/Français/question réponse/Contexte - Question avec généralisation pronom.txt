@@ -1,5 +1,4 @@
 ﻿Une boisson est chaude, tiède ou froide.
-Le café est une boisson.
 Mon café est chaude.
 #Est-ce mon café froide?
 Est mon café froide?

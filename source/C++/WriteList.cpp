@@ -1,9 +1,9 @@
-/*	Class:			WriteList
+﻿/*	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -45,9 +45,9 @@ class WriteList : private List
 	protected:
 	// Constructor
 
-	WriteList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	WriteList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( WORD_WRITE_LIST_SYMBOL, "WriteList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( WORD_WRITE_LIST_SYMBOL, "WriteList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~WriteList()
@@ -80,7 +80,7 @@ class WriteList : private List
 	signed char checkGrammarItemForUsage( GrammarItem *unusedGrammarItem )
 		{
 		WriteItem *searchWriteItem = firstActiveWriteItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkGrammarItemForUsage";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkGrammarItemForUsage";
 
 		if( unusedGrammarItem == NULL )
 			return startError( functionNameString, "The given unused grammar item is undefined" );
@@ -98,9 +98,9 @@ class WriteList : private List
 
 	signed char createWriteItem( bool isSkipped, unsigned short grammarLevel, GrammarItem *startOfChoiceOrOptionGrammarItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createWriteItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createWriteItem";
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+		if( addItemToList( QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
 			return addError( functionNameString, "I failed to add an active write item" );
 
 		return RESULT_OK;

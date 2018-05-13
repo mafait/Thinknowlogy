@@ -1,9 +1,9 @@
-/*	Class:			ScoreList
+﻿/*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ class ScoreList : private List
 		bool isEqualBlockingScore = ( oldBlockingScore == bestOldBlockingScore &&
 										newBlockingScore == bestNewBlockingScore );
 
-		return( isEqualSatisfiedScore &&
+		return ( isEqualSatisfiedScore &&
 				isEqualDissatisfiedScore &&
 				isEqualNotBlockingScore &&
 				isEqualBlockingScore );
@@ -63,7 +63,7 @@ class ScoreList : private List
 	signed char markAction( SelectionItem *markSelectionReference )
 		{
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "MarkAction";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "MarkAction";
 
 		if( markSelectionReference == NULL )
 			return startError( functionNameString, "The given score item is undefined" );
@@ -83,7 +83,7 @@ class ScoreList : private List
 	signed char disableAction( bool isIncludingMarkedActions, SelectionItem *disableItem )
 		{
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "DisableAction";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "DisableAction";
 
 		if( disableItem == NULL )
 			return startError( functionNameString, "The given score item is undefined" );
@@ -143,7 +143,7 @@ class ScoreList : private List
 		bool isLowerNotBlockingScore = ( notBlockingScore < bestNotBlockingScore );
 		bool isLowerBlockingScore = ( blockingScore < bestBlockingScore );
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getBestScore";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getBestScore";
 
 		if( solveStrategyParameter != NO_SOLVE_STRATEGY_PARAMETER &&
 		solveStrategyParameter != WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
@@ -188,11 +188,11 @@ class ScoreList : private List
 
 	// Constructor
 
-	ScoreList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	ScoreList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
 		// Private constructed variables
 
-		initializeListVariables( ADMIN_SCORE_LIST_SYMBOL, "ScoreList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( ADMIN_SCORE_LIST_SYMBOL, "ScoreList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~ScoreList()
@@ -224,7 +224,7 @@ class ScoreList : private List
 
 	unsigned int nPossibilities()
 		{
-		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
+		unsigned short currentAssignmentLevel = globalVariables()->currentAssignmentLevel;
 		unsigned int nItems = 0;
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
 
@@ -243,7 +243,7 @@ class ScoreList : private List
 	signed char changeAction( SelectionItem *actionSelectionItem )
 		{
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "changeAction";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeAction";
 
 		if( actionSelectionItem == NULL )
 			return startError( functionNameString, "The given action selection item is undefined" );
@@ -265,9 +265,9 @@ class ScoreList : private List
 
 	signed char createScoreItem( bool isChecked, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore, SelectionItem *referenceSelectionItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createScoreItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createScoreItem";
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, commonVariables()->currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+		if( addItemToList( QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, globalVariables()->currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
 			return addError( functionNameString, "I failed to add an active score item" );
 
 		return RESULT_OK;
@@ -275,9 +275,9 @@ class ScoreList : private List
 
 	signed char deleteScores()
 		{
-		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
+		unsigned short currentAssignmentLevel = globalVariables()->currentAssignmentLevel;
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteScores";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "deleteScores";
 
 		while( searchScoreItem != NULL &&
 		searchScoreItem->assignmentLevel() >= currentAssignmentLevel )
@@ -308,7 +308,7 @@ class ScoreList : private List
 
 	BoolResultType checkScores( bool isInverted, unsigned short solveStrategyParameter, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore )
 		{
-		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
+		unsigned short currentAssignmentLevel = globalVariables()->currentAssignmentLevel;
 		unsigned int checkOldSatisfiedScore = ( isInverted ? oldDissatisfiedScore : oldSatisfiedScore );
 		unsigned int checkNewSatisfiedScore = ( isInverted ? newDissatisfiedScore : newSatisfiedScore );
 		unsigned int checkOldDissatisfiedScore = ( isInverted ? oldSatisfiedScore : oldDissatisfiedScore );
@@ -316,7 +316,7 @@ class ScoreList : private List
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
 		BoolResultType boolCheckResult;
 		BoolResultType boolReturnResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkScores";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkScores";
 
 		if( checkOldSatisfiedScore <= NO_SCORE &&
 		checkNewSatisfiedScore <= NO_SCORE &&
@@ -390,10 +390,10 @@ class ScoreList : private List
 
 	BoolResultType findScore( bool isPreparingSort, SelectionItem *findScoreItem )
 		{
-		unsigned short currentAssignmentLevel = commonVariables()->currentAssignmentLevel;
+		unsigned short currentAssignmentLevel = globalVariables()->currentAssignmentLevel;
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findScore";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findScore";
 
 		if( findScoreItem == NULL )
 			return startBoolResultError( functionNameString, "The given score item is undefined" );
@@ -422,19 +422,6 @@ class ScoreList : private List
 		{
 		bool hasBetterScore = false;
 		bool isCummulate = false;
-		unsigned int nRandomEntries = 0;
-		unsigned int nLocalLosingScores;
-		unsigned int nLocalWinningScores;
-		unsigned int nBestWinningScores = 0;
-		unsigned int nBestLosingScores = MAX_NUMBER;
-		unsigned int localOldSatisfiedScore;
-		unsigned int localNewSatisfiedScore;
-		unsigned int localOldDissatisfiedScore;
-		unsigned int localNewDissatisfiedScore;
-		unsigned int localOldNotBlockingScore;
-		unsigned int localNewNotBlockingScore;
-		unsigned int localOldBlockingScore;
-		unsigned int localNewBlockingScore;
 		unsigned int bestOldSatisfiedScore = NO_SCORE;
 		unsigned int bestNewSatisfiedScore = NO_SCORE;
 		unsigned int bestOldDissatisfiedScore = ( solveStrategyParameter == NO_SOLVE_STRATEGY_PARAMETER ? MAX_SCORE : NO_SCORE );
@@ -443,12 +430,25 @@ class ScoreList : private List
 		unsigned int bestNewNotBlockingScore = MAX_SCORE;
 		unsigned int bestOldBlockingScore = MAX_SCORE;
 		unsigned int bestNewBlockingScore = MAX_SCORE;
+		unsigned int localOldSatisfiedScore;
+		unsigned int localNewSatisfiedScore;
+		unsigned int localOldDissatisfiedScore;
+		unsigned int localNewDissatisfiedScore;
+		unsigned int localOldNotBlockingScore;
+		unsigned int localNewNotBlockingScore;
+		unsigned int localOldBlockingScore;
+		unsigned int localNewBlockingScore;
+		unsigned int nBestLosingScores = MAX_NUMBER;
+		unsigned int nBestWinningScores = 0;
+		unsigned int nLocalLosingScores;
+		unsigned int nLocalWinningScores;
+		unsigned int nRandomEntries = 0;
 		ScoreItem *localScoreItem;
 		ScoreItem *searchScoreItem = firstActiveScoreItem();
 		SelectionItem *bestActionSelectionItem = NULL;
 		BoolResultType boolResult;
 		SelectionResultType selectionResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getBestSelection";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getBestSelection";
 
 		while( searchScoreItem != NULL )
 			{

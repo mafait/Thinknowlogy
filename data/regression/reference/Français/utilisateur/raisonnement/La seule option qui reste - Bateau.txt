@@ -1,4 +1,4 @@
 ﻿* 
 * Mes conclusions:
-< Le bateau est un bateau à rames.
+< Sien bateau est un bateau à rames.
 < 

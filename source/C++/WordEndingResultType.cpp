@@ -1,9 +1,9 @@
-/*	Class:		WordEndingResultType
+﻿/*	Class:		WordEndingResultType
  *	Purpose:	To return word ending variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,9 @@
 class WordEndingResultType
 	{
 	friend class AdminReadCreateWords;
+	friend class AdminReadSentence;
 	friend class GrammarList;
+	friend class Item;
 	friend class List;
 	friend class WordItem;
 	friend class WordTypeList;
@@ -40,9 +42,8 @@ class WordEndingResultType
 
 	bool hasFoundWordEnding;
 
-	size_t singularNounWordStringLength;
-
-	char singularNounWordString[MAX_WORD_LENGTH];
+	size_t wordStringLength;
+	char wordString[MAX_WORD_LENGTH];
 
 	protected:
 	// Constructor
@@ -53,9 +54,8 @@ class WordEndingResultType
 
 		hasFoundWordEnding = false;
 
-		singularNounWordStringLength = 0;
-
-		strcpy( singularNounWordString, EMPTY_STRING );
+		wordStringLength = 0;
+		strcpy( wordString, EMPTY_STRING );
 		}
 	};
 #endif

@@ -1,4 +1,4 @@
-Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
 Johan is een zoon van Jan en Anna.
 Laura is een dochter van Jan en Anna.
 Toon de verantwoordingsrapportage over Anna.

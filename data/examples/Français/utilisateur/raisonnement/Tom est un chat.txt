@@ -1,4 +1,4 @@
-#Les chats sont des animaux.
+﻿#Les chats sont des animaux.
 Chats sont animaux.
 #Chaque chat est à la fourrure.
 Chaque chat est à-la-fourrure.

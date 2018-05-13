@@ -1,12 +1,12 @@
 ﻿An option is 1, 2, 3, 4, 5, 6, 7, 8 or 9.
-The option is not 1.
-The option is not 2.
-The option is not 3.
-The option is not 4.
-The option is not 5.
-#The option is not 6.
-The option is not 7.
-The option is not 8.
-The option is not 9.
+His option is not 1.
+His option is not 2.
+His option is not 3.
+His option is not 4.
+His option is not 5.
+#His option is not 6.
+His option is not 7.
+His option is not 8.
+His option is not 9.
 Display the justification report about option.
 # To continue, click button «Clear your mind.» or «Restart.».

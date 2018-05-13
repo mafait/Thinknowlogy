@@ -452,7 +452,7 @@
 <	- Chaque famille a parents et enfants.
 <	- Amélie est probablement un parent de Lorraine et Julien.
 < 
-* Je n'ai pas rapport de justification sur Pascal.
+* Je n'ai pas les informations demandées.
 * 
 * 
 * Mes hypothèses:

@@ -1,11 +1,11 @@
-/*	Class:			GeneralizationItem
+﻿/*	Class:			GeneralizationItem
  *	Parent class:	Item
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -51,12 +51,21 @@ class GeneralizationItem : private Item
 	WordItem *generalizationWordItem_;
 
 
+	// Private functions
+
+	bool isNoun()
+		{
+		return ( generalizationWordTypeNr_ == WORD_TYPE_NOUN_SINGULAR ||
+				generalizationWordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
+		}
+
+
 	protected:
 	// Constructor
 
-	GeneralizationItem( bool isLanguageWord, bool isRelation, unsigned short languageNr, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	GeneralizationItem( bool isLanguageWord, bool isRelation, unsigned short languageNr, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GeneralizationItem", commonVariables, inputOutput, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GeneralizationItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -86,15 +95,15 @@ class GeneralizationItem : private Item
 		if( generalizationWordItem_ != NULL &&
 		( wordString = generalizationWordItem_->wordTypeString( true, generalizationWordTypeNr_ ) ) != NULL )
 			{
-			if( commonVariables()->hasFoundQuery )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+			if( globalVariables()->hasFoundQuery )
+				strcat( globalVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( globalVariables()->queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, wordString );
+			globalVariables()->hasFoundQuery = true;
+			strcat( globalVariables()->queryString, wordString );
 			}
 		}
 
@@ -113,15 +122,15 @@ class GeneralizationItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		char *queryString;
-		char *wordString;
-		char *languageNameString = myWordItem()->languageNameString( languageNr_ );
 		char *generalizationWordTypeString = myWordItem()->wordTypeNameString( generalizationWordTypeNr_ );
+		char *languageNameString = myWordItem()->languageNameString( languageNr_ );
+		char *queryString;
 		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
+		char *wordString;
 
 		itemBaseToString( queryWordTypeNr );
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( isLanguageWord_ )
 			{
@@ -194,7 +203,7 @@ class GeneralizationItem : private Item
 
 	GeneralizationItem *generalizationItem( bool isIncludingThisItem, bool isOnlySelectingCurrentLanguage, bool isOnlySelectingNoun, bool isRelation )
 		{
-		unsigned short currentLanguageNr = commonVariables()->currentLanguageNr;
+		unsigned short currentLanguageNr = globalVariables()->currentLanguageNr;
 		GeneralizationItem *searchGeneralizationItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
 
 		while( searchGeneralizationItem != NULL )
@@ -205,7 +214,7 @@ class GeneralizationItem : private Item
 			searchGeneralizationItem->languageNr_ == currentLanguageNr ) &&
 
 			( !isOnlySelectingNoun ||
-			isNounWordType( searchGeneralizationItem->generalizationWordTypeNr_ ) ) )
+			searchGeneralizationItem->isNoun() ) )
 				return searchGeneralizationItem;
 
 			searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();

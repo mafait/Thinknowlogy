@@ -27,7 +27,7 @@
 < Een dochter is waarschijnlijk een persoon.
 < 
 * 
-* U heeft meervoudige zelfstandige naamwoord "zoons" ingevoerd, dat onbekend was voor mij.
+* U hebt meervoudige zelfstandige naamwoord "zoons" ingevoerd, dat onbekend was voor mij.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een ouder.

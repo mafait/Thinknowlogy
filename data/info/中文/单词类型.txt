@@ -1,0 +1,33 @@
+﻿呈现"------------------------------------------------------------------------------"。
+呈现" Total number of word type items: ~#<w>~,	(all languages included)."。
+呈现"------------------------------------------------------------------------------"。
+呈现" * Active word type items:		~+#<w>~."。
+呈现"   (@1)  Symbols:			~+#<w>@1~."。
+呈现"   (@2)  Numerals:			~+#<w>@2~."。
+呈现"   (@3)  Small letters:			~+#<w>@3~."。
+呈现"   (@4)  Capital letters:			~+#<w>@4~."。
+呈现"   (@5)  Proper names:			~+#<w>@5~."。
+呈现"   (@6)  Adjectives:			~+#<w>@6~."。
+呈现"   (@7)  Adverbs:			~+#<w>@7~."。
+呈现"   (@8)  Answer words:			~+#<w>@8~."。
+呈现"   (@9)  Articles:			~+#<w>@9~."。
+呈现"   (@10) Conjunctions:			~+#<w>@10~."。
+呈现"   (@11) Singular nouns:			~+#<w>@11~."。
+呈现"   (@12) Plural nouns:			~+#<w>@12~."。
+呈现"   (@13) Personal pronoun singular (subjective):	~+#<w>@13~."。
+呈现"   (@14) Personal pronoun singular (objective):	~+#<w>@14~."。
+呈现"   (@15) Possessive determiner singular:		~+#<w>@15~."。
+呈现"   (@16) Possessive pronoun singular:		~+#<w>@16~."。
+呈现"   (@17) Personal pronoun plural (subjective):		~+#<w>@17~."。
+呈现"   (@18) Personal pronoun plural (objective):		~+#<w>@18~."。
+呈现"   (@19) Possessive determiner plural:		~+#<w>@19~."。
+呈现"   (@20) Possessive pronoun plural:		~+#<w>@20~."。
+呈现"   (@21) Prepositions:			~+#<w>@21~."。
+呈现"   (@22) Singular verbs:			~+#<w>@22~."。
+呈现"   (@23) Plural verbs:			~+#<w>@23~."。
+呈现"   (@24) Selection words:			~+#<w>@24~."。
+呈现" * Inactive word type items:		~=#<w>~."。
+呈现" * Archived word type items:		~$#<w>~."。
+呈现" * Replaced word type items:		~%#<w>~."。
+呈现" * Deleted word type items:		~&#<w>~."。
+呈现"------------------------------------------------------------------------------"。

@@ -1,9 +1,9 @@
-/*	Class:			WordTypeList
+﻿/*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -25,53 +25,10 @@ class WordTypeList extends List
 	{
 	// Private constructed variables
 
-	private boolean hasFeminineWordEnding_;
-	private boolean hasMasculineWordEnding_;
-
 	private WordTypeItem foundWordTypeItem_;
 
 
 	// Private methods
-
-	private byte checkOnFeminineAndMasculineWordEnding( boolean isSingularNoun, String wordString )
-		{
-		WordItem currentLanguageWordItem;
-		WordEndingResultType wordEndingResult = new WordEndingResultType();
-
-		if( wordString == null )
-			return startError( 1, "The given word string is undefined" );
-
-		if( ( currentLanguageWordItem = CommonVariables.currentLanguageWordItem ) == null )
-			return startError( 1, "The current language word item is undefined" );
-
-		if( ( wordEndingResult = currentLanguageWordItem.analyzeWordEnding( ( isSingularNoun ? Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING : Constants.WORD_FEMININE_PROPER_NAME_ENDING ), 0, wordString ) ).result != Constants.RESULT_OK )
-			return addError( 1, "I failed to check on feminine word ending" );
-
-		if( wordEndingResult.hasFoundWordEnding )
-			{
-			hasFeminineWordEnding_ = true;
-
-			if( isSingularNoun &&
-			myWordItem().markWordAsFeminine() != Constants.RESULT_OK )
-				return addError( 1, "I failed to mark my word as feminine" );
-			}
-		else
-			{
-			if( ( wordEndingResult = currentLanguageWordItem.analyzeWordEnding( ( isSingularNoun ? Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING : Constants.WORD_MASCULINE_PROPER_NAME_ENDING ), 0, wordString ) ).result != Constants.RESULT_OK )
-				return addError( 1, "I failed to check on masculine word ending" );
-
-			if( wordEndingResult.hasFoundWordEnding )
-				{
-				hasMasculineWordEnding_ = true;
-
-				if( isSingularNoun &&
-				myWordItem().markWordAsMasculine() != Constants.RESULT_OK )
-					return addError( 1, "I failed to mark my word as masculine" );
-				}
-			}
-
-		return Constants.RESULT_OK;
-		}
 
 	private WordTypeItem nextWordTypeListItem()
 		{
@@ -110,7 +67,7 @@ class WordTypeList extends List
 
 	private WordTypeItem firstActiveCurrentLanguageWordTypeItem()
 		{
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
+		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		WordTypeItem searchWordTypeItem = firstActiveWordTypeItem();
 
 		while( searchWordTypeItem != null &&
@@ -123,7 +80,7 @@ class WordTypeList extends List
 
 	private WordTypeItem firstDeletedCurrentLanguageWordTypeItem()
 		{
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
+		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		WordTypeItem searchWordTypeItem = firstDeletedWordTypeItem();
 
 		while( searchWordTypeItem != null &&
@@ -140,9 +97,6 @@ class WordTypeList extends List
 	protected WordTypeList( WordItem myWordItem )
 		{
 		// Private constructed variables
-
-		hasFeminineWordEnding_ = false;
-		hasMasculineWordEnding_ = false;
 
 		foundWordTypeItem_ = null;
 
@@ -203,6 +157,49 @@ class WordTypeList extends List
 			}
 
 		return false;
+		}
+
+	protected boolean isMatchingChineseWord( String wordString )
+		{
+		String currentWordTypeString;
+		WordTypeItem currentWordTypeItem;
+
+		if( wordString != null &&
+		( currentWordTypeItem = firstActiveCurrentLanguageWordTypeItem() ) != null )
+			{
+			do	{
+				// Skip hidden word type
+				if( ( currentWordTypeString = currentWordTypeItem.itemString() ) != null &&
+				wordString.startsWith( currentWordTypeString ) )
+					return true;
+				}
+			while( ( currentWordTypeItem = currentWordTypeItem.nextCurrentLanguageWordTypeItem() ) != null );
+			}
+
+		return false;
+		}
+
+	protected int bestMatchingChineseWordLength( String wordString )
+		{
+		int bestMatchingChineseWordLength = 0;
+		int currentMatchingWordLength;
+		String currentWordTypeString;
+		WordTypeItem currentWordTypeItem;
+
+		if( wordString != null &&
+		( currentWordTypeItem = firstActiveCurrentLanguageWordTypeItem() ) != null )
+			{
+			do	{
+				// Skip hidden word type
+				if( ( currentWordTypeString = currentWordTypeItem.itemString() ) != null &&
+				wordString.startsWith( currentWordTypeString ) &&
+				( currentMatchingWordLength = currentWordTypeString.length() ) > bestMatchingChineseWordLength )
+					bestMatchingChineseWordLength = currentMatchingWordLength;
+				}
+			while( ( currentWordTypeItem = currentWordTypeItem.nextCurrentLanguageWordTypeItem() ) != null );
+			}
+
+		return bestMatchingChineseWordLength;
 		}
 
 	protected byte checkWordTypesOnFeminineParameters()
@@ -323,198 +320,120 @@ class WordTypeList extends List
 
 	protected byte markGeneralizationWordTypeAsWritten( boolean isLanguageWord, short wordTypeNr )
 		{
-		boolean hasWordTypeNr = false;
-		boolean isWordTypeAlreadyMarkedAsWritten = false;
-		WordTypeItem pluralNounWordTypeItem = null;
-		WordTypeItem singularNounWordTypeItem = null;
+		boolean hasFoundWordType = false;
 		WordTypeItem searchWordTypeItem = ( isLanguageWord ? firstActiveWordTypeItem() : firstActiveCurrentLanguageWordTypeItem() );
 
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
 			return startError( 1, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
-		while( searchWordTypeItem != null &&
-		!isWordTypeAlreadyMarkedAsWritten )
+		while( !hasFoundWordType &&
+		searchWordTypeItem != null )
 			{
-			if( searchWordTypeItem.isGeneralizationWordAlreadyWritten() )
-				isWordTypeAlreadyMarkedAsWritten = true;
-			else
+			if( !searchWordTypeItem.isGeneralizationWordAlreadyWritten() &&
+			searchWordTypeItem.wordTypeNr() == wordTypeNr )
 				{
-				if( searchWordTypeItem.isSingularNoun() )
-					singularNounWordTypeItem = searchWordTypeItem;
-				else
-					{
-					if( searchWordTypeItem.isPluralNoun() )
-						pluralNounWordTypeItem = searchWordTypeItem;
-					}
+				if( searchWordTypeItem.markGeneralizationWordTypeAsWritten() != Constants.RESULT_OK )
+					return addError( 1, "I failed to mark a generalization word as written" );
 
-				if( searchWordTypeItem.wordTypeNr() == wordTypeNr )
-					{
-					if( searchWordTypeItem.markGeneralizationWordTypeAsWritten() != Constants.RESULT_OK )
-						return addError( 1, "I failed to mark a word as written" );
-
-					hasWordTypeNr = true;
-					}
+				hasFoundWordType = true;
 				}
-
-			searchWordTypeItem = ( isLanguageWord ? searchWordTypeItem.nextWordTypeItem() : searchWordTypeItem.nextCurrentLanguageWordTypeItem() );
+			else
+				searchWordTypeItem = ( isLanguageWord ? searchWordTypeItem.nextWordTypeItem() : searchWordTypeItem.nextCurrentLanguageWordTypeItem() );
 			}
 
-		if( isWordTypeAlreadyMarkedAsWritten )
-			return startError( 1, "The given word type number is already marked as written: " + wordTypeNr );
-
-		if( !hasWordTypeNr )
+		if( !hasFoundWordType )
 			return startError( 1, "I couldn't find the given word type number: " + wordTypeNr );
-
-		// If singular noun - also set plural noun
-		if( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR &&
-		pluralNounWordTypeItem != null )
-			{
-			if( pluralNounWordTypeItem.markGeneralizationWordTypeAsWritten() != Constants.RESULT_OK )
-				return addError( 1, "I failed to mark a plural noun word as written" );
-			}
-		else
-			{
-			// If plural noun - also set singular noun
-			if( wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL &&
-			singularNounWordTypeItem != null &&
-			singularNounWordTypeItem.markGeneralizationWordTypeAsWritten() != Constants.RESULT_OK )
-				return addError( 1, "I failed to mark a singular noun word as written" );
-			}
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte markSpecificationWordTypeAsWritten( short wordTypeNr )
 		{
-		boolean hasWordTypeNr = false;
-		boolean isWordTypeAlreadyMarkedAsWritten = false;
-		WordTypeItem pluralNounWordTypeItem = null;
-		WordTypeItem singularNounWordTypeItem = null;
+		boolean hasFoundWordType = false;
+		boolean isPluralNounRequested = ( wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
+		boolean isSingularNounRequested = ( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR );
 		WordTypeItem searchWordTypeItem = firstActiveCurrentLanguageWordTypeItem();
 
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
 			return startError( 1, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
-		while( searchWordTypeItem != null &&
-		!isWordTypeAlreadyMarkedAsWritten )
+		while( !hasFoundWordType &&
+		searchWordTypeItem != null )
 			{
-			if( searchWordTypeItem.isSpecificationWordAlreadyWritten() )
-				isWordTypeAlreadyMarkedAsWritten = true;
-			else
+			if( !searchWordTypeItem.isSpecificationWordAlreadyWritten() )
 				{
-				if( searchWordTypeItem.isSingularNoun() )
-					singularNounWordTypeItem = searchWordTypeItem;
-				else
-					{
-					if( searchWordTypeItem.isPluralNoun() )
-						pluralNounWordTypeItem = searchWordTypeItem;
-					}
-
 				if( searchWordTypeItem.wordTypeNr() == wordTypeNr )
 					{
 					if( searchWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
-						return addError( 1, "I failed to mark a word as written" );
+						return addError( 1, "I failed to mark a specification word as written" );
 
-					hasWordTypeNr = true;
+					hasFoundWordType = true;
+					}
+				else
+					{
+					if( isSingularNounRequested )
+						{
+						if( searchWordTypeItem.isPluralNoun() &&
+						// Singular noun is requested. Also mark plural noun as written
+						searchWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
+							return addError( 1, "I failed to mark a plural noun specification word as written" );
+						}
+					else
+						{
+						if( isPluralNounRequested &&
+						searchWordTypeItem.isSingularNoun() &&
+						// Plural noun is requested. Also mark singular noun as written
+						searchWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
+							return addError( 1, "I failed to mark a singular noun specification word as written" );
+						}
 					}
 				}
 
 			searchWordTypeItem = searchWordTypeItem.nextCurrentLanguageWordTypeItem();
 			}
 
-		if( isWordTypeAlreadyMarkedAsWritten )
-			return startError( 1, "The given word type number is already marked as written: " + wordTypeNr );
-
-		if( !hasWordTypeNr )
+		if( !hasFoundWordType )
 			return startError( 1, "I couldn't find the given word type number: " + wordTypeNr );
-
-		// If singular noun - also set plural noun
-		if( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR &&
-		pluralNounWordTypeItem != null )
-			{
-			if( pluralNounWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
-				return addError( 1, "I failed to mark a plural noun word as written" );
-			}
-		else
-			{
-			// If plural noun - also set singular noun
-			if( wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL &&
-			singularNounWordTypeItem != null &&
-			singularNounWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
-				return addError( 1, "I failed to mark a singular noun word as written" );
-			}
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte markRelationWordTypeAsWritten( short wordTypeNr )
 		{
-		boolean hasWordTypeNr = false;
-		boolean isWordTypeAlreadyMarkedAsWritten = false;
-		WordTypeItem pluralNounWordTypeItem = null;
-		WordTypeItem singularNounWordTypeItem = null;
+		boolean hasFoundWordType = false;
 		WordTypeItem searchWordTypeItem = firstActiveCurrentLanguageWordTypeItem();
 
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
 			return startError( 1, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
-		while( searchWordTypeItem != null &&
-		!isWordTypeAlreadyMarkedAsWritten )
+		while( !hasFoundWordType &&
+		searchWordTypeItem != null )
 			{
-			if( !searchWordTypeItem.isRelationWordAlreadyWritten() )
+			if( !searchWordTypeItem.isRelationWordAlreadyWritten() &&
+			searchWordTypeItem.wordTypeNr() == wordTypeNr )
 				{
-				if( searchWordTypeItem.isSingularNoun() )
-					singularNounWordTypeItem = searchWordTypeItem;
-				else
-					{
-					if( searchWordTypeItem.isPluralNoun() )
-						pluralNounWordTypeItem = searchWordTypeItem;
-					}
+				if( searchWordTypeItem.markRelationWordTypeAsWritten() != Constants.RESULT_OK )
+					return addError( 1, "I failed to mark a relation word as written" );
 
-				if( searchWordTypeItem.wordTypeNr() == wordTypeNr )
-					{
-					if( searchWordTypeItem.markRelationWordTypeAsWritten() != Constants.RESULT_OK )
-						return addError( 1, "I failed to mark a word as written" );
-
-					hasWordTypeNr = true;
-					}
+				hasFoundWordType = true;
 				}
-
-			searchWordTypeItem = searchWordTypeItem.nextCurrentLanguageWordTypeItem();
+			else
+				searchWordTypeItem = searchWordTypeItem.nextCurrentLanguageWordTypeItem();
 			}
 
-		if( isWordTypeAlreadyMarkedAsWritten )
-			return startError( 1, "The given word type number is already marked as written: " + wordTypeNr );
-
-		if( !hasWordTypeNr )
+		if( !hasFoundWordType )
 			return startError( 1, "I couldn't find the given word type number: " + wordTypeNr );
-
-		// If singular noun - also set plural noun
-		if( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR &&
-		pluralNounWordTypeItem != null )
-			{
-			if( pluralNounWordTypeItem.markRelationWordTypeAsWritten() != Constants.RESULT_OK )
-				return addError( 1, "I failed to mark a plural noun word as written" );
-			}
-		else
-			{
-			// If plural noun - also set singular noun
-			if( wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL &&
-			singularNounWordTypeItem != null &&
-			singularNounWordTypeItem.markRelationWordTypeAsWritten() != Constants.RESULT_OK )
-				return addError( 1, "I failed to mark a singular noun word as written" );
-			}
 
 		return Constants.RESULT_OK;
 		}
 
 	protected String wordTypeString( boolean isCheckingAllLanguages, short wordTypeNr )
 		{
-		WordTypeItem searchWordTypeItem;
 		WordTypeItem foundWordTypeItem = null;
+		WordTypeItem searchWordTypeItem;
 
 		foundWordTypeItem_ = null;
 
@@ -597,14 +516,14 @@ class WordTypeList extends List
 		return boolResult;
 		}
 
-	protected WordTypeResultType addWordType( boolean isLanguageWord, boolean isMultipleWord, boolean isProperNamePrecededByDefiniteArticle, short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, short wordTypeNr, int wordLength, String wordTypeString )
+	protected WordTypeResultType addWordType( boolean isLanguageWord, boolean isMultipleWord, boolean isProperNounPrecededByDefiniteArticle, short adjectiveParameter, short definiteArticleParameter, short indefiniteArticleParameter, short wordTypeNr, int wordLength, String wordTypeString )
 		{
+		boolean hasFeminineWordEnding = false;
+		boolean hasMasculineWordEnding = false;
+		boolean isSingularNoun;
+		WordEndingResultType wordEndingResult = new WordEndingResultType();
 		WordResultType wordResult;
 		WordTypeResultType wordTypeResult = new WordTypeResultType();
-		boolean isSingularNoun;
-
-		hasFeminineWordEnding_ = false;
-		hasMasculineWordEnding_ = false;
 
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
@@ -625,13 +544,37 @@ class WordTypeList extends List
 			if( isSingularNoun ||
 
 			( !isLanguageWord &&
-			wordTypeNr == Constants.WORD_TYPE_PROPER_NAME ) )
+			wordTypeNr == Constants.WORD_TYPE_PROPER_NOUN ) )
 				{
-				if( checkOnFeminineAndMasculineWordEnding( isSingularNoun, wordTypeString ) != Constants.RESULT_OK )
-					return addWordTypeResultError( 1, "I failed to check the string on feminine or masculine word ending" );
+				// Check on feminine and masculine word ending
+				if( ( wordEndingResult = myWordItem().analyzeWordEndingWithCurrentLanguage( ( isSingularNoun ? Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING : Constants.WORD_FEMININE_PROPER_NOUN_ENDING ), 0, wordTypeString ) ).result != Constants.RESULT_OK )
+					return addWordTypeResultError( 1, "I failed to check on feminine word ending" );
+
+				if( wordEndingResult.hasFoundWordEnding )
+					{
+					hasFeminineWordEnding = true;
+
+					if( isSingularNoun &&
+					myWordItem().markWordAsFeminine() != Constants.RESULT_OK )
+						return addWordTypeResultError( 1, "I failed to mark my word as feminine" );
+					}
+				else
+					{
+					if( ( wordEndingResult = myWordItem().analyzeWordEndingWithCurrentLanguage( ( isSingularNoun ? Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING : Constants.WORD_MASCULINE_PROPER_NOUN_ENDING ), 0, wordTypeString ) ).result != Constants.RESULT_OK )
+						return addWordTypeResultError( 1, "I failed to check on masculine word ending" );
+
+					if( wordEndingResult.hasFoundWordEnding )
+						{
+						hasMasculineWordEnding = true;
+
+						if( isSingularNoun &&
+						myWordItem().markWordAsMasculine() != Constants.RESULT_OK )
+							return addWordTypeResultError( 1, "I failed to mark my word as masculine" );
+						}
+					}
 				}
 
-			if( ( wordTypeResult.wordTypeItem = new WordTypeItem( ( hasFeminineWordEnding_ && !isMultipleWord ), hasMasculineWordEnding_, isProperNamePrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, CommonVariables.currentLanguageNr, wordTypeNr, wordLength, wordTypeString, this, myWordItem() ) ) == null )
+			if( ( wordTypeResult.wordTypeItem = new WordTypeItem( ( hasFeminineWordEnding && ( isSingularNoun || !isMultipleWord ) ), hasMasculineWordEnding, isProperNounPrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, GlobalVariables.currentLanguageNr, wordTypeNr, wordLength, wordTypeString, this, myWordItem() ) ) == null )
 				return startWordTypeResultError( 1, "The created word type item is undefined" );
 
 			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, wordTypeResult.wordTypeItem ) != Constants.RESULT_OK )

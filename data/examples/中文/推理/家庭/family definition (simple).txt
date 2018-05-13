@@ -1,0 +1,42 @@
+﻿#----------------------------------------------------------------------------
+# Purpose: To demonstrate automated reasoning in natural language:
+# - Drawing conclusions, making assumptions, asking questions,
+# - detecting conflicts and some cases of semantic ambiguity, and
+# - displaying of justification reports for the self-generated knowledge
+# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
+#----------------------------------------------------------------------------
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+# The simple definition of a family.
+每个人都是男或女。
+每个女都是女孩的名字。
+每个男都是男孩的名字。
+每个家庭都有父母和孩子。
+每个父母都是父亲或母亲。
+每个孩子都是儿子或女儿。
+每个父亲都是男。
+每个母亲都是女。
+每个儿子都是男。
+每个女儿都是女。
+#C++## Now type sentences like these:
+#C++##
+#C++## 军是勇、超和瑞的父亲和媛是他们的母亲。
+#C++## 勇是父亲。		勇是男。
+#C++## 超是父亲。		超是男。
+#C++## 瑞是母亲。		瑞是女。
+#C++## 军是父亲。		军是父母。
+#C++## 媛是母亲。		媛是父母。
+#C++## 呈现军的信息。		呈现媛的信息。
+#C++## 呈现勇的信息。		呈现瑞的信息。
+#C++## 呈现父母的信息。	呈现孩子的信息。
+#C++## 勇是军和媛的父亲。
+#C++## 超是军和媛的父亲。
+#C++## 瑞是军和媛的母亲。
+#C++##
+#C++## See the text on the buttons of the family screenshots
+#C++## (in subfolder: screenshots) for more examples.
+#C++##
+# Try the sentences in all kind of combinations and in different order.
+# Use button «清除你的想法», «撤销» or «重启» for a retry.

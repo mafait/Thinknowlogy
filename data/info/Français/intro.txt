@@ -1,29 +1,26 @@
-Affichez "------------------------------------------------------------------------------".
-Affichez " Thinknowlogy est le système de raisonnement du Langage Contrôlé le plus avancé:".
-#C++#Affichez " * Malgré des siècles de recherche exhaustive, la théorie de l'évolution n'a".
-#Java#Affichez " • Malgré des siècles de recherche exhaustive, la théorie de l'évolution n'a".
-Affichez " toujours pas fourni une explication satisfaisante de l'origine de l'intelligence,".
-Affichez " du langage et des lois de la nature. Laissons seul, comment ils sont liés;".
-#C++#Affichez " * Selon la vision du monde biblique, Dieu a créé lois de la nature. Étant basé".
-#Java#Affichez " • Selon la vision du monde biblique, Dieu a créé lois de la nature. Étant basé".
+﻿Affichez "------------------------------------------------------------------------------".
+Affichez " Thinknowlogy est le système de raisonnement naturel contrôlé (CNL) le plus".
+Affichez " avancé au monde. Il est basé sur les lois naturelles de l'intelligence.".
+Affichez " Cependant, cette logique du langage n'est ni décrite par les scientifiques:".
+Affichez " * Malgré des recherches exhaustives, la théorie de l'évolution n'a toujours".
+Affichez " pas fourni une explication satisfaisante de l'origine de l'intelligence, du".
+Affichez " langage et des lois de la nature. Laissons seul, comment ils sont liés;".
+Affichez " * Selon la vision du monde biblique, Dieu a créé lois de la nature. Étant basé".
 Affichez " sur les lois de l'intelligence, seulement Thinknowlogy implémente le fonction".
-#C++#Affichez " intelligente des mots comme les articles définis \"le\" et \"la\", conjonction \"ou\",".
-#C++#Affichez " verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
-#Java#Affichez " intelligente des mots comme les articles définis «le» et «la», conjonction «ou»,".
-#Java#Affichez " verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
+#C++#Affichez " intelligente des mots comme les articles définis \"le\" et \"la\", conjonction".
+#C++#Affichez " \"ou\", verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
+#Java#Affichez " intelligente des mots comme les articles définis «le» et «la», conjonction".
+#Java#Affichez " «ou», verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
 Affichez "------------------------------------------------------------------------------".
 Affichez " La fonction intelligente de ces mots est démontrée par:".
-#C++#Affichez " * Programmation en Langue contrôlée;".
-#C++#Affichez " * Raisonnement en Langue contrôlée:".
-#Java#Affichez " • Programmation en Langue contrôlée;".
-#Java#Affichez " • Raisonnement en Langue contrôlée:".
+Affichez " * Programmation en Langue contrôlée;".
+Affichez " * Raisonnement en Langue contrôlée:".
 Affichez "   - tirer des conclusions (plus avancés que les solutions scientifiques),".
 Affichez "   - faire des hypothèses (avec niveau d'incertitude auto-réglage),".
 Affichez "   - poser des questions (environ lacunes dans les connaissances),".
 Affichez "   - détecter les conflits et les quelques cas d'ambiguïté sémantique,".
 Affichez "   - l'affichage de rapports de justification pour la connaissance autoproduite;".
-#C++#Affichez " * Multilinguisme, prouver: Langues naturelles ont une origine commune.".
-#Java#Affichez " • Multilinguisme, prouver: Langues naturelles ont une origine commune.".
+Affichez " * Multilinguisme, prouver: Langues naturelles ont une origine commune et logique.".
 Affichez "------------------------------------------------------------------------------".
 Affichez " Je défie quiconque de battre ce raisonneur: http://mafait.org/challenge/".
 Affichez "------------------------------------------------------------------------------".

@@ -1,10 +1,10 @@
-/*	Class:			GrammarItem
+﻿/*	Class:			GrammarItem
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -67,9 +67,9 @@ class GrammarItem : private Item
 
 	// Constructor
 
-	GrammarItem( bool isDefinitionStart, bool isNewStart, bool isOptionStart, bool isChoiceStart, bool isSkipOptionForWriting, unsigned short grammarWordTypeNr, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString, GrammarItem *_definitionGrammarItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	GrammarItem( bool isDefinitionStart, bool isNewStart, bool isOptionStart, bool isChoiceStart, bool isSkipOptionForWriting, unsigned short grammarWordTypeNr, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString, GrammarItem *_definitionGrammarItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GrammarItem", commonVariables, inputOutput, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "GrammarItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -137,18 +137,18 @@ class GrammarItem : private Item
 
 		statusString[0] = statusChar();
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( grammarString_ != NULL )
 			{
-			if( commonVariables()->hasFoundQuery )
+			if( globalVariables()->hasFoundQuery )
 				strcat( queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
 				strcat( queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
+			globalVariables()->hasFoundQuery = true;
 			strcat( queryString, grammarString_ );
 			}
 		}
@@ -189,7 +189,7 @@ class GrammarItem : private Item
 
 		itemBaseToString( queryWordTypeNr );
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( isDefinitionStart_ )
 			{
@@ -325,21 +325,6 @@ class GrammarItem : private Item
 		return ( grammarWordTypeNr_ > NO_WORD_TYPE_NR );
 		}
 
-	bool isNumeral()
-		{
-		return ( grammarWordTypeNr_ == WORD_TYPE_NUMERAL );
-		}
-
-	bool isSingularNoun()
-		{
-		return ( grammarWordTypeNr_ == WORD_TYPE_NOUN_SINGULAR );
-		}
-
-	bool isPluralNoun()
-		{
-		return ( grammarWordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
-		}
-
 	bool isUndefinedWord()
 		{
 		// Last item in the list
@@ -362,6 +347,45 @@ class GrammarItem : private Item
 				grammarString_ != NULL &&
 				checkGrammarItem->grammarString() != NULL &&
 				strcmp( grammarString_, checkGrammarItem->grammarString() ) == 0 );
+		}
+
+	bool isUsefulGrammarDefinition( bool isAssignment, bool isArchivedAssignment, bool isChineseCurrentLanguage, bool isPossessive, bool isQuestion, bool isSpecificationGeneralization )
+		{		// Statement
+		return ( ( !isQuestion &&
+
+				( grammarParameter_ < GRAMMAR_STATEMENT_ASSIGNMENT ||
+				grammarParameter_ > GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ||
+
+				( !isSpecificationGeneralization &&
+
+				( ( !isAssignment &&
+				grammarParameter_ == GRAMMAR_STATEMENT_SPECIFICATION ) ||
+
+				( isAssignment &&
+
+				( isPossessive ||
+				isChineseCurrentLanguage ||
+				grammarParameter_ == GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ||
+
+				( isArchivedAssignment &&
+				!isPossessive ) ||
+
+				( isSpecificationGeneralization &&
+				grammarParameter_ == GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ) ) ||
+
+				// Question
+				( isQuestion &&
+
+				( grammarParameter_ < GRAMMAR_QUESTION_SPECIFICATION ||
+				grammarParameter_ > GRAMMAR_QUESTION_SPECIFICATION_GENERALIZATION ||
+
+				( !isSpecificationGeneralization &&
+
+				( isAssignment ||
+				grammarParameter_ == GRAMMAR_QUESTION_SPECIFICATION ) ) ||
+
+				( isSpecificationGeneralization &&
+				grammarParameter_ == GRAMMAR_QUESTION_SPECIFICATION_GENERALIZATION ) ) ) );
 		}
 
 	unsigned short grammarParameter()

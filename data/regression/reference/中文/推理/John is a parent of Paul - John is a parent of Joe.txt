@@ -1,0 +1,20 @@
+﻿* 
+* 我的结论：
+< 勇的父母叫军。
+< 
+* 
+* The word "军" is semantically ambiguous. There are multiple instances of this entity.
+* 
+* 我的结论：
+< 超的父母叫军。
+< 
+* 
+* 你的信息：
+< 军是勇和超的父母。
+* 
+* 相关信息：
+< 超的父母叫军。
+< 勇的父母叫军。
+< 
+* 我知道。
+* 

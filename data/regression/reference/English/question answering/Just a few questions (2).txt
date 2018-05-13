@@ -4,6 +4,9 @@
 * I don't know the answer to this question, but I'll keep it in mind.
 * 
 * 
+* You had a similar question before:
+< Is a set a number?
+* 
 * I don't know the answer to this question, but I'll keep it in mind.
 * 
 < No, a set is A, B, C, D, E, F or G.
@@ -29,11 +32,11 @@
 * This question is already answered.
 * 
 * My answer:
-< No, my set is D.
+< No, his set is D.
 < 
 * 
 * You had a similar question before:
-< Is the set A?
+< Is his set A?
 * 
 * This question is already answered.
 * 

@@ -1,10 +1,10 @@
-/*	Class:			WriteItem
+﻿/*	Class:			WriteItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about a word
  *					during the process of writing a sentence
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -44,9 +44,9 @@ class WriteItem : private Item
 
 	// Constructor
 
-	WriteItem( bool _isSkipped, unsigned short grammarLevel, GrammarItem *startOfChoiceOrOptionGrammarItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	WriteItem( bool _isSkipped, unsigned short grammarLevel, GrammarItem *startOfChoiceOrOptionGrammarItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "WriteItem", commonVariables, inputOutput, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "WriteItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -82,7 +82,7 @@ class WriteItem : private Item
 
 		itemBaseToString( queryWordTypeNr );
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( isSkipped )
 			{

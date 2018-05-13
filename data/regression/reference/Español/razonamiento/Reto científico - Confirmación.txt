@@ -52,12 +52,6 @@
 < Los Estados Unidos tiene un presidente, llamado Barack Obama.
 < 
 * 
-* La palabra "Barack Obama" es semánticamente ambiguas:
-* - la entidad que reapareció,
-* - o si hay varias instancias de esta entidad.
-* 
-* En este último caso, por favor, mejorar la especificación de las entidades involucradas.
-* 
 * Mis conclusiones son confirmadas:
 < Los Estados Unidos tiene un presidente, llamado Barack Obama.
 < 

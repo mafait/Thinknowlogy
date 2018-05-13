@@ -1,9 +1,9 @@
-/*	Class:			JustificationList
+﻿/*	Class:			JustificationList
  *	Parent class:	List
  *	Purpose:		To store justification items of self-generated knowledge
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -56,7 +56,7 @@ class JustificationList extends List
 		return highestOrderNr;
 		}
 
-	private short justificationOrderNr( boolean hasFeminineOrMasculineProperNameEnding, boolean hasPossessivePrimarySpecification, short justificationTypeNr, int primarySpecificationCollectionNr )
+	private short justificationOrderNr( boolean hasFeminineOrMasculineProperNounEnding, boolean hasPossessivePrimarySpecification, short justificationTypeNr, int primarySpecificationCollectionNr )
 		{
 		JustificationItem searchJustificationItem = firstActiveJustificationItem();
 
@@ -64,7 +64,7 @@ class JustificationList extends List
 			{
 			while( searchJustificationItem != null )
 				{
-				if( searchJustificationItem.hasFeminineOrMasculineProperNameEnding() == hasFeminineOrMasculineProperNameEnding &&
+				if( searchJustificationItem.hasFeminineOrMasculineProperNounEnding() == hasFeminineOrMasculineProperNounEnding &&
 				searchJustificationItem.justificationTypeNr() == justificationTypeNr &&
 				searchJustificationItem.hasPossessivePrimarySpecification() == hasPossessivePrimarySpecification &&
 				searchJustificationItem.primarySpecificationCollectionNr() == primarySpecificationCollectionNr )
@@ -121,7 +121,7 @@ class JustificationList extends List
 			return startError( 1, "The given unused justification item is undefined" );
 
 		while( searchJustificationItem != null &&
-		!CommonVariables.hasDisplayedIntegrityWarning )
+		!GlobalVariables.hasDisplayedIntegrityWarning )
 			{
 			if( searchJustificationItem.attachedJustificationItem() == unusedJustificationItem &&
 			InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nI found an attached justification item that is still in use:\n\tJustificationItem: " + searchJustificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ";\n\tattachedJustificationItem: " + unusedJustificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n" ) != Constants.RESULT_OK )
@@ -141,7 +141,7 @@ class JustificationList extends List
 			return startError( 1, "The given unused specification item is undefined" );
 
 		while( searchJustificationItem != null &&
-		!CommonVariables.hasDisplayedIntegrityWarning )
+		!GlobalVariables.hasDisplayedIntegrityWarning )
 			{
 			if( searchJustificationItem.primarySpecificationItem() == unusedSpecificationItem &&
 			InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nI found a primary specification item that is still in use:\n\tJustificationItem: " + searchJustificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ";\n\tprimarySpecificationItem: " + unusedSpecificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n" ) != Constants.RESULT_OK )
@@ -233,13 +233,13 @@ class JustificationList extends List
 		return ( isActiveItem ? firstActiveJustificationItem() : firstReplacedJustificationItem() );
 		}
 
-	private JustificationItem justificationItem( boolean hasFeminineOrMasculineProperNameEnding, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem )
+	private JustificationItem justificationItem( boolean hasFeminineOrMasculineProperNounEnding, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem )
 		{
 		JustificationItem searchJustificationItem = firstActiveJustificationItem();
 
 		while( searchJustificationItem != null )
 			{
-			if( searchJustificationItem.hasJustification( hasFeminineOrMasculineProperNameEnding, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, anotherSecondarySpecificationItem ) )
+			if( searchJustificationItem.hasJustification( hasFeminineOrMasculineProperNounEnding, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, anotherSecondarySpecificationItem ) )
 				return searchJustificationItem;
 
 			searchJustificationItem = searchJustificationItem.nextJustificationItem();
@@ -407,7 +407,7 @@ class JustificationList extends List
 				obsoleteJustificationItem = firstJustificationItem.primarySpecificationWithoutRelationContextJustificationItem( attachedPrimarySpecificationItem.specificationWordItem() );
 			else
 				{
-				// Typically for the Spanish language
+				// Typically for Spanish
 				if( attachedSecondarySpecificationItem != null &&
 				attachedSecondarySpecificationItem.isUserSpecification() &&
 				
@@ -530,7 +530,7 @@ class JustificationList extends List
 			( searchJustificationItem = searchJustificationItem.nextJustificationItem() ) != null );
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte checkForUnreferencedReplacedJustifications()
@@ -539,7 +539,7 @@ class JustificationList extends List
 		WordItem generalizationWordItem = myWordItem();
 
 		while( searchJustificationItem != null &&
-		!CommonVariables.hasDisplayedIntegrityWarning )
+		!GlobalVariables.hasDisplayedIntegrityWarning )
 			{
 			if( !generalizationWordItem.isJustificationInUse( searchJustificationItem ) &&
 			InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nI found an unreferenced replaced justification item:\n\tJustificationItem: " + searchJustificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n" ) != Constants.RESULT_OK )
@@ -560,7 +560,7 @@ class JustificationList extends List
 				return checkJustificationForUsage( false, unusedJustificationItem );
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte checkSpecificationForUsage( SpecificationItem unusedSpecificationItem )
@@ -568,7 +568,7 @@ class JustificationList extends List
 		if( checkSpecificationForUsage( true, unusedSpecificationItem ) == Constants.RESULT_OK )
 			return checkSpecificationForUsage( false, unusedSpecificationItem );
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected byte replaceJustification( boolean isExclusiveGeneralization, JustificationItem obsoleteJustificationItem, JustificationItem replacingJustificationItem, SpecificationItem involvedSpecificationItem, SpecificationItem replacingCorrectedAssumptionByKnowledgeSpecificationItem )
@@ -837,7 +837,7 @@ class JustificationList extends List
 					// Avoid creating unreferenced justifications
 					generalizationWordItem.isJustificationInUse( searchJustificationItem ) ) )
 						{
-						if( ( justificationResult = addJustification( searchJustificationItem.hasFeminineOrMasculineProperNameEnding(), ( isReplacingSecondarySpecification && searchJustificationItem.isPossessiveReversibleAssumptionOrConclusion() ), false, searchJustificationItem.updatedJustificationTypeNr( replacingSpecificationItem ), searchJustificationItem.orderNr, searchJustificationItem.originalSentenceNr(), ( isReplacingPrimarySpecification ? replacingSpecificationItem : searchJustificationItem.updatedPrimarySpecificationItem() ), ( isReplacingAnotherPrimarySpecification ? replacingSpecificationItem : anotherPrimarySpecificationItem ), ( isReplacingSecondarySpecification ? replacingSpecificationItem : searchJustificationItem.updatedSecondarySpecificationItem() ), ( isReplacingAnotherSecondarySpecification ? replacingSpecificationItem : anotherSecondarySpecificationItem ), searchJustificationItem.attachedJustificationItem() ) ).result != Constants.RESULT_OK )
+						if( ( justificationResult = addJustification( searchJustificationItem.hasFeminineOrMasculineProperNounEnding(), ( isReplacingSecondarySpecification && searchJustificationItem.isPossessiveReversibleAssumptionOrConclusion() ), false, searchJustificationItem.updatedJustificationTypeNr( replacingSpecificationItem ), searchJustificationItem.orderNr, searchJustificationItem.originalSentenceNr(), ( isReplacingPrimarySpecification ? replacingSpecificationItem : searchJustificationItem.updatedPrimarySpecificationItem() ), ( isReplacingAnotherPrimarySpecification ? replacingSpecificationItem : anotherPrimarySpecificationItem ), ( isReplacingSecondarySpecification ? replacingSpecificationItem : searchJustificationItem.updatedSecondarySpecificationItem() ), ( isReplacingAnotherSecondarySpecification ? replacingSpecificationItem : anotherSecondarySpecificationItem ), searchJustificationItem.attachedJustificationItem() ) ).result != Constants.RESULT_OK )
 							return addError( 1, "I failed to add a justification item" );
 
 						if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == null )
@@ -1048,7 +1048,7 @@ class JustificationList extends List
 		return null;
 		}
 
-	protected JustificationResultType addJustification( boolean hasFeminineOrMasculineProperNameEnding, boolean isForcingNewJustification, boolean isIncrementingOrderNr, short justificationTypeNr, short orderNr, int originalSentenceNr, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem, JustificationItem attachedJustificationItem )
+	protected JustificationResultType addJustification( boolean hasFeminineOrMasculineProperNounEnding, boolean isForcingNewJustification, boolean isIncrementingOrderNr, short justificationTypeNr, short orderNr, int originalSentenceNr, SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem anotherSecondarySpecificationItem, JustificationItem attachedJustificationItem )
 		{
 		boolean hasPrimarySpecificationRelationContext = false;
 		boolean isExclusivePrimarySpecification = false;
@@ -1101,7 +1101,7 @@ class JustificationList extends List
 
 		// Skipping search, will force the creation of another justification item
 		if( !isForcingNewJustification )
-			foundJustificationItem = justificationItem( hasFeminineOrMasculineProperNameEnding, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, anotherSecondarySpecificationItem );
+			foundJustificationItem = justificationItem( hasFeminineOrMasculineProperNounEnding, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, anotherSecondarySpecificationItem );
 
 		if( foundJustificationItem == null ||
 
@@ -1148,7 +1148,7 @@ class JustificationList extends List
 							{
 							case Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
 								if( anotherPrimarySpecificationItem == null &&
-								secondarySpecificationItem.isGeneralizationProperName() &&
+								secondarySpecificationItem.isGeneralizationProperNoun() &&
 								( existingJustificationItem = primarySpecificationJustificationItem( false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, primarySpecificationItem ) ) != null )
 									isIncrementingOrderNr = true;
 
@@ -1165,18 +1165,18 @@ class JustificationList extends List
 								// See case above
 								if( ( isExclusivePrimarySpecification ||
 
-								// Typically for the Spanish language
+								// Typically for Spanish
 								( ( isPrimarySpecificationWordSpanishAmbiguous &&
 								hasPrimarySpecificationRelationContext &&
 								primarySpecificationItem.generalizationWordItem() == myWordItem() ) ||
 
-								( hasFeminineOrMasculineProperNameEnding &&
+								( hasFeminineOrMasculineProperNounEnding &&
 								anotherPrimarySpecificationItem != null &&
 								anotherPrimarySpecificationItem.isSpecificationWordSpanishAmbiguous() ) ) ) &&
 
 								( primarySpecificationCollectionNr = primarySpecificationItem.specificationCollectionNr() ) > Constants.NO_COLLECTION_NR )
 									{
-									if( ( foundJustificationOrderNr = justificationOrderNr( hasFeminineOrMasculineProperNameEnding, primarySpecificationItem.isPossessive(), justificationTypeNr, primarySpecificationCollectionNr ) ) == Constants.NO_ORDER_NR )
+									if( ( foundJustificationOrderNr = justificationOrderNr( hasFeminineOrMasculineProperNounEnding, primarySpecificationItem.isPossessive(), justificationTypeNr, primarySpecificationCollectionNr ) ) == Constants.NO_ORDER_NR )
 										isIncrementingOrderNr = true;
 									else
 										orderNr = foundJustificationOrderNr;
@@ -1198,7 +1198,7 @@ class JustificationList extends List
 								break;
 
 							case Constants.JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION:
-								// Typically for the Spanish language
+								// Typically for Spanish
 								if( anotherPrimarySpecificationItem == null &&
 								anotherSecondarySpecificationItem != null &&
 								secondarySpecificationItem.hasRelationContext() )
@@ -1207,7 +1207,7 @@ class JustificationList extends List
 								break;
 
 							case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
-								// Typically for the Spanish language
+								// Typically for Spanish
 								if( anotherSecondarySpecificationItem == null )
 									{
 									if( ( foundJustificationOrderNr = questionJustificationOrderNr( primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem ) ) == Constants.NO_ORDER_NR )
@@ -1224,7 +1224,7 @@ class JustificationList extends List
 					orderNr == Constants.NO_ORDER_NR ||
 					justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION ||
 
-					// Typically for the Spanish language
+					// Typically for Spanish
 					( primarySpecificationItem != null &&
 					justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION &&
 
@@ -1238,7 +1238,7 @@ class JustificationList extends List
 			if( orderNr <= Constants.NO_ORDER_NR )
 				return startJustificationResultError( 1, "The order number is undefined" );
 
-			if( ( justificationResult.createdJustificationItem = new JustificationItem( hasFeminineOrMasculineProperNameEnding, justificationTypeNr, orderNr, originalSentenceNr, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, anotherSecondarySpecificationItem, attachedJustificationItem, this, myWordItem() ) ) == null )
+			if( ( justificationResult.createdJustificationItem = new JustificationItem( hasFeminineOrMasculineProperNounEnding, justificationTypeNr, orderNr, originalSentenceNr, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, anotherSecondarySpecificationItem, attachedJustificationItem, this, myWordItem() ) ) == null )
 				return startJustificationResultError( 1, "I failed to create a justification item" );
 
 			// Add justification item
@@ -1253,7 +1253,7 @@ class JustificationList extends List
 	protected JustificationResultType copyJustification( boolean isForcingNewJustification, SpecificationItem newPrimarySpecificationItem, SpecificationItem newSecondarySpecificationItem, JustificationItem newAttachedJustificationItem, JustificationItem originalJustificationItem )
 		{
 		if( originalJustificationItem != null )
-			return addJustification( originalJustificationItem.hasFeminineOrMasculineProperNameEnding(), isForcingNewJustification, false, originalJustificationItem.updatedJustificationTypeNr( newSecondarySpecificationItem ), originalJustificationItem.orderNr, originalJustificationItem.originalSentenceNr(), newPrimarySpecificationItem, originalJustificationItem.anotherPrimarySpecificationItem(), newSecondarySpecificationItem, originalJustificationItem.anotherSecondarySpecificationItem(), newAttachedJustificationItem );
+			return addJustification( originalJustificationItem.hasFeminineOrMasculineProperNounEnding(), isForcingNewJustification, false, originalJustificationItem.updatedJustificationTypeNr( newSecondarySpecificationItem ), originalJustificationItem.orderNr, originalJustificationItem.originalSentenceNr(), newPrimarySpecificationItem, originalJustificationItem.anotherPrimarySpecificationItem(), newSecondarySpecificationItem, originalJustificationItem.anotherSecondarySpecificationItem(), newAttachedJustificationItem );
 
 		return startJustificationResultError( 1, "The given original justification item is undefined" );
 		}

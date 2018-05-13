@@ -1,0 +1,5 @@
+﻿Parents et enfants sont partie de chaque famille.
+Chaque personne est un homme ou une femme.
+# Une question sera générée, car les noms "homme" et "femme" ne sont pas encore définis comme masculin et féminin.
+Amélie est une personne.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

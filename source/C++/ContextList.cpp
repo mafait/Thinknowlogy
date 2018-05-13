@@ -1,9 +1,9 @@
-/*	Class:			ContextList
+﻿/*	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -74,13 +74,13 @@ class ContextList : private List
 	protected:
 	// Constructor
 
-	ContextList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	ContextList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
 		// Private constructed variables
 
 		isMarkedAsContextWord_ = false;
 
-		initializeListVariables( WORD_CONTEXT_LIST_SYMBOL, "ContextList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( WORD_CONTEXT_LIST_SYMBOL, "ContextList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~ContextList()
@@ -104,15 +104,15 @@ class ContextList : private List
 
 	void addToContextWordQuickAccessList()
 		{
-		WordItem *lastContextWordItem = commonVariables()->lastContextWordItem;
+		WordItem *lastContextWordItem = globalVariables()->lastContextWordItem;
 
 		if( lastContextWordItem == NULL )
-			commonVariables()->firstContextWordItem = myWordItem();
+			globalVariables()->firstContextWordItem = myWordItem();
 		else
 			// Word order is important: Add word at end of context word list
 			lastContextWordItem->nextContextWordItem = myWordItem();
 
-		commonVariables()->lastContextWordItem = myWordItem();
+		globalVariables()->lastContextWordItem = myWordItem();
 		}
 
 	bool hasContext( unsigned int contextNr )
@@ -250,7 +250,7 @@ class ContextList : private List
 	signed char addContext( bool isCompoundCollectionSpanishAmbiguous, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem )
 		{
 		ContextItem *foundContextItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "addContext";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addContext";
 
 		if( contextNr <= NO_CONTEXT_NR )
 			return startError( functionNameString, "The given context number is undefined" );
@@ -273,7 +273,7 @@ class ContextList : private List
 				addToContextWordQuickAccessList();
 				}
 
-			if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionSpanishAmbiguous, contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+			if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionSpanishAmbiguous, contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
 				return addError( functionNameString, "I failed to add an active context item" );
 			}
 		else
@@ -294,10 +294,10 @@ class ContextList : private List
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 		char errorString[MAX_ERROR_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkForUnusedContext";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForUnusedContext";
 
 		while( searchContextItem != NULL &&
-		!commonVariables()->hasDisplayedIntegrityWarning )
+		!globalVariables()->hasDisplayedIntegrityWarning )
 			{
 			if( !hasContextInSpecificationsOfGeneralizationWords( searchContextItem->contextNr() ) )
 				{
@@ -316,7 +316,7 @@ class ContextList : private List
 	signed char checkWordItemForUsage( WordItem *unusedWordItem )
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkWordItemForUsage";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkWordItemForUsage";
 
 		if( unusedWordItem == NULL )
 			return startError( functionNameString, "The given unused word item is undefined" );

@@ -166,11 +166,11 @@
 <	- Paul is the son of John and Anna.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Anna is probably a parent of Paul and Joe.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 < Anna is possibly a woman. Because:
 <	- Anna is possibly a mother of Paul and Joe.
 <	- Every mother is a woman.
@@ -199,7 +199,7 @@
 <	- Anna has 2 son [plural of 'son' is unknown], called Paul and Joe.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 < Paul is probably a child of John and Anna. Because:
 <	- Anna has probably 2 children, called Paul and Joe.
 <	- John has probably 2 children, called Paul and Joe.
@@ -276,7 +276,7 @@
 <	- Anna has 2 son [plural of 'son' is unknown], called Paul and Joe.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 
 * My questions:
 < Is Joe a boy or a man? Because:

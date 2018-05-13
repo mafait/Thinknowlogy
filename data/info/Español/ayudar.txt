@@ -9,24 +9,25 @@
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Ejemplos de oraciones imperativas disponibles:".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Leer el archivo \"{nombre de archivo}\".\t* Leer un archivo".
-Mostrar " Ayudar.\t\t\t\t* Muestra esta información de ayuda".
-Mostrar " Deshacer.\t\t\t\t* Deshacer la última frase".
-Mostrar " Rehacer.\t\t\t\t* Rehacer una sentencia sin hacer".
-Mostrar " Despejar la mente.\t\t\t* Olvídese de los conocimientos previos".
-Mostrar " Reiniciar.\t\t\t\t* Reiniciar el programa".
+Mostrar " Leer el archivo \"{nombre de archivo}\".	* Leer un archivo".
+Mostrar " Ayudar.			* Muestra esta información de ayuda".
+Mostrar " Deshacer.			* Deshacer la última frase".
+Mostrar " Rehacer.			* Rehacer una sentencia sin hacer".
+Mostrar " Despejar la mente.		* Olvídese de los conocimientos previos".
+Mostrar " Reiniciar.			* Reiniciar el programa".
 Mostrar " Mostrar información sobre los idiomas.".
 Mostrar " Mostrar información sobre las listas.".
+Mostrar " Mostrar información sobre los usuarios.".
 Mostrar " Mostrar información sobre los tipos de palabra.".
 Mostrar " Mostrar los comandos de consulta.".
 Mostrar " Mostrar los derechos de autor.".
 Mostrar " Mostrar la licencia-GPLv2.".
 Mostrar " Mostrar la garantía.".
 Mostrar "------------------------------------------------------------------------------".
-#C++#Mostrar " Archivos de ejemplo:\t* carpeta: Thinknowlogy2017r2/data/examples/Español/usuario/".
-#Java#Mostrar " Archivos de ejemplo: Utilice botón <más ejemplos>".
-#Java#Mostrar "\t    o ver carpeta: Thinknowlogy2017r2/data/examples/Español/usuario/".
-Mostrar " Fundamental:\t\t* carpeta: Thinknowlogy2017r2/documents/".
-Mostrar " Proyecto:\t\t* carpeta: Thinknowlogy2017r2/documents/design/".
-Mostrar " Imágenes:\t\t* carpeta: Thinknowlogy2017r2/screenshots/Español/".
+#C++#Mostrar " Archivos de ejemplo: * carpeta: Thinknowlogy2018r1/data/examples/Español/usuario/".
+#Java#Mostrar " Archivos de ejemplo: * Utilice botón <más ejemplos>".
+#Java#Mostrar "	    o ver carpeta: Thinknowlogy2018r1/data/examples/Español/usuario/".
+Mostrar " Fundamental:	          * carpeta: Thinknowlogy2018r1/documents/".
+Mostrar " Proyecto:	          * carpeta: Thinknowlogy2018r1/documents/design/".
+Mostrar " Imágenes:	          * carpeta: Thinknowlogy2018r1/screenshots/Español/".
 Mostrar "------------------------------------------------------------------------------".

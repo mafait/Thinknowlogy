@@ -1,6 +1,6 @@
 ﻿Read the file "English/user/reasoning/family/family definition".
-James has a son, called Adam.
-Display the justification report about James.
+Michael has a son, called Adam.
+Display the justification report about Michael.
 Display the justification report about Adam.
 John is the father and Anna is the mother of Paul, Joe and Laura.
 Display the justification report about John.

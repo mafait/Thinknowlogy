@@ -1,0 +1,4 @@
+﻿Cada tipo de líquido tiene un punto de ebullición específico.
+El agua tiene un punto de ebullición de 100 grados Celsius.
+Mostrar el informe de justificación sobre el agua.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -1,4 +1,4 @@
-﻿Une personne est un homme ou une femme.
+﻿Chaque personne est un homme ou une femme.
 Dominique est une personne.
 Dominique n'est pas une femme.
 Affichez le rapport de justification sur Dominique.

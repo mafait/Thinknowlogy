@@ -3,7 +3,6 @@
 #----------------------------
 #Java#Lirez le fichier de test "Français/utilisateur/ambiguïté/Boston".
 #Java#Lirez le fichier de test "Français/utilisateur/ambiguïté/Presidents des États-Unis".
-#Java#Lirez le fichier de test "Français/utilisateur/ambiguïté/Presidents des États-Unis - Confirmation".
 
 Lirez le fichier de test "Français/utilisateur/programmation/Puissance 4 - Affichez information sur le mouvement".
 Lirez le fichier de test "Français/utilisateur/programmation/Message d'accueil".
@@ -15,6 +14,8 @@ Lirez le fichier de test "Français/utilisateur/question réponse/Spécification
 Lirez le fichier de test "Français/utilisateur/question réponse/Spécification-généralisation - Question (nombre)".
 Lirez le fichier de test "Français/utilisateur/question réponse/Cette question est plus spécifique (sans relation)".
 
+Lirez le fichier de test "Français/utilisateur/raisonnement/Point d'ébullition".
+Lirez le fichier de test "Français/utilisateur/raisonnement/Point de condensation".
 Lirez le fichier de test "Français/utilisateur/raisonnement/Article indéfini ne correspond pas à noun".
 Lirez le fichier de test "Français/utilisateur/raisonnement/Mes conclusions qui sont confirmées (avec relation, sans définition de famille)".
 #Java#Lirez le fichier de test "Français/utilisateur/raisonnement/Défi scientifique".
@@ -24,6 +25,7 @@ Lirez le fichier de test "Français/utilisateur/raisonnement/Spécification-gén
 Lirez le fichier de test "Français/utilisateur/raisonnement/La seule option qui reste - Bateau".
 Lirez le fichier de test "Français/utilisateur/raisonnement/La seule option qui reste - Option".
 Lirez le fichier de test "Français/utilisateur/raisonnement/Tom est un chat".
+#Java#Lirez le fichier de test "Français/utilisateur/raisonnement/Presidents des États-Unis - Confirmation".
 
 #----------------------------
 # Famille (utilisateur)
@@ -129,6 +131,7 @@ Lirez le fichier de test "Français/question réponse/Juste quelques questions (
 Lirez le fichier de test "Français/raisonnement/Acceptation - Olivier est une personne, Olivier est grand et Olivier est un garçon".
 Lirez le fichier de test "Français/raisonnement/L'acceptation d'un seul article dans la spécification exclusive".
 Lirez le fichier de test "Français/raisonnement/L'acceptation de la peine sans fin du côlon".
+Lirez le fichier de test "Français/raisonnement/Test supplémentaire".
 Lirez le fichier de test "Français/raisonnement/Adjectif".
 Lirez le fichier de test "Français/raisonnement/Un changé niveau de hypothèse (1)".
 Lirez le fichier de test "Français/raisonnement/Un changé niveau de hypothèse (2)".

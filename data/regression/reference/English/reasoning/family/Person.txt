@@ -47,7 +47,7 @@
 < Anna is probably a woman. Because:
 <	- Anna is a person.
 <	- Every person is a man or a woman.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 < Anna is probably feminine. Because:
 <	- Anna is probably a woman.
 <	- Every woman is feminine.

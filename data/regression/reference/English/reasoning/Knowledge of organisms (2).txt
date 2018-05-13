@@ -13,6 +13,5 @@
 < A body is part of every creature.
 < 
 * 
-* My conclusions:
-< A body is part of a creature.
-< 
+* You have entered plural noun "creatures", which was unknown to me.
+* 

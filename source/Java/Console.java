@@ -1,8 +1,8 @@
 /*	Class:		Console
  *	Purpose:	To create the GUI and to process the events
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -149,7 +149,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		nSubMenuButtons_ < Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS &&
 		currentLanguageWordItem_ != null &&
 		( interfaceString = currentLanguageWordItem_.interfaceString( interfaceParameter ) ) != null &&
-		!interfaceString.equals( Constants.INTERFACE_STRING_NOT_AVAILABLE ) )
+		!interfaceString.equals( Constants.NO_INTERFACE_STRING_FOUND_STRING ) )
 			{
 			subMenuButtonArray_[nSubMenuButtons_].setEnabled( true );
 			subMenuButtonArray_[nSubMenuButtons_++].setText( interfaceString );
@@ -167,23 +167,19 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			}
 		}
 
-	private static void changeFont( String actionCommandString )
+	private static void changeFont( String fontString )
 		{
 		boolean hasFoundAction = false;
 		String interfaceString;
 
-		if( actionCommandString != null )
+		if( fontString != null )
 			{
-			if( actionCommandString.equals( Constants.CONSOLE_FONT_ARIEL ) ||
-			actionCommandString.equals( Constants.CONSOLE_FONT_COURIER ) ||
-			actionCommandString.equals( Constants.CONSOLE_FONT_COURIER_NEW ) ||
-			actionCommandString.equals( Constants.CONSOLE_FONT_MICROSOFT_SANS_SERIF ) ||
-			actionCommandString.equals( Constants.CONSOLE_FONT_MONOSPACED ) ||
-			actionCommandString.equals( Constants.CONSOLE_FONT_TIMES_NEW_ROMAN ) ||
-			actionCommandString.equals( Constants.CONSOLE_FONT_VERDANA ) )
+			if( fontString.equals( Font.SANS_SERIF ) ||
+			fontString.equals( Font.SERIF ) ||
+			fontString.equals( Font.MONOSPACED ) )
 				{
 				hasFoundAction = true;
-				currentFontString_ = actionCommandString;
+				currentFontString_ = fontString;
 				}
 			else
 				{
@@ -192,7 +188,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 					interfaceString = currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_FONT_SIZE_DECREASE );
 	
 					if( interfaceString != null &&
-					interfaceString.equals( actionCommandString ) )
+					interfaceString.equals( fontString ) )
 						{
 						hasFoundAction = true;
 						currentFontSize_--;
@@ -202,7 +198,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 						interfaceString = currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_FONT_SIZE_INCREASE );
 						
 						if( interfaceString != null &&
-						interfaceString.equals( actionCommandString ) )
+						interfaceString.equals( fontString ) )
 							{
 							hasFoundAction = true;
 							currentFontSize_++;
@@ -229,16 +225,16 @@ class Console extends JPanel implements ActionListener, ComponentListener
 										hasSelectedProgrammingTowerOfHanoi_ ||
 										hasSelectedReasoningScientificChallenge_ ||
 										hasSelectedReasoningFamilyDefinition_ );
-		boolean isFontMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_FONT );
-		boolean isLanguageMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
+		boolean isChangeFontMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_FONT );
+		boolean isChangeLanguageMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE );
 		boolean isDeveloperTheCurrentUser = ( adminItem_ != null &&
 											adminItem_.isDeveloperTheCurrentUser() );
 		boolean isExpertTheCurrentUser = ( adminItem_ != null &&
 											adminItem_.isExpertTheCurrentUser() );
 		boolean isHelpMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_HELP );
 		boolean isInitMenu = ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_INIT );
-		boolean isInvisible = ( isFontMenu ||
-								isLanguageMenu ||
+		boolean isInvisible = ( isChangeFontMenu ||
+								isChangeLanguageMenu ||
 								isHelpMenu ||
 								isInitMenu );
 
@@ -324,10 +320,10 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			}
 
 		mainMenuBackButton_.setEnabled( isEnablingNormalButtons );
-		setButtonText( ( !isInitMenu && !isLanguageMenu && !isFontMenu && !isHelpMenu ), Constants.INTERFACE_CONSOLE_MAIN_MENU_BACK, mainMenuBackButton_ );
+		setButtonText( ( !isChangeFontMenu && !isChangeLanguageMenu && !isHelpMenu && !isInitMenu ), Constants.INTERFACE_CONSOLE_MAIN_MENU_BACK, mainMenuBackButton_ );
 
-		setButtonText( isEnablingNormalButtons, Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE, mainMenuChangeLanguageButton_ );
-		setButtonText( isEnablingNormalButtons, Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT, mainMenuChangeFontButton_ );
+		setButtonText( ( isEnablingNormalButtons && !isChangeFontMenu ), Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT, mainMenuChangeFontButton_ );
+		setButtonText( ( isEnablingNormalButtons && !isChangeLanguageMenu ), Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE, mainMenuChangeLanguageButton_ );
 
 		// Sub-menu
 		if( !isInitMenu &&
@@ -357,9 +353,9 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	private static void resizeFrame()
 		{
-		int difference;
 		int buttonPaneSize = ( titleBarHeight_ + mainMenuPanel_.getHeight() + subMenuPanel_.getHeight() + inputPanel_.getHeight() + windowBottomHeight_ + Constants.CONSOLE_BUTTON_PANE_HEIGHT );
 		int currentOutputPaneSize = ( currentFrameHeight_ - buttonPaneSize );
+		int difference;
 		int halfFrameHeight = ( currentFrameHeight_ / 2 );
 		// The output pane size must be at least half the frame size 
 		int preferredOutputScrollPaneSize = ( currentOutputPaneSize < halfFrameHeight ? halfFrameHeight : currentOutputPaneSize );
@@ -371,9 +367,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			// Increasing the number of visible sub-menu buttons of the pane  
 			nSubMenuButtons_++;
 
-		difference = preferredOutputScrollPaneSize - wantedPreferredOutputScrollPaneSize_;
-
-		if( difference == 0 )
+		if( ( difference = preferredOutputScrollPaneSize - wantedPreferredOutputScrollPaneSize_ ) == 0 )
 			{
 			if( nSubMenuButtons_ > 1 &&
 			outputScrollPane_.getHeight() < buttonPaneSize )
@@ -391,7 +385,12 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				goToEndOfOutputDocument( true );
 				}
 			else
-				wantedPreferredOutputScrollPaneSize_++;
+				{
+				if( difference > 3 )
+					wantedPreferredOutputScrollPaneSize_ += ( difference / 2 );
+				else
+					wantedPreferredOutputScrollPaneSize_++;
+				}
 			}
 
 		mainMenuPanel_.setPreferredSize( new Dimension( 0, ( Constants.CONSOLE_BUTTON_PANE_HEIGHT + mainMenuHelpButton_.getY() ) ) );
@@ -412,12 +411,12 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			isButtonInvisible = ( isInvisible &&
 								interfaceString != null &&
 								// Don't display undefined buttons
-								!interfaceString.equals( Constants.INTERFACE_STRING_NOT_AVAILABLE ) );
+								!interfaceString.equals( Constants.NO_INTERFACE_STRING_FOUND_STRING ) );
 
 			// Change language button and Change font button are always visible
 			if( interfaceParameter == Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_LANGUAGE ||
 			interfaceParameter == Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT )
-				menuButton.setEnabled( isButtonInvisible && ( interfaceParameter == Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT || CommonVariables.interfaceLanguageStringBuffer != null ) );
+				menuButton.setEnabled( isButtonInvisible && ( interfaceParameter == Constants.INTERFACE_CONSOLE_MAIN_MENU_CHANGE_FONT || GlobalVariables.interfaceLanguageStringBuffer != null ) );
 			else
 				menuButton.setVisible( isButtonInvisible );
 
@@ -428,10 +427,10 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	private static void setInterfaceLanguage()
 		{
-		if( CommonVariables.currentLanguageWordItem != null &&
-		CommonVariables.currentLanguageWordItem != currentLanguageWordItem_ )
+		if( GlobalVariables.currentLanguageWordItem != null &&
+		GlobalVariables.currentLanguageWordItem != currentLanguageWordItem_ )
 			{
-			currentLanguageWordItem_ = CommonVariables.currentLanguageWordItem;
+			currentLanguageWordItem_ = GlobalVariables.currentLanguageWordItem;
 			
 			// Upper panel buttons
 			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_CLEAR_YOUR_MIND, upperMenuClearYourMindButton_ );
@@ -489,6 +488,10 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		switch( currentSubMenu_ )
 			{
 			case Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4:
+				// Set mono-spaced font
+				// Otherwise, the playing board looks compressed
+				outputArea_.setFont( new Font( Font.MONOSPACED, Font.PLAIN, currentFontSize_ ) );
+
 				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_MY_SET_IS_A );
 				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_MY_SET_IS_B );
 				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_MY_SET_IS_C );
@@ -496,7 +499,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_MY_SET_IS_E );
 				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_MY_SET_IS_F );
 				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_MY_SET_IS_G );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_SHOW_INFO_ABOUT_THE_SET );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_DISPLAY_INFO_ABOUT_THE_SET );
 				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_THE_SOLVE_LEVEL_IS_LOW );
 				addSubMenuButton( Constants.INTERFACE_CONSOLE_PROGRAMMING_CONNECT4_THE_SOLVE_LEVEL_IS_HIGH );
 				break;
@@ -560,18 +563,18 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				break;
 
 			case Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT:
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_FAMILY );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_PARENT );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_CHILD );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_FATHER );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_MOTHER );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_SON );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_DAUGHTER );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_JOHN );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_ANN );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_PAUL );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_JOE );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_SHOW_JUSTIFICATION_REPORT_FOR_LAURA );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_FAMILY );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_PARENT );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_CHILD );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_FATHER );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_MOTHER );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_SON );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_DAUGHTER );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_JOHN );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_ANN );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_PAUL );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_JOE );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_LAURA );
 				break;
 
 			case Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS:
@@ -603,9 +606,9 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				break;
 
 			case Constants.CONSOLE_SUBMENU_CHANGE_LANGUAGE:
-				if( CommonVariables.interfaceLanguageStringBuffer != null )
+				if( GlobalVariables.interfaceLanguageStringBuffer != null )
 					{
-					grammarLanguageStringBufferLength = CommonVariables.interfaceLanguageStringBuffer.length();
+					grammarLanguageStringBufferLength = GlobalVariables.interfaceLanguageStringBuffer.length();
 
 					if( currentLanguageWordItem_ != null &&
 					( currentLanguageString = currentLanguageWordItem_.anyWordTypeString() ) != null )
@@ -613,13 +616,13 @@ class Console extends JPanel implements ActionListener, ComponentListener
 						while( startPosition < grammarLanguageStringBufferLength &&
 						nSubMenuButtons_ < Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS )
 							{
-							if( ( endPosition = CommonVariables.interfaceLanguageStringBuffer.substring( startPosition ).indexOf( Constants.QUERY_SEPARATOR_SPACE_STRING ) ) < 0 )
+							if( ( endPosition = GlobalVariables.interfaceLanguageStringBuffer.substring( startPosition ).indexOf( Constants.QUERY_SEPARATOR_SPACE_STRING ) ) < 0 )
 								// Last language in string
 								endPosition = grammarLanguageStringBufferLength;
 							else
 								endPosition += startPosition;
 	
-							if( ( languageString = CommonVariables.interfaceLanguageStringBuffer.substring( startPosition, endPosition ) ) != null )
+							if( ( languageString = GlobalVariables.interfaceLanguageStringBuffer.substring( startPosition, endPosition ) ) != null )
 								{
 								// Disable current language
 								subMenuButtonArray_[nSubMenuButtons_].setEnabled( !languageString.equals( currentLanguageString ) );
@@ -647,42 +650,41 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 				addSubMenuButton( Constants.INTERFACE_CONSOLE_FONT_SIZE_INCREASE );
 
-				addSubMenuFontButton( Constants.CONSOLE_FONT_ARIEL );
-				addSubMenuFontButton( Constants.CONSOLE_FONT_COURIER );
-				addSubMenuFontButton( Constants.CONSOLE_FONT_COURIER_NEW );
-				addSubMenuFontButton( Constants.CONSOLE_FONT_MICROSOFT_SANS_SERIF );
-				addSubMenuFontButton( Constants.CONSOLE_FONT_MONOSPACED );
-				addSubMenuFontButton( Constants.CONSOLE_FONT_TIMES_NEW_ROMAN );
-				addSubMenuFontButton( Constants.CONSOLE_FONT_VERDANA );
+				addSubMenuFontButton( Font.SANS_SERIF );
+				addSubMenuFontButton( Font.SERIF );
+				addSubMenuFontButton( Font.MONOSPACED );
 				break;
 
 			case Constants.CONSOLE_SUBMENU_HELP:
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_LANGUAGES );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_LISTS );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_USERS );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_SHOW_INFO_ABOUT_THE_WORD_TYPES );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_SHOW_THE_QUERY_COMMANDS );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_SHOW_THE_COPYRIGHT );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_SHOW_THE_GPLv2_LICENSE );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_SHOW_THE_WARRANTY );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_DISPLAY_INFO_ABOUT_THE_LANGUAGES );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_DISPLAY_INFO_ABOUT_THE_LISTS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_DISPLAY_INFO_ABOUT_THE_USERS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_DISPLAY_INFO_ABOUT_THE_WORD_TYPES );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_DISPLAY_THE_QUERY_COMMANDS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_DISPLAY_THE_COPYRIGHT );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_DISPLAY_THE_GPLv2_LICENSE );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_HELP_DISPLAY_THE_WARRANTY );
 				break;
 			}
 
 		initialLabelEnterSentence_.setVisible( nSubMenuButtons_ == 0 && adminItem_ != null && adminItem_.isDeveloperOrExpertTheCurrentUser() );
 		}
 
-	private static void setSubMenuVisible( boolean isClearYourMind, short subMenu )
+	private static void setSubMenuVisible( boolean isClearYourMind, short newSubMenu )
 		{
 		boolean hasNoSubMenuButtons;
+
+		// Reset font after Connect-Four, which forced mono-spaced font
+		if( currentSubMenu_ == Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 ) 
+			outputArea_.setFont( new Font( currentFontString_, Font.PLAIN, currentFontSize_ ) );
 
 		if( !isClearYourMind )
 			{
 			isSubMenuChanged_ = true;
-			currentSubMenu_ = subMenu;
+			currentSubMenu_ = newSubMenu;
 			}
 
 		setSubMenuButtonTexts();
-
 		displayProgressStatus( null );
 
 		for( short index = 0; index < Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS; index++ )
@@ -789,7 +791,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		// Set font for output area
 		currentFontSize_ = Constants.CONSOLE_DEFAULT_FONT_SIZE;
-		currentFontString_ = Constants.CONSOLE_FONT_COURIER_NEW;
+		currentFontString_ = Font.SANS_SERIF;
 		outputArea_.setFont( new Font( currentFontString_, Font.PLAIN, currentFontSize_ ) );
 
 		// Create scroll pane with border for output area
@@ -845,7 +847,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		upperMenuMoreExamplesButton_.addActionListener( this );
 
 		// Create the file chooser
-		fileChooser_ = new JFileChooser( CommonVariables.currentPathStringBuffer + Constants.FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING );
+		fileChooser_ = new JFileChooser( GlobalVariables.currentPathStringBuffer + Constants.FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING );
 
 		// Create progress bar
 		upperMenuProgressLabel_ = new JLabel();
@@ -911,7 +913,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		// Create input field
 		inputField_ = new JTextField();
-		inputField_.setFont( new Font( Constants.CONSOLE_FONT_COURIER_NEW, Font.PLAIN, Constants.CONSOLE_DEFAULT_FONT_SIZE ) );
+		inputField_.setFont( new Font( Font.SANS_SERIF, Font.PLAIN, Constants.CONSOLE_DEFAULT_FONT_SIZE ) );
 		inputField_.addActionListener( this );
 
 		// Create password field
@@ -1083,6 +1085,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		// Clear screen
 		outputArea_.setText( Constants.NEW_LINE_STRING );
+		outputArea_.setFont( new Font( currentFontString_, Font.PLAIN, currentFontSize_ ) );
 
 		// Clear fields
 		inputField_.setText( Constants.EMPTY_STRING );
@@ -1189,8 +1192,8 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	public void actionPerformed( ActionEvent actionEvent )
 		{
-		File selectedFile;
 		File currentDirectory;
+		File selectedFile;
 		Object actionSource;
 		String actionCommandString;
 		String currentDirectoryString;
@@ -1265,12 +1268,12 @@ class Console extends JPanel implements ActionListener, ComponentListener
 													( currentLanguageString = currentLanguageWordItem_.anyWordTypeString() ) != null )
 														{
 														currentUserNounString = ( adminItem_.isDeveloperTheCurrentUser() ||
-																				CommonVariables.predefinedNounUserWordItem == null ? null : CommonVariables.predefinedNounUserWordItem.wordTypeString( false, Constants.WORD_TYPE_NOUN_SINGULAR ) );
+																				GlobalVariables.predefinedNounUserWordItem == null ? null : GlobalVariables.predefinedNounUserWordItem.wordTypeString( false, Constants.WORD_TYPE_NOUN_SINGULAR ) );
 
 														// No file selected yet with current language
 														if( currentDirectoryString.indexOf( currentLanguageString ) < 0 ) 
 															// Select current language in file chooser
-															fileChooser_ = new JFileChooser( CommonVariables.currentPathStringBuffer + Constants.FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING + currentLanguageString + ( currentUserNounString == null ? Constants.EMPTY_STRING : ( Constants.SLASH_STRING + currentUserNounString ) ) );
+															fileChooser_ = new JFileChooser( GlobalVariables.currentPathStringBuffer + Constants.FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING + currentLanguageString + ( currentUserNounString == null ? Constants.EMPTY_STRING : ( Constants.SLASH_STRING + currentUserNounString ) ) );
 														}
 													} 
 		
@@ -1291,7 +1294,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 												{
 												if( actionSource == mainMenuProgrammingSubMenuButton_ )
 													{
-													setSubMenuVisible( false, ( hasSelectedProgrammingConnect4_ ? Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 : Constants.CONSOLE_SUBMENU_PROGRAMMING ) );
+													setSubMenuVisible( false, hasSelectedProgrammingConnect4_ ? Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 : Constants.CONSOLE_SUBMENU_PROGRAMMING );
 													enableMenus( true, true, false );
 													}
 												else
@@ -1371,7 +1374,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 																							{
 																							if( actionSource == mainMenuBackButton_ )
 																								{
-																								setSubMenuVisible( false, ( currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DISPLAY_INFORMATION ? Constants.CONSOLE_SUBMENU_REASONING : Constants.CONSOLE_SUBMENU_INIT ) );
+																								setSubMenuVisible( false, currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DEFINITIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_CONFLICTS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS || currentSubMenu_ == Constants.CONSOLE_SUBMENU_REASONING_FAMILY_DISPLAY_INFORMATION ? Constants.CONSOLE_SUBMENU_REASONING : Constants.CONSOLE_SUBMENU_INIT );
 																								enableMenus( true, true, false );
 																								}
 																							else

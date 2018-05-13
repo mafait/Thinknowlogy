@@ -1,9 +1,9 @@
-/*	Class:			AdminQuery
+﻿/*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -29,17 +29,16 @@ class AdminQuery
 
 	// Private constructed variables
 
+	size_t queryCommandStringPosition_;
 	unsigned int queryItemNr_;
 	unsigned int querySentenceNr_;
 
-	size_t queryCommandStringPosition_;
-
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_LENGTH];
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
 
 	AdminItem *adminItem_;
-	CommonVariables *commonVariables_;
+	GlobalVariables *globalVariables_;
 	InputOutput *inputOutput_;
 
 
@@ -49,19 +48,19 @@ class AdminQuery
 		{
 		unsigned int nFoundCategories = 0;
 
-		if( commonVariables_->nActiveQueryItems > 0 )
+		if( globalVariables_->nActiveQueryItems > 0 )
 			nFoundCategories++;
 
-		if( commonVariables_->nInactiveQueryItems > 0 )
+		if( globalVariables_->nInactiveQueryItems > 0 )
 			nFoundCategories++;
 
-		if( commonVariables_->nArchivedQueryItems > 0 )
+		if( globalVariables_->nArchivedQueryItems > 0 )
 			nFoundCategories++;
 
-		if( commonVariables_->nReplacedQueryItems > 0 )
+		if( globalVariables_->nReplacedQueryItems > 0 )
 			nFoundCategories++;
 
-		if( commonVariables_->nDeletedQueryItems > 0 )
+		if( globalVariables_->nDeletedQueryItems > 0 )
 			nFoundCategories++;
 
 		return ( nFoundCategories > 1 );
@@ -95,25 +94,25 @@ class AdminQuery
 
 	unsigned int nTotalCountQuery()
 		{
-		commonVariables_->nActiveQueryItems = 0;
-		commonVariables_->nInactiveQueryItems = 0;
-		commonVariables_->nArchivedQueryItems = 0;
-		commonVariables_->nReplacedQueryItems = 0;
-		commonVariables_->nDeletedQueryItems = 0;
+		globalVariables_->nActiveQueryItems = 0;
+		globalVariables_->nInactiveQueryItems = 0;
+		globalVariables_->nArchivedQueryItems = 0;
+		globalVariables_->nReplacedQueryItems = 0;
+		globalVariables_->nDeletedQueryItems = 0;
 
 		adminItem_->countQuery();
 
-		return ( commonVariables_->nActiveQueryItems +
-				commonVariables_->nInactiveQueryItems +
-				commonVariables_->nArchivedQueryItems +
-				commonVariables_->nReplacedQueryItems +
-				commonVariables_->nDeletedQueryItems );
+		return ( globalVariables_->nActiveQueryItems +
+				globalVariables_->nInactiveQueryItems +
+				globalVariables_->nArchivedQueryItems +
+				globalVariables_->nReplacedQueryItems +
+				globalVariables_->nDeletedQueryItems );
 		}
 
 	signed char getIdFromQuery( bool hasEndChar, char *queryCommandString, char startChar, char endChar )
 		{
 		size_t queryCommandStringLength;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getIdFromQuery";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getIdFromQuery";
 
 		querySentenceNr_ = NO_SENTENCE_NR;
 		queryItemNr_ = NO_ITEM_NR;
@@ -191,10 +190,10 @@ class AdminQuery
 
 	signed char getNameFromQuery( char *queryCommandString, char *nameString, char startChar, char endChar )
 		{
+		size_t nameLength = 0;
 		size_t queryCommandStringLength;
 		size_t startSourceStringPosition;
-		size_t nameLength = 0;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getNameFromQuery";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getNameFromQuery";
 
 		if( queryCommandString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given query command string is undefined" );
@@ -243,20 +242,16 @@ class AdminQuery
 
 	signed char itemQuery( bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSuppressingMessage, char *textString )
 		{
-		WordItem *currentLanguageWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "itemQuery";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "itemQuery";
 
 		if( textString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given text string is undefined" );
 
 		adminItem_->itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR );
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
-
 		if( !isSuppressingMessage &&
 		nTotalCountQuery() == 0 )
-			strcat( textString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
+			strcat( textString, adminItem_->interfaceString( INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
 
 		return RESULT_OK;
 		}
@@ -264,16 +259,15 @@ class AdminQuery
 	protected:
 	// Constructor
 
-	AdminQuery( AdminItem *adminItem, CommonVariables *commonVariables, InputOutput *inputOutput )
+	AdminQuery( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Private constructed variables
 
+		queryCommandStringPosition_ = 0;
 		queryItemNr_ = NO_ITEM_NR;
 		querySentenceNr_ = NO_SENTENCE_NR;
-
-		queryCommandStringPosition_ = 0;
 
 		// Private initialized variables
 
@@ -283,15 +277,15 @@ class AdminQuery
 
 		if( ( adminItem_ = adminItem ) == NULL )
 			{
-			if( commonVariables != NULL )
-				commonVariables->result = RESULT_SYSTEM_ERROR;
+			if( globalVariables != NULL )
+				globalVariables->result = RESULT_SYSTEM_ERROR;
 
 			fprintf( stderr, "\nClass:%s\nFunction:\t%s\nError:\t\tThe given admin item is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
 			}
 		else
 			{
-			if( ( commonVariables_ = commonVariables ) == NULL )
-				strcpy( errorString, "The given common variables is undefined" );
+			if( ( globalVariables_ = globalVariables ) == NULL )
+				strcpy( errorString, "The given global variables is undefined" );
 
 			if( ( inputOutput_ = inputOutput ) == NULL )
 				strcpy( errorString, "The given input-output is undefined" );
@@ -322,16 +316,16 @@ class AdminQuery
 		bool isSelectingAttachedJustifications = false;
 		bool isSelectingJustificationSpecifications = false;
 		unsigned short queryWordTypeNr = NO_WORD_TYPE_NR;
-		unsigned int nTotalCount = 0;
 		size_t listStringPosition;
 		size_t nameStringLength;
+		unsigned int nTotalCount = 0;
 		size_t queryCommandStringLength;
 		size_t queryWidth = NO_CENTER_WIDTH;
-		WordItem *currentLanguageWordItem;
 		char *queryString;
-		char nameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char nameString[ENTENDED_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char tempString[FUNCTION_NAME_STRING_LENGTH];
 		QueryResultType queryResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "executeQuery";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "executeQuery";
 
 		if( queryCommandString == NULL )
 			return adminItem_->startQueryResultError( functionNameString, moduleNameString_, "The given query command string is undefined" );
@@ -343,23 +337,20 @@ class AdminQuery
 		queryCommandStringStartPosition >= queryCommandStringLength )
 			return adminItem_->startQueryResultError( functionNameString, moduleNameString_, "The given query command string start position is not within the range of the given query command string" );
 
-		if( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) == NULL )
-			return adminItem_->startQueryResultError( functionNameString, moduleNameString_, "The current language word item is undefined" );
-
 		querySentenceNr_ = NO_SENTENCE_NR;
 		queryItemNr_ = NO_ITEM_NR;
 
 		queryCommandStringPosition_ = queryCommandStringStartPosition;
 
-		strcpy( commonVariables_->queryString, EMPTY_STRING );
-		queryString = commonVariables_->queryString;
+		strcpy( globalVariables_->queryString, EMPTY_STRING );
+		queryString = globalVariables_->queryString;
 
-		commonVariables_->hasFoundQuery = false;
+		globalVariables_->hasFoundQuery = false;
 
 		adminItem_->clearQuerySelections();
 
 		while( !isEndOfQuery &&
-		strlen( commonVariables_->queryString ) == 0 &&
+		strlen( globalVariables_->queryString ) == 0 &&
 		queryCommandStringPosition_ < queryCommandStringLength )
 			{
 			switch( queryCommandString[queryCommandStringPosition_] )
@@ -374,7 +365,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_ITEM_WAS_FOUND ) );
+						strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_ITEM_WAS_FOUND ) );
 
 					break;
 
@@ -388,7 +379,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_REFERENCE_ITEM_WAS_FOUND ) );
+						strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_REFERENCE_ITEM_WAS_FOUND ) );
 
 					break;
 
@@ -408,7 +399,7 @@ class AdminQuery
 						!isAdminListChar( nameString[listStringPosition] ) )
 							{
 							isInvalidChar = true;
-							strcat( queryString, currentLanguageWordItem->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_INVALID_CHARACTER_IN_LIST ) );
+							strcat( queryString, adminItem_->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_INVALID_CHARACTER_IN_LIST ) );
 							}
 						}
 					while( !isInvalidChar &&
@@ -423,7 +414,7 @@ class AdminQuery
 
 						if( !isSuppressingMessage &&
 						nTotalCountQuery() == 0 )
-							strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_LIST_WAS_FOUND ) );
+							strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_LIST_WAS_FOUND ) );
 						}
 
 					break;
@@ -441,7 +432,7 @@ class AdminQuery
 							{
 							if( queryCommandStringPosition_ < queryCommandStringLength &&
 							queryCommandString[queryCommandStringPosition_] != QUERY_CHAR )
-								strcat( queryString, currentLanguageWordItem->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_EMPTY_WORD_SPECIFICATION ) );
+								strcat( queryString, adminItem_->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_EMPTY_WORD_SPECIFICATION ) );
 							else
 								{
 								isOnlyDisplayingWords = true;
@@ -457,7 +448,7 @@ class AdminQuery
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )
-								strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_WORD_WAS_FOUND ) );
+								strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_WORD_WAS_FOUND ) );
 							}
 						}
 					else
@@ -482,7 +473,7 @@ class AdminQuery
 							{
 							if( queryCommandStringPosition_ < queryCommandStringLength &&
 							queryCommandString[queryCommandStringPosition_] != QUERY_CHAR )
-								strcat( queryString, currentLanguageWordItem->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_EMPTY_WORD_REFERENCE ) );
+								strcat( queryString, adminItem_->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_EMPTY_WORD_REFERENCE ) );
 							else
 								{
 								isReturnQueryToPosition = true;
@@ -498,7 +489,7 @@ class AdminQuery
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )
-								strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_WORD_REFERENCE_WAS_FOUND ) );
+								strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_WORD_REFERENCE_WAS_FOUND ) );
 							}
 						}
 					else
@@ -531,7 +522,7 @@ class AdminQuery
 							{
 							if( queryCommandStringPosition_ < queryCommandStringLength &&
 							queryCommandString[queryCommandStringPosition_] != QUERY_CHAR )
-								strcat( queryString, currentLanguageWordItem->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_EMPTY_STRING_SPECIFICATION ) );
+								strcat( queryString, adminItem_->interfaceString( isSuppressingMessage ? INTERFACE_QUERY_ERROR : INTERFACE_QUERY_EMPTY_STRING_SPECIFICATION ) );
 							else
 								{
 								isOnlyDisplayingStrings = true;
@@ -547,7 +538,7 @@ class AdminQuery
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )
-								strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_STRING_WAS_FOUND ) );
+								strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_STRING_WAS_FOUND ) );
 							}
 						}
 					else
@@ -576,7 +567,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_WORD_TYPE_WAS_FOUND ) );
+						strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_WORD_TYPE_WAS_FOUND ) );
 
 					break;
 
@@ -595,7 +586,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_PARAMETER_WAS_FOUND ) );
+						strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_PARAMETER_WAS_FOUND ) );
 
 					break;
 
@@ -780,9 +771,6 @@ class AdminQuery
 						queryWidth = ( queryWidth * 10 + queryCommandString[queryCommandStringPosition_] - '0' );
 						queryCommandStringPosition_++;
 						}
-
-					if( queryWidth >= NUMBER_OF_CONSOLE_COLUMNS )
-						return adminItem_->startQueryResultError( functionNameString, moduleNameString_, "The query width in the query is too high" );
 				}
 			}
 
@@ -801,75 +789,85 @@ class AdminQuery
 				else
 					{
 					if( nTotalCount == 0 )
-						strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
+						strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
 					else
 						{
 						if( isDisplayingTotal() )
 							sprintf( queryString, "total:%u", nTotalCount );
 
-						if( commonVariables_->nActiveQueryItems > 0 )
+						if( globalVariables_->nActiveQueryItems > 0 )
 							{
 							if( strlen( queryString ) > 0 )
 								strcat( queryString, QUERY_SEPARATOR_SPACE_STRING );
 
-							sprintf( queryString, "%sactive:%u", queryString, commonVariables_->nActiveQueryItems );
+							strcat( queryString, "active:" );
+							sprintf( tempString, "%u", globalVariables_->nActiveQueryItems );
+							strcat( queryString, tempString );
 							}
 
-						if( commonVariables_->nInactiveQueryItems > 0 )
+						if( globalVariables_->nInactiveQueryItems > 0 )
 							{
 							if( strlen( queryString ) > 0 )
 								strcat( queryString, QUERY_SEPARATOR_SPACE_STRING );
 
-							sprintf( queryString, "%sinactive:%u.\n", queryString, commonVariables_->nInactiveQueryItems );
+							strcat( queryString, "inactive:" );
+							sprintf( tempString, "%u", globalVariables_->nInactiveQueryItems );
+							strcat( queryString, tempString );
 							}
 
-						if( commonVariables_->nArchivedQueryItems > 0 )
+						if( globalVariables_->nArchivedQueryItems > 0 )
 							{
 							if( strlen( queryString ) > 0 )
 								strcat( queryString, QUERY_SEPARATOR_SPACE_STRING );
 
-							sprintf( queryString, "%sarchived:%u.\n", queryString, commonVariables_->nArchivedQueryItems );
+							strcat( queryString, "archived:" );
+							sprintf( tempString, "%u", globalVariables_->nArchivedQueryItems );
+							strcat( queryString, tempString );
 							}
 
-						if( commonVariables_->nReplacedQueryItems > 0 )
+						if( globalVariables_->nReplacedQueryItems > 0 )
 							{
 							if( strlen( queryString ) > 0 )
 								strcat( queryString, QUERY_SEPARATOR_SPACE_STRING );
 
-							sprintf( queryString, "%sreplaced:%u.\n", queryString, commonVariables_->nReplacedQueryItems );
+							strcat( queryString, "replaced:" );
+							sprintf( tempString, "%u", globalVariables_->nReplacedQueryItems );
+							strcat( queryString, tempString );
 							}
 
-						if( commonVariables_->nDeletedQueryItems > 0 )
+						if( globalVariables_->nDeletedQueryItems > 0 )
 							{
 							if( strlen( queryString ) > 0 )
 								strcat( queryString, QUERY_SEPARATOR_SPACE_STRING );
 
-							sprintf( queryString, "%sdeleted:%u.\n", queryString, commonVariables_->nDeletedQueryItems );
+							strcat( queryString, "deleted:" );
+							sprintf( tempString, "%u", globalVariables_->nDeletedQueryItems );
+							strcat( queryString, tempString );
 							}
 						}
 					}
 				}
 			else
 				{
-				commonVariables_->hasFoundQuery = false;
+				globalVariables_->hasFoundQuery = false;
 
 				if( adminItem_->displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) != RESULT_OK )
 					return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to display the query result" );
 
 				if( !isSuppressingMessage &&
-				!commonVariables_->hasFoundQuery &&
+				!globalVariables_->hasFoundQuery &&
 				strlen( queryString ) == 0 )
 					{
 					if( isOnlyDisplayingWords )
-						strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_WORDS_WERE_FOUND ) );
+						strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_WORDS_WERE_FOUND ) );
 					else
 						{
 						if( isOnlyDisplayingWordReferences )
-							strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_WORD_REFERENCES_WERE_FOUND ) );
+							strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_WORD_REFERENCES_WERE_FOUND ) );
 						else
 							{
 							if( isOnlyDisplayingStrings )
-								strcat( queryString, currentLanguageWordItem->interfaceString( INTERFACE_QUERY_NO_STRINGS_WERE_FOUND ) );
+								strcat( queryString, adminItem_->interfaceString( INTERFACE_QUERY_NO_STRINGS_WERE_FOUND ) );
 							}
 						}
 					}
@@ -879,8 +877,8 @@ class AdminQuery
 		if( isDisplayingCount &&
 		nTotalCount > 0 &&
 		queryWidth == NO_CENTER_WIDTH &&
-		!commonVariables_->hasFoundQuery )
-			strcpy( commonVariables_->queryString, EMPTY_STRING );
+		!globalVariables_->hasFoundQuery )
+			strcpy( globalVariables_->queryString, EMPTY_STRING );
 		else
 			{
 			if( isWritingQueryResult &&
@@ -889,7 +887,7 @@ class AdminQuery
 			strlen( queryString ) > 0 ) &&
 
 			// Display comment on empty query
-			inputOutput_->writeText( ( !isSuppressingMessage && !commonVariables_->hasFoundQuery && queryWidth == NO_CENTER_WIDTH ), promptTypeNr, queryWidth, queryString ) != RESULT_OK )
+			inputOutput_->writeText( ( !isSuppressingMessage && !globalVariables_->hasFoundQuery && queryWidth == NO_CENTER_WIDTH ), promptTypeNr, queryWidth, queryString ) != RESULT_OK )
 				return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to write the query result" );
 			}
 

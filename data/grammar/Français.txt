@@ -1,277 +1,287 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To define the grammar for the French language
-#	Version:	Thinknowlogy 2017r2 (Science as it should be)
+# Purpose: To define the grammar for the French language
+# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------- Définitions de mots -----------
 
-@0		:0			$undefined
+@0		:0		$undefined
 
 #--- Symboles ---
-@1		:0			$symbol
-@1		:100		$symbol_comma														,
-@1		:101		$symbol_colon															.
-@1		:102		$symbol_exclamation_mark									!
-#@1	:103		$symbol_exclamation_mark_inverted						¡
-@1		:104		$symbol_question_mark											?
-#@1	:105		$symbol_question_mark_inverted							¿
+@1		:0		$symbol
+@1		:100	$symbol_comma									,
+@1		:101	$symbol_colon									.
+@1		:102	$symbol_exclamation_mark						!
+@1		:103	$symbol_question_mark							?
+#@1		:104	$symbol_Chinese_negative_separator
+#@1		:105	$symbol_Chinese_question_separator
+#@1		:106	$symbol_Spanish_inverted_exclamation_mark
+#@1		:107	$symbol_Spanish_inverted_question_mark
 
 
 #--- Chiffres ---
-@2		:0			$numeral
-@2		:200		$numeral_Both														la-fois
+@2		:0		$numeral
+@2		:200	$numeral_Both									la-fois
+#@2		:201	$numeral_Chinese_All
 
 
 #--- Lettres ---
-@3		:0			$letter_small
-@4		:0			$letter_capital
+@3		:0		$letter_small
+@4		:0		$letter_capital
 
 
 #--- Les noms propres ---
-@5		:0			$proper_name
+@5		:0		$proper_noun
 
 
 #--- Adjectifs ---
-@6		:0			$adjective
-@6		:600		$adjective																assigné
-@6		:601		$adjective																occupé
-@6		:602		$adjective																prêt
-@6		:603		$adjective																défensive
-@6		:604		$adjective																vide
-@6		:605		$adjective																exclusive
-@6		:606		$adjective																inversé
-@6		:607		$adjective																féminine
-@6		:608		$adjective																masculin
-@6		:609		$adjective_No															aucun
-@6		:610		$adjective_Called													appelés
-@6		:611		$adjective_Called													appelée
-@6		:612		$adjective_Called													appelé
-@6		:613		$adjective_Every														chaque
-#@6	:614		$adjective_Every
-@6		:615		$adjective_past_tense											précédent
-#@6	:616		$adjective_past_tense
-@6		:617		$adjective_present_tense										actuel
-#@6	:618		$adjective_present_tense
-@6		:619		$adjective_New														nouveau
-#@6	:620		$adjective_New
-#@6	:621		$adjective_future_tense											prochaine
-#@6	:622		$adjective_future_tense
-@6		:623		$adjective_Odd_or_Even										impair
-@6		:624		$adjective_Odd_or_Even										pair
-@6		:625		$adjective_comparison											plus-tôt
-@6		:626		$adjective_comparison											moins
-@6		:627		$adjective_comparison											inférieur
-@6		:628		$adjective_comparison											plus-petit
-@6		:629		$adjective_comparison											égal
-@6		:630		$adjective_comparison											même
-@6		:631		$adjective_comparison											plus-gros
-@6		:632		$adjective_comparison											supérieur
-@6		:633		$adjective_comparison											plus-grande
-@6		:634		$adjective_comparison											plus-tard
-@6		:635		$adjective_comparison											plus
+@6		:0		$adjective
+@6		:600	$adjective										assigné
+@6		:601	$adjective										occupé
+@6		:602	$adjective										défensive
+@6		:603	$adjective										prêt
+@6		:604	$adjective										vide
+@6		:605	$adjective										exclusive
+@6		:606	$adjective										féminine
+@6		:607	$adjective										inversé
+@6		:608	$adjective										masculin
+@6		:609	$adjective_comparison							plus-gros
+@6		:610	$adjective_comparison							plus-tôt
+@6		:611	$adjective_comparison							égal
+@6		:612	$adjective_comparison							supérieur
+@6		:613	$adjective_comparison							plus-grande
+@6		:614	$adjective_comparison							plus-tard
+@6		:615	$adjective_comparison							moins
+@6		:616	$adjective_comparison							inférieur
+@6		:617	$adjective_comparison							plus
+@6		:618	$adjective_comparison							même
+@6		:619	$adjective_comparison							plus-petit
+@6		:620	$adjective_Called								appelés
+@6		:621	$adjective_Called								appelée
+@6		:622	$adjective_Called								appelé
+@6		:623	$adjective_Characteristic						caractéristique
+@6		:624	$adjective_Current								actuel
+#@6		:625	$adjective_Current
+@6		:626	$adjective_Even									pair
+@6		:627	$adjective_Every								chaque
+#@6		:628	$adjective_Every
+@6		:629	$adjective_New									nouveau
+#@6		:630	$adjective_New
+#@6		:631	$adjective_Next									prochaine
+#@6		:632	$adjective_Next
+@6		:633	$adjective_No									aucun
+@6		:634	$adjective_Odd									impair
+@6		:635	$adjective_Previous								précédent
+#@6		:636	$adjective_Previous
+@6		:637	$adjective_Specific								spécifique
 
 
 #--- Adverbes ---
-@7		:0			$adverb
-@7		:700		$adverb_Anymore													plus
-@7		:701		$adverb_As																comme
-@7		:702		$adverb_uncertainty												peut-être
-@7		:703		$adverb_uncertainty												possible
-@7		:704		$adverb_uncertainty												probablement
-@7		:705		$adverb_Ne																ne
-@7		:706		$adverb_Pas															pas
+@7		:0		$adverb
+@7		:700	$adverb_uncertainty								peut-être
+@7		:701	$adverb_uncertainty								possible
+@7		:702	$adverb_uncertainty								probablement
+@7		:703	$adverb_Anymore									plus
+@7		:704	$adverb_As										comme
+@7		:705	$adverb_Not										ne
+#@7		:706	$adverb_Chinese_Never_Again
+@7		:707	$adverb_French_Pas								pas
 
 
 #--- Interjections ---
-@8		:0			$interjection
-@8		:800		$interjection															oui
-@8		:801		$interjection															non
+@8		:0		$interjection
+@8		:800	$interjection_Yes								oui
+@8		:801	$interjection_No								non
 
 
 #--- Articles ---
-@9		:0			$article
-#@9	:900		$article_indefinite
-#@9	:901		$article_indefinite
-#@9	:902		$article_indefinite
-#@9	:903		$article_indefinite
-#@9	:904		$article_indefinite
-#@9	:905		$article_indefinite
-@9		:906		$article_indefinite													une
-@9		:907		$article_indefinite													un
-#@9	:908		$article_definite
-@9		:909		$article_definite														les
-#@9	:910		$article_definite
-#@9	:911		$article_definite
-@9		:912		$article_definite														la
-@9		:913		$article_definite														le
+@9		:0		$article
+#@9		:900	$article_indefinite
+#@9		:901	$article_indefinite
+#@9		:902	$article_indefinite
+#@9		:903	$article_indefinite
+#@9		:904	$article_indefinite
+#@9		:905	$article_indefinite
+@9		:906	$article_indefinite								une
+@9		:907	$article_indefinite								un
+#@9		:908	$article_definite
+@9		:909	$article_definite								les
+#@9		:910	$article_definite
+#@9		:911	$article_definite
+@9		:912	$article_definite								la
+@9		:913	$article_definite								le
 
 
 #--- Conjonctions ---
-@10		:0			$conjunction
-@10		:1000	$conjunction_collective											et
-@10		:1001	$conjunction_exclusive											ou
-@10		:1002	$conjunction_Than													à
-@10		:1003	$conjunction_Than													que
-#@10	:1004	$conjunction_Zowel		(néerlandais)
-#@10	:1005	$conjunction_Als				(néerlandais)
+@10		:0		$conjunction
+@10		:1000	$conjunction_collective							et
+@10		:1001	$conjunction_exclusive							ou
+@10		:1002	$conjunction_Than								à
+@10		:1003	$conjunction_Than								que
+#@10	:1004	$conjunction_Dutch_Zowel
+#@10	:1005	$conjunction_Dutch_Als
 
 
 #--- Les noms singuliers ---
-@11		:0			$noun_singular
-@11		:1100	$noun_singular														développeur
-@11		:1101	$noun_singular														expert
-@11		:1102	$noun_singular														fichier
-@11		:1103	$noun_singular														rapport de justification
-@11		:1104	$noun_singular														tête
-@11		:1105	$noun_singular														queue
-@11		:1106	$noun_singular														langue
-@11		:1107	$noun_singular														esprit
-@11		:1108	$noun_singular														nombre
-@11		:1109	$noun_singular														mot de passe
-@11		:1110	$noun_singular														niveau de résolution
-@11		:1111	$noun_singular														méthode de résolution
-@11		:1112	$noun_singular														stratégie de résolution
-@11		:1113	$noun_singular														langue de démarrage
-@11		:1114	$noun_singular														fichier de test
-@11		:1115	$noun_singular														utilisateur
-@11		:1116	$noun_singular_Information									information
-@11		:1117	$noun_singular_Part												partie
-@11		:1118	$noun_singular_Value												valeur
+@11		:0		$noun_singular
+@11		:1100	$noun_singular									développeur
+@11		:1101	$noun_singular									expert
+@11		:1102	$noun_singular									fichier
+@11		:1103	$noun_singular									tête
+@11		:1104	$noun_singular									rapport de justification
+@11		:1105	$noun_singular									langue
+@11		:1106	$noun_singular									esprit
+@11		:1107	$noun_singular									nombre
+@11		:1108	$noun_singular									mot de passe
+@11		:1109	$noun_singular									niveau de résolution
+@11		:1110	$noun_singular									méthode de résolution
+@11		:1111	$noun_singular									stratégie de résolution
+@11		:1112	$noun_singular									langue de démarrage
+@11		:1113	$noun_singular									queue
+@11		:1114	$noun_singular									fichier de test
+@11		:1115	$noun_singular									utilisateur
+@11		:1116	$noun_singular_Information						information
+@11		:1117	$noun_singular_Part								partie
+@11		:1118	$noun_singular_Value							valeur
+#@11	:1119	$noun_Chinese_Is_It_True
 
 
 #--- Le pluriel des noms ---
-@12		:0			$noun_plural
+@12		:0		$noun_plural
 
 
 #--- Pronoms singuliers ---
-@13		:0			$personal_pronoun_singular_subjective
-#@13	:1300	$personal_pronoun_singular_subjective				je
-#@13	:1301	$personal_pronoun_singular_subjective				tu
-#@13	:1302	$personal_pronoun_singular_subjective				tu
-#@13	:1303	$personal_pronoun_singular_subjective				il
-#@13	:1304	$personal_pronoun_singular_subjective				elle
-#@13	:1305	$personal_pronoun_singular_subjective				ce
+@13		:0		$personal_pronoun_singular_subjective
+#@13	:1300	$personal_pronoun_singular_subjective			je
+#@13	:1301	$personal_pronoun_singular_subjective			tu
+#@13	:1302	$personal_pronoun_singular_subjective			tu
+#@13	:1303	$personal_pronoun_singular_subjective			il
+#@13	:1304	$personal_pronoun_singular_subjective			elle
+#@13	:1305	$personal_pronoun_singular_subjective			ce
 
-@14		:0			$personal_pronoun_singular_objective
-#@14	:1300	$personal_pronoun_singular_objective					moi
-#@14	:1301	$personal_pronoun_singular_objective					lui
-#@14	:1302	$personal_pronoun_singular_objective					lui
-#@14	:1303	$personal_pronoun_singular_objective					vous
-#@14	:1304	$personal_pronoun_singular_objective					lui
-#@14	:1305	$personal_pronoun_singular_objective					il
+@14		:0		$personal_pronoun_singular_objective
+#@14	:1300	$personal_pronoun_singular_objective			moi
+#@14	:1301	$personal_pronoun_singular_objective			lui
+#@14	:1302	$personal_pronoun_singular_objective			lui
+#@14	:1303	$personal_pronoun_singular_objective			vous
+#@14	:1304	$personal_pronoun_singular_objective			lui
+#@14	:1305	$personal_pronoun_singular_objective			il
 
-@15		:0			$possessive_determiner_singular
-@15		:1300	$possessive_determiner_singular							mon
-@15		:1301	$possessive_determiner_singular							ton
-@15		:1302	$possessive_determiner_singular							votre
-@15		:1303	$possessive_determiner_singular							sien
-@15		:1304	$possessive_determiner_singular							elle
-@15		:1305	$possessive_determiner_singular							ses
+@15		:0		$possessive_determiner_singular
+@15		:1300	$possessive_determiner_singular					mon
+@15		:1301	$possessive_determiner_singular					ton
+@15		:1302	$possessive_determiner_singular					votre
+@15		:1303	$possessive_determiner_singular					sien
+@15		:1304	$possessive_determiner_singular					elle
+@15		:1305	$possessive_determiner_singular					ses
 
-@16		:0			$possessive_pronoun_singular
-@16		:1300	$possessive_pronoun_singular								mien
-@16		:1301	$possessive_pronoun_singular								vôtre
-@16		:1302	$possessive_pronoun_singular								vous
-@16		:1303	$possessive_pronoun_singular								sien
-@16		:1304	$possessive_pronoun_singular								sienne
-@16		:1305	$possessive_pronoun_singular								ses
+@16		:0		$possessive_pronoun_singular
+@16		:1300	$possessive_pronoun_singular					mien
+@16		:1301	$possessive_pronoun_singular					vôtre
+#@16	:1302	$possessive_pronoun_singular					vous
+#@16	:1303	$possessive_pronoun_singular					sien
+#@16	:1304	$possessive_pronoun_singular					sienne
+#@16	:1305	$possessive_pronoun_singular					ses
 
 
 #--- Pronoms pluriels ---
-@17		:0			$personal_pronoun_plural_subjective
-#@17	:1700	$personal_pronoun_plural_subjective					nous
-#@17	:1701	$personal_pronoun_plural_subjective					nous
-#@17	:1702	$personal_pronoun_plural_subjective					vous
-#@17	:1703	$personal_pronoun_plural_subjective					vous
-#@17	:1704	$personal_pronoun_plural_subjective					vous
-#@17	:1705	$personal_pronoun_plural_subjective					ils
-#@17	:1706	$personal_pronoun_plural_subjective					ils
+@17		:0		$personal_pronoun_plural_subjective
+#@17	:1700	$personal_pronoun_plural_subjective				nous
+#@17	:1701	$personal_pronoun_plural_subjective				nous
+#@17	:1702	$personal_pronoun_plural_subjective				vous
+#@17	:1703	$personal_pronoun_plural_subjective				vous
+#@17	:1704	$personal_pronoun_plural_subjective				vous
+#@17	:1705	$personal_pronoun_plural_subjective				ils
+#@17	:1706	$personal_pronoun_plural_subjective				ils
 
-@18		:0			$personal_pronoun_plural_objective
-#@18	:1700	$personal_pronoun_plural_objective						nous
-#@18	:1701	$personal_pronoun_plural_objective						nous
-#@18	:1702	$personal_pronoun_plural_objective						vous
-#@18	:1703	$personal_pronoun_plural_objective						vous
-#@18	:1704	$personal_pronoun_plural_objective						vous
-#@18	:1705	$personal_pronoun_plural_objective						eux
-#@18	:1706	$personal_pronoun_plural_objective						eux
+@18		:0		$personal_pronoun_plural_objective
+#@18	:1700	$personal_pronoun_plural_objective				nous
+#@18	:1701	$personal_pronoun_plural_objective				nous
+#@18	:1702	$personal_pronoun_plural_objective				vous
+#@18	:1703	$personal_pronoun_plural_objective				vous
+#@18	:1704	$personal_pronoun_plural_objective				vous
+#@18	:1705	$personal_pronoun_plural_objective				eux
+#@18	:1706	$personal_pronoun_plural_objective				eux
 
-@19		:0			$possessive_determiner_plural
-@19		:1700	$possessive_determiner_plural								notre
-@19		:1701	$possessive_determiner_plural								notre
-@19		:1702	$possessive_determiner_plural								votre
-@19		:1703	$possessive_determiner_plural								votre
-@19		:1704	$possessive_determiner_plural								votre
-@19		:1705	$possessive_determiner_plural								leur
-@19		:1706	$possessive_determiner_plural								leur
+@19		:0		$possessive_determiner_plural
+#@19	:1700	$possessive_determiner_plural					notre
+#@19	:1701	$possessive_determiner_plural					notre
+#@19	:1702	$possessive_determiner_plural					votre
+#@19	:1703	$possessive_determiner_plural					votre
+#@19	:1704	$possessive_determiner_plural					votre
+#@19	:1705	$possessive_determiner_plural					leur
+#@19	:1706	$possessive_determiner_plural					leur
 
-@20		:0			$possessive_pronoun_plural
-@20		:1700	$possessive_pronoun_plural									notres
-@20		:1701	$possessive_pronoun_plural									notres
-@20		:1702	$possessive_pronoun_plural									votres
-@20		:1703	$possessive_pronoun_plural									votres
-@20		:1704	$possessive_pronoun_plural									votres
-@20		:1705	$possessive_pronoun_plural									leurs
-@20		:1706	$possessive_pronoun_plural									leurs
+@20		:0		$possessive_pronoun_plural
+#@20	:1700	$possessive_pronoun_plural						notres
+#@20	:1701	$possessive_pronoun_plural						notres
+#@20	:1702	$possessive_pronoun_plural						votres
+#@20	:1703	$possessive_pronoun_plural						votres
+#@20	:1704	$possessive_pronoun_plural						votres
+#@20	:1705	$possessive_pronoun_plural						leurs
+#@20	:1706	$possessive_pronoun_plural						leurs
 
 
 #--- Prépositions ---
-@21		:0			$preposition
-@21		:2100	$preposition															sur
-#@21	:2101	$preposition															de
-@21		:2102	$preposition															vers
-@21		:2103	$preposition															à
-@21		:2104	$preposition_Of														de
-@21		:2105	$preposition_à														à
+@21		:0		$preposition
+@21		:2100	$preposition									sur
+#@21	:2101	$preposition
+@21		:2102	$preposition									vers
+@21		:2103	$preposition									à
+@21		:2104	$preposition_For								pour
+@21		:2105	$preposition_Of									de
+#@21	:2106	$preposition_Chinese_imperative_verb
+#@21	:2107	$preposition_Chinese_imperative_verb
+#@21	:2108	$preposition_Chinese_imperative_verb
+@21		:2109	$preposition_French_à							à
 
 
 #--- Verbes singuliers ---
-@22		:0			$verb_singular
-@22		:2200	$verb_singular_present_tense								est
-@22		:2201	$verb_singular_past_tense									était
-@22		:2202	$verb_singular_conditional										peut-être
+@22		:0		$verb_singular
+@22		:2200	$verb_singular_present_tense					est
+@22		:2201	$verb_singular_past_tense						était
+@22		:2202	$verb_singular_conditional						peut-être
 @22		:2203	$verb_singular_possessive_present_tense			a
-@22		:2204	$verb_singular_possessive_past_tense					avait
-@22		:2205	$verb_singular_possessive_conditional					peut avoir
-@22		:2206	$verb_imperative													ajoutez
-@22		:2207	$verb_imperative													affichez
-@22		:2208	$verb_imperative													déplacez
-@22		:2209	$verb_imperative													supprimez
-@22		:2210	$verb_imperative													videz
-@22		:2211	$verb_imperative													aide
-@22		:2212	$verb_imperative													connectez-vous
-@22		:2213	$verb_imperative													lirez
-@22		:2214	$verb_imperative													refaire
-@22		:2215	$verb_imperative													redémarrer
-@22		:2216	$verb_imperative													résoudrez
-@22		:2217	$verb_imperative													annuler
+@22		:2204	$verb_singular_possessive_past_tense			avait
+@22		:2205	$verb_imperative								ajoutez
+@22		:2206	$verb_imperative								videz
+@22		:2207	$verb_imperative								affichez
+@22		:2208	$verb_imperative								aide
+@22		:2209	$verb_imperative								connectez-vous
+@22		:2210	$verb_imperative								déplacez
+@22		:2211	$verb_imperative								lirez
+@22		:2212	$verb_imperative								refaire
+@22		:2213	$verb_imperative								supprimez
+@22		:2214	$verb_imperative								redémarrer
+@22		:2215	$verb_imperative								résoudrez
+@22		:2216	$verb_imperative								annuler
+#@22	:2217	$verb_imperative_Chinese_Put
 
 
 #--- Verbes plurielles ---
-@23		:0			$verb_plural
-@23		:2300	$verb_plural_present_tense									sont
-@23		:2301	$verb_plural_past_tense										étions
-@23		:2302	$verb_plural_conditional											peut-être
-@23		:2303	$verb_plural_possessive_present_tense				ont
-@23		:2304	$verb_plural_possessive_past_tense						avait
-@23		:2305	$verb_plural_possessive_conditional						peut-avoir
+@23		:0		$verb_plural
+@23		:2300	$verb_plural_present_tense						sont
+@23		:2301	$verb_plural_past_tense							étions
+@23		:2302	$verb_plural_conditional						peut-être
+@23		:2303	$verb_plural_possessive_present_tense			ont
+@23		:2304	$verb_plural_possessive_past_tense				avait
 
 
 #--- Les mots de sélection ---
-@24		:0			$selection
-@24		:2400	$selection_If															si
-@24		:2401	$selection_Then														puis
-@24		:2402	$selection_Else														autre
+@24		:0		$selection
+@24		:2400	$selection_If									si
+@24		:2401	$selection_Then									puis
+@24		:2402	$selection_Else									autre
 
 
 #--- Texte ---
-@25		:0			$text
+@25		:0		$text
 
 
-#--- Feminine proper name endings ---
+#--- Terminaisons de noms propres féminines ---
 @0		:3000	$dia
 @0		:3000	$ée
 @0		:3000	$te
@@ -280,335 +290,315 @@
 @0		:3000	$raine
 
 
-#--- Masculine proper name endings ---
-#@0		:3001	$ent
-#@0		:3001	$ier
+#--- Terminaisons de noms propres masculins ---
+#@0		:3001
+#@0		:3001
 
 
-#--- Feminine singular noun endings ---
+#--- Terminaisons nominales féminines singulières ---
 @0		:3002	$lle
 @0		:3002	$ne
 
 
-#--- Masculine singular noun endings ---
+#--- Terminaisons nominales masculines singulières ---
 @0		:3003	$cle
 
 
 #--- Terminaisons nominales plurielles ---
-@0		:3004	$aux				au
-@0		:3004	$cs					c
-@0		:3004	$ds					d
-@0		:3004	$es					e
-@0		:3004	$és					é
-@0		:3004	$maux				mal
-@0		:3004	$ms					m
-@0		:3004	$ns					n
-@0		:3004	$rs					r
-@0		:3004	$ts					t
-@0		:3004	$uils					uil
+@0		:3004	$as				a
+@0		:3004	$aux			au
+@0		:3004	$cs				c
+@0		:3004	$ds				d
+@0		:3004	$es				e
+@0		:3004	$és				é
+@0		:3004	$maux			mal
+@0		:3004	$ms				m
+@0		:3004	$ns				n
+@0		:3004	$os				o
+@0		:3004	$rs				r
+@0		:3004	$tis			ti
+@0		:3004	$ts				t
+@0		:3004	$us				u
+@0		:3004	$uils			uil
 
 
 #--- Des mots fusionnés ---
-@0		:3005	$à le 				au 
-@0		:3005	$à les 				aux 
-@0		:3005	$ce e				c'e
-@0		:3005	$de a				d'a
-@0		:3005	$de e				d'e
-@0		:3005	$de é				d'é
-@0		:3005	$de i				d'i
-@0		:3005	$de o				d'o
-@0		:3005	$de u				d'u
-@0		:3005	$de le 				du 
-@0		:3005	$de les 			des 
-@0		:3005	$je a				j'a
+@0		:3005	$à le 			au 
+@0		:3005	$à les	 		aux 
+@0		:3005	$ce e			c'e
+@0		:3005	$de a			d'a
+@0		:3005	$de e			d'e
+@0		:3005	$de é			d'é
+@0		:3005	$de i			d'i
+@0		:3005	$de o			d'o
+@0		:3005	$de u			d'u
+@0		:3005	$de le 			du 
+@0		:3005	$de les 		des 
+@0		:3005	$je a			j'a
 
-@0		:3005	$la a				l'a
-@0		:3005	$la â				l'â
-@0		:3005	$la e				l'e
-@0		:3005	$la é				l'é
-@0		:3005	$la h				l'h
-@0		:3005	$la i					l'i
-@0		:3005	$la o				l'o
-@0		:3005	$la u				l'u
+@0		:3005	$la a			l'a
+@0		:3005	$la â			l'â
+@0		:3005	$la e			l'e
+@0		:3005	$la é			l'é
+@0		:3005	$la h			l'h
+@0		:3005	$la i			l'i
+@0		:3005	$la o			l'o
+@0		:3005	$la u			l'u
 
-@0		:3005	$la A				l'A
-@0		:3005	$la Â				l'Â
-@0		:3005	$la E				l'E
-@0		:3005	$la É				l'É
-@0		:3005	$la H				l'H
-@0		:3005	$la I					l'I
-@0		:3005	$la O				l'O
-@0		:3005	$la U				l'U
+@0		:3005	$la A			l'A
+@0		:3005	$la Â			l'Â
+@0		:3005	$la E			l'E
+@0		:3005	$la É			l'É
+@0		:3005	$la H			l'H
+@0		:3005	$la I			l'I
+@0		:3005	$la O			l'O
+@0		:3005	$la U			l'U
 
-@0		:3005	$La a				L'a
-@0		:3005	$La â				L'â
-@0		:3005	$La e				L'e
-@0		:3005	$La é				L'é
-@0		:3005	$La h				L'h
-@0		:3005	$La i				L'i
-@0		:3005	$La o				L'o
-@0		:3005	$La u				L'u
+@0		:3005	$La a			L'a
+@0		:3005	$La â			L'â
+@0		:3005	$La e			L'e
+@0		:3005	$La é			L'é
+@0		:3005	$La h			L'h
+@0		:3005	$La i			L'i
+@0		:3005	$La o			L'o
+@0		:3005	$La u			L'u
 
-@0		:3005	$le a				l'a
-@0		:3005	$le â				l'â
-@0		:3005	$le e				l'e
-@0		:3005	$le é				l'é
-@0		:3005	$le h				l'h
-@0		:3005	$le i					l'i
-@0		:3005	$le o				l'o
-@0		:3005	$le u				l'u
+@0		:3005	$le a			l'a
+@0		:3005	$le â			l'â
+@0		:3005	$le e			l'e
+@0		:3005	$le é			l'é
+@0		:3005	$le h			l'h
+@0		:3005	$le i			l'i
+@0		:3005	$le o			l'o
+@0		:3005	$le u			l'u
 
-@0		:3005	$le A				l'A
-@0		:3005	$le Â				l'Â
-@0		:3005	$le E				l'E
-@0		:3005	$le É				l'É
-@0		:3005	$le H				l'H
-@0		:3005	$le I					l'I
-@0		:3005	$le O				l'O
-@0		:3005	$le U				l'U
+@0		:3005	$le A			l'A
+@0		:3005	$le Â			l'Â
+@0		:3005	$le E			l'E
+@0		:3005	$le É			l'É
+@0		:3005	$le H			l'H
+@0		:3005	$le I			l'I
+@0		:3005	$le O			l'O
+@0		:3005	$le U			l'U
 
-@0		:3005	$Le a				L'a
-@0		:3005	$Le â				L'â
-@0		:3005	$Le e				L'e
-@0		:3005	$Le é				L'é
-@0		:3005	$Le h				L'h
-@0		:3005	$Le i				L'i
-@0		:3005	$Le o				L'o
-@0		:3005	$Le u				L'u
+@0		:3005	$Le a			L'a
+@0		:3005	$Le â			L'â
+@0		:3005	$Le e			L'e
+@0		:3005	$Le é			L'é
+@0		:3005	$Le h			L'h
+@0		:3005	$Le i			L'i
+@0		:3005	$Le o			L'o
+@0		:3005	$Le u			L'u
 
-@0		:3005	$ne a 				n'a 
-@0		:3005	$ne e				n'e
+@0		:3005	$ne a 			n'a 
+@0		:3005	$ne e			n'e
+
+
+#--- Assignment nouns ---
+#@0		:3006
 
 
 #----------- Définitions de grammaire ---------------
 
-# [ .. ]			= option
-# [ .. | .. ]		= multiples options
+# [ .. ]		= option
+# [ .. | .. ]	= multiples options
 # { .. | .. }	= choix
-# ( .. )			= option pour la lecture, ne seront pas utilisés pour l'écriture
+# ( .. )		= option pour la lecture, ne seront pas utilisés pour l'écriture
 
 
 #--- Verbes spéciales ---
-			$singular_verb_present_tense_or_past_tense															[ adverb_Ne ] { verb_singular_present_tense | verb_singular_past_tense }
-:6120	$singular_verb																											singular_verb_present_tense_or_past_tense [ adverb_uncertainty ]
-:6120	$singular_conditional_verb																							verb_singular_conditional
+		$singular_verb_present_or_past_tense											[ adverb_Not ] { verb_singular_present_tense | verb_singular_past_tense }
+:5120	$singular_verb																	singular_verb_present_or_past_tense [ adverb_uncertainty ]
+:5120	$singular_conditional_verb														verb_singular_conditional
 
-			$plural_verb_present_tense_or_past_tense																[ adverb_Ne ] { verb_plural_present_tense | verb_plural_past_tense }
-:6120	$plural_verb																												plural_verb_present_tense_or_past_tense [ adverb_uncertainty ]
-:6120	$plural_conditional_verb																								verb_plural_conditional
+		$plural_verb_present_or_past_tense												[ adverb_Not ] { verb_plural_present_tense | verb_plural_past_tense }
+:5120	$plural_verb																	plural_verb_present_or_past_tense [ adverb_uncertainty ]
+:5120	$plural_conditional_verb														verb_plural_conditional
 
-:6120	$singular_possessive_verb																							[ adverb_Ne ] { verb_singular_possessive_present_tense | verb_singular_possessive_past_tense } [ adverb_uncertainty ]
-:6120	$singular_possessive_conditional_verb																		verb_singular_possessive_conditional
-:6120	$plural_possessive_verb																								[ adverb_Ne ] { verb_plural_possessive_present_tense | verb_plural_possessive_past_tense } [ adverb_uncertainty ]
-:6120	$plural_possessive_conditional_verb																			verb_plural_possessive_conditional
+:5120	$singular_possessive_verb														[ adverb_Not ] { verb_singular_possessive_present_tense | verb_singular_possessive_past_tense } [ adverb_uncertainty ]
+:5120	$plural_possessive_verb															[ adverb_Not ] { verb_plural_possessive_present_tense | verb_plural_possessive_past_tense } [ adverb_uncertainty ]
 
-:6121	$singular_question_verb																								singular_verb_present_tense_or_past_tense
-:6121	$plural_question_verb																								plural_verb_present_tense_or_past_tense
+:5121	$singular_question_verb															singular_verb_present_or_past_tense
+:5121	$plural_question_verb															plural_verb_present_or_past_tense
 
-:6122	$singular_specification_generalization_verb																singular_verb
-:6122	$plural_specification_generalization_verb																	plural_verb
+:5122	$singular_specification_generalization_verb										singular_verb
+:5122	$plural_specification_generalization_verb										plural_verb
 
-:6123	$singular_specification_generalization_question_verb												singular_verb_present_tense_or_past_tense
-:6123	$plural_specification_generalization_question_verb													plural_verb_present_tense_or_past_tense
+:5123	$singular_specification_generalization_question_verb							singular_verb_present_or_past_tense
+:5123	$plural_specification_generalization_question_verb								plural_verb_present_or_past_tense
 
 
 #--- Conjonctions spéciales ---
-:6110	$comma_conjunction																									symbol_comma
-:6110	$collective_sentence_conjunction																				conjunction_collective
-:6110	$exclusive_sentence_conjunction																				conjunction_exclusive
+:5110	$comma_conjunction																symbol_comma
+:5110	$collective_sentence_conjunction												conjunction_collective
+:5110	$exclusive_sentence_conjunction													conjunction_exclusive
 
 
 #--- Articles spéciaux ---
-			$assignment_possessive_determiner																			{ possessive_determiner_singular | possessive_determiner_plural }
-:6100	$generalization_assignment_article																			{ assignment_possessive_determiner | article_definite }
-:6101	$specification_assignment_definite_article																	article_definite
-:6101	$specification_assignment_possessive_determiner													assignment_possessive_determiner
-:6102	$relation_assignment_article																						{ assignment_possessive_determiner | article_definite }
+		$assignment_possessive_determiner												{ possessive_determiner_singular | possessive_determiner_plural }
+:5100	$generalization_assignment_article												{ assignment_possessive_determiner | article_definite }
+:5101	$specification_assignment_definite_article										article_definite
+:5101	$specification_assignment_possessive_determiner									assignment_possessive_determiner
+:5102	$relation_assignment_article													{ assignment_possessive_determiner | article_definite }
 
 
 #-----------
 
-:6023	$exclusive_specification_conjunction																			( symbol_comma ) conjunction_exclusive
+:5023	$exclusive_specification_conjunction											( symbol_comma ) conjunction_exclusive
 
-:6022	$As																																adverb_As
-:6022	$Information																												noun_singular_Information
+:5022	$As																				adverb_As
+:5022	$Information																	noun_singular_Information
+:5022	$specification_numeral															[ adverb_French_Pas ] numeral
+		$comma_separated_specification_numerals											symbol_comma specification_numeral [ comma_separated_specification_numerals ]
+		$collective_specification_numerals												specification_numeral [ comma_separated_specification_numerals ] conjunction_collective specification_numeral
+		$more_exclusive_specification_numerals											[ comma_separated_specification_numerals ] exclusive_specification_conjunction specification_numeral
+		$exclusive_specification_numerals												specification_numeral [ more_exclusive_specification_numerals ]
 
-:6022	$specification_numeral																								[ adverb_Pas ] numeral
-			$comma_separated_specification_numerals																symbol_comma specification_numeral [ comma_separated_specification_numerals ]
+:5022	$specification_small_letter														[ adverb_French_Pas ] letter_small
+		$comma_separated_specification_small_letters									symbol_comma specification_small_letter [ comma_separated_specification_small_letters ]
+		$collective_specification_small_letters											specification_small_letter [ comma_separated_specification_small_letters ] conjunction_collective specification_small_letter
+		$more_exclusive_specification_small_letters										[ comma_separated_specification_small_letters ] exclusive_specification_conjunction specification_small_letter
+		$exclusive_specification_small_letters											specification_small_letter [ more_exclusive_specification_small_letters ]
 
-			$more_collective_specification_numerals																	[ comma_separated_specification_numerals ] conjunction_collective specification_numeral
-			$collective_specification_numerals																				specification_numeral [ more_collective_specification_numerals ]
+:5022	$specification_capital_letter													[ adverb_French_Pas ] letter_capital
+		$comma_separated_specification_capital_letters									symbol_comma specification_capital_letter [ comma_separated_specification_capital_letters ]
+		$collective_specification_capital_letters										specification_capital_letter [ comma_separated_specification_capital_letters ] conjunction_collective specification_capital_letter
+		$more_exclusive_specification_capital_letters									[ comma_separated_specification_capital_letters ] exclusive_specification_conjunction specification_capital_letter
+		$exclusive_specification_capital_letters										specification_capital_letter [ more_exclusive_specification_capital_letters ]
 
-			$more_exclusive_specification_numerals																	[ comma_separated_specification_numerals ] exclusive_specification_conjunction specification_numeral
-			$exclusive_specification_numerals																				specification_numeral [ more_exclusive_specification_numerals ]
+:5022	$specification_adjective														[ adverb_French_Pas ] adjective
+		$comma_separated_specification_adjectives										symbol_comma specification_adjective [ comma_separated_specification_adjectives ]
+		$collective_specification_adjectives											specification_adjective [ comma_separated_specification_adjectives ] conjunction_collective specification_adjective
+		$more_exclusive_specification_adjectives										[ comma_separated_specification_adjectives ] exclusive_specification_conjunction specification_adjective
+		$exclusive_specification_adjectives												specification_adjective [ more_exclusive_specification_adjectives ]
 
-:6022	$specification_small_letter																							[ adverb_Pas ] letter_small
-			$comma_separated_specification_small_letters															symbol_comma specification_small_letter [ comma_separated_specification_small_letters ]
-			$collective_specification_small_letters																		specification_small_letter [ comma_separated_specification_small_letters ] conjunction_collective specification_small_letter
+		$more_singular_nouns															noun_singular [ noun_singular ]
+		$multiple_word_singular_noun													noun_singular ( preposition_French_à noun_plural | more_singular_nouns )
+:5022	$single_singular_specification_noun												multiple_word_singular_noun [ multiple_type_relation_numeral ]
+:5022	$Value																			noun_singular_Value
 
-			$more_exclusive_specification_small_letters																[ comma_separated_specification_small_letters ] exclusive_specification_conjunction specification_small_letter
-			$exclusive_specification_small_letters																		specification_small_letter [ more_exclusive_specification_small_letters ]
+		$specification_noun_assignment_article											[ adverb_French_Pas ] { specification_assignment_possessive_determiner | article_indefinite | specification_assignment_definite_article }
+		$singular_noun_assignment_specification_noun									[ adjective_Previous | adjective_Current | Value preposition_Of relation_assignment_article ] single_singular_specification_noun
+		$singular_noun_assignment_specification_noun_with_mandatory_article				specification_noun_assignment_article singular_noun_assignment_specification_noun
+		$singular_noun_assignment_specification_noun_with_optional_article				[ specification_noun_assignment_article ] singular_noun_assignment_specification_noun
+		$comma_separated_singular_noun_assignment_specification_nouns					symbol_comma singular_noun_assignment_specification_noun_with_optional_article [ comma_separated_singular_noun_assignment_specification_nouns ]
+		$more_singular_noun_assignment_specification_nouns								[ comma_separated_singular_noun_assignment_specification_nouns ] conjunction_collective singular_noun_assignment_specification_noun_with_optional_article
+		$singular_noun_assignment_specification_nouns									singular_noun_assignment_specification_noun_with_mandatory_article [ more_singular_noun_assignment_specification_nouns ]
 
-:6022	$specification_capital_letter																						[ adverb_Pas ] letter_capital
-			$comma_separated_specification_capital_letters														symbol_comma specification_capital_letter [ comma_separated_specification_capital_letters ]
-			$collective_specification_capital_letters																		specification_capital_letter [ comma_separated_specification_capital_letters ] conjunction_collective specification_capital_letter
+		$specification_proper_noun_assignment_article									[ adverb_French_Pas ] { specification_assignment_possessive_determiner | specification_assignment_definite_article }
+		$singular_proper_noun_assignment_specification_noun								[ adjective_Previous | adjective_Current | Value preposition_Of relation_assignment_article ] single_singular_specification_noun
+		$singular_proper_noun_assignment_specification_noun_with_mandatory_article		specification_proper_noun_assignment_article singular_proper_noun_assignment_specification_noun
+		$singular_proper_noun_assignment_specification_noun_with_optional_article		[ specification_proper_noun_assignment_article ] singular_proper_noun_assignment_specification_noun
+		$comma_separated_singular_proper_noun_assignment_specification_nouns			symbol_comma singular_proper_noun_assignment_specification_noun_with_optional_article [ comma_separated_singular_proper_noun_assignment_specification_nouns ]
+		$more_singular_proper_noun_assignment_specification_nouns						[ comma_separated_singular_proper_noun_assignment_specification_nouns ] conjunction_collective singular_proper_noun_assignment_specification_noun_with_optional_article
+		$singular_proper_noun_assignment_specification_nouns							singular_proper_noun_assignment_specification_noun_with_mandatory_article [ more_singular_proper_noun_assignment_specification_nouns ]
 
-			$more_exclusive_specification_capital_letters															[ comma_separated_specification_capital_letters ] exclusive_specification_conjunction specification_capital_letter
-			$exclusive_specification_capital_letters																		specification_capital_letter [ more_exclusive_specification_capital_letters ]
+		$singular_structure_specification_noun											[ adjective_Previous | adjective_New ] single_singular_specification_noun
+		$singular_structure_specification_noun_with_mandatory_article					[ adverb_French_Pas ] article_indefinite singular_structure_specification_noun
+		$singular_structure_specification_noun_with_optional_article					[ adjective_No | article_indefinite ] singular_structure_specification_noun
+		$comma_separated_singular_structure_specification_nouns							symbol_comma singular_structure_specification_noun_with_optional_article [ comma_separated_singular_structure_specification_nouns ]
+		$singular_exclusive_structure_specification_nouns								singular_structure_specification_noun_with_mandatory_article [ comma_separated_singular_structure_specification_nouns ] [ exclusive_specification_conjunction singular_structure_specification_noun_with_optional_article ]
 
-:6022	$specification_adjective																								[ adverb_Pas ] adjective
-			$comma_separated_specification_adjectives																symbol_comma specification_adjective [ comma_separated_specification_adjectives ]
-			$collective_specification_adjectives																			specification_adjective [ comma_separated_specification_adjectives ] conjunction_collective specification_adjective
+		$multiple_word_plural_noun														( noun_singular ) noun_plural
+		$multiple_word_plural_noun														noun_plural ( multiple_word_plural_noun | multiple_word_singular_noun )
+:5022	$plural_specification_noun														multiple_word_plural_noun
+		$plural_assignment_specification_noun											[ specification_noun_assignment_article ] plural_specification_noun
+		$comma_separated_plural_assignment_specification_nouns							symbol_comma plural_assignment_specification_noun [ comma_separated_plural_assignment_specification_nouns ]
+		$more_plural_assignment_specification_nouns										[ comma_separated_plural_assignment_specification_nouns ] conjunction_collective plural_assignment_specification_noun
+		$plural_assignment_specification_nouns											plural_assignment_specification_noun [ more_plural_assignment_specification_nouns ]
+		$plural_structure_specification_noun											[ adjective_No | numeral ] plural_specification_noun
 
-			$more_exclusive_specification_adjectives																	[ comma_separated_specification_adjectives ] exclusive_specification_conjunction specification_adjective
-			$exclusive_specification_adjectives																			specification_adjective [ more_exclusive_specification_adjectives ]
+		$structure_specification_noun													{ singular_structure_specification_noun_with_mandatory_article | plural_structure_specification_noun }
+		$comma_separated_structure_specification_nouns									symbol_comma structure_specification_noun [ comma_separated_structure_specification_nouns ]
+		$more_collective_structure_specification_nouns									[ comma_separated_structure_specification_nouns ] conjunction_collective structure_specification_noun
+		$collective_structure_specification_nouns										structure_specification_noun [ more_collective_structure_specification_nouns ]
+		$more_exclusive_structure_specification_nouns									[ comma_separated_structure_specification_nouns ] exclusive_specification_conjunction structure_specification_noun
+		$structure_specification_nouns													structure_specification_noun [ more_collective_structure_specification_nouns | more_exclusive_structure_specification_nouns ]
 
-			$more_singular_nouns																								noun_singular [ noun_singular ]
-			$multiple_word_singular_noun																					noun_singular ( preposition_à noun_plural | more_singular_nouns )
+		$possessive_singular_structure_specification_noun_with_mandatory_article		{ adjective_No | article_indefinite } singular_structure_specification_noun [ adjective_Specific ]
+		$possessive_structure_specification_noun										{ possessive_singular_structure_specification_noun_with_mandatory_article | plural_structure_specification_noun }
+		$comma_separated_possessive_structure_specification_nouns						symbol_comma possessive_structure_specification_noun [ comma_separated_possessive_structure_specification_nouns ]
+		$more_collective_possessive_structure_specification_nouns						[ comma_separated_possessive_structure_specification_nouns ] conjunction_collective possessive_structure_specification_noun
+		$possessive_structure_specification_nouns										possessive_structure_specification_noun [ more_collective_possessive_structure_specification_nouns ]
 
-:6022	$single_singular_specification_noun																			multiple_word_singular_noun
-:6022	$Value																															noun_singular_Value
+:5022	$specification_pronoun															[ adverb_French_Pas ] { possessive_pronoun_singular | possessive_pronoun_plural }
+		$comma_separated_specification_pronouns											symbol_comma specification_pronoun [ comma_separated_specification_pronouns ]
+		$collective_specification_pronouns												specification_pronoun [ comma_separated_specification_pronouns ] conjunction_collective specification_pronoun
+		$more_exclusive_specification_pronouns											[ comma_separated_specification_pronouns ] exclusive_specification_conjunction specification_pronoun
+		$exclusive_specification_pronouns												specification_pronoun [ more_exclusive_specification_pronouns ]
 
-			$specification_noun_assignment_article																		[ adverb_Pas ] { specification_assignment_possessive_determiner | article_indefinite | specification_assignment_definite_article }
-			$singular_noun_assignment_specification_noun														[ adjective_past_tense | adjective_present_tense | Value preposition_Of relation_assignment_article ] single_singular_specification_noun
-			$singular_noun_assignment_specification_noun_with_mandatory_article					specification_noun_assignment_article singular_noun_assignment_specification_noun
-			$singular_noun_assignment_specification_noun_with_optional_article						[ specification_noun_assignment_article ] singular_noun_assignment_specification_noun
-			$comma_separated_singular_noun_assignment_specification_nouns						symbol_comma singular_noun_assignment_specification_noun_with_optional_article [ comma_separated_singular_noun_assignment_specification_nouns ]
-			$more_singular_noun_assignment_specification_nouns											[ comma_separated_singular_noun_assignment_specification_nouns ] conjunction_collective singular_noun_assignment_specification_noun_with_optional_article
-			$singular_noun_assignment_specification_nouns														singular_noun_assignment_specification_noun_with_mandatory_article [ more_singular_noun_assignment_specification_nouns ]
-	
-			$specification_proper_name_assignment_article														[ adverb_Pas ] { specification_assignment_possessive_determiner | specification_assignment_definite_article }
-			$singular_proper_name_assignment_specification_noun											[ adjective_past_tense | adjective_present_tense | Value preposition_Of relation_assignment_article ] single_singular_specification_noun
-			$singular_proper_name_assignment_specification_noun_with_mandatory_article	specification_proper_name_assignment_article singular_proper_name_assignment_specification_noun
-			$singular_proper_name_assignment_specification_noun_with_optional_article		[ specification_proper_name_assignment_article ] singular_proper_name_assignment_specification_noun
-			$comma_separated_singular_proper_name_assignment_specification_nouns			symbol_comma singular_proper_name_assignment_specification_noun_with_optional_article [ comma_separated_singular_proper_name_assignment_specification_nouns ]
-			$more_singular_proper_name_assignment_specification_nouns								[ comma_separated_singular_proper_name_assignment_specification_nouns ] conjunction_collective singular_proper_name_assignment_specification_noun_with_optional_article
-			$singular_proper_name_assignment_specification_nouns											singular_proper_name_assignment_specification_noun_with_mandatory_article [ more_singular_proper_name_assignment_specification_nouns ]
+		$multiple_word_proper_noun														proper_noun ( multiple_word_proper_noun )
+:5022	$specification_proper_noun														[ adverb_French_Pas ] [ article_definite ] multiple_word_proper_noun
+		$comma_separated_specification_proper_nouns										symbol_comma specification_proper_noun [ comma_separated_specification_proper_nouns ]
+		$collective_specification_proper_nouns											specification_proper_noun [ comma_separated_specification_proper_nouns ] conjunction_collective specification_proper_noun
+		$more_exclusive_specification_proper_nouns										[ comma_separated_specification_proper_nouns ] exclusive_specification_conjunction specification_proper_noun
+		$exclusive_specification_proper_nouns											specification_proper_noun [ more_exclusive_specification_proper_nouns ]
 
-			$singular_structure_specification_article																	[ adverb_Pas ] article_indefinite
-			$singular_structure_specification_noun																		[ adjective_past_tense | adjective_New ] single_singular_specification_noun
+:5022	$specification_text																text
+		$comma_separated_specification_texts											symbol_comma specification_text [ comma_separated_specification_texts ]
+		$more_exclusive_specification_texts												[ comma_separated_specification_texts ] exclusive_specification_conjunction specification_text
+		$exclusive_specification_texts													specification_text [ more_exclusive_specification_texts ]
 
-			$singular_structure_specification_noun_with_mandatory_article								[ adverb_Pas ] article_indefinite singular_structure_specification_noun
-			$singular_structure_specification_noun_with_optional_article									[ adjective_No | singular_structure_specification_article ] singular_structure_specification_noun
-			$comma_separated_singular_structure_specification_nouns										symbol_comma singular_structure_specification_noun_with_optional_article [ comma_separated_singular_structure_specification_nouns ]
-			$singular_collective_structure_specification_nouns													singular_structure_specification_noun_with_mandatory_article [ comma_separated_singular_structure_specification_nouns ] conjunction_collective singular_structure_specification_noun_with_optional_article
+:5021	$singular_noun_assignment_specification											{ singular_noun_assignment_specification_nouns | collective_specification_proper_nouns | specification_proper_noun | collective_specification_numerals | specification_numeral | collective_specification_small_letters | specification_small_letter | collective_specification_capital_letters | specification_capital_letter | collective_specification_adjectives | specification_adjective | collective_specification_pronouns | specification_pronoun | specification_text }
+:5021	$singular_proper_noun_assignment_specification									{ singular_proper_noun_assignment_specification_nouns | collective_specification_numerals | specification_numeral | collective_specification_small_letters | specification_small_letter | collective_specification_capital_letters | specification_capital_letter | collective_specification_adjectives | specification_adjective | collective_specification_pronouns | specification_pronoun | specification_text }
+:5021	$plural_assignment_specification												{ plural_assignment_specification_nouns | collective_specification_numerals | collective_specification_small_letters | collective_specification_capital_letters | collective_specification_adjectives | collective_specification_pronouns }
+:5021	$noun_assignment_specification													{ singular_noun_assignment_specification_nouns | plural_assignment_specification_nouns | collective_specification_adjectives  }
+:5021	$proper_noun_assignment_specification											{ singular_proper_noun_assignment_specification_nouns | plural_assignment_specification_nouns | collective_specification_adjectives }
 
-			$more_singular_exclusive_structure_specification_nouns											[ comma_separated_singular_structure_specification_nouns ] exclusive_specification_conjunction singular_structure_specification_noun_with_optional_article
-			$singular_exclusive_structure_specification_nouns													singular_structure_specification_noun_with_mandatory_article [ more_singular_exclusive_structure_specification_nouns ]
-
-			$multiple_word_plural_noun																						( noun_singular ) noun_plural
-			$multiple_word_plural_noun																						noun_plural ( multiple_word_plural_noun | multiple_word_singular_noun )
-
-:6022	$plural_specification_noun																							multiple_word_plural_noun
-			$plural_assignment_specification_noun																		[ specification_noun_assignment_article ] plural_specification_noun
-			$comma_separated_plural_assignment_specification_nouns										symbol_comma plural_assignment_specification_noun [ comma_separated_plural_assignment_specification_nouns ]
-			$more_plural_assignment_specification_nouns															[ comma_separated_plural_assignment_specification_nouns ] conjunction_collective plural_assignment_specification_noun
-			$plural_assignment_specification_nouns																	plural_assignment_specification_noun [ more_plural_assignment_specification_nouns ]
-
-			$structure_specification_noun																					{ singular_structure_specification_noun_with_mandatory_article | possessive_plural_structure_specification_noun }
-			$comma_separated_structure_specification_nouns													symbol_comma structure_specification_noun [ comma_separated_structure_specification_nouns ]
-			$more_collective_structure_specification_nouns														[ comma_separated_structure_specification_nouns ] conjunction_collective structure_specification_noun
-			$collective_structure_specification_nouns																	structure_specification_noun [ more_collective_structure_specification_nouns ]
-			$more_exclusive_structure_specification_nouns														[ comma_separated_structure_specification_nouns ] exclusive_specification_conjunction structure_specification_noun
-			$structure_specification_nouns																					structure_specification_noun [ more_collective_structure_specification_nouns | more_exclusive_structure_specification_nouns ]
-
-			$possessive_singular_structure_specification_noun_with_mandatory_article			{ adjective_No | article_indefinite } singular_structure_specification_noun
-			$possessive_plural_structure_specification_noun														[ adjective_No | numeral ] plural_specification_noun
-			$possessive_structure_specification_noun																	{ possessive_singular_structure_specification_noun_with_mandatory_article | possessive_plural_structure_specification_noun }
-			$comma_separated_possessive_structure_specification_nouns								symbol_comma possessive_structure_specification_noun [ comma_separated_possessive_structure_specification_nouns ]
-			$more_collective_possessive_structure_specification_nouns										[ comma_separated_possessive_structure_specification_nouns ] conjunction_collective possessive_structure_specification_noun
-			$possessive_structure_specification_nouns																possessive_structure_specification_noun [ more_collective_possessive_structure_specification_nouns ]
-
-:6022	$specification_pronoun																								[ adverb_Pas ] { possessive_pronoun_singular | possessive_pronoun_plural }
-			$comma_separated_specification_pronouns																symbol_comma specification_pronoun [ comma_separated_specification_pronouns ]
-			$collective_specification_pronouns																				specification_pronoun [ comma_separated_specification_pronouns ] conjunction_collective specification_pronoun
-
-			$more_exclusive_specification_pronouns																	[ comma_separated_specification_pronouns ] exclusive_specification_conjunction specification_pronoun
-			$exclusive_specification_pronouns																				specification_pronoun [ more_exclusive_specification_pronouns ]
-
-			$multiple_word_proper_name																					proper_name ( multiple_word_proper_name )
-
-:6022	$specification_proper_name																						[ adverb_Pas ] [ article_definite ] multiple_word_proper_name
-			$comma_separated_specification_proper_names														symbol_comma specification_proper_name [ comma_separated_specification_proper_names ]
-			$collective_specification_proper_names																		specification_proper_name [ comma_separated_specification_proper_names ] conjunction_collective specification_proper_name
-
-			$more_exclusive_specification_proper_names															[ comma_separated_specification_proper_names ] exclusive_specification_conjunction specification_proper_name
-			$exclusive_specification_proper_names																		specification_proper_name [ more_exclusive_specification_proper_names ]
-
-:6022	$specification_text																										text
-			$comma_separated_specification_texts																		symbol_comma specification_text [ comma_separated_specification_texts ]
-			$more_exclusive_specification_texts																			[ comma_separated_specification_texts ] exclusive_specification_conjunction specification_text
-			$exclusive_specification_texts																					specification_text [ more_exclusive_specification_texts ]
-
-:6021	$singular_noun_assignment_specification																	{ singular_noun_assignment_specification_nouns | collective_specification_proper_names | specification_proper_name | collective_specification_numerals | specification_numeral | collective_specification_small_letters | specification_small_letter | collective_specification_capital_letters | specification_capital_letter | collective_specification_adjectives | specification_adjective | collective_specification_pronouns | specification_pronoun | specification_text }
-:6021	$singular_proper_name_assignment_specification														{ singular_proper_name_assignment_specification_nouns | collective_specification_numerals | specification_numeral | collective_specification_small_letters | specification_small_letter | collective_specification_capital_letters | specification_capital_letter | collective_specification_adjectives | specification_adjective | collective_specification_pronouns | specification_pronoun | specification_text }
-:6021	$plural_assignment_specification																				{ plural_assignment_specification_nouns | collective_specification_numerals | collective_specification_small_letters | collective_specification_capital_letters | collective_specification_adjectives | collective_specification_pronouns }
-
-:6021	$noun_assignment_specification																				{ collective_specification_adjectives | singular_noun_assignment_specification_nouns | plural_assignment_specification_nouns }
-:6021	$proper_name_assignment_specification																	{ collective_specification_adjectives | singular_proper_name_assignment_specification_nouns | plural_assignment_specification_nouns }
-
-:6020	$singular_structure_specification																				{ singular_exclusive_structure_specification_nouns | exclusive_specification_proper_names | exclusive_specification_numerals | exclusive_specification_small_letters | exclusive_specification_capital_letters | exclusive_specification_adjectives | exclusive_specification_pronouns | exclusive_specification_texts }
-:6020	$plural_structure_specification																					{ collective_structure_specification_nouns | singular_collective_structure_specification_nouns | collective_specification_proper_names | collective_specification_numerals | collective_specification_small_letters | collective_specification_capital_letters | collective_specification_adjectives | collective_specification_pronouns }
-
-:6020	$singular_condition_noun_specification																		{ specification_assignment_possessive_determiner | specification_assignment_definite_article } single_singular_specification_noun
+:5020	$singular_structure_specification												{ singular_exclusive_structure_specification_nouns | exclusive_specification_proper_nouns | exclusive_specification_numerals | exclusive_specification_small_letters | exclusive_specification_capital_letters | exclusive_specification_adjectives | exclusive_specification_pronouns | exclusive_specification_texts }
+:5020	$plural_structure_specification													{ collective_structure_specification_nouns | collective_specification_proper_nouns | collective_specification_numerals | collective_specification_small_letters | collective_specification_capital_letters | collective_specification_adjectives | collective_specification_pronouns }
+:5020	$singular_condition_noun_specification											{ specification_assignment_possessive_determiner | specification_assignment_definite_article } single_singular_specification_noun
 
 
 #-----------
 
-:6031	$relation_numeral																										numeral
+		$multiple_type																	{ noun_singular | noun_plural | proper_noun } [ multiple_type ]
+:5031	$multiple_type_relation_numeral													preposition_Of numeral ( multiple_type )
+:5031	$relation_numeral																numeral
+:5031	$single_singular_relation_noun													multiple_word_singular_noun
+:5031	$single_plural_relation_noun													multiple_word_plural_noun
+:5031	$relation_proper_noun															[ article_definite ] multiple_word_proper_noun
+		$comma_separated_relation_proper_nouns											symbol_comma relation_proper_noun [ comma_separated_relation_proper_nouns ]
+		$more_relation_proper_nouns														[ comma_separated_relation_proper_nouns ] conjunction_collective relation_proper_noun
+		$relation_proper_nouns															relation_proper_noun [ more_relation_proper_nouns ]
+		$specification_assignment_relation_noun											[ article_definite ] { single_plural_relation_noun | single_singular_relation_noun }
 
-:6031	$single_singular_relation_noun																					multiple_word_singular_noun
-:6031	$single_plural_relation_noun																						multiple_word_plural_noun
+:5030	$preposition_noun_relation														{ preposition | preposition_Of } specification_assignment_relation_noun
+:5030	$preposition_relation															{ preposition | preposition_Of } { relation_proper_noun | specification_assignment_relation_noun }
+:5030	$preposition_relations															preposition_Of [ numeral_Both ] relation_proper_nouns
+:5030	$possessive_relations															[ symbol_comma ] adjective_Called relation_proper_nouns
 
-:6031	$relation_proper_name																								[ article_definite ] multiple_word_proper_name
-			$comma_separated_relation_proper_names																symbol_comma relation_proper_name [ comma_separated_relation_proper_names ]
-			$more_relation_proper_names																					[ comma_separated_relation_proper_names ] conjunction_collective relation_proper_name
-			$relation_proper_names																								relation_proper_name [ more_relation_proper_names ]
-
-			$preposition_word																										{ preposition | preposition_Of }
-
-			$specification_assignment_relation_noun																	[ article_definite ] { single_plural_relation_noun | single_singular_relation_noun }
-
-:6030	$preposition_assignment_relation																				preposition_word { relation_proper_name | specification_assignment_relation_noun }
-:6030	$preposition_assignment_relations																			preposition_word relation_proper_names
-:6030	$preposition_structure_relations																				preposition_word [ numeral_Both ] relation_proper_names
-:6030	$possessive_relations																									[ symbol_comma ] adjective_Called relation_proper_names
-
-:6040	$execution_text																											text
+:5040	$execution_text																	text
 
 
 #-----------
 
-:6012	$linked_generalization_conjunction																			conjunction_collective
+:5012	$linked_generalization_conjunction												conjunction_collective
 
-:6011	$singular_generalization_noun																					multiple_word_singular_noun
-:6011	$plural_generalization_noun																						multiple_word_plural_noun
-:6011	$generalization_proper_name																					[ article_definite ] multiple_word_proper_name
-:6011	$generalization_Odd_or_Even																					adjective_Odd_or_Even
-:6011	$generalization_comparison																						adjective_comparison
+:5011	$singular_generalization_noun													multiple_word_singular_noun
+:5011	$plural_generalization_noun														multiple_word_plural_noun
+:5011	$generalization_proper_noun														[ article_definite ] multiple_word_proper_noun
+:5011	$generalization_Odd_or_Even														{ adjective_Odd | adjective_Even }
+:5011	$generalization_comparison														adjective_comparison
 
-:6010	$generalization_noun_singular_assignment																generalization_assignment_article singular_generalization_noun
-:6010	$generalization_noun_plural_assignment																	generalization_assignment_article plural_generalization_noun
+:5010	$generalization_noun_singular_assignment										generalization_assignment_article singular_generalization_noun
+:5010	$singular_structure_noun_generalization											{ adjective_Every | article_indefinite } singular_generalization_noun
+:5010	$generalization_singular_verb_Odd_or_Even										singular_verb [ adverb_French_Pas ] generalization_Odd_or_Even
+:5010	$generalization_singular_verb_comparison										singular_verb [ adverb_French_Pas ] generalization_comparison conjunction_Than
 
-:6010	$singular_structure_noun_generalization																	{ adjective_Every | article_indefinite } singular_generalization_noun
+		$comma_separated_generalization_proper_nouns									symbol_comma generalization_proper_noun [ comma_separated_generalization_proper_nouns ]
+		$collective_generalization_proper_nouns											generalization_proper_noun [ comma_separated_generalization_proper_nouns ] conjunction_collective generalization_proper_noun
+		$singular_proper_noun_generalization_assignment									generalization_proper_noun singular_verb proper_noun_assignment_specification
+		$comma_separated_singular_proper_noun_generalization_assignment					symbol_comma singular_proper_noun_generalization_assignment [ comma_separated_singular_proper_noun_generalization_assignment ]
+		$more_singular_proper_noun_generalization_assignments							[ comma_separated_singular_proper_noun_generalization_assignment ] conjunction_collective singular_proper_noun_generalization_assignment
 
-:6010	$generalization_singular_verb_Odd_or_Even															singular_verb [ adverb_Pas ] generalization_Odd_or_Even
-:6010	$generalization_singular_verb_comparison																singular_verb [ adverb_Pas ] generalization_comparison conjunction_Than
-
-			$Part_Of																														noun_singular_Part preposition_Of
-			$comma_separated_generalization_proper_names													symbol_comma generalization_proper_name [ comma_separated_generalization_proper_names ]
-			$collective_generalization_proper_names																	generalization_proper_name [ comma_separated_generalization_proper_names ] conjunction_collective generalization_proper_name
-
-			$singular_proper_name_generalization_assignment													generalization_proper_name singular_verb proper_name_assignment_specification
-			$comma_separated_singular_proper_names_generalization_assignment				symbol_comma singular_proper_name_generalization_assignment [ comma_separated_singular_proper_names_generalization_assignment ]
-			$more_singular_proper_name_generalization_assignments										[ comma_separated_singular_proper_names_generalization_assignment ] conjunction_collective singular_proper_name_generalization_assignment
-
-			$singular_proper_name_generalization_structure														generalization_proper_name { singular_possessive_verb | singular_possessive_conditional_verb } possessive_structure_specification_nouns [ possessive_relations ] [ adverb_Anymore ]
-			$singular_proper_name_generalization_structure														generalization_proper_name { singular_verb | singular_conditional_verb } [ Part_Of ] { structure_specification_nouns | exclusive_specification_adjectives } [ preposition_structure_relations ]
-
-			$linked_singular_proper_name_generalization_structure											{ singular_verb | singular_conditional_verb | singular_possessive_verb | singular_possessive_conditional_verb } possessive_structure_specification_nouns
-			$comma_singular_separated_proper_names_generalization_structure					symbol_comma { singular_proper_name_generalization_structure | linked_singular_proper_name_generalization_structure } [ comma_singular_separated_proper_names_generalization_structure ]
-			$more_singular_proper_name_generalization_structures											[ comma_singular_separated_proper_names_generalization_structure ] { linked_generalization_conjunction linked_singular_proper_name_generalization_structure | conjunction_collective singular_proper_name_generalization_structure }
+		$Part_Of																		noun_singular_Part preposition_Of
+		$singular_proper_noun_specification												singular_possessive_verb possessive_structure_specification_nouns [ possessive_relations ] [ adverb_Anymore ]
+		$singular_proper_noun_specification												singular_verb [ Part_Of ] { structure_specification_nouns | exclusive_specification_adjectives } [ preposition_relations ]
+		$singular_proper_noun_generalization_structure									generalization_proper_noun singular_proper_noun_specification
+		$linked_singular_proper_noun_generalization_structure							{ singular_verb | singular_possessive_verb } possessive_structure_specification_nouns
+		$comma_separated_singular_proper_noun_generalization_structure					symbol_comma { singular_proper_noun_generalization_structure | linked_singular_proper_noun_generalization_structure } [ comma_separated_singular_proper_noun_generalization_structure ]
+		$more_singular_proper_noun_generalization_structures							[ comma_separated_singular_proper_noun_generalization_structure ] linked_generalization_conjunction linked_singular_proper_noun_generalization_structure
 
 
 #-----------
@@ -618,35 +608,38 @@
 # - (si) le temps est plus-tôt que "12:00" (puis)
 # - (si) le nombre du pôle de départ est impair (puis)
 # - (si) la tête du pôle de départ est plus-petit que la tête du pôle d'échange (puis)
-:6000	$condition_generalization_specification																		singular_condition_noun_specification generalization_singular_verb_comparison { relation_numeral | execution_text }
-:6000	$condition_generalization_specification																		singular_condition_noun_specification preposition_assignment_relation { generalization_singular_verb_Odd_or_Even | generalization_singular_verb_comparison singular_condition_noun_specification preposition_assignment_relation | generalization_singular_verb_comparison text }
-:6000	$condition_generalization_specification																		generalization_proper_name singular_verb singular_proper_name_assignment_specification
-:6000	$condition_generalization_specification																		generalization_noun_singular_assignment singular_verb singular_noun_assignment_specification
+		$condition_specification														generalization_singular_verb_comparison { relation_numeral | execution_text }
+		$condition_specification														preposition_noun_relation { generalization_singular_verb_Odd_or_Even | generalization_singular_verb_comparison singular_condition_noun_specification preposition_noun_relation | generalization_singular_verb_comparison text }
+:5000	$condition_generalization_specification											singular_condition_noun_specification condition_specification
+:5000	$condition_generalization_specification											generalization_proper_noun singular_verb singular_proper_noun_assignment_specification
+:5000	$condition_generalization_specification											generalization_noun_singular_assignment singular_verb singular_noun_assignment_specification
 
 #-----------
 
-:6000	$assignment_generalization_specification																	singular_proper_name_generalization_assignment [ more_singular_proper_name_generalization_assignments | preposition_assignment_relations ]
-:6000	$assignment_generalization_specification																	generalization_noun_plural_assignment { plural_verb plural_assignment_specification | plural_possessive_verb noun_assignment_specification }
-:6000	$assignment_generalization_specification																	generalization_noun_singular_assignment { singular_verb singular_noun_assignment_specification | singular_possessive_verb noun_assignment_specification }
+:5000	$assignment_generalization_specification										generalization_noun_singular_assignment { singular_verb singular_noun_assignment_specification | singular_possessive_verb noun_assignment_specification }
+:5000	$assignment_generalization_specification										singular_proper_noun_generalization_assignment [ more_singular_proper_noun_generalization_assignments | preposition_relations ]
 
-:6000	$assignment_generalization_specification_question													singular_question_verb generalization_proper_name [ adverb_uncertainty ] proper_name_assignment_specification [ preposition_assignment_relations ]
-:6000	$assignment_generalization_specification_question													singular_question_verb generalization_noun_singular_assignment { singular_structure_specification | singular_noun_assignment_specification }
+		$assignment_question_specification												generalization_noun_singular_assignment { singular_structure_specification | singular_noun_assignment_specification }
+		$assignment_question_specification												generalization_proper_noun [ adverb_uncertainty ] proper_noun_assignment_specification [ preposition_relations ]
+:5000	$assignment_generalization_specification_question								singular_question_verb assignment_question_specification
 
-:6000	$structure_generalization_specification																		singular_proper_name_generalization_structure [ more_singular_proper_name_generalization_structures ]
-:6000	$structure_generalization_specification																		plural_generalization_noun { plural_possessive_verb | plural_possessive_conditional_verb } possessive_structure_specification_nouns [ possessive_relations ]
-:6000	$structure_generalization_specification																		plural_generalization_noun { plural_verb | plural_conditional_verb } plural_structure_specification
-:6000	$structure_generalization_specification																		singular_structure_noun_generalization { singular_possessive_verb | singular_possessive_conditional_verb } possessive_structure_specification_nouns
-:6000	$structure_generalization_specification																		singular_structure_noun_generalization { singular_verb | singular_conditional_verb } singular_structure_specification
+		$structure_plural_specification													plural_possessive_verb possessive_structure_specification_nouns [ possessive_relations ]
+		$structure_plural_specification													{ plural_verb | plural_conditional_verb } plural_structure_specification
+:5000	$structure_generalization_specification											plural_generalization_noun structure_plural_specification
+:5000	$structure_generalization_specification											singular_structure_noun_generalization singular_possessive_verb possessive_structure_specification_nouns [ preposition_noun_relation ]
+:5000	$structure_generalization_specification											singular_proper_noun_generalization_structure [ more_singular_proper_noun_generalization_structures ]
+:5000	$structure_generalization_specification											singular_structure_noun_generalization { singular_verb | singular_conditional_verb } singular_structure_specification
 
-:6000	$structure_generalization_specification_question														plural_question_verb collective_generalization_proper_names plural_specification_noun [ preposition_structure_relations ]
-:6000	$structure_generalization_specification_question														singular_question_verb generalization_proper_name [ adverb_uncertainty ] structure_specification_nouns [ preposition_structure_relations ]
-:6000	$structure_generalization_specification_question														singular_question_verb singular_structure_noun_generalization singular_structure_specification
+		$structure_question_specification												generalization_proper_noun [ adverb_uncertainty ] structure_specification_nouns [ preposition_relations ]
+		$structure_question_specification												singular_structure_noun_generalization singular_structure_specification
+:5000	$structure_generalization_specification_question								plural_question_verb collective_generalization_proper_nouns plural_specification_noun [ preposition_relations ]
+:5000	$structure_generalization_specification_question								singular_question_verb structure_question_specification
 
-:6000	$structure_specification_generalization																		plural_structure_specification plural_specification_generalization_verb { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
-:6000	$structure_specification_generalization																		singular_structure_specification singular_specification_generalization_verb [ Part_Of ] singular_structure_noun_generalization
+:5000	$structure_specification_generalization											plural_structure_specification plural_specification_generalization_verb { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
+:5000	$structure_specification_generalization											singular_structure_specification singular_specification_generalization_verb [ Part_Of | adjective_Characteristic preposition_For ] singular_structure_noun_generalization
 
-:6000	$structure_specification_generalization_question														plural_specification_generalization_question_verb plural_structure_specification [ adverb_uncertainty ] { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
-:6000	$structure_specification_generalization_question														singular_specification_generalization_question_verb singular_structure_specification [ adverb_uncertainty ] [ Part_Of ] singular_structure_noun_generalization
+:5000	$structure_specification_generalization_question								plural_specification_generalization_question_verb plural_structure_specification [ adverb_uncertainty ] { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
+:5000	$structure_specification_generalization_question								singular_specification_generalization_question_verb singular_structure_specification [ adverb_uncertainty ] [ Part_Of ] singular_structure_noun_generalization
 
 
 #-----------
@@ -659,49 +652,53 @@
 # - Affichez "Bonjour tout le monde".
 # - Affichez des informations sur Olivier.
 # - Affichez des informations sur les listes.
-:5100	$imperative																													verb_imperative [ singular_noun_assignment_specification | plural_assignment_specification | Information preposition_assignment_relation | As specification_proper_name | execution_text ]
+		$imperative-specification														[ singular_noun_assignment_specification | plural_assignment_specification | Information preposition_relation | execution_text | As specification_proper_noun ]
 
 # Exemples d'un impératif:
-# - Lirez le fichier "Français/programmation/Puissance 4".
+# - Lirez le fichier "Français/utilisateur/programmation/Puissance 4".
 # - Ajouter D, C, B et A au pôle de départ.
-# - Déplacez la tête du pôle de départ au pôle d'échange.
-:5100	$imperative																													verb_imperative singular_noun_assignment_specification preposition_assignment_relation [ preposition_assignment_relation ]
+# - Déplacez la tête du pôle d'échange au pôle d'objectif.
+		$imperative-specification														singular_noun_assignment_specification preposition_relation [ preposition_relation ]
 
-:5200	$answer_Yes_or_No																									interjection
-
-
-#-----------
-
-			$execution																													{ assignment_generalization_specification | imperative }
-			$comma_separated_executions																					comma_conjunction execution [ comma_separated_executions ]
-			$more_executions																										[ comma_separated_executions ] collective_sentence_conjunction execution
-
-			$statement																													{ assignment_generalization_specification | structure_generalization_specification | structure_specification_generalization | imperative }
-			$comma_separated_statements																					comma_conjunction statement [ comma_separated_statements ]
-			$more_statements																										[ comma_separated_statements ] collective_sentence_conjunction statement
-
-			$question																													{ assignment_generalization_specification_question | structure_generalization_specification_question | structure_specification_generalization_question }
-			$comma_separated_questions																					comma_conjunction question [ comma_separated_questions ]
-			$more_questions																										[ comma_separated_questions ] { collective_sentence_conjunction | exclusive_sentence_conjunction } question
-
-			$comma_separated_conditions																					comma_conjunction condition_generalization_specification [ comma_separated_conditions ]
-			$more_conditions																										[ comma_separated_conditions ] collective_sentence_conjunction condition_generalization_specification
-
-			$condition_list																												condition_generalization_specification [ more_conditions ] [ exclusive_sentence_conjunction condition_list ]
-			$execution_list																											execution [ more_executions ]
-			$statement_list																											[ answer_Yes_or_No symbol_comma ] statement [ more_statements ]
-			$question_list																												question [ more_questions ]
-
-			$selection_execution																									execution_list [ selection_Else { selection_list | execution_list } ]
-
-:5000	$selection_list																												selection_If condition_list selection_Then { selection_list | selection_execution }
+:4040	$imperative																		verb_imperative [ imperative-specification ]
 
 
 #-----------
 
-:4000	$sentence																													question_list symbol_question_mark
-:4000	$sentence																													selection_list [ symbol_colon ]
-:4000	$sentence																													statement_list [ symbol_colon | symbol_exclamation_mark ]
+		$execution																		{ assignment_generalization_specification | imperative }
+		$comma_separated_executions														comma_conjunction execution [ comma_separated_executions ]
+		$more_executions																[ comma_separated_executions ] collective_sentence_conjunction execution
+
+		$comma_separated_conditions														comma_conjunction condition_generalization_specification [ comma_separated_conditions ]
+		$more_conditions																[ comma_separated_conditions ] collective_sentence_conjunction condition_generalization_specification
+
+		$condition_list																	condition_generalization_specification [ more_conditions ] [ exclusive_sentence_conjunction condition_list ]
+		$execution_list																	execution [ more_executions ]
+		$selection_execution															execution_list [ selection_Else { selection_list | execution_list } ]
+
+:4030	$selection_list																	selection_If condition_list selection_Then { selection_list | selection_execution }
+		$selection_sentence																selection_list [ symbol_colon ]
+
+
+#-----------
+
+:4022	$question																		structure_specification_generalization_question
+:4021	$question																		structure_generalization_specification_question
+		$question																		assignment_generalization_specification_question
+		$comma_separated_questions														comma_conjunction question [ comma_separated_questions ]
+		$more_questions																	[ comma_separated_questions ] { collective_sentence_conjunction | exclusive_sentence_conjunction } question
+:4020	$question_sentence																question [ more_questions ] symbol_question_mark
+
+		$statement																		imperative
+:4014	$statement																		structure_specification_generalization
+:4013	$statement																		structure_generalization_specification
+:4012	$statement																		assignment_generalization_specification
+		$comma_separated_statements														comma_conjunction statement [ comma_separated_statements ]
+		$more_statements																[ comma_separated_statements ] collective_sentence_conjunction statement
+:4011	$answer_Yes_or_No																{ interjection_Yes | interjection_No }
+:4010	$statement_sentence																[ answer_Yes_or_No symbol_comma ] statement [ more_statements ] [ symbol_colon | symbol_exclamation_mark ]
+
+:4000	$sentence																		{ statement_sentence | question_sentence | selection_sentence }
 
 
 #----------- Les assignations et les spécifications -----------

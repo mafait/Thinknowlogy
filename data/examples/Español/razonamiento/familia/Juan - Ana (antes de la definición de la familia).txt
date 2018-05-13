@@ -1,4 +1,4 @@
-Ana tiene una hija, llamada Luisa.
+﻿Ana tiene una hija, llamada Luisa.
 Juan es padre de Pablo.
 Ana es madre de Pablo.
 Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".

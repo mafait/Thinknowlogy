@@ -1,10 +1,10 @@
 ﻿* 
 * Mes conclusions:
-< L'option est 6.
+< Sien option est 6.
 < 
 * 
 * Mes conclusions:
-< L'option est 6. En raison:
+< Sien option est 6. En raison:
 <	- Une option est 1, 2, 3, 4, 5, 6, 7, 8 ou 9.
-<	- L'option n'est pas 9, pas 8, pas 7, pas 5, pas 4, pas 3, pas 2 et pas 1.
+<	- Sien option n'est pas 9, pas 8, pas 7, pas 5, pas 4, pas 3, pas 2 et pas 1.
 < 

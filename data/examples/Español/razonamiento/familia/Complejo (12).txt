@@ -1,4 +1,4 @@
-Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
 Pablo tiene 2 padres, llamados Juan y Ana.
 José tiene una madre, llamada Ana.
 Mostrar el informe de justificación sobre Ana.

@@ -1,4 +1,4 @@
-﻿Una persona es un hombre o una mujer.
+﻿Cada persona es un hombre o una mujer.
 Cruz es una persona.
 Cruz no es una mujer.
 Mostrar el informe de justificación sobre Cruz.

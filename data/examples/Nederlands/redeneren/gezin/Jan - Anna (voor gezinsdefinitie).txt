@@ -1,4 +1,4 @@
-Anna heeft een dochter, genaamd Laura.
+﻿Anna heeft een dochter, genaamd Laura.
 Jan is een ouder van Paul.
 Anna is een ouder van Paul.
 Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".

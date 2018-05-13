@@ -1,9 +1,9 @@
-/*	Class:			SelectionList
+﻿/*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -152,18 +152,16 @@ class SelectionList extends List
 		return null;
 		}
 
-	protected DuplicateResultType checkDuplicateCondition()
+	protected DuplicateResultType checkForDuplicateCondition()
 		{
 		DuplicateResultType duplicateResult = new DuplicateResultType();
 
-		duplicateResult.duplicateConditionSentenceNr = CommonVariables.currentSentenceNr;
+		duplicateResult.duplicateConditionSentenceNr = GlobalVariables.currentSentenceNr;
 
 		do	{
-			if( ( duplicateResult.duplicateConditionSentenceNr = getLowerSentenceNr( duplicateResult.duplicateConditionSentenceNr ) ) > Constants.NO_SENTENCE_NR )
-				{
-				if( ( duplicateResult = checkDuplicateSelectionPart( duplicateResult.duplicateConditionSentenceNr ) ).result != Constants.RESULT_OK )
-					return addDuplicateResultError( 1, "I failed to check if the alternative selection part is duplicate" );
-				}
+			if( ( duplicateResult.duplicateConditionSentenceNr = getLowerSentenceNr( duplicateResult.duplicateConditionSentenceNr ) ) > Constants.NO_SENTENCE_NR &&
+			( duplicateResult = checkForDuplicateSelectionPart( duplicateResult.duplicateConditionSentenceNr ) ).result != Constants.RESULT_OK )
+				return addDuplicateResultError( 1, "I failed to check if the alternative selection part is duplicate" );
 			}
 		while( !duplicateResult.hasFoundDuplicateSelection &&
 		duplicateResult.duplicateConditionSentenceNr > Constants.NO_SENTENCE_NR );
@@ -171,8 +169,10 @@ class SelectionList extends List
 		return duplicateResult;
 		}
 
-	protected DuplicateResultType checkDuplicateSelectionPart( int duplicateConditionSentenceNr )
+	protected DuplicateResultType checkForDuplicateSelectionPart( int duplicateConditionSentenceNr )
 		{
+		String currentSpecificationString;
+		String searchSpecificationString;
 		SelectionItem currentSelectionItem = null;
 		SelectionItem searchSelectionItem = firstActiveSelectionItem();
 		DuplicateResultType duplicateResult = new DuplicateResultType();
@@ -180,7 +180,7 @@ class SelectionList extends List
 		if( duplicateConditionSentenceNr <= Constants.NO_SENTENCE_NR )
 			return startDuplicateResultError( 1, "The given duplicate sentence number is undefined" );
 
-		if( duplicateConditionSentenceNr >= CommonVariables.currentSentenceNr )
+		if( duplicateConditionSentenceNr >= GlobalVariables.currentSentenceNr )
 			return startDuplicateResultError( 1, "The given duplicate sentence number is equal or higher than the current sentence number" );
 
 		duplicateResult.hasFoundDuplicateSelection = true;
@@ -201,18 +201,23 @@ class SelectionList extends List
 					currentSelectionItem.generalizationWordItem() == searchSelectionItem.generalizationWordItem() &&
 					currentSelectionItem.specificationWordItem() == searchSelectionItem.specificationWordItem() )
 						{
-						if( currentSelectionItem.specificationString() != null &&
-						searchSelectionItem.specificationString() != null )
-							duplicateResult.hasFoundDuplicateSelection = ( currentSelectionItem.specificationString().equals( searchSelectionItem.specificationString() ) );
+						currentSpecificationString = currentSelectionItem.specificationString();
+						searchSpecificationString = searchSelectionItem.specificationString();
+
+						if( currentSpecificationString != null &&
+						searchSpecificationString != null )
+							duplicateResult.hasFoundDuplicateSelection = ( currentSpecificationString.equals( searchSpecificationString ) );
 						else
 							{
-							if( currentSelectionItem.specificationString() != null ||
-							searchSelectionItem.specificationString() != null )
+							if( currentSpecificationString != null ||
+							searchSpecificationString != null )
 								duplicateResult.hasFoundDuplicateSelection = false;
 							}
 
 						if( duplicateResult.hasFoundDuplicateSelection )
 							{
+							duplicateResult.duplicateConditionSentenceNr = searchSelectionItem.creationSentenceNr();
+
 							currentSelectionItem = ( currentSelectionItem.nextSelectionItem() != null &&
 													currentSelectionItem.nextSelectionItem().hasCurrentCreationSentenceNr() ? currentSelectionItem.nextSelectionItem() : null );
 

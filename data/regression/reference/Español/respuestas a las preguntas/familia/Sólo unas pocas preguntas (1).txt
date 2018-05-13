@@ -28,6 +28,7 @@
 < 
 * 
 * Mis suposiciones:
+< Un padre es probablemente una persona.
 < Juan es probablemente un hombre.
 < Juan es posiblemente una persona.
 < Juan no es puede-ser una mujer.
@@ -41,7 +42,6 @@
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
-< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:
@@ -65,8 +65,8 @@
 < ¿Es Juan padre de Pablo?
 * 
 * Mis suposiciones que se ajustan:
-< Juan es probablemente una persona.
 < Juan no es probablemente una mujer.
+< Juan es probablemente una persona.
 * 
 * Mis suposiciones que se concluyen:
 < Juan es un hombre.

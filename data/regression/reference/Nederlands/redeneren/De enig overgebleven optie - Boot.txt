@@ -1,10 +1,10 @@
 ﻿* 
 * Mijn conclusies:
-< De boot is een roeiboot.
+< Zijn boot is een roeiboot.
 < 
 * 
 * Mijn conclusies:
-< De boot is een roeiboot. Omdat:
+< Zijn boot is een roeiboot. Omdat:
 <	- Een boot is een roeiboot, een zeilboot of een motorboot.
-<	- De boot is geen zeilboot en geen motorboot.
+<	- Zijn boot is geen zeilboot en geen motorboot.
 < 

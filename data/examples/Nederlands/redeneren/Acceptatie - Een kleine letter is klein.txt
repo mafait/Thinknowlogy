@@ -1,2 +1,2 @@
-Een kleine letter is klein.
+﻿Een kleine letter is klein.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

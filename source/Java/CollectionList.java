@@ -1,9 +1,9 @@
-/*	Class:			CollectionList
+﻿/*	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -51,15 +51,15 @@ class CollectionList extends List
 
 	protected void addToCollectionWordQuickAccessList()
 		{
-		WordItem lastCollectionWordItem = CommonVariables.lastCollectionWordItem;
+		WordItem lastCollectionWordItem = GlobalVariables.lastCollectionWordItem;
 
 		if( lastCollectionWordItem == null )
-			CommonVariables.firstCollectionWordItem = myWordItem();
+			GlobalVariables.firstCollectionWordItem = myWordItem();
 		else
 			// Word order is important: Add word at end of collection word list
 			lastCollectionWordItem.nextCollectionWordItem = myWordItem();
 
-		CommonVariables.lastCollectionWordItem = myWordItem();
+		GlobalVariables.lastCollectionWordItem = myWordItem();
 		}
 
 	protected boolean hasCollectionNr( int collectionNr )

@@ -1,4 +1,4 @@
-Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
 Pascal a une mère, appelée Amélie.
 Lorraine est un enfant de Olivier et Amélie.
 Julien est un garçon.

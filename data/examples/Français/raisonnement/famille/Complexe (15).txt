@@ -1,4 +1,4 @@
-Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
 Julien est un fils de Olivier et Amélie.
 Lorraine est une fille de Olivier et Amélie.
 Affichez le rapport de justification sur Amélie.

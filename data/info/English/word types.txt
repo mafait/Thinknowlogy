@@ -1,33 +1,33 @@
 ﻿Display "------------------------------------------------------------------------------".
-Display " Total number of word type items:	~#<w>~,	(all languages included).".
+Display " Total number of word type items: ~#<w>~, (all languages included).".
 Display "------------------------------------------------------------------------------".
-Display " * Active word type items:			~+#<w>~.".
-Display "   (@1)  Symbols:					~+#<w>@1~.".
-Display "   (@2)  Numerals:					~+#<w>@2~.".
-Display "   (@3)  Small letters:					~+#<w>@3~.".
-Display "   (@4)  Capital letters:				~+#<w>@4~.".
-Display "   (@5)  Proper names:					~+#<w>@5~.".
-Display "   (@6)  Adjectives:					~+#<w>@6~.".
-Display "   (@7)  Adverbs:					~+#<w>@7~.".
-Display "   (@8)  Answer words:					~+#<w>@8~.".
-Display "   (@9)  Articles:					~+#<w>@9~.".
-Display "   (@10) Conjunctions:					~+#<w>@10~.".
-Display "   (@11) Singular nouns:				~+#<w>@11~.".
-Display "   (@12) Plural nouns:					~+#<w>@12~.".
+Display " * Active word type items:		~+#<w>~.".
+Display "   (@1)  Symbols:			~+#<w>@1~.".
+Display "   (@2)  Numerals:			~+#<w>@2~.".
+Display "   (@3)  Small letters:			~+#<w>@3~.".
+Display "   (@4)  Capital letters:			~+#<w>@4~.".
+Display "   (@5)  Proper names:			~+#<w>@5~.".
+Display "   (@6)  Adjectives:			~+#<w>@6~.".
+Display "   (@7)  Adverbs:			~+#<w>@7~.".
+Display "   (@8)  Answer words:			~+#<w>@8~.".
+Display "   (@9)  Articles:			~+#<w>@9~.".
+Display "   (@10) Conjunctions:			~+#<w>@10~.".
+Display "   (@11) Singular nouns:			~+#<w>@11~.".
+Display "   (@12) Plural nouns:			~+#<w>@12~.".
 Display "   (@13) Personal pronoun singular (subjective):	~+#<w>@13~.".
-Display "   (@14) Personal pronoun singular (objective):		~+#<w>@14~.".
+Display "   (@14) Personal pronoun singular (objective):	~+#<w>@14~.".
 Display "   (@15) Possessive determiner singular:		~+#<w>@15~.".
-Display "   (@16) Possessive pronoun singular:			~+#<w>@16~.".
+Display "   (@16) Possessive pronoun singular:		~+#<w>@16~.".
 Display "   (@17) Personal pronoun plural (subjective):		~+#<w>@17~.".
 Display "   (@18) Personal pronoun plural (objective):		~+#<w>@18~.".
-Display "   (@19) Possessive determiner plural:			~+#<w>@19~.".
-Display "   (@20) Possessive pronoun plural:			~+#<w>@20~.".
-Display "   (@21) Prepositions:					~+#<w>@21~.".
-Display "   (@22) Singular verbs:				~+#<w>@22~.".
-Display "   (@23) Plural verbs:					~+#<w>@23~.".
-Display "   (@24) Selection words:				~+#<w>@24~.".
-Display " * Inactive word type items:			~=#<w>~.".
-Display " * Archived word type items:			~$#<w>~.".
-Display " * Replaced word type items:			~%#<w>~.".
-Display " * Deleted word type items:			~&#<w>~.".
+Display "   (@19) Possessive determiner plural:		~+#<w>@19~.".
+Display "   (@20) Possessive pronoun plural:		~+#<w>@20~.".
+Display "   (@21) Prepositions:			~+#<w>@21~.".
+Display "   (@22) Singular verbs:			~+#<w>@22~.".
+Display "   (@23) Plural verbs:			~+#<w>@23~.".
+Display "   (@24) Selection words:			~+#<w>@24~.".
+Display " * Inactive word type items:		~=#<w>~.".
+Display " * Archived word type items:		~$#<w>~.".
+Display " * Replaced word type items:		~%#<w>~.".
+Display " * Deleted word type items:		~&#<w>~.".
 Display "------------------------------------------------------------------------------".

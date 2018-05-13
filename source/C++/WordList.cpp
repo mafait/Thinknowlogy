@@ -1,9 +1,9 @@
-/*	Class:			WordList
+﻿/*	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -44,11 +44,11 @@ class WordList : private List
 
 	void deleteSentencesInWordList( unsigned int lowestSentenceNr, WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentencesInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "deleteSentencesInWordList";
 
 		while( searchWordItem != NULL )
 			{
-			// For efficiency, only select words with lowest sentence number or higher
+			// Efficiency: Only select words with lowest sentence number or higher
 			if( searchWordItem->highestSentenceNrInWord() >= lowestSentenceNr &&
 			searchWordItem->deleteSentencesInWord( lowestSentenceNr ) != RESULT_OK )
 				// This function can be called during an error situation. So, the result isn't returned
@@ -60,11 +60,11 @@ class WordList : private List
 
 	void decrementSentenceNrsInWordList( unsigned int startSentenceNr, WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrsInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementSentenceNrsInWordList";
 
 		while( searchWordItem != NULL )
 			{
-			// For efficiency, only select words with start sentence number or higher
+			// Efficiency: Only select words with start sentence number or higher
 			if( searchWordItem->highestSentenceNrInWord() >= startSentenceNr &&
 			searchWordItem->decrementSentenceNrsInWord( startSentenceNr ) != RESULT_OK )
 				// This function can be called during an error situation. So, the result isn't returned
@@ -76,11 +76,11 @@ class WordList : private List
 
 	void decrementItemNrRangeInWordList( unsigned int decrementSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset, WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRangeInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementItemNrRangeInWordList";
 
 		while( searchWordItem != NULL )
 			{
-			// For efficiency, only select words with decrement sentence number or higher
+			// Efficiency: Only select words with decrement sentence number or higher
 			if( searchWordItem->highestSentenceNrInWord() >= decrementSentenceNr &&
 			searchWordItem->decrementItemNrRangeInWord( decrementSentenceNr, decrementItemNr, decrementOffset ) != RESULT_OK )
 				// This function can be called during an error situation. So, the result isn't returned
@@ -92,10 +92,10 @@ class WordList : private List
 
 	void removeFirstRangeOfDeletedItemsInWordList( WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItemsInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "removeFirstRangeOfDeletedItemsInWordList";
 
 		while( searchWordItem != NULL &&
-		commonVariables()->nDeletedItems == 0 )
+		globalVariables()->nDeletedItems == 0 )
 			{
 			if( searchWordItem->removeFirstRangeOfDeletedItemsInWord() != RESULT_OK )
 				// This function can be called during an error situation. So, the result isn't returned
@@ -109,7 +109,7 @@ class WordList : private List
 		{
 		while( searchWordItem != NULL )
 			{
-			// For efficiency, only select words with current sentence number or higher
+			// Efficiency: Only select words with current sentence number or higher
 			if( searchWordItem->highestSentenceNrInWord() >= currentSentenceNr )
 				currentSentenceItemNr = searchWordItem->highestCurrentSentenceItemNrInWord( currentSentenceNr, currentSentenceItemNr );
 
@@ -124,7 +124,7 @@ class WordList : private List
 		while( searchWordItem != NULL &&
 		highestFoundSentenceNr < maxSentenceNr )
 			{
-			// For efficiency, only select words with higher sentence number
+			// Efficiency: Only select words with higher sentence number
 			if( searchWordItem->highestSentenceNrInWord() > highestFoundSentenceNr )
 				highestFoundSentenceNr = searchWordItem->highestFoundSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr );
 
@@ -139,7 +139,7 @@ class WordList : private List
 /*
 	signed char storeChangesInFutureDatabaseInWordList( WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabaseInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "storeChangesInFutureDatabaseInWordList";
 
 		while( searchWordItem != NULL )
 			{
@@ -158,7 +158,7 @@ class WordList : private List
 
 	signed char redoCurrentSentenceInWordList( WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentenceInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "redoCurrentSentenceInWordList";
 
 		while( searchWordItem != NULL )
 			{
@@ -173,7 +173,7 @@ class WordList : private List
 
 	signed char undoCurrentSentenceInWordList( WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentenceInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "undoCurrentSentenceInWordList";
 
 		while( searchWordItem != NULL )
 			{
@@ -249,7 +249,7 @@ class WordList : private List
 
 	signed char displayQueryResultInWordList( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "displayQueryResultInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "displayQueryResultInWordList";
 
 		while( searchWordItem != NULL )
 			{
@@ -264,7 +264,7 @@ class WordList : private List
 
 	signed char stringQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString, WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "stringQueryInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "stringQueryInWordList";
 
 		while( searchWordItem != NULL )
 			{
@@ -279,7 +279,7 @@ class WordList : private List
 
 	signed char wordQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *wordNameString, WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "wordQueryInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "wordQueryInWordList";
 
 		while( searchWordItem != NULL )
 			{
@@ -294,7 +294,7 @@ class WordList : private List
 
 	signed char wordReferenceQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString, WordItem *searchWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQueryInWordList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "wordReferenceQueryInWordList";
 
 		while( searchWordItem != NULL )
 			{
@@ -324,9 +324,9 @@ class WordList : private List
 	protected:
 	// Constructor
 
-	WordList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	WordList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		initializeListVariables( ADMIN_WORD_LIST_SYMBOL, "WordList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( ADMIN_WORD_LIST_SYMBOL, "WordList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~WordList()
@@ -431,11 +431,11 @@ class WordList : private List
 		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
 			storeChangesInFutureDatabaseInWordList( searchWordItem );
 
-		if( commonVariables()->result == RESULT_OK &&
+		if( globalVariables()->result == RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != NULL )
 			storeChangesInFutureDatabaseInWordList( searchWordItem );
 
-		return commonVariables()->result;
+		return globalVariables()->result;
 		}
 */
 
@@ -448,11 +448,11 @@ class WordList : private List
 		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
 			redoCurrentSentenceInWordList( searchWordItem );
 
-		if( commonVariables()->result == RESULT_OK &&
+		if( globalVariables()->result == RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != NULL )
 			redoCurrentSentenceInWordList( searchWordItem );
 
-		return commonVariables()->result;
+		return globalVariables()->result;
 		}
 
 	signed char undoCurrentSentenceInWordList()
@@ -462,11 +462,11 @@ class WordList : private List
 		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
 			undoCurrentSentenceInWordList( searchWordItem );
 
-		if( commonVariables()->result == RESULT_OK &&
+		if( globalVariables()->result == RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != NULL )
 			undoCurrentSentenceInWordList( searchWordItem );
 
-		return commonVariables()->result;
+		return globalVariables()->result;
 		}
 
 
@@ -545,11 +545,11 @@ class WordList : private List
 		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
 			displayQueryResultInWordList( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchWordItem );
 
-		if( commonVariables()->result == RESULT_OK &&
+		if( globalVariables()->result == RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != NULL )
 			displayQueryResultInWordList( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchWordItem );
 
-		return commonVariables()->result;
+		return globalVariables()->result;
 		}
 
 	signed char stringQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString )
@@ -559,11 +559,11 @@ class WordList : private List
 		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
 			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchWordItem );
 
-		if( commonVariables()->result == RESULT_OK &&
+		if( globalVariables()->result == RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != NULL )
 			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchWordItem );
 
-		return commonVariables()->result;
+		return globalVariables()->result;
 		}
 
 	signed char wordQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *wordNameString )
@@ -573,11 +573,11 @@ class WordList : private List
 		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
 			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchWordItem );
 
-		if( commonVariables()->result == RESULT_OK &&
+		if( globalVariables()->result == RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != NULL )
 			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchWordItem );
 
-		return commonVariables()->result;
+		return globalVariables()->result;
 		}
 
 	signed char wordReferenceQueryInWordList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
@@ -587,11 +587,11 @@ class WordList : private List
 		if( ( searchWordItem = firstActiveWordItem() ) != NULL )
 			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchWordItem );
 
-		if( commonVariables()->result == RESULT_OK &&
+		if( globalVariables()->result == RESULT_OK &&
 		( searchWordItem = firstDeletedWordItem() ) != NULL )
 			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchWordItem );
 
-		return commonVariables()->result;
+		return globalVariables()->result;
 		}
 
 
@@ -600,10 +600,10 @@ class WordList : private List
 	WordResultType createWordItem( bool isLanguageWord, unsigned short wordParameter )
 		{
 		WordResultType wordResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createWordItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createWordItem";
 
 		// Create word
-		if( ( wordResult.createdWordItem = new WordItem( isLanguageWord, wordParameter, commonVariables(), inputOutput(), this ) ) == NULL )
+		if( ( wordResult.createdWordItem = new WordItem( isLanguageWord, wordParameter, globalVariables(), inputOutput(), this ) ) == NULL )
 			return startWordResultError( functionNameString, "I failed to create a word item" );
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, wordResult.createdWordItem ) != RESULT_OK )

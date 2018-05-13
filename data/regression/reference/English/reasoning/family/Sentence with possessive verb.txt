@@ -28,112 +28,112 @@
 < 
 * 
 * My conclusions:
-< Adam is a son of James.
+< Adam is a son of Michael.
 * 
 * My assumptions:
-< James has probably a child, called Adam.
-< James is probably a parent of Adam.
-< James is probably part of a family.
-< James is possibly a person.
+< Michael has probably a child, called Adam.
+< Michael is probably a parent of Adam.
+< Michael is probably part of a family.
+< Michael is possibly a person.
 < Adam is probably a person.
-< Adam is probably a child of James.
+< Adam is probably a child of Michael.
 < Adam is probably part of a family.
 < Adam is probably not a girl and not a woman.
 < Adam is probably not a daughter.
-< Adam has probably a parent, called James.
+< Adam has probably a parent, called Michael.
 * 
 * My questions:
-< Is James a woman or a man?
-< Is James a father or a mother?
+< Is Michael a woman or a man?
+< Is Michael a father or a mother?
 < Is Adam a boy or a man?
 < 
 * 
 * My assumptions:
-< James has probably a child, called Adam. Because:
+< Michael has probably a child, called Adam. Because:
 <	- Every child is a son or a daughter.
-<	- James has a son, called Adam.
+<	- Michael has a son, called Adam.
 * 	and:
-<	- Adam is probably a child of James.
-< James is probably a parent of Adam. Because:
+<	- Adam is probably a child of Michael.
+< Michael is probably a parent of Adam. Because:
 <	- Every family has parents and children.
-<	- Adam is probably a child of James.
+<	- Adam is probably a child of Michael.
 * 	and:
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- James has a son, called Adam.
+<	- Michael has a son, called Adam.
 * 	and:
-<	- Adam has probably a parent, called James.
-< James is probably part of a family. Because:
-<	- James is probably a parent of Adam.
+<	- Adam has probably a parent, called Michael.
+< Michael is probably part of a family. Because:
+<	- Michael is probably a parent of Adam.
 <	- Parents are part of every family.
-< James is possibly a person. Because:
-<	- James is probably a parent of Adam.
+< Michael is possibly a person. Because:
+<	- Michael is probably a parent of Adam.
 <	- A parent is probably a person.
 * 
 * My questions:
-< Is James a woman or a man? Because:
-<	- James has a son, called Adam.
+< Is Michael a woman or a man? Because:
+<	- Michael has a son, called Adam.
 <	- Every family has parents and children.
 <	- Every parent is a woman or a man.
 * 	and:
-<	- Is James a father or a mother?
+<	- Is Michael a father or a mother?
 <	- Every father is a man.
 <	- Every mother is a woman.
 * 	and:
-<	- James is probably a parent of Adam.
+<	- Michael is probably a parent of Adam.
 <	- Every parent is a woman or a man.
 * 	and:
-<	- James is possibly a person.
+<	- Michael is possibly a person.
 <	- Every person is a man or a woman.
-< Is James a father or a mother? Because:
-<	- James has a son, called Adam.
+< Is Michael a father or a mother? Because:
+<	- Michael has a son, called Adam.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 * 	and:
-<	- James is probably a parent of Adam.
+<	- Michael is probably a parent of Adam.
 <	- Every parent is a father or a mother.
 < 
 * 
 * My conclusions:
-< Adam is a son of James. Because:
-<	- James has a son, called Adam.
+< Adam is a son of Michael. Because:
+<	- Michael has a son, called Adam.
 * 
 * My assumptions:
 < Adam is probably a person. Because:
-<	- Adam is a son of James.
+<	- Adam is a son of Michael.
 <	- A son is probably a person.
 * 	and:
-<	- Adam is probably a child of James.
+<	- Adam is probably a child of Michael.
 <	- A child is probably a person.
-< Adam is probably a child of James. Because:
-<	- James has probably a child, called Adam.
+< Adam is probably a child of Michael. Because:
+<	- Michael has probably a child, called Adam.
 * 	and:
 <	- Every child is a son or a daughter.
-<	- Adam is a son of James.
+<	- Adam is a son of Michael.
 * 	and:
 <	- Every family has parents and children.
-<	- James is probably a parent of Adam.
+<	- Michael is probably a parent of Adam.
 < Adam is probably part of a family. Because:
-<	- Adam is probably a child of James.
+<	- Adam is probably a child of Michael.
 <	- Children are part of every family.
 < Adam is probably not a girl and not a woman. Because:
-<	- Adam is probably a child of James.
+<	- Adam is probably a child of Michael.
 <	- Every child is a girl, a woman, a boy or a man.
-<	- Adam is a son of James.
+<	- Adam is a son of Michael.
 <	- Every son is a boy or a man.
 < Adam is probably not a daughter. Because:
-<	- Adam is probably a child of James.
+<	- Adam is probably a child of Michael.
 <	- Every child is a son or a daughter.
-<	- Adam is a son of James.
-< Adam has probably a parent, called James. Because:
+<	- Adam is a son of Michael.
+< Adam has probably a parent, called Michael. Because:
 <	- Every family has parents and children.
-<	- Adam is probably a child of James.
+<	- Adam is probably a child of Michael.
 * 	and:
-<	- James is probably a parent of Adam.
+<	- Michael is probably a parent of Adam.
 * 
 * My questions:
 < Is Adam a boy or a man? Because:
-<	- Adam is a son of James.
+<	- Adam is a son of Michael.
 <	- Every son is a boy or a man.
 < 
 * 
@@ -246,7 +246,7 @@
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
@@ -349,7 +349,7 @@
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:

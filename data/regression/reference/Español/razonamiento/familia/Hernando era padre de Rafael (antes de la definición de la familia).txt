@@ -33,12 +33,16 @@
 < Hernando era parte de una familia.
 < 
 * 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Hernando era probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
-< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:
@@ -56,6 +60,11 @@
 < Hernando era parte de una familia. Porque:
 <	- Hernando era el padre de Rafael y Peyo.
 <	- Padres son parte de cada familia.
+* 
+* Mis suposiciones:
+< Hernando era probablemente una persona. Porque:
+<	- Hernando era el padre de Rafael y Peyo.
+<	- Un padre es probablemente una persona.
 < 
 * 
 * Mis conclusiones:

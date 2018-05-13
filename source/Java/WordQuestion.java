@@ -1,9 +1,9 @@
-/*	Class:			WordQuestion
+﻿/*	Class:			WordQuestion
  *	Supports class:	WordItem
  *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -50,13 +50,13 @@ class WordQuestion
 		boolean isAssignment;
 		boolean isExclusiveSpecification;
 		boolean isNegative;
-		boolean isPossessive;
 		boolean isNegativeAnswer = false;
 		boolean isPositiveAnswer = false;
+		boolean isPossessive;
 		boolean isUncertainAboutRelation = false;
-		int specificationCollectionNr;
 		int generalizationContextNr;
 		int relationContextNr;
+		int specificationCollectionNr;
 		SpecificationItem answerSpecificationItem = null;
 		WordItem specificationWordItem;
 
@@ -69,9 +69,9 @@ class WordQuestion
 		isNegative = questionSpecificationItem.isNegative();
 		isPossessive = questionSpecificationItem.isPossessive();
 
-		specificationCollectionNr = questionSpecificationItem.specificationCollectionNr();
 		generalizationContextNr = questionSpecificationItem.generalizationContextNr();
 		relationContextNr = questionSpecificationItem.relationContextNr();
+		specificationCollectionNr = questionSpecificationItem.specificationCollectionNr();
 		specificationWordItem = questionSpecificationItem.specificationWordItem();
 
 		// Find correct answer
@@ -131,12 +131,11 @@ class WordQuestion
 
 			!hasRelationContext &&
 			answerSpecificationItem.isAssignment() &&
-			answerSpecificationItem.hasRelationContext() )
-				{
-				// Ambiguity: Missing relation context
-				if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_QUESTION_MISSING_RELATION ) != Constants.RESULT_OK )
-					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write the 'ambiguous question missing relation' interface notification" );
-				}
+			answerSpecificationItem.hasRelationContext() &&
+
+			// Ambiguity: Missing relation context
+			InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_AMBIGUOUS_QUESTION_MISSING_RELATION ) != Constants.RESULT_OK )
+				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write the 'ambiguous question missing relation' interface notification" );
 			}
 
 		if( answerSpecificationItem != null &&
@@ -155,9 +154,9 @@ class WordQuestion
 		boolean isAssignment;
 		boolean isNegative;
 		boolean isPossessive;
-		int specificationCollectionNr;
 		int generalizationContextNr;
 		int relationContextNr;
+		int specificationCollectionNr;
 		SpecificationItem currentSpecificationItem;
 		WordItem currentSpecificationWordItem;
 		WordItem specificationWordItem;
@@ -174,9 +173,9 @@ class WordQuestion
 
 			isNegative = questionSpecificationItem.isNegative();
 			isPossessive = questionSpecificationItem.isPossessive();
-			specificationCollectionNr = questionSpecificationItem.specificationCollectionNr();
 			generalizationContextNr = questionSpecificationItem.generalizationContextNr();
 			relationContextNr = questionSpecificationItem.relationContextNr();
+			specificationCollectionNr = questionSpecificationItem.specificationCollectionNr();
 			specificationWordItem = questionSpecificationItem.specificationWordItem();
 
 			do	{
@@ -247,7 +246,7 @@ class WordQuestion
 		relationContextNr = questionSpecificationItem.relationContextNr();
 		specificationWordItem = questionSpecificationItem.specificationWordItem();
 
-		if( ( currentSpecificationWordItem = CommonVariables.firstSpecificationWordItem ) == null )
+		if( ( currentSpecificationWordItem = GlobalVariables.firstSpecificationWordItem ) == null )
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The first specification word is undefined" );
 
 		isSpecificationWordSpanishAmbiguous = specificationWordItem.isNounWordSpanishAmbiguous();
@@ -255,18 +254,17 @@ class WordQuestion
 		// Do for all specification words
 		do	{
 			if( currentSpecificationWordItem != myWordItem_ &&
-			( foundSpecificationItem = currentSpecificationWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, isArchivedAssignment, isNegative, isPossessive, Constants.NO_COLLECTION_NR, generalizationContextNr, relationContextNr, specificationWordItem ) ) != null )
+			( foundSpecificationItem = currentSpecificationWordItem.bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, isArchivedAssignment, isNegative, isPossessive, Constants.NO_COLLECTION_NR, generalizationContextNr, relationContextNr, specificationWordItem ) ) != null &&
+
+			( hasFoundSpecificationGeneralizationAnswer ||
+
+			( ( !isSpecificationWordSpanishAmbiguous ||
+			!foundSpecificationItem.isHiddenSpanishSpecification() ) &&
+
+			( foundSpecificationItem.isRelatedSpecification( isNegative, isPossessive, generalizationWordTypeNr ) ) ) ) )
 				{
-				if( hasFoundSpecificationGeneralizationAnswer ||
-
-				( ( !isSpecificationWordSpanishAmbiguous ||
-				!foundSpecificationItem.isHiddenSpanishSpecification() ) &&
-
-				( foundSpecificationItem.isRelatedSpecification( isNegative, isPossessive, generalizationWordTypeNr ) ) ) )
-					{
-					if( currentSpecificationWordItem.writeAnswerToQuestion( !hasFoundDeeperPositiveAnswer_, hasFoundDeeperPositiveAnswer_, false, foundSpecificationItem ) != Constants.RESULT_OK )
-						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an answer to a question" );
-					}
+				if( currentSpecificationWordItem.writeAnswerToQuestion( !hasFoundDeeperPositiveAnswer_, hasFoundDeeperPositiveAnswer_, false, foundSpecificationItem ) != Constants.RESULT_OK )
+					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an answer to a question" );
 				}
 			}
 		while( ( currentSpecificationWordItem = currentSpecificationWordItem.nextSpecificationWordItem ) != null );
@@ -282,7 +280,7 @@ class WordQuestion
 		isNegativeAnswer_ = false;
 		uncertainAboutAnswerRelationSpecificationItem_ = null;
 
-		CommonVariables.hasFoundAnswerToQuestion = false;
+		GlobalVariables.hasFoundAnswerToQuestion = false;
 
 		if( questionSpecificationItem == null )
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given question specification item is undefined" );
@@ -293,7 +291,7 @@ class WordQuestion
 		if( findAnswerToQuestion( questionSpecificationItem ) != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find an answer to a question" );
 
-		if( !CommonVariables.hasFoundAnswerToQuestion &&
+		if( !GlobalVariables.hasFoundAnswerToQuestion &&
 		// Check collections for an alternative current-tense assignment answer to the question
 		findAlternativeAnswerToQuestion( questionSpecificationItem ) != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find an alternative answer to a question" );
@@ -302,7 +300,7 @@ class WordQuestion
 		hasFoundSpecificationGeneralizationAnswer_ ||
 		uncertainAboutAnswerRelationSpecificationItem_ != null ||
 
-		( !CommonVariables.hasFoundAnswerToQuestion &&
+		( !GlobalVariables.hasFoundAnswerToQuestion &&
 		questionSpecificationItem.isAssignment() ) )
 			{
 			// Check other words for an alternative answer to the question
@@ -310,7 +308,7 @@ class WordQuestion
 				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find an alternative answer to a question" );
 			}
 
-		if( CommonVariables.hasFoundAnswerToQuestion &&
+		if( GlobalVariables.hasFoundAnswerToQuestion &&
 		uncertainAboutAnswerRelationSpecificationItem_ == null )
 			{
 			if( markQuestionAsAnswered( false, questionSpecificationItem ) != Constants.RESULT_OK )
@@ -326,7 +324,7 @@ class WordQuestion
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write the 'I don't know anything about word' interface notification" );
 
 				hasFoundNoAnswerInThisWord_ = true;
-				CommonVariables.hasFoundAnswerToQuestion = true;
+				GlobalVariables.hasFoundAnswerToQuestion = true;
 				}
 			else
 				{
@@ -336,14 +334,14 @@ class WordQuestion
 					if( myWordItem_.writeSelectedSpecification( false, false, true, true, false, false, false, Constants.NO_ANSWER_PARAMETER, uncertainAboutAnswerRelationSpecificationItem_ ) != Constants.RESULT_OK )
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a selected answer to a question" );
 
-					if( ( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) == null ||
+					if( ( writtenSentenceStringBuffer = GlobalVariables.writtenSentenceStringBuffer ) == null ||
 					writtenSentenceStringBuffer.length() == 0 )
 						return myWordItem_.startErrorInWord( 1, moduleNameString_, "I couldn't write the selected answer to a question" );
 
 					if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_LISTING_I_ONLY_KNOW ) != Constants.RESULT_OK )
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a header" );
 
-					if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+					if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, GlobalVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an answer to a question" );
 					}
 				}
@@ -368,7 +366,7 @@ class WordQuestion
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given answer specification item is a question" );
 
 		if( ( !answerSpecificationItem.isExclusiveSpecification() ||
-		CommonVariables.nUserSpecificationWords == 1 ) &&
+		GlobalVariables.nUserSpecificationWords == 1 ) &&
 
 		( currentQuestionSpecificationItem = myWordItem_.firstSpecificationItem( isAssignment, false, isArchivedAssignment, true ) ) != null )
 			{
@@ -472,8 +470,8 @@ class WordQuestion
 
 	private SpecificationItem firstActiveNewUserQuestion()
 		{
-		SpecificationItem firstQuestionSpecificationItem;
 		SpecificationItem firstNewUserQuestion = null;
+		SpecificationItem firstQuestionSpecificationItem;
 
 		// Try to find an assignment first
 		if( ( firstQuestionSpecificationItem = myWordItem_.firstQuestionAssignmentItem() ) != null )
@@ -511,7 +509,7 @@ class WordQuestion
 
 		if( ( myWordItem_ = myWordItem ) == null )
 			{
-			CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
+			GlobalVariables.result = Constants.RESULT_SYSTEM_ERROR;
 			Console.addError( "\nClass:" + moduleNameString_ + "\nMethod:\t" + Constants.INPUT_OUTPUT_ERROR_CONSTRUCTOR_METHOD_NAME + "\nError:\t\tThe given my word item is undefined.\n" );
 			}
 		}
@@ -573,8 +571,6 @@ class WordQuestion
 	protected byte writeAnswerToQuestion( boolean isNegativeAnswer, boolean isPositiveAnswer, boolean isUncertainAboutRelation, SpecificationItem answerSpecificationItem )
 		{
 		short answerParameter;
-		long startNanoTime;
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
 		StringBuffer writtenSentenceStringBuffer;
 
 		if( answerSpecificationItem == null )
@@ -590,15 +586,8 @@ class WordQuestion
 
 			if( isPositiveAnswer )
 				{
-				if( currentLanguageWordItem == null )
-					return myWordItem_.startErrorInWord( 1, moduleNameString_, "The current language word item is undefined" );
-
-				startNanoTime = System.nanoTime();
-
-				if( myWordItem_.writeSpecificationSentence( false, false, Constants.WORD_PARAMETER_INTERJECTION_YES, Constants.NO_GRAMMAR_LEVEL, currentLanguageWordItem.firstGrammarItem(), answerSpecificationItem ) != Constants.RESULT_OK )
+				if( myWordItem_.writeSpecificationSentence( answerSpecificationItem.isAssignment(), answerSpecificationItem.isArchivedAssignment(), false, answerSpecificationItem.isPossessive(), false, answerSpecificationItem.isSpecificationGeneralization(), false, Constants.WORD_PARAMETER_INTERJECTION_YES, Constants.NO_GRAMMAR_LEVEL, myWordItem_.firstCurrentLanguageWritingGrammarItem( false ), answerSpecificationItem ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an answer" );
-
-				CommonVariables.writingTime += ( System.nanoTime() - startNanoTime );
 
 				answerSpecificationItem.hasSpecificationBeenWrittenAsAnswer = true;
 				}
@@ -615,7 +604,7 @@ class WordQuestion
 				else
 					{
 					answerParameter = ( isNegativeAnswer &&
-										CommonVariables.isFirstAnswerToQuestion ? Constants.WORD_PARAMETER_INTERJECTION_NO : Constants.NO_ANSWER_PARAMETER );
+										GlobalVariables.isFirstAnswerToQuestion ? Constants.WORD_PARAMETER_INTERJECTION_NO : Constants.NO_ANSWER_PARAMETER );
 
 					if( myWordItem_.writeSelectedSpecification( false, false, true, true, false, false, answerSpecificationItem.isNegative(), answerParameter, answerSpecificationItem ) != Constants.RESULT_OK )
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a selected answer to a question" );
@@ -625,24 +614,24 @@ class WordQuestion
 				}
 
 			if( !isUncertainAboutRelation &&
-			( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) != null &&
+			( writtenSentenceStringBuffer = GlobalVariables.writtenSentenceStringBuffer ) != null &&
 			writtenSentenceStringBuffer.length() > 0 )
 				{
-				if( CommonVariables.hasDisplayedMessage &&
-				CommonVariables.isFirstAnswerToQuestion &&
+				if( GlobalVariables.hasDisplayedMessage &&
+				GlobalVariables.isFirstAnswerToQuestion &&
 
 				// Display notification 'My answer:'
 				InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_LISTING_MY_ANSWER ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write a listing header" );
 
-				if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+				if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, GlobalVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an answer to a question" );
 
 				if( isNegativeAnswer )
 					isNegativeAnswer_ = true;
 
-				CommonVariables.hasFoundAnswerToQuestion = true;
-				CommonVariables.isFirstAnswerToQuestion = false;
+				GlobalVariables.hasFoundAnswerToQuestion = true;
+				GlobalVariables.isFirstAnswerToQuestion = false;
 				}
 			}
 

@@ -1,8 +1,8 @@
-/*	Class:		Item
+﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -29,6 +29,7 @@
 #include "ReadWordResultType.cpp"
 #include "SelectionResultType.cpp"
 #include "UserSpecificationResultType.cpp"
+#include "WordEndingResultType.cpp"
 //Java
 //Java
 //Java
@@ -82,7 +83,7 @@
 		// Private initialized variables
 //Java
 
-		commonVariables_ = NULL;
+		globalVariables_ = NULL;
 		inputOutput_ = NULL;
 		myList_ = NULL;
 		myWordItem_ = NULL;
@@ -116,7 +117,7 @@
 		else
 			inputOutput_->displayError( SYMBOL_QUESTION_MARK, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? parentClassNameString_ : NULL ), wordItemString, functionNameString, errorString );
 
-		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
+		return ( globalVariables_ == NULL ? RESULT_ERROR : globalVariables_->result );
 		}
 
 	signed char Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number )
@@ -156,15 +157,15 @@
 		else
 			inputOutput_->displayError( listChar, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? parentClassNameString_ : NULL ), wordNameString, functionNameString, errorString );
 
-		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
+		return ( globalVariables_ == NULL ? RESULT_ERROR : globalVariables_->result );
 		}
 
 	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		addError( functionNameString, moduleNameString, NULL, errorString );
 
-		if( commonVariables_ != NULL )
-		commonVariables_->result = RESULT_ERROR;
+		if( globalVariables_ != NULL )
+		globalVariables_->result = RESULT_ERROR;
 		return RESULT_ERROR;
 		}
 
@@ -172,8 +173,8 @@
 		{
 		addError( functionNameString, moduleNameString, wordNameString, errorString );
 
-		if( commonVariables_ != NULL )
-		commonVariables_->result = RESULT_ERROR;
+		if( globalVariables_ != NULL )
+		globalVariables_->result = RESULT_ERROR;
 		return RESULT_ERROR;
 		}
 
@@ -227,8 +228,8 @@
 	signed char Item::startSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		char textChar;
-		size_t tempStringPosition = 0;
 		size_t errorStringPosition = 0;
+		size_t tempStringPosition = 0;
 
 		strcpy( tempString, EMPTY_STRING );
 
@@ -250,8 +251,8 @@
 
 		addError( functionNameString, moduleNameString, wordNameString, tempString );
 
-		if( commonVariables_ != NULL )
-		commonVariables_->result = RESULT_SYSTEM_ERROR;
+		if( globalVariables_ != NULL )
+		globalVariables_->result = RESULT_SYSTEM_ERROR;
 		return RESULT_SYSTEM_ERROR;
 		}
 
@@ -316,14 +317,6 @@
 		BoolResultType boolResult;
 
 		boolResult.result = startError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
-		return boolResult;
-		}
-
-	BoolResultType Item::startBoolResultError( const char *functionNameString, const char *moduleNameString, char *wordTypeNameString, const char *errorString )
-		{
-		BoolResultType boolResult;
-
-		boolResult.result = startError( functionNameString, moduleNameString, wordTypeNameString, errorString );
 		return boolResult;
 		}
 
@@ -681,6 +674,14 @@
 		return userSpecificationResult;
 		}
 
+	WordEndingResultType Item::startWordEndingResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
+		{
+		WordEndingResultType wordEndingResult;
+
+		wordEndingResult.result = startError( functionNameString, moduleNameString, wordNameString, errorString );
+		return wordEndingResult;
+		}
+
 	WordResultType Item::addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		WordResultType wordResult;
@@ -826,25 +827,25 @@
 	void Item::setActiveSentenceNr()
 		{
 		if( activeSentenceNr_ == NO_SENTENCE_NR )
-			activeSentenceNr_ = commonVariables_->currentSentenceNr;
+			activeSentenceNr_ = globalVariables_->currentSentenceNr;
 		}
 
 	void Item::setArchivedSentenceNr()
 		{
 		if( archivedSentenceNr_ == NO_SENTENCE_NR )
-			archivedSentenceNr_ = commonVariables_->currentSentenceNr;
+			archivedSentenceNr_ = globalVariables_->currentSentenceNr;
 		}
 
 	void Item::setInactiveSentenceNr()
 		{
 		if( inactiveSentenceNr_ == NO_SENTENCE_NR )
-			inactiveSentenceNr_ = commonVariables_->currentSentenceNr;
+			inactiveSentenceNr_ = globalVariables_->currentSentenceNr;
 		}
 
 	void Item::setReplacedSentenceNr()
 		{
 		if( replacedSentenceNr_ == NO_SENTENCE_NR )
-			replacedSentenceNr_ = commonVariables_->currentSentenceNr;
+			replacedSentenceNr_ = globalVariables_->currentSentenceNr;
 		}
 
 	void Item::displayWords( bool isReturnQueryToPosition, unsigned short queryWordTypeNr )
@@ -855,27 +856,27 @@
 
 		if( ( myWordString = myWordTypeString( queryWordTypeNr ) ) != NULL )
 			{
-			if( commonVariables_->hasFoundQuery )
-				strcat( commonVariables_->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+			if( globalVariables_->hasFoundQuery )
+				strcat( globalVariables_->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables_->queryString, statusString );
+				strcat( globalVariables_->queryString, statusString );
 
-			commonVariables_->hasFoundQuery = true;
-			strcat( commonVariables_->queryString, myWordString );
+			globalVariables_->hasFoundQuery = true;
+			strcat( globalVariables_->queryString, myWordString );
 			}
 		}
 
 	// Strictly for initialization of AdminItem
-	void Item::initializeItemVariables( const char *classNameString, CommonVariables *commonVariables, WordItem *myWordItem )
+	void Item::initializeItemVariables( const char *classNameString, GlobalVariables *globalVariables, WordItem *myWordItem )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 
-		if( ( commonVariables_ = commonVariables ) == NULL )
-			strcpy( errorString, "The given common variables is undefined" );
+		if( ( globalVariables_ = globalVariables ) == NULL )
+			strcpy( errorString, "The given global variables is undefined" );
 
 		if( ( myWordItem_ = myWordItem ) == NULL )
 			strcpy( errorString, "The given my word item is undefined" );
@@ -889,7 +890,7 @@
 			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
 		}
 
-	void Item::initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	void Item::initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 //Java
@@ -897,21 +898,21 @@
 
 		// Checking private initialized variables
 
-		if( ( commonVariables_ = commonVariables ) == NULL )
-			strcpy( errorString, "The given common variables is undefined" );
+		if( ( globalVariables_ = globalVariables ) == NULL )
+			strcpy( errorString, "The given global variables is undefined" );
 		else
 			{
-			userNr_ = commonVariables_->currentUserNr;
-			originalSentenceNr_ = ( originalSentenceNr == NO_SENTENCE_NR ? commonVariables_->currentSentenceNr : originalSentenceNr );
-			creationSentenceNr_ = commonVariables_->currentSentenceNr;
-			activeSentenceNr_ = ( originalSentenceNr == NO_SENTENCE_NR ? commonVariables_->currentSentenceNr : activeSentenceNr );
+			userNr_ = globalVariables_->currentUserNr;
+			originalSentenceNr_ = ( originalSentenceNr == NO_SENTENCE_NR ? globalVariables_->currentSentenceNr : originalSentenceNr );
+			creationSentenceNr_ = globalVariables_->currentSentenceNr;
+			activeSentenceNr_ = ( originalSentenceNr == NO_SENTENCE_NR ? globalVariables_->currentSentenceNr : activeSentenceNr );
 			inactiveSentenceNr_ = inactiveSentenceNr;
 			archivedSentenceNr_ = archivedSentenceNr;
 
-			if( commonVariables_->currentSentenceItemNr >= NO_ITEM_NR )
+			if( globalVariables_->currentSentenceItemNr >= NO_ITEM_NR )
 				{
-				if( commonVariables_->currentSentenceItemNr < MAX_ITEM_NR )
-					itemNr_ = ++commonVariables_->currentSentenceItemNr;
+				if( globalVariables_->currentSentenceItemNr < MAX_ITEM_NR )
+					itemNr_ = ++globalVariables_->currentSentenceItemNr;
 				else
 					strcpy( errorString, "Current item number overflow" );
 				}
@@ -949,32 +950,32 @@
 
 	bool Item::hasCurrentCreationSentenceNr()
 		{
-		return ( creationSentenceNr_ == commonVariables_->currentSentenceNr );
+		return ( creationSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
 	bool Item::hasCurrentOrNewerCreationSentenceNr()
 		{
-		return ( creationSentenceNr_ >= commonVariables_->currentSentenceNr );
+		return ( creationSentenceNr_ >= globalVariables_->currentSentenceNr );
 		}
 
 	bool Item::hasCurrentActiveSentenceNr()
 		{
-		return ( activeSentenceNr_ == commonVariables_->currentSentenceNr );
+		return ( activeSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
 	bool Item::hasCurrentInactiveSentenceNr()
 		{
-		return ( inactiveSentenceNr_ == commonVariables_->currentSentenceNr );
+		return ( inactiveSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
 	bool Item::hasCurrentArchivedSentenceNr()
 		{
-		return ( archivedSentenceNr_ == commonVariables_->currentSentenceNr );
+		return ( archivedSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
 	bool Item::hasCurrentReplacedSentenceNr()
 		{
-		return ( replacedSentenceNr_ == commonVariables_->currentSentenceNr );
+		return ( replacedSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
 	bool Item::hasSentenceNr( unsigned int sentenceNr )
@@ -994,7 +995,7 @@
 
 	bool Item::isOlderItem()
 		{
-		return ( originalSentenceNr_ < commonVariables_->currentSentenceNr );
+		return ( originalSentenceNr_ < globalVariables_->currentSentenceNr );
 		}
 
 	bool Item::isActiveItem()
@@ -1053,14 +1054,6 @@
 		return ( previousStatusChar == QUERY_ARCHIVED_CHAR );
 		}
 
-	bool Item::isSpanishCurrentLanguage()
-		{
-		WordItem *currentLanguageWordItem;
-
-		return ( ( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL &&
-				currentLanguageWordItem->isNounWordSpanishAmbiguous() );
-		}
-
 	unsigned short Item::userNr()
 		{
 		return userNr_;
@@ -1103,7 +1096,7 @@
 
 	signed char Item::decrementActiveSentenceNr()
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementActiveSentenceNr";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementActiveSentenceNr";
 
 		if( activeSentenceNr_ <= NO_SENTENCE_NR )
 			return startError( functionNameString, parentClassNameString_, "The active sentence number is undefined" );
@@ -1115,7 +1108,7 @@
 
 	signed char Item::decrementInactiveSentenceNr()
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementInactiveSentenceNr";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementInactiveSentenceNr";
 
 		if( inactiveSentenceNr_ <= NO_SENTENCE_NR )
 			return startError( functionNameString, parentClassNameString_, "The inactive sentence number is undefined" );
@@ -1127,7 +1120,7 @@
 
 	signed char Item::decrementOriginalSentenceNr()
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementOriginalSentenceNr";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementOriginalSentenceNr";
 
 		if( originalSentenceNr_ <= NO_SENTENCE_NR )
 			return startError( functionNameString, parentClassNameString_, "The original sentence number is undefined" );
@@ -1139,7 +1132,7 @@
 
 	signed char Item::decrementCreationSentenceNr()
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementCreationSentenceNr";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementCreationSentenceNr";
 
 		if( creationSentenceNr_ <= NO_SENTENCE_NR )
 			return startError( functionNameString, parentClassNameString_, "The creation sentence number is undefined" );
@@ -1151,7 +1144,7 @@
 
 	signed char Item::decrementArchivedSentenceNr()
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementArchivedSentenceNr";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementArchivedSentenceNr";
 
 		if( archivedSentenceNr_ <= NO_SENTENCE_NR )
 			return startError( functionNameString, parentClassNameString_, "The archived sentence number is undefined" );
@@ -1163,7 +1156,7 @@
 
 	signed char Item::decrementReplacedSentenceNr()
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementReplacedSentenceNr";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementReplacedSentenceNr";
 
 		if( replacedSentenceNr_ <= NO_SENTENCE_NR )
 			return startError( functionNameString, parentClassNameString_, "The replaced sentence number is undefined" );
@@ -1175,7 +1168,7 @@
 
 	signed char Item::decrementItemNr( unsigned int decrementOffset )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNr";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementItemNr";
 
 		if( decrementOffset >= itemNr_ )
 			return startError( functionNameString, parentClassNameString_, "The given decrement offset is higher than the item number itself" );
@@ -1197,14 +1190,14 @@
 
 	char *Item::itemBaseToString( unsigned short queryWordTypeNr )
 		{
-		char *queryString;
 		char *myWordString = myWordTypeString( queryWordTypeNr );
+		char *queryString;
 		char *userNameString = ( myWordItem_ == NULL ? NULL : myWordItem_->userNameString( userNr_ ) );
 
 		statusString[0] = statusChar_;
-		strcpy( commonVariables_->queryString, EMPTY_STRING );
+		strcpy( globalVariables_->queryString, EMPTY_STRING );
 
-		queryString = commonVariables_->queryString;
+		queryString = globalVariables_->queryString;
 
 		// Display status if not active
 		if( !isActiveItem() )
@@ -1287,9 +1280,9 @@
 		return parentClassNameString_;
 		}
 
-	CommonVariables *Item::commonVariables()
+	GlobalVariables *Item::globalVariables()
 		{
-		return commonVariables_;
+		return globalVariables_;
 		}
 
 	InputOutput *Item::inputOutput()
@@ -1304,8 +1297,8 @@
 
 	Item *Item::tailOfList()
 		{
-		Item *searchItem = nextItem;
 		Item *previousSearchItem = this;
+		Item *searchItem = nextItem;
 
 		while( searchItem != NULL )
 			{
@@ -1456,12 +1449,12 @@
 
 	bool Item::isGeneralizationReasoningWordType( unsigned short wordTypeNr )
 		{
-		return ( wordTypeNr == WORD_TYPE_PROPER_NAME ||
+		return ( wordTypeNr == WORD_TYPE_PROPER_NOUN ||
 				wordTypeNr == WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr == WORD_TYPE_NOUN_PLURAL );
 		}
 
-	unsigned short Item::assumptionGrade( bool hasAnotherPrimarySpecification, bool hasFeminineOrMasculineProperNameEnding, bool hasPossessivePrimarySpecification, bool hasPrimaryQuestionSpecification, unsigned short justificationTypeNr )
+	unsigned short Item::assumptionGrade( bool hasAnotherPrimarySpecification, bool hasFeminineOrMasculineProperNounEnding, bool hasPossessivePrimarySpecification, bool hasPrimaryQuestionSpecification, unsigned short justificationTypeNr )
 		{
 		switch( justificationTypeNr )
 			{
@@ -1475,14 +1468,14 @@
 				return 0;
 
 			case JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
-				return ( hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
+				return ( hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
 
 			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				return ( hasAnotherPrimarySpecification &&
-						hasFeminineOrMasculineProperNameEnding ? 2 : 1 );
+						hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
 
 			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
-				return ( hasFeminineOrMasculineProperNameEnding ? 1 : 0 );
+				return ( hasFeminineOrMasculineProperNounEnding ? 1 : 0 );
 
 			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
 				return ( hasPossessivePrimarySpecification ? 1 : 0 );

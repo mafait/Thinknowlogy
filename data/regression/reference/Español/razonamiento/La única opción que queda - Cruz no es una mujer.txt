@@ -13,6 +13,6 @@
 * Mis conclusiones:
 < Cruz es un hombre. Porque:
 <	- Cruz es una persona.
-<	- Una persona es un hombre o una mujer.
+<	- Cada persona es un hombre o una mujer.
 <	- Cruz no es una mujer.
 < 

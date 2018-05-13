@@ -1,0 +1,5 @@
+﻿父母和孩子都是每家庭的一部分。
+每个人都是男或女。
+# A question will be generated, because nouns "男" and "女" are not defined yet as masculine and feminine.
+媛是人。
+# To continue, click button «清除你的想法» or «重启».

@@ -21,6 +21,7 @@ Crabs, spiders and insects are arthropods.
 # Echinoderms
 Starfish, sea-urchins, sand-dollars and sea-cucumbers are echinoderms.
 # Mollusks
+#Cockles, cuttlefish, clams, mussels, nautiluses, octopuses, oysters, snails and squids are mollusks.
 Cuttlefish, clams, mussels, nautiluses, octopuses, oysters, snails and squids are mollusks.
 # Protozoa
 #Amoebas and flagellates are protozoa (plural of protozoan).

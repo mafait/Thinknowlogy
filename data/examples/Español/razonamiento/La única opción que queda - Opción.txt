@@ -1,12 +1,12 @@
 ﻿Una opción es 1, 2, 3, 4, 5, 6, 7, 8 o 9.
-La opción no es 1.
-La opción no es 2.
-La opción no es 3.
-La opción no es 4.
-La opción no es 5.
-#La opción no es 6.
-La opción no es 7.
-La opción no es 8.
-La opción no es 9.
+Su opción no es 1.
+Su opción no es 2.
+Su opción no es 3.
+Su opción no es 4.
+Su opción no es 5.
+#Su opción no es 6.
+Su opción no es 7.
+Su opción no es 8.
+Su opción no es 9.
 Mostrar el informe de justificación sobre la opción.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

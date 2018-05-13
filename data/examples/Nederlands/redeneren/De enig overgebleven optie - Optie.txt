@@ -1,12 +1,12 @@
 ﻿Een optie is 1, 2, 3, 4, 5, 6, 7, 8 of 9.
-De optie is niet 1.
-De optie is niet 2.
-De optie is niet 3.
-De optie is niet 4.
-De optie is niet 5.
-#De optie is niet 6.
-De optie is niet 7.
-De optie is niet 8.
-De optie is niet 9.
+Zijn optie is niet 1.
+Zijn optie is niet 2.
+Zijn optie is niet 3.
+Zijn optie is niet 4.
+Zijn optie is niet 5.
+#Zijn optie is niet 6.
+Zijn optie is niet 7.
+Zijn optie is niet 8.
+Zijn optie is niet 9.
 Toon de verantwoordingsrapportage over optie.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

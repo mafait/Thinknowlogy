@@ -1,4 +1,4 @@
-Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
 Lorraine est un enfant.
 Amélie est la mère de Pascal, Julien et Lorraine.
 Pascal a 2 parents, appelés Olivier et Amélie.

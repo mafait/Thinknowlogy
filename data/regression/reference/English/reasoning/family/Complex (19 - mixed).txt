@@ -209,17 +209,17 @@
 <	- Laura has a mother, called Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Anna is probably a mother of Laura, Paul and Joe. Because:
 <	- Joe is a son of Anna and John.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Anna is probably a parent of Laura, Paul and Joe.
 <	- Anna is a parent of Paul.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Laura has a mother, called Anna.
 < Anna is probably a person. Because:
@@ -317,7 +317,7 @@
 <	- Anna has a son, called Joe.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 
 * My questions:
 < Is Joe a boy or a man? Because:
@@ -347,12 +347,12 @@
 < Laura is possibly a daughter of Anna. Because:
 <	- Laura is probably a child of Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Anna is a mother of Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is maybe not a boy and not a man. Because:
 <	- Laura is probably a child of Anna.
 <	- Every child is a girl, a woman, a boy or a man.
@@ -465,12 +465,12 @@
 <	- James is a parent of Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura has probably 2 parents, called Anna and James.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < James is probably a person. Because:
 <	- James is a father.
 <	- A father is probably a person.
@@ -589,17 +589,17 @@
 <	- Laura has a mother, called Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Anna is probably a mother of Laura, Paul and Joe. Because:
 <	- Joe is a son of Anna and John.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Anna is probably a parent of Laura, Paul and Joe.
 <	- Anna is a parent of Paul.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Laura has a mother, called Anna.
 < Anna is probably a person. Because:
@@ -699,7 +699,7 @@
 <	- Anna has a son, called Joe.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 
 * My questions:
 < Is Joe a boy or a man? Because:
@@ -731,12 +731,12 @@
 < Laura is possibly a daughter of Anna. Because:
 <	- Laura is probably a child of Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Anna is a mother of Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is possibly not a boy and not a man. Because:
 <	- Laura is a child.
 <	- Every child is a girl, a woman, a boy or a man.

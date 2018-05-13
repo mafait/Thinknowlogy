@@ -1,0 +1,4 @@
+﻿Chaque type de liquide a un point d'ébullition spécifique.
+L'eau a un point d'ébullition de 100 degrés Celsius.
+Affichez le rapport de justification sur l'eau.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

@@ -1,0 +1,12 @@
+﻿# Expert is allowed to enter free text.
+#专是用户和他的密码是expert123。
+专是用户和不有密码。
+专是专家。
+
+# Developer is allowed to enter free text and to run regression tests.
+#开发是用户和他的密码是developer123。
+开发是用户和不有密码。
+开发是开发者。
+
+# Default user.
+客人是用户和不有密码。

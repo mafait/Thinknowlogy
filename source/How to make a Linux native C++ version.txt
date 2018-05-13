@@ -3,18 +3,32 @@ in a Linux native console window:
 ---------------------------------
 
 Install build-essential and libncurses5-dev packages:
+---------------------------------
 sudo apt-get install build-essential
 sudo apt-get install libncurses5-dev
 
 Go to the C++ source folder:
-cd Thinknowlogy2017r2/source/C++
+---------------------------------
+cd Thinknowlogy2018r1/source/C++
 
 Now make the application:
+---------------------------------
 make
 
-Either move the application to the Thinknowlogy folder,
+Either move the created application (called Thinknowlogy) to the Thinknowlogy folder,
 or make a link to data folder inside the C++ source folder:
+---------------------------------
 ln -s ../../data data
 
-Start the application (either from the Thinknowlogy folder or the C++ source folder):
+Start the application,
+either from the Thinknowlogy folder if you have moved the executable,
+or from the C++ source folder if you have created a link:
+---------------------------------
 ./Thinknowlogy
+
+Feel free to run the regression tests:
+---------------------------------
+Read the test file "English/Regression test".
+Leer el archivo de prueba "Español/Prueba de regresión".
+Lirez le fichier de test "Français/Test de régression".
+Lees het testbestand "Nederlands/Regressie-test".

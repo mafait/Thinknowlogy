@@ -1,0 +1,37 @@
+﻿呈现"------------------------------------------------------------------------------"。
+呈现" Total number of items: ~#<>~."。
+呈现"------------------------------------------------------------------------------"。
+呈现" Items in administrator:	~#<FRSWXYZ>~."。
+呈现"------------------------------------------------------------------------------"。
+呈现" * Active items:	        ~+#<FRSWXYZ>~."。
+呈现"    <F> Files:			~+#<F>~."。
+呈现"    <R> Read words (temporary):	~+#<R>~."。
+呈现"    <S> Solve scores (temporary):	~+#<S>~."。
+呈现"    <W> Words:		~+#<W>~, (predefined: ~+#<W>:*~)."。
+呈现"    <X> Conditions:		~+#<X>~."。
+呈现"    <Y> Actions:		~+#<Y>~."。
+呈现"    <Z> Alternatives:		~+#<Z>~."。
+呈现" * Inactive items:	        ~=#<FRSWXYZ>~."。
+呈现" * Archived items:	        ~$#<FRSWXYZ>~."。
+呈现" * Replaced items:	        ~%#<FRSWXYZ>~."。
+呈现" * Deleted items:	        ~&#<FRSWXYZ>~."。
+呈现"------------------------------------------------------------------------------"。
+呈现" Items in words:	~#<acgijlmrswx>~."。
+呈现"------------------------------------------------------------------------------"。
+呈现" * Active items:	        ~+#<acgijlmrswx>~."。
+呈现"    <a> assignments:		~+#<a>~."。
+呈现"    <c> collections:		~+#<c>~."。
+呈现"    <g> generalizations:		~+#<g>~."。
+呈现"    <i> interface:		~+#<i>~."。
+呈现"    <j> justification:		~+#<j>~."。
+呈现"    <l> grammar:		~+#<l>~."。
+呈现"    <m> multiple word:		~+#<m>~."。
+呈现"    <s> specifications:		~+#<s>~."。
+呈现"    <r> write words (temporary):	~+#<r>~."。
+呈现"    <w> word types:		~+#<w>~."。
+呈现"    <x> context:		~+#<x>~."。
+呈现" * Inactive items:	        ~=#<acgijlmrswx>~."。
+呈现" * Archived items:	        ~$#<acgijlmrswx>~."。
+呈现" * Replaced items:	        ~%#<acgijlmrswx>~."。
+呈现" * Deleted items:	        ~&#<acgijlmrswx>~."。
+呈现"------------------------------------------------------------------------------"。

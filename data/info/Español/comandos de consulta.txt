@@ -1,43 +1,43 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
-Mostrar " Los comandos de consulta disponibles son:				Ejemplos:".
+Mostrar " Los comandos de consulta disponibles son:			Ejemplos:".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " \~(phraseNr)		identificación del artículo			\~(123)".
-Mostrar " \~(phraseNr,artículoNr)	identificación del artículo			\~(123,1)".
-Mostrar " \~(,artículoNr)		identificación del artículo			\~(,3)".
+Mostrar " \~(phraseNr)		identificación del artículo		\~(123)".
+Mostrar " \~(phraseNr,artículoNr)	identificación del artículo		\~(123,1)".
+Mostrar " \~(,artículoNr)		identificación del artículo		\~(,3)".
 Mostrar " \~[phraseNr]		referencia a la identificación de artículos	\~[123]".
 Mostrar " \~[phraseNr,artículoNr]	referencia a la identificación de artículos	\~[123,1]".
 Mostrar " \~[,artículoNr]		referencia a la identificación de artículos	\~[,3]".
-Mostrar " \~<adminListaCar>	lista de administradores			\~<W>".
-Mostrar " \~<wordListaCar>	lista de palabras				\~<w>".
-Mostrar " \~<listaCarlistaCar>	múltiples listas				\~<Xas>".
-Mostrar " \~'palabra'		palabra						\~'Español'".
-Mostrar " \~`palabraReferencia`	referencia a la palabra				\~`Español`".
-Mostrar " \~\"textoCedena\"		cadena de texto					\~\"phrase\"".
+Mostrar " \~<adminListaCar>	lista de administradores		\~<W>".
+Mostrar " \~<wordListaCar>	lista de palabras		\~<w>".
+Mostrar " \~<listaCarlistaCar>	múltiples listas			\~<Xas>".
+Mostrar " \~'palabra'		palabra			\~'Español'".
+Mostrar " \~`palabraReferencia`	referencia a la palabra		\~`Español`".
+Mostrar " \~\"textoCedena\"	cadena de texto		\~\"phrase\"".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Ambos comodines '?' y '*' puede ser utilizado en:".
-Mostrar " 			* palabras					\~'Espa?ol'".
-Mostrar " 			* referencias a una palabra			\~`Es*ol`".
-Mostrar " 			* cadenas de texto				\~\"gr?m*\"".
+Mostrar "  * palabras					\~'Espa?ol'".
+Mostrar "  * referencias a una palabra				\~`Es*ol`".
+Mostrar "  * cadenas de texto				\~\"gr?m*\"".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Especificación del elemento vacío mostrará todos los artículos		\~()".
+Mostrar " Especificación del elemento vacío mostrará todos los artículos	\~()".
 Mostrar " La especificación de lista vacía mostrará todos los artículos		\~<>".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Adición de '#' da funcionalidad conteo					\~#(123)".
-Mostrar " Adición de '+' sólo selecciona elementos activos			\~+(123)".
-Mostrar " Adición de '=' sólo selecciona elementos inactivos			\~=(123)".
-Mostrar " Adición de '$' sólo selecciona elementos archivados			\~$(123)".
-Mostrar " Adición de '%' sólo selecciona elementos sustituidos			\~%(123)".
-Mostrar " Adición de '&' sólo selecciona elementos eliminados			\~&(123)".
-Mostrar " Concatenación de consultas da 'AND' funcionalidad			\~(123)<s>".
+Mostrar " Adición de '#' da funcionalidad conteo			\~#(123)".
+Mostrar " Adición de '+' sólo selecciona elementos activos		\~+(123)".
+Mostrar " Adición de '=' sólo selecciona elementos inactivos		\~=(123)".
+Mostrar " Adición de '$' sólo selecciona elementos archivados		\~$(123)".
+Mostrar " Adición de '%' sólo selecciona elementos sustituidos		\~%(123)".
+Mostrar " Adición de '&' sólo selecciona elementos eliminados		\~&(123)".
+Mostrar " Concatenación de consultas da 'AND' funcionalidad		\~(123)<s>".
 Mostrar " Adición de '*' también selecciona elementos de justificación adjuntos	\~*'Luisa'<s>`hija`".
 Mostrar " Adición de '**' también selecciona especificaciones de justificación	\~**'Luisa'<s>`hija`".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Adición de ' al final sólo mostrará las palabras			\~(123)'".
-Mostrar " Adición de ` al final sólo muestra las referencias de palabras		\~(123)`".
+Mostrar " Adición de ' al final sólo mostrará las palabras		\~(123)'".
+Mostrar " Adición de ` al final sólo muestra las referencias de palabras	\~(123)`".
 Mostrar " Adición de \" al final sólo mostrará las cadenas de texto		\~(123)\"".
-Mostrar " Adición '' muestra sólo palabras sobre la nueva línea			\~(123)''".
+Mostrar " Adición '' muestra sólo palabras sobre la nueva línea		\~(123)''".
 Mostrar " Adición de `` sólo muestra las refer. de palabras sobre la nueva línea	\~(123)``".
 Mostrar " Adición de \"\" sólo muestra las cadenas de texto en la nueva línea	\~(123)\"\"".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " En los archivos de '\~' marcará el fin de una consulta			...\~#<W>\~...".
+Mostrar " En los archivos de '\~' marcará el fin de una consulta		...\~#<W>\~...".
 Mostrar "------------------------------------------------------------------------------".

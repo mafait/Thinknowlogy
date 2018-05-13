@@ -1,10 +1,10 @@
-/*	Class:			JustificationItem
+﻿/*	Class:			JustificationItem
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@
 		if( firstContextNr > NO_CONTEXT_NR &&
 		secondContextNr > NO_CONTEXT_NR &&
 		firstContextNr != secondContextNr &&
-		( currentContextWordItem = commonVariables()->firstContextWordItem ) != NULL )
+		( currentContextWordItem = globalVariables()->firstContextWordItem ) != NULL )
 			{
 			// Do for all context words
 			do	{
@@ -81,13 +81,13 @@
 
 	// Constructor
 
-	JustificationItem::JustificationItem( bool hasFeminineOrMasculineProperNameEnding, unsigned short justificationTypeNr, unsigned short _orderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, JustificationItem *attachedJustificationItem, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	JustificationItem::JustificationItem( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, unsigned short _orderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, JustificationItem *attachedJustificationItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( originalSentenceNr, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "JustificationItem", commonVariables, inputOutput, myList, myWordItem );
+		initializeItemVariables( originalSentenceNr, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "JustificationItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
-		hasFeminineOrMasculineProperNameEnding_ = hasFeminineOrMasculineProperNameEnding;
+		hasFeminineOrMasculineProperNounEnding_ = hasFeminineOrMasculineProperNounEnding;
 
 		justificationTypeNr_ = justificationTypeNr;
 
@@ -162,12 +162,12 @@
 
 		itemBaseToString( queryWordTypeNr );
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
-		if( hasFeminineOrMasculineProperNameEnding_ )
+		if( hasFeminineOrMasculineProperNounEnding_ )
 			{
 			strcat( queryString, QUERY_SEPARATOR_STRING );
-			strcat( queryString, "hasFeminineOrMasculineProperNameEnding" );
+			strcat( queryString, "hasFeminineOrMasculineProperNounEnding" );
 			}
 
 		switch( justificationTypeNr_ )
@@ -340,9 +340,9 @@
 		return ( attachedJustificationItem_ != NULL );
 		}
 
-	bool JustificationItem::hasFeminineOrMasculineProperNameEnding()
+	bool JustificationItem::hasFeminineOrMasculineProperNounEnding()
 		{
-		return hasFeminineOrMasculineProperNameEnding_;
+		return hasFeminineOrMasculineProperNounEnding_;
 		}
 
 	bool JustificationItem::hasJustification( SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem )
@@ -353,9 +353,9 @@
 				anotherSecondarySpecificationItem_ == anotherSecondarySpecificationItem );
 		}
 
-	bool JustificationItem::hasJustification( bool hasFeminineOrMasculineProperNameEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem )
+	bool JustificationItem::hasJustification( bool hasFeminineOrMasculineProperNounEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem )
 		{
-		return ( hasFeminineOrMasculineProperNameEnding_ == hasFeminineOrMasculineProperNameEnding &&
+		return ( hasFeminineOrMasculineProperNounEnding_ == hasFeminineOrMasculineProperNounEnding &&
 				primarySpecificationItem_ == primarySpecificationItem &&
 				anotherPrimarySpecificationItem_ == anotherPrimarySpecificationItem &&
 				secondarySpecificationItem_ == secondarySpecificationItem &&
@@ -508,7 +508,7 @@
 
 		if( primarySpecificationItem_ != NULL )
 			{
-			if( primarySpecificationItem_->isGeneralizationProperName() &&
+			if( primarySpecificationItem_->isGeneralizationProperNoun() &&
 			primarySpecificationItem_->isPossessive() )
 				hasPossessivePrimarySpecification = true;
 
@@ -516,7 +516,7 @@
 				hasPrimaryQuestionSpecification = true;
 			}
 
-		return assumptionGrade( ( anotherPrimarySpecificationItem_ != NULL ), hasFeminineOrMasculineProperNameEnding_, hasPossessivePrimarySpecification, hasPrimaryQuestionSpecification, justificationTypeNr_ );
+		return assumptionGrade( ( anotherPrimarySpecificationItem_ != NULL ), hasFeminineOrMasculineProperNounEnding_, hasPossessivePrimarySpecification, hasPrimaryQuestionSpecification, justificationTypeNr_ );
 		}
 
 	unsigned short JustificationItem::justificationTypeNr()
@@ -581,7 +581,7 @@
 
 	signed char JustificationItem::attachJustification( JustificationItem *attachedJustificationItem, SpecificationItem *involvedSpecificationItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "attachJustification";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "attachJustification";
 
 		if( attachedJustificationItem == NULL )
 			return startError( functionNameString, NULL, "The given attached justification item is undefined" );
@@ -612,7 +612,7 @@
 
 	signed char JustificationItem::changeAttachedJustification( JustificationItem *newAttachedJustificationItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "changeAttachedJustification";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeAttachedJustification";
 
 		attachedJustificationItem_ = NULL;
 
@@ -637,7 +637,7 @@
 
 	signed char JustificationItem::changePrimarySpecification( SpecificationItem *replacingSpecificationItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "changePrimarySpecification";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changePrimarySpecification";
 
 		if( replacingSpecificationItem == NULL )
 			return startError( functionNameString, NULL, "The given replacing specification item is undefined" );
@@ -655,7 +655,7 @@
 
 	signed char JustificationItem::changeAnotherPrimarySpecification( SpecificationItem *replacingSpecificationItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "changeAnotherPrimarySpecification";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeAnotherPrimarySpecification";
 
 		if( replacingSpecificationItem == NULL )
 			return startError( functionNameString, NULL, "The given replacing specification item is undefined" );
@@ -673,7 +673,7 @@
 
 	signed char JustificationItem::changeSecondarySpecification( SpecificationItem *replacingSpecificationItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "changeSecondarySpecification";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeSecondarySpecification";
 
 		if( replacingSpecificationItem == NULL )
 			return startError( functionNameString, NULL, "The given replacing specification item is undefined" );
@@ -691,7 +691,7 @@
 
 	signed char JustificationItem::changeAnotherSecondarySpecification( SpecificationItem *replacingSpecificationItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "changeAnotherSecondarySpecification";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeAnotherSecondarySpecification";
 
 		if( replacingSpecificationItem == NULL )
 			return startError( functionNameString, NULL, "The given replacing specification item is undefined" );
@@ -710,7 +710,7 @@
 	signed char JustificationItem::checkForDeletedSpecifications()
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkForDeletedSpecifications";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForDeletedSpecifications";
 
 		if( primarySpecificationItem_ != NULL &&
 		primarySpecificationItem_->isDeletedItem() )
@@ -778,7 +778,7 @@
 	signed char JustificationItem::checkForReplacedOrDeletedSpecification()
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_LENGTH] = "checkForReplacedOrDeletedSpecification";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForReplacedOrDeletedSpecification";
 
 		if( primarySpecificationItem_ != NULL &&
 		primarySpecificationItem_->isReplacedOrDeletedItem() )
@@ -885,8 +885,8 @@
 
 	JustificationItem *JustificationItem::nextJustificationItemWithDifferentTypeOrOrderNr( JustificationItem *firstJustificationItem )
 		{
-		JustificationItem *usedTypeJustificationItem;
 		JustificationItem *nextTypeJustificationItem = attachedJustificationItem_;
+		JustificationItem *usedTypeJustificationItem;
 
 		if( firstJustificationItem != NULL )
 			{
@@ -1042,7 +1042,7 @@
 		{
 		unsigned int assumptionLevel = NO_ASSUMPTION_LEVEL;
 		ShortResultType shortResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getCombinedAssumptionLevel";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getCombinedAssumptionLevel";
 
 		if( primarySpecificationItem_ != NULL )
 			assumptionLevel += primarySpecificationItem_->assumptionLevel();

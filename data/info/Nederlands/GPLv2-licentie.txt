@@ -68,7 +68,7 @@ Toon "zulk programma of werk, en een \"werk gebaseerd op het programma\" verwijs
 Toon "het Programma of eender welk ander afgeleid werk onder de wet van het".
 Toon "auteursrecht: dit wil zeggen, een werk dat het Programma of een deel ervan".
 Toon "bevat, letterlijk oftewel gewijzigd en/of vertaald naar een andere taal.".
-Toon "(Hierna vallen vertalingen zonder beperking onder de term "wijziging".)".
+Toon "(Hierna vallen vertalingen zonder beperking onder de term \"wijziging\".)".
 Toon "Elke licentiehouder wordt geadresseerd als \"u\".".
 Toon "\nAndere handelingen dan kopiëren,".
 Toon "verspreiden en wijzigen zijn niet gedekt door deze licentie; hiervoor is deze".

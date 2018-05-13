@@ -1,0 +1,17 @@
+﻿# In 1989, George H. W. Bush was inaugurated as president of the United States.
+乔治 布什是美国的总统。
+# In 1993, Bill Clinton was inaugurated as president of the United States.
+比尔 克林顿是美国的总统。
+呈现总统的信息。
+# In 1997, Bill Clinton was re-inaugurated as president of the United States.
+比尔 克林顿是美国的总统。
+# In 2001, George W. Bush - a son of George H. W. Bush - was inaugurated as president of the United States.
+乔治 布什是美国的总统。
+呈现总统的信息。
+# In 2005, George W. Bush was re-inaugurated as president of the United States.
+乔治 布什是美国的总统。
+# In 2009, Barack Obama was inaugurated as president of the United States.
+巴拉克 奥巴马是美国的总统。
+呈现总统的信息。
+# In 2013, ...
+# To continue, click button «清除你的想法» or «重启».

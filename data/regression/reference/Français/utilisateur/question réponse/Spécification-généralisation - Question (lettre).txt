@@ -16,11 +16,11 @@
 * Ma réponse:
 < Oui, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y et Z sont lettre-majuscules.
 < 
-< Non, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y et Z sont lettre-majuscules. (appris de l'utilisateur Admin)
-< A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y et z sont lettre-minuscules. (appris de l'utilisateur Admin)
+< Non, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y et Z sont lettre-majuscules. {appris de l'utilisateur Admin}
+< A, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y et z sont lettre-minuscules. {appris de l'utilisateur Admin}
 < 
-< Non, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y et z sont lettre-minuscules. (appris de l'utilisateur Admin)
-< A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y et Z sont lettre-majuscules. (appris de l'utilisateur Admin)
+< Non, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y et z sont lettre-minuscules. {appris de l'utilisateur Admin}
+< A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y et Z sont lettre-majuscules. {appris de l'utilisateur Admin}
 < 
 < Oui, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y et z sont lettre-minuscules.
 < 

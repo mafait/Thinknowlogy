@@ -1,2 +1,2 @@
-John is a person, John is tall and John is a boy.
+﻿John is a person, John is tall and John is a boy.
 # To continue, click button «Clear your mind.» or «Restart.».

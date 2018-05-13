@@ -13,6 +13,6 @@
 * Mes conclusions:
 < Dominique est un homme. En raison:
 <	- Dominique est une personne.
-<	- Une personne est un homme ou une femme.
+<	- Chaque personne est un homme ou une femme.
 <	- Dominique n'est pas une femme.
 < 

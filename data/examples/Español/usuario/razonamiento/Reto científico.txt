@@ -1,7 +1,7 @@
-#-----------------------------------------------------------------
-#	Esta prueba ejecuta los ejemplos de mi Reto Científico. Para
-#	obtener más información, consulte el documento Reto Científico
-#	incluido, o: http://mafait.org/challenge/
+﻿#-----------------------------------------------------------------
+# Esta prueba ejecuta los ejemplos de mi Reto Científico. Para
+# obtener más información, consulte el documento Reto Científico
+# incluido, o: http://mafait.org/challenge/
 #-----------------------------------------------------------------
 # Bloque 1: Conversiones directas
 #-----------------------------------------------------------------

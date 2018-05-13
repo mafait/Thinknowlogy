@@ -1,0 +1,14 @@
+﻿* 
+* My conclusions:
+< Every kind of gas has a specific condensation point.
+< 
+* 
+* My assumptions:
+< Water vapor is probably a kind of gas.
+< 
+* 
+* My assumptions:
+< Water vapor is probably a kind of gas. Because:
+<	- Every kind of gas has a specific condensation point.
+<	- Water vapor has a condensation point of 100 degrees centigrade.
+< 

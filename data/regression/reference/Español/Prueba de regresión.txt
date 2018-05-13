@@ -5,154 +5,156 @@
  Ejemplos de oraciones imperativas disponibles:
 ------------------------------------------------------------------------------
  Leer el archivo "{nombre de archivo}".	* Leer un archivo
- Ayudar.				* Muestra esta información de ayuda
- Deshacer.				* Deshacer la última frase
- Rehacer.				* Rehacer una sentencia sin hacer
- Despejar la mente.			* Olvídese de los conocimientos previos
- Reiniciar.				* Reiniciar el programa
+ Ayudar.			* Muestra esta información de ayuda
+ Deshacer.			* Deshacer la última frase
+ Rehacer.			* Rehacer una sentencia sin hacer
+ Despejar la mente.		* Olvídese de los conocimientos previos
+ Reiniciar.			* Reiniciar el programa
  Mostrar información sobre los idiomas.
  Mostrar información sobre las listas.
+ Mostrar información sobre los usuarios.
  Mostrar información sobre los tipos de palabra.
  Mostrar los comandos de consulta.
  Mostrar los derechos de autor.
  Mostrar la licencia-GPLv2.
  Mostrar la garantía.
 ------------------------------------------------------------------------------
- Archivos de ejemplo: Utilice botón <más ejemplos>
-	    o ver carpeta: Thinknowlogy2017r2/data/examples/Español/usuario/
- Fundamental:		* carpeta: Thinknowlogy2017r2/documents/
- Proyecto:		* carpeta: Thinknowlogy2017r2/documents/design/
- Imágenes:		* carpeta: Thinknowlogy2017r2/screenshots/Español/
+ Archivos de ejemplo: * Utilice botón <más ejemplos>
+	    o ver carpeta: Thinknowlogy2018r1/data/examples/Español/usuario/
+ Fundamental:	          * carpeta: Thinknowlogy2018r1/documents/
+ Proyecto:	          * carpeta: Thinknowlogy2018r1/documents/design/
+ Imágenes:	          * carpeta: Thinknowlogy2018r1/screenshots/Español/
 ------------------------------------------------------------------------------
 < 
 < Especificaciones:
-< Nederlands es la anterior idioma. (aprendido de usuario Admin)
-< Français es una idioma. (aprendido de usuario Admin)
-< Español es la corriente idioma. (aprendido de usuario Admin)
-< English es una idioma. (aprendido de usuario Admin)
+< 中文 es la anterior idioma. {aprendido de usuario Admin}
+< Nederlands es una idioma. {aprendido de usuario Admin}
+< Français es una idioma. {aprendido de usuario Admin}
+< Español es la corriente idioma. {aprendido de usuario Admin}
+< English es una idioma. {aprendido de usuario Admin}
 < 
 ------------------------------------------------------------------------------
- Número total de elementos:	7445.
+ Número total de elementos:	8606.
 ------------------------------------------------------------------------------
- Elementos de administrador:		375.
+ Elementos de administrador:	        420.
 ------------------------------------------------------------------------------
- * Elementos activos:				375.
-    <F> Archivos:					2.
-    <R> Leer palabras (temporal):			3.
+ * Elementos activos:		420.
+    <F> Archivos:			2.
+    <R> Leer palabras (temporal):		3.
     <S> Resolver las puntuaciones (temporal):		0.
-    <W> Palabras:					349, (predefinido: 183).
-    <X> Condiciones:					9.
-    <Y> Acciones:					12.
-    <Z> Alternativas:					0.
- * Elementos inactivos:				0.
- * Elementos archivados:			0.
- * Elementos sustituidos:			0.
- * Elementos eliminados:			0.
+    <W> Palabras:			389, (predefinido: 189).
+    <X> Condiciones:			11.
+    <Y> Acciones:			15.
+    <Z> Alternativas:			0.
+ * Elementos inactivos:		0.
+ * Elementos archivados:		0.
+ * Elementos sustituidos:		0.
+ * Elementos eliminados:		0.
 ------------------------------------------------------------------------------
- Elementos de las palabras:		7070.
+ Elementos de las palabras:	        8186.
 ------------------------------------------------------------------------------
- * Elementos activos:				7040.
-    <a> asignaciones:					6.
-    <c> colecciones:					232.
-    <g> generalizaciones:				313.
-    <i> interfaz:					1106.
-    <j> justificación:					0.
-    <l> gramática:					4029.
-    <m> varias palabras:				77.
-    <s> especificaciones:				364.
-    <r> escribir palabras (temporal):			0.
-    <w> tipos de palabra:				913.
-    <x> contexto:					0.
- * Elementos inactivos:				3.
- * Elementos archivados:			21.
- * Elementos sustituidos:			6.
- * Elementos eliminados:			0.
+ * Elementos activos:		8143.
+    <a> asignaciones:			7.
+    <c> colecciones:			276.
+    <g> generalizaciones:			345.
+    <i> interfaz:				1242.
+    <j> justificación:			0.
+    <l> gramática:			4802.
+    <m> varias palabras:			69.
+    <s> especificaciones:			401.
+    <r> escribir palabras (temporal):		0.
+    <w> tipos de palabra:			1001.
+    <x> contexto:			0.
+ * Elementos inactivos:		3.
+ * Elementos archivados:		33.
+ * Elementos sustituidos:		7.
+ * Elementos eliminados:		0.
 ------------------------------------------------------------------------------
 < 
 < Especificaciones:
-< Invitado es un usuario. (aprendido de usuario Admin)
-< Revelador es el corriente usuario. (aprendido de usuario Experto)
-< Experto es el anterior usuario. (aprendido de usuario Invitado)
+< Invitado es un usuario. {aprendido de usuario Admin}
+< Revelador es el corriente usuario. {aprendido de usuario Experto}
+< Experto es el anterior usuario. {aprendido de usuario Invitado}
 < 
 ------------------------------------------------------------------------------
- Número total de elementos de tipo de palabra:	918, (todos idiomas incluidos).
+ Número total de elementos de tipo de palabra: 1006, (todos idiomas incluidos).
 ------------------------------------------------------------------------------
- * Elementos de tipo de palabra activa:			918.
-   (@1)  Símbolos:						18.
-   (@2)  Números:						43.
-   (@3)  Letras minúsculas:					104.
-   (@4)  Letras mayúsculas:					104.
-   (@5)  Nombres propios:					16.
-   (@6)  Adjetivos:						165.
-   (@7)  Adverbios:						25.
-   (@8)  Respuesta palabras:					8.
-   (@9)  Artículos:						18.
-   (@10) Conjunciones:						15.
-   (@11) Sustantivos singulares:				172.
-   (@12) Sustantivos en plural:					23.
-   (@13) Pronombre personal singular (subjetiva):		0.
-   (@14) Pronombre personal singular (objetiva):		0.
-   (@15) Determinante posesivo singular:			20.
-   (@16) Pronombre posesivo singular:				19.
-   (@17) Plural del pronombre personal (subjetiva):		0.
-   (@18) Plural del pronombre personal (objetivo):		0.
-   (@19) Plural determinante posesivo:				19.
-   (@20) Plural del pronombre posesivo:				21.
-   (@21) Preposiciones:						18.
-   (@22) Verbos singulares:					74.
-   (@23) Verbos en plural:					24.
-   (@24) Palabras de selección:					12.
- * Elementos de tipo de palabra desactiva:		0.
- * Elementos de tipo de palabra archivados:		0.
- * Elementos de tipo de palabra sustituidos:		0.
- * Elementos de tipo de palabra eliminados:		0.
+ * Elementos de tipo de palabra activa:	        1006.
+   (@1)  Símbolos:			24.
+   (@2)  Números:			54.
+   (@3)  Letras minúsculas:			104.
+   (@4)  Letras mayúsculas:			104.
+   (@5)  Nombres propios:			20.
+   (@6)  Adjetivos:			200.
+   (@7)  Adverbios:			32.
+   (@8)  Respuesta palabras:			10.
+   (@9)  Artículos:			20.
+   (@10) Conjunciones:			18.
+   (@11) Sustantivos singulares:		214.
+   (@12) Sustantivos en plural:			23.
+   (@13) Pronombre personal singular (subjetiva):	0.
+   (@14) Pronombre personal singular (objetiva):	0.
+   (@15) Determinante posesivo singular:		23.
+   (@16) Pronombre posesivo singular:		10.
+   (@17) Plural del pronombre personal (subjetiva):	1.
+   (@18) Plural del pronombre personal (objetivo):	0.
+   (@19) Plural determinante posesivo:		0.
+   (@20) Plural del pronombre posesivo:		0.
+   (@21) Preposiciones:			28.
+   (@22) Verbos singulares:			83.
+   (@23) Verbos en plural:			23.
+   (@24) Palabras de selección:		15.
+ * Elementos de tipo de palabra desactiva:	       0.
+ * Elementos de tipo de palabra archivados:	       0.
+ * Elementos de tipo de palabra sustituidos:	       0.
+ * Elementos de tipo de palabra eliminados:	       0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
- Los comandos de consulta disponibles son:				Ejemplos:
+ Los comandos de consulta disponibles son:			Ejemplos:
 ------------------------------------------------------------------------------
- ~(phraseNr)		identificación del artículo			~(123)
- ~(phraseNr,artículoNr)	identificación del artículo			~(123,1)
- ~(,artículoNr)		identificación del artículo			~(,3)
+ ~(phraseNr)		identificación del artículo		~(123)
+ ~(phraseNr,artículoNr)	identificación del artículo		~(123,1)
+ ~(,artículoNr)		identificación del artículo		~(,3)
  ~[phraseNr]		referencia a la identificación de artículos	~[123]
  ~[phraseNr,artículoNr]	referencia a la identificación de artículos	~[123,1]
  ~[,artículoNr]		referencia a la identificación de artículos	~[,3]
- ~<adminListaCar>	lista de administradores			~<W>
- ~<wordListaCar>	lista de palabras				~<w>
- ~<listaCarlistaCar>	múltiples listas				~<Xas>
- ~'palabra'		palabra						~'Español'
- ~`palabraReferencia`	referencia a la palabra				~`Español`
- ~"textoCedena"		cadena de texto					~"phrase"
+ ~<adminListaCar>	lista de administradores		~<W>
+ ~<wordListaCar>	lista de palabras		~<w>
+ ~<listaCarlistaCar>	múltiples listas			~<Xas>
+ ~'palabra'		palabra			~'Español'
+ ~`palabraReferencia`	referencia a la palabra		~`Español`
+ ~"textoCedena"	cadena de texto		~"phrase"
 ------------------------------------------------------------------------------
  Ambos comodines '?' y '*' puede ser utilizado en:
- 			* palabras					~'Espa?ol'
- 			* referencias a una palabra			~`Es*ol`
- 			* cadenas de texto				~"gr?m*"
+  * palabras					~'Espa?ol'
+  * referencias a una palabra				~`Es*ol`
+  * cadenas de texto				~"gr?m*"
 ------------------------------------------------------------------------------
- Especificación del elemento vacío mostrará todos los artículos		~()
+ Especificación del elemento vacío mostrará todos los artículos	~()
  La especificación de lista vacía mostrará todos los artículos		~<>
 ------------------------------------------------------------------------------
- Adición de '#' da funcionalidad conteo					~#(123)
- Adición de '+' sólo selecciona elementos activos			~+(123)
- Adición de '=' sólo selecciona elementos inactivos			~=(123)
- Adición de '$' sólo selecciona elementos archivados			~$(123)
- Adición de '%' sólo selecciona elementos sustituidos			~%(123)
- Adición de '&' sólo selecciona elementos eliminados			~&(123)
- Concatenación de consultas da 'AND' funcionalidad			~(123)<s>
+ Adición de '#' da funcionalidad conteo			~#(123)
+ Adición de '+' sólo selecciona elementos activos		~+(123)
+ Adición de '=' sólo selecciona elementos inactivos		~=(123)
+ Adición de '$' sólo selecciona elementos archivados		~$(123)
+ Adición de '%' sólo selecciona elementos sustituidos		~%(123)
+ Adición de '&' sólo selecciona elementos eliminados		~&(123)
+ Concatenación de consultas da 'AND' funcionalidad		~(123)<s>
  Adición de '*' también selecciona elementos de justificación adjuntos	~*'Luisa'<s>`hija`
  Adición de '**' también selecciona especificaciones de justificación	~**'Luisa'<s>`hija`
 ------------------------------------------------------------------------------
- Adición de ' al final sólo mostrará las palabras			~(123)'
- Adición de ` al final sólo muestra las referencias de palabras		~(123)`
+ Adición de ' al final sólo mostrará las palabras		~(123)'
+ Adición de ` al final sólo muestra las referencias de palabras	~(123)`
  Adición de " al final sólo mostrará las cadenas de texto		~(123)"
- Adición '' muestra sólo palabras sobre la nueva línea			~(123)''
+ Adición '' muestra sólo palabras sobre la nueva línea		~(123)''
  Adición de `` sólo muestra las refer. de palabras sobre la nueva línea	~(123)``
  Adición de "" sólo muestra las cadenas de texto en la nueva línea	~(123)""
 ------------------------------------------------------------------------------
- En los archivos de '~' marcará el fin de una consulta			...~#<W>~...
+ En los archivos de '~' marcará el fin de una consulta		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2017, Menno Mafait
- Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles escriba
- "Mostrar la garantía.". Este software es libre, y se le permite redistribuirlo
+ Copyright (C) 2009-2018, Menno Mafait
+ Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles
+ escriba "Mostrar la garantía.". Este software es libre, y se le permite redistribuirlo
  bajo ciertas condiciones; Escriba "Mostrar la licencia-GPLv2." para más detalles.
 Licencia Pública GNU
 Esta es la conocida GNU Public License (GPL), versión 2 (de junio de 1.991), que cubre la mayor parte del software de la Free Software Foundation, y muchos más programas.

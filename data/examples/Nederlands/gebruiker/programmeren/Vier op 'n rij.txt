@@ -1,32 +1,32 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To demonstrate programming in natural language.
-#	Version:	Thinknowlogy 2017r2 (Science as it should be)
+# Purpose: To demonstrate programming in natural language.
+# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	De spelregels van Vier op 'n rij:
+# De spelregels van Vier op 'n rij:
 #----------------------------------------------------------------------------
-#	Het spel wordt gespeeld op een verticaal geplaatst bord bestaand uit
-#	7 kolommen en 6 rijen. Iedere speler beschikt over 21 schijven met een
-#	afwijkende kleur, meestal geel en rood. Het spel wordt gespeeld in
-#	beurten. De spelers laten om de beurt een schijf in één van de nog niet
-#	volle kolommen vallen. De schijf bezet altijd het laagst beschikbare vak
-#	in een kolom. Een speler wint door met vier van zijn eigen schijven een
-#	aaneengesloten rij te vormen. Een rij kan zowel verticaal, horizontaal
-#	als diagonaal worden gevormd en beëindigt het spel.
-#	Het spel eindigt in een gelijkspel als geen van de twee spelers er in
-#	slaagt een aaneengesloten rij te vormen voordat het bord volledig door
-#	schijven is gevuld.
+# Het spel wordt gespeeld op een verticaal geplaatst bord bestaand uit
+# 7 kolommen en 6 rijen. Iedere speler beschikt over 21 schijven met een
+# afwijkende kleur, meestal geel en rood. Het spel wordt gespeeld in
+# beurten. De spelers laten om de beurt een schijf in één van de nog niet
+# volle kolommen vallen. De schijf bezet altijd het laagst beschikbare vak
+# in een kolom. Een speler wint door met vier van zijn eigen schijven een
+# aaneengesloten rij te vormen. Een rij kan zowel verticaal, horizontaal
+# als diagonaal worden gevormd en beëindigt het spel.
+# Het spel eindigt in een gelijkspel als geen van de twee spelers er in
+# slaagt een aaneengesloten rij te vormen voordat het bord volledig door
+# schijven is gevuld.
 #----------------------------------------------------------------------------
-#	Bron: http://nl.wikipedia.org/wiki/Vier_op_%27n_rij
+# Bron: http://nl.wikipedia.org/wiki/Vier_op_%27n_rij
 #----------------------------------------------------------------------------
 
 # Initial definitions.
-Een beurt is van jou of van mij.
-Een zet is A, B, C, D, E, F of G.
+Iedere beurt is van jou of van mij.
+Iedere zet is A, B, C, D, E, F of G.
 Een oplossingsniveau is laag of hoog.
 
 # Los het probleem op.
@@ -116,4 +116,4 @@ De beurt is van jou.
 #C++## Voor een iets moeilijker spel:	Het oplossingsniveau is hoog.
 #C++## Terug naar gemakkelijk niveau:	Het oplossingsniveau is laag.
 #C++## Informatie over de zetten:	Toon informatie over de zet.
-#Java## Als het speelbord er raar uitziet, wijzig dan het lettertype met knop «wijzig lettertype».
+#Java## Opmerking: Het lettertype is aangepast om het spelbord op een goede manier te tonen.

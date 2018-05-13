@@ -5,155 +5,157 @@
  Des exemples de phrases impératives disponibles:
 ------------------------------------------------------------------------------
  Lirez le fichier "{nom de fichier}".	* Lire un fichier
- Aide.					* Afficher cette information d'aide
- Annuler.				* Annuler la dernière phrase
- Refaire.				* Refaire une peine annulée
- Videz votre esprit.			* Oublier connaissances précédente
- Redémarrer.				* Redémarrez ce programme
- Affichez des informations sur les langues.
- Affichez des informations sur les listes.
- Affichez des informations sur les types de mots.
+ Aide.			* Afficher cette information d'aide
+ Annuler.			* Annuler la dernière phrase
+ Refaire.			* Refaire une peine annulée
+ Videz votre esprit.		* Oublier connaissances précédente
+ Redémarrer.			* Redémarrez ce programme
+ Affichez information sur les langues.
+ Affichez information sur les listes.
+ Affichez information sur les utilisateurs.
+ Affichez information sur les types de mots.
  Affichez les commandes de requête.
  Affichez le droit d'auteur.
  Affichez la licence-GPLv2.
  Affichez la garantie.
 ------------------------------------------------------------------------------
- Exemples fichiers:	* Utilisez le bouton <exemples> ou voir le
-			  dossier: Thinknowlogy2017r2/data/examples/Français/utilisateur/
- Fondamental:		* dossier: Thinknowlogy2017r2/documents/
- Projet:		* dossier: Thinknowlogy2017r2/documents/design/
- Captures d'écran:	* dossier: Thinknowlogy2017r2/screenshots/Français/
+ Exemples fichiers: * Utilisez le bouton <exemples>
+                 ou voir le dossier: Thinknowlogy2018r1/data/examples/Français/utilisateur/
+ Fondamental:        * dossier: Thinknowlogy2018r1/documents/
+ Projet:	       * dossier: Thinknowlogy2018r1/documents/design/
+ Captures d'écran:   * dossier: Thinknowlogy2018r1/screenshots/Français/
 ------------------------------------------------------------------------------
 < 
 < Spécifications:
-< Nederlands est la précédent langue. (appris de l'utilisateur Admin)
-< Français est l'actuel langue. (appris de l'utilisateur Admin)
-< Español est une langue. (appris de l'utilisateur Admin)
-< English est une langue. (appris de l'utilisateur Admin)
+< 中文 est la précédent langue. {appris de l'utilisateur Admin}
+< Nederlands est une langue. {appris de l'utilisateur Admin}
+< Français est l'actuel langue. {appris de l'utilisateur Admin}
+< Español est une langue. {appris de l'utilisateur Admin}
+< English est une langue. {appris de l'utilisateur Admin}
 < 
 ------------------------------------------------------------------------------
- Nombre total d'éléments:	7445.
+ Nombre total d'éléments: 8606.
 ------------------------------------------------------------------------------
- Éléments dans l'administrateur:	375.
+ Éléments dans l'administrateur: 420.
 ------------------------------------------------------------------------------
- * Éléments actifs:				375.
-    <F> Fichers:					2.
-    <R> Lire mots (temporaire):				3.
-    <S> Résolvez scores (temporaire):			0.
-    <W> Mots:						349, (prédéfini: 183).
-    <X> Conditions:					9.
-    <Y> Actes:						12.
-    <Z> Alternatives:					0.
- * Éléments inactifs:				0.
- * Éléments archivés:				0.
- * Éléments remplacées:				0.
- * Éléments supprimés:				0.
+ * Éléments actifs:		420.
+    <F> Fichers:			2.
+    <R> Lire mots (temporaire):		3.
+    <S> Résolvez scores (temporaire):		0.
+    <W> Mots:				389, (prédéfini: 189).
+    <X> Conditions:			11.
+    <Y> Actes:				15.
+    <Z> Alternatives:			0.
+ * Éléments inactifs:		0.
+ * Éléments archivés:		0.
+ * Éléments remplacées:		0.
+ * Éléments supprimés:		0.
 ------------------------------------------------------------------------------
- Éléments dans mots:			7070.
+ Éléments dans mots:	    8186.
 ------------------------------------------------------------------------------
- * Éléments actifs:				7040.
-    <a> assignations:					6.
-    <c> collections:					232.
-    <g> généralisations:				313.
-    <i> interface:					1106.
-    <j> justification:					0.
-    <l> grammaire:					4029.
-    <m> mot multiples:					77.
-    <s> specifications:					364.
-    <r> Écrire des mots (temporaire):			0.
-    <w> types de mots:					913.
-    <x> contexte:					0.
- * Éléments inactifs:				3.
- * Éléments archivés:				21.
- * Éléments remplacées:				6.
- * Éléments supprimés:				0.
+ * Éléments actifs:		8143.
+    <a> assignations:			7.
+    <c> collections:			276.
+    <g> généralisations:			345.
+    <i> interface:			1242.
+    <j> justification:			0.
+    <l> grammaire:			4802.
+    <m> mot multiples:			69.
+    <s> specifications:			401.
+    <r> Écrire des mots (temporaire):		0.
+    <w> types de mots:			1001.
+    <x> contexte:			0.
+ * Éléments inactifs:		3.
+ * Éléments archivés:		33.
+ * Éléments remplacées:		7.
+ * Éléments supprimés:		0.
 ------------------------------------------------------------------------------
 < 
 < Spécifications:
-< Invité est un utilisateur. (appris de l'utilisateur Admin)
-< Développeur est l'actuel utilisateur. (appris de l'utilisateur Expert)
-< Expert est le précédent utilisateur. (appris de l'utilisateur Invité)
+< Invité est un utilisateur. {appris de l'utilisateur Admin}
+< Développeur est l'actuel utilisateur. {appris de l'utilisateur Expert}
+< Expert est le précédent utilisateur. {appris de l'utilisateur Invité}
 < 
 ------------------------------------------------------------------------------
- Nombre total éléments de type mots:	919,	(toutes langues confondues).
+ Nombre total éléments de type mots: 1007, (toutes langues confondues).
 ------------------------------------------------------------------------------
- * Éléments de type mot actifs:			919.
-   (@1)  Symboles:					18.
-   (@2)  Chiffres:					43.
-   (@3)  Minuscules:					104.
-   (@4)  Majuscules:					104.
-   (@5)  Noms propres:					16.
-   (@6)  Adjectifs:					165.
-   (@7)  Adverbes:					25.
-   (@8)  Mots de réponses:				8.
-   (@9)  Articles:					18.
-   (@10) Conjonctions:					15.
-   (@11) Substantif singulier:				171.
-   (@12) Substantif pluriel:				25.
+ * Éléments de type mot actifs:	1007.
+   (@1)  Symboles:			24.
+   (@2)  Chiffres:			54.
+   (@3)  Minuscules:			104.
+   (@4)  Majuscules:			104.
+   (@5)  Noms propres:			20.
+   (@6)  Adjectifs:			200.
+   (@7)  Adverbes:			32.
+   (@8)  Mots de réponses:			10.
+   (@9)  Articles:			20.
+   (@10) Conjonctions:			18.
+   (@11) Substantif singulier:			213.
+   (@12) Substantif pluriel:			25.
    (@13) Pronom personnel singulier (subjective):	0.
-   (@14) Pronom personnel singulier (objectif):		0.
-   (@15) Déterminant possessif singulier:		20.
-   (@16) Pronom possessif singulier:			19.
-   (@17) Pronom personnel pluriel (subjective):		0.
+   (@14) Pronom personnel singulier (objectif):	0.
+   (@15) Déterminant possessif singulier:		23.
+   (@16) Pronom possessif singulier:		10.
+   (@17) Pronom personnel pluriel (subjective):	1.
    (@18) Pronom personnel pluriel (objectif):		0.
-   (@19) Déterminant possessif pluriel:			19.
-   (@20) Pronom possessif pluriel:			21.
-   (@21) Prépositions:					18.
-   (@22) Verbes singuliers:				74.
-   (@23) Verbes au pluriel:				24.
-   (@24) Mots de sélection:				12.
- * Éléments de type mot inactifs:		0.
- * Éléments de type mot archivés:		0.
- * Éléments de type mot remplacées:		0.
- * Éléments de type mot supprimés:		0.
+   (@19) Déterminant possessif pluriel:		0.
+   (@20) Pronom possessif pluriel:		0.
+   (@21) Prépositions:			28.
+   (@22) Verbes singuliers:			83.
+   (@23) Verbes au pluriel:			23.
+   (@24) Mots de sélection:			15.
+ * Éléments de type mot inactifs:	0.
+ * Éléments de type mot archivés:	0.
+ * Éléments de type mot remplacées:	0.
+ * Éléments de type mot supprimés:	0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
- Les commandes de requête sont disponibles:				Exemples:
+ Les commandes de requête sont disponibles:		Exemples:
 ------------------------------------------------------------------------------
- ~(phraseNr)		identification de l'élément			~(123)
- ~(phraseNr,élémentNr)	identification de l'élément			~(123,1)
- ~(,élémentNr)		identification de l'élément			~(,3)
+ ~(phraseNr)		identification de l'élément		~(123)
+ ~(phraseNr,élémentNr)	identification de l'élément		~(123,1)
+ ~(,élémentNr)		identification de l'élément		~(,3)
  ~[phraseNr]		référence à l'identification des éléments	~[123]
  ~[phraseNr,élémentNr]	référence à l'identification des éléments	~[123,1]
  ~[,élémentNr]		référence à l'identification des éléments	~[,3]
- ~<adminListeCar>	liste des administrateurs			~<W>
- ~<motListeCar>		liste de mots					~<w>
- ~<listeCarlisteCar>	plusieurs listes				~<Xas>
- ~'mot'			mot						~'Français'
- ~`motRéférence`	référence à un mot				~`Français`
- ~"chaîneTexte"		chaîne de texte					~"phrase"
+ ~<adminListeCar>	liste des administrateurs		~<W>
+ ~<motListeCar>	liste de mots			~<w>
+ ~<listeCarlisteCar>	plusieurs listes			~<Xas>
+ ~'mot'		mot			~'Français'
+ ~`motRéférence`	référence à un mot		~`Français`
+ ~"chaîneTexte"	chaîne de texte		~"phrase"
 ------------------------------------------------------------------------------
  Les deux jokers '?' et '*' peut être utilisé dans:
-			* mots						~'Fran?ais'
-			* les références à un mot			~`Fran*is`
-			* chaînes de texte				~"gr?m*"
+  * mots					~'Fran?ais'
+  * les références à un mot				~`Fran*is`
+  * chaînes de texte				~"gr?m*"
 ------------------------------------------------------------------------------
- Une spécification vide de l'article affichera tous les articles	~()
+ Une spécification vide de l'article affichera tous les articles		~()
  Une spécification de liste vide affichera tous les articles		~<>
 ------------------------------------------------------------------------------
  Ajouter de '#' fournira des fonctionnalités de comptage		~#(123)
  Ajouter de '+' sélectionnera seulement les éléments actifs		~+(123)
  Ajouter de '=' sélectionnera seulement les éléments inactifs		~=(123)
- Ajouter de '$' sélectionnera seulement les éléments archivés		~$(123)
- Ajouter de '%' sélectionnera seulement les éléments remplacés		~%(123)
- Ajouter de '&' sélectionnera seulement les éléments supprimés		~&(123)
- Concaténation des requêtes fournira 
+ Ajouter de '$' sélectionnera seulement les éléments archivés	~$(123)
+ Ajouter de '%' sélectionnera seulement les éléments remplacés	~%(123)
+ Ajouter de '&' sélectionnera seulement les éléments supprimés	~&(123)
+ Concaténation des requêtes fournira "ET" fonctionnalité		~(123)<s>
  Ajouter de '*' sélectionnera éléments de justification aussi attachés	~*'Lorraine'<s>`fille`
- Ajouter de '**' sélectionnera également spécifications de justification ~**'Lorraine'<s>`fille`
+ Ajouter de '**' sélectionnera également spécifications de justification	 ~**'Lorraine'<s>`fille`
 ------------------------------------------------------------------------------
- Ajouter de ' à la fin, affichera que des mots				~(123)'
+ Ajouter de ' à la fin, affichera que des mots			~(123)'
  Ajouter de ` à la fin, affichera que des références de mots		~(123)`
  Ajouter de " à la fin, affichera que les chaînes de texte		~(123)"
  Ajouter de '' affichera que des mots sur une nouvelle ligne		~(123)''
  Ajouter de `` affichera que des références de mot sur nouvelle ligne	~(123)``
  Ajouter de "" affichera seulement chaînes de texte sur nouvelle ligne	~(123)""
 ------------------------------------------------------------------------------
- Dans les fichiers '~' marquera la fin d'une requête			...~#<W>~...
+ Dans les fichiers '~' marquera la fin d'une requête		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2017, Menno Mafait
- Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de
- détails tapez "Affichez le droit d'auteur.". Ceci est un logiciel libre et
- vous êtes invité à le redistribuer en respectant certaines obligations;
+ Copyright (C) 2009-2018, Menno Mafait
+ Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ;
+ pour plus de détails tapez "Affichez le droit d'auteur.". Ceci est un logiciel
+ libre et vous êtes invité à le redistribuer en respectant certaines obligations;
  pour plus de détails tapez "Affichez la licence-GPLv2.".
 
 		    GNU GENERAL PUBLIC LICENSE

@@ -1,9 +1,9 @@
-/*	Class:			ReadItem
+﻿/*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,8 @@
 class ReadItem extends Item
 	{
 	// Private initialized variables
+
+	private boolean isUncountableGeneralizationNoun_;
 
 	private short wordOrderNr_;
 	private short wordParameter_;
@@ -49,19 +51,19 @@ class ReadItem extends Item
 
 	// Constructor
 
-	protected ReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String _readString, WordItem readWordItem, List myList, WordItem myWordItem )
+	protected ReadItem( boolean isUncountableGeneralizationNoun, short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String _readString, WordItem readWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
-
 		// Private initialized variables
+
+		isUncountableGeneralizationNoun_ = isUncountableGeneralizationNoun;
 
 		wordOrderNr_ = wordOrderNr;
 		wordParameter_ = wordParameter;
 		wordTypeNr_ = wordTypeNr;
 
 		readWordItem_ = readWordItem;
-
 
 		// Protected constructed variables
 
@@ -82,20 +84,20 @@ class ReadItem extends Item
 
 	protected void displayString( boolean isReturnQueryToPosition )
 		{
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
 		if( readString != null )
 			{
-			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+			if( GlobalVariables.hasFoundQuery )
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				GlobalVariables.queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( readString );
+			GlobalVariables.hasFoundQuery = true;
+			GlobalVariables.queryStringBuffer.append( readString );
 			}
 		}
 
@@ -103,21 +105,21 @@ class ReadItem extends Item
 		{
 		String wordString;
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
 		if( readWordItem_ != null &&
 		( wordString = readWordItem_.wordTypeString( true, wordTypeNr_ ) ) != null )
 			{
-			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+			if( GlobalVariables.hasFoundQuery )
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				GlobalVariables.queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( wordString );
+			GlobalVariables.hasFoundQuery = true;
+			GlobalVariables.queryStringBuffer.append( wordString );
 			}
 		}
 
@@ -178,10 +180,10 @@ class ReadItem extends Item
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		if( hasWordPassedIntegrityCheckOfStoredUserSentence )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "hasWordPassedIntegrityCheckOfStoredUserSentence" );
@@ -247,19 +249,27 @@ class ReadItem extends Item
 		return false;
 		}
 
-	protected boolean isSymbol()
+	protected boolean isAdjectiveAssigned()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_SYMBOL );
+		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_ASSIGNED );
 		}
 
-	protected boolean isNumeral()
+	protected boolean isAdjectiveAssignedOrEmpty()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_NUMERAL );
+		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_ASSIGNED ||
+				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_EMPTY );
 		}
 
-	protected boolean isAdjective()
+	protected boolean isAdjectiveEvery()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_ADJECTIVE );
+		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL ||
+				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_EVERY_FEMININE_MASCULINE );
+		}
+
+	protected boolean isAdjectivePrevious()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_PREVIOUS_NEUTRAL ||
+				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_PREVIOUS_FEMININE_MASCULINE );
 		}
 
 	protected boolean isArticle()
@@ -267,19 +277,17 @@ class ReadItem extends Item
 		return ( wordTypeNr_ == Constants.WORD_TYPE_ARTICLE );
 		}
 
-	protected boolean isNoun()
+	protected boolean isChineseReversedImperativeNoun()
 		{
-		return isNounWordType( wordTypeNr_ );
+		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_HEAD ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_NUMBER ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_TAIL ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_VALUE );
 		}
 
-	protected boolean isSingularNoun()
+	protected boolean isConjunction()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR );
-		}
-
-	protected boolean isMatchingReadWordTypeNr( short wordTypeNr )
-		{
-		return isMatchingWordType( wordTypeNr_, wordTypeNr );
+		return ( wordTypeNr_ == Constants.WORD_TYPE_CONJUNCTION );
 		}
 
 	protected boolean isDeterminerOrPronoun()
@@ -297,6 +305,90 @@ class ReadItem extends Item
 				wordTypeNr_ == Constants.WORD_TYPE_POSSESSIVE_PRONOUN_PLURAL );
 		}
 
+	protected boolean isFrenchPreposition()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_FRENCH_A );
+		}
+
+	protected boolean isGeneralizationWord()
+		{
+		return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_WORD );
+		}
+
+	protected boolean isImperativeNoun()
+		{
+		return ( wordParameter_ == Constants.NO_WORD_PARAMETER ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_HEAD ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_LANGUAGE ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_MIND ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_NUMBER ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_TAIL ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_USER );
+		}
+
+	protected boolean isMatchingReadWordTypeNr( short wordTypeNr )
+		{
+		return isMatchingWordType( wordTypeNr_, wordTypeNr );
+		}
+
+	protected boolean isNoun()
+		{
+		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR ||
+				wordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
+		}
+
+	protected boolean isNonChineseNumeral()
+		{
+		return ( wordTypeNr_ == Constants.WORD_TYPE_NUMERAL &&
+				wordParameter_ != Constants.WORD_PARAMETER_NUMERAL_CHINESE_ALL );
+		}
+
+	protected boolean isNumeralBoth()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_NUMERAL_BOTH );
+		}
+
+	protected boolean isNegative()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_NO ||
+				wordParameter_ == Constants.WORD_PARAMETER_ADVERB_NOT ||
+				wordParameter_ == Constants.WORD_PARAMETER_ADVERB_FRENCH_PAS );
+		}
+
+	protected boolean isNounHeadOrTail()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_HEAD ||
+				wordParameter_ == Constants.WORD_PARAMETER_NOUN_TAIL );
+		}
+
+	protected boolean isNounValue()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_VALUE );
+		}
+
+	protected boolean isNounValueAhead()
+		{
+		ReadItem lookingAheadReadItem;
+
+		return ( ( lookingAheadReadItem = this.nextReadItem() ) != null &&
+				( lookingAheadReadItem = lookingAheadReadItem.nextReadItem() ) != null &&
+				lookingAheadReadItem.isNounValue() );
+		}
+
+	protected boolean isNounPartOf()
+		{
+		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_PART );
+		}
+
+	protected boolean isPersonalPronoun()
+		{
+		return ( wordTypeNr_ == Constants.WORD_TYPE_PERSONAL_PRONOUN_SINGULAR_SUBJECTIVE ||
+				wordTypeNr_ == Constants.WORD_TYPE_PERSONAL_PRONOUN_SINGULAR_OBJECTIVE ||
+
+				wordTypeNr_ == Constants.WORD_TYPE_PERSONAL_PRONOUN_PLURAL_SUBJECTIVE ||
+				wordTypeNr_ == Constants.WORD_TYPE_PERSONAL_PRONOUN_PLURAL_OBJECTIVE );
+		}
+
 	protected boolean isPossessiveDeterminer()
 		{
 		return ( wordTypeNr_ == Constants.WORD_TYPE_POSSESSIVE_DETERMINER_SINGULAR ||
@@ -308,93 +400,21 @@ class ReadItem extends Item
 		return ( wordTypeNr_ == Constants.WORD_TYPE_PREPOSITION );
 		}
 
-	protected boolean isProperName()
+	protected boolean isProperNoun()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_PROPER_NAME );
+		return ( wordTypeNr_ == Constants.WORD_TYPE_PROPER_NOUN );
 		}
 
-	protected boolean isVerb()
+	protected boolean isQuestionMark()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_VERB_SINGULAR ||
-				wordTypeNr_ == Constants.WORD_TYPE_VERB_PLURAL );
+		return ( wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_QUESTION_MARK );
 		}
 
-	protected boolean isPluralQuestionVerb()
+	protected boolean isRelationWord()
 		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_VERB_PLURAL &&
-				grammarParameter == Constants.GRAMMAR_QUESTION_VERB );
-		}
-
-	protected boolean isText()
-		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_TEXT );
-		}
-
-	protected boolean isNumeralBoth()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_NUMERAL_BOTH );
-		}
-
-	protected boolean isAdjectiveAssigned()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_ASSIGNED );
-		}
-
-	protected boolean isAdjectiveAssignedOrEmpty()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_ASSIGNED ||
-				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_EMPTY );
-		}
-
-	protected boolean isAdjectiveCalledSingularFeminineOrMasculine()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_FEMININE ||
-				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_MASCULINE );
-		}
-
-	protected boolean isAdjectiveEvery()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL ||
-				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_EVERY_FEMININE_MASCULINE );
-		}
-
-	protected boolean isAdjectivePrevious()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_PREVIOUS_NEUTRAL ||
-				wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_PREVIOUS_FEMININE_MASCULINE );
-		}
-
-	protected boolean isNegative()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_ADJECTIVE_NO ||
-				wordParameter_ == Constants.WORD_PARAMETER_ADVERB_NOT ||
-				wordParameter_ == Constants.WORD_PARAMETER_ADVERB_NOT_FRENCH );
-		}
-
-	protected boolean isNounJustificationReport()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_JUSTIFICATION_REPORT );
-		}
-
-	protected boolean isNounInformation()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_INFORMATION );
-		}
-
-	protected boolean isNounValue()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_VALUE );
-		}
-
-	protected boolean isNounFile()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_FILE ||
-				wordParameter_ == Constants.WORD_PARAMETER_NOUN_TEST_FILE );
-		}
-
-	protected boolean isNounPartOf()
-		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_NOUN_PART );
+		// To avoid triggering on the article before a proper noun preceded by defined article
+		return ( wordTypeNr_ != Constants.WORD_TYPE_ARTICLE &&
+				grammarParameter == Constants.GRAMMAR_RELATION_WORD );
 		}
 
 	protected boolean isSeparator()
@@ -402,9 +422,129 @@ class ReadItem extends Item
 		return ( wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_COMMA ||
 				wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_COLON ||
 				wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_EXCLAMATION_MARK ||
-				wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_EXCLAMATION_MARK_INVERTED ||
 				wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_QUESTION_MARK ||
-				wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_QUESTION_MARK_INVERTED );
+				wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_SPANISH_INVERTED_EXCLAMATION_MARK ||
+				wordParameter_ == Constants.WORD_PARAMETER_SYMBOL_SPANISH_INVERTED_QUESTION_MARK );
+		}
+
+	protected boolean isSingularNoun()
+		{
+		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR );
+		}
+
+	protected boolean isSkippingChineseIntegrityCheckWords()
+		{
+		switch( wordTypeNr_ )
+			{
+			case Constants.WORD_TYPE_SYMBOL:
+			case Constants.WORD_TYPE_PREPOSITION:
+				return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_SPECIFICATION );
+
+			case Constants.WORD_TYPE_NUMERAL:
+				return ( grammarParameter == Constants.GRAMMAR_SPECIFICATION_WORD );
+
+			case Constants.WORD_TYPE_ARTICLE:
+				return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_PART );
+
+			case Constants.WORD_TYPE_CONJUNCTION:
+				return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_PART ||
+						grammarParameter == Constants.GRAMMAR_EXCLUSIVE_SPECIFICATION_CONJUNCTION );
+
+			case Constants.WORD_TYPE_PERSONAL_PRONOUN_PLURAL_SUBJECTIVE:
+				return ( grammarParameter == Constants.GRAMMAR_RELATION_PART );
+			}
+
+		return false;
+		}
+
+	protected boolean isSkippingIntegrityCheckWords()
+		{
+		switch( wordTypeNr_ )
+			{
+			case Constants.WORD_TYPE_SYMBOL:
+				// Skip extra comma in sentence that isn't written.
+				// See grammar file for: '( symbolComma )'
+				// Example: "A creature is an animal, fungus, human-being, micro-organism, or plant."
+				return ( grammarParameter == Constants.GRAMMAR_EXCLUSIVE_SPECIFICATION_CONJUNCTION ||
+						grammarParameter == Constants.GRAMMAR_SENTENCE_CONJUNCTION );
+
+			case Constants.WORD_TYPE_NUMERAL:
+				// Skip on different order of specification words with a numeral
+				// Example: "John has 2 sons and a daughter"
+				return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_SPECIFICATION );
+
+			case Constants.WORD_TYPE_ADJECTIVE:
+						// Typically for Spanish
+				return ( grammarParameter == Constants.GRAMMAR_SPECIFICATION_WORD ||
+						// Typically for French
+						grammarParameter == Constants.GRAMMAR_RELATION_PART );
+
+			case Constants.WORD_TYPE_ADVERB:
+				// Skip mismatch in uncertainty
+				return ( grammarParameter == Constants.GRAMMAR_VERB );
+
+			case Constants.WORD_TYPE_ARTICLE:
+						// Skip missing indefinite article, because of a plural noun
+				return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_SPECIFICATION ||
+						// Skip wrong indefinite article
+						// Example: "An horse is incorrect."
+						grammarParameter == Constants.GRAMMAR_GENERALIZATION_PART ||
+						// Typically for Dutch
+						// Skip wrong definite article
+						// Example: "De paard is onjuist."
+						grammarParameter == Constants.GRAMMAR_GENERALIZATION_ASSIGNMENT );
+
+			case Constants.WORD_TYPE_CONJUNCTION:
+						// Skip question entered with singular verb, but written with plural verb
+						// Example: "Expert is a user and his password is expert123."
+				return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_SPECIFICATION ||
+						// Skip linked conjunctions
+						// Example: "Guest is a user and has no password."
+						grammarParameter == Constants.GRAMMAR_LINKED_GENERALIZATION_CONJUNCTION ||
+						// Skip sentence conjunctions
+						// Example: "Expert is a user and his password is expert123."
+						grammarParameter == Constants.GRAMMAR_SENTENCE_CONJUNCTION );
+
+			case Constants.WORD_TYPE_NOUN_SINGULAR:
+				return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_WORD ||
+						grammarParameter == Constants.GRAMMAR_SPECIFICATION_WORD );
+
+			case Constants.WORD_TYPE_NOUN_PLURAL:
+				// Skip plural noun if singular noun is entered
+				// Example: entered: "Is Joe a child?", written: "Are Paul and Joe children?"
+				return ( grammarParameter == Constants.GRAMMAR_SPECIFICATION_WORD );
+
+			case Constants.WORD_TYPE_VERB_SINGULAR:
+				return ( grammarParameter == Constants.GRAMMAR_VERB );
+
+			case Constants.WORD_TYPE_VERB_PLURAL:
+				// Skip plural question verb if singular verb is entered
+				// Example: entered: "Is Joe a child?", written: "Are Paul and Joe children?"
+				return ( grammarParameter == Constants.GRAMMAR_QUESTION_VERB );
+			}
+
+		return false;
+		}
+
+	protected boolean isSpecificationWord()
+		{
+		return ( grammarParameter == Constants.GRAMMAR_SPECIFICATION_WORD );
+		}
+
+	protected boolean isSymbol()
+		{
+		return ( wordTypeNr_ == Constants.WORD_TYPE_SYMBOL );
+		}
+
+	protected boolean isUncountableGeneralizationNoun()
+		{
+		return isUncountableGeneralizationNoun_;
+		}
+
+	protected boolean isVerb()
+		{
+		return ( wordTypeNr_ == Constants.WORD_TYPE_VERB_SINGULAR ||
+				wordTypeNr_ == Constants.WORD_TYPE_VERB_PLURAL );
 		}
 
 	protected boolean isVirtualListPreposition()
@@ -414,41 +554,34 @@ class ReadItem extends Item
 				wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_OF );
 		}
 
-	protected boolean isFrenchPreposition()
+	protected boolean isText()
 		{
-		return ( wordParameter_ == Constants.WORD_PARAMETER_PREPOSITION_FRENCH_A );
+		return ( wordTypeNr_ == Constants.WORD_TYPE_TEXT );
 		}
 
-	protected boolean isUserDefined()
+	protected short readAheadChineseImperativeVerbParameter()
 		{
-		return ( wordParameter_ == Constants.NO_WORD_PARAMETER );
-		}
+		ReadItem searchReadItem = this;
 
-	protected boolean isGeneralizationWord()
-		{
-		return ( grammarParameter == Constants.GRAMMAR_GENERALIZATION_WORD );
-		}
+		if( wordParameter_ == Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_CHINESE_PUT )
+			{
+			while( ( searchReadItem = searchReadItem.nextReadItem() ) != null )
+				{
+				switch( searchReadItem.wordParameter() )
+					{
+					case Constants.WORD_PARAMETER_PREPOSITION_CHINESE_VERB_ADD:
+						return Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_ADD;
 
-	protected boolean isSpecificationWord()
-		{
-		return ( grammarParameter == Constants.GRAMMAR_SPECIFICATION_WORD );
-		}
+					case Constants.WORD_PARAMETER_PREPOSITION_CHINESE_VERB_MOVE:
+						return Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_MOVE;
 
-	protected boolean isRelationWord()
-		{
-		// To avoid triggering on the article before a proper name preceded by defined article
-		return ( wordTypeNr_ != Constants.WORD_TYPE_ARTICLE &&
-				grammarParameter == Constants.GRAMMAR_RELATION_WORD );
-		}
+					case Constants.WORD_PARAMETER_PREPOSITION_CHINESE_VERB_REMOVE:
+						return Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REMOVE;
+					}
+				}
+			}
 
-	protected boolean isLinkedGeneralizationConjunction()
-		{
-		return ( grammarParameter == Constants.GRAMMAR_LINKED_GENERALIZATION_CONJUNCTION );
-		}
-
-	protected boolean isSentenceConjunction()
-		{
-		return ( grammarParameter == Constants.GRAMMAR_SENTENCE_CONJUNCTION );
+		return Constants.NO_WORD_PARAMETER;
 		}
 
 	protected short wordOrderNr()

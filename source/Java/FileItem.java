@@ -1,9 +1,9 @@
-/*	Class:			FileItem
+﻿/*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -64,20 +64,20 @@ class FileItem extends Item
 
 	protected void displayString( boolean isReturnQueryToPosition )
 		{
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
 		if( readFileNameString_ != null )
 			{
-			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+			if( GlobalVariables.hasFoundQuery )
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				GlobalVariables.queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( readFileNameString_ );
+			GlobalVariables.hasFoundQuery = true;
+			GlobalVariables.queryStringBuffer.append( readFileNameString_ );
 			}
 		}
 
@@ -95,10 +95,10 @@ class FileItem extends Item
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		if( isInfoFile_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isInfoFile" );

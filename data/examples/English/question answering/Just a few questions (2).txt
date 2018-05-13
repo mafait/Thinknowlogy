@@ -1,15 +1,15 @@
 ﻿A set is A, B, C, D, E, F or G.
-My set is D.
+His set is D.
 Is John my father?
 
 Is a set a number?
 Is a set round?
 Is a set A?
 
-Is the set a father?
-Is the set a number?
+Is his set a father?
+Is his set a number?
 
 Is my father John?
-Is the set A?
+Is his set A?
 Is a set A?
 # To continue, click button «Clear your mind.» or «Restart.».

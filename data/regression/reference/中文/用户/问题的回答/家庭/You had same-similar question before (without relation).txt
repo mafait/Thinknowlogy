@@ -1,0 +1,60 @@
+﻿* 
+* 我的结论：
+< 父母和孩子都是每家庭的一部分。
+< 
+* 
+* 我的假设：
+< 父亲大概都是人。
+< 父母大概都是人。
+< 
+* 
+* 我的结论：
+< 每个父母都是女或男。
+* 
+* 我的假设：
+< 母亲大概都是人。
+< 
+* 
+* 我的假设：
+< 儿子大概都是人。
+< 孩子大概都是人。
+< 
+* 
+* 我的结论：
+< 每个孩子都是女孩、女、男孩或男。
+* 
+* 我的假设：
+< 女儿大概都是人。
+< 
+* I know nothing about 军, but I'll keep this question in mind.
+* 
+* I know nothing about 媛, but I'll keep this question in mind.
+* 
+* I know nothing about 勇, but I'll keep this question in mind.
+* 
+* I know nothing about 瑞, but I'll keep this question in mind.
+* 
+* 
+* You had the same question before.
+* 
+* I don't know the answer to this question, but I'll keep it in mind.
+* 
+* 
+* You had a similar question before:
+< 军是父亲吗？
+* I know nothing about 军, but I'll keep this question in mind.
+* 
+* 
+* You had the same question before.
+* I know nothing about 媛, but I'll keep this question in mind.
+* 
+* 
+* You had a similar question before:
+< 勇是儿子吗？
+* I know nothing about 勇, but I'll keep this question in mind.
+* 
+* 
+* You had a similar question before:
+< 瑞是女儿吗？
+* I know nothing about 瑞, but I'll keep this question in mind.
+* 

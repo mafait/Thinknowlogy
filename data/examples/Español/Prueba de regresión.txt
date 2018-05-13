@@ -3,7 +3,6 @@
 #----------------------------
 Leer el archivo de prueba "Español/usuario/ambigüedad/Boston".
 Leer el archivo de prueba "Español/usuario/ambigüedad/Presidentes de EUA".
-Leer el archivo de prueba "Español/usuario/ambigüedad/Presidentes de EUA - Confirmación".
 
 Leer el archivo de prueba "Español/usuario/programación/Conecta 4 - Mostrar informacion sobre el movimiento".
 Leer el archivo de prueba "Español/usuario/programación/Saludo".
@@ -15,6 +14,8 @@ Leer el archivo de prueba "Español/usuario/programación/Torres de Hanói (núm
 #Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Especificación-generalización - Pregunta (número)".
 #Java#Leer el archivo de prueba "Español/usuario/respuestas a las preguntas/Esta pregunta es más específica (sin relación)".
 
+Leer el archivo de prueba "Español/usuario/razonamiento/Punto de ebullición".
+Leer el archivo de prueba "Español/usuario/razonamiento/Punto de condensación".
 Leer el archivo de prueba "Español/usuario/razonamiento/Artículo indefinido no coincide con el sustantivo".
 Leer el archivo de prueba "Español/usuario/razonamiento/Mis conclusiones que se confirman (con relación, sin definición de la familia)".
 Leer el archivo de prueba "Español/usuario/razonamiento/Reto científico".
@@ -24,6 +25,7 @@ Leer el archivo de prueba "Español/usuario/razonamiento/Especificación general
 Leer el archivo de prueba "Español/usuario/razonamiento/La única opción que queda - Barco".
 Leer el archivo de prueba "Español/usuario/razonamiento/La única opción que queda - Opción".
 Leer el archivo de prueba "Español/usuario/razonamiento/Tom es un gato".
+Leer el archivo de prueba "Español/usuario/razonamiento/Presidentes de EUA - Confirmación".
 
 #----------------------------
 # Familia (usuario)
@@ -129,6 +131,7 @@ Leer el archivo de prueba "Español/programación/El bueno, El Malo y El Feo".
 Leer el archivo de prueba "Español/razonamiento/Aceptación - Juan es una persona, Juan es alto y Juan es un niño".
 Leer el archivo de prueba "Español/razonamiento/La aceptación de un solo artículo en la especificación exclusiva".
 Leer el archivo de prueba "Español/razonamiento/La aceptación de la frase sin fin de colon".
+Leer el archivo de prueba "Español/razonamiento/Prueba adicional".
 Leer el archivo de prueba "Español/razonamiento/Adjetivo".
 Leer el archivo de prueba "Español/razonamiento/El nivel de asunción ha cambiado (1)".
 Leer el archivo de prueba "Español/razonamiento/El nivel de asunción ha cambiado (2)".

@@ -1,4 +1,4 @@
-Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/user/reasoning/family/family definition".
 John is the father of Paul, Joe and Laura.
 Joe is a son of John and Anna.
 John is a parent of Paul, Joe and Laura.

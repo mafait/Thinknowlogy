@@ -1,0 +1,5 @@
+﻿Padres y hijos son parte de cada familia.
+Cada persona es un hombre o una mujer.
+# Se generará una pregunta, porque los sustantivos "hombre" y "mujer" aún no se definen como masculino y femenino.
+Ana es una persona.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

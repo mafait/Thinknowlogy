@@ -1,10 +1,10 @@
 ﻿* 
 * Mis conclusiones:
-< La opción es 6.
+< Su opción es 6.
 < 
 * 
 * Mis conclusiones:
-< La opción es 6. Porque:
+< Su opción es 6. Porque:
 <	- Una opción es 1, 2, 3, 4, 5, 6, 7, 8 o 9.
-<	- La opción no es 9, 8, 7, 5, 4, 3, 2 y 1.
+<	- Su opción no es 9, 8, 7, 5, 4, 3, 2 y 1.
 < 

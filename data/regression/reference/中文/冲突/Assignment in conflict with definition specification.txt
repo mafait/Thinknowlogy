@@ -1,0 +1,8 @@
+﻿* 
+* 我的结论：
+< 先都是每人的一部分。
+< 
+* 
+* This assignment is not accepted, because it is in conflict with definition specification:
+< 每个人都有先。
+< 

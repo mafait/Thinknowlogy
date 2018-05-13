@@ -1,31 +1,31 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To demonstrate programming in natural language.
-#	Version:	Thinknowlogy 2017r2 (Science as it should be)
+# Purpose: To demonstrate programming in natural language.
+# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	A summary of the "tower of Hanoi" puzzle:
+# A summary of the "tower of Hanoi" puzzle:
 #----------------------------------------------------------------------------
-#	The Tower of Hanoi (also called the Tower of Brahma or Lucas' Tower,
-#	and sometimes pluralised) is a mathematical game or puzzle. It consists
-#	of three rods, and a number of disks of different sizes which can slide
-#	onto any rod. The puzzle starts with the disks in a neat stack in
-#	ascending order of size on one rod, the smallest at the top, thus
-#	making a conical shape.
+# The Tower of Hanoi (also called the Tower of Brahma or Lucas' Tower,
+# and sometimes pluralised) is a mathematical game or puzzle. It consists
+# of three rods, and a number of disks of different sizes which can slide
+# onto any rod. The puzzle starts with the disks in a neat stack in
+# ascending order of size on one rod, the smallest at the top, thus
+# making a conical shape.
 #
-#	The objective of the puzzle is to move the entire stack to another rod
-#	obeying the following rules:
+# The objective of the puzzle is to move the entire stack to another rod
+# obeying the following rules:
 #
-#	- Only one disk may be moved at a time.
-#	- Each move consists of taking the upper disk from one of the rods and
-#	  sliding it onto another rod, on top of the other disks that may
-#	  already be present on that rod.
-#	- No disk may be placed on top of a smaller disk.
+# - Only one disk may be moved at a time.
+# - Each move consists of taking the upper disk from one of the rods and
+#   sliding it onto another rod, on top of the other disks that may
+#   already be present on that rod.
+# - No disk may be placed on top of a smaller disk.
 #----------------------------------------------------------------------------
-#	See for the full text: http://en.wikipedia.org/wiki/Tower_of_Hanoi
+# See for the full text: http://en.wikipedia.org/wiki/Tower_of_Hanoi
 #----------------------------------------------------------------------------
 
 # Define the moves.
@@ -51,5 +51,5 @@ If the move is assigned, the start pole is not assigned, the swap pole is not as
 
 # Now add an odd or even number of discs in reverse order,
 # the biggest first (e.g. D or E), and the smallest (A) on top, like:
-# - For an even number of discs:	Add D, C, B and A to the start pole.
-# - For an odd number of discs:	Add E, D, C, B and A to the start pole.
+# - For an even number of discs:  Add D, C, B and A to the start pole.
+# - For an odd number of discs:   Add E, D, C, B and A to the start pole.

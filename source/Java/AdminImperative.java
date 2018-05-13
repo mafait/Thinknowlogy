@@ -1,9 +1,9 @@
-/*	Class:			AdminImperative
+﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -60,8 +60,8 @@ class AdminImperative
 
 	private static boolean isNumeralString( String checkString )
 		{
-		int stringLength;
 		int position = 0;
+		int stringLength;
 
 		if( checkString != null &&
 		( stringLength = checkString.length() ) > 0 )
@@ -81,10 +81,10 @@ class AdminImperative
 		if( generalizationWordItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
-		if( generalizationWordItem.addSpecificationInWord( true, false, false, false, false, false, false, false, false, false, false, isSelection, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, specificationWordItem, null, null, null ).result != Constants.RESULT_OK )
+		if( generalizationWordItem.addSpecificationInWord( true, false, false, false, false, false, false, false, false, false, false, false, isSelection, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, specificationWordItem, null, null, null ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to add a virtual list specification" );
 
-		if( generalizationWordItem.assignSpecification( false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.NO_WORD_TYPE_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, 0, null, specificationWordItem, null, null ).result != Constants.RESULT_OK )
+		if( generalizationWordItem.assignSpecification( false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.NO_WORD_TYPE_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, specificationWordItem, null, null ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to assign a virtual list word" );
 
 		return Constants.RESULT_OK;
@@ -94,7 +94,7 @@ class AdminImperative
 		{
 		WordItem currentAssignmentWordItem;
 
-		if( ( currentAssignmentWordItem = CommonVariables.firstAssignmentWordItem ) != null )
+		if( ( currentAssignmentWordItem = GlobalVariables.firstAssignmentWordItem ) != null )
 			{
 			// Do for all assignment words
 			do	;
@@ -102,14 +102,14 @@ class AdminImperative
 			( currentAssignmentWordItem = currentAssignmentWordItem.nextAssignmentWordItem ) != null );
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	private static byte deleteAssignmentLevelInAssignmentWords()
 		{
 		WordItem currentAssignmentWordItem;
 
-		if( ( currentAssignmentWordItem = CommonVariables.firstAssignmentWordItem ) != null )
+		if( ( currentAssignmentWordItem = GlobalVariables.firstAssignmentWordItem ) != null )
 			{
 			// Do for all assignment words
 			do	;
@@ -117,13 +117,12 @@ class AdminImperative
 			( currentAssignmentWordItem = currentAssignmentWordItem.nextAssignmentWordItem ) != null );
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	private byte executeImperativeDisplay( short executionNounWordParameter, short executionWordTypeNr, WordItem imperativeVerbWordItem, WordItem executionWordItem, String executionString )
 		{
 		String singularNounString;
-		StringBuffer writtenSentenceStringBuffer;
 		FileResultType fileResult;
 
 		if( imperativeVerbWordItem == null )
@@ -135,7 +134,7 @@ class AdminImperative
 			if( executionString != null &&
 			executionWordTypeNr == Constants.WORD_TYPE_TEXT )
 				{
-				if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL &&
+				if( GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL &&
 				writeInfoTextWithPossibleQueryCommands( executionString ) != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to write the execution string" );
 				}
@@ -151,8 +150,15 @@ class AdminImperative
 
 						break;
 
+					case Constants.WORD_PARAMETER_NOUN_INFORMATION:
+						// Try to display all knowledge about this specification
+						if( adminItem_.writeInfoAboutWord( false, true, true, true, true, true, true, true, executionWordItem ) != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to write info about a word" );
+
+						// Don't insert a break statement here
+
 					default:
-						// Try to read the info file with the specification name
+						// Try to read the info file with the given specification name
 						if( executionWordItem == null )
 							return adminItem_.startError( 1, moduleNameString_, "The specification word item is undefined" );
 
@@ -162,33 +168,14 @@ class AdminImperative
 						if( fileResult.createdFileItem == null &&
 						executionWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL &&
 						( singularNounString = executionWordItem.singularNounString() ) != null &&
+						// In case of a plural noun, also try a singular noun
 						adminItem_.readInfoFile( false, singularNounString ).result != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to read the info file with a singular noun word" );
-
-						// Try to display all knowledge about this specification
-						if( adminItem_.writeInfoAboutWord( false, true, true, true, true, true, true, true, executionWordItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to write info about a word" );
 					}
 
-				if( !CommonVariables.hasDisplayedMessage &&
-				executionWordItem != null )
-					{
-					if( adminItem_.isImperativeSentence() &&
-					( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) != null &&
-					writtenSentenceStringBuffer.length() > 0 )
-						{
-						if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_IMPERATIVE_NOTIFICATION_I_HAVE_NO ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'I have no' interface notification" );
-
-						if( InputOutput.writeDiacriticalText( false, false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, writtenSentenceStringBuffer.toString() ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to write a sentence" );
-						}
-					else
-						{
-						if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_START, executionWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_HAVE_NO_INFO_ABOUT_END ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
-						}
-					}
+				if( !GlobalVariables.hasDisplayedMessage &&
+				InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_IMPERATIVE_NOTIFICATION_I_DONT_HAVE_THE_REQUESTED_INFO ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
 				}
 			}
 		else
@@ -200,7 +187,7 @@ class AdminImperative
 		return Constants.RESULT_OK;
 		}
 
-	private byte executeVirtualListImperative( short imperativeVerbParameter, short prepositionParameter, short specificationWordTypeNr, short relationWordTypeNr, WordItem imperativeVerbWordItem, WordItem specificationWordItem, WordItem relationWordItem )
+	private byte executeVirtualListImperativePart( short imperativeVerbParameter, short prepositionParameter, short specificationWordTypeNr, short relationWordTypeNr, WordItem imperativeVerbWordItem, WordItem specificationWordItem, WordItem relationWordItem )
 		{
 		boolean hasFoundHeadOrTail = false;
 		boolean hasFoundVirtualListAction = false;
@@ -282,6 +269,10 @@ class AdminImperative
 						break;
 
 					case Constants.WORD_PARAMETER_PREPOSITION_TO:
+					// Typically for Chinese
+					case Constants.WORD_PARAMETER_PREPOSITION_CHINESE_VERB_ADD:
+					case Constants.WORD_PARAMETER_PREPOSITION_CHINESE_VERB_MOVE:
+					case Constants.WORD_PARAMETER_PREPOSITION_CHINESE_VERB_REMOVE:
 						// Global virtual assignment list
 						if( virtualListAssignmentItem_ == null )
 							{
@@ -320,18 +311,28 @@ class AdminImperative
 		return Constants.RESULT_OK;
 		}
 
-	private byte executeVirtualListImperative( short imperativeVerbParameter, short specificationWordTypeNr, WordItem imperativeVerbWordItem, WordItem specificationWordItem, ReadItem startRelationWordReadItem, ReadItem endRelationReadItem )
+	private byte executeVirtualListImperative( short imperativeVerbParameter, short specificationWordTypeNr, WordItem imperativeVerbWordItem, WordItem specificationWordItem, ReadItem startRelationReadItem, ReadItem endRelationReadItem )
 		{
 		short prepositionParameter = Constants.NO_PREPOSITION_PARAMETER;
-		ReadItem currentReadItem = startRelationWordReadItem;
+		ReadItem currentReadItem = startRelationReadItem;
 		WordItem relationWordItem;
 
 		if( imperativeVerbWordItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given imperative verb word item is undefined" );
 
-		if( specificationWordItem != null )
+		if( specificationWordItem == null )
 			{
-			if( startRelationWordReadItem != null )
+			if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, imperativeVerbWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+			}
+		else
+			{
+			if( startRelationReadItem == null )
+				{
+				if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_NEEDS_A_LIST_TO_BE_SPECIFIED ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
+				}
+			else
 				{
 				do	{
 					if( currentReadItem.isPreposition() )
@@ -340,41 +341,15 @@ class AdminImperative
 						{
 						if( currentReadItem.isRelationWord() &&
 						( relationWordItem = currentReadItem.readWordItem() ) != null &&
-						executeVirtualListImperative( imperativeVerbParameter, prepositionParameter, specificationWordTypeNr, currentReadItem.wordTypeNr(), imperativeVerbWordItem, specificationWordItem, relationWordItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to execute a virtual list imperative" );
+
+						executeVirtualListImperativePart( imperativeVerbParameter, prepositionParameter, specificationWordTypeNr, currentReadItem.wordTypeNr(), imperativeVerbWordItem, specificationWordItem, relationWordItem ) != Constants.RESULT_OK )
+							return adminItem_.addError( 1, moduleNameString_, "I failed to execute a virtual list imperative part" );
 						}
 					}
 				while( currentReadItem != endRelationReadItem &&
 				( currentReadItem = currentReadItem.nextReadItem() ) != null );
 				}
-			else
-				{
-				if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_NEEDS_A_LIST_TO_BE_SPECIFIED ) != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
-				}
 			}
-		else
-			{
-			if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_START, imperativeVerbWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_DONT_KNOW_HOW_TO_EXECUTE_IMPERATIVE_VERB_END ) != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning about the add, move or remove imperative" );
-			}
-
-		return Constants.RESULT_OK;
-		}
-
-	private byte executeVirtualListSelectionImperative( short imperativeVerbParameter, short prepositionParameter, short specificationWordTypeNr, short relationWordTypeNr, WordItem imperativeVerbWordItem, WordItem specificationWordItem, WordItem relationWordItem )
-		{
-		if( imperativeVerbWordItem == null )
-			return adminItem_.startError( 1, moduleNameString_, "The given imperative verb word item is undefined" );
-
-		if( specificationWordItem == null )
-			return adminItem_.startError( 1, moduleNameString_, "The given specification word item is undefined" );
-
-		if( relationWordItem == null )
-			return adminItem_.startError( 1, moduleNameString_, "The given relation word item is undefined" );
-
-		if( executeVirtualListImperative( imperativeVerbParameter, prepositionParameter, specificationWordTypeNr, relationWordTypeNr, imperativeVerbWordItem, specificationWordItem, relationWordItem ) != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to execute a virtual list imperative" );
 
 		return Constants.RESULT_OK;
 		}
@@ -397,15 +372,15 @@ class AdminImperative
 		// Word has no active assignments
 		if( solveWordItem.firstNonQuestionActiveAssignmentItem() == null )
 			{
-			if( CommonVariables.currentAssignmentLevel > solveLevel )
-				return adminItem_.startError( 1, moduleNameString_, "The given assignment level of " + CommonVariables.currentAssignmentLevel + " is higher than the given solve level " + solveLevel );
+			if( GlobalVariables.currentAssignmentLevel > solveLevel )
+				return adminItem_.startError( 1, moduleNameString_, "The given assignment level of " + GlobalVariables.currentAssignmentLevel + " is higher than the given solve level " + solveLevel );
 
 			if( adminItem_.assignSpecification( predefinedNounSolveMethodWordItem_, predefinedAdjectiveBusyWordItem_ ) != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level " + CommonVariables.currentAssignmentLevel );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 			// There already is a scores list at the start
 			if( adminItem_.hasScoreList() &&
-			CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL &&
+			GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL &&
 			adminItem_.deleteScores() != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to delete the admin score list" );
 
@@ -413,18 +388,18 @@ class AdminImperative
 
 			// Get solve strategy parameter
 			if( ( shortResult = getAssignmentWordParameter( predefinedNounSolveStrategyWordItem_ ) ).result != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to get the solve strategy at assignment level " + CommonVariables.currentAssignmentLevel );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to get the solve strategy at assignment level " + GlobalVariables.currentAssignmentLevel );
 
-			if( ( boolResult = findSelectionToSolveWord( true, ( CommonVariables.currentAssignmentLevel == solveLevel ), isInverted, ( CommonVariables.currentAssignmentLevel + 1 < solveLevel ), shortResult.shortValue, solveWordItem ) ).result != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to find a selection to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+			if( ( boolResult = findSelectionToSolveWord( true, ( GlobalVariables.currentAssignmentLevel == solveLevel ), isInverted, ( GlobalVariables.currentAssignmentLevel + 1 < solveLevel ), shortResult.shortValue, solveWordItem ) ).result != Constants.RESULT_OK )
+				return adminItem_.addError( 1, moduleNameString_, "I failed to find a selection to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 			// Has found possibility to solve word
 			if( boolResult.booleanValue )
 				{
-				if( CommonVariables.currentAssignmentLevel < solveLevel )
+				if( GlobalVariables.currentAssignmentLevel < solveLevel )
 					{
 					if( ( nPossibilities = adminItem_.nPossibilities() ) <= 0 )
-						return adminItem_.startError( 1, moduleNameString_, "There are no possibilities at assignment level " + CommonVariables.currentAssignmentLevel );
+						return adminItem_.startError( 1, moduleNameString_, "There are no possibilities at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 					solveProgressStep = ( nPossibilities == 0 ? Constants.MAX_PROGRESS : ( ( endSolveProgressLevel - currentSolveProgressLevel ) / nPossibilities ) );
 
@@ -432,33 +407,33 @@ class AdminImperative
 						InputOutput.startProgress( Constants.INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START, solveLevel, Constants.INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END, currentSolveProgressLevel, Constants.MAX_PROGRESS );
 
 					if( ( possibilityScoreItem = adminItem_.firstPossibility() ) == null )
-						return adminItem_.startError( 1, moduleNameString_, "I couldn't find any possibility item at assignment level " + CommonVariables.currentAssignmentLevel );
+						return adminItem_.startError( 1, moduleNameString_, "I couldn't find any possibility item at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 					do	{
 						// Copy solve action of Constants.NO_ASSIGNMENT_LEVEL to higher levels
-						if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+						if( GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
 							actionSelectionItem = possibilityScoreItem.referenceSelectionItem;
 
 						if( createNewAssignmentLevelInAssignmentWords() != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to create a new assignment level: " + CommonVariables.currentAssignmentLevel );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to create a new assignment level: " + GlobalVariables.currentAssignmentLevel );
 
-						CommonVariables.currentAssignmentLevel++;
+						GlobalVariables.currentAssignmentLevel++;
 
 						if( adminItem_.assignSelectionSpecification( possibilityScoreItem.referenceSelectionItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to assign a selection specifcation at assignment level: " + CommonVariables.currentAssignmentLevel );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to assign a selection specifcation at assignment level: " + GlobalVariables.currentAssignmentLevel );
 
 						nextSolveProgressLevel = currentSolveProgressLevel + solveProgressStep;
 
 						if( executeSelection( (int)( currentSolveProgressLevel + solveProgressStep / 2L ), actionSelectionItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to execute a selection during the solving of word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to execute a selection during the solving of word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 						// Word has active assignments
 						if( solveWordItem.firstNonQuestionActiveAssignmentItem() == null )
 							{
 							if( solveWord( solveLevel, currentSolveProgressLevel, nextSolveProgressLevel, solveWordItem, actionSelectionItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + GlobalVariables.currentAssignmentLevel );
 
-							if( CommonVariables.currentAssignmentLevel == 1 &&
+							if( GlobalVariables.currentAssignmentLevel == 1 &&
 							adminItem_.changeAction( actionSelectionItem ) != Constants.RESULT_OK )
 								return adminItem_.addError( 1, moduleNameString_, "I failed to change an action" );
 							}
@@ -468,26 +443,26 @@ class AdminImperative
 							isInverted = ( predefinedNounSolveMethodWordItem_.firstNonQuestionAssignmentItem( true, false, false, false, false, Constants.NO_CONTEXT_NR, predefinedAdjectiveInvertedWordItem_ ) != null );
 
 							if( !isInverted &&
-							CommonVariables.currentAssignmentLevel < solveLevel )
+							GlobalVariables.currentAssignmentLevel < solveLevel )
 								{
 								if( adminItem_.deleteScores() != Constants.RESULT_OK )
-									return adminItem_.addError( 1, moduleNameString_, "I failed to delete the scores with an assignment level higher than " + CommonVariables.currentAssignmentLevel );
+									return adminItem_.addError( 1, moduleNameString_, "I failed to delete the scores with an assignment level higher than " + GlobalVariables.currentAssignmentLevel );
 
 								// Don't solve any deeper
-								solveLevel = CommonVariables.currentAssignmentLevel;
+								solveLevel = GlobalVariables.currentAssignmentLevel;
 								}
 
 							// Create winning or losing score
 							if( adminItem_.createScoreItem( false, Constants.NO_SCORE, ( isInverted ? Constants.NO_SCORE : Constants.WINNING_SCORE ), Constants.NO_SCORE, ( isInverted ? Constants.WINNING_SCORE : Constants.NO_SCORE ), Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, actionSelectionItem ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to create a winning or losing score of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to create a winning or losing score of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + GlobalVariables.currentAssignmentLevel );
 							}
 
 						currentSolveProgressLevel = nextSolveProgressLevel;
 
 						if( deleteAssignmentLevelInAssignmentWords() != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to delete the assignments of level " + CommonVariables.currentAssignmentLevel );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to delete the assignments of level " + GlobalVariables.currentAssignmentLevel );
 
-						CommonVariables.currentAssignmentLevel--;
+						GlobalVariables.currentAssignmentLevel--;
 						possibilityScoreItem = possibilityScoreItem.nextPossibilityScoreItem();
 
 						if( ++possibilityNumber <= nPossibilities )
@@ -506,44 +481,44 @@ class AdminImperative
 
 					if( nPossibilities > 1 ||
 					// Higher level has possibilities
-					CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL )
+					GlobalVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL )
 						{
 						if( adminItem_.deleteScores() != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to delete the scores with assignment level " + CommonVariables.currentAssignmentLevel );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to delete the scores with assignment level " + GlobalVariables.currentAssignmentLevel );
 						}
 					}
 
 				currentSolveProgressLevel = endSolveProgressLevel;
 
 				if( solveLevel > 1 )
-					InputOutput.displayProgress( currentSolveProgressLevel );
+					InputOutput.displayProgressBar( currentSolveProgressLevel );
 
-				if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+				if( GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
 					{
 					// Get solve strategy parameter
 					if( ( shortResult = getAssignmentWordParameter( predefinedNounSolveStrategyWordItem_ ) ).result != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to get the solve strategy at assignment level " + CommonVariables.currentAssignmentLevel );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to get the solve strategy at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 					// Get best selection
 					if( ( selectionResult = adminItem_.getBestSelection( adminItem_.isCurrentlyTesting(), shortResult.shortValue ) ).result != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to get the best selection action of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + CommonVariables.currentAssignmentLevel );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to get the best selection action of solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 					if( ( actionSelectionItem = selectionResult.selectionItem ) == null )
 						return adminItem_.startError( 1, moduleNameString_, "I couldn't get the best action selection item" );
 
 					// Assign best selection
 					if( adminItem_.assignSelectionSpecification( actionSelectionItem ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to assign a selection specification at assignment level " + CommonVariables.currentAssignmentLevel );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to assign a selection specification at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 					// Set solve method to 'done'
 					if( adminItem_.assignSpecification( predefinedNounSolveMethodWordItem_, predefinedAdjectiveDoneWordItem_ ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to assign the done flag to the solve method at assignment level " + CommonVariables.currentAssignmentLevel );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to assign the done flag to the solve method at assignment level " + GlobalVariables.currentAssignmentLevel );
 					}
 				}
 			else
 				{
 				// Display warning
-				if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL &&
+				if( GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL &&
 				InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_START, solveWordItem.anyWordTypeString(), Constants.INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_END ) != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
 				}
@@ -561,8 +536,8 @@ class AdminImperative
 	private byte writeInfoTextWithPossibleQueryCommands( String textString )
 		{
 		boolean hasFoundNewLine = false;
-		int textStringLength;
 		int position = 0;
+		int textStringLength;
 		char textChar = Constants.SYMBOL_QUESTION_MARK;
 		StringBuffer writeStringBuffer = new StringBuffer();
 		QueryResultType queryResult;
@@ -629,13 +604,13 @@ class AdminImperative
 
 	private BoolResultType backTrackSelectionConditions( boolean isInitializeScores, boolean isInverted, boolean isAllowingDuplicates, boolean isPreparingSort, short executionLevel, short solveStrategyParameter, int conditionSentenceNr )
 		{
+		boolean hasFoundScore = false;
 		boolean isNewStart;
 		boolean isWaitingForNewLevel;
 		boolean isWaitingForNewStart;
-		boolean hasFoundScore = false;
-		short selectionLevel;
 		short handledSelectionLevel;
 		short previousSelectionLevel;
+		short selectionLevel;
 		short unhandledSelectionLevel;
 		SelectionItem conditionSelectionItem;
 		SelectionItem previousConditionSelectionItem;
@@ -745,7 +720,7 @@ class AdminImperative
 
 			if( isAllowingDuplicates &&
 			isInitializeScores &&
-			CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL )
+			GlobalVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL )
 				{
 				hasFoundScore = false;
 
@@ -785,7 +760,7 @@ class AdminImperative
 
 		// Word can't be solved
 		if( !boolResult.booleanValue &&
-		!CommonVariables.hasDisplayedWarning &&
+		!GlobalVariables.hasDisplayedWarning &&
 		( boolResult = canWordBeSolved( false, solveWordItem ) ).result != Constants.RESULT_OK )
 			return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to find out if a word can be solved by an alternative action" );
 
@@ -837,9 +812,9 @@ class AdminImperative
 		String firstString = null;
 		String secondString = null;
 		SpecificationItem comparisonAssignmentItem;
+		WordItem comparisonAssignmentSpecificationWordItem = null;
 		WordItem firstSpecificationWordItem;
 		WordItem secondSpecificationWordItem;
-		WordItem comparisonAssignmentSpecificationWordItem = null;
 		BoolResultType boolResult = new BoolResultType();
 		SpecificationResultType specificationResult;
 
@@ -978,7 +953,7 @@ class AdminImperative
 		solveWordItem.isWordCheckedForSolving = true;
 
 		// Selection available
-		if( CommonVariables.adminActionList != null )
+		if( GlobalVariables.adminActionList != null )
 			{
 			// Check selection actions
 			if( ( boolCheckResult = findSelectionToSolveWord( true, isInitializeScores, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, solveWordItem ) ).result != Constants.RESULT_OK )
@@ -987,8 +962,8 @@ class AdminImperative
 			if( boolCheckResult.booleanValue )
 				boolReturnResult.booleanValue = true;
 
-			if( !CommonVariables.hasDisplayedWarning &&
-			CommonVariables.adminAlternativeList != null )
+			if( !GlobalVariables.hasDisplayedWarning &&
+			GlobalVariables.adminAlternativeList != null )
 				{
 				// Check selection alternatives
 				if( ( boolCheckResult = findSelectionToSolveWord( false, isInitializeScores, isAllowingDuplicates, isInverted, isPreparingSort, solveStrategyParameter, solveWordItem ) ).result != Constants.RESULT_OK )
@@ -1105,7 +1080,7 @@ class AdminImperative
 
 						if( !hasFoundScore )
 							{
-							if( adminItem_.createScoreItem( ( CommonVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL ), Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, conditionSelectionItem ) != Constants.RESULT_OK )
+							if( adminItem_.createScoreItem( ( GlobalVariables.currentAssignmentLevel > Constants.NO_ASSIGNMENT_LEVEL ), Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, Constants.NO_SCORE, conditionSelectionItem ) != Constants.RESULT_OK )
 								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create an empty solve score" );
 
 							// Has created score
@@ -1117,7 +1092,7 @@ class AdminImperative
 			}
 
 		if( isAddingScoresOfConditionPart &&
-		!CommonVariables.hasDisplayedWarning )
+		!GlobalVariables.hasDisplayedWarning )
 			{
 			oldGlobalSatisfiedScore_ += conditionPartResult.oldSatisfiedScore;
 			newGlobalSatisfiedScore_ += conditionPartResult.newSatisfiedScore;
@@ -1227,8 +1202,8 @@ class AdminImperative
 	private ConditionResultType checkValueConditionPart( boolean isNegative, boolean isPossessive, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
 		boolean isSatisfiedScore;
-		SpecificationItem foundAssignmentItem;
 		SpecificationItem currentSpecificationItem;
+		SpecificationItem foundAssignmentItem;
 		ConditionResultType conditionPartResult;
 		ConditionResultType conditionReturnResult = new ConditionResultType();
 
@@ -1348,8 +1323,8 @@ class AdminImperative
 		{
 		short assignmentOrderNr = 0;
 		short specificationNr = 0;
-		SpecificationItem orderAssignmentItem;
 		SpecificationItem currentSpecificationItem;
+		SpecificationItem orderAssignmentItem;
 		WordItem assignmentWordItem;
 		ShortResultType shortResult = new ShortResultType();
 
@@ -1357,7 +1332,7 @@ class AdminImperative
 			return adminItem_.startShortResultError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		if( generalizationWordItem.nActiveAssignments() > 1 )
-			return adminItem_.startShortResultError( 1, moduleNameString_, "I have more than one assignment at assignment level " + CommonVariables.currentAssignmentLevel );
+			return adminItem_.startShortResultError( 1, moduleNameString_, "I have more than one assignment at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 		orderAssignmentItem = generalizationWordItem.firstNonQuestionActiveAssignmentItem();
 
@@ -1389,12 +1364,12 @@ class AdminImperative
 			return adminItem_.startShortResultError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
 		if( generalizationWordItem.nActiveAssignments() > 1 )
-			return adminItem_.startShortResultError( 1, moduleNameString_, "I have more than one assignment at assignment level " + CommonVariables.currentAssignmentLevel );
+			return adminItem_.startShortResultError( 1, moduleNameString_, "I have more than one assignment at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 		if( ( assignmentItem = generalizationWordItem.firstNonQuestionActiveAssignmentItem() ) != null )
 			{
 			if( ( specificationWordItem = assignmentItem.specificationWordItem() ) == null )
-				return adminItem_.startShortResultError( 1, moduleNameString_, "I found an undefined assignment word at assignment level " + CommonVariables.currentAssignmentLevel );
+				return adminItem_.startShortResultError( 1, moduleNameString_, "I found an undefined assignment word at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 			shortResult.shortValue = specificationWordItem.wordParameter();
 			}
@@ -1485,7 +1460,7 @@ class AdminImperative
 
 		if( ( adminItem_ = adminItem ) == null )
 			{
-			CommonVariables.result = Constants.RESULT_SYSTEM_ERROR;
+			GlobalVariables.result = Constants.RESULT_SYSTEM_ERROR;
 			Console.addError( "\nClass:" + moduleNameString_ + "\nMethod:\t" + Constants.INPUT_OUTPUT_ERROR_CONSTRUCTOR_METHOD_NAME + "\nError:\t\tThe given admin item is undefined.\n" );
 			}
 		else
@@ -1503,21 +1478,24 @@ class AdminImperative
 		return hasRequestedRestart_;
 		}
 
-	protected byte executeImperative( boolean isInitializeVariables, short executionListNr, short imperativeVerbParameter, short executionNounWordParameter, short specificationWordTypeNr, int endSolveProgressLevel, String executionString, WordItem imperativeVerbWordItem, WordItem specificationWordItem, ReadItem startRelationWordReadItem, ReadItem endRelationReadItem, SelectionItem executionSelectionItem, SelectionItem actionSelectionItem )
+	protected byte executeImperative( boolean isInitializeVariables, short executionListNr, short executionNounWordParameter, short imperativeVerbParameter, short specificationWordTypeNr, int endSolveProgressLevel, String executionString, WordItem imperativeVerbWordItem, WordItem specificationWordItem, ReadItem startRelationReadItem, ReadItem endRelationReadItem, SelectionItem executionSelectionItem, SelectionItem actionSelectionItem )
 		{
 		boolean isDisplayingRelationWarning = false;
-		long startSolveNanoTime;
+		int firstSentenceNrOfCurrentUser;
 		ShortResultType shortResult;
 
 		if( isInitializeVariables )
 			virtualListAssignmentItem_ = null;
+
+		if( imperativeVerbWordItem == null )
+			return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "The given imperative verb word item is undefined" );
 
 		switch( imperativeVerbParameter )
 			{
 			// Selection
 			case Constants.NO_IMPERATIVE_PARAMETER:
 				if( adminItem_.assignSelectionSpecification( executionSelectionItem ) != Constants.RESULT_OK )
-					return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to assign an imperative selection specification at assignment level " + CommonVariables.currentAssignmentLevel );
+					return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to assign an imperative selection specification at assignment level " + GlobalVariables.currentAssignmentLevel );
 
 				break;
 
@@ -1526,27 +1504,26 @@ class AdminImperative
 			case Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REMOVE:
 				if( executionSelectionItem == null )
 					{
-					if( executeVirtualListImperative( imperativeVerbParameter, specificationWordTypeNr, imperativeVerbWordItem, specificationWordItem, startRelationWordReadItem, endRelationReadItem ) != Constants.RESULT_OK )
+					if( executeVirtualListImperative( imperativeVerbParameter, specificationWordTypeNr, imperativeVerbWordItem, specificationWordItem, startRelationReadItem, endRelationReadItem ) != Constants.RESULT_OK )
 						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to execute a virtual list imperative" );
 					}
 				else
 					{
-					if( executeVirtualListSelectionImperative( imperativeVerbParameter, executionSelectionItem.prepositionParameter(), specificationWordTypeNr, executionSelectionItem.relationWordTypeNr(), imperativeVerbWordItem, specificationWordItem, executionSelectionItem.relationWordItem() ) != Constants.RESULT_OK )
+					if( executeVirtualListImperativePart( imperativeVerbParameter, executionSelectionItem.prepositionParameter(), specificationWordTypeNr, executionSelectionItem.relationWordTypeNr(), imperativeVerbWordItem, specificationWordItem, executionSelectionItem.relationWordItem() ) != Constants.RESULT_OK )
 						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to execute a selection virtual list imperative" );
 					}
 
 				break;
 
 			case Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_CLEAR:
-				if( imperativeVerbWordItem == null )
-					return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "The given imperative verb word item is undefined" );
-
-				if( startRelationWordReadItem == null )
+				if( startRelationReadItem == null )
 					{
 					switch( executionNounWordParameter )
 						{
 						case Constants.WORD_PARAMETER_NOUN_MIND:
-							adminItem_.deleteSentences( adminItem_.firstSentenceNrOfCurrentUser() );
+							firstSentenceNrOfCurrentUser = adminItem_.firstSentenceNrOfCurrentUser();
+							adminItem_.deleteSentences( firstSentenceNrOfCurrentUser );
+							GlobalVariables.currentSentenceNr = firstSentenceNrOfCurrentUser;
 
 							if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_IMPERATIVE_NOTIFICATION_MY_MIND_IS_CLEAR ) != Constants.RESULT_OK )
 								return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to write the 'my mind is clear' interface notification about clearing my mind" );
@@ -1564,10 +1541,7 @@ class AdminImperative
 				break;
 
 			case Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_HELP:
-				if( imperativeVerbWordItem == null )
-					return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "The given imperative verb word item is undefined" );
-
-				if( startRelationWordReadItem == null )
+				if( startRelationReadItem == null )
 					{
 					if( adminItem_.readInfoFile( true, imperativeVerbWordItem.anyWordTypeString() ).result != Constants.RESULT_OK )
 						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to read the info help file" );
@@ -1578,7 +1552,7 @@ class AdminImperative
 				break;
 
 			case Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_LOGIN:
-				if( startRelationWordReadItem == null )
+				if( startRelationReadItem == null )
 					{
 					if( adminItem_.login( specificationWordItem ) != Constants.RESULT_OK )
 						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to login" );
@@ -1589,7 +1563,7 @@ class AdminImperative
 				break;
 
 			case Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_READ:
-				if( startRelationWordReadItem == null )
+				if( startRelationReadItem == null )
 					{
 					switch( executionNounWordParameter )
 						{
@@ -1610,7 +1584,7 @@ class AdminImperative
 							// Stop redirecting to test results
 							InputOutput.redirectOutputToTestFile( null );
 
-							if( CommonVariables.result == Constants.RESULT_OK &&
+							if( GlobalVariables.result == Constants.RESULT_OK &&
 							!Console.isTestingCanceled() &&
 							adminItem_.compareOutputFileAgainstReferenceFile( executionString ) != Constants.RESULT_OK )
 								return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to compare the test file against the reference file" );
@@ -1619,7 +1593,7 @@ class AdminImperative
 							InputOutput.redirectOutputToTestFile( adminItem_.currentWriteFile() );
 
 							// Now check the result
-							if( CommonVariables.result != Constants.RESULT_OK )
+							if( GlobalVariables.result != Constants.RESULT_OK )
 								{
 								InputOutput.clearProgress();
 								return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to read a test file" );
@@ -1628,10 +1602,10 @@ class AdminImperative
 							break;
 
 						default:
-							if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+							if( GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
 								return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to execute imperative 'read'. Unknown specification parameter: " + executionNounWordParameter );
 
-							return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to execute imperative 'read'. Unknown specification parameter: " + executionNounWordParameter + " at assignment level " + CommonVariables.currentAssignmentLevel );
+							return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to execute imperative 'read'. Unknown specification parameter: " + executionNounWordParameter + " at assignment level " + GlobalVariables.currentAssignmentLevel );
 						}
 					}
 				else
@@ -1674,12 +1648,8 @@ class AdminImperative
 					if( ( shortResult = getAssignmentOrderNr( predefinedNounSolveLevelWordItem_ ) ).result != Constants.RESULT_OK )
 						return adminItem_.addError( 1, moduleNameString_, "I failed to get the solve level" );
 
-					startSolveNanoTime = System.nanoTime();
-
 					if( solveWord( shortResult.shortValue, 0, endSolveProgressLevel, specificationWordItem, actionSelectionItem ) != Constants.RESULT_OK )
-						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to solve a word at assignment level " + CommonVariables.currentAssignmentLevel );
-
-					CommonVariables.solvingTime += ( System.nanoTime() - startSolveNanoTime );
+						return adminItem_.addErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I failed to solve a word at assignment level " + GlobalVariables.currentAssignmentLevel );
 					}
 				else
 					{
@@ -1690,10 +1660,10 @@ class AdminImperative
 				break;
 
 			default:
-				if( CommonVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+				if( GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
 					return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to execute the imperative with word parameter: " + imperativeVerbParameter );
 
-				return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to execute the imperative with word parameter: " + imperativeVerbParameter + ", at assignment level " + CommonVariables.currentAssignmentLevel );
+				return adminItem_.startErrorWithAdminListNr( executionListNr, 1, moduleNameString_, "I don't know how to execute the imperative with word parameter: " + imperativeVerbParameter + ", at assignment level " + GlobalVariables.currentAssignmentLevel );
 			}
 
 		if( isDisplayingRelationWarning &&
@@ -1713,17 +1683,17 @@ class AdminImperative
 		boolean isWaitingForNewLevel;
 		boolean isWaitingForExecution;
 		short executionLevel;
-		short executionListNr;
-		short selectionLevel;
 		short nSelectionInterations = 0;
+		short selectionLevel;
 		int executionSentenceNr;
+		long startNanoTime = System.nanoTime();
 		SelectionItem conditionSelectionItem;
 		SelectionItem executionSelectionItem;
 		ConditionResultType conditionResult;
 
 		do	{
 			hasDoneLastExecution = false;
-			CommonVariables.isAssignmentChanged = false;
+			GlobalVariables.isAssignmentChanged = false;
 
 			if( ( conditionSelectionItem = adminItem_.firstConditionItem() ) != null )
 				{
@@ -1738,25 +1708,25 @@ class AdminImperative
 					if( conditionSelectionItem == null ||
 					executionSentenceNr != conditionSelectionItem.activeSentenceNr() )
 						{
-						executionListNr = ( isConditionSatisfied ? Constants.ADMIN_ACTION_LIST : Constants.ADMIN_ALTERNATIVE_LIST );
-
 						if( ( executionSelectionItem = adminItem_.executionStartEntry( isConditionSatisfied, executionLevel, executionSentenceNr ) ) != null )
 							{
 							isInitializeVariables = true;
 
 							do	{
-								if( adminItem_.executeImperative( isInitializeVariables, executionListNr, executionSelectionItem.imperativeVerbParameter(), Constants.NO_WORD_PARAMETER, executionSelectionItem.specificationWordTypeNr(), endSolveProgressLevel, executionSelectionItem.specificationString(), executionSelectionItem.generalizationWordItem(), executionSelectionItem.specificationWordItem(), null, null, executionSelectionItem, actionSelectionItem ) != Constants.RESULT_OK )
+								if( executeImperative( isInitializeVariables, ( isConditionSatisfied ? Constants.ADMIN_ACTION_LIST : Constants.ADMIN_ALTERNATIVE_LIST ), Constants.NO_WORD_PARAMETER, executionSelectionItem.imperativeVerbParameter(), executionSelectionItem.specificationWordTypeNr(), endSolveProgressLevel, executionSelectionItem.specificationString(), executionSelectionItem.generalizationWordItem(), executionSelectionItem.specificationWordItem(), null, null, executionSelectionItem, actionSelectionItem ) != Constants.RESULT_OK )
 									return adminItem_.addError( 1, moduleNameString_, "I failed to execute an imperative" );
 
 								isInitializeVariables = false;
 								}
 							while( !hasRequestedRestart_ &&
-							!CommonVariables.hasDisplayedWarning &&
+							!GlobalVariables.hasDisplayedWarning &&
 							( executionSelectionItem = executionSelectionItem.nextExecutionItem( executionLevel, executionSentenceNr ) ) != null );
 							}
 
 						// Found new condition
-						if( conditionSelectionItem != null )
+						if( conditionSelectionItem == null )
+							hasDoneLastExecution = true;
+						else
 							{
 							isConditionSatisfied = false;
 							isWaitingForNewStart = false;
@@ -1766,9 +1736,7 @@ class AdminImperative
 							}
 						}
 
-					if( conditionSelectionItem == null )
-						hasDoneLastExecution = true;
-					else
+					if( conditionSelectionItem != null )
 						{
 						isNewStart = conditionSelectionItem.isNewStart();
 						selectionLevel = conditionSelectionItem.selectionLevel();
@@ -1824,15 +1792,17 @@ class AdminImperative
 					}
 				while( !hasDoneLastExecution &&
 				!hasRequestedRestart_ &&
-				!CommonVariables.hasDisplayedWarning );
+				!GlobalVariables.hasDisplayedWarning );
 				}
 			}
 		while( !hasRequestedRestart_ &&
-		!CommonVariables.hasDisplayedWarning &&
-		CommonVariables.isAssignmentChanged &&
+		!GlobalVariables.hasDisplayedWarning &&
+		GlobalVariables.isAssignmentChanged &&
 		++nSelectionInterations < Constants.MAX_SELECTION_ITERATIONS );
 
-		if( CommonVariables.isAssignmentChanged &&
+		GlobalVariables.selectionExecutionTime += ( System.nanoTime() - startNanoTime );
+
+		if( GlobalVariables.isAssignmentChanged &&
 		nSelectionInterations == Constants.MAX_SELECTION_ITERATIONS )
 			return adminItem_.startError( 1, moduleNameString_, "There is probably an endless loop in the selections" );
 

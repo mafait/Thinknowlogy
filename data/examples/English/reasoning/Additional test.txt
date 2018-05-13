@@ -1,0 +1,5 @@
+﻿Parents and children are part of every family.
+Every person is a man or a woman.
+# A question will be generated, because nouns "man" and "woman" are not defined yet as masculine and feminine
+Anna is a person.
+# To continue, click button «Clear your mind.» or «Restart.».

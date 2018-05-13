@@ -1,8 +1,8 @@
-/*	Class:		List
+﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -53,8 +53,8 @@
 
 	unsigned int List::highestCurrentSentenceItemNr( unsigned int currentSentenceNr, Item *searchItem )
 		{
-		unsigned int tempItemNr;
 		unsigned int highestItemNr = NO_ITEM_NR;
+		unsigned int tempItemNr;
 
 		while( searchItem != NULL )
 			{
@@ -70,8 +70,8 @@
 
 	unsigned int List::highestFoundSentenceNrInList( unsigned int maxSentenceNr, Item *searchItem )
 		{
-		unsigned int tempSentenceNr;
 		unsigned int highestFoundSentenceNr = NO_SENTENCE_NR;
+		unsigned int tempSentenceNr;
 
 		while( searchItem != NULL &&
 		highestFoundSentenceNr < maxSentenceNr )
@@ -108,7 +108,7 @@
 
 	signed char List::decrementItemNrRange( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset, Item *searchItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRange";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementItemNrRange";
 
 		while( searchItem != NULL )
 			{
@@ -130,7 +130,7 @@
 
 	signed char List::decrementSentenceNrs( unsigned int startSentenceNr, Item *searchItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrs";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementSentenceNrs";
 
 		while( searchItem != NULL )
 			{
@@ -196,7 +196,7 @@
 
 	signed char List::removeItemFromList( Item *removeItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "removeItemFromList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "removeItemFromList";
 
 		if( removeItem == NULL )
 			return startError( functionNameString, "The given remove item is undefined" );
@@ -260,7 +260,7 @@
 /*
 	signed char List::storeChangesInFutureDatabase( Item *searchItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "storeChangesInFutureDatabase";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "storeChangesInFutureDatabase";
 
 		while( searchItem != NULL )
 			{
@@ -313,7 +313,7 @@
 				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
 					{
-					commonVariables_->hasFoundQuery = true;
+					globalVariables_->hasFoundQuery = true;
 					queryItem->isSelectedByQuery = true;
 					}
 				}
@@ -336,7 +336,7 @@
 				{
 				if( !queryItem->isSelectedByQuery )
 					{
-					commonVariables_->hasFoundQuery = true;
+					globalVariables_->hasFoundQuery = true;
 					queryItem->isSelectedByQuery = true;
 					}
 				}
@@ -359,7 +359,7 @@
 				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
 					{
-					commonVariables_->hasFoundQuery = true;
+					globalVariables_->hasFoundQuery = true;
 					queryItem->isSelectedByQuery = true;
 					}
 				}
@@ -382,7 +382,7 @@
 				{
 				if( !queryItem->isSelectedByQuery )
 					{
-					commonVariables_->hasFoundQuery = true;
+					globalVariables_->hasFoundQuery = true;
 					queryItem->isSelectedByQuery = true;
 					}
 				}
@@ -405,7 +405,7 @@
 				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
 					{
-					commonVariables_->hasFoundQuery = true;
+					globalVariables_->hasFoundQuery = true;
 					queryItem->isSelectedByQuery = true;
 					}
 				}
@@ -422,7 +422,7 @@
 
 	signed char List::displayQueryResult( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth, Item *queryItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "displayQueryResult";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "displayQueryResult";
 
 		while( queryItem != NULL )
 			{
@@ -459,7 +459,7 @@
 		bool hasFoundString;
 		char *itemString;
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "stringQuery";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "stringQuery";
 
 		while( queryItem != NULL )
 			{
@@ -478,7 +478,7 @@
 				if( isSelectingOnFind &&
 				!queryItem->isSelectedByQuery )
 					{
-					commonVariables_->hasFoundQuery = true;
+					globalVariables_->hasFoundQuery = true;
 					queryItem->isSelectedByQuery = true;
 					}
 				}
@@ -498,7 +498,7 @@
 	signed char List::wordReferenceQuery( bool isSelectingOnFind, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString, Item *queryItem )
 		{
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "wordReferenceQuery";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "wordReferenceQuery";
 
 		while( queryItem != NULL )
 			{
@@ -517,7 +517,7 @@
 					{
 					if( isSelectingOnFind )
 						{
-						commonVariables_->hasFoundQuery = true;
+						globalVariables_->hasFoundQuery = true;
 						queryItem->isSelectedByQuery = true;
 						}
 					}
@@ -559,7 +559,7 @@
 		strcpy( classNameString_, EMPTY_STRING );
 		strcpy( parentClassNameString_, "List" );
 
-		commonVariables_ = NULL;
+		globalVariables_ = NULL;
 		inputOutput_ = NULL;
 		myWordItem_ = NULL;
 		}
@@ -576,7 +576,7 @@
 		else
 			inputOutput_->displayError( listChar_, classNameString_, parentClassNameString_, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), functionNameString, errorString );
 
-		return ( commonVariables_ == NULL ? RESULT_ERROR : commonVariables_->result );
+		return ( globalVariables_ == NULL ? RESULT_ERROR : globalVariables_->result );
 		}
 
 	signed char List::addError( const char *functionNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
@@ -590,8 +590,8 @@
 		{
 		addError( functionNameString, errorString );
 
-		if( commonVariables_ != NULL )
-		commonVariables_->result = RESULT_ERROR;
+		if( globalVariables_ != NULL )
+		globalVariables_->result = RESULT_ERROR;
 		return RESULT_ERROR;
 		}
 
@@ -613,8 +613,8 @@
 		{
 		addError( functionNameString, errorString );
 
-		if( commonVariables_ != NULL )
-		commonVariables_->result = RESULT_SYSTEM_ERROR;
+		if( globalVariables_ != NULL )
+		globalVariables_->result = RESULT_SYSTEM_ERROR;
 
 		return RESULT_SYSTEM_ERROR;
 		}
@@ -779,14 +779,6 @@
 		return shortResult;
 		}
 
-	WordEndingResultType List::addWordEndingResultError( const char *functionNameString, const char *errorString )
-		{
-		WordEndingResultType wordEndingResult;
-
-		wordEndingResult.result = addError( functionNameString, errorString );
-		return wordEndingResult;
-		}
-
 	WordEndingResultType List::startWordEndingResultError( const char *functionNameString, const char *errorString )
 		{
 		WordEndingResultType wordEndingResult;
@@ -838,13 +830,13 @@
 
 	// Protected common functions
 
-	void List::initializeListVariables( char listChar, const char *classNameString, CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	void List::initializeListVariables( char listChar, const char *classNameString, GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		listChar_ = listChar;
 
-		commonVariables_ = commonVariables;
+		globalVariables_ = globalVariables;
 		inputOutput_ = inputOutput;
 		myWordItem_ = myWordItem;
 
@@ -855,8 +847,8 @@
 		else
 			strcpy( classNameString_, classNameString );
 
-		if( ( commonVariables_ = commonVariables ) == NULL )
-			strcpy( errorString, "The given common variables is undefined" );
+		if( ( globalVariables_ = globalVariables ) == NULL )
+			strcpy( errorString, "The given global variables is undefined" );
 
 		if( ( myWordItem_ = myWordItem ) == NULL )
 			strcpy( errorString, "The given my word item is undefined" );
@@ -958,9 +950,9 @@
 	signed char List::addItemToList( char statusChar, Item *newItem )
 		{
 		unsigned int creationSentenceNr;
-		Item *searchItem;
 		Item *previousSearchItem = NULL;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "addItemToList";
+		Item *searchItem;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addItemToList";
 
 		if( newItem == NULL )
 			return startError( functionNameString, "The given new item is undefined" );
@@ -1114,7 +1106,7 @@
 
 	signed char List::activateItem( Item *activateItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "activateItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "activateItem";
 
 		if( activateItem == NULL )
 			return startError( functionNameString, "The given activate item is undefined" );
@@ -1129,15 +1121,15 @@
 			return addError( functionNameString, "I failed to add an item to the active list" );
 
 		if( isAssignmentList() &&
-		commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-			commonVariables_->isAssignmentChanged = true;
+		globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+			globalVariables_->isAssignmentChanged = true;
 
 		return RESULT_OK;
 		}
 
 	signed char List::inactivateItem( Item *inactivateItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "inactivateItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "inactivateItem";
 
 		if( inactivateItem == NULL )
 			return startError( functionNameString, "The given inactivate item is undefined" );
@@ -1156,15 +1148,15 @@
 			return addError( functionNameString, "I failed to add an item to the inactive list" );
 
 		if( isAssignmentList() &&
-		commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-			commonVariables_->isAssignmentChanged = true;
+		globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+			globalVariables_->isAssignmentChanged = true;
 
 		return RESULT_OK;
 		}
 
 	signed char List::archiveItem( Item *archiveItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "archiveItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "archiveItem";
 
 		if( archiveItem == NULL )
 			return startError( functionNameString, "The given archive item is undefined" );
@@ -1183,15 +1175,15 @@
 		if( addItemToList( QUERY_ARCHIVED_CHAR, archiveItem ) != RESULT_OK )
 			return addError( functionNameString, "I failed to add an item to the archived list" );
 
-		if( commonVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-			commonVariables_->isAssignmentChanged = true;
+		if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+			globalVariables_->isAssignmentChanged = true;
 
 		return RESULT_OK;
 		}
 
 	signed char List::replaceItem( Item *replaceItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "replaceItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "replaceItem";
 
 		if( replaceItem == NULL )
 			return startError( functionNameString, "The given replace item is undefined" );
@@ -1212,7 +1204,7 @@
 
 	signed char List::deleteItem( Item *deleteItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "deleteItem";
 
 		if( removeItemFromList( deleteItem ) != RESULT_OK )
 			return addError( functionNameString, "I failed to remove an item from a list" );
@@ -1228,40 +1220,19 @@
 		return RESULT_OK;
 		}
 
-	signed char List::deleteActiveItemsWithCurrentSentenceNr()
-		{
-		Item *searchItem = activeList_;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteActiveItemsWithCurrentSentenceNr";
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->hasCurrentCreationSentenceNr() )
-				{
-				if( deleteItem( searchItem ) != RESULT_OK )
-					return addError( functionNameString, "I failed to delete an active item" );
-
-				searchItem = nextListItem_;
-				}
-			else
-				searchItem = searchItem->nextItem;
-			}
-
-		return RESULT_OK;
-		}
-
 	signed char List::removeFirstRangeOfDeletedItemsInList()
 		{
+		unsigned int nDeletedItems = 0;
 		unsigned int removeSentenceNr;
 		unsigned int removeStartItemNr;
-		unsigned int nDeletedItems = 0;
 		Item *removeItem = deletedList_;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "removeFirstRangeOfDeletedItemsInList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "removeFirstRangeOfDeletedItemsInList";
 
 		if( removeItem != NULL )
 			{
-			if( commonVariables_->nDeletedItems != 0 ||
-			commonVariables_->removeSentenceNr > NO_SENTENCE_NR ||
-			commonVariables_->removeStartItemNr > NO_ITEM_NR )
+			if( globalVariables_->nDeletedItems != 0 ||
+			globalVariables_->removeSentenceNr > NO_SENTENCE_NR ||
+			globalVariables_->removeStartItemNr > NO_ITEM_NR )
 				return startError( functionNameString, "There is already a range of deleted items" );
 
 			removeSentenceNr = removeItem->creationSentenceNr();
@@ -1285,9 +1256,9 @@
 			// Ascending item number
 			removeItem->itemNr() == removeStartItemNr + nDeletedItems );
 
-			commonVariables_->nDeletedItems = nDeletedItems;
-			commonVariables_->removeSentenceNr = removeSentenceNr;
-			commonVariables_->removeStartItemNr = removeStartItemNr;
+			globalVariables_->nDeletedItems = nDeletedItems;
+			globalVariables_->removeSentenceNr = removeSentenceNr;
+			globalVariables_->removeStartItemNr = removeStartItemNr;
 			}
 
 		return RESULT_OK;
@@ -1323,9 +1294,9 @@
 		return nextListItem_;
 		}
 
-	CommonVariables *List::commonVariables()
+	GlobalVariables *List::globalVariables()
 		{
-		return commonVariables_;
+		return globalVariables_;
 		}
 
 	InputOutput *List::inputOutput()
@@ -1340,12 +1311,12 @@
 
 	BoolResultType List::compareStrings( char *searchString, char *sourceString )
 		{
-		bool isStop;
 		bool hasFoundMatchingString = true;
+		bool isStop;
 		size_t searchStringPosition = 0;
 		size_t sourceStringPosition = 0;
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "compareStrings";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "compareStrings";
 
 		if( searchString == NULL )
 			return startBoolResultError( functionNameString, "The given search string is undefined" );
@@ -1431,8 +1402,8 @@
 
 	unsigned int List::highestCurrentSentenceItemNrInList( unsigned int currentSentenceNr, unsigned int globalHighestItemNr )
 		{
-		unsigned int tempItemNr;
 		unsigned int localHighestItemNr = NO_ITEM_NR;
+		unsigned int tempItemNr;
 		Item *searchItem;
 
 		if( ( searchItem = firstActiveItem() ) != NULL )
@@ -1462,8 +1433,8 @@
 
 	unsigned int List::highestFoundSentenceNrInList( bool isIncludingDeletedItems, unsigned int globalHighestFoundSentenceNr, unsigned int maxSentenceNr )
 		{
-		unsigned int tempSentenceNr;
 		unsigned int localHighestFoundSentenceNr = NO_SENTENCE_NR;
+		unsigned int tempSentenceNr;
 		Item *searchItem;
 
 		if( ( searchItem = firstActiveItem() ) != NULL )
@@ -1495,7 +1466,7 @@
 	signed char List::decrementItemNrRangeInList( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset )
 		{
 		Item *searchItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementItemNrRangeInList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementItemNrRangeInList";
 
 		if( decrementSentenceNr < NO_SENTENCE_NR )
 			return startError( functionNameString, "The given decrement sentence number is undefined" );
@@ -1509,19 +1480,19 @@
 		if( ( searchItem = firstActiveItem() ) != NULL )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstInactiveItem() ) != NULL )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstArchivedItem() ) != NULL )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstReplacedItem() ) != NULL )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstDeletedItem() ) != NULL )
 			decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset, searchItem );
 
@@ -1532,7 +1503,7 @@
 	signed char List::decrementSentenceNrsInList( unsigned int startSentenceNr )
 		{
 		Item *searchItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "decrementSentenceNrsInList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementSentenceNrsInList";
 
 		if( startSentenceNr <= NO_SENTENCE_NR )
 			return startError( functionNameString, "The given start sentence number is undefined" );
@@ -1543,19 +1514,19 @@
 		if( ( searchItem = firstActiveItem() ) != NULL )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstInactiveItem() ) != NULL )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstArchivedItem() ) != NULL )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstReplacedItem() ) != NULL )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstDeletedItem() ) != NULL )
 			decrementSentenceNrs( startSentenceNr, searchItem );
 
@@ -1564,9 +1535,9 @@
 
 	signed char List::deleteSentencesInList( unsigned int lowestSentenceNr )
 		{
-		bool isResultOK = ( commonVariables_->result == RESULT_OK );
+		bool isResultOK = ( globalVariables_->result == RESULT_OK );
 		Item *searchItem = firstActiveItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteSentencesInList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "deleteSentencesInList";
 
 		if( lowestSentenceNr <= NO_SENTENCE_NR )
 			return startError( functionNameString, "The given lowest sentence number is undefined" );
@@ -1717,7 +1688,7 @@
 	signed char List::redoCurrentSentenceInList()
 		{
 		Item *searchItem = firstActiveItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "redoCurrentSentenceInList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "redoCurrentSentenceInList";
 
 		while( searchItem != NULL )
 			{
@@ -1877,7 +1848,7 @@
 	signed char List::undoCurrentSentenceInList()
 		{
 		Item *searchItem = firstActiveItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "undoCurrentSentenceInList";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "undoCurrentSentenceInList";
 
 		while( searchItem != NULL )
 			{
@@ -2002,23 +1973,23 @@
 		if( ( searchItem = firstActiveItem() ) != NULL )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstInactiveItem() ) != NULL )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstArchivedItem() ) != NULL )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstReplacedItem() ) != NULL )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstDeletedItem() ) != NULL )
 			storeChangesInFutureDatabase( searchItem );
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 */
 
@@ -2051,7 +2022,7 @@
 		while( searchItem != NULL )
 			{
 			if( searchItem->isSelectedByQuery )
-				commonVariables_->nActiveQueryItems++;
+				globalVariables_->nActiveQueryItems++;
 
 			searchItem = searchItem->nextItem;
 			}
@@ -2061,7 +2032,7 @@
 		while( searchItem != NULL )
 			{
 			if( searchItem->isSelectedByQuery )
-				commonVariables_->nInactiveQueryItems++;
+				globalVariables_->nInactiveQueryItems++;
 
 			searchItem = searchItem->nextItem;
 			}
@@ -2071,7 +2042,7 @@
 		while( searchItem != NULL )
 			{
 			if( searchItem->isSelectedByQuery )
-				commonVariables_->nArchivedQueryItems++;
+				globalVariables_->nArchivedQueryItems++;
 
 			searchItem = searchItem->nextItem;
 			}
@@ -2081,7 +2052,7 @@
 		while( searchItem != NULL )
 			{
 			if( searchItem->isSelectedByQuery )
-				commonVariables_->nReplacedQueryItems++;
+				globalVariables_->nReplacedQueryItems++;
 
 			searchItem = searchItem->nextItem;
 			}
@@ -2091,7 +2062,7 @@
 		while( searchItem != NULL )
 			{
 			if( searchItem->isSelectedByQuery )
-				commonVariables_->nDeletedQueryItems++;
+				globalVariables_->nDeletedQueryItems++;
 
 			searchItem = searchItem->nextItem;
 			}
@@ -2238,23 +2209,23 @@
 		if( ( searchItem = firstActiveItem() ) != NULL )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstInactiveItem() ) != NULL )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstArchivedItem() ) != NULL )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstReplacedItem() ) != NULL )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		( searchItem = firstDeletedItem() ) != NULL )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char List::stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString )
@@ -2265,27 +2236,27 @@
 		( searchItem = firstActiveItem() ) != NULL )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		isSelectingInactiveItems &&
 		( searchItem = firstInactiveItem() ) != NULL )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		isSelectingArchivedItems &&
 		( searchItem = firstArchivedItem() ) != NULL )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != NULL )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		isSelectingDeletedItems &&
 		( searchItem = firstDeletedItem() ) != NULL )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 	signed char List::wordReferenceQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
@@ -2296,27 +2267,27 @@
 		( searchItem = firstActiveItem() ) != NULL )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		isSelectingInactiveItems &&
 		( searchItem = firstInactiveItem() ) != NULL )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		isSelectingArchivedItems &&
 		( searchItem = firstArchivedItem() ) != NULL )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != NULL )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		if( commonVariables_->result == RESULT_OK &&
+		if( globalVariables_->result == RESULT_OK &&
 		isSelectingDeletedItems &&
 		( searchItem = firstDeletedItem() ) != NULL )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
-		return commonVariables_->result;
+		return globalVariables_->result;
 		}
 
 /*************************************************************************

@@ -1,4 +1,4 @@
-Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/user/reasoning/family/family definition".
 Joe is a son of John and Anna.
 Laura is a daughter of John and Anna.
 Display the justification report about Anna.

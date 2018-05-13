@@ -1,9 +1,9 @@
-/*	Class:			CollectionItem
+﻿/*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -67,29 +67,29 @@ class CollectionItem extends Item
 		StringBuffer queryStringBuffer;
 		String wordString;
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		if( collectionWordItem_ != null &&
 		( wordString = collectionWordItem_.wordTypeString( true, collectionWordTypeNr_ ) ) != null )
 			{
-			if( CommonVariables.hasFoundQuery )
+			if( GlobalVariables.hasFoundQuery )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
+			GlobalVariables.hasFoundQuery = true;
 			queryStringBuffer.append( wordString );
 			}
 
 		if( commonWordItem_ != null &&
 		( wordString = commonWordItem_.wordTypeString( true, commonWordTypeNr_ ) ) != null )
 			{
-			if( CommonVariables.hasFoundQuery ||
+			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
@@ -97,14 +97,14 @@ class CollectionItem extends Item
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
+			GlobalVariables.hasFoundQuery = true;
 			queryStringBuffer.append( wordString );
 			}
 
 		if( compoundGeneralizationWordItem_ != null &&
 		( wordString = compoundGeneralizationWordItem_.wordTypeString( true, commonWordTypeNr_ ) ) != null )
 			{
-			if( CommonVariables.hasFoundQuery ||
+			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
 				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
@@ -112,7 +112,7 @@ class CollectionItem extends Item
 			if( !isActiveItem() )
 				queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
+			GlobalVariables.hasFoundQuery = true;
 			queryStringBuffer.append( wordString );
 			}
 		}
@@ -151,17 +151,17 @@ class CollectionItem extends Item
 
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		String wordString;
-		StringBuffer queryStringBuffer;
 		String collectionWordTypeString = myWordItem().wordTypeNameString( collectionWordTypeNr_ );
 		String commonWordTypeString = myWordItem().wordTypeNameString( commonWordTypeNr_ );
+		StringBuffer queryStringBuffer;
+		String wordString;
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		if( isExclusiveSpecification_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isExclusiveSpecification" );

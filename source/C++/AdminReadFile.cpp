@@ -1,9 +1,9 @@
-/*	Class:			AdminReadFile
+﻿/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the grammar, user-interface and example files
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -62,10 +62,10 @@ class AdminReadFile
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_LENGTH];
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
 
 	AdminItem *adminItem_;
-	CommonVariables *commonVariables_;
+	GlobalVariables *globalVariables_;
 	InputOutput *inputOutput_;
 
 
@@ -78,40 +78,40 @@ class AdminReadFile
 
 		if( !hasClosedFileDueToError_ &&
 
-		( commonVariables_->hasDisplayedWarning ||
-		commonVariables_->hasDisplayedIntegrityWarning ||
-		commonVariables_->result != RESULT_OK ) )
-			adminItem_->deleteSentences( commonVariables_->currentSentenceNr );
+		( globalVariables_->hasDisplayedWarning ||
+		globalVariables_->hasDisplayedIntegrityWarning ||
+		globalVariables_->result != RESULT_OK ) )
+			adminItem_->deleteSentences( globalVariables_->currentSentenceNr );
 
 		do	{
-			commonVariables_->nDeletedItems = 0;
-			commonVariables_->removeSentenceNr = NO_SENTENCE_NR;
-			commonVariables_->removeStartItemNr = NO_ITEM_NR;
+			globalVariables_->nDeletedItems = 0;
+			globalVariables_->removeSentenceNr = NO_SENTENCE_NR;
+			globalVariables_->removeStartItemNr = NO_ITEM_NR;
 
 			adminItem_->removeFirstRangeOfDeletedItems();
 
-			if( commonVariables_->nDeletedItems > 0 )
+			if( globalVariables_->nDeletedItems > 0 )
 				{
-				decrementItemNrRange( commonVariables_->removeSentenceNr, commonVariables_->removeStartItemNr, commonVariables_->nDeletedItems );
-				startRemoveSentenceNr = commonVariables_->removeSentenceNr;
+				decrementItemNrRange( globalVariables_->removeSentenceNr, globalVariables_->removeStartItemNr, globalVariables_->nDeletedItems );
+				startRemoveSentenceNr = globalVariables_->removeSentenceNr;
 				}
 			}
-		while( commonVariables_->nDeletedItems > 0 );
+		while( globalVariables_->nDeletedItems > 0 );
 
-		if( commonVariables_->hasDisplayedWarning )
-			commonVariables_->hasDisplayedWarning = false;
+		if( globalVariables_->hasDisplayedWarning )
+			globalVariables_->hasDisplayedWarning = false;
 		else
 			{
 			if( startRemoveSentenceNr > NO_SENTENCE_NR &&
 			// Previous deleted sentence might be empty
-			startRemoveSentenceNr != commonVariables_->removeSentenceNr &&
+			startRemoveSentenceNr != globalVariables_->removeSentenceNr &&
 			// All items of this sentence are deleted
 			adminItem_->highestFoundSentenceNr( true, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
 				{
 				// So, decrement all higher sentence numbers
 				adminItem_->decrementSentenceNrs( startRemoveSentenceNr );
 
-				if( commonVariables_->currentSentenceNr >= startRemoveSentenceNr )
+				if( globalVariables_->currentSentenceNr >= startRemoveSentenceNr )
 					{
 					firstSentenceNr = firstSentenceNrOfCurrentUser();
 
@@ -120,9 +120,9 @@ class AdminReadFile
 						adminItem_->decrementCurrentSentenceNr();
 					else
 						{
-						commonVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, false, commonVariables_->currentSentenceNr );
+						globalVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, false, globalVariables_->currentSentenceNr );
 						// Necessary after changing current sentence number
-						commonVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr();
+						globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr();
 						}
 					}
 				}
@@ -132,9 +132,9 @@ class AdminReadFile
 	void clearPredefinedMultipleWordNrInPredefinedWords()
 		{
 		WordItem *currentPredefinedWordItem;
-		WordItem *lastPredefinedWordItem = commonVariables_->lastPredefinedWordItem;
+		WordItem *lastPredefinedWordItem = globalVariables_->lastPredefinedWordItem;
 
-		if( ( currentPredefinedWordItem = commonVariables_->firstPredefinedWordItem ) != NULL )
+		if( ( currentPredefinedWordItem = globalVariables_->firstPredefinedWordItem ) != NULL )
 			{
 			// Do for all (grammar) words
 			do	currentPredefinedWordItem->predefinedMultipleWordNr = 0;
@@ -145,9 +145,9 @@ class AdminReadFile
 
 	void decrementItemNrRange( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset )
 		{
-		if( commonVariables_->currentSentenceNr == decrementSentenceNr &&
-		commonVariables_->currentSentenceItemNr > startDecrementItemNr )
-			commonVariables_->currentSentenceItemNr -= decrementOffset;
+		if( globalVariables_->currentSentenceNr == decrementSentenceNr &&
+		globalVariables_->currentSentenceItemNr > startDecrementItemNr )
+			globalVariables_->currentSentenceItemNr -= decrementOffset;
 
 		adminItem_->decrementItemNrRange( decrementSentenceNr, startDecrementItemNr, decrementOffset );
 		}
@@ -156,7 +156,7 @@ class AdminReadFile
 		{
 		WordItem *currentSpecificationWordItem;
 
-		if( ( currentSpecificationWordItem = commonVariables_->firstSpecificationWordItem ) != NULL )
+		if( ( currentSpecificationWordItem = globalVariables_->firstSpecificationWordItem ) != NULL )
 			{
 			// Do for all specification words
 			do	{
@@ -179,20 +179,20 @@ class AdminReadFile
 
 	signed char addGrammar( char *grammarString )
 		{
-		bool hasFoundWordDefinitionInfo;
 		bool hasCreatedInterface = false;
 		bool hasFoundChoiceAlternatives = false;
 		bool hasFoundOnlyOptions = true;
-		bool hasParameter = false;
 		bool hasFoundPipe = false;
-		bool hasWordTypeNr = false;
+		bool hasFoundWordDefinitionInfo;
 		bool hasGrammarWords = false;
+		bool hasParameter = false;
+		bool hasWordTypeNr = false;
 		bool isChoice = false;
 		bool isChoiceCheck = false;
 		bool isChoiceStart = false;
-		bool isMergedWord = false;
 		bool isEndOfLine = false;
 		bool isLastPartOfMultipleWord = false;
+		bool isMergedWord = false;
 		bool isMultipleWord = false;
 		bool isNewStart = true;
 		bool isOption = false;
@@ -203,26 +203,22 @@ class AdminReadFile
 		unsigned short predefinedMultipleWordNr = 0;
 		unsigned short wordTypeNr = NO_WORD_TYPE_NR;
 		unsigned int firstCreationItemNr = NO_ITEM_NR;
-		size_t grammarStringLength;
 		size_t grammarPosition = 0;
-		GrammarItem *foundGrammarItem;
+		size_t grammarStringLength;
 		GrammarItem *definitionGrammarItem = NULL;
-		WordItem *foundWordItem;
+		GrammarItem *foundGrammarItem;
 		WordItem *createdWordItem;
-		WordItem *currentLanguageWordItem = commonVariables_->currentLanguageWordItem;
+		WordItem *foundWordItem;
 		GrammarResultType grammarResult;
 		ReadWordResultType readWordResult;
 		WordResultType wordResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "addGrammar";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addGrammar";
 
 		if( grammarString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given grammar string is undefined" );
 
 		if( ( grammarStringLength = strlen( grammarString ) ) == 0 )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given grammar string is empty" );
-
-		if( currentLanguageWordItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
 
 		if( isPredefinedMultipleWord_ )
 			{
@@ -231,10 +227,11 @@ class AdminReadFile
 			}
 
 		do	{
-			if( ( readWordResult = adminItem_->readWordFromString( true, isMergedWord, false, grammarPosition, 0, grammarString ) ).result != RESULT_OK )
+			if( ( readWordResult = adminItem_->readWordFromString( true, isMergedWord, false, 0, &grammarString[grammarPosition] ) ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word from the grammar string" );
 
 			hasFoundWordDefinitionInfo = false;
+			readWordResult.offset += grammarPosition;
 
 			switch( grammarString[grammarPosition] )
 				{
@@ -282,10 +279,12 @@ class AdminReadFile
 					if( firstCreationItemNr != NO_ITEM_NR )
 						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition word must be the first word in the grammar definition" );
 
-					if( ( readWordResult = adminItem_->readWordFromString( false, isMergedWord, false, ++grammarPosition, 0, grammarString ) ).result != RESULT_OK )
+					if( ( readWordResult = adminItem_->readWordFromString( false, isMergedWord, false, 0, &grammarString[++grammarPosition] ) ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word definition from the grammar string" );
 
-					if( ( grammarResult = currentLanguageWordItem->findGrammar( ( grammarParameter >= GRAMMAR_SENTENCE ), grammarParameter, readWordResult.wordLength, &grammarString[grammarPosition] ) ).result != RESULT_OK )
+					readWordResult.offset += grammarPosition;
+
+					if( ( grammarResult = adminItem_->findGrammarOfCurrentLanguage( ( grammarParameter >= GRAMMAR_SENTENCE ), grammarParameter, readWordResult.wordLength, &grammarString[grammarPosition] ) ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a grammar definition item" );
 
 					hasFoundWordDefinitionInfo = true;
@@ -295,15 +294,15 @@ class AdminReadFile
 					foundGrammarItem == NULL ||
 					grammarParameter >= GRAMMAR_SENTENCE )
 						{
-						if( ( grammarResult = currentLanguageWordItem->createGrammarItem( true, ( hasParameter && grammarParameter < GRAMMAR_SENTENCE ), false, false, false, wordTypeNr, grammarParameter, readWordResult.wordLength, &grammarString[grammarPosition], NULL ) ).result != RESULT_OK )
+						if( ( grammarResult = adminItem_->createGrammarItemForCurrentLanguage( true, ( hasParameter && grammarParameter < GRAMMAR_SENTENCE ), false, false, false, wordTypeNr, grammarParameter, readWordResult.wordLength, &grammarString[grammarPosition], NULL ) ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar definition word item" );
 
-						firstCreationItemNr = commonVariables_->currentSentenceItemNr;
+						firstCreationItemNr = globalVariables_->currentSentenceItemNr;
 						definitionGrammarItem = grammarResult.grammarItem;
 						}
 					else
 						{
-						if( inputOutput_->writeInterfaceText( INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_START, foundGrammarItem->grammarParameter(), INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_MIDDLE, currentLanguageWordItem->anyWordTypeString(), INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_END ) != RESULT_OK )
+						if( inputOutput_->writeInterfaceText( INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_START, foundGrammarItem->grammarParameter(), INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_MIDDLE, adminItem_->currentLanguageNameString(), INTERFACE_GRAMMAR_PARAMETER_DEFINED_MORE_THAN_ONCE_END ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'grammar parameter defined more than once' interface notification" );
 						}
 
@@ -319,7 +318,7 @@ class AdminReadFile
 					grammarParameter < GRAMMAR_SENTENCE )
 						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
 
-					if( commonVariables_->currentSentenceItemNr <= NO_ITEM_NR )
+					if( globalVariables_->currentSentenceItemNr <= NO_ITEM_NR )
 						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition must start with a grammar definition word" );
 
 					if( isOption )
@@ -351,7 +350,7 @@ class AdminReadFile
 
 						isOption = false;
 						isNewStart = true;
-						currentLanguageWordItem->markAsOptionEnd();
+						adminItem_->markGrammarOfCurrentLanguageAsOptionEnd();
 						}
 					else
 						{
@@ -368,7 +367,7 @@ class AdminReadFile
 					grammarParameter < GRAMMAR_SENTENCE )
 						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition can not have a value parameter lower than the grammar value" );
 
-					if( commonVariables_->currentSentenceItemNr <= NO_ITEM_NR )
+					if( globalVariables_->currentSentenceItemNr <= NO_ITEM_NR )
 						return adminItem_->startError( functionNameString, moduleNameString_, "A grammar definition must start with a grammar definition word" );
 
 					if( isChoice )
@@ -399,7 +398,7 @@ class AdminReadFile
 						isChoice = false;
 						isNewStart = true;
 						hasFoundChoiceAlternatives = false;
-						currentLanguageWordItem->markAsChoiceEnd( commonVariables_->currentSentenceItemNr );
+						adminItem_->markGrammarOfCurrentLanguageAsChoiceEnd( globalVariables_->currentSentenceItemNr );
 						}
 					else
 						{
@@ -450,10 +449,10 @@ class AdminReadFile
 						grammarString[ grammarStringLength - 1 ] != SYMBOL_DOUBLE_QUOTE )
 							return adminItem_->startError( functionNameString, moduleNameString_, "I found a corrupted interface definition" );
 
-						if( currentLanguageWordItem->checkInterface( grammarParameter, &grammarString[grammarPosition] ) != RESULT_OK )
+						if( adminItem_->checkInterfaceOfCurrentLanguage( grammarParameter, &grammarString[grammarPosition] ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an interface definition word item" );
 
-						if( currentLanguageWordItem->createInterfaceItem( grammarParameter, ( grammarStringLength - grammarPosition - 1 ), &grammarString[grammarPosition] ) != RESULT_OK )
+						if( adminItem_->createInterfaceForCurrentLanguage( grammarParameter, ( grammarStringLength - grammarPosition - 1 ), &grammarString[grammarPosition] ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an interface definition word item" );
 
 						hasCreatedInterface = true;
@@ -466,7 +465,7 @@ class AdminReadFile
 					if( hasCreatedInterface )
 						return adminItem_->startError( functionNameString, moduleNameString_, "Interface definition and grammar definitions can not be mixed" );
 
-					if( commonVariables_->currentSentenceItemNr <= NO_ITEM_NR )
+					if( globalVariables_->currentSentenceItemNr <= NO_ITEM_NR )
 						return adminItem_->startError( functionNameString, moduleNameString_, "The first grammar word in a grammar definition is the grammar definition word and must start with a grammar character" );
 
 					if( hasParameter &&
@@ -475,12 +474,16 @@ class AdminReadFile
 						if( grammarParameter > NO_GRAMMAR_PARAMETER )
 							{
 							if( isMergedWord ||
-							grammarParameter == WORD_PLURAL_NOUN_ENDING )
+							grammarParameter == WORD_PLURAL_NOUN_ENDING ||
+							// Typically for Chinese
+							grammarParameter == WORD_FEMININE_PROPER_NOUN_ENDING ||
+							// Typically for Chinese
+							grammarParameter == WORD_MASCULINE_PROPER_NOUN_ENDING )
 								{
 								if( definitionGrammarItem == NULL )
 									return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition item is undefined" );
 
-								if( ( grammarResult = currentLanguageWordItem->createGrammarItem( false, false, false, false, false, NO_WORD_TYPE_NR, grammarParameter, readWordResult.wordLength, &grammarString[grammarPosition], definitionGrammarItem ) ).result != RESULT_OK )
+								if( ( grammarResult = adminItem_->createGrammarItemForCurrentLanguage( false, false, false, false, false, NO_WORD_TYPE_NR, grammarParameter, readWordResult.wordLength, &grammarString[grammarPosition], definitionGrammarItem ) ).result != RESULT_OK )
 									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar definition word item" );
 
 								if( definitionGrammarItem->nextDefinitionGrammarItem != NULL )
@@ -537,6 +540,10 @@ class AdminReadFile
 									{
 									if( foundWordItem->addWordType( false, false, ( adminItem_->isAdjectiveParameter( grammarParameter ) ? grammarParameter : NO_ADJECTIVE_PARAMETER ), ( adminItem_->isDefiniteArticleParameter( grammarParameter ) ? grammarParameter : NO_DEFINITE_ARTICLE_PARAMETER ), ( adminItem_->isIndefiniteArticleParameter( grammarParameter ) ? grammarParameter : NO_INDEFINITE_ARTICLE_PARAMETER ), wordTypeNr, readWordResult.wordLength, &grammarString[grammarPosition] ).result != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add another word type to grammar word \"", foundWordItem->anyWordTypeString(), "\"" );
+
+									if( grammarParameter == WORD_PARAMETER_SYMBOL_COLON &&
+									grammarString[grammarPosition] != SYMBOL_COLON )
+										adminItem_->setCurrentLanguageAsChinese();
 									}
 								}
 							}
@@ -544,12 +551,12 @@ class AdminReadFile
 					else
 						{
 						// Get grammar identification
-						if( ( grammarResult = currentLanguageWordItem->findGrammar( true, NO_GRAMMAR_PARAMETER, readWordResult.wordLength, &grammarString[grammarPosition] ) ).result != RESULT_OK )
+						if( ( grammarResult = adminItem_->findGrammarOfCurrentLanguage( true, NO_GRAMMAR_PARAMETER, readWordResult.wordLength, &grammarString[grammarPosition] ) ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a grammar definition word item" );
 
 						foundGrammarItem = grammarResult.grammarItem;
 
-						if( currentLanguageWordItem->createGrammarItem( false, ( hasFoundPipe || isNewStart ), isOptionStart, isChoiceStart, isSkipOptionForWriting, NO_WORD_TYPE_NR, NO_GRAMMAR_PARAMETER, readWordResult.wordLength, &grammarString[grammarPosition], foundGrammarItem ).result != RESULT_OK )
+						if( adminItem_->createGrammarItemForCurrentLanguage( false, ( hasFoundPipe || isNewStart ), isOptionStart, isChoiceStart, isSkipOptionForWriting, NO_WORD_TYPE_NR, NO_GRAMMAR_PARAMETER, readWordResult.wordLength, &grammarString[grammarPosition], foundGrammarItem ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a grammar item" );
 
 						isNewStart = false;
@@ -570,13 +577,18 @@ class AdminReadFile
 
 			if( !hasFoundWordDefinitionInfo &&
 			!readWordResult.hasFoundGrammarDefinition &&
-			readWordResult.nextWordPosition < grammarStringLength &&
-			( readWordResult = adminItem_->readWordFromString( false, false, false, grammarPosition, 0, grammarString ) ).result != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a new word from the grammar string" );
+			readWordResult.offset < grammarStringLength )
+				{
+				// Read next word from string
+				if( ( readWordResult = adminItem_->readWordFromString( false, false, false, 0, &grammarString[grammarPosition] ) ).result != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a new word from the grammar string" );
 
-			grammarPosition = readWordResult.nextWordPosition;
+				readWordResult.offset += grammarPosition;
+				}
+
+			grammarPosition = readWordResult.offset;
 			}
-		while( readWordResult.nextWordPosition < grammarStringLength );
+		while( readWordResult.offset < grammarStringLength );
 
 		if( isOption )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The grammar definition option isn't closed" );
@@ -601,10 +613,10 @@ class AdminReadFile
 				}
 
 			// Remove possible duplicate grammar definition
-			if( currentLanguageWordItem->checkForDuplicateGrammarDefinition() != RESULT_OK )
+			if( adminItem_->checkForDuplicateGrammarDefinitionInCurrentLanguage() != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check for a duplicate grammar definition" );
 
-			if( currentLanguageWordItem->linkLaterDefinedGrammarWords() != RESULT_OK )
+			if( adminItem_->linkLaterDefinedGrammarWordsInCurrentLanguage() != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to link later defined grammar words" );
 			}
 
@@ -618,7 +630,7 @@ class AdminReadFile
 		WordTypeItem *foundWordTypeItem;
 		char multipleWordString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		WordResultType wordResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "addPredefinedMultipleWord";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addPredefinedMultipleWord";
 
 		wordResult.createdWordItem = multipleWordItem;
 
@@ -666,7 +678,7 @@ class AdminReadFile
 
 	signed char authorizeWord( WordItem *authorizationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "authorizeWord";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "authorizeWord";
 
 		if( authorizationWordItem == NULL )
 			return adminItem_->startSystemError( functionNameString, moduleNameString_, "The given authorization word item is undefined" );
@@ -685,7 +697,7 @@ class AdminReadFile
 		{
 		bool isTestFile;
 		unsigned int testFileSentenceNr;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "closeCurrentFileItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "closeCurrentFileItem";
 
 		// Get info before closing the file
 		isTestFile = adminItem_->isCurrentFileTestFile();
@@ -698,11 +710,11 @@ class AdminReadFile
 			adminItem_->deleteSentences( testFileSentenceNr );
 		else
 			{
-			if( commonVariables_->hasDisplayedWarning ||
-			commonVariables_->result != RESULT_OK )
+			if( globalVariables_->hasDisplayedWarning ||
+			globalVariables_->result != RESULT_OK )
 				{
 				hasClosedFileDueToError_ = true;
-				commonVariables_->hasDisplayedWarning = false;
+				globalVariables_->hasDisplayedWarning = false;
 				}
 			}
 
@@ -711,19 +723,12 @@ class AdminReadFile
 
 	signed char createLanguageSpecification( WordItem *languageNounWordItem )
 		{
-		WordItem *currentLanguageWordItem = commonVariables_->currentLanguageWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createLanguageSpecification";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createLanguageSpecification";
 
 		if( languageNounWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given language noun word item is undefined" );
 
-		if( currentLanguageWordItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The current language word item is undefined" );
-
-		if( !currentLanguageWordItem->isLanguageWord() )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The current language word isn't a language word" );
-
-		if( addSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NAME, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, currentLanguageWordItem, languageNounWordItem, NULL, NULL ).result != RESULT_OK )
+		if( addSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, globalVariables_->currentLanguageWordItem, languageNounWordItem, NULL, NULL ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a new language specification" );
 
 		return RESULT_OK;
@@ -733,19 +738,19 @@ class AdminReadFile
 		{
 		WordItem *languageWordItem;
 		WordResultType wordResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createLanguageWord";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createLanguageWord";
 
 		if( ( wordResult = findLanguageByName( languageNameString ) ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find the language" );
 
 		if( wordResult.foundWordItem == NULL )
 			{
-			commonVariables_->currentLanguageNr++;
+			globalVariables_->currentLanguageNr++;
 
-			if( ( wordResult = adminItem_->addWord( true, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, NO_WORD_PARAMETER, WORD_TYPE_PROPER_NAME, strlen( languageNameString ), languageNameString ) ).result != RESULT_OK )
+			if( ( wordResult = adminItem_->addWord( true, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, NO_WORD_PARAMETER, WORD_TYPE_PROPER_NOUN, strlen( languageNameString ), languageNameString ) ).result != RESULT_OK )
 				{
 				// On error, restore old language
-				commonVariables_->currentLanguageNr--;
+				globalVariables_->currentLanguageNr--;
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a language word" );
 				}
 
@@ -755,20 +760,21 @@ class AdminReadFile
 			if( authorizeWord( languageWordItem ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to authorize the language word" );
 
-			commonVariables_->currentLanguageWordItem = languageWordItem;
+			globalVariables_->currentLanguageWordItem = languageWordItem;
 			}
 		else
-			commonVariables_->currentLanguageWordItem = wordResult.foundWordItem;
+			globalVariables_->currentLanguageWordItem = wordResult.foundWordItem;
 
 		return RESULT_OK;
 		}
 
 	signed char executeLine( char *readString )
 		{
-		bool wasQueryCommand = false;
 		bool hasSwitchedLanguage = false;
+		bool wasQueryCommand = false;
 		bool wasUndoOrRedoCommand;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "executeLine";
+		SpecificationItem *userSpecificationItem;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "executeLine";
 
 		if( readString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given read string is undefined" );
@@ -778,10 +784,10 @@ class AdminReadFile
 		// and comment line
 		readString[0] != COMMENT_CHAR )
 			{
-			commonVariables_->hasDisplayedIntegrityWarning = false;
-			commonVariables_->hasDisplayedMessage = false;
-			commonVariables_->hasDisplayedWarning = false;
-			commonVariables_->isAssignmentChanged = false;
+			globalVariables_->hasDisplayedIntegrityWarning = false;
+			globalVariables_->hasDisplayedMessage = false;
+			globalVariables_->hasDisplayedWarning = false;
+			globalVariables_->isAssignmentChanged = false;
 
 			if( !adminItem_->wasPreviousCommandUndoOrRedo() )
 				cleanupDeletedItems();
@@ -840,20 +846,23 @@ class AdminReadFile
 					}
 				}
 
-			if( commonVariables_->result != RESULT_SYSTEM_ERROR &&
+			if( globalVariables_->result != RESULT_SYSTEM_ERROR &&
 			!adminItem_->hasRequestedRestart() )
 				{
 				wasUndoOrRedoCommand = adminItem_->wasUndoOrRedoCommand();
 
-				if( commonVariables_->result == RESULT_OK &&
-				!commonVariables_->hasDisplayedWarning )
+				if( globalVariables_->result == RESULT_OK &&
+				!globalVariables_->hasDisplayedWarning )
 					{
 					if( adminItem_->hasAnyChangeBeenMadeByThisSentence() )
 						{
 						if( !hasSwitchedLanguage &&
 
 						( wasUndoOrRedoCommand ||
-						!commonVariables_->hasDisplayedMessage ) )
+
+						( !globalVariables_->hasDisplayedMessage &&
+						( userSpecificationItem = adminItem_->userSpecificationItem() ) != NULL &&
+						userSpecificationItem->isTriggeringExecutionOfSelections() ) ) )
 							{
 							if( adminItem_->executeSelections() != RESULT_OK )
 								adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute selections after reading the sentence" );
@@ -863,8 +872,7 @@ class AdminReadFile
 						{
 						if( !hasSwitchedLanguage &&
 						!wasLoginCommand_ &&
-						!commonVariables_->hasDisplayedMessage &&
-						!adminItem_->isSystemStartingUp() &&
+						!globalVariables_->hasDisplayedMessage &&
 
 						inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != RESULT_OK )
 							adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I know' interface notification" );
@@ -881,7 +889,7 @@ class AdminReadFile
 					if( !adminItem_->isSystemStartingUp() )
 						{
 						// Check for empty sentence
-						if( ( commonVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr() ) == NO_ITEM_NR )
+						if( ( globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr() ) == NO_ITEM_NR )
 							adminItem_->decrementCurrentSentenceNr();
 						}
 					}
@@ -893,14 +901,14 @@ class AdminReadFile
 
 	signed char incrementCurrentSentenceNr()
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "incrementCurrentSentenceNr";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "incrementCurrentSentenceNr";
 
-		if( commonVariables_->currentSentenceNr >= MAX_SENTENCE_NR )
+		if( globalVariables_->currentSentenceNr >= MAX_SENTENCE_NR )
 			return adminItem_->startSystemError( functionNameString, moduleNameString_, "Sentence number overflow! I can't except anymore input" );
 
-		commonVariables_->currentSentenceNr++;
+		globalVariables_->currentSentenceNr++;
 		// Necessary after changing current sentence number
-		commonVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr();
+		globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr();
 
 		return RESULT_OK;
 		}
@@ -910,12 +918,10 @@ class AdminReadFile
 		FileItem *openedLanguageFileItem;
 		FileResultType fileResult;
 		signed char originalResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "readLanguageFile";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readLanguageFile";
 
 		if( languageNameString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given language name is undefined" );
-
-		inputOutput_->displayStatus( languageNameString );
 
 		if( ( fileResult = adminItem_->openFile( true, false, false, false, ( isGrammarFile ? FILE_DATA_GRAMMAR_DIRECTORY_NAME_STRING : FILE_DATA_INTERFACE_DIRECTORY_NAME_STRING ), languageNameString, NULL, NULL ) ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, ( isGrammarFile ? "I failed to open the grammar file: \"" : "I failed to open the interface file: \"" ), languageNameString, "\"" );
@@ -933,23 +939,16 @@ class AdminReadFile
 			if( readAndExecute() != RESULT_OK )
 				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened language file" );
 
-			originalResult = commonVariables_->result;
+			originalResult = globalVariables_->result;
 
 			if( closeCurrentFileItem( openedLanguageFileItem ) != RESULT_OK )
 				adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the language file item" );
 
 			if( originalResult != RESULT_OK )
-				commonVariables_->result = originalResult;
+				globalVariables_->result = originalResult;
 			}
 		else
-			{
-			// When reading special characters goes wrong, the wrong Zip file may be downloaded
-			// The Zip format of special characters up to Windows 7 is different from the Zip format of special characters from Windows 8 and higher
-			if( strcmp( languageNameString, FILE_WINDOWS_VERSION_STRING ) == 0 )
-				return adminItem_->startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, moduleNameString_, "You have probably downloaded the Zip file for the wrong Windows version.\nPlease check if the downloaded file name matches your Windows version.\nThe Zip format of special characters up to Windows 7 is different from the Zip format of special characters from Windows 8 and higher" );
-
 			return adminItem_->startError( functionNameString, moduleNameString_, ( isGrammarFile ? "I couldn't open the grammar file: \"" : "I couldn't open the interface file: \"" ), languageNameString, "\"" );
-			}
 
 		return RESULT_OK;
 		}
@@ -958,7 +957,7 @@ class AdminReadFile
 		{
 		WordItem *currentLanguageWordItem;
 		char *startupLanguageNameString = adminItem_->startupLanguageNameString();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "readGrammarFileAndUserInterfaceFile";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readGrammarFileAndUserInterfaceFile";
 
 		if( readLanguageNameString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given read language name string is undefined" );
@@ -974,20 +973,18 @@ class AdminReadFile
 		// If the system is restarted
 		if( startupLanguageNameString != NULL &&
 		predefinedNounStartupLanguageWordItem_ != NULL &&
-		( currentLanguageWordItem = commonVariables_->currentLanguageWordItem ) != NULL )
+		( currentLanguageWordItem = globalVariables_->currentLanguageWordItem ) != NULL &&
+		// The current language (of which the grammar file and the interface file were read above),
+		// is the last selected language before the restart
+		strcmp( startupLanguageNameString, adminItem_->currentLanguageNameString() ) == 0 )
 			{
-			// The current language (of which the grammar file and the interface file were read above),
-			// is the last selected language before the restart
-			if( strcmp( startupLanguageNameString, currentLanguageWordItem->anyWordTypeString() ) == 0 )
-				{
-				// Create language specification for the startup language word
-				if( addSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NAME, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, predefinedNounStartupLanguageWordItem_, currentLanguageWordItem, NULL, NULL ).result != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a predefined noun startup language specification" );
+			// Create language specification for the startup language word
+			if( addSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, predefinedNounStartupLanguageWordItem_, currentLanguageWordItem, NULL, NULL ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a predefined noun startup language specification" );
 
-				// Assign the created startup language word to the current language
-				if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, predefinedNounStartupLanguageWordItem_, currentLanguageWordItem, NULL ).result != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the predefined noun startup language word" );
-				}
+			// Assign the created startup language word to the current language
+			if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, predefinedNounStartupLanguageWordItem_, currentLanguageWordItem, NULL ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the predefined noun startup language word" );
 			}
 
 		return RESULT_OK;
@@ -996,7 +993,7 @@ class AdminReadFile
 	signed char readLine( bool isPassword, bool isQuestion, unsigned int promptSentenceNr, char *promptUserNameString, char *readString )
 		{
 		char promptString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "readLine";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readLine";
 
 		if( promptSentenceNr > NO_SENTENCE_NR )
 			sprintf( promptString, "%u", promptSentenceNr );
@@ -1017,7 +1014,7 @@ class AdminReadFile
 
 	signed char setPredefinedWord( unsigned short grammarParameter, WordItem *createdWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "setPredefinedWord";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "setPredefinedWord";
 
 		if( createdWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given created word item" );
@@ -1061,7 +1058,7 @@ class AdminReadFile
 				if( predefinedNounLanguageWordItem_ == NULL )
 					{
 					predefinedNounLanguageWordItem_ = createdWordItem;
-					commonVariables_->predefinedNounLanguageWordItem = createdWordItem;
+					globalVariables_->predefinedNounLanguageWordItem = createdWordItem;
 
 					// During the creation of the first language,
 					// the predefined noun language word wasn't defined yet
@@ -1136,7 +1133,7 @@ class AdminReadFile
 				if( predefinedNounUserWordItem_ == NULL )
 					{
 					predefinedNounUserWordItem_ = createdWordItem;
-					commonVariables_->predefinedNounUserWordItem = createdWordItem;
+					globalVariables_->predefinedNounUserWordItem = createdWordItem;
 
 					if( authorizeWord( predefinedNounUserWordItem_ ) != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to authorize the predefined user noun word" );
@@ -1171,9 +1168,15 @@ class AdminReadFile
 
 	WordResultType findLanguageByName( char *languageNameString )
 		{
-		// Initially, the language name words are not linked to
-		// the language defintion word. So, search in all words
-		return adminItem_->findWordTypeInAllWords( true, WORD_TYPE_PROPER_NAME, languageNameString, NULL );
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findLanguageByName";
+
+		if( languageNameString != NULL )
+
+			// Initially, the language name words are not linked to
+			// the language defintion word. So, search in all words
+			return adminItem_->findWordTypeInAllWords( true, WORD_TYPE_PROPER_NOUN, languageNameString, NULL );
+
+		return adminItem_->startWordResultError( functionNameString, moduleNameString_, "The given language name string is undefined" );
 		}
 
 	WordItem *predefinedMultipleWordItem( unsigned short predefinedMultipleWordNr )
@@ -1181,7 +1184,7 @@ class AdminReadFile
 		WordItem *currentWordItem;
 
 		if( predefinedMultipleWordNr > 0 &&
-		( currentWordItem = commonVariables_->firstWordItem ) != NULL )
+		( currentWordItem = globalVariables_->firstWordItem ) != NULL )
 			{
 			// Do for all (grammar) words
 			do	{
@@ -1198,7 +1201,7 @@ class AdminReadFile
 	protected:
 	// Constructor
 
-	AdminReadFile( AdminItem *adminItem, CommonVariables *commonVariables, InputOutput *inputOutput )
+	AdminReadFile( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
@@ -1234,15 +1237,15 @@ class AdminReadFile
 
 		if( ( adminItem_ = adminItem ) == NULL )
 			{
-			if( commonVariables != NULL )
-				commonVariables->result = RESULT_SYSTEM_ERROR;
+			if( globalVariables != NULL )
+				globalVariables->result = RESULT_SYSTEM_ERROR;
 
 			fprintf( stderr, "\nClass:%s\nFunction:\t%s\nError:\t\tThe given admin item is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
 			}
 		else
 			{
-			if( ( commonVariables_ = commonVariables ) == NULL )
-				strcpy( errorString, "The given common variables is undefined" );
+			if( ( globalVariables_ = globalVariables ) == NULL )
+				strcpy( errorString, "The given global variables is undefined" );
 
 			if( ( inputOutput_ = inputOutput ) == NULL )
 				strcpy( errorString, "The given input-output is undefined" );
@@ -1271,7 +1274,7 @@ class AdminReadFile
 		SpecificationItem *languageSpecificationItem;
 		WordItem *foundLanguageWordItem;
 		WordResultType wordResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "assignLanguage";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "assignLanguage";
 
 		if( ( wordResult = findLanguageByName( languageNameString ) ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find the language" );
@@ -1281,14 +1284,14 @@ class AdminReadFile
 			hasFoundLanguage = true;
 
 			if( ( languageSpecificationItem = foundLanguageWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, false, NO_QUESTION_PARAMETER, NO_COLLECTION_NR, predefinedNounLanguageWordItem_ ) ) != NULL )
-				commonVariables_->currentLanguageNr = languageSpecificationItem->languageNr();
+				globalVariables_->currentLanguageNr = languageSpecificationItem->languageNr();
 
-			if( commonVariables_->currentLanguageWordItem != foundLanguageWordItem )
+			if( globalVariables_->currentLanguageWordItem != foundLanguageWordItem )
 				{
-				if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, foundLanguageWordItem, predefinedNounLanguageWordItem_, NULL ).result != RESULT_OK )
+				if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, foundLanguageWordItem, predefinedNounLanguageWordItem_, NULL ).result != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
 
-				commonVariables_->currentLanguageWordItem = foundLanguageWordItem;
+				globalVariables_->currentLanguageWordItem = foundLanguageWordItem;
 				}
 
 			if( !hasFoundLanguage )
@@ -1313,7 +1316,7 @@ class AdminReadFile
 		char outputString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char referenceString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		FileResultType fileResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "compareOutputFileAgainstReferenceFile";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "compareOutputFileAgainstReferenceFile";
 
 		hasFoundDifferentTestResult_ = false;
 
@@ -1382,12 +1385,12 @@ class AdminReadFile
 		GeneralizationItem *currentGeneralizationItem;
 		SpecificationItem *passwordAssignmentItem = NULL;
 		WordItem *currentGeneralizationWordItem;
-		WordItem *passwordSpecificationWordItem;
 		WordItem *foundUserWordItem = NULL;
+		WordItem *passwordSpecificationWordItem;
 		char readPasswordString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char readUserNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		WordResultType wordResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "login";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "login";
 
 		wasLoginCommand_ = false;
 
@@ -1408,7 +1411,7 @@ class AdminReadFile
 					return adminItem_->startSystemError( functionNameString, moduleNameString_, "I found an undefined generalization word" );
 
 				// Select first user in the current language
-				if( currentGeneralizationWordItem->activeWordTypeItem( false, WORD_TYPE_PROPER_NAME ) != NULL )
+				if( currentGeneralizationWordItem->activeWordTypeItem( false, WORD_TYPE_PROPER_NOUN ) != NULL )
 					specificationWordItem = currentGeneralizationWordItem;
 				}
 			while( specificationWordItem == NULL &&
@@ -1435,7 +1438,7 @@ class AdminReadFile
 				if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
 					return adminItem_->startSystemError( functionNameString, moduleNameString_, "I found an undefined generalization word" );
 
-				if( ( wordResult = currentGeneralizationWordItem->findWordType( true, WORD_TYPE_PROPER_NAME, readUserNameString ) ).result != RESULT_OK )
+				if( ( wordResult = currentGeneralizationWordItem->findWordType( true, WORD_TYPE_PROPER_NOUN, readUserNameString ) ).result != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find the user name" );
 
 				if( wordResult.foundWordTypeItem != NULL )
@@ -1485,12 +1488,12 @@ class AdminReadFile
 
 			foundUserWordItem != NULL )
 				{
-				if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, 0, NULL, foundUserWordItem, predefinedNounUserWordItem_, NULL ).result != RESULT_OK )
+				if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, foundUserWordItem, predefinedNounUserWordItem_, NULL ).result != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the user" );
 
-				firstSentenceNrOfCurrentUser_ = commonVariables_->currentSentenceNr;
+				firstSentenceNrOfCurrentUser_ = globalVariables_->currentSentenceNr;
 				currentUserWordItem_ = foundUserWordItem;
-				commonVariables_->currentUserNr = predefinedNounUserWordItem_->userNr( foundUserWordItem );
+				globalVariables_->currentUserNr = predefinedNounUserWordItem_->userNr( foundUserWordItem );
 
 				if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_CONSOLE_WELCOME_MESSAGE_EXPERT ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the welcome message for experts" );
@@ -1516,7 +1519,7 @@ class AdminReadFile
 		{
 		bool isLineExecuted;
 		char readString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "readAndExecute";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readAndExecute";
 
 		hasFoundDifferentTestResult_ = false;
 
@@ -1524,7 +1527,7 @@ class AdminReadFile
 			isLineExecuted = false;
 			strcpy( readString, EMPTY_STRING );
 
-			if( readLine( false, false, ( commonVariables_->currentSentenceNr + 1 ), ( currentUserWordItem_ == NULL ? NULL : currentUserWordItem_->anyWordTypeString() ), readString ) != RESULT_OK )
+			if( readLine( false, false, ( globalVariables_->currentSentenceNr + 1 ), ( currentUserWordItem_ == NULL ? NULL : currentUserWordItem_->anyWordTypeString() ), readString ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a line" );
 
 			if( inputOutput_->hasReadLine() )
@@ -1541,11 +1544,11 @@ class AdminReadFile
 
 		// Ignore warnings during testing
 		( adminItem_->isCurrentlyTesting() ||
-		!commonVariables_->hasDisplayedWarning ) );
+		!globalVariables_->hasDisplayedWarning ) );
 
 		if( adminItem_->isSystemStartingUp() &&
-		commonVariables_->hasDisplayedWarning )
-			commonVariables_->result = RESULT_SYSTEM_ERROR;
+		globalVariables_->hasDisplayedWarning )
+			globalVariables_->result = RESULT_SYSTEM_ERROR;
 
 		return RESULT_OK;
 		}
@@ -1555,13 +1558,10 @@ class AdminReadFile
 		FileItem *openedExampleFileItem;
 		FileResultType fileResult;
 		signed char originalResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "readExampleFile";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readExampleFile";
 
 		if( exampleFileNameString != NULL )
 			{
-			if( adminItem_->isSystemStartingUp() )
-				inputOutput_->displayStatus( exampleFileNameString );
-
 			if( ( fileResult = adminItem_->openFile( !adminItem_->isSystemStartingUp(), false, false, true, FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING, exampleFileNameString, NULL, NULL ) ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to open an example file" );
 
@@ -1570,13 +1570,13 @@ class AdminReadFile
 				if( readAndExecute() != RESULT_OK )
 					adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened example file" );
 
-				originalResult = commonVariables_->result;
+				originalResult = globalVariables_->result;
 
 				if( closeCurrentFileItem( openedExampleFileItem ) != RESULT_OK )
 					adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the example file item" );
 
 				if( originalResult != RESULT_OK )
-					commonVariables_->result = originalResult;
+					globalVariables_->result = originalResult;
 				}
 			}
 		else
@@ -1593,7 +1593,7 @@ class AdminReadFile
 		FileItem *openedStartupFileItem;
 		FileResultType fileResult;
 		signed char originalResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "readStartupFile";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readStartupFile";
 
 		if( ( fileResult = adminItem_->openFile( true, false, false, true, FILE_DATA_STARTUP_DIRECTORY_NAME_STRING, FILE_STARTUP_NAME_STRING, NULL, NULL ) ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to open an startup file" );
@@ -1603,13 +1603,13 @@ class AdminReadFile
 			if( readAndExecute() != RESULT_OK )
 				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened startup file" );
 
-			originalResult = commonVariables_->result;
+			originalResult = globalVariables_->result;
 
 			if( closeCurrentFileItem( openedStartupFileItem ) != RESULT_OK )
 				adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the startup file item" );
 
 			if( originalResult != RESULT_OK )
-				commonVariables_->result = originalResult;
+				globalVariables_->result = originalResult;
 			}
 
 		return RESULT_OK;
@@ -1622,7 +1622,7 @@ class AdminReadFile
 		char testString[MAX_SENTENCE_STRING_LENGTH];
 		signed char originalResult;
 		FileResultType fileResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "readTestFile";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readTestFile";
 
 		// Check if user has already entered sentences
 		if( hasAnyUserSpecification() )
@@ -1652,14 +1652,14 @@ class AdminReadFile
 		if( readAndExecute() != RESULT_OK )
 			adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened test file" );
 
-		if( ( originalResult = commonVariables_->result ) != RESULT_OK )
-			commonVariables_->result = RESULT_OK;
+		if( ( originalResult = globalVariables_->result ) != RESULT_OK )
+			globalVariables_->result = RESULT_OK;
 
 		if( closeCurrentFileItem( testFileItem ) != RESULT_OK )
 			adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the test file item" );
 
 		if( originalResult != RESULT_OK )
-			commonVariables_->result = originalResult;
+			globalVariables_->result = originalResult;
 		else
 			{
 			if( isFirstTestFile )
@@ -1704,10 +1704,10 @@ class AdminReadFile
 		return predefinedNounSolveStrategyWordItem_;
 		}
 
-	CreateAndAssignResultType addSpecificationWithAuthorization( bool isAssignment, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int copiedRelationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
+	CreateAndAssignResultType addSpecificationWithAuthorization( bool isAssignment, bool isCharacteristicFor, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int copiedRelationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
 		{
 		CreateAndAssignResultType createAndAssignResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "addSpecificationWithAuthorization";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addSpecificationWithAuthorization";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startCreateAndAssignResultError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
@@ -1720,7 +1720,7 @@ class AdminReadFile
 		specificationWordItem->hideWordType( specificationWordTypeNr, moduleNameString_ ) != RESULT_OK )
 			return adminItem_->addCreateAndAssignResultError( functionNameString, moduleNameString_, "I failed to hide a password" );
 
-		if( ( createAndAssignResult = generalizationWordItem->addSpecificationInWord( isAssignment, isConditional, isInactiveAssignment, isArchivedAssignment, isEveryGeneralization, true, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, copiedRelationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, moduleNameString_ ) ).result != RESULT_OK )
+		if( ( createAndAssignResult = generalizationWordItem->addSpecificationInWord( isAssignment, isInactiveAssignment, isArchivedAssignment, isCharacteristicFor, isConditional, isEveryGeneralization, true, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecific, isSpecificationGeneralization, isUncountableGeneralizationNoun, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, copiedRelationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, moduleNameString_ ) ).result != RESULT_OK )
 			return adminItem_->addCreateAndAssignResultError( functionNameString, moduleNameString_, "I failed to add a specification with authorization" );
 
 		// Collect current language with previous languages
@@ -1730,33 +1730,29 @@ class AdminReadFile
 		return createAndAssignResult;
 		}
 
-	CreateAndAssignResultType assignSpecificationWithAuthorization( bool isAmbiguousRelationContext, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, char *specificationString )
+	CreateAndAssignResultType assignSpecificationWithAuthorization( bool isAmbiguousRelationContext, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, char *specificationString )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "assignSpecificationWithAuthorization";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "assignSpecificationWithAuthorization";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startCreateAndAssignResultError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
-		return generalizationWordItem->assignSpecification( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPartOf, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, moduleNameString_ );
+		return generalizationWordItem->assignSpecification( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, moduleNameString_ );
 		}
 
 	FileResultType readInfoFile( bool isReportingErrorIfFileDoesNotExist, char *infoFileNameString )
 		{
 		FileItem *openedInfoFileItem;
-		WordItem *currentLanguageWordItem = commonVariables_->currentLanguageWordItem;
 		FileResultType fileResult;
 		signed char originalResult;
 		char infoPathString[MAX_SENTENCE_STRING_LENGTH] = FILE_DATA_INFO_DIRECTORY_NAME_STRING;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "readInfoFile";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readInfoFile";
 
 		if( infoFileNameString == NULL )
 			return adminItem_->startFileResultError( functionNameString, moduleNameString_, "The given info file name string is undefined" );
 
-		if( currentLanguageWordItem != NULL )
-			{
-			strcat( infoPathString, currentLanguageWordItem->anyWordTypeString() );
-			strcat( infoPathString, SLASH_STRING );
-			}
+		strcat( infoPathString, adminItem_->currentLanguageNameString() );
+		strcat( infoPathString, SLASH_STRING );
 
 		if( ( fileResult = adminItem_->openFile( true, true, false, isReportingErrorIfFileDoesNotExist, infoPathString, infoFileNameString, NULL, NULL ) ).result != RESULT_OK )
 			return adminItem_->addFileResultError( functionNameString, moduleNameString_, "I failed to open the info file" );
@@ -1766,13 +1762,13 @@ class AdminReadFile
 			if( readAndExecute() != RESULT_OK )
 				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened info file" );
 
-			originalResult = commonVariables_->result;
+			originalResult = globalVariables_->result;
 
 			if( closeCurrentFileItem( openedInfoFileItem ) != RESULT_OK )
 				adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the info file item" );
 
 			if( originalResult != RESULT_OK )
-				commonVariables_->result = originalResult;
+				globalVariables_->result = originalResult;
 			}
 
 		return fileResult;

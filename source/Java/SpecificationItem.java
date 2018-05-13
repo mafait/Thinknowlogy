@@ -1,9 +1,9 @@
-/*	Class:			SpecificationItem
+﻿/*	Class:			SpecificationItem
  *	Purpose:		To store info about the specification structure
  *					of a word
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@ class SpecificationItem extends Item
 	// Private initialized variables
 
 	private boolean isAnsweredQuestion_;
+	private boolean isCharacteristicFor_;
 	private boolean isConcludedAssumption_;
 	private boolean isConditional_;
 	private boolean isCorrectedAssumption_;
@@ -36,7 +37,9 @@ class SpecificationItem extends Item
 	private boolean isNegative_;
 	private boolean isPartOf_;
 	private boolean isPossessive_;
+	private boolean isSpecific_;
 	private boolean isSpecificationGeneralization_;
+	private boolean isUncountableGeneralizationNoun_;
 	private boolean isUniqueUserRelation_;
 	private boolean isValueSpecification_;
 
@@ -105,7 +108,7 @@ class SpecificationItem extends Item
 
 		if( relationContextNr_ > Constants.NO_CONTEXT_NR &&
 		specificationWordItem_ != null &&
-		( currentContextWordItem = CommonVariables.firstContextWordItem ) != null )
+		( currentContextWordItem = GlobalVariables.firstContextWordItem ) != null )
 			{
 			// Do for all context words
 			do	{
@@ -134,7 +137,7 @@ class SpecificationItem extends Item
 				( !isPossessive_ ||
 				isAllowingSpanishPossessiveSpecification ) &&
 
-				generalizationWordTypeNr_ == Constants.WORD_TYPE_PROPER_NAME &&
+				generalizationWordTypeNr_ == Constants.WORD_TYPE_PROPER_NOUN &&
 				questionParameter_ == Constants.NO_QUESTION_PARAMETER &&
 
 				specificationWordItem_ != null &&
@@ -151,7 +154,7 @@ class SpecificationItem extends Item
 		WordItem currentContextWordItem;
 
 		if( contextNr > Constants.NO_CONTEXT_NR &&
-		( currentContextWordItem = CommonVariables.firstContextWordItem ) != null )
+		( currentContextWordItem = GlobalVariables.firstContextWordItem ) != null )
 			{
 			do	{
 				if( currentContextWordItem.hasContextInWord( contextNr, specificationWordItem ) &&
@@ -164,18 +167,18 @@ class SpecificationItem extends Item
 		return Constants.RESULT_OK;
 		}
 
-	private static WordItem contextWordItemInContextWords( int contextNr, WordItem specificationWordItem, WordItem previousContextWordItem )
+	private WordItem relationContextWordItemInContextWords( WordItem previousContextWordItem )
 		{
 		WordItem currentContextWordItem;
 
 		// In case of a pronoun context, the given specification word item will be undefined
 
-		if( contextNr > Constants.NO_CONTEXT_NR &&
+		if( relationContextNr_ > Constants.NO_CONTEXT_NR &&
 		// Do for all (remaining) context words
-		( currentContextWordItem = ( previousContextWordItem == null ? CommonVariables.firstContextWordItem : previousContextWordItem.nextContextWordItem ) ) != null )
+		( currentContextWordItem = ( previousContextWordItem == null ? GlobalVariables.firstContextWordItem : previousContextWordItem.nextContextWordItem ) ) != null )
 			{
 			do	{
-				if( currentContextWordItem.hasContextInWord( contextNr, specificationWordItem ) )
+				if( currentContextWordItem.hasContextInWord( relationContextNr_, specificationWordItem_ ) )
 					return currentContextWordItem;
 				}
 			while( ( currentContextWordItem = currentContextWordItem.nextContextWordItem ) != null );
@@ -194,13 +197,14 @@ class SpecificationItem extends Item
 
 	// Constructor
 
-	protected SpecificationItem( boolean isAnsweredQuestion, boolean isConcludedAssumption, boolean isConditional, boolean isCorrectedAssumption, boolean isEveryGeneralization, boolean isExclusiveGeneralization, boolean isExclusiveSpecification, boolean isLanguageWord, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assignmentLevel, short assumptionLevel, short languageNr, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationCollectionNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString, StringBuffer storedSentenceStringBuffer, StringBuffer storedSentenceWithOnlyOneSpecificationStringBuffer, List myList, WordItem myWordItem )
+	protected SpecificationItem( boolean isAnsweredQuestion, boolean isCharacteristicFor, boolean isConcludedAssumption, boolean isConditional, boolean isCorrectedAssumption, boolean isEveryGeneralization, boolean isExclusiveGeneralization, boolean isExclusiveSpecification, boolean isLanguageWord, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSpecific, boolean isSpecificationGeneralization, boolean isUncountableGeneralizationNoun, boolean isUniqueUserRelation, boolean isValueSpecification, short assignmentLevel, short assumptionLevel, short languageNr, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationCollectionNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString, StringBuffer storedSentenceStringBuffer, StringBuffer storedSentenceWithOnlyOneSpecificationStringBuffer, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( originalSentenceNr, activeSentenceNr, inactiveSentenceNr, archivedSentenceNr, myList, myWordItem );
 
 		// Private initialized variables
 
 		isAnsweredQuestion_ = isAnsweredQuestion;
+		isCharacteristicFor_ = isCharacteristicFor;
 		isConcludedAssumption_ = isConcludedAssumption;
 		isConditional_ = isConditional;
 		isCorrectedAssumption_ = isCorrectedAssumption;
@@ -211,7 +215,9 @@ class SpecificationItem extends Item
 		isNegative_ = isNegative;
 		isPartOf_ = isPartOf;
 		isPossessive_ = isPossessive;
+		isSpecific_ = isSpecific;
 		isSpecificationGeneralization_ = isSpecificationGeneralization;
+		isUncountableGeneralizationNoun_ = isUncountableGeneralizationNoun;
 		isUniqueUserRelation_ = isUniqueUserRelation;
 		isValueSpecification_ = isValueSpecification;
 
@@ -283,20 +289,20 @@ class SpecificationItem extends Item
 
 	protected void displayString( boolean isReturnQueryToPosition )
 		{
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
 		if( specificationString_ != null )
 			{
-			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+			if( GlobalVariables.hasFoundQuery )
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				GlobalVariables.queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( specificationString_ );
+			GlobalVariables.hasFoundQuery = true;
+			GlobalVariables.queryStringBuffer.append( specificationString_ );
 			}
 		}
 
@@ -304,21 +310,21 @@ class SpecificationItem extends Item
 		{
 		String wordString;
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
 		if( specificationWordItem_ != null &&
 		( wordString = specificationWordItem_.wordTypeString( true, specificationWordTypeNr_ ) ) != null )
 			{
-			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+			if( GlobalVariables.hasFoundQuery )
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				GlobalVariables.queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( wordString );
+			GlobalVariables.hasFoundQuery = true;
+			GlobalVariables.queryStringBuffer.append( wordString );
 			}
 		}
 
@@ -383,25 +389,28 @@ class SpecificationItem extends Item
 
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		StringBuffer queryStringBuffer;
-		String wordString;
 		String languageNameString = myWordItem().languageNameString( languageNr_ );
 		String generalizationWordTypeString = myWordItem().wordTypeNameString( generalizationWordTypeNr_ );
-		String specificationWordTypeString = myWordItem().wordTypeNameString( specificationWordTypeNr_ );
+		StringBuffer queryStringBuffer;
 		String relationWordTypeString = ( relationWordTypeNr_ == Constants.NO_WORD_TYPE_NR ? null : myWordItem().wordTypeNameString( relationWordTypeNr_ ) );
+		String specificationWordTypeString = myWordItem().wordTypeNameString( specificationWordTypeNr_ );
+		String wordString;
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		if( languageNr_ > Constants.NO_LANGUAGE_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + ( languageNameString == null ? ( "languageNr:" + languageNr_ ) : ( "language:" + languageNameString ) ) );
 
 		if( isAnsweredQuestion_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isAnsweredQuestion" );
+
+		if( isCharacteristicFor_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isCharacteristicFor" );
 
 		if( isConcludedAssumption_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isConcludedAssumption" );
@@ -433,8 +442,14 @@ class SpecificationItem extends Item
 		if( isPossessive_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isPossessive" );
 
+		if( isSpecific_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecific" );
+
 		if( isSpecificationGeneralization_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isSpecificationGeneralization" );
+
+		if( isUncountableGeneralizationNoun_ )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUncountableGeneralizationNoun" );
 
 		if( isUniqueUserRelation_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isUniqueUserRelation" );
@@ -570,7 +585,8 @@ class SpecificationItem extends Item
 
 	protected SpecificationItem assignmentItem( boolean isIncludingAnsweredQuestions, boolean isIncludingThisItem, boolean isQuestion )
 		{
-		SpecificationItem searchSpecificationItem = ( isIncludingThisItem ? ( assignmentLevel_ == CommonVariables.currentAssignmentLevel ? this : null ) : nextAssignmentItemWithCurrentLevel() );
+		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
+		SpecificationItem searchSpecificationItem = ( isIncludingThisItem ? ( assignmentLevel_ == currentAssignmentLevel ? this : null ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
 
 		while( searchSpecificationItem != null )
 			{
@@ -581,7 +597,7 @@ class SpecificationItem extends Item
 			!searchSpecificationItem.isAnsweredQuestion_ ) )
 				return searchSpecificationItem;
 
-			searchSpecificationItem = searchSpecificationItem.nextAssignmentItemWithCurrentLevel();
+			searchSpecificationItem = searchSpecificationItem.nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel );
 			}
 
 		return null;
@@ -589,7 +605,8 @@ class SpecificationItem extends Item
 
 	protected SpecificationItem assignmentItem( boolean isIncludingAnsweredQuestions, boolean isIncludingThisItem, short questionParameter )
 		{
-		SpecificationItem searchSpecificationItem = ( isIncludingThisItem ? ( assignmentLevel_ == CommonVariables.currentAssignmentLevel ? this : null ) : nextAssignmentItemWithCurrentLevel() );
+		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
+		SpecificationItem searchSpecificationItem = ( isIncludingThisItem ? ( assignmentLevel_ == currentAssignmentLevel ? this : null ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
 
 		while( searchSpecificationItem != null )
 			{
@@ -600,18 +617,18 @@ class SpecificationItem extends Item
 			!searchSpecificationItem.isAnsweredQuestion_ ) )
 				return searchSpecificationItem;
 
-			searchSpecificationItem = searchSpecificationItem.nextAssignmentItemWithCurrentLevel();
+			searchSpecificationItem = searchSpecificationItem.nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel );
 			}
 
 		return null;
 		}
 
-	protected SpecificationItem nextAssignmentItemWithCurrentLevel()
+	protected SpecificationItem nextAssignmentItemWithAssignmentLevel( short currentAssignmentLevel )
 		{
 		SpecificationItem nextAssignmentItem = (SpecificationItem)nextItem;
 
 		if( nextAssignmentItem != null &&
-		nextAssignmentItem.assignmentLevel() == CommonVariables.currentAssignmentLevel )
+		nextAssignmentItem.assignmentLevel() == currentAssignmentLevel )
 			return nextAssignmentItem;
 
 		return null;
@@ -698,12 +715,12 @@ class SpecificationItem extends Item
 
 	protected void storeWrittenSentenceStringBuffer()
 		{
-		storedSentenceStringBuffer_ = CommonVariables.writtenSentenceStringBuffer;
+		storedSentenceStringBuffer_ = GlobalVariables.writtenSentenceStringBuffer;
 		}
 
 	protected void storedWrittenSentenceStringBufferWithOneSpecificationOnly()
 		{
-		storedSentenceWithOnlyOneSpecificationStringBuffer_ = CommonVariables.writtenSentenceStringBuffer;
+		storedSentenceWithOnlyOneSpecificationStringBuffer_ = GlobalVariables.writtenSentenceStringBuffer;
 		}
 
 	protected boolean hasAnsweredQuestionInJustification()
@@ -752,10 +769,10 @@ class SpecificationItem extends Item
 
 	protected boolean hasJustificationOfSameType( short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem secondarySpecificationItem )
 		{
-		int searchPrimarySpecificationCollectionNr;
-		int searchSecondarySpecificationCollectionNr;
 		int primarySpecificationCollectionNr = ( primarySpecificationItem == null ? Constants.NO_COLLECTION_NR : primarySpecificationItem.specificationCollectionNr() );
 		int secondarySpecificationCollectionNr = ( secondarySpecificationItem == null ? Constants.NO_COLLECTION_NR : secondarySpecificationItem.specificationCollectionNr() );
+		int searchPrimarySpecificationCollectionNr;
+		int searchSecondarySpecificationCollectionNr;
 		JustificationItem searchJustificationItem = firstJustificationItem_;
 		SpecificationItem searchPrimarySpecificationItem;
 		SpecificationItem searchSecondarySpecificationItem;
@@ -830,11 +847,6 @@ class SpecificationItem extends Item
 		return false;
 		}
 
-	protected boolean hasPrepositionParameter()
-		{
-		return ( prepositionParameter_ > Constants.NO_PREPOSITION_PARAMETER );
-		}
-
 	protected boolean hasPrimarySpecificationJustification( SpecificationItem primarySpecificationItem )
 		{
 		JustificationItem searchJustificationItem = firstJustificationItem_;
@@ -865,7 +877,7 @@ class SpecificationItem extends Item
 		if( relationContextNr_ > Constants.NO_CONTEXT_NR &&
 		specificationWordItem_ != null &&
 		isOlderItem() &&
-		( currentContextWordItem = CommonVariables.firstContextWordItem ) != null )
+		( currentContextWordItem = GlobalVariables.firstContextWordItem ) != null )
 			{
 			// Do for all context words
 			do	{
@@ -899,6 +911,11 @@ class SpecificationItem extends Item
 				firstJustificationItem_ != null );
 		}
 
+	protected boolean isCharacteristicFor()
+		{
+		return isCharacteristicFor_;
+		}
+
 	protected boolean isConcludedAssumption()
 		{
 		return isConcludedAssumption_;
@@ -914,18 +931,17 @@ class SpecificationItem extends Item
 		return isCorrectedAssumption_;
 		}
 
-	protected boolean isCorrectSpecificationArticle( short articleParameter )
+	protected boolean isCorrectSpecificationArticle( boolean isDefiniteArticle, short articleParameter )
 		{
-		boolean isIncludingAnsweredQuestions = isAnsweredQuestion();
-		boolean isSelfGeneratedSpecification = isSelfGenerated();
+		boolean isSelfGeneratedSpecification;
 		SpecificationItem searchSpecificationItem;
 		WordItem currentSpecificationWordItem;
 		WordItem foundWordItem = null;
 
-		if( specificationWordItem_ != null &&
-		isSpecificationNoun() &&
-		( searchSpecificationItem = myWordItem().firstSpecificationItem( isIncludingAnsweredQuestions, isAssignment(), isInactiveAssignment(), isArchivedAssignment(), questionParameter_ ) ) != null )
+		if( ( searchSpecificationItem = myWordItem().firstSpecificationItem( isAnsweredQuestion_, isAssignment(), isInactiveAssignment(), isArchivedAssignment(), questionParameter_ ) ) != null )
 			{
+			isSelfGeneratedSpecification = isSelfGenerated();
+
 			do	{
 				currentSpecificationWordItem = ( searchSpecificationItem == this ? specificationWordItem_ : searchSpecificationItem.relatedSpecificationWordItem( isExclusiveSpecification_, isNegative_, isPossessive_, isSelfGeneratedSpecification, assumptionLevel_, specificationWordTypeNr_, specificationCollectionNr_, generalizationContextNr_, relationContextNr_ ) );
 
@@ -934,20 +950,20 @@ class SpecificationItem extends Item
 					foundWordItem = currentSpecificationWordItem;
 				}
 			while( foundWordItem == null &&
-			( searchSpecificationItem = searchSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isIncludingAnsweredQuestions ) ) != null );
+			( searchSpecificationItem = searchSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion_ ) ) != null );
 
-			return ( foundWordItem == null ? true : ( isDefiniteArticleParameter( articleParameter ) ? foundWordItem.isCorrectDefiniteArticle( articleParameter, specificationWordTypeNr_ ) : foundWordItem.isCorrectIndefiniteArticle( articleParameter, specificationWordTypeNr_ ) ) );
+			return ( foundWordItem == null ? true : ( isDefiniteArticle ? foundWordItem.isCorrectDefiniteArticle( articleParameter, specificationWordTypeNr_ ) : foundWordItem.isCorrectIndefiniteArticle( articleParameter, specificationWordTypeNr_ ) ) );
 			}
 
 		return false;
 		}
 
-	protected boolean isCorrectArticleOfFirstUnwrittenProperNameRelationWord( short definiteArticleParameter )
+	protected boolean isCorrectArticleOfFirstUnwrittenProperNounRelationWord( short definiteArticleParameter )
 		{
-		WordItem firstUnwrittenRelationWordItem = unwrittenProperNameRelationWordItem( null );
+		WordItem firstProperNounUnwrittenRelationWordItem;
 
-		return ( firstUnwrittenRelationWordItem != null &&
-				firstUnwrittenRelationWordItem.isProperNamePrecededByDefiniteArticle( definiteArticleParameter ) );
+		return ( ( firstProperNounUnwrittenRelationWordItem = firstUnwrittenRelationWordItem( Constants.WORD_TYPE_PROPER_NOUN, null ) ) != null &&
+				firstProperNounUnwrittenRelationWordItem.isProperNounPrecededByDefiniteArticle( definiteArticleParameter ) );
 		}
 
 	protected boolean isExclusiveNonPossessiveGeneralizationAssignment()
@@ -980,12 +996,13 @@ class SpecificationItem extends Item
 
 	protected boolean isGeneralizationNoun()
 		{
-		return isNounWordType( generalizationWordTypeNr_ );
+		return ( generalizationWordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR ||
+				generalizationWordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
-	protected boolean isGeneralizationProperName()
+	protected boolean isGeneralizationProperNoun()
 		{
-		return ( generalizationWordTypeNr_ == Constants.WORD_TYPE_PROPER_NAME );
+		return ( generalizationWordTypeNr_ == Constants.WORD_TYPE_PROPER_NOUN );
 		}
 
 	protected boolean isHiddenSpanishSpecification()
@@ -995,7 +1012,7 @@ class SpecificationItem extends Item
 				!isNegative_ &&
 				isSelfGenerated() &&
 				!isQuestion() &&
-				isGeneralizationProperName() &&
+				isGeneralizationProperNoun() &&
 
 				// Not possessive specification not in a male word
 				( ( !isPossessive_ &&
@@ -1152,7 +1169,7 @@ class SpecificationItem extends Item
 
 			while( searchJustificationItem != null )
 				{
-				// At least one justification is an assumption. So, it is not a conclusion
+				// At least one justification is an assumption. So, it is no conclusion
 				if( searchJustificationItem.isAssumptionJustification() )
 					return false;
 
@@ -1176,6 +1193,11 @@ class SpecificationItem extends Item
 		return ( firstJustificationItem_ != null );
 		}
 
+	protected boolean isSpecific()
+		{
+		return isSpecific_;
+		}
+
 	protected boolean isSpecificationGeneralization()
 		{
 		return isSpecificationGeneralization_;
@@ -1183,7 +1205,8 @@ class SpecificationItem extends Item
 
 	protected boolean isSpecificationNoun()
 		{
-		return isNounWordType( specificationWordTypeNr_ );
+		return ( specificationWordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR ||
+				specificationWordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
 	protected boolean isSpecificationNumeral()
@@ -1212,6 +1235,17 @@ class SpecificationItem extends Item
 		{
 		return ( specificationWordItem_ != null &&
 				specificationWordItem_.isNounWordSpanishAmbiguous() );
+		}
+
+	protected boolean isTriggeringExecutionOfSelections()
+		{
+		return ( isAssignment() ||
+				generalizationWordTypeNr_ == Constants.WORD_TYPE_VERB_SINGULAR );
+		}
+
+	protected boolean isUncountableGeneralizationNoun()
+		{
+		return isUncountableGeneralizationNoun_;
 		}
 
 	protected boolean isUniqueUserRelation()
@@ -1383,7 +1417,7 @@ class SpecificationItem extends Item
 			}
 		else
 			{
-			if( ( createAndAssignResult = myWordItem().createSpecificationItem( isAssignment(), isInactiveAssignment(), isArchivedAssignment(), isAnsweredQuestion_, isConcludedAssumption_, isConditional_, isCorrectedAssumption_, isEveryGeneralization_, isExclusiveGeneralization_, isExclusiveSpecification_, isNegative_, isPartOf_, isPossessive_, isSpecificationGeneralization_, isUniqueUserRelation_, isValueSpecification_, assignmentLevel_, assumptionLevel_, languageNr_, prepositionParameter_, questionParameter_, generalizationWordTypeNr_, specificationWordTypeNr_, relationWordTypeNr_, specificationCollectionNr_, generalizationContextNr_, specificationContextNr_, relationContextNr_, originalSentenceNr(), activeSentenceNr(), inactiveSentenceNr(), archivedSentenceNr(), nContextRelations_, attachJustificationItem, specificationWordItem_, specificationString_, storedSentenceStringBuffer_, storedSentenceWithOnlyOneSpecificationStringBuffer_ ) ).result != Constants.RESULT_OK )
+			if( ( createAndAssignResult = myWordItem().createSpecificationItem( isAssignment(), isInactiveAssignment(), isArchivedAssignment(), isAnsweredQuestion_, isCharacteristicFor_, isConcludedAssumption_, isConditional_, isCorrectedAssumption_, isEveryGeneralization_, isExclusiveGeneralization_, isExclusiveSpecification_, isNegative_, isPartOf_, isPossessive_, isSpecific_, isSpecificationGeneralization_, isUncountableGeneralizationNoun_, isUniqueUserRelation_, isValueSpecification_, assignmentLevel_, assumptionLevel_, languageNr_, prepositionParameter_, questionParameter_, generalizationWordTypeNr_, specificationWordTypeNr_, relationWordTypeNr_, specificationCollectionNr_, generalizationContextNr_, specificationContextNr_, relationContextNr_, originalSentenceNr(), activeSentenceNr(), inactiveSentenceNr(), archivedSentenceNr(), nContextRelations_, attachJustificationItem, specificationWordItem_, specificationString_, storedSentenceStringBuffer_, storedSentenceWithOnlyOneSpecificationStringBuffer_ ) ).result != Constants.RESULT_OK )
 				return addError( 1, null, "I failed to create a copy of myself with a different first justification item" );
 
 			if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == null )
@@ -1424,7 +1458,7 @@ class SpecificationItem extends Item
 		JustificationItem searchJustificationItem = firstJustificationItem_;
 
 		while( searchJustificationItem != null &&
-		!CommonVariables.hasDisplayedIntegrityWarning )
+		!GlobalVariables.hasDisplayedIntegrityWarning )
 			{
 			if( searchJustificationItem.isDeletedItem() &&
 			InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nI found a deleted justification item in a replaced specification item:\n\tSpecificationItem: " + itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ";\n\tJustification: " + searchJustificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n" ) != Constants.RESULT_OK )
@@ -1441,7 +1475,7 @@ class SpecificationItem extends Item
 		JustificationItem searchJustificationItem = firstJustificationItem_;
 
 		while( searchJustificationItem != null &&
-		!CommonVariables.hasDisplayedIntegrityWarning )
+		!GlobalVariables.hasDisplayedIntegrityWarning )
 			{
 			if( searchJustificationItem.isReplacedOrDeletedItem() )
 				{
@@ -1543,22 +1577,22 @@ class SpecificationItem extends Item
 
 	protected byte markSpecificationStringAsWritten()
 		{
-		if( CommonVariables.currentWriteLevel >= Constants.MAX_LEVEL )
+		if( GlobalVariables.currentWriteLevel >= Constants.MAX_LEVEL )
 			return startSystemError( 1, null, "Current write word level overflow" );
 
 		if( specificationStringWriteLevel_ > Constants.NO_WRITE_LEVEL )
 			return startError( 1, null, "My write level is already assigned" );
 
-		specificationStringWriteLevel_ = ++CommonVariables.currentWriteLevel;
+		specificationStringWriteLevel_ = ++GlobalVariables.currentWriteLevel;
 
 		return Constants.RESULT_OK;
 		}
 
 	protected byte recalculateAssumption()
 		{
-		boolean isOlderAssumption;
 		boolean hasRelationContext = ( relationContextNr_ > Constants.NO_CONTEXT_NR );
 		boolean isAdjustedSpecification = false;
+		boolean isOlderAssumption;
 		short previousAssumptionLevel = assumptionLevel_;
 
 		if( firstJustificationItem_ != null &&
@@ -1589,7 +1623,7 @@ class SpecificationItem extends Item
 
 				( assumptionLevel_ != previousAssumptionLevel ||
 
-				// Typically for the Spanish language
+				// Typically for Spanish
 				( assumptionLevel_ == Constants.NO_ASSUMPTION_LEVEL &&
 				previousAssumptionLevel == Constants.NO_ASSUMPTION_LEVEL ) ) &&
 
@@ -1659,14 +1693,14 @@ class SpecificationItem extends Item
 		if( myWordItem().writeSelectedSpecification( false, false, this ) != Constants.RESULT_OK )
 			return addError( 1, null, "I failed to write the conflicting specification" );
 
-		if( ( writtenSentenceStringBuffer = CommonVariables.writtenSentenceStringBuffer ) == null ||
+		if( ( writtenSentenceStringBuffer = GlobalVariables.writtenSentenceStringBuffer ) == null ||
 		writtenSentenceStringBuffer.length() == 0 )
 			return startError( 1, null, "The written sentence string buffer is empty" );
 
 		if( InputOutput.writeInterfaceText( true, Constants.INPUT_OUTPUT_PROMPT_WARNING, ( isOlderItem() ? Constants.INTERFACE_LISTING_CONFLICT : Constants.INTERFACE_LISTING_SENTENCE_DOESNT_LEAVE_ANY_OPTION_OPEN ) ) != Constants.RESULT_OK )
 			return addError( 1, null, "I failed to write an interface warning" );
 
-		if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, CommonVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
+		if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceStringBuffer, GlobalVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 			return addError( 1, null, "I failed to write the conflict sentence" );
 
 		hasSpecificationBeenWrittenAsConflict_ = true;
@@ -1991,7 +2025,7 @@ class SpecificationItem extends Item
 
 	protected SpecificationItem specificationItem( boolean isIncludingAnsweredQuestions, boolean isIncludingThisItem, boolean isQuestion )
 		{
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
+		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		SpecificationItem searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
 
 		while( searchSpecificationItem != null )
@@ -2015,7 +2049,7 @@ class SpecificationItem extends Item
 
 	protected SpecificationItem specificationItem( boolean isIncludingAnsweredQuestions, boolean isIncludingThisItem, short questionParameter )
 		{
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
+		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		SpecificationItem searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
 
 		while( searchSpecificationItem != null )
@@ -2039,7 +2073,7 @@ class SpecificationItem extends Item
 
 	protected SpecificationItem nextAssignmentOrSpecificationItem()
 		{
-		return ( isAssignment() ? nextAssignmentItemWithCurrentLevel() : nextSpecificationItem() );
+		return ( isAssignment() ? nextAssignmentItemWithAssignmentLevel( GlobalVariables.currentAssignmentLevel ) : nextSpecificationItem() );
 		}
 
 	protected SpecificationItem nextExclusiveNounSpecificationItem()
@@ -2130,10 +2164,23 @@ class SpecificationItem extends Item
 		WordItem commonWordItem;
 
 		if( specificationWordItem_ != null &&
-		( commonWordItem = specificationWordItem_.commonWordItem( specificationCollectionNr_ ) ) != null )
+		( commonWordItem = specificationWordItem_.commonWordItem( specificationCollectionNr_ ) ) != null &&
+		commonWordItem.isNounWordSpanishAmbiguous() )
+			return commonWordItem;
+
+		return null;
+		}
+
+	protected WordItem firstUnwrittenRelationWordItem( short wordTypeNr, WordItem previousWordItem )
+		{
+		// Start with previous word
+		WordItem currentRelationWordItem = previousWordItem;
+
+		// Check all relation words
+		while( ( currentRelationWordItem = relationContextWordItemInContextWords( currentRelationWordItem ) ) != null )
 			{
-			if( commonWordItem.isNounWordSpanishAmbiguous() )
-				return commonWordItem;
+			if( !currentRelationWordItem.isRelationWordTypeAlreadyWritten( wordTypeNr ) )
+				return currentRelationWordItem;
 			}
 
 		return null;
@@ -2149,9 +2196,9 @@ class SpecificationItem extends Item
 		WordItem firstRelationWordItem;
 
 		// Check all relation words
-		if( ( firstRelationWordItem = contextWordItemInContextWords( relationContextNr_, specificationWordItem_, null ) ) != null &&
+		if( ( firstRelationWordItem = relationContextWordItemInContextWords( null ) ) != null &&
 		// Found another relation word
-		contextWordItemInContextWords( relationContextNr_, specificationWordItem_, firstRelationWordItem ) != null )
+		relationContextWordItemInContextWords( firstRelationWordItem ) != null )
 			return null;
 
 		return firstRelationWordItem;
@@ -2203,21 +2250,6 @@ class SpecificationItem extends Item
 	protected WordItem specificationWordItem()
 		{
 		return specificationWordItem_;
-		}
-
-	protected WordItem unwrittenProperNameRelationWordItem( WordItem previousWordItem )
-		{
-		// Start with previous word
-		WordItem currentRelationWordItem = previousWordItem;
-
-		// Check all relation words
-		while( ( currentRelationWordItem = contextWordItemInContextWords( relationContextNr_, specificationWordItem_, currentRelationWordItem ) ) != null )
-			{
-			if( !currentRelationWordItem.isRelationWordTypeAlreadyWritten( Constants.WORD_TYPE_PROPER_NAME ) )
-				return currentRelationWordItem;
-			}
-
-		return null;
 		}
 
 	protected ShortResultType calculateAssumptionLevel()
@@ -2284,7 +2316,7 @@ class SpecificationItem extends Item
 				nJustificationRelationWords > nRelationWords ) ) &&
 
 				( !isSpanishCurrentLanguage ||
-				// Typically for the Spanish language
+				// Typically for Spanish
 				isNegative_ ||
 
 				// First set of justifications

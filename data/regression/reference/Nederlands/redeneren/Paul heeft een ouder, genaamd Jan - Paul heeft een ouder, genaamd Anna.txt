@@ -15,5 +15,5 @@
 < Jan is een ouder van Paul.
 < 
 * 
-* U heeft meervoudige zelfstandige naamwoord "ouders" ingevoerd, dat onbekend was voor mij.
+* U hebt meervoudige zelfstandige naamwoord "ouders" ingevoerd, dat onbekend was voor mij.
 * 

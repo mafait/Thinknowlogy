@@ -1,9 +1,9 @@
-/*	Class:			ReadList
+﻿/*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -79,13 +79,13 @@ class ReadList : private List
 	protected:
 	// Constructor
 
-	ReadList( CommonVariables *commonVariables, InputOutput *inputOutput, WordItem *myWordItem )
+	ReadList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
 		// Private constructed variables
 
 		lastActivatedWordOrderNr_ = NO_ORDER_NR;
 
-		initializeListVariables( ADMIN_READ_LIST_SYMBOL, "ReadList", commonVariables, inputOutput, myWordItem );
+		initializeListVariables( ADMIN_READ_LIST_SYMBOL, "ReadList", globalVariables, inputOutput, myWordItem );
 		}
 
 	~ReadList()
@@ -118,69 +118,10 @@ class ReadList : private List
 		lastActivatedWordOrderNr_ = NO_ORDER_NR;
 		}
 
-	bool isImperativeSentence()
-		{
-		unsigned short wordOrderNr;
-		unsigned short previousWordOrderNr = NO_ORDER_NR;
-		unsigned int nWords = 0;
-		char *readWordString;
-		ReadItem *searchReadItem = firstActiveReadItem();
-		ReadItem *startReadItem = NULL;
-
-		while( searchReadItem != NULL )
-			{
-			if( ( nWords > 0 ||
-			// Trigger
-			searchReadItem->isSpecificationWord() ) &&
-
-			// First appearance of new word
-			( wordOrderNr = searchReadItem->wordOrderNr() ) > previousWordOrderNr )
-				{
-				nWords++;
-				previousWordOrderNr = wordOrderNr;
-
-				if( startReadItem == NULL )
-					startReadItem = searchReadItem;
-				}
-
-			searchReadItem = searchReadItem->nextReadItem();
-			}
-
-		// Start creation of imperative sentence
-		if( nWords > 2 )
-			{
-			previousWordOrderNr = NO_ORDER_NR;
-			searchReadItem = startReadItem;
-			strcpy( commonVariables()->writtenSentenceString, EMPTY_STRING );
-
-			while( searchReadItem != NULL )
-				{
-				if( ( wordOrderNr = searchReadItem->wordOrderNr() ) > previousWordOrderNr &&
-				!searchReadItem->isText() &&
-				( readWordString = searchReadItem->readWordTypeString() ) != NULL )
-					{
-					if( previousWordOrderNr > NO_ORDER_NR &&
-					// End of string (colon, question mark, etc)
-					searchReadItem->grammarParameter != GRAMMAR_SENTENCE )
-						strcat( commonVariables()->writtenSentenceString, SPACE_STRING );
-
-					previousWordOrderNr = wordOrderNr;
-					strcat( commonVariables()->writtenSentenceString, readWordString );
-					}
-
-				searchReadItem = searchReadItem->nextReadItem();
-				}
-
-			return true;
-			}
-
-		return false;
-		}
-
 	signed char activateInactiveReadWords( unsigned short wordOrderNr )
 		{
 		ReadItem *searchReadItem = firstInactiveReadItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "activateInactiveReadWords";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "activateInactiveReadWords";
 
 		while( searchReadItem != NULL )
 			{
@@ -199,9 +140,9 @@ class ReadList : private List
 		return RESULT_OK;
 		}
 
-	signed char createReadItem( unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, size_t readStringLength, char *readString, WordItem *readWordItem )
+	signed char createReadItem( bool isUncountableGeneralizationNoun, unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, size_t readStringLength, char *readString, WordItem *readWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_LENGTH] = "createReadItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createReadItem";
 
 		if( wordTypeNr <= NO_WORD_TYPE_NR ||
 		wordTypeNr >= NUMBER_OF_WORD_TYPES )
@@ -210,7 +151,7 @@ class ReadList : private List
 		if( hasFoundReadItem( wordOrderNr, wordParameter, wordTypeNr, readString, readWordItem ) )
 			return startError( functionNameString, "The given read item already exists" );
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new ReadItem( wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, commonVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+		if( addItemToList( QUERY_ACTIVE_CHAR, new ReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
 			return addError( functionNameString, "I failed to add an active read item" );
 
 		return RESULT_OK;
@@ -220,7 +161,7 @@ class ReadList : private List
 		{
 		ReadItem *searchReadItem = firstActiveReadItem();
 		WordItem *readWordItem;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "deleteReadItemsWithNonMatchingMultipleWordPart";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "deleteReadItemsWithNonMatchingMultipleWordPart";
 
 		if( sentenceString == NULL )
 			return startError( functionNameString, "The given sentence string is undefined" );
@@ -257,7 +198,7 @@ class ReadList : private List
 		size_t definitionGrammarStringLength;
 		char *definitionGrammarString;
 		ReadItem *searchReadItem = firstActiveReadItem();
-		char functionNameString[FUNCTION_NAME_LENGTH] = "setGrammarParameter";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "setGrammarParameter";
 
 		if( endWordOrderNr <= NO_ORDER_NR )
 			return startError( functionNameString, "The given end word order number is undefined" );
@@ -356,7 +297,7 @@ class ReadList : private List
 		ReadItem *activeReadItem = firstActiveReadItem();
 		ReadItem *inactiveReadItem = firstInactiveReadItem();
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "findMoreInterpretations";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findMoreInterpretations";
 
 		// Get last inactive item
 		while( inactiveReadItem != NULL &&
@@ -389,7 +330,7 @@ class ReadList : private List
 		ReadItem *activeReadItem;
 		ReadItem *currentReadItem = firstActiveReadItem();
 		BoolResultType boolResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "selectMatchingWordType";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "selectMatchingWordType";
 
 		// Find current word position
 		if( currentWordOrderNr > NO_ORDER_NR )
@@ -438,7 +379,7 @@ class ReadList : private List
 		unsigned short nReadWordReferences = 0;
 		ReadItem *searchReadItem = firstActiveReadItem();
 		ShortResultType shortResult;
-		char functionNameString[FUNCTION_NAME_LENGTH] = "getNumberOfReadWordReferences";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getNumberOfReadWordReferences";
 
 		if( readWordItem == NULL )
 			return startShortResultError( functionNameString, "The given read word is undefined" );

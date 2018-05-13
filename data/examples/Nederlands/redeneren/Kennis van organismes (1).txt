@@ -34,8 +34,7 @@ Kangoeroes, koala's, opossums en tasmaanse-duivels zijn buideldieren.
 # Apen
 Bonobo's, chimpansees, gorilla's, zijdeaapjes, klauwaapjes, orang-oetans en eekhoorn-apen zijn apen.
 #	Knaagdieren
-Bevers, cavia's, hamsters, muizen, stekelvarkens en ratten zijn knaagdieren.
-#Bevers, cavia's, hamsters, muizen, stekelvarkens, ratten en eekhoorns zijn knaagdieren.
+Bevers, cavia's, hamsters, muizen, stekelvarkens, ratten en eekhoorns zijn knaagdieren.
 # Geleedpotigen
 Iedere geleedpotige is een spinachtige, schaaldier of insect.
 # Spinachtigen

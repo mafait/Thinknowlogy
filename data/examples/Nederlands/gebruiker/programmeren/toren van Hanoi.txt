@@ -1,32 +1,32 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To demonstrate programming in natural language
-#	Version:	Thinknowlogy 2017r2 (Science as it should be)
+# Purpose: To demonstrate programming in natural language
+# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Een samenvatting van de "toren van Hanoi" puzzel:
+# Een samenvatting van de "toren van Hanoi" puzzel:
 #----------------------------------------------------------------------------
-#	De Torens van Hanoi is een spel of puzzel met een aantal schijven.
-#	Het spel bestaat uit een plankje met daarop drie stokjes. Bij aanvang
-#	van het spel is op een van de stokjes een piramidevormige toren van
-#	schijven met een gat in het midden geplaatst. Elke schijf heeft een
-#	verschillende diameter en de schijven zijn zo geplaatst dat de kleinste
-#	bovenop en de grootste onderop ligt.
-#	
-#	Het doel van het spel is om de complete toren van schijven te
-#	verplaatsen naar een ander stokje, waarbij de volgende regels in acht
-#	genomen dienen te worden:
-#	- er mag slechts 1 schijf tegelijk worden verplaatst;
-#	- nooit mag een grotere schijf op een kleinere rusten.
+# De Torens van Hanoi is een spel of puzzel met een aantal schijven.
+# Het spel bestaat uit een plankje met daarop drie stokjes. Bij aanvang
+# van het spel is op een van de stokjes een piramidevormige toren van
+# schijven met een gat in het midden geplaatst. Elke schijf heeft een
+# verschillende diameter en de schijven zijn zo geplaatst dat de kleinste
+# bovenop en de grootste onderop ligt.
+# 
+# Het doel van het spel is om de complete toren van schijven te
+# verplaatsen naar een ander stokje, waarbij de volgende regels in acht
+# genomen dienen te worden:
+# - er mag slechts 1 schijf tegelijk worden verplaatst;
+# - nooit mag een grotere schijf op een kleinere rusten.
 #----------------------------------------------------------------------------
-#	Zie voor de volle text: http://nl.wikipedia.org/wiki/Torens_van_Hanoi
+# Zie voor de volle text: http://nl.wikipedia.org/wiki/Torens_van_Hanoi
 #----------------------------------------------------------------------------
 
 # Defineer de zetten.
-Een zet is tussen-start-en-wissel, tussen-start-en-doel, tussen-wissel-en-doel, klaar-tussen-start-en-wissel, klaar-tussen-start-en-doel of klaar-tussen-wissel-en-doel.
+Iedere zet is tussen-start-en-wissel, tussen-start-en-doel, tussen-wissel-en-doel, klaar-tussen-start-en-wissel, klaar-tussen-start-en-doel of klaar-tussen-wissel-en-doel.
 
 # Toon de zetten.
 Als de zet is klaar-tussen-start-en-wissel of de zet is klaar-tussen-start-en-doel of de zet klaar-tussen-wissel-en-doel is dan toon "* startpaal:\t~+'startpaal'<a>`~.\n* wisselpaal:\t~+'wisselpaal'<a>`~.\n* doelpaal:\t~+'doelpaal'<a>`~.\n\n".

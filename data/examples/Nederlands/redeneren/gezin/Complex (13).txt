@@ -1,4 +1,4 @@
-Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
 Paul heeft 2 ouders, genaamd Jan en Anna.
 Johan is een kind van Jan en Anna.
 Laura is een kind van Jan en Anna.

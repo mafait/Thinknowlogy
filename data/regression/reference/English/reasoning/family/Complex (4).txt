@@ -124,7 +124,7 @@
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
@@ -184,7 +184,7 @@
 <	- Laura has a mother, called Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My assumptions:
@@ -221,11 +221,11 @@
 <	- John is a father of Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is maybe not a boy and not a man. Because:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.
@@ -309,14 +309,14 @@
 <	- Laura has probably 2 parents, called John and Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is possibly a daughter of John and Anna.
 * 	and:
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < John has probably 3 children, called Laura, Paul and Joe. Because:
 <	- Every family has parents and children.
 <	- John is a parent of Laura, Paul and Joe.
@@ -343,7 +343,7 @@
 <	- Laura has a mother, called Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Anna has probably a child, called Laura. Because:
 <	- Every family has parents and children.
 <	- Anna is probably a parent of Laura.
@@ -474,11 +474,11 @@
 <	- John is a father of Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is maybe not a boy and not a man. Because:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.
@@ -558,14 +558,14 @@
 <	- Laura has probably 2 parents, called John and Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is possibly a daughter of John and Anna.
 * 	and:
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < John is probably a person. Because:
 <	- Every person is a man or a woman.
 <	- John is a man.
@@ -611,7 +611,7 @@
 <	- Laura has a mother, called Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Anna has probably 2 children, called Laura and Joe. Because:
 <	- Every family has parents and children.
 <	- Anna is probably a parent of Laura and Joe.
@@ -651,7 +651,7 @@
 * 	and:
 <	- Anna is a parent of Joe.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 < 
 * 
 * My conclusions:
@@ -742,11 +742,11 @@
 <	- John is a father of Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is maybe not a boy and not a man. Because:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.
@@ -826,14 +826,14 @@
 <	- Laura has probably 2 parents, called John and Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is possibly a daughter of John and Anna.
 * 	and:
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < John is probably a person. Because:
 <	- Every person is a man or a woman.
 <	- John is a man.
@@ -899,7 +899,7 @@
 <	- Laura has a mother, called Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Anna is probably a person. Because:
 <	- Anna is a parent of Joe.
 <	- A parent is probably a person.
@@ -1020,11 +1020,11 @@
 <	- John is a father of Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is maybe not a boy and not a man. Because:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.

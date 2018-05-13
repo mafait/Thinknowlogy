@@ -1,9 +1,9 @@
-/*	Class:			FileList
+﻿/*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -180,6 +180,7 @@ class FileList extends List
 
 	protected FileResultType openFile( boolean isAddingSubPath, boolean isInfoFile, boolean isTestFile, boolean isReportingErrorIfFileDoesNotExist, String defaultSubPathString, String fileNameString, String testOutputFileSubPathString, String testReferenceFileSubPathString )
 		{
+		long startNanoTime = System.nanoTime();
 		BufferedReader readFile = null;
 		BufferedWriter writeFile = null;
 		StringBuffer readFileNameStringBuffer = new StringBuffer();
@@ -201,9 +202,9 @@ class FileList extends List
 		fileNameString.charAt( 0 ) != Constants.SYMBOL_BACK_SLASH &&
 		fileNameString.indexOf( Constants.DOUBLE_COLON_STRING ) < 0 )
 			{
-			readFileNameStringBuffer.append( CommonVariables.currentPathStringBuffer );
-			referenceFileNameStringBuffer.append( CommonVariables.currentPathStringBuffer );
-			writeFileNameStringBuffer.append( CommonVariables.currentPathStringBuffer );
+			readFileNameStringBuffer.append( GlobalVariables.currentPathStringBuffer );
+			referenceFileNameStringBuffer.append( GlobalVariables.currentPathStringBuffer );
+			writeFileNameStringBuffer.append( GlobalVariables.currentPathStringBuffer );
 
 			if( isAddingSubPath &&
 			// File name doesn't contains sub-path
@@ -269,6 +270,8 @@ class FileList extends List
 				return startFileResultError( 1, "I couldn't open " + ( readFile == null ? "file for reading: \"" + readFileNameStringBuffer + "\"" : ( testReferenceFileSubPathString != null && fileResult.referenceFile == null ? ( "reference file for reading: \"" + referenceFileNameStringBuffer + "\"" ) : ( testOutputFileSubPathString == null ? "an unknown file" : ( " file for writing: \"" + writeFileNameStringBuffer + "\"" ) ) ) ) );
 				}
 			}
+
+		GlobalVariables.openFileTime += ( System.nanoTime() - startNanoTime );
 
 		return fileResult;
 		}

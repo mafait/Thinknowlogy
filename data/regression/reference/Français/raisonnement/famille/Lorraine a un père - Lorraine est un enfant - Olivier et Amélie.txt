@@ -257,11 +257,6 @@
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Lorraine est un enfant de Olivier et Amélie.
 < Amélie a possible une fille, appelée Lorraine. En raison:
-<	- Amélie est la mère de Lorraine, Pascal et Julien.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Lorraine» est probablement féminin.
-* 	et:
 <	- Lorraine a une mère, appelée Amélie.
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.

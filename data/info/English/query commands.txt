@@ -1,43 +1,43 @@
 ﻿Display "------------------------------------------------------------------------------".
-Display " The available query commands are:				Examples:".
+Display " The available query commands are:		Examples:".
 Display "------------------------------------------------------------------------------".
-Display " \~(sentenceNr)		item identification			\~(123)".
-Display " \~(sentenceNr,itemNr)	item identification			\~(123,1)".
-Display " \~(,itemNr)		item identification			\~(,3)".
-Display " \~[sentenceNr]		reference to item identification	\~[123]".
-Display " \~[sentenceNr,itemNr]	reference to item identification	\~[123,1]".
-Display " \~[,itemNr]		reference to item identification	\~[,3]".
-Display " \~<adminListChar>	administrator list			\~<W>".
-Display " \~<wordListChar>	word list				\~<w>".
-Display " \~<listCharlistChar>	multiple lists				\~<Xas>".
-Display " \~'word'		word					\~'English'".
-Display " \~`wordReference`	reference to word			\~`English`".
-Display " \~\"textString\"		text string				\~\"sentence\"".
+Display " \~(sentenceNr)		item identification	\~(123)".
+Display " \~(sentenceNr,itemNr)	item identification	\~(123,1)".
+Display " \~(,itemNr)		item identification	\~(,3)".
+Display " \~[sentenceNr]		reference to item id.	\~[123]".
+Display " \~[sentenceNr,itemNr]	reference to item id.	\~[123,1]".
+Display " \~[,itemNr]		reference to item id.	\~[,3]".
+Display " \~<adminListChar>	administrator list	\~<W>".
+Display " \~<wordListChar>	word list		\~<w>".
+Display " \~<listCharlistChar>	multiple lists		\~<Xas>".
+Display " \~'word'		word		\~'English'".
+Display " \~`wordReference`	reference to word	\~`English`".
+Display " \~\"textString\"		text string		\~\"sentence\"".
 Display "------------------------------------------------------------------------------".
 Display " Both wildcards '?' and '*' can be used in:".
-Display "			* words					\~'Engl?sh'".
-Display "			* references to a word			\~`Eng*sh`".
-Display "			* text strings				\~\"gr?m*\"".
+Display "	 * words			\~'Engl?sh'".
+Display "	 * references to a word		\~`Eng*sh`".
+Display "	 * text strings			\~\"gr?m*\"".
 Display "------------------------------------------------------------------------------".
-Display " Empty item specification will display all items		\~()".
+Display " Empty item specification will display all items	\~()".
 Display " Empty list specification will display all items		\~<>".
 Display "------------------------------------------------------------------------------".
-Display " Adding '#' will provide count functionality			\~#(123)".
-Display " Adding '+' will select only active items			\~+(123)".
-Display " Adding '=' will select only inactive items			\~=(123)".
-Display " Adding '$' will select only archived items			\~$(123)".
-Display " Adding '%' will select only replaced items			\~%(123)".
-Display " Adding '&' will select only deleted items			\~&(123)".
+Display " Adding '#' will provide count functionality		\~#(123)".
+Display " Adding '+' will select only active items		\~+(123)".
+Display " Adding '=' will select only inactive items		\~=(123)".
+Display " Adding '$' will select only archived items		\~$(123)".
+Display " Adding '%' will select only replaced items		\~%(123)".
+Display " Adding '&' will select only deleted items		\~&(123)".
 Display " Concatenation of queries will provide 'AND' functionality	\~(123)<s>".
 Display " Adding '*' will select also attached justification items	\~*'Laura'<s>`daughter`".
 Display " Adding '**' will select also justification specifications	\~**'Laura'<s>`daughter`".
 Display "------------------------------------------------------------------------------".
-Display " Adding ' at the end will display only words			\~(123)'".
-Display " Adding ` at the end will display only word references		\~(123)`".
-Display " Adding \" at the end will display only text strings		\~(123)\"".
-Display " Adding '' will display only words on new line			\~(123)''".
+Display " Adding ' at the end will display only words		\~(123)'".
+Display " Adding ` at the end will display only word references	\~(123)`".
+Display " Adding \" at the end will display only text strings	\~(123)\"".
+Display " Adding '' will display only words on new line		\~(123)''".
 Display " Adding `` will display only word references on new line	\~(123)``".
-Display " Adding \"\" will display only text strings on new line		\~(123)\"\"".
+Display " Adding \"\" will display only text strings on new line	\~(123)\"\"".
 Display "------------------------------------------------------------------------------".
-Display " In files '\~' will mark the end of a query			...\~#<W>\~...".
+Display " In files '\~' will mark the end of a query		...\~#<W>\~...".
 Display "------------------------------------------------------------------------------".

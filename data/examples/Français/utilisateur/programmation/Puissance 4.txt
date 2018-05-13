@@ -1,32 +1,32 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To demonstrate programming in natural language.
-#	Version:	Thinknowlogy 2017r2 (Science as it should be)
+# Purpose: To demonstrate programming in natural language.
+# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Un résumé du jeu Puissance 4:
+# Un résumé du jeu Puissance 4:
 #----------------------------------------------------------------------------
-#	Le but du jeu est d'aligner 4 pions sur une grille comptant 6 rangées
-#	et 7 colonnes. Chaque joueur dispose de 21 pions d'une couleur (par
-#	convention, en général jaune ou rouge). Tour à tour les deux joueurs
-#	placent un pion dans la colonne de leur choix, le pion coulisse alors
-#	jusqu'à la position la plus basse possible dans ladite colonne à la
-#	suite de quoi c'est à l'adversaire de jouer. Le vainqueur est le joueur
-#	qui réalise le premier un alignement (horizontal, vertical ou diagonal)
-#	d'au moins quatre pions de sa couleur. Si, alors que toutes les cases
-#	de la grille de jeu sont remplies, aucun des deux joueurs n'a réalisé un
-#	tel alignement, la partie est déclarée nulle.
+# Le but du jeu est d'aligner 4 pions sur une grille comptant 6 rangées
+# et 7 colonnes. Chaque joueur dispose de 21 pions d'une couleur (par
+# convention, en général jaune ou rouge). Tour à tour les deux joueurs
+# placent un pion dans la colonne de leur choix, le pion coulisse alors
+# jusqu'à la position la plus basse possible dans ladite colonne à la
+# suite de quoi c'est à l'adversaire de jouer. Le vainqueur est le joueur
+# qui réalise le premier un alignement (horizontal, vertical ou diagonal)
+# d'au moins quatre pions de sa couleur. Si, alors que toutes les cases
+# de la grille de jeu sont remplies, aucun des deux joueurs n'a réalisé un
+# tel alignement, la partie est déclarée nulle.
 #----------------------------------------------------------------------------
-#	Voir le texte intégral: https://fr.wikipedia.org/wiki/Puissance_4
+# Voir le texte intégral: https://fr.wikipedia.org/wiki/Puissance_4
 #----------------------------------------------------------------------------
 
 # Définitions initiales.
-#Un virage est le vôtre ou le mien.
-Un virage est vôtre ou mien.
-Un mouvement est A, B, C, D, E, F ou G.
+#Chaque virage est le vôtre ou le mien.
+Chaque virage est vôtre ou mien.
+Chaque mouvement est A, B, C, D, E, F ou G.
 Un niveau de résolution est faible ou élevé.
 
 # Résoudre le problème.
@@ -85,7 +85,7 @@ Si le virage est assigné et le jeu n'est pas assigné puis si A4 est la valeur 
 Si le virage est assigné et le jeu n'est pas assigné puis si A5 est la valeur du virage, B4 est la valeur du virage, C3 est la valeur du virage et D2 est la valeur du virage ou B5 est la valeur du virage, C4 est la valeur du virage, D3 est la valeur du virage et E2 est la valeur du virage ou C5 est la valeur du virage, D4 est la valeur du virage, E3 est la valeur du virage et F2 est la valeur du virage ou D5 est la valeur du virage, E4 est la valeur du virage, F3 est la valeur du virage et G2 est la valeur du virage puis le jeu est la valeur du virage.
 Si le virage est assigné et le jeu n'est pas assigné puis si A6 est la valeur du virage, B5 est la valeur du virage, C4 est la valeur du virage et D3 est la valeur du virage ou B6 est la valeur du virage, C5 est la valeur du virage, D4 est la valeur du virage et E3 est la valeur du virage ou C6 est la valeur du virage, D5 est la valeur du virage, E4 est la valeur du virage et F3 est la valeur du virage ou D6 est la valeur du virage, E5 est la valeur du virage, F4 est la valeur du virage et G3 est la valeur du virage puis le jeu est la valeur du virage.
 
-# La puce sera mis dans la colonne choisie et «tomber» dans la cellule libre le plus bas.
+# La puce sera mis dans la colonne choisie et tomber dans la cellule libre le plus bas.
 Si le mouvement est A et le jeu n'est pas assigné puis si A1 n'est pas assigné puis A1 est la valeur du virage autre si A2 n'est pas assigné puis A2 est la valeur du virage autre si A3 n'est pas assigné puis A3 est la valeur du virage autre si A4 n'est pas assigné puis A4 est la valeur du virage autre si A5 n'est pas assigné puis A5 est la valeur du virage autre si A6 n'est pas assigné puis A6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
 Si le mouvement est B et le jeu n'est pas assigné puis si B1 n'est pas assigné puis B1 est la valeur du virage autre si B2 n'est pas assigné puis B2 est la valeur du virage autre si B3 n'est pas assigné puis B3 est la valeur du virage autre si B4 n'est pas assigné puis B4 est la valeur du virage autre si B5 n'est pas assigné puis B5 est la valeur du virage autre si B6 n'est pas assigné puis B6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
 Si le mouvement est C et le jeu n'est pas assigné puis si C1 n'est pas assigné puis C1 est la valeur du virage autre si C2 n'est pas assigné puis C2 est la valeur du virage autre si C3 n'est pas assigné puis C3 est la valeur du virage autre si C4 n'est pas assigné puis C4 est la valeur du virage autre si C5 n'est pas assigné puis C5 est la valeur du virage autre si C6 n'est pas assigné puis C6 est la valeur du virage autre affichez "\nDésolé, colonne ~+'mouvement'<a>`~ est plein.\n" et le mouvement est invalide.
@@ -113,4 +113,4 @@ Le virage est vôtre.
 #C++## Pour un jeu avancé, tapez:	Le niveau de résolution est élevé.
 #C++## Pour revenir au niveau débutant:	Le niveau de résolution est faible.
 #C++## Infos sur le mouvement:		Affichez information sur le mouvement.
-#Java## Si le plateau de jeu semble comprimé, s'il vous plaît changer la police en utilisant le bouton «changer la police».
+#Java## Remarque: La police est ajustée pour afficher la carte de jeu correctement.

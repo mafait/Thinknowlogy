@@ -139,7 +139,7 @@
 <	- Anna has a son, called Paul.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 
 * My questions:
 < Is Paul a boy or a man? Because:
@@ -242,7 +242,7 @@
 <	- Anna has a son, called Paul.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 
 * My questions:
 < Is Paul a boy or a man? Because:

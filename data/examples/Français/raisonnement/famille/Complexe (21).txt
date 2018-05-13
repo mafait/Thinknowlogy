@@ -1,4 +1,4 @@
-Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
 Lorraine a un père, appelé Olivier.
 Julien est un enfant de Olivier et Amélie.
 Olivier est le père de Pascal, Julien et Lorraine.

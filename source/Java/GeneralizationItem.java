@@ -1,11 +1,11 @@
-/*	Class:			GeneralizationItem
+﻿/*	Class:			GeneralizationItem
  *	Parent class:	Item
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -37,6 +37,15 @@ class GeneralizationItem extends Item
 	private WordItem generalizationWordItem_;
 
 
+	// Private methods
+
+	private boolean isNoun()
+		{
+		return ( generalizationWordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR ||
+				generalizationWordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
+		}
+
+
 	// Constructor
 
 	protected GeneralizationItem( boolean isLanguageWord, boolean isRelation, short languageNr, short specificationWordTypeNr, short generalizationWordTypeNr, WordItem generalizationWordItem, List myList, WordItem myWordItem )
@@ -66,21 +75,21 @@ class GeneralizationItem extends Item
 		{
 		String wordString;
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
 		if( generalizationWordItem_ != null &&
 		( wordString = generalizationWordItem_.wordTypeString( true, generalizationWordTypeNr_ ) ) != null )
 			{
-			if( CommonVariables.hasFoundQuery )
-				CommonVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+			if( GlobalVariables.hasFoundQuery )
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				CommonVariables.queryStringBuffer.append( statusChar() );
+				GlobalVariables.queryStringBuffer.append( statusChar() );
 
-			CommonVariables.hasFoundQuery = true;
-			CommonVariables.queryStringBuffer.append( wordString );
+			GlobalVariables.hasFoundQuery = true;
+			GlobalVariables.queryStringBuffer.append( wordString );
 			}
 		}
 
@@ -99,18 +108,18 @@ class GeneralizationItem extends Item
 
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		StringBuffer queryStringBuffer;
-		String wordString;
-		String languageNameString = myWordItem().languageNameString( languageNr_ );
 		String generalizationWordTypeString = myWordItem().wordTypeNameString( generalizationWordTypeNr_ );
+		String languageNameString = myWordItem().languageNameString( languageNr_ );
+		StringBuffer queryStringBuffer;
 		String specificationWordTypeString = myWordItem().wordTypeNameString( specificationWordTypeNr_ );
+		String wordString;
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
-		if( CommonVariables.queryStringBuffer == null )
-			CommonVariables.queryStringBuffer = new StringBuffer();
+		if( GlobalVariables.queryStringBuffer == null )
+			GlobalVariables.queryStringBuffer = new StringBuffer();
 
-		queryStringBuffer = CommonVariables.queryStringBuffer;
+		queryStringBuffer = GlobalVariables.queryStringBuffer;
 
 		if( isLanguageWord_ )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isLanguageWord" );
@@ -154,7 +163,7 @@ class GeneralizationItem extends Item
 
 	protected GeneralizationItem generalizationItem( boolean isIncludingThisItem, boolean isOnlySelectingCurrentLanguage, boolean isOnlySelectingNoun, boolean isRelation )
 		{
-		short currentLanguageNr = CommonVariables.currentLanguageNr;
+		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		GeneralizationItem searchGeneralizationItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
 
 		while( searchGeneralizationItem != null )
@@ -165,7 +174,7 @@ class GeneralizationItem extends Item
 			searchGeneralizationItem.languageNr_ == currentLanguageNr ) &&
 
 			( !isOnlySelectingNoun ||
-			isNounWordType( searchGeneralizationItem.generalizationWordTypeNr_ ) ) )
+			searchGeneralizationItem.isNoun() ) )
 				return searchGeneralizationItem;
 
 			searchGeneralizationItem = searchGeneralizationItem.nextGeneralizationItem();

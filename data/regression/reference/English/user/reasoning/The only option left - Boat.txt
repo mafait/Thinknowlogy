@@ -1,4 +1,4 @@
 ﻿* 
 * My conclusions:
-< The boat is a rowing boat.
+< His boat is a rowing boat.
 < 

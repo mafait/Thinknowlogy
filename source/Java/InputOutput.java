@@ -1,8 +1,8 @@
 /*	Class:		InputOutput
  *	Purpose:	To read and write user information
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -37,8 +37,8 @@ class InputOutput
 	private static int currentPosition_;
 	private static int previousProgress_;
 
-	private static StringBuffer outputStringBuffer_;
 	private static StringBuffer currentStatusStringBuffer_;
+	private static StringBuffer outputStringBuffer_;
 
 	private static BufferedWriter testFile_;
 
@@ -56,9 +56,9 @@ class InputOutput
 	private static void displayStatus( short interfaceParameter )
 		{
 		String newStatusString;
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
 		
-		if( ( newStatusString = ( currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND : currentLanguageWordItem.interfaceString( interfaceParameter ) ) ) == null )
+		if( ( newStatusString = ( currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND_STRING : currentLanguageWordItem.interfaceString( interfaceParameter ) ) ) == null )
 			clearStatus();
 		else
 			{
@@ -103,13 +103,83 @@ class InputOutput
 			}
 		}
 
+	private static byte writeDiacriticalText( boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, String diacriticalTextString )
+		{
+		boolean hasFoundNewLine = false;
+		int position = 0;
+		char textChar = Constants.SYMBOL_QUESTION_MARK;
+		StringBuffer textStringBuffer = new StringBuffer();
+
+		if( diacriticalTextString != null )
+			{
+			isDisplayingExtraPromptLine_ = true;
+
+			if( diacriticalTextString.charAt( 0 ) == Constants.QUERY_STRING_START_CHAR )
+				position++;
+
+			while( GlobalVariables.result == Constants.RESULT_OK &&
+			position < diacriticalTextString.length() )
+				{
+				if( diacriticalTextString.charAt( position ) == Constants.SYMBOL_BACK_SLASH )
+					{
+					if( ++position < diacriticalTextString.length() )
+						{
+						if( ( textChar = convertDiacriticalChar( diacriticalTextString.charAt( position ) ) ) == Constants.NEW_LINE_CHAR )
+							hasFoundNewLine = true;
+						}
+					else
+						{
+						displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The text string ended with a diacritical sign" );
+						GlobalVariables.result = Constants.RESULT_ERROR;
+						}
+					}
+				else
+					textChar = diacriticalTextString.charAt( position );
+
+				if( GlobalVariables.result == Constants.RESULT_OK )
+					{
+					position++;
+					textStringBuffer.append( Constants.EMPTY_STRING + textChar );
+	
+					if( hasFoundNewLine ||
+	
+					( textStringBuffer.length() > 0 &&
+					position < diacriticalTextString.length() &&
+					diacriticalTextString.charAt( position ) == Constants.QUERY_CHAR ) )
+						{
+						if( writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) == Constants.RESULT_OK )
+							{
+							hasFoundNewLine = false;
+							textStringBuffer = new StringBuffer();
+							}
+						else
+							displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write a text string part" );
+						}
+					}
+				}
+
+			if( GlobalVariables.result == Constants.RESULT_OK &&
+			textStringBuffer.length() > 0 &&
+			writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) != Constants.RESULT_OK )
+				displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the last text string part" );
+			}
+		else
+			{
+			displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given diacritical text string is undefined" );
+			GlobalVariables.result = Constants.RESULT_ERROR;
+			}
+
+		return GlobalVariables.result;
+		}
+
 	private static byte writeText( boolean isSkippingInTestFile, boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, int leftWidth, int rightWidth, int printStringLength, String promptString, String writeString )
 		{
 		boolean startNewLine = false;
-		int wordPosition;
+		int firstLetterPosition = 0;
 		int i = 0;
 		int length = 0;
-		int firstLetterPosition = 0;
+		int promptStringLength;
+		int wordPosition;
 		String textString;
 
 		if( writeString != null )
@@ -150,9 +220,10 @@ class InputOutput
 					while( i < printStringLength ||
 					leftWidth > Constants.NO_CENTER_WIDTH )
 						{
-						if( currentPosition_ == 0 )
+						if( currentPosition_ == 0 &&
+						( promptStringLength = promptString.length() ) > 0 )
 							{
-							currentPosition_ = promptString.length() - 1;
+							currentPosition_ = ( promptStringLength - 1 );
 							addStringToOutput( isSkippingInTestFile, false, promptString );
 							}
 	
@@ -173,6 +244,7 @@ class InputOutput
 								!Character.isWhitespace( textString.charAt( i ) ) );
 	
 								if( i < printStringLength &&
+
 								( textString.charAt( i ) == Constants.NEW_LINE_CHAR ||
 								textString.charAt( i ) == Constants.CARRIAGE_RETURN_CHAR ) )
 									length--;
@@ -181,6 +253,7 @@ class InputOutput
 								}
 	
 							if( i < printStringLength &&
+
 							( textString.charAt( i ) == Constants.NEW_LINE_CHAR ||
 							textString.charAt( i ) == Constants.CARRIAGE_RETURN_CHAR ) )
 								{
@@ -235,30 +308,30 @@ class InputOutput
 				while( rightWidth-- > Constants.NO_CENTER_WIDTH )
 					{
 					currentPosition_++;
-					addStringToOutput( isSkippingInTestFile, ( ( i + 1 == printStringLength ) && rightWidth == Constants.NO_CENTER_WIDTH ), Constants.SPACE_STRING );
+					addStringToOutput( isSkippingInTestFile, ( ( i + 1 ) == printStringLength && rightWidth == Constants.NO_CENTER_WIDTH ), Constants.SPACE_STRING );
 					}
 				}
 			else
 				{
 				displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given write string is empty" );
-				CommonVariables.result = Constants.RESULT_ERROR;
+				GlobalVariables.result = Constants.RESULT_ERROR;
 				}
 			}
 		else
 			{
 			displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given write string is undefined" );
-			CommonVariables.result = Constants.RESULT_ERROR;
+			GlobalVariables.result = Constants.RESULT_ERROR;
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	private static byte writeText( boolean isSkippingInTestFile, boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, int queryWidth, String promptString, String textString )
 		{
-		int widthDifference;
 		int leftWidth = Constants.NO_CENTER_WIDTH;
 		int rightWidth = Constants.NO_CENTER_WIDTH;
 		int textStringLength;
+		int widthDifference;
 
 		if( textString != null )
 			{
@@ -271,13 +344,13 @@ class InputOutput
 				clearProgress();
 
 				if( promptTypeNr == Constants.INPUT_OUTPUT_PROMPT_WARNING )
-					CommonVariables.hasDisplayedWarning = true;
+					GlobalVariables.hasDisplayedWarning = true;
 				else
 					{
 					if( promptTypeNr == Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY )
-						CommonVariables.hasDisplayedIntegrityWarning = true;
+						GlobalVariables.hasDisplayedIntegrityWarning = true;
 					else
-						CommonVariables.hasDisplayedMessage = true;
+						GlobalVariables.hasDisplayedMessage = true;
 					}
 
 				if( queryWidth > 0 &&
@@ -299,16 +372,16 @@ class InputOutput
 			else
 				{
 				displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given text string is empty" );
-				CommonVariables.result = Constants.RESULT_ERROR;
+				GlobalVariables.result = Constants.RESULT_ERROR;
 				}
 			}
 		else
 			{
 			displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given text string is undefined" );
-			CommonVariables.result = Constants.RESULT_ERROR;
+			GlobalVariables.result = Constants.RESULT_ERROR;
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	private static String getPromptString( short promptTypeNr )
@@ -355,8 +428,8 @@ class InputOutput
 		lastShownInterfaceParameter_ = Constants.NO_INTERFACE_PARAMETER;
 		lastUsedPromptTypeNr_ = Constants.INPUT_OUTPUT_PROMPT_QUERY;
 
-		outputStringBuffer_ = new StringBuffer();
 		currentStatusStringBuffer_ = null;
+		outputStringBuffer_ = new StringBuffer();
 
 		testFile_ = null;
 		}
@@ -365,11 +438,11 @@ class InputOutput
 
 	protected static void startProgress( short interfaceParameter1, short shortNumber, short interfaceParameter2, int startProgress, int maxProgress )
 		{
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
-		Console.startProgress( startProgress, maxProgress, ( currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND : currentLanguageWordItem.interfaceString( interfaceParameter1 ) + shortNumber + currentLanguageWordItem.interfaceString( interfaceParameter2 ) + "  " + Constants.QUERY_ITEM_START_STRING + CommonVariables.currentSentenceNr + ( CommonVariables.currentSentenceItemNr == Constants.NO_SENTENCE_NR ? Constants.EMPTY_STRING : Constants.QUERY_SEPARATOR_STRING + CommonVariables.currentSentenceItemNr ) + Constants.QUERY_ITEM_END_CHAR ) );
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
+		Console.startProgress( startProgress, maxProgress, ( currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND_STRING : currentLanguageWordItem.interfaceString( interfaceParameter1 ) + shortNumber + currentLanguageWordItem.interfaceString( interfaceParameter2 ) + "  " + Constants.QUERY_ITEM_START_STRING + GlobalVariables.currentSentenceNr + ( GlobalVariables.currentSentenceItemNr == Constants.NO_SENTENCE_NR ? Constants.EMPTY_STRING : Constants.QUERY_SEPARATOR_STRING + GlobalVariables.currentSentenceItemNr ) + Constants.QUERY_ITEM_END_CHAR ) );
 		}
 
-	protected static void displayProgress( int currentProgress )
+	protected static void displayProgressBar( int currentProgress )
 		{
 		if( currentProgress != previousProgress_ )
 			{
@@ -394,8 +467,8 @@ class InputOutput
 
 	protected static void displayError( char methodListChar, String classNameString, String parentClassNameString, String wordNameString, int methodLevel, String errorString )
 		{
-		StringBuffer errorStringBuffer = new StringBuffer();
 		StackTraceElement[] elements;
+		StringBuffer errorStringBuffer = new StringBuffer();
 		Throwable t = new Throwable();
 
 		// Show remaining output
@@ -434,7 +507,7 @@ class InputOutput
 
 		errorStringBuffer.append( Constants.INPUT_OUTPUT_ERROR_MESSAGE_END_STRING );
 
-		Console.addError( Constants.INPUT_OUTPUT_ERROR_CURRENT_ID_STRING + Constants.QUERY_ITEM_START_CHAR + CommonVariables.currentSentenceNr + Constants.QUERY_SEPARATOR_CHAR + CommonVariables.currentSentenceItemNr + Constants.QUERY_ITEM_END_CHAR, errorStringBuffer.toString() );
+		Console.addError( Constants.INPUT_OUTPUT_ERROR_CURRENT_ID_STRING + Constants.QUERY_ITEM_START_CHAR + GlobalVariables.currentSentenceNr + Constants.QUERY_SEPARATOR_CHAR + GlobalVariables.currentSentenceItemNr + Constants.QUERY_ITEM_END_CHAR, errorStringBuffer.toString() );
 		}
 
 	protected static boolean hasReadLine()
@@ -506,7 +579,7 @@ class InputOutput
 					displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the line" );
 				}
 
-			if( CommonVariables.result == Constants.RESULT_OK )
+			if( GlobalVariables.result == Constants.RESULT_OK )
 				{
 				if( isPassword ||
 				readFile == null )
@@ -523,7 +596,7 @@ class InputOutput
 						else
 							{
 							displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The returned password string is undefined" );
-							CommonVariables.result = Constants.RESULT_ERROR;
+							GlobalVariables.result = Constants.RESULT_ERROR;
 							}
 						}
 					else
@@ -540,7 +613,7 @@ class InputOutput
 						else
 							{
 							displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The returned read line string is undefined" );
-							CommonVariables.result = Constants.RESULT_ERROR;
+							GlobalVariables.result = Constants.RESULT_ERROR;
 							}
 						}
 					}
@@ -574,11 +647,11 @@ class InputOutput
 					catch( IOException exception )
 						{
 						displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, exception.toString() );
-						CommonVariables.result = Constants.RESULT_ERROR;
+						GlobalVariables.result = Constants.RESULT_ERROR;
 						}
 					}
 
-				if( CommonVariables.result == Constants.RESULT_OK &&
+				if( GlobalVariables.result == Constants.RESULT_OK &&
 				hasReadLine_ &&
 				readString != null &&
 				( readStringLength = readString.length() ) > 0 )
@@ -597,84 +670,15 @@ class InputOutput
 		else
 			{
 			displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given read string buffer is undefined" );
-			CommonVariables.result = Constants.RESULT_ERROR;
+			GlobalVariables.result = Constants.RESULT_ERROR;
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeDiacriticalText( short promptTypeNr, String diacriticalTextString )
 		{
 		return writeDiacriticalText( true, true, promptTypeNr, diacriticalTextString );
-		}
-
-	protected static byte writeDiacriticalText( boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, String diacriticalTextString )
-		{
-		boolean hasFoundNewLine = false;
-		int position = 0;
-		char textChar = Constants.SYMBOL_QUESTION_MARK;
-		StringBuffer textStringBuffer = new StringBuffer();
-
-		if( diacriticalTextString != null )
-			{
-			isDisplayingExtraPromptLine_ = true;
-
-			if( diacriticalTextString.charAt( 0 ) == Constants.QUERY_STRING_START_CHAR )
-				position++;
-
-			while( CommonVariables.result == Constants.RESULT_OK &&
-			position < diacriticalTextString.length() )
-				{
-				if( diacriticalTextString.charAt( position ) == Constants.SYMBOL_BACK_SLASH )
-					{
-					if( ++position < diacriticalTextString.length() )
-						{
-						if( ( textChar = convertDiacriticalChar( diacriticalTextString.charAt( position ) ) ) == Constants.NEW_LINE_CHAR )
-							hasFoundNewLine = true;
-						}
-					else
-						{
-						displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The text string ended with a diacritical sign" );
-						CommonVariables.result = Constants.RESULT_ERROR;
-						}
-					}
-				else
-					textChar = diacriticalTextString.charAt( position );
-
-				if( CommonVariables.result == Constants.RESULT_OK )
-					{
-					position++;
-					textStringBuffer.append( Constants.EMPTY_STRING + textChar );
-	
-					if( hasFoundNewLine ||
-	
-					( textStringBuffer.length() > 0 &&
-					position < diacriticalTextString.length() &&
-					diacriticalTextString.charAt( position ) == Constants.QUERY_CHAR ) )
-						{
-						if( writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) == Constants.RESULT_OK )
-							{
-							hasFoundNewLine = false;
-							textStringBuffer = new StringBuffer();
-							}
-						else
-							displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write a text string part" );
-						}
-					}
-				}
-
-			if( CommonVariables.result == Constants.RESULT_OK &&
-			textStringBuffer.length() > 0 &&
-			writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, Constants.NO_CENTER_WIDTH, null, textStringBuffer.toString() ) != Constants.RESULT_OK )
-				displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the last text string part" );
-			}
-		else
-			{
-			displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given diacritical text string is undefined" );
-			CommonVariables.result = Constants.RESULT_ERROR;
-			}
-
-		return CommonVariables.result;
 		}
 
 	protected static byte writeInterfaceText( boolean isCheckingForDuplicateInterfaceParameter, short promptTypeNr, short interfaceParameter )
@@ -684,7 +688,7 @@ class InputOutput
 
 	protected static byte writeInterfaceText( boolean isCheckingForDuplicateInterfaceParameter, boolean isReturningToPosition, short promptTypeNr, short interfaceParameter )
 		{
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
 
 		if( currentLanguageWordItem != null )
 			{
@@ -698,51 +702,51 @@ class InputOutput
 		else
 			{
 			displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
-			CommonVariables.result = Constants.RESULT_ERROR;
+			GlobalVariables.result = Constants.RESULT_ERROR;
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, int intNumber, short interfaceParameter2 )
 		{
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
 
 		if( currentLanguageWordItem != null )
 			return writeDiacriticalText( promptTypeNr, currentLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber + currentLanguageWordItem.interfaceString( interfaceParameter2 ) );
 
 		displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
-		CommonVariables.result = Constants.RESULT_ERROR;
-		return CommonVariables.result;
+		GlobalVariables.result = Constants.RESULT_ERROR;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, int intNumber, short interfaceParameter2, String textString, short interfaceParameter3 )
 		{
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
 
 		if( currentLanguageWordItem != null )
 			return writeDiacriticalText( promptTypeNr, currentLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber + currentLanguageWordItem.interfaceString( interfaceParameter2 ) + textString + currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
 
 		displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
-		CommonVariables.result = Constants.RESULT_ERROR;
-		return CommonVariables.result;
+		GlobalVariables.result = Constants.RESULT_ERROR;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, int intNumber1, short interfaceParameter2, int intNumber2, short interfaceParameter3, String textString, short interfaceParameter4 )
 		{
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
 
 		if( currentLanguageWordItem != null )
 			return writeDiacriticalText( promptTypeNr, currentLanguageWordItem.interfaceString( interfaceParameter1 ) + intNumber1 + currentLanguageWordItem.interfaceString( interfaceParameter2 ) + intNumber2 + currentLanguageWordItem.interfaceString( interfaceParameter3 ) + textString + currentLanguageWordItem.interfaceString( interfaceParameter4 ) );
 
 		displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
-		CommonVariables.result = Constants.RESULT_ERROR;
-		return CommonVariables.result;
+		GlobalVariables.result = Constants.RESULT_ERROR;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeInterfaceText( boolean isCheckingForDuplicateInterfaceParameter, short promptTypeNr, short interfaceParameter1, String textString, short interfaceParameter2 )
 		{
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
 
 		if( currentLanguageWordItem != null )
 			{
@@ -756,46 +760,46 @@ class InputOutput
 		else
 			{
 			displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
-			CommonVariables.result = Constants.RESULT_ERROR;
+			GlobalVariables.result = Constants.RESULT_ERROR;
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString, short interfaceParameter2 )
 		{
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
 
 		if( currentLanguageWordItem != null )
 			return writeDiacriticalText( promptTypeNr, currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString + currentLanguageWordItem.interfaceString( interfaceParameter2 ) );
 
 		displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
-		CommonVariables.result = Constants.RESULT_ERROR;
-		return CommonVariables.result;
+		GlobalVariables.result = Constants.RESULT_ERROR;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString1, short interfaceParameter2, String textString2, short interfaceParameter3 )
 		{
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
 
 		if( currentLanguageWordItem != null )
 			return writeDiacriticalText( promptTypeNr, currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString1 + currentLanguageWordItem.interfaceString( interfaceParameter2 ) + textString2 + currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
 
 		displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
-		CommonVariables.result = Constants.RESULT_ERROR;
-		return CommonVariables.result;
+		GlobalVariables.result = Constants.RESULT_ERROR;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeInterfaceText( short promptTypeNr, short interfaceParameter1, String textString, short interfaceParameter2, int intNumber, short interfaceParameter3 )
 		{
-		WordItem currentLanguageWordItem = CommonVariables.currentLanguageWordItem;
+		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
 
 		if( currentLanguageWordItem != null )
 			return writeDiacriticalText( promptTypeNr, currentLanguageWordItem.interfaceString( interfaceParameter1 ) + textString + currentLanguageWordItem.interfaceString( interfaceParameter2 ) + intNumber + currentLanguageWordItem.interfaceString( interfaceParameter3 ) );
 
 		displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The current interface language word is undefined" );
-		CommonVariables.result = Constants.RESULT_ERROR;
-		return CommonVariables.result;
+		GlobalVariables.result = Constants.RESULT_ERROR;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeText( short promptTypeNr, StringBuffer textStringBuffer1, StringBuffer textStringBuffer2 )
@@ -814,10 +818,10 @@ class InputOutput
 		else
 			{
 			displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given first diacritical text string buffer is undefined" );
-			CommonVariables.result = Constants.RESULT_ERROR;
+			GlobalVariables.result = Constants.RESULT_ERROR;
 			}
 
-		return CommonVariables.result;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeText( boolean isReturningToPosition, short promptTypeNr, int queryWidth, StringBuffer textStringBuffer )
@@ -826,8 +830,8 @@ class InputOutput
 			return writeText( false, true, isReturningToPosition, promptTypeNr, queryWidth, null, textStringBuffer.toString() );
 
 		displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "The given text string buffer is undefined" );
-		CommonVariables.result = Constants.RESULT_ERROR;
-		return CommonVariables.result;
+		GlobalVariables.result = Constants.RESULT_ERROR;
+		return GlobalVariables.result;
 		}
 
 	protected static byte writeText( boolean isSkippingInTestFile, boolean isReturningToPosition, short promptTypeNr, int queryWidth, String textString )

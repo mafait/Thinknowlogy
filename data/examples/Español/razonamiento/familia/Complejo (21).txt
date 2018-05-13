@@ -1,4 +1,4 @@
-Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
 Juan es padre de Pablo, José y Luisa.
 Luisa tiene un padre, llamado Juan.
 José tiene 2 padres, llamados Juan y Ana.

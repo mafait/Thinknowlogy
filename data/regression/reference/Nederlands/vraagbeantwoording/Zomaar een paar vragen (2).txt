@@ -4,6 +4,9 @@
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
 * 
+* U hebt eerder een gelijksoortige vraag gesteld:
+< Is een zet een getal?
+* 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
 < Nee, een zet is A, B, C, D, E, F of G.
@@ -29,11 +32,11 @@
 * Deze vraag is al beantwoord.
 * 
 * Mijn antwoord:
-< Nee, mijn zet is D.
+< Nee, zijn zet is D.
 < 
 * 
 * U hebt eerder een gelijksoortige vraag gesteld:
-< Is de zet A?
+< Is zijn zet A?
 * 
 * Deze vraag is al beantwoord.
 * 

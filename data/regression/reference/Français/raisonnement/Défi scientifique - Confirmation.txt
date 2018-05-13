@@ -52,12 +52,6 @@
 < Les États-Unis a un président, appelé Barack Obama.
 < 
 * 
-* Le mot «Barack Obama» est sémantiquement ambiguë:
-* - Soit l'entité réapparu,
-* - Ou il ya plusieurs instances de cette entité.
-* 
-* Dans ce dernier cas, s'il vous plaît améliorer la spécification des entités impliquées.
-* 
 * Mes conclusions qui sont confirmées:
 < Les États-Unis a un président, appelé Barack Obama.
 < 

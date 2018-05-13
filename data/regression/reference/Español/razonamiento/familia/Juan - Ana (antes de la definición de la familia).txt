@@ -21,6 +21,11 @@
 < Juan es parte de una familia.
 < 
 * 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Juan es probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Ana es parte de una familia.
 < Ana es una mujer.
@@ -31,7 +36,6 @@
 < Una madre es probablemente una persona.
 < Ana es probablemente una persona.
 < Ana no es probablemente un hombre.
-< Un padre es probablemente una persona.
 < 
 * 
 * Mis suposiciones:
@@ -67,7 +71,6 @@
 < Ana no es un padre.
 * 
 * Mis suposiciones:
-< Juan es probablemente una persona.
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
 < Pablo es posiblemente parte de una familia.

@@ -1,4 +1,4 @@
-Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
 Paul heeft een moeder, genaamd Anna.
 Laura is een kind van Jan en Anna.
 Johan is een jongen.

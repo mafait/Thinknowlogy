@@ -1,158 +1,160 @@
 ﻿------------------------------------------------------------------------------
  Use button <programming>	to learn about programming in natural language
- Use button <reasoning>		to learn about reasoning in natural language
+ Use button <reasoning>	to learn about reasoning in natural language
 ------------------------------------------------------------------------------
  Examples of available imperative sentences:
 ------------------------------------------------------------------------------
  Read the file "{filename}".	* Read a file
- Help.				* Displays this help information
- Undo.				* Undo the last sentence
- Redo.				* Redo an undone sentence
- Clear your mind.		* Forget previous knowledge
- Restart.			* Restart this program
- Display info about the languages.
- Display info about the lists.
- Display info about the word types.
+ Help.		* Displays this help information
+ Undo.		* Undo the last sentence
+ Redo.		* Redo an undone sentence
+ Clear your mind.	* Forget previous knowledge
+ Restart.		* Restart this program
+ Display information about the languages.
+ Display information about the lists.
+ Display information about the users.
+ Display information about the word types.
  Display the query commands.
  Display the copyright.
  Display the GPLv2-license.
  Display the warranty.
 ------------------------------------------------------------------------------
- Example files:	* Use button <more examples> or see
-		  folder: Thinknowlogy2017r2/data/examples/English/user/
- Fundamental:	* folder: Thinknowlogy2017r2/documents/
- Design:	* folder: Thinknowlogy2017r2/documents/design/
- Screenshots:	* folder: Thinknowlogy2017r2/screenshots/English/
+ Example files:	* Use button <more examples>
+              or see folder: Thinknowlogy2018r1/data/examples/English/user/
+ Fundamental:	* folder: Thinknowlogy2018r1/documents/
+ Design:	* folder: Thinknowlogy2018r1/documents/design/
+ Screenshots:	* folder: Thinknowlogy2018r1/screenshots/English/
 ------------------------------------------------------------------------------
 < 
 < Specifications:
-< Nederlands is the previous language. (learned from user Admin)
-< Français is a language. (learned from user Admin)
-< Español is a language. (learned from user Admin)
-< English is the current language. (learned from user Admin)
+< 中文 is the previous language. {learned from user Admin}
+< Nederlands is a language. {learned from user Admin}
+< Français is a language. {learned from user Admin}
+< Español is a language. {learned from user Admin}
+< English is the current language. {learned from user Admin}
 < 
 ------------------------------------------------------------------------------
- Total number of items: 7443.
+ Total number of items: 8604.
 ------------------------------------------------------------------------------
- Items in administrator:	375.
+ Items in administrator:	420.
 ------------------------------------------------------------------------------
- * Active items:			375.
-    <F> Files:					2.
-    <R> Read words (temporary):			3.
-    <S> Solve scores (temporary):		0.
-    <W> Words:					349, (predefined: 183).
-    <X> Conditions:				9.
-    <Y> Actions:				12.
-    <Z> Alternatives:				0.
- * Inactive items:			0.
- * Archived items:			0.
- * Replaced items:			0.
- * Deleted items:			0.
+ * Active items:	        420.
+    <F> Files:			2.
+    <R> Read words (temporary):	3.
+    <S> Solve scores (temporary):	0.
+    <W> Words:		389, (predefined: 189).
+    <X> Conditions:		11.
+    <Y> Actions:		15.
+    <Z> Alternatives:		0.
+ * Inactive items:	        0.
+ * Archived items:	        0.
+ * Replaced items:	        0.
+ * Deleted items:	        0.
 ------------------------------------------------------------------------------
- Items in words:		7068.
+ Items in words:	8184.
 ------------------------------------------------------------------------------
- * Active items:			7039.
-    <a> assignments:				5.
-    <c> collections:				232.
-    <g> generalizations:			313.
-    <i> interface:				1106.
-    <j> justification:				0.
-    <l> grammar:				4029.
-    <m> multiple word:				77.
-    <s> specifications:				364.
-    <r> write words (temporary):		0.
-    <w> word types:				913.
-    <x> context:				0.
- * Inactive items:			3.
- * Archived items:			21.
- * Replaced items:			5.
- * Deleted items:			0.
+ * Active items:	        8142.
+    <a> assignments:		6.
+    <c> collections:		276.
+    <g> generalizations:		345.
+    <i> interface:		1242.
+    <j> justification:		0.
+    <l> grammar:		4802.
+    <m> multiple word:		69.
+    <s> specifications:		401.
+    <r> write words (temporary):	0.
+    <w> word types:		1001.
+    <x> context:		0.
+ * Inactive items:	        3.
+ * Archived items:	        33.
+ * Replaced items:	        6.
+ * Deleted items:	        0.
 ------------------------------------------------------------------------------
 < 
 < Specifications:
-< Guest is a user. (learned from user Admin)
-< Developer is the current user. (learned from user Expert)
-< Expert is the previous user. (learned from user Guest)
+< Guest is a user. {learned from user Admin}
+< Developer is the current user. {learned from user Expert}
+< Expert is the previous user. {learned from user Guest}
 < 
 ------------------------------------------------------------------------------
- Total number of word type items:	918,	(all languages included).
+ Total number of word type items: 1006, (all languages included).
 ------------------------------------------------------------------------------
- * Active word type items:			918.
-   (@1)  Symbols:					18.
-   (@2)  Numerals:					43.
-   (@3)  Small letters:					104.
-   (@4)  Capital letters:				104.
-   (@5)  Proper names:					16.
-   (@6)  Adjectives:					165.
-   (@7)  Adverbs:					25.
-   (@8)  Answer words:					8.
-   (@9)  Articles:					18.
-   (@10) Conjunctions:					15.
-   (@11) Singular nouns:				171.
-   (@12) Plural nouns:					24.
+ * Active word type items:		1006.
+   (@1)  Symbols:			24.
+   (@2)  Numerals:			54.
+   (@3)  Small letters:			104.
+   (@4)  Capital letters:			104.
+   (@5)  Proper names:			20.
+   (@6)  Adjectives:			200.
+   (@7)  Adverbs:			32.
+   (@8)  Answer words:			10.
+   (@9)  Articles:			20.
+   (@10) Conjunctions:			18.
+   (@11) Singular nouns:			213.
+   (@12) Plural nouns:			24.
    (@13) Personal pronoun singular (subjective):	0.
-   (@14) Personal pronoun singular (objective):		0.
-   (@15) Possessive determiner singular:		20.
-   (@16) Possessive pronoun singular:			19.
-   (@17) Personal pronoun plural (subjective):		0.
+   (@14) Personal pronoun singular (objective):	0.
+   (@15) Possessive determiner singular:		23.
+   (@16) Possessive pronoun singular:		10.
+   (@17) Personal pronoun plural (subjective):		1.
    (@18) Personal pronoun plural (objective):		0.
-   (@19) Possessive determiner plural:			19.
-   (@20) Possessive pronoun plural:			21.
-   (@21) Prepositions:					18.
-   (@22) Singular verbs:				74.
-   (@23) Plural verbs:					24.
-   (@24) Selection words:				12.
- * Inactive word type items:			0.
- * Archived word type items:			0.
- * Replaced word type items:			0.
- * Deleted word type items:			0.
+   (@19) Possessive determiner plural:		0.
+   (@20) Possessive pronoun plural:		0.
+   (@21) Prepositions:			28.
+   (@22) Singular verbs:			83.
+   (@23) Plural verbs:			23.
+   (@24) Selection words:			15.
+ * Inactive word type items:		0.
+ * Archived word type items:		0.
+ * Replaced word type items:		0.
+ * Deleted word type items:		0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
- The available query commands are:				Examples:
+ The available query commands are:		Examples:
 ------------------------------------------------------------------------------
- ~(sentenceNr)		item identification			~(123)
- ~(sentenceNr,itemNr)	item identification			~(123,1)
- ~(,itemNr)		item identification			~(,3)
- ~[sentenceNr]		reference to item identification	~[123]
- ~[sentenceNr,itemNr]	reference to item identification	~[123,1]
- ~[,itemNr]		reference to item identification	~[,3]
- ~<adminListChar>	administrator list			~<W>
- ~<wordListChar>	word list				~<w>
- ~<listCharlistChar>	multiple lists				~<Xas>
- ~'word'		word					~'English'
- ~`wordReference`	reference to word			~`English`
- ~"textString"		text string				~"sentence"
+ ~(sentenceNr)		item identification	~(123)
+ ~(sentenceNr,itemNr)	item identification	~(123,1)
+ ~(,itemNr)		item identification	~(,3)
+ ~[sentenceNr]		reference to item id.	~[123]
+ ~[sentenceNr,itemNr]	reference to item id.	~[123,1]
+ ~[,itemNr]		reference to item id.	~[,3]
+ ~<adminListChar>	administrator list	~<W>
+ ~<wordListChar>	word list		~<w>
+ ~<listCharlistChar>	multiple lists		~<Xas>
+ ~'word'		word		~'English'
+ ~`wordReference`	reference to word	~`English`
+ ~"textString"		text string		~"sentence"
 ------------------------------------------------------------------------------
  Both wildcards '?' and '*' can be used in:
-			* words					~'Engl?sh'
-			* references to a word			~`Eng*sh`
-			* text strings				~"gr?m*"
+	 * words			~'Engl?sh'
+	 * references to a word		~`Eng*sh`
+	 * text strings			~"gr?m*"
 ------------------------------------------------------------------------------
- Empty item specification will display all items		~()
+ Empty item specification will display all items	~()
  Empty list specification will display all items		~<>
 ------------------------------------------------------------------------------
- Adding '#' will provide count functionality			~#(123)
- Adding '+' will select only active items			~+(123)
- Adding '=' will select only inactive items			~=(123)
- Adding '$' will select only archived items			~$(123)
- Adding '%' will select only replaced items			~%(123)
- Adding '&' will select only deleted items			~&(123)
+ Adding '#' will provide count functionality		~#(123)
+ Adding '+' will select only active items		~+(123)
+ Adding '=' will select only inactive items		~=(123)
+ Adding '$' will select only archived items		~$(123)
+ Adding '%' will select only replaced items		~%(123)
+ Adding '&' will select only deleted items		~&(123)
  Concatenation of queries will provide 'AND' functionality	~(123)<s>
  Adding '*' will select also attached justification items	~*'Laura'<s>`daughter`
  Adding '**' will select also justification specifications	~**'Laura'<s>`daughter`
 ------------------------------------------------------------------------------
- Adding ' at the end will display only words			~(123)'
- Adding ` at the end will display only word references		~(123)`
- Adding " at the end will display only text strings		~(123)"
- Adding '' will display only words on new line			~(123)''
+ Adding ' at the end will display only words		~(123)'
+ Adding ` at the end will display only word references	~(123)`
+ Adding " at the end will display only text strings	~(123)"
+ Adding '' will display only words on new line		~(123)''
  Adding `` will display only word references on new line	~(123)``
- Adding "" will display only text strings on new line		~(123)""
+ Adding "" will display only text strings on new line	~(123)""
 ------------------------------------------------------------------------------
- In files '~' will mark the end of a query			...~#<W>~...
+ In files '~' will mark the end of a query		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2017, Menno Mafait
- Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details type "Display
- the warranty.". This is free software, and you are welcome to redistribute
+ Copyright (C) 2009-2018, Menno Mafait
+ Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details type
+ "Display the warranty.". This is free software, and you are welcome to redistribute
  it under certain conditions; type "Display the GPLv2-license." for details.
 
 		    GNU GENERAL PUBLIC LICENSE
@@ -218,13 +220,13 @@ modification follow.
 
   0. This License applies to any program or other work which contains
 a notice placed by the copyright holder saying it may be distributed
-under the terms of this General Public License.  The 
+under the terms of this General Public License.  The "Program", below,
 refers to any such program or work, and a "work based on the Program"
 means either the Program or any derivative work under copyright law:
 that is to say, a work containing the Program or a portion of it,
 either verbatim or with modifications and/or translated into another
 language.  (Hereinafter, translation is included without limitation in
-the term 
+the term "modification".)  Each licensee is addressed as "you".
 
 Activities other than copying, distribution and modification are not
 covered by this License; they are outside its scope.  The act of
@@ -496,5 +498,5 @@ library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU General Public License for more details.

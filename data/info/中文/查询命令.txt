@@ -1,0 +1,43 @@
+﻿呈现"------------------------------------------------------------------------------"。
+呈现" The available query commands are:		Examples:"。
+呈现"------------------------------------------------------------------------------"。
+呈现" \~(sentenceNr)		item identification	\~(123)"。
+呈现" \~(sentenceNr,itemNr)	item identification	\~(123,1)"。
+呈现" \~(,itemNr)		item identification	\~(,3)"。
+呈现" \~[sentenceNr]		reference to item id.	\~[123]"。
+呈现" \~[sentenceNr,itemNr]	reference to item id.	\~[123,1]"。
+呈现" \~[,itemNr]		reference to item id.	\~[,3]"。
+呈现" \~<adminListChar>	administrator list	\~<W>"。
+呈现" \~<wordListChar>	word list		\~<w>"。
+呈现" \~<listCharlistChar>	multiple lists		\~<Xas>"。
+呈现" \~'word'		word		\~'English'"。
+呈现" \~`wordReference`	reference to word	\~`English`"。
+呈现" \~\"textString\"		text string		\~\"sentence\""。
+呈现"------------------------------------------------------------------------------"。
+呈现" Both wildcards '?' and '*' can be used in:"。
+呈现"  * words				\~'Engl?sh'"。
+呈现"  * references to a word			\~`Eng*sh`"。
+呈现"  * text strings				\~\"gr?m*\""。
+呈现"------------------------------------------------------------------------------"。
+呈现" Empty item specification will display all items	\~()"。
+呈现" Empty list specification will display all items		\~<>"。
+呈现"------------------------------------------------------------------------------"。
+呈现" Adding '#' will provide count functionality		\~#(123)"。
+呈现" Adding '+' will select only active items		\~+(123)"。
+呈现" Adding '=' will select only inactive items		\~=(123)"。
+呈现" Adding '$' will select only archived items		\~$(123)"。
+呈现" Adding '%' will select only replaced items		\~%(123)"。
+呈现" Adding '&' will select only deleted items		\~&(123)"。
+呈现" Concatenation of queries will provide 'AND' functionality	\~(123)<s>"。
+呈现" Adding '*' will select also attached justification items	\~*'瑞'<s>`女儿`"。
+呈现" Adding '**' will select also justification specifications	\~**'瑞'<s>`女儿`"。
+呈现"------------------------------------------------------------------------------"。
+呈现" Adding ' at the end will display only words		\~(123)'"。
+呈现" Adding ` at the end will display only word references	\~(123)`"。
+呈现" Adding \" at the end will display only text strings	\~(123)\""。
+呈现" Adding '' will display only words on new line		\~(123)''"。
+呈现" Adding `` will display only word references on new line	\~(123)``"。
+呈现" Adding \"\" will display only text strings on new line	\~(123)\"\""。
+呈现"------------------------------------------------------------------------------"。
+呈现" In files '\~' will mark the end of a query		...\~#<W>\~..."。
+呈现"------------------------------------------------------------------------------"。

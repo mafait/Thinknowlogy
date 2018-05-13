@@ -43,7 +43,7 @@
 < John is probably a parent. Because:
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- John has 2 sons and a daughter.
+<	- John has a daughter and 2 sons.
 < John is probably part of a family. Because:
 <	- John is probably a parent.
 <	- Parents are part of every family.
@@ -53,7 +53,7 @@
 * 
 * My questions:
 < Is John a woman or a man? Because:
-<	- John has 2 sons and a daughter.
+<	- John has a daughter and 2 sons.
 <	- Every family has parents and children.
 <	- Every parent is a woman or a man.
 * 	and:
@@ -67,7 +67,7 @@
 <	- Every father is a man.
 <	- Every mother is a woman.
 < Is John a father or a mother? Because:
-<	- John has 2 sons and a daughter.
+<	- John has a daughter and 2 sons.
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 * 	and:
@@ -76,7 +76,7 @@
 < 
 * 
 * Your information:
-< John has 2 sons and a daughter.
+< John has a daughter and 2 sons.
 * 
 * My assumptions:
 < John is probably a parent.

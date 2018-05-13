@@ -1,2 +1,2 @@
-Juan es una persona, Juan es alto y Juan es un niño
+﻿Juan es una persona, Juan es alto y Juan es un niño
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

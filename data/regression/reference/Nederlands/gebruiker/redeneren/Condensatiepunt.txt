@@ -1,0 +1,14 @@
+﻿* 
+* Mijn conclusies:
+< Ieder soort gas heeft een specifiek condensatiepunt.
+< 
+* 
+* Mijn veronderstellingen:
+< Waterdamp is waarschijnlijk een soort gas.
+< 
+* 
+* Mijn veronderstellingen:
+< Waterdamp is waarschijnlijk een soort gas. Omdat:
+<	- Ieder soort gas heeft een specifiek condensatiepunt.
+<	- Waterdamp heeft een condensatiepunt van 100 graden Celsius.
+< 

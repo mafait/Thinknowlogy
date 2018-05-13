@@ -1,8 +1,8 @@
 /*	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -48,11 +48,11 @@ class Thinknowlogy
 			}
 
 		// If no absolute path is given - add it
-		CommonVariables.currentPathStringBuffer = new StringBuffer( lastIndex < 0 ? absolutePath : absolutePath.substring( 0, lastIndex + 1 ) );
+		GlobalVariables.currentPathStringBuffer = new StringBuffer( lastIndex < 0 ? absolutePath : absolutePath.substring( 0, lastIndex + 1 ) );
 
 		// Replace all '%20' by spaces
-		while( ( lastIndex = CommonVariables.currentPathStringBuffer.indexOf( "%20" ) ) > 0 )
-			CommonVariables.currentPathStringBuffer.replace( lastIndex, lastIndex + 3, " " );
+		while( ( lastIndex = GlobalVariables.currentPathStringBuffer.indexOf( "%20" ) ) > 0 )
+			GlobalVariables.currentPathStringBuffer.replace( lastIndex, lastIndex + 3, " " );
 		}
 
 	private static void createAndShowGUI()

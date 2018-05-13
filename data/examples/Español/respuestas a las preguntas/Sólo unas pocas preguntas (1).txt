@@ -1,10 +1,10 @@
 ﻿Un movimiento es A, B, C, D, E, F o G.
-Mi movimiento es D.
+Su movimiento es D.
 ¿Es Juan mi padre?
 
-¿Es el movimiento A?
-¿Es el movimiento un padre?
-¿Es el movimiento un número?
+¿Es su movimiento A?
+¿Es su movimiento un padre?
+¿Es su movimiento un número?
 
 ¿Es un movimiento un número?
 ¿Es un movimiento redondo?

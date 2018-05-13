@@ -1,4 +1,4 @@
-Anna has a daughter, called Laura.
+﻿Anna has a daughter, called Laura.
 John is a parent of Paul.
 Anna is a parent of Paul.
 Read the file "English/user/reasoning/family/family definition".

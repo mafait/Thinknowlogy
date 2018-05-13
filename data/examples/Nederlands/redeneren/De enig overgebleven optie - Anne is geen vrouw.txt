@@ -1,4 +1,4 @@
-﻿Een persoon is een man of een vrouw.
+﻿Ieder persoon is een man of een vrouw.
 Anne is een persoon.
 Anne is geen vrouw.
 Toon de verantwoordingsrapportage over Anne.

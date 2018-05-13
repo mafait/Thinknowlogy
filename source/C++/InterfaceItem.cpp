@@ -1,10 +1,10 @@
-/*	Class:			InterfaceItem
+﻿/*	Class:			InterfaceItem
  *	Parent class:	Item
  *	Purpose:		To store info about the user-interface messages
  *					in the available languages
- *	Version:		Thinknowlogy 2017r2 (Science as it should be)
+ *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
  *************************************************************************/
-/*	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -38,9 +38,9 @@ class InterfaceItem : private Item
 	protected:
 	// Constructor
 
-	InterfaceItem( unsigned short interfaceParameter, size_t interfaceStringLength, char *interfaceString, CommonVariables *commonVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	InterfaceItem( unsigned short interfaceParameter, size_t interfaceStringLength, char *interfaceString, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "InterfaceItem", commonVariables, inputOutput, myList, myWordItem );
+		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "InterfaceItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
@@ -83,15 +83,15 @@ class InterfaceItem : private Item
 
 		if( interfaceString_ != NULL )
 			{
-			if( commonVariables()->hasFoundQuery )
-				strcat( commonVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+			if( globalVariables()->hasFoundQuery )
+				strcat( globalVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
-				strcat( commonVariables()->queryString, statusString );
+				strcat( globalVariables()->queryString, statusString );
 
-			commonVariables()->hasFoundQuery = true;
-			strcat( commonVariables()->queryString, interfaceString_ );
+			globalVariables()->hasFoundQuery = true;
+			strcat( globalVariables()->queryString, interfaceString_ );
 			}
 		}
 
@@ -114,7 +114,7 @@ class InterfaceItem : private Item
 
 		itemBaseToString( queryWordTypeNr );
 
-		queryString = commonVariables()->queryString;
+		queryString = globalVariables()->queryString;
 
 		if( interfaceParameter_ > NO_INTERFACE_PARAMETER )
 			{

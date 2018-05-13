@@ -1,4 +1,4 @@
-Amélie a une fille, appelée Lorraine.
+﻿Amélie a une fille, appelée Lorraine.
 Olivier est un parent de Pascal.
 Amélie est un parent de Pascal.
 Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".

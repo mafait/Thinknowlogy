@@ -1,7 +1,7 @@
 ﻿#-----------------------------------------------------------------
-#	This test executes the examples of my Scientific Challenge.
-#	For more info, see the included Scientific Challenge document,
-#	or: http://mafait.org/challenge/
+# This test executes the examples of my Scientific Challenge.
+# For more info, see the included Scientific Challenge document,
+# or: http://mafait.org/challenge/
 #-----------------------------------------------------------------
 # Block 1: Direct conversions
 #-----------------------------------------------------------------

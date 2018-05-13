@@ -223,7 +223,7 @@
 < Laura is probably a daughter. Because:
 <	- Laura is a child of John and Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is probably not a boy and not a man. Because:
 <	- Laura is a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.
@@ -492,7 +492,7 @@
 < Laura is probably a daughter. Because:
 <	- Laura is a child of John and Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is probably not a boy and not a man. Because:
 <	- Laura is a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.

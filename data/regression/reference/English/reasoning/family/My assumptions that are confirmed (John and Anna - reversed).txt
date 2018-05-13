@@ -82,7 +82,7 @@
 <	- Laura has a parent, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 
 * My questions:
 < Is John a woman or a man? Because:
@@ -183,12 +183,12 @@
 < Laura is possibly a daughter of John. Because:
 <	- Laura is probably a child of John.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- John is a parent of Paul, Joe and Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is maybe not a boy and not a man. Because:
 <	- Laura is probably a child of John.
 <	- Every child is a girl, a woman, a boy or a man.
@@ -244,7 +244,7 @@
 < Anna is probably a woman. Because:
 <	- Anna is a parent of Paul, Joe and Laura.
 <	- Every parent is a woman or a man.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Anna is probably a mother.
 <	- Every mother is a woman.
@@ -262,7 +262,7 @@
 < Anna is probably a mother. Because:
 <	- Anna is a parent of Paul, Joe and Laura.
 <	- Every parent is a father or a mother.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 < Anna is probably not a father. Because:
 <	- Anna is a parent of Paul, Joe and Laura.
 <	- Every parent is a father or a mother.
@@ -285,7 +285,7 @@
 <	- Laura has 2 parents, called John and Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
@@ -382,11 +382,11 @@
 <	- John is a parent of Paul, Joe and Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is maybe not a boy and not a man. Because:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.
@@ -472,21 +472,21 @@
 <	- Laura has a father, called John.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is possibly a daughter of John and Anna.
 * 	and:
 <	- Laura has 2 parents, called John and Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
 < Anna is a woman. Because:
 <	- Anna is a parent of Paul, Joe and Laura.
 <	- Every parent is a woman or a man.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Anna is a mother.
 <	- Every mother is a woman.
@@ -529,14 +529,14 @@
 <	- Laura has a mother, called Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is possibly a daughter of John and Anna.
 * 	and:
 <	- Laura has 2 parents, called John and Anna.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Anna is probably a person. Because:
 <	- Anna is a parent of Paul, Joe and Laura.
 <	- A parent is probably a person.
@@ -669,11 +669,11 @@
 <	- John is a parent of Paul, Joe and Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 * 	and:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a son or a daughter.
-<	- Proper name "Laura" is probably feminine.
+<	- Proper noun "Laura" is probably feminine.
 < Laura is maybe not a boy and not a man. Because:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.
@@ -762,7 +762,7 @@
 < Anna is a woman. Because:
 <	- Anna is a parent of Paul, Joe and Laura.
 <	- Every parent is a woman or a man.
-<	- Proper name "Anna" is probably feminine.
+<	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Anna is a mother.
 <	- Every mother is a woman.

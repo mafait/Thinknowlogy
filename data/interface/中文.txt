@@ -1,0 +1,365 @@
+﻿#----------------------------------------------------------------------------
+#	Purpose:	To define the interface texts for the Chinese language
+#	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+#----------------------------------------------------------------------------
+#	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+#	corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+# Java console (upper menu)
+#Java#:100		"清除你的想法"
+#Java#:101		"重启"
+#Java#:102		"撤销"
+#Java#:103		"重做"
+#Java#:104		"登录如专"
+#Java#:105		"登录如开发"
+#Java#:106		"回归测试"
+#Java#:107		"<停止>"
+#Java#:108		"<更多的例子>"
+#Java#:109		"阅读文档\""
+#Java#:110		"阅读测试文档""
+#Java#:111		"\"。"
+
+# Java console (main menu)
+#Java#:200		"阅读文档"中文/用户/程序设计/屏風式四子棋"。"
+#Java#:201		"阅读文档"中文/用户/程序设计/汉诺塔"。"
+#Java#:202		"阅读文档"中文/用户/推理/科学挑战"。"
+#Java#:203		"阅读文档"中文/用户/推理/家庭/家庭的定义"。"
+#Java#:204		"<程序设计>"
+#Java#:205		"<推理>"
+#Java#:206		"<定义>"
+#Java#:207		"<冲突>"
+#Java#:208		"<正当的理由>"
+#Java#:209		"<问题>"
+#Java#:210		"<信息>"
+#Java#:211		"<返回>"
+#Java#:212		"帮助"
+#Java#:213		"<改变语言>"
+#Java#:214		"<改变字体大小>"
+
+# Java console (programming/Connect-Four submenu)
+#Java#:300		"我的选择是A。"
+#Java#:301		"我的选择是B。"
+#Java#:302		"我的选择是C。"
+#Java#:303		"我的选择是D。"
+#Java#:304		"我的选择是E。"
+#Java#:305		"我的选择是F。"
+#Java#:306		"我的选择是G。"
+#Java#:307		"呈现选择的信息。"
+#Java#:308		"该解决方案水平是低。"
+#Java#:309		"该解决方案水平是高。"
+
+# Java console (programming/汉诺塔 submenu)
+#Java#:310		"把D、C、B和A添加到起始杆。"
+#Java#:311		"把E、D、C、B和A添加到起始杆。"
+
+# Java console (reasoning/family definition submenu)
+#Java#:400		"军是勇、超和瑞的父亲、媛是他们的母亲。"
+#Java#:401		"军是勇、超和瑞的父亲。"
+#Java#:402		"媛是勇、超和瑞的母亲。"
+#Java#:403		"勇是军和媛的儿子。"
+#Java#:404		"超是军和媛的儿子。"
+#Java#:405		"瑞是军和媛的女儿。"
+
+#Java#:406		"军是父亲。"
+#Java#:407		"媛是母亲。"
+#Java#:408		"勇是儿子。"
+#Java#:409		"超是儿子。"
+#Java#:410		"瑞是女儿。"
+
+#Java#:411		"勇的父亲叫军。"
+#Java#:412		"勇的母亲叫媛。"
+#Java#:413		"超的父亲叫军。"
+#Java#:414		"超的母亲叫媛。"
+#Java#:415		"瑞的父亲叫军。"
+#Java#:416		"瑞的母亲叫媛。"
+
+#Java#:417		"军是父母。"
+#Java#:418		"媛是父母。"
+#Java#:419		"军是勇、超和瑞的父母。"
+#Java#:420		"媛是勇、超和瑞的父母。"
+#Java#:421		"勇的父母叫军和媛。"
+#Java#:422		"超的父母叫军和媛。"
+#Java#:423		"瑞的父母叫军和媛。"
+#Java#:424		"勇是军和媛的孩子。"
+#Java#:425		"超是军和媛的孩子。"
+#Java#:426		"瑞是军和媛的孩子。"
+
+#Java#:427		"军是男。"
+#Java#:428		"媛是女。"
+#Java#:429		"勇是男。"
+#Java#:430		"超是男。"
+#Java#:431		"瑞是女。"
+#Java#:432		"勇是孩子。"
+#Java#:433		"超是孩子。"
+#Java#:434		"瑞是孩子。"
+#Java#:435		"勇是男孩。"
+#Java#:436		"超是男孩。"
+#Java#:437		"瑞是女孩。"
+
+# Java console (reasoning/family conflict submenu)
+#Java#:440		"军是女。"
+#Java#:441		"军是淘的母亲。"
+#Java#:442		"媛是儿子。"
+#Java#:443		"勇是女儿。"
+#Java#:444		"超是母亲。"
+
+# Java console (reasoning/family justification report submenu)
+#Java#:450		"呈现关于家庭的论证报告。"
+#Java#:451		"呈现关于父母的论证报告。"
+#Java#:452		"呈现关于孩子的论证报告。"
+#Java#:453		"呈现关于父亲的论证报告。"
+#Java#:454		"呈现关于母亲的论证报告。"
+#Java#:455		"呈现关于儿子的论证报告。"
+#Java#:456		"呈现关于女儿的论证报告。"
+#Java#:457		"呈现关于军的论证报告。"
+#Java#:458		"呈现关于媛的论证报告。"
+#Java#:459		"呈现关于勇的论证报告。"
+#Java#:460		"呈现关于超的论证报告。"
+#Java#:461		"呈现关于瑞的论证报告。"
+
+# Java console (reasoning/family question submenu)
+#Java#:470		"军是父亲吗？"
+#Java#:471		"军是母亲吗？"
+#Java#:472		"军是勇的父亲吗？"
+#Java#:473		"军是勇的母亲吗？"
+#Java#:474		"勇是男吗？"
+#Java#:475		"勇是女吗？"
+#Java#:476		"勇是男的，是女？"
+#Java#:477		"勇是儿子吗？"
+#Java#:478		"勇是女儿吗？"
+#Java#:479		"勇是儿子的，是女儿？"
+
+# Java console (reasoning/family display information submenu)
+#Java#:480		"呈现家庭的信息。"
+#Java#:481		"呈现父母的信息。"
+#Java#:482		"呈现孩子的信息。"
+#Java#:483		"呈现父亲的信息。"
+#Java#:484		"呈现母亲的信息。"
+#Java#:485		"呈现儿子的信息。"
+#Java#:486		"呈现女儿的信息。"
+#Java#:487		"呈现军的信息。"
+#Java#:488		"呈现媛的信息。"
+#Java#:489		"呈现勇的信息。"
+#Java#:490		"呈现超的信息。"
+#Java#:491		"呈现瑞的信息。"
+
+# Java console (font size submenu)
+#Java#:500		"<缩小字体大小>"
+#Java#:501		"<增加字体大小>"
+
+# Java console (help submenu)
+#Java#:510		"呈现语言的信息。"
+#Java#:511		"呈现名单的信息。"
+#Java#:512		"呈现用户的信息。"
+#Java#:513		"呈现单词类型的信息。"
+#Java#:514		"呈现查询命令。"
+#Java#:515		"呈现版权。"
+#Java#:516		"呈现GNU 通用公共授权。"
+#Java#:517		"呈现保证。"
+
+# Console (common)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+##C++#:1000		"Enter a sentence conform the implemented grammar:"
+##Java#:1000	"Allow me to guide you by menu buttons, and by buttons with a predefined sentence."
+##Java#:1001	"And you're invited to enter a sentence conform the implemented grammar rules."
+##Java#:1002	"Waiting for input"
+##Java#:1003	"Waiting for secure input"
+#:1004			"You are already logged in as "
+#:1005			"."
+#:1006			"The username or its password is not correct."
+#:1007			"\nThinknowlogy is not a chatbot. If everything fails, read the documents.\n"
+
+# Console (status and progress)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1010			"I am executing selections at level "
+#:1011			":"
+
+# Grammar
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1100			"Grammar definition \""
+#:1101			"\" in grammar language \""
+#:1102			"\" is not used."
+#:1103			"Grammar parameter "
+#:1104			" in language \""
+#:1105			"\" is defined more than once."
+#:1106			"Word type definition number "
+#:1107			" is missing in \""
+#:1108			"Word type definition numbers "
+#:1109			" to "
+#:1110			" are missing in \""
+#:1111			"\"."
+#:1112			" [plural of '"
+#:1113			"' is unknown]"
+
+# Imperative (notifications)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1200			"My mind is clear."
+#:1201			"There are no sentences to undo."
+#:1202			"There are no sentences to redo."
+#:1203			"I have undone sentence number "
+#:1204			"."
+#:1205			"I have redone the undone sentence number "
+#:1206			"."
+#:1207			"I don't have the requested information."
+
+# Imperative (warnings)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1210			"I could not find any selection containing information how to solve the "
+#:1211			"."
+#:1212			"I don't know how to execute imperative verb \""
+#:1213			"\"."
+#:1214			"I don't know what to do with the given relation(s)."
+#:1215			"I don't know which file to read."
+#:1216			"This imperative needs a(nother) list to be specified."
+#:1217			"I found a preposition word that is not used for this action."
+#:1218			"Word \""
+#:1219			"\" is already solved."
+
+# Listing (conflicts)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1300			"\nThis sentence is not accepted, because it is in conflict with itself."
+#:1301			"\nThis question is not answered, because it is in conflict with itself."
+#:1302			"\nThis sentence is not accepted, because it is in conflict with:"
+#:1303			"\nThis sentence is not accepted, because it doesn't leave any option open:"
+#:1304			"\nThis definition specification is not accepted, because it is already assigned:"
+#:1305			"\nThis assignment is not accepted, because it is in conflict with definition specification:"
+
+# Listing (current information)
+:1310			"\n你的信息："
+:1311			"\n你的问题："
+:1312			"\n我的信息："
+:1313			"\n我的结论："
+:1314			"\n我的假设："
+:1315			"\n调整后的假设："
+:1316			"\n下结论的假设："
+#:1317			"\nMy conclusions that are not hidden anymore:"
+#:1318			"\nMy assumptions that are not hidden anymore:"
+:1319			"\n我的问题："
+:1320			"\n我调整后的问题："
+:1321			"\n我的回答："
+:1322			"\n我只知道："
+:1323			"\n细则："
+:1324			"\n相关信息："
+:1325			"\n相关问题："
+
+# Listing (old information)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1330			"\nYou have confirmed the specification - but none of its relations - of my earlier assumptions:"
+#:1331			"\nYou have confirmed the specification - but none of its relations - of my earlier conclusions:"
+#:1332			"\nYou have confirmed the specification and at least one relation of my earlier assumptions:"
+#:1333			"\nYou have confirmed the specification and at least one relation of my earlier conclusions:"
+:1334			"\n确定的假设："
+:1335			"\n我确定的结论："
+#:1336			"\nMy earlier assumptions that have relation words now:"
+#:1337			"\nMy earlier conclusions that have relation words now:"
+#:1338			"\nYour information is more specific than my earlier assumption:"
+#:1339			"\nYour information is more specific than my earlier conclusion:"
+#:1340			"\nYour question is more specific than my earlier question:"
+#:1341			"\nThis information is more specific than your earlier information:"
+#:1342			"\nThis question is more specific than your earlier question:"
+:1343			"\n你回答的问题："
+:1344			"\n我回答的问题："
+#:1345			"\nMy earlier assumptions that are corrected by knowledge:"
+#:1346			"\nMy earlier assumptions that are corrected by an opposite suggestive question:"
+
+# Listing (justification report)
+:1350			" 因为："
+:1351			"\t和："
+:1352			"专有名词\""
+:1353			"\"大概是女孩的名字。"
+:1354			"\"大概是男孩的名字。"
+:1355			" {learned from user "
+:1356			"}"
+
+# Query
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1400			"No item was found matching the given specification."
+#:1401			"No reference item number was found matching the given specification."
+#:1402			"The given list contains an invalid character."
+#:1403			"No list was found matching the given specification."
+#:1404			"No word was found matching the given specification."
+#:1405			"No word reference was found matching the given specification."
+#:1406			"No text string was found matching the given specification."
+#:1407			"No word type was found matching the given specification."
+#:1408			"No parameter was found matching the given specification."
+
+#:1409			"No items were found matching the given specification."
+#:1410			"No words were found matching the given specification."
+#:1411			"No word references were found matching the given specification."
+#:1412			"No text strings were found matching the given specification."
+
+#:1413			"An empty word specification is only useful at the end of a query specification."
+#:1414			"An empty word reference specification is only useful at the end of a query specification."
+#:1415			"An empty string specification is only useful at the end of a query specification."
+
+#:1499			"<query error>"
+
+# Response (questions)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1500			"\nYou had the same question before."
+#:1501			"\nI had the same question before."
+#:1502			"\nYou had a similar question before:"
+#:1503			"\nI had a similar question before:"
+#:1504			"\nYou had a related question before:"
+#:1505			"\nI had a related question before:"
+#:1506			"I know nothing about "
+#:1507			", but I'll keep this question in mind."
+#:1508			"\nThis question is already answered."
+#:1509			"\nI don't know the answer to this question, but I'll keep it in mind."
+
+# Sentence (notifications)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1600			"I expected proper noun \""
+#:1601			"I expected singular noun \""
+#:1602			"\" to be feminine."
+#:1603			"\" to be masculine."
+:1604			"我知道。"
+#:1605			"\nThe word \""
+#:1606			"\" is semantically ambiguous. There are multiple instances of this entity."
+#:1607			"\" is semantically ambiguous:\n- either the entity re-occurred,\n- or there are multiple instances of this entity.\n\nIn the latter case, please enhance the specification of the involved entities."
+#:1608			"Your question is semantically ambiguous, because it is missing a relation specification."
+#:1609			"I assume you mean:"
+#:1610			"Earlier, you used a different adjective in combination with noun \""
+#:1611			"Earlier, you used a different definite article in combination with noun \""
+#:1612			"Earlier, you used a different indefinite article in combination with noun \""
+#:1613			"\"."
+#:1614			"\nYou have entered plural noun \""
+#:1615			"\", which was unknown to me."
+
+# Sentence (warnings)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1620			"I don't understand this sentence. Please make sure to enter a sentence conform my limited grammar definition."
+#:1621			"I don't understand the sentence from word at position "
+#:1622			"."
+#:1623			"The word \""
+#:1624			"\" at position "
+#:1625			" can only used in the condition of a selection."
+#:1626			"Word \""
+#:1627			"\" is a generalization word as well as a relation word. It assumes there are multiple (different) instances of this word. However, this kind of logic isn't implemented yet."
+#:1628			"This sentence is not accepted, because I am unable to link 'yes' and 'no' answers to a question. Please repeat your sentence without this interjection."
+#:1629			"This sentence is not accepted, because it is semantically ambiguous: It is missing a relation word, while it is required in this sentence construction."
+#:1630			"This sentence is not accepted, because it is semantically ambiguous: It has multiple specifications as well as multiple relations."
+
+# Sentence (errors)
+# The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
+# In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
+#:1640			"\nIntegrity error! My implementation is insufficient to store or retrieve "
+#:1641			"this sentence."
+#:1642			"this sentence, due to words:"
+#:1643			"sentence \""
+#:1644			"\"."
+#:1645			"\", due to words:"
+#:1646			"\nI retrieved from my system: \""
+#:1647			"\"."

@@ -1,30 +1,30 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To demonstrate programming in natural language.
-#	Version:	Thinknowlogy 2017r2 (Science as it should be)
+# Purpose: To demonstrate programming in natural language.
+# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2017, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	A summary of the Connect-Four game:
+# A summary of the Connect-Four game:
 #----------------------------------------------------------------------------
-#	Connect Four (also known as Captain's Mistress, Four Up, Plot Four,
-#	Find Four, Fourplay, Four in a Row and Four in a Line) is a two-player
-#	game in which the players first choose a color and then take turns
-#	dropping colored discs from the top into a seven-column,
-#	six-row vertically-suspended grid.
-#	The pieces fall straight down, occupying the next available space
-#	within the column. The object of the game is to connect four of one's
-#	own discs of the same color next to each other vertically,
-#	horizontally, or diagonally before your opponent.
+# Connect Four (also known as Captain's Mistress, Four Up, Plot Four,
+# Find Four, Fourplay, Four in a Row and Four in a Line) is a two-player
+# game in which the players first choose a color and then take turns
+# dropping colored discs from the top into a seven-column,
+# six-row vertically-suspended grid.
+# The pieces fall straight down, occupying the next available space
+# within the column. The object of the game is to connect four of one's
+# own discs of the same color next to each other vertically,
+# horizontally, or diagonally before your opponent.
 #----------------------------------------------------------------------------
-#	See for the full text: http://en.wikipedia.org/wiki/Connect_four
+# See for the full text: http://en.wikipedia.org/wiki/Connect_four
 #----------------------------------------------------------------------------
 
 # Initial definitions.
-A turn is yours or mine.
-A set is A, B, C, D, E, F or G.
+Every turn is yours or mine.
+Every set is A, B, C, D, E, F or G.
 A solve level is low or high.
 
 # Solve the problem.
@@ -83,7 +83,7 @@ If the turn is assigned and the game is not assigned then if A4 is the value of 
 If the turn is assigned and the game is not assigned then if A5 is the value of the turn, B4 is the value of the turn, C3 is the value of the turn and D2 is the value of the turn or B5 is the value of the turn, C4 is the value of the turn, D3 is the value of the turn and E2 is the value of the turn or C5 is the value of the turn, D4 is the value of the turn, E3 is the value of the turn and F2 is the value of the turn or D5 is the value of the turn, E4 is the value of the turn, F3 is the value of the turn and G2 is the value of the turn then the game is the value of the turn.
 If the turn is assigned and the game is not assigned then if A6 is the value of the turn, B5 is the value of the turn, C4 is the value of the turn and D3 is the value of the turn or B6 is the value of the turn, C5 is the value of the turn, D4 is the value of the turn and E3 is the value of the turn or C6 is the value of the turn, D5 is the value of the turn, E4 is the value of the turn and F3 is the value of the turn or D6 is the value of the turn, E5 is the value of the turn, F4 is the value of the turn and G3 is the value of the turn then the game is the value of the turn.
 
-# The chip will be put into the chosen column and will 'fall' into the lowest free cell.
+# The chip will be put into the chosen column and will fall into the lowest free cell.
 If the set is A and the game is not assigned then if A1 is not assigned then A1 is the value of the turn else if A2 is not assigned then A2 is the value of the turn else if A3 is not assigned then A3 is the value of the turn else if A4 is not assigned then A4 is the value of the turn else if A5 is not assigned then A5 is the value of the turn else if A6 is not assigned then A6 is the value of the turn else display "\nSorry, column ~+'set'<a>`~ is full.\n" and the set is invalid.
 If the set is B and the game is not assigned then if B1 is not assigned then B1 is the value of the turn else if B2 is not assigned then B2 is the value of the turn else if B3 is not assigned then B3 is the value of the turn else if B4 is not assigned then B4 is the value of the turn else if B5 is not assigned then B5 is the value of the turn else if B6 is not assigned then B6 is the value of the turn else display "\nSorry, column ~+'set'<a>`~ is full.\n" and the set is invalid.
 If the set is C and the game is not assigned then if C1 is not assigned then C1 is the value of the turn else if C2 is not assigned then C2 is the value of the turn else if C3 is not assigned then C3 is the value of the turn else if C4 is not assigned then C4 is the value of the turn else if C5 is not assigned then C5 is the value of the turn else if C6 is not assigned then C6 is the value of the turn else display "\nSorry, column ~+'set'<a>`~ is full.\n" and the set is invalid.
@@ -111,4 +111,4 @@ The turn is yours.
 #C++## Type for an advanced game:	The solve level is high.
 #C++## Return to beginners level:	The solve level is low.
 #C++## Info about the set:		Display information about the set.
-#Java## If the playing board looks compressed, please change the font using button «change font».
+#Java## Note: The font is adjusted to display the playing board is a correct way.

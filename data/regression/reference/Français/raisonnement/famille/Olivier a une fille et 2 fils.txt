@@ -43,7 +43,7 @@
 < Olivier est probablement un parent. En raison:
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
-<	- Olivier a 2 fils et une fille.
+<	- Olivier a une fille et 2 fils.
 < Olivier est probablement partie d'une famille. En raison:
 <	- Olivier est probablement un parent.
 <	- Parents sont partie de chaque famille.
@@ -53,7 +53,7 @@
 * 
 * Mes questions:
 < Est Olivier une femme ou un homme? En raison:
-<	- Olivier a 2 fils et une fille.
+<	- Olivier a une fille et 2 fils.
 <	- Chaque famille a parents et enfants.
 <	- Chaque parent est une femme ou un homme.
 * 	et:
@@ -67,7 +67,7 @@
 <	- Chaque père est un homme.
 <	- Chaque mère est une femme.
 < Est Olivier un père ou une mère? En raison:
-<	- Olivier a 2 fils et une fille.
+<	- Olivier a une fille et 2 fils.
 <	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 * 	et:
@@ -76,7 +76,7 @@
 < 
 * 
 * Vos informations:
-< Olivier a 2 fils et une fille.
+< Olivier a une fille et 2 fils.
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent.
