@@ -89,10 +89,6 @@
 <	- Nombre propio "Luisa" es probablemente femenino.
 < Luisa tiene probablemente una madre, llamada Ana. Porque:
 <	- Ana es probablemente madre de Luisa.
-* 	y:
-<	- Luisa tiene 2 padres, llamados Juan y Ana.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
 * 
 * Mis preguntas:
 < ¿Es Luisa una niña o una mujer? Porque:

@@ -395,9 +395,7 @@
 < Ana no es posiblemente un hombre.
 * 
 * Mis suposiciones que se concluyen:
-< Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene una madre, llamada Ana.
-< José tiene 2 padres, llamados Juan y Ana.
 < José tiene una madre, llamada Ana.
 < Luisa tiene una madre, llamada Ana.
 < Ana es parte de una familia.
@@ -410,6 +408,8 @@
 < Ana no es un hombre.
 < Ana es femenina.
 < Ana no es un padre.
+< Pablo tiene 2 padres, llamados Juan y Ana.
+< José tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene 2 padres, llamados Juan y Ana.
 * 
 * Mis conclusiones:

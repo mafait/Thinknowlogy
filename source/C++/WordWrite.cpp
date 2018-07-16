@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordWrite
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -36,7 +36,6 @@ class WordWrite
 	bool hasFoundAllSpecificationWordsBeforeConjunction_;
 	bool hasFoundWordToWrite_;
 	bool hasGeneralizationWord_;
-	bool hasQuestionVerb_;
 	bool hasFoundSingleSpecificationWord_;
 	bool hasFoundSpecificationGeneralizationVerb_;
 	bool hasFoundSpecificationWord_;
@@ -80,7 +79,6 @@ class WordWrite
 		hasFoundAllSpecificationWords_ = false;
 		hasFoundAllSpecificationWordsBeforeConjunction_ = false;
 		hasGeneralizationWord_ = false;
-		hasQuestionVerb_ = false;
 		hasFoundSingleSpecificationWord_ = false;
 		hasFoundSpecificationGeneralizationVerb_ = false;
 		hasFoundSpecificationWord_ = false;
@@ -273,8 +271,6 @@ class WordWrite
 		isUnknownPluralOfNoun_ = false;
 
 		if( ( writeWordString_ = myWordItem_->activeWordTypeString( isPluralSpecificationGeneralization && !isChineseCurrentLanguage_ ? WORD_TYPE_NOUN_PLURAL : grammarDefinitionWordTypeNr ) ) == NULL &&
-		isPluralSpecificationGeneralization &&
-		grammarDefinitionWordTypeNr == WORD_TYPE_NOUN_PLURAL &&
 		( writeWordString_ = myWordItem_->singularNounString() ) != NULL )
 			{
 			if( !isChineseCurrentLanguage_ )
@@ -285,15 +281,10 @@ class WordWrite
 
 		if( writeWordString_ != NULL )
 			{
-			if( myWordItem_->isGeneralizationWordTypeAlreadyWritten( writeWordTypeNr ) )
-				writeWordString_ = NULL;
-			else
-				{
-				if( myWordItem_->markGeneralizationWordTypeAsWritten( writeWordTypeNr ) != RESULT_OK )
-					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a word type of a generalization word as written" );
+			if( myWordItem_->markGeneralizationWordTypeAsWritten( writeWordTypeNr ) != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a word type of a generalization word as written" );
 
-				hasGeneralizationWord_ = true;
-				}
+			hasGeneralizationWord_ = true;
 			}
 
 		return RESULT_OK;
@@ -338,7 +329,7 @@ class WordWrite
 				if( isWordTypeNumeral )
 					{
 					if( !isChineseCurrentLanguage_ ||
-					// Typically for Chinese: no counting of parents, children, and so on, in sentence with relation.
+					// Typical for Chinese: no counting of parents, children, and so on, in sentence with relation.
 					relationContextNr == NO_CONTEXT_NR )
 						{
 						// The grammar definition word 'number' needs to be converted to the number of relation words
@@ -362,7 +353,7 @@ class WordWrite
 							}
 						}
 					else
-						// Must be hidden word type
+						// Accept a hidden word type (password) in user sentence
 						writeWordString_ = specificationWordItem->anyWordTypeString();
 					}
 				}
@@ -378,7 +369,7 @@ class WordWrite
 				hasFoundSpecificationWord_ = true;
 				lastFoundSpecificationItem_ = writeSpecificationItem;
 
-				// Typically for Chinese
+				// Typical for Chinese
 				if( isChineseCurrentLanguage_ &&
 				// Chinese test files: "Boiling point" and "Condensation point"
 				writeSpecificationItem->isUncountableGeneralizationNoun() )
@@ -436,9 +427,12 @@ class WordWrite
 
 					( currentSpecificationWordItem = currentSpecificationItem->specificationWordItem() ) != NULL )
 						{
-						if( currentSpecificationWordItem->isSpecificationWordTypeAlreadyWritten( currentSpecificationWordTypeNr = currentSpecificationItem->specificationWordTypeNr() ) )
+						currentSpecificationWordTypeNr = currentSpecificationItem->specificationWordTypeNr();
+
+						if( currentSpecificationWordItem->isSpecificationWordTypeAlreadyWritten( currentSpecificationWordTypeNr ) )
 							{
-							if( currentSpecificationItem != writeSpecificationItem )
+							if( //!isAnsweredQuestion &&
+							currentSpecificationItem != writeSpecificationItem )
 								hasSkippedDifferentSpecification = true;
 							}
 						else
@@ -562,7 +556,7 @@ class WordWrite
 		bool isSpecificationString = false;
 		bool isUncountableGeneralizationNoun;
 		bool isUniqueUserRelation;
-		// Typically for Chinese: No spaces between characters
+		// Typical for Chinese: No spaces between characters
 		bool isInsertingSeparator = !isChineseCurrentLanguage;
 		unsigned short assumptionLevel;
 		unsigned short generalizationWordTypeNr;
@@ -597,7 +591,7 @@ class WordWrite
 		if( definitionGrammarItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given definition grammar item is undefined" );
 
-		if( !definitionGrammarItem->hasWordType() )
+		if( ( grammarDefinitionWordTypeNr = definitionGrammarItem->grammarWordTypeNr() ) <= NO_WORD_TYPE_NR )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given grammar definition has no word type" );
 
 		if( writeSpecificationItem == NULL )
@@ -640,7 +634,7 @@ class WordWrite
 
 						( specificationStartWordPosition_ > 0 ||
 
-						// Typically for Chinese: Relation before specification
+						// Typical for Chinese: Relation before specification
 						( isChineseCurrentLanguage &&
 						!isPossessive &&
 						!hasFoundAllRelationWords_ ) ) );
@@ -649,7 +643,6 @@ class WordWrite
 							!isRelation );
 
 		grammarDefinitionParameter = definitionGrammarItem->grammarParameter();
-		grammarDefinitionWordTypeNr = definitionGrammarItem->grammarWordTypeNr();
 		assumptionLevel = writeSpecificationItem->assumptionLevel();
 		generalizationWordTypeNr = writeSpecificationItem->generalizationWordTypeNr();
 		prepositionParameter = writeSpecificationItem->prepositionParameter();
@@ -669,9 +662,8 @@ class WordWrite
 			{
 			// Symbols
 			case WORD_PARAMETER_SYMBOL_COMMA:
-				// Generalization
-				if( ( isGeneralization &&
-				answerParameter > NO_ANSWER_PARAMETER ) ||
+				// Answer to question: Comma after 'yes'or 'no'
+				if( isGeneralization ||
 
 				// Relation
 				( isRelation &&
@@ -682,14 +674,14 @@ class WordWrite
 				( isSpecification &&
 				!hasFoundAllSpecificationWordsBeforeConjunction_ &&
 
+				// Part-of specification
 				( ( isWritingCurrentSpecificationWordOnly &&
-				isGeneralizationNoun &&
-				isPartOf ) ||
+				isGeneralizationNoun ) ||
 
 				( !isWritingCurrentSpecificationWordOnly &&
 
-				( !isAssignment ||
-				isExclusiveSpecification ||
+				( ( ( !isAssignment ||
+				isExclusiveSpecification ) ) ||
 
 				( !isQuestion &&
 				!writeSpecificationItem->isExclusiveGeneralization() ) ) &&
@@ -705,18 +697,16 @@ class WordWrite
 				// Exceptions
 				( isCharacteristicFor ||
 				isInactiveAssignment ||
+				isSpecificationGeneralization ||
 
 				// Test file: "Same and similar questions"
 				( isQuestion &&
 				isExclusiveSpecification ) ||
 
-				// Typically for French
-				// Typically for Spanish
+				// Typical for French
+				// Typical for Spanish
 				( isPossessive &&
-				!isSelfGenerated ) ||
-
-				( isSpecificationGeneralization &&
-				generalizationStartWordPosition_ == 0 ) ) ) ) ) ) ) )
+				!isSelfGenerated ) ) ) ) ) ) ) )
 					{
 					isInsertingSeparator = false;
 					writeWordString_ = predefinedWordString;
@@ -767,11 +757,11 @@ class WordWrite
 				isExclusiveSpecification &&
 				!hasFoundAllSpecificationWords_ )
 					{
+					// Typical for Chinese
 					isSpecificationWaitingForConjunction_ = false;
 					writeWordString_ = predefinedWordString;
 
-					if( !hasFoundAllSpecificationWordsBeforeConjunction_ &&
-					myWordItem_->nRemainingSpecificationWordsForWriting( isActiveAssignment, isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, questionParameter, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr, ( isSelfGenerated ? NO_SENTENCE_NR : writeSpecificationItem->creationSentenceNr() ) ) == 1 )
+					if( myWordItem_->nRemainingSpecificationWordsForWriting( isActiveAssignment, isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, questionParameter, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr, ( isSelfGenerated ? NO_SENTENCE_NR : writeSpecificationItem->creationSentenceNr() ) ) == 1 )
 						hasFoundAllSpecificationWordsBeforeConjunction_ = true;
 					}
 
@@ -798,10 +788,7 @@ class WordWrite
 			case WORD_PARAMETER_ADJECTIVE_CALLED_SINGULAR_FEMININE:
 				if( hasRelationContext &&
 				// Has only one relation word
-				( singleRelationWordItem = writeSpecificationItem->singleRelationWordItem() ) != NULL &&
-
-				( singleRelationWordItem->isFemale() ||
-				!singleRelationWordItem->hasMasculineProperNounEnding() ) )
+				( singleRelationWordItem = writeSpecificationItem->singleRelationWordItem() ) != NULL )
 					writeWordString_ = predefinedWordString;
 
 				break;
@@ -862,8 +849,7 @@ class WordWrite
 */
 			case WORD_PARAMETER_ADJECTIVE_PREVIOUS_NEUTRAL:
 			case WORD_PARAMETER_ADJECTIVE_PREVIOUS_FEMININE_MASCULINE:
-				if( isInactiveAssignment &&
-				!isQuestion )
+				if( isInactiveAssignment )
 					writeWordString_ = predefinedWordString;
 
 				break;
@@ -886,7 +872,7 @@ class WordWrite
 				if( isNegative &&
 
 				( !isChineseCurrentLanguage ||
-				// Typically for Chinese
+				// Typical for Chinese
 				!isUniqueUserRelation ) )
 					writeWordString_ = predefinedWordString;
 
@@ -898,9 +884,6 @@ class WordWrite
 				isUniqueUserRelation )
 					writeWordString_ = predefinedWordString;
 
-				break;
-
-			case WORD_PARAMETER_ADVERB_AS:
 				break;
 
 			case WORD_PARAMETER_ADVERB_ASSUMPTION_MAYBE:
@@ -974,12 +957,7 @@ class WordWrite
 			case WORD_PARAMETER_ARTICLE_INDEFINITE_PLURAL_MASCULINE:
 			case WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_FEMININE:
 			case WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE:
-				if( ( hasRelationContext ||
-				!isArchivedAssignment ||
-				!isExclusiveSpecification ) &&
-
-				// Generalization noun
-				( ( isGeneralization &&
+				if( ( isGeneralization &&
 				isGeneralizationNoun &&
 				!isUncountableGeneralizationNoun &&
 
@@ -997,8 +975,6 @@ class WordWrite
 				isSpecificationNoun &&
 
 				( ( !isChineseCurrentLanguage ||
-				// Typically for Chinese
-				hasRelationContext ||
 				isGeneralizationProperNoun ||
 
 				( ( !isEveryGeneralization ||
@@ -1009,7 +985,7 @@ class WordWrite
 				( !isSpecificationPluralNoun ||
 				grammarDefinitionParameter != WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE ) &&
 
-				writeSpecificationItem->isCorrectSpecificationArticle( false, grammarDefinitionParameter ) ) ) ) )
+				writeSpecificationItem->isCorrectSpecificationArticle( false, grammarDefinitionParameter ) ) ) )
 					writeWordString_ = predefinedWordString;
 
 				break;
@@ -1027,17 +1003,13 @@ class WordWrite
 
 				// Generalization noun
 				( ( isGeneralization &&
+				!isArchivedAssignment &&
 				isGeneralizationNoun &&
-
-				( !isArchivedAssignment ||
-				!isEveryGeneralization ) &&
-
 				myWordItem_->isCorrectDefiniteArticle( grammarDefinitionParameter, generalizationWordTypeNr ) ) ||
 
 				// Specification nouns
 				( isSpecification &&
 				isGeneralizationProperNoun &&
-				isSpecificationNoun &&
 
 				( !isChineseCurrentLanguage ||
 				!hasRelationContext ) &&
@@ -1089,15 +1061,15 @@ class WordWrite
 				break;
 
 			// Ambiguity
-			// Typically for Dutch: in zowel ... als ...
+			// Typical for Dutch: in zowel ... als ...
 			case WORD_PARAMETER_CONJUNCTION_DUTCH_ALS:
 				isSpecificationWaitingForConjunction_ = false;
 
 				// Don't insert a break statement here
 
-			// Typically for English: '... in both ... and ...'
+			// Typical for English: '... in both ... and ...'
 			case WORD_PARAMETER_NUMERAL_BOTH:
-			// Typically for Dutch: in zowel ... als ...
+			// Typical for Dutch: in zowel ... als ...
 			case WORD_PARAMETER_CONJUNCTION_DUTCH_ZOWEL:
 				if( writeSpecificationItem->isSpecificationWithStaticAmiguity() )
 					writeWordString_ = predefinedWordString;
@@ -1112,9 +1084,6 @@ class WordWrite
 				break;
 
 			case WORD_PARAMETER_NOUN_VALUE:
-				if( writeSpecificationItem->isValueSpecification() )
-					writeWordString_ = predefinedWordString;
-
 				break;
 
 			case WORD_PARAMETER_NOUN_CHINESE_IS_IT_TRUE:
@@ -1176,11 +1145,7 @@ class WordWrite
 			case WORD_PARAMETER_PREPOSITION_FOR:
 			case WORD_PARAMETER_PREPOSITION_FRENCH_A:
 				if( prepositionParameter == grammarDefinitionParameter ||
-
-				( prepositionParameter == NO_PREPOSITION_PARAMETER &&
-
-				( isGeneralizationNoun ||
-				!isSpecificationPluralNoun ) ) )
+				prepositionParameter == NO_PREPOSITION_PARAMETER )
 					writeWordString_ = predefinedWordString;
 
 				break;
@@ -1188,16 +1153,13 @@ class WordWrite
 			case WORD_PARAMETER_PREPOSITION_OF:
 				if( ( prepositionParameter == grammarDefinitionParameter ||
 
-				( prepositionParameter == NO_PREPOSITION_PARAMETER &&
-
 				( isGeneralizationNoun ||
-				!isSpecificationPluralNoun ) ) ) &&
+				!isSpecificationPluralNoun ) ) &&
 
 				( !isChineseCurrentLanguage ||
 
-				// Typically for Chinese
+				// Typical for Chinese
 				( isSpecification &&
-				generalizationContextNr == NO_CONTEXT_NR &&
 
 				( isGeneralizationNoun ||
 				hasRelationContext ) ) ) )
@@ -1210,7 +1172,7 @@ class WordWrite
 			case WORD_PARAMETER_PLURAL_VERB_ARE:
 				if( ( !isPossessive ||
 
-				// Typically for Chinese
+				// Typical for Chinese
 				( isChineseCurrentLanguage &&
 				// Chinese test files: "Boiling point" and "Condensation point"
 				isUncountableGeneralizationNoun &&
@@ -1228,11 +1190,8 @@ class WordWrite
 					writeWordString_ = predefinedWordString;
 
 					if( isQuestion )
-						{
-						hasQuestionVerb_ = true;
-						// Typically for Spanish: No separator after inverted question mark
+						// Typical for Spanish: No separator after inverted question mark
 						isInsertingSeparator = false;
-						}
 
 					if( isSpecificationGeneralization )
 						hasFoundSpecificationGeneralizationVerb_ = true;
@@ -1245,26 +1204,19 @@ class WordWrite
 				if( !isPossessive &&
 
 				( isInactiveAssignment ||
-				isArchivedAssignment ) &&
-
-				!isConditional )
+				isArchivedAssignment ) )
 					{
 					if( isQuestion )
-						{
-						hasQuestionVerb_ = true;
-						// Typically for Spanish: No separator after inverted question mark
+						// Typical for Spanish: No separator after inverted question mark
 						isInsertingSeparator = false;
-						}
 
 					if( isSpecificationGeneralization )
 						hasFoundSpecificationGeneralizationVerb_ = true;
 
 					if( isQuestion ||
 					isArchivedAssignment ||
-					!isInactiveAssignment ||
-
-					( !hasRelationContext &&
-					writeSpecificationItem->hasSpecificationCollection() ) )
+					// Test file: "Connect Four"
+					writeSpecificationItem->hasSpecificationCollection() )
 						writeWordString_ = predefinedWordString;
 					else
 						{
@@ -1281,11 +1233,7 @@ class WordWrite
 
 			case WORD_PARAMETER_SINGULAR_VERB_CAN_BE:
 			case WORD_PARAMETER_PLURAL_VERB_CAN_BE:
-				if( isConditional &&
-				!isPossessive &&
-
-				( !isAssignment ||		// Specification
-				isActiveAssignment ) )
+				if( isConditional )
 					writeWordString_ = predefinedWordString;
 
 				break;
@@ -1293,42 +1241,16 @@ class WordWrite
 			case WORD_PARAMETER_SINGULAR_VERB_HAS:
 			case WORD_PARAMETER_PLURAL_VERB_HAVE:
 				if( isPossessive &&
-				!isConditional &&
 				!isArchivedAssignment )
-					{
 					writeWordString_ = predefinedWordString;
-
-					if( isQuestion )
-						{
-						hasQuestionVerb_ = true;
-						// Typically for Spanish: No separator after inverted question mark
-						isInsertingSeparator = false;
-						}
-
-					if( isSpecificationGeneralization )
-						hasFoundSpecificationGeneralizationVerb_ = true;
-					}
 
 				break;
 
 			case WORD_PARAMETER_SINGULAR_VERB_HAD:
 			case WORD_PARAMETER_PLURAL_VERB_HAD:
-				if( isArchivedAssignment &&
-				!isConditional &&
-				isPossessive )
-					{
+				if( isPossessive &&
+				isArchivedAssignment )
 					writeWordString_ = predefinedWordString;
-
-					if( isQuestion )
-						{
-						hasQuestionVerb_ = true;
-						// Typically for Spanish: No separator after inverted question mark
-						isInsertingSeparator = false;
-						}
-
-					if( isSpecificationGeneralization )
-						hasFoundSpecificationGeneralizationVerb_ = true;
-					}
 
 				break;
 
@@ -1345,12 +1267,6 @@ class WordWrite
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_SOLVE:
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_UNDO:
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_CHINESE_PUT:
-				break;
-
-			// Selection words
-			case WORD_PARAMETER_SELECTION_IF:
-			case WORD_PARAMETER_SELECTION_THEN:
-			case WORD_PARAMETER_SELECTION_ELSE:
 				break;
 
 			case NO_GRAMMAR_PARAMETER:
@@ -1392,12 +1308,7 @@ class WordWrite
 			case WORD_PARAMETER_NOUN_CHINESE_MARSUPIAL:
 			case WORD_PARAMETER_NOUN_CHINESE_SAILBOAT:
 			case WORD_PARAMETER_NOUN_CHINESE_TURN:
-				if( ( !isQuestion ||
-				hasQuestionVerb_ ||
-				// Typically for Chinese: Questions have generalization word before verb
-				isChineseCurrentLanguage ) &&
-
-				!isSpecificationWaitingForConjunction_ )
+				if( !isSpecificationWaitingForConjunction_ )
 					{
 					if( isGeneralization )
 						{
@@ -1414,6 +1325,7 @@ class WordWrite
 								{
 								// Specification string
 								if( grammarDefinitionWordTypeNr == WORD_TYPE_TEXT &&
+								// Typical for Chinese
 								!writeSpecificationItem->isSpecificationStringAlreadyWritten() )
 									{
 									if( writeSpecificationItem->markSpecificationStringAsWritten() != RESULT_OK )
@@ -1438,8 +1350,7 @@ class WordWrite
 							}
 						else
 							{
-							if( isRelation &&
-							!hasFoundAllRelationWords_ &&
+							if( !hasFoundAllRelationWords_ &&
 							// Matching relation word type
 							writeSpecificationItem->relationWordTypeNr() == grammarDefinitionWordTypeNr &&
 
@@ -1523,7 +1434,6 @@ class WordWrite
 		hasFoundAllSpecificationWordsBeforeConjunction_ = false;
 		hasFoundWordToWrite_ = false;
 		hasGeneralizationWord_ = false;
-		hasQuestionVerb_ = false;
 		hasFoundSingleSpecificationWord_ = false;
 		hasFoundSpecificationGeneralizationVerb_ = false;
 		hasFoundSpecificationWord_ = false;
@@ -1598,6 +1508,7 @@ class WordWrite
 
 	signed char writeSelectedRelationInfo( bool isActiveAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isQuestion, WordItem *writeWordItem )
 		{
+		unsigned int relationContextNr;
 		SpecificationItem *currentSpecificationItem = NULL;
 		char *writtenSentenceString;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeSelectedRelationInfo";
@@ -1608,8 +1519,8 @@ class WordWrite
 		if( ( currentSpecificationItem = myWordItem_->firstSpecificationItem( isActiveAssignment, isInactiveAssignment, isArchivedAssignment, isQuestion ) ) != NULL )
 			{
 			do	{
-				if( writeWordItem->hasContextInWord( currentSpecificationItem->relationContextNr(), currentSpecificationItem->specificationWordItem() ) &&
-				myWordItem_->firstRelationSpecificationItem( isInactiveAssignment, isArchivedAssignment, currentSpecificationItem->isPossessive(), currentSpecificationItem->isQuestion(), writeWordItem ) != NULL &&
+				if( ( relationContextNr = currentSpecificationItem->relationContextNr() ) > NO_CONTEXT_NR &&
+				writeWordItem->hasContextInWord( relationContextNr, currentSpecificationItem->specificationWordItem() ) &&
 				!currentSpecificationItem->isHiddenSpanishSpecification() )
 					{
 					if( writeSelectedSpecification( false, false, false, false, false, false, false, NO_ANSWER_PARAMETER, currentSpecificationItem ) != RESULT_OK )
@@ -1722,8 +1633,7 @@ class WordWrite
 							if( isNegative &&
 							!isOlderItem &&
 
-							( !myWordItem_->hasFoundAnswerToQuestion() ||
-							myWordItem_->isSpanishCurrentLanguage() ||
+							( myWordItem_->isSpanishCurrentLanguage() ||
 
 							( !relatedSpecificationItem->isConcludedAssumption() &&
 							!relatedSpecificationItem->hasSpecificationBeenWrittenAsAdjustedNegativeAssumption() ) ) )
@@ -1772,14 +1682,12 @@ class WordWrite
 
 			( !isExclusiveSpecification &&
 
-			( isFirstRelatedSpecification ||
-
 			( !isSpecificationPluralNoun &&
 
 			( !isPossessive ||
 			!isChineseCurrentLanguage_ ||
-			// Typically for Chinese
-			globalVariables_->nUserSpecificationWords == 1 ) ) ) ) ) ) ||
+			// Typical for Chinese
+			globalVariables_->nUserSpecificationWords == 1 ) ) ) ) ) ||
 
 			// User specification
 			( !isSelfGeneratedDefinitionConclusion &&
@@ -1802,7 +1710,6 @@ class WordWrite
 
 			( !isAdjustedAssumption &&
 			isNegative &&
-			!isQuestion &&
 			writeSpecificationItem->assumptionLevel() != relatedSpecificationItem->assumptionLevel() ) ) ) )
 				{
 				isWritingSentenceWithOnlyOneSpecification = ( isWritingCurrentSpecificationWordOnly &&
@@ -1826,7 +1733,6 @@ class WordWrite
 
 				// Self-generated specification
 				( isSelfGenerated &&
-				isOlderItem &&
 
 				( !hasSpecificationCollection ||
 
@@ -1848,7 +1754,6 @@ class WordWrite
 
 				// Relation context
 				( hasRelationContext &&
-				isOlderItem &&
 				!writeSpecificationItem->hasRelationContextCurrentlyBeenUpdated() ) ) )
 					{
 					// Use the stored sentence
@@ -1897,7 +1802,6 @@ class WordWrite
 								!isAssignment ||
 								!isExclusiveSpecification ||
 								isOlderItem ||
-								!isPossessive ||
 								writeSpecificationItem->isInactiveAssignment() ) )
 									writeSpecificationItem->storeWrittenSentenceString();
 								}
@@ -1931,8 +1835,7 @@ class WordWrite
 		if( ( currentSpecificationItem = myWordItem_->firstSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, false ) ) != NULL )
 			{
 			do	{
-				if( currentSpecificationItem->specificationWordItem() == writeWordItem &&
-				!currentSpecificationItem->isHiddenSpanishSpecification() )
+				if( currentSpecificationItem->specificationWordItem() == writeWordItem )
 					{
 					if( writeSelectedSpecification( false, false, false, false, false, false, false, NO_ANSWER_PARAMETER, currentSpecificationItem ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a selected specification" );
@@ -2128,8 +2031,7 @@ class WordWrite
 						!hasFoundWordToWrite_ )
 							isStillSuccessful = false;
 						}
-					while( selectedGrammarItem != NULL &&
-					!selectedGrammarItem->isDefinitionStart() );
+					while( !selectedGrammarItem->isDefinitionStart() );
 
 					if( !hasFoundWordToWrite_ &&
 					!isSkippingClearWriteLevel_ &&
@@ -2162,7 +2064,7 @@ class WordWrite
 				if( isCheckingUserSentenceForIntegrity )
 					strcpy( globalVariables_->writtenUserSentenceString, globalVariables_->writtenSentenceString );
 
-				// Typically for French: Merged words
+				// Typical for French: Merged words
 				if( myWordItem_->shrinkMergedWordsInWriteSentenceOfCurrentLanguage() != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to shrink the merged words in the write sentence string" );
 				}
@@ -2171,7 +2073,7 @@ class WordWrite
 		return RESULT_OK;
 		}
 
-	signed char writeUpdatedSpecification( bool isAdjustedSpecification, bool isConcludedSpanishAmbiguousAssumption, bool isCorrectedAssumptionByKnowledge, bool isCorrectedAssumptionByOppositeQuestion, bool isReplacedBySpecificationWithRelation, bool wasHiddenSpanishSpecification, SpecificationItem *writeSpecificationItem )
+	signed char writeUpdatedSpecification( bool isAdjustedSpecification, bool isCorrectedAssumptionByKnowledge, bool isCorrectedAssumptionByOppositeQuestion, bool isReplacedBySpecificationWithRelation, bool wasHiddenSpanishSpecification, SpecificationItem *writeSpecificationItem )
 		{
 		bool isExclusiveSpecification;
 		unsigned short interfaceParameter;
@@ -2193,8 +2095,8 @@ class WordWrite
 									( isCorrectedAssumptionByOppositeQuestion ? INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_QUESTION :
 									( isReplacedBySpecificationWithRelation ? ( writeSpecificationItem->isSelfGeneratedAssumption() ? INTERFACE_LISTING_MY_EARLIER_ASSUMPTIONS_THAT_HAVE_RELATION_WORDS_NOW : INTERFACE_LISTING_MY_EARLIER_CONCLUSIONS_THAT_HAVE_RELATION_WORDS_NOW ) :
 									( isAdjustedSpecification ? ( writeSpecificationItem->isQuestion() ? INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS :
-									( isConcludedSpanishAmbiguousAssumption || writeSpecificationItem->isSelfGeneratedConclusion() ?
-									( wasHiddenSpanishSpecification && !writeSpecificationItem->isConcludedAssumption() ? INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_NOT_HIDDEN_ANYMORE : INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED ) :
+									( writeSpecificationItem->isSelfGeneratedConclusion() ?
+									( writeSpecificationItem->isConcludedAssumption() ? INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED : ( wasHiddenSpanishSpecification ? INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_NOT_HIDDEN_ANYMORE : INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_UPDATED ) ) :
 									( wasHiddenSpanishSpecification ? INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE : INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED ) ) ) :
 									( writeSpecificationItem->isSelfGenerated() ? INTERFACE_LISTING_MY_QUESTIONS_THAT_ARE_ANSWERED : INTERFACE_LISTING_YOUR_QUESTIONS_THAT_ARE_ANSWERED ) ) ) ) );
 

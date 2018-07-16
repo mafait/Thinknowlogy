@@ -75,8 +75,9 @@
 < 洁曾经是男。
 < 
 ! 
-! This sentence is not accepted, because it is in conflict with itself.
-! 
+! This sentence is not accepted, because it is in conflict with:
+< 每个人都是男或女。
+< 
 * 
 * 我的问题：
 < 平是男的，是女？

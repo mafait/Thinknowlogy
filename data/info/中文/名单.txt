@@ -11,10 +11,6 @@
 呈现"    <X> Conditions:		~+#<X>~."。
 呈现"    <Y> Actions:		~+#<Y>~."。
 呈现"    <Z> Alternatives:		~+#<Z>~."。
-呈现" * Inactive items:	        ~=#<FRSWXYZ>~."。
-呈现" * Archived items:	        ~$#<FRSWXYZ>~."。
-呈现" * Replaced items:	        ~%#<FRSWXYZ>~."。
-呈现" * Deleted items:	        ~&#<FRSWXYZ>~."。
 呈现"------------------------------------------------------------------------------"。
 呈现" Items in words:	~#<acgijlmrswx>~."。
 呈现"------------------------------------------------------------------------------"。
@@ -33,5 +29,4 @@
 呈现" * Inactive items:	        ~=#<acgijlmrswx>~."。
 呈现" * Archived items:	        ~$#<acgijlmrswx>~."。
 呈现" * Replaced items:	        ~%#<acgijlmrswx>~."。
-呈现" * Deleted items:	        ~&#<acgijlmrswx>~."。
 呈现"------------------------------------------------------------------------------"。

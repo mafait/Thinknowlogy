@@ -1,7 +1,7 @@
 ﻿/*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -66,7 +66,7 @@ class FileList extends List
 			return startFileResultError( 1, "I failed to create a file item" );
 
 		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, fileResult.createdFileItem ) != Constants.RESULT_OK )
-			return addFileResultError( 1, "I failed to add an active file item" );
+			return addFileResultError( 1, "I failed to add a file item" );
 
 		return fileResult;
 		}
@@ -180,7 +180,6 @@ class FileList extends List
 
 	protected FileResultType openFile( boolean isAddingSubPath, boolean isInfoFile, boolean isTestFile, boolean isReportingErrorIfFileDoesNotExist, String defaultSubPathString, String fileNameString, String testOutputFileSubPathString, String testReferenceFileSubPathString )
 		{
-		long startNanoTime = System.nanoTime();
 		BufferedReader readFile = null;
 		BufferedWriter writeFile = null;
 		StringBuffer readFileNameStringBuffer = new StringBuffer();
@@ -270,8 +269,6 @@ class FileList extends List
 				return startFileResultError( 1, "I couldn't open " + ( readFile == null ? "file for reading: \"" + readFileNameStringBuffer + "\"" : ( testReferenceFileSubPathString != null && fileResult.referenceFile == null ? ( "reference file for reading: \"" + referenceFileNameStringBuffer + "\"" ) : ( testOutputFileSubPathString == null ? "an unknown file" : ( " file for writing: \"" + writeFileNameStringBuffer + "\"" ) ) ) ) );
 				}
 			}
-
-		GlobalVariables.openFileTime += ( System.nanoTime() - startNanoTime );
 
 		return fileResult;
 		}

@@ -76,7 +76,6 @@
 < Ana no es posiblemente un hombre.
 * 
 * Mis suposiciones que se concluyen:
-< José tiene 2 padres, llamados Juan y Ana.
 < José tiene una madre, llamada Ana.
 < Ana es parte de una familia.
 < Ana es una mujer.
@@ -88,6 +87,7 @@
 < Ana no es un hombre.
 < Ana es femenina.
 < Ana no es un padre.
+< José tiene 2 padres, llamados Juan y Ana.
 * 
 * Mis conclusiones:
 < Juan es un hombre.

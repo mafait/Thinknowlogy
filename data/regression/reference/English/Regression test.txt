@@ -46,10 +46,6 @@
     <X> Conditions:		11.
     <Y> Actions:		15.
     <Z> Alternatives:		0.
- * Inactive items:	        0.
- * Archived items:	        0.
- * Replaced items:	        0.
- * Deleted items:	        0.
 ------------------------------------------------------------------------------
  Items in words:	8184.
 ------------------------------------------------------------------------------
@@ -68,7 +64,6 @@
  * Inactive items:	        3.
  * Archived items:	        33.
  * Replaced items:	        6.
- * Deleted items:	        0.
 ------------------------------------------------------------------------------
 < 
 < Specifications:
@@ -107,7 +102,6 @@
  * Inactive word type items:		0.
  * Archived word type items:		0.
  * Replaced word type items:		0.
- * Deleted word type items:		0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
  The available query commands are:		Examples:
@@ -153,9 +147,9 @@
  In files '~' will mark the end of a query		...~#<W>~...
 ------------------------------------------------------------------------------
  Copyright (C) 2009-2018, Menno Mafait
- Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details type
- "Display the warranty.". This is free software, and you are welcome to redistribute
- it under certain conditions; type "Display the GPLv2-license." for details.
+ Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details click <Help.>
+ and <Display the warranty.>. This is free software, and you are welcome to redistribute
+ it under certain conditions; click <Help.> and <Display the GPLv2-license.> for details.
 
 		    GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991

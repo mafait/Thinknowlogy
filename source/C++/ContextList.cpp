@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -49,20 +49,18 @@ class ContextList : private List
 			}
 		}
 
-	bool hasContextInSpecificationsOfGeneralizationWords( unsigned int contextNr )
+	bool hasRelationContextInSpecificationsOfGeneralizationWords( unsigned int relationContextNr )
 		{
 		GeneralizationItem *currentGeneralizationItem;
 		WordItem *currentGeneralizationWordItem;
 
-		if( contextNr > NO_CONTEXT_NR &&
+		if( relationContextNr > NO_CONTEXT_NR &&
 		( currentGeneralizationItem = myWordItem()->firstGeneralizationItem() ) != NULL )
 			{
 			// Do for all generalization words
 			do	{
-				currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem();
-
-				if( currentGeneralizationWordItem != NULL &&
-				currentGeneralizationWordItem->hasContextInSpecificationsInWord( contextNr ) )
+				if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) != NULL &&
+				currentGeneralizationWordItem->hasRelationContextInSpecificationsInWord( relationContextNr ) )
 					return true;
 				}
 			while( ( currentGeneralizationItem = currentGeneralizationItem->nextGeneralizationItem() ) != NULL );
@@ -137,9 +135,8 @@ class ContextList : private List
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the given specification word item will be undefined
-
-		if( contextNr > NO_CONTEXT_NR )
+		if( contextNr > NO_CONTEXT_NR &&
+		specificationWordItem != NULL )
 			{
 			while( searchContextItem != NULL )
 				{
@@ -154,19 +151,37 @@ class ContextList : private List
 		return false;
 		}
 
-	bool hasContextCurrentlyBeenUpdated( unsigned int contextNr, WordItem *specificationWordItem )
+	bool hasContext( unsigned int contextNr, unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem )
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the given specification word item will be undefined
+		if( contextNr > NO_CONTEXT_NR &&
+		specificationWordItem != NULL )
+			{
+			while( searchContextItem != NULL )
+				{
+				if( searchContextItem->contextNr() == contextNr &&
+				searchContextItem->spanishAmbiguousCollectionNr() == spanishAmbiguousCollectionNr &&
+				searchContextItem->specificationWordItem() == specificationWordItem )
+					return true;
+
+				searchContextItem = searchContextItem->nextContextItem();
+				}
+			}
+
+		return false;
+		}
+
+	bool hasContextCurrentlyBeenUpdated( unsigned int contextNr )
+		{
+		ContextItem *searchContextItem = firstActiveContextItem();
 
 		if( contextNr > NO_CONTEXT_NR )
 			{
 			while( searchContextItem != NULL )
 				{
 				if( searchContextItem->hasCurrentCreationSentenceNr() &&
-				searchContextItem->contextNr() == contextNr &&
-				searchContextItem->specificationWordItem() == specificationWordItem )
+				searchContextItem->contextNr() == contextNr )
 					return true;
 
 				searchContextItem = searchContextItem->nextContextItem();
@@ -213,19 +228,20 @@ class ContextList : private List
 		return NO_CONTEXT_NR;
 		}
 
-	unsigned int contextNr( bool isCompoundCollectionSpanishAmbiguous, WordItem *specificationWordItem )
+	unsigned int contextNr( unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem )
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the given specification word item will be undefined
-
-		while( searchContextItem != NULL )
+		if( specificationWordItem != NULL )
 			{
-			if( searchContextItem->specificationWordItem() == specificationWordItem &&
-			searchContextItem->isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous )
-				return searchContextItem->contextNr();
+			while( searchContextItem != NULL )
+				{
+				if( searchContextItem->spanishAmbiguousCollectionNr() == spanishAmbiguousCollectionNr &&
+				searchContextItem->specificationWordItem() == specificationWordItem )
+					return searchContextItem->contextNr();
 
-			searchContextItem = searchContextItem->nextContextItem();
+				searchContextItem = searchContextItem->nextContextItem();
+				}
 			}
 
 		return NO_CONTEXT_NR;
@@ -247,7 +263,7 @@ class ContextList : private List
 		return highestContextNr;
 		}
 
-	signed char addContext( bool isCompoundCollectionSpanishAmbiguous, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem )
+	signed char addContext( unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem )
 		{
 		ContextItem *foundContextItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addContext";
@@ -273,8 +289,8 @@ class ContextList : private List
 				addToContextWordQuickAccessList();
 				}
 
-			if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionSpanishAmbiguous, contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
-				return addError( functionNameString, "I failed to add an active context item" );
+			if( addItemToList( QUERY_ACTIVE_CHAR, new ContextItem( contextWordTypeNr, ( specificationWordTypeNr == WORD_TYPE_NOUN_PLURAL ? WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, spanishAmbiguousCollectionNr, specificationWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+				return addError( functionNameString, "I failed to add a context item" );
 			}
 		else
 			{
@@ -290,18 +306,18 @@ class ContextList : private List
 		return RESULT_OK;
 		}
 
-	signed char checkForUnusedContext()
+	signed char checkForUnusedRelationContext()
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 		char errorString[MAX_ERROR_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForUnusedContext";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForUnusedRelationContext";
 
 		while( searchContextItem != NULL &&
 		!globalVariables()->hasDisplayedIntegrityWarning )
 			{
-			if( !hasContextInSpecificationsOfGeneralizationWords( searchContextItem->contextNr() ) )
+			if( !hasRelationContextInSpecificationsOfGeneralizationWords( searchContextItem->contextNr() ) )
 				{
-				sprintf( errorString, "\nI found unused context number: %u;\n\tContextItem: %s.\n", searchContextItem->contextNr(), searchContextItem->itemToString( NO_WORD_TYPE_NR ) );
+				sprintf( errorString, "\nI found unused relation context number: %u;\n\tContextItem: %s.\n", searchContextItem->contextNr(), searchContextItem->itemToString( NO_WORD_TYPE_NR ) );
 
 				if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 					return startError( functionNameString, "I failed to write an interface warning" );
@@ -355,26 +371,36 @@ class ContextList : private List
 		return NULL;
 		}
 
-	ContextItem *contextItem( bool isCompoundCollectionSpanishAmbiguous, unsigned int nContextWords, WordItem *specificationWordItem )
+	ContextItem *contextItem( bool isCompoundCollectionSpanishAmbiguous, unsigned int nContextWords, unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem )
 		{
+		unsigned int searchSpanishAmbiguousCollectionNr;
 		ContextItem *searchContextItem = firstActiveContextItem();
 		WordItem *anyWordItem = myWordItem();
 
-		// In case of a pronoun context, the given specification word item will be undefined
-
-		if( nContextWords > 0 )
+		if( nContextWords > 0 &&
+		specificationWordItem != NULL )
 			{
 			while( searchContextItem != NULL )
 				{
-				if( searchContextItem->specificationWordItem() == specificationWordItem &&
+				if( searchContextItem->specificationWordItem() == specificationWordItem )
+					{
+					searchSpanishAmbiguousCollectionNr = searchContextItem->spanishAmbiguousCollectionNr();
 
-				( ( isCompoundCollectionSpanishAmbiguous &&
-				searchContextItem->isCompoundCollectionSpanishAmbiguous() ) ||
+					// No compound collection Spanish ambiguous
+					if( ( !isCompoundCollectionSpanishAmbiguous &&
 
-				( !isCompoundCollectionSpanishAmbiguous &&
-				!searchContextItem->isCompoundCollectionSpanishAmbiguous() &&
-				anyWordItem->nContextWords( searchContextItem->contextNr(), specificationWordItem ) == nContextWords ) ) )
-					return searchContextItem;
+					( searchSpanishAmbiguousCollectionNr == NO_COLLECTION_NR ||
+					// Typical for Spanish
+					searchSpanishAmbiguousCollectionNr == spanishAmbiguousCollectionNr ) &&
+
+					anyWordItem->nContextWords( searchContextItem->contextNr(), specificationWordItem ) == nContextWords ) ||
+
+					// Typical for Spanish
+					// Compound collection Spanish ambiguous
+					( isCompoundCollectionSpanishAmbiguous &&
+					searchSpanishAmbiguousCollectionNr == spanishAmbiguousCollectionNr ) )
+						return searchContextItem;
+					}
 
 				searchContextItem = searchContextItem->nextContextItem();
 				}

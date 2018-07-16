@@ -40,8 +40,8 @@
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
 < Pablo es posiblemente parte de una familia.
-< José es posiblemente una persona.
 < José es posiblemente parte de una familia.
+< José es posiblemente una persona.
 < Luisa es posiblemente hija de Juan.
 < Luisa es posiblemente parte de una familia.
 < Luisa es puede-ser una persona.
@@ -272,10 +272,6 @@
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 	y:
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
-* 	y:
 <	- Pablo tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
@@ -315,10 +311,6 @@
 * Mis suposiciones:
 < José es probablemente una persona. Porque:
 <	- José es hijo de Juan y Ana.
-<	- Un hijo es probablemente una persona.
-* 	y:
-<	- José tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 	y:
 <	- José tiene un padre, llamado Juan.

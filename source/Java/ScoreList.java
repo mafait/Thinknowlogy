@@ -1,7 +1,7 @@
 ﻿/*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -229,7 +229,7 @@ class ScoreList extends List
 	protected byte createScoreItem( boolean isChecked, int oldSatisfiedScore, int newSatisfiedScore, int oldDissatisfiedScore, int newDissatisfiedScore, int oldNotBlockingScore, int newNotBlockingScore, int oldBlockingScore, int newBlockingScore, SelectionItem referenceSelectionItem )
 		{
 		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, GlobalVariables.currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to add an active score item" );
+			return addError( 1, "I failed to add a score item" );
 
 		return Constants.RESULT_OK;
 		}
@@ -245,7 +245,7 @@ class ScoreList extends List
 			if( searchScoreItem.assignmentLevel() == currentAssignmentLevel )
 				{
 				if( deleteItem( searchScoreItem ) != Constants.RESULT_OK )
-					return addError( 1, "I failed to delete an active item" );
+					return addError( 1, "I failed to delete a score item" );
 
 				searchScoreItem = nextScoreListItem();
 				}

@@ -11,10 +11,6 @@ Display "    <W> Words:		~+#<W>~, (predefined: ~+#<W>:*~).".
 Display "    <X> Conditions:		~+#<X>~.".
 Display "    <Y> Actions:		~+#<Y>~.".
 Display "    <Z> Alternatives:		~+#<Z>~.".
-Display " * Inactive items:	        ~=#<FRSWXYZ>~.".
-Display " * Archived items:	        ~$#<FRSWXYZ>~.".
-Display " * Replaced items:	        ~%#<FRSWXYZ>~.".
-Display " * Deleted items:	        ~&#<FRSWXYZ>~.".
 Display "------------------------------------------------------------------------------".
 Display " Items in words:	~#<acgijlmrswx>~.".
 Display "------------------------------------------------------------------------------".
@@ -33,5 +29,4 @@ Display "    <x> context:		~+#<x>~.".
 Display " * Inactive items:	        ~=#<acgijlmrswx>~.".
 Display " * Archived items:	        ~$#<acgijlmrswx>~.".
 Display " * Replaced items:	        ~%#<acgijlmrswx>~.".
-Display " * Deleted items:	        ~&#<acgijlmrswx>~.".
 Display "------------------------------------------------------------------------------".

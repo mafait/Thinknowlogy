@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,12 +31,11 @@ class ContextItem : private Item
 
 	// Private initialized variables
 
-	bool isCompoundCollectionSpanishAmbiguous_;
-
 	unsigned short contextWordTypeNr_;
 	unsigned short specificationWordTypeNr_;
 
 	unsigned int contextNr_;
+	unsigned int spanishAmbiguousCollectionNr_;
 
 	WordItem *specificationWordItem_;
 
@@ -44,18 +43,17 @@ class ContextItem : private Item
 	protected:
 	// Constructor
 
-	ContextItem( bool isCompoundCollectionSpanishAmbiguous, unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	ContextItem( unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ContextItem", globalVariables, inputOutput, myList, myWordItem );
 
 		// Private initialized variables
 
-		isCompoundCollectionSpanishAmbiguous_ = isCompoundCollectionSpanishAmbiguous;
-
 		contextWordTypeNr_ = contextWordTypeNr;
 		specificationWordTypeNr_ = specificationWordTypeNr;
 
 		contextNr_ = contextNr;
+		spanishAmbiguousCollectionNr_ = spanishAmbiguousCollectionNr;
 
 		specificationWordItem_ = specificationWordItem;
 		}
@@ -123,15 +121,15 @@ class ContextItem : private Item
 
 		strcat( queryString, tempString );
 
-		if( isCompoundCollectionSpanishAmbiguous_ )
-			{
-			strcat( queryString, QUERY_SEPARATOR_STRING );
-			strcat( queryString, "isCompoundCollectionSpanishAmbiguous" );
-			}
-
 		if( contextNr_ > NO_CONTEXT_NR )
 			{
 			sprintf( tempString, "%ccontextNr:%u", QUERY_SEPARATOR_CHAR, contextNr_ );
+			strcat( queryString, tempString );
+			}
+
+		if( spanishAmbiguousCollectionNr_ > NO_COLLECTION_NR )
+			{
+			sprintf( tempString, "%cspanishAmbiguousCollectionNr:%u", QUERY_SEPARATOR_CHAR, spanishAmbiguousCollectionNr_ );
 			strcat( queryString, tempString );
 			}
 
@@ -173,11 +171,6 @@ class ContextItem : private Item
 
 	// Protected functions
 
-	bool isCompoundCollectionSpanishAmbiguous()
-		{
-		return isCompoundCollectionSpanishAmbiguous_;
-		}
-
 	unsigned short contextWordTypeNr()
 		{
 		return contextWordTypeNr_;
@@ -191,6 +184,11 @@ class ContextItem : private Item
 	unsigned int contextNr()
 		{
 		return contextNr_;
+		}
+
+	unsigned int spanishAmbiguousCollectionNr()
+		{
+		return spanishAmbiguousCollectionNr_;
 		}
 
 	ContextItem *nextContextItem()

@@ -127,13 +127,13 @@
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Anna is probably a parent of Paul, Joe and Laura.
 * 	and:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 <	- Paul has a father, called John.
 <	- Paul has a mother, called Anna.
-* 	and:
-<	- John has probably 3 children, called Paul, Joe and Laura.
-<	- Anna has probably 3 children, called Paul, Joe and Laura.
 < Paul is probably part of a family. Because:
 <	- Paul is probably a child of John and Anna.
 <	- Children are part of every family.
@@ -194,13 +194,13 @@
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Anna is probably a parent of Paul, Joe and Laura.
 * 	and:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 <	- Paul has a father, called John.
 <	- Paul has a mother, called Anna.
-* 	and:
-<	- John has probably 3 children, called Paul, Joe and Laura.
-<	- Anna has probably 3 children, called Paul, Joe and Laura.
 < Paul is probably part of a family. Because:
 <	- Paul is probably a child of John and Anna.
 <	- Children are part of every family.
@@ -234,13 +234,13 @@
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Anna is probably a parent of Paul, Joe and Laura.
 * 	and:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 <	- Paul has a father, called John.
 <	- Paul has a mother, called Anna.
-* 	and:
-<	- John has probably 3 children, called Paul, Joe and Laura.
-<	- Anna has probably 3 children, called Paul, Joe and Laura.
 < Paul is probably not a girl and not a woman. Because:
 <	- Paul is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.

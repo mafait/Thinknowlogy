@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -359,23 +359,10 @@ class JustificationItem extends Item
 		return true;
 		}
 
-	protected boolean hasNonPossessivePrimaryUserSpecification()
+	protected boolean hasNonPossessivePrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != null &&
-				!primarySpecificationItem_.isPossessive() &&
-				primarySpecificationItem_.isUserSpecification() );
-		}
-
-	protected boolean hasPrimaryAnsweredQuestion()
-		{
-		return ( primarySpecificationItem_ != null &&
-				primarySpecificationItem_.isAnsweredQuestion() );
-		}
-
-	protected boolean hasPrimaryQuestion()
-		{
-		return ( primarySpecificationItem_ != null &&
-				primarySpecificationItem_.isQuestion() );
+				!primarySpecificationItem_.isPossessive() );
 		}
 
 	protected boolean hasPossessivePrimarySpecification()
@@ -541,8 +528,7 @@ class JustificationItem extends Item
 				if( anotherPrimarySpecificationItem_ != null )
 					return myWordItem().nContextWords( secondaryRelationContextNr, secondarySpecificationItem_.specificationWordItem() );
 
-				if( secondaryRelationContextNr == relationContextNr ||
-				isContextSimilarInContextWords( secondaryRelationContextNr, relationContextNr ) )
+				if( isContextSimilarInContextWords( secondaryRelationContextNr, relationContextNr ) )
 					return nRelationWords;
 				}
 
@@ -556,6 +542,14 @@ class JustificationItem extends Item
 		{
 		if( primarySpecificationItem_ != null )
 			return primarySpecificationItem_.specificationCollectionNr();
+
+		return Constants.NO_COLLECTION_NR;
+		}
+
+	protected int secondarySpecificationCollectionNr()
+		{
+		if( secondarySpecificationItem_ != null )
+			return secondarySpecificationItem_.specificationCollectionNr();
 
 		return Constants.NO_COLLECTION_NR;
 		}
@@ -604,9 +598,7 @@ class JustificationItem extends Item
 			return startError( 1, null, "It isn't allowed to change an older item afterwards" );
 
 		if( newAttachedJustificationItem == null ||
-
-		( !hasJustification( newAttachedJustificationItem ) &&
-		!newAttachedJustificationItem.hasJustification( this ) ) )
+		!newAttachedJustificationItem.hasJustification( this ) )
 			attachedJustificationItem_ = newAttachedJustificationItem;
 
 		return Constants.RESULT_OK;
@@ -628,22 +620,6 @@ class JustificationItem extends Item
 		return Constants.RESULT_OK;
 		}
 
-	protected byte changeAnotherPrimarySpecification( SpecificationItem replacingSpecificationItem )
-		{
-		if( replacingSpecificationItem == null )
-			return startError( 1, null, "The given replacing specification item is undefined" );
-
-		if( replacingSpecificationItem.isReplacedOrDeletedItem() )
-			return startError( 1, null, "The given replacing specification item is replaced or deleted" );
-
-		if( !hasCurrentCreationSentenceNr() )
-			return startError( 1, null, "It isn't allowed to change an older item afterwards" );
-
-		anotherPrimarySpecificationItem_ = replacingSpecificationItem;
-
-		return Constants.RESULT_OK;
-		}
-
 	protected byte changeSecondarySpecification( SpecificationItem replacingSpecificationItem )
 		{
 		if( replacingSpecificationItem == null )
@@ -656,22 +632,6 @@ class JustificationItem extends Item
 			return startError( 1, null, "It isn't allowed to change an older item afterwards" );
 
 		secondarySpecificationItem_ = replacingSpecificationItem;
-
-		return Constants.RESULT_OK;
-		}
-
-	protected byte changeAnotherSecondarySpecification( SpecificationItem replacingSpecificationItem )
-		{
-		if( replacingSpecificationItem == null )
-			return startError( 1, null, "The given replacing specification item is undefined" );
-
-		if( replacingSpecificationItem.isReplacedOrDeletedItem() )
-			return startError( 1, null, "The given replacing specification item is replaced or deleted" );
-
-		if( !hasCurrentCreationSentenceNr() )
-			return startError( 1, null, "It isn't allowed to change an older item afterwards" );
-
-		anotherSecondarySpecificationItem_ = replacingSpecificationItem;
 
 		return Constants.RESULT_OK;
 		}
@@ -808,8 +768,7 @@ class JustificationItem extends Item
 		secondarySpecificationItem != null &&
 		secondarySpecificationItem_ != null &&
 		secondarySpecificationItem_.isSelfGenerated() &&
-		secondarySpecificationItem_.generalizationWordItem() == secondarySpecificationItem.generalizationWordItem() &&
-		secondarySpecificationItem_.specificationWordItem() == secondarySpecificationItem.specificationWordItem() ) )
+		secondarySpecificationItem_.generalizationWordItem() == secondarySpecificationItem.generalizationWordItem() ) )
 			return this;
 
 		// Recursive, do for all attached justification items

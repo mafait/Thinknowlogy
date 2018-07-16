@@ -1,7 +1,7 @@
 ﻿/*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -152,7 +152,7 @@ class ReadList : private List
 			return startError( functionNameString, "The given read item already exists" );
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, new ReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an active read item" );
+			return addError( functionNameString, "I failed to add a read item" );
 
 		return RESULT_OK;
 		}
@@ -173,10 +173,10 @@ class ReadList : private List
 				{
 				if( readWordItem->isMultipleWord() &&
 				// No matching multiple word parts
-				readWordItem->matchingMultipleSingularNounWordParts( sentenceString ) == 0 )
+				readWordItem->matchingMultipleWordParts( sentenceString ) == 0 )
 					{
 					if( deleteItem( searchReadItem ) != RESULT_OK )
-						return addError( functionNameString, "I failed to delete an active read item" );
+						return addError( functionNameString, "I failed to delete a read item" );
 
 					searchReadItem = nextReadListItem();
 					}

@@ -26,6 +26,8 @@
 * Mijn veronderstellingen:
 < Een dochter is waarschijnlijk een persoon.
 < 
-! 
-! Deze vraag is niet beantwoord, omdat het in conflict is met zichzelf.
-! 
+< 
+< Nee, want:
+< Iedere ouder is een vrouw of een man.
+< Iedere persoon is een man of een vrouw.
+< 

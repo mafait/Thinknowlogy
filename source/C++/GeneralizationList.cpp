@@ -1,7 +1,7 @@
 ﻿/*	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -92,12 +92,12 @@ class GeneralizationList : private List
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createGeneralizationItem";
 
-		if( generalizationWordTypeNr <= NO_WORD_TYPE_NR &&
+		if( generalizationWordTypeNr <= NO_WORD_TYPE_NR ||
 		generalizationWordTypeNr >= NUMBER_OF_WORD_TYPES )
 			return startError( functionNameString, "The given generalization word type number is undefined or out of bounds: ", generalizationWordTypeNr );
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, new GeneralizationItem( isLanguageWord, isRelation, globalVariables()->currentLanguageNr, specificationWordTypeNr, generalizationWordTypeNr, generalizationWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an active generalization item" );
+			return addError( functionNameString, "I failed to add a generalization item" );
 
 		return RESULT_OK;
 		}

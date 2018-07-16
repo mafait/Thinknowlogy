@@ -1,7 +1,7 @@
 ﻿/*	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -70,7 +70,7 @@ class GrammarList extends List
 				grammarParameter == Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING ||
 				grammarParameter == Constants.WORD_PLURAL_NOUN_ENDING ||
 				grammarParameter == Constants.WORD_MERGED_WORD ||
-				// Typically for Chinese
+				// Typical for Chinese
 				grammarParameter == Constants.WORD_CHINESE_EXCLUSIVE_NOUN );
 		}
 
@@ -134,39 +134,38 @@ class GrammarList extends List
 
 	// Protected methods
 
-	protected void markAsOptionEnd()
+	protected void markAsChoiceEnd()
 		{
 		boolean hasFound = false;
 		int currentSentenceItemNr = GlobalVariables.currentSentenceItemNr;
 		GrammarItem searchGrammarItem = firstActiveGrammarItem();
 
-		while( searchGrammarItem != null &&
-		!hasFound )
+		while( !hasFound &&
+		searchGrammarItem != null )
 			{
-			if( searchGrammarItem.hasCurrentCreationSentenceNr() &&
-			searchGrammarItem.itemNr() == currentSentenceItemNr )
+			if( searchGrammarItem.itemNr() == currentSentenceItemNr )
 				{
 				hasFound = true;
-				searchGrammarItem.isOptionEnd = true;
+				searchGrammarItem.isChoiceEnd = true;
 				}
 
 			searchGrammarItem = searchGrammarItem.nextGrammarItem();
 			}
 		}
 
-	protected void markAsChoiceEnd( int choiceEndItemNr )
+	protected void markAsOptionEnd()
 		{
 		boolean hasFound = false;
+		int currentSentenceItemNr = GlobalVariables.currentSentenceItemNr;
 		GrammarItem searchGrammarItem = firstActiveGrammarItem();
 
-		while( searchGrammarItem != null &&
-		!hasFound )
+		while( !hasFound &&
+		searchGrammarItem != null )
 			{
-			if( searchGrammarItem.hasCurrentCreationSentenceNr() &&
-			searchGrammarItem.itemNr() == choiceEndItemNr )
+			if( searchGrammarItem.itemNr() == currentSentenceItemNr )
 				{
 				hasFound = true;
-				searchGrammarItem.isChoiceEnd = true;
+				searchGrammarItem.isOptionEnd = true;
 				}
 
 			searchGrammarItem = searchGrammarItem.nextGrammarItem();
@@ -204,8 +203,7 @@ class GrammarList extends List
 					definitionGrammarItem = searchGrammarItem;
 				else
 					{
-					if( definitionGrammarItem != null &&
-					searchGrammarItem.creationSentenceNr() < GlobalVariables.currentSentenceNr )
+					if( definitionGrammarItem != null )
 						{
 						grammarString = searchGrammarItem.grammarString();
 						definitionGrammarString = definitionGrammarItem.grammarString();
@@ -239,14 +237,10 @@ class GrammarList extends List
 					if( currentGrammarItem.isIdentical( duplicateGrammarItem ) )
 						{
 						nextGrammarItem = currentGrammarItem.nextGrammarItem();
-
-						currentGrammarItem = ( nextGrammarItem != null &&
-												nextGrammarItem.hasCurrentCreationSentenceNr() ? nextGrammarItem : null );
+						currentGrammarItem = nextGrammarItem;
 
 						nextGrammarItem = duplicateGrammarItem.nextGrammarItem();
-
-						duplicateGrammarItem = ( nextGrammarItem != null &&
-												nextGrammarItem.creationSentenceNr() == duplicateDefinitionGrammarItem.creationSentenceNr() ? nextGrammarItem : null );
+						duplicateGrammarItem = nextGrammarItem;
 						}
 					else
 						isIdentical = false;
@@ -367,19 +361,12 @@ class GrammarList extends List
 			if( ( grammarString = currentGrammarItem.grammarString() ) == null )
 				return startError( 1, "The grammar string of the grammar definition word is undefined" );
 
-			if( currentGrammarItem.definitionGrammarItem == null )
+			if( currentGrammarItem.definitionGrammarItem == null &&
+			!currentGrammarItem.isDefinitionStart() &&
+			definitionGrammarString.equals( grammarString ) )
 				{
-				if( !currentGrammarItem.isDefinitionStart() &&
-				definitionGrammarString.equals( grammarString ) )
-					{
-					definitionGrammarItem.isGrammarItemInUse = true;
-					currentGrammarItem.definitionGrammarItem = definitionGrammarItem;
-					}
-				}
-			else
-				{
-				if( currentGrammarItem.definitionGrammarItem == definitionGrammarItem.nextDefinitionGrammarItem )
-					currentGrammarItem.definitionGrammarItem = definitionGrammarItem;
+				definitionGrammarItem.isGrammarItemInUse = true;
+				currentGrammarItem.definitionGrammarItem = definitionGrammarItem;
 				}
 			}
 
@@ -553,7 +540,7 @@ class GrammarList extends List
 		grammarResult.grammarItem = createdGrammarItem;
 
 		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, createdGrammarItem ) != Constants.RESULT_OK )
-			return addGrammarResultError( 1, "I failed to add an active grammar item" );
+			return addGrammarResultError( 1, "I failed to add a grammar item" );
 
 		isCheckingGrammarNeeded_ = true;
 
@@ -675,7 +662,7 @@ class GrammarList extends List
 							{
 							if( ( replacingWordEndingString = replacingWordEndingGrammarItem.grammarString() ) != null )
 								{
-								// Typically for Chinese
+								// Typical for Chinese
 								if( Character.isDigit( wordEndingString.charAt( 0 ) ) )
 									{
 									try	{

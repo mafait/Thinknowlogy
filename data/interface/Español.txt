@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To define the interface texts for the Spanish language
-#	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+# Purpose: To define the interface texts for the Spanish language
+# Version: Thinknowlogy 2018r2 (Natural Intelligence)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 # Consola de Java (menú superior)
@@ -204,12 +204,11 @@
 :1219			"\" ya está resuelto."
 
 # Listado (conflictos)
-:1300			"\nNo se acepta esta frase, porque está en conflicto consigo mismo."
-:1301			"\nNo se acepta esta pregunta, porque está en conflicto consigo misma."
-:1302			"\nNo se acepta esta frase, porque está en conflicto con:"
-:1303			"\nNo se acepta esta frase, porque no deja ninguna opción abierta:"
-:1304			"\nNo se acepta esta especificación de definición, porque ya está asignado:"
-:1305			"\nNo se acepta esta asignación, porque está en conflicto con especificación de definición:"
+:1300			"\nNo porque:"
+:1301			"\nNo se acepta esta frase, porque está en conflicto con:"
+:1302			"\nNo se acepta esta frase, porque no deja ninguna opción abierta:"
+:1303			"\nNo se acepta esta especificación de definición, porque ya está asignado:"
+:1304			"\nNo se acepta esta asignación, porque está en conflicto con especificación de definición:"
 
 # Listado (información actual)
 :1310			"\nSu información:"
@@ -219,15 +218,16 @@
 :1314			"\nMis suposiciones:"
 :1315			"\nMis suposiciones que se ajustan:"
 :1316			"\nMis suposiciones que se concluyen:"
-:1317			"\nMis conclusiones que no son ocultos más:"
-:1318			"\nMis suposiciones que no son ocultos más:"
-:1319			"\nMis preguntas:"
-:1320			"\nMis preguntas ajustadas:"
-:1321			"\nMi respuesta:"
-:1322			"\nSólo sé:"
-:1323			"\nEspecificaciones:"
-:1324			"\nInformación relacionada:"
-:1325			"\nPreguntas relacionadas:"
+:1317			"\nMis conclusiones que se actualizan:"
+:1318			"\nMis conclusiones que no son ocultos más:"
+:1319			"\nMis suposiciones que no son ocultos más:"
+:1320			"\nMis preguntas:"
+:1321			"\nMis preguntas ajustadas:"
+:1322			"\nMi respuesta:"
+:1323			"\nSólo sé:"
+:1324			"\nEspecificaciones:"
+:1325			"\nInformación relacionada:"
+:1326			"\nPreguntas relacionadas:"
 
 # Listado (información antigua)
 :1330			"\nUsted ha confirmado la especificación - pero ninguno de sus relaciones - de mis supuestos anteriores:"

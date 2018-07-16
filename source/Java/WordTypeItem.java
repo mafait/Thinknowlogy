@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -171,9 +171,6 @@ class WordTypeItem extends Item
 		return ( adjectiveParameter_ == queryParameter ||
 				definiteArticleParameter_ == queryParameter ||
 				indefiniteArticleParameter_ == queryParameter ||
-				generalizationWriteLevel_ == queryParameter ||
-				specificationWriteLevel_ == queryParameter ||
-				relationWriteLevel_ == queryParameter ||
 				wordTypeLanguageNr_ == queryParameter ||
 
 				( queryParameter == Constants.MAX_QUERY_PARAMETER &&
@@ -181,9 +178,6 @@ class WordTypeItem extends Item
 				( adjectiveParameter_ > Constants.NO_ADJECTIVE_PARAMETER ||
 				definiteArticleParameter_ > Constants.NO_DEFINITE_ARTICLE_PARAMETER ||
 				indefiniteArticleParameter_ > Constants.NO_INDEFINITE_ARTICLE_PARAMETER ||
-				generalizationWriteLevel_ > Constants.NO_WRITE_LEVEL ||
-				specificationWriteLevel_ > Constants.NO_WRITE_LEVEL ||
-				relationWriteLevel_ > Constants.NO_WRITE_LEVEL ||
 				wordTypeLanguageNr_ > Constants.NO_LANGUAGE_NR ) ) );
 		}
 
@@ -359,7 +353,7 @@ class WordTypeItem extends Item
 		indefiniteArticleParameter_ == indefiniteArticleParameter )
 			return true;
 
-		// Typically for English ('a' or 'an')
+		// Typical for English ('a' or 'an')
 		// If undefined, fall back to a simple phonetic vowel rule
 		if( isIndefinitePhoneticVowelArticle( hasIndefiniteArticleParameter ? indefiniteArticleParameter_ : indefiniteArticleParameter ) )
 			{
@@ -404,27 +398,13 @@ class WordTypeItem extends Item
 
 	protected boolean isDefiniteArticle()
 		{
-		// Filter on articles, because nouns also have a definiteArticleParameter
-		return ( wordTypeNr_ == Constants.WORD_TYPE_ARTICLE &&
-				isDefiniteArticleParameter( definiteArticleParameter_ ) );
-		}
-
-	protected boolean isIndefiniteArticle()
-		{
-		// Filter on articles, because nouns also have an indefiniteArticleParameter
-		return ( wordTypeNr_ == Constants.WORD_TYPE_ARTICLE &&
-				isIndefiniteArticleParameter( indefiniteArticleParameter_ ) );
+		return isDefiniteArticleParameter( definiteArticleParameter_ );
 		}
 
 	protected boolean isNoun()
 		{
 		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
-		}
-
-	protected boolean isPluralNoun()
-		{
-		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
 	protected boolean isProperNounPrecededByDefiniteArticle( short definiteArticleParameter )
@@ -437,12 +417,12 @@ class WordTypeItem extends Item
 		{
 		return ( wordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR );
 		}
-
+/*
 	protected boolean isGeneralizationWordAlreadyWritten()
 		{
 		return ( generalizationWriteLevel_ > Constants.NO_WRITE_LEVEL );
 		}
-
+*/
 	protected boolean isSpecificationWordAlreadyWritten()
 		{
 		return ( specificationWriteLevel_ > Constants.NO_WRITE_LEVEL );
@@ -580,6 +560,7 @@ class WordTypeItem extends Item
 		else
 			{
 			if( indefiniteArticleParameter_ != indefiniteArticleParameter &&
+
 			InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, itemString(), Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
 				return addError( 1, null, itemString(), "I failed to write an interface notification about the use of an indefinite article" );
 			}
@@ -598,22 +579,6 @@ class WordTypeItem extends Item
 
 		return ( nextCurrentLanguageWordTypeItem != null &&
 				nextCurrentLanguageWordTypeItem.wordTypeLanguageNr() == GlobalVariables.currentLanguageNr ? nextCurrentLanguageWordTypeItem : null );
-		}
-
-	protected WordTypeItem nextWordTypeItem( short wordTypeNr )
-		{
-		WordTypeItem searchWordTypeItem = nextCurrentLanguageWordTypeItem();
-
-		while( searchWordTypeItem != null )
-			{
-			if( wordTypeNr == Constants.NO_WORD_TYPE_NR ||
-			searchWordTypeItem.wordTypeNr_ == wordTypeNr )
-				return searchWordTypeItem;
-
-			searchWordTypeItem = searchWordTypeItem.nextCurrentLanguageWordTypeItem();
-			}
-
-		return null;
 		}
 	};
 

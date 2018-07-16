@@ -138,10 +138,10 @@
 <	- Every family has parents and children.
 <	- John is a parent of Paul, Joe and Laura.
 * 	and:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- Paul has a parent, called John.
-* 	and:
-<	- John has probably 3 children, called Paul, Joe and Laura.
 < Paul is probably part of a family. Because:
 <	- Paul is probably a child of John.
 <	- Children are part of every family.

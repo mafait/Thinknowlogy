@@ -1,6 +1,6 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -58,6 +58,11 @@ class List
 			}
 
 		return true;
+		}
+
+	private Item firstDeletedItem()
+		{
+		return deletedList_;
 		}
 
 
@@ -229,10 +234,6 @@ class List
 
 				case Constants.QUERY_REPLACED_CHAR:
 					replacedList_ = removeItem.nextItem;
-					break;
-
-				case Constants.QUERY_DELETED_CHAR:
-					deletedList_ = removeItem.nextItem;
 					break;
 
 				default:
@@ -1206,11 +1207,6 @@ class List
 		return replacedList_;
 		}
 
-	protected Item firstDeletedItem()
-		{
-		return deletedList_;
-		}
-
 	protected Item nextListItem()
 		{
 		return nextListItem_;
@@ -1342,7 +1338,7 @@ class List
 		return globalHighestItemNr;
 		}
 
-	protected int highestFoundSentenceNrInList( boolean isIncludingDeletedItems, int globalHighestFoundSentenceNr, int maxSentenceNr )
+	protected int highestFoundSentenceNrInList( int globalHighestFoundSentenceNr, int maxSentenceNr )
 		{
 		int localHighestFoundSentenceNr = Constants.NO_SENTENCE_NR;
 		int tempSentenceNr;
@@ -1360,11 +1356,6 @@ class List
 			localHighestFoundSentenceNr = tempSentenceNr;
 
 		if( ( searchItem = firstReplacedItem() ) != null &&
-		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
-			localHighestFoundSentenceNr = tempSentenceNr;
-
-		if( isIncludingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != null &&
 		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
 			localHighestFoundSentenceNr = tempSentenceNr;
 
@@ -1891,10 +1882,6 @@ class List
 		( searchItem = firstReplacedItem() ) != null )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		( searchItem = firstDeletedItem() ) != null )
-			storeChangesInFutureDatabase( searchItem );
-
 		return GlobalVariables.result;
 		}
 */
@@ -1915,9 +1902,6 @@ class List
 			clearQuerySelections( searchItem );
 
 		if( ( searchItem = firstReplacedItem() ) != null )
-			clearQuerySelections( searchItem );
-
-		if( ( searchItem = firstDeletedItem() ) != null )
 			clearQuerySelections( searchItem );
 		}
 
@@ -1962,19 +1946,9 @@ class List
 
 			searchItem = searchItem.nextItem;
 			}
-
-		searchItem = firstDeletedItem();
-
-		while( searchItem != null )
-			{
-			if( searchItem.isSelectedByQuery )
-				GlobalVariables.nDeletedQueryItems++;
-
-			searchItem = searchItem.nextItem;
-			}
 		}
 
-	protected void itemQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
+	protected void itemQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
 		{
 		Item searchItem;
 
@@ -1993,13 +1967,9 @@ class List
 		if( isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != null )
 			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
-
-		if( isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != null )
-			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 		}
 
-	protected void listQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, StringBuffer queryListStringBuffer )
+	protected void listQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, StringBuffer queryListStringBuffer )
 		{
 		boolean isSelectingOnFindAndListIncluded;
 		boolean isListIncludedInQuery = isIncludingThisList( queryListStringBuffer );
@@ -2026,14 +1996,10 @@ class List
 			if( isSelectingReplacedItems &&
 			( searchItem = firstReplacedItem() ) != null )
 				listQuery( isSelectingOnFindAndListIncluded, searchItem );
-
-			if( isSelectingDeletedItems &&
-			( searchItem = firstDeletedItem() ) != null )
-				listQuery( isSelectingOnFindAndListIncluded, searchItem );
 			}
 		}
 
-	protected void parameterQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, int queryParameter )
+	protected void parameterQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, int queryParameter )
 		{
 		Item searchItem;
 
@@ -2051,14 +2017,10 @@ class List
 
 		if( isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != null )
-			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
-
-		if( isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != null )
 			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 		}
 
-	protected void wordQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems )
+	protected void wordQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems )
 		{
 		Item searchItem;
 
@@ -2076,14 +2038,10 @@ class List
 
 		if( isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != null )
-			wordQuery( isSelectingOnFind, searchItem );
-
-		if( isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != null )
 			wordQuery( isSelectingOnFind, searchItem );
 		}
 
-	protected void wordTypeQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, short queryWordTypeNr )
+	protected void wordTypeQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, short queryWordTypeNr )
 		{
 		Item searchItem;
 
@@ -2101,10 +2059,6 @@ class List
 
 		if( isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != null )
-			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
-
-		if( isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != null )
 			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 		}
 
@@ -2127,14 +2081,10 @@ class List
 		( searchItem = firstReplacedItem() ) != null )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		( searchItem = firstDeletedItem() ) != null )
-			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
-
 		return GlobalVariables.result;
 		}
 
-	protected byte stringQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String queryString )
+	protected byte stringQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, String queryString )
 		{
 		Item searchItem;
 
@@ -2157,15 +2107,10 @@ class List
 		( searchItem = firstReplacedItem() ) != null )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != null )
-			stringQuery( isSelectingOnFind, queryString, searchItem );
-
 		return GlobalVariables.result;
 		}
 
-	protected byte wordReferenceQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
+	protected byte wordReferenceQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
 		{
 		Item searchItem;
 
@@ -2186,11 +2131,6 @@ class List
 		if( GlobalVariables.result == Constants.RESULT_OK &&
 		isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != null )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
-
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != null )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		return GlobalVariables.result;

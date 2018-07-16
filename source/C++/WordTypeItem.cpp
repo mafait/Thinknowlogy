@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -205,9 +205,6 @@ class WordTypeItem : private Item
 		return ( adjectiveParameter_ == queryParameter ||
 				definiteArticleParameter_ == queryParameter ||
 				indefiniteArticleParameter_ == queryParameter ||
-				generalizationWriteLevel_ == queryParameter ||
-				specificationWriteLevel_ == queryParameter ||
-				relationWriteLevel_ == queryParameter ||
 				wordTypeLanguageNr_ == queryParameter ||
 
 				( queryParameter == MAX_QUERY_PARAMETER &&
@@ -215,9 +212,6 @@ class WordTypeItem : private Item
 				( adjectiveParameter_ > NO_ADJECTIVE_PARAMETER ||
 				definiteArticleParameter_ > NO_DEFINITE_ARTICLE_PARAMETER ||
 				indefiniteArticleParameter_ > NO_INDEFINITE_ARTICLE_PARAMETER ||
-				generalizationWriteLevel_ > NO_WRITE_LEVEL ||
-				specificationWriteLevel_ > NO_WRITE_LEVEL ||
-				relationWriteLevel_ > NO_WRITE_LEVEL ||
 				wordTypeLanguageNr_ > NO_LANGUAGE_NR ) ) );
 		}
 
@@ -426,7 +420,7 @@ class WordTypeItem : private Item
 		indefiniteArticleParameter_ == indefiniteArticleParameter )
 			return true;
 
-		// Typically for English ('a' or 'an')
+		// Typical for English ('a' or 'an')
 		// If undefined, fall back to a simple phonetic vowel rule
 		if( isIndefinitePhoneticVowelArticle( hasIndefiniteArticleParameter ? indefiniteArticleParameter_ : indefiniteArticleParameter ) )
 			{
@@ -471,27 +465,13 @@ class WordTypeItem : private Item
 
 	bool isDefiniteArticle()
 		{
-		// Filter on articles, because nouns also have a definiteArticleParameter
-		return ( wordTypeNr_ == WORD_TYPE_ARTICLE &&
-				isDefiniteArticleParameter( definiteArticleParameter_ ) );
-		}
-
-	bool isIndefiniteArticle()
-		{
-		// Filter on articles, because nouns also have an indefiniteArticleParameter
-		return ( wordTypeNr_ == WORD_TYPE_ARTICLE &&
-				isIndefiniteArticleParameter( indefiniteArticleParameter_ ) );
+		return isDefiniteArticleParameter( definiteArticleParameter_ );
 		}
 
 	bool isNoun()
 		{
 		return ( wordTypeNr_ == WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
-		}
-
-	bool isPluralNoun()
-		{
-		return ( wordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
 		}
 
 	bool isProperNounPrecededByDefiniteArticle( unsigned short definiteArticleParameter )
@@ -504,12 +484,12 @@ class WordTypeItem : private Item
 		{
 		return ( wordTypeNr_ == WORD_TYPE_NOUN_SINGULAR );
 		}
-
+/*
 	bool isGeneralizationWordAlreadyWritten()
 		{
 		return ( generalizationWriteLevel_ > NO_WRITE_LEVEL );
 		}
-
+*/
 	bool isSpecificationWordAlreadyWritten()
 		{
 		return ( specificationWriteLevel_ > NO_WRITE_LEVEL );
@@ -661,6 +641,7 @@ class WordTypeItem : private Item
 		else
 			{
 			if( indefiniteArticleParameter_ != indefiniteArticleParameter &&
+
 			inputOutput()->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != RESULT_OK )
 				return addError( functionNameString, NULL, itemString(), "I failed to write an interface notification about the use of an indefinite article" );
 			}
@@ -679,22 +660,6 @@ class WordTypeItem : private Item
 
 		return ( nextCurrentLanguageWordTypeItem != NULL &&
 				nextCurrentLanguageWordTypeItem->wordTypeLanguageNr() == globalVariables()->currentLanguageNr ? nextCurrentLanguageWordTypeItem : NULL );
-		}
-
-	WordTypeItem *nextWordTypeItem( unsigned short wordTypeNr )
-		{
-		WordTypeItem *searchWordTypeItem = nextCurrentLanguageWordTypeItem();
-
-		while( searchWordTypeItem != NULL )
-			{
-			if( wordTypeNr == NO_WORD_TYPE_NR ||
-			searchWordTypeItem->wordTypeNr_ == wordTypeNr )
-				return searchWordTypeItem;
-
-			searchWordTypeItem = searchWordTypeItem->nextCurrentLanguageWordTypeItem();
-			}
-
-		return NULL;
 		}
 	};
 #endif

@@ -1,7 +1,7 @@
 ﻿/*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -150,21 +150,16 @@ class MultipleWordItem : private Item
 
 	// Protected functions
 
-	bool isSingularNoun()
-		{
-		return ( wordTypeNr_ == WORD_TYPE_NOUN_SINGULAR );
-		}
-
 	unsigned short nWordParts()
 		{
 		return nWordParts_;
 		}
-
+/*
 	unsigned short wordTypeLanguageNr()
 		{
 		return wordTypeLanguageNr_;
 		}
-
+*/
 	unsigned short wordTypeNr()
 		{
 		return wordTypeNr_;

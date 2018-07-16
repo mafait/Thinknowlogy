@@ -46,10 +46,6 @@
     <X> Condiciones:			11.
     <Y> Acciones:			15.
     <Z> Alternativas:			0.
- * Elementos inactivos:		0.
- * Elementos archivados:		0.
- * Elementos sustituidos:		0.
- * Elementos eliminados:		0.
 ------------------------------------------------------------------------------
  Elementos de las palabras:	        8186.
 ------------------------------------------------------------------------------
@@ -68,7 +64,6 @@
  * Elementos inactivos:		3.
  * Elementos archivados:		33.
  * Elementos sustituidos:		7.
- * Elementos eliminados:		0.
 ------------------------------------------------------------------------------
 < 
 < Especificaciones:
@@ -107,7 +102,6 @@
  * Elementos de tipo de palabra desactiva:	       0.
  * Elementos de tipo de palabra archivados:	       0.
  * Elementos de tipo de palabra sustituidos:	       0.
- * Elementos de tipo de palabra eliminados:	       0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
  Los comandos de consulta disponibles son:			Ejemplos:
@@ -153,9 +147,9 @@
  En los archivos de '~' marcará el fin de una consulta		...~#<W>~...
 ------------------------------------------------------------------------------
  Copyright (C) 2009-2018, Menno Mafait
- Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles
- escriba "Mostrar la garantía.". Este software es libre, y se le permite redistribuirlo
- bajo ciertas condiciones; Escriba "Mostrar la licencia-GPLv2." para más detalles.
+ Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles haga clic
+ en <Ayudar.> y <Mostrar la garantía.>. Este software es libre, y se le permite redistribuirlo bajo
+ ciertas condiciones; Haga clic en <Ayudar.> y <Mostrar la licencia-GPLv2.> para más detalles.
 Licencia Pública GNU
 Esta es la conocida GNU Public License (GPL), versión 2 (de junio de 1.991), que cubre la mayor parte del software de la Free Software Foundation, y muchos más programas.
 

@@ -70,11 +70,11 @@
 <	- Every family has parents and children.
 <	- Paul is probably a child of John and Anna.
 * 	and:
+<	- Paul has probably 2 parents, called John and Anna.
+* 	and:
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
 <	- John has a son, called Paul.
-* 	and:
-<	- Paul has probably 2 parents, called John and Anna.
 < John is probably part of a family. Because:
 <	- John is probably a parent of Paul.
 <	- Parents are part of every family.
@@ -106,11 +106,11 @@
 <	- Paul is probably a child of John and Anna.
 <	- A child is probably a person.
 < Paul is probably a child of John and Anna. Because:
-<	- Anna has probably a child, called Paul.
-<	- John has probably a child, called Paul.
-* 	and:
 <	- Every child is a son or a daughter.
 <	- Paul is a son of John and Anna.
+* 	and:
+<	- John has probably a child, called Paul.
+<	- Anna has probably a child, called Paul.
 * 	and:
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul.
@@ -191,11 +191,11 @@
 <	- Every family has parents and children.
 <	- Paul is probably a child of John and Anna.
 * 	and:
+<	- Paul has probably 2 parents, called John and Anna.
+* 	and:
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
 <	- John has a son, called Paul.
-* 	and:
-<	- Paul has probably 2 parents, called John and Anna.
 < John is probably part of a family. Because:
 <	- John is probably a parent of Paul.
 <	- Parents are part of every family.
@@ -209,11 +209,11 @@
 <	- Paul is probably a child of John and Anna.
 <	- A child is probably a person.
 < Paul is probably a child of John and Anna. Because:
-<	- Anna has probably a child, called Paul.
-<	- John has probably a child, called Paul.
-* 	and:
 <	- Every child is a son or a daughter.
 <	- Paul is a son of John and Anna.
+* 	and:
+<	- John has probably a child, called Paul.
+<	- Anna has probably a child, called Paul.
 * 	and:
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul.

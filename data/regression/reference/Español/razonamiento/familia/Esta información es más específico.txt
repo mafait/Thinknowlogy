@@ -65,11 +65,11 @@
 < Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene un padre, llamado Juan.
 < Pablo tiene una madre, llamada Ana.
-< José tiene 2 padres, llamados Juan y Ana.
 < José tiene un padre, llamado Juan.
+< José tiene 2 padres, llamados Juan y Ana.
 < José tiene una madre, llamada Ana.
-< Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
+< Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene una madre, llamada Ana.
 * 
 * Mis suposiciones:

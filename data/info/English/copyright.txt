@@ -1,4 +1,7 @@
 ﻿Display " Copyright (C) 2009-2018, Menno Mafait".
-Display " Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details type".
-Display " \"Display the warranty.\". This is free software, and you are welcome to redistribute".
-Display " it under certain conditions; type \"Display the GPLv2-license.\" for details.".
+#C++#Display " Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details type".
+#C++#Display " \"Display the warranty.\". This is free software, and you are welcome to redistribute".
+#C++#Display " it under certain conditions; type \"Display the GPLv2-license.\" for details.".
+#Java#Display " Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details click <Help.>".
+#Java#Display " and <Display the warranty.>. This is free software, and you are welcome to redistribute".
+#Java#Display " it under certain conditions; click <Help.> and <Display the GPLv2-license.> for details.".

@@ -77,8 +77,9 @@
 < Philippe était un homme.
 < 
 ! 
-! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec lui-même.
-! 
+! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec:
+< Chaque personne est un homme ou une femme.
+< 
 * 
 * Mes questions:
 < Est Dominique un homme ou une femme?

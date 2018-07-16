@@ -1,5 +1,6 @@
-﻿Changes in Thinknowlogy 2018r1 (ShangDi 上帝) compared to 2017r2 (Science as it should be):
+﻿Changes in Thinknowlogy 2018r2 (Natural Intelligence) compared to 2018r1 (ShangDi 上帝):
 - Bug fixes;
-- Added the Chinese language. (Not available in the C++ version);
-- Significantly improved performance on writing sentences;
-- Added two examples: "Boiling point" and "Condensation point".
+- Added check on invalid context;
+- Slightly improved conflict detection;
+- Improved performance, by removing abundant code;
+- Moved some reasoning functionality from class AdminReasoningOld to class AdminReasoningNew, as part of the redesign.

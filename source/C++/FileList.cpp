@@ -1,7 +1,7 @@
 ﻿/*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -107,7 +107,7 @@ class FileList : private List
 			return startFileResultError( functionNameString, "I failed to create a file item" );
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, fileResult.createdFileItem ) != RESULT_OK )
-			return addFileResultError( functionNameString, "I failed to add an active file item" );
+			return addFileResultError( functionNameString, "I failed to add a file item" );
 
 		return fileResult;
 		}

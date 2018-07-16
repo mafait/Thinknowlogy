@@ -29,5 +29,4 @@ Affichez "   (@24) Mots de sélection:			~+#<w>@24~.".
 Affichez " * Éléments de type mot inactifs:	~=#<w>~.".
 Affichez " * Éléments de type mot archivés:	~$#<w>~.".
 Affichez " * Éléments de type mot remplacées:	~%#<w>~.".
-Affichez " * Éléments de type mot supprimés:	~&#<w>~.".
 Affichez "------------------------------------------------------------------------------".

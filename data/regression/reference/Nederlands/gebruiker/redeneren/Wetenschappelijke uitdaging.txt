@@ -77,8 +77,9 @@
 < Johan was een man.
 < 
 ! 
-! Deze zin is niet geaccepteerd, omdat het in conflict is met zichzelf.
-! 
+! Deze zin is niet geaccepteerd, omdat het in conflict is met:
+< Ieder persoon is een man of een vrouw.
+< 
 * 
 * Mijn vragen:
 < Is Anne een man of een vrouw?

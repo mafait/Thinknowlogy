@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -248,11 +248,6 @@ class GrammarItem extends Item
 		return ( grammarParameter_ == Constants.GRAMMAR_SENTENCE );
 		}
 
-	protected boolean hasWordType()
-		{
-		return ( grammarWordTypeNr_ > Constants.NO_WORD_TYPE_NR );
-		}
-
 	protected boolean isUndefinedWord()
 		{
 		// Last item in the list
@@ -263,14 +258,14 @@ class GrammarItem extends Item
 		{
 		return ( checkGrammarItem != null &&
 
-				isNewStart_ == checkGrammarItem.isNewStart() &&
-				isOptionStart_ == checkGrammarItem.isOptionStart() &&
-				isOptionEnd == checkGrammarItem.isOptionEnd &&
-				isChoiceStart_ == checkGrammarItem.isChoiceStart() &&
-				isChoiceEnd == checkGrammarItem.isChoiceEnd &&
-				grammarParameter_ == checkGrammarItem.grammarParameter() &&
-				grammarWordTypeNr_ == checkGrammarItem.grammarWordTypeNr() &&
-				itemNr() == checkGrammarItem.itemNr() &&
+				checkGrammarItem.isNewStart() == isNewStart_ &&
+				checkGrammarItem.isOptionStart() == isOptionStart_ &&
+				checkGrammarItem.isOptionEnd == isOptionEnd &&
+				checkGrammarItem.isChoiceStart() == isChoiceStart_ &&
+				checkGrammarItem.isChoiceEnd == isChoiceEnd &&
+				checkGrammarItem.grammarParameter() == grammarParameter_ &&
+				checkGrammarItem.grammarWordTypeNr() == grammarWordTypeNr_ &&
+				checkGrammarItem.itemNr() == itemNr() &&
 
 				grammarString_ != null &&
 				checkGrammarItem.grammarString() != null &&
@@ -281,8 +276,12 @@ class GrammarItem extends Item
 		{		// Statement
 		return ( ( !isQuestion &&
 
-				( grammarParameter_ < Constants.GRAMMAR_STATEMENT_ASSIGNMENT ||
+				( isArchivedAssignment ||
+				grammarParameter_ < Constants.GRAMMAR_STATEMENT_ASSIGNMENT ||
 				grammarParameter_ > Constants.GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ||
+
+				( isSpecificationGeneralization &&
+				grammarParameter_ == Constants.GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ||
 
 				( !isSpecificationGeneralization &&
 
@@ -293,13 +292,7 @@ class GrammarItem extends Item
 
 				( isPossessive ||
 				isChineseCurrentLanguage ||
-				grammarParameter_ == Constants.GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ||
-
-				( isArchivedAssignment &&
-				!isPossessive ) ||
-
-				( isSpecificationGeneralization &&
-				grammarParameter_ == Constants.GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ) ) ||
+				grammarParameter_ == Constants.GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ) ) ||
 
 				// Question
 				( isQuestion &&

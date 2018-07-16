@@ -138,10 +138,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Paul, Johan en Laura.
 * 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul heeft een ouder, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Paul is waarschijnlijk deel van een gezin. Omdat:
 <	- Paul is waarschijnlijk een kind van Jan.
 <	- Kinderen zijn deel van ieder gezin.

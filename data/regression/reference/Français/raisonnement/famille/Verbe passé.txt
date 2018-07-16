@@ -82,10 +82,10 @@
 <	- Chaque parent est une femme ou un homme.
 <	- Philippe était un homme.
 < Philippe était probablement un parent de Antoine. En raison:
-<	- Antoine avait probablement un parent, appelé Philippe.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Antoine est probablement un enfant de Philippe.
+* 	et:
+<	- Antoine avait probablement un parent, appelé Philippe.
 * 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Philippe était le père de Antoine.

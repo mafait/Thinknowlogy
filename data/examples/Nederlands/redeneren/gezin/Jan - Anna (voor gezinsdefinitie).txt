@@ -8,4 +8,9 @@ Toon de verantwoordingsrapportage over Anna.
 Toon de verantwoordingsrapportage over Paul.
 Toon de verantwoordingsrapportage over Johan.
 Toon de verantwoordingsrapportage over Laura.
+Anna heeft een dochter, genaamd Laura.
+Jan heeft een dochter, genaamd Laura.
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Anna.
+Toon de verantwoordingsrapportage over Laura.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

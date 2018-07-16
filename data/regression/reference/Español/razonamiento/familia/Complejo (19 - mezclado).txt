@@ -210,10 +210,6 @@
 <	- Hijos son parte de cada familia.
 < Pablo tiene probablemente una madre, llamada Ana. Porque:
 <	- Ana es probablemente madre de Luisa, Pablo y José.
-* 	y:
-<	- Pablo tiene 2 padres, llamados Ana y Juan.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
 < Pablo es posiblemente una persona. Porque:
 <	- Pablo tiene 2 padres, llamados Ana y Juan.
 <	- Cada familia tiene padres y hijos.
@@ -347,6 +343,7 @@
 < Hernando tiene probablemente un hijo.
 * 
 * Mis conclusiones:
+< Luisa tiene un padre, llamado Hernando.
 < Luisa tiene 2 padres, llamados Ana y Hernando.
 * 
 * Mis suposiciones:
@@ -380,7 +377,7 @@
 <	- Cada persona es un hombre o una mujer.
 <	- Hernando es un hombre.
 < Hernando tiene posiblemente una hija, llamada Luisa. Porque:
-<	- Luisa tiene 2 padres, llamados Ana y Hernando.
+<	- Luisa tiene un padre, llamado Hernando.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Luisa" es probablemente femenino.
@@ -514,10 +511,6 @@
 * Mis suposiciones:
 < Pablo tiene probablemente una madre, llamada Ana. Porque:
 <	- Ana es probablemente madre de Luisa, Pablo y José.
-* 	y:
-<	- Pablo tiene 2 padres, llamados Ana y Juan.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
 < Pablo es probablemente una persona. Porque:
 <	- Pablo es un hijo.
 <	- Un hijo es probablemente una persona.
@@ -566,6 +559,8 @@
 < 
 * 
 * Mis conclusiones:
+< Luisa tiene un padre, llamado Hernando. Porque:
+<	- Hernando es padre de Luisa.
 < Luisa tiene 2 padres, llamados Ana y Hernando. Porque:
 <	- Hernando es padre de Luisa.
 <	- Ana es madre de Luisa.

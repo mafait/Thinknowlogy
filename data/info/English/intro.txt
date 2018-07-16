@@ -1,17 +1,17 @@
 ﻿Display "------------------------------------------------------------------------------".
-Display " Thinknowlogy is the world's most advanced Controlled Natural".
-Display " Language (CNL) reasoner. It is based on natural laws of intelligence.".
-Display " However, this logic of language is not described by scientists:".
-Display " * Despite exhaustive research, the theory of evolution still hasn't".
-Display " provided a satisfactory explanation for the origin of intelligence,".
-Display " language and laws of nature. Let alone, how they are related;".
-Display " * According to the biblical world view, God has created laws of nature to".
-Display " make his creation run like clockwork. Being based on the Natural Laws".
-Display " of Intelligence embedded in Grammar, only Thinknowlogy implements the".
-#C++#Display " intelligent function of words like definite article \"the\", conjunction \"or\",".
-#C++#Display " possessive verb \"have\", and past tense verbs \"were\" and \"had\".".
-#Java#Display " intelligent function of words like definite article “the”, conjunction “or”,".
-#Java#Display " possessive verb “have”, and past tense verbs “were” and “had”.".
+Display " Thinknowlogy is the world's most advanced automated reasoner. Being based".
+#C++#Display " on Natural Laws of Intelligence - embedded in grammar - Thinknowlogy".
+#Java#Display " on Natural Laws of Intelligence – embedded in grammar – Thinknowlogy".
+Display " implements reasoning constructions that are not described by scientists yet:".
+Display " * Despite exhaustive research, the theory of evolution still hasn't provided a".
+Display " satisfactory explanation for the origin of intelligence, language and laws of nature.".
+Display " Let alone, how they are related;".
+Display " * According to the biblical world view, God has created laws of nature to make his creation".
+Display " run like clockwork. Being based on Natural Laws of Intelligence embedded in Grammar,".
+#C++#Display " only Thinknowlogy implements the intelligent function of words like definite article \"the\",".
+#C++#Display " conjunction \"or\", possessive verb \"have\", and past tense verbs \"were\" and \"had\".".
+#Java#Display " only Thinknowlogy implements the intelligent function of words like definite article “the”,".
+#Java#Display " conjunction “or”, possessive verb “have”, and past tense verbs “were” and “had”.".
 Display "------------------------------------------------------------------------------".
 Display " The intelligent function of these words is demonstrated by:".
 Display " * Programming in Controlled Natural Language;".
@@ -19,11 +19,11 @@ Display " * Reasoning in Controlled Natural Language:".
 Display "   - drawing conclusions (more advanced than scientific solutions),".
 Display "   - making assumptions (with self-adjusting level of uncertainty),".
 Display "   - asking questions (about gaps in the knowledge),".
-Display "   - detecting conflicts and some cases of semantic ambiguity,".
+Display "   - detecting confirmations, conflicts and some cases of semantic ambiguity,".
 Display "   - displaying of justification reports for the self-generated knowledge;".
 Display " * Multilingualism, proving: Natural languages have a common and logical origin.".
 Display "------------------------------------------------------------------------------".
-Display " I defy anyone to beat this reasoner: http://mafait.org/challenge/".
+Display " I defy anyone to beat this automated reasoner: http://mafait.org/challenge/".
 Display "------------------------------------------------------------------------------".
 #C++#Display " Help.\t\t\t\t\t\t\t* Display help info".
 #C++#Display " \~{languageName}\t\t\t\t\t* Change language".

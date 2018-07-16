@@ -122,11 +122,11 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
 * 	en:
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Jan heeft een zoon, genaamd Johan.
-* 	en:
-<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
 < Jan is waarschijnlijk een persoon. Omdat:
 <	- Jan is een ouder van Paul.
 <	- Een ouder is waarschijnlijk een persoon.
@@ -284,11 +284,11 @@
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
 <	- Een kind is waarschijnlijk een persoon.
 < Johan is waarschijnlijk een kind van Anna en Jan. Omdat:
-<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Laura, Paul en Johan.
-<	- Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan.
-* 	en:
 <	- Ieder kind is een zoon of een dochter.
 <	- Johan is een zoon van Anna en Jan.
+* 	en:
+<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Laura, Paul en Johan.
+<	- Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is waarschijnlijk een ouder van Paul en Johan.
@@ -330,11 +330,11 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna is waarschijnlijk een ouder van Laura, Paul en Johan.
 * 	en:
+<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Laura, Paul en Johan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
 <	- Laura heeft een moeder, genaamd Anna.
-* 	en:
-<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Laura, Paul en Johan.
 < Laura is waarschijnlijk deel van een gezin. Omdat:
 <	- Laura is waarschijnlijk een kind van Anna.
 <	- Kinderen zijn deel van ieder gezin.
@@ -363,9 +363,6 @@
 <	- Ieder kind is een zoon of een dochter.
 <	- Laura is mogelijk een dochter van Anna.
 < Laura heeft waarschijnlijk een ouder, genaamd Anna. Omdat:
-<	- Iedere ouder is een vader of een moeder.
-<	- Laura heeft een moeder, genaamd Anna.
-* 	en:
 <	- Anna is waarschijnlijk een ouder van Laura, Paul en Johan.
 * 
 * Mijn vragen:
@@ -496,11 +493,11 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
 * 	en:
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Jan heeft een zoon, genaamd Johan.
-* 	en:
-<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
 < Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan. Omdat:
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
 <	- Paul is waarschijnlijk een kind van Anna en Jan.
@@ -660,11 +657,11 @@
 * 
 * Mijn veronderstellingen:
 < Johan is waarschijnlijk een kind van Anna en Jan. Omdat:
-<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Laura, Paul en Johan.
-<	- Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan.
-* 	en:
 <	- Ieder kind is een zoon of een dochter.
 <	- Johan is een zoon van Anna en Jan.
+* 	en:
+<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Laura, Paul en Johan.
+<	- Jan heeft waarschijnlijk 2 kinderen, genaamd Paul en Johan.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is waarschijnlijk een ouder van Paul en Johan.
@@ -716,18 +713,15 @@
 < Laura heeft waarschijnlijk 2 ouders, genaamd Anna en Cor. Omdat:
 <	- Cor is een ouder van Laura.
 <	- Anna is waarschijnlijk een ouder van Laura, Paul en Johan.
-* 	en:
-<	- Iedere ouder is een vader of een moeder.
-<	- Laura heeft een moeder, genaamd Anna.
 < Laura is waarschijnlijk een kind van Anna. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna is waarschijnlijk een ouder van Laura, Paul en Johan.
 * 	en:
+<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Laura, Paul en Johan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
 <	- Laura heeft een moeder, genaamd Anna.
-* 	en:
-<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Laura, Paul en Johan.
 < Laura is mogelijk een dochter van Anna. Omdat:
 <	- Laura is waarschijnlijk een kind van Anna.
 <	- Ieder kind is een zoon of een dochter.

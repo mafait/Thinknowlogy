@@ -11,10 +11,6 @@ Mostrar "    <W> Palabras:			~+#<W>~, (predefinido: ~+#<W>:*~).".
 Mostrar "    <X> Condiciones:			~+#<X>~.".
 Mostrar "    <Y> Acciones:			~+#<Y>~.".
 Mostrar "    <Z> Alternativas:			~+#<Z>~.".
-Mostrar " * Elementos inactivos:		~=#<FRSWXYZ>~.".
-Mostrar " * Elementos archivados:		~$#<FRSWXYZ>~.".
-Mostrar " * Elementos sustituidos:		~%#<FRSWXYZ>~.".
-Mostrar " * Elementos eliminados:		~&#<FRSWXYZ>~.".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Elementos de las palabras:	        ~#<acgijlmrswx>~.".
 Mostrar "------------------------------------------------------------------------------".
@@ -33,5 +29,4 @@ Mostrar "    <x> contexto:			~+#<x>~.".
 Mostrar " * Elementos inactivos:		~=#<acgijlmrswx>~.".
 Mostrar " * Elementos archivados:		~$#<acgijlmrswx>~.".
 Mostrar " * Elementos sustituidos:		~%#<acgijlmrswx>~.".
-Mostrar " * Elementos eliminados:		~&#<acgijlmrswx>~.".
 Mostrar "------------------------------------------------------------------------------".

@@ -193,12 +193,12 @@
 <	- Amélie est une mère.
 <	- Une mère est probablement une personne.
 < Amélie est probablement un parent de Pascal, Julien et Lorraine. En raison:
-<	- Lorraine a probablement un parent, appelée Amélie.
-<	- Julien a probablement un parent, appelée Amélie.
-<	- Pascal a probablement un parent, appelée Amélie.
-* 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Amélie est la mère de Pascal, Julien et Lorraine.
+* 	et:
+<	- Pascal a probablement un parent, appelée Amélie.
+<	- Julien a probablement un parent, appelée Amélie.
+<	- Lorraine a probablement un parent, appelée Amélie.
 < Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine. En raison:
 <	- Chaque famille a parents et enfants.
 <	- Pascal a probablement un parent, appelée Amélie.
@@ -313,11 +313,11 @@
 <	- Chaque famille a parents et enfants.
 <	- Amélie est probablement un parent de Pascal, Julien et Lorraine.
 * 	et:
+<	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 <	- Lorraine a une mère, appelée Amélie.
-* 	et:
-<	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 < Lorraine est possible une fille de Amélie. En raison:
 <	- Lorraine est probablement un enfant de Amélie.
 <	- Chaque enfant est un fils ou une fille.

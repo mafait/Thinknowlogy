@@ -269,6 +269,8 @@
 阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (Joe has 2 parents)"。
 阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (with relation)"。
 阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (without relation)"。
+阅读测试文档"中文/推理/家庭/Paul - Anna - Joe - Laura - Joe - John"。
+阅读测试文档"中文/推理/家庭/Paul - Anna - Joe - Laura - John"。
 阅读测试文档"中文/推理/家庭/Paul - Joe - Laura - John and Anna (parents)"。
 阅读测试文档"中文/推理/家庭/Paul - Joe - Laura - John and Anna (son - daughter)"。
 阅读测试文档"中文/推理/家庭/Paul - John and Anna - Joe - Laura"。

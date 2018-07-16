@@ -108,6 +108,7 @@
 < Pablo no es una hija.
 < Pablo no es una niña y una mujer.
 < Ana tiene un hijo, llamado Pablo.
+< Juan tiene 2 hijos, llamados Pablo y Luisa.
 < Juan tiene un hijo, llamado Pablo.
 < 
 * 
@@ -126,24 +127,28 @@
 * Mis suposiciones que no son ocultos más:
 < Pablo tiene probablemente 2 padres, llamados Ana y Juan.
 * 
-* Mis suposiciones que se concluyen:
-< Pablo tiene 2 padres, llamados Ana y Juan.
-* 
 * Mis suposiciones anteriores que tienen palabras de relación ahora:
-< José tiene posiblemente un padre.
 < José es probablemente un hijo.
 * 
 * Mis suposiciones que no son ocultos más:
 < Luisa tiene probablemente 2 padres, llamados Ana y Juan.
 * 
-* Mis conclusiones son confirmadas:
-< Ana es madre de Pablo.
+* Mis suposiciones que se concluyen:
+< Pablo tiene 2 padres, llamados Ana y Juan.
 * 
 * Mis suposiciones que se confirman:
 < Ana es posiblemente madre de Pablo y Luisa.
 * 
+* Mis conclusiones son confirmadas:
+< Ana es madre de Pablo.
+* 
 * Mis suposiciones que se concluyen:
 < Ana no es un hombre.
+* 
+* Mis suposiciones anteriores que tienen palabras de relación ahora:
+< José tiene posiblemente un padre.
+* 
+* Mis suposiciones que se concluyen:
 < Luisa tiene una madre, llamada Ana.
 < Luisa tiene 2 padres, llamados Ana y Juan.
 * 

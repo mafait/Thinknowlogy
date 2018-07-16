@@ -81,10 +81,10 @@
 <	- Iedere ouder is een vrouw of een man.
 <	- Anna is een vrouw.
 < Anna is waarschijnlijk een ouder van Johan. Omdat:
-<	- Johan heeft waarschijnlijk een ouder, genaamd Anna.
-* 	en:
 <	- Iedere ouder is een vader of een moeder.
 <	- Anna is een moeder van Johan.
+* 	en:
+<	- Johan heeft waarschijnlijk een ouder, genaamd Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Johan is waarschijnlijk een kind van Anna.
@@ -104,19 +104,16 @@
 * 
 * Mijn veronderstellingen:
 < Johan heeft waarschijnlijk een ouder, genaamd Anna. Omdat:
-<	- Iedere ouder is een vader of een moeder.
-<	- Johan heeft een moeder, genaamd Anna.
-* 	en:
 <	- Anna is waarschijnlijk een ouder van Johan.
 < Johan is waarschijnlijk een kind van Anna. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna is waarschijnlijk een ouder van Johan.
 * 	en:
+<	- Anna heeft waarschijnlijk een kind, genaamd Johan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
 <	- Johan heeft een moeder, genaamd Anna.
-* 	en:
-<	- Anna heeft waarschijnlijk een kind, genaamd Johan.
 < Johan is waarschijnlijk deel van een gezin. Omdat:
 <	- Johan is waarschijnlijk een kind van Anna.
 <	- Kinderen zijn deel van ieder gezin.
@@ -219,10 +216,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Johan, Paul en Laura.
 * 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul heeft een ouder, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
 < Paul is waarschijnlijk deel van een gezin. Omdat:
 <	- Paul is waarschijnlijk een kind van Jan.
 <	- Kinderen zijn deel van ieder gezin.
@@ -243,23 +240,20 @@
 < Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan. Omdat:
 <	- Jan is een ouder van Johan, Paul en Laura.
 <	- Anna is waarschijnlijk een ouder van Johan.
-* 	en:
-<	- Iedere ouder is een vader of een moeder.
-<	- Johan heeft een moeder, genaamd Anna.
 < Johan is waarschijnlijk een kind van Anna en Jan. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Anna is waarschijnlijk een ouder van Johan.
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
+* 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
+<	- Anna heeft waarschijnlijk een kind, genaamd Johan.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Johan, Paul en Laura.
+<	- Anna is waarschijnlijk een ouder van Johan.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
 <	- Johan heeft een moeder, genaamd Anna.
-* 	en:
-<	- Anna heeft waarschijnlijk een kind, genaamd Johan.
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
-* 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
 < Johan is waarschijnlijk deel van een gezin. Omdat:
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
 <	- Kinderen zijn deel van ieder gezin.
@@ -293,10 +287,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Johan, Paul en Laura.
 * 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Laura heeft een ouder, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
 < Laura is waarschijnlijk deel van een gezin. Omdat:
 <	- Laura is waarschijnlijk een kind van Jan.
 <	- Kinderen zijn deel van ieder gezin.
@@ -406,11 +400,11 @@
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
 <	- Paul is een kind van Anna en Jan.
 < Anna is waarschijnlijk een ouder van Johan en Paul. Omdat:
-<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
-<	- Paul heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
-* 	en:
 <	- Iedere ouder is een vader of een moeder.
 <	- Anna is een moeder van Johan.
+* 	en:
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
@@ -590,12 +584,12 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna is waarschijnlijk een ouder van Johan, Paul en Laura.
 < Anna is waarschijnlijk een ouder van Johan, Paul en Laura. Omdat:
-<	- Laura heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
-<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
-<	- Paul heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
-* 	en:
 <	- Iedere ouder is een vader of een moeder.
 <	- Anna is de moeder van Johan, Paul en Laura.
+* 	en:
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
+<	- Laura heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
@@ -679,19 +673,19 @@
 * Mijn veronderstellingen:
 < Johan is waarschijnlijk een kind van Anna en Jan. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Anna is waarschijnlijk een ouder van Johan, Paul en Laura.
-<	- Jan is een ouder van Johan, Paul en Laura.
-* 	en:
-<	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
-<	- Johan heeft een moeder, genaamd Anna.
 <	- Johan heeft een vader, genaamd Jan.
-* 	en:
-<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
+<	- Johan heeft een moeder, genaamd Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
+* 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
+<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Jan is een ouder van Johan, Paul en Laura.
+<	- Anna is waarschijnlijk een ouder van Johan, Paul en Laura.
 < Johan is waarschijnlijk deel van een gezin. Omdat:
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
 <	- Kinderen zijn deel van ieder gezin.
@@ -701,9 +695,6 @@
 < Johan heeft waarschijnlijk 2 ouders, genaamd Anna en Jan. Omdat:
 <	- Jan is een ouder van Johan, Paul en Laura.
 <	- Anna is waarschijnlijk een ouder van Johan, Paul en Laura.
-* 	en:
-<	- Iedere ouder is een vader of een moeder.
-<	- Johan heeft een moeder, genaamd Anna.
 * 
 * Mijn vragen:
 < Is Johan een meisje, een vrouw, een jongen of een man? Omdat:
@@ -731,19 +722,19 @@
 * Mijn veronderstellingen:
 < Laura is waarschijnlijk een kind van Anna en Jan. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Jan is een ouder van Johan, Paul en Laura.
-<	- Anna is waarschijnlijk een ouder van Johan, Paul en Laura.
+<	- Iedere ouder is een vader of een moeder.
+<	- Laura heeft een vader, genaamd Jan.
+<	- Laura heeft een moeder, genaamd Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Laura heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
+<	- Jan is een ouder van Johan, Paul en Laura.
+<	- Anna is waarschijnlijk een ouder van Johan, Paul en Laura.
 * 	en:
 <	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
 <	- Anna heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Iedere ouder is een vader of een moeder.
-<	- Laura heeft een vader, genaamd Jan.
-<	- Laura heeft een moeder, genaamd Anna.
+<	- Laura heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
 < Laura is waarschijnlijk deel van een gezin. Omdat:
 <	- Laura is waarschijnlijk een kind van Anna en Jan.
 <	- Kinderen zijn deel van ieder gezin.

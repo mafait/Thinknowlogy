@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -94,14 +94,14 @@ class WordList extends List
 		return currentSentenceItemNr;
 		}
 
-	private static int highestFoundSentenceNrInWordList( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int highestFoundSentenceNr, int maxSentenceNr, WordItem searchWordItem )
+	private static int highestFoundSentenceNrInWordList( boolean isIncludingTemporaryLists, int highestFoundSentenceNr, int maxSentenceNr, WordItem searchWordItem )
 		{
 		while( searchWordItem != null &&
 		highestFoundSentenceNr < maxSentenceNr )
 			{
 			// Efficiency: Only select words with higher sentence number
 			if( searchWordItem.highestSentenceNrInWord() > highestFoundSentenceNr )
-				highestFoundSentenceNr = searchWordItem.highestFoundSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr );
+				highestFoundSentenceNr = searchWordItem.highestFoundSentenceNrInWord( isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr );
 
 			searchWordItem = searchWordItem.nextWordItem();
 			}
@@ -176,25 +176,25 @@ class WordList extends List
 			}
 		}
 
-	private static void itemQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr, WordItem searchWordItem )
+	private static void itemQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr, WordItem searchWordItem )
 		{
 		while( searchWordItem != null )
 			{
-			searchWordItem.itemQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr );
+			searchWordItem.itemQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isReferenceQuery, querySentenceNr, queryItemNr );
 			searchWordItem = searchWordItem.nextWordItem();
 			}
 		}
 
-	private static void listQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, StringBuffer queryListStringBuffer, WordItem searchWordItem )
+	private static void listQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, StringBuffer queryListStringBuffer, WordItem searchWordItem )
 		{
 		while( searchWordItem != null )
 			{
-			searchWordItem.listQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer );
+			searchWordItem.listQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, queryListStringBuffer );
 			searchWordItem = searchWordItem.nextWordItem();
 			}
 		}
 
-	private static void parameterQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, int queryParameter, WordItem searchWordItem )
+	private static void parameterQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, int queryParameter, WordItem searchWordItem )
 		{
 		while( searchWordItem != null )
 			{
@@ -202,16 +202,16 @@ class WordList extends List
 			searchWordItem.hasParameter( queryParameter ) )
 				searchWordItem.isSelectedByQuery = true;
 
-			searchWordItem.parameterQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter );
+			searchWordItem.parameterQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, queryParameter );
 			searchWordItem = searchWordItem.nextWordItem();
 			}
 		}
 
-	private static void wordTypeQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, short queryWordTypeNr, WordItem searchWordItem )
+	private static void wordTypeQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, short queryWordTypeNr, WordItem searchWordItem )
 		{
 		while( searchWordItem != null )
 			{
-			searchWordItem.wordTypeQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr );
+			searchWordItem.wordTypeQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, queryWordTypeNr );
 			searchWordItem = searchWordItem.nextWordItem();
 			}
 		}
@@ -229,11 +229,11 @@ class WordList extends List
 		return Constants.RESULT_OK;
 		}
 
-	private byte stringQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String queryString, WordItem searchWordItem )
+	private byte stringQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, String queryString, WordItem searchWordItem )
 		{
 		while( searchWordItem != null )
 			{
-			if( searchWordItem.stringQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString ) != Constants.RESULT_OK )
+			if( searchWordItem.stringQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, queryString ) != Constants.RESULT_OK )
 				return addError( 1, "I failed to query strings in a word" );
 
 			searchWordItem = searchWordItem.nextWordItem();
@@ -242,11 +242,11 @@ class WordList extends List
 		return Constants.RESULT_OK;
 		}
 
-	private byte wordQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String wordNameString, WordItem searchWordItem )
+	private byte wordQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, String wordNameString, WordItem searchWordItem )
 		{
 		while( searchWordItem != null )
 			{
-			if( searchWordItem.wordQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString ) != Constants.RESULT_OK )
+			if( searchWordItem.wordQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, wordNameString ) != Constants.RESULT_OK )
 				return addError( 1, "I failed to query a word" );
 
 			searchWordItem = searchWordItem.nextWordItem();
@@ -255,11 +255,11 @@ class WordList extends List
 		return Constants.RESULT_OK;
 		}
 
-	private byte wordReferenceQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString, WordItem searchWordItem )
+	private byte wordReferenceQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString, WordItem searchWordItem )
 		{
 		while( searchWordItem != null )
 			{
-			if( searchWordItem.wordReferenceQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString ) != Constants.RESULT_OK )
+			if( searchWordItem.wordReferenceQueryInWord( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString ) != Constants.RESULT_OK )
 				return addError( 1, "I failed to query word references in a word" );
 
 			searchWordItem = searchWordItem.nextWordItem();
@@ -274,11 +274,6 @@ class WordList extends List
 	private WordItem firstActiveWordItem()
 		{
 		return (WordItem)firstActiveItem();
-		}
-
-	private WordItem firstDeletedWordItem()
-		{
-		return (WordItem)firstDeletedItem();
 		}
 
 
@@ -298,9 +293,6 @@ class WordList extends List
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			decrementItemNrRangeInWordList( decrementSentenceNr, decrementItemNr, decrementOffset, searchWordItem );
 		}
 
 	protected void decrementSentenceNrsInWordList( int startSentenceNr )
@@ -308,9 +300,6 @@ class WordList extends List
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			decrementSentenceNrsInWordList( startSentenceNr, searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
 			decrementSentenceNrsInWordList( startSentenceNr, searchWordItem );
 		}
 
@@ -320,9 +309,6 @@ class WordList extends List
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			deleteSentencesInWordList( lowestSentenceNr, searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			deleteSentencesInWordList( lowestSentenceNr, searchWordItem );
 		}
 
 	protected void removeFirstRangeOfDeletedItemsInWordList()
@@ -330,9 +316,6 @@ class WordList extends List
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			removeFirstRangeOfDeletedItemsInWordList( searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
 			removeFirstRangeOfDeletedItemsInWordList( searchWordItem );
 		}
 
@@ -343,24 +326,16 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			currentSentenceItemNr = highestCurrentSentenceItemNrInWordList( currentSentenceNr, currentSentenceItemNr, searchWordItem );
 
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			return highestCurrentSentenceItemNrInWordList( currentSentenceNr, currentSentenceItemNr, searchWordItem );
-
 		return currentSentenceItemNr;
 		}
 
-	protected int highestFoundSentenceNrInWordList( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int maxSentenceNr )
+	protected int highestFoundSentenceNrInWordList( boolean isIncludingTemporaryLists, int maxSentenceNr )
 		{
 		int highestFoundSentenceNr = Constants.NO_SENTENCE_NR;
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			highestFoundSentenceNr = highestFoundSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr, searchWordItem );
-
-		if( isIncludingDeletedItems &&
-		highestFoundSentenceNr < maxSentenceNr &&
-		( searchWordItem = firstDeletedWordItem() ) != null )
-			return highestFoundSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr, searchWordItem );
+			highestFoundSentenceNr = highestFoundSentenceNrInWordList( isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr, searchWordItem );
 
 		return highestFoundSentenceNr;
 		}
@@ -373,10 +348,6 @@ class WordList extends List
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			storeChangesInFutureDatabaseInWordList( searchWordItem );
-
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		( searchWordItem = firstDeletedWordItem() ) != null )
 			storeChangesInFutureDatabaseInWordList( searchWordItem );
 
 		return GlobalVariables.result;
@@ -392,10 +363,6 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			redoCurrentSentenceInWordList( searchWordItem );
 
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		( searchWordItem = firstDeletedWordItem() ) != null )
-			redoCurrentSentenceInWordList( searchWordItem );
-
 		return GlobalVariables.result;
 		}
 
@@ -404,10 +371,6 @@ class WordList extends List
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			undoCurrentSentenceInWordList( searchWordItem );
-
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		( searchWordItem = firstDeletedWordItem() ) != null )
 			undoCurrentSentenceInWordList( searchWordItem );
 
 		return GlobalVariables.result;
@@ -422,9 +385,6 @@ class WordList extends List
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			countQueryInWordList( searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			countQueryInWordList( searchWordItem );
 		}
 
 	protected void clearQuerySelectionsInWordList()
@@ -433,53 +393,38 @@ class WordList extends List
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			clearQuerySelectionsInWordList( searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			clearQuerySelectionsInWordList( searchWordItem );
 		}
 
-	protected void itemQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
+	protected void itemQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
 		{
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isReferenceQuery, querySentenceNr, queryItemNr, searchWordItem );
+			itemQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isReferenceQuery, querySentenceNr, queryItemNr, searchWordItem );
 		}
 
-	protected void listQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, StringBuffer queryListStringBuffer )
+	protected void listQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, StringBuffer queryListStringBuffer )
 		{
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer, searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryListStringBuffer, searchWordItem );
+			listQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, queryListStringBuffer, searchWordItem );
 		}
 
-	protected void parameterQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, int queryParameter )
+	protected void parameterQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, int queryParameter )
 		{
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryParameter, searchWordItem );
+			parameterQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, queryParameter, searchWordItem );
 		}
 
-	protected void wordTypeQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, short queryWordTypeNr )
+	protected void wordTypeQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, short queryWordTypeNr )
 		{
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, searchWordItem );
-
-		if( ( searchWordItem = firstDeletedWordItem() ) != null )
-			wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryWordTypeNr, searchWordItem );
+			wordTypeQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, queryWordTypeNr, searchWordItem );
 		}
 
 	protected byte displayQueryResultInWordList( boolean isOnlyDisplayingWords, boolean isOnlyDisplayingWordReferences, boolean isOnlyDisplayingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
@@ -489,51 +434,35 @@ class WordList extends List
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
 			displayQueryResultInWordList( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchWordItem );
 
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		( searchWordItem = firstDeletedWordItem() ) != null )
-			displayQueryResultInWordList( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchWordItem );
-
 		return GlobalVariables.result;
 		}
 
-	protected byte stringQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String queryString )
+	protected byte stringQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, String queryString )
 		{
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchWordItem );
-
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		( searchWordItem = firstDeletedWordItem() ) != null )
-			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, queryString, searchWordItem );
+			stringQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, queryString, searchWordItem );
 
 		return GlobalVariables.result;
 		}
 
-	protected byte wordQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, String wordNameString )
+	protected byte wordQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, String wordNameString )
 		{
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchWordItem );
-
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		( searchWordItem = firstDeletedWordItem() ) != null )
-			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, wordNameString, searchWordItem );
+			wordQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, wordNameString, searchWordItem );
 
 		return GlobalVariables.result;
 		}
 
-	protected byte wordReferenceQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingDeletedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
+	protected byte wordReferenceQueryInWordList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
 		{
 		WordItem searchWordItem;
 
 		if( ( searchWordItem = firstActiveWordItem() ) != null )
-			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchWordItem );
-
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		( searchWordItem = firstDeletedWordItem() ) != null )
-			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchWordItem );
+			wordReferenceQueryInWordList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchWordItem );
 
 		return GlobalVariables.result;
 		}

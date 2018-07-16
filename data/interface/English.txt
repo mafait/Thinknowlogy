@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To define the interface texts for the English language
-#	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+# Purpose: To define the interface texts for the English language
+# Version: Thinknowlogy 2018r2 (Natural Intelligence)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 # Java console (upper menu)
@@ -212,12 +212,11 @@
 :1219			"\" is already solved."
 
 # Listing (conflicts)
-:1300			"\nThis sentence is not accepted, because it is in conflict with itself."
-:1301			"\nThis question is not answered, because it is in conflict with itself."
-:1302			"\nThis sentence is not accepted, because it is in conflict with:"
-:1303			"\nThis sentence is not accepted, because it doesn't leave any option open:"
-:1304			"\nThis definition specification is not accepted, because it is already assigned:"
-:1305			"\nThis assignment is not accepted, because it is in conflict with definition specification:"
+:1300			"\nNo, because:"
+:1301			"\nThis sentence is not accepted, because it is in conflict with:"
+:1302			"\nThis sentence is not accepted, because it doesn't leave any option open:"
+:1303			"\nThis definition specification is not accepted, because it is already assigned:"
+:1304			"\nThis assignment is not accepted, because it is in conflict with definition specification:"
 
 # Listing (current information)
 :1310			"\nYour information:"
@@ -227,15 +226,16 @@
 :1314			"\nMy assumptions:"
 :1315			"\nMy assumptions that are adjusted:"
 :1316			"\nMy assumptions that are concluded:"
-#:1317			"\nMy conclusions that are not hidden anymore:"
-#:1318			"\nMy assumptions that are not hidden anymore:"
-:1319			"\nMy questions:"
-:1320			"\nMy adjusted questions:"
-:1321			"\nMy answer:"
-:1322			"\nI only know:"
-:1323			"\nSpecifications:"
-:1324			"\nRelated information:"
-:1325			"\nRelated questions:"
+:1317			"\nMy conclusions that are updated:"
+#:1318			"\nMy conclusions that are not hidden anymore:"
+#:1319			"\nMy assumptions that are not hidden anymore:"
+:1320			"\nMy questions:"
+:1321			"\nMy adjusted questions:"
+:1322			"\nMy answer:"
+:1323			"\nI only know:"
+:1324			"\nSpecifications:"
+:1325			"\nRelated information:"
+:1326			"\nRelated questions:"
 
 # Listing (old information)
 :1330			"\nYou have confirmed the specification - but none of its relations - of my earlier assumptions:"

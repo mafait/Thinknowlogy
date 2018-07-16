@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -320,11 +320,6 @@ class GrammarItem : private Item
 		return ( grammarParameter_ == GRAMMAR_SENTENCE );
 		}
 
-	bool hasWordType()
-		{
-		return ( grammarWordTypeNr_ > NO_WORD_TYPE_NR );
-		}
-
 	bool isUndefinedWord()
 		{
 		// Last item in the list
@@ -335,14 +330,14 @@ class GrammarItem : private Item
 		{
 		return ( checkGrammarItem != NULL &&
 
-				isNewStart_ == checkGrammarItem->isNewStart() &&
-				isOptionStart_ == checkGrammarItem->isOptionStart() &&
-				isOptionEnd == checkGrammarItem->isOptionEnd &&
-				isChoiceStart_ == checkGrammarItem->isChoiceStart() &&
-				isChoiceEnd == checkGrammarItem->isChoiceEnd &&
-				grammarParameter_ == checkGrammarItem->grammarParameter() &&
-				grammarWordTypeNr_ == checkGrammarItem->grammarWordTypeNr() &&
-				itemNr() == checkGrammarItem->itemNr() &&
+				checkGrammarItem->isNewStart() == isNewStart_ &&
+				checkGrammarItem->isOptionStart() == isOptionStart_ &&
+				checkGrammarItem->isOptionEnd == isOptionEnd &&
+				checkGrammarItem->isChoiceStart() == isChoiceStart_ &&
+				checkGrammarItem->isChoiceEnd == isChoiceEnd &&
+				checkGrammarItem->grammarParameter() == grammarParameter_ &&
+				checkGrammarItem->grammarWordTypeNr() == grammarWordTypeNr_ &&
+				checkGrammarItem->itemNr() == itemNr() &&
 
 				grammarString_ != NULL &&
 				checkGrammarItem->grammarString() != NULL &&
@@ -353,8 +348,12 @@ class GrammarItem : private Item
 		{		// Statement
 		return ( ( !isQuestion &&
 
-				( grammarParameter_ < GRAMMAR_STATEMENT_ASSIGNMENT ||
+				( isArchivedAssignment ||
+				grammarParameter_ < GRAMMAR_STATEMENT_ASSIGNMENT ||
 				grammarParameter_ > GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ||
+
+				( isSpecificationGeneralization &&
+				grammarParameter_ == GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ||
 
 				( !isSpecificationGeneralization &&
 
@@ -365,13 +364,7 @@ class GrammarItem : private Item
 
 				( isPossessive ||
 				isChineseCurrentLanguage ||
-				grammarParameter_ == GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ||
-
-				( isArchivedAssignment &&
-				!isPossessive ) ||
-
-				( isSpecificationGeneralization &&
-				grammarParameter_ == GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ) ) ||
+				grammarParameter_ == GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ) ) ||
 
 				// Question
 				( isQuestion &&

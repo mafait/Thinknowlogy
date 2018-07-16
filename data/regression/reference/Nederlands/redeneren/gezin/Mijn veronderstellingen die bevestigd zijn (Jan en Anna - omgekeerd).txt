@@ -109,10 +109,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Paul, Johan en Laura.
 * 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul heeft een ouder, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Paul is waarschijnlijk deel van een gezin. Omdat:
 <	- Paul is waarschijnlijk een kind van Jan.
 <	- Kinderen zijn deel van ieder gezin.
@@ -138,10 +138,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Paul, Johan en Laura.
 * 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Johan heeft een ouder, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Johan is waarschijnlijk deel van een gezin. Omdat:
 <	- Johan is waarschijnlijk een kind van Jan.
 <	- Kinderen zijn deel van ieder gezin.
@@ -167,10 +167,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Paul, Johan en Laura.
 * 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Laura heeft een ouder, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Laura is waarschijnlijk deel van een gezin. Omdat:
 <	- Laura is waarschijnlijk een kind van Jan.
 <	- Kinderen zijn deel van ieder gezin.
@@ -299,11 +299,11 @@
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Anna is een ouder van Paul, Johan en Laura.
 * 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Paul heeft 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 <	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul heeft 2 ouders, genaamd Jan en Anna.
 < Paul is waarschijnlijk deel van een gezin. Omdat:
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 <	- Kinderen zijn deel van ieder gezin.
@@ -331,11 +331,11 @@
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Anna is een ouder van Paul, Johan en Laura.
 * 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Johan heeft 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 <	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Johan heeft 2 ouders, genaamd Jan en Anna.
 < Johan is waarschijnlijk deel van een gezin. Omdat:
 <	- Johan is waarschijnlijk een kind van Jan en Anna.
 <	- Kinderen zijn deel van ieder gezin.
@@ -363,11 +363,11 @@
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Anna is een ouder van Paul, Johan en Laura.
 * 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Laura heeft 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 <	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Laura heeft 2 ouders, genaamd Jan en Anna.
 < Laura is waarschijnlijk deel van een gezin. Omdat:
 <	- Laura is waarschijnlijk een kind van Jan en Anna.
 <	- Kinderen zijn deel van ieder gezin.
@@ -563,11 +563,11 @@
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Anna is een ouder van Paul, Johan en Laura.
 * 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Paul heeft 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 <	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul heeft 2 ouders, genaamd Jan en Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
@@ -604,11 +604,11 @@
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Anna is een ouder van Paul, Johan en Laura.
 * 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Johan heeft 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 <	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Johan heeft 2 ouders, genaamd Jan en Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
@@ -645,11 +645,11 @@
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Anna is een ouder van Paul, Johan en Laura.
 * 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Laura heeft 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 <	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Laura heeft 2 ouders, genaamd Jan en Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
@@ -825,11 +825,11 @@
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Anna is een ouder van Paul, Johan en Laura.
 * 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Laura heeft 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 <	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Laura heeft 2 ouders, genaamd Jan en Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
@@ -877,11 +877,11 @@
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Anna is een ouder van Paul, Johan en Laura.
 * 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Paul heeft 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 <	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul heeft 2 ouders, genaamd Jan en Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.

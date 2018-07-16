@@ -11,10 +11,6 @@ Toon "    <W> Woorden:		~+#<W>~, (voorgedefinieerd: ~+#<W>:*~).".
 Toon "    <X> Condities:		~+#<X>~.".
 Toon "    <Y> Acties:			~+#<Y>~.".
 Toon "    <Z> Alternatieven:		~+#<Z>~.".
-Toon " * Inactieve items:	       ~=#<FRSWXYZ>~.".
-Toon " * Gearchiveerde items:	       ~$#<FRSWXYZ>~.".
-Toon " * Vervangen items:	       ~%#<FRSWXYZ>~.".
-Toon " * Verwijderde items:	       ~&#<FRSWXYZ>~.".
 Toon "------------------------------------------------------------------------------".
 Toon " Items in woorden:	~#<acgijlmrswx>~.".
 Toon "------------------------------------------------------------------------------".
@@ -33,5 +29,4 @@ Toon "    <x> context:		~+#<x>~.".
 Toon " * Inactieve items:	       ~=#<acgijlmrswx>~.".
 Toon " * Gearchiveerde items:	       ~$#<acgijlmrswx>~.".
 Toon " * Vervangen items:	       ~%#<acgijlmrswx>~.".
-Toon " * Verwijderde items:	       ~&#<acgijlmrswx>~.".
 Toon "------------------------------------------------------------------------------".

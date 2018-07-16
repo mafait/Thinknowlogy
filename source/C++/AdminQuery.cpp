@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -60,9 +60,6 @@ class AdminQuery
 		if( globalVariables_->nReplacedQueryItems > 0 )
 			nFoundCategories++;
 
-		if( globalVariables_->nDeletedQueryItems > 0 )
-			nFoundCategories++;
-
 		return ( nFoundCategories > 1 );
 		}
 
@@ -98,15 +95,13 @@ class AdminQuery
 		globalVariables_->nInactiveQueryItems = 0;
 		globalVariables_->nArchivedQueryItems = 0;
 		globalVariables_->nReplacedQueryItems = 0;
-		globalVariables_->nDeletedQueryItems = 0;
 
 		adminItem_->countQuery();
 
 		return ( globalVariables_->nActiveQueryItems +
 				globalVariables_->nInactiveQueryItems +
 				globalVariables_->nArchivedQueryItems +
-				globalVariables_->nReplacedQueryItems +
-				globalVariables_->nDeletedQueryItems );
+				globalVariables_->nReplacedQueryItems );
 		}
 
 	signed char getIdFromQuery( bool hasEndChar, char *queryCommandString, char startChar, char endChar )
@@ -240,14 +235,14 @@ class AdminQuery
 		return RESULT_OK;
 		}
 
-	signed char itemQuery( bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSuppressingMessage, char *textString )
+	signed char itemQuery( bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSuppressingMessage, char *textString )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "itemQuery";
 
 		if( textString == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given text string is undefined" );
 
-		adminItem_->itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR );
+		adminItem_->itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, false, NO_SENTENCE_NR, NO_ITEM_NR );
 
 		if( !isSuppressingMessage &&
 		nTotalCountQuery() == 0 )
@@ -312,7 +307,6 @@ class AdminQuery
 		bool isSelectingInactiveItems = true;
 		bool isSelectingArchivedItems = true;
 		bool isSelectingReplacedItems = true;
-		bool isSelectingDeletedItems = true;
 		bool isSelectingAttachedJustifications = false;
 		bool isSelectingJustificationSpecifications = false;
 		unsigned short queryWordTypeNr = NO_WORD_TYPE_NR;
@@ -359,7 +353,7 @@ class AdminQuery
 					if( getIdFromQuery( true, queryCommandString, QUERY_ITEM_START_CHAR, QUERY_ITEM_END_CHAR ) != RESULT_OK )
 						return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to get an identification from the item" );
 
-					adminItem_->itemQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, querySentenceNr_, queryItemNr_ );
+					adminItem_->itemQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, false, querySentenceNr_, queryItemNr_ );
 
 					isFirstInstruction = false;
 
@@ -373,7 +367,7 @@ class AdminQuery
 					if( getIdFromQuery( true, queryCommandString, QUERY_REF_ITEM_START_CHAR, QUERY_REF_ITEM_END_CHAR ) != RESULT_OK )
 						return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to get a reference identification from the item" );
 
-					adminItem_->itemQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, true, querySentenceNr_, queryItemNr_ );
+					adminItem_->itemQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, true, querySentenceNr_, queryItemNr_ );
 
 					isFirstInstruction = false;
 
@@ -408,7 +402,7 @@ class AdminQuery
 					// All list characters are valid
 					if( !isInvalidChar )
 						{
-						adminItem_->listQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, nameString );
+						adminItem_->listQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, nameString );
 
 						isFirstInstruction = false;
 
@@ -441,7 +435,7 @@ class AdminQuery
 							}
 						else
 							{
-							if( adminItem_->wordQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, nameString ) != RESULT_OK )
+							if( adminItem_->wordQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, nameString ) != RESULT_OK )
 								return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to query words" );
 
 							isFirstInstruction = false;
@@ -482,7 +476,7 @@ class AdminQuery
 							}
 						else
 							{
-							if( adminItem_->wordReferenceQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, nameString ) != RESULT_OK )
+							if( adminItem_->wordReferenceQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, nameString ) != RESULT_OK )
 								return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to query word references" );
 
 							isFirstInstruction = false;
@@ -531,7 +525,7 @@ class AdminQuery
 							}
 						else
 							{
-							if( adminItem_->stringQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, nameString ) != RESULT_OK )
+							if( adminItem_->stringQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, nameString ) != RESULT_OK )
 								return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to query strings" );
 
 							isFirstInstruction = false;
@@ -559,7 +553,7 @@ class AdminQuery
 					if( queryItemNr_ != NO_ITEM_NR )
 						return adminItem_->startQueryResultError( functionNameString, moduleNameString_, "The given parameter is undefined" );
 
-					adminItem_->wordTypeQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, (unsigned short)querySentenceNr_ );
+					adminItem_->wordTypeQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, (unsigned short)querySentenceNr_ );
 
 					isFirstInstruction = false;
 					// Remember given word type number
@@ -580,7 +574,7 @@ class AdminQuery
 					if( queryItemNr_ != NO_ITEM_NR )
 						return adminItem_->startQueryResultError( functionNameString, moduleNameString_, "The given parameter is undefined" );
 
-					adminItem_->parameterQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, querySentenceNr_ );
+					adminItem_->parameterQuery( isFirstInstruction, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, querySentenceNr_ );
 
 					isFirstInstruction = false;
 
@@ -595,13 +589,11 @@ class AdminQuery
 					if( isSelectingActiveItems &&
 					isSelectingInactiveItems &&
 					isSelectingArchivedItems &&
-					isSelectingReplacedItems &&
-					isSelectingDeletedItems )
+					isSelectingReplacedItems )
 						{
 						isSelectingInactiveItems = false;
 						isSelectingArchivedItems = false;
 						isSelectingReplacedItems = false;
-						isSelectingDeletedItems = false;
 						}
 					else
 						isSelectingActiveItems = true;
@@ -612,7 +604,7 @@ class AdminQuery
 					// End of query
 					queryCommandString[queryCommandStringPosition_] == QUERY_CHAR )
 						{
-						if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, queryString ) != RESULT_OK )
+						if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSuppressingMessage, queryString ) != RESULT_OK )
 							return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to execute an item query of active items" );
 						}
 
@@ -623,13 +615,11 @@ class AdminQuery
 					if( isSelectingActiveItems &&
 					isSelectingInactiveItems &&
 					isSelectingArchivedItems &&
-					isSelectingReplacedItems &&
-					isSelectingDeletedItems )
+					isSelectingReplacedItems )
 						{
 						isSelectingActiveItems = false;
 						isSelectingArchivedItems = false;
 						isSelectingReplacedItems = false;
-						isSelectingDeletedItems = false;
 						}
 					else
 						isSelectingInactiveItems = true;
@@ -640,7 +630,7 @@ class AdminQuery
 					// End of query
 					queryCommandString[queryCommandStringPosition_] == QUERY_CHAR )
 						{
-						if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, queryString ) != RESULT_OK )
+						if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSuppressingMessage, queryString ) != RESULT_OK )
 							return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to execute an item query of inactive items" );
 						}
 
@@ -651,13 +641,11 @@ class AdminQuery
 					if( isSelectingActiveItems &&
 					isSelectingInactiveItems &&
 					isSelectingArchivedItems &&
-					isSelectingReplacedItems &&
-					isSelectingDeletedItems )
+					isSelectingReplacedItems )
 						{
 						isSelectingActiveItems = false;
 						isSelectingInactiveItems = false;
 						isSelectingReplacedItems = false;
-						isSelectingDeletedItems = false;
 						}
 					else
 						isSelectingArchivedItems = true;
@@ -668,7 +656,7 @@ class AdminQuery
 					// End of query
 					queryCommandString[queryCommandStringPosition_] == QUERY_CHAR )
 						{
-						if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, queryString ) != RESULT_OK )
+						if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSuppressingMessage, queryString ) != RESULT_OK )
 							return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to execute an item query of archived items" );
 						}
 
@@ -679,13 +667,11 @@ class AdminQuery
 					if( isSelectingActiveItems &&
 					isSelectingInactiveItems &&
 					isSelectingArchivedItems &&
-					isSelectingReplacedItems &&
-					isSelectingDeletedItems )
+					isSelectingReplacedItems )
 						{
 						isSelectingActiveItems = false;
 						isSelectingInactiveItems = false;
 						isSelectingArchivedItems = false;
-						isSelectingDeletedItems = false;
 						}
 					else
 						isSelectingReplacedItems = true;
@@ -696,37 +682,20 @@ class AdminQuery
 					// End of query
 					queryCommandString[queryCommandStringPosition_] == QUERY_CHAR )
 						{
-						if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, queryString ) != RESULT_OK )
+						if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSuppressingMessage, queryString ) != RESULT_OK )
 							return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to execute an item query of archived items" );
 						}
 
 					break;
 
 				case QUERY_DELETED_CHAR:
-					// Initially
-					if( isSelectingActiveItems &&
-					isSelectingInactiveItems &&
-					isSelectingArchivedItems &&
-					isSelectingReplacedItems &&
-					isSelectingDeletedItems )
-						{
-						isSelectingActiveItems = false;
-						isSelectingInactiveItems = false;
-						isSelectingArchivedItems = false;
-						isSelectingReplacedItems = false;
-						}
-					else
-						isSelectingDeletedItems = true;
+					// Deleted items are cleaned up
+					isSelectingActiveItems = false;
+					isSelectingInactiveItems = false;
+					isSelectingArchivedItems = false;
+					isSelectingReplacedItems = false;
 
 					queryCommandStringPosition_++;
-
-					if( queryCommandStringPosition_ >= queryCommandStringLength ||
-					// End of query
-					queryCommandString[queryCommandStringPosition_] == QUERY_CHAR )
-						{
-						if( itemQuery( isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, isSuppressingMessage, queryString ) != RESULT_OK )
-							return adminItem_->addQueryResultError( functionNameString, moduleNameString_, "I failed to execute an item query of deleted items" );
-						}
 
 					break;
 
@@ -737,7 +706,7 @@ class AdminQuery
 					if( queryCommandStringPosition_ >= queryCommandStringLength ||
 					// End of query
 					queryCommandString[queryCommandStringPosition_] == QUERY_CHAR )
-						adminItem_->itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR );
+						adminItem_->itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, false, NO_SENTENCE_NR, NO_ITEM_NR );
 
 					break;
 
@@ -778,7 +747,7 @@ class AdminQuery
 			{
 			// No query executed yet
 			if( isFirstInstruction )
-				adminItem_->itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, isSelectingDeletedItems, false, NO_SENTENCE_NR, NO_ITEM_NR );
+				adminItem_->itemQuery( true, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, false, NO_SENTENCE_NR, NO_ITEM_NR );
 
 			if( isDisplayingCount )
 				{
@@ -832,16 +801,6 @@ class AdminQuery
 
 							strcat( queryString, "replaced:" );
 							sprintf( tempString, "%u", globalVariables_->nReplacedQueryItems );
-							strcat( queryString, tempString );
-							}
-
-						if( globalVariables_->nDeletedQueryItems > 0 )
-							{
-							if( strlen( queryString ) > 0 )
-								strcat( queryString, QUERY_SEPARATOR_SPACE_STRING );
-
-							strcat( queryString, "deleted:" );
-							sprintf( tempString, "%u", globalVariables_->nDeletedQueryItems );
 							strcat( queryString, tempString );
 							}
 						}

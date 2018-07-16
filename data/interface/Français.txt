@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To define the interface texts for the French language
-#	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+# Purpose: To define the interface texts for the French language
+# Version: Thinknowlogy 2018r2 (Natural Intelligence)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 # Console de Java (menu supérieur)
@@ -45,7 +45,7 @@
 #Java#:304		"Mon mouvement est E."
 #Java#:305		"Mon mouvement est F."
 #Java#:306		"Mon mouvement est G."
-#Java#:307		"Affichez des informations sur les mouvements."
+#Java#:307		"Affichez information sur les mouvements."
 #Java#:308		"Le niveau de solution est faible."
 #Java#:309		"Le niveau de solution est élevé."
 
@@ -131,31 +131,31 @@
 #Java#:479		"Est Pascal un fils ou une fille?"
 
 # Console de Java (raisonnement/sous-menu affichant des informations)
-#Java#:480		"Affichez des informations sur la famille."
-#Java#:481		"Affichez des informations sur les parents."
-#Java#:482		"Affichez des informations sur les enfants."
-#Java#:483		"Affichez des informations sur les pères."
-#Java#:484		"Affichez des informations sur les mères."
-#Java#:485		"Affichez des informations sur les fils."
-#Java#:486		"Affichez des informations sur les filles."
-#Java#:487		"Affichez des informations sur Olivier."
-#Java#:488		"Affichez des informations sur Amélie."
-#Java#:489		"Affichez des informations sur Pascal."
-#Java#:490		"Affichez des informations sur Julien."
-#Java#:491		"Affichez des informations sur Lorraine."
+#Java#:480		"Affichez information sur la famille."
+#Java#:481		"Affichez information sur les parents."
+#Java#:482		"Affichez information sur les enfants."
+#Java#:483		"Affichez information sur les pères."
+#Java#:484		"Affichez information sur les mères."
+#Java#:485		"Affichez information sur les fils."
+#Java#:486		"Affichez information sur les filles."
+#Java#:487		"Affichez information sur Olivier."
+#Java#:488		"Affichez information sur Amélie."
+#Java#:489		"Affichez information sur Pascal."
+#Java#:490		"Affichez information sur Julien."
+#Java#:491		"Affichez information sur Lorraine."
 
 # Java console (sous-menu la taille de police)
 #Java#:500		"<diminuer la taille de police>"
 #Java#:501		"<augmenter la taille de police>"
 
 # Console de Java (sous-menu d'aide)
-##Java#:510		"Affichez des informations sur les langues."
+##Java#:510		"Affichez information sur les langues."
 #Java#:510		"Affichez information sur les langues."
-##Java#:511		"Affichez des informations sur les listes."
+##Java#:511		"Affichez information sur les listes."
 #Java#:511		"Affichez information sur les listes."
-##Java#:512		"Affichez des informations sur les utilisateurs."
+##Java#:512		"Affichez information sur les utilisateurs."
 #Java#:512		"Affichez information sur les utilisateurs."
-##Java#:513		"Affichez des informations sur les types de mots."
+##Java#:513		"Affichez information sur les types de mots."
 #Java#:513		"Affichez information sur les types de mots."
 #Java#:514		"Affichez les commandes de requête."
 #Java#:515		"Affichez le droit d'auteur."
@@ -216,12 +216,11 @@
 :1219			"» est déjà résolu."
 
 # Liste (conflits)
-:1300			"\nCette phrase n'est pas acceptée, parce qu'il est en conflit avec lui-même."
-:1301			"\nCette question n'est pas réponse, parce qu'il est en conflit avec lui-même."
-:1302			"\nCette phrase n'est pas acceptée, parce qu'il est en conflit avec:"
-:1303			"\nCette phrase n'est pas acceptée, parce qu'il ne laisse aucune option ouverte:"
-:1304			"\nCette spécification de définition n'est pas acceptée, parce qu'il est déjà assignée:"
-:1305			"\nCette assignation ne sont pas acceptées, parce qu'il est en conflit avec la spécification de définition:"
+:1300			"\nNon parce que:"
+:1301			"\nCette phrase n'est pas acceptée, parce qu'il est en conflit avec:"
+:1302			"\nCette phrase n'est pas acceptée, parce qu'il ne laisse aucune option ouverte:"
+:1303			"\nCette spécification de définition n'est pas acceptée, parce qu'il est déjà assignée:"
+:1304			"\nCette assignation ne sont pas acceptées, parce qu'il est en conflit avec la spécification de définition:"
 
 # Liste (informations actuelles)
 :1310			"\nVos informations:"
@@ -231,15 +230,16 @@
 :1314			"\nMes hypothèses:"
 :1315			"\nMes hypothèses qui sont ajustés:"
 :1316			"\nMes hypothèses qui sont conclus:"
-#:1317			"\nMes conclusions qui ne sont plus cachés:"
-#:1318			"\nMes hypothèses qui ne sont plus cachés:"
-:1319			"\nMes questions:"
-:1320			"\nMes questions ajustés:"
-:1321			"\nMa réponse:"
-:1322			"\nJe sais seulement:"
-:1323			"\nSpécifications:"
-:1324			"\nInformations connexes:"
-:1325			"\nQuestions connexes:"
+:1317			"\nMes conclusions qui sont mises à jour:"
+#:1318			"\nMes conclusions qui ne sont plus cachés:"
+#:1319			"\nMes hypothèses qui ne sont plus cachés:"
+:1320			"\nMes questions:"
+:1321			"\nMes questions ajustés:"
+:1322			"\nMa réponse:"
+:1323			"\nJe sais seulement:"
+:1324			"\nSpécifications:"
+:1325			"\nInformations connexes:"
+:1326			"\nQuestions connexes:"
 
 # Liste (anciennes informations)
 :1330			"\nVous avez confirmé la spécification - mais aucun de ses relations - de mes hypothèses antérieures:"

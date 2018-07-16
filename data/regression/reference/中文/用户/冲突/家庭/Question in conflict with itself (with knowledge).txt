@@ -53,6 +53,5 @@
 < 平大概不是母亲。
 < 平大概不是女。
 < 
-! 
-! This question is not answered, because it is in conflict with itself.
-! 
+< 沒有、平大概不是女。
+< 

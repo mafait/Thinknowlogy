@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		To create words of the read sentence
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -208,7 +208,6 @@ class AdminReadCreateWords
 		bool isArticle = false;
 		bool isBasicVerb = false;
 		bool isCapitalPluralVerb;
-		bool isCapitalSingularVerb;
 		bool isChineseImperativeVerbDisplay = false;
 		bool isConjunction = false;
 		bool isCreatedSingularNoun = false;
@@ -316,7 +315,6 @@ class AdminReadCreateWords
 				isArticle = false;
 				isBasicVerb = false;
 				isCapitalPluralVerb = false;
-				isCapitalSingularVerb = false;
 				isChineseImperativeVerbDisplay = false;
 				isConjunction = false;
 				isCreatedSingularNoun = false;
@@ -367,11 +365,11 @@ class AdminReadCreateWords
 						hasFoundSingularNoun = foundWordTypeItem->isSingularNoun();
 
 						if( ( !isAdverb ||
-						// Typically for Spanish: Skip answer, when an adverb was found too
+						// Typical for Spanish: Skip answer, when an adverb was found too
 						!foundWordTypeItem->isAnswer() ) &&
 
 						( !isChineseCurrentLanguage ||
-						// Typically for Chinese
+						// Typical for Chinese
 						// Chinese test file: "Connect Four"
 						// Chinese test file: "Acceptance - John is a person, John is tall and John is a boy"
 						isFirstWord ||
@@ -386,7 +384,7 @@ class AdminReadCreateWords
 							{
 							foundWordTypeNr = foundWordTypeItem->wordTypeNr();
 
-							// Typically for Chinese: Possessive pronoun and possessive determiner are the same
+							// Typical for Chinese: Possessive pronoun and possessive determiner are the same
 							// Chinese test file: "Connect Four"
 							if( isChineseCurrentLanguage &&
 							foundWordTypeNr == WORD_TYPE_POSSESSIVE_DETERMINER_SINGULAR &&
@@ -413,7 +411,7 @@ class AdminReadCreateWords
 									break;
 
 								case WORD_TYPE_NUMERAL:
-									// Typically for French
+									// Typical for French
 									if( !isChineseCurrentLanguage )
 										isFrenchNumeral = true;
 
@@ -451,14 +449,13 @@ class AdminReadCreateWords
 
 									if( foundWordTypeItem->isDefiniteArticle() )
 										{
+										// Definite article
 										hasFoundChineseDefiniteArticle = true;
 										currentWordDefiniteArticleParameter = foundWordTypeItem->definiteArticleParameter();
 										}
 									else
-										{
-										if( foundWordTypeItem->isIndefiniteArticle() )
-											currentWordIndefiniteArticleParameter = foundWordTypeItem->indefiniteArticleParameter();
-										}
+										// Indefinite article
+										currentWordIndefiniteArticleParameter = foundWordTypeItem->indefiniteArticleParameter();
 
 									break;
 
@@ -492,7 +489,7 @@ class AdminReadCreateWords
 										isBasicVerb = true;
 									else
 										{
-										// Typically for Chinese
+										// Typical for Chinese
 										if( isChineseCurrentLanguage &&
 										foundWordItem->isImperativeVerbDisplay() )
 											isChineseImperativeVerbDisplay = true;
@@ -510,7 +507,7 @@ class AdminReadCreateWords
 
 								if( wasPreviousWordFrenchNumeral )
 									{
-									// Typically for French: Skip singular/plural noun mismatch of word 'fils'
+									// Typical for French: Skip singular/plural noun mismatch of word 'fils'
 									if( foundWordItem->addWordType( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString ).result != RESULT_OK )
 										return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to add a plural noun word type item for word \"", foundWordItem->anyWordTypeString(), "\"" );
 									}
@@ -603,20 +600,10 @@ class AdminReadCreateWords
 								{
 								case WORD_TYPE_ADJECTIVE:
 									isAdjective = true;
+									currentWordAdjectiveParameter = foundWordTypeItem->adjectiveParameter();
 
-									switch( foundWordItem->wordParameter() )
-										{
-										case WORD_PARAMETER_ADJECTIVE_NO:
-											// Adjective 'no' can be used as article
-											isArticle = true;
-											break;
-
-										case WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL:
-											hasFoundAdjectiveEvery = true;
-										}
-
-									if( !wasPreviousWordArticle )
-										currentWordAdjectiveParameter = foundWordTypeItem->adjectiveParameter();
+									if( foundWordItem->wordParameter() == WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL )
+										hasFoundAdjectiveEvery = true;
 
 									break;
 
@@ -624,12 +611,11 @@ class AdminReadCreateWords
 									isArticle = true;
 
 									if( foundWordTypeItem->isDefiniteArticle() )
+										// Definite article
 										currentWordDefiniteArticleParameter = foundWordTypeItem->definiteArticleParameter();
 									else
-										{
-										if( foundWordTypeItem->isIndefiniteArticle() )
-											currentWordIndefiniteArticleParameter = foundWordTypeItem->indefiniteArticleParameter();
-										}
+										// Indefinite article
+										currentWordIndefiniteArticleParameter = foundWordTypeItem->indefiniteArticleParameter();
 
 									break;
 
@@ -644,10 +630,6 @@ class AdminReadCreateWords
 									break;
 
 								case WORD_TYPE_VERB_SINGULAR:
-									isCapitalSingularVerb = true;
-
-									// Don't insert a break statement here
-
 								case WORD_TYPE_VERB_PLURAL:
 									isCapitalPluralVerb = true;
 									break;
@@ -660,8 +642,8 @@ class AdminReadCreateWords
 					// Allow multiple finds
 					while( foundWordItem != NULL );
 
-					if( !isUndefinedWord &&
-					wordStringLength == 1 )
+					// One character
+					if( !isUndefinedWord )
 						{
 						// Step 3: Typically for English: Find or create lowercase letter 'a' as first letter of a sentence.
 						if( ( wordResult = findWordTypeInAllWords( false, wordTypeNr, lowercaseWordString, NULL ) ).result != RESULT_OK )
@@ -688,14 +670,11 @@ class AdminReadCreateWords
 				( !isCapitalPluralVerb ||
 				wordStringLength == 1 ) ) ||
 
+				// Typical for Spanish: 'o' and 'y' are letters as well as conjunctions
 				// Small letters, capital letters and numerals
-				( wasPreviousWordSymbol &&
-				wordStringLength == 1 &&
-
-				// Typically for Spanish: 'o' and 'y' are letters as well as conjunctions
-				( isConjunction ||
-				// Typically for Dutch: 'u' is a letter as well as a possessive pronoun
-				isPossessivePronoun ) ) )
+				( isConjunction &&
+				wasPreviousWordSymbol &&
+				wordStringLength == 1 ) )
 					{
 					isFirstFind = true;
 
@@ -709,10 +688,8 @@ class AdminReadCreateWords
 						foundWordTypeItem = wordResult.foundWordTypeItem;
 
 						if( isFirstFind ||
-
-						( foundWordItem != NULL &&
 						// Skip if later runs have no result
-						foundWordTypeItem != NULL ) )
+						foundWordItem != NULL )
 							{
 							if( ( shortResult = getWordTypeNr( true, wordStringLength, exactWordString ) ).result != RESULT_OK )
 								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to get the word type number of an exact word" );
@@ -772,17 +749,14 @@ class AdminReadCreateWords
 				!isPossessivePronoun &&
 				!isSymbol &&
 
-				( ( wordStringLength > 1 &&
+				( isUndefinedWord ||
+
+				( wordStringLength > 1 &&
 
 				( ( !isUpperChar &&
 				wasPreviousWordArticle ) ||
 
-				( isUndefinedWord &&
-
-				( isFirstWord ||
-				!isUpperChar ) ) ||
-
-				// Typically for English. Test files: "Boiling point" and "Condensation point"
+				// Typical for English. Test files: "Boiling point" and "Condensation point"
 				( hasFoundAdjectiveEvery &&
 				isPreposition &&
 				wasPreviousWordCreatedSingularNoun ) ) ) ) )
@@ -803,7 +777,7 @@ class AdminReadCreateWords
 					wasPreviousWordCreatedSingularNoun ||
 					wasPreviousWordPreposition ||
 
-					// Typically for Chinese
+					// Typical for Chinese
 					( isChineseCurrentLanguage && 
 
 					( isUncountableGeneralizationNoun ||
@@ -849,12 +823,11 @@ class AdminReadCreateWords
 							}
 						else
 							{
-							if( !isCapitalSingularVerb &&
-							!isExactSingularNoun )
+							if( !isExactSingularNoun )
 								{
 								if( wasPreviousWordFrenchNumeral )
 									{
-									// Typically for French: Singular and plural noun 'fils' are the same
+									// Typical for French: Singular and plural noun 'fils' are the same
 									if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, NO_WORD_PARAMETER, WORD_TYPE_NOUN_PLURAL, wordStringLength, exactWordString ) ).result != RESULT_OK )
 										return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to add a singular noun word" );
 
@@ -862,17 +835,11 @@ class AdminReadCreateWords
 									}
 								else
 									{
-									if( !isExactWord ||
-									// Typically for English. Test files: "Boiling point" and "Condensation point"
-									isPreposition ||
-									previousWordIndefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER )
-										{
-										if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, NO_WORD_PARAMETER, WORD_TYPE_NOUN_SINGULAR, wordStringLength, exactWordString ) ).result != RESULT_OK )
-											return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to add a singular noun word" );
+									if( ( wordResult = addWord( false, false, previousWordAdjectiveParameter, previousWordDefiniteArticleParameter, previousWordIndefiniteArticleParameter, NO_WORD_PARAMETER, WORD_TYPE_NOUN_SINGULAR, wordStringLength, exactWordString ) ).result != RESULT_OK )
+										return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to add a singular noun word" );
 
-										isCreatedSingularNoun = true;
-										singularNounWordItem = wordResult.createdWordItem;
-										}
+									isCreatedSingularNoun = true;
+									singularNounWordItem = wordResult.createdWordItem;
 									}
 								}
 							}
@@ -883,10 +850,6 @@ class AdminReadCreateWords
 							return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to create a singular noun read word" );
 
 						if( pluralNounWordItem != NULL &&
-
-						( hasFoundWordEnding ||
-						wasPreviousWordFrenchNumeral ) &&
-
 						// Plural noun
 						( createReadWordResult = createReadWord( false, currentWordOrderNr, WORD_TYPE_NOUN_PLURAL, 0, NULL, pluralNounWordItem ) ).result != RESULT_OK )
 							return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to create a plural noun read word" );
@@ -935,7 +898,6 @@ class AdminReadCreateWords
 	ReadWordResultType readWordFromString( bool isCheckingForGrammarDefinition, bool isMergedWord, bool isSkippingTextString, size_t minimumStringLength, char *wordString )
 		{
 		bool isText = false;
-		bool isWordStartingWithDoubleQuote = false;
 		char currentChar;
 		size_t index = 0;
 		size_t wordStringLength;
@@ -960,10 +922,6 @@ class AdminReadCreateWords
 			}
 		else
 			{
-			if( isSkippingTextString &&
-			currentChar == SYMBOL_DOUBLE_QUOTE )
-				isWordStartingWithDoubleQuote = true;
-
 			while( index < wordStringLength &&
 
 			( isText ||
@@ -976,7 +934,7 @@ class AdminReadCreateWords
 
 			( !isspace( currentChar ) ||
 
-			// Typically for French: Include spaces in grammar merged word definition
+			// Typical for French: Include spaces in grammar merged word definition
 			( isMergedWord &&
 			currentChar == SPACE_CHAR ) ) ) ) )
 				{
@@ -997,7 +955,7 @@ class AdminReadCreateWords
 					currentChar = wordString[index];
 				}
 
-			if( isWordStartingWithDoubleQuote &&
+			if( isSkippingTextString &&
 			readWordResult.wordLength > 1 )
 				readWordResult.wordLength--;
 
@@ -1022,9 +980,7 @@ class AdminReadCreateWords
 
 	WordResultType addWord( bool isLanguageWord, bool isMultipleWord, unsigned short previousWordAdjectiveParameter, unsigned short previousWordDefiniteArticleParameter, unsigned short previousWordIndefiniteArticleParameter, unsigned short wordParameter, unsigned short wordTypeNr, size_t wordTypeStringLength, char *wordTypeString )
 		{
-		bool isProperNoun;
 		bool isProperNounPrecededByDefiniteArticle;
-		bool isNounWordType;
 		bool wasPreviousWordAdjective = ( previousWordAdjectiveParameter > NO_ADJECTIVE_PARAMETER );
 		bool wasPreviousWordDefiniteArticle = ( previousWordDefiniteArticleParameter > NO_DEFINITE_ARTICLE_PARAMETER );
 		bool wasPreviousWordIndefiniteArticle = ( previousWordIndefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER );
@@ -1074,19 +1030,11 @@ class AdminReadCreateWords
 				globalVariables_->lastPredefinedWordItem = createdWordItem;
 				}
 
-			isProperNoun = ( wordTypeNr == WORD_TYPE_PROPER_NOUN );
-
-			isProperNounPrecededByDefiniteArticle = ( isProperNoun &&
-													wasPreviousWordDefiniteArticle );
-
-			isNounWordType = adminItem_->isNounWordType( wordTypeNr );
-
 			if( adminItem_->isAdjectiveParameter( wordParameter ) )
 				adjectiveParameter = wordParameter;
 			else
 				{
-				if( wasPreviousWordAdjective &&
-				isNounWordType )
+				if( wasPreviousWordAdjective )
 					adjectiveParameter = previousWordAdjectiveParameter;
 				}
 
@@ -1094,10 +1042,7 @@ class AdminReadCreateWords
 				definiteArticleParameter = wordParameter;
 			else
 				{
-				if( wasPreviousWordDefiniteArticle &&
-
-				( isProperNoun ||
-				isNounWordType ) )
+				if( wasPreviousWordDefiniteArticle )
 					definiteArticleParameter = previousWordDefiniteArticleParameter;
 				}
 
@@ -1105,17 +1050,19 @@ class AdminReadCreateWords
 				indefiniteArticleParameter = wordParameter;
 			else
 				{
-				if( wasPreviousWordIndefiniteArticle &&
-				isNounWordType )
+				if( wasPreviousWordIndefiniteArticle )
 					indefiniteArticleParameter = previousWordIndefiniteArticleParameter;
 				}
+
+			isProperNounPrecededByDefiniteArticle = ( wasPreviousWordDefiniteArticle &&
+													  wordTypeNr == WORD_TYPE_PROPER_NOUN );
 
 			if( ( wordTypeResult = createdWordItem->addWordType( isMultipleWord, isProperNounPrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordTypeStringLength, wordTypeString ) ).result != RESULT_OK )
 				return adminItem_->addWordResultError( functionNameString, moduleNameString_, "I failed to add a word type to a new word" );
 
-			if( isNounWordType &&
-			indefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER &&
+			if( indefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER &&
 			wordTypeResult.wordTypeItem != NULL &&
+			adminItem_->isNounWordType( wordTypeNr ) &&
 			!wordTypeResult.wordTypeItem->isCorrectIndefiniteArticle( false, indefiniteArticleParameter ) &&
 
 			// Write 'different indefinite article used' notification

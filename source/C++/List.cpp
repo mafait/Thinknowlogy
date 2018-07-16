@@ -1,6 +1,6 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -46,6 +46,11 @@
 			}
 
 		return true;
+		}
+
+	Item *List::firstDeletedItem()
+		{
+		return deletedList_;
 		}
 
 
@@ -223,10 +228,6 @@
 
 				case QUERY_REPLACED_CHAR:
 					replacedList_ = removeItem->nextItem;
-					break;
-
-				case QUERY_DELETED_CHAR:
-					deletedList_ = removeItem->nextItem;
 					break;
 
 				default:
@@ -1284,11 +1285,6 @@
 		return replacedList_;
 		}
 
-	Item *List::firstDeletedItem()
-		{
-		return deletedList_;
-		}
-
 	Item *List::nextListItem()
 		{
 		return nextListItem_;
@@ -1431,7 +1427,7 @@
 		return globalHighestItemNr;
 		}
 
-	unsigned int List::highestFoundSentenceNrInList( bool isIncludingDeletedItems, unsigned int globalHighestFoundSentenceNr, unsigned int maxSentenceNr )
+	unsigned int List::highestFoundSentenceNrInList( unsigned int globalHighestFoundSentenceNr, unsigned int maxSentenceNr )
 		{
 		unsigned int localHighestFoundSentenceNr = NO_SENTENCE_NR;
 		unsigned int tempSentenceNr;
@@ -1449,11 +1445,6 @@
 			localHighestFoundSentenceNr = tempSentenceNr;
 
 		if( ( searchItem = firstReplacedItem() ) != NULL &&
-		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
-			localHighestFoundSentenceNr = tempSentenceNr;
-
-		if( isIncludingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != NULL &&
 		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
 			localHighestFoundSentenceNr = tempSentenceNr;
 
@@ -1985,10 +1976,6 @@
 		( searchItem = firstReplacedItem() ) != NULL )
 			storeChangesInFutureDatabase( searchItem );
 
-		if( globalVariables_->result == RESULT_OK &&
-		( searchItem = firstDeletedItem() ) != NULL )
-			storeChangesInFutureDatabase( searchItem );
-
 		return globalVariables_->result;
 		}
 */
@@ -2009,9 +1996,6 @@
 			clearQuerySelections( searchItem );
 
 		if( ( searchItem = firstReplacedItem() ) != NULL )
-			clearQuerySelections( searchItem );
-
-		if( ( searchItem = firstDeletedItem() ) != NULL )
 			clearQuerySelections( searchItem );
 		}
 
@@ -2056,19 +2040,9 @@
 
 			searchItem = searchItem->nextItem;
 			}
-
-		searchItem = firstDeletedItem();
-
-		while( searchItem != NULL )
-			{
-			if( searchItem->isSelectedByQuery )
-				globalVariables_->nDeletedQueryItems++;
-
-			searchItem = searchItem->nextItem;
-			}
 		}
 
-	void List::itemQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
+	void List::itemQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		Item *searchItem;
 
@@ -2087,13 +2061,9 @@
 		if( isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != NULL )
 			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
-
-		if( isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != NULL )
-			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 		}
 
-	void List::listQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryListString )
+	void List::listQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, char *queryListString )
 		{
 		bool isSelectingOnFindAndListIncluded;
 		bool isListIncludedInQuery = isIncludingThisList( queryListString );
@@ -2120,14 +2090,10 @@
 			if( isSelectingReplacedItems &&
 			( searchItem = firstReplacedItem() ) != NULL )
 				listQuery( isSelectingOnFindAndListIncluded, searchItem );
-
-			if( isSelectingDeletedItems &&
-			( searchItem = firstDeletedItem() ) != NULL )
-				listQuery( isSelectingOnFindAndListIncluded, searchItem );
 			}
 		}
 
-	void List::parameterQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned int queryParameter )
+	void List::parameterQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, unsigned int queryParameter )
 		{
 		Item *searchItem;
 
@@ -2145,14 +2111,10 @@
 
 		if( isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != NULL )
-			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
-
-		if( isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != NULL )
 			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 		}
 
-	void List::wordQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems )
+	void List::wordQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems )
 		{
 		Item *searchItem;
 
@@ -2170,14 +2132,10 @@
 
 		if( isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != NULL )
-			wordQuery( isSelectingOnFind, searchItem );
-
-		if( isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != NULL )
 			wordQuery( isSelectingOnFind, searchItem );
 		}
 
-	void List::wordTypeQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, unsigned short queryWordTypeNr )
+	void List::wordTypeQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, unsigned short queryWordTypeNr )
 		{
 		Item *searchItem;
 
@@ -2195,10 +2153,6 @@
 
 		if( isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != NULL )
-			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
-
-		if( isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != NULL )
 			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 		}
 
@@ -2221,14 +2175,10 @@
 		( searchItem = firstReplacedItem() ) != NULL )
 			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
 
-		if( globalVariables_->result == RESULT_OK &&
-		( searchItem = firstDeletedItem() ) != NULL )
-			displayQueryResult( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth, searchItem );
-
 		return globalVariables_->result;
 		}
 
-	signed char List::stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, char *queryString )
+	signed char List::stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, char *queryString )
 		{
 		Item *searchItem;
 
@@ -2251,15 +2201,10 @@
 		( searchItem = firstReplacedItem() ) != NULL )
 			stringQuery( isSelectingOnFind, queryString, searchItem );
 
-		if( globalVariables_->result == RESULT_OK &&
-		isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != NULL )
-			stringQuery( isSelectingOnFind, queryString, searchItem );
-
 		return globalVariables_->result;
 		}
 
-	signed char List::wordReferenceQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingDeletedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
+	signed char List::wordReferenceQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
 		{
 		Item *searchItem;
 
@@ -2280,11 +2225,6 @@
 		if( globalVariables_->result == RESULT_OK &&
 		isSelectingReplacedItems &&
 		( searchItem = firstReplacedItem() ) != NULL )
-			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
-
-		if( globalVariables_->result == RESULT_OK &&
-		isSelectingDeletedItems &&
-		( searchItem = firstDeletedItem() ) != NULL )
 			wordReferenceQuery( isSelectingOnFind, isSelectingAttachedJustifications, isSelectingJustificationSpecifications, wordReferenceNameString, searchItem );
 
 		return globalVariables_->result;

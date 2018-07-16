@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To define the interface texts for the Chinese language
-#	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+# Purpose: To define the interface texts for the Chinese language
+# Version: Thinknowlogy 2018r2 (Natural Intelligence)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 # Java console (upper menu)
@@ -224,12 +224,11 @@
 # Listing (conflicts)
 # The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
 # In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
-#:1300			"\nThis sentence is not accepted, because it is in conflict with itself."
-#:1301			"\nThis question is not answered, because it is in conflict with itself."
-#:1302			"\nThis sentence is not accepted, because it is in conflict with:"
-#:1303			"\nThis sentence is not accepted, because it doesn't leave any option open:"
-#:1304			"\nThis definition specification is not accepted, because it is already assigned:"
-#:1305			"\nThis assignment is not accepted, because it is in conflict with definition specification:"
+#:1300			"\nNo, because:"
+#:1301			"\nThis sentence is not accepted, because it is in conflict with:"
+#:1302			"\nThis sentence is not accepted, because it doesn't leave any option open:"
+#:1303			"\nThis definition specification is not accepted, because it is already assigned:"
+#:1304			"\nThis assignment is not accepted, because it is in conflict with definition specification:"
 
 # Listing (current information)
 :1310			"\n你的信息："
@@ -239,15 +238,16 @@
 :1314			"\n我的假设："
 :1315			"\n调整后的假设："
 :1316			"\n下结论的假设："
-#:1317			"\nMy conclusions that are not hidden anymore:"
-#:1318			"\nMy assumptions that are not hidden anymore:"
-:1319			"\n我的问题："
-:1320			"\n我调整后的问题："
-:1321			"\n我的回答："
-:1322			"\n我只知道："
-:1323			"\n细则："
-:1324			"\n相关信息："
-:1325			"\n相关问题："
+#:1317			"\nMy conclusions that are updated:"
+#:1318			"\nMy conclusions that are not hidden anymore:"
+#:1319			"\nMy assumptions that are not hidden anymore:"
+:1320			"\n我的问题："
+:1321			"\n我调整后的问题："
+:1322			"\n我的回答："
+:1323			"\n我只知道："
+:1324			"\n细则："
+:1325			"\n相关信息："
+:1326			"\n相关问题："
 
 # Listing (old information)
 # The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.

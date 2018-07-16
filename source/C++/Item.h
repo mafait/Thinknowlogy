@@ -1,6 +1,6 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -279,8 +279,6 @@ class Item
 	bool isReplacedItem();
 	bool isDeletedItem();
 	bool isReplacedOrDeletedItem();
-
-	bool isMoreRecent( Item *checkItem );
 
 	bool wasActiveBefore();
 	bool wasInactiveBefore();

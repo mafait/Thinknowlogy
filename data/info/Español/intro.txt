@@ -1,16 +1,16 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
-Mostrar " Thinknowlogy es el razonador de Lenguaje Natural Controlado (CNL) más".
-Mostrar " avanzado del mundo. Se basa en las leyes naturales de la inteligencia.".
-Mostrar " Sin embargo, esta lógica del lenguaje no es descrita por los científicos:".
-Mostrar " * A pesar de una investigación exhaustiva, la teoría de la evolución aún no ha".
-Mostrar " proporcionado una explicación satisfactoria para el origen de la inteligencia, el".
-Mostrar " lenguaje y las leyes de la naturaleza. Y mucho menos, cómo están relacionados;".
-Mostrar " * Según la cosmovisión bíblica, Dios ha creado las leyes de la naturaleza.".
-Mostrar " Basándose en las leyes de la inteligencia, solamente Thinknowlogy implementa".
-#C++#Mostrar " el función inteligente de palabras como artículos definidos, conjunción \"o\",".
-#C++#Mostrar " verbos posesivos \"tener\" y los verbos en pasado \"era\" y \"tenido\".".
-#Java#Mostrar " el función inteligente de palabras como artículos definidos, conjunción “o”,".
-#Java#Mostrar " verbos posesivos “tener” y los verbos en pasado “era” y “tenido”.".
+Mostrar " Thinknowlogy es el sistema de razonamiento automatizado más avanzado del mundo.".
+Mostrar " Al implementar las Leyes de Inteligencia Natural, que están integradas en la gramática,".
+Mostrar " Thinknowlogy tiene resultados de razonamiento que los científicos aún no han descrito:".
+Mostrar " * A pesar de una investigación exhaustiva, la teoría de la evolución aún no ha proporcionado".
+Mostrar " una explicación satisfactoria para el origen de la inteligencia, el lenguaje y las leyes de la".
+Mostrar " naturaleza. Y mucho menos, cómo están relacionados;".
+Mostrar " * De acuerdo con la cosmovisión bíblica, Dios ha creado leyes de la naturaleza como".
+Mostrar " el fundamento de su creación. Basándose en las leyes de la inteligencia, solamente".
+#C++#Mostrar " Thinknowlogy implementa el función inteligente de palabras como artículos definidos,".
+#C++#Mostrar " conjunción \"o\", verbos posesivos \"tener\" y los verbos en pasado \"era\" y \"tenido\".".
+#Java#Mostrar " Thinknowlogy implementa el función inteligente de palabras como artículos definidos,".
+#Java#Mostrar " conjunción “o”, verbos posesivos “tener” y los verbos en pasado “era” y “tenido”.".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " La función inteligente de estas palabras se demuestra por:".
 Mostrar " * Programación en Lengua controlada;".
@@ -18,11 +18,11 @@ Mostrar " * Razonamiento en Lengua controlada:".
 Mostrar "   - sacar conclusiones (más avanzada que las soluciones científicas),".
 Mostrar "   - hacer suposiciones (con el nivel de ajuste automático de la incertidumbre),".
 Mostrar "   - haciendo preguntas (acerca de las brechas en el conocimiento),".
-Mostrar "   - detección de conflictos y algunos casos de ambigüedad semántica,".
+Mostrar "   - la detección de confirmaciones, conflictos y algunos casos de ambigüedad semántica,".
 Mostrar "   - mostrar los informes de justificación para el conocimiento autogenerado;".
 Mostrar " * El multilingüismo, probando: Los lenguajes naturales tienen un origen común y lógico.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Reto a cualquiera a vencer este razonador: http://mafait.org/challenge/".
+Mostrar " Desafío a todos a superar este sistema de razonamiento: http://mafait.org/challenge/".
 Mostrar "------------------------------------------------------------------------------".
 #C++#Mostrar " Ayudar.\t\t\t\t\t       * Mostrar más info ayuda".
 #C++#Mostrar " \~{nombre del idioma}\t\t\t\t\t* Cambiar la idioma".

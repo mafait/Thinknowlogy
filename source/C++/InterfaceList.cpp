@@ -1,7 +1,7 @@
 ﻿/*	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -109,7 +109,7 @@ class InterfaceList : private List
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createInterfaceItem";
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, new InterfaceItem( interfaceParameter, interfaceStringLength, interfaceString, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an active interface item" );
+			return addError( functionNameString, "I failed to add an interface item" );
 
 		return RESULT_OK;
 		}

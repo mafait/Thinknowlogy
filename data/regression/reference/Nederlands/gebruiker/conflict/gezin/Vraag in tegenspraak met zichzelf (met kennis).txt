@@ -53,6 +53,5 @@
 < Anne is waarschijnlijk geen moeder.
 < Anne is waarschijnlijk geen vrouw.
 < 
-! 
-! Deze vraag is niet beantwoord, omdat het in conflict is met zichzelf.
-! 
+< Nee, Anne is waarschijnlijk geen vrouw.
+< 

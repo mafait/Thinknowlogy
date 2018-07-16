@@ -1,16 +1,16 @@
 ﻿Affichez "------------------------------------------------------------------------------".
-Affichez " Thinknowlogy est le système de raisonnement naturel contrôlé (CNL) le plus".
-Affichez " avancé au monde. Il est basé sur les lois naturelles de l'intelligence.".
-Affichez " Cependant, cette logique du langage n'est ni décrite par les scientifiques:".
-Affichez " * Malgré des recherches exhaustives, la théorie de l'évolution n'a toujours".
-Affichez " pas fourni une explication satisfaisante de l'origine de l'intelligence, du".
-Affichez " langage et des lois de la nature. Laissons seul, comment ils sont liés;".
-Affichez " * Selon la vision du monde biblique, Dieu a créé lois de la nature. Étant basé".
-Affichez " sur les lois de l'intelligence, seulement Thinknowlogy implémente le fonction".
-#C++#Affichez " intelligente des mots comme les articles définis \"le\" et \"la\", conjonction".
-#C++#Affichez " \"ou\", verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
-#Java#Affichez " intelligente des mots comme les articles définis «le» et «la», conjonction".
-#Java#Affichez " «ou», verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
+Affichez " Thinknowlogy est le système de raisonnement automatisé le plus avancé au monde.".
+Affichez " En appliquant les lois naturelles de l'intelligence, qui sont intégrées dans la grammaire,".
+Affichez " Thinknowlogy a des résultats de raisonnement que les scientifiques n'ont pas encore décrits:".
+Affichez " * Malgré des recherches exhaustives, la théorie de l'évolution n'a toujours pas fourni une".
+Affichez " explication satisfaisante de l'origine de l'intelligence, du langage et des lois de la nature.".
+Affichez " Laissons seul, comment ils sont liés;".
+Affichez " * Selon la vision biblique du monde, Dieu a créé les lois de la nature, comme fondement de sa".
+Affichez " création. Basé sur les lois naturelles de l'intelligence, intégrées dans la grammaire, seulement".
+#C++#Affichez " Thinknowlogy implémente la fonction intelligente des mots comme les articles définis \"le\" et \"la\",".
+#C++#Affichez " conjonction \"ou\", verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
+#Java#Affichez " Thinknowlogy implémente la fonction intelligente des mots comme les articles définis «le» et «la»,".
+#Java#Affichez " conjonction «ou», verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
 Affichez "------------------------------------------------------------------------------".
 Affichez " La fonction intelligente de ces mots est démontrée par:".
 Affichez " * Programmation en Langue contrôlée;".
@@ -18,11 +18,11 @@ Affichez " * Raisonnement en Langue contrôlée:".
 Affichez "   - tirer des conclusions (plus avancés que les solutions scientifiques),".
 Affichez "   - faire des hypothèses (avec niveau d'incertitude auto-réglage),".
 Affichez "   - poser des questions (environ lacunes dans les connaissances),".
-Affichez "   - détecter les conflits et les quelques cas d'ambiguïté sémantique,".
+Affichez "   - la détection de confirmations, conflits et quelques cas d'ambiguïté sémantique,".
 Affichez "   - l'affichage de rapports de justification pour la connaissance autoproduite;".
 Affichez " * Multilinguisme, prouver: Langues naturelles ont une origine commune et logique.".
 Affichez "------------------------------------------------------------------------------".
-Affichez " Je défie quiconque de battre ce raisonneur: http://mafait.org/challenge/".
+Affichez " Je défie tout le monde de dépasser ce système de raisonnement: http://mafait.org/challenge/".
 Affichez "------------------------------------------------------------------------------".
 #C++#Affichez " Aide.\t\t\t\t\t\t* Afficher plus d'aide d'info".
 #C++#Affichez " \~{languageName}\t\t\t\t* Changer la langue".

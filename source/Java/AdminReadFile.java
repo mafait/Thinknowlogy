@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the grammar, user-interface and example files
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -70,7 +70,6 @@ class AdminReadFile
 		{
 		int firstSentenceNr;
 		int startRemoveSentenceNr = Constants.NO_SENTENCE_NR;
-		long startNanoTime = System.nanoTime();
 
 		if( !hasClosedFileDueToError_ &&
 
@@ -102,29 +101,24 @@ class AdminReadFile
 			// Previous deleted sentence might be empty
 			startRemoveSentenceNr != GlobalVariables.removeSentenceNr &&
 			// All items of this sentence are deleted
-			adminItem_.highestFoundSentenceNr( true, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
+			adminItem_.highestFoundSentenceNr( true, startRemoveSentenceNr ) < startRemoveSentenceNr )
 				{
 				// So, decrement all higher sentence numbers
 				adminItem_.decrementSentenceNrs( startRemoveSentenceNr );
 
-				if( GlobalVariables.currentSentenceNr >= startRemoveSentenceNr )
-					{
-					firstSentenceNr = firstSentenceNrOfCurrentUser();
+				firstSentenceNr = firstSentenceNrOfCurrentUser();
 
-					// First user sentence
-					if( startRemoveSentenceNr == firstSentenceNr )
-						adminItem_.decrementCurrentSentenceNr();
-					else
-						{
-						GlobalVariables.currentSentenceNr = adminItem_.highestFoundSentenceNr( false, false, GlobalVariables.currentSentenceNr );
-						// Necessary after changing current sentence number
-						GlobalVariables.currentSentenceItemNr = adminItem_.highestCurrentSentenceItemNr();
-						}
+				// First user sentence
+				if( startRemoveSentenceNr == firstSentenceNr )
+					adminItem_.decrementCurrentSentenceNr();
+				else
+					{
+					GlobalVariables.currentSentenceNr = adminItem_.highestFoundSentenceNr( false, GlobalVariables.currentSentenceNr );
+					// Necessary after changing current sentence number
+					GlobalVariables.currentSentenceItemNr = adminItem_.highestCurrentSentenceItemNr();
 					}
 				}
 			}
-
-		GlobalVariables.cleaningTime += ( System.nanoTime() - startNanoTime );
 		}
 
 	private static void clearPredefinedMultipleWordNrInPredefinedWords()
@@ -395,7 +389,7 @@ class AdminReadFile
 						isChoice = false;
 						isNewStart = true;
 						hasFoundChoiceAlternatives = false;
-						adminItem_.markGrammarOfCurrentLanguageAsChoiceEnd( GlobalVariables.currentSentenceItemNr );
+						adminItem_.markGrammarOfCurrentLanguageAsChoiceEnd();
 						}
 					else
 						{
@@ -415,8 +409,8 @@ class AdminReadFile
 					if( hasFoundPipe )
 						return adminItem_.startError( 1, moduleNameString_, "I found an extra pipe character in the grammar definition" );
 
-					if( !isOption &&
-					!isChoice )
+					if( !isChoice &&
+					!isOption )
 						return adminItem_.startError( 1, moduleNameString_, "Pipes are only allowed within grammar definition options or choices" );
 
 					hasFoundPipe = true;
@@ -472,9 +466,9 @@ class AdminReadFile
 							{
 							if( isMergedWord ||
 							grammarParameter == Constants.WORD_PLURAL_NOUN_ENDING ||
-							// Typically for Chinese
+							// Typical for Chinese
 							grammarParameter == Constants.WORD_FEMININE_PROPER_NOUN_ENDING ||
-							// Typically for Chinese
+							// Typical for Chinese
 							grammarParameter == Constants.WORD_MASCULINE_PROPER_NOUN_ENDING )
 								{
 								if( definitionGrammarItem == null )
@@ -560,11 +554,9 @@ class AdminReadFile
 						isOptionStart = false;
 						isChoiceStart = false;
 
+						hasFoundOnlyOptions = false;
 						hasFoundPipe = false;
 						hasGrammarWords = true;
-
-						if( !isOptionStart )
-							hasFoundOnlyOptions = false;
 
 						if( foundGrammarItem != null &&
 						!foundGrammarItem.hasCurrentCreationSentenceNr() )
@@ -645,16 +637,18 @@ class AdminReadFile
 				}
 			}
 
-		if( multipleWordItem == null ||
-		multipleWordItem.hasCurrentCreationSentenceNr() )
+		if( multipleWordItem != null )
 			{
-			if( ( wordResult = adminItem_.addWord( false, true, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, wordParameter, wordTypeNr, multipleWordStringBuffer.length(), multipleWordStringBuffer.toString() ) ).result != Constants.RESULT_OK )
-				return adminItem_.addWordResultError( 1, moduleNameString_, "I failed to add a predefined grammar word" );
-			}
-		else
-			{
-			if( multipleWordItem.addWordType( true, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, multipleWordStringBuffer.length(), multipleWordStringBuffer.toString() ).result != Constants.RESULT_OK )
-				return adminItem_.addWordResultError( 1, moduleNameString_, "The given multiple word item is undefined" );
+			if( multipleWordItem.hasCurrentCreationSentenceNr() )
+				{
+				if( ( wordResult = adminItem_.addWord( false, true, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, wordParameter, wordTypeNr, multipleWordStringBuffer.length(), multipleWordStringBuffer.toString() ) ).result != Constants.RESULT_OK )
+					return adminItem_.addWordResultError( 1, moduleNameString_, "I failed to add a predefined grammar word" );
+				}
+			else
+				{
+				if( multipleWordItem.addWordType( true, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, multipleWordStringBuffer.length(), multipleWordStringBuffer.toString() ).result != Constants.RESULT_OK )
+					return adminItem_.addWordResultError( 1, moduleNameString_, "The given multiple word item is undefined" );
+				}
 			}
 
 		if( wordResult.createdWordItem == null )
@@ -777,6 +771,7 @@ class AdminReadFile
 			GlobalVariables.hasDisplayedMessage = false;
 			GlobalVariables.hasDisplayedWarning = false;
 			GlobalVariables.isAssignmentChanged = false;
+			GlobalVariables.isConflictingQuestion = false;
 
 			if( !adminItem_.wasPreviousCommandUndoOrRedo() )
 				cleanupDeletedItems();
@@ -980,6 +975,7 @@ class AdminReadFile
 		{
 		StringBuffer promptStringBuffer = new StringBuffer();
 
+		// Don't show sentence number when asking for user name, password, and so on
 		if( promptSentenceNr > Constants.NO_SENTENCE_NR )
 			promptStringBuffer.append( promptSentenceNr );
 
@@ -1652,11 +1648,6 @@ class AdminReadFile
 			{
 			testFileNr_ = 0;
 			startTime_ = new Date().getTime();
-
-			GlobalVariables.cleaningTime = 0;
-			GlobalVariables.openFileTime = 0;
-			GlobalVariables.selectionExecutionTime = 0;
-			GlobalVariables.writingTime = 0;
 			}
 		else
 			testFileNr_++;
@@ -1690,7 +1681,7 @@ class AdminReadFile
 				{
 				totalTime = ( new Date().getTime() - startTime_ );
 
-				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Done in: " + String.format( "%.1f", ( totalTime / 1e3 ) ) + " sec.\n- Opening files: " + String.format( "%.1f", ( GlobalVariables.openFileTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( totalTime == 0 ? 0 : ( GlobalVariables.openFileTime / totalTime / 1e4 ) ) ) + "%);\n- Execution of selections: " + String.format( "%.1f", ( GlobalVariables.selectionExecutionTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( totalTime == 0 ? 0 : ( GlobalVariables.selectionExecutionTime / totalTime / 1e4 ) ) ) + "%);\n- Constructing new sentences: " + String.format( "%.1f", ( GlobalVariables.writingTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( totalTime == 0 ? 0 : ( GlobalVariables.writingTime / totalTime / 1e4 ) ) ) + "%);\n- Cleaning up after each sentence: " + String.format( "%.1f", ( GlobalVariables.cleaningTime / 1e9 ) ) + " sec. (" + String.format( "%.1f", ( totalTime == 0 ? 0 : ( GlobalVariables.cleaningTime / totalTime / 1e4 ) ) ) + "%).\n" ) != Constants.RESULT_OK )
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Done in: " + String.format( "%.1f", ( totalTime / 1e3 ) ) + " sec." ) != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
 				}
 			}
@@ -1747,7 +1738,7 @@ class AdminReadFile
 			return adminItem_.addCreateAndAssignResultError( 1, moduleNameString_, "I failed to add a specification with authorization" );
 
 		// Collect current language with previous languages
-		if( adminItem_.collectGeneralizationWordWithPreviousOne( isAssignment, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, generalizationWordItem, specificationWordItem ) != Constants.RESULT_OK )
+		if( adminItem_.collectGeneralizationWordWithPreviousOne( isAssignment, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, relationContextNr, generalizationWordItem, specificationWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addCreateAndAssignResultError( 1, moduleNameString_, "I failed to collect a generalization word with a previous one" );
 
 		return createAndAssignResult;

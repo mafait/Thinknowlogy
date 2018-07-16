@@ -210,10 +210,6 @@
 <	- Hijos son parte de cada familia.
 < Pablo tiene probablemente una madre, llamada Ana. Porque:
 <	- Ana es probablemente madre de Luisa, Pablo y José.
-* 	y:
-<	- Pablo tiene 2 padres, llamados Ana y Juan.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
 < Pablo es posiblemente una persona. Porque:
 <	- Pablo tiene 2 padres, llamados Ana y Juan.
 <	- Cada familia tiene padres y hijos.
@@ -509,10 +505,6 @@
 * Mis suposiciones:
 < Pablo tiene probablemente una madre, llamada Ana. Porque:
 <	- Ana es probablemente madre de Luisa, Pablo y José.
-* 	y:
-<	- Pablo tiene 2 padres, llamados Ana y Juan.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
 < Pablo es probablemente hijo de Ana y Juan. Porque:
 <	- Juan es padre de Luisa, Pablo y José.
 <	- Cada familia tiene padres y hijos.

@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,30 +25,28 @@ class ContextItem extends Item
 	{
 	// Private initialized variables
 
-	private boolean isCompoundCollectionSpanishAmbiguous_;
-
 	private short contextWordTypeNr_;
 	private short specificationWordTypeNr_;
 
 	private int contextNr_;
+	private int spanishAmbiguousCollectionNr_;
 
 	private WordItem specificationWordItem_;
 
 
 	// Constructor
 
-	protected ContextItem( boolean isCompoundCollectionSpanishAmbiguous, short contextWordTypeNr, short specificationWordTypeNr, int contextNr, WordItem specificationWordItem, List myList, WordItem myWordItem )
+	protected ContextItem( short contextWordTypeNr, short specificationWordTypeNr, int contextNr, int spanishAmbiguousCollectionNr, WordItem specificationWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
 		// Private initialized variables
 
-		isCompoundCollectionSpanishAmbiguous_ = isCompoundCollectionSpanishAmbiguous;
-
 		contextWordTypeNr_ = contextWordTypeNr;
 		specificationWordTypeNr_ = specificationWordTypeNr;
 
 		contextNr_ = contextNr;
+		spanishAmbiguousCollectionNr_ = spanishAmbiguousCollectionNr;
 
 		specificationWordItem_ = specificationWordItem;
 		}
@@ -115,11 +113,11 @@ class ContextItem extends Item
 
 		queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "contextWordType:" + ( contextWordTypeString == null ? Constants.EMPTY_STRING : contextWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + contextWordTypeNr_ );
 
-		if( isCompoundCollectionSpanishAmbiguous_ )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "isCompoundCollectionSpanishAmbiguous" );
-
 		if( contextNr_ > Constants.NO_CONTEXT_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "contextNr:" + contextNr_ );
+
+		if( spanishAmbiguousCollectionNr_ > Constants.NO_COLLECTION_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "spanishAmbiguousCollectionNr:" + spanishAmbiguousCollectionNr_ );
 
 		if( specificationWordTypeNr_ > Constants.NO_WORD_TYPE_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordType:" + ( specificationWordTypeString == null ? Constants.EMPTY_STRING : specificationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + specificationWordTypeNr_ );
@@ -146,11 +144,6 @@ class ContextItem extends Item
 
 	// Protected methods
 
-	protected boolean isCompoundCollectionSpanishAmbiguous()
-		{
-		return isCompoundCollectionSpanishAmbiguous_;
-		}
-
 	protected short contextWordTypeNr()
 		{
 		return contextWordTypeNr_;
@@ -164,6 +157,11 @@ class ContextItem extends Item
 	protected int contextNr()
 		{
 		return contextNr_;
+		}
+
+	protected int spanishAmbiguousCollectionNr()
+		{
+		return spanishAmbiguousCollectionNr_;
 		}
 
 	protected ContextItem nextContextItem()

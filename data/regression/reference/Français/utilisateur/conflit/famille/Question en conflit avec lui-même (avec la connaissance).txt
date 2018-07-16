@@ -53,6 +53,5 @@
 < Dominique n'est probablement pas une mère.
 < Dominique n'est probablement pas une femme.
 < 
-! 
-! Cette question n'est pas réponse, parce qu'il est en conflit avec lui-même.
-! 
+< Non, Dominique n'est probablement pas une femme.
+< 

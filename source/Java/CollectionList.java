@@ -1,7 +1,7 @@
 ﻿/*	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -90,27 +90,6 @@ class CollectionList extends List
 			while( searchCollectionItem != null )
 				{
 				if( searchCollectionItem.collectionNr() == collectionNr &&
-				searchCollectionItem.commonWordItem() == commonWordItem )
-					return true;
-
-				searchCollectionItem = searchCollectionItem.nextCollectionItem();
-				}
-			}
-
-		return false;
-		}
-
-	protected boolean hasCollectionNr( int collectionNr, WordItem collectionWordItem, WordItem commonWordItem )
-		{
-		CollectionItem searchCollectionItem = firstActiveCollectionItem();
-
-		if( collectionNr > Constants.NO_COLLECTION_NR &&
-		commonWordItem != null )
-			{
-			while( searchCollectionItem != null )
-				{
-				if( searchCollectionItem.collectionNr() == collectionNr &&
-				searchCollectionItem.collectionWordItem() == collectionWordItem &&
 				searchCollectionItem.commonWordItem() == commonWordItem )
 					return true;
 
@@ -217,34 +196,15 @@ class CollectionList extends List
 		return highestCollectionOrderNr;
 		}
 
-	protected short collectionOrderNr( int collectionNr, WordItem collectionWordItem, WordItem commonWordItem )
+	protected int collectionNr( short collectionWordTypeNr )
 		{
 		CollectionItem searchCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != null )
-			{
-			if( searchCollectionItem.collectionNr() == collectionNr &&
-			searchCollectionItem.collectionWordItem() == collectionWordItem &&
-			searchCollectionItem.commonWordItem() == commonWordItem )
-				return searchCollectionItem.collectionOrderNr();
-
-			searchCollectionItem = searchCollectionItem.nextCollectionItem();
-			}
-
-		return Constants.NO_ORDER_NR;
-		}
-
-	protected int collectionNr( short collectionWordTypeNr, WordItem commonWordItem )
-		{
-		CollectionItem searchCollectionItem = firstActiveCollectionItem();
-
-		if( collectionWordTypeNr > Constants.NO_WORD_TYPE_NR &&
-		commonWordItem != null )
+		if( collectionWordTypeNr > Constants.NO_WORD_TYPE_NR )
 			{
 			while( searchCollectionItem != null )
 				{
-				if( searchCollectionItem.commonWordItem() == commonWordItem &&
-				searchCollectionItem.isMatchingCollectionWordTypeNr( collectionWordTypeNr ) )
+				if( searchCollectionItem.collectionWordTypeNr() == collectionWordTypeNr )
 					return searchCollectionItem.collectionNr();
 
 				searchCollectionItem = searchCollectionItem.nextCollectionItem();
@@ -254,40 +214,50 @@ class CollectionList extends List
 		return Constants.NO_COLLECTION_NR;
 		}
 
-	protected int compoundCollectionNr( short collectionWordTypeNr )
+	protected int collectionNr( WordItem commonWordItem )
 		{
-		int foundCompoundCollectionNr = Constants.NO_COLLECTION_NR;
 		CollectionItem searchCollectionItem = firstActiveCollectionItem();
 
-		if( collectionWordTypeNr > Constants.NO_WORD_TYPE_NR )
+		if( commonWordItem != null )
 			{
 			while( searchCollectionItem != null )
 				{
-				if( searchCollectionItem.isCompoundGeneralization() &&
-				searchCollectionItem.isMatchingCollectionWordTypeNr( collectionWordTypeNr ) )
-					foundCompoundCollectionNr = searchCollectionItem.collectionNr();
+				if( searchCollectionItem.commonWordItem() == commonWordItem )
+					return searchCollectionItem.collectionNr();
 
 				searchCollectionItem = searchCollectionItem.nextCollectionItem();
 				}
 			}
 
+		return Constants.NO_COLLECTION_NR;
+		}
+
+	protected int compoundCollectionNr()
+		{
+		int foundCompoundCollectionNr = Constants.NO_COLLECTION_NR;
+		CollectionItem searchCollectionItem = firstActiveCollectionItem();
+
+		while( searchCollectionItem != null )
+			{
+			if( searchCollectionItem.isCompoundGeneralization() )
+				foundCompoundCollectionNr = searchCollectionItem.collectionNr();
+
+			searchCollectionItem = searchCollectionItem.nextCollectionItem();
+			}
+
 		return foundCompoundCollectionNr;
 		}
 
-	protected int nonCompoundCollectionNr( short collectionWordTypeNr )
+	protected int nonCompoundCollectionNr()
 		{
 		CollectionItem searchCollectionItem = firstActiveCollectionItem();
 
-		if( collectionWordTypeNr > Constants.NO_WORD_TYPE_NR )
+		while( searchCollectionItem != null )
 			{
-			while( searchCollectionItem != null )
-				{
-				if( !searchCollectionItem.isCompoundGeneralization() &&
-				searchCollectionItem.isMatchingCollectionWordTypeNr( collectionWordTypeNr ) )
-					return searchCollectionItem.collectionNr();
+			if( !searchCollectionItem.isCompoundGeneralization() )
+				return searchCollectionItem.collectionNr();
 
-				searchCollectionItem = searchCollectionItem.nextCollectionItem();
-				}
+			searchCollectionItem = searchCollectionItem.nextCollectionItem();
 			}
 
 		return Constants.NO_COLLECTION_NR;
@@ -304,11 +274,9 @@ class CollectionList extends List
 			while( searchCollectionItem != null )
 				{
 				if( searchCollectionItem.collectionNr() == compoundCollectionNr &&
-				( collectionWordItem = searchCollectionItem.collectionWordItem() ) != null )
-					{
-					if( ( nonCompoundCollectionNr = collectionWordItem.nonCompoundCollectionNr( searchCollectionItem.collectionWordTypeNr() ) ) > Constants.NO_COLLECTION_NR )
-						return nonCompoundCollectionNr;
-					}
+				( collectionWordItem = searchCollectionItem.collectionWordItem() ) != null &&
+				( nonCompoundCollectionNr = collectionWordItem.nonCompoundCollectionNr() ) > Constants.NO_COLLECTION_NR )
+					return nonCompoundCollectionNr;
 
 				searchCollectionItem = searchCollectionItem.nextCollectionItem();
 				}
@@ -482,10 +450,8 @@ class CollectionList extends List
 			do	{
 				if( searchCollectionItem.collectionWordItem() == collectionWordItem &&
 
-				( searchCollectionItem.commonWordItem() == commonWordItem ||
-
-				( isAllowingDifferentCommonWord &&
-				collectionWordItem.hasCollectionNr( searchCollectionItem.collectionNr() ) ) ) )
+				( isAllowingDifferentCommonWord ||
+				searchCollectionItem.commonWordItem() == commonWordItem ) )
 					isCollected = true;
 				}
 			while( !isCollected &&
@@ -496,11 +462,9 @@ class CollectionList extends List
 		return boolResult;
 		}
 
-	protected CollectionResultType addCollection( boolean isExclusiveSpecification, boolean isSpecificationGeneralization, short collectionWordTypeNr, short commonWordTypeNr, int _collectionNr, WordItem collectionWordItem, WordItem commonWordItem, WordItem compoundGeneralizationWordItem )
+	protected CollectionResultType createCollection( boolean isExclusiveSpecification, short collectionWordTypeNr, short commonWordTypeNr, int _collectionNr, WordItem collectionWordItem, WordItem commonWordItem, WordItem compoundGeneralizationWordItem )
 		{
-		boolean isDuplicateCollection = false;
 		short collectionOrderNr;
-		int foundCollectionNr = Constants.NO_COLLECTION_NR;
 		CollectionResultType collectionResult = new CollectionResultType();
 
 		if( collectionWordTypeNr <= Constants.NO_WORD_TYPE_NR ||
@@ -519,11 +483,11 @@ class CollectionList extends List
 		if( collectionWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL )
 			collectionWordTypeNr = Constants.WORD_TYPE_NOUN_SINGULAR;
 
-		// Typically for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
+		// Typical for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
 		if( !myWordItem().hasWordType( true, collectionWordTypeNr ) )
 			return startCollectionResultError( 1, "I don't have the requested word type number: " + collectionWordTypeNr );
 
-		// Typically for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
+		// Typical for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
 		if( !collectionWordItem.hasWordType( true, collectionWordTypeNr ) )
 			return startCollectionResultError( 1, "The collection word item doesn't have the requested word type number: " + collectionWordTypeNr );
 
@@ -535,32 +499,18 @@ class CollectionList extends List
 			collectionResult.createdCollectionNr = ++_collectionNr;
 			}
 
-		foundCollectionNr = collectionNr( collectionWordTypeNr, commonWordItem );
+		// A collection comes in pairs
+		if( ( collectionOrderNr = myWordItem().highestCollectionOrderNrInCollectionWords( _collectionNr ) ) >= Constants.MAX_ORDER_NR - 1 )
+			return startCollectionResultSystemError( 1, "Collection order number overflow" );
 
-		if( isSpecificationGeneralization &&
-		foundCollectionNr > Constants.NO_COLLECTION_NR &&
-		foundCollectionNr != _collectionNr )
-			isDuplicateCollection = true;
-
-		if( !isDuplicateCollection &&
-
-		( collectionResult.createdCollectionNr > Constants.NO_COLLECTION_NR ||
-		// Check if collection already exists
-		!myWordItem().hasCollectionNr( _collectionNr, collectionWordItem, commonWordItem ) ) )
+		if( !isMarkedAsCollectionWord_ )
 			{
-			// A collection comes in pairs
-			if( ( collectionOrderNr = myWordItem().highestCollectionOrderNrInCollectionWords( _collectionNr ) ) >= Constants.MAX_ORDER_NR - 1 )
-				return startCollectionResultSystemError( 1, "Collection order number overflow" );
-
-			if( !isMarkedAsCollectionWord_ )
-				{
-				isMarkedAsCollectionWord_ = true;
-				addToCollectionWordQuickAccessList();
-				}
-
-			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, _collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-				return addCollectionResultError( 1, "I failed to add an active collection item" );
+			isMarkedAsCollectionWord_ = true;
+			addToCollectionWordQuickAccessList();
 			}
+
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, _collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+			return addCollectionResultError( 1, "I failed to add a collection item" );
 
 		return collectionResult;
 		}

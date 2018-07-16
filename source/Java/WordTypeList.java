@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -60,28 +60,10 @@ class WordTypeList extends List
 		return (WordTypeItem)firstActiveItem();
 		}
 
-	private WordTypeItem firstDeletedWordTypeItem()
-		{
-		return (WordTypeItem)firstDeletedItem();
-		}
-
 	private WordTypeItem firstActiveCurrentLanguageWordTypeItem()
 		{
 		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		WordTypeItem searchWordTypeItem = firstActiveWordTypeItem();
-
-		while( searchWordTypeItem != null &&
-		searchWordTypeItem.wordTypeLanguageNr() < currentLanguageNr )
-			searchWordTypeItem = searchWordTypeItem.nextWordTypeItem();
-
-		return ( searchWordTypeItem != null &&
-				searchWordTypeItem.wordTypeLanguageNr() == currentLanguageNr ? searchWordTypeItem : null );
-		}
-
-	private WordTypeItem firstDeletedCurrentLanguageWordTypeItem()
-		{
-		short currentLanguageNr = GlobalVariables.currentLanguageNr;
-		WordTypeItem searchWordTypeItem = firstDeletedWordTypeItem();
 
 		while( searchWordTypeItem != null &&
 		searchWordTypeItem.wordTypeLanguageNr() < currentLanguageNr )
@@ -268,7 +250,7 @@ class WordTypeList extends List
 			return startError( 1, "The given delete word type item is undefined" );
 
 		if( deleteItem( searchWordTypeItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to delete an active item" );
+			return addError( 1, "I failed to delete a word type item" );
 
 		return Constants.RESULT_OK;
 		}
@@ -320,30 +302,22 @@ class WordTypeList extends List
 
 	protected byte markGeneralizationWordTypeAsWritten( boolean isLanguageWord, short wordTypeNr )
 		{
-		boolean hasFoundWordType = false;
 		WordTypeItem searchWordTypeItem = ( isLanguageWord ? firstActiveWordTypeItem() : firstActiveCurrentLanguageWordTypeItem() );
 
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
 			return startError( 1, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
-		while( !hasFoundWordType &&
-		searchWordTypeItem != null )
-			{
-			if( !searchWordTypeItem.isGeneralizationWordAlreadyWritten() &&
-			searchWordTypeItem.wordTypeNr() == wordTypeNr )
-				{
-				if( searchWordTypeItem.markGeneralizationWordTypeAsWritten() != Constants.RESULT_OK )
-					return addError( 1, "I failed to mark a generalization word as written" );
+		// Search for required word type
+		while( searchWordTypeItem != null &&
+		searchWordTypeItem.wordTypeNr() != wordTypeNr )
+			searchWordTypeItem = searchWordTypeItem.nextCurrentLanguageWordTypeItem();
 
-				hasFoundWordType = true;
-				}
-			else
-				searchWordTypeItem = ( isLanguageWord ? searchWordTypeItem.nextWordTypeItem() : searchWordTypeItem.nextCurrentLanguageWordTypeItem() );
-			}
-
-		if( !hasFoundWordType )
+		if( searchWordTypeItem == null )
 			return startError( 1, "I couldn't find the given word type number: " + wordTypeNr );
+
+		if( searchWordTypeItem.markGeneralizationWordTypeAsWritten() != Constants.RESULT_OK )
+			return addError( 1, "I failed to mark a generalization word as written" );
 
 		return Constants.RESULT_OK;
 		}
@@ -351,8 +325,8 @@ class WordTypeList extends List
 	protected byte markSpecificationWordTypeAsWritten( short wordTypeNr )
 		{
 		boolean hasFoundWordType = false;
-		boolean isPluralNounRequested = ( wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
-		boolean isSingularNounRequested = ( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR );
+		boolean isNounWordTypeGiven = ( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
+									wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		WordTypeItem searchWordTypeItem = firstActiveCurrentLanguageWordTypeItem();
 
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
@@ -362,32 +336,21 @@ class WordTypeList extends List
 		while( !hasFoundWordType &&
 		searchWordTypeItem != null )
 			{
-			if( !searchWordTypeItem.isSpecificationWordAlreadyWritten() )
+			if( searchWordTypeItem.wordTypeNr() == wordTypeNr )
 				{
-				if( searchWordTypeItem.wordTypeNr() == wordTypeNr )
-					{
-					if( searchWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
-						return addError( 1, "I failed to mark a specification word as written" );
+				if( searchWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
+					return addError( 1, "I failed to mark a specification word as written" );
 
-					hasFoundWordType = true;
-					}
-				else
+				hasFoundWordType = true;
+				}
+			else
+				{
+				if( isNounWordTypeGiven )
 					{
-					if( isSingularNounRequested )
-						{
-						if( searchWordTypeItem.isPluralNoun() &&
-						// Singular noun is requested. Also mark plural noun as written
-						searchWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
-							return addError( 1, "I failed to mark a plural noun specification word as written" );
-						}
-					else
-						{
-						if( isPluralNounRequested &&
-						searchWordTypeItem.isSingularNoun() &&
-						// Plural noun is requested. Also mark singular noun as written
-						searchWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
-							return addError( 1, "I failed to mark a singular noun specification word as written" );
-						}
+					// If plural noun is given, mark also the singular noun as written
+					// If singular noun is given, mark also the plural noun as written
+					if( searchWordTypeItem.markSpecificationWordTypeAsWritten() != Constants.RESULT_OK )
+						return addError( 1, "I failed to mark a plural noun specification word as written" );
 					}
 				}
 
@@ -402,30 +365,22 @@ class WordTypeList extends List
 
 	protected byte markRelationWordTypeAsWritten( short wordTypeNr )
 		{
-		boolean hasFoundWordType = false;
 		WordTypeItem searchWordTypeItem = firstActiveCurrentLanguageWordTypeItem();
 
 		if( wordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
 			return startError( 1, "The given word type number is undefined or out of bounds: " + wordTypeNr );
 
-		while( !hasFoundWordType &&
-		searchWordTypeItem != null )
-			{
-			if( !searchWordTypeItem.isRelationWordAlreadyWritten() &&
-			searchWordTypeItem.wordTypeNr() == wordTypeNr )
-				{
-				if( searchWordTypeItem.markRelationWordTypeAsWritten() != Constants.RESULT_OK )
-					return addError( 1, "I failed to mark a relation word as written" );
+		// Search for required word type
+		while( searchWordTypeItem != null &&
+		searchWordTypeItem.wordTypeNr() != wordTypeNr )
+			searchWordTypeItem = searchWordTypeItem.nextCurrentLanguageWordTypeItem();
 
-				hasFoundWordType = true;
-				}
-			else
-				searchWordTypeItem = searchWordTypeItem.nextCurrentLanguageWordTypeItem();
-			}
-
-		if( !hasFoundWordType )
+		if( searchWordTypeItem == null )
 			return startError( 1, "I couldn't find the given word type number: " + wordTypeNr );
+
+		if( searchWordTypeItem.markRelationWordTypeAsWritten() != Constants.RESULT_OK )
+			return addError( 1, "I failed to mark a relation word as written" );
 
 		return Constants.RESULT_OK;
 		}
@@ -441,21 +396,11 @@ class WordTypeList extends List
 		if( ( searchWordTypeItem = firstActiveCurrentLanguageWordTypeItem() ) != null )
 			foundWordTypeItem = wordTypeString( false, false, wordTypeNr, searchWordTypeItem );
 
-		if( foundWordTypeItem == null &&
-		( searchWordTypeItem = firstDeletedCurrentLanguageWordTypeItem() ) != null )
-			foundWordTypeItem = wordTypeString( false, false, wordTypeNr, searchWordTypeItem );
-
 		// Not found in current language. Now, try all languages
 		if( isCheckingAllLanguages &&
-		foundWordTypeItem == null )
-			{
-			if( ( searchWordTypeItem = firstActiveWordTypeItem() ) != null )
-				foundWordTypeItem = wordTypeString( false, true, wordTypeNr, searchWordTypeItem );
-
-			if( foundWordTypeItem == null &&
-			( searchWordTypeItem = firstDeletedWordTypeItem() ) != null )
-				foundWordTypeItem = wordTypeString( false, true, wordTypeNr, searchWordTypeItem );
-			}
+		foundWordTypeItem == null &&
+		( searchWordTypeItem = firstActiveWordTypeItem() ) != null )
+			foundWordTypeItem = wordTypeString( false, true, wordTypeNr, searchWordTypeItem );
 
 		return ( foundWordTypeItem == null ? ( foundWordTypeItem_ == null ? null : foundWordTypeItem_.itemString() ) : foundWordTypeItem.itemString() );
 		}
@@ -475,12 +420,10 @@ class WordTypeList extends List
 		WordTypeItem foundWordTypeItem;
 
 		// Try to find word type of the current language
-		if( ( foundWordTypeItem = wordTypeString( isAllowingDifferentNoun, false, wordTypeNr, firstActiveCurrentLanguageWordTypeItem() ) ) == null )
-			{
-			// Not found in current language. Now, try all languages
-			if( isCheckingAllLanguages )
-				foundWordTypeItem = wordTypeString( false, true, wordTypeNr, firstActiveWordTypeItem() );
-			}
+		if( ( foundWordTypeItem = wordTypeString( isAllowingDifferentNoun, false, wordTypeNr, firstActiveCurrentLanguageWordTypeItem() ) ) == null &&
+		// Not found in current language. Now, try all languages
+		isCheckingAllLanguages )
+			foundWordTypeItem = wordTypeString( false, true, wordTypeNr, firstActiveWordTypeItem() );
 
 		return foundWordTypeItem;
 		}
@@ -497,18 +440,6 @@ class WordTypeList extends List
 			if( ( itemString = searchWordTypeItem.itemString() ) != null &&
 			( boolResult = compareStrings( searchString, itemString ) ).result != Constants.RESULT_OK )
 				return addBoolResultError( 1, "I failed to compare an active word type string with the query string" );
-
-			searchWordTypeItem = searchWordTypeItem.nextWordTypeItem();
-			}
-
-		searchWordTypeItem = firstDeletedWordTypeItem();
-
-		while( !boolResult.booleanValue &&
-		searchWordTypeItem != null )
-			{
-			if( ( itemString = searchWordTypeItem.itemString() ) != null &&
-			( boolResult = compareStrings( searchString, itemString ) ).result != Constants.RESULT_OK )
-				return addBoolResultError( 1, "I failed to compare a deleted word type string with the query string" );
 
 			searchWordTypeItem = searchWordTypeItem.nextWordTypeItem();
 			}
@@ -578,7 +509,7 @@ class WordTypeList extends List
 				return startWordTypeResultError( 1, "The created word type item is undefined" );
 
 			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, wordTypeResult.wordTypeItem ) != Constants.RESULT_OK )
-				return addWordTypeResultError( 1, "I failed to add an active word type item" );
+				return addWordTypeResultError( 1, "I failed to add a word type item" );
 			}
 
 		return wordTypeResult;
@@ -616,7 +547,7 @@ class WordTypeList extends List
 					}
 				}
 			while( wordResult.foundWordItem == null &&
-			( currentWordTypeItem = currentWordTypeItem.nextWordTypeItem( wordTypeNr ) ) != null );
+			( currentWordTypeItem = currentWordTypeItem.nextCurrentLanguageWordTypeItem() ) != null );
 			}
 
 		return wordResult;

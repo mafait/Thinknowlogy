@@ -1,7 +1,7 @@
 ﻿/*	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -62,7 +62,7 @@ class WriteList extends List
 	protected byte createWriteItem( boolean isSkipped, short grammarLevel, GrammarItem startOfChoiceOrOptionGrammarItem )
 		{
 		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to add an active write item" );
+			return addError( 1, "I failed to add a write item" );
 
 		return Constants.RESULT_OK;
 		}

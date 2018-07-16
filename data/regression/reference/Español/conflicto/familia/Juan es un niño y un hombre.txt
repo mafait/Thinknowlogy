@@ -25,5 +25,6 @@
 < Una hija es probablemente una persona.
 < 
 ! 
-! No se acepta esta frase, porque está en conflicto consigo mismo.
-! 
+! No se acepta esta frase, porque está en conflicto con:
+< Cada hijo es un niño o un hombre.
+< 

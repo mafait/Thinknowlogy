@@ -136,10 +136,6 @@
 <	- Hijos son parte de cada familia.
 < Pablo tiene probablemente una madre, llamada Ana. Porque:
 <	- Ana es probablemente madre de Pablo.
-* 	y:
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
 * 
 * Mis preguntas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre? Porque:

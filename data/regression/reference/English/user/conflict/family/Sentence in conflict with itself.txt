@@ -27,5 +27,6 @@
 < A daughter is probably a person.
 < 
 ! 
-! This sentence is not accepted, because it is in conflict with itself.
-! 
+! This sentence is not accepted, because it is in conflict with:
+< Every parent is a father or a mother.
+< 

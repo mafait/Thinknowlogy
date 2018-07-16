@@ -459,20 +459,20 @@
 * 
 * Mes hypothèses:
 < Amélie est probablement un parent de Pascal, Julien et Lorraine. En raison:
+<	- Chaque famille a parents et enfants.
+<	- Pascal est probablement un enfant de Olivier et Amélie.
+<	- Julien est un enfant de Olivier et Amélie.
+<	- Lorraine est un enfant de Olivier et Amélie.
+* 	et:
+<	- Chaque parent est un père ou une mère.
+<	- Amélie est la mère de Pascal, Julien et Lorraine.
+* 	et:
 <	- Pascal a 2 parents, appelés Olivier et Amélie.
 <	- Julien a probablement 2 parents, appelés Olivier et Amélie.
 <	- Lorraine a probablement 2 parents, appelés Olivier et Amélie.
 * 	et:
 <	- Chaque famille a parents et enfants.
-<	- Julien est un enfant de Olivier et Amélie.
-<	- Lorraine est un enfant de Olivier et Amélie.
-<	- Pascal est probablement un enfant de Olivier et Amélie.
-* 	et:
-<	- Chaque famille a parents et enfants.
 <	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
-* 	et:
-<	- Chaque parent est un père ou une mère.
-<	- Amélie est la mère de Pascal, Julien et Lorraine.
 < Amélie est probablement une personne. En raison:
 <	- Amélie est un parent de Pascal.
 <	- Un parent est probablement une personne.

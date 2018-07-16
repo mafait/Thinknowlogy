@@ -1,0 +1,1 @@
+del /S data\regression\output\*.txt

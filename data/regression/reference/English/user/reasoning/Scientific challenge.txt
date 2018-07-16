@@ -77,8 +77,9 @@
 < James was a man.
 < 
 ! 
-! This sentence is not accepted, because it is in conflict with itself.
-! 
+! This sentence is not accepted, because it is in conflict with:
+< Every person is a man or a woman.
+< 
 * 
 * My questions:
 < Is Addison a man or a woman?

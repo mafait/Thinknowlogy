@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -30,20 +30,18 @@ class ContextList extends List
 
 	// Private methods
 
-	private boolean hasContextInSpecificationsOfGeneralizationWords( int contextNr )
+	private boolean hasRelationContextInSpecificationsOfGeneralizationWords( int relationContextNr )
 		{
 		GeneralizationItem currentGeneralizationItem;
 		WordItem currentGeneralizationWordItem;
 
-		if( contextNr > Constants.NO_CONTEXT_NR &&
+		if( relationContextNr > Constants.NO_CONTEXT_NR &&
 		( currentGeneralizationItem = myWordItem().firstGeneralizationItem() ) != null )
 			{
 			// Do for all generalization words
 			do	{
-				currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem();
-
-				if( currentGeneralizationWordItem != null &&
-				currentGeneralizationWordItem.hasContextInSpecificationsInWord( contextNr ) )
+				if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) != null &&
+				currentGeneralizationWordItem.hasRelationContextInSpecificationsInWord( relationContextNr ) )
 					return true;
 				}
 			while( ( currentGeneralizationItem = currentGeneralizationItem.nextGeneralizationItem() ) != null );
@@ -101,9 +99,8 @@ class ContextList extends List
 		{
 		ContextItem searchContextItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the given specification word item will be undefined
-
-		if( contextNr > Constants.NO_CONTEXT_NR )
+		if( contextNr > Constants.NO_CONTEXT_NR &&
+		specificationWordItem != null )
 			{
 			while( searchContextItem != null )
 				{
@@ -118,19 +115,37 @@ class ContextList extends List
 		return false;
 		}
 
-	protected boolean hasContextCurrentlyBeenUpdated( int contextNr, WordItem specificationWordItem )
+	protected boolean hasContext( int contextNr, int spanishAmbiguousCollectionNr, WordItem specificationWordItem )
 		{
 		ContextItem searchContextItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the given specification word item will be undefined
+		if( contextNr > Constants.NO_CONTEXT_NR &&
+		specificationWordItem != null )
+			{
+			while( searchContextItem != null )
+				{
+				if( searchContextItem.contextNr() == contextNr &&
+				searchContextItem.spanishAmbiguousCollectionNr() == spanishAmbiguousCollectionNr &&
+				searchContextItem.specificationWordItem() == specificationWordItem )
+					return true;
+
+				searchContextItem = searchContextItem.nextContextItem();
+				}
+			}
+
+		return false;
+		}
+
+	protected boolean hasContextCurrentlyBeenUpdated( int contextNr )
+		{
+		ContextItem searchContextItem = firstActiveContextItem();
 
 		if( contextNr > Constants.NO_CONTEXT_NR )
 			{
 			while( searchContextItem != null )
 				{
 				if( searchContextItem.hasCurrentCreationSentenceNr() &&
-				searchContextItem.contextNr() == contextNr &&
-				searchContextItem.specificationWordItem() == specificationWordItem )
+				searchContextItem.contextNr() == contextNr )
 					return true;
 
 				searchContextItem = searchContextItem.nextContextItem();
@@ -177,19 +192,20 @@ class ContextList extends List
 		return Constants.NO_CONTEXT_NR;
 		}
 
-	protected int contextNr( boolean isCompoundCollectionSpanishAmbiguous, WordItem specificationWordItem )
+	protected int contextNr( int spanishAmbiguousCollectionNr, WordItem specificationWordItem )
 		{
 		ContextItem searchContextItem = firstActiveContextItem();
 
-		// In case of a pronoun context, the given specification word item will be undefined
-
-		while( searchContextItem != null )
+		if( specificationWordItem != null )
 			{
-			if( searchContextItem.specificationWordItem() == specificationWordItem &&
-			searchContextItem.isCompoundCollectionSpanishAmbiguous() == isCompoundCollectionSpanishAmbiguous )
-				return searchContextItem.contextNr();
+			while( searchContextItem != null )
+				{
+				if( searchContextItem.spanishAmbiguousCollectionNr() == spanishAmbiguousCollectionNr &&
+				searchContextItem.specificationWordItem() == specificationWordItem )
+					return searchContextItem.contextNr();
 
-			searchContextItem = searchContextItem.nextContextItem();
+				searchContextItem = searchContextItem.nextContextItem();
+				}
 			}
 
 		return Constants.NO_CONTEXT_NR;
@@ -211,7 +227,7 @@ class ContextList extends List
 		return highestContextNr;
 		}
 
-	protected byte addContext( boolean isCompoundCollectionSpanishAmbiguous, short contextWordTypeNr, short specificationWordTypeNr, int contextNr, WordItem specificationWordItem )
+	protected byte addContext( short contextWordTypeNr, short specificationWordTypeNr, int contextNr, int spanishAmbiguousCollectionNr, WordItem specificationWordItem )
 		{
 		ContextItem foundContextItem;
 
@@ -236,8 +252,8 @@ class ContextList extends List
 				addToContextWordQuickAccessList();
 				}
 
-			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ContextItem( isCompoundCollectionSpanishAmbiguous, contextWordTypeNr, ( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ? Constants.WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, specificationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-				return addError( 1, "I failed to add an active context item" );
+			if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ContextItem( contextWordTypeNr, ( specificationWordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL ? Constants.WORD_TYPE_NOUN_SINGULAR : specificationWordTypeNr ), contextNr, spanishAmbiguousCollectionNr, specificationWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
+				return addError( 1, "I failed to add a context item" );
 			}
 		else
 			{
@@ -253,15 +269,15 @@ class ContextList extends List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte checkForUnusedContext()
+	protected byte checkForUnusedRelationContext()
 		{
 		ContextItem searchContextItem = firstActiveContextItem();
 
 		while( searchContextItem != null &&
 		!GlobalVariables.hasDisplayedIntegrityWarning )
 			{
-			if( !hasContextInSpecificationsOfGeneralizationWords( searchContextItem.contextNr() ) &&
-			InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nI found unused context number: " + searchContextItem.contextNr() + ";\n\tContextItem: " + searchContextItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n" ) != Constants.RESULT_OK )
+			if( !hasRelationContextInSpecificationsOfGeneralizationWords( searchContextItem.contextNr() ) &&
+			InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nI found unused relation context number: " + searchContextItem.contextNr() + ";\n\tContextItem: " + searchContextItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n" ) != Constants.RESULT_OK )
 				return startError( 1, "I failed to write an interface warning" );
 
 			searchContextItem = searchContextItem.nextContextItem();
@@ -311,26 +327,36 @@ class ContextList extends List
 		return null;
 		}
 
-	protected ContextItem contextItem( boolean isCompoundCollectionSpanishAmbiguous, int nContextWords, WordItem specificationWordItem )
+	protected ContextItem contextItem( boolean isCompoundCollectionSpanishAmbiguous, int nContextWords, int spanishAmbiguousCollectionNr, WordItem specificationWordItem )
 		{
+		int searchSpanishAmbiguousCollectionNr;
 		ContextItem searchContextItem = firstActiveContextItem();
 		WordItem anyWordItem = myWordItem();
 
-		// In case of a pronoun context, the given specification word item will be undefined
-
-		if( nContextWords > 0 )
+		if( nContextWords > 0 &&
+		specificationWordItem != null )
 			{
 			while( searchContextItem != null )
 				{
-				if( searchContextItem.specificationWordItem() == specificationWordItem &&
+				if( searchContextItem.specificationWordItem() == specificationWordItem )
+					{
+					searchSpanishAmbiguousCollectionNr = searchContextItem.spanishAmbiguousCollectionNr();
 
-				( ( isCompoundCollectionSpanishAmbiguous &&
-				searchContextItem.isCompoundCollectionSpanishAmbiguous() ) ||
+					// No compound collection Spanish ambiguous
+					if( ( !isCompoundCollectionSpanishAmbiguous &&
 
-				( !isCompoundCollectionSpanishAmbiguous &&
-				!searchContextItem.isCompoundCollectionSpanishAmbiguous() &&
-				anyWordItem.nContextWords( searchContextItem.contextNr(), specificationWordItem ) == nContextWords ) ) )
-					return searchContextItem;
+					( searchSpanishAmbiguousCollectionNr == Constants.NO_COLLECTION_NR ||
+					// Typical for Spanish
+					searchSpanishAmbiguousCollectionNr == spanishAmbiguousCollectionNr ) &&
+
+					anyWordItem.nContextWords( searchContextItem.contextNr(), specificationWordItem ) == nContextWords ) ||
+
+					// Typical for Spanish
+					// Compound collection Spanish ambiguous
+					( isCompoundCollectionSpanishAmbiguous &&
+					searchSpanishAmbiguousCollectionNr == spanishAmbiguousCollectionNr ) )
+						return searchContextItem;
+					}
 
 				searchContextItem = searchContextItem.nextContextItem();
 				}

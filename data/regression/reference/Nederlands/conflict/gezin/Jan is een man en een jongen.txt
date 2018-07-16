@@ -27,5 +27,6 @@
 < Een dochter is waarschijnlijk een persoon.
 < 
 ! 
-! Deze zin is niet geaccepteerd, omdat het in conflict is met zichzelf.
-! 
+! Deze zin is niet geaccepteerd, omdat het in conflict is met:
+< Een zoon is een jongen of een man.
+< 

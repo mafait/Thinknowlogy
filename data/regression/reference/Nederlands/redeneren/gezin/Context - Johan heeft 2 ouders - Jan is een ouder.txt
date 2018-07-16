@@ -91,8 +91,8 @@
 <	- Jan is een ouder van Johan, Paul en Laura.
 <	- Een ouder is waarschijnlijk een persoon.
 < Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura. Omdat:
-<	- Paul is waarschijnlijk een kind van Jan.
 <	- Johan is waarschijnlijk een kind van Jan en Anna.
+<	- Paul is waarschijnlijk een kind van Jan.
 <	- Laura is waarschijnlijk een kind van Jan.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
@@ -130,10 +130,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Johan, Paul en Laura.
 * 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul heeft een ouder, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Johan, Paul en Laura.
 < Paul is waarschijnlijk deel van een gezin. Omdat:
 <	- Paul is waarschijnlijk een kind van Jan.
 <	- Kinderen zijn deel van ieder gezin.

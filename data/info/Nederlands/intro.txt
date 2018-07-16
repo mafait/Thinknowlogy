@@ -1,17 +1,15 @@
 ﻿Toon "------------------------------------------------------------------------------".
-Toon " Thinknowlogy is 's werelds meest geavanceerde Controlled Natural Language".
-Toon " (CNL) reasoner. Het is gebaseerd op de natuurwetten van intelligentie.".
-Toon " Maar deze logica van taal is niet begrepen door wetenschappers:".
-Toon " * Ondanks diepgaand onderzoek, heeft de evolutietheorie nog steeds".
-Toon " geen bevredigende verklaring gegeven voor het ontstaan van intelligentie,".
-Toon " taal en natuurwetten. Laat staan, hoe ze verwant zijn;".
-Toon " * Volgens het bijbels wereldbeeld heeft God natuurwetten gecreëerd.".
-Toon " Gebaseerd op de Natuurwetten van Intelligentie ingebed in Grammatica,".
-Toon " implementeert alleen Thinknowlogy de intelligente functie van woorden als".
-#C++#Toon " bepaald lidwoord \"de/het\", voegwoord \"of\", bezittelijk werkwoord \"hebben\",".
-#C++#Toon " de verleden tijd \"waren\" en \"hadden\".".
-#Java#Toon " bepaald lidwoord “de/het”, voegwoord “of”, bezittelijk werkwoord “hebben”,".
-#Java#Toon " en werkwoorden in de verleden tijd “waren” en “hadden”.".
+Toon " Thinknowlogy is 's werelds meest geavanceerde redeneersysteem. Door de".
+Toon " implementatie van Natuurwetten van Intelligentie, die ingebed zijn in grammatica,".
+Toon " heeft Thinknowlogy redeneerresultaten die wetenschappers nog niet beschreven hebben:".
+Toon " * Ondanks diepgaand onderzoek, heeft de evolutietheorie nog steeds geen bevredigende verklaring".
+Toon " gegeven voor het ontstaan van intelligentie, taal en natuurwetten. Laat staan, hoe ze verwant zijn;".
+Toon " * Volgens het bijbelse wereldbeeld heeft God natuurwetten gecreëerd, als het fundament van zijn".
+Toon " schepping. Gebaseerd op Natuurwetten van Intelligentie, die ingebed zijn in grammatica, implementeert".
+#C++#Toon " alleen Thinknowlogy de intelligente functie van woorden als bepaald lidwoord \"de/het\", voegwoord \"of\",".
+#C++#Toon " bezittelijk werkwoord \"hebben\", de verleden tijd \"waren\" en \"hadden\".".
+#Java#Toon " alleen Thinknowlogy de intelligente functie van woorden als bepaald lidwoord “de/het”, voegwoord “of”,".
+#Java#Toon " bezittelijk werkwoord “hebben”, en werkwoorden in de verleden tijd “waren” en “hadden”.".
 Toon "------------------------------------------------------------------------------".
 Toon " De intelligente functie van deze woorden wordt aangetoond door:".
 Toon " * Programmeren in Gecontroleerde natuurlijke taal;".
@@ -19,11 +17,11 @@ Toon " * Redeneren in Gecontroleerde natuurlijke taal:".
 Toon "   - het trekken van conclusies (geavanceerder dan wetenschappelijke oplossingen),".
 Toon "   - het doen van aannames (met zelfregulerend onzekerheidsniveau),".
 Toon "   - het stellen van vragen (over hiaten in de kennis),".
-Toon "   - het detecteren van conflicten en enkele gevallen van semantische ambiguïteit,".
+Toon "   - het detecteren van bevestigingen, conflicten en enkele gevallen van semantische ambiguïteit,".
 Toon "   - het tonen van verantwoordingsrapportages voor de zelf-gegenereerde kennis;".
 Toon " * Meertaligheid, wat bewijst: Talen hebben een gemeenschappelijke en logische oorsprong.".
 Toon "------------------------------------------------------------------------------".
-Toon " Ik daag iedereen uit om dit systeem te verslaan: http://mafait.org/challenge/".
+Toon " Ik daag iedereen uit om dit redeneersysteem te overtreffen: http://mafait.org/challenge/".
 Toon "------------------------------------------------------------------------------".
 #C++#Toon " Help.\t\t\t\t\t\t\t* Toon help info".
 #C++#Toon " \~{taalnaam}\t\t\t\t\t\t* Wijzig taal".

@@ -50,6 +50,5 @@
 < Cruz no es una mujer.
 < Cruz es masculino.
 < 
-! 
-! No se acepta esta pregunta, porque está en conflicto consigo misma.
-! 
+< No, Cruz no es una mujer.
+< 

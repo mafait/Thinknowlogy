@@ -206,8 +206,6 @@
 <	- Ana es posiblemente madre de Pablo.
 <	- Juan es padre de Pablo, José y Luisa.
 * 	y:
-<	- Pablo tiene un padre, llamado Juan.
-* 	y:
 <	- Pablo es hijo de Juan y Ana.
 <	- Cada familia tiene padres y hijos.
 < Pablo tiene posiblemente una madre, llamada Ana. Porque:

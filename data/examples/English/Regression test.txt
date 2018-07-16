@@ -270,6 +270,8 @@ Read the test file "English/reasoning/family/My conclusions that are confirmed (
 Read the test file "English/reasoning/family/My conclusions that are confirmed (Joe has 2 parents)".
 Read the test file "English/reasoning/family/My conclusions that are confirmed (with relation)".
 Read the test file "English/reasoning/family/My conclusions that are confirmed (without relation)".
+Read the test file "English/reasoning/family/Paul - Anna - Joe - Laura - Joe - John".
+Read the test file "English/reasoning/family/Paul - Anna - Joe - Laura - John".
 Read the test file "English/reasoning/family/Paul - Joe - Laura - John and Anna (parents)".
 Read the test file "English/reasoning/family/Paul - Joe - Laura - John and Anna (son - daughter)".
 Read the test file "English/reasoning/family/Paul - John and Anna - Joe - Laura".

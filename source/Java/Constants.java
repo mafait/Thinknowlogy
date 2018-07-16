@@ -1,6 +1,6 @@
 ﻿/*	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,17 +24,17 @@ class Constants
 	{
 	// Version constants
 	protected static final String PRODUCT_NAME =												"Thinknowlogy";
-	protected static final String VERSION_NAME =												"2018r1 (ShangDi 上帝)";
+	protected static final String VERSION_NAME =												"2018r2 (Natural Intelligence)";
 
 	// Console constants
-	protected static final short CONSOLE_SLEEP_TIME =											10;		// in milliseconds
+	protected static final short CONSOLE_SLEEP_TIME =											10;		// milliseconds
 
-	protected static final short CONSOLE_BORDER_SIZE =											2;		// in pixels
-	protected static final short CONSOLE_BUTTON_PANE_HEIGHT =									30;		// in pixels
-	protected static final short CONSOLE_ERROR_PANE_HEIGHT =									400;	// in pixels
-	protected static final short CONSOLE_ERROR_PANE_WIDTH =										600;	// in pixels
-	protected static final short CONSOLE_MAXIMUM_FRAME_WIDTH_AT_STARTUP =						1280;	// in pixels
-	protected static final short CONSOLE_TOP_BOTTOM_SPACE =										75;		// in pixels (space between top of screen and top of GUI and between bottom of GUI and bottom of screen)
+	protected static final short CONSOLE_BORDER_SIZE =											2;		// pixels
+	protected static final short CONSOLE_BUTTON_PANE_HEIGHT =									30;		// pixels
+	protected static final short CONSOLE_ERROR_PANE_HEIGHT =									400;	// pixels
+	protected static final short CONSOLE_ERROR_PANE_WIDTH =										600;	// pixels
+	protected static final short CONSOLE_MAXIMUM_FRAME_WIDTH_AT_STARTUP =						1280;	// pixels
+	protected static final short CONSOLE_TOP_BOTTOM_SPACE =										75;		// pixels (space between top of screen and top of GUI and between bottom of GUI and bottom of screen)
 	protected static final short CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS =						50;
 
 	protected static final short CONSOLE_SUBMENU_INIT =											0;
@@ -842,12 +842,11 @@ class Constants
 	protected static final short INTERFACE_IMPERATIVE_WARNING_WORD_ALREADY_SOLVED_END =										1219;
 
 	// Listing (conflicts)
-	protected static final short INTERFACE_LISTING_SENTENCE_IN_CONFLICT_WITH_ITSELF =										1300;
-	protected static final short INTERFACE_LISTING_QUESTION_IN_CONFLICT_WITH_ITSELF =										1301;
-	protected static final short INTERFACE_LISTING_CONFLICT =																1302;
-	protected static final short INTERFACE_LISTING_SENTENCE_DOESNT_LEAVE_ANY_OPTION_OPEN =									1303;
-	protected static final short INTERFACE_LISTING_SENTENCE_DEFINITION_SPECIFICATION_IS_ALREADY_ASSIGNED =					1304;
-	protected static final short INTERFACE_LISTING_SENTENCE_ASSIGNMENT_IN_CONFLICT_WITH_DEFINITION_SPECIFICATION =			1305;
+	protected static final short INTERFACE_LISTING_QUESTION_IN_CONFLICT_WITH_DEFINITION =									1300;
+	protected static final short INTERFACE_LISTING_SENTENCE_IN_CONFLICT_WITH_DEFINITION =									1301;
+	protected static final short INTERFACE_LISTING_SENTENCE_DOESNT_LEAVE_ANY_OPTION_OPEN =									1302;
+	protected static final short INTERFACE_LISTING_SENTENCE_DEFINITION_SPECIFICATION_IS_ALREADY_ASSIGNED =					1303;
+	protected static final short INTERFACE_LISTING_SENTENCE_ASSIGNMENT_IN_CONFLICT_WITH_DEFINITION_SPECIFICATION =			1304;
 
 	// Listing (current information)
 	protected static final short INTERFACE_LISTING_YOUR_INFORMATION =														1310;
@@ -857,15 +856,16 @@ class Constants
 	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS =															1314;
 	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED =										1315;
 	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED =										1316;
-	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1317;
-	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1318;
-	protected static final short INTERFACE_LISTING_MY_QUESTIONS =															1319;
-	protected static final short INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS =													1320;
-	protected static final short INTERFACE_LISTING_MY_ANSWER =																1321;
-	protected static final short INTERFACE_LISTING_I_ONLY_KNOW =															1322;
-	protected static final short INTERFACE_LISTING_SPECIFICATIONS =															1323;
-	protected static final short INTERFACE_LISTING_RELATED_INFORMATION =													1324;
-	protected static final short INTERFACE_LISTING_RELATED_QUESTIONS =														1325;
+	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_UPDATED =										1317;
+	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1318;
+	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1319;
+	protected static final short INTERFACE_LISTING_MY_QUESTIONS =															1320;
+	protected static final short INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS =													1321;
+	protected static final short INTERFACE_LISTING_MY_ANSWER =																1322;
+	protected static final short INTERFACE_LISTING_I_ONLY_KNOW =															1323;
+	protected static final short INTERFACE_LISTING_SPECIFICATIONS =															1324;
+	protected static final short INTERFACE_LISTING_RELATED_INFORMATION =													1325;
+	protected static final short INTERFACE_LISTING_RELATED_QUESTIONS =														1326;
 
 	// Listing (old information)
 	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION_BUT_NOT_ITS_RELATION =			1330;

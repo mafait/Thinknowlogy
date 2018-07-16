@@ -46,10 +46,6 @@
     <X> Condities:		11.
     <Y> Acties:			15.
     <Z> Alternatieven:		0.
- * Inactieve items:	       0.
- * Gearchiveerde items:	       0.
- * Vervangen items:	       0.
- * Verwijderde items:	       0.
 ------------------------------------------------------------------------------
  Items in woorden:	8186.
 ------------------------------------------------------------------------------
@@ -68,7 +64,6 @@
  * Inactieve items:	       3.
  * Gearchiveerde items:	       33.
  * Vervangen items:	       7.
- * Verwijderde items:	       0.
 ------------------------------------------------------------------------------
 < 
 < Specificaties:
@@ -107,7 +102,6 @@
  * Inactieve woordtype items:			0.
  * Gearchiveerde woordtype items:		0.
  * Vervangen woordtype items:		0.
- * Verwijderde woordtype items:		0.
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
  De beschikbare opvraag-opdrachten zijn:			Voorbeelden:
@@ -153,9 +147,9 @@
  In bestanden markeert '~' het einde van de opvraag-opdracht		...~#<W>~...
 ------------------------------------------------------------------------------
  Copyright (C) 2009-2018, Menno Mafait
- Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details type "Toon
- de garantie.". Dit is vrije software en het is u toegestaan deze te verspreiden
- onder bepaalde voorwaarden; type "Toon de GPLv2-licentie." voor meer details.
+ Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details klik <Help.> en
+ <Toon de garantie.>. Dit is vrije software en het is u toegestaan deze te verspreiden
+ onder bepaalde voorwaarden; klik <Help.> en <Toon de GPLv2-licentie.> voor meer details.
 English disclaimer
 This is an unofficial translation of the GNU General
 Public License into Dutch. It was not published by the Free Software

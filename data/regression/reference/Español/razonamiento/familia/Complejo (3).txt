@@ -114,10 +114,6 @@
 <	- Hijos son parte de cada familia.
 < José tiene probablemente una madre, llamada Ana. Porque:
 <	- Ana es probablemente madre de José.
-* 	y:
-<	- José tiene 2 padres, llamados Juan y Ana.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
 * 
 * Mis preguntas:
 < ¿Es José una niña, una mujer, un niño o un hombre? Porque:
@@ -221,9 +217,6 @@
 * 
 * Mis suposiciones que se confirman:
 < Ana es probablemente madre de José.
-* 
-* Mis suposiciones que no son ocultos más:
-< Ana tiene probablemente 3 hijos, llamados José, Pablo y Luisa.
 * 
 * Mis suposiciones que se ajustan:
 < Ana no es probablemente un hombre.

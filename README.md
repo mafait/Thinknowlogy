@@ -10,7 +10,7 @@ How to start:
 • The example files can be found in the "data/examples" subfolder.
 
 ----------------------------------------------------------------------------
-Thinknowlogy2018r1.jar:
+Thinknowlogy2018r2.jar:
 ----------------------------------------------------------------------------
 • This is a Java application. It can be started by double-clicking on the file;
 • The GUI (Graphical User Interface) has handy demo buttons to guide you;

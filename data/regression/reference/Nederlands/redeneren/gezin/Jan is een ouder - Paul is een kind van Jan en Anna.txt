@@ -134,10 +134,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is een kind van Jan en Anna.
 * 	en:
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna heeft een kind, genaamd Paul.
-* 	en:
-<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 < Anna is waarschijnlijk deel van een gezin. Omdat:
 <	- Anna is waarschijnlijk een ouder van Paul.
 <	- Ouders zijn deel van ieder gezin.
@@ -223,10 +223,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Paul, Johan en Laura.
 * 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Johan heeft een ouder, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Johan is waarschijnlijk deel van een gezin. Omdat:
 <	- Johan is waarschijnlijk een kind van Jan.
 <	- Kinderen zijn deel van ieder gezin.
@@ -252,10 +252,10 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Paul, Johan en Laura.
 * 	en:
+<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Laura heeft een ouder, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Laura is waarschijnlijk deel van een gezin. Omdat:
 <	- Laura is waarschijnlijk een kind van Jan.
 <	- Kinderen zijn deel van ieder gezin.

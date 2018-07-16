@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -248,7 +248,7 @@ class AdminImperative
 							else
 								{
 								if( relationWordItem->inactivateActiveAssignment( virtualListAssignmentItem_ ) != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to dectivate the head of a virtual list" );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to inactivate the head of a virtual list" );
 								}
 							}
 						else
@@ -262,7 +262,7 @@ class AdminImperative
 								else
 									{
 									if( relationWordItem->inactivateActiveAssignment( virtualListAssignmentItem_ ) != RESULT_OK )
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to dectivate the tail of a virtual list" );
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to inactivate the tail of a virtual list" );
 									}
 								}
 							}
@@ -272,19 +272,19 @@ class AdminImperative
 					case WORD_PARAMETER_PREPOSITION_FROM:
 						if( !hasFoundHeadOrTail )
 							{
-							if( ( virtualListAssignmentItem_ = relationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, specificationWordItem ) ) == NULL )
+							if( ( virtualListAssignmentItem_ = relationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, specificationWordItem ) ) == NULL )
 								hasFoundVirtualListAction = true;
 							else
 								{
 								if( relationWordItem->inactivateActiveAssignment( virtualListAssignmentItem_ ) != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to dectivate the word in a virtual list" );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to inactivate the word in a virtual list" );
 								}
 							}
 
 						break;
 
 					case WORD_PARAMETER_PREPOSITION_TO:
-					// Typically for Chinese
+					// Typical for Chinese
 					case WORD_PARAMETER_PREPOSITION_CHINESE_VERB_ADD:
 					case WORD_PARAMETER_PREPOSITION_CHINESE_VERB_MOVE:
 					case WORD_PARAMETER_PREPOSITION_CHINESE_VERB_REMOVE:
@@ -311,11 +311,11 @@ class AdminImperative
 				break;
 
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REMOVE:
-				localVirtualListAssignmentItem = ( specificationWordItem->isNounHead() ? relationWordItem->lastActiveNonQuestionAssignmentItem() : ( specificationWordItem->isNounTail() ? relationWordItem->firstNonQuestionActiveAssignmentItem() : relationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, specificationWordItem ) ) );
+				localVirtualListAssignmentItem = ( specificationWordItem->isNounHead() ? relationWordItem->lastActiveNonQuestionAssignmentItem() : ( specificationWordItem->isNounTail() ? relationWordItem->firstNonQuestionActiveAssignmentItem() : relationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, specificationWordItem ) ) );
 
 				if( localVirtualListAssignmentItem != NULL &&
 				relationWordItem->inactivateActiveAssignment( localVirtualListAssignmentItem ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to dectivate the head of a virtual list" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to inactivate the head of a virtual list" );
 
 				break;
 
@@ -373,6 +373,7 @@ class AdminImperative
 	signed char solveWord( unsigned short solveLevel, unsigned int currentSolveProgressLevel, unsigned int endSolveProgressLevel, WordItem *solveWordItem, SelectionItem *actionSelectionItem )
 		{
 		bool isInverted = false;
+		unsigned short currentAssignmentLevel = globalVariables_->currentAssignmentLevel;
 		unsigned int nPossibilities;
 		unsigned int possibilityNumber = 0;
 		unsigned int solveProgressStep;
@@ -389,34 +390,34 @@ class AdminImperative
 		// Word has no active assignments
 		if( solveWordItem->firstNonQuestionActiveAssignmentItem() == NULL )
 			{
-			if( globalVariables_->currentAssignmentLevel > solveLevel )
-				return adminItem_->startError( functionNameString, moduleNameString_, "The given assignment level of ", globalVariables_->currentAssignmentLevel, " is higher than the given solve level ", solveLevel );
+			if( currentAssignmentLevel > solveLevel )
+				return adminItem_->startError( functionNameString, moduleNameString_, "The given assignment level of ", currentAssignmentLevel, " is higher than the given solve level ", solveLevel );
 
 			if( adminItem_->assignSpecification( predefinedNounSolveMethodWordItem_, predefinedAdjectiveBusyWordItem_ ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level ", globalVariables_->currentAssignmentLevel );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the busy flag to the solve method at assignment level ", currentAssignmentLevel );
 
 			// There already is a scores list at the start
 			if( adminItem_->hasScoreList() &&
-			globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
+			currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
 			adminItem_->deleteScores() != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the admin score list" );
 
-			isInverted = ( predefinedNounSolveMethodWordItem_->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, predefinedAdjectiveInvertedWordItem_ ) != NULL );
+			isInverted = ( predefinedNounSolveMethodWordItem_->firstNonQuestionAssignmentItem( true, false, false, false, false, predefinedAdjectiveInvertedWordItem_ ) != NULL );
 
 			// Get solve strategy parameter
 			if( ( shortResult = getAssignmentWordParameter( predefinedNounSolveStrategyWordItem_ ) ).result != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", globalVariables_->currentAssignmentLevel );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", currentAssignmentLevel );
 
-			if( ( boolResult = findSelectionToSolveWord( true, ( globalVariables_->currentAssignmentLevel == solveLevel ), isInverted, ( globalVariables_->currentAssignmentLevel + 1 < solveLevel ), shortResult.shortValue, solveWordItem ) ).result != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a selection to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", globalVariables_->currentAssignmentLevel );
+			if( ( boolResult = findSelectionToSolveWord( true, ( currentAssignmentLevel == solveLevel ), isInverted, ( currentAssignmentLevel + 1 < solveLevel ), shortResult.shortValue, solveWordItem ) ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a selection to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", currentAssignmentLevel );
 
 			// Has found possibility to solve word
 			if( boolResult.booleanValue )
 				{
-				if( globalVariables_->currentAssignmentLevel < solveLevel )
+				if( currentAssignmentLevel < solveLevel )
 					{
 					if( ( nPossibilities = adminItem_->nPossibilities() ) <= 0 )
-						return adminItem_->startError( functionNameString, moduleNameString_, "There are no possibilities at assignment level ", globalVariables_->currentAssignmentLevel );
+						return adminItem_->startError( functionNameString, moduleNameString_, "There are no possibilities at assignment level ", currentAssignmentLevel );
 
 					solveProgressStep = ( nPossibilities == 0 ? MAX_PROGRESS : ( ( endSolveProgressLevel - currentSolveProgressLevel ) / nPossibilities ) );
 
@@ -424,7 +425,7 @@ class AdminImperative
 						inputOutput_->startProgress( INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START, solveLevel, INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END, currentSolveProgressLevel, MAX_PROGRESS );
 
 					if( ( possibilityScoreItem = adminItem_->firstPossibility() ) == NULL )
-						return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find any possibility item at assignment level ", globalVariables_->currentAssignmentLevel );
+						return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find any possibility item at assignment level ", currentAssignmentLevel );
 
 					do	{
 						// Copy solve action of NO_ASSIGNMENT_LEVEL to higher levels
@@ -457,7 +458,7 @@ class AdminImperative
 						else
 							{
 							// There is a winning or losing score
-							isInverted = ( predefinedNounSolveMethodWordItem_->firstNonQuestionAssignmentItem( true, false, false, false, false, NO_CONTEXT_NR, predefinedAdjectiveInvertedWordItem_ ) != NULL );
+							isInverted = ( predefinedNounSolveMethodWordItem_->firstNonQuestionAssignmentItem( true, false, false, false, false, predefinedAdjectiveInvertedWordItem_ ) != NULL );
 
 							if( !isInverted &&
 							globalVariables_->currentAssignmentLevel < solveLevel )
@@ -535,7 +536,7 @@ class AdminImperative
 			else
 				{
 				// Display warning
-				if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
+				if( currentAssignmentLevel == NO_ASSIGNMENT_LEVEL &&
 				inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_START, solveWordItem->anyWordTypeString(), INTERFACE_IMPERATIVE_WARNING_I_COULD_NOT_FIND_ANY_SELECTION_TO_SOLVE_INFO_END ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
 				}
@@ -1246,7 +1247,7 @@ class AdminImperative
 		if( ( currentSpecificationItem = specificationWordItem->firstExclusiveSpecificationItem() ) != NULL )
 			{
 			do	{
-				foundAssignmentItem = specificationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, isPossessive, currentSpecificationItem->relationContextNr(), currentSpecificationItem->specificationWordItem() );
+				foundAssignmentItem = specificationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, isPossessive, currentSpecificationItem->specificationWordItem() );
 				isSatisfiedScore = ( isNegative == ( foundAssignmentItem == NULL || foundAssignmentItem->isNegative() ) );
 
 				if( ( conditionPartResult = findSatisfyingScores( isPossessive, isSatisfiedScore, currentSpecificationItem->relationContextNr(), generalizationWordItem, currentSpecificationItem->specificationWordItem() ) ).result != RESULT_OK )
@@ -1807,8 +1808,7 @@ class AdminImperative
 						!isWaitingForExecution )
 							{
 							if( !isNewStart &&
-							!isConditionSatisfied &&
-							executionLevel == selectionLevel )
+							!isConditionSatisfied )
 								// Skip checking of this condition part and wait for a new start to come on this level
 								isWaitingForNewStart = true;
 							else

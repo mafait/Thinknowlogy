@@ -70,11 +70,11 @@
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 * 	et:
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
 <	- Olivier a un fils, appelé Pascal.
-* 	et:
-<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
 < Olivier est probablement partie d'une famille. En raison:
 <	- Olivier est probablement un parent de Pascal.
 <	- Parents sont partie de chaque famille.
@@ -106,11 +106,11 @@
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
-<	- Amélie a probablement un enfant, appelé Pascal.
-<	- Olivier a probablement un enfant, appelé Pascal.
-* 	et:
 <	- Chaque enfant est un fils ou une fille.
 <	- Pascal est un fils de Olivier et Amélie.
+* 	et:
+<	- Olivier a probablement un enfant, appelé Pascal.
+<	- Amélie a probablement un enfant, appelé Pascal.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal.
@@ -191,11 +191,11 @@
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 * 	et:
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
 <	- Olivier a un fils, appelé Pascal.
-* 	et:
-<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
 < Olivier est probablement partie d'une famille. En raison:
 <	- Olivier est probablement un parent de Pascal.
 <	- Parents sont partie de chaque famille.
@@ -209,11 +209,11 @@
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
-<	- Amélie a probablement un enfant, appelé Pascal.
-<	- Olivier a probablement un enfant, appelé Pascal.
-* 	et:
 <	- Chaque enfant est un fils ou une fille.
 <	- Pascal est un fils de Olivier et Amélie.
+* 	et:
+<	- Olivier a probablement un enfant, appelé Pascal.
+<	- Amélie a probablement un enfant, appelé Pascal.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal.

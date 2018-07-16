@@ -29,5 +29,4 @@ Toon "   (@24) Selectie woorden:				~+#<w>@24~.".
 Toon " * Inactieve woordtype items:			~=#<w>~.".
 Toon " * Gearchiveerde woordtype items:		~$#<w>~.".
 Toon " * Vervangen woordtype items:		~%#<w>~.".
-Toon " * Verwijderde woordtype items:		~&#<w>~.".
 Toon "------------------------------------------------------------------------------".

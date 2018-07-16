@@ -64,8 +64,8 @@
 < Ana tiene una hija, llamada Luisa.
 * 
 * Mis suposiciones:
-< Luisa tiene posiblemente una madre, llamada Ana.
 < Luisa tiene posiblemente 2 padres, llamados Juan y Ana.
+< Luisa tiene posiblemente una madre, llamada Ana.
 < Ana es posiblemente madre de Luisa.
 < Ana es posiblemente parte de una familia.
 < Ana es posiblemente una mujer.
@@ -304,13 +304,11 @@
 * 
 * Mis conclusiones:
 < Luisa tiene 2 padres, llamados Juan y Ana. Porque:
-<	- Juan es el padre de Luisa, Pablo y José.
-<	- Ana es la madre de Luisa, Pablo y José.
-* 	y:
-<	- Luisa tiene un padre, llamado Juan.
-* 	y:
 <	- Ana tiene una hija, llamada Luisa.
 <	- Cada familia tiene padres y hijos.
+* 	y:
+<	- Ana es la madre de Luisa, Pablo y José.
+<	- Juan es el padre de Luisa, Pablo y José.
 < Luisa tiene una madre, llamada Ana. Porque:
 <	- Ana es la madre de Luisa, Pablo y José.
 < Luisa es parte de una familia. Porque:

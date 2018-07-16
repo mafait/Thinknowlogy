@@ -153,14 +153,14 @@
 < Juan no es una mujer.
 < Juan es masculino.
 < Juan no es una madre.
-< Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene un padre, llamado Juan.
+< Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene una madre, llamada Ana.
-< José tiene 2 padres, llamados Juan y Ana.
 < José tiene un padre, llamado Juan.
+< José tiene 2 padres, llamados Juan y Ana.
 < José tiene una madre, llamada Ana.
-< Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
+< Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene una madre, llamada Ana.
 < Ana es parte de una familia.
 < Ana es una mujer.
@@ -277,11 +277,11 @@
 < 
 * 
 * Mis conclusiones:
+< Pablo tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
 < Pablo tiene 2 padres, llamados Juan y Ana. Porque:
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Ana es la madre de Pablo, José y Luisa.
-< Pablo tiene un padre, llamado Juan. Porque:
-<	- Juan es el padre de Pablo, José y Luisa.
 < Pablo tiene una madre, llamada Ana. Porque:
 <	- Ana es la madre de Pablo, José y Luisa.
 < Pablo es parte de una familia. Porque:
@@ -311,11 +311,11 @@
 < 
 * 
 * Mis conclusiones:
+< José tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
 < José tiene 2 padres, llamados Juan y Ana. Porque:
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Ana es la madre de Pablo, José y Luisa.
-< José tiene un padre, llamado Juan. Porque:
-<	- Juan es el padre de Pablo, José y Luisa.
 < José tiene una madre, llamada Ana. Porque:
 <	- Ana es la madre de Pablo, José y Luisa.
 < José es parte de una familia. Porque:
@@ -345,11 +345,11 @@
 < 
 * 
 * Mis conclusiones:
+< Luisa tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
 < Luisa tiene 2 padres, llamados Juan y Ana. Porque:
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Ana es la madre de Pablo, José y Luisa.
-< Luisa tiene un padre, llamado Juan. Porque:
-<	- Juan es el padre de Pablo, José y Luisa.
 < Luisa tiene una madre, llamada Ana. Porque:
 <	- Ana es la madre de Pablo, José y Luisa.
 < Luisa es parte de una familia. Porque:

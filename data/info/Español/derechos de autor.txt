@@ -1,4 +1,7 @@
 ﻿Mostrar " Copyright (C) 2009-2018, Menno Mafait".
-Mostrar " Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles".
-Mostrar " escriba \"Mostrar la garantía.\". Este software es libre, y se le permite redistribuirlo".
-Mostrar " bajo ciertas condiciones; Escriba \"Mostrar la licencia-GPLv2.\" para más detalles.".
+#C++#Mostrar " Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles".
+#C++#Mostrar " escriba \"Mostrar la garantía.\". Este software es libre, y se le permite redistribuirlo".
+#C++#Mostrar " bajo ciertas condiciones; Escriba \"Mostrar la licencia-GPLv2.\" para más detalles.".
+#Java#Mostrar " Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles haga clic".
+#Java#Mostrar " en <Ayudar.> y <Mostrar la garantía.>. Este software es libre, y se le permite redistribuirlo bajo".
+#Java#Mostrar " ciertas condiciones; Haga clic en <Ayudar.> y <Mostrar la licencia-GPLv2.> para más detalles.".

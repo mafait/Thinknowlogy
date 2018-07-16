@@ -1,7 +1,7 @@
 ﻿/*	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -101,7 +101,7 @@ class WriteList : private List
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createWriteItem";
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, new WriteItem( isSkipped, grammarLevel, startOfChoiceOrOptionGrammarItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an active write item" );
+			return addError( functionNameString, "I failed to add a write item" );
 
 		return RESULT_OK;
 		}

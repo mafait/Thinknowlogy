@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
-#	Purpose:	To define the interface texts for the Dutch language
-#	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+# Purpose: To define the interface texts for the Dutch language
+# Version: Thinknowlogy 2018r2 (Natural Intelligence)
 #----------------------------------------------------------------------------
-#	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-#	corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
 #----------------------------------------------------------------------------
 
 # Java console (bovenste menu)
@@ -212,12 +212,11 @@
 :1219			"\" is al opgelost."
 
 # Opsomming (conflicten)
-:1300			"\nDeze zin is niet geaccepteerd, omdat het in conflict is met zichzelf."
-:1301			"\nDeze vraag is niet beantwoord, omdat het in conflict is met zichzelf."
-:1302			"\nDeze zin is niet geaccepteerd, omdat het in conflict is met:"
-:1303			"\nDeze zin is niet geaccepteerd, omdat het geen opties open laat:"
-:1304			"\nDeze definitie-specificatie is niet geaccepteerd, omdat het al is toegewezen:"
-:1305			"\nDeze toewijzing is niet geaccepteerd, omdat het in conflict is met definitie-specificatie:"
+:1300			"\nNee, want:"
+:1301			"\nDeze zin is niet geaccepteerd, omdat het in conflict is met:"
+:1302			"\nDeze zin is niet geaccepteerd, omdat het geen opties open laat:"
+:1303			"\nDeze definitie-specificatie is niet geaccepteerd, omdat het al is toegewezen:"
+:1304			"\nDeze toewijzing is niet geaccepteerd, omdat het in conflict is met definitie-specificatie:"
 
 # Opsomming (actuele informatie)
 :1310			"\nUw informatie:"
@@ -227,15 +226,16 @@
 :1314			"\nMijn veronderstellingen:"
 :1315			"\nMijn veronderstellingen die aangepast zijn:"
 :1316			"\nMijn veronderstellingen die geconcludeerd zijn:"
-#:1317			"\nMijn conclusies die niet meer verborgen zijn:"
-#:1318			"\nMijn veronderstellingen die niet meer verborgen zijn:"
-:1319			"\nMijn vragen:"
-:1320			"\nMijn aangepaste vragen:"
-:1321			"\nMijn antwoord:"
-:1322			"\nIk weet alleen:"
-:1323			"\nSpecificaties:"
-:1324			"\nGerelateerde informatie:"
-:1325			"\nGerelateerde vragen:"
+:1317			"\nMijn conclusies die bijgewerkt zijn:"
+#:1318			"\nMijn conclusies die niet meer verborgen zijn:"
+#:1319			"\nMijn veronderstellingen die niet meer verborgen zijn:"
+:1320			"\nMijn vragen:"
+:1321			"\nMijn aangepaste vragen:"
+:1322			"\nMijn antwoord:"
+:1323			"\nIk weet alleen:"
+:1324			"\nSpecificaties:"
+:1325			"\nGerelateerde informatie:"
+:1326			"\nGerelateerde vragen:"
 
 # Opsomming (oude informatie)
 :1330			"\nU hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere veronderstellingen:"

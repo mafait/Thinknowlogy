@@ -81,10 +81,10 @@
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal.
 < Olivier est probablement un parent de Pascal. En raison:
-<	- Pascal a probablement un parent, appelé Olivier.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant de Olivier.
+* 	et:
+<	- Pascal a probablement un parent, appelé Olivier.
 * 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Olivier est le père de Pascal.
@@ -129,12 +129,12 @@
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal et Julien.
 < Olivier est probablement un parent de Pascal et Julien. En raison:
-<	- Julien a probablement un parent, appelé Olivier.
-<	- Pascal a probablement un parent, appelé Olivier.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Julien est probablement un enfant de Olivier.
 <	- Pascal est probablement un enfant de Olivier.
+* 	et:
+<	- Julien a probablement un parent, appelé Olivier.
+<	- Pascal a probablement un parent, appelé Olivier.
 * 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Olivier est le père de Pascal et Julien.
@@ -200,14 +200,14 @@
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
 < Olivier est probablement un parent de Pascal, Julien et Lorraine. En raison:
-<	- Lorraine a probablement un parent, appelé Olivier.
-<	- Julien a probablement un parent, appelé Olivier.
-<	- Pascal a probablement un parent, appelé Olivier.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Lorraine est probablement un enfant de Olivier.
 <	- Julien est probablement un enfant de Olivier.
 <	- Pascal est probablement un enfant de Olivier.
+* 	et:
+<	- Lorraine a probablement un parent, appelé Olivier.
+<	- Julien a probablement un parent, appelé Olivier.
+<	- Pascal a probablement un parent, appelé Olivier.
 * 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Olivier est le père de Pascal, Julien et Lorraine.
@@ -291,16 +291,16 @@
 <	- Claudia est possible une fille de Olivier.
 <	- Lorraine est possible une fille de Olivier.
 < Olivier est probablement un parent de Pascal, Julien, Lorraine et Claudia. En raison:
-<	- Claudia a probablement un parent, appelé Olivier.
-<	- Lorraine a probablement un parent, appelé Olivier.
-<	- Julien a probablement un parent, appelé Olivier.
-<	- Pascal a probablement un parent, appelé Olivier.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Claudia est probablement un enfant de Olivier.
 <	- Lorraine est probablement un enfant de Olivier.
 <	- Julien est probablement un enfant de Olivier.
 <	- Pascal est probablement un enfant de Olivier.
+* 	et:
+<	- Claudia a probablement un parent, appelé Olivier.
+<	- Lorraine a probablement un parent, appelé Olivier.
+<	- Julien a probablement un parent, appelé Olivier.
+<	- Pascal a probablement un parent, appelé Olivier.
 * 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Olivier est le père de Pascal, Julien, Lorraine et Claudia.

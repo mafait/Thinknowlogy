@@ -1,7 +1,7 @@
 ﻿/*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -131,12 +131,12 @@ class SelectionList : private List
 		generalizationWordTypeNr >= NUMBER_OF_WORD_TYPES )
 			return startError( functionNameString, "The given generalization word type number is undefined or out of bounds" );
 
-		if( specificationWordTypeNr <= NO_WORD_TYPE_NR &&
+		if( specificationWordTypeNr <= NO_WORD_TYPE_NR ||
 		specificationWordTypeNr >= NUMBER_OF_WORD_TYPES )
 			return startError( functionNameString, "The given specification word type number is undefined or out of bounds" );
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an active selection item" );
+			return addError( functionNameString, "I failed to add a selection item" );
 
 		return RESULT_OK;
 		}

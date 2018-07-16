@@ -31,14 +31,14 @@
 < Juan no es una mujer.
 < Juan es masculino.
 < Juan no es una madre.
-< Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene un padre, llamado Juan.
+< Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene una madre, llamada Ana.
-< José tiene 2 padres, llamados Juan y Ana.
 < José tiene un padre, llamado Juan.
+< José tiene 2 padres, llamados Juan y Ana.
 < José tiene una madre, llamada Ana.
-< Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
+< Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene una madre, llamada Ana.
 < Ana es parte de una familia.
 < Ana es una mujer.
@@ -51,8 +51,8 @@
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
 < Pablo es posiblemente parte de una familia.
-< José es posiblemente una persona.
 < José es posiblemente parte de una familia.
+< José es posiblemente una persona.
 < Luisa es posiblemente hija de Juan y Ana.
 < Luisa es posiblemente parte de una familia.
 < Luisa es puede-ser una persona.
@@ -265,17 +265,6 @@
 <	- Juan es el padre de Pablo, José y Luisa.
 * 
 * Mis suposiciones:
-< Pablo es probablemente hijo de Juan y Ana. Porque:
-<	- Juan es el padre de Pablo, José y Luisa.
-<	- Ana es la madre de Pablo, José y Luisa.
-<	- Cada familia tiene padres y hijos.
-* 	y:
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-* 	y:
-<	- Pablo tiene un padre, llamado Juan.
-<	- Pablo tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
 < Pablo es posiblemente una persona. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Cada familia tiene padres y hijos.
@@ -288,6 +277,17 @@
 <	- Pablo tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
+< Pablo es probablemente hijo de Juan y Ana. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
+<	- Ana es la madre de Pablo, José y Luisa.
+<	- Cada familia tiene padres y hijos.
+* 	y:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada familia tiene padres y hijos.
+* 	y:
+<	- Pablo tiene un padre, llamado Juan.
+<	- Pablo tiene una madre, llamada Ana.
+<	- Cada familia tiene padres y hijos.
 < Pablo es probablemente un hijo. Porque:
 <	- Cada hijo es un niño o un hombre.
 <	- Pablo es un niño.
@@ -317,11 +317,11 @@
 < José es masculino. Porque:
 <	- José es un hombre.
 <	- Cada hombre es masculino.
+< José tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
 < José tiene 2 padres, llamados Juan y Ana. Porque:
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Ana es la madre de Pablo, José y Luisa.
-< José tiene un padre, llamado Juan. Porque:
-<	- Juan es el padre de Pablo, José y Luisa.
 < José tiene una madre, llamada Ana. Porque:
 <	- Ana es la madre de Pablo, José y Luisa.
 * 
@@ -332,10 +332,6 @@
 * 	y:
 <	- Cada persona es un hombre o una mujer.
 <	- José es un hombre.
-* 	y:
-<	- José tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
 * 	y:
 <	- José tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
@@ -353,11 +349,11 @@
 < Luisa no es una mujer, un niño y un hombre. Porque:
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 <	- Luisa es una niña.
+< Luisa tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Pablo, José y Luisa.
 < Luisa tiene 2 padres, llamados Juan y Ana. Porque:
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Ana es la madre de Pablo, José y Luisa.
-< Luisa tiene un padre, llamado Juan. Porque:
-<	- Juan es el padre de Pablo, José y Luisa.
 < Luisa tiene una madre, llamada Ana. Porque:
 <	- Ana es la madre de Pablo, José y Luisa.
 * 
@@ -412,7 +408,7 @@
 < Luisa es femenina. Porque:
 <	- Luisa es una niña.
 <	- Cada niña es femenina.
-< Luisa no es un niño, un hombre y una mujer. Porque:
+< Luisa no es una mujer, un niño y un hombre. Porque:
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 <	- Luisa es una niña.
 < Luisa tiene un padre, llamado Juan. Porque:
@@ -465,7 +461,7 @@
 ! 
 ! No se acepta esta frase, porque está en conflicto con:
 < Luisa es una niña.
-< Luisa no es un niño, un hombre y una mujer.
+< Luisa no es una mujer, un niño y un hombre.
 < 
 * Sé.
 * 

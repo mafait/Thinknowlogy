@@ -27,5 +27,6 @@
 < Une fille est probablement une personne.
 < 
 ! 
-! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec lui-même.
-! 
+! Cette phrase n'est pas acceptée, parce qu'il est en conflit avec:
+< Chaque parent est un père ou une mère.
+< 

@@ -29,5 +29,4 @@ Display "   (@24) Selection words:			~+#<w>@24~.".
 Display " * Inactive word type items:		~=#<w>~.".
 Display " * Archived word type items:		~$#<w>~.".
 Display " * Replaced word type items:		~%#<w>~.".
-Display " * Deleted word type items:		~&#<w>~.".
 Display "------------------------------------------------------------------------------".

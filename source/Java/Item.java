@@ -1,6 +1,6 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -792,16 +792,6 @@ class Item
 		{
 		return ( statusChar_ == Constants.QUERY_REPLACED_CHAR ||
 				statusChar_ == Constants.QUERY_DELETED_CHAR );
-		}
-
-	protected boolean isMoreRecent( Item checkItem )
-		{
-		return ( checkItem != null &&
-
-				( creationSentenceNr_ > checkItem.creationSentenceNr_ ||
-
-				( creationSentenceNr_ == checkItem.creationSentenceNr_ &&
-				itemNr_ > checkItem.itemNr_ ) ) );
 		}
 
 	protected boolean wasActiveBefore()

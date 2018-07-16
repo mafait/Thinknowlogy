@@ -27,5 +27,6 @@
 < 女儿大概都是人。
 < 
 ! 
-! This sentence is not accepted, because it is in conflict with itself.
-! 
+! This sentence is not accepted, because it is in conflict with:
+< 每个父母都是父亲或母亲。
+< 

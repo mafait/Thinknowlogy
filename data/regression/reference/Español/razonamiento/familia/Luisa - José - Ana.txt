@@ -210,9 +210,6 @@
 * 	y:
 <	- Luisa es posiblemente hija de Juan y Ana.
 <	- José es hijo de Juan y Ana.
-* 	y:
-<	- Ana es madre de Luisa, José y Pablo.
-<	- Cada familia tiene padres y hijos.
 < Ana tiene posiblemente una hija, llamada Luisa. Porque:
 <	- Luisa es posiblemente hija de Juan y Ana.
 * 	y:
@@ -293,9 +290,8 @@
 < Luisa tiene una madre, llamada Ana. Porque:
 <	- Ana es madre de Luisa, José y Pablo.
 < Luisa tiene 2 padres, llamados Juan y Ana. Porque:
-<	- Luisa tiene un padre, llamado Juan.
-* 	y:
 <	- Ana es madre de Luisa, José y Pablo.
+<	- Juan es padre de Luisa.
 * 
 * Mis suposiciones:
 < Luisa es probablemente parte de una familia. Porque:

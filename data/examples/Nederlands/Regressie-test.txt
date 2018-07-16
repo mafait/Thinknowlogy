@@ -269,6 +269,8 @@ Lees het testbestand "Nederlands/redeneren/gezin/Mijn conclusies die bevestigd z
 Lees het testbestand "Nederlands/redeneren/gezin/Mijn conclusies die bevestigd zijn (Johan heeft 2 ouders)".
 Lees het testbestand "Nederlands/redeneren/gezin/Mijn conclusies die bevestigd zijn (met relatie)".
 Lees het testbestand "Nederlands/redeneren/gezin/Mijn conclusies die bevestigd zijn (zonder relatie)".
+Lees het testbestand "Nederlands/redeneren/gezin/Paul - Anna - Johan - Laura - Johan - Jan".
+Lees het testbestand "Nederlands/redeneren/gezin/Paul - Anna - Johan - Laura - Jan".
 Lees het testbestand "Nederlands/redeneren/gezin/Paul - Johan - Laura - Jan en Anna (ouders)".
 Lees het testbestand "Nederlands/redeneren/gezin/Paul - Johan - Laura - Jan en Anna (zoon - dochter)".
 Lees het testbestand "Nederlands/redeneren/gezin/Paul - Jan en Anna - Johan - Laura".

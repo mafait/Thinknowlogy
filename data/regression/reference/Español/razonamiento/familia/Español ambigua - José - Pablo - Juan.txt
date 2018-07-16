@@ -79,6 +79,7 @@
 < Juan es probablemente padre de José y Pablo.
 * 
 * Mis conclusiones:
+< Pablo tiene un padre, llamado Juan.
 < Luisa tiene un padre, llamado Juan.
 * 
 * Mis suposiciones:
@@ -128,7 +129,7 @@
 <	- Un padre es probablemente una persona.
 < Juan tiene probablemente 3 hijos, llamados José, Pablo y Luisa. Porque:
 <	- Luisa tiene un padre, llamado Juan.
-<	- Pablo tiene probablemente 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
 <	- José tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 * 	y:
@@ -186,6 +187,8 @@
 < 
 * 
 * Mis conclusiones:
+< Pablo tiene un padre, llamado Juan. Porque:
+<	- Juan es padre de José, Pablo y Luisa.
 < Pablo es parte de una familia. Porque:
 <	- Pablo es hijo de Juan y Ana.
 <	- Hijos son parte de cada familia.

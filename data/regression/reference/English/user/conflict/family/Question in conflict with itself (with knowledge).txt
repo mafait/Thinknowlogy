@@ -53,6 +53,5 @@
 < Addison is probably not a mother.
 < Addison is probably not a woman.
 < 
-! 
-! This question is not answered, because it is in conflict with itself.
-! 
+< No, Addison is probably not a woman.
+< 

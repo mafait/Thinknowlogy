@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -95,9 +95,7 @@ class JustificationItem : private Item
 	bool hasJustification( bool hasFeminineOrMasculineProperNounEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
 	bool hasOnlyExclusiveSpecificationSubstitutionAssumptionsWithoutDefinition();
 
-	bool hasNonPossessivePrimaryUserSpecification();
-	bool hasPrimaryAnsweredQuestion();
-	bool hasPrimaryQuestion();
+	bool hasNonPossessivePrimarySpecification();
 	bool hasPossessivePrimarySpecification();
 	bool hasPossessiveSecondarySpecification();
 	bool hasReplacedPrimarySpecification();
@@ -127,14 +125,13 @@ class JustificationItem : private Item
 
 	unsigned int nJustificationContextRelations( unsigned int relationContextNr, unsigned int nRelationWords );
 	unsigned int primarySpecificationCollectionNr();
+	unsigned int secondarySpecificationCollectionNr();
 
 	signed char attachJustification( JustificationItem *attachedJustificationItem, SpecificationItem *mySpecificationItem );
 
 	signed char changeAttachedJustification( JustificationItem *newAttachedJustificationItem );
 	signed char changePrimarySpecification( SpecificationItem *replacingSpecificationItem );
-	signed char changeAnotherPrimarySpecification( SpecificationItem *replacingSpecificationItem );
 	signed char changeSecondarySpecification( SpecificationItem *replacingSpecificationItem );
-	signed char changeAnotherSecondarySpecification( SpecificationItem *replacingSpecificationItem );
 
 	signed char checkForDeletedSpecifications();
 	signed char checkForReplacedOrDeletedSpecification();

@@ -1,7 +1,7 @@
 ﻿/*	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -90,9 +90,8 @@ class MultipleWordList : private List
 
 	// Protected functions
 
-	unsigned short matchingMultipleSingularNounWordParts( char *sentenceString )
+	unsigned short matchingMultipleWordParts( char *sentenceString )
 		{
-		unsigned short currentLanguageNr = globalVariables()->currentLanguageNr;
 		MultipleWordItem *searchMultipleWordItem = firstActiveMultipleWordItem();
 		WordItem *multipleWordItem;
 		char *multipleWordString;
@@ -101,16 +100,10 @@ class MultipleWordList : private List
 			{
 			while( searchMultipleWordItem != NULL )
 				{
-				if( searchMultipleWordItem->isSingularNoun() &&
-				searchMultipleWordItem->wordTypeLanguageNr() == currentLanguageNr &&
-				( multipleWordItem = searchMultipleWordItem->multipleWordItem() ) != NULL )
-					{
-					multipleWordString = multipleWordItem->singularNounString();
-
-					if( multipleWordString != NULL &&
-					strncmp( sentenceString, multipleWordString, strlen( multipleWordString ) ) == 0 )
-						return searchMultipleWordItem->nWordParts();
-					}
+				if( ( multipleWordItem = searchMultipleWordItem->multipleWordItem() ) != NULL &&
+				( multipleWordString = multipleWordItem->anyWordTypeString() ) != NULL &&
+				strncmp( sentenceString, multipleWordString, strlen( multipleWordString ) ) == 0 )
+					return searchMultipleWordItem->nWordParts();
 
 				searchMultipleWordItem = searchMultipleWordItem->nextMultipleWordItem();
 				}
@@ -132,7 +125,7 @@ class MultipleWordList : private List
 
 		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) &&
 		addItemToList( QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, globalVariables()->currentLanguageNr, wordTypeNr, multipleWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an active multiple word item" );
+			return addError( functionNameString, "I failed to add a multiple word item" );
 
 		return RESULT_OK;
 		}

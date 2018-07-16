@@ -29,5 +29,4 @@ Mostrar "   (@24) Palabras de selección:		~+#<w>@24~.".
 Mostrar " * Elementos de tipo de palabra desactiva:	       ~=#<w>~.".
 Mostrar " * Elementos de tipo de palabra archivados:	       ~$#<w>~.".
 Mostrar " * Elementos de tipo de palabra sustituidos:	       ~%#<w>~.".
-Mostrar " * Elementos de tipo de palabra eliminados:	       ~&#<w>~.".
 Mostrar "------------------------------------------------------------------------------".

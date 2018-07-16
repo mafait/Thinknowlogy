@@ -1,17 +1,14 @@
 ﻿呈现"------------------------------------------------------------------------------"。
-呈现" Thinknowlogy is the world's most advanced Controlled Natural"。
-呈现" Language (CNL) reasoner. It is based on natural laws of intelligence."。
-呈现" However, this logic of language is not described by scientists:"。
-呈现" * Despite exhaustive research, the theory of evolution still hasn't"。
-呈现" provided a satisfactory explanation for the origin of intelligence,"。
-呈现" language and laws of nature. Let alone, how they are related;"。
-呈现" * According to the biblical world view, God has created laws of nature to"。
-呈现" make his creation run like clockwork. Being based on the Natural Laws"。
-呈现" of Intelligence embedded in Grammar, only Thinknowlogy implements the"。
-#C++#呈现" intelligent function of words like definite article \"the\", conjunction \"or\","。
-#C++#呈现" possessive verb \"have\", and past tense verbs \"were\" and \"had\"."。
-#Java#呈现" intelligent function of words like definite article “the”, conjunction “or”,"。
-#Java#呈现" possessive verb “have”, and past tense verbs “were” and “had”."。
+呈现" Thinknowlogy is the world's most advanced automated reasoner. Being based"。
+呈现" on Natural Laws of Intelligence – that are embedded in grammar – Thinknowlogy"。
+呈现" implements reasoning constructions that are not described by scientists yet:"。
+呈现" * Despite exhaustive research, the theory of evolution still hasn't provided a"。
+呈现" satisfactory explanation for the origin of intelligence, language and laws of nature."。
+呈现" Let alone, how they are related;"。
+呈现" * According to the biblical world view, God has created laws of nature to make his creation"。
+呈现" run like clockwork. Being based on Natural Laws of Intelligence embedded in Grammar,"。
+呈现" only Thinknowlogy implements the intelligent function of words like definite article “the”,"。
+呈现" conjunction “or”, possessive verb “have”, and past tense verbs “were” and “had”."。
 呈现"------------------------------------------------------------------------------"。
 呈现" The intelligent function of these words is demonstrated by:"。
 呈现" * Programming in Controlled Natural Language;"。
@@ -19,20 +16,14 @@
 呈现"   - drawing conclusions (more advanced than scientific solutions),"。
 呈现"   - making assumptions (with self-adjusting level of uncertainty),"。
 呈现"   - asking questions (about gaps in the knowledge),"。
-呈现"   - detecting conflicts and some cases of semantic ambiguity,"。
+呈现"   - detecting confirmations, conflicts and some cases of semantic ambiguity,"。
 呈现"   - displaying of justification reports for the self-generated knowledge;"。
 呈现" * Multilingualism, proving: Natural languages have a common and logical origin."。
 呈现"------------------------------------------------------------------------------"。
-呈现" I defy anyone to beat this reasoner: http://mafait.org/challenge/"。
+呈现" I defy anyone to beat this automated reasoner: http://mafait.org/challenge/"。
 呈现"------------------------------------------------------------------------------"。
-#C++#呈现" 帮助\t\t\t\t\t\t\t* Display help info"。
-#C++#呈现" \~{languageName}\t\t\t\t\t* Change language"。
-#C++#呈现" 阅读文档\"中文/用户/程序设计/屏風式四子棋\"。	* Game Connect-Four"。
-#C++#呈现" 阅读文档\"中文/用户/程序设计/汉诺塔\"。 * Solve a puzzle"。
-#C++#呈现" 阅读文档\"中文/用户/推理/科学挑战\"。 * Challenge"。
-#C++#呈现" 阅读文档\"中文/用户/推理/家庭/家庭的定义\"。 * Reasoning"。
-#Java#呈现" Use button <程序设计> to learn about programming in natural language"。
-#Java#呈现" Use button <推理> to learn about reasoning in natural language"。
+呈现" Use button <程序设计> to learn about programming in natural language"。
+呈现" Use button <推理> to learn about reasoning in natural language"。
 呈现"------------------------------------------------------------------------------"。
 呈现" Available languages: ~+`language`<s>'~."。
 呈现"------------------------------------------------------------------------------"。

@@ -26,6 +26,8 @@
 * My assumptions:
 < A daughter is probably a person.
 < 
-! 
-! This question is not answered, because it is in conflict with itself.
-! 
+< 
+< No, because:
+< Every parent is a woman or a man.
+< Every person is a man or a woman.
+< 

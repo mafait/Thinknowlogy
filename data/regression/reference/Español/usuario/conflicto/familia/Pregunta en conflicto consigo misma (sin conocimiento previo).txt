@@ -24,6 +24,8 @@
 * Mis suposiciones:
 < Una hija es probablemente una persona.
 < 
-! 
-! No se acepta esta pregunta, porque está en conflicto consigo misma.
-! 
+< 
+< No porque:
+< Cada padre es una mujer o un hombre.
+< Cada persona es un hombre o una mujer.
+< 

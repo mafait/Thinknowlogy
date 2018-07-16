@@ -195,12 +195,12 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna is een ouder van Paul.
 < Anna is waarschijnlijk een ouder van Paul, Johan en Laura. Omdat:
-<	- Laura heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
-<	- Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
-<	- Paul heeft 2 ouders, genaamd Jan en Anna.
-* 	en:
 <	- Iedere ouder is een vader of een moeder.
 <	- Anna is de moeder van Paul, Johan en Laura.
+* 	en:
+<	- Paul heeft 2 ouders, genaamd Jan en Anna.
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Laura heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is waarschijnlijk een kind van Jan en Anna.

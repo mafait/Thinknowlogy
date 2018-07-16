@@ -1,7 +1,7 @@
 ﻿/*	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -87,7 +87,7 @@ class GrammarList : private List
 				grammarParameter == WORD_MASCULINE_SINGULAR_NOUN_ENDING ||
 				grammarParameter == WORD_PLURAL_NOUN_ENDING ||
 				grammarParameter == WORD_MERGED_WORD ||
-				// Typically for Chinese
+				// Typical for Chinese
 				grammarParameter == WORD_CHINESE_EXCLUSIVE_NOUN );
 		}
 
@@ -168,39 +168,38 @@ class GrammarList : private List
 
 	// Protected functions
 
-	void markAsOptionEnd()
+	void markAsChoiceEnd()
 		{
 		bool hasFound = false;
 		unsigned int currentSentenceItemNr = globalVariables()->currentSentenceItemNr;
 		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
 
-		while( searchGrammarItem != NULL &&
-		!hasFound )
+		while( !hasFound &&
+		searchGrammarItem != NULL )
 			{
-			if( searchGrammarItem->hasCurrentCreationSentenceNr() &&
-			searchGrammarItem->itemNr() == currentSentenceItemNr )
+			if( searchGrammarItem->itemNr() == currentSentenceItemNr )
 				{
 				hasFound = true;
-				searchGrammarItem->isOptionEnd = true;
+				searchGrammarItem->isChoiceEnd = true;
 				}
 
 			searchGrammarItem = searchGrammarItem->nextGrammarItem();
 			}
 		}
 
-	void markAsChoiceEnd( unsigned int choiceEndItemNr )
+	void markAsOptionEnd()
 		{
 		bool hasFound = false;
+		unsigned int currentSentenceItemNr = globalVariables()->currentSentenceItemNr;
 		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
 
-		while( searchGrammarItem != NULL &&
-		!hasFound )
+		while( !hasFound &&
+		searchGrammarItem != NULL )
 			{
-			if( searchGrammarItem->hasCurrentCreationSentenceNr() &&
-			searchGrammarItem->itemNr() == choiceEndItemNr )
+			if( searchGrammarItem->itemNr() == currentSentenceItemNr )
 				{
 				hasFound = true;
-				searchGrammarItem->isChoiceEnd = true;
+				searchGrammarItem->isOptionEnd = true;
 				}
 
 			searchGrammarItem = searchGrammarItem->nextGrammarItem();
@@ -239,8 +238,7 @@ class GrammarList : private List
 					definitionGrammarItem = searchGrammarItem;
 				else
 					{
-					if( definitionGrammarItem != NULL &&
-					searchGrammarItem->creationSentenceNr() < globalVariables()->currentSentenceNr )
+					if( definitionGrammarItem != NULL )
 						{
 						grammarString = searchGrammarItem->grammarString();
 						definitionGrammarString = definitionGrammarItem->grammarString();
@@ -274,14 +272,10 @@ class GrammarList : private List
 					if( currentGrammarItem->isIdentical( duplicateGrammarItem ) )
 						{
 						nextGrammarItem = currentGrammarItem->nextGrammarItem();
-
-						currentGrammarItem = ( nextGrammarItem != NULL &&
-												nextGrammarItem->hasCurrentCreationSentenceNr() ? nextGrammarItem : NULL );
+						currentGrammarItem = nextGrammarItem;
 
 						nextGrammarItem = duplicateGrammarItem->nextGrammarItem();
-
-						duplicateGrammarItem = ( nextGrammarItem != NULL &&
-												nextGrammarItem->creationSentenceNr() == duplicateDefinitionGrammarItem->creationSentenceNr() ? nextGrammarItem : NULL );
+						duplicateGrammarItem = nextGrammarItem;
 						}
 					else
 						isIdentical = false;
@@ -409,19 +403,12 @@ class GrammarList : private List
 			if( ( grammarString = currentGrammarItem->grammarString() ) == NULL )
 				return startError( functionNameString, "The grammar string of the grammar definition word is undefined" );
 
-			if( currentGrammarItem->definitionGrammarItem == NULL )
+			if( currentGrammarItem->definitionGrammarItem == NULL &&
+			!currentGrammarItem->isDefinitionStart() &&
+			strcmp( definitionGrammarString, grammarString ) == 0 )
 				{
-				if( !currentGrammarItem->isDefinitionStart() &&
-				strcmp( definitionGrammarString, grammarString ) == 0 )
-					{
-					definitionGrammarItem->isGrammarItemInUse = true;
-					currentGrammarItem->definitionGrammarItem = definitionGrammarItem;
-					}
-				}
-			else
-				{
-				if( currentGrammarItem->definitionGrammarItem == definitionGrammarItem->nextDefinitionGrammarItem )
-					currentGrammarItem->definitionGrammarItem = definitionGrammarItem;
+				definitionGrammarItem->isGrammarItemInUse = true;
+				currentGrammarItem->definitionGrammarItem = definitionGrammarItem;
 				}
 			}
 
@@ -602,7 +589,7 @@ class GrammarList : private List
 		grammarResult.grammarItem = createdGrammarItem;
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, createdGrammarItem ) != RESULT_OK )
-			return addGrammarResultError( functionNameString, "I failed to add an active grammar item" );
+			return addGrammarResultError( functionNameString, "I failed to add a grammar item" );
 
 		isCheckingGrammarNeeded_ = true;
 

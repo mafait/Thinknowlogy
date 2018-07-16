@@ -1,8 +1,9 @@
-﻿Installation instructions for Thinknowlogy 2018r1 (ShangDi 上帝):
+﻿Installation instructions for Thinknowlogy 2018r2 (Natural Intelligence):
 
 • This software uses Java. In order to install or upgrade the Java Runtime Environment, go to http://java.com/ and follow the instructions;
+• For Windows 7 and Windows XP, please check if you have downloaded the 7-Zip version;
 • Now extract the downloaded Zip file. It doesn't matter in which folder the file is extracted;
-• Start Explorer (for files) and go to the extracted folder, called Thinknowlogy2018r1;
-• Here you will find Java archive file Thinknowlogy2018r1. Double-click on this file to start the program;
+• Start Explorer (for files) and go to the extracted folder, called Thinknowlogy2018r2;
+• Here you will find Java archive file Thinknowlogy2018r2. Double-click on this file to start the program;
 • The documentation and the source code of the program (in Java as well as C++) are included;
 • This program applies software license GPLv2.

@@ -1,6 +1,6 @@
 /*	Class:		GlobalVariables
  *	Purpose:	To hold the global variables
- *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,6 +28,7 @@ class GlobalVariables
 	protected static boolean hasFoundAnswerToQuestion;
 	protected static boolean hasFoundQuery;
 	protected static boolean isAssignmentChanged;
+	protected static boolean isConflictingQuestion;
 	protected static boolean isFirstAnswerToQuestion;
 	protected static boolean isQuestionAlreadyAnswered;
 
@@ -45,7 +46,7 @@ class GlobalVariables
 	protected static int nInactiveQueryItems;
 	protected static int nArchivedQueryItems;
 	protected static int nReplacedQueryItems;
-	protected static int nDeletedQueryItems;
+
 	protected static int nDeletedItems;
 
 	protected static int nUserGeneralizationWords;
@@ -54,11 +55,6 @@ class GlobalVariables
 
 	protected static int removeSentenceNr;
 	protected static int removeStartItemNr;
-
-	protected static long cleaningTime;
-	protected static long openFileTime;
-	protected static long selectionExecutionTime;
-	protected static long writingTime;
 
 	protected static SelectionList adminConditionList;
 	protected static SelectionList adminActionList;
@@ -99,6 +95,7 @@ class GlobalVariables
 		hasFoundAnswerToQuestion = false;
 		hasFoundQuery = false;
 		isAssignmentChanged = false;
+		isConflictingQuestion = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
 
@@ -116,7 +113,7 @@ class GlobalVariables
 		nInactiveQueryItems = 0;
 		nArchivedQueryItems = 0;
 		nReplacedQueryItems = 0;
-		nDeletedQueryItems = 0;
+
 		nDeletedItems = 0;
 
 		nUserGeneralizationWords = 0;
@@ -125,11 +122,6 @@ class GlobalVariables
 
 		removeSentenceNr = Constants.NO_SENTENCE_NR;
 		removeStartItemNr = Constants.NO_ITEM_NR;
-
-		cleaningTime = 0;
-		openFileTime = 0;
-		selectionExecutionTime = 0;
-		writingTime = 0;
 
 		adminConditionList = null;
 		adminActionList = null;

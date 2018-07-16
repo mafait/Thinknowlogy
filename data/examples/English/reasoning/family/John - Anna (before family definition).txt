@@ -8,4 +8,9 @@ Display the justification report about Anna.
 Display the justification report about Paul.
 Display the justification report about Joe.
 Display the justification report about Laura.
+Anna has a daughter, called Laura.
+John has a daughter, called Laura.
+Display the justification report about John.
+Display the justification report about Anna.
+Display the justification report about Laura.
 # To continue, click button «Clear your mind.» or «Restart.».

@@ -11,10 +11,6 @@ Affichez "    <W> Mots:				~+#<W>~, (prédéfini: ~+#<W>:*~).".
 Affichez "    <X> Conditions:			~+#<X>~.".
 Affichez "    <Y> Actes:				~+#<Y>~.".
 Affichez "    <Z> Alternatives:			~+#<Z>~.".
-Affichez " * Éléments inactifs:		~=#<FRSWXYZ>~.".
-Affichez " * Éléments archivés:		~$#<FRSWXYZ>~.".
-Affichez " * Éléments remplacées:		~%#<FRSWXYZ>~.".
-Affichez " * Éléments supprimés:		~&#<FRSWXYZ>~.".
 Affichez "------------------------------------------------------------------------------".
 Affichez " Éléments dans mots:	    ~#<acgijlmrswx>~.".
 Affichez "------------------------------------------------------------------------------".
@@ -33,5 +29,4 @@ Affichez "    <x> contexte:			~+#<x>~.".
 Affichez " * Éléments inactifs:		~=#<acgijlmrswx>~.".
 Affichez " * Éléments archivés:		~$#<acgijlmrswx>~.".
 Affichez " * Éléments remplacées:		~%#<acgijlmrswx>~.".
-Affichez " * Éléments supprimés:		~&#<acgijlmrswx>~.".
 Affichez "------------------------------------------------------------------------------".

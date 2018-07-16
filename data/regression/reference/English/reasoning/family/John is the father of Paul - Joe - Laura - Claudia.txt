@@ -81,10 +81,10 @@
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul.
 < John is probably a parent of Paul. Because:
-<	- Paul has probably a parent, called John.
-* 	and:
 <	- Every family has parents and children.
 <	- Paul is probably a child of John.
+* 	and:
+<	- Paul has probably a parent, called John.
 * 	and:
 <	- Every parent is a father or a mother.
 <	- John is the father of Paul.
@@ -129,12 +129,12 @@
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul and Joe.
 < John is probably a parent of Paul and Joe. Because:
-<	- Joe has probably a parent, called John.
-<	- Paul has probably a parent, called John.
-* 	and:
 <	- Every family has parents and children.
 <	- Joe is probably a child of John.
 <	- Paul is probably a child of John.
+* 	and:
+<	- Joe has probably a parent, called John.
+<	- Paul has probably a parent, called John.
 * 	and:
 <	- Every parent is a father or a mother.
 <	- John is the father of Paul and Joe.
@@ -200,14 +200,14 @@
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul, Joe and Laura.
 < John is probably a parent of Paul, Joe and Laura. Because:
-<	- Laura has probably a parent, called John.
-<	- Joe has probably a parent, called John.
-<	- Paul has probably a parent, called John.
-* 	and:
 <	- Every family has parents and children.
 <	- Laura is probably a child of John.
 <	- Joe is probably a child of John.
 <	- Paul is probably a child of John.
+* 	and:
+<	- Laura has probably a parent, called John.
+<	- Joe has probably a parent, called John.
+<	- Paul has probably a parent, called John.
 * 	and:
 <	- Every parent is a father or a mother.
 <	- John is the father of Paul, Joe and Laura.
@@ -291,16 +291,16 @@
 <	- Claudia is possibly a daughter of John.
 <	- Laura is possibly a daughter of John.
 < John is probably a parent of Paul, Joe, Laura and Claudia. Because:
-<	- Claudia has probably a parent, called John.
-<	- Laura has probably a parent, called John.
-<	- Joe has probably a parent, called John.
-<	- Paul has probably a parent, called John.
-* 	and:
 <	- Every family has parents and children.
 <	- Claudia is probably a child of John.
 <	- Laura is probably a child of John.
 <	- Joe is probably a child of John.
 <	- Paul is probably a child of John.
+* 	and:
+<	- Claudia has probably a parent, called John.
+<	- Laura has probably a parent, called John.
+<	- Joe has probably a parent, called John.
+<	- Paul has probably a parent, called John.
 * 	and:
 <	- Every parent is a father or a mother.
 <	- John is the father of Paul, Joe, Laura and Claudia.

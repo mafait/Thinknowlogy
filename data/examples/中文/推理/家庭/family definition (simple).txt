@@ -3,7 +3,7 @@
 # - Drawing conclusions, making assumptions, asking questions,
 # - detecting conflicts and some cases of semantic ambiguity, and
 # - displaying of justification reports for the self-generated knowledge
-# Version: Thinknowlogy 2018r1 (ShangDi 上帝)
+# Version: Thinknowlogy 2018r2 (Natural Intelligence)
 #----------------------------------------------------------------------------
 # Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at http://mafait.org/contact/
@@ -22,7 +22,7 @@
 每个女儿都是女。
 #C++## Now type sentences like these:
 #C++##
-#C++## 军是勇、超和瑞的父亲和媛是他们的母亲。
+#C++## 军是勇、超和瑞的父亲、媛是他们的母亲。
 #C++## 勇是父亲。		勇是男。
 #C++## 超是父亲。		超是男。
 #C++## 瑞是母亲。		瑞是女。

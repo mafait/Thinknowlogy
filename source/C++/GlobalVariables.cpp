@@ -1,6 +1,6 @@
 ﻿/*	Class:			GlobalVariables
  *	Purpose:		To hold the global variables
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -82,6 +82,7 @@ class GlobalVariables
 	bool hasFoundAnswerToQuestion;
 	bool hasFoundQuery;
 	bool isAssignmentChanged;
+	bool isConflictingQuestion;
 	bool isFirstAnswerToQuestion;
 	bool isQuestionAlreadyAnswered;
 
@@ -95,12 +96,12 @@ class GlobalVariables
 	unsigned int currentSentenceNr;
 	unsigned int currentSentenceItemNr;
 
-	unsigned int nDeletedItems;
 	unsigned int nActiveQueryItems;
 	unsigned int nInactiveQueryItems;
 	unsigned int nArchivedQueryItems;
 	unsigned int nReplacedQueryItems;
-	unsigned int nDeletedQueryItems;
+
+	unsigned int nDeletedItems;
 
 	unsigned int nUserGeneralizationWords;
 	unsigned int nUserSpecificationWords;
@@ -148,6 +149,7 @@ class GlobalVariables
 		hasFoundAnswerToQuestion = false;
 		hasFoundQuery = false;
 		isAssignmentChanged = false;
+		isConflictingQuestion = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
 
@@ -161,12 +163,12 @@ class GlobalVariables
 		currentSentenceNr = 1;	// First sentence
 		currentSentenceItemNr = NO_ITEM_NR;
 
-		nDeletedItems = 0;
 		nActiveQueryItems = 0;
 		nInactiveQueryItems = 0;
 		nArchivedQueryItems = 0;
 		nReplacedQueryItems = 0;
-		nDeletedQueryItems = 0;
+
+		nDeletedItems = 0;
 
 		nUserGeneralizationWords = 0;
 		nUserSpecificationWords = 0;

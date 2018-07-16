@@ -26,6 +26,8 @@
 * 我的假设：
 < 女儿大概都是人。
 < 
-! 
-! This question is not answered, because it is in conflict with itself.
-! 
+< 
+< No, because:
+< 每个父母都是女或男。
+< 每个人都是男或女。
+< 

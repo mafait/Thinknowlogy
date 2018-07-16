@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		To read and analyze sentences
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -90,7 +90,7 @@ class AdminReadSentence
 	void checkForChangesMadeByThisSentence()
 		{
 		unsigned int currentSentenceNr = globalVariables_->currentSentenceNr;
-		unsigned int highestFoundSentenceNr = adminItem_->highestFoundSentenceNr( false, false, currentSentenceNr );
+		unsigned int highestFoundSentenceNr = adminItem_->highestFoundSentenceNr( false, currentSentenceNr );
 
 		hasAnyChangeBeenMadeByThisSentence_ = ( highestFoundSentenceNr >= currentSentenceNr );
 		}
@@ -156,7 +156,7 @@ class AdminReadSentence
 			case WORD_PARAMETER_PREPOSITION_OF:
 				if( !isAssignment_ &&
 				startSpecificationReadItem_ == NULL )
-					// Typically for Chinese
+					// Typical for Chinese
 					isPossessive_ = true;
 				break;
 
@@ -199,7 +199,6 @@ class AdminReadSentence
 		bool hasCurrentWordWithSameWordType = true;
 		bool hasFoundFrenchPreposition = false;
 		bool hasFoundWordWithDifferentWordType = false;
-		bool hasRelation = ( globalVariables_->nUserRelationWords > 0 );
 		bool isFirstWordTypeNumeral = false;
 		bool isFrenchPreposition;
 		unsigned short currentWordTypeNr;
@@ -264,10 +263,6 @@ class AdminReadSentence
 			isFrenchPreposition ||
 			firstWordTypeNr == currentWordTypeNr ||
 
-			// Typically for Chinese
-			( hasRelation &&
-			currentWordTypeNr == WORD_TYPE_NUMERAL ) ||
-
 			// Allow mix of singular and plural nouns
 			( adminItem_->isNounWordType( firstWordTypeNr ) &&
 			adminItem_->isNounWordType( currentWordTypeNr ) ) )
@@ -282,7 +277,7 @@ class AdminReadSentence
 				lastReadItem = currentReadItem;
 
 				if( !isChineseCurrentLanguage_ ||
-				// Typically for Chinese: Only spaces in multiple proper noun words
+				// Typical for Chinese: Only spaces in multiple proper noun words
 				currentWordTypeNr == WORD_TYPE_PROPER_NOUN )
 					{
 					strcat( multipleWordString, SPACE_STRING );
@@ -438,7 +433,7 @@ class AdminReadSentence
 				switch( currentGeneralizationReadItem->grammarParameter )
 					{
 					case GRAMMAR_IMPERATIVE:
-						// Typically for Chinese
+						// Typical for Chinese
 						if( isChineseCurrentLanguage_ &&
 						( tempVerbParameter = currentGeneralizationReadItem->readAheadChineseImperativeVerbParameter() ) > NO_WORD_PARAMETER )
 							imperativeVerbParameter = tempVerbParameter;
@@ -618,8 +613,6 @@ class AdminReadSentence
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete an unused word type item" );
 
 							if( !currentReadWordItem->hasAnyWordType() &&
-							!currentReadWordItem->isDeletedItem() &&
-							currentReadWordItem->hasCurrentCreationSentenceNr() &&
 							adminItem_->deleteWordItem( currentReadWordItem ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete an unused word item" );
 							}
@@ -754,9 +747,9 @@ class AdminReadSentence
 
 				if( isChoice &&
 				!isWaitingForChoiceEnd &&
+				currentParseWordOrderNr_ > previousWordOrderNr &&
 				parseGrammarItem != NULL &&
-				parseGrammarItem->isNewStart() &&
-				currentParseWordOrderNr_ > previousWordOrderNr )
+				parseGrammarItem->isNewStart() )
 					isWaitingForChoiceEnd = true;
 				}
 			while( ( isWaitingForNewStart ||
@@ -775,11 +768,11 @@ class AdminReadSentence
 		definitionParseGrammarItem != NULL &&
 		( parseGrammarItem = definitionParseGrammarItem->nextDefinitionGrammarItem ) != NULL );
 
-		if( definitionParseGrammarItem != NULL &&
-		definitionParseGrammarItem->isGrammarDefinition() &&
-
-		( previousWordOrderNr > startWordOrderNr ||
+		if( ( previousWordOrderNr > startWordOrderNr ||
 		currentParseWordOrderNr_ > startWordOrderNr ) &&
+
+		definitionParseGrammarItem != NULL &&
+		definitionParseGrammarItem->isGrammarDefinition() &&
 
 		// Set grammar parameter
 		adminItem_->setGrammarParameter( ( currentParseWordOrderNr_ > startWordOrderNr ), startWordOrderNr, ( currentParseWordOrderNr_ > startWordOrderNr ? currentParseWordOrderNr_ : previousWordOrderNr ), definitionParseGrammarItem ) != RESULT_OK )
@@ -853,7 +846,7 @@ class AdminReadSentence
 					case GRAMMAR_QUESTION_VERB:
 					case GRAMMAR_SPECIFICATION_GENERALIZATION_VERB:
 					case GRAMMAR_SPECIFICATION_GENERALIZATION_QUESTION_VERB:
-						if( scanSpecification( readUserSentenceString ) != RESULT_OK )
+						if( scanSpecification() != RESULT_OK )
 							return adminItem_->addErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I failed to scan the generalization-specification" );
 
 						if( addReadSpecification( isAction, isNewStart, selectionLevel, readUserSentenceString ) != RESULT_OK )
@@ -864,7 +857,7 @@ class AdminReadSentence
 						break;
 
 					case GRAMMAR_IMPERATIVE:
-						if( readImperative( isAction, isNewStart, selectionLevel, readUserSentenceString ) != RESULT_OK )
+						if( readImperative( isAction, isNewStart, selectionLevel ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read an imperative" );
 
 						isNewStart = false;
@@ -883,7 +876,7 @@ class AdminReadSentence
 							{
 							case WORD_PARAMETER_SYMBOL_COMMA:
 							case WORD_PARAMETER_CONJUNCTION_AND:
-							// Typically for Dutch: "in zowel ... als ..."
+							// Typical for Dutch: "in zowel ... als ..."
 							case WORD_PARAMETER_CONJUNCTION_DUTCH_ALS:
 								break;
 
@@ -989,7 +982,7 @@ class AdminReadSentence
 			assignLanguage( currentLanguageNr ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
 
-			// Typically for French: Merged words
+			// Typical for French: Merged words
 			if( ( boolResult = adminItem_->expandMergedWordsInReadSentenceOfCurrentLanguage( readUserSentenceString ) ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to expand the merged words in the read user sentence string" );
 
@@ -1096,7 +1089,7 @@ class AdminReadSentence
 		return RESULT_OK;
 		}
 
-	signed char readImperative( bool isAction, bool isNewStart, unsigned short selectionLevel, char *readUserSentenceString )
+	signed char readImperative( bool isAction, bool isNewStart, unsigned short selectionLevel )
 		{
 		bool hasFoundChineseImperativeVerb = false;
 		unsigned short executionNounWordParameter = NO_WORD_PARAMETER;
@@ -1112,7 +1105,7 @@ class AdminReadSentence
 		startGeneralizationReadItem_ = NULL;
 		endGeneralizationReadItem_ = NULL;
 
-		if( scanSpecification( readUserSentenceString ) != RESULT_OK )
+		if( scanSpecification() != RESULT_OK )
 			return adminItem_->addErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I failed to scan the generalization-specification" );
 
 		if( endGeneralizationReadItem_ == NULL ||
@@ -1122,7 +1115,7 @@ class AdminReadSentence
 		do	{
 			if( currentReadItem->isVerb() )
 				{
-				// Typically for Chinese
+				// Typical for Chinese
 				if( isChineseCurrentLanguage_ &&
 				( tempVerbParameter = currentReadItem->readAheadChineseImperativeVerbParameter() ) > NO_WORD_PARAMETER )
 					{
@@ -1191,7 +1184,7 @@ class AdminReadSentence
 						specificationWordTypeNr = specificationReadItem->wordTypeNr();
 
 						if( ( !hasFoundChineseImperativeVerb ||
-						// Typically for Chinese
+						// Typical for Chinese
 						specificationWordTypeNr != WORD_TYPE_NOUN_SINGULAR ) &&
 
 						// Execute imperative
@@ -1213,13 +1206,12 @@ class AdminReadSentence
 		return RESULT_OK;
 		}
 
-	signed char scanSpecification( char *readUserSentenceString )
+	signed char scanSpecification()
 		{
 		bool hasGeneralizationArticle = false;
 		bool isFrenchPreposition;
 		bool isSameWordTypeAsPreviousWord;
 		bool isStop = false;
-		unsigned short currentWordOrderNr;
 		unsigned short currentWordParameter;
 		unsigned short currentWordTypeNr;
 		unsigned short generalizationAdjectiveParameter = NO_ADJECTIVE_PARAMETER;
@@ -1274,21 +1266,12 @@ class AdminReadSentence
 			startGeneralizationReadItem_ = NULL;
 			endGeneralizationReadItem_ = NULL;
 			}
-		else
-			{
-			if( linkedGeneralizationReadItem_->isProperNoun() )
-				startGeneralizationReadItem_ = linkedGeneralizationReadItem_;
-
-			linkedGeneralizationReadItem_ = NULL;
-			}
 
 		if( currentReadItem_ == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The read item is undefined" );
 
 		do	{
 			isFrenchPreposition = currentReadItem_->isFrenchPreposition();
-
-			currentWordOrderNr = currentReadItem_->wordOrderNr();
 			currentWordParameter = currentReadItem_->wordParameter();
 			currentWordTypeNr = currentReadItem_->wordTypeNr();
 			currentReadWordItem = currentReadItem_->readWordItem();
@@ -1304,24 +1287,9 @@ class AdminReadSentence
 
 			switch( currentReadItem_->grammarParameter )
 				{
-				case GRAMMAR_SENTENCE:
-					if( !currentReadItem_->isSeparator() )
-						{
-						if( readUserSentenceString != NULL &&
-
-						( adminItem_->isCurrentlyTesting() ||
-						adminItem_->isSystemStartingUp() ) )
-							return adminItem_->startError( functionNameString, moduleNameString_, "I found an unknown word in sentence \"", readUserSentenceString, "\" at position ", currentWordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", currentWordParameter );
-
-						return adminItem_->startError( functionNameString, moduleNameString_, "I found an unknown word at position ", currentWordOrderNr, " with grammar parameter ", currentReadItem_->grammarParameter, " and word parameter ", currentWordParameter );
-						}
-
-					break;
-
 				case GRAMMAR_STATEMENT:
-					// Typically for Chinese
+					// Typical for Chinese
 					if( isChineseCurrentLanguage_ &&
-					questionParameter_ == NO_QUESTION_PARAMETER &&
 					currentReadItem_->isQuestionMark() )
 						questionParameter_ = WORD_PARAMETER_SINGULAR_VERB_IS;
 
@@ -1426,15 +1394,9 @@ class AdminReadSentence
 					break;
 
 				case GRAMMAR_LINKED_GENERALIZATION_CONJUNCTION:
+					isStop = true;
 					nextReadItem = currentReadItem_->nextReadItem();
-
-					if( nextReadItem != NULL &&
-					nextReadItem->readWordItem() != previousGeneralizationWordItem_ )
-						{
-						isStop = true;
-						linkedGeneralizationReadItem_ = nextReadItem;
-						}
-
+					linkedGeneralizationReadItem_ = nextReadItem;
 					break;
 
 				case GRAMMAR_EXCLUSIVE_SPECIFICATION_CONJUNCTION:
@@ -1442,11 +1404,6 @@ class AdminReadSentence
 					break;
 
 				case GRAMMAR_RELATION_PART:
-					if( currentReadItem_->isPersonalPronoun() )
-						isAssignment_ = true;
-
-					// Don't insert a break statement here
-
 				case GRAMMAR_RELATION_WORD:
 					if( currentReadItem_->isPreposition() )
 						prepositionParameter_ = currentWordParameter;
@@ -1461,7 +1418,7 @@ class AdminReadSentence
 								isSameWordTypeAsPreviousWord = true;
 							else
 								{
-								// Typically for Chinese
+								// Typical for Chinese
 								if( currentWordTypeNr == WORD_TYPE_NOUN_SINGULAR &&
 								previousWordTypeNr == WORD_TYPE_VERB_SINGULAR )
 									isUncountableGeneralizationNoun_ = true;
@@ -1492,9 +1449,9 @@ class AdminReadSentence
 
 					endRelationReadItem_ = currentReadItem_;
 
-					// Typically for English: "... in both ... and ..."
+					// Typical for English: "... in both ... and ..."
 					if( currentWordParameter == WORD_PARAMETER_NUMERAL_BOTH ||
-					// Typically for Dutch: "... in zowel ... als ..."
+					// Typical for Dutch: "... in zowel ... als ..."
 					currentWordParameter == WORD_PARAMETER_CONJUNCTION_DUTCH_ZOWEL )
 						isExclusiveSpecification_ = true;
 
@@ -1536,7 +1493,7 @@ class AdminReadSentence
 							if( !hasGeneralizationArticle &&
 							isArchivedAssignment_ )
 								{
-								// Typically for Chinese
+								// Typical for Chinese
 								if( isChineseCurrentLanguage_ )
 									{
 									if( startRelationReadItem_ != NULL )
@@ -1575,7 +1532,7 @@ class AdminReadSentence
 									}
 								else
 									{
-									// Typically for Spanish
+									// Typical for Spanish
 									if( previousGeneralizationWordItem_ != NULL &&
 									previousGeneralizationWordTypeNr_ == WORD_TYPE_PROPER_NOUN &&
 									( currentReadWordTypeItem = currentReadItem_->activeReadWordTypeItem() ) != NULL &&
@@ -1667,7 +1624,7 @@ class AdminReadSentence
 			contextResult.contextNr++;
 			}
 
-		if( contextWordItem->addContext( false, contextWordTypeNr, NO_WORD_TYPE_NR, contextResult.contextNr, NULL ) != RESULT_OK )
+		if( contextWordItem->addContext( contextWordTypeNr, NO_WORD_TYPE_NR, contextResult.contextNr, NO_COLLECTION_NR, NULL ) != RESULT_OK )
 			return adminItem_->addContextResultError( functionNameString, moduleNameString_, "I failed to add a pronoun context to word \"", contextWordItem->anyWordTypeString(), "\"" );
 
 		return contextResult;
@@ -1764,6 +1721,11 @@ class AdminReadSentence
 		return hasFemaleUserSpecificationWord_;
 		}
 
+	bool isUniqueUserRelation()
+		{
+		return isUniqueUserRelation_;
+		}
+
 	bool isUserQuestion()
 		{
 		return ( questionParameter_ > NO_QUESTION_PARAMETER );
@@ -1808,8 +1770,6 @@ class AdminReadSentence
 			if( hasAnyChangeBeenMadeByThisSentence_ &&
 			!isUserImperativeSentence_ &&
 			selectionListNr_ == NO_LIST_NR &&
-			// User specification is already known (notification: I know)
-			adminItem_->userSpecificationItem() != NULL &&
 			adminItem_->checkIntegrityOfStoredUserSentence( readUserSentenceString ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to check the integrity of the stored user sentence \"", readUserSentenceString, "\"" );
 

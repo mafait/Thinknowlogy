@@ -26,6 +26,8 @@
 * Mes hypothèses:
 < Une fille est probablement une personne.
 < 
-! 
-! Cette question n'est pas réponse, parce qu'il est en conflit avec lui-même.
-! 
+< 
+< Non parce que:
+< Chaque parent est une femme ou un homme.
+< Chaque personne est un homme ou une femme.
+< 

@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -378,23 +378,10 @@
 		return true;
 		}
 
-	bool JustificationItem::hasNonPossessivePrimaryUserSpecification()
+	bool JustificationItem::hasNonPossessivePrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != NULL &&
-				!primarySpecificationItem_->isPossessive() &&
-				primarySpecificationItem_->isUserSpecification() );
-		}
-
-	bool JustificationItem::hasPrimaryAnsweredQuestion()
-		{
-		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isAnsweredQuestion() );
-		}
-
-	bool JustificationItem::hasPrimaryQuestion()
-		{
-		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isQuestion() );
+				!primarySpecificationItem_->isPossessive() );
 		}
 
 	bool JustificationItem::hasPossessivePrimarySpecification()
@@ -560,8 +547,7 @@
 				if( anotherPrimarySpecificationItem_ != NULL )
 					return myWordItem()->nContextWords( secondaryRelationContextNr, secondarySpecificationItem_->specificationWordItem() );
 
-				if( secondaryRelationContextNr == relationContextNr ||
-				isContextSimilarInContextWords( secondaryRelationContextNr, relationContextNr ) )
+				if( isContextSimilarInContextWords( secondaryRelationContextNr, relationContextNr ) )
 					return nRelationWords;
 				}
 
@@ -575,6 +561,14 @@
 		{
 		if( primarySpecificationItem_ != NULL )
 			return primarySpecificationItem_->specificationCollectionNr();
+
+		return NO_COLLECTION_NR;
+		}
+
+	unsigned int JustificationItem::secondarySpecificationCollectionNr()
+		{
+		if( secondarySpecificationItem_ != NULL )
+			return secondarySpecificationItem_->specificationCollectionNr();
 
 		return NO_COLLECTION_NR;
 		}
@@ -627,9 +621,7 @@
 			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
 
 		if( newAttachedJustificationItem == NULL ||
-
-		( !hasJustification( newAttachedJustificationItem ) &&
-		!newAttachedJustificationItem->hasJustification( this ) ) )
+		!newAttachedJustificationItem->hasJustification( this ) )
 			attachedJustificationItem_ = newAttachedJustificationItem;
 
 		return RESULT_OK;
@@ -653,24 +645,6 @@
 		return RESULT_OK;
 		}
 
-	signed char JustificationItem::changeAnotherPrimarySpecification( SpecificationItem *replacingSpecificationItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeAnotherPrimarySpecification";
-
-		if( replacingSpecificationItem == NULL )
-			return startError( functionNameString, NULL, "The given replacing specification item is undefined" );
-
-		if( replacingSpecificationItem->isReplacedOrDeletedItem() )
-			return startError( functionNameString, NULL, "The given replacing specification item is replaced or deleted" );
-
-		if( !hasCurrentCreationSentenceNr() )
-			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
-
-		anotherPrimarySpecificationItem_ = replacingSpecificationItem;
-
-		return RESULT_OK;
-		}
-
 	signed char JustificationItem::changeSecondarySpecification( SpecificationItem *replacingSpecificationItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeSecondarySpecification";
@@ -685,24 +659,6 @@
 			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
 
 		secondarySpecificationItem_ = replacingSpecificationItem;
-
-		return RESULT_OK;
-		}
-
-	signed char JustificationItem::changeAnotherSecondarySpecification( SpecificationItem *replacingSpecificationItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeAnotherSecondarySpecification";
-
-		if( replacingSpecificationItem == NULL )
-			return startError( functionNameString, NULL, "The given replacing specification item is undefined" );
-
-		if( replacingSpecificationItem->isReplacedOrDeletedItem() )
-			return startError( functionNameString, NULL, "The given replacing specification item is replaced or deleted" );
-
-		if( !hasCurrentCreationSentenceNr() )
-			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
-
-		anotherSecondarySpecificationItem_ = replacingSpecificationItem;
 
 		return RESULT_OK;
 		}
@@ -925,8 +881,7 @@
 		secondarySpecificationItem != NULL &&
 		secondarySpecificationItem_ != NULL &&
 		secondarySpecificationItem_->isSelfGenerated() &&
-		secondarySpecificationItem_->generalizationWordItem() == secondarySpecificationItem->generalizationWordItem() &&
-		secondarySpecificationItem_->specificationWordItem() == secondarySpecificationItem->specificationWordItem() ) )
+		secondarySpecificationItem_->generalizationWordItem() == secondarySpecificationItem->generalizationWordItem() ) )
 			return this;
 
 		// Recursive, do for all attached justification items

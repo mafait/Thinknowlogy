@@ -48,14 +48,14 @@
 < Juan no es una mujer.
 < Juan es masculino.
 < Juan no es una madre.
-< Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene un padre, llamado Juan.
+< Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene una madre, llamada Ana.
-< José tiene 2 padres, llamados Juan y Ana.
 < José tiene un padre, llamado Juan.
+< José tiene 2 padres, llamados Juan y Ana.
 < José tiene una madre, llamada Ana.
-< Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene un padre, llamado Juan.
+< Luisa tiene 2 padres, llamados Juan y Ana.
 < Luisa tiene una madre, llamada Ana.
 < Ana es parte de una familia.
 < Ana es una mujer.
@@ -68,8 +68,8 @@
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
 < Pablo es posiblemente parte de una familia.
-< José es posiblemente una persona.
 < José es posiblemente parte de una familia.
+< José es posiblemente una persona.
 < Luisa es posiblemente hija de Juan y Ana.
 < Luisa es posiblemente parte de una familia.
 < Luisa es puede-ser una persona.

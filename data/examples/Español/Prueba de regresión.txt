@@ -268,6 +268,8 @@ Leer el archivo de prueba "Español/razonamiento/familia/Mis conclusiones que se
 Leer el archivo de prueba "Español/razonamiento/familia/Mis conclusiones que se confirman (José tiene 2 padres)".
 Leer el archivo de prueba "Español/razonamiento/familia/Mis conclusiones que se confirman (con relación)".
 Leer el archivo de prueba "Español/razonamiento/familia/Mis conclusiones que se confirman (sin relación)".
+Leer el archivo de prueba "Español/razonamiento/familia/Pablo - Ana - José - Luisa - José - Juan".
+Leer el archivo de prueba "Español/razonamiento/familia/Pablo - Ana - José - Luisa - Juan".
 Leer el archivo de prueba "Español/razonamiento/familia/Pablo - José - Luisa - Juan y Ana (padres)".
 Leer el archivo de prueba "Español/razonamiento/familia/Pablo - José - Luisa - Juan y Ana (hijo - hija)".
 Leer el archivo de prueba "Español/razonamiento/familia/Pablo - Juan y Ana - José - Luisa".

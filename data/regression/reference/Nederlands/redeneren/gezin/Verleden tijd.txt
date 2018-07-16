@@ -82,10 +82,10 @@
 <	- Iedere ouder is een vrouw of een man.
 <	- Cor was een man.
 < Cor was waarschijnlijk een ouder van Kees. Omdat:
-<	- Kees had waarschijnlijk een ouder, genaamd Cor.
-* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Kees is waarschijnlijk een kind van Cor.
+* 	en:
+<	- Kees had waarschijnlijk een ouder, genaamd Cor.
 * 	en:
 <	- Iedere ouder is een vader of een moeder.
 <	- Cor was de vader van Kees.

@@ -135,12 +135,12 @@
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Julien est probablement un enfant de Olivier et Amélie.
 * 	et:
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
 <	- Amélie a 2 fils [pluriel de «fils» est inconnue], appelés Pascal et Julien.
-* 	et:
-<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
-<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
 < Amélie est probablement partie d'une famille. En raison:
 <	- Amélie est probablement un parent de Pascal et Julien.
 <	- Parents sont partie de chaque famille.
@@ -201,11 +201,11 @@
 <	- Chaque parent est un père ou une mère.
 <	- Nom propre «Amélie» est probablement féminin.
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
-<	- Amélie a probablement 2 enfants, appelés Pascal et Julien.
-<	- Olivier a probablement 2 enfants, appelés Pascal et Julien.
-* 	et:
 <	- Chaque enfant est un fils ou une fille.
 <	- Pascal est le fils de Olivier et Amélie.
+* 	et:
+<	- Olivier a probablement 2 enfants, appelés Pascal et Julien.
+<	- Amélie a probablement 2 enfants, appelés Pascal et Julien.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal et Julien.
@@ -243,11 +243,11 @@
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
 < Julien est probablement un enfant de Olivier et Amélie. En raison:
-<	- Amélie a probablement 2 enfants, appelés Pascal et Julien.
-<	- Olivier a probablement 2 enfants, appelés Pascal et Julien.
-* 	et:
 <	- Chaque enfant est un fils ou une fille.
 <	- Julien est un fils de Olivier et Amélie.
+* 	et:
+<	- Olivier a probablement 2 enfants, appelés Pascal et Julien.
+<	- Amélie a probablement 2 enfants, appelés Pascal et Julien.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal et Julien.

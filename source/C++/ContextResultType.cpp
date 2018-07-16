@@ -1,7 +1,7 @@
 ﻿/*	Class:		ContextResultType
  *	Purpose:	To return context variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -35,10 +35,8 @@ class ContextResultType
 
 	signed char result;
 	bool isAmbiguousRelationContext;
-	bool isNewContext;
 	unsigned int contextNr;
 	unsigned int copiedRelationContextNr;
-
 	SpecificationItem *confirmedAllRelationWordsOfSpecificationItem;
 
 	protected:
@@ -48,7 +46,6 @@ class ContextResultType
 		{
 		result = RESULT_OK;
 		isAmbiguousRelationContext = false;
-		isNewContext = false;
 		contextNr = NO_CONTEXT_NR;
 		copiedRelationContextNr = NO_CONTEXT_NR;
 		confirmedAllRelationWordsOfSpecificationItem = NULL;

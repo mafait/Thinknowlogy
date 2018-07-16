@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the grammar, user-interface and example files
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -106,24 +106,21 @@ class AdminReadFile
 			// Previous deleted sentence might be empty
 			startRemoveSentenceNr != globalVariables_->removeSentenceNr &&
 			// All items of this sentence are deleted
-			adminItem_->highestFoundSentenceNr( true, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
+			adminItem_->highestFoundSentenceNr( true, startRemoveSentenceNr ) < startRemoveSentenceNr )
 				{
 				// So, decrement all higher sentence numbers
 				adminItem_->decrementSentenceNrs( startRemoveSentenceNr );
 
-				if( globalVariables_->currentSentenceNr >= startRemoveSentenceNr )
-					{
-					firstSentenceNr = firstSentenceNrOfCurrentUser();
+				firstSentenceNr = firstSentenceNrOfCurrentUser();
 
-					// First user sentence
-					if( startRemoveSentenceNr == firstSentenceNr )
-						adminItem_->decrementCurrentSentenceNr();
-					else
-						{
-						globalVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, false, globalVariables_->currentSentenceNr );
-						// Necessary after changing current sentence number
-						globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr();
-						}
+				// First user sentence
+				if( startRemoveSentenceNr == firstSentenceNr )
+					adminItem_->decrementCurrentSentenceNr();
+				else
+					{
+					globalVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, globalVariables_->currentSentenceNr );
+					// Necessary after changing current sentence number
+					globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr();
 					}
 				}
 			}
@@ -398,7 +395,7 @@ class AdminReadFile
 						isChoice = false;
 						isNewStart = true;
 						hasFoundChoiceAlternatives = false;
-						adminItem_->markGrammarOfCurrentLanguageAsChoiceEnd( globalVariables_->currentSentenceItemNr );
+						adminItem_->markGrammarOfCurrentLanguageAsChoiceEnd();
 						}
 					else
 						{
@@ -418,8 +415,8 @@ class AdminReadFile
 					if( hasFoundPipe )
 						return adminItem_->startError( functionNameString, moduleNameString_, "I found an extra pipe character in the grammar definition" );
 
-					if( !isOption &&
-					!isChoice )
+					if( !isChoice &&
+					!isOption )
 						return adminItem_->startError( functionNameString, moduleNameString_, "Pipes are only allowed within grammar definition options or choices" );
 
 					hasFoundPipe = true;
@@ -475,9 +472,9 @@ class AdminReadFile
 							{
 							if( isMergedWord ||
 							grammarParameter == WORD_PLURAL_NOUN_ENDING ||
-							// Typically for Chinese
+							// Typical for Chinese
 							grammarParameter == WORD_FEMININE_PROPER_NOUN_ENDING ||
-							// Typically for Chinese
+							// Typical for Chinese
 							grammarParameter == WORD_MASCULINE_PROPER_NOUN_ENDING )
 								{
 								if( definitionGrammarItem == NULL )
@@ -563,11 +560,9 @@ class AdminReadFile
 						isOptionStart = false;
 						isChoiceStart = false;
 
+						hasFoundOnlyOptions = false;
 						hasFoundPipe = false;
 						hasGrammarWords = true;
-
-						if( !isOptionStart )
-							hasFoundOnlyOptions = false;
 
 						if( foundGrammarItem != NULL &&
 						!foundGrammarItem->hasCurrentCreationSentenceNr() )
@@ -649,16 +644,18 @@ class AdminReadFile
 				}
 			}
 
-		if( multipleWordItem == NULL ||
-		multipleWordItem->hasCurrentCreationSentenceNr() )
+		if( multipleWordItem != NULL )
 			{
-			if( ( wordResult = adminItem_->addWord( false, true, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordParameter, wordTypeNr, strlen( multipleWordString ), multipleWordString ) ).result != RESULT_OK )
-				return adminItem_->addWordResultError( functionNameString, moduleNameString_, "I failed to add a predefined grammar word" );
-			}
-		else
-			{
-			if( multipleWordItem->addWordType( true, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, strlen( multipleWordString ), multipleWordString ).result != RESULT_OK )
-				return adminItem_->addWordResultError( functionNameString, moduleNameString_, "The given multiple word item is undefined" );
+			if( multipleWordItem->hasCurrentCreationSentenceNr() )
+				{
+				if( ( wordResult = adminItem_->addWord( false, true, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordParameter, wordTypeNr, strlen( multipleWordString ), multipleWordString ) ).result != RESULT_OK )
+					return adminItem_->addWordResultError( functionNameString, moduleNameString_, "I failed to add a predefined grammar word" );
+				}
+			else
+				{
+				if( multipleWordItem->addWordType( true, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, strlen( multipleWordString ), multipleWordString ).result != RESULT_OK )
+					return adminItem_->addWordResultError( functionNameString, moduleNameString_, "The given multiple word item is undefined" );
+				}
 			}
 
 		if( wordResult.createdWordItem == NULL )
@@ -788,6 +785,7 @@ class AdminReadFile
 			globalVariables_->hasDisplayedMessage = false;
 			globalVariables_->hasDisplayedWarning = false;
 			globalVariables_->isAssignmentChanged = false;
+			globalVariables_->isConflictingQuestion = false;
 
 			if( !adminItem_->wasPreviousCommandUndoOrRedo() )
 				cleanupDeletedItems();
@@ -995,6 +993,7 @@ class AdminReadFile
 		char promptString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readLine";
 
+		// Don't show sentence number when asking for user name, password, and so on
 		if( promptSentenceNr > NO_SENTENCE_NR )
 			sprintf( promptString, "%u", promptSentenceNr );
 
@@ -1724,7 +1723,7 @@ class AdminReadFile
 			return adminItem_->addCreateAndAssignResultError( functionNameString, moduleNameString_, "I failed to add a specification with authorization" );
 
 		// Collect current language with previous languages
-		if( adminItem_->collectGeneralizationWordWithPreviousOne( isAssignment, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, generalizationWordItem, specificationWordItem ) != RESULT_OK )
+		if( adminItem_->collectGeneralizationWordWithPreviousOne( isAssignment, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, relationContextNr, generalizationWordItem, specificationWordItem ) != RESULT_OK )
 			return adminItem_->addCreateAndAssignResultError( functionNameString, moduleNameString_, "I failed to collect a generalization word with a previous one" );
 
 		return createAndAssignResult;

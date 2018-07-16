@@ -1,7 +1,7 @@
 ﻿/*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -442,15 +442,6 @@ class ReadItem : private Item
 		return ( wordParameter_ == WORD_PARAMETER_NOUN_PART );
 		}
 
-	bool isPersonalPronoun()
-		{
-		return ( wordTypeNr_ == WORD_TYPE_PERSONAL_PRONOUN_SINGULAR_SUBJECTIVE ||
-				wordTypeNr_ == WORD_TYPE_PERSONAL_PRONOUN_SINGULAR_OBJECTIVE ||
-
-				wordTypeNr_ == WORD_TYPE_PERSONAL_PRONOUN_PLURAL_SUBJECTIVE ||
-				wordTypeNr_ == WORD_TYPE_PERSONAL_PRONOUN_PLURAL_OBJECTIVE );
-		}
-
 	bool isPossessiveDeterminer()
 		{
 		return ( wordTypeNr_ == WORD_TYPE_POSSESSIVE_DETERMINER_SINGULAR ||
@@ -536,9 +527,9 @@ class ReadItem : private Item
 				return ( grammarParameter == GRAMMAR_GENERALIZATION_SPECIFICATION );
 
 			case WORD_TYPE_ADJECTIVE:
-						// Typically for Spanish
+						// Typical for Spanish
 				return ( grammarParameter == GRAMMAR_SPECIFICATION_WORD ||
-						// Typically for French
+						// Typical for French
 						grammarParameter == GRAMMAR_RELATION_PART );
 
 			case WORD_TYPE_ADVERB:
@@ -551,7 +542,7 @@ class ReadItem : private Item
 						// Skip wrong indefinite article
 						// Example: "An horse is incorrect."
 						grammarParameter == GRAMMAR_GENERALIZATION_PART ||
-						// Typically for Dutch
+						// Typical for Dutch
 						// Skip wrong definite article
 						// Example: "De paard is onjuist."
 						grammarParameter == GRAMMAR_GENERALIZATION_ASSIGNMENT );
@@ -700,6 +691,21 @@ class ReadItem : private Item
 	ReadItem *nextReadItem()
 		{
 		return (ReadItem *)nextItem;
+		}
+
+	WordItem *lookAheadRelationWordItem()
+		{
+		ReadItem *searchReadItem = this;
+
+		while( searchReadItem != NULL )
+			{
+			if( searchReadItem->isRelationWord() )
+				return searchReadItem->readWordItem();
+
+			searchReadItem = searchReadItem->nextReadItem();
+			}
+
+		return NULL;
 		}
 
 	WordItem *readWordItem()

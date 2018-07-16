@@ -82,10 +82,10 @@
 <	- Every parent is a woman or a man.
 <	- James was a man.
 < James was probably a parent of Peter. Because:
-<	- Peter had probably a parent, called James.
-* 	and:
 <	- Every family has parents and children.
 <	- Peter is probably a child of James.
+* 	and:
+<	- Peter had probably a parent, called James.
 * 	and:
 <	- Every parent is a father or a mother.
 <	- James was the father of Peter.

@@ -1,7 +1,7 @@
 ﻿/*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -268,7 +268,7 @@ class ScoreList : private List
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createScoreItem";
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, new ScoreItem( isChecked, globalVariables()->currentAssignmentLevel, oldSatisfiedScore, newSatisfiedScore, oldDissatisfiedScore, newDissatisfiedScore, oldNotBlockingScore, newNotBlockingScore, oldBlockingScore, newBlockingScore, referenceSelectionItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an active score item" );
+			return addError( functionNameString, "I failed to add a score item" );
 
 		return RESULT_OK;
 		}
@@ -285,7 +285,7 @@ class ScoreList : private List
 			if( searchScoreItem->assignmentLevel() == currentAssignmentLevel )
 				{
 				if( deleteItem( searchScoreItem ) != RESULT_OK )
-					return addError( functionNameString, "I failed to delete an active item" );
+					return addError( functionNameString, "I failed to delete a score item" );
 
 				searchScoreItem = nextScoreListItem();
 				}

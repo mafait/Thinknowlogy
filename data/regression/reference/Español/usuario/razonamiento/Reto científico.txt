@@ -87,8 +87,9 @@
 < Santiago es probablemente un hombre.
 < 
 ! 
-! No se acepta esta frase, porque está en conflicto consigo mismo.
-! 
+! No se acepta esta frase, porque está en conflicto con:
+< Cada persona es un hombre o una mujer.
+< 
 * 
 * Mis preguntas:
 < ¿Es Cruz un hombre o una mujer?

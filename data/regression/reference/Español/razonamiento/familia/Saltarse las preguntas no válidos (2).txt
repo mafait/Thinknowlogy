@@ -49,8 +49,8 @@
 < Ana tiene posiblemente una hija, llamada Luisa.
 < Pablo es posiblemente una persona.
 < Pablo es posiblemente parte de una familia.
-< José es posiblemente una persona.
 < José es posiblemente parte de una familia.
+< José es posiblemente una persona.
 < Luisa es posiblemente hija de Ana.
 < Luisa es posiblemente parte de una familia.
 < Luisa no es posiblemente un hijo.

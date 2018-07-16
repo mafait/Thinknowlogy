@@ -1,7 +1,7 @@
 ﻿/*	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -72,7 +72,7 @@ class InterfaceList extends List
 	protected byte createInterfaceItem( short interfaceParameter, int interfaceStringLength, String interfaceString )
 		{
 		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new InterfaceItem( interfaceParameter, interfaceStringLength, interfaceString, this, myWordItem() ) ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to add an active interface item" );
+			return addError( 1, "I failed to add an interface item" );
 
 		return Constants.RESULT_OK;
 		}

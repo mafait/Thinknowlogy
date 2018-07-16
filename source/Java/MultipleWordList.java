@@ -1,7 +1,7 @@
 ﻿/*	Class:			MultipleWordList
  *	Parent class:	List
  *	Purpose:		To store multiple word items
- *	Version:		Thinknowlogy 2018r1 (ShangDi 上帝)
+ *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -56,9 +56,8 @@ class MultipleWordList extends List
 
 	// Protected methods
 
-	protected short matchingMultipleSingularNounWordParts( String sentenceString )
+	protected short matchingMultipleWordParts( String sentenceString )
 		{
-		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		MultipleWordItem searchMultipleWordItem = firstActiveMultipleWordItem();
 		WordItem multipleWordItem;
 		String multipleWordString;
@@ -67,16 +66,10 @@ class MultipleWordList extends List
 			{
 			while( searchMultipleWordItem != null )
 				{
-				if( searchMultipleWordItem.isSingularNoun() &&
-				searchMultipleWordItem.wordTypeLanguageNr() == currentLanguageNr &&
-				( multipleWordItem = searchMultipleWordItem.multipleWordItem() ) != null )
-					{
-					multipleWordString = multipleWordItem.singularNounString();
-
-					if( multipleWordString != null &&
-					sentenceString.startsWith( multipleWordString ) )
-						return searchMultipleWordItem.nWordParts();
-					}
+				if( ( multipleWordItem = searchMultipleWordItem.multipleWordItem() ) != null &&
+				( multipleWordString = multipleWordItem.anyWordTypeString() ) != null &&
+				sentenceString.startsWith( multipleWordString ) )
+					return searchMultipleWordItem.nWordParts();
 
 				searchMultipleWordItem = searchMultipleWordItem.nextMultipleWordItem();
 				}
@@ -96,7 +89,7 @@ class MultipleWordList extends List
 
 		if( !hasFoundMultipleWordItem( wordTypeNr, multipleWordItem ) &&
 		addItemToList( Constants.QUERY_ACTIVE_CHAR, new MultipleWordItem( nWordParts, GlobalVariables.currentLanguageNr, wordTypeNr, multipleWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to add an active multiple word item" );
+			return addError( 1, "I failed to add a multiple word item" );
 
 		return Constants.RESULT_OK;
 		}

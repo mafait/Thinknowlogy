@@ -193,12 +193,12 @@
 <	- Anna is a mother.
 <	- A mother is probably a person.
 < Anna is probably a parent of Paul, Joe and Laura. Because:
-<	- Laura has probably a parent, called Anna.
-<	- Joe has probably a parent, called Anna.
-<	- Paul has probably a parent, called Anna.
-* 	and:
 <	- Every parent is a father or a mother.
 <	- Anna is the mother of Paul, Joe and Laura.
+* 	and:
+<	- Paul has probably a parent, called Anna.
+<	- Joe has probably a parent, called Anna.
+<	- Laura has probably a parent, called Anna.
 < Anna has probably 3 children, called Paul, Joe and Laura. Because:
 <	- Every family has parents and children.
 <	- Paul has probably a parent, called Anna.
@@ -313,11 +313,11 @@
 <	- Every family has parents and children.
 <	- Anna is probably a parent of Paul, Joe and Laura.
 * 	and:
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 <	- Laura has a mother, called Anna.
-* 	and:
-<	- Anna has probably 3 children, called Paul, Joe and Laura.
 < Laura is possibly a daughter of Anna. Because:
 <	- Laura is probably a child of Anna.
 <	- Every child is a son or a daughter.
