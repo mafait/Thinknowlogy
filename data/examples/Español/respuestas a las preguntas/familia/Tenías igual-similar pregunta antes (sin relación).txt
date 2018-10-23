@@ -1,0 +1,11 @@
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+¿Es Juan un padre?
+¿Es Ana un padre o una madre?
+¿Es Pablo un hijo?
+¿Es Luisa una hija?
+¿Es Juan un padre?
+¿Es Juan un padre o una madre?
+¿Es Ana un padre o una madre?
+¿Es Pablo un hijo o una hija?
+¿Es Luisa un hijo o una hija?
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

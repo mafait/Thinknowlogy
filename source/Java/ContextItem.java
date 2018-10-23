@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,13 +25,13 @@ class ContextItem extends Item
 	{
 	// Private initialized variables
 
-	private short contextWordTypeNr_;
-	private short specificationWordTypeNr_;
+	private short contextWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
+	private short specificationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
-	private int contextNr_;
-	private int spanishAmbiguousCollectionNr_;
+	private int contextNr_ = Constants.NO_CONTEXT_NR;
+	private int spanishAmbiguousCollectionNr_ = Constants.NO_COLLECTION_NR;
 
-	private WordItem specificationWordItem_;
+	private WordItem specificationWordItem_ = null;
 
 
 	// Constructor
@@ -65,7 +65,7 @@ class ContextItem extends Item
 		( wordString = specificationWordItem_.wordTypeString( true, specificationWordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )

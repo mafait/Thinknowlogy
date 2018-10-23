@@ -1,6 +1,6 @@
 /*	Class:		InputOutput
  *	Purpose:	To read and write user information
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -37,12 +37,12 @@ class InputOutput
 	private static int currentPosition_;
 	private static int previousProgress_;
 
-	private static StringBuffer currentStatusStringBuffer_;
-	private static StringBuffer outputStringBuffer_;
-
 	private static BufferedWriter testFile_;
 
 	private static String classNameString_ = "InputOutput";
+
+	private static StringBuffer currentStatusStringBuffer_;
+	private static StringBuffer outputStringBuffer_;
 
 
 	// Private static methods
@@ -114,9 +114,6 @@ class InputOutput
 			{
 			isDisplayingExtraPromptLine_ = true;
 
-			if( diacriticalTextString.charAt( 0 ) == Constants.QUERY_STRING_START_CHAR )
-				position++;
-
 			while( GlobalVariables.result == Constants.RESULT_OK &&
 			position < diacriticalTextString.length() )
 				{
@@ -181,6 +178,7 @@ class InputOutput
 		int promptStringLength;
 		int wordPosition;
 		String textString;
+		StringBuffer writeStringBuffer = new StringBuffer();
 
 		if( writeString != null )
 			{
@@ -224,7 +222,7 @@ class InputOutput
 						( promptStringLength = promptString.length() ) > 0 )
 							{
 							currentPosition_ = ( promptStringLength - 1 );
-							addStringToOutput( isSkippingInTestFile, false, promptString );
+							writeStringBuffer.append( promptString );
 							}
 	
 						if( i < printStringLength )
@@ -258,10 +256,9 @@ class InputOutput
 							textString.charAt( i ) == Constants.CARRIAGE_RETURN_CHAR ) )
 								{
 								startNewLine = true;
-								addStringToOutput( isSkippingInTestFile, ( i + 1 == printStringLength ), Constants.CARRIAGE_RETURN_NEW_LINE_STRING );
-	
 								i++;
 								currentPosition_ = 0;
+								writeStringBuffer.append( Constants.CARRIAGE_RETURN_NEW_LINE_STRING );
 								}
 							}
 	
@@ -273,22 +270,21 @@ class InputOutput
 								{
 								leftWidth--;
 								currentPosition_++;
-								addStringToOutput( isSkippingInTestFile, false, Constants.SPACE_STRING );
+								writeStringBuffer.append( Constants.SPACE_STRING );
 								}
 	
 							if( i < printStringLength )
 								{
 								if( textString.charAt( i ) == Constants.TAB_CHAR )
 									{
-									addStringToOutput( isSkippingInTestFile, ( i + 1 == printStringLength ), Constants.EMPTY_STRING + textString.charAt( i ) );
-
+									writeStringBuffer.append( textString.charAt( i ) );
 									i++;
 									currentPosition_ += length;
 									}
 								else
 									{
 									do	{
-										addStringToOutput( isSkippingInTestFile, ( i + 1 == printStringLength ), Constants.EMPTY_STRING + textString.charAt( i ) );
+										writeStringBuffer.append( textString.charAt( i ) );
 	
 										if( textString.charAt( i ) == Constants.NEW_LINE_CHAR ||
 										textString.charAt( i ) == Constants.CARRIAGE_RETURN_CHAR )
@@ -308,8 +304,10 @@ class InputOutput
 				while( rightWidth-- > Constants.NO_CENTER_WIDTH )
 					{
 					currentPosition_++;
-					addStringToOutput( isSkippingInTestFile, ( ( i + 1 ) == printStringLength && rightWidth == Constants.NO_CENTER_WIDTH ), Constants.SPACE_STRING );
+					writeStringBuffer.append( Constants.SPACE_STRING );
 					}
+
+				addStringToOutput( isSkippingInTestFile, true, writeStringBuffer.toString() );
 				}
 			else
 				{
@@ -419,19 +417,21 @@ class InputOutput
 
 	protected static void initialize()
 		{
+		// Private static variables
+
 		hasReadLine_ = false;
 		isDisplayingExtraPromptLine_ = false;
-
-		currentPosition_ = 0;
-		previousProgress_ = 0;
 
 		lastShownInterfaceParameter_ = Constants.NO_INTERFACE_PARAMETER;
 		lastUsedPromptTypeNr_ = Constants.INPUT_OUTPUT_PROMPT_QUERY;
 
-		currentStatusStringBuffer_ = null;
-		outputStringBuffer_ = new StringBuffer();
+		currentPosition_ = 0;
+		previousProgress_ = 0;
 
 		testFile_ = null;
+
+		currentStatusStringBuffer_ = null;
+		outputStringBuffer_ = new StringBuffer();
 		}
 
 	// Protected methods
@@ -541,7 +541,7 @@ class InputOutput
 		return diacriticalChar;
 		}
 
-	protected static byte readLine( boolean isClearInputField, boolean isDisplayingLine, boolean isFirstLine, boolean isPassword, boolean isQuestion, String promptString, StringBuffer readStringBuffer, BufferedReader readFile )
+	protected static byte readLine( boolean isClearInputField, boolean isDeveloperTheCurrentUser, boolean isDisplayingLine, boolean isFirstLine, boolean isPassword, boolean isQuestion, String promptString, StringBuffer readStringBuffer, BufferedReader readFile )
 		{
 		int readStringLength;
 		int startPosition = 0;
@@ -557,14 +557,7 @@ class InputOutput
 				promptStringBuffer.append( Constants.INPUT_OUTPUT_PROMPT_WRITE_STRING );
 
 			if( promptString != null )
-				{
-				if( isQuestion &&
-				promptString.length() > 0 &&
-				Character.isLetter( promptString.charAt( 0 ) ) )
-					promptStringBuffer.append( Character.toUpperCase( promptString.charAt( 0 ) ) + promptString.substring( 1 ) );
-				else
-					promptStringBuffer.append( promptString );
-				}
+				promptStringBuffer.append( isQuestion && promptString.length() > 0 && Character.isLetter( promptString.charAt( 0 ) ) ? Character.toUpperCase( promptString.charAt( 0 ) ) + promptString.substring( 1 ) : promptString );
 
 			promptStringBuffer.append( isQuestion ? Constants.INPUT_OUTPUT_PROMPT_QUERY_STRING : Constants.INPUT_OUTPUT_PROMPT_READ_STRING );
 
@@ -633,13 +626,22 @@ class InputOutput
 								// Remove UTF-8 BOM marker
 								readString = readString.substring( 1 );
 
-							// Strip Java comment from line
-							if( readString.startsWith( Constants.INPUT_OUTPUT_STRIP_COMMENT_STRING ) )
-								readString = readString.substring( Constants.INPUT_OUTPUT_STRIP_COMMENT_STRING.length() );
+							if( readString.startsWith( Constants.INPUT_OUTPUT_DEVELOPER_TAG_STRING ) )
+								{
+								if( isDeveloperTheCurrentUser )
+									// Strip Developer tag from line
+									readString = readString.substring( Constants.INPUT_OUTPUT_DEVELOPER_TAG_STRING.length() );
+								else
+									isDisplayingLine = false;
+								}
+
+							if( readString.startsWith( Constants.INPUT_OUTPUT_JAVA_ACCEPT_TAG_STRING ) )
+								// Strip Java tag from line
+								readString = readString.substring( Constants.INPUT_OUTPUT_JAVA_ACCEPT_TAG_STRING.length() );
 
 							if( isDisplayingLine &&
 							// Skip C++ comment line
-							!readString.startsWith( Constants.INPUT_OUTPUT_SKIP_COMMENT_STRING ) &&
+							!readString.startsWith( Constants.INPUT_OUTPUT_CPP_SKIP_TAG_STRING ) &&
 							writeText( false, true, true, Constants.INPUT_OUTPUT_PROMPT_READ, Constants.NO_CENTER_WIDTH, promptStringBuffer.toString(), ( readString.length() == 0 ? Constants.NEW_LINE_STRING : readString ) ) != Constants.RESULT_OK )
 								displayError( Constants.SYMBOL_QUESTION_MARK, classNameString_, null, null, 1, "I failed to write the text" );
 							}

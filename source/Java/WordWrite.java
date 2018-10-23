@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordWrite
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,40 +25,39 @@ class WordWrite
 	{
 	// Private constructed variables
 
-	private boolean hasFoundAllRelationWords_;
-	private boolean hasFoundAllRelationWordsBeforeConjunction_;
-	private boolean hasFoundAllSpecificationWords_;
-	private boolean hasFoundAllSpecificationWordsBeforeConjunction_;
-	private boolean hasFoundWordToWrite_;
-	private boolean hasGeneralizationWord_;
-	private boolean hasFoundSingleSpecificationWord_;
-	private boolean hasFoundSpecificationGeneralizationVerb_;
-	private boolean hasFoundSpecificationWord_;
-	private boolean isChineseCurrentLanguage_;
-	private boolean isSkippingClearWriteLevel_;
-	private boolean isSpecificationWaitingForConjunction_;
-	private boolean isUnknownPluralOfNoun_;
+	private boolean hasFoundAllRelationWords_ = false;
+	private boolean hasFoundAllRelationWordsBeforeConjunction_ = false;
+	private boolean hasFoundAllSpecificationWords_ = false;
+	private boolean hasFoundAllSpecificationWordsBeforeConjunction_ = false;
+	private boolean hasFoundWordToWrite_ = false;
+	private boolean hasGeneralizationWord_ = false;
+	private boolean hasFoundSingleSpecificationWord_ = false;
+	private boolean hasFoundSpecificationGeneralizationVerb_ = false;
+	private boolean hasFoundSpecificationWord_ = false;
+	private boolean isChineseCurrentLanguage_ = false;
+	private boolean isSkippingClearWriteLevel_ = false;
+	private boolean isSpecificationWaitingForConjunction_ = false;
+	private boolean isUnknownPluralOfNoun_ = false;
 
-	private short writeWordTypeNr_;
+	private short writeWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
-	private int generalizationStartWordPosition_;
-	private int specificationStartWordPosition_;
+	private int generalizationStartWordPosition_ = 0;
+	private int specificationStartWordPosition_ = 0;
 
-	private SpecificationItem lastFoundSpecificationItem_;
+	private SpecificationItem lastFoundSpecificationItem_ = null;
 
-	private WordItem lastFoundRelationWordItem_;
+	private WordItem lastFoundRelationWordItem_ = null;
 
-	private String writeWordString_;
+	private String writeWordString_ = null;
 
-	private StringBuffer lastSpecificationStringBuffer_;
-	private StringBuffer previousSpecificationStringBuffer_;
+	private String moduleNameString_ = this.getClass().getName();
 
+	private StringBuffer lastSpecificationStringBuffer_ = null; 
+	private StringBuffer previousSpecificationStringBuffer_ = null;
 
 	// Private initialized variables
 
-	private String moduleNameString_;
-
-	private WordItem myWordItem_;
+	private WordItem myWordItem_ = null;
 
 
 	// Private methods
@@ -98,36 +97,20 @@ class WordWrite
 
 	private byte checkAssumptionLevel( SpecificationItem writeSpecificationItem )
 		{
-		short currentAssumptionLevel;
 		short previousAssumptionLevel;
-		ShortResultType shortResult;
 
 		if( writeSpecificationItem == null )
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given write specification item is undefined" );
 
 		previousAssumptionLevel = writeSpecificationItem.assumptionLevel();
 
-		if( myWordItem_.hasCorrectedAssumptionByKnowledge() )
-			{
-			// Normal calculation will go wrong if corrected assumption is rewritten
-			// In other words: If the stored sentence buffer string isn't used
-			if( writeSpecificationItem.recalculateAssumption() != Constants.RESULT_OK )
-				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to calculate the assumption level of the write specification" );
+		if( writeSpecificationItem.calculateAssumptionLevel() != Constants.RESULT_OK )
+			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to calculate the assumption level of the write specification" );
 
-			currentAssumptionLevel = writeSpecificationItem.assumptionLevel();
-			}
-		else
-			{
-			if( ( shortResult = writeSpecificationItem.calculateAssumptionLevel() ).result != Constants.RESULT_OK )
-				return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to calculate the assumption level of the write specification" );
-
-			currentAssumptionLevel = shortResult.shortValue;
-			}
-
-		// Difference between recalculated assumption level and previous assumption level
-		// Assumption level is not recalculated after change
-		if( currentAssumptionLevel != previousAssumptionLevel &&
-		InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nThe assumption level of the following specification item has changed during the process, but it isn't recalculated.\nSo, this specification may have a recalculation or update issue.\n\tPrevious assumption level: " + previousAssumptionLevel + ", recalculated assumption level: " + currentAssumptionLevel + ";\n\tSpecificationItem: " + writeSpecificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n\n" ) != Constants.RESULT_OK )
+		// There is a difference between recalculated assumption level and previous assumption level
+		// So, the assumption level is not recalculated after a change during the process
+		if( writeSpecificationItem.assumptionLevel() != previousAssumptionLevel &&
+		InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, "\nThe assumption level of the following specification item has changed during the process, but it isn't recalculated.\nSo, this specification may have a recalculation or update issue.\n\tPrevious assumption level: " + previousAssumptionLevel + ", recalculated assumption level: " + writeSpecificationItem.assumptionLevel() + ";\n\tSpecificationItem: " + writeSpecificationItem.itemToStringBuffer( Constants.NO_WORD_TYPE_NR ) + ".\n\n" ) != Constants.RESULT_OK )
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "I failed to write an interface warning" );
 
 		return Constants.RESULT_OK;
@@ -168,7 +151,6 @@ class WordWrite
 
 	private byte clearWriteLevel( boolean isWritingCurrentSpecificationWordOnly, short currentWriteLevel, SpecificationItem clearSpecificationItem )
 		{
-		boolean isAnsweredQuestion;
 		boolean isExclusiveSpecification = false;
 		boolean isNegative = false;
 		boolean isPossessive = false;
@@ -198,27 +180,23 @@ class WordWrite
 			if( ( relationContextNr = clearSpecificationItem.relationContextNr() ) == Constants.NO_CONTEXT_NR )
 				{
 				if( !isWritingCurrentSpecificationWordOnly &&
-				( specificationCollectionNr = clearSpecificationItem.specificationCollectionNr() ) > Constants.NO_COLLECTION_NR )
+				( specificationCollectionNr = clearSpecificationItem.specificationCollectionNr() ) > Constants.NO_COLLECTION_NR &&
+				( currentSpecificationItem = myWordItem_.firstSpecificationItem( clearSpecificationItem.isAssignment(), clearSpecificationItem.isInactiveAssignment(), clearSpecificationItem.isArchivedAssignment(), clearSpecificationItem.questionParameter() ) ) != null )
 					{
-					isAnsweredQuestion = clearSpecificationItem.isAnsweredQuestion();
+					// Clear specification write level of related specification words
+					isExclusiveSpecification = clearSpecificationItem.isExclusiveSpecification();
+					isNegative = clearSpecificationItem.isNegative();
+					isPossessive = clearSpecificationItem.isPossessive();
+					isSelfGenerated = clearSpecificationItem.isSelfGenerated();
+					assumptionLevel = clearSpecificationItem.assumptionLevel();
+					generalizationContextNr = clearSpecificationItem.generalizationContextNr();
 
-					if( ( currentSpecificationItem = myWordItem_.firstSpecificationItem( isAnsweredQuestion, clearSpecificationItem.isAssignment(), clearSpecificationItem.isInactiveAssignment(), clearSpecificationItem.isArchivedAssignment(), clearSpecificationItem.questionParameter() ) ) != null )
-						{
-						// Clear specification write level of related specification words
-						isExclusiveSpecification = clearSpecificationItem.isExclusiveSpecification();
-						isNegative = clearSpecificationItem.isNegative();
-						isPossessive = clearSpecificationItem.isPossessive();
-						isSelfGenerated = clearSpecificationItem.isSelfGenerated();
-						assumptionLevel = clearSpecificationItem.assumptionLevel();
-						generalizationContextNr = clearSpecificationItem.generalizationContextNr();
-
-						do	{
-							if( currentSpecificationItem != clearSpecificationItem &&
-							( currentSpecificationWordItem = currentSpecificationItem.relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, Constants.NO_WORD_TYPE_NR, specificationCollectionNr, generalizationContextNr, relationContextNr ) ) != null )
-								currentSpecificationWordItem.clearSpecificationWriteLevel( currentWriteLevel );
-							}
-						while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != null );
+					do	{
+						if( currentSpecificationItem != clearSpecificationItem &&
+						( currentSpecificationWordItem = currentSpecificationItem.relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, Constants.NO_WORD_TYPE_NR, specificationCollectionNr, generalizationContextNr, relationContextNr ) ) != null )
+							currentSpecificationWordItem.clearSpecificationWriteLevel( currentWriteLevel );
 						}
+					while( ( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem() ) != null );
 					}
 				}
 			else
@@ -365,7 +343,6 @@ class WordWrite
 
 	private byte writeSpecificationWordToSentence( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isSelfGenerated, boolean isSpecificationGeneralization, boolean isWritingCurrentSpecificationWordOnly, short assumptionLevel, short grammarDefinitionWordTypeNr, short questionParameter, short specificationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int relationContextNr, SpecificationItem writeSpecificationItem, WordItem specificationWordItem )
 		{
-		boolean isAnsweredQuestion;
 		boolean hasSkippedDifferentSpecification = false;
 		short currentSpecificationWordTypeNr;
 		SpecificationItem currentSpecificationItem;
@@ -393,9 +370,7 @@ class WordWrite
 			}
 		else
 			{
-			isAnsweredQuestion = writeSpecificationItem.isAnsweredQuestion();
-
-			if( ( currentSpecificationItem = myWordItem_.firstSpecificationItem( isAnsweredQuestion, isAssignment, isInactiveAssignment, isArchivedAssignment, questionParameter ) ) != null )
+			if( ( currentSpecificationItem = myWordItem_.firstSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, questionParameter ) ) != null )
 				{
 				do	{
 					if( ( currentSpecificationItem == writeSpecificationItem ||
@@ -420,7 +395,7 @@ class WordWrite
 						}
 					}
 				while( writeWordString_ == null &&
-				( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != null );
+				( currentSpecificationItem = currentSpecificationItem.nextSelectedQuestionParameterSpecificationItem() ) != null );
 				}
 			}
 
@@ -570,7 +545,6 @@ class WordWrite
 			return myWordItem_.startErrorInWord( 1, moduleNameString_, "The given write specification item is undefined" );
 
 		hasRelationContext = writeSpecificationItem.hasRelationContext();
-
 		isAssignment = writeSpecificationItem.isAssignment();
 		isActiveAssignment = writeSpecificationItem.isActiveAssignment();
 		isArchivedAssignment = writeSpecificationItem.isArchivedAssignment();
@@ -861,6 +835,7 @@ class WordWrite
 			case Constants.WORD_PARAMETER_ADVERB_ASSUMPTION_MAYBE:
 				if( isSelfGeneratedAssumption )
 					{
+					// Check if the assumption level is still correct
 					if( checkAssumptionLevel( writeSpecificationItem ) != Constants.RESULT_OK )
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to check the assumption level for 'maybe'" );
 					}
@@ -879,6 +854,7 @@ class WordWrite
 			case Constants.WORD_PARAMETER_ADVERB_ASSUMPTION_POSSIBLY:
 				if( isSelfGeneratedAssumption )
 					{
+					// Check if the assumption level is still correct
 					if( checkAssumptionLevel( writeSpecificationItem ) != Constants.RESULT_OK )
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to check the assumption level for 'possibly'" );
 					}
@@ -897,6 +873,7 @@ class WordWrite
 			case Constants.WORD_PARAMETER_ADVERB_ASSUMPTION_PROBABLY:
 				if( isSelfGeneratedAssumption )
 					{
+					// Check if the assumption level is still correct
 					if( checkAssumptionLevel( writeSpecificationItem ) != Constants.RESULT_OK )
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to check the assumption level for 'probably'" );
 					}
@@ -1384,37 +1361,6 @@ class WordWrite
 
 	protected WordWrite( WordItem myWordItem )
 		{
-		// Private constructed variables
-
-		hasFoundAllRelationWords_ = false;
-		hasFoundAllRelationWordsBeforeConjunction_ = false;
-		hasFoundAllSpecificationWords_ = false;
-		hasFoundAllSpecificationWordsBeforeConjunction_ = false;
-		hasFoundWordToWrite_ = false;
-		hasGeneralizationWord_ = false;
-		hasFoundSingleSpecificationWord_ = false;
-		hasFoundSpecificationGeneralizationVerb_ = false;
-		hasFoundSpecificationWord_ = false;
-		isChineseCurrentLanguage_ = false;
-		isSkippingClearWriteLevel_ = false;
-		isSpecificationWaitingForConjunction_ = false;
-		isUnknownPluralOfNoun_ = false;
-
-		writeWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
-
-		generalizationStartWordPosition_ = 0;
-		specificationStartWordPosition_ = 0;
-
-		lastFoundSpecificationItem_ = null;
-
-		lastFoundRelationWordItem_ = null;
-
-		writeWordString_ = null;
-
-		// Private initialized variables
-
-		moduleNameString_ = this.getClass().getName();
-
 		// Checking private initialized variables
 
 		if( ( myWordItem_ = myWordItem ) == null )
@@ -1517,7 +1463,7 @@ class WordWrite
 		StringBuffer storedSentenceStringBuffer;
 		StringBuffer storedSentenceWithOnlyOneSpecificationStringBuffer = null;
 		StringBuffer writtenSentenceStringBuffer;
-		RelatedResultType relatedResult = new RelatedResultType();
+		RelatedResultType relatedResult;
 
 		GlobalVariables.learnedFromUserStringBuffer = new StringBuffer();
 		GlobalVariables.writtenSentenceStringBuffer = new StringBuffer();
@@ -1554,11 +1500,11 @@ class WordWrite
 
 			if( ( specificationWordItem = writeSpecificationItem.specificationWordItem() ) != null )
 				{
-				if( !isWritingCurrentSpecificationWordOnly &&
+				if( hasSpecificationCollection &&
+				!isWritingCurrentSpecificationWordOnly &&
 				answerParameter == Constants.NO_ANSWER_PARAMETER )
 					{
-					if( hasSpecificationCollection &&
-					( relatedResult = myWordItem_.findRelatedSpecification( true, writeSpecificationItem ) ).result != Constants.RESULT_OK )
+					if( ( relatedResult = myWordItem_.findRelatedSpecification( true, writeSpecificationItem ) ).result != Constants.RESULT_OK )
 						return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find a related specification" );
 
 					isFirstRelatedSpecification = relatedResult.isFirstRelatedSpecification;
@@ -1654,14 +1600,12 @@ class WordWrite
 				isWritingSentenceWithOnlyOneSpecification = ( isWritingCurrentSpecificationWordOnly &&
 															( storedSentenceWithOnlyOneSpecificationStringBuffer = writeSpecificationItem.storedSentenceWithOnlyOneSpecificationStringBuffer() ) != null );
 
-				storedSentenceStringBuffer = writeSpecificationItem.storedSentenceStringBuffer();
-
 				// Efficiency: Use the stored sentence if still up-to-date
-				if( answerParameter == Constants.NO_ANSWER_PARAMETER &&
-				storedSentenceStringBuffer != null &&
+				if( ( storedSentenceStringBuffer = writeSpecificationItem.storedSentenceStringBuffer() ) != null &&
+				answerParameter == Constants.NO_ANSWER_PARAMETER &&
 
-				( isWritingSentenceWithOnlyOneSpecification ||
-				isQuestion ||
+				( isQuestion ||
+				isWritingSentenceWithOnlyOneSpecification ||
 
 				// No relation context
 				( !hasRelationContext &&

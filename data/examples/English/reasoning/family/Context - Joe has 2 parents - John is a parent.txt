@@ -1,7 +1,7 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 Joe has 2 parents, called John and Anna.
 John is a parent of Paul, Joe and Laura.
-Display the justification report about John.
-Display the justification report about Paul.
-Display the justification report about Joe.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Paul.
+#Dev#Display the justification report about Joe.
 # To continue, click button «Clear your mind.» or «Restart.».

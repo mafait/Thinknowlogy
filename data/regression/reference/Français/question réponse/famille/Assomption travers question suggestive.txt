@@ -67,10 +67,10 @@
 < Olivier a probablement un enfant, appelé Pascal. En raison:
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 < Olivier est probablement un parent de Pascal. En raison:
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant de Olivier et Amélie.
-* 	et:
-<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
@@ -188,10 +188,10 @@
 < Olivier a probablement un enfant, appelé Pascal. En raison:
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 < Olivier est probablement un parent de Pascal. En raison:
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant de Olivier et Amélie.
-* 	et:
-<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.

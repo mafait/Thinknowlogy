@@ -1,0 +1,4 @@
+﻿Een condensatiepunt is karakteristiek voor ieder soort gas.
+Waterdamp heeft een condensatiepunt van 100 graden Celsius.
+#Dev#Toon de verantwoordingsrapportage over waterdamp.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

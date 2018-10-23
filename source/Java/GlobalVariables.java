@@ -1,6 +1,6 @@
 /*	Class:		GlobalVariables
  *	Purpose:	To hold the global variables
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -143,10 +143,11 @@ class GlobalVariables
 		predefinedNounLanguageWordItem = null;
 		predefinedNounUserWordItem = null;
 
-		// Don't initialize 'currentPathStringBuffer' there. 
-		// It will be set in the main() method of the Thinknowlogy class.
-		// Otherwise it will destroy the initialization by Thinknowlogy
+		/* Don't initialize 'currentPathStringBuffer' here.
+		Otherwise it will destroy the initialization by class Thinknowlogy
+		This variable will be set in the main() method of class Thinknowlogy */
 //		currentPathStringBuffer = null;
+
 		interfaceLanguageStringBuffer = null;
 		learnedFromUserStringBuffer = null;
 		queryStringBuffer = null;

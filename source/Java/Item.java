@@ -1,6 +1,6 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -23,26 +23,25 @@
 class Item
 	{
 	// Private constructed variables
-	private short userNr_;
-	private int activeSentenceNr_;
-	private int inactiveSentenceNr_;
-	private int originalSentenceNr_;
-	private int creationSentenceNr_;
-	private int archivedSentenceNr_;
-	private int replacedSentenceNr_;
-	private int itemNr_;
-	private char statusChar_;
-	// Private initialized variables
-	private List myList_;
-	private WordItem myWordItem_;
-	private String moduleNameString_;
+	private short userNr_ = Constants.NO_USER_NR;
+	private int originalSentenceNr_ = Constants.NO_SENTENCE_NR;
+	private int creationSentenceNr_ = GlobalVariables.currentSentenceNr;
+	private int activeSentenceNr_ = Constants.NO_SENTENCE_NR;
+	private int inactiveSentenceNr_ = Constants.NO_SENTENCE_NR;
+	private int archivedSentenceNr_ = Constants.NO_SENTENCE_NR;
+	private int replacedSentenceNr_ = Constants.NO_SENTENCE_NR;
+	private int itemNr_ = Constants.NO_ITEM_NR;
+	private char statusChar_ = Constants.QUERY_ACTIVE_CHAR;
+	private List myList_ = null;
+	private WordItem myWordItem_ = null;
+	private String moduleNameString_ = this.getClass().getName();
 	// Protected constructed variables
-	protected boolean isSelectedByQuery;
-	protected boolean isSelectedByJustificationQuery;
-	protected char previousStatusChar;
-	protected Item previousItem;
-	protected Item nextItem;
-	protected StringBuffer debugStringBuffer;
+	protected boolean isSelectedByQuery = false;
+	protected boolean isSelectedByJustificationQuery = false;
+	protected char previousStatusChar = Constants.QUERY_ACTIVE_CHAR;
+	protected Item previousItem = null;
+	protected Item nextItem = null;
+	protected StringBuffer debugStringBuffer = null;
 
 	// Private methods
 
@@ -51,7 +50,7 @@ class Item
 		String wordTypeString = null;
 
 		if( myList_ != null &&
-		// Don't display my word string if the item is in an admin list
+		// Don't display my word string if the item is in an Admin list
 		!myList_.isAdminList() &&
 		myWordItem_ != null &&
 		( wordTypeString = myWordItem_.wordTypeString( true, queryWordTypeNr ) ) == null )
@@ -60,41 +59,11 @@ class Item
 		return wordTypeString;
 		}
 
+
 	// Constructor
 
 	protected Item()
 		{
-		// Private constructed variables
-
-		userNr_ = Constants.NO_USER_NR;
-
-		originalSentenceNr_ = Constants.NO_SENTENCE_NR;
-		creationSentenceNr_ = GlobalVariables.currentSentenceNr;
-
-		activeSentenceNr_ = Constants.NO_SENTENCE_NR;
-		inactiveSentenceNr_ = Constants.NO_SENTENCE_NR;
-		archivedSentenceNr_ = Constants.NO_SENTENCE_NR;
-		replacedSentenceNr_ = Constants.NO_SENTENCE_NR;
-
-		itemNr_ = Constants.NO_ITEM_NR;
-
-		statusChar_ = Constants.QUERY_ACTIVE_CHAR;
-
-		// Private initialized variables
-		moduleNameString_ = this.getClass().getName();
-
-		myList_ = null;
-		myWordItem_ = null;
-
-		// Protected constructed variables
-
-		isSelectedByQuery = false;
-		isSelectedByJustificationQuery = false;
-
-		previousStatusChar = Constants.QUERY_ACTIVE_CHAR;
-
-		nextItem = null;
-		previousItem = null;
 		}
 
 
@@ -420,27 +389,11 @@ class Item
 		return selectionResult;
 		}
 
-	protected ShortResultType addShortResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
-		{
-		ShortResultType shortResult = new ShortResultType();
-
-		shortResult.result = addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
-		return shortResult;
-		}
-
 	protected ShortResultType startShortResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		ShortResultType shortResult = new ShortResultType();
 
 		shortResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
-		return shortResult;
-		}
-
-	protected ShortResultType startShortResultSystemError( int methodLevel, String errorString )
-		{
-		ShortResultType shortResult = new ShortResultType();
-
-		shortResult.result = startSystemError( 1, null, errorString );
 		return shortResult;
 		}
 
@@ -651,7 +604,7 @@ class Item
 		if( ( myWordString = myWordTypeString( queryWordTypeNr ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -928,7 +881,8 @@ class Item
 		{
 		String myWordString = myWordTypeString( queryWordTypeNr );
 		StringBuffer queryStringBuffer;
-		String userNameString = ( myWordItem_ == null ? null : myWordItem_.userNameString( userNr_ ) );
+		String userNameString = ( myWordItem_ != null ?
+								myWordItem_.userNameString( userNr_ ) : null );
 		GlobalVariables.queryStringBuffer = new StringBuffer();
 
 		queryStringBuffer = GlobalVariables.queryStringBuffer;
@@ -1039,7 +993,7 @@ class Item
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION ||
+				justificationTypeNr == Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION ||
@@ -1051,7 +1005,7 @@ class Item
 	protected boolean isConclusion( short justificationTypeNr )
 		{
 		return ( justificationTypeNr == Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ||
+				justificationTypeNr == Constants.JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION ||
 				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION ||
@@ -1160,7 +1114,7 @@ class Item
 				return (short)( hasAnotherPrimarySpecification &&
 						hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
 
-			case Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
+			case Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION:
 				return (short)( hasFeminineOrMasculineProperNounEnding ? 1 : 0 );
 
 			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:

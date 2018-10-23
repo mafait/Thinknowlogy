@@ -1,16 +1,16 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Julien est un fils de Olivier et Amélie.
 Lorraine est une fille de Olivier et Amélie.
-Affichez le rapport de justification sur Amélie.
-Affichez le rapport de justification sur Julien.
-Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Julien.
+#Dev#Affichez le rapport de justification sur Lorraine.
 Pascal a un père, appelé Olivier.
 Julien a une mère, appelée Amélie.
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Amélie.
-Affichez le rapport de justification sur Pascal.
-Affichez le rapport de justification sur Julien.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Julien.
 Lorraine a un père, appelé Olivier.
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Lorraine.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

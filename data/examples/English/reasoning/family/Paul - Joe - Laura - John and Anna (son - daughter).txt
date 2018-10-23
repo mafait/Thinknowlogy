@@ -1,24 +1,24 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 Paul is a son of John and Anna.
-Display the justification report about John.
-Display the justification report about Anna.
-Display the justification report about Paul.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
 Joe is a son of John and Anna.
 Laura is a daughter of John and Anna.
-Display the justification report about John.
-Display the justification report about Anna.
-Display the justification report about Paul.
-Display the justification report about Joe.
-Display the justification report about Laura.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
+#Dev#Display the justification report about Joe.
+#Dev#Display the justification report about Laura.
 John is the father and Anna is the mother of Paul, Joe and Laura.
-Display the justification report about John.
-Display the justification report about Anna.
-Display the justification report about Paul.
-Display the justification report about Joe.
-Display the justification report about Laura.
-# Extra tests
-John has 2 sons, called Paul and Joe.
-Anna has 2 sons, called Paul and Joe.
-John has 3 children, called Paul, Joe and Laura.
-Anna has 3 children, called Paul, Joe and Laura.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
+#Dev#Display the justification report about Joe.
+#Dev#Display the justification report about Laura.
+#Dev## Extra tests
+#Dev#John has 2 sons, called Paul and Joe.
+#Dev#Anna has 2 sons, called Paul and Joe.
+#Dev#John has 3 children, called Paul, Joe and Laura.
+#Dev#Anna has 3 children, called Paul, Joe and Laura.
 # To continue, click button «Clear your mind.» or «Restart.».

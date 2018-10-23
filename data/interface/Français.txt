@@ -1,6 +1,6 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the French language
-# Version: Thinknowlogy 2018r2 (Natural Intelligence)
+# Version: Thinknowlogy 2018r3 (Deep Magic)
 #----------------------------------------------------------------------------
 # Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at http://mafait.org/contact/
@@ -21,10 +21,10 @@
 #Java#:111		"\"."
 
 # Console de Java (menu principal)
-#Java#:200		"Lirez le fichier "Français/utilisateur/programmation/Puissance 4"."
-#Java#:201		"Lirez le fichier "Français/utilisateur/programmation/Tours de Hanoï"."
-#Java#:202		"Lirez le fichier "Français/utilisateur/raisonnement/Défi scientifique"."
-#Java#:203		"Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille"."
+#Java#:200		"Lirez le fichier "Français/programmation/Puissance 4"."
+#Java#:201		"Lirez le fichier "Français/programmation/Tours de Hanoï"."
+#Java#:202		"Lirez le fichier "Français/raisonnement/Défi scientifique"."
+#Java#:203		"Lirez le fichier "Français/raisonnement/famille/définition de famille"."
 #Java#:204		"<programmation>"
 #Java#:205		"<raisonnement>"
 #Java#:206		"<définitions>"

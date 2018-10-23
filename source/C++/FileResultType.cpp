@@ -1,7 +1,7 @@
 ﻿/*	Class:		FileResultType
  *	Purpose:	To return file variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -38,21 +38,11 @@ class FileResultType
 	protected:
 	// Protected variables
 
-	signed char result;
-	FileItem *createdFileItem;
-	FILE *outputFile;
-	FILE *referenceFile;
+	signed char result = RESULT_OK;
 
-	protected:
-	// Constructor
-
-	FileResultType()
-		{
-		result = RESULT_OK;
-		createdFileItem = NULL;
-		outputFile = NULL;
-		referenceFile = NULL;
-		}
+	FileItem *createdFileItem = NULL;
+	FILE *outputFile = NULL;
+	FILE *referenceFile = NULL;
 	};
 #endif
 

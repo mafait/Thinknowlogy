@@ -1,4 +1,4 @@
-﻿Lees het bestand "Nederlands/gebruiker/programmeren/Vier op 'n rij".
+﻿Lees het bestand "Nederlands/programmeren/Vier op 'n rij".
 Het oplossingsniveau is hoog.
 Mijn zet is D.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

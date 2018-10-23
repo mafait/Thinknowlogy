@@ -1,6 +1,0 @@
-﻿Read the file "English/user/reasoning/family/family definition".
-Paul has 2 parents, called John and Anna.
-Joe has 2 parents, called John and Anna.
-Laura has 2 parents, called John and Anna.
-John is the father and Anna is the mother of Paul, Joe and Laura.
-# To continue, click button «Clear your mind.» or «Restart.».

@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminWrite
  *	Supports class:	AdminItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,22 +25,21 @@ class AdminWrite
 	{
 	// Private constructed variables
 
-	private boolean hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_;
-	private boolean isFirstSelfGeneratedAssumption_;
-	private boolean isFirstSelfGeneratedConclusion_;
-	private boolean isFirstSelfGeneratedQuestion_;
-	private boolean isFirstUserSpecifications_;
-	private boolean isHidingAlmostDuplicateSpanishSpecification_;
-	private boolean isWritingStartOfJustifications_;
+	private boolean hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = false;
+	private boolean isFirstSelfGeneratedAssumption_ = false;
+	private boolean isFirstSelfGeneratedConclusion_ = false;
+	private boolean isFirstSelfGeneratedQuestion_ = false;
+	private boolean isFirstUserSpecifications_ = false;
+	private boolean isHidingAlmostDuplicateSpanishSpecification_ = false;
+	private boolean isWritingStartOfJustifications_ = false;
 
-	private SpecificationItem previousPrimarySpecificationItem_;
+	private SpecificationItem previousPrimarySpecificationItem_ = null;
 
+	private String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
-	private String moduleNameString_;
-
-	private AdminItem adminItem_;
+	private AdminItem adminItem_ = null;
 
 
 	// Private methods
@@ -207,7 +206,7 @@ class AdminWrite
 
 	private byte writeJustificationType( boolean isFirstJustificationType, JustificationItem writeJustificationItem, SpecificationItem selfGeneratedSpecificationItem )
 		{
-		boolean hasNonExclusiveCollection = false;
+		boolean isNonExclusiveCollection = false;
 		boolean isExclusiveSpecification;
 		boolean isNegative;
 		boolean isNegativeAssumptionOrConclusion;
@@ -255,15 +254,15 @@ class AdminWrite
 		if( ( firstSecondarySpecificationItem = writeJustificationItem.secondarySpecificationItem() ) != null &&
 		isNegativeAssumptionOrConclusion &&
 		firstSecondarySpecificationItem.hasNonExclusiveSpecificationCollection() )
-			hasNonExclusiveCollection = true;
+			isNonExclusiveCollection = true;
 
 		if( ( !isNegativeAssumptionOrConclusion ||
-		hasNonExclusiveCollection ||
+		isNonExclusiveCollection ||
 
 		( !writeJustificationItem.hasAnotherPrimarySpecification() &&
 		writeJustificationItem.isPrimarySpecificationWordSpanishAmbiguous() ) ) &&
 
-		( currentSpecificationItem = generalizationWordItem.firstSpecificationItem( false, selfGeneratedSpecificationItem.isAssignment(), selfGeneratedSpecificationItem.isInactiveAssignment(), selfGeneratedSpecificationItem.isArchivedAssignment(), selfGeneratedSpecificationItem.questionParameter() ) ) != null )
+		( currentSpecificationItem = generalizationWordItem.firstSpecificationItem( selfGeneratedSpecificationItem.isAssignment(), selfGeneratedSpecificationItem.isInactiveAssignment(), selfGeneratedSpecificationItem.isArchivedAssignment(), selfGeneratedSpecificationItem.questionParameter() ) ) != null )
 			{
 			isExclusiveSpecification = selfGeneratedSpecificationItem.isExclusiveSpecification();
 			isNegative = selfGeneratedSpecificationItem.isNegative();
@@ -355,23 +354,21 @@ class AdminWrite
 
 				( ( !isWritingJustification &&
 
-				( ( currentSpecificationItem.hasNonCompoundSpecificationCollection() &&
-				currentSpecificationItem.isOlderItem() &&
+				( ( currentSpecificationItem.isOlderItem() &&
 				currentSpecificationItem.isSelfGeneratedAssumption() &&
-				adminItem_.hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore() &&
+				!currentSpecificationItem.wasHiddenSpanishSpecification() &&
+				adminItem_.hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore() &&
+				currentSpecificationItem.isFirstJustificiationReversibleConclusion() ) ||
 
-				( currentSpecificationItem.isPossessiveReversibleConclusion() ||
-
-				( currentSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) != null &&
-				currentSpecificationItem.firstJustificationItem( Constants.JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION ) == null ) ) ) ||
-
+				// Test files: "Complejo (2)"
 				( currentSpecificationItem.hasCompoundSpecificationCollection() &&
-				currentSpecificationItem.isPossessiveReversibleConclusion() &&
+				currentSpecificationItem.isFirstJustificiationReversibleConclusion() &&
 				currentSpecificationItem.wasHiddenSpanishSpecification() ) ) ) ||
 
-				( currentSpecificationItem.hasNonCompoundSpecificationCollection() &&
+				( currentSpecificationItem.isPossessive() &&
+				currentSpecificationItem.hasNonCompoundSpecificationCollection() &&
 				!currentSpecificationItem.isConcludedAssumption() &&
-				currentSpecificationItem.isPossessiveReversibleConclusion() &&
+				currentSpecificationItem.isFirstJustificiationReversibleConclusion() &&
 				( singleRelationWordItem = currentSpecificationItem.singleRelationWordItem() ) != null &&
 				singleRelationWordItem.isMale() ) ) )
 					isHiddenSpanishSpecification = true;
@@ -591,7 +588,7 @@ class AdminWrite
 					}
 				else
 					{
-					if( ( !writeJustificationItem.isPossessiveReversibleAssumption() ||
+					if( ( !writeJustificationItem.isReversibleAssumption() ||
 					// Typical for Spanish
 					writeJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() == null ) &&
 
@@ -605,7 +602,7 @@ class AdminWrite
 			writeJustificationItem.hasFeminineOrMasculineProperNounEnding() &&
 
 			( ( isWritingPrimarySpecification &&
-			!writeJustificationItem.isPossessiveReversibleAssumption() ) ||
+			!writeJustificationItem.isReversibleAssumption() ) ||
 
 			// Typical for Spanish
 			writeJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() == null ) )
@@ -616,7 +613,9 @@ class AdminWrite
 					if( currentJustificationItem.hasFeminineOrMasculineProperNounEnding() )
 						{
 						currentPrimarySpecificationItem = currentJustificationItem.primarySpecificationItem();
-						feminineOrMasculineProperNounEndingWordItem = ( isPossessiveSelfGeneratedSpecificationItem ? ( selfGeneratedSpecificationItem.hasOnlyOneRelationWord() ? selfGeneratedSpecificationItem.singleRelationWordItem() : currentPrimarySpecificationItem.generalizationWordItem() ) : currentJustificationItem.generalizationWordItem() );
+						feminineOrMasculineProperNounEndingWordItem = ( isPossessiveSelfGeneratedSpecificationItem ?
+																		( selfGeneratedSpecificationItem.hasOnlyOneRelationWord() ? selfGeneratedSpecificationItem.singleRelationWordItem() : currentPrimarySpecificationItem.generalizationWordItem() ) :
+																			currentJustificationItem.generalizationWordItem() );
 
 						if( feminineOrMasculineProperNounEndingWordItem == null )
 							return adminItem_.startError( 1, moduleNameString_, "I couldn't find the feminine or masculine proper noun ending word" );
@@ -771,22 +770,6 @@ class AdminWrite
 
 	protected AdminWrite( AdminItem adminItem )
 		{
-		// Private constructed variables
-
-		hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = false;
-		isFirstSelfGeneratedAssumption_ = true;
-		isFirstSelfGeneratedConclusion_ = true;
-		isFirstSelfGeneratedQuestion_ = true;
-		isFirstUserSpecifications_ = true;
-		isHidingAlmostDuplicateSpanishSpecification_ = false;
-		isWritingStartOfJustifications_ = false;
-
-		previousPrimarySpecificationItem_ = null;
-
-		// Private initialized variables
-
-		moduleNameString_ = this.getClass().getName();
-
 		// Checking private initialized variables
 
 		if( ( adminItem_ = adminItem ) == null )
@@ -888,6 +871,7 @@ class AdminWrite
 		{
 		boolean isEqualReadAndWriteUserString;
 		short lastFoundWordOrderNr = Constants.NO_ORDER_NR;
+		int offset = 0;
 		int readUserSentenceStringLength = ( readUserSentenceString == null ? 0 : readUserSentenceString.length() );
 		int readWordTypeStringLength;
 		int wordPosition = 0;
@@ -897,7 +881,7 @@ class AdminWrite
 		ReadItem currentReadItem;
 		ReadItem startNewSpecificationReadItem = null;
 		WordItem generalizationWordItem;
-		ReadWordResultType readWordResult = new ReadWordResultType();
+		ReadWordResultType readWordResult;
 
 		if( userSpecificationItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given user specification item is undefined" );
@@ -930,19 +914,14 @@ class AdminWrite
 						currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence = true;
 					else
 						{
-						if( ( readWordTypeString = currentReadItem.readWordTypeString() ) == null )
-							{
-							// Skip text string (or hidden word)
-							currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence = true;
-							// Avoid looping
-							readWordResult.offset = ( writtenUserSentenceStringBufferLength - wordPosition );
-							}
-						else
+						if( ( readWordTypeString = currentReadItem.readWordTypeString() ) != null )
 							{
 							readWordTypeStringLength = readWordTypeString.length();
 
 							if( ( readWordResult = adminItem_.readWordFromString( false, false, false, false, readWordTypeStringLength, writtenUserSentenceStringBuffer.substring( wordPosition ) ) ).result != Constants.RESULT_OK )
 								return adminItem_.addError( 1, moduleNameString_, "I failed to read a word from the written string" );
+
+							offset = readWordResult.offset;
 
 							if( !currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence )
 								{
@@ -955,7 +934,7 @@ class AdminWrite
 									if( lastFoundWordOrderNr == Constants.NO_ORDER_NR ||
 									lastFoundWordOrderNr + 1 == currentReadItem.wordOrderNr() )
 										{
-										wordPosition += readWordResult.offset;
+										wordPosition += offset;
 										lastFoundWordOrderNr = currentReadItem.wordOrderNr();
 										startNewSpecificationReadItem = currentReadItem.nextReadItem();
 										}
@@ -979,7 +958,7 @@ class AdminWrite
 					}
 				while( ( currentReadItem = currentReadItem.nextReadItem() ) != null );
 
-				wordPosition += readWordResult.offset;
+				wordPosition += offset;
 				currentReadItem = startNewSpecificationReadItem;
 				}
 			while( currentReadItem != null &&

@@ -1,7 +1,7 @@
 ﻿/*	Class:		CreateReadWordResultType
  *	Purpose:	To return read word variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,19 +31,9 @@ class CreateReadWordResultType
 	protected:
 	// Protected variables
 
-	signed char result;
-	bool hasCreatedReadWord;
-	size_t offset;
-
-	protected:
-	// Constructor
-
-	CreateReadWordResultType()
-		{
-		result = RESULT_OK;
-		hasCreatedReadWord = false;
-		offset = 0;
-		}
+	signed char result = RESULT_OK;
+	bool hasCreatedReadWord = false;
+	size_t offset = 0;
 	};
 
 /*************************************************************************

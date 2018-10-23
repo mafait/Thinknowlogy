@@ -2,6 +2,16 @@
 * Mis conclusiones:
 < Los Estados Unidos tiene un presidente, llamado George Bush.
 < 
+< 
+< Especificaciones:
+< George Bush es el presidente de los Estados Unidos.
+< Los Estados Unidos tiene un presidente, llamado George Bush.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado George Bush. Porque:
+<	- George Bush es el presidente de los Estados Unidos.
+< 
 * 
 * Mis conclusiones:
 < Los Estados Unidos tiene un nuevo presidente, llamado Bill Clinton.
@@ -13,6 +23,13 @@
 < George Bush es el anterior presidente de los Estados Unidos.
 < Los Estados Unidos tiene un presidente, llamado Bill Clinton.
 < Los Estados Unidos tiene un anterior presidente, llamado George Bush.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado Bill Clinton. Porque:
+<	- Bill Clinton es el corriente presidente de los Estados Unidos.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush. Porque:
+<	- George Bush es el anterior presidente de los Estados Unidos.
 < 
 * Sé.
 * 
@@ -37,6 +54,15 @@
 < Los Estados Unidos tiene un anterior presidente, llamado Bill Clinton.
 < Los Estados Unidos tenido un presidente, llamado George Bush.
 < 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado George Bush. Porque:
+<	- George Bush es el corriente presidente de los Estados Unidos.
+< Los Estados Unidos tiene un anterior presidente, llamado Bill Clinton. Porque:
+<	- Bill Clinton es el anterior presidente de los Estados Unidos.
+< Los Estados Unidos tenido un presidente, llamado George Bush. Porque:
+<	- George Bush era presidente de los Estados Unidos.
+< 
 * Sé.
 * 
 * 
@@ -55,6 +81,17 @@
 < Los Estados Unidos tiene un anterior presidente, llamado George Bush.
 < Los Estados Unidos tenido un presidente, llamado George Bush.
 < Los Estados Unidos tenido un presidente, llamado Bill Clinton.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado Barack Obama. Porque:
+<	- Barack Obama es el corriente presidente de los Estados Unidos.
+< Los Estados Unidos tiene un anterior presidente, llamado George Bush. Porque:
+<	- George Bush es el anterior presidente de los Estados Unidos.
+< Los Estados Unidos tenido un presidente, llamado George Bush. Porque:
+<	- George Bush era presidente de los Estados Unidos.
+< Los Estados Unidos tenido un presidente, llamado Bill Clinton. Porque:
+<	- Bill Clinton era presidente de los Estados Unidos.
 < 
 * 
 * Mis conclusiones:

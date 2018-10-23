@@ -127,10 +127,10 @@
 * 
 * My assumptions:
 < Anna has probably a child, called Paul. Because:
-<	- Paul is probably a child of John and Anna.
-* 	and:
 <	- Every family has parents and children.
 <	- Anna is a parent of Paul.
+* 	and:
+<	- Paul is probably a child of John and Anna.
 < Anna is probably a person. Because:
 <	- Anna is a parent of Paul.
 <	- A parent is probably a person.

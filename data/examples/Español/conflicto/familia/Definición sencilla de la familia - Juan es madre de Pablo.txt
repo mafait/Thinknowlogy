@@ -5,6 +5,6 @@ Cada padre es un hombre.
 Cada madre es una mujer.
 
 Juan es un padre.
-Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Juan.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».
 Juan es madre de Pablo.

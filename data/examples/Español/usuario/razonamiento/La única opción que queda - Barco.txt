@@ -1,3 +1,0 @@
-﻿Un barco es un barco de remos, un velero o una lancha.
-Su barco no es un velero y una lancha.
-# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

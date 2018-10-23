@@ -4,7 +4,8 @@ Affichez " En appliquant les lois naturelles de l'intelligence, qui sont intégr
 Affichez " Thinknowlogy a des résultats de raisonnement que les scientifiques n'ont pas encore décrits:".
 Affichez " * Malgré des recherches exhaustives, la théorie de l'évolution n'a toujours pas fourni une".
 Affichez " explication satisfaisante de l'origine de l'intelligence, du langage et des lois de la nature.".
-Affichez " Laissons seul, comment ils sont liés;".
+Affichez " Laissons seul, comment ils sont liés. De plus, aucun des phénomènes exclusifs à la".
+Affichez " théorie de l'évolution, ou des théories dérivées, ne s'applique dans la vie quotidienne;".
 Affichez " * Selon la vision biblique du monde, Dieu a créé les lois de la nature, comme fondement de sa".
 Affichez " création. Basé sur les lois naturelles de l'intelligence, intégrées dans la grammaire, seulement".
 #C++#Affichez " Thinknowlogy implémente la fonction intelligente des mots comme les articles définis \"le\" et \"la\",".
@@ -26,10 +27,10 @@ Affichez " Je défie tout le monde de dépasser ce système de raisonnement: htt
 Affichez "------------------------------------------------------------------------------".
 #C++#Affichez " Aide.\t\t\t\t\t\t* Afficher plus d'aide d'info".
 #C++#Affichez " \~{languageName}\t\t\t\t* Changer la langue".
-#C++#Affichez " Lirez le fichier \"Français/programmation/utilisateur/Puissance 4\".".
-#C++#Affichez " Lirez le fichier \"Français/programmation/utilisateur/Tours de Hanoï\".".
-#C++#Affichez " Lirez le fichier \"Français/raisonnement/utilisateur/raisonnement/Défi scientifique\".".
-#C++#Affichez " Lirez le fichier \"Français/raisonnement/utilisateur/famille/définition de famille\".".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Puissance 4\".".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Tours de Hanoï\".".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/raisonnement/Défi scientifique\".".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/famille/définition de famille\".".
 #Java#Affichez " Bouton <programmation> utiliser pour apprendre la programmation en langage naturel.".
 #Java#Affichez " Bouton <raisonnement> utiliser pour en apprendre davantage sur le raisonnement en langage naturel.".
 Affichez "------------------------------------------------------------------------------".

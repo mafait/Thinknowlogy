@@ -1,0 +1,4 @@
+﻿Un point de condensation est caractéristique pour chaque type de gaz.
+La vapeur d'eau a un point de condensation de 100 degrés Celsius.
+#Dev#Affichez le rapport de justification sur la vapeur d'eau.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

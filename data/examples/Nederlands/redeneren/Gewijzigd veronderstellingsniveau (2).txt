@@ -1,7 +1,7 @@
 ﻿Jan is mogelijk de vader van Paul.
 Jan is de vader van Paul.
-Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 Sjors was mogelijk de vader van André.
 Sjors was de vader van André.
-Toon de verantwoordingsrapportage over André.
+#Dev#Toon de verantwoordingsrapportage over André.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

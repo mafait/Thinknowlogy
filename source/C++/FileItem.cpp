@@ -1,7 +1,7 @@
 ﻿/*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -30,14 +30,14 @@ class FileItem : private Item
 
 	// Private initialized variables
 
-	bool isInfoFile_;
-	bool isTestFile_;
+	bool isInfoFile_ = false;
+	bool isTestFile_ = false;
 
-	char *readFileNameString_;
-	char *writeFileNameString_;
+	char *readFileNameString_ = NULL;
+	char *writeFileNameString_ = NULL;
 
-	FILE *readFile_;
-	FILE *writeFile_;
+	FILE *readFile_ = NULL;
+	FILE *writeFile_ = NULL;
 
 	protected:
 	// Constructor
@@ -52,9 +52,6 @@ class FileItem : private Item
 
 		isInfoFile_ = isInfoFile;
 		isTestFile_ = isTestFile;
-
-		readFileNameString_ = NULL;
-		writeFileNameString_ = NULL;
 
 		readFile_ = readFile;
 		writeFile_ = writeFile;

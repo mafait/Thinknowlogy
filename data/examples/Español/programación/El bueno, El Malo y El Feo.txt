@@ -1,8 +1,0 @@
-﻿Añadir el bueno, el malo y el feo para las películas.
-Añadir Bueno, Malo y Feo para Películas.
-Mueva la cabeza de las películas para los géneros.
-Mueva la cola de las películas para los géneros.
-Mueva Malo desde Películas para Géneros.
-Eliminar la cabeza desde los géneros.
-Mueva la cabeza para el mejor.
-# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

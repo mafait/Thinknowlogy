@@ -1,7 +1,7 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 John is a father.
 Paul has 2 parents, called John and Anna.
-Display the justification report about John.
-Display the justification report about Anna.
-Display the justification report about Paul.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
 # To continue, click button «Clear your mind.» or «Restart.».

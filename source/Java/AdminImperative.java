@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,35 +25,33 @@ class AdminImperative
 	{
 	// Private constructed variables
 
-	private boolean hasRequestedRestart_;
+	private boolean hasRequestedRestart_ = false;
 
-	private int oldGlobalSatisfiedScore_;
-	private int newGlobalSatisfiedScore_;
-	private int oldGlobalDissatisfiedScore_;
-	private int newGlobalDissatisfiedScore_;
-	private int oldGlobalNotBlockingScore_;
-	private int newGlobalNotBlockingScore_;
-	private int oldGlobalBlockingScore_;
-	private int newGlobalBlockingScore_;
+	private int oldGlobalSatisfiedScore_ = Constants.NO_SCORE;
+	private int newGlobalSatisfiedScore_ = Constants.NO_SCORE;
+	private int oldGlobalDissatisfiedScore_ = Constants.NO_SCORE;
+	private int newGlobalDissatisfiedScore_ = Constants.NO_SCORE;
+	private int oldGlobalNotBlockingScore_ = Constants.NO_SCORE;
+	private int newGlobalNotBlockingScore_ = Constants.NO_SCORE;
+	private int oldGlobalBlockingScore_ = Constants.NO_SCORE;
+	private int newGlobalBlockingScore_ = Constants.NO_SCORE;
 
-	private SpecificationItem firstComparisonAssignmentItem_;
-	private SpecificationItem secondComparisonAssignmentItem_;
-	private SpecificationItem virtualListAssignmentItem_;
+	private SpecificationItem firstComparisonAssignmentItem_ = null;
+	private SpecificationItem secondComparisonAssignmentItem_ = null;
+	private SpecificationItem virtualListAssignmentItem_ = null;
 
-
+	private String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
-	private WordItem predefinedAdjectiveBusyWordItem_;
-	private WordItem predefinedAdjectiveDoneWordItem_;
-	private WordItem predefinedAdjectiveInvertedWordItem_;
-	private WordItem predefinedNounSolveLevelWordItem_;
-	private WordItem predefinedNounSolveMethodWordItem_;
-	private WordItem predefinedNounSolveStrategyWordItem_;
+	private WordItem predefinedAdjectiveBusyWordItem_ = null;
+	private WordItem predefinedAdjectiveDoneWordItem_ = null;
+	private WordItem predefinedAdjectiveInvertedWordItem_ = null;
+	private WordItem predefinedNounSolveLevelWordItem_ = null;
+	private WordItem predefinedNounSolveMethodWordItem_ = null;
+	private WordItem predefinedNounSolveStrategyWordItem_ = null;
 
-	private String moduleNameString_;
-
-	private AdminItem adminItem_;
+	private AdminItem adminItem_ = null;
 
 
 	// Private methods
@@ -296,7 +294,9 @@ class AdminImperative
 				break;
 
 			case Constants.WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REMOVE:
-				localVirtualListAssignmentItem = ( specificationWordItem.isNounHead() ? relationWordItem.lastActiveNonQuestionAssignmentItem() : ( specificationWordItem.isNounTail() ? relationWordItem.firstNonQuestionActiveAssignmentItem() : relationWordItem.firstNonQuestionAssignmentItem( true, false, false, false, false, specificationWordItem ) ) );
+				localVirtualListAssignmentItem = ( specificationWordItem.isNounHead() ? relationWordItem.lastActiveNonQuestionAssignmentItem() :
+												( specificationWordItem.isNounTail() ? relationWordItem.firstNonQuestionActiveAssignmentItem() :
+												relationWordItem.firstNonQuestionAssignmentItem( true, false, false, false, false, specificationWordItem ) ) );
 
 				if( localVirtualListAssignmentItem != null &&
 				relationWordItem.inactivateActiveAssignment( localVirtualListAssignmentItem ) != Constants.RESULT_OK )
@@ -356,14 +356,16 @@ class AdminImperative
 
 	private byte solveWord( short solveLevel, int currentSolveProgressLevel, int endSolveProgressLevel, WordItem solveWordItem, SelectionItem actionSelectionItem )
 		{
-		boolean isInverted = false;
+		boolean isAllowingDuplicates;
+		boolean isInverted;
+		boolean isPreparingSort;
 		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
 		int nPossibilities;
 		int possibilityNumber = 0;
 		int solveProgressStep;
 		int nextSolveProgressLevel;
 		ScoreItem possibilityScoreItem;
-		BoolResultType boolResult = new BoolResultType();
+		BoolResultType boolResult;
 		SelectionResultType selectionResult;
 		ShortResultType shortResult;
 
@@ -385,13 +387,15 @@ class AdminImperative
 			adminItem_.deleteScores() != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to delete the admin score list" );
 
-			isInverted = ( predefinedNounSolveMethodWordItem_.firstNonQuestionAssignmentItem( true, false, false, false, false, predefinedAdjectiveInvertedWordItem_ ) != null );
-
 			// Get solve strategy parameter
 			if( ( shortResult = getAssignmentWordParameter( predefinedNounSolveStrategyWordItem_ ) ).result != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to get the solve strategy at assignment level " + currentAssignmentLevel );
 
-			if( ( boolResult = findSelectionToSolveWord( true, ( currentAssignmentLevel == solveLevel ), isInverted, ( currentAssignmentLevel + 1 < solveLevel ), shortResult.shortValue, solveWordItem ) ).result != Constants.RESULT_OK )
+			isAllowingDuplicates = ( currentAssignmentLevel == solveLevel );
+			isInverted = ( predefinedNounSolveMethodWordItem_.firstNonQuestionAssignmentItem( true, false, false, false, false, predefinedAdjectiveInvertedWordItem_ ) != null );
+			isPreparingSort = ( currentAssignmentLevel + 1 < solveLevel );
+
+			if( ( boolResult = findSelectionToSolveWord( true, isAllowingDuplicates, isInverted, isPreparingSort, shortResult.shortValue, solveWordItem ) ).result != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to find a selection to solve word \"" + solveWordItem.anyWordTypeString() + "\" at assignment level " + currentAssignmentLevel );
 
 			// Has found possibility to solve word
@@ -848,11 +852,15 @@ class AdminImperative
 
 				secondComparisonAssignmentItem_ = specificationResult.specificationItem;
 
-				firstSpecificationWordItem = ( firstComparisonAssignmentItem_ == null ? null : firstComparisonAssignmentItem_.specificationWordItem() );
-				secondSpecificationWordItem = ( secondComparisonAssignmentItem_ == null ? null : secondComparisonAssignmentItem_.specificationWordItem() );
+				firstSpecificationWordItem = ( firstComparisonAssignmentItem_ != null ?
+												firstComparisonAssignmentItem_.specificationWordItem() : null );
+				secondSpecificationWordItem = ( secondComparisonAssignmentItem_ != null ?
+												secondComparisonAssignmentItem_.specificationWordItem() : null );
 
-				firstString = ( firstSpecificationWordItem == null ? null : firstSpecificationWordItem.anyWordTypeString() );
-				secondString = ( secondSpecificationWordItem == null ? null : secondSpecificationWordItem.anyWordTypeString() );
+				firstString = ( firstSpecificationWordItem != null ?
+								firstSpecificationWordItem.anyWordTypeString() : null );
+				secondString = ( secondSpecificationWordItem != null ?
+								secondSpecificationWordItem.anyWordTypeString() : null );
 				}
 			else
 				{
@@ -863,7 +871,9 @@ class AdminImperative
 				if( ( comparisonAssignmentItem = specificationResult.specificationItem ) != null )
 					comparisonAssignmentSpecificationWordItem = comparisonAssignmentItem.specificationWordItem();
 
-				firstString = ( comparisonAssignmentItem == null ? null : ( isNumeralRelation ? ( comparisonAssignmentSpecificationWordItem == null ? null : comparisonAssignmentSpecificationWordItem.anyWordTypeString() ) : comparisonAssignmentItem.specificationString() ) );
+				firstString = ( comparisonAssignmentItem == null ? null :
+								( isNumeralRelation ?
+								( comparisonAssignmentSpecificationWordItem == null ? null : comparisonAssignmentSpecificationWordItem.anyWordTypeString() ) : comparisonAssignmentItem.specificationString() ) );
 				secondString = ( isNumeralRelation ? ( relationWordItem == null ? null : relationWordItem.anyWordTypeString() ) : specificationString );
 				}
 
@@ -1181,7 +1191,7 @@ class AdminImperative
 						}
 					else
 						{
-						if( ( conditionPartResult = findSatisfyingScores( conditionSelectionItem.isPossessive(), !isNegative, conditionSelectionItem.relationContextNr(), generalizationWordItem, specificationWordItem ) ).result != Constants.RESULT_OK )
+						if( ( conditionPartResult = findSatisfyingScores( !isNegative, generalizationWordItem, specificationWordItem ) ).result != Constants.RESULT_OK )
 							return adminItem_.addConditionResultError( 1, moduleNameString_, "I failed to find satisfying scores" );
 
 						// Scoring assignment is satifying
@@ -1219,7 +1229,7 @@ class AdminImperative
 				foundAssignmentItem = specificationWordItem.firstNonQuestionAssignmentItem( true, false, false, false, isPossessive, currentSpecificationItem.specificationWordItem() );
 				isSatisfiedScore = ( isNegative == ( foundAssignmentItem == null || foundAssignmentItem.isNegative() ) );
 
-				if( ( conditionPartResult = findSatisfyingScores( isPossessive, isSatisfiedScore, currentSpecificationItem.relationContextNr(), generalizationWordItem, currentSpecificationItem.specificationWordItem() ) ).result != Constants.RESULT_OK )
+				if( ( conditionPartResult = findSatisfyingScores( isSatisfiedScore, generalizationWordItem, currentSpecificationItem.specificationWordItem() ) ).result != Constants.RESULT_OK )
 					return adminItem_.addConditionResultError( 1, moduleNameString_, "I failed to find satisfying scores" );
 
 				// Scoring assignment is unsatisfying
@@ -1251,17 +1261,17 @@ class AdminImperative
 			do	{
 				if( !currentAssignmentItem.isNegative() )
 					{
-					if( isBlocking )
+					if( currentAssignmentItem.isOlderItem() )
 						{
-						if( currentAssignmentItem.isOlderItem() )
+						if( isBlocking )
 							conditionResult.oldBlockingScore++;
 						else
-							conditionResult.newBlockingScore++;
+							conditionResult.oldNotBlockingScore++;
 						}
 					else
 						{
-						if( currentAssignmentItem.isOlderItem() )
-							conditionResult.oldNotBlockingScore++;
+						if( isBlocking )
+							conditionResult.newBlockingScore++;
 						else
 							conditionResult.newNotBlockingScore++;
 						}
@@ -1277,7 +1287,7 @@ class AdminImperative
 		return conditionResult;
 		}
 
-	private ConditionResultType findSatisfyingScores( boolean isPossessive, boolean isSatisfiedScore, int relationContextNr, WordItem generalizationWordItem, WordItem specificationWordItem )
+	private ConditionResultType findSatisfyingScores( boolean isSatisfiedScore, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
 		boolean hasFoundScoringAssignment = false;
 		SpecificationItem currentAssignmentItem;
@@ -1292,24 +1302,24 @@ class AdminImperative
 		if( ( currentAssignmentItem = generalizationWordItem.firstNonQuestionActiveAssignmentItem() ) != null )
 			{
 			do	{
-				if( currentAssignmentItem.isRelatedSpecification( false, isPossessive, relationContextNr, specificationWordItem ) )
+				if( currentAssignmentItem.isRelatedSpecification( false, specificationWordItem ) )
 					{
-					hasFoundScoringAssignment = true;
-
-					if( isSatisfiedScore )
+					if( currentAssignmentItem.isOlderItem() )
 						{
-						if( currentAssignmentItem.isOlderItem() )
+						if( isSatisfiedScore )
 							conditionResult.oldSatisfiedScore++;
 						else
-							conditionResult.newSatisfiedScore++;
+							conditionResult.oldDissatisfiedScore++;
 						}
 					else
 						{
-						if( currentAssignmentItem.isOlderItem() )
-							conditionResult.oldDissatisfiedScore++;
+						if( isSatisfiedScore )
+							conditionResult.newSatisfiedScore++;
 						else
 							conditionResult.newDissatisfiedScore++;
 						}
+
+					hasFoundScoringAssignment = true;
 					}
 				}
 			while( !hasFoundScoringAssignment &&
@@ -1417,27 +1427,6 @@ class AdminImperative
 	protected AdminImperative( AdminItem adminItem, WordItem predefinedAdjectiveBusyWordItem, WordItem predefinedAdjectiveDoneWordItem, WordItem predefinedAdjectiveInvertedWordItem, WordItem predefinedNounSolveLevelWordItem, WordItem predefinedNounSolveMethodWordItem, WordItem predefinedNounSolveStrategyWordItem )
 		{
 		String errorString = null;
-
-		// Private constructed variables
-
-		hasRequestedRestart_ = false;
-
-		oldGlobalSatisfiedScore_ = Constants.NO_SCORE;
-		newGlobalSatisfiedScore_ = Constants.NO_SCORE;
-		oldGlobalDissatisfiedScore_ = Constants.NO_SCORE;
-		newGlobalDissatisfiedScore_ = Constants.NO_SCORE;
-		oldGlobalNotBlockingScore_ = Constants.NO_SCORE;
-		newGlobalNotBlockingScore_ = Constants.NO_SCORE;
-		oldGlobalBlockingScore_ = Constants.NO_SCORE;
-		newGlobalBlockingScore_ = Constants.NO_SCORE;
-
-		firstComparisonAssignmentItem_ = null;
-		secondComparisonAssignmentItem_ = null;
-		virtualListAssignmentItem_ = null;
-
-		// Private initialized variables
-
-		moduleNameString_ = this.getClass().getName();
 
 		// Checking private initialized variables
 

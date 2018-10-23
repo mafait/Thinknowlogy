@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -41,32 +41,31 @@ class JustificationItem : private Item
 
 	// Private initialized variables
 
-	bool hasFeminineOrMasculineProperNounEnding_;
+	bool hasFeminineOrMasculineProperNounEnding_ = false;
 
-	unsigned short justificationTypeNr_;
+	unsigned short justificationTypeNr_ = NO_JUSTIFICATION_TYPE;
 
-	SpecificationItem *primarySpecificationItem_;
-	SpecificationItem *anotherPrimarySpecificationItem_;
-	SpecificationItem *secondarySpecificationItem_;
-	SpecificationItem *anotherSecondarySpecificationItem_;
+	SpecificationItem *primarySpecificationItem_ = NULL;
+	SpecificationItem *anotherPrimarySpecificationItem_ = NULL;
+	SpecificationItem *secondarySpecificationItem_ = NULL;
+	SpecificationItem *anotherSecondarySpecificationItem_ = NULL;
 
-	JustificationItem *attachedJustificationItem_;
+	JustificationItem *attachedJustificationItem_ = NULL;
 
 
 	// Private functions
 
 	bool hasJustification( JustificationItem *checkJustificationItem );
 	bool isContextSimilarInContextWords( unsigned int firstContextNr, unsigned int secondContextNr );
-	bool isExclusiveSpecificationSubstitutionAssumption();
 	bool isSameJustificationType( JustificationItem *referenceJustificationItem );
 
 
 	protected:
 	// Protected constructed variables
 
-	bool hasJustificationBeenWritten;
+	bool hasJustificationBeenWritten = false;
 
-	unsigned short orderNr;
+	unsigned short orderNr = NO_ORDER_NR;
 
 
 	// Constructor
@@ -93,7 +92,6 @@ class JustificationItem : private Item
 	bool hasFeminineOrMasculineProperNounEnding();
 	bool hasJustification( SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
 	bool hasJustification( bool hasFeminineOrMasculineProperNounEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
-	bool hasOnlyExclusiveSpecificationSubstitutionAssumptionsWithoutDefinition();
 
 	bool hasNonPossessivePrimarySpecification();
 	bool hasPossessivePrimarySpecification();
@@ -107,13 +105,13 @@ class JustificationItem : private Item
 	bool isAssumptionJustification();
 	bool isConclusionJustification();
 
+	bool isExclusiveSpecificationSubstitutionAssumption();
 	bool isGeneralizationAssumption();
 	bool isNegativeAssumptionOrConclusion();
 	bool isOppositePossessiveConditionalSpecificationAssumption();
-	bool isPossessiveReversibleAssumption();
-	bool isPossessiveReversibleConclusion();
-	bool isPossessiveReversibleConclusionWithoutRelationContext();
-	bool isPossessiveReversibleAssumptionOrConclusion();
+	bool isReversibleAssumption();
+	bool isReversibleConclusion();
+	bool isReversibleAssumptionOrConclusion();
 	bool isQuestionJustification();
 	bool isSpecificationSubstitutionAssumption();
 	bool isSuggestiveQuestionAssumption();

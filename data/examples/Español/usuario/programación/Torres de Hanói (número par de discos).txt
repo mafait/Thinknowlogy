@@ -1,2 +1,0 @@
-﻿Leer el archivo "Español/usuario/programación/Torres de Hanói".
-Añadir D, C, B y A para el polo de inicio.

@@ -1,5 +1,5 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Laura heeft 2 ouders, genaamd Jan en Anna.
 Laura is een dochter.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

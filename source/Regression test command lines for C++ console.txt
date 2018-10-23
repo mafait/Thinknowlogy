@@ -1,0 +1,10 @@
+﻿Read the test file "English/Regression test".
+Lees het testbestand "Nederlands/Regressie-test".
+
+Windows:
+Leer el archivo de prueba "Espa±ol/Prueba de regresi¾n".
+Lirez le fichier de test "Franþais/Test de rÚgression".
+
+Linux:
+Leer el archivo de prueba "Español/Prueba de regresión".
+Lirez le fichier de test "Français/Test de régression".

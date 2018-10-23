@@ -1,4 +1,4 @@
-﻿Read the file "English/user/programming/Connect-Four".
+﻿Read the file "English/programming/Connect-Four".
 The solve level is high.
 My set is D.
 # To continue, click button «Clear your mind.» or «Restart.».

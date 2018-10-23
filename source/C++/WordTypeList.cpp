@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,7 +31,7 @@ class WordTypeList : private List
 
 	// Private constructed variables
 
-	WordTypeItem *foundWordTypeItem_;
+	WordTypeItem *foundWordTypeItem_ = NULL;
 
 
 	// Private functions
@@ -97,10 +97,6 @@ class WordTypeList : private List
 
 	WordTypeList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		// Private constructed variables
-
-		foundWordTypeItem_ = NULL;
-
 		initializeListVariables( WORD_TYPE_LIST_SYMBOL, "WordTypeList", globalVariables, inputOutput, myWordItem );
 		}
 
@@ -402,17 +398,18 @@ class WordTypeList : private List
 		( searchWordTypeItem = firstActiveWordTypeItem() ) != NULL )
 			foundWordTypeItem = wordTypeString( false, true, wordTypeNr, searchWordTypeItem );
 
-		return ( foundWordTypeItem == NULL ? ( foundWordTypeItem_ == NULL ? NULL : foundWordTypeItem_->itemString() ) : foundWordTypeItem->itemString() );
+		return ( foundWordTypeItem != NULL ?
+				foundWordTypeItem->itemString() :
+				( foundWordTypeItem_ != NULL ?
+				foundWordTypeItem_->itemString() : NULL ) );
 		}
 
 	char *activeWordTypeString( bool isLanguageWord, unsigned short wordTypeNr )
 		{
 		WordTypeItem *foundWordTypeItem;
 
-		if( ( foundWordTypeItem = activeWordTypeItem( false, isLanguageWord, wordTypeNr ) ) != NULL )
-			return foundWordTypeItem->itemString();
-
-		return NULL;
+		return ( ( foundWordTypeItem = activeWordTypeItem( false, isLanguageWord, wordTypeNr ) ) != NULL ?
+				foundWordTypeItem->itemString() : NULL );
 		}
 
 	WordTypeItem *activeWordTypeItem( bool isAllowingDifferentNoun, bool isCheckingAllLanguages, unsigned short wordTypeNr )
@@ -453,6 +450,8 @@ class WordTypeList : private List
 		bool hasFeminineWordEnding = false;
 		bool hasMasculineWordEnding = false;
 		bool isSingularNoun;
+		unsigned short grammarParameter;
+		WordItem *generalizationWordItem = myWordItem();
 		WordEndingResultType wordEndingResult;
 		WordResultType wordResult;
 		WordTypeResultType wordTypeResult;
@@ -479,8 +478,11 @@ class WordTypeList : private List
 			( !isLanguageWord &&
 			wordTypeNr == WORD_TYPE_PROPER_NOUN ) )
 				{
+				// Feminine
+				grammarParameter = ( isSingularNoun ? WORD_FEMININE_SINGULAR_NOUN_ENDING : WORD_FEMININE_PROPER_NOUN_ENDING );
+
 				// Check on feminine and masculine word ending
-				if( ( wordEndingResult = myWordItem()->analyzeWordEndingWithCurrentLanguage( ( isSingularNoun ? WORD_FEMININE_SINGULAR_NOUN_ENDING : WORD_FEMININE_PROPER_NOUN_ENDING ), 0, wordTypeString ) ).result != RESULT_OK )
+				if( ( wordEndingResult = generalizationWordItem->analyzeWordEndingWithCurrentLanguage( grammarParameter, 0, wordTypeString ) ).result != RESULT_OK )
 					return addWordTypeResultError( functionNameString, "I failed to check on feminine word ending" );
 
 				if( wordEndingResult.hasFoundWordEnding )
@@ -488,12 +490,15 @@ class WordTypeList : private List
 					hasFeminineWordEnding = true;
 
 					if( isSingularNoun &&
-					myWordItem()->markWordAsFeminine() != RESULT_OK )
+					generalizationWordItem->markWordAsFeminine() != RESULT_OK )
 						return addWordTypeResultError( functionNameString, "I failed to mark my word as feminine" );
 					}
 				else
 					{
-					if( ( wordEndingResult = myWordItem()->analyzeWordEndingWithCurrentLanguage( ( isSingularNoun ? WORD_MASCULINE_SINGULAR_NOUN_ENDING : WORD_MASCULINE_PROPER_NOUN_ENDING ), 0, wordTypeString ) ).result != RESULT_OK )
+					// Masculine
+					grammarParameter = ( isSingularNoun ? WORD_MASCULINE_SINGULAR_NOUN_ENDING : WORD_MASCULINE_PROPER_NOUN_ENDING );
+
+					if( ( wordEndingResult = generalizationWordItem->analyzeWordEndingWithCurrentLanguage( grammarParameter, 0, wordTypeString ) ).result != RESULT_OK )
 						return addWordTypeResultError( functionNameString, "I failed to check on masculine word ending" );
 
 					if( wordEndingResult.hasFoundWordEnding )
@@ -501,7 +506,7 @@ class WordTypeList : private List
 						hasMasculineWordEnding = true;
 
 						if( isSingularNoun &&
-						myWordItem()->markWordAsMasculine() != RESULT_OK )
+						generalizationWordItem->markWordAsMasculine() != RESULT_OK )
 							return addWordTypeResultError( functionNameString, "I failed to mark my word as masculine" );
 						}
 					}

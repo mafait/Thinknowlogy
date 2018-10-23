@@ -1,9 +1,9 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
 #C++#Mostrar " \~{nombre del idioma}\t\t\t\t* Cambiar la idioma".
-#C++#Mostrar " Leer el archivo \"Español/usuario/programación/Conecta 4\".".
-#C++#Mostrar " Leer el archivo \"Español/usuario/programación/Torres de Hanói\".".
-#C++#Mostrar " Leer el archivo \"Español/usuario/razonamiento/Reto científico\".".
-#C++#Mostrar " Leer el archivo \"Español/usuario/razonamiento/familia/definición de familia\".".
+#C++#Mostrar " Leer el archivo \"Español/programación/Conecta 4\".".
+#C++#Mostrar " Leer el archivo \"Español/programación/Torres de Hanói\".".
+#C++#Mostrar " Leer el archivo \"Español/razonamiento/Reto científico\".".
+#C++#Mostrar " Leer el archivo \"Español/razonamiento/familia/definición de familia\".".
 #Java#Mostrar " Utilice el botón <programación> para aprender acerca de la programación en lenguaje natural".
 #Java#Mostrar " Utilice el botón <razonamiento> para aprender sobre el razonamiento en el lenguaje natural".
 Mostrar "------------------------------------------------------------------------------".
@@ -24,9 +24,9 @@ Mostrar " Mostrar los derechos de autor.".
 Mostrar " Mostrar la licencia-GPLv2.".
 Mostrar " Mostrar la garantía.".
 Mostrar "------------------------------------------------------------------------------".
-#C++#Mostrar " Archivos de ejemplo: * carpeta: Thinknowlogy2018r1/data/examples/Español/usuario/".
+#C++#Mostrar " Archivos de ejemplo: * carpeta: Thinknowlogy2018r1/data/examples/Español/".
 #Java#Mostrar " Archivos de ejemplo: * Utilice botón <más ejemplos>".
-#Java#Mostrar "	    o ver carpeta: Thinknowlogy2018r1/data/examples/Español/usuario/".
+#Java#Mostrar "	    o ver carpeta: Thinknowlogy2018r1/data/examples/Español/".
 Mostrar " Fundamental:	          * carpeta: Thinknowlogy2018r1/documents/".
 Mostrar " Proyecto:	          * carpeta: Thinknowlogy2018r1/documents/design/".
 Mostrar " Imágenes:	          * carpeta: Thinknowlogy2018r1/screenshots/Español/".

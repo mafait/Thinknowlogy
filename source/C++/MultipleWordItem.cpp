@@ -1,7 +1,7 @@
 ﻿/*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,11 +29,11 @@ class MultipleWordItem : private Item
 
 	// Private initialized variables
 
-	unsigned short nWordParts_;
-	unsigned short wordTypeLanguageNr_;
-	unsigned short wordTypeNr_;
+	unsigned short nWordParts_ = 0;
+	unsigned short wordTypeLanguageNr_ = NO_LANGUAGE_NR;
+	unsigned short wordTypeNr_ = NO_WORD_TYPE_NR;
 
-	WordItem *multipleWordItem_;
+	WordItem *multipleWordItem_ = NULL;
 
 
 	protected:

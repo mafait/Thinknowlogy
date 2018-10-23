@@ -82,11 +82,11 @@
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent de Pascal. En raison:
+<	- Pascal a probablement un parent, appelé Olivier.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
 <	- Olivier a un fils, appelé Pascal.
-* 	et:
-<	- Pascal a probablement un parent, appelé Olivier.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est probablement un enfant de Olivier.

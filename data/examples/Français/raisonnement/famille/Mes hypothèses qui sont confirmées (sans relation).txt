@@ -1,7 +1,7 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
 Amélie est une personne.
-Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Amélie.
 Lorraine est partie de une famille.
-Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Lorraine.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

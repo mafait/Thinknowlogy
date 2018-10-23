@@ -1,28 +1,28 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Amélie est la mère de Pascal, Julien et Lorraine.
-Affichez le rapport de justification sur Amélie.
-Affichez le rapport de justification sur Pascal.
-Affichez le rapport de justification sur Julien.
-Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Julien.
+#Dev#Affichez le rapport de justification sur Lorraine.
 Olivier est le père de Pascal, Julien et Lorraine.
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Amélie.
-Affichez le rapport de justification sur Pascal.
-Affichez le rapport de justification sur Julien.
-Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Julien.
+#Dev#Affichez le rapport de justification sur Lorraine.
 Pascal est un fils.
 Julien est un fils.
 Lorraine est une fille.
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Amélie.
-Affichez le rapport de justification sur Pascal.
-Affichez le rapport de justification sur Julien.
-Affichez le rapport de justification sur Lorraine.
-# Extra checks
-Pascal est un homme.
-Affichez le rapport de justification sur Pascal.
-Julien est un garçon.
-Affichez le rapport de justification sur Julien.
-Lorraine est une femme.
-Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Julien.
+#Dev#Affichez le rapport de justification sur Lorraine.
+#Dev## Extra checks
+#Dev#Pascal est un homme.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Julien est un garçon.
+#Dev#Affichez le rapport de justification sur Julien.
+#Dev#Lorraine est une femme.
+#Dev#Affichez le rapport de justification sur Lorraine.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

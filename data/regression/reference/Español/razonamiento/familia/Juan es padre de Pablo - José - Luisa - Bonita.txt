@@ -115,10 +115,10 @@
 * Mis suposiciones:
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Luisa es posiblemente hija de Juan.
+< Luisa no es posiblemente un hijo.
 < Luisa es posiblemente parte de una familia.
 < Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
-< Luisa no es posiblemente un hijo.
 * 
 * Mis preguntas:
 < ¿Es Luisa una niña o una mujer?
@@ -164,10 +164,10 @@
 * Mis suposiciones:
 < Juan tiene posiblemente 2 hija [plural de 'hija' es desconocida], llamados Luisa y Bonita.
 < Bonita es posiblemente hija de Juan.
+< Bonita no es posiblemente un hijo.
 < Bonita es posiblemente parte de una familia.
 < Bonita es puede-ser una persona.
 < Bonita no es posiblemente un niño y un hombre.
-< Bonita no es posiblemente un hijo.
 * 
 * Mis preguntas:
 < ¿Es Bonita una niña o una mujer?
@@ -225,6 +225,9 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Bonita" es probablemente femenino.
+< Bonita no es posiblemente un hijo. Porque:
+<	- Cada hijo es un hijo o una hija.
+<	- Bonita es posiblemente hija de Juan.
 < Bonita es posiblemente parte de una familia. Porque:
 <	- Bonita es posiblemente hija de Juan.
 <	- Hijos son parte de cada familia.
@@ -235,9 +238,6 @@
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 <	- Bonita es posiblemente hija de Juan.
 <	- Cada hija es una niña o una mujer.
-< Bonita no es posiblemente un hijo. Porque:
-<	- Cada hijo es un hijo o una hija.
-<	- Bonita es posiblemente hija de Juan.
 * 
 * Mis preguntas:
 < ¿Es Bonita una niña o una mujer? Porque:

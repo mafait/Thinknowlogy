@@ -1,7 +1,7 @@
 ﻿/*	Class:		SelectionResultType
  *	Purpose:	To return selection variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -35,17 +35,8 @@ class SelectionResultType
 	protected:
 	// Protected variables
 
-	signed char result;
-	SelectionItem *selectionItem;
-
-	protected:
-	// Constructor
-
-	SelectionResultType()
-		{
-		result = RESULT_OK;
-		selectionItem = NULL;
-		}
+	signed char result = RESULT_OK;
+	SelectionItem *selectionItem = NULL;
 	};
 
 /*************************************************************************

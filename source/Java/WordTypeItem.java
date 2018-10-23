@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,25 +25,25 @@ class WordTypeItem extends Item
 	{
 	// Private initialized variables
 
-	private boolean hasFeminineWordEnding_;
-	private boolean hasMasculineWordEnding_;
-	private boolean isProperNounPrecededByDefiniteArticle_;
+	private boolean hasFeminineWordEnding_ = false;
+	private boolean hasMasculineWordEnding_ = false;
+	private boolean isProperNounPrecededByDefiniteArticle_ = false;
 
-	private short adjectiveParameter_;
-	private short definiteArticleParameter_;
-	private short indefiniteArticleParameter_;
-	private short wordTypeLanguageNr_;
-	private short wordTypeNr_;
+	private short adjectiveParameter_ = Constants.NO_ADJECTIVE_PARAMETER;
+	private short definiteArticleParameter_ = Constants.NO_DEFINITE_ARTICLE_PARAMETER;
+	private short indefiniteArticleParameter_ = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
+	private short wordTypeLanguageNr_ = Constants.NO_LANGUAGE_NR;
+	private short wordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
 
 	// Private constructed variables
 
-	private short generalizationWriteLevel_;
-	private short specificationWriteLevel_;
-	private short relationWriteLevel_;
+	private short generalizationWriteLevel_ = Constants.NO_WRITE_LEVEL;
+	private short specificationWriteLevel_ = Constants.NO_WRITE_LEVEL;
+	private short relationWriteLevel_ = Constants.NO_WRITE_LEVEL;
 
-	private String hideKey_;
-	private String wordTypeString_;
+	private String hideKey_ = null;
+	private String wordTypeString_ = null;
 
 
 	// Private methods
@@ -81,11 +81,9 @@ class WordTypeItem extends Item
 				break;
 			}
 
-		if( phoneticVowelIndefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER &&
-		( phoneticVowelIndefiniteArticleWordItem = myWordItem().predefinedWordItem( phoneticVowelIndefiniteArticleParameter ) ) != null )
-			return phoneticVowelIndefiniteArticleWordItem.hasWordType( false, Constants.WORD_TYPE_ARTICLE );
-
-		return false;
+		return ( phoneticVowelIndefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER &&
+				( phoneticVowelIndefiniteArticleWordItem = myWordItem().predefinedWordItem( phoneticVowelIndefiniteArticleParameter ) ) != null ?
+					phoneticVowelIndefiniteArticleWordItem.hasWordType( false, Constants.WORD_TYPE_ARTICLE ) : false );
 		}
 
 	private static boolean isIndefiniteArticlePhoneticVowelParameter( short wordParameter )
@@ -114,15 +112,6 @@ class WordTypeItem extends Item
 		indefiniteArticleParameter_ = indefiniteArticleParameter;
 		wordTypeLanguageNr_ = wordTypeLanguageNr;
 		wordTypeNr_ = wordTypeNr;
-
-		// Private constructed variables
-
-		generalizationWriteLevel_ = Constants.NO_WRITE_LEVEL;
-		specificationWriteLevel_ = Constants.NO_WRITE_LEVEL;
-		relationWriteLevel_ = Constants.NO_WRITE_LEVEL;
-
-		hideKey_ = null;
-		wordTypeString_ = null;
 
 		// Checking private initialized variables
 
@@ -155,7 +144,7 @@ class WordTypeItem extends Item
 		if( itemString() != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -382,13 +371,10 @@ class WordTypeItem extends Item
 
 	protected boolean isCorrectHiddenWordType( short wordTypeNr, String compareString, String hideKey )
 		{
-		if( wordTypeNr_ == wordTypeNr &&
-		hideKey_ == hideKey &&
-		compareString != null &&
-		wordTypeString_.equals( compareString ) )
-			return true;
-
-		return false;
+		return ( wordTypeNr_ == wordTypeNr &&
+				hideKey_ == hideKey &&
+				compareString != null &&
+				wordTypeString_.equals( compareString ) );
 		}
 
 	protected boolean isAnswer()

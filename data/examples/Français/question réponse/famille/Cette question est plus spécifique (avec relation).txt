@@ -1,10 +1,10 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Est Olivier un père?
 Est Olivier le père de Pascal?
 Est Amélie un père ou une mère?
 Est Amélie une mère?
 Amélie est une mère.
 Est Amélie la mère de Pascal?
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

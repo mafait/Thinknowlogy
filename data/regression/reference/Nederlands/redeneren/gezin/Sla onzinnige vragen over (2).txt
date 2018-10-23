@@ -101,10 +101,10 @@
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een ouder van Paul. Omdat:
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is een kind van Anna en Jan.
-* 	en:
-<	- Paul heeft waarschijnlijk 2 ouders, genaamd Anna en Jan.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan heeft een kind, genaamd Paul.
@@ -233,10 +233,10 @@
 < Laura heeft waarschijnlijk een ouder, genaamd Anna. Omdat:
 <	- Anna is waarschijnlijk een ouder van Paul, Johan en Laura.
 < Laura is waarschijnlijk een kind van Anna. Omdat:
+<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna is waarschijnlijk een ouder van Paul, Johan en Laura.
-* 	en:
-<	- Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.

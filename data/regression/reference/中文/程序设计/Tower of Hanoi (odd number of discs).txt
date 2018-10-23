@@ -1,0 +1,160 @@
+﻿
+The number of discs is odd. So, the rule order is: Move first from start to goal, then from start to swap.
+
+Moved a disc from start to goal:
+* 起始杆:	E, D, C, B.
+* 交换杆:	.
+* 目标杆:	A.
+
+Moved a disc from start to swap:
+* 起始杆:	E, D, C.
+* 交换杆:	B.
+* 目标杆:	A.
+
+Moved a disc from goal to swap:
+* 起始杆:	E, D, C.
+* 交换杆:	B, A.
+* 目标杆:	.
+
+Moved a disc from start to goal:
+* 起始杆:	E, D.
+* 交换杆:	B, A.
+* 目标杆:	C.
+
+Moved a disc from swap to start:
+* 起始杆:	E, D, A.
+* 交换杆:	B.
+* 目标杆:	C.
+
+Moved a disc from swap to goal:
+* 起始杆:	E, D, A.
+* 交换杆:	.
+* 目标杆:	C, B.
+
+Moved a disc from start to goal:
+* 起始杆:	E, D.
+* 交换杆:	.
+* 目标杆:	C, B, A.
+
+Moved a disc from start to swap:
+* 起始杆:	E.
+* 交换杆:	D.
+* 目标杆:	C, B, A.
+
+Moved a disc from goal to swap:
+* 起始杆:	E.
+* 交换杆:	D, A.
+* 目标杆:	C, B.
+
+Moved a disc from goal to start:
+* 起始杆:	E, B.
+* 交换杆:	D, A.
+* 目标杆:	C.
+
+Moved a disc from swap to start:
+* 起始杆:	E, B, A.
+* 交换杆:	D.
+* 目标杆:	C.
+
+Moved a disc from goal to swap:
+* 起始杆:	E, B, A.
+* 交换杆:	D, C.
+* 目标杆:	.
+
+Moved a disc from start to goal:
+* 起始杆:	E, B.
+* 交换杆:	D, C.
+* 目标杆:	A.
+
+Moved a disc from start to swap:
+* 起始杆:	E.
+* 交换杆:	D, C, B.
+* 目标杆:	A.
+
+Moved a disc from goal to swap:
+* 起始杆:	E.
+* 交换杆:	D, C, B, A.
+* 目标杆:	.
+
+Moved a disc from start to goal:
+* 起始杆:	.
+* 交换杆:	D, C, B, A.
+* 目标杆:	E.
+
+Moved a disc from swap to start:
+* 起始杆:	A.
+* 交换杆:	D, C, B.
+* 目标杆:	E.
+
+Moved a disc from swap to goal:
+* 起始杆:	A.
+* 交换杆:	D, C.
+* 目标杆:	E, B.
+
+Moved a disc from start to goal:
+* 起始杆:	.
+* 交换杆:	D, C.
+* 目标杆:	E, B, A.
+
+Moved a disc from swap to start:
+* 起始杆:	C.
+* 交换杆:	D.
+* 目标杆:	E, B, A.
+
+Moved a disc from goal to swap:
+* 起始杆:	C.
+* 交换杆:	D, A.
+* 目标杆:	E, B.
+
+Moved a disc from goal to start:
+* 起始杆:	C, B.
+* 交换杆:	D, A.
+* 目标杆:	E.
+
+Moved a disc from swap to start:
+* 起始杆:	C, B, A.
+* 交换杆:	D.
+* 目标杆:	E.
+
+Moved a disc from swap to goal:
+* 起始杆:	C, B, A.
+* 交换杆:	.
+* 目标杆:	E, D.
+
+Moved a disc from start to goal:
+* 起始杆:	C, B.
+* 交换杆:	.
+* 目标杆:	E, D, A.
+
+Moved a disc from start to swap:
+* 起始杆:	C.
+* 交换杆:	B.
+* 目标杆:	E, D, A.
+
+Moved a disc from goal to swap:
+* 起始杆:	C.
+* 交换杆:	B, A.
+* 目标杆:	E, D.
+
+Moved a disc from start to goal:
+* 起始杆:	.
+* 交换杆:	B, A.
+* 目标杆:	E, D, C.
+
+Moved a disc from swap to start:
+* 起始杆:	A.
+* 交换杆:	B.
+* 目标杆:	E, D, C.
+
+Moved a disc from swap to goal:
+* 起始杆:	A.
+* 交换杆:	.
+* 目标杆:	E, D, C, B.
+
+Moved a disc from start to goal:
+* 起始杆:	.
+* 交换杆:	.
+* 目标杆:	E, D, C, B, A.
+
+Done.
+To start the puzzle again, click button «清除你的想法» and then «阅读文档"中文/程序设计/汉诺塔"。»

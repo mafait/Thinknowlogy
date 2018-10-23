@@ -1,13 +1,13 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Juan es un padre.
 Ana es una madre.
-# Extra checks (next 2)
-Juan tiene 3 hijos.
-Ana tiene 3 hijos.
+# Two extra checks
+#Dev#Juan tiene 3 hijos.
+#Dev#Ana tiene 3 hijos.
 Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Pablo.
 Pablo es un hijo.
-Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Pablo.
 Pablo es hijo de Juan y Ana.
-Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Pablo.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

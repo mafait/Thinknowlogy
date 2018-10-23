@@ -45,13 +45,13 @@
 < John has possibly a daughter, called Laura.
 < John is probably a person.
 < Anna has probably a child, called Laura.
-< Anna has possibly a daughter, called Laura.
 < Anna is probably a person.
 < Anna is probably a woman.
 < Anna is probably not a man.
 < Anna is probably feminine.
 < Anna is probably a mother of Laura.
 < Anna is probably not a father.
+< Anna has possibly a daughter, called Laura.
 * 
 * My questions:
 < Is Laura a girl or a woman?

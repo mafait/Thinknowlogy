@@ -4,11 +4,11 @@ Every father is a man.
 Every mother is a woman.
 
 John is the father and Anna is the mother of Paul, Joe and Laura.
-Display the justification report about John.
-Display the justification report about Anna.
-Display the justification report about Paul.
-Display the justification report about Joe.
-Display the justification report about Laura.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
+#Dev#Display the justification report about Joe.
+#Dev#Display the justification report about Laura.
 Paul is a son.
 Joe is a son.
 Laura is a daughter.

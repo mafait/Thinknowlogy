@@ -1,4 +1,4 @@
-﻿Lirez le fichier "Français/utilisateur/programmation/Puissance 4".
+﻿Lirez le fichier "Français/programmation/Puissance 4".
 Mon mouvement est D.
 Mon mouvement est D.
 Mon mouvement est D.

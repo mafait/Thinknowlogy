@@ -1,7 +1,7 @@
 ﻿/*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -34,7 +34,7 @@ class ReadList : private List
 
 	// Private constructed variables
 
-	unsigned short lastActivatedWordOrderNr_;
+	unsigned short lastActivatedWordOrderNr_ = NO_ORDER_NR;
 
 	// Private functions
 
@@ -50,7 +50,7 @@ class ReadList : private List
 			}
 		}
 
-	bool hasFoundReadItem( unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, char *readString, WordItem *readWordItem )
+	bool hasFoundReadItem( unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, WordItem *readWordItem )
 		{
 		ReadItem *searchReadItem = firstActiveReadItem();
 
@@ -59,14 +59,6 @@ class ReadList : private List
 			if( searchReadItem->wordOrderNr() == wordOrderNr &&
 			searchReadItem->wordParameter() == wordParameter &&
 			searchReadItem->wordTypeNr() == wordTypeNr &&
-
-			( ( searchReadItem->readString == NULL &&
-			readString == NULL ) ||
-
-			( searchReadItem->readString != NULL &&
-			readString != NULL &&
-			strcmp( searchReadItem->readString, readString ) == 0 ) ) &&
-
 			searchReadItem->readWordItem() == readWordItem )
 				return true;
 
@@ -81,10 +73,6 @@ class ReadList : private List
 
 	ReadList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		// Private constructed variables
-
-		lastActivatedWordOrderNr_ = NO_ORDER_NR;
-
 		initializeListVariables( ADMIN_READ_LIST_SYMBOL, "ReadList", globalVariables, inputOutput, myWordItem );
 		}
 
@@ -148,7 +136,7 @@ class ReadList : private List
 		wordTypeNr >= NUMBER_OF_WORD_TYPES )
 			return startError( functionNameString, "The given read word type number is undefined or out of bounds" );
 
-		if( hasFoundReadItem( wordOrderNr, wordParameter, wordTypeNr, readString, readWordItem ) )
+		if( hasFoundReadItem( wordOrderNr, wordParameter, wordTypeNr, readWordItem ) )
 			return startError( functionNameString, "The given read item already exists" );
 
 		if( addItemToList( QUERY_ACTIVE_CHAR, new ReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
@@ -246,21 +234,16 @@ class ReadList : private List
 						if( searchReadItem->readString == NULL &&
 						( definitionGrammarString = definitionGrammarItem->grammarString() ) != NULL )
 							{
+							if( ( definitionGrammarStringLength = strlen( definitionGrammarString ) ) >= MAX_WORD_LENGTH )
+								return startError( functionNameString, "The grammar definition string is too long" );
+
 							if( searchReadItem->readString != NULL )
-								strcpy( searchReadItem->readString, definitionGrammarString );
-							else
-								{
-								if( ( definitionGrammarStringLength = strlen( definitionGrammarString ) ) >= MAX_WORD_LENGTH )
-									return startError( functionNameString, "The grammar definition string is too long" );
+								delete searchReadItem->readString;
 
-								if( searchReadItem->readString != NULL )
-									delete searchReadItem->readString;
+							if( ( searchReadItem->readString = new char[definitionGrammarStringLength + 1] ) == NULL )
+								return startError( functionNameString, "I failed to create a grammar string" );
 
-								if( ( searchReadItem->readString = new char[definitionGrammarStringLength + 1] ) == NULL )
-									return startError( functionNameString, "I failed to create a grammar string" );
-
-								strcpy( searchReadItem->readString, definitionGrammarString );
-								}
+							strcpy( searchReadItem->readString, definitionGrammarString );
 							}
 						}
 					}

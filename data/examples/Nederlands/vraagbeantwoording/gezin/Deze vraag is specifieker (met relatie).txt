@@ -1,10 +1,10 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Is Jan een vader?
 Is Jan de vader van Paul?
 Is Anna een vader of een moeder?
 Is Anna een moeder?
 Anna is een moeder.
 Is Anna de moeder van Paul?
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

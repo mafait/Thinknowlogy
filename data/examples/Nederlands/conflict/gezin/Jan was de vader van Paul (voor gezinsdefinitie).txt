@@ -1,4 +1,4 @@
 ﻿Jan was de vader van Paul.
-Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.

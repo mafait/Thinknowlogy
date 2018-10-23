@@ -1,7 +1,7 @@
 ﻿/*	Class:		FileResultType
  *	Purpose:	To return file variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -26,20 +26,11 @@ class FileResultType
 	{
 	// Protected variables
 
-	protected byte result;
-	protected FileItem createdFileItem;
-	BufferedReader outputFile;
-	BufferedReader referenceFile;
+	protected byte result = Constants.RESULT_OK;
 
-	// Constructor
-
-	FileResultType()
-		{
-		result = Constants.RESULT_OK;
-		createdFileItem = null;
-		outputFile = null;
-		referenceFile = null;
-		}
+	protected FileItem createdFileItem = null;
+	BufferedReader outputFile = null;
+	BufferedReader referenceFile = null;
 	};
 
 /*************************************************************************

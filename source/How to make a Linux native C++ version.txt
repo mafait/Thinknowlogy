@@ -9,7 +9,7 @@ sudo apt-get install libncurses5-dev
 
 Go to the C++ source folder:
 ---------------------------------
-cd Thinknowlogy2018r1/source/C++
+cd Thinknowlogy2018r3/source/C++
 
 Now make the application:
 ---------------------------------

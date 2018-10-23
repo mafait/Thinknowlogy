@@ -1,7 +1,0 @@
-﻿Voeg-toe de goede, de slechte en de lelijke aan de films.
-Voeg-toe Goede, Slechte en Lelijke aan Films.
-Verplaats de top van de films naar de genres.
-Verplaats de staart van de films naar de genres.
-Verplaats Slechte van Films naar Genres.
-Verwijder de top van de genres.
-Verplaats de top naar de beste.

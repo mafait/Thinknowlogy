@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminWrite
  *	Supports class:	AdminItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -32,24 +32,23 @@ class AdminWrite
 
 	// Private constructed variables
 
-	bool hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_;
-	bool isFirstSelfGeneratedAssumption_;
-	bool isFirstSelfGeneratedConclusion_;
-	bool isFirstSelfGeneratedQuestion_;
-	bool isFirstUserSpecifications_;
-	bool isHidingAlmostDuplicateSpanishSpecification_;
-	bool isWritingStartOfJustifications_;
+	bool hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = false;
+	bool isFirstSelfGeneratedAssumption_ = false;
+	bool isFirstSelfGeneratedConclusion_ = false;
+	bool isFirstSelfGeneratedQuestion_ = false;
+	bool isFirstUserSpecifications_ = false;
+	bool isHidingAlmostDuplicateSpanishSpecification_ = false;
+	bool isWritingStartOfJustifications_ = false;
 
-	SpecificationItem *previousPrimarySpecificationItem_;
+	SpecificationItem *previousPrimarySpecificationItem_ = NULL;
 
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminWrite";
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
-
-	AdminItem *adminItem_;
-	GlobalVariables *globalVariables_;
-	InputOutput *inputOutput_;
+	AdminItem *adminItem_ = NULL;
+	GlobalVariables *globalVariables_ = NULL;
+	InputOutput *inputOutput_ = NULL;
 
 
 	// Private functions
@@ -224,7 +223,7 @@ class AdminWrite
 
 	signed char writeJustificationType( bool isFirstJustificationType, JustificationItem *writeJustificationItem, SpecificationItem *selfGeneratedSpecificationItem )
 		{
-		bool hasNonExclusiveCollection = false;
+		bool isNonExclusiveCollection = false;
 		bool isExclusiveSpecification;
 		bool isNegative;
 		bool isNegativeAssumptionOrConclusion;
@@ -273,15 +272,15 @@ class AdminWrite
 		if( ( firstSecondarySpecificationItem = writeJustificationItem->secondarySpecificationItem() ) != NULL &&
 		isNegativeAssumptionOrConclusion &&
 		firstSecondarySpecificationItem->hasNonExclusiveSpecificationCollection() )
-			hasNonExclusiveCollection = true;
+			isNonExclusiveCollection = true;
 
 		if( ( !isNegativeAssumptionOrConclusion ||
-		hasNonExclusiveCollection ||
+		isNonExclusiveCollection ||
 
 		( !writeJustificationItem->hasAnotherPrimarySpecification() &&
 		writeJustificationItem->isPrimarySpecificationWordSpanishAmbiguous() ) ) &&
 
-		( currentSpecificationItem = generalizationWordItem->firstSpecificationItem( false, selfGeneratedSpecificationItem->isAssignment(), selfGeneratedSpecificationItem->isInactiveAssignment(), selfGeneratedSpecificationItem->isArchivedAssignment(), selfGeneratedSpecificationItem->questionParameter() ) ) != NULL )
+		( currentSpecificationItem = generalizationWordItem->firstSpecificationItem( selfGeneratedSpecificationItem->isAssignment(), selfGeneratedSpecificationItem->isInactiveAssignment(), selfGeneratedSpecificationItem->isArchivedAssignment(), selfGeneratedSpecificationItem->questionParameter() ) ) != NULL )
 			{
 			isExclusiveSpecification = selfGeneratedSpecificationItem->isExclusiveSpecification();
 			isNegative = selfGeneratedSpecificationItem->isNegative();
@@ -376,23 +375,21 @@ class AdminWrite
 
 				( ( !isWritingJustification &&
 
-				( ( currentSpecificationItem->hasNonCompoundSpecificationCollection() &&
-				currentSpecificationItem->isOlderItem() &&
+				( ( currentSpecificationItem->isOlderItem() &&
 				currentSpecificationItem->isSelfGeneratedAssumption() &&
-				adminItem_->hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore() &&
+				!currentSpecificationItem->wasHiddenSpanishSpecification() &&
+				adminItem_->hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore() &&
+				currentSpecificationItem->isFirstJustificiationReversibleConclusion() ) ||
 
-				( currentSpecificationItem->isPossessiveReversibleConclusion() ||
-
-				( currentSpecificationItem->firstJustificationItem( JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ) != NULL &&
-				currentSpecificationItem->firstJustificationItem( JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION ) == NULL ) ) ) ||
-
+				// Test files: "Complejo (2)"
 				( currentSpecificationItem->hasCompoundSpecificationCollection() &&
-				currentSpecificationItem->isPossessiveReversibleConclusion() &&
+				currentSpecificationItem->isFirstJustificiationReversibleConclusion() &&
 				currentSpecificationItem->wasHiddenSpanishSpecification() ) ) ) ||
 
-				( currentSpecificationItem->hasNonCompoundSpecificationCollection() &&
+				( currentSpecificationItem->isPossessive() &&
+				currentSpecificationItem->hasNonCompoundSpecificationCollection() &&
 				!currentSpecificationItem->isConcludedAssumption() &&
-				currentSpecificationItem->isPossessiveReversibleConclusion() &&
+				currentSpecificationItem->isFirstJustificiationReversibleConclusion() &&
 				( singleRelationWordItem = currentSpecificationItem->singleRelationWordItem() ) != NULL &&
 				singleRelationWordItem->isMale() ) ) )
 					isHiddenSpanishSpecification = true;
@@ -646,7 +643,7 @@ class AdminWrite
 					}
 				else
 					{
-					if( ( !writeJustificationItem->isPossessiveReversibleAssumption() ||
+					if( ( !writeJustificationItem->isReversibleAssumption() ||
 					// Typical for Spanish
 					writeJustificationItem->nextJustificationItemWithSameTypeAndOrderNr() == NULL ) &&
 
@@ -660,7 +657,7 @@ class AdminWrite
 			writeJustificationItem->hasFeminineOrMasculineProperNounEnding() &&
 
 			( ( isWritingPrimarySpecification &&
-			!writeJustificationItem->isPossessiveReversibleAssumption() ) ||
+			!writeJustificationItem->isReversibleAssumption() ) ||
 
 			// Typical for Spanish
 			writeJustificationItem->nextJustificationItemWithSameTypeAndOrderNr() == NULL ) )
@@ -671,7 +668,9 @@ class AdminWrite
 					if( currentJustificationItem->hasFeminineOrMasculineProperNounEnding() )
 						{
 						currentPrimarySpecificationItem = currentJustificationItem->primarySpecificationItem();
-						feminineOrMasculineProperNounEndingWordItem = ( isPossessiveSelfGeneratedSpecificationItem ? ( selfGeneratedSpecificationItem->hasOnlyOneRelationWord() ? selfGeneratedSpecificationItem->singleRelationWordItem() : currentPrimarySpecificationItem->generalizationWordItem() ) : currentJustificationItem->generalizationWordItem() );
+						feminineOrMasculineProperNounEndingWordItem = ( isPossessiveSelfGeneratedSpecificationItem ?
+																		( selfGeneratedSpecificationItem->hasOnlyOneRelationWord() ? selfGeneratedSpecificationItem->singleRelationWordItem() : currentPrimarySpecificationItem->generalizationWordItem() ) :
+																			currentJustificationItem->generalizationWordItem() );
 
 						if( feminineOrMasculineProperNounEndingWordItem == NULL )
 							return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find the feminine or masculine proper noun ending word" );
@@ -835,22 +834,6 @@ class AdminWrite
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
-		// Private constructed variables
-
-		hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ = false;
-		isFirstSelfGeneratedAssumption_ = true;
-		isFirstSelfGeneratedConclusion_ = true;
-		isFirstSelfGeneratedQuestion_ = true;
-		isFirstUserSpecifications_ = true;
-		isHidingAlmostDuplicateSpanishSpecification_ = false;
-		isWritingStartOfJustifications_ = false;
-
-		previousPrimarySpecificationItem_ = NULL;
-
-		// Private initialized variables
-
-		strcpy( moduleNameString_, "AdminWrite" );
-
 		// Checking private initialized variables
 
 		if( ( adminItem_ = adminItem ) == NULL )
@@ -967,6 +950,7 @@ class AdminWrite
 		{
 		bool isEqualReadAndWriteUserString;
 		unsigned short lastFoundWordOrderNr = NO_ORDER_NR;
+		size_t offset = 0;
 		size_t readUserSentenceStringLength = ( readUserSentenceString == NULL ? 0 : strlen( readUserSentenceString ) );
 		size_t readWordTypeStringLength;
 		size_t wordPosition = 0;
@@ -1010,19 +994,14 @@ class AdminWrite
 						currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence = true;
 					else
 						{
-						if( ( readWordTypeString = currentReadItem->readWordTypeString() ) == NULL )
-							{
-							// Skip text string (or hidden word)
-							currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence = true;
-							// Avoid looping
-							readWordResult.offset = ( writtenUserSentenceStringLength - wordPosition );
-							}
-						else
+						if( ( readWordTypeString = currentReadItem->readWordTypeString() ) != NULL )
 							{
 							readWordTypeStringLength = strlen( readWordTypeString );
 
 							if( ( readWordResult = adminItem_->readWordFromString( false, false, false, readWordTypeStringLength, &writtenUserSentenceString[wordPosition] ) ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a word from the written string" );
+
+							offset = readWordResult.offset;
 
 							if( !currentReadItem->hasWordPassedIntegrityCheckOfStoredUserSentence )
 								{
@@ -1035,7 +1014,7 @@ class AdminWrite
 									if( lastFoundWordOrderNr == NO_ORDER_NR ||
 									lastFoundWordOrderNr + 1 == currentReadItem->wordOrderNr() )
 										{
-										wordPosition += readWordResult.offset;
+										wordPosition += offset;
 										lastFoundWordOrderNr = currentReadItem->wordOrderNr();
 										startNewSpecificationReadItem = currentReadItem->nextReadItem();
 										}
@@ -1059,7 +1038,7 @@ class AdminWrite
 					}
 				while( ( currentReadItem = currentReadItem->nextReadItem() ) != NULL );
 
-				wordPosition += readWordResult.offset;
+				wordPosition += offset;
 				currentReadItem = startNewSpecificationReadItem;
 				}
 			while( currentReadItem != NULL &&

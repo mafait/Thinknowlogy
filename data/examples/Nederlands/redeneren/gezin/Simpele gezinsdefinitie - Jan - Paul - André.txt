@@ -1,0 +1,5 @@
+﻿Ieder gezin heeft een ouder en een kind.
+Jan is een ouder van Paul.
+Paul is een ouder van André.
+André is een kind van Paul.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

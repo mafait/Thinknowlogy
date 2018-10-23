@@ -1,0 +1,5 @@
+﻿Every family has a parent and a child.
+John is a parent of Paul.
+Paul is a parent of Adam.
+Adam is a child of Paul.
+# To continue, click button «Clear your mind.» or «Restart.».

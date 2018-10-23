@@ -1,7 +1,7 @@
 ﻿/*	Class:		BoolResultType
  *	Purpose:	To return word parameter variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -32,18 +32,13 @@ class BoolResultType
 	friend class AdminSpecification;
 	friend class CollectionItem;
 	friend class CollectionList;
-	friend class ContextItem;
-	friend class GeneralizationItem;
 	friend class GeneralizationList;
 	friend class InterfaceList;
 	friend class Item;
 	friend class List;
-	friend class MultipleWordItem;
-	friend class ReadItem;
 	friend class ReadList;
 	friend class ScoreList;
 	friend class SelectionItem;
-	friend class SpecificationItem;
 	friend class SpecificationList;
 	friend class WordItem;
 	friend class WordSpecification;
@@ -52,17 +47,8 @@ class BoolResultType
 	protected:
 	// Protected variables
 
-	signed char result;
-	bool booleanValue;
-
-	protected:
-	// Constructor
-
-	BoolResultType()
-		{
-		result = RESULT_OK;
-		booleanValue = false;
-		}
+	signed char result = RESULT_OK;
+	bool booleanValue = false;
 	};
 
 /*************************************************************************

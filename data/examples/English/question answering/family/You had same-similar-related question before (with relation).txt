@@ -1,0 +1,10 @@
+﻿Read the file "English/reasoning/family/family definition".
+Is John the father of Paul?
+Is John the father of Joe?
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Is John the father of Paul?
+Is John the mother of Paul?
+Is John the father of Paul?
+Is John a father?
+Is John the father of Laura?
+# To continue, click button «Clear your mind.» or «Restart.».

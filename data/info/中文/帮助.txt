@@ -1,9 +1,9 @@
 ﻿呈现"------------------------------------------------------------------------------"。
 #C++#呈现" \~{languageName}\t\t\t\t\t* Change language"。
-#C++#呈现" 阅读文档\"中文/用户/程序设计/屏風式四子棋\"。	* Game Connect-Four"。
-#C++#呈现" 阅读文档\"中文/用户/程序设计/汉诺塔\"。 * Solve a puzzle"。
-#C++#呈现" 阅读文档\"中文/用户/推理/科学挑战\"。 * Challenge"。
-#C++#呈现" 阅读文档\"中文/用户/推理/家庭/家庭的定义\"。 * Reasoning"。
+#C++#呈现" 阅读文档\"中文/程序设计/屏風式四子棋\"。	* Game Connect-Four"。
+#C++#呈现" 阅读文档\"中文/程序设计/汉诺塔\"。 * Solve a puzzle"。
+#C++#呈现" 阅读文档\"中文/推理/科学挑战\"。 * Challenge"。
+#C++#呈现" 阅读文档\"中文/推理/家庭/家庭的定义\"。 * Reasoning"。
 #Java#呈现" Use button <程序设计>	to learn about programming in natural language"。
 #Java#呈现" Use button <推理>	to learn about reasoning in natural language"。
 呈现"------------------------------------------------------------------------------"。
@@ -24,9 +24,9 @@
 呈现" 呈现GNU 通用公共授权。"。
 呈现" 呈现保证。"。
 呈现"------------------------------------------------------------------------------"。
-#C++#呈现" Example files:	* folder: Thinknowlogy2018r1/data/examples/中文/用户/"。
+#C++#呈现" Example files:	* folder: Thinknowlogy2018r1/data/examples/中文/"。
 #Java#呈现" Example files:	* Use button <更多的例子>"。
-#Java#呈现"              or see folder: Thinknowlogy2018r1/data/examples/中文/用户/"。
+#Java#呈现"              or see folder: Thinknowlogy2018r1/data/examples/中文/"。
 呈现" Fundamental:	* folder: Thinknowlogy2018r1/documents/"。
 呈现" Design:	* folder: Thinknowlogy2018r1/documents/design/"。
 呈现" Screenshots:	* folder: Thinknowlogy2018r1/screenshots/中文/"。

@@ -1,0 +1,69 @@
+﻿#----------------------------------------------------------------------------
+# Purpose: To demonstrate programming in natural language.
+# Version: Thinknowlogy 2018r3 (Deep Magic)
+#----------------------------------------------------------------------------
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+# Display the greeting and cleanup to avoid interference with the next greeting
+如果该打招呼是开始那么呈现"\n~+'问候'<a>\"~~+'称呼'<a>\"~~+'名字'<a>`~.\n\n"、该年龄是空的、该性别是空的、该时间是空的、该打招呼是空的、该婚姻状况是空的、该问候是空的、该称呼是空的和该名字是空的。
+
+# Determine the salutation for a male.
+如果该打招呼是开始和该性别是男性那么如果该年龄是已分配和该年龄是少于13那么该称呼是"年轻的绅士"否该称呼是"先生"。
+
+# Determine the salutation for a female.
+如果该打招呼是开始和该性别是女性那么如果该婚姻状况是已婚那么该称呼是"太太"否如果该年龄是已分配和该年龄是少于13那么该称呼是"小小姐"否该称呼是"小姐"。
+
+# Determine the greeting according the time of the day.
+如果该打招呼是开始和该时间是已分配那么如果该时间是早于"06:00"那么该问候是"晚安"否如果该时间是早于"12:00"那么该问候是"早上好"否如果该时间是早于"18:00"那么该问候是"下午好"否该问候是"晚上好"。
+
+
+# Now do your trick.
+
+#---------------------
+# Little Miss Robinson
+#---------------------
+该名字是Robinson。
+该性别是女性。
+该年龄是6。
+# 该婚姻状况是单身。	# Obvious for a child and not relevant
+该时间是"07:30"。
+该打招呼是开始。
+#-------------
+# Master Adams
+#-------------
+该名字是Adams。
+该性别是男性。
+该年龄是8。
+# 该婚姻状况是单身。	# Obvious for a child and not relevant
+该时间是"10:00"。
+该打招呼是开始。
+#----------------
+# Miss Piggy
+#----------------
+该名字是Piggy。
+该性别是女性。
+该年龄是25。
+该婚姻状况是单身。
+该时间是"17:00"。
+该打招呼是开始。
+#----------------
+# Mrs. Jones
+#----------------
+该名字是Jones。
+该性别是女性。
+该年龄是29。
+该婚姻状况是已婚。
+该时间是"18:30"。
+该打招呼是开始。
+#----------------
+# Mr. Smith
+#----------------
+该名字是Smith。
+该性别是男性。
+该年龄是32。
+# 该婚姻状况是单身。	# Not relevant
+该时间是"01:30"。
+该打招呼是开始。
+# To continue, click button «清除你的想法» or «重启».

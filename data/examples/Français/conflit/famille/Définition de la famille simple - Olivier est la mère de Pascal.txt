@@ -5,6 +5,6 @@ Chaque père est un homme.
 Chaque mère est une femme.
 
 Olivier est un père.
-Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Olivier.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».
 Olivier est la mère de Pascal.

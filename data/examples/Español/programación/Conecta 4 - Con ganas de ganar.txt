@@ -1,4 +1,4 @@
-﻿Leer el archivo "Español/usuario/programación/Conecta 4".
+﻿Leer el archivo "Español/programación/Conecta 4".
 Mi movimiento es D.
 Mi movimiento es D.
 Mi movimiento es D.

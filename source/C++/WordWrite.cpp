@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordWrite
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -30,44 +30,44 @@ class WordWrite
 
 	// Private constructed variables
 
-	bool hasFoundAllRelationWords_;
-	bool hasFoundAllRelationWordsBeforeConjunction_;
-	bool hasFoundAllSpecificationWords_;
-	bool hasFoundAllSpecificationWordsBeforeConjunction_;
-	bool hasFoundWordToWrite_;
-	bool hasGeneralizationWord_;
-	bool hasFoundSingleSpecificationWord_;
-	bool hasFoundSpecificationGeneralizationVerb_;
-	bool hasFoundSpecificationWord_;
-	bool isChineseCurrentLanguage_;
-	bool isSkippingClearWriteLevel_;
-	bool isSpecificationWaitingForConjunction_;
-	bool isUnknownPluralOfNoun_;
+	bool hasFoundAllRelationWords_ = false;
+	bool hasFoundAllRelationWordsBeforeConjunction_ = false;
+	bool hasFoundAllSpecificationWords_ = false;
+	bool hasFoundAllSpecificationWordsBeforeConjunction_ = false;
+	bool hasFoundWordToWrite_ = false;
+	bool hasGeneralizationWord_ = false;
+	bool hasFoundSingleSpecificationWord_ = false;
+	bool hasFoundSpecificationGeneralizationVerb_ = false;
+	bool hasFoundSpecificationWord_ = false;
+	bool isChineseCurrentLanguage_ = false;
+	bool isSkippingClearWriteLevel_ = false;
+	bool isSpecificationWaitingForConjunction_ = false;
+	bool isUnknownPluralOfNoun_ = false;
 
-	unsigned short writeWordTypeNr_;
+	unsigned short writeWordTypeNr_ = NO_WORD_TYPE_NR;
 
-	size_t generalizationStartWordPosition_;
-	size_t specificationStartWordPosition_;
+	size_t generalizationStartWordPosition_ = 0;
+	size_t specificationStartWordPosition_ = 0;
 
-	SpecificationItem *lastFoundSpecificationItem_;
+	SpecificationItem *lastFoundSpecificationItem_ = NULL;
 
-	WordItem *lastFoundRelationWordItem_;
+	WordItem *lastFoundRelationWordItem_ = NULL;
 
-	char *writeWordString_;
+	char *writeWordString_ = NULL;
+
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "WordWrite";
+
+	char lastSpecificationString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char previousSpecificationString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+
 	// This string is returned by a function. So, it must be "static".
-	char nContextRelationsString_[MAX_SENTENCE_STRING_LENGTH];
-
-	char lastSpecificationString_[MAX_SENTENCE_STRING_LENGTH];
-	char previousSpecificationString_[MAX_SENTENCE_STRING_LENGTH];
-
+	char nContextRelationsString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
-
-	GlobalVariables *globalVariables_;
-	InputOutput *inputOutput_;
-	WordItem *myWordItem_;
+	GlobalVariables *globalVariables_ = NULL;
+	InputOutput *inputOutput_ = NULL;
+	WordItem *myWordItem_ = NULL;
 
 
 	// Private functions
@@ -98,6 +98,7 @@ class WordWrite
 
 		strcpy( lastSpecificationString_, EMPTY_STRING );
 		strcpy( previousSpecificationString_, EMPTY_STRING );
+
 		strcpy( nContextRelationsString_, EMPTY_STRING );
 
 		globalVariables_->currentWriteLevel = NO_WRITE_LEVEL;
@@ -108,9 +109,7 @@ class WordWrite
 
 	signed char checkAssumptionLevel( SpecificationItem *writeSpecificationItem )
 		{
-		unsigned short currentAssumptionLevel;
 		unsigned short previousAssumptionLevel;
-		ShortResultType shortResult;
 		char errorString[MAX_ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkAssumptionLevel";
 
@@ -119,28 +118,14 @@ class WordWrite
 
 		previousAssumptionLevel = writeSpecificationItem->assumptionLevel();
 
-		if( myWordItem_->hasCorrectedAssumptionByKnowledge() )
-			{
-			// Normal calculation will go wrong if corrected assumption is rewritten
-			// In other words: If the stored sentence buffer string isn't used
-			if( writeSpecificationItem->recalculateAssumption() != RESULT_OK )
-				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to calculate the assumption level of the write specification" );
+		if( writeSpecificationItem->calculateAssumptionLevel() != RESULT_OK )
+			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to calculate the assumption level of the write specification" );
 
-			currentAssumptionLevel = writeSpecificationItem->assumptionLevel();
-			}
-		else
+		// There is a difference between recalculated assumption level and previous assumption level
+		// So, the assumption level is not recalculated after a change during the process
+		if( writeSpecificationItem->assumptionLevel() != previousAssumptionLevel )
 			{
-			if( ( shortResult = writeSpecificationItem->calculateAssumptionLevel() ).result != RESULT_OK )
-				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to calculate the assumption level of the write specification" );
-
-			currentAssumptionLevel = shortResult.shortValue;
-			}
-
-		// Difference between recalculated assumption level and previous assumption level
-		// Assumption level is not recalculated after change
-		if( currentAssumptionLevel != previousAssumptionLevel )
-			{
-			sprintf( errorString, "\nThe assumption level of the following specification item has changed during the process, but it isn't recalculated.\nSo, this specification may have a recalculation or update issue.\n\tPrevious assumption level: %u, recalculated assumption level: %u;\n\tSpecificationItem: %s.\n\n", previousAssumptionLevel, currentAssumptionLevel, writeSpecificationItem->itemToString( NO_WORD_TYPE_NR ) );
+			sprintf( errorString, "\nThe assumption level of the following specification item has changed during the process, but it isn't recalculated.\nSo, this specification may have a recalculation or update issue.\n\tPrevious assumption level: %u, recalculated assumption level: %u;\n\tSpecificationItem: %s.\n\n", previousAssumptionLevel, writeSpecificationItem->assumptionLevel(), writeSpecificationItem->itemToString( NO_WORD_TYPE_NR ) );
 
 			if( inputOutput_->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "I failed to write an interface warning" );
@@ -187,7 +172,6 @@ class WordWrite
 
 	signed char clearWriteLevel( bool isWritingCurrentSpecificationWordOnly, unsigned short currentWriteLevel, SpecificationItem *clearSpecificationItem )
 		{
-		bool isAnsweredQuestion;
 		bool isExclusiveSpecification = false;
 		bool isNegative = false;
 		bool isPossessive = false;
@@ -218,27 +202,23 @@ class WordWrite
 			if( ( relationContextNr = clearSpecificationItem->relationContextNr() ) == NO_CONTEXT_NR )
 				{
 				if( !isWritingCurrentSpecificationWordOnly &&
-				( specificationCollectionNr = clearSpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR )
+				( specificationCollectionNr = clearSpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR &&
+				( currentSpecificationItem = myWordItem_->firstSpecificationItem( clearSpecificationItem->isAssignment(), clearSpecificationItem->isInactiveAssignment(), clearSpecificationItem->isArchivedAssignment(), clearSpecificationItem->questionParameter() ) ) != NULL )
 					{
-					isAnsweredQuestion = clearSpecificationItem->isAnsweredQuestion();
+					// Clear specification write level of related specification words
+					isExclusiveSpecification = clearSpecificationItem->isExclusiveSpecification();
+					isNegative = clearSpecificationItem->isNegative();
+					isPossessive = clearSpecificationItem->isPossessive();
+					isSelfGenerated = clearSpecificationItem->isSelfGenerated();
+					assumptionLevel = clearSpecificationItem->assumptionLevel();
+					generalizationContextNr = clearSpecificationItem->generalizationContextNr();
 
-					if( ( currentSpecificationItem = myWordItem_->firstSpecificationItem( isAnsweredQuestion, clearSpecificationItem->isAssignment(), clearSpecificationItem->isInactiveAssignment(), clearSpecificationItem->isArchivedAssignment(), clearSpecificationItem->questionParameter() ) ) != NULL )
-						{
-						// Clear specification write level of related specification words
-						isExclusiveSpecification = clearSpecificationItem->isExclusiveSpecification();
-						isNegative = clearSpecificationItem->isNegative();
-						isPossessive = clearSpecificationItem->isPossessive();
-						isSelfGenerated = clearSpecificationItem->isSelfGenerated();
-						assumptionLevel = clearSpecificationItem->assumptionLevel();
-						generalizationContextNr = clearSpecificationItem->generalizationContextNr();
-
-						do	{
-							if( currentSpecificationItem != clearSpecificationItem &&
-							( currentSpecificationWordItem = currentSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, NO_WORD_TYPE_NR, specificationCollectionNr, generalizationContextNr, relationContextNr ) ) != NULL )
-								currentSpecificationWordItem->clearSpecificationWriteLevel( currentWriteLevel );
-							}
-						while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != NULL );
+					do	{
+						if( currentSpecificationItem != clearSpecificationItem &&
+						( currentSpecificationWordItem = currentSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, assumptionLevel, NO_WORD_TYPE_NR, specificationCollectionNr, generalizationContextNr, relationContextNr ) ) != NULL )
+							currentSpecificationWordItem->clearSpecificationWriteLevel( currentWriteLevel );
 						}
+					while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedQuestionParameterSpecificationItem() ) != NULL );
 					}
 				}
 			else
@@ -388,7 +368,6 @@ class WordWrite
 
 	signed char writeSpecificationWordToSentence( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGenerated, bool isSpecificationGeneralization, bool isWritingCurrentSpecificationWordOnly, unsigned short assumptionLevel, unsigned short grammarDefinitionWordTypeNr, unsigned short questionParameter, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr, SpecificationItem *writeSpecificationItem, WordItem *specificationWordItem )
 		{
-		bool isAnsweredQuestion;
 		bool hasSkippedDifferentSpecification = false;
 		unsigned short currentSpecificationWordTypeNr;
 		SpecificationItem *currentSpecificationItem;
@@ -417,9 +396,7 @@ class WordWrite
 			}
 		else
 			{
-			isAnsweredQuestion = writeSpecificationItem->isAnsweredQuestion();
-
-			if( ( currentSpecificationItem = myWordItem_->firstSpecificationItem( isAnsweredQuestion, isAssignment, isInactiveAssignment, isArchivedAssignment, questionParameter ) ) != NULL )
+			if( ( currentSpecificationItem = myWordItem_->firstSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, questionParameter ) ) != NULL )
 				{
 				do	{
 					if( ( currentSpecificationItem == writeSpecificationItem ||
@@ -444,7 +421,7 @@ class WordWrite
 						}
 					}
 				while( writeWordString_ == NULL &&
-				( currentSpecificationItem = currentSpecificationItem->nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != NULL );
+				( currentSpecificationItem = currentSpecificationItem->nextSelectedQuestionParameterSpecificationItem() ) != NULL );
 				}
 			}
 
@@ -598,7 +575,6 @@ class WordWrite
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given write specification item is undefined" );
 
 		hasRelationContext = writeSpecificationItem->hasRelationContext();
-
 		isAssignment = writeSpecificationItem->isAssignment();
 		isActiveAssignment = writeSpecificationItem->isActiveAssignment();
 		isArchivedAssignment = writeSpecificationItem->isArchivedAssignment();
@@ -889,6 +865,7 @@ class WordWrite
 			case WORD_PARAMETER_ADVERB_ASSUMPTION_MAYBE:
 				if( isSelfGeneratedAssumption )
 					{
+					// Check if the assumption level is still correct
 					if( checkAssumptionLevel( writeSpecificationItem ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the assumption level for 'maybe'" );
 					}
@@ -907,6 +884,7 @@ class WordWrite
 			case WORD_PARAMETER_ADVERB_ASSUMPTION_POSSIBLY:
 				if( isSelfGeneratedAssumption )
 					{
+					// Check if the assumption level is still correct
 					if( checkAssumptionLevel( writeSpecificationItem ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the assumption level for 'possibly'" );
 					}
@@ -925,6 +903,7 @@ class WordWrite
 			case WORD_PARAMETER_ADVERB_ASSUMPTION_PROBABLY:
 				if( isSelfGeneratedAssumption )
 					{
+					// Check if the assumption level is still correct
 					if( checkAssumptionLevel( writeSpecificationItem ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to check the assumption level for 'probably'" );
 					}
@@ -1426,37 +1405,6 @@ class WordWrite
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
-		// Private constructed variables
-
-		hasFoundAllRelationWords_ = false;
-		hasFoundAllRelationWordsBeforeConjunction_ = false;
-		hasFoundAllSpecificationWords_ = false;
-		hasFoundAllSpecificationWordsBeforeConjunction_ = false;
-		hasFoundWordToWrite_ = false;
-		hasGeneralizationWord_ = false;
-		hasFoundSingleSpecificationWord_ = false;
-		hasFoundSpecificationGeneralizationVerb_ = false;
-		hasFoundSpecificationWord_ = false;
-		isChineseCurrentLanguage_ = false;
-		isSkippingClearWriteLevel_ = false;
-		isSpecificationWaitingForConjunction_ = false;
-		isUnknownPluralOfNoun_ = false;
-
-		writeWordTypeNr_ = NO_WORD_TYPE_NR;
-
-		generalizationStartWordPosition_ = 0;
-		specificationStartWordPosition_ = 0;
-
-		lastFoundSpecificationItem_ = NULL;
-
-		lastFoundRelationWordItem_ = NULL;
-
-		writeWordString_ = NULL;
-
-		// Private initialized variables
-
-		strcpy( moduleNameString_, "WordWrite" );
-
 		// Checking private initialized variables
 
 		if( ( myWordItem_ = myWordItem ) == NULL )
@@ -1615,11 +1563,11 @@ class WordWrite
 
 			if( ( specificationWordItem = writeSpecificationItem->specificationWordItem() ) != NULL )
 				{
-				if( !isWritingCurrentSpecificationWordOnly &&
+				if( hasSpecificationCollection &&
+				!isWritingCurrentSpecificationWordOnly &&
 				answerParameter == NO_ANSWER_PARAMETER )
 					{
-					if( hasSpecificationCollection &&
-					( relatedResult = myWordItem_->findRelatedSpecification( true, writeSpecificationItem ) ).result != RESULT_OK )
+					if( ( relatedResult = myWordItem_->findRelatedSpecification( true, writeSpecificationItem ) ).result != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a related specification" );
 
 					isFirstRelatedSpecification = relatedResult.isFirstRelatedSpecification;
@@ -1716,15 +1664,13 @@ class WordWrite
 															( storedSentenceWithOnlyOneSpecificationString = writeSpecificationItem->storedSentenceWithOnlyOneSpecificationString() ) != NULL &&
 															strlen( storedSentenceWithOnlyOneSpecificationString ) > 0 );
 
-				storedSentenceString = writeSpecificationItem->storedSentenceString();
-
 				// Efficiency: Use the stored sentence if still up-to-date
-				if( answerParameter == NO_ANSWER_PARAMETER &&
-				storedSentenceString != NULL &&
+				if( ( storedSentenceString = writeSpecificationItem->storedSentenceString() ) != NULL &&
 				strlen( storedSentenceString ) > 0 &&
+				answerParameter == NO_ANSWER_PARAMETER &&
 
-				( isWritingSentenceWithOnlyOneSpecification ||
-				isQuestion ||
+				( isQuestion ||
+				isWritingSentenceWithOnlyOneSpecification ||
 
 				// No relation context
 				( !hasRelationContext &&

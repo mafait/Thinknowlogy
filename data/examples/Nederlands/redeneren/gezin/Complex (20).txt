@@ -1,12 +1,12 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Jan is de vader van Paul, Johan en Laura.
 Johan is een zoon van Jan en Anna.
 Jan is een ouder van Paul, Johan en Laura.
 Anna is een ouder van Paul, Johan en Laura.
 Paul is een kind van Jan en Anna.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Paul.
-Toon de verantwoordingsrapportage over Johan.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,7 +25,7 @@ class WordTypeList extends List
 	{
 	// Private constructed variables
 
-	private WordTypeItem foundWordTypeItem_;
+	private WordTypeItem foundWordTypeItem_ = null;
 
 
 	// Private methods
@@ -78,10 +78,6 @@ class WordTypeList extends List
 
 	protected WordTypeList( WordItem myWordItem )
 		{
-		// Private constructed variables
-
-		foundWordTypeItem_ = null;
-
 		initializeListVariables( Constants.WORD_TYPE_LIST_SYMBOL, "WordTypeList", myWordItem );
 		}
 
@@ -402,17 +398,18 @@ class WordTypeList extends List
 		( searchWordTypeItem = firstActiveWordTypeItem() ) != null )
 			foundWordTypeItem = wordTypeString( false, true, wordTypeNr, searchWordTypeItem );
 
-		return ( foundWordTypeItem == null ? ( foundWordTypeItem_ == null ? null : foundWordTypeItem_.itemString() ) : foundWordTypeItem.itemString() );
+		return ( foundWordTypeItem != null ?
+				foundWordTypeItem.itemString() :
+				( foundWordTypeItem_ != null ?
+				foundWordTypeItem_.itemString() : null ) );
 		}
 
 	protected String activeWordTypeString( boolean isLanguageWord, short wordTypeNr )
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( ( foundWordTypeItem = activeWordTypeItem( false, isLanguageWord, wordTypeNr ) ) != null )
-			return foundWordTypeItem.itemString();
-
-		return null;
+		return ( ( foundWordTypeItem = activeWordTypeItem( false, isLanguageWord, wordTypeNr ) ) != null ?
+				foundWordTypeItem.itemString() : null );
 		}
 
 	protected WordTypeItem activeWordTypeItem( boolean isAllowingDifferentNoun, boolean isCheckingAllLanguages, short wordTypeNr )
@@ -452,7 +449,9 @@ class WordTypeList extends List
 		boolean hasFeminineWordEnding = false;
 		boolean hasMasculineWordEnding = false;
 		boolean isSingularNoun;
-		WordEndingResultType wordEndingResult = new WordEndingResultType();
+		short grammarParameter;
+		WordItem generalizationWordItem = myWordItem();
+		WordEndingResultType wordEndingResult;
 		WordResultType wordResult;
 		WordTypeResultType wordTypeResult = new WordTypeResultType();
 
@@ -477,8 +476,11 @@ class WordTypeList extends List
 			( !isLanguageWord &&
 			wordTypeNr == Constants.WORD_TYPE_PROPER_NOUN ) )
 				{
+				// Feminine
+				grammarParameter = ( isSingularNoun ? Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING : Constants.WORD_FEMININE_PROPER_NOUN_ENDING );
+
 				// Check on feminine and masculine word ending
-				if( ( wordEndingResult = myWordItem().analyzeWordEndingWithCurrentLanguage( ( isSingularNoun ? Constants.WORD_FEMININE_SINGULAR_NOUN_ENDING : Constants.WORD_FEMININE_PROPER_NOUN_ENDING ), 0, wordTypeString ) ).result != Constants.RESULT_OK )
+				if( ( wordEndingResult = generalizationWordItem.analyzeWordEndingWithCurrentLanguage( grammarParameter, 0, wordTypeString ) ).result != Constants.RESULT_OK )
 					return addWordTypeResultError( 1, "I failed to check on feminine word ending" );
 
 				if( wordEndingResult.hasFoundWordEnding )
@@ -486,12 +488,15 @@ class WordTypeList extends List
 					hasFeminineWordEnding = true;
 
 					if( isSingularNoun &&
-					myWordItem().markWordAsFeminine() != Constants.RESULT_OK )
+					generalizationWordItem.markWordAsFeminine() != Constants.RESULT_OK )
 						return addWordTypeResultError( 1, "I failed to mark my word as feminine" );
 					}
 				else
 					{
-					if( ( wordEndingResult = myWordItem().analyzeWordEndingWithCurrentLanguage( ( isSingularNoun ? Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING : Constants.WORD_MASCULINE_PROPER_NOUN_ENDING ), 0, wordTypeString ) ).result != Constants.RESULT_OK )
+					// Masculine
+					grammarParameter = ( isSingularNoun ? Constants.WORD_MASCULINE_SINGULAR_NOUN_ENDING : Constants.WORD_MASCULINE_PROPER_NOUN_ENDING );
+
+					if( ( wordEndingResult = generalizationWordItem.analyzeWordEndingWithCurrentLanguage( grammarParameter, 0, wordTypeString ) ).result != Constants.RESULT_OK )
 						return addWordTypeResultError( 1, "I failed to check on masculine word ending" );
 
 					if( wordEndingResult.hasFoundWordEnding )
@@ -499,7 +504,7 @@ class WordTypeList extends List
 						hasMasculineWordEnding = true;
 
 						if( isSingularNoun &&
-						myWordItem().markWordAsMasculine() != Constants.RESULT_OK )
+						generalizationWordItem.markWordAsMasculine() != Constants.RESULT_OK )
 							return addWordTypeResultError( 1, "I failed to mark my word as masculine" );
 						}
 					}

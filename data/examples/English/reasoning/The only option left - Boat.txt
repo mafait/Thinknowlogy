@@ -1,4 +1,4 @@
 ﻿Every boat is a rowing boat, a sailboat or a motorboat.
 His boat is not a sailboat and not a motorboat.
-Display the justification report about boats.
+#Dev#Display the justification report about boats.
 # To continue, click button «Clear your mind.» or «Restart.».

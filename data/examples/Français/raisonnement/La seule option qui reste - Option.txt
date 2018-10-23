@@ -8,5 +8,5 @@ Sien option n'est pas 5.
 Sien option n'est pas 7.
 Sien option n'est pas 8.
 Sien option n'est pas 9.
-Affichez le rapport de justification sur le option.
+#Dev#Affichez le rapport de justification sur le option.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

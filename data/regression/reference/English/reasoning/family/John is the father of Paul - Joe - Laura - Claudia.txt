@@ -336,11 +336,11 @@
 * 
 * My assumptions:
 < Claudia is probably a child of John. Because:
+<	- John has probably 4 children, called Paul, Joe, Laura and Claudia.
+* 	and:
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 <	- Claudia has a father, called John.
-* 	and:
-<	- John has probably 4 children, called Paul, Joe, Laura and Claudia.
 * 	and:
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul, Joe, Laura and Claudia.

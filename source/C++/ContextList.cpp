@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -32,7 +32,7 @@ class ContextList : private List
 
 	// Private constructed variables
 
-	bool isMarkedAsContextWord_;
+	bool isMarkedAsContextWord_ = false;
 
 
 	// Private functions
@@ -74,10 +74,6 @@ class ContextList : private List
 
 	ContextList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		// Private constructed variables
-
-		isMarkedAsContextWord_ = false;
-
 		initializeListVariables( WORD_CONTEXT_LIST_SYMBOL, "ContextList", globalVariables, inputOutput, myWordItem );
 		}
 

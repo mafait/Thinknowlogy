@@ -1,5 +1,0 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
-Pablo es hijo de Juan y Ana.
-¿Es Juan el padre de Pablo?
-¿Es Jorge el padre de Pablo?
-# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

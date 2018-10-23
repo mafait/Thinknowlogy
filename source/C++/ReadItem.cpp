@@ -1,7 +1,7 @@
 ﻿/*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -36,29 +36,27 @@ class ReadItem : private Item
 
 	// Private initialized variables
 
-	bool isUncountableGeneralizationNoun_;
+	bool isUncountableGeneralizationNoun_ = false;
 
-	unsigned short wordOrderNr_;
-	unsigned short wordParameter_;
-	unsigned short wordTypeNr_;
+	unsigned short wordOrderNr_ = NO_ORDER_NR;
+	unsigned short wordParameter_ = NO_WORD_PARAMETER;
+	unsigned short wordTypeNr_ = NO_WORD_TYPE_NR;
 
-	WordItem *readWordItem_;
-
+	WordItem *readWordItem_ = NULL;
 
 	protected:
 	// Protected constructed variables
 
-	bool hasWordPassedIntegrityCheckOfStoredUserSentence;
-	bool isMarkedBySetGrammarParameter;
+	bool hasWordPassedIntegrityCheckOfStoredUserSentence = false;
+	bool isMarkedBySetGrammarParameter = false;
 
-	unsigned short grammarParameter;
+	unsigned short grammarParameter = NO_GRAMMAR_PARAMETER;
 
-	GrammarItem *definitionGrammarItem;
-
+	GrammarItem *definitionGrammarItem = NULL;
 
 	// Protected initialized variables
 
-	char *readString;
+	char *readString = NULL;
 
 
 	// Constructor
@@ -77,18 +75,7 @@ class ReadItem : private Item
 
 		readWordItem_ = readWordItem;
 
-		// Protected constructed variables
-
-		hasWordPassedIntegrityCheckOfStoredUserSentence = false;
-		isMarkedBySetGrammarParameter = false;
-
-		grammarParameter = NO_GRAMMAR_PARAMETER;
-
-		definitionGrammarItem = NULL;
-
 		// Protected initialized variables
-
-		readString = NULL;
 
 		if( _readString != NULL )
 			{
@@ -667,10 +654,8 @@ class ReadItem : private Item
 
 	char *readWordTypeString()
 		{
-		if( readWordItem_ != NULL )
-			return readWordItem_->activeWordTypeString( wordTypeNr_ );
-
-		return NULL;
+		return ( readWordItem_ != NULL ?
+				readWordItem_->activeWordTypeString( wordTypeNr_ ) : NULL );
 		}
 
 	ReadItem *firstRelationWordReadItem()
@@ -715,7 +700,8 @@ class ReadItem : private Item
 
 	WordTypeItem *activeReadWordTypeItem()
 		{
-		return ( readWordItem_ == NULL ? NULL : readWordItem_->activeWordTypeItem( true, wordTypeNr_ ) );
+		return ( readWordItem_ != NULL ?
+				readWordItem_->activeWordTypeItem( true, wordTypeNr_ ) : NULL );
 		}
 	};
 #endif

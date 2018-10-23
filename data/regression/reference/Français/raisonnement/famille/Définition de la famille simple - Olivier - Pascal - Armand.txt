@@ -1,0 +1,33 @@
+﻿* 
+* Mes conclusions:
+< Un parent et un enfant sont partie de chaque famille.
+< 
+* 
+* Mes conclusions:
+< Olivier est partie d'une famille.
+< Pascal a un parent, appelé Olivier.
+* 
+* Mes hypothèses:
+< Olivier a probablement un enfant, appelé Pascal.
+< Pascal est probablement un enfant de Olivier.
+< Pascal est probablement partie d'une famille.
+< 
+* 
+* Mes hypothèses qui sont conclus:
+< Pascal est partie d'une famille.
+* 
+* Mes conclusions:
+< Armand a un parent, appelé Pascal.
+* 
+* Mes hypothèses:
+< Pascal a probablement un enfant, appelé Armand.
+< Armand est probablement un enfant de Pascal.
+< Armand est probablement partie d'une famille.
+< 
+* 
+* Mes hypothèses qui sont confirmées:
+< Armand est probablement un enfant de Pascal.
+* 
+* Mes hypothèses qui sont conclus:
+< Armand est partie d'une famille.
+< 

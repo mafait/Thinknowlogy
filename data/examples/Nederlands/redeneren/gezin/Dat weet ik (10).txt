@@ -1,4 +1,4 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 Anna is een vrouw.
 Paul heeft 2 ouders, genaamd Jan en Anna.
@@ -12,17 +12,17 @@ Jan is een vader.
 Laura is een meisje.
 Paul heeft een moeder, genaamd Anna.
 Johan is een zoon van Jan en Anna.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Paul.
-Toon de verantwoordingsrapportage over Johan.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Jan is de vader van Paul, Johan en Laura.
 Anna is de moeder van Paul, Johan en Laura.
 Paul heeft een moeder, genaamd Anna.
 Anna is een ouder.
 Laura heeft 2 ouders, genaamd Jan en Anna.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Jan is een man.
 Anna is een vrouw.
 Johan is een man.
@@ -36,6 +36,7 @@ Anna is een moeder.
 Anna is een ouder van Paul, Johan en Laura.
 Johan heeft een moeder, genaamd Anna.
 Anna is een ouder van Paul, Johan en Laura.
+Jan is een ouder van Paul, Johan en Laura.
 Anna is een vrouw.
 Jan is een vader.
 Johan heeft een vader, genaamd Jan.
@@ -55,4 +56,5 @@ Johan is een zoon van Jan en Anna.
 Paul heeft een moeder, genaamd Anna.
 Anna is een ouder.
 Laura heeft 2 ouders, genaamd Jan en Anna.
+Jan is een ouder van Paul, Johan en Laura.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

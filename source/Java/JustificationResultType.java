@@ -1,7 +1,7 @@
 ﻿/*	Class:		JustificationResultType
  *	Purpose:	To return justification variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,18 +25,10 @@ class JustificationResultType
 	{
 	// Protected variables
 
-	protected byte result;
-	protected JustificationItem createdJustificationItem;
-	protected JustificationItem foundJustificationItem;
+	protected byte result = Constants.RESULT_OK;
 
-	// Constructor
-
-	JustificationResultType()
-		{
-		result = Constants.RESULT_OK;
-		createdJustificationItem = null;
-		foundJustificationItem = null;
-		}
+	protected JustificationItem createdJustificationItem = null;
+	protected JustificationItem foundJustificationItem = null;
 	};
 
 /*************************************************************************

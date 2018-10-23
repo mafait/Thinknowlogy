@@ -2,7 +2,7 @@
 ¿Era Hernando padre de Rafael?
 ¿Es Juan padre de Pablo?
 ¿Son Pablo y José hijos?
-Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Leer el archivo "Español/razonamiento/familia/definición de familia".
 Juan es el padre y Ana es la madre de Pablo, José y Luisa.
 Jorge es el padre de Alfonso.
 ¿Son Pablo y José hijos?

@@ -54,10 +54,10 @@
 < José es posiblemente parte de una familia.
 < José es posiblemente una persona.
 < Luisa es posiblemente hija de Juan y Ana.
+< Luisa no es posiblemente un hijo.
 < Luisa es posiblemente parte de una familia.
 < Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
-< Luisa no es posiblemente un hijo.
 < Ana es probablemente una persona.
 < Ana tiene posiblemente una hija, llamada Luisa.
 * 
@@ -72,19 +72,11 @@
 * Mis preguntas que son contestadas:
 < ¿Es José un hijo o una hija?
 * 
-* Mis suposiciones que no son ocultos más:
-< Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
-* 
-* Mis suposiciones que se ajustan:
-< Luisa es probablemente parte de una familia.
-* 
 * Mis suposiciones que se concluyen:
 < José es parte de una familia.
 * 
-* Mis suposiciones que se ajustan:
-< Pablo es probablemente parte de una familia.
-* 
 * Mis suposiciones que no son ocultos más:
+< Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
 < Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
 * 
 * Mis preguntas ajustadas:
@@ -92,6 +84,8 @@
 * 
 * Mis suposiciones que se ajustan:
 < José es probablemente una persona.
+< Luisa es probablemente parte de una familia.
+< Pablo es probablemente parte de una familia.
 * 
 * Mis conclusiones:
 < José no es una hija.

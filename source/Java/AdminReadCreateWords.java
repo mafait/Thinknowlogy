@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		To create words of the read sentence
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,14 +25,13 @@ class AdminReadCreateWords
 	{
 	// Private constructed variables
 
-	private short lastCreatedWordOrderNr_;
+	private short lastCreatedWordOrderNr_ = Constants.NO_ORDER_NR;
 
+	private String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
-	private String moduleNameString_;
-
-	private AdminItem adminItem_;
+	private AdminItem adminItem_ = null;
 
 
 	// Private methods
@@ -76,7 +75,6 @@ class AdminReadCreateWords
 				character == Constants.SYMBOL_SPANISH_INVERTED_EXCLAMATION_MARK ||
 				character == Constants.SYMBOL_SPANISH_INVERTED_QUESTION_MARK ||
 				character == Constants.SYMBOL_SLASH ||
-				character == Constants.SYMBOL_BACK_SLASH ||
 				// Don't add Constants.SYMBOL_QUOTE to avoid analyzing merged words
 				// Don't add Constants.SYMBOL_DOUBLE_QUOTE to avoid analyzing text strings
 				character == Constants.SYMBOL_OPEN_ROUNDED_BRACKET ||
@@ -126,7 +124,7 @@ class AdminReadCreateWords
 			createReadWordResult.offset = readWordResult.offset;
 			}
 
-		if( adminItem_.createReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readWordResult.wordLength, ( textString == null ? null : textString.substring( textStringStartPosition + readWordResult.startWordPosition ) ), readWordItem ) != Constants.RESULT_OK )
+		if( adminItem_.createReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readWordResult.wordLength, ( textString != null ? textString.substring( textStringStartPosition + readWordResult.startWordPosition ) : null ), readWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addCreateReadWordResultError( 1, moduleNameString_, "I failed to create a read word item" );
 
 		lastCreatedWordOrderNr_ = wordOrderNr;
@@ -182,14 +180,6 @@ class AdminReadCreateWords
 
 	protected AdminReadCreateWords( AdminItem adminItem )
 		{
-		// Private constructed variables
-
-		lastCreatedWordOrderNr_ = Constants.NO_ORDER_NR;
-
-		// Private initialized variables
-
-		moduleNameString_ = this.getClass().getName();
-
 		// Checking private initialized variables
 
 		if( ( adminItem_ = adminItem ) == null )
@@ -318,7 +308,7 @@ class AdminReadCreateWords
 		WordTypeItem foundWordTypeItem;
 		WordTypeItem tempWordTypeItem;
 		String exactWordString = null;
-		String lowercaseWordString = null;
+		String lowerCaseWordString = null;
 		String singularNounWordString = null;
 		BoolResultType boolResult = new BoolResultType();
 		CreateReadWordResultType createReadWordResult = new CreateReadWordResultType();
@@ -339,7 +329,6 @@ class AdminReadCreateWords
 			firstChar = readUserSentenceString.charAt( 0 );
 
 			if( !Character.isUpperCase( firstChar ) &&
-			!Character.isLowerCase( firstChar ) &&
 			firstChar != Constants.SYMBOL_SPANISH_INVERTED_QUESTION_MARK &&
 			firstChar != Constants.SYMBOL_SPANISH_INVERTED_EXCLAMATION_MARK )
 				isChineseCurrentLanguage = true;
@@ -420,8 +409,8 @@ class AdminReadCreateWords
 				// Create exact word string
 				exactWordString = readUserSentenceString.substring( currentPosition, ( currentPosition + wordStringLength ) );
 
-				// Create lowercase word string
-				lowercaseWordString = readUserSentenceString.substring( currentPosition, ( currentPosition + wordStringLength ) ).toLowerCase();
+				// Create lower-case word string
+				lowerCaseWordString = readUserSentenceString.substring( currentPosition, ( currentPosition + wordStringLength ) ).toLowerCase();
 
 				// Step 1: Find exact word types in all words
 				do	{
@@ -650,18 +639,18 @@ class AdminReadCreateWords
 				( !isExactWord ||
 				wordStringLength == 1 ) )
 					{
-					if( ( shortResult = getWordTypeNr( false, false, wordStringLength, lowercaseWordString ) ).result != Constants.RESULT_OK )
-						return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to get the word type number of a lowercase word" );
+					if( ( shortResult = getWordTypeNr( false, false, wordStringLength, lowerCaseWordString ) ).result != Constants.RESULT_OK )
+						return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to get the word type number of a lower-case word" );
 
 					if( ( wordTypeNr = shortResult.shortValue ) == Constants.NO_WORD_TYPE_NR )
 						isUndefinedWord = true;
 
-					// Step 2: Find word type with lowercase first letter in all words
+					// Step 2: Find word type with lower-case first letter in all words
 					do	{
-						if( ( wordResult = findWordTypeInAllWords( true, Constants.NO_WORD_TYPE_NR, lowercaseWordString, foundWordItem ) ).result != Constants.RESULT_OK )
+						if( ( wordResult = findWordTypeInAllWords( true, Constants.NO_WORD_TYPE_NR, lowerCaseWordString, foundWordItem ) ).result != Constants.RESULT_OK )
 							return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to find a word type with difference case of the first letter in all words" );
 
-						// Found word type with lowercase first letter
+						// Found word type with lower-case first letter
 						if( ( foundWordItem = wordResult.foundWordItem ) != null &&
 						( foundWordTypeItem = wordResult.foundWordTypeItem ) != null )
 							{
@@ -672,8 +661,8 @@ class AdminReadCreateWords
 							foundWordTypeItem.wordTypeLanguageNr() != currentLanguageNr &&
 
 							// Create same word type for different language
-							foundWordItem.addWordType( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, wordStringLength, lowercaseWordString ).result != Constants.RESULT_OK )
-								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add a word type with lowercase first letter" );
+							foundWordItem.addWordType( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, wordStringLength, lowerCaseWordString ).result != Constants.RESULT_OK )
+								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add a word type with lower-case first letter" );
 
 							if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, foundWordTypeNr, 0, null, foundWordItem ) ).result != Constants.RESULT_OK )
 								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a read word with a word type with difference case of the first letter" );
@@ -727,20 +716,20 @@ class AdminReadCreateWords
 					// One character
 					if( !isUndefinedWord )
 						{
-						// Step 3: Typically for English: Find or create lowercase letter 'a' as first letter of a sentence.
-						if( ( wordResult = findWordTypeInAllWords( false, wordTypeNr, lowercaseWordString, null ) ).result != Constants.RESULT_OK )
-							return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to find a lowercase letter" );
+						// Step 3: Typically for English: Find or create lower-case letter 'a' as first letter of a sentence.
+						if( ( wordResult = findWordTypeInAllWords( false, wordTypeNr, lowerCaseWordString, null ) ).result != Constants.RESULT_OK )
+							return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to find a lower-case letter" );
 
 						if( wordResult.foundWordItem == null )
 							{
-							if( ( wordResult = addWord( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, Constants.NO_WORD_PARAMETER, wordTypeNr, wordStringLength, lowercaseWordString ) ).result != Constants.RESULT_OK )
-								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add word with lowercase letter" );
+							if( ( wordResult = addWord( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, Constants.NO_WORD_PARAMETER, wordTypeNr, wordStringLength, lowerCaseWordString ) ).result != Constants.RESULT_OK )
+								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add word with lower-case letter" );
 
 							if( ( createdWordItem = wordResult.createdWordItem ) == null )
-								return adminItem_.startBoolResultError( 1, moduleNameString_, "The created word with lowercase letter is undefined" );
+								return adminItem_.startBoolResultError( 1, moduleNameString_, "The created word with lower-case letter is undefined" );
 
 							if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, wordTypeNr, 0, null, createdWordItem ) ).result != Constants.RESULT_OK )
-								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a read word with lowercase letter" );
+								return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to create a read word with lower-case letter" );
 							}
 						}
 					}
@@ -1031,7 +1020,7 @@ class AdminReadCreateWords
 					wasPreviousWordExactNoun ||
 					wasPreviousWordSymbol ) )
 						{
-						if( ( wordResult = addWord( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_ADJECTIVE, wordStringLength, lowercaseWordString ) ).result != Constants.RESULT_OK )
+						if( ( wordResult = addWord( false, false, Constants.NO_ADJECTIVE_PARAMETER, Constants.NO_DEFINITE_ARTICLE_PARAMETER, Constants.NO_INDEFINITE_ARTICLE_PARAMETER, Constants.NO_WORD_PARAMETER, Constants.WORD_TYPE_ADJECTIVE, wordStringLength, lowerCaseWordString ) ).result != Constants.RESULT_OK )
 							return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to add an adjective word" );
 
 						if( ( createdWordItem = wordResult.createdWordItem ) == null )
@@ -1196,7 +1185,7 @@ class AdminReadCreateWords
 		short definiteArticleParameter = Constants.NO_DEFINITE_ARTICLE_PARAMETER;
 		short indefiniteArticleParameter = Constants.NO_INDEFINITE_ARTICLE_PARAMETER;
 		WordItem createdWordItem;
-		WordResultType wordResult = new WordResultType();
+		WordResultType wordResult;
 		WordTypeResultType wordTypeResult;
 
 		if( wordTypeString == null )
@@ -1262,7 +1251,7 @@ class AdminReadCreateWords
 				}
 
 			isProperNounPrecededByDefiniteArticle = ( wasPreviousWordDefiniteArticle &&
-													  wordTypeNr == Constants.WORD_TYPE_PROPER_NOUN );
+													wordTypeNr == Constants.WORD_TYPE_PROPER_NOUN );
 
 			if( ( wordTypeResult = createdWordItem.addWordType( isMultipleWord, isProperNounPrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordTypeStringLength, wordTypeString ) ).result != Constants.RESULT_OK )
 				return adminItem_.addWordResultError( 1, moduleNameString_, "I failed to add a word type to a new word" );

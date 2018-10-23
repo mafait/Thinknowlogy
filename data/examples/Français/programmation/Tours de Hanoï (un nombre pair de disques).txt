@@ -1,0 +1,3 @@
+﻿Lirez le fichier "Français/programmation/Tours de Hanoï".
+Ajoutez D, C, B et A au pôle de départ.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

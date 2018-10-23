@@ -52,8 +52,8 @@
 < José es posiblemente parte de una familia.
 < José es posiblemente una persona.
 < Luisa es posiblemente hija de Ana.
-< Luisa es posiblemente parte de una familia.
 < Luisa no es posiblemente un hijo.
+< Luisa es posiblemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
@@ -236,6 +236,9 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Luisa" es probablemente femenino.
+< Luisa no es posiblemente un hijo. Porque:
+<	- Cada hijo es un hijo o una hija.
+<	- Luisa es posiblemente hija de Ana.
 < Luisa es probablemente una persona. Porque:
 <	- Luisa es posiblemente hija de Ana.
 <	- Una hija es probablemente una persona.
@@ -246,7 +249,4 @@
 <	- Luisa es probablemente una persona.
 <	- Cada persona es un hombre o una mujer.
 <	- Luisa es una mujer.
-< Luisa no es posiblemente un hijo. Porque:
-<	- Cada hijo es un hijo o una hija.
-<	- Luisa es posiblemente hija de Ana.
 < 

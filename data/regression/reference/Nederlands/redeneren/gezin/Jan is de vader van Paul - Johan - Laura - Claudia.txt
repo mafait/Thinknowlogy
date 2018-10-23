@@ -336,11 +336,11 @@
 * 
 * Mijn veronderstellingen:
 < Claudia is waarschijnlijk een kind van Jan. Omdat:
+<	- Jan heeft waarschijnlijk 4 kinderen, genaamd Paul, Johan, Laura en Claudia.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
 <	- Claudia heeft een vader, genaamd Jan.
-* 	en:
-<	- Jan heeft waarschijnlijk 4 kinderen, genaamd Paul, Johan, Laura en Claudia.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is waarschijnlijk een ouder van Paul, Johan, Laura en Claudia.

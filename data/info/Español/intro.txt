@@ -4,7 +4,8 @@ Mostrar " Al implementar las Leyes de Inteligencia Natural, que están integrada
 Mostrar " Thinknowlogy tiene resultados de razonamiento que los científicos aún no han descrito:".
 Mostrar " * A pesar de una investigación exhaustiva, la teoría de la evolución aún no ha proporcionado".
 Mostrar " una explicación satisfactoria para el origen de la inteligencia, el lenguaje y las leyes de la".
-Mostrar " naturaleza. Y mucho menos, cómo están relacionados;".
+Mostrar " naturaleza. Y mucho menos, cómo están relacionados. Además, ninguno de los fenómenos".
+Mostrar " exclusivos de la teoría de la evolución, o teorías derivadas, aplicable en la vida diaria;".
 Mostrar " * De acuerdo con la cosmovisión bíblica, Dios ha creado leyes de la naturaleza como".
 Mostrar " el fundamento de su creación. Basándose en las leyes de la inteligencia, solamente".
 #C++#Mostrar " Thinknowlogy implementa el función inteligente de palabras como artículos definidos,".
@@ -26,10 +27,10 @@ Mostrar " Desafío a todos a superar este sistema de razonamiento: http://mafait
 Mostrar "------------------------------------------------------------------------------".
 #C++#Mostrar " Ayudar.\t\t\t\t\t       * Mostrar más info ayuda".
 #C++#Mostrar " \~{nombre del idioma}\t\t\t\t\t* Cambiar la idioma".
-#C++#Mostrar " Leer el archivo \"Español/usuario/programación/Conecta 4\".".
-#C++#Mostrar " Leer el archivo \"Español/usuario/programación/Torres de Hanói\".".
-#C++#Mostrar " Leer el archivo \"Español/usuario/razonamiento/Reto científico\".".
-#C++#Mostrar " Leer el archivo \"Español/usuario/razonamiento/familia/definición de familia\".".
+#C++#Mostrar " Leer el archivo \"Español/programación/Conecta 4\".".
+#C++#Mostrar " Leer el archivo \"Español/programación/Torres de Hanói\".".
+#C++#Mostrar " Leer el archivo \"Español/razonamiento/Reto científico\".".
+#C++#Mostrar " Leer el archivo \"Español/razonamiento/familia/definición de familia\".".
 #Java#Mostrar " Utilice el botón <programación> para aprender acerca de la programación en lenguaje natural.".
 #Java#Mostrar " Utilice el botón <razonamiento> para aprender acerca de razonamiento en lenguaje natural.".
 Mostrar "------------------------------------------------------------------------------".

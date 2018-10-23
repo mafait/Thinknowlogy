@@ -1,3 +1,0 @@
-﻿Read the file "English/user/programming/tower of Hanoi".
-Add D, C, B and A to the start pole.
-# To continue, click button «Clear your mind.» or «Restart.».

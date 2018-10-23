@@ -1,6 +1,6 @@
 ﻿Philippe était un père.
 Chaque père est un homme.
 Philippe était le père de Antoine.
-Affichez le rapport de justification sur Philippe.
-Affichez le rapport de justification sur Antoine.
+#Dev#Affichez le rapport de justification sur Philippe.
+#Dev#Affichez le rapport de justification sur Antoine.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

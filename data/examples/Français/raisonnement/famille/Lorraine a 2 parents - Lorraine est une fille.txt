@@ -1,5 +1,5 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Lorraine a 2 parents, appelés Olivier et Amélie.
 Lorraine est une fille.
-Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Lorraine.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

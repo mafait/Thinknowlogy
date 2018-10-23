@@ -1,6 +1,6 @@
 ﻿/*	Class:		InputOutput
  *	Purpose:	To read and write user information
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -58,53 +58,56 @@ class InputOutput
 
 	// Private constructed variables
 
-	bool hasReadLine_;
-	bool isDisplayingExtraPromptLine_;
+	bool hasReadLine_ = false;
+	bool isDisplayingExtraPromptLine_ = false;
 
-	unsigned short lastDisplayedInterfaceParameter_;
-	unsigned short lastUsedPromptTypeNr_;
+	unsigned short lastDisplayedInterfaceParameter_ = NO_INTERFACE_PARAMETER;
+	unsigned short lastUsedPromptTypeNr_ = INPUT_OUTPUT_PROMPT_QUERY;
 
-	size_t currentPosition_;
-	size_t progressBarLength_;
-	size_t progressTextStringLength_;
+	size_t currentPosition_ = 0;
+	size_t progressBarLength_ = 0;
+	size_t progressTextStringLength_ = 0;
 
-	unsigned int maximumProgress_;
-	unsigned int previousProgress_;
+	unsigned int maximumProgress_ = 0;
+	unsigned int previousProgress_ = 0;
 
-	WordItem *adminWordItem_;
+	char currentProgressString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char currentStatusString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char errorString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char outputString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char tempString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
-	char currentProgressString_[MAX_SENTENCE_STRING_LENGTH];
-	char currentStatusString_[MAX_SENTENCE_STRING_LENGTH];
-	char errorString_[MAX_SENTENCE_STRING_LENGTH];
-	char outputString_[MAX_SENTENCE_STRING_LENGTH];
-	char tempErrorString_[MAX_SENTENCE_STRING_LENGTH];
+	char charString_[2] = SPACE_STRING;
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "InputOutput";
 
-	FILE *testFile_;
-
+	FILE *testFile_ = NULL;
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
-
-	GlobalVariables *globalVariables_;
+	GlobalVariables *globalVariables_ = NULL;
+	WordItem *adminWordItem_ = NULL;
 
 
 	// Private functions
 
 	void clearProgressText()
 		{
+		char outputString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+
 		if( progressTextStringLength_ > 0 )
 			{
-			addStringToOutput( true, false, false, CARRIAGE_RETURN_STRING );
+			strcat( outputString, CARRIAGE_RETURN_STRING );
 
 			for( size_t i = 0; i < progressTextStringLength_; i++ )
-				addStringToOutput( true, false, false, SPACE_STRING );
+				strcat( outputString, SPACE_STRING );
 
-			addStringToOutput( true, false, true, CARRIAGE_RETURN_STRING );
+			strcat( outputString, CARRIAGE_RETURN_STRING );
 
 			progressTextStringLength_ = 0;
 			currentPosition_ = 0;
 			strcpy( currentStatusString_, EMPTY_STRING );
+
+			addStringToOutput( true, false, true, outputString );
 			}
 		}
 
@@ -208,11 +211,9 @@ class InputOutput
 				character == SYMBOL_SEMI_COLON ||
 				character == SYMBOL_DOUBLE_COLON ||
 				character == SYMBOL_EXCLAMATION_MARK ||
-#ifdef _MSC_VER
-				character == SYMBOL_SPANISH_INVERTED_EXCLAMATION_MARK ||
-#endif
 				character == SYMBOL_QUESTION_MARK ||
 #ifdef _MSC_VER
+				character == SYMBOL_SPANISH_INVERTED_EXCLAMATION_MARK ||
 				character == SYMBOL_SPANISH_INVERTED_QUESTION_MARK ||
 #endif
 				character == SYMBOL_SLASH ||
@@ -232,6 +233,7 @@ class InputOutput
 		size_t length = 0;
 		size_t promptStringLength;
 		size_t wordPosition;
+		char outputString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char textString[MAX_SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeText";
 
@@ -278,7 +280,7 @@ class InputOutput
 						{
 						isPrintingPrompt = false;
 						currentPosition_ = ( promptStringLength - 1 );
-						addStringToOutput( isSkippingInTestFile, isError, false, promptString );
+						strcat( outputString, promptString );
 						}
 
 					if( i < printStringLength )
@@ -317,9 +319,8 @@ class InputOutput
 								{
 								isPrintingPrompt = true;
 								isStartingNewLine = true;
-
-								addCharToOutput( isSkippingInTestFile, isError, ( i + 1 == printStringLength ), textString[i] );
-
+								charString_[0] = textString[i];
+								strcat( outputString, charString_ );
 								i++;
 								}
 							else
@@ -327,7 +328,7 @@ class InputOutput
 								while( isspace( textString[i] ) )
 									i++;
 
-								addStringToOutput( isSkippingInTestFile, isError, ( i == printStringLength ), NEW_LINE_STRING );
+								strcat( outputString, NEW_LINE_STRING );
 								}
 
 							currentPosition_ = 0;
@@ -340,8 +341,7 @@ class InputOutput
 						{
 						if( currentPosition_ == 0 )
 							{
-							addStringToOutput( isSkippingInTestFile, isError, false, ( isPrintingPrompt ? promptString : INPUT_OUTPUT_PROMPT_EMPTY_STRING ) );
-
+							strcat( outputString, ( isPrintingPrompt ? promptString : INPUT_OUTPUT_PROMPT_EMPTY_STRING ) );
 							isPrintingPrompt = false;
 							currentPosition_ = ( ( isPrintingPrompt &&
 												( promptStringLength = strlen( promptString ) ) > 0 ? promptStringLength : strlen( INPUT_OUTPUT_PROMPT_EMPTY_STRING ) ) - 1 );
@@ -351,22 +351,23 @@ class InputOutput
 							{
 							leftWidth--;
 							currentPosition_++;
-							addStringToOutput( isSkippingInTestFile, isError, false, SPACE_STRING );
+							strcat( outputString, SPACE_STRING );
 							}
 
 						if( i < printStringLength )
 							{
 							if( textString[i] == TAB_CHAR )
 								{
-								addCharToOutput( isSkippingInTestFile, isError, ( i + 1 == printStringLength ), textString[i] );
-
+								charString_[0] = textString[i];
+								strcat( outputString, charString_ );
 								i++;
 								currentPosition_ += length;
 								}
 							else
 								{
 								do	{
-									addCharToOutput( isSkippingInTestFile, isError, ( i + 1 == printStringLength ), textString[i] );
+									charString_[0] = textString[i];
+									strcat( outputString, charString_ );
 
 									if( textString[i] == NEW_LINE_CHAR ||
 									textString[i] == CARRIAGE_RETURN_CHAR )
@@ -385,20 +386,22 @@ class InputOutput
 				while( rightWidth-- > NO_CENTER_WIDTH )
 					{
 					currentPosition_++;
-					addStringToOutput( isSkippingInTestFile, isError, ( ( i + 1 == printStringLength ) && rightWidth == NO_CENTER_WIDTH ), SPACE_STRING );
+					strcat( outputString, SPACE_STRING );
 					}
+
+				addStringToOutput( isSkippingInTestFile, isError, true, outputString );
 				}
 			else
 				{
-				sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tThe given text string is empty.\n", moduleNameString_, functionNameString );
-				addStringToOutput( true, true, true, tempErrorString_ );
+				sprintf( tempString_, "\nClass:\t%s\nFunction:\t%s\nError:\tThe given text string is empty.\n", moduleNameString_, functionNameString );
+				addStringToOutput( true, true, true, tempString_ );
 				globalVariables_->result = RESULT_ERROR;
 				}
 			}
 		else
 			{
-			sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tThe given write string is undefined.\n", moduleNameString_, functionNameString );
-			addStringToOutput( true, true, true, tempErrorString_ );
+			sprintf( tempString_, "\nClass:\t%s\nFunction:\t%s\nError:\tThe given write string is undefined.\n", moduleNameString_, functionNameString );
+			addStringToOutput( true, true, true, tempString_ );
 			globalVariables_->result = RESULT_ERROR;
 			}
 
@@ -448,21 +451,15 @@ class InputOutput
 					lastUsedPromptTypeNr_ = ( promptTypeNr == INPUT_OUTPUT_PROMPT_WARNING_INDENTED ? INPUT_OUTPUT_PROMPT_WARNING : ( promptTypeNr == INPUT_OUTPUT_PROMPT_WRITE_INDENTED ? INPUT_OUTPUT_PROMPT_WRITE : promptTypeNr ) );
 				else
 					{
-					sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to write the string.\n", moduleNameString_, functionNameString );
-					addStringToOutput( true, true, true, tempErrorString_ );
+					sprintf( tempString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to write the string.\n", moduleNameString_, functionNameString );
+					addStringToOutput( true, true, true, tempString_ );
 					}
 				}
 			else
-				{
-				displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The given write string is empty" );
-				globalVariables_->result = RESULT_ERROR;
-				}
+				globalVariables_->result = displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The given write string is empty" );
 			}
 		else
-			{
-			displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The given write string is undefined" );
-			globalVariables_->result = RESULT_ERROR;
-			}
+			globalVariables_->result = displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The given write string is undefined" );
 
 		return globalVariables_->result;
 		}
@@ -503,45 +500,18 @@ class InputOutput
 
 	InputOutput( GlobalVariables *globalVariables, WordItem *adminWordItem )
 		{
-		// Private constructed variables
-
-		hasReadLine_ = false;
-		isDisplayingExtraPromptLine_ = false;
-
-		lastDisplayedInterfaceParameter_ = NO_INTERFACE_PARAMETER;
-		lastUsedPromptTypeNr_ = INPUT_OUTPUT_PROMPT_QUERY;
-
-		currentPosition_ = 0;
-		progressBarLength_ = 0;
-		progressTextStringLength_ = 0;
-
-		maximumProgress_ = 0;
-		previousProgress_ = 0;
-
-		strcpy( currentProgressString_, EMPTY_STRING );
-		strcpy( currentStatusString_, EMPTY_STRING );
-		strcpy( errorString_, EMPTY_STRING );
-		strcpy( outputString_, EMPTY_STRING );
-		strcpy( tempErrorString_, EMPTY_STRING );
-
-		testFile_ = NULL;
-
 		// Private initialized variables
-
-		strcpy( moduleNameString_, "InputOutput" );
-
-		// Checking private initialized variables
 
 		if( ( globalVariables_ = globalVariables ) == NULL )
 			{
-			sprintf( tempErrorString_, "\nClass:%s\nFunction:\t%s\nError:\tThe given global variables is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
-			addStringToOutput( true, true, true, tempErrorString_ );
+			sprintf( tempString_, "\nClass:%s\nFunction:\t%s\nError:\tThe given global variables is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
+			addStringToOutput( true, true, true, tempString_ );
 			}
 
 		if( ( adminWordItem_ = adminWordItem ) == NULL )
 			{
-			sprintf( tempErrorString_, "\nClass:%s\nFunction:\t%s\nError:\tThe given admin word Item is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
-			addStringToOutput( true, true, true, tempErrorString_ );
+			sprintf( tempString_, "\nClass:%s\nFunction:\t%s\nError:\tThe given admin word Item is undefined.\n", moduleNameString_, INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME );
+			addStringToOutput( true, true, true, tempString_ );
 			}
 		}
 
@@ -569,70 +539,6 @@ class InputOutput
 	void redirectOutputToTestFile( FILE *testFile )
 		{
 		testFile_ = testFile;
-		}
-
-	void displayError( char functionListChar, const char *classNameString, const char *parentClassNameString, const char *wordNameString, const char *functionString, const char *errorString )
-		{
-		signed char originalErrorResult = globalVariables_->result;
-
-		strcpy( errorString_, EMPTY_STRING );
-
-		// First error message
-		if( globalVariables_->result == RESULT_OK )
-			{
-			sprintf( tempErrorString_, "%s%c%u%c%u%c%s", INPUT_OUTPUT_ERROR_CURRENT_ID_START_STRING, QUERY_ITEM_START_CHAR, globalVariables_->currentSentenceNr, QUERY_SEPARATOR_CHAR, globalVariables_->currentSentenceItemNr, QUERY_ITEM_END_CHAR, INPUT_OUTPUT_ERROR_CURRENT_ID_END_STRING );
-			strcat( errorString_, tempErrorString_ );
-			}
-
-		if( classNameString != NULL )
-			{
-			strcat( errorString_, INPUT_OUTPUT_ERROR_CLASS_STRING );
-			strcat( errorString_, classNameString );
-			}
-
-		if( parentClassNameString != NULL )
-			{
-			strcat( errorString_, INPUT_OUTPUT_ERROR_PARENT_CLASS_STRING );
-			strcat( errorString_, parentClassNameString );
-			}
-
-		if( functionString != NULL )
-			{
-			strcat( errorString_, INPUT_OUTPUT_ERROR_FUNCTION_STRING );
-			strcat( errorString_, functionString );
-			}
-
-		if( functionListChar != SYMBOL_QUESTION_MARK )
-			{
-			sprintf( tempErrorString_, "%s%c%s", INPUT_OUTPUT_ERROR_FUNCTION_LIST_START_STRING, functionListChar, INPUT_OUTPUT_ERROR_FUNCTION_LIST_END_STRING );
-			strcat( errorString_, tempErrorString_ );
-			}
-
-		if( wordNameString != NULL )
-			{
-			strcat( errorString_, INPUT_OUTPUT_ERROR_FUNCTION_WORD_START_STRING );
-			strcat( errorString_, wordNameString );
-			strcat( errorString_, INPUT_OUTPUT_ERROR_FUNCTION_WORD_END_STRING );
-			}
-
-		if( errorString != NULL )
-			{
-			strcat( errorString_, INPUT_OUTPUT_ERROR_STRING );
-			strcat( errorString_, errorString );
-			}
-
-		strcat( errorString_, COLON_STRING );
-
-		originalErrorResult = globalVariables_->result;
-		globalVariables_->result = RESULT_OK;
-
-		if( writeText( true, true, true, INPUT_OUTPUT_PROMPT_WARNING, NO_CENTER_WIDTH, NULL, errorString_ ) != RESULT_OK )
-			{
-			sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to write the error.\n", moduleNameString_, functionString );
-			addStringToOutput( true, true, true, tempErrorString_ );
-			}
-
-		globalVariables_->result = originalErrorResult;
 		}
 
 	void displayProgressBar( unsigned int currentProgress )
@@ -766,6 +672,65 @@ class InputOutput
 		return diacriticalChar;
 		}
 
+	signed char displayError( char functionListChar, const char *classNameString, const char *parentClassNameString, const char *wordNameString, const char *functionString, const char *errorString )
+		{
+		strcpy( errorString_, EMPTY_STRING );
+
+		// First error message
+		if( globalVariables_->result == RESULT_OK )
+			{
+			sprintf( tempString_, "%s%c%u%c%u%c%s", INPUT_OUTPUT_ERROR_CURRENT_ID_START_STRING, QUERY_ITEM_START_CHAR, globalVariables_->currentSentenceNr, QUERY_SEPARATOR_CHAR, globalVariables_->currentSentenceItemNr, QUERY_ITEM_END_CHAR, INPUT_OUTPUT_ERROR_CURRENT_ID_END_STRING );
+			strcat( errorString_, tempString_ );
+			}
+
+		if( classNameString != NULL )
+			{
+			strcat( errorString_, INPUT_OUTPUT_ERROR_CLASS_STRING );
+			strcat( errorString_, classNameString );
+			}
+
+		if( parentClassNameString != NULL )
+			{
+			strcat( errorString_, INPUT_OUTPUT_ERROR_PARENT_CLASS_STRING );
+			strcat( errorString_, parentClassNameString );
+			}
+
+		if( functionString != NULL )
+			{
+			strcat( errorString_, INPUT_OUTPUT_ERROR_FUNCTION_STRING );
+			strcat( errorString_, functionString );
+			}
+
+		if( functionListChar != SYMBOL_QUESTION_MARK )
+			{
+			sprintf( tempString_, "%s%c%s", INPUT_OUTPUT_ERROR_FUNCTION_LIST_START_STRING, functionListChar, INPUT_OUTPUT_ERROR_FUNCTION_LIST_END_STRING );
+			strcat( errorString_, tempString_ );
+			}
+
+		if( wordNameString != NULL )
+			{
+			strcat( errorString_, INPUT_OUTPUT_ERROR_FUNCTION_WORD_START_STRING );
+			strcat( errorString_, wordNameString );
+			strcat( errorString_, INPUT_OUTPUT_ERROR_FUNCTION_WORD_END_STRING );
+			}
+
+		if( errorString != NULL )
+			{
+			strcat( errorString_, INPUT_OUTPUT_ERROR_STRING );
+			strcat( errorString_, errorString );
+			}
+
+		strcat( errorString_, COLON_STRING );
+
+		if( writeText( true, true, true, INPUT_OUTPUT_PROMPT_WARNING, NO_CENTER_WIDTH, NULL, errorString_ ) != RESULT_OK )
+			{
+			sprintf( tempString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to write the error.\n", moduleNameString_, functionString );
+			addStringToOutput( true, true, true, tempString_ );
+			}
+
+		return RESULT_ERROR;
+		}
+
 	signed char readLine( bool isDisplayingLine, bool isPassword, bool isQuestion, char *promptString, char *readString, FILE *readFile )
 		{
 		size_t passwordLength;
@@ -809,8 +774,8 @@ class InputOutput
 					isDisplayingExtraPromptLine_ = false;
 				else
 					{
-					sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to write the text.\n", moduleNameString_, functionNameString );
-					addStringToOutput( true, true, true, tempErrorString_ );
+					sprintf( tempString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to write the text.\n", moduleNameString_, functionNameString );
+					addStringToOutput( true, true, true, tempString_ );
 					}
 				}
 
@@ -882,8 +847,8 @@ class InputOutput
 							}
 						else
 							{
-							sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to get an input string.\n", moduleNameString_, functionNameString );
-							addStringToOutput( true, true, true, tempErrorString_ );
+							sprintf( tempString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to get an input string.\n", moduleNameString_, functionNameString );
+							addStringToOutput( true, true, true, tempString_ );
 							globalVariables_->result = RESULT_ERROR;
 							}
 						}
@@ -905,29 +870,42 @@ class InputOutput
 						// MS Visual Studio
 						sprintf( inputString, "%S", &inputWideString );
 #else
-						// For compilers other than MS Visual Studio
+						// For compilers other than MS Visual Studio:
 						// Check for possible BOM marker from first line
 						if( strlen( inputString ) > 2 &&
 						(unsigned short)inputString[0] == FILE_UTF_8_BOM_CHAR_1 &&
 						(unsigned short)inputString[1] == FILE_UTF_8_BOM_CHAR_2 &&
 						(unsigned short)inputString[2] == FILE_UTF_8_BOM_CHAR_3 )
+							{
 							// Remove BOM marker
-							strcpy( inputString, &inputString[FILE_UTF_8_BOM_LENGTH] );
+							strcpy( tempString_, &inputString[FILE_UTF_8_BOM_LENGTH] );
+							strcpy( inputString, tempString_ );
+							}
 #endif
 
 						stripStartAndEndSpaces( inputString, readString );
 
-						// Strip C++/Java comment from line
-						if( strncmp( readString, INPUT_OUTPUT_STRIP_COMMENT_STRING, strlen( INPUT_OUTPUT_STRIP_COMMENT_STRING ) ) == 0 )
-							strcpy( readString, &readString[ strlen( INPUT_OUTPUT_STRIP_COMMENT_STRING ) ] );
+						if( strncmp( readString, INPUT_OUTPUT_DEVELOPER_TAG_STRING, strlen( INPUT_OUTPUT_DEVELOPER_TAG_STRING ) ) == 0 )
+							{
+							// Strip Developer tag from line
+							strcpy( tempString_, &readString[ strlen( INPUT_OUTPUT_DEVELOPER_TAG_STRING ) ] );
+							strcpy( readString, tempString_ );
+							}
+
+						if( strncmp( readString, INPUT_OUTPUT_CPP_ACCEPT_TAG_STRING, strlen( INPUT_OUTPUT_CPP_ACCEPT_TAG_STRING ) ) == 0 )
+							{
+							// Strip C++ tag from line
+							strcpy( tempString_, &readString[ strlen( INPUT_OUTPUT_CPP_ACCEPT_TAG_STRING ) ] );
+							strcpy( readString, tempString_ );
+							}
 
 						if( isDisplayingLine &&
 						// Skip Java comment line
-						strncmp( readString, INPUT_OUTPUT_SKIP_COMMENT_STRING, strlen( INPUT_OUTPUT_SKIP_COMMENT_STRING ) ) != 0 &&
+						strncmp( readString, INPUT_OUTPUT_JAVA_SKIP_TAG_STRING, strlen( INPUT_OUTPUT_JAVA_SKIP_TAG_STRING ) ) != 0 &&
 						writeText( false, true, true, INPUT_OUTPUT_PROMPT_READ, NO_CENTER_WIDTH, outputString, ( strlen( readString ) == 0 ? NEW_LINE_STRING : readString ) ) != RESULT_OK )
 							{
-							sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to write the text.\n", moduleNameString_, functionNameString );
-							addStringToOutput( true, true, true, tempErrorString_ );
+							sprintf( tempString_, "\nClass:\t%s\nFunction:\t%s\nError:\tI failed to write the text.\n", moduleNameString_, functionNameString );
+							addStringToOutput( true, true, true, tempString_ );
 							}
 						}
 					}
@@ -935,8 +913,8 @@ class InputOutput
 			}
 		else
 			{
-			sprintf( tempErrorString_, "\nClass:\t%s\nFunction:\t%s\nError:\tThe given read string is undefined.\n", moduleNameString_, functionNameString );
-			addStringToOutput( true, true, true, tempErrorString_ );
+			sprintf( tempString_, "\nClass:\t%s\nFunction:\t%s\nError:\tThe given read string is undefined.\n", moduleNameString_, functionNameString );
+			addStringToOutput( true, true, true, tempString_ );
 			globalVariables_->result = RESULT_ERROR;
 			}
 
@@ -953,7 +931,6 @@ class InputOutput
 		bool hasFoundNewLine = false;
 		size_t position = 0;
 		char textChar = SYMBOL_QUESTION_MARK;
-		char charString[2] = SPACE_STRING;
 		char textString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeDiacriticalText";
 
@@ -975,10 +952,7 @@ class InputOutput
 							hasFoundNewLine = true;
 						}
 					else
-						{
-						displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The text string ended with a diacritical sign" );
-						globalVariables_->result = RESULT_ERROR;
-						}
+						globalVariables_->result = displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The text string ended with a diacritical sign" );
 					}
 				else
 					textChar = diacriticalTextString[position];
@@ -986,8 +960,8 @@ class InputOutput
 				if( globalVariables_->result == RESULT_OK )
 					{
 					position++;
-					charString[0] = textChar;
-					strcat( textString, charString );
+					charString_[0] = textChar;
+					strcat( textString, charString_ );
 
 					if( hasFoundNewLine ||
 					strlen( textString ) + 1 == MAX_SENTENCE_STRING_LENGTH ||
@@ -1003,8 +977,8 @@ class InputOutput
 							}
 						else
 							{
-							sprintf( tempErrorString_, "\nClass:%s\nFunction:\t%s\nError:\tI failed to write a text string part.\n", moduleNameString_, functionNameString );
-							addStringToOutput( true, true, true, tempErrorString_ );
+							sprintf( tempString_, "\nClass:%s\nFunction:\t%s\nError:\tI failed to write a text string part.\n", moduleNameString_, functionNameString );
+							addStringToOutput( true, true, true, tempString_ );
 							}
 						}
 					}
@@ -1014,15 +988,12 @@ class InputOutput
 			strlen( textString ) > 0 &&
 			writeText( false, isFirstCharacterToUpperCase, isReturningToPosition, promptTypeNr, NO_CENTER_WIDTH, NULL, textString ) != RESULT_OK )
 				{
-				sprintf( tempErrorString_, "\nClass:%s\nFunction:\t%s\nError:\tI failed to write the last text string part.\n", moduleNameString_, functionNameString );
-				addStringToOutput( true, true, true, tempErrorString_ );
+				sprintf( tempString_, "\nClass:%s\nFunction:\t%s\nError:\tI failed to write the last text string part.\n", moduleNameString_, functionNameString );
+				addStringToOutput( true, true, true, tempString_ );
 				}
 			}
 		else
-			{
-			displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The given diacritical text string is undefined" );
-			globalVariables_->result = RESULT_ERROR;
-			}
+			globalVariables_->result = displayError( SYMBOL_QUESTION_MARK, moduleNameString_, NULL, NULL, functionNameString, "The given diacritical text string is undefined" );
 
 		return globalVariables_->result;
 		}

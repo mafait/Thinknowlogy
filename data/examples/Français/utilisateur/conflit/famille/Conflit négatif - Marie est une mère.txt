@@ -1,4 +1,0 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
-Marie n'est pas une mère.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».
-Marie est une mère.

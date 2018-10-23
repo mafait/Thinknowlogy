@@ -1,23 +1,23 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 Jan is een ouder van Paul, Johan en Laura.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Paul.
-Toon de verantwoordingsrapportage over Johan.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Anna is een ouder van Paul, Johan en Laura.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Paul.
-Toon de verantwoordingsrapportage over Johan.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Jan is een persoon.
 Jan heeft een dochter, genaamd Laura.
-Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Jan.
 Anna is een persoon.
 Anna heeft een dochter, genaamd Laura.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Paul is een persoon.
 Paul is deel van een gezin.
-Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

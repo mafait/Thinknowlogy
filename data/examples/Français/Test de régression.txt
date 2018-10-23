@@ -1,306 +1,257 @@
-﻿#----------------------------
-# Général (utilisateur)
-#----------------------------
-#Java#Lirez le fichier de test "Français/utilisateur/ambiguïté/Boston".
-#Java#Lirez le fichier de test "Français/utilisateur/ambiguïté/Presidents des États-Unis".
+﻿#-----------
+# Général
+#-----------
+#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Acceptation - Boston - États-Unis - Royaume-Uni".
+#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Acceptation - Collection dans un ordre différent".
+#Dev#Lirez le fichier de test "Français/ambiguïté/Acceptation - Sous-ensemble de collecte".
+#Dev#Lirez le fichier de test "Français/ambiguïté/Acceptation - Collection élargie".
+#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Boston".
+#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Doublons".
+#Dev#Lirez le fichier de test "Français/ambiguïté/Spécifications multiples ainsi que de multiples relations".
+#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Nero".
+#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis".
+#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis - Boston".
+#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis - Imaginaire réélection (avec confirmation)".
+#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis - Imaginaire réélection".
 
-Lirez le fichier de test "Français/utilisateur/programmation/Puissance 4 - Affichez information sur le mouvement".
-Lirez le fichier de test "Français/utilisateur/programmation/Message d'accueil".
-#Java#Lirez le fichier de test "Français/utilisateur/programmation/Tours de Hanoï (un nombre pair de disques)".
-#Java#Lirez le fichier de test "Français/utilisateur/programmation/Tours de Hanoï (un nombre impair de disques)".
+#Dev#Lirez le fichier de test "Français/conflit/Assignation en conflit avec la spécification de définition".
+#Dev#Lirez le fichier de test "Français/conflit/Spécification de définition est déjà assignée".
+#Dev##Java#Lirez le fichier de test "Français/conflit/Le mot de généralisation et le mot de relation sont les mêmes".
+#Dev#Lirez le fichier de test "Français/conflit/En boucle - Chaqué père est un parent".
+#Dev#Lirez le fichier de test "Français/conflit/En boucle - Chaque mère est un parent".
+#Dev#Lirez le fichier de test "Français/conflit/Aucun conflit sur la collecte non-exclusive".
 
-Lirez le fichier de test "Français/utilisateur/question réponse/Spécification-généralisation - Question (à travers les définitions)".
-Lirez le fichier de test "Français/utilisateur/question réponse/Spécification-généralisation - Question (lettre)".
-Lirez le fichier de test "Français/utilisateur/question réponse/Spécification-généralisation - Question (nombre)".
-Lirez le fichier de test "Français/utilisateur/question réponse/Cette question est plus spécifique (sans relation)".
+#Dev#Lirez le fichier de test "Français/programmation/Puissance 4 - La colonne est pleine".
+#Dev#Lirez le fichier de test "Français/programmation/Puissance 4 - Affichez information sur le mouvement".
+#Dev#Lirez le fichier de test "Français/programmation/Puissance 4 - Désireux de gagner".
+#Dev#Lirez le fichier de test "Français/programmation/Puissance 4 - Le niveau de résolution est élevé".
+#Dev#Lirez le fichier de test "Français/programmation/Message d'accueil".
+#Dev##Java#Lirez le fichier de test "Français/programmation/Tours de Hanoï (un nombre pair de disques)".
+#Dev##Java#Lirez le fichier de test "Français/programmation/Tours de Hanoï (un nombre impair de disques)".
 
-Lirez le fichier de test "Français/utilisateur/raisonnement/Point d'ébullition".
-Lirez le fichier de test "Français/utilisateur/raisonnement/Point de condensation".
-Lirez le fichier de test "Français/utilisateur/raisonnement/Article indéfini ne correspond pas à noun".
-Lirez le fichier de test "Français/utilisateur/raisonnement/Mes conclusions qui sont confirmées (avec relation, sans définition de famille)".
-#Java#Lirez le fichier de test "Français/utilisateur/raisonnement/Défi scientifique".
-Lirez le fichier de test "Français/utilisateur/raisonnement/Phrase avec verbe possessif (sans définition de famille)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/Spécification-généralisation - Mammifères (au pluriel)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/Spécification-généralisation - Mammifères (au singulier)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/La seule option qui reste - Bateau".
-Lirez le fichier de test "Français/utilisateur/raisonnement/La seule option qui reste - Option".
-Lirez le fichier de test "Français/utilisateur/raisonnement/Tom est un chat".
-#Java#Lirez le fichier de test "Français/utilisateur/raisonnement/Presidents des États-Unis - Confirmation".
+#Dev#Lirez le fichier de test "Français/question réponse/Contexte - Question avec généralisation pronom".
+#Dev#Lirez le fichier de test "Français/question réponse/Juste quelques questions (1)".
+#Dev#Lirez le fichier de test "Français/question réponse/Juste quelques questions (2)".
+#Dev#Lirez le fichier de test "Français/question réponse/Juste quelques questions (3)".
+#Dev##Java#Lirez le fichier de test "Français/question réponse/Juste quelques questions (4)".
+#Dev##Java#Lirez le fichier de test "Français/question réponse/Juste quelques questions (5)".
+#Dev#Lirez le fichier de test "Français/question réponse/Spécification-généralisation - Question (à travers les définitions)".
+#Dev#Lirez le fichier de test "Français/question réponse/Spécification-généralisation - Question (lettre)".
+#Dev#Lirez le fichier de test "Français/question réponse/Spécification-généralisation - Question (nombre)".
+#Dev#Lirez le fichier de test "Français/question réponse/Cette question est plus spécifique (sans relation)".
 
-#----------------------------
-# Famille (utilisateur)
-#----------------------------
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Amélie est un fils".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Julien est une mère".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Olivier est une femme".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Olivier est la mère de Pascal".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Aimée est un homme (accepter)".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Conflit négatif - Olivier n'est pas un père".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Conflit négatif - Marie est une mère".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Conflit négatif - Patrique n'est pas un père".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Conflit négatif - Beatrice est la mère de Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Verbe passé - Olivier était le père de Pascal - Olivier est un homme".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Pascal a un père, appelée Amélie".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Pascal est un garçon - Pascal est un homme (normal)".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Pascal est une fille".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Pascal est un homme (normal) - Pascal est un garçon".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Question en conflit avec lui-même (pas de connaissance préalable)".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Question en conflit avec lui-même (avec la connaissance)".
-Lirez le fichier de test "Français/utilisateur/conflit/famille/Phrase en conflit avec lui-même".
+##Dev#Lirez le fichier de test "Français/raisonnement/Acceptance - A small letter is small".
+#Dev#Lirez le fichier de test "Français/raisonnement/Acceptation - Olivier est une personne, Olivier est grand et Olivier est un garçon".
+#Dev#Lirez le fichier de test "Français/raisonnement/L'acceptation d'un seul article dans la spécification exclusive".
+#Dev#Lirez le fichier de test "Français/raisonnement/L'acceptation de la peine sans fin du côlon".
+#Dev#Lirez le fichier de test "Français/raisonnement/Test supplémentaire".
+#Dev#Lirez le fichier de test "Français/raisonnement/Adjectif".
+#Dev#Lirez le fichier de test "Français/raisonnement/Point d'ébullition".
+#Dev#Lirez le fichier de test "Français/raisonnement/Un changé niveau de hypothèse (1)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Un changé niveau de hypothèse (2)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Chaque père est un parent - Chaque mère est un parent".
+#Dev#Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Chaque père est un parent et chaque mère est un parent".
+#Dev#Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Olivier-Amélie-Pascal-Julien - Olivier-Amélie-Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Olivier-Pascal-Julien - Olivier-Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Verbe passé".
+#Dev#Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Incertitude".
+#Dev#Lirez le fichier de test "Français/raisonnement/Point de condensation".
+#Dev#Lirez le fichier de test "Français/raisonnement/Chaque voiture a des roues".
+#Dev#Lirez le fichier de test "Français/raisonnement/Article indéfini ne correspond pas à noun".
+#Dev#Lirez le fichier de test "Français/raisonnement/Philippe était un père - Philippe était le père de Antoine".
+#Dev#Lirez le fichier de test "Français/raisonnement/Olivier est un père".
+#Dev#Lirez le fichier de test "Français/raisonnement/Olivier est un parent de Pascal - Julien a 2 parents".
+#Dev#Lirez le fichier de test "Français/raisonnement/Olivier est un parent de Pascal - Olivier est un parent de Julien".
+#Dev#Lirez le fichier de test "Français/raisonnement/Connaissance des organismes (1)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Connaissance des organismes (2)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Mes conclusions qui sont confirmées (avec relation, sans définition de la famille)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Pascal a un parent, appelé Olivier - Pascal a un parent, appelée Amélie".
+#Dev##Java#Lirez le fichier de test "Français/raisonnement/Défi scientifique".
+#Dev##Java#Lirez le fichier de test "Français/raisonnement/Défi scientifique - Confirmation".
+#Dev#Lirez le fichier de test "Français/raisonnement/Phrase avec verbe possessif (sans définition de famille)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Spécification-généralisation - Acceptation des phrases (au pluriel)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Spécification-généralisation - Acceptation des peines (au singulier)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Spécification-généralisation - Mammifères (au pluriel)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Spécification-généralisation - Mammifères (au singulier)".
+#Dev#Lirez le fichier de test "Français/raisonnement/Spécification-généralisation - Spécification unique".
+#Dev#Lirez le fichier de test "Français/raisonnement/Changer de langue".
+#Dev#Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Bateau".
+#Dev#Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Dominique n'est pas une femme".
+#Dev#Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Option".
+#Dev#Lirez le fichier de test "Français/raisonnement/Tom est un chat".
+#Dev##Java#Lirez le fichier de test "Français/raisonnement/L'incertitude et passé".
+#Dev#Lirez le fichier de test "Français/raisonnement/Relation unique".
+#Dev##Java#Lirez le fichier de test "Français/raisonnement/Presidents des États-Unis - Confirmation".
 
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Assomption travers question suggestive".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Question exclusive".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Je ne suis pas sûr".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/J'ai eu la même question avant".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Je sais seulement".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Indirectement répondu question, avec la confirmation".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Réponses négatives et alternatives".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Réponses positives".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Relation de question est sous-ensemble de relation de réponse".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Questions identiques ou similaires".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Cette question est plus spécifique (avec relation)".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Vous aviez une question connexe avant".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Vous aviez une question identiques-similaires avant (avec relation)".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Vous aviez une question identiques-similaires avant (sans relation)".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Vous aviez une question identiques-similaires-connexes avant (avec relation)".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Votre question est plus spécifique (sur Olivier)".
-Lirez le fichier de test "Français/utilisateur/question réponse/famille/Votre question est plus spécifique (sur Pascal et Julien)".
+#-----------
+# Famille
+#-----------
+#Dev#Lirez le fichier de test "Français/ambiguïté/famille/Question est manquant un contexte de relation".
+#Dev#Lirez le fichier de test "Français/ambiguïté/famille/Phrase est manquant un contexte de relation - Je suppose que vous voulez dire".
 
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Amélie était la mère de Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Correction hypothèse invalidée (par la connaissance)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Correction hypothèse invalidée (par une question suggestive inverse)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Olivier - Amélie - Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Olivier et Amélie - Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Olivier était le père de Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Rapport de justification".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Lorraine - Julien - Olivier et Amélie - Pascal".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Lorraine - Julien - Pascal - Olivier et Amélie".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Mes hypothèses qui sont confirmées (enfant)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Mes hypothèses qui sont confirmées (parents)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Amélie)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Mes hypothèses qui sont confirmées (Pascal, Julien et Lorraine)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Mes hypothèses qui sont confirmées (sans relation)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Mes conclusions qui sont confirmées (père et mère)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Mes conclusions qui sont confirmées (avec relation)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Mes conclusions qui sont confirmées (sans relation)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Pascal - Julien - Lorraine - Olivier et Amélie (parents)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Pascal - Julien - Lorraine - Olivier et Amélie (fils - fille)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Pascal - Olivier et Amélie - Julien - Lorraine".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Verbe passé".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Phrase avec verbe possessif".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Cette information est plus spécifique (non-exclusif)".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Cette information est plus spécifique".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Vous avez confirmé au moins un mot de relation".
-Lirez le fichier de test "Français/utilisateur/raisonnement/famille/Vous avez confirmé la spécification - mais pas la relation".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Amélie est un fils".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Amélie est le père de Pascal, Julien et Lorraine".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Julien est une mère".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Olivier est un garçon et un homme".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Olivier est un homme et un garçon".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Olivier est une femme".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Olivier est la mère de Pascal".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Olivier était le père de Pascal (avant la définition de famille)".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Aimée est un homme (accepter)".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Conflit négatif - Olivier n'est pas un père".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Conflit négatif - Marie est une mère".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Conflit négatif - Patrique n'est pas un père".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Conflit négatif - Beatrice est la mère de Pascal, Julien et Lorraine".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Pas de conflit dans la même phrase".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Pas de conflit sur plusieurs spécifications connexes".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Verbe passé - Olivier était le père de Pascal - Olivier est un homme".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Pascal a un père, appelée Amélie".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Pascal est un garçon - Pascal est un homme (normal)".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Pascal est une fille".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Pascal est un homme (normal) - Pascal est un garçon".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Question en conflit avec lui-même (pas de connaissance préalable)".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Question en conflit avec lui-même (avec la connaissance)".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Phrase en conflit avec lui-même".
+#Dev#Lirez le fichier de test "Français/conflit/famille/Définition de la famille simple - Olivier est la mère de Pascal".
 
-#----------------------------
-# Général (profond)
-#----------------------------
-#Java#Lirez le fichier de test "Français/ambiguïté/Acceptation - Boston - États-Unis - Royaume-Uni".
-#Java#Lirez le fichier de test "Français/ambiguïté/Acceptation - Collection dans un ordre différent".
-Lirez le fichier de test "Français/ambiguïté/Acceptation - Sous-ensemble de collecte".
-Lirez le fichier de test "Français/ambiguïté/Acceptation - Collection élargie".
-#Java#Lirez le fichier de test "Français/ambiguïté/Doublons".
-Lirez le fichier de test "Français/ambiguïté/Spécifications multiples ainsi que de multiples relations".
-#Java#Lirez le fichier de test "Français/ambiguïté/Nero".
-#Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis".
-#Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis - Boston".
-#Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis - Imaginaire réélection (avec confirmation)".
-#Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis - Imaginaire réélection".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Assomption travers question suggestive".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Question exclusive".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Je ne suis pas sûr".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/J'ai eu la même question avant".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Je sais seulement".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Indirectement répondu question, avec la confirmation".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Est Pascal une femme".
+#Dev##Java#Lirez le fichier de test "Français/question réponse/famille/Juste quelques questions (1)".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Juste quelques questions (2)".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Réponses négatives et alternatives".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Réponses positives".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Relation de question est sous-ensemble de relation de réponse".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Questions identiques ou similaires".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Cette question est plus spécifique (avec relation)".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Vous aviez une question connexe avant".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Vous aviez une question identiques-similaires avant (avec relation)".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Vous aviez une question identiques-similaires avant (sans relation)".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Vous aviez une question identiques-similaires-connexes avant (avec relation)".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Votre question est plus spécifique (sur Olivier)".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Votre question est plus spécifique (sur Pascal et Julien)".
 
-Lirez le fichier de test "Français/conflit/Assignation en conflit avec la spécification de définition".
-Lirez le fichier de test "Français/conflit/Spécification de définition est déjà assignée".
-#Java#Lirez le fichier de test "Français/conflit/Le mot de généralisation et le mot de relation sont les mêmes".
-Lirez le fichier de test "Français/conflit/En boucle - Chaqué père est un parent".
-Lirez le fichier de test "Français/conflit/En boucle - Chaque mère est un parent".
-Lirez le fichier de test "Français/conflit/Aucun conflit sur la collecte non-exclusive".
-
-Lirez le fichier de test "Français/programmation/Puissance 4 - La colonne est pleine".
-Lirez le fichier de test "Français/programmation/Puissance 4 - Désireux de gagner".
-Lirez le fichier de test "Français/programmation/Puissance 4 - Le niveau de résolution est élevé".
-Lirez le fichier de test "Français/programmation/Le Bon, la Brute et le Truand".
-
-Lirez le fichier de test "Français/question réponse/Contexte - Question avec généralisation pronom".
-Lirez le fichier de test "Français/question réponse/Juste quelques questions (1)".
-Lirez le fichier de test "Français/question réponse/Juste quelques questions (2)".
-Lirez le fichier de test "Français/question réponse/Juste quelques questions (3)".
-#Java#Lirez le fichier de test "Français/question réponse/Juste quelques questions (4)".
-#Java#Lirez le fichier de test "Français/question réponse/Juste quelques questions (5)".
-
-#Lirez le fichier de test "Français/raisonnement/Acceptance - A small letter is small".
-Lirez le fichier de test "Français/raisonnement/Acceptation - Olivier est une personne, Olivier est grand et Olivier est un garçon".
-Lirez le fichier de test "Français/raisonnement/L'acceptation d'un seul article dans la spécification exclusive".
-Lirez le fichier de test "Français/raisonnement/L'acceptation de la peine sans fin du côlon".
-Lirez le fichier de test "Français/raisonnement/Test supplémentaire".
-Lirez le fichier de test "Français/raisonnement/Adjectif".
-Lirez le fichier de test "Français/raisonnement/Un changé niveau de hypothèse (1)".
-Lirez le fichier de test "Français/raisonnement/Un changé niveau de hypothèse (2)".
-Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Chaque père est un parent - Chaque mère est un parent".
-Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Chaque père est un parent et chaque mère est un parent".
-Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Olivier-Amélie-Pascal-Julien - Olivier-Amélie-Lorraine".
-Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Olivier-Pascal-Julien - Olivier-Lorraine".
-Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Verbe passé".
-Lirez le fichier de test "Français/raisonnement/Recueillir par la suite - Incertitude".
-Lirez le fichier de test "Français/raisonnement/Chaque voiture a des roues".
-Lirez le fichier de test "Français/raisonnement/Philippe était un père - Philippe était le père de Antoine".
-Lirez le fichier de test "Français/raisonnement/Olivier est un père".
-Lirez le fichier de test "Français/raisonnement/Olivier est un parent de Pascal - Julien a 2 parents".
-Lirez le fichier de test "Français/raisonnement/Olivier est un parent de Pascal - Olivier est un parent de Julien".
-Lirez le fichier de test "Français/raisonnement/Connaissance des organismes (1)".
-Lirez le fichier de test "Français/raisonnement/Connaissance des organismes (2)".
-Lirez le fichier de test "Français/raisonnement/Mes conclusions sont confirmées (avec relation, sans définition de la famille)".
-Lirez le fichier de test "Français/raisonnement/Pascal a un parent, appelé Olivier - Pascal a un parent, appelée Amélie".
-Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Bateau".
-Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Dominique n'est pas une femme".
-Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Option".
-#Java#Lirez le fichier de test "Français/raisonnement/Défi scientifique - Confirmation".
-Lirez le fichier de test "Français/raisonnement/Phrase avec verbe possessif (sans définition de famille)".
-Lirez le fichier de test "Français/raisonnement/Spécification-généralisation - Acceptation des phrases (au pluriel)".
-Lirez le fichier de test "Français/raisonnement/Spécification-généralisation - Acceptation des peines (au singulier)".
-Lirez le fichier de test "Français/raisonnement/Spécification-généralisation - Spécification unique".
-Lirez le fichier de test "Français/raisonnement/Changer de langue".
-#Java#Lirez le fichier de test "Français/raisonnement/L'incertitude et passé".
-Lirez le fichier de test "Français/raisonnement/Relation unique".
-
-#----------------------------
-# Famille (profond)
-#----------------------------
-Lirez le fichier de test "Français/ambiguïté/famille/Question est manquant un contexte de relation".
-Lirez le fichier de test "Français/ambiguïté/famille/Phrase est manquant un contexte de relation - Je suppose que vous voulez dire".
-
-Lirez le fichier de test "Français/conflit/famille/Amélie est le père de Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/conflit/famille/Julien est une mère".
-Lirez le fichier de test "Français/conflit/famille/Olivier est un garçon et un homme".
-Lirez le fichier de test "Français/conflit/famille/Olivier est un homme et un garçon".
-Lirez le fichier de test "Français/conflit/famille/Olivier était le père de Pascal (avant la définition de famille)".
-Lirez le fichier de test "Français/conflit/famille/Pas de conflit dans la même phrase".
-Lirez le fichier de test "Français/conflit/famille/Pas de conflit sur plusieurs spécifications connexes".
-Lirez le fichier de test "Français/conflit/famille/Définition de la famille simple - Olivier est la mère de Pascal".
-
-Lirez le fichier de test "Français/question réponse/famille/Assomption travers question suggestive".
-Lirez le fichier de test "Français/question réponse/famille/Indirectement répondu question, avec la confirmation".
-Lirez le fichier de test "Français/question réponse/famille/Est Pascal une femme".
-#Java#Lirez le fichier de test "Français/question réponse/famille/Juste quelques questions (1)".
-Lirez le fichier de test "Français/question réponse/famille/Juste quelques questions (2)".
-Lirez le fichier de test "Français/question réponse/famille/Réponses négatives et alternatives".
-Lirez le fichier de test "Français/question réponse/famille/Cette question est plus spécifique (avec relation)".
-Lirez le fichier de test "Français/question réponse/famille/Votre question est plus spécifique (sur Olivier)".
-
-Lirez le fichier de test "Français/raisonnement/famille/Acceptation d'une définition familiale étrange".
-Lirez le fichier de test "Français/raisonnement/famille/Amélie - Olivier - Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/raisonnement/famille/Amélie était la mère de Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/raisonnement/famille/Éviter le contexte dupliqué".
-Lirez le fichier de test "Français/raisonnement/famille/Recueillir par la suite - Julien-Amélie - Lorraine-Olivier Olivier-Amélie-Pascal-Julien-Lorraine".
-Lirez le fichier de test "Français/raisonnement/famille/Recueillir par la suite - Olivier-Amélie-Pascal-Julien - Olivier-Amélie-Lorraine".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (1)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (2)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (3)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (4)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (5)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (6)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (7 - Belle)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (7 - Claudia)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (8)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (9)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (10)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (11)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (12)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (13)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (14)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (15)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (16)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (17)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (18)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (19 - mixte)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (19 - étrange)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (20)".
-Lirez le fichier de test "Français/raisonnement/famille/Complexe (21)".
-Lirez le fichier de test "Français/raisonnement/famille/Contexte - Julien a 2 parents - Olivier est un parent".
-Lirez le fichier de test "Français/raisonnement/famille/Contexte - Pronom de la spécification".
-Lirez le fichier de test "Français/raisonnement/famille/Correction hypothèse invalidée (par la connaissance)".
-Lirez le fichier de test "Français/raisonnement/famille/Correction hypothèse invalidée (par une question suggestive inverse)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (1)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (2)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (3)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (4)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (5)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (6)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (7)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (8)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (9)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (10)".
-Lirez le fichier de test "Français/raisonnement/famille/Je sais que (11)".
-Lirez le fichier de test "Français/raisonnement/famille/Philippe était le père de Antoine (avant la définition de famille)".
-Lirez le fichier de test "Français/raisonnement/famille/Julien a 2 parents - Julien est un enfant".
-Lirez le fichier de test "Français/raisonnement/famille/Julien a 2 parents - Julien est un fils".
-Lirez le fichier de test "Français/raisonnement/famille/Julien est un enfant - Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Julien est un enfant - Julien a 2 parents".
-Lirez le fichier de test "Français/raisonnement/famille/Julien est un fils - Julien a 2 parents".
-Lirez le fichier de test "Français/raisonnement/famille/Julien est un fils de Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier - Amélie (avant la définition de famille)".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier - Amélie - Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier - Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier - Lorraine - Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier et Amélie - Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier a 2 fils et une fille".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier a 2 fils et une fille (avant la définition de famille)".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier a une fille et 2 fils".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier est un père - Pascal a 2 parents".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier est un parent - Pascal est un enfant de Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier est un parent - Pascal est un fils".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier est le père de Pascal - Julien - Lorraine - Claudia".
-Lirez le fichier de test "Français/raisonnement/famille/Olivier était le père de Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/raisonnement/famille/Lorraine - Julien - Olivier et Amélie - Pascal".
-Lirez le fichier de test "Français/raisonnement/famille/Lorraine - Julien - Pascal - Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Lorraine - Olivier et Amélie - Julien".
-Lirez le fichier de test "Français/raisonnement/famille/Lorraine - Pascal - Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Lorraine a 2 parents - Lorraine est une fille".
-Lirez le fichier de test "Français/raisonnement/famille/Lorraine a un père - Lorraine est un enfant - Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Lorraine est un enfant - Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (enfant)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (parents)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Amélie)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Amélie - inversé)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Pascal)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Pascal et Olivier)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Pascal, Julien et Lorraine)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (sans relation)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (père et mère)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (Julien a 2 parents)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (avec relation)".
-Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (sans relation)".
-Lirez le fichier de test "Français/raisonnement/famille/Pascal - Amélie - Julien - Lorraine - Julien - Olivier".
-Lirez le fichier de test "Français/raisonnement/famille/Pascal - Amélie - Julien - Lorraine - Olivier".
-Lirez le fichier de test "Français/raisonnement/famille/Pascal - Julien - Lorraine - Olivier et Amélie (parents)".
-Lirez le fichier de test "Français/raisonnement/famille/Pascal - Julien - Lorraine - Olivier et Amélie (fils - fille)".
-Lirez le fichier de test "Français/raisonnement/famille/Pascal - Olivier et Amélie - Julien - Lorraine".
-Lirez le fichier de test "Français/raisonnement/famille/Pascal a un père - Pascal a 2 parents".
-Lirez le fichier de test "Français/raisonnement/famille/Pascal est un garçon - Lorraine est una jeune-fille".
-Lirez le fichier de test "Français/raisonnement/famille/Pascal est un enfant - Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Pascal est le fils de Olivier et Amélie".
-Lirez le fichier de test "Français/raisonnement/famille/Verbe passé".
-Lirez le fichier de test "Français/raisonnement/famille/Person".
-Lirez le fichier de test "Français/raisonnement/famille/Phrase avec verbe possessif".
-Lirez le fichier de test "Français/raisonnement/famille/Définition de la famille simple - Complexe (7 - Claudia).txt".
-Lirez le fichier de test "Français/raisonnement/famille/Définition de la famille simple - Olivier et Amélie - Pascal, Julien et Lorraine".
-Lirez le fichier de test "Français/raisonnement/famille/Définition de la famille simple - Olivier est un père".
-Lirez le fichier de test "Français/raisonnement/famille/Définition de la famille simple - Rapport de justification.txt".
-Lirez le fichier de test "Français/raisonnement/famille/Passer des questions invalides (1)".
-Lirez le fichier de test "Français/raisonnement/famille/Passer des questions invalides (2)".
-Lirez le fichier de test "Français/raisonnement/famille/Cette information est plus spécifique (non-exclusif)".
-Lirez le fichier de test "Français/raisonnement/famille/Cette information est plus spécifique".
-Lirez le fichier de test "Français/raisonnement/famille/Vous avez confirmé au moins un mot de relation".
-Lirez le fichier de test "Français/raisonnement/famille/Vous avez confirmé la spécification - mais pas la relation".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Acceptation d'une définition familiale étrange".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Amélie - Olivier - Pascal, Julien et Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Amélie était la mère de Pascal, Julien et Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Éviter le contexte dupliqué".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Recueillir par la suite - Julien-Amélie - Lorraine-Olivier Olivier-Amélie-Pascal-Julien-Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Recueillir par la suite - Olivier-Amélie-Pascal-Julien - Olivier-Amélie-Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (1)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (2)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (3)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (4)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (5)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (6)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (7 - Belle)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (7 - Claudia)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (8)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (9)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (10)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (11)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (12)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (13)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (14)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (15)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (16)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (17)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (18)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (19 - mixte)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (19 - étrange)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (20)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Complexe (21)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Contexte - Julien a 2 parents - Olivier est un parent".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Contexte - Pronom de la spécification".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Correction hypothèse invalidée (par la connaissance)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Correction hypothèse invalidée (par une question suggestive inverse)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (1)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (2)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (3)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (4)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (5)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (6)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (7)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (8)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (9)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (10)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (11)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Philippe était le père de Antoine (avant la définition de famille)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Julien a 2 parents - Julien est un enfant".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Julien a 2 parents - Julien est un fils".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Julien est un enfant - Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Julien est un enfant - Julien a 2 parents".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Julien est un fils - Julien a 2 parents".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Julien est un fils de Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier - Amélie (avant la définition de famille)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier - Amélie - Pascal, Julien et Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier - Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier - Lorraine - Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier et Amélie - Pascal, Julien et Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier a 2 fils et une fille".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier a 2 fils et une fille (avant la définition de famille)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier a une fille et 2 fils".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est un père - Pascal a 2 parents".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est un parent - Pascal est un enfant de Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est un parent - Pascal est un fils".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est le père de Pascal - Julien - Lorraine - Claudia".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier était le père de Pascal, Julien et Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Rapport de justification".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Lorraine - Julien - Olivier et Amélie - Pascal".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Lorraine - Julien - Pascal - Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Lorraine - Olivier et Amélie - Julien".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Lorraine - Pascal - Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Lorraine a 2 parents - Lorraine est une fille".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Lorraine a un père - Lorraine est un enfant - Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Lorraine est un enfant - Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (enfant)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (parents)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Amélie)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Amélie - inversé)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Pascal)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Pascal et Olivier)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Pascal, Julien et Lorraine)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (sans relation)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (père et mère)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (Julien a 2 parents)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (avec relation)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (sans relation)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Amélie - Julien - Lorraine - Julien - Olivier".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Amélie - Julien - Lorraine - Olivier".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Julien - Lorraine - Olivier et Amélie (parents)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Julien - Lorraine - Olivier et Amélie (fils - fille)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Olivier et Amélie - Julien - Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal a un père - Pascal a 2 parents".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal est un garçon - Lorraine est una jeune-fille".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal est un enfant - Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal est le fils de Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Verbe passé".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Person".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Phrase avec verbe possessif".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Définition de la famille simple - Complexe (7 - Claudia).txt".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Définition de la famille simple - Olivier - Pascal - Armand".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Définition de la famille simple - Olivier et Amélie - Pascal, Julien et Lorraine".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Définition de la famille simple - Olivier est un père".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Définition de la famille simple - Rapport de justification.txt".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Passer des questions invalides (1)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Passer des questions invalides (2)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Cette information est plus spécifique (non-exclusif)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Cette information est plus spécifique".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Vous avez confirmé au moins un mot de relation".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Vous avez confirmé la spécification - mais pas la relation".
 
 #----------------------------
 # Info
 #----------------------------
 Aide.
-Affichez information sur les langues.
-Affichez information sur les listes.
-Affichez information sur les utilisateurs.
-Affichez information sur les types de mots.
-Affichez les commandes de requête.
-Affichez le droit d'auteur.
-Affichez la licence-GPLv2.
-Affichez la garantie.
+#Dev#Affichez information sur les langues.
+#Dev#Affichez information sur les listes.
+#Dev#Affichez information sur les utilisateurs.
+#Dev#Affichez information sur les types de mots.
+#Dev#Affichez les commandes de requête.
+#Dev#Affichez le droit d'auteur.
+#Dev#Affichez la licence-GPLv2.
+#Dev#Affichez la garantie.

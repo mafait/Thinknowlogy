@@ -1,7 +1,7 @@
 ﻿/*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,17 +25,17 @@ class CollectionItem extends Item
 	{
 	// Private initialized variables
 
-	private boolean isExclusiveSpecification_;
+	private boolean isExclusiveSpecification_ = false;
 
-	private short collectionOrderNr_;
-	private short collectionWordTypeNr_;
-	private short commonWordTypeNr_;
+	private short collectionOrderNr_ = Constants.NO_ORDER_NR;
+	private short collectionWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
+	private short commonWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
-	private int collectionNr_;
+	private int collectionNr_ = Constants.NO_COLLECTION_NR;
 
-	private WordItem collectionWordItem_;
-	private WordItem commonWordItem_;
-	private WordItem compoundGeneralizationWordItem_;
+	private WordItem collectionWordItem_ = null;
+	private WordItem commonWordItem_ = null;
+	private WordItem compoundGeneralizationWordItem_ = null;
 
 
 	// Constructor
@@ -76,7 +76,7 @@ class CollectionItem extends Item
 		( wordString = collectionWordItem_.wordTypeString( true, collectionWordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -91,7 +91,7 @@ class CollectionItem extends Item
 			{
 			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
-				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -106,7 +106,7 @@ class CollectionItem extends Item
 			{
 			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
-				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )

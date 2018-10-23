@@ -1,7 +1,7 @@
 ﻿/*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,38 +25,38 @@ class SelectionItem extends Item
 	{
 	// Private initialized variables
 
-	private boolean isAction_;
-	private boolean isAssignedOrEmpty_;
-	private boolean isInactiveAssignment_;
-	private boolean isArchivedAssignment_;
-	private boolean isFirstComparisonPart_;
-	private boolean isNewStart_;
-	private boolean isNegative_;
-	private boolean isPossessive_;
-	private boolean isSpecificationGeneralization_;
-	private boolean isUniqueUserRelation_;
-	private boolean isValueSpecification_;
+	private boolean isAction_ = false;
+	private boolean isAssignedOrEmpty_ = false;
+	private boolean isInactiveAssignment_ = false;
+	private boolean isArchivedAssignment_ = false;
+	private boolean isFirstComparisonPart_ = false;
+	private boolean isNewStart_ = false;
+	private boolean isNegative_ = false;
+	private boolean isPossessive_ = false;
+	private boolean isSpecificationGeneralization_ = false;
+	private boolean isUniqueUserRelation_ = false;
+	private boolean isValueSpecification_ = false;
 
-	private short assumptionLevel_;
-	private short selectionLevel_;
-	private short imperativeVerbParameter_;
-	private short prepositionParameter_;
+	private short assumptionLevel_ = Constants.NO_ASSIGNMENT_LEVEL;
+	private short selectionLevel_ = Constants.NO_SELECTION_LEVEL;
+	private short imperativeVerbParameter_ = Constants.NO_IMPERATIVE_PARAMETER;
+	private short prepositionParameter_ = Constants.NO_PREPOSITION_PARAMETER;
 
-	private short generalizationWordTypeNr_;
-	private short specificationWordTypeNr_;
-	private short relationWordTypeNr_;
+	private short generalizationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
+	private short specificationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
+	private short relationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
-	private int generalizationContextNr_;
-	private int specificationContextNr_;
-	private int relationContextNr_;
+	private int generalizationContextNr_ = Constants.NO_CONTEXT_NR;
+	private int specificationContextNr_ = Constants.NO_CONTEXT_NR;
+	private int relationContextNr_ = Constants.NO_CONTEXT_NR;
 
-	private int nContextRelations_;
+	private int nContextRelations_ = 0;
 
-	private WordItem generalizationWordItem_;
-	private WordItem specificationWordItem_;
-	private WordItem relationWordItem_;
+	private WordItem generalizationWordItem_ = null;
+	private WordItem specificationWordItem_ = null;
+	private WordItem relationWordItem_ = null;
 
-	private String specificationString_;
+	private String specificationString_ = null;
 
 
 	// Private methods
@@ -83,7 +83,7 @@ class SelectionItem extends Item
 
 	// Protected constructed variables
 
-	protected boolean isConditionCheckedForSolving;
+	protected boolean isConditionCheckedForSolving = false;
 
 
 	// Constructor
@@ -130,10 +130,6 @@ class SelectionItem extends Item
 		relationWordItem_ = relationWordItem;
 
 		specificationString_ = specificationString;
-
-		// Protected constructed variables
-
-		isConditionCheckedForSolving = false;
 		}
 
 
@@ -147,7 +143,7 @@ class SelectionItem extends Item
 		if( specificationString_ != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -172,7 +168,7 @@ class SelectionItem extends Item
 		( wordString = generalizationWordItem_.wordTypeString( true, generalizationWordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -187,7 +183,7 @@ class SelectionItem extends Item
 			{
 			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
-				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -202,7 +198,7 @@ class SelectionItem extends Item
 			{
 			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
-				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -530,22 +526,20 @@ class SelectionItem extends Item
 
 	protected SelectionItem nextConditionItem( short executionLevel, int conditionSentenceNr )
 		{
-		if( nextSelectionItem() != null &&
-		nextSelectionItem().selectionLevel_ <= executionLevel &&
-		nextSelectionItem().creationSentenceNr() == conditionSentenceNr )
-			return nextSelectionItem();
+		SelectionItem _nextSelectionItem;
 
-		return null;
+		return ( ( _nextSelectionItem = nextSelectionItem() ) != null &&
+				_nextSelectionItem.selectionLevel_ <= executionLevel &&
+				_nextSelectionItem.creationSentenceNr() == conditionSentenceNr ? _nextSelectionItem : null );
 		}
 
 	protected SelectionItem nextExecutionItem( short executionLevel, int executionSentenceNr )
 		{
-		if( nextSelectionItem() != null &&
-		nextSelectionItem().selectionLevel_ == executionLevel &&
-		nextSelectionItem().creationSentenceNr() == executionSentenceNr )
-			return nextSelectionItem();
+		SelectionItem _nextSelectionItem;
 
-		return null;
+		return ( ( _nextSelectionItem = nextSelectionItem() ) != null &&
+				_nextSelectionItem.selectionLevel_ == executionLevel &&
+				_nextSelectionItem.creationSentenceNr() == executionSentenceNr ? _nextSelectionItem : null );
 		}
 
 	protected WordItem generalizationWordItem()

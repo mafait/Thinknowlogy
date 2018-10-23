@@ -1,7 +1,7 @@
 ﻿/*	Class:		ReadWordResultType
  *	Purpose:	To return read word variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,26 +25,13 @@ class ReadWordResultType
 	{
 	// Protected variables
 
-	protected byte result;
+	protected byte result = Constants.RESULT_OK;
 
 	protected boolean hasFoundGrammarDefinition;
 
-	protected int offset;
-	protected int startWordPosition;
-	protected int wordLength;
-
-	// Constructor
-
-	ReadWordResultType()
-		{
-		result = Constants.RESULT_OK;
-
-		hasFoundGrammarDefinition = false;
-
-		offset = 0;
-		startWordPosition = 0;
-		wordLength = 0;
-		}
+	protected int offset = 0;
+	protected int startWordPosition = 0;
+	protected int wordLength = 0;
 	};
 
 /*************************************************************************

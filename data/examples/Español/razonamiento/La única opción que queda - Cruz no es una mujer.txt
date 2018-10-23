@@ -1,5 +1,5 @@
 ﻿Cada persona es un hombre o una mujer.
 Cruz es una persona.
 Cruz no es una mujer.
-Mostrar el informe de justificación sobre Cruz.
+#Dev#Mostrar el informe de justificación sobre Cruz.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

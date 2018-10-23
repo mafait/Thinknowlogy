@@ -1,4 +1,4 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Pablo es un hombre.
 José es un hombre.
 Ana es una mujer.

@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To temporarily store scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,24 +31,24 @@ class ScoreItem : private Item
 
 	// Private initialized variables
 
-	unsigned short assignmentLevel_;
+	unsigned short assignmentLevel_ = NO_ASSIGNMENT_LEVEL;
 
 	protected:
 	// Protected initialized variables
 
-	bool isMarked;
-	bool isChecked;
+	bool isMarked = false;
+	bool isChecked = false;
 
-	unsigned int oldSatisfiedScore;
-	unsigned int newSatisfiedScore;
-	unsigned int oldDissatisfiedScore;
-	unsigned int newDissatisfiedScore;
-	unsigned int oldNotBlockingScore;
-	unsigned int newNotBlockingScore;
-	unsigned int oldBlockingScore;
-	unsigned int newBlockingScore;
+	unsigned int oldSatisfiedScore = NO_SCORE;
+	unsigned int newSatisfiedScore = NO_SCORE;
+	unsigned int oldDissatisfiedScore = NO_SCORE;
+	unsigned int newDissatisfiedScore = NO_SCORE;
+	unsigned int oldNotBlockingScore = NO_SCORE;
+	unsigned int newNotBlockingScore = NO_SCORE;
+	unsigned int oldBlockingScore = NO_SCORE;
+	unsigned int newBlockingScore = NO_SCORE;
 
-	SelectionItem *referenceSelectionItem;
+	SelectionItem *referenceSelectionItem = NULL;
 
 
 	private:
@@ -85,7 +85,6 @@ class ScoreItem : private Item
 
 		// Protected initialized variables
 
-		isMarked = false;
 		isChecked = _isChecked;
 
 		oldSatisfiedScore = _oldSatisfiedScore;

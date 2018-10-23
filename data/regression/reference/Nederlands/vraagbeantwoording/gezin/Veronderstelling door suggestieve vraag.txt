@@ -67,10 +67,10 @@
 < Jan heeft waarschijnlijk een kind, genaamd Paul. Omdat:
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 < Jan is waarschijnlijk een ouder van Paul. Omdat:
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
-* 	en:
-<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
@@ -188,10 +188,10 @@
 < Jan heeft waarschijnlijk een kind, genaamd Paul. Omdat:
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 < Jan is waarschijnlijk een ouder van Paul. Omdat:
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
-* 	en:
-<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.

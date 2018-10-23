@@ -1,4 +1,4 @@
 ﻿Juan tiene 2 hijos y una hija.
-Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+Leer el archivo "Español/razonamiento/familia/definición de familia".
 Mostrar información sobre los Juan.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

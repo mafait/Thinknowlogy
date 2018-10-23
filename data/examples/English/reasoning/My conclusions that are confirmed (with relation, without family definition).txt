@@ -1,9 +1,9 @@
 ﻿John is the father and Anna is the mother of Paul, Joe and Laura.
-Display the justification report about Paul.
+#Dev#Display the justification report about Paul.
 Paul has a father, called John.
-Display the justification report about Paul.
+#Dev#Display the justification report about Paul.
 Joe has a father, called John.
-Display the justification report about Joe.
+#Dev#Display the justification report about Joe.
 Laura has a father, called John.
-Display the justification report about Laura.
+#Dev#Display the justification report about Laura.
 # To continue, click button «Clear your mind.» or «Restart.».

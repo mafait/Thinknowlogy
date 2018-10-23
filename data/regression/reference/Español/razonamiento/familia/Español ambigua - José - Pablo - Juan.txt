@@ -62,11 +62,11 @@
 < Juan es probablemente padre de José y Pablo.
 < Ana es probablemente parte de una familia.
 < Ana es posiblemente madre de Pablo.
+< Ana no es posiblemente un padre.
 < Ana es posiblemente una mujer.
 < Ana es puede-ser una persona.
 < Ana no es puede-ser un hombre.
 < Ana es posiblemente femenina.
-< Ana no es posiblemente un padre.
 * 
 * Mis preguntas:
 < ¿Es Pablo un niño o un hombre?
@@ -87,9 +87,9 @@
 < Juan tiene posiblemente una hija, llamada Luisa.
 < Luisa es probablemente parte de una familia.
 < Luisa es posiblemente hija de Juan.
+< Luisa no es posiblemente un hijo.
 < Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
-< Luisa no es posiblemente un hijo.
 * 
 * Mis preguntas:
 < ¿Es Luisa una niña o una mujer?
@@ -165,6 +165,9 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada padre es un padre o una madre.
 <	- Nombre propio "Ana" es probablemente femenino.
+< Ana no es posiblemente un padre. Porque:
+<	- Cada padre es un padre o una madre.
+<	- Ana es posiblemente madre de Pablo.
 < Ana es posiblemente una mujer. Porque:
 <	- Ana es posiblemente madre de Pablo.
 <	- Cada madre es una mujer.
@@ -181,9 +184,6 @@
 < Ana es posiblemente femenina. Porque:
 <	- Ana es posiblemente una mujer.
 <	- Cada mujer es femenina.
-< Ana no es posiblemente un padre. Porque:
-<	- Cada padre es un padre o una madre.
-<	- Ana es posiblemente madre de Pablo.
 < 
 * 
 * Mis conclusiones:
@@ -246,6 +246,9 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Luisa" es probablemente femenino.
+< Luisa no es posiblemente un hijo. Porque:
+<	- Cada hijo es un hijo o una hija.
+<	- Luisa es posiblemente hija de Juan.
 < Luisa es puede-ser una persona. Porque:
 <	- Luisa es posiblemente hija de Juan.
 <	- Una hija es probablemente una persona.
@@ -253,9 +256,6 @@
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 <	- Luisa es posiblemente hija de Juan.
 <	- Cada hija es una niña o una mujer.
-< Luisa no es posiblemente un hijo. Porque:
-<	- Cada hijo es un hijo o una hija.
-<	- Luisa es posiblemente hija de Juan.
 * 
 * Mis preguntas:
 < ¿Es Luisa una niña o una mujer? Porque:

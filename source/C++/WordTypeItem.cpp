@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -36,25 +36,25 @@ class WordTypeItem : private Item
 
 	// Private initialized variables
 
-	bool hasFeminineWordEnding_;
-	bool hasMasculineWordEnding_;
-	bool isProperNounPrecededByDefiniteArticle_;
+	bool hasFeminineWordEnding_ = false;
+	bool hasMasculineWordEnding_ = false;
+	bool isProperNounPrecededByDefiniteArticle_ = false;
 
-	unsigned short adjectiveParameter_;
-	unsigned short definiteArticleParameter_;
-	unsigned short indefiniteArticleParameter_;
-	unsigned short wordTypeLanguageNr_;
-	unsigned short wordTypeNr_;
+	unsigned short adjectiveParameter_ = NO_ADJECTIVE_PARAMETER;
+	unsigned short definiteArticleParameter_ = NO_DEFINITE_ARTICLE_PARAMETER;
+	unsigned short indefiniteArticleParameter_ = NO_INDEFINITE_ARTICLE_PARAMETER;
+	unsigned short wordTypeLanguageNr_ = NO_LANGUAGE_NR;
+	unsigned short wordTypeNr_ = NO_WORD_TYPE_NR;
 
 
 	// Private constructed variables
 
-	unsigned short generalizationWriteLevel_;
-	unsigned short specificationWriteLevel_;
-	unsigned short relationWriteLevel_;
+	unsigned short generalizationWriteLevel_ = NO_WRITE_LEVEL;
+	unsigned short specificationWriteLevel_ = NO_WRITE_LEVEL;
+	unsigned short relationWriteLevel_ = NO_WRITE_LEVEL;
 
-	char *hideKey_;
-	char *wordTypeString_;
+	char *hideKey_ = NULL;
+	char *wordTypeString_ = NULL;
 
 
 	// Private functions
@@ -92,11 +92,9 @@ class WordTypeItem : private Item
 				break;
 			}
 
-		if( phoneticVowelIndefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER &&
-		( phoneticVowelIndefiniteArticleWordItem = myWordItem()->predefinedWordItem( phoneticVowelIndefiniteArticleParameter ) ) != NULL )
-			return phoneticVowelIndefiniteArticleWordItem->hasWordType( false, WORD_TYPE_ARTICLE );
-
-		return false;
+		return ( phoneticVowelIndefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER &&
+				( phoneticVowelIndefiniteArticleWordItem = myWordItem()->predefinedWordItem( phoneticVowelIndefiniteArticleParameter ) ) != NULL ?
+					phoneticVowelIndefiniteArticleWordItem->hasWordType( false, WORD_TYPE_ARTICLE ) : false );
 		}
 
 	bool isIndefiniteArticlePhoneticVowelParameter( unsigned short wordParameter )
@@ -126,15 +124,6 @@ class WordTypeItem : private Item
 		indefiniteArticleParameter_ = indefiniteArticleParameter;
 		wordTypeLanguageNr_ = wordTypeLanguageNr;
 		wordTypeNr_ = wordTypeNr;
-
-		// Private constructed variables
-
-		generalizationWriteLevel_ = NO_WRITE_LEVEL;
-		specificationWriteLevel_ = NO_WRITE_LEVEL;
-		relationWriteLevel_ = NO_WRITE_LEVEL;
-
-		hideKey_ = NULL;
-		wordTypeString_ = NULL;
 
 		// Checking private initialized variables
 
@@ -449,13 +438,10 @@ class WordTypeItem : private Item
 
 	bool isCorrectHiddenWordType( unsigned short wordTypeNr, char *compareString, char *hideKey )
 		{
-		if( wordTypeNr_ == wordTypeNr &&
-		hideKey_ == hideKey &&
-		compareString != NULL &&
-		strcmp( wordTypeString_, compareString ) == 0 )
-			return true;
-
-		return false;
+		return ( wordTypeNr_ == wordTypeNr &&
+				hideKey_ == hideKey &&
+				compareString != NULL &&
+				strcmp( wordTypeString_, compareString ) == 0 );
 		}
 
 	bool isAnswer()

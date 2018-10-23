@@ -1,7 +1,7 @@
 ﻿/*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		To temporarily store read items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,11 +25,11 @@ class ReadList extends List
 	{
 	// Private constructed variables
 
-	private short lastActivatedWordOrderNr_;
+	private short lastActivatedWordOrderNr_ = Constants.NO_ORDER_NR;
 
 	// Private methods
 
-	private boolean hasFoundReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, String readString, WordItem readWordItem )
+	private boolean hasFoundReadItem( short wordOrderNr, short wordParameter, short wordTypeNr, WordItem readWordItem )
 		{
 		ReadItem searchReadItem = firstActiveReadItem();
 
@@ -38,14 +38,6 @@ class ReadList extends List
 			if( searchReadItem.wordOrderNr() == wordOrderNr &&
 			searchReadItem.wordParameter() == wordParameter &&
 			searchReadItem.wordTypeNr() == wordTypeNr &&
-
-			( ( searchReadItem.readString == null &&
-			readString == null ) ||
-
-			( searchReadItem.readString != null &&
-			readString != null &&
-			searchReadItem.readString.equals( readString ) ) ) &&
-
 			searchReadItem.readWordItem() == readWordItem )
 				return true;
 
@@ -59,10 +51,6 @@ class ReadList extends List
 
 	protected ReadList( WordItem myWordItem )
 		{
-		// Private constructed variables
-
-		lastActivatedWordOrderNr_ = Constants.NO_ORDER_NR;
-
 		initializeListVariables( Constants.ADMIN_READ_LIST_SYMBOL, "ReadList", myWordItem );
 		}
 
@@ -109,7 +97,7 @@ class ReadList extends List
 		wordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
 			return startError( 1, "The given read word type number is undefined or out of bounds" );
 
-		if( hasFoundReadItem( wordOrderNr, wordParameter, wordTypeNr, readString, readWordItem ) )
+		if( hasFoundReadItem( wordOrderNr, wordParameter, wordTypeNr, readWordItem ) )
 			return startError( 1, "The given read item already exists" );
 
 		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new ReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readStringLength, readString, readWordItem, this, myWordItem() ) ) != Constants.RESULT_OK )
@@ -203,12 +191,7 @@ class ReadList extends List
 
 						if( searchReadItem.readString == null &&
 						( definitionGrammarString = definitionGrammarItem.grammarString() ) != null )
-							{
-							if( searchReadItem.readString != null )
-								searchReadItem.readString = definitionGrammarString;
-							else
-								searchReadItem.readString = definitionGrammarString;
-							}
+							searchReadItem.readString = definitionGrammarString;
 						}
 					}
 				else

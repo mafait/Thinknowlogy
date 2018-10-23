@@ -101,10 +101,10 @@
 * 
 * My assumptions:
 < John is probably a parent of Paul. Because:
+<	- Paul has probably 2 parents, called Anna and John.
+* 	and:
 <	- Every family has parents and children.
 <	- Paul is a child of Anna and John.
-* 	and:
-<	- Paul has probably 2 parents, called Anna and John.
 * 	and:
 <	- Every family has parents and children.
 <	- John has a child, called Paul.
@@ -233,10 +233,10 @@
 < Laura has probably a parent, called Anna. Because:
 <	- Anna is probably a parent of Paul, Joe and Laura.
 < Laura is probably a child of Anna. Because:
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- Anna is probably a parent of Paul, Joe and Laura.
-* 	and:
-<	- Anna has probably 3 children, called Paul, Joe and Laura.
 * 	and:
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.

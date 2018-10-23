@@ -1,7 +1,7 @@
 ﻿/*	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -32,18 +32,18 @@ class GrammarList : private List
 
 	// Private constructed variables
 
-	bool isCheckingGrammarNeeded_;
+	bool isCheckingGrammarNeeded_ = false;
 
-	GrammarItem *firstFeminineProperNounEndingGrammarItem_;
-	GrammarItem *firstMasculineProperNounEndingGrammarItem_;
-	GrammarItem *firstFeminineSingularNounEndingGrammarItem_;
-	GrammarItem *firstMasculineSingularNounEndingGrammarItem_;
-	GrammarItem *firstPluralNounEndingGrammarItem_;
-	GrammarItem *firstMergedWordGrammarItem_;
-	GrammarItem *firstChineseExclusiveNounGrammarItem_;
-	GrammarItem *firstSentenceGrammarItem_;
-	GrammarItem *firstStatementGrammarItem_;
-	GrammarItem *firstQuestionGrammarItem_;
+	GrammarItem *firstFeminineProperNounEndingGrammarItem_ = NULL;
+	GrammarItem *firstMasculineProperNounEndingGrammarItem_ = NULL;
+	GrammarItem *firstFeminineSingularNounEndingGrammarItem_ = NULL;
+	GrammarItem *firstMasculineSingularNounEndingGrammarItem_ = NULL;
+	GrammarItem *firstPluralNounEndingGrammarItem_ = NULL;
+	GrammarItem *firstMergedWordGrammarItem_ = NULL;
+	GrammarItem *firstChineseExclusiveNounGrammarItem_ = NULL;
+	GrammarItem *firstSentenceGrammarItem_ = NULL;
+	GrammarItem *firstStatementGrammarItem_ = NULL;
+	GrammarItem *firstQuestionGrammarItem_ = NULL;
 
 
 	// Private functions
@@ -131,21 +131,6 @@ class GrammarList : private List
 
 	GrammarList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		// Private constructed variables
-
-		isCheckingGrammarNeeded_ = false;
-
-		firstFeminineProperNounEndingGrammarItem_ = NULL;
-		firstMasculineProperNounEndingGrammarItem_ = NULL;
-		firstFeminineSingularNounEndingGrammarItem_ = NULL;
-		firstMasculineSingularNounEndingGrammarItem_ = NULL;
-		firstPluralNounEndingGrammarItem_ = NULL;
-		firstMergedWordGrammarItem_ = NULL;
-		firstChineseExclusiveNounGrammarItem_ = NULL;
-		firstSentenceGrammarItem_ = NULL;
-		firstStatementGrammarItem_ = NULL;
-		firstQuestionGrammarItem_ = NULL;
-
 		initializeListVariables( WORD_GRAMMAR_LIST_SYMBOL, "GrammarList", globalVariables, inputOutput, myWordItem );
 		}
 
@@ -572,7 +557,9 @@ class GrammarList : private List
 
 	GrammarItem *firstWritingGrammarItem( bool isQuestion )
 		{
-		return ( isQuestion && firstQuestionGrammarItem_ != NULL ? firstQuestionGrammarItem_ : firstStatementGrammarItem_ );
+		return ( isQuestion &&
+				firstQuestionGrammarItem_ != NULL ?
+				firstQuestionGrammarItem_ : firstStatementGrammarItem_ );
 		}
 
 	GrammarResultType createGrammarItem( bool isDefinitionStart, bool isNewStart, bool isOptionStart, bool isChoiceStart, bool isSkipOptionForWriting, unsigned short wordTypeNr, unsigned short grammarParameter, size_t grammarStringLength, char *grammarString, GrammarItem *definitionGrammarItem )

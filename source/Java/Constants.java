@@ -1,6 +1,6 @@
 ﻿/*	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,7 +24,7 @@ class Constants
 	{
 	// Version constants
 	protected static final String PRODUCT_NAME =												"Thinknowlogy";
-	protected static final String VERSION_NAME =												"2018r2 (Natural Intelligence)";
+	protected static final String VERSION_NAME =												"2018r3 (Deep Magic)";
 
 	// Console constants
 	protected static final short CONSOLE_SLEEP_TIME =											10;		// milliseconds
@@ -159,8 +159,9 @@ class Constants
 	protected static final String INPUT_OUTPUT_PROMPT_WARNING_INDENTED_STRING =					"!	- ";
 	protected static final String INPUT_OUTPUT_PROMPT_QUERY_STRING =							"? ";
 
-	protected static final String INPUT_OUTPUT_SKIP_COMMENT_STRING =							"#C++#";
-	protected static final String INPUT_OUTPUT_STRIP_COMMENT_STRING =							"#Java#";
+	protected static final String INPUT_OUTPUT_DEVELOPER_TAG_STRING =							"#Dev#";
+	protected static final String INPUT_OUTPUT_CPP_SKIP_TAG_STRING =							"#C++#";
+	protected static final String INPUT_OUTPUT_JAVA_ACCEPT_TAG_STRING =							"#Java#";
 
 	// Character constants
 	protected static final char SPACE_CHAR =													' ';
@@ -337,6 +338,8 @@ class Constants
 													'o' };
 
 	// Justification types
+	protected static final short NO_JUSTIFICATION_TYPE =														Short.MAX_VALUE;
+
 	protected static final short JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION =									0;
 	protected static final short JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION =	1;
 	protected static final short JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =			2;
@@ -344,7 +347,7 @@ class Constants
 	protected static final short JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =							4;
 
 	protected static final short JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION =								5;
-	protected static final short JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION =							6;
+	protected static final short JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION =										6;
 	protected static final short JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION =								7;
 	protected static final short JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION =										8;
 	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION =		9;
@@ -353,7 +356,7 @@ class Constants
 	protected static final short JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION =								12;
 
 	protected static final short JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION =								13;
-	protected static final short JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION =							14;
+	protected static final short JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION =										14;
 	protected static final short JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION =								15;
 	protected static final short JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION =										16;
 	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION =		17;

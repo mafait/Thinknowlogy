@@ -2,7 +2,7 @@
  *	Parent class:	WordItem
  *	Grand parent:	Item
  *	Purpose:		To process tasks at administration level
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -140,29 +140,6 @@
 
 		// Private constructed variables
 
-		isSystemStartingUp_ = true;
-		wasUndoOrRedoCommand_ = false;
-
-		// Admin item supporting modules
-		adminImperative_ = NULL;
-		adminQuery_ = NULL;
-		adminReadFile_ = NULL;
-		adminReadCreateWords_ = NULL;
-		adminReadSentence_ = NULL;
-		adminReasoningNew_ = NULL;
-		adminReasoningOld_ = NULL;
-		adminSpecification_ = NULL;
-		adminWrite_ = NULL;
-
-		// Admin item lists
-		fileList_ = NULL;
-		readList_ = NULL;
-		scoreList_ = NULL;
-		wordList_ = NULL;
-		conditionList_ = NULL;
-		actionList_ = NULL;
-		alternativeList_ = NULL;
-
 		// Admin item lists array
 		for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 			adminListArray_[adminListNr] = NULL;
@@ -287,14 +264,14 @@
 		return highestContextNr;
 		}
 
-	unsigned int AdminItem::highestFoundSentenceNr( bool isIncludingTemporaryLists, unsigned int maxSentenceNr )
+	unsigned int AdminItem::highestFoundSentenceNr( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int maxSentenceNr )
 		{
 		unsigned int highestFoundSentenceNr = NO_SENTENCE_NR;
 		List *currentAdminList;
 
 		// Word lists
 		if( wordList_ != NULL )
-			highestFoundSentenceNr = wordList_->highestFoundSentenceNrInWordList( isIncludingTemporaryLists, maxSentenceNr );
+			highestFoundSentenceNr = wordList_->highestFoundSentenceNrInWordList( isIncludingDeletedItems, isIncludingTemporaryLists, maxSentenceNr );
 
 		// Admin lists
 		for( unsigned short adminListNr = 0; ( adminListNr < NUMBER_OF_ADMIN_LISTS && highestFoundSentenceNr < maxSentenceNr ); adminListNr++ )
@@ -306,7 +283,7 @@
 
 			// Efficiency: Only select lists with higher sentence number
 			currentAdminList->highestSentenceNrInList() > highestFoundSentenceNr )
-				highestFoundSentenceNr = currentAdminList->highestFoundSentenceNrInList( highestFoundSentenceNr, maxSentenceNr );
+				highestFoundSentenceNr = currentAdminList->highestFoundSentenceNrInList( isIncludingDeletedItems, highestFoundSentenceNr, maxSentenceNr );
 			}
 
 		return highestFoundSentenceNr;
@@ -343,10 +320,8 @@
 
 	char *AdminItem::currentLanguageNameString()
 		{
-		if( globalVariables() != NULL )
-			return languageNameString( globalVariables()->currentLanguageNr );
-
-		return NULL;
+		return ( globalVariables() != NULL ?
+				languageNameString( globalVariables()->currentLanguageNr ) : NULL );
 		}
 
 	char *AdminItem::startupLanguageNameString()
@@ -434,7 +409,7 @@
 			// No need to store items of temporary lists
 			!currentAdminList->isTemporaryList() &&
 			currentAdminList->storeChangesInFutureDatabaseInList() != RESULT_OK )
-				return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to store changes in future database of an admin list" );
+				return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to store changes in future database of an Admin list" );
 			}
 
 		return RESULT_OK;
@@ -457,10 +432,8 @@
 
 	bool AdminItem::hasRequestedRestart()
 		{
-		if( adminImperative_ != NULL )
-			return adminImperative_->hasRequestedRestart();
-
-		return false;
+		return ( adminImperative_ != NULL ?
+				adminImperative_->hasRequestedRestart() : false );
 		}
 
 	bool AdminItem::hasScoreList()
@@ -470,10 +443,8 @@
 
 	unsigned int AdminItem::nPossibilities()
 		{
-		if( scoreList_ != NULL )
-			return scoreList_->nPossibilities();
-
-		return 0;
+		return ( scoreList_ != NULL ?
+				scoreList_->nPossibilities() : 0 );
 		}
 
 	signed char AdminItem::changeAction( SelectionItem *actionSelectionItem )
@@ -546,17 +517,17 @@
 
 		wasUndoOrRedoCommand_ = true;
 
-		if( highestFoundSentenceNr( false, globalVariables()->currentSentenceNr ) == globalVariables()->currentSentenceNr )
+		if( highestFoundSentenceNr( true, false, globalVariables()->currentSentenceNr ) == globalVariables()->currentSentenceNr )
 			{
-			// Important: Redo admin lists first, and the words after that
-			// Because redoing admin words list might redo words
+			// Important: Redo admin lists first, and the words after that.
+			// Because redoing admin words list might redo words.
 			for( unsigned short adminListNr = 0; adminListNr < NUMBER_OF_ADMIN_LISTS; adminListNr++ )
 				{
 				if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL &&
 				// No need to redo items of temporary lists
 				!currentAdminList->isTemporaryList() &&
 				currentAdminList->redoCurrentSentenceInList() != RESULT_OK )
-					return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to redo the current sentence in an admin list" );
+					return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to redo the current sentence in an Admin list" );
 				}
 
 			// Word lists
@@ -627,58 +598,40 @@
 
 	ScoreItem *AdminItem::firstPossibility()
 		{
-		if( scoreList_ != NULL )
-			return scoreList_->firstPossibility();
-
-		return NULL;
+		return ( scoreList_ != NULL ?
+				scoreList_->firstPossibility() : NULL );
 		}
 
 	SelectionItem *AdminItem::executionStartEntry( bool isAction, unsigned short executionLevel, unsigned int executionSentenceNr )
 		{
 		if( isAction )
-			{
-			if( actionList_ != NULL )
-				return actionList_->executionStartEntry( executionLevel, executionSentenceNr );
-			}
-		else
-			{
-			if( alternativeList_ != NULL )
-				return alternativeList_->executionStartEntry( executionLevel, executionSentenceNr );
-			}
+			return ( actionList_ != NULL ?
+					actionList_->executionStartEntry( executionLevel, executionSentenceNr ) : NULL );
 
-		return NULL;
+		return ( alternativeList_ != NULL ?
+				alternativeList_->executionStartEntry( executionLevel, executionSentenceNr ) : NULL );
 		}
 
 	SelectionItem *AdminItem::firstConditionItem()
 		{
-		if( conditionList_ != NULL )
-			return conditionList_->firstActiveSelectionItem();
-
-		return NULL;
+		return ( conditionList_ != NULL ?
+				conditionList_->firstActiveSelectionItem() : NULL );
 		}
 
 	SelectionItem *AdminItem::firstConditionSelectionItem( unsigned int conditionSentenceNr )
 		{
-		if( conditionList_ != NULL )
-			return conditionList_->firstConditionSelectionItem( conditionSentenceNr );
-
-		return NULL;
+		return ( conditionList_ != NULL ?
+				conditionList_->firstConditionSelectionItem( conditionSentenceNr ) : NULL );
 		}
 
 	SelectionItem *AdminItem::firstSelectionItem( bool isAction, WordItem *solveWordItem )
 		{
 		if( isAction )
-			{
-			if( actionList_ != NULL )
-				return actionList_->firstSelectionItem( solveWordItem );
-			}
-		else
-			{
-			if( alternativeList_ != NULL )
-				return alternativeList_->firstSelectionItem( solveWordItem );
-			}
+			return ( actionList_ != NULL ?
+					actionList_->firstSelectionItem( solveWordItem ) : NULL );
 
-		return NULL;
+		return ( alternativeList_ != NULL ?
+				alternativeList_->firstSelectionItem( solveWordItem ) : NULL );
 		}
 
 	BoolResultType AdminItem::checkScores( bool isInverted, unsigned short solveStrategyParameter, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore )
@@ -825,7 +778,7 @@
 			{
 			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL &&
 			currentAdminList->displayQueryResultInList( isOnlyDisplayingWords, isOnlyDisplayingWordReferences, isOnlyDisplayingStrings, isReturnQueryToPosition, promptTypeNr, queryWordTypeNr, queryWidth ) != RESULT_OK )
-				return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to display the query result of an admin list" );
+				return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to display the query result of an Admin list" );
 			}
 
 		return RESULT_OK;
@@ -846,7 +799,7 @@
 			{
 			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL &&
 			currentAdminList->stringQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, queryString ) != RESULT_OK )
-				return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to query strings in an admin list" );
+				return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to query strings in an Admin list" );
 			}
 
 		return RESULT_OK;
@@ -879,7 +832,7 @@
 			{
 			if( ( currentAdminList = adminListArray_[adminListNr] ) != NULL &&
 			currentAdminList->wordReferenceQueryInList( isSelectingOnFind, isSelectingActiveItems, isSelectingInactiveItems, isSelectingArchivedItems, isSelectingReplacedItems, false, false, wordReferenceNameString ) != RESULT_OK )
-				return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to query word references in an admin list" );
+				return addErrorWithAdminListNr( adminListNr, functionNameString, NULL, "I failed to query word references in an Admin list" );
 			}
 
 		return RESULT_OK;
@@ -908,10 +861,8 @@
 
 	unsigned short AdminItem::lastCreatedWordOrderNr()
 		{
-		if( adminReadCreateWords_ != NULL )
-			return adminReadCreateWords_->lastCreatedWordOrderNr();
-
-		return NO_ORDER_NR;
+		return ( adminReadCreateWords_ != NULL ?
+				adminReadCreateWords_->lastCreatedWordOrderNr() : NO_ORDER_NR );
 		}
 
 	signed char AdminItem::createReadItem( bool isUncountableGeneralizationNoun, unsigned short wordOrderNr, unsigned short wordParameter, unsigned short wordTypeNr, size_t readStringLength, char *readString, WordItem *readWordItem )
@@ -942,26 +893,20 @@
 
 	ReadItem *AdminItem::firstActiveReadItem()
 		{
-		if( readList_ != NULL )
-			return readList_->firstActiveReadItem();
-
-		return NULL;
+		return ( readList_ != NULL ?
+				readList_->firstActiveReadItem() : NULL );
 		}
 
 	ReadItem *AdminItem::firstInactiveReadItem()
 		{
-		if( readList_ != NULL )
-			return readList_->firstInactiveReadItem();
-
-		return NULL;
+		return ( readList_ != NULL ?
+				readList_->firstInactiveReadItem() : NULL );
 		}
 
 	ReadItem *AdminItem::nextReadListItem()
 		{
-		if( readList_ != NULL )
-			return readList_->nextReadListItem();
-
-		return NULL;
+		return ( readList_ != NULL ?
+				readList_->nextReadListItem() : NULL );
 		}
 
 	BoolResultType AdminItem::createReadWords( bool isChineseCurrentLanguage, char *readUserSentenceString )
@@ -1119,43 +1064,33 @@
 
 	bool AdminItem::isCurrentFileTestFile()
 		{
-		if( fileList_ != NULL )
-			return fileList_->isCurrentFileTestFile();
-
-		return false;
+		return ( fileList_ != NULL ?
+				fileList_->isCurrentFileTestFile() : false );
 		}
 
 	bool AdminItem::isCurrentlyTesting()
 		{
-		if( fileList_ != NULL )
-			return fileList_->isCurrentlyTesting();
-
-		return false;
+		return ( fileList_ != NULL ?
+				fileList_->isCurrentlyTesting() : false );
 		}
 
 	bool AdminItem::isDisplayingLine()
 		{
-		if( !isSystemStartingUp_ &&
-		fileList_ != NULL )
-			return fileList_->isDisplayingLine();
-
-		return false;
+		return ( !isSystemStartingUp_ &&
+				fileList_ != NULL ?
+				fileList_->isDisplayingLine() : false );
 		}
 
 	unsigned int AdminItem::currentFileSentenceNr()
 		{
-		if( fileList_ != NULL )
-			return fileList_->currentFileSentenceNr();
-
-		return NO_SENTENCE_NR;
+		return ( fileList_ != NULL ?
+				fileList_->currentFileSentenceNr() : NO_SENTENCE_NR );
 		}
 
 	unsigned int AdminItem::firstSentenceNrOfCurrentUser()
 		{
-		if( adminReadFile_ != NULL )
-			return adminReadFile_->firstSentenceNrOfCurrentUser();
-
-		return NO_SENTENCE_NR;
+		return ( adminReadFile_ != NULL ?
+				adminReadFile_->firstSentenceNrOfCurrentUser() : NO_SENTENCE_NR );
 		}
 
 	unsigned int AdminItem::highestCurrentSentenceItemNr()
@@ -1252,18 +1187,14 @@
 
 	FILE *AdminItem::currentReadFile()
 		{
-		if( fileList_ != NULL )
-			return fileList_->currentReadFile();
-
-		return NULL;
+		return ( fileList_ != NULL ?
+				fileList_->currentReadFile() : NULL );
 		}
 
 	FILE *AdminItem::currentWriteFile()
 		{
-		if( fileList_ != NULL )
-			return fileList_->currentWriteFile();
-
-		return NULL;
+		return ( fileList_ != NULL ?
+				fileList_->currentWriteFile() : NULL );
 		}
 
 	CreateAndAssignResultType AdminItem::addSpecificationWithAuthorization( bool isAssignment, bool isCharacteristicFor, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int copiedRelationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
@@ -1307,43 +1238,33 @@
 
 	bool AdminItem::hasAnyChangeBeenMadeByThisSentence()
 		{
-		if( adminReadSentence_ != NULL )
-			return adminReadSentence_->hasAnyChangeBeenMadeByThisSentence();
-
-		// Default if admin cleanup module isn't created yet
-		return true;
+		return ( adminReadSentence_ != NULL ?
+				// Default 'true' if admin read sentence module isn't created yet
+				adminReadSentence_->hasAnyChangeBeenMadeByThisSentence() : true );
 		}
 
 	bool AdminItem::hasFemaleUserSpecificationWord()
 		{
-		if( adminReadSentence_ != NULL )
-			return adminReadSentence_->hasFemaleUserSpecificationWord();
-
-		return false;
+		return ( adminReadSentence_ != NULL ?
+				adminReadSentence_->hasFemaleUserSpecificationWord() : false );
 		}
 
 	bool AdminItem::isUniqueUserRelation()
 		{
-		if( adminReadSentence_ != NULL )
-			return adminReadSentence_->isUniqueUserRelation();
-
-		return false;
+		return ( adminReadSentence_ != NULL ?
+				adminReadSentence_->isUniqueUserRelation() : false );
 		}
 
 	bool AdminItem::isUserQuestion()
 		{
-		if( adminReadSentence_ != NULL )
-			return adminReadSentence_->isUserQuestion();
-
-		return false;
+		return ( adminReadSentence_ != NULL ?
+				adminReadSentence_->isUserQuestion() : false );
 		}
 
 	bool AdminItem::wasPreviousCommandUndoOrRedo()
 		{
-		if( adminReadSentence_ != NULL )
-			return adminReadSentence_->wasPreviousCommandUndoOrRedo();
-
-		return false;
+		return ( adminReadSentence_ != NULL ?
+				adminReadSentence_->wasPreviousCommandUndoOrRedo() : false );
 		}
 
 	signed char AdminItem::activateInactiveReadWords( unsigned short wordOrderNr )
@@ -1449,6 +1370,12 @@
 
 	// Protected new reasoning functions
 
+	bool AdminItem::hasSuggestiveQuestionAssumption()
+		{
+		return ( adminReasoningNew_ != NULL ?
+				adminReasoningNew_->hasSuggestiveQuestionAssumption() : false );
+		}
+
 	signed char AdminItem::askQuestions( bool isCheckingForGapInKnowledge )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "askQuestions";
@@ -1459,44 +1386,122 @@
 		return adminReasoningNew_->askQuestions( isCheckingForGapInKnowledge );
 		}
 
-	signed char AdminItem::correctSuggestiveAssumptionsByOppositeQuestion( bool isArchivedAssignment, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+	signed char AdminItem::addJustificationToSpecification( bool hasFeminineOrMasculineProperNounEnding, bool isForcingNewJustification, bool isIncrementingOrderNr, unsigned short assumptionJustificationTypeNr, unsigned short conclusionJustificationTypeNr, SpecificationItem *destinationSpecificationItem, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawPossessiveReversibleConclusions";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addJustificationToSpecification";
 
 		if( adminReasoningNew_ == NULL )
 			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
 
-		return adminReasoningNew_->correctSuggestiveAssumptionsByOppositeQuestion( isArchivedAssignment, isNegative, isPossessive, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem );
+		return adminReasoningNew_->addJustificationToSpecification( hasFeminineOrMasculineProperNounEnding, false, isForcingNewJustification, isIncrementingOrderNr, assumptionJustificationTypeNr, conclusionJustificationTypeNr, destinationSpecificationItem, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, generalizationWordItem );
 		}
 
-	signed char AdminItem::drawPossessiveReversibleConclusions( WordItem *generalizationWordItem )
+	signed char AdminItem::drawOnlyOptionLeftConclusion( bool isInactiveAssignment, bool isArchivedAssignment, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, WordItem *generalizationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawPossessiveReversibleConclusions";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawOnlyOptionLeftConclusion";
 
 		if( adminReasoningNew_ == NULL )
 			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
 
-		return adminReasoningNew_->drawPossessiveReversibleConclusions( generalizationWordItem );
+		return adminReasoningNew_->drawOnlyOptionLeftConclusion( isInactiveAssignment, isArchivedAssignment, specificationCollectionNr, generalizationContextNr, generalizationWordItem );
 		}
 
-	signed char AdminItem::drawProperNounPartOfConclusions( bool hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore, bool isArchivedAssignment, WordItem *generalizationProperNounWordItem, WordItem *specificationWordItem, WordItem *spanishRelationWordItem )
+	signed char AdminItem::drawProperNounPartOfConclusions( bool hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore, bool isArchivedAssignment, WordItem *generalizationProperNounWordItem, WordItem *specificationWordItem, WordItem *spanishRelationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawProperNounPartOfConclusions";
+
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->drawProperNounPartOfConclusions( hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore, isArchivedAssignment, generalizationProperNounWordItem, specificationWordItem, spanishRelationWordItem );
+		}
+
+	signed char AdminItem::drawReversibleConclusions( bool hasCreatedSpecification, WordItem *generalizationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawReversibleConclusions";
+
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->drawReversibleConclusions( hasCreatedSpecification, generalizationWordItem );
+		}
+
+	signed char AdminItem::drawSpecificationGeneralizationConclusion( bool isArchivedAssignment, bool isSelfGenerated, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawSpecificationGeneralizationConclusion";
+
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->drawSpecificationGeneralizationConclusion( isArchivedAssignment, isSelfGenerated, generalizationWordTypeNr, specificationWordTypeNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem );
+		}
+
+	signed char AdminItem::makeIndirectlyAnsweredQuestionAssumption( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, SpecificationItem *userSpecificationItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makeIndirectlyAnsweredQuestionAssumption";
 
 		if( adminReasoningNew_ == NULL &&
 		// Create supporting module
 		( adminReasoningNew_ = new AdminReasoningNew( this, globalVariables() ) ) == NULL )
 			return startError( functionNameString, NULL, NULL, "I failed to create the admin reasoning new module" );
 
-		return adminReasoningNew_->drawProperNounPartOfConclusions( hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore, isArchivedAssignment, generalizationProperNounWordItem, specificationWordItem, spanishRelationWordItem );
+		return adminReasoningNew_->makeIndirectlyAnsweredQuestionAssumption( isAssignment, isInactiveAssignment, isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, specificationWordItem, userSpecificationItem );
+		}
+
+	signed char AdminItem::makeGeneralizationAssumption( bool hasCurrentlyCorrectedAssumptionByKnowledge, bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makeGeneralizationAssumption";
+
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->makeGeneralizationAssumption( hasCurrentlyCorrectedAssumptionByKnowledge, isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, primarySpecificationItem, secondarySpecificationItem, generalizationWordItem, specificationWordItem );
+		}
+
+	signed char AdminItem::makeGeneralizationAssumptionByGeneralization( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makeGeneralizationAssumption";
+
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->makeGeneralizationAssumptionByGeneralization( isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, generalizationWordItem, specificationWordItem );
+		}
+
+	signed char AdminItem::makeOnlyOptionLeftAssumption( bool isArchivedAssignment, bool isPossessive, SpecificationItem *createdSpecificationItem, WordItem *generalizationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makeSuggestiveQuestionAssumption";
+
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->makeOnlyOptionLeftAssumption( isArchivedAssignment, isPossessive, createdSpecificationItem, generalizationWordItem );
+		}
+
+	signed char AdminItem::makeSuggestiveQuestionAssumption( bool isArchivedAssignment, bool isNegative, bool isPossessive, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makeSuggestiveQuestionAssumption";
+
+		if( adminReasoningNew_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->makeSuggestiveQuestionAssumption( isArchivedAssignment, isNegative, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem, relationWordItem );
+		}
+
+	CompoundResultType AdminItem::drawCompoundSpecificationSubstitutionConclusion( unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawCompoundSpecificationSubstitutionConclusion";
+
+		if( adminReasoningNew_ == NULL )
+			return startCompoundResultError( functionNameString, NULL, "The admin reasoning new module isn't created yet" );
+
+		return adminReasoningNew_->drawCompoundSpecificationSubstitutionConclusion( specificationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
 		}
 
 	WordItem *AdminItem::adjustedQuestionWordItem()
 		{
-		if( adminReasoningNew_ != NULL )
-			return adminReasoningNew_->adjustedQuestionWordItem();
-
-		return NULL;
+		return ( adminReasoningNew_ != NULL ?
+				adminReasoningNew_->adjustedQuestionWordItem() : NULL );
 		}
 
 
@@ -1504,40 +1509,28 @@
 
 	signed char AdminItem::checkForUnprocessedNegativeConclusion()
 		{
-		if( adminReasoningOld_ != NULL )
-			return adminReasoningOld_->checkForUnprocessedNegativeConclusion();
-
-		return RESULT_OK;
+		return ( adminReasoningOld_ != NULL ?
+				adminReasoningOld_->checkForUnprocessedNegativeConclusion() : RESULT_OK );
 		}
 
-	signed char AdminItem::drawNegativeConclusionsFromAnsweredQuestions( bool hasDisplayedMoreSpecificNonExclusiveSpecification, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
+	signed char AdminItem::drawNegativeConclusion( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, WordItem *generalizationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawNegativeConclusion";
+
+		if( adminReasoningOld_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning old module isn't created yet" );
+
+		return adminReasoningOld_->drawNegativeConclusion( isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem, anotherSecondarySpecificationItem, generalizationWordItem );
+		}
+
+	signed char AdminItem::drawNegativeConclusionsFromAnsweredQuestions( bool hasCurrentlyMoreSpecificNonExclusiveSpecification, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawNegativeConclusionsFromAnsweredQuestions";
 
 		if( adminReasoningOld_ == NULL )
 			return startError( functionNameString, NULL, NULL, "The admin reasoning old module isn't created yet" );
 
-		return adminReasoningOld_->drawNegativeConclusionsFromAnsweredQuestions( hasDisplayedMoreSpecificNonExclusiveSpecification, userSpecificationItem, generalizationWordItem );
-		}
-
-	signed char AdminItem::drawOnlyOptionLeftConclusion( bool isInactiveAssignment, bool isArchivedAssignment, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, WordItem *generalizationWordItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawOnlyOptionLeftConclusion";
-
-		if( adminReasoningOld_ == NULL )
-			return startError( functionNameString, NULL, NULL, "The admin reasoning old module isn't created yet" );
-
-		return adminReasoningOld_->drawOnlyOptionLeftConclusion( isInactiveAssignment, isArchivedAssignment, specificationCollectionNr, generalizationContextNr, generalizationWordItem );
-		}
-
-	signed char AdminItem::drawPossessiveReversibleConclusion( bool isArchivedAssignment, bool isExclusiveSpecification, bool isPossessive, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawPossessiveReversibleConclusion";
-
-		if( adminReasoningOld_ == NULL )
-			return startError( functionNameString, NULL, NULL, "The admin reasoning old module isn't created yet" );
-
-		return adminReasoningOld_->drawPossessiveReversibleConclusion( isArchivedAssignment, isExclusiveSpecification, isPossessive, isUniqueUserRelation, assumptionLevel, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationContextNr, relationContextNr, generalizationWordItem, specificationWordItem, relationWordItem );
+		return adminReasoningOld_->drawNegativeConclusionsFromAnsweredQuestions( hasCurrentlyMoreSpecificNonExclusiveSpecification, userSpecificationItem, generalizationWordItem );
 		}
 
 	signed char AdminItem::drawSimpleNegativeSpanishConclusion( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem )
@@ -1550,24 +1543,14 @@
 		return adminReasoningOld_->drawSimpleNegativeSpanishConclusion( isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, specificationWordItem );
 		}
 
-	signed char AdminItem::drawSpecificationGeneralizationConclusion( bool isArchivedAssignment, bool isSelfGenerated, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawSpecificationGeneralizationConclusion";
-
-		if( adminReasoningOld_ == NULL )
-			return startError( functionNameString, NULL, NULL, "The admin reasoning old module isn't created yet" );
-
-		return adminReasoningOld_->drawSpecificationGeneralizationConclusion( isArchivedAssignment, isSelfGenerated, generalizationWordTypeNr, specificationWordTypeNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem );
-		}
-
-	signed char AdminItem::drawSpecificationSubstitutionConclusionOrAskQuestion( bool isAssumption, bool isArchivedAssignment, bool isExclusiveSpecification, bool isMakingPartOfAssumption, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
+	signed char AdminItem::drawSpecificationSubstitutionConclusionOrAskQuestion( bool isAssumption, bool isArchivedAssignment, bool isExclusiveSpecification, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawSpecificationSubstitutionConclusionOrAskQuestion";
 
 		if( adminReasoningOld_ == NULL )
 			return startError( functionNameString, NULL, NULL, "The admin reasoning old module isn't created yet" );
 
-		return adminReasoningOld_->drawSpecificationSubstitutionConclusionOrAskQuestion( isAssumption, isArchivedAssignment, isExclusiveSpecification, isMakingPartOfAssumption, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, specificationWordItem, relationWordItem );
+		return adminReasoningOld_->drawSpecificationSubstitutionConclusionOrAskQuestion( isAssumption, isArchivedAssignment, isExclusiveSpecification, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, specificationWordItem, relationWordItem );
 		}
 
 	signed char AdminItem::makeExclusiveSpecificationSubstitutionAssumption( bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isUncountableGeneralizationNoun, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
@@ -1580,62 +1563,38 @@
 		return adminReasoningOld_->makeExclusiveSpecificationSubstitutionAssumption( isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, isUncountableGeneralizationNoun, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationWordItem, specificationWordItem, relationWordItem );
 		}
 
-	signed char AdminItem::makeIndirectlyAnsweredQuestionAssumption( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, SpecificationItem *userSpecificationItem )
+	signed char AdminItem::makePossessiveConditionalSpecificationAssumption( bool isArchivedAssignment, bool isExclusiveSpecification, bool isPossessive, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, SpecificationItem *secondarySpecificationItem, SpecificationItem *alternativeSecondarySpecificationItem, WordItem *generalizationWordItem, WordItem *relationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makeIndirectlyAnsweredQuestionAssumption";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makePossessiveConditionalSpecificationAssumption";
+
+		if( adminReasoningOld_ == NULL )
+			return startError( functionNameString, NULL, NULL, "The admin reasoning old module isn't created yet" );
+
+		return adminReasoningOld_->makePossessiveConditionalSpecificationAssumption( isArchivedAssignment, isExclusiveSpecification, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, secondarySpecificationItem, alternativeSecondarySpecificationItem, generalizationWordItem, relationWordItem );
+		}
+
+	signed char AdminItem::makeSpecificationSubstitutionPartOfAssumption( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makeSpecificationSubstitutionPartOfAssumption";
 
 		if( adminReasoningOld_ == NULL &&
 		// Create supporting module
 		( adminReasoningOld_ = new AdminReasoningOld( this, globalVariables(), inputOutput_ ) ) == NULL )
 			return startError( functionNameString, NULL, NULL, "I failed to create the admin reasoning module" );
 
-		return adminReasoningOld_->makeIndirectlyAnsweredQuestionAssumption( isAssignment, isInactiveAssignment, isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, specificationWordItem, userSpecificationItem );
+		return adminReasoningOld_->makeSpecificationSubstitutionPartOfAssumption( isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, generalizationWordItem, specificationWordItem );
 		}
 
-	signed char AdminItem::makeOnlyOptionLeftAssumption( bool isArchivedAssignment, bool isPossessive, SpecificationItem *createdSpecificationItem, WordItem *generalizationWordItem )
+	SpecificationItem *AdminItem::definitionSpecificationItem( WordItem *specificationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makeSuggestiveQuestionAssumption";
-
-		if( adminReasoningOld_ == NULL )
-			return startError( functionNameString, NULL, NULL, "The admin reasoning old module isn't created yet" );
-
-		return adminReasoningOld_->makeOnlyOptionLeftAssumption( isArchivedAssignment, isPossessive, createdSpecificationItem, generalizationWordItem );
+		return ( adminReasoningOld_ != NULL ?
+				adminReasoningOld_->definitionSpecificationItem( specificationWordItem ) : NULL );
 		}
 
-	signed char AdminItem::makeSuggestiveQuestionAssumption( bool isArchivedAssignment, bool isNegative, bool isPossessive, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, SpecificationItem *secondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
+	WordItem *AdminItem::oppositePossessiveDefinitionSpecificationWordItem( WordItem *specificationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "makeSuggestiveQuestionAssumption";
-
-		if( adminReasoningOld_ == NULL )
-			return startError( functionNameString, NULL, NULL, "The admin reasoning old module isn't created yet" );
-
-		return adminReasoningOld_->makeSuggestiveQuestionAssumption( isArchivedAssignment, isNegative, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, secondarySpecificationItem, generalizationWordItem, specificationWordItem, relationWordItem );
-		}
-
-	SpecificationItem *AdminItem::oppositePossessiveDefinitionSpecificationItem()
-		{
-		if( adminReasoningOld_ != NULL )
-			return adminReasoningOld_->oppositePossessiveDefinitionSpecificationItem();
-
-		return NULL;
-		}
-
-	WordItem *AdminItem::possessiveDefinitionSpecificationWordItem()
-		{
-		if( adminReasoningOld_ != NULL )
-			return adminReasoningOld_->possessiveDefinitionSpecificationWordItem();
-
-		return NULL;
-		}
-
-	CompoundResultType AdminItem::drawCompoundSpecificationSubstitutionConclusion( unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawCompoundSpecificationSubstitutionConclusion";
-
-		if( adminReasoningOld_ == NULL )
-			return startCompoundResultError( functionNameString, NULL, "The admin reasoning old module isn't created yet" );
-
-		return adminReasoningOld_->drawCompoundSpecificationSubstitutionConclusion( specificationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, specificationWordItem );
+		return ( adminReasoningOld_ != NULL ?
+				adminReasoningOld_->oppositePossessiveDefinitionSpecificationWordItem( specificationWordItem ) : NULL );
 		}
 
 
@@ -1647,12 +1606,10 @@
 			adminSpecification_->initializeLinkedWord();
 		}
 
-	bool AdminItem::hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore()
+	bool AdminItem::hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore()
 		{
-		if( adminSpecification_ != NULL )
-			return adminSpecification_->hasDisplaySpanishSpecificationsThatAreNotHiddenAnymore();
-
-		return false;
+		return ( adminSpecification_ != NULL ?
+				adminSpecification_->hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore() : false );
 		}
 
 	signed char AdminItem::addUserSpecification( bool isAction, bool isAssignment, bool isCharacteristicFor, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isNewStart, bool isPartOf, bool isPossessive, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short selectionLevel, unsigned short selectionListNr, unsigned short userAssumptionLevel, unsigned int generalizationContextNr, unsigned int specificationContextNr, ReadItem *generalizationWordItem, ReadItem *startSpecificationReadItem, ReadItem *endSpecificationReadItem, ReadItem *startRelationReadItem, ReadItem *endRelationReadItem )
@@ -1749,28 +1706,24 @@
 
 	SpecificationItem *AdminItem::simpleUserSpecificationItem()
 		{
-		if( adminSpecification_ != NULL )
-			return adminSpecification_->simpleUserSpecificationItem();
-
-		return NULL;
+		return ( adminSpecification_ != NULL ?
+				adminSpecification_->simpleUserSpecificationItem() : NULL );
 		}
 
 	SpecificationItem *AdminItem::userSpecificationItem()
 		{
-		if( adminSpecification_ != NULL )
-			return adminSpecification_->userSpecificationItem();
-
-		return NULL;
+		return ( adminSpecification_ != NULL ?
+				adminSpecification_->userSpecificationItem() : NULL );
 		}
 
-	ContextResultType AdminItem::getGeneralizationContext( bool isArchivedAssignment, bool isPossessive, bool isQuestion, bool isUserSentence, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, ReadItem *startRelationReadItem )
+	ContextResultType AdminItem::getRelationContext( bool isArchivedAssignment, bool isPossessive, bool isQuestion, bool isUserSentence, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, ReadItem *startRelationReadItem )
 		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getGeneralizationContext";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "getRelationContext";
 
 		if( adminSpecification_ == NULL )
 			return startContextResultError( functionNameString, NULL, "The admin specification module isn't created yet" );
 
-		return adminSpecification_->getGeneralizationContext( false, isArchivedAssignment, isPossessive, isQuestion, isUserSentence, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, startRelationReadItem );
+		return adminSpecification_->getRelationContext( false, isArchivedAssignment, isPossessive, isQuestion, isUserSentence, generalizationWordItem, specificationWordItem, relationWordItem, startRelationReadItem );
 		}
 
 	CreateAndAssignResultType AdminItem::addSelfGeneratedSpecification( bool hasFeminineOrMasculineProperNounEnding, bool isAssignment, bool isArchivedAssignment, bool isCharacteristicFor, bool isEveryGeneralization, bool isExclusiveGeneralization, bool isExclusiveSpecification, bool isForcingNewJustification, bool isNegative, bool isPartOf, bool isPossessive, bool isUniqueUserRelation, bool isSkipDrawingSpanishAmbiguousSubstitutionConclusion, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, unsigned short assumptionLevel, unsigned short assumptionJustificationTypeNr, unsigned short conclusionJustificationTypeNr, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )

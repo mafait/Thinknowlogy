@@ -1,4 +1,4 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 John is the father and Anna is the mother of Paul, Joe and Laura.
 Is John a mother?
 Is John the mother of Paul?
@@ -8,9 +8,9 @@ Is John the father of Adam?
 Is Michael the father of Paul?
 Richard is a father.
 Is Richard the father of Paul?
-Display the justification report about John.
-Display the justification report about Paul.
-Display the justification report about Michael.
-Display the justification report about Richard.
-Display the justification report about Adam.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Paul.
+#Dev#Display the justification report about Michael.
+#Dev#Display the justification report about Richard.
+#Dev#Display the justification report about Adam.
 # To continue, click button «Clear your mind.» or «Restart.».

@@ -1,4 +1,4 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 John is a father and a son.
-Display the justification report about John.
+#Dev#Display the justification report about John.
 # To continue, click button «Clear your mind.» or «Restart.».

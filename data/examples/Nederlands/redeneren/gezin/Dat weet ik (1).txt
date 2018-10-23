@@ -1,4 +1,4 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Jan is een ouder.
 Peter is een ouder.
 Johan is een kind van Jan.

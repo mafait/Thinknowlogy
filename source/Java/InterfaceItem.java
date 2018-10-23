@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the user-interface messages
  *					in the available languages
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -26,9 +26,9 @@ class InterfaceItem extends Item
 	{
 	// Private initialized variables
 
-	private short interfaceParameter_;
+	private short interfaceParameter_ = Constants.NO_INTERFACE_PARAMETER;
 
-	private String interfaceString_;
+	private String interfaceString_ = null;
 
 
 	// Constructor
@@ -60,7 +60,7 @@ class InterfaceItem extends Item
 		if( interfaceString_ != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )

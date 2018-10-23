@@ -1,9 +1,9 @@
 ﻿Display "------------------------------------------------------------------------------".
 #C++#Display " \~{languageName}\t\t\t\t\t* Change language".
-#C++#Display " Read the file \"English/user/programming/Connect-Four\".\t* Game Connect-Four".
-#C++#Display " Read the file \"English/user/programming/tower of Hanoi\". * Solve a puzzle".
-#C++#Display " Read the file \"English/user/reasoning/Scientific challenge\". * Challenge".
-#C++#Display " Read the file \"English/user/reasoning/family/family definition\". * Reasoning".
+#C++#Display " Read the file \"English/programming/Connect-Four\".\t* Game Connect-Four".
+#C++#Display " Read the file \"English/programming/tower of Hanoi\". * Solve a puzzle".
+#C++#Display " Read the file \"English/reasoning/Scientific challenge\". * Challenge".
+#C++#Display " Read the file \"English/reasoning/family/family definition\". * Reasoning".
 #Java#Display " Use button <programming>	to learn about programming in natural language".
 #Java#Display " Use button <reasoning>	to learn about reasoning in natural language".
 Display "------------------------------------------------------------------------------".
@@ -24,9 +24,9 @@ Display " Display the copyright.".
 Display " Display the GPLv2-license.".
 Display " Display the warranty.".
 Display "------------------------------------------------------------------------------".
-#C++#Display " Example files:	* folder: Thinknowlogy2018r1/data/examples/English/user/".
+#C++#Display " Example files:	* folder: Thinknowlogy2018r1/data/examples/English/".
 #Java#Display " Example files:	* Use button <more examples>".
-#Java#Display "              or see folder: Thinknowlogy2018r1/data/examples/English/user/".
+#Java#Display "              or see folder: Thinknowlogy2018r1/data/examples/English/".
 Display " Fundamental:	* folder: Thinknowlogy2018r1/documents/".
 Display " Design:	* folder: Thinknowlogy2018r1/documents/design/".
 Display " Screenshots:	* folder: Thinknowlogy2018r1/screenshots/English/".

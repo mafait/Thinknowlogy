@@ -177,5 +177,5 @@
 
 这场比赛是我的。
 
-To play again, click button «清除你的想法» and then «阅读文档"中文/用户/程序设计/屏風式四子棋"。».
+To play again, click button «清除你的想法» and then «阅读文档"中文/程序设计/屏風式四子棋"。».
 

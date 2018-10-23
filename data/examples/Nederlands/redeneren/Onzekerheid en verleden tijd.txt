@@ -1,13 +1,13 @@
 ﻿Jan is mogelijk een vader.
 Willem was mogelijk een vader.
 Sjors was mogelijk de vader van André.
-Toon de verantwoordingsrapportage over André.
+#Dev#Toon de verantwoordingsrapportage over André.
 Was Willem een vader?
 Was Ronald de vader van Paul?
 # Vreemde test van verleden tijd
 Iedere vader was een ouder.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Willem.
-Toon de verantwoordingsrapportage over Sjors.
-Toon de verantwoordingsrapportage over Ronald.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Willem.
+#Dev#Toon de verantwoordingsrapportage over Sjors.
+#Dev#Toon de verantwoordingsrapportage over Ronald.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

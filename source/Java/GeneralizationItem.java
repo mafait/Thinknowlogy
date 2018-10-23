@@ -3,7 +3,7 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,12 +27,12 @@ class GeneralizationItem extends Item
 	{
 	// Private initialized variables
 
-	private boolean isLanguageWord_;
-	private boolean isRelation_;
+	private boolean isLanguageWord_ = false;
+	private boolean isRelation_ = false;
 
-	private short languageNr_;
-	private short specificationWordTypeNr_;
-	private short generalizationWordTypeNr_;
+	private short languageNr_ = Constants.NO_LANGUAGE_NR;
+	private short specificationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
+	private short generalizationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
 	private WordItem generalizationWordItem_;
 
@@ -82,7 +82,7 @@ class GeneralizationItem extends Item
 		( wordString = generalizationWordItem_.wordTypeString( true, generalizationWordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )

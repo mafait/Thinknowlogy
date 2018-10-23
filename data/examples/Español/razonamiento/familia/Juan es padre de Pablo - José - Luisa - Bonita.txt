@@ -1,11 +1,11 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Juan es el padre de Pablo.
-Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Juan.
 Juan es el padre de José.
-Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Juan.
 Juan es el padre de Luisa.
-Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Juan.
 Juan es el padre de Bonita.
-Mostrar el informe de justificación sobre Juan.
-Mostrar el informe de justificación sobre Bonita.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Bonita.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -1,0 +1,175 @@
+﻿* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< 
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia.
+< Juan es un hombre.
+< Juan no es una mujer.
+< Juan es masculino.
+< Juan no es una madre.
+< Pablo tiene un padre, llamado Juan.
+< Pablo tiene 2 padres, llamados Juan y Ana.
+< Pablo tiene una madre, llamada Ana.
+< José tiene un padre, llamado Juan.
+< José tiene 2 padres, llamados Juan y Ana.
+< José tiene una madre, llamada Ana.
+< Luisa tiene un padre, llamado Juan.
+< Luisa tiene 2 padres, llamados Juan y Ana.
+< Luisa tiene una madre, llamada Ana.
+< Ana es parte de una familia.
+< Ana es una mujer.
+< Ana no es un hombre.
+< Ana es femenina.
+< Ana no es un padre.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona.
+< Juan tiene posiblemente una hija, llamada Luisa.
+< Pablo es posiblemente una persona.
+< Pablo es posiblemente parte de una familia.
+< José es posiblemente parte de una familia.
+< José es posiblemente una persona.
+< Luisa es posiblemente hija de Juan y Ana.
+< Luisa no es posiblemente un hijo.
+< Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser una persona.
+< Luisa no es posiblemente un niño y un hombre.
+< Ana es probablemente una persona.
+< Ana tiene posiblemente una hija, llamada Luisa.
+* 
+* Mis preguntas:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+< ¿Es Pablo un hijo o una hija?
+< ¿Es José una niña, una mujer, un niño o un hombre?
+< ¿Es José un hijo o una hija?
+< ¿Es Luisa una niña o una mujer?
+< 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve una pregunta similar antes:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Pablo una mujer?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+* 
+* Tenías una pregunta similar antes:
+< ¿Es Pablo una mujer?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve una pregunta similar antes:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+* 
+* Tenías la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+* 
+* Tenías la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
+< ¿Es Pablo una niña, una mujer, un niño o un hombre?
+* 
+* Tenías la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve una pregunta similar antes:
+< ¿Es José una niña, una mujer, un niño o un hombre?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve la misma pregunta antes.
+* 
+* Tenías una pregunta similar antes:
+< ¿Es José una mujer o un hombre?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve una pregunta similar antes:
+< ¿Es José una niña, una mujer, un niño o un hombre?
+* 
+* Tenías una pregunta similar antes:
+< ¿Es José una niña, una mujer, un niño o un hombre?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve la misma pregunta antes.
+* 
+* Tenías la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve una pregunta similar antes:
+< ¿Es José una niña, una mujer, un niño o un hombre?
+* 
+* Tenías la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve una pregunta similar antes:
+< ¿Es José una niña, una mujer, un niño o un hombre?
+* 
+* Tenías la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tuve la misma pregunta antes.
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Su pregunta es más específica que mi pregunta anterior:
+< ¿Es José un hijo o una hija?
+* 
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 

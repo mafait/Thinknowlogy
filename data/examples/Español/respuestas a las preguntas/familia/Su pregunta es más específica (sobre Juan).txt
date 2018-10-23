@@ -1,6 +1,6 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Pablo es hijo de Juan.
 ¿Es Juan un padre?
 Mostrar información sobre Juan.
-Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Juan.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

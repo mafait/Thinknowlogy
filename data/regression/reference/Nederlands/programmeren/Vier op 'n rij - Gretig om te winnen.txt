@@ -177,5 +177,5 @@ zet->	-A-B-C-D-E-F-G-
 
 Het spel is gewonnen door mij.
 
-Om nogmaals het spelen, klik op knop «Wis je geheugen.» en dan op «Lees het bestand "Nederlands/gebruiker/programmeren/Vier op 'n rij".».
+Om nogmaals het spelen, klik op knop «Wis je geheugen.» en dan op «Lees het bestand "Nederlands/programmeren/Vier op 'n rij".».
 

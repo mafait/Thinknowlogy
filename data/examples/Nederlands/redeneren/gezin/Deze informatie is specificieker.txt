@@ -1,13 +1,13 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Jan is een vader.
 Anna is een moeder.
-# Extra checks (next 2)
-Jan heeft 3 kinderen.
-Anna heeft 3 kinderen.
+#Dev## Two extra checks
+#Dev#Jan heeft 3 kinderen.
+#Dev#Anna heeft 3 kinderen.
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
-Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 Paul is een zoon.
-Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 Paul is een zoon van Jan en Anna.
-Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

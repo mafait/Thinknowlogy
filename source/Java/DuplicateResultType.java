@@ -1,7 +1,7 @@
 ﻿/*	Class:		DuplicateResultType
  *	Purpose:	To return duplicate condition variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,18 +25,9 @@ class DuplicateResultType
 	{
 	// Protected variables
 
-	protected byte result;
-	protected boolean hasFoundDuplicateSelection;
-	protected int duplicateConditionSentenceNr;
-
-	// Constructor
-
-	DuplicateResultType()
-		{
-		result = Constants.RESULT_OK;
-		hasFoundDuplicateSelection = false;
-		duplicateConditionSentenceNr = Constants.NO_SENTENCE_NR;
-		}
+	protected byte result = Constants.RESULT_OK;
+	protected boolean hasFoundDuplicateSelection = false;
+	protected int duplicateConditionSentenceNr = Constants.NO_SENTENCE_NR;
 	};
 
 /*************************************************************************

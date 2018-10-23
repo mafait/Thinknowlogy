@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordQuestion
  *	Supports class:	WordItem
  *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,19 +29,18 @@ class WordQuestion
 
 	// Private constructed variables
 
-	bool hasCurrentlyAnsweredSelfGeneratedQuestion_;
-	bool hasFoundAnswerToQuestion_;
-	bool hasFoundDeeperPositiveAnswer_;
-	bool hasFoundNoAnswerInThisWord_;
-	bool hasFoundSpecificationGeneralizationAnswer_;
-	bool isNegativeAnswer_;
+	bool hasCurrentlyAnsweredSelfGeneratedQuestion_ = false;
+	bool hasFoundAnswerToQuestion_ = false;
+	bool hasFoundDeeperPositiveAnswer_ = false;
+	bool hasFoundNoAnswerInThisWord_ = false;
+	bool hasFoundSpecificationGeneralizationAnswer_ = false;
+	bool isNegativeAnswer_ = false;
 
-	SpecificationItem *uncertainAboutAnswerRelationSpecificationItem_;
+	SpecificationItem *uncertainAboutAnswerRelationSpecificationItem_ = NULL;
 
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "WordQuestion";
 
 	// Private initialized variables
-
-	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
 
 	GlobalVariables *globalVariables_;
 	InputOutput *inputOutput_;
@@ -136,8 +135,7 @@ class WordQuestion
 		if( answerSpecificationItem != NULL &&
 		// Ignore suggestive assumptions
 		answerSpecificationItem->isOlderItem() &&
-		!answerSpecificationItem->isHiddenSpanishSpecification() &&
-
+		// Write answer to question
 		writeAnswerToQuestion( isNegativeAnswer, isPositiveAnswer, isUncertainAboutRelation, answerSpecificationItem ) != RESULT_OK )
 			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an answer to a question" );
 
@@ -461,17 +459,14 @@ class WordQuestion
 		{
 		SpecificationItem *firstQuestionSpecificationItem;
 
-		// Try to find an assignment first
-		if( ( firstQuestionSpecificationItem = myWordItem_->firstQuestionAssignmentItem() ) != NULL &&
-		!firstQuestionSpecificationItem->isOlderItem() )
-			return firstQuestionSpecificationItem;
+				// Try to find an assignment first
+		return ( ( ( firstQuestionSpecificationItem = myWordItem_->firstQuestionAssignmentItem() ) != NULL &&
+				!firstQuestionSpecificationItem->isOlderItem() ) ||
 
-		// If not found, try to find a specification
-		if( ( firstQuestionSpecificationItem = myWordItem_->firstActiveQuestionSpecificationItem() ) != NULL &&
-		!firstQuestionSpecificationItem->isOlderItem() )
-			return firstQuestionSpecificationItem;
-
-		return NULL;
+				// If not found, try to find a specification
+				( ( firstQuestionSpecificationItem = myWordItem_->firstActiveQuestionSpecificationItem() ) != NULL &&
+				!firstQuestionSpecificationItem->isOlderItem() ) ?
+					firstQuestionSpecificationItem : NULL );
 		}
 
 
@@ -481,21 +476,6 @@ class WordQuestion
 	WordQuestion( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
-
-		// Private constructed variables
-
-		hasCurrentlyAnsweredSelfGeneratedQuestion_ = false;
-		hasFoundAnswerToQuestion_ = false;
-		hasFoundDeeperPositiveAnswer_ = false;
-		hasFoundNoAnswerInThisWord_ = false;
-		hasFoundSpecificationGeneralizationAnswer_ = false;
-		isNegativeAnswer_ = false;
-
-		uncertainAboutAnswerRelationSpecificationItem_ = NULL;
-
-		// Private initialized variables
-
-		strcpy( moduleNameString_, "WordQuestion" );
 
 		// Checking private initialized variables
 

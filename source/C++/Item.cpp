@@ -1,6 +1,6 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -48,7 +48,7 @@
 		char *wordTypeString = NULL;
 
 		if( myList_ != NULL &&
-		// Don't display my word string if the item is in an admin list
+		// Don't display my word string if the item is in an Admin list
 		!myList_->isAdminList() &&
 		myWordItem_ != NULL &&
 		( wordTypeString = myWordItem_->wordTypeString( true, queryWordTypeNr ) ) == NULL )
@@ -57,49 +57,11 @@
 		return wordTypeString;
 		}
 
+
 	// Constructor
 
 	Item::Item()
 		{
-		// Private constructed variables
-
-		userNr_ = NO_USER_NR;
-
-		originalSentenceNr_ = NO_SENTENCE_NR;
-		creationSentenceNr_ = NO_SENTENCE_NR;
-
-		activeSentenceNr_ = NO_SENTENCE_NR;
-		inactiveSentenceNr_ = NO_SENTENCE_NR;
-		archivedSentenceNr_ = NO_SENTENCE_NR;
-		replacedSentenceNr_ = NO_SENTENCE_NR;
-
-		itemNr_ = NO_ITEM_NR;
-
-		statusChar_ = QUERY_ACTIVE_CHAR;
-
-		strcpy( parentClassNameString_, "Item" );
-		strcpy( classNameString_, EMPTY_STRING );
-
-		// Private initialized variables
-//Java
-
-		globalVariables_ = NULL;
-		inputOutput_ = NULL;
-		myList_ = NULL;
-		myWordItem_ = NULL;
-
-		// Protected constructed variables
-
-		isSelectedByQuery = false;
-		isSelectedByJustificationQuery = false;
-
-		previousStatusChar = QUERY_ACTIVE_CHAR;
-
-		nextItem = NULL;
-		previousItem = NULL;
-
-		strcpy( statusString, SPACE_STRING );
-		strcpy( tempString, EMPTY_STRING );
 		}
 
 
@@ -610,14 +572,6 @@
 		return selectionResult;
 		}
 
-	ShortResultType Item::addShortResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
-		{
-		ShortResultType shortResult;
-
-		shortResult.result = addError( functionNameString, moduleNameString, wordNameString, errorString );
-		return shortResult;
-		}
-
 	ShortResultType Item::startShortResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		ShortResultType shortResult;
@@ -631,14 +585,6 @@
 		ShortResultType shortResult;
 
 		shortResult.result = startError( functionNameString, moduleNameString, errorString, number );
-		return shortResult;
-		}
-
-	ShortResultType Item::startShortResultSystemError( const char *functionNameString, const char *errorString )
-		{
-		ShortResultType shortResult;
-
-		shortResult.result = startSystemError( functionNameString, NULL, errorString );
 		return shortResult;
 		}
 
@@ -857,7 +803,7 @@
 		if( ( myWordString = myWordTypeString( queryWordTypeNr ) ) != NULL )
 			{
 			if( globalVariables_->hasFoundQuery )
-				strcat( globalVariables_->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
+				strcat( globalVariables()->queryString, ( isReturnQueryToPosition ? NEW_LINE_STRING : QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -1182,7 +1128,8 @@
 		{
 		char *myWordString = myWordTypeString( queryWordTypeNr );
 		char *queryString;
-		char *userNameString = ( myWordItem_ == NULL ? NULL : myWordItem_->userNameString( userNr_ ) );
+		char *userNameString = ( myWordItem_ != NULL ?
+								myWordItem_->userNameString( userNr_ ) : NULL );
 
 		statusString[0] = statusChar_;
 		strcpy( globalVariables_->queryString, EMPTY_STRING );
@@ -1343,7 +1290,7 @@
 				justificationTypeNr == JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION ||
+				justificationTypeNr == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION ||
@@ -1355,7 +1302,7 @@
 	bool Item::isConclusion( unsigned short justificationTypeNr )
 		{
 		return ( justificationTypeNr == JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION ||
+				justificationTypeNr == JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION ||
 				justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION ||
@@ -1464,7 +1411,7 @@
 				return ( hasAnotherPrimarySpecification &&
 						hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
 
-			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
+			case JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION:
 				return ( hasFeminineOrMasculineProperNounEnding ? 1 : 0 );
 
 			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:

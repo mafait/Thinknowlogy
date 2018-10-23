@@ -67,10 +67,10 @@
 < John has probably a child, called Paul. Because:
 <	- Paul is probably a child of John and Anna.
 < John is probably a parent of Paul. Because:
+<	- Paul has probably 2 parents, called John and Anna.
+* 	and:
 <	- Every family has parents and children.
 <	- Paul is probably a child of John and Anna.
-* 	and:
-<	- Paul has probably 2 parents, called John and Anna.
 * 	and:
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
@@ -188,10 +188,10 @@
 < John has probably a child, called Paul. Because:
 <	- Paul is probably a child of John and Anna.
 < John is probably a parent of Paul. Because:
+<	- Paul has probably 2 parents, called John and Anna.
+* 	and:
 <	- Every family has parents and children.
 <	- Paul is probably a child of John and Anna.
-* 	and:
-<	- Paul has probably 2 parents, called John and Anna.
 * 	and:
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.

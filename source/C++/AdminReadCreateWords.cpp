@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		To create words of the read sentence
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -34,16 +34,15 @@ class AdminReadCreateWords
 
 	// Private constructed variables
 
-	unsigned short lastCreatedWordOrderNr_;
+	unsigned short lastCreatedWordOrderNr_ = NO_ORDER_NR;
 
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminReadCreateWords";
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
-
-	AdminItem *adminItem_;
-	GlobalVariables *globalVariables_;
-	InputOutput *inputOutput_;
+	AdminItem *adminItem_ = NULL;
+	GlobalVariables *globalVariables_ = NULL;
+	InputOutput *inputOutput_ = NULL;
 
 
 	// Private functions
@@ -68,7 +67,6 @@ class AdminReadCreateWords
 				character == SYMBOL_SPANISH_INVERTED_QUESTION_MARK ||
 #endif
 				character == SYMBOL_SLASH ||
-				character == SYMBOL_BACK_SLASH ||
 				// Don't add SYMBOL_QUOTE to avoid analyzing merged words
 				// Don't add SYMBOL_DOUBLE_QUOTE to avoid analyzing text strings
 				character == SYMBOL_OPEN_ROUNDED_BRACKET ||
@@ -99,7 +97,7 @@ class AdminReadCreateWords
 			createReadWordResult.offset = readWordResult.offset;
 			}
 
-		if( adminItem_->createReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readWordResult.wordLength, ( textString == NULL ? NULL : &textString[textStringStartPosition + readWordResult.startWordPosition] ), readWordItem ) != RESULT_OK )
+		if( adminItem_->createReadItem( isUncountableGeneralizationNoun, wordOrderNr, wordParameter, wordTypeNr, readWordResult.wordLength, ( textString != NULL ? &textString[textStringStartPosition + readWordResult.startWordPosition] : NULL ), readWordItem ) != RESULT_OK )
 			return adminItem_->addCreateReadWordResultError( functionNameString, moduleNameString_, "I failed to create a read word item" );
 
 		lastCreatedWordOrderNr_ = wordOrderNr;
@@ -156,14 +154,6 @@ class AdminReadCreateWords
 	AdminReadCreateWords( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
-
-		// Private constructed variables
-
-		lastCreatedWordOrderNr_ = NO_ORDER_NR;
-
-		// Private initialized variables
-
-		strcpy( moduleNameString_, "AdminReadCreateWords" );
 
 		// Checking private initialized variables
 
@@ -259,7 +249,7 @@ class AdminReadCreateWords
 		WordTypeItem *foundWordTypeItem;
 		WordTypeItem *tempWordTypeItem;
 		char exactWordString[MAX_WORD_LENGTH] = EMPTY_STRING;
-		char lowercaseWordString[MAX_WORD_LENGTH] = EMPTY_STRING;
+		char lowerCaseWordString[MAX_WORD_LENGTH] = EMPTY_STRING;
 		char singularNounWordString[MAX_WORD_LENGTH] = EMPTY_STRING;
 		BoolResultType boolResult;
 		CreateReadWordResultType createReadWordResult;
@@ -347,11 +337,11 @@ class AdminReadCreateWords
 				strcpy( exactWordString, EMPTY_STRING );
 				strncat( exactWordString, &readUserSentenceString[currentPosition], wordStringLength );
 
-				// Create lowercase word string
-				strcpy( lowercaseWordString, exactWordString );
+				// Create lower-case word string
+				strcpy( lowerCaseWordString, exactWordString );
 
 				for( unsigned i = 0; i < wordStringLength; i++ )
-					lowercaseWordString[i] = (char)tolower( exactWordString[i] );
+					lowerCaseWordString[i] = (char)tolower( exactWordString[i] );
 
 				// Step 1: Find exact word types in all words
 				do	{
@@ -568,18 +558,18 @@ class AdminReadCreateWords
 				( !isExactWord ||
 				wordStringLength == 1 ) )
 					{
-					if( ( shortResult = getWordTypeNr( false, wordStringLength, lowercaseWordString ) ).result != RESULT_OK )
-						return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to get the word type number of a lowercase word" );
+					if( ( shortResult = getWordTypeNr( false, wordStringLength, lowerCaseWordString ) ).result != RESULT_OK )
+						return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to get the word type number of a lower-case word" );
 
 					if( ( wordTypeNr = shortResult.shortValue ) == NO_WORD_TYPE_NR )
 						isUndefinedWord = true;
 
-					// Step 2: Find word type with lowercase first letter in all words
+					// Step 2: Find word type with lower-case first letter in all words
 					do	{
-						if( ( wordResult = findWordTypeInAllWords( true, NO_WORD_TYPE_NR, lowercaseWordString, foundWordItem ) ).result != RESULT_OK )
+						if( ( wordResult = findWordTypeInAllWords( true, NO_WORD_TYPE_NR, lowerCaseWordString, foundWordItem ) ).result != RESULT_OK )
 							return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to find a word type with difference case of the first letter in all words" );
 
-						// Found word type with lowercase first letter
+						// Found word type with lower-case first letter
 						if( ( foundWordItem = wordResult.foundWordItem ) != NULL &&
 						( foundWordTypeItem = wordResult.foundWordTypeItem ) != NULL )
 							{
@@ -590,8 +580,8 @@ class AdminReadCreateWords
 							foundWordTypeItem->wordTypeLanguageNr() != currentLanguageNr &&
 
 							// Create same word type for different language
-							foundWordItem->addWordType( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, wordStringLength, lowercaseWordString ).result != RESULT_OK )
-								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to add a word type with lowercase first letter" );
+							foundWordItem->addWordType( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, wordTypeNr, wordStringLength, lowerCaseWordString ).result != RESULT_OK )
+								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to add a word type with lower-case first letter" );
 
 							if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, foundWordTypeNr, 0, NULL, foundWordItem ) ).result != RESULT_OK )
 								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to create a read word with a word type with difference case of the first letter" );
@@ -645,20 +635,20 @@ class AdminReadCreateWords
 					// One character
 					if( !isUndefinedWord )
 						{
-						// Step 3: Typically for English: Find or create lowercase letter 'a' as first letter of a sentence.
-						if( ( wordResult = findWordTypeInAllWords( false, wordTypeNr, lowercaseWordString, NULL ) ).result != RESULT_OK )
-							return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to find a lowercase letter" );
+						// Step 3: Typically for English: Find or create lower-case letter 'a' as first letter of a sentence.
+						if( ( wordResult = findWordTypeInAllWords( false, wordTypeNr, lowerCaseWordString, NULL ) ).result != RESULT_OK )
+							return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to find a lower-case letter" );
 
 						if( wordResult.foundWordItem == NULL )
 							{
-							if( ( wordResult = addWord( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, NO_WORD_PARAMETER, wordTypeNr, wordStringLength, lowercaseWordString ) ).result != RESULT_OK )
-								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to add word with lowercase letter" );
+							if( ( wordResult = addWord( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, NO_WORD_PARAMETER, wordTypeNr, wordStringLength, lowerCaseWordString ) ).result != RESULT_OK )
+								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to add word with lower-case letter" );
 
 							if( ( createdWordItem = wordResult.createdWordItem ) == NULL )
-								return adminItem_->startBoolResultError( functionNameString, moduleNameString_, "The created word with lowercase letter is undefined" );
+								return adminItem_->startBoolResultError( functionNameString, moduleNameString_, "The created word with lower-case letter is undefined" );
 
 							if( ( createReadWordResult = createReadWord( false, currentWordOrderNr, wordTypeNr, 0, NULL, createdWordItem ) ).result != RESULT_OK )
-								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to create a read word with lowercase letter" );
+								return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to create a read word with lower-case letter" );
 							}
 						}
 					}
@@ -867,7 +857,7 @@ class AdminReadCreateWords
 					wasPreviousWordExactNoun ||
 					wasPreviousWordSymbol ) )
 						{
-						if( ( wordResult = addWord( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, NO_WORD_PARAMETER, WORD_TYPE_ADJECTIVE, wordStringLength, lowercaseWordString ) ).result != RESULT_OK )
+						if( ( wordResult = addWord( false, false, NO_ADJECTIVE_PARAMETER, NO_DEFINITE_ARTICLE_PARAMETER, NO_INDEFINITE_ARTICLE_PARAMETER, NO_WORD_PARAMETER, WORD_TYPE_ADJECTIVE, wordStringLength, lowerCaseWordString ) ).result != RESULT_OK )
 							return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to add an adjective word" );
 
 						if( ( createdWordItem = wordResult.createdWordItem ) == NULL )
@@ -1055,7 +1045,7 @@ class AdminReadCreateWords
 				}
 
 			isProperNounPrecededByDefiniteArticle = ( wasPreviousWordDefiniteArticle &&
-													  wordTypeNr == WORD_TYPE_PROPER_NOUN );
+													wordTypeNr == WORD_TYPE_PROPER_NOUN );
 
 			if( ( wordTypeResult = createdWordItem->addWordType( isMultipleWord, isProperNounPrecededByDefiniteArticle, adjectiveParameter, definiteArticleParameter, indefiniteArticleParameter, wordTypeNr, wordTypeStringLength, wordTypeString ) ).result != RESULT_OK )
 				return adminItem_->addWordResultError( functionNameString, moduleNameString_, "I failed to add a word type to a new word" );

@@ -1,11 +1,11 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Sjors heeft een zoon, genaamd André.
-Toon de verantwoordingsrapportage over Sjors.
-Toon de verantwoordingsrapportage over André.
+#Dev#Toon de verantwoordingsrapportage over Sjors.
+#Dev#Toon de verantwoordingsrapportage over André.
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 Paul heeft een vader, genaamd Jan.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

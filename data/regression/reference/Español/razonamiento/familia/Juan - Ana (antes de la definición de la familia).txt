@@ -64,14 +64,14 @@
 < Juan no es una madre.
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene 2 padres, llamados Ana y Juan.
-< Luisa no es un niño y un hombre.
 < Luisa no es un hijo.
+< Luisa no es un niño y un hombre.
 < Luisa tiene una madre, llamada Ana.
 < José tiene un padre, llamado Juan.
 < José tiene 2 padres, llamados Ana y Juan.
 < José tiene una madre, llamada Ana.
-< Pablo tiene 2 padres, llamados Ana y Juan.
 < Pablo tiene un padre, llamado Juan.
+< Pablo tiene 2 padres, llamados Ana y Juan.
 < Pablo tiene una madre, llamada Ana.
 < Ana no es un padre.
 * 
@@ -157,21 +157,21 @@
 < 
 * 
 * Mis conclusiones:
+< Pablo tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Luisa, Pablo y José.
 < Pablo tiene 2 padres, llamados Ana y Juan. Porque:
 <	- Juan es el padre de Luisa, Pablo y José.
 <	- Ana es la madre de Luisa, Pablo y José.
-< Pablo tiene un padre, llamado Juan. Porque:
-<	- Juan es el padre de Luisa, Pablo y José.
 < Pablo tiene una madre, llamada Ana. Porque:
 <	- Ana es la madre de Luisa, Pablo y José.
 * 
 * Mis suposiciones:
 < Pablo es posiblemente una persona. Porque:
-<	- Pablo tiene 2 padres, llamados Ana y Juan.
+<	- Pablo tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 	y:
-<	- Pablo tiene un padre, llamado Juan.
+<	- Pablo tiene 2 padres, llamados Ana y Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 	y:
@@ -184,11 +184,11 @@
 * 
 * Mis preguntas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre? Porque:
-<	- Pablo tiene 2 padres, llamados Ana y Juan.
+<	- Pablo tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 * 	y:
-<	- Pablo tiene un padre, llamado Juan.
+<	- Pablo tiene 2 padres, llamados Ana y Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 * 	y:
@@ -196,11 +196,11 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 < ¿Es Pablo un hijo o una hija? Porque:
-<	- Pablo tiene 2 padres, llamados Ana y Juan.
+<	- Pablo tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 * 	y:
-<	- Pablo tiene un padre, llamado Juan.
+<	- Pablo tiene 2 padres, llamados Ana y Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 * 	y:
@@ -224,6 +224,10 @@
 <	- Hijos son parte de cada familia.
 < José es posiblemente una persona. Porque:
 <	- José tiene un padre, llamado Juan.
+<	- Cada familia tiene padres y hijos.
+<	- Un hijo es probablemente una persona.
+* 	y:
+<	- José tiene 2 padres, llamados Ana y Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 	y:
@@ -269,13 +273,13 @@
 < Luisa es parte de una familia. Porque:
 <	- Luisa es hija de Ana.
 <	- Hijos son parte de cada familia.
+< Luisa no es un hijo. Porque:
+<	- Cada hijo es un hijo o una hija.
+<	- Luisa es hija de Ana.
 < Luisa no es un niño y un hombre. Porque:
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 <	- Luisa es hija de Ana.
 <	- Cada hija es una niña o una mujer.
-< Luisa no es un hijo. Porque:
-<	- Cada hijo es un hijo o una hija.
-<	- Luisa es hija de Ana.
 < Luisa tiene una madre, llamada Ana. Porque:
 <	- Ana es la madre de Luisa, Pablo y José.
 * 
@@ -387,13 +391,13 @@
 * 	y:
 <	- Ana tiene una hija, llamada Luisa.
 <	- Hijos son parte de cada familia.
+< Luisa no es un hijo. Porque:
+<	- Cada hijo es un hijo o una hija.
+<	- Luisa es hija de Ana y Juan.
 < Luisa no es un niño y un hombre. Porque:
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 <	- Luisa es hija de Ana y Juan.
 <	- Cada hija es una niña o una mujer.
-< Luisa no es un hijo. Porque:
-<	- Cada hijo es un hijo o una hija.
-<	- Luisa es hija de Ana y Juan.
 < Luisa tiene un padre, llamado Juan. Porque:
 <	- Juan es el padre de Luisa, Pablo y José.
 < Luisa tiene 2 padres, llamados Ana y Juan. Porque:

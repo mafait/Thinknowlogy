@@ -1,4 +1,4 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 John is the father and Anna is the mother of Paul, Joe and Laura.
 Is Michael the father of Paul?
 Are Paul and Adam children?

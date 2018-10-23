@@ -1,6 +1,0 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
-Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
-Pascal a 2 parents, appelés Olivier et Amélie.
-Julien a 2 parents, appelés Olivier et Amélie.
-Lorraine a 2 parents, appelés Olivier et Amélie.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

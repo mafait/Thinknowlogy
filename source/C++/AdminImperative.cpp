@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -33,38 +33,37 @@ class AdminImperative
 
 	// Private constructed variables
 
-	bool hasRequestedRestart_;
+	bool hasRequestedRestart_ = false;
 
-	unsigned int oldGlobalSatisfiedScore_;
-	unsigned int newGlobalSatisfiedScore_;
-	unsigned int oldGlobalDissatisfiedScore_;
-	unsigned int newGlobalDissatisfiedScore_;
-	unsigned int oldGlobalNotBlockingScore_;
-	unsigned int newGlobalNotBlockingScore_;
-	unsigned int oldGlobalBlockingScore_;
-	unsigned int newGlobalBlockingScore_;
+	unsigned int oldGlobalSatisfiedScore_ = NO_SCORE;
+	unsigned int newGlobalSatisfiedScore_ = NO_SCORE;
+	unsigned int oldGlobalDissatisfiedScore_ = NO_SCORE;
+	unsigned int newGlobalDissatisfiedScore_ = NO_SCORE;
+	unsigned int oldGlobalNotBlockingScore_ = NO_SCORE;
+	unsigned int newGlobalNotBlockingScore_ = NO_SCORE;
+	unsigned int oldGlobalBlockingScore_ = NO_SCORE;
+	unsigned int newGlobalBlockingScore_ = NO_SCORE;
 
-	SpecificationItem *firstComparisonAssignmentItem_;
-	SpecificationItem *secondComparisonAssignmentItem_;
-	SpecificationItem *virtualListAssignmentItem_;
+	SpecificationItem *firstComparisonAssignmentItem_ = NULL;
+	SpecificationItem *secondComparisonAssignmentItem_ = NULL;
+	SpecificationItem *virtualListAssignmentItem_ = NULL;
 
-	char closedTestFileNameString_[MAX_SENTENCE_STRING_LENGTH];
+	char closedTestFileNameString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminImperative";
 
 	// Private initialized variables
 
-	WordItem *predefinedAdjectiveBusyWordItem_;
-	WordItem *predefinedAdjectiveDoneWordItem_;
-	WordItem *predefinedAdjectiveInvertedWordItem_;
-	WordItem *predefinedNounSolveLevelWordItem_;
-	WordItem *predefinedNounSolveMethodWordItem_;
-	WordItem *predefinedNounSolveStrategyWordItem_;
+	WordItem *predefinedAdjectiveBusyWordItem_ = NULL;
+	WordItem *predefinedAdjectiveDoneWordItem_ = NULL;
+	WordItem *predefinedAdjectiveInvertedWordItem_ = NULL;
+	WordItem *predefinedNounSolveLevelWordItem_ = NULL;
+	WordItem *predefinedNounSolveMethodWordItem_ = NULL;
+	WordItem *predefinedNounSolveStrategyWordItem_ = NULL;
 
-	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
-
-	AdminItem *adminItem_;
-	GlobalVariables *globalVariables_;
-	InputOutput *inputOutput_;
+	AdminItem *adminItem_ = NULL;
+	GlobalVariables *globalVariables_ = NULL;
+	InputOutput *inputOutput_ = NULL;
 
 
 	// Private functions
@@ -311,7 +310,9 @@ class AdminImperative
 				break;
 
 			case WORD_PARAMETER_SINGULAR_VERB_IMPERATIVE_REMOVE:
-				localVirtualListAssignmentItem = ( specificationWordItem->isNounHead() ? relationWordItem->lastActiveNonQuestionAssignmentItem() : ( specificationWordItem->isNounTail() ? relationWordItem->firstNonQuestionActiveAssignmentItem() : relationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, specificationWordItem ) ) );
+				localVirtualListAssignmentItem = ( specificationWordItem->isNounHead() ? relationWordItem->lastActiveNonQuestionAssignmentItem() :
+												( specificationWordItem->isNounTail() ? relationWordItem->firstNonQuestionActiveAssignmentItem() :
+												relationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, false, specificationWordItem ) ) );
 
 				if( localVirtualListAssignmentItem != NULL &&
 				relationWordItem->inactivateActiveAssignment( localVirtualListAssignmentItem ) != RESULT_OK )
@@ -372,7 +373,9 @@ class AdminImperative
 
 	signed char solveWord( unsigned short solveLevel, unsigned int currentSolveProgressLevel, unsigned int endSolveProgressLevel, WordItem *solveWordItem, SelectionItem *actionSelectionItem )
 		{
-		bool isInverted = false;
+		bool isAllowingDuplicates;
+		bool isInverted;
+		bool isPreparingSort;
 		unsigned short currentAssignmentLevel = globalVariables_->currentAssignmentLevel;
 		unsigned int nPossibilities;
 		unsigned int possibilityNumber = 0;
@@ -402,13 +405,15 @@ class AdminImperative
 			adminItem_->deleteScores() != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete the admin score list" );
 
-			isInverted = ( predefinedNounSolveMethodWordItem_->firstNonQuestionAssignmentItem( true, false, false, false, false, predefinedAdjectiveInvertedWordItem_ ) != NULL );
-
 			// Get solve strategy parameter
 			if( ( shortResult = getAssignmentWordParameter( predefinedNounSolveStrategyWordItem_ ) ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to get the solve strategy at assignment level ", currentAssignmentLevel );
 
-			if( ( boolResult = findSelectionToSolveWord( true, ( currentAssignmentLevel == solveLevel ), isInverted, ( currentAssignmentLevel + 1 < solveLevel ), shortResult.shortValue, solveWordItem ) ).result != RESULT_OK )
+			isAllowingDuplicates = ( currentAssignmentLevel == solveLevel );
+			isInverted = ( predefinedNounSolveMethodWordItem_->firstNonQuestionAssignmentItem( true, false, false, false, false, predefinedAdjectiveInvertedWordItem_ ) != NULL );
+			isPreparingSort = ( currentAssignmentLevel + 1 < solveLevel );
+
+			if( ( boolResult = findSelectionToSolveWord( true, isAllowingDuplicates, isInverted, isPreparingSort, shortResult.shortValue, solveWordItem ) ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a selection to solve word \"", solveWordItem->anyWordTypeString(), "\" at assignment level ", currentAssignmentLevel );
 
 			// Has found possibility to solve word
@@ -873,11 +878,15 @@ class AdminImperative
 
 				secondComparisonAssignmentItem_ = specificationResult.specificationItem;
 
-				firstSpecificationWordItem = ( firstComparisonAssignmentItem_ == NULL ? NULL : firstComparisonAssignmentItem_->specificationWordItem() );
-				secondSpecificationWordItem = ( secondComparisonAssignmentItem_ == NULL ? NULL : secondComparisonAssignmentItem_->specificationWordItem() );
+				firstSpecificationWordItem = ( firstComparisonAssignmentItem_ != NULL ?
+												firstComparisonAssignmentItem_->specificationWordItem() : NULL );
+				secondSpecificationWordItem = ( secondComparisonAssignmentItem_ != NULL ?
+												secondComparisonAssignmentItem_->specificationWordItem() : NULL );
 
-				firstString = ( firstSpecificationWordItem == NULL ? NULL : firstSpecificationWordItem->anyWordTypeString() );
-				secondString = ( secondSpecificationWordItem == NULL ? NULL : secondSpecificationWordItem->anyWordTypeString() );
+				firstString = ( firstSpecificationWordItem != NULL ?
+								firstSpecificationWordItem->anyWordTypeString() : NULL );
+				secondString = ( secondSpecificationWordItem != NULL ?
+								secondSpecificationWordItem->anyWordTypeString() : NULL );
 				}
 			else
 				{
@@ -888,7 +897,9 @@ class AdminImperative
 				if( ( comparisonAssignmentItem = specificationResult.specificationItem ) != NULL )
 					comparisonAssignmentSpecificationWordItem = comparisonAssignmentItem->specificationWordItem();
 
-				firstString = ( comparisonAssignmentItem == NULL ? NULL : ( isNumeralRelation ? ( comparisonAssignmentSpecificationWordItem == NULL ? NULL : comparisonAssignmentSpecificationWordItem->anyWordTypeString() ) : comparisonAssignmentItem->specificationString() ) );
+				firstString = ( comparisonAssignmentItem == NULL ? NULL :
+								( isNumeralRelation ?
+								( comparisonAssignmentSpecificationWordItem == NULL ? NULL : comparisonAssignmentSpecificationWordItem->anyWordTypeString() ) : comparisonAssignmentItem->specificationString() ) );
 				secondString = ( isNumeralRelation ? ( relationWordItem == NULL ? NULL : relationWordItem->anyWordTypeString() ) : specificationString );
 				}
 
@@ -1211,7 +1222,7 @@ class AdminImperative
 						}
 					else
 						{
-						if( ( conditionPartResult = findSatisfyingScores( conditionSelectionItem->isPossessive(), !isNegative, conditionSelectionItem->relationContextNr(), generalizationWordItem, specificationWordItem ) ).result != RESULT_OK )
+						if( ( conditionPartResult = findSatisfyingScores( !isNegative, generalizationWordItem, specificationWordItem ) ).result != RESULT_OK )
 							return adminItem_->addConditionResultError( functionNameString, moduleNameString_, "I failed to find satisfying scores" );
 
 						// Scoring assignment is satifying
@@ -1250,7 +1261,7 @@ class AdminImperative
 				foundAssignmentItem = specificationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, isPossessive, currentSpecificationItem->specificationWordItem() );
 				isSatisfiedScore = ( isNegative == ( foundAssignmentItem == NULL || foundAssignmentItem->isNegative() ) );
 
-				if( ( conditionPartResult = findSatisfyingScores( isPossessive, isSatisfiedScore, currentSpecificationItem->relationContextNr(), generalizationWordItem, currentSpecificationItem->specificationWordItem() ) ).result != RESULT_OK )
+				if( ( conditionPartResult = findSatisfyingScores( isSatisfiedScore, generalizationWordItem, currentSpecificationItem->specificationWordItem() ) ).result != RESULT_OK )
 					return adminItem_->addConditionResultError( functionNameString, moduleNameString_, "I failed to find satisfying scores" );
 
 				// Scoring assignment is unsatisfying
@@ -1283,17 +1294,17 @@ class AdminImperative
 			do	{
 				if( !currentAssignmentItem->isNegative() )
 					{
-					if( isBlocking )
+					if( currentAssignmentItem->isOlderItem() )
 						{
-						if( currentAssignmentItem->isOlderItem() )
+						if( isBlocking )
 							conditionResult.oldBlockingScore++;
 						else
-							conditionResult.newBlockingScore++;
+							conditionResult.oldNotBlockingScore++;
 						}
 					else
 						{
-						if( currentAssignmentItem->isOlderItem() )
-							conditionResult.oldNotBlockingScore++;
+						if( isBlocking )
+							conditionResult.newBlockingScore++;
 						else
 							conditionResult.newNotBlockingScore++;
 						}
@@ -1309,7 +1320,7 @@ class AdminImperative
 		return conditionResult;
 		}
 
-	ConditionResultType findSatisfyingScores( bool isPossessive, bool isSatisfiedScore, unsigned int relationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+	ConditionResultType findSatisfyingScores( bool isSatisfiedScore, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
 		bool hasFoundScoringAssignment = false;
 		SpecificationItem *currentAssignmentItem;
@@ -1325,24 +1336,24 @@ class AdminImperative
 		if( ( currentAssignmentItem = generalizationWordItem->firstNonQuestionActiveAssignmentItem() ) != NULL )
 			{
 			do	{
-				if( currentAssignmentItem->isRelatedSpecification( false, isPossessive, relationContextNr, specificationWordItem ) )
+				if( currentAssignmentItem->isRelatedSpecification( false, specificationWordItem ) )
 					{
-					hasFoundScoringAssignment = true;
-
-					if( isSatisfiedScore )
+					if( currentAssignmentItem->isOlderItem() )
 						{
-						if( currentAssignmentItem->isOlderItem() )
+						if( isSatisfiedScore )
 							conditionResult.oldSatisfiedScore++;
 						else
-							conditionResult.newSatisfiedScore++;
+							conditionResult.oldDissatisfiedScore++;
 						}
 					else
 						{
-						if( currentAssignmentItem->isOlderItem() )
-							conditionResult.oldDissatisfiedScore++;
+						if( isSatisfiedScore )
+							conditionResult.newSatisfiedScore++;
 						else
 							conditionResult.newDissatisfiedScore++;
 						}
+
+					hasFoundScoringAssignment = true;
 					}
 				}
 			while( !hasFoundScoringAssignment &&
@@ -1454,29 +1465,6 @@ class AdminImperative
 	AdminImperative( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *predefinedAdjectiveBusyWordItem, WordItem *predefinedAdjectiveDoneWordItem, WordItem *predefinedAdjectiveInvertedWordItem, WordItem *predefinedNounSolveLevelWordItem, WordItem *predefinedNounSolveMethodWordItem, WordItem *predefinedNounSolveStrategyWordItem )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
-
-		// Private constructed variables
-
-		hasRequestedRestart_ = false;
-
-		oldGlobalSatisfiedScore_ = NO_SCORE;
-		newGlobalSatisfiedScore_ = NO_SCORE;
-		oldGlobalDissatisfiedScore_ = NO_SCORE;
-		newGlobalDissatisfiedScore_ = NO_SCORE;
-		oldGlobalNotBlockingScore_ = NO_SCORE;
-		newGlobalNotBlockingScore_ = NO_SCORE;
-		oldGlobalBlockingScore_ = NO_SCORE;
-		newGlobalBlockingScore_ = NO_SCORE;
-
-		strcpy( closedTestFileNameString_, EMPTY_STRING );
-
-		firstComparisonAssignmentItem_ = NULL;
-		secondComparisonAssignmentItem_ = NULL;
-		virtualListAssignmentItem_ = NULL;
-
-		// Private initialized variables
-
-		strcpy( moduleNameString_, "AdminImperative" );
 
 		// Checking private initialized variables
 

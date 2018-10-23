@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		To read and analyze sentences
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -33,56 +33,56 @@ class AdminReadSentence
 
 	// Private constructed variables
 
-	bool hasAnyChangeBeenMadeByThisSentence_;
-	bool hasFemaleUserSpecificationWord_;
-	bool isAssignment_;
-	bool isInactiveAssignment_;
-	bool isArchivedAssignment_;
-	bool isCharacteristicFor_;
-	bool isChineseCurrentLanguage_;
-	bool isConditional_;
-	bool isEveryGeneralization_;
-	bool isExclusiveSpecification_;
-	bool isNegative_;
-	bool isPartOf_;
-	bool isPossessive_;
-	bool isSpecific_;
-	bool isSpecificationGeneralization_;
-	bool isUncountableGeneralizationNoun_;
-	bool isUniqueUserRelation_;
-	bool isUserImperativeSentence_;
-	bool wasPreviousCommandUndoOrRedo_;
+		// Private constructed variables
 
-//	unsigned short answerParameter_;
-	unsigned short currentParseWordOrderNr_;
-	unsigned short prepositionParameter_;
-	unsigned short previousGeneralizationWordTypeNr_;
-	unsigned short questionParameter_;
-	unsigned short selectionListNr_;
-	unsigned short userAssumptionLevel_;
+	bool hasAnyChangeBeenMadeByThisSentence_ = false;
+	bool hasFemaleUserSpecificationWord_ = false;
+	bool isAssignment_ = false;
+	bool isInactiveAssignment_ = false;
+	bool isArchivedAssignment_ = false;
+	bool isCharacteristicFor_ = false;
+	bool isChineseCurrentLanguage_ = false;
+	bool isConditional_ = false;
+	bool isEveryGeneralization_ = false;
+	bool isExclusiveSpecification_ = false;
+	bool isNegative_ = false;
+	bool isPartOf_ = false;
+	bool isPossessive_ = false;
+	bool isSpecific_ = false;
+	bool isSpecificationGeneralization_ = false;
+	bool isUncountableGeneralizationNoun_ = false;
+	bool isUniqueUserRelation_ = false;
+	bool isUserImperativeSentence_ = false;
+	bool wasPreviousCommandUndoOrRedo_ = false;
 
-	unsigned int generalizationContextNr_;
-	unsigned int specificationContextNr_;
+	unsigned short currentParseWordOrderNr_ = NO_ORDER_NR;
+	unsigned short prepositionParameter_ = NO_PREPOSITION_PARAMETER;
+	unsigned short previousGeneralizationWordTypeNr_ = NO_WORD_TYPE_NR;
+	unsigned short questionParameter_ = NO_QUESTION_PARAMETER;
+	unsigned short selectionListNr_ = NO_LIST_NR;
+	unsigned short userAssumptionLevel_ = NO_ASSUMPTION_LEVEL;
 
-	ReadItem *currentReadItem_;
-	ReadItem *linkedGeneralizationReadItem_;
-	ReadItem *startGeneralizationReadItem_;
-	ReadItem *endGeneralizationReadItem_;
-	ReadItem *startSpecificationReadItem_;
-	ReadItem *endSpecificationReadItem_;
-	ReadItem *startRelationReadItem_;
-	ReadItem *endRelationReadItem_;
+	unsigned int generalizationContextNr_ = NO_CONTEXT_NR;
+	unsigned int specificationContextNr_ = NO_CONTEXT_NR;
 
-	WordItem *previousGeneralizationWordItem_;
+	ReadItem *currentReadItem_ = NULL;
+	ReadItem *linkedGeneralizationReadItem_ = NULL;
+	ReadItem *startGeneralizationReadItem_ = NULL;
+	ReadItem *endGeneralizationReadItem_ = NULL;
+	ReadItem *startSpecificationReadItem_ = NULL;
+	ReadItem *endSpecificationReadItem_ = NULL;
+	ReadItem *startRelationReadItem_ = NULL;
+	ReadItem *endRelationReadItem_ = NULL;
 
+	WordItem *previousGeneralizationWordItem_ = NULL;
+
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminReadSentence";
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
-
-	AdminItem *adminItem_;
-	GlobalVariables *globalVariables_;
-	InputOutput *inputOutput_;
+	AdminItem *adminItem_ = NULL;
+	GlobalVariables *globalVariables_ = NULL;
+	InputOutput *inputOutput_ = NULL;
 
 
 	// Private functions
@@ -90,7 +90,7 @@ class AdminReadSentence
 	void checkForChangesMadeByThisSentence()
 		{
 		unsigned int currentSentenceNr = globalVariables_->currentSentenceNr;
-		unsigned int highestFoundSentenceNr = adminItem_->highestFoundSentenceNr( false, currentSentenceNr );
+		unsigned int highestFoundSentenceNr = adminItem_->highestFoundSentenceNr( false, false, currentSentenceNr );
 
 		hasAnyChangeBeenMadeByThisSentence_ = ( highestFoundSentenceNr >= currentSentenceNr );
 		}
@@ -419,9 +419,9 @@ class AdminReadSentence
 			{
 			if( wasPreviousCommandUndoOrRedo_ )
 				{
+				wasPreviousCommandUndoOrRedo_ = false;
 				// From this point, redo is not possible anymore
 				clearReplacingInfoInSpecificationWords();
-				wasPreviousCommandUndoOrRedo_ = false;
 				}
 
 			isConditional = ( isSelection ||
@@ -1055,9 +1055,9 @@ class AdminReadSentence
 			{
 			if( wasPreviousCommandUndoOrRedo_ )
 				{
+				wasPreviousCommandUndoOrRedo_ = false;
 				// From this point, redo is not possible anymore
 				clearReplacingInfoInSpecificationWords();
-				wasPreviousCommandUndoOrRedo_ = false;
 				}
 
 			if( globalVariables_->currentLanguageNr != originalLanguageNr &&
@@ -1147,9 +1147,9 @@ class AdminReadSentence
 				wasPreviousCommandUndoOrRedo_ = true;
 			else
 				{
+				wasPreviousCommandUndoOrRedo_ = false;
 				// From this point, redo is not possible anymore
 				clearReplacingInfoInSpecificationWords();
-				wasPreviousCommandUndoOrRedo_ = false;
 				}
 
 			if( adminItem_->executeImperative( true, NO_LIST_NR, NO_WORD_PARAMETER, startGeneralizationReadItem_->wordParameter(), NO_WORD_TYPE_NR, MAX_PROGRESS, startGeneralizationReadItem_->readString, startGeneralizationReadItem_->readWordItem(), NULL, startRelationReadItem_, endRelationReadItem_, NULL, NULL ) != RESULT_OK )
@@ -1243,7 +1243,6 @@ class AdminReadSentence
 		isUncountableGeneralizationNoun_ = false;
 		isUniqueUserRelation_ = false;
 
-//		answerParameter_ = NO_ANSWER_PARAMETER;
 		currentParseWordOrderNr_ = NO_ORDER_NR;
 		prepositionParameter_ = NO_PREPOSITION_PARAMETER;
 		questionParameter_ = NO_QUESTION_PARAMETER;
@@ -1637,54 +1636,6 @@ class AdminReadSentence
 	AdminReadSentence( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
-
-		// Private constructed variables
-
-		hasAnyChangeBeenMadeByThisSentence_ = false;
-		hasFemaleUserSpecificationWord_ = false;
-		isAssignment_ = false;
-		isInactiveAssignment_ = false;
-		isArchivedAssignment_ = false;
-		isCharacteristicFor_ = false;
-		isChineseCurrentLanguage_ = false;
-		isConditional_ = false;
-		isEveryGeneralization_ = false;
-		isExclusiveSpecification_ = false;
-		isNegative_ = false;
-		isPartOf_ = false;
-		isPossessive_ = false;
-		isSpecific_ = false;
-		isSpecificationGeneralization_ = false;
-		isUncountableGeneralizationNoun_ = false;
-		isUniqueUserRelation_ = false;
-		isUserImperativeSentence_ = false;
-		wasPreviousCommandUndoOrRedo_ = false;
-
-//		answerParameter_ = NO_ANSWER_PARAMETER;
-		currentParseWordOrderNr_ = NO_ORDER_NR;
-		prepositionParameter_ = NO_PREPOSITION_PARAMETER;
-		previousGeneralizationWordTypeNr_ = NO_WORD_TYPE_NR;
-		questionParameter_ = NO_QUESTION_PARAMETER;
-		selectionListNr_ = NO_LIST_NR;
-		userAssumptionLevel_ = NO_ASSUMPTION_LEVEL;
-
-		generalizationContextNr_ = NO_CONTEXT_NR;
-		specificationContextNr_ = NO_CONTEXT_NR;
-
-		currentReadItem_ = NULL;
-		linkedGeneralizationReadItem_ = NULL;
-		startGeneralizationReadItem_ = NULL;
-		endGeneralizationReadItem_ = NULL;
-		startSpecificationReadItem_ = NULL;
-		endSpecificationReadItem_ = NULL;
-		startRelationReadItem_ = NULL;
-		endRelationReadItem_ = NULL;
-
-		previousGeneralizationWordItem_ = NULL;
-
-		// Private initialized variables
-
-		strcpy( moduleNameString_, "AdminReadSentence" );
 
 		// Checking private initialized variables
 

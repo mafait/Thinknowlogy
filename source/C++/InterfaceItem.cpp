@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the user-interface messages
  *					in the available languages
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -30,9 +30,9 @@ class InterfaceItem : private Item
 
 	// Private initialized variables
 
-	unsigned short interfaceParameter_;
+	unsigned short interfaceParameter_ = NO_INTERFACE_PARAMETER;
 
-	char *interfaceString_;
+	char *interfaceString_ = NULL;
 
 
 	protected:

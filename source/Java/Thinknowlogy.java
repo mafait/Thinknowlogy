@@ -1,6 +1,6 @@
 /*	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,9 +29,10 @@ class Thinknowlogy
 	{
 	// Private static variables
 
-	private static int titleBarHeight_;
-	private static int windowBottomHeight_;
+	private static int titleBarHeight_ = 0;
+	private static int windowBottomHeight_ = 0;
 	
+
 	// Private static methods
 
 	private static void deriveCurrentPath()

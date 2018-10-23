@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,7 +25,7 @@ class ContextList extends List
 	{
 	// Private constructed variables
 
-	private boolean isMarkedAsContextWord_;
+	private boolean isMarkedAsContextWord_ = false;
 
 
 	// Private methods
@@ -54,10 +54,6 @@ class ContextList extends List
 
 	protected ContextList( WordItem myWordItem )
 		{
-		// Private constructed variables
-
-		isMarkedAsContextWord_ = false;
-
 		initializeListVariables( Constants.WORD_CONTEXT_LIST_SYMBOL, "ContextList", myWordItem );
 		}
 

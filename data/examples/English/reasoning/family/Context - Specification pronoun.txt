@@ -1,3 +1,3 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 John is my father.
 # To continue, click button «Clear your mind.» or «Restart.».

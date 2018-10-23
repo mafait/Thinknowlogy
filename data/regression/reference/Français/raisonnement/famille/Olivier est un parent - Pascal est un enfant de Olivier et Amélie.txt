@@ -131,10 +131,10 @@
 * 
 * Mes hypothèses:
 < Amélie est probablement un parent de Pascal. En raison:
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est un enfant de Olivier et Amélie.
-* 	et:
-<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Amélie a un enfant, appelé Pascal.
@@ -189,14 +189,14 @@
 <	- Pascal est un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
 < Pascal a probablement 2 parents, appelés Olivier et Amélie. En raison:
-<	- Olivier est un parent de Pascal, Julien et Lorraine.
 <	- Amélie est probablement un parent de Pascal.
-* 	et:
-<	- Chaque famille a parents et enfants.
-<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+<	- Olivier est un parent de Pascal, Julien et Lorraine.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est un enfant de Olivier et Amélie.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 < Pascal a possible une mère, appelée Amélie. En raison:
 <	- Amélie est possible une mère de Pascal.
 * 	et:
@@ -220,10 +220,10 @@
 * 
 * Mes hypothèses:
 < Julien est probablement un enfant de Olivier. En raison:
+<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est un parent de Pascal, Julien et Lorraine.
-* 	et:
-<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Julien a un parent, appelé Olivier.
@@ -249,10 +249,10 @@
 * 
 * Mes hypothèses:
 < Lorraine est probablement un enfant de Olivier. En raison:
+<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est un parent de Pascal, Julien et Lorraine.
-* 	et:
-<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Lorraine a un parent, appelé Olivier.

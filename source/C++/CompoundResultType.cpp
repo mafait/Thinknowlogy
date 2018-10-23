@@ -1,7 +1,7 @@
 ﻿/*	Class:		CompoundResultType
  *	Purpose:	To return specification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,24 +25,15 @@
 
 class CompoundResultType
 	{
-	friend class AdminReasoningOld;
+	friend class AdminReasoningNew;
 	friend class AdminSpecification;
 	friend class Item;
 
 	protected:
 	// Protected variables
 
-	signed char result;
-	WordItem *compoundGeneralizationWordItem;
-
-	protected:
-	// Constructor
-
-	CompoundResultType()
-		{
-		result = RESULT_OK;
-		compoundGeneralizationWordItem = NULL;
-		}
+	signed char result = RESULT_OK;
+	WordItem *compoundGeneralizationWordItem = NULL;
 	};
 
 /*************************************************************************

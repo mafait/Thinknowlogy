@@ -1,2 +1,2 @@
-﻿Leer el archivo "Español/usuario/ambigüedad/Presidentes de EUA".
-Leer el archivo "Español/usuario/ambigüedad/Boston".
+﻿Leer el archivo "Español/ambigüedad/Presidentes de EUA".
+Leer el archivo "Español/ambigüedad/Boston".

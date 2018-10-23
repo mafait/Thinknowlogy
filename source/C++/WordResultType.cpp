@@ -1,7 +1,7 @@
 ﻿/*	Class:		WordResultType
  *	Purpose:	To return word variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,38 +25,23 @@
 
 class WordResultType
 	{
-	friend class AdminItem;
 	friend class AdminReadCreateWords;
 	friend class AdminReadFile;
 	friend class AdminReadSentence;
 	friend class Item;
 	friend class List;
-	friend class WordItem;
 	friend class WordList;
 	friend class WordTypeList;
 
 	protected:
 	// Protected variables
 
-	signed char result;
+	signed char result = RESULT_OK;
 
-	WordItem *createdWordItem;
-	WordItem *foundWordItem;
+	WordItem *createdWordItem = NULL;
+	WordItem *foundWordItem = NULL;
 
-	WordTypeItem *foundWordTypeItem;
-
-	protected:
-	// Constructor
-
-	WordResultType()
-		{
-		result = RESULT_OK;
-
-		createdWordItem = NULL;
-		foundWordItem = NULL;
-
-		foundWordTypeItem = NULL;
-		}
+	WordTypeItem *foundWordTypeItem = NULL;
 	};
 
 /*************************************************************************

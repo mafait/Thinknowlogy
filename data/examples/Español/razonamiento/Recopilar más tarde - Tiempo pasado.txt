@@ -1,7 +1,7 @@
 ﻿Un padre era un padre.
 Una madre era un padre.
-Mostrar el informe de justificación sobre los padres.
+#Dev#Mostrar el informe de justificación sobre los padres.
 Un niño era probablemente un hijo.
 Una niña era posiblemente un hijo.
-Mostrar el informe de justificación sobre los hijos.
+#Dev#Mostrar el informe de justificación sobre los hijos.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

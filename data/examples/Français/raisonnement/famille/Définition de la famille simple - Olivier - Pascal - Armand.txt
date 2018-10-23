@@ -1,0 +1,5 @@
+﻿Chaque famille a un parent et un enfant.
+Olivier est un parent de Pascal.
+Pascal est un parent de Armand.
+Armand est un enfant de Pascal.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

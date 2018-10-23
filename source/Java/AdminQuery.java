@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,15 +25,15 @@ class AdminQuery
 	{
 	// Private constructed variables
 
-	private int queryCommandStringPosition_;
-	private int queryItemNr_;
-	private int querySentenceNr_;
+	private int queryCommandStringPosition_ = 0;
+	private int queryItemNr_ = Constants.NO_ITEM_NR;
+	private int querySentenceNr_ = Constants.NO_SENTENCE_NR;
+
+	private String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
-	private String moduleNameString_;
-
-	private AdminItem adminItem_;
+	private AdminItem adminItem_ = null;
 
 
 	// Private methods
@@ -239,16 +239,6 @@ class AdminQuery
 
 	protected AdminQuery( AdminItem adminItem )
 		{
-		// Private constructed variables
-
-		queryCommandStringPosition_ = 0;
-		queryItemNr_ = Constants.NO_ITEM_NR;
-		querySentenceNr_ = Constants.NO_SENTENCE_NR;
-
-		// Private initialized variables
-
-		moduleNameString_ = this.getClass().getName();
-
 		// Checking private initialized variables
 
 		if( ( adminItem_ = adminItem ) == null )

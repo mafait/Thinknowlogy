@@ -1,7 +1,7 @@
 ﻿/*	Class:		JustificationResultType
  *	Purpose:	To return justification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,7 +28,6 @@ class JustificationItem;
 class JustificationResultType
 	{
 	friend class AdminReasoningNew;
-	friend class AdminReasoningOld;
 	friend class AdminSpecification;
 	friend class Item;
 	friend class JustificationList;
@@ -39,19 +38,10 @@ class JustificationResultType
 	protected:
 	// Protected variables
 
-	signed char result;
-	JustificationItem *createdJustificationItem;
-	JustificationItem *foundJustificationItem;
+	signed char result = RESULT_OK;
 
-	protected:
-	// Constructor
-
-	JustificationResultType()
-		{
-		result = RESULT_OK;
-		createdJustificationItem = NULL;
-		foundJustificationItem = NULL;
-		}
+	JustificationItem *createdJustificationItem = NULL;
+	JustificationItem *foundJustificationItem = NULL;
 	};
 
 /*************************************************************************

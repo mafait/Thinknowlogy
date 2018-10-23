@@ -1,7 +1,7 @@
 ﻿/*	Class:			ScoreList
  *	Parent class:	List
  *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -151,36 +151,37 @@ class ScoreList : private List
 			return startBoolResultError( functionNameString, "The given solve strategy parameter is invalid" );
 
 		// Has better score
-		boolResult.booleanValue =	( ( solveStrategyParameter == NO_SOLVE_STRATEGY_PARAMETER &&
-									( isHigherSatisfiedScore ||
-									( isEqualSatisfiedScore &&
-									isLowerDissatisfiedScore ) ) ) ||
+		if( ( solveStrategyParameter == NO_SOLVE_STRATEGY_PARAMETER &&
+		( isHigherSatisfiedScore ||
+		( isEqualSatisfiedScore &&
+		isLowerDissatisfiedScore ) ) ) ||
 
-								( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
-									( isLowerDissatisfiedScore ||
-									( isEqualDissatisfiedScore &&
-									isHigherSatisfiedScore ) ) ) ||
+		( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
+			( isLowerDissatisfiedScore ||
+			( isEqualDissatisfiedScore &&
+			isHigherSatisfiedScore ) ) ) ||
 
-								( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_EXCLUSIVE &&
-									// Has no dissatisfied score and superior satisfied score
-									( ( isSuperiorSatisfiedScore &&
-									( isCummulative ||
-									dissatisfiedScore == NO_SCORE ) ) ||
+		( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_EXCLUSIVE &&
+			// Has no dissatisfied score and superior satisfied score
+			( ( isSuperiorSatisfiedScore &&
+			( isCummulative ||
+			dissatisfiedScore == NO_SCORE ) ) ||
 
-									// Has no old satisfied score and has new satisfied score and higher dissatisfied score
-									( isHigherDissatisfiedScore &&
-									( isCummulative ||
-									( oldSatisfiedScore == NO_SCORE &&
-									newSatisfiedScore > NO_SCORE ) ) ) ) ) ||
+			// Has no old satisfied score and has new satisfied score and higher dissatisfied score
+			( isHigherDissatisfiedScore &&
+			( isCummulative ||
+			( oldSatisfiedScore == NO_SCORE &&
+			newSatisfiedScore > NO_SCORE ) ) ) ) ) ||
 
-								// else if equal satisfying strategy,
-								( isEqualSatisfiedScore &&
-								isEqualDissatisfiedScore &&
+		// else if equal satisfying strategy,
+		( isEqualSatisfiedScore &&
+		isEqualDissatisfiedScore &&
 
-								// Get lowest blocking score, else if equal blocking score, Get lowest not blocking score
-								( isLowerBlockingScore ||
-								( isEqualBlockingScore &&
-								isLowerNotBlockingScore ) ) ) );
+		// Get lowest blocking score, else if equal blocking score, Get lowest not blocking score
+		( isLowerBlockingScore ||
+		( isEqualBlockingScore &&
+		isLowerNotBlockingScore ) ) ) )
+			boolResult.booleanValue = true;
 
 		return boolResult;
 		}
@@ -190,8 +191,6 @@ class ScoreList : private List
 
 	ScoreList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		// Private constructed variables
-
 		initializeListVariables( ADMIN_SCORE_LIST_SYMBOL, "ScoreList", globalVariables, inputOutput, myWordItem );
 		}
 
@@ -300,10 +299,8 @@ class ScoreList : private List
 		{
 		ScoreItem *firstScoreItem;
 
-		if( ( firstScoreItem = firstActiveScoreItem() ) != NULL )
-			return firstScoreItem->firstPossibilityScoreItem();
-
-		return NULL;
+		return ( ( firstScoreItem = firstActiveScoreItem() ) != NULL ?
+				firstScoreItem->firstPossibilityScoreItem() : NULL );
 		}
 
 	BoolResultType checkScores( bool isInverted, unsigned short solveStrategyParameter, unsigned int oldSatisfiedScore, unsigned int newSatisfiedScore, unsigned int oldDissatisfiedScore, unsigned int newDissatisfiedScore, unsigned int oldNotBlockingScore, unsigned int newNotBlockingScore, unsigned int oldBlockingScore, unsigned int newBlockingScore )

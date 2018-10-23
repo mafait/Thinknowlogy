@@ -1,17 +1,17 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 Paul has a mother, called Anna.
-Display the justification report about Anna.
-Display the justification report about Paul.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
 Paul is a man.
-Display the justification report about Paul.
+#Dev#Display the justification report about Paul.
 Paul is a son.
-Display the justification report about Paul.
-# Extra checks
-John is the father and Anna is the mother of Paul, Joe and Laura.
-Joe is a daughter.
-Display the justification report about John.
-Display the justification report about Anna.
-Display the justification report about Paul.
-Display the justification report about Joe.
-Display the justification report about Laura.
+#Dev#Display the justification report about Paul.
+#Dev## Extra checks
+#Dev#John is the father and Anna is the mother of Paul, Joe and Laura.
+#Dev#Joe is a daughter.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
+#Dev#Display the justification report about Joe.
+#Dev#Display the justification report about Laura.
 # To continue, click button «Clear your mind.» or «Restart.».

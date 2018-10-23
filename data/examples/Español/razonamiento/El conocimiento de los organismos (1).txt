@@ -52,7 +52,7 @@ Cada humano es un vertebrado.
 Cada humano es un mamífero.
 Juan es un humano.
 # Informe de justificación
-Mostrar el informe de justificación sobre los vertebrados.
-Mostrar el informe de justificación sobre los mamíferos.
-Mostrar el informe de justificación sobre los cocodrilos.
-Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre los vertebrados.
+#Dev#Mostrar el informe de justificación sobre los mamíferos.
+#Dev#Mostrar el informe de justificación sobre los cocodrilos.
+#Dev#Mostrar el informe de justificación sobre Juan.

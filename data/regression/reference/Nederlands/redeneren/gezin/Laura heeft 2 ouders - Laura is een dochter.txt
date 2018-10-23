@@ -45,13 +45,13 @@
 < Jan heeft mogelijk een dochter, genaamd Laura.
 < Jan is waarschijnlijk een persoon.
 < Anna heeft waarschijnlijk een kind, genaamd Laura.
-< Anna heeft mogelijk een dochter, genaamd Laura.
 < Anna is waarschijnlijk een persoon.
 < Anna is waarschijnlijk een vrouw.
 < Anna is waarschijnlijk geen man.
 < Anna is waarschijnlijk vrouwelijk.
 < Anna is waarschijnlijk een moeder van Laura.
 < Anna is waarschijnlijk geen vader.
+< Anna heeft mogelijk een dochter, genaamd Laura.
 * 
 * Mijn vragen:
 < Is Laura een meisje of een vrouw?

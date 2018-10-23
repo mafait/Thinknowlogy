@@ -4,11 +4,11 @@ Chaque père est un homme.
 Chaque mère est une femme.
 
 Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Amélie.
-Affichez le rapport de justification sur Pascal.
-Affichez le rapport de justification sur Julien.
-Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Julien.
+#Dev#Affichez le rapport de justification sur Lorraine.
 Pascal est un fils.
 Julien est un fils.
 Lorraine est une fille.

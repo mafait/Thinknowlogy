@@ -1,6 +1,0 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
-Olivier est un parent.
-Olivier est un père.
-Est Olivier le père de Pascal?
-Est Olivier un parent de Julien?
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

@@ -1,7 +1,7 @@
 ﻿/*	Class:		WordEndingResultType
  *	Purpose:	To return word ending variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,24 +25,12 @@ class WordEndingResultType
 	{
 	// Protected variables
 
-	protected byte result;
+	protected byte result = Constants.RESULT_OK;
 
-	protected boolean hasFoundWordEnding;
+	protected boolean hasFoundWordEnding = false;
 
-	protected int wordStringLength;
-	protected String wordString;
-
-	// Constructor
-
-	WordEndingResultType()
-		{
-		result = Constants.RESULT_OK;
-
-		hasFoundWordEnding = false;
-
-		wordStringLength = 0;
-		wordString = null;
-		}
+	protected int wordStringLength = 0;
+	protected String wordString = null;
 	};
 
 /*************************************************************************

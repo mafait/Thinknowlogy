@@ -1,7 +1,7 @@
 ﻿/*	Class:		ConditionResultType
  *	Purpose:	To return selection condition variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,37 +31,18 @@ class ConditionResultType
 	protected:
 	// Protected variables
 
-	signed char result;
+	signed char result = RESULT_OK;
 
-	bool isConditionPartSatisfied;
+	bool isConditionPartSatisfied = false;
 
-	unsigned int oldSatisfiedScore;
-	unsigned int newSatisfiedScore;
-	unsigned int oldDissatisfiedScore;
-	unsigned int newDissatisfiedScore;
-	unsigned int oldNotBlockingScore;
-	unsigned int newNotBlockingScore;
-	unsigned int oldBlockingScore;
-	unsigned int newBlockingScore;
-
-	protected:
-	// Constructor
-
-	ConditionResultType()
-		{
-		result = RESULT_OK;
-
-		isConditionPartSatisfied = false;
-
-		oldSatisfiedScore = NO_SCORE;
-		newSatisfiedScore = NO_SCORE;
-		oldDissatisfiedScore = NO_SCORE;
-		newDissatisfiedScore = NO_SCORE;
-		oldNotBlockingScore = NO_SCORE;
-		newNotBlockingScore = NO_SCORE;
-		oldBlockingScore = NO_SCORE;
-		newBlockingScore = NO_SCORE;
-		}
+	unsigned int oldSatisfiedScore = NO_SCORE;
+	unsigned int newSatisfiedScore = NO_SCORE;
+	unsigned int oldDissatisfiedScore = NO_SCORE;
+	unsigned int newDissatisfiedScore = NO_SCORE;
+	unsigned int oldNotBlockingScore = NO_SCORE;
+	unsigned int newNotBlockingScore = NO_SCORE;
+	unsigned int oldBlockingScore = NO_SCORE;
+	unsigned int newBlockingScore = NO_SCORE;
 	};
 
 /*************************************************************************

@@ -1,6 +1,6 @@
 /*	Class:		Console
  *	Purpose:	To create the GUI and to process the events
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -1198,7 +1198,6 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		String actionCommandString;
 		String currentDirectoryString;
 		String currentLanguageString;
-		String currentUserNounString;
 		String selectedFilePath;
 
 		isSubMenuChanged_ = false;
@@ -1265,16 +1264,11 @@ class Console extends JPanel implements ActionListener, ComponentListener
 													if( adminItem_ != null &&
 													currentLanguageWordItem_ != null &&
 													( currentDirectoryString = currentDirectory.toString() ) != null &&
-													( currentLanguageString = currentLanguageWordItem_.anyWordTypeString() ) != null )
-														{
-														currentUserNounString = ( adminItem_.isDeveloperTheCurrentUser() ||
-																				GlobalVariables.predefinedNounUserWordItem == null ? null : GlobalVariables.predefinedNounUserWordItem.wordTypeString( false, Constants.WORD_TYPE_NOUN_SINGULAR ) );
-
-														// No file selected yet with current language
-														if( currentDirectoryString.indexOf( currentLanguageString ) < 0 ) 
-															// Select current language in file chooser
-															fileChooser_ = new JFileChooser( GlobalVariables.currentPathStringBuffer + Constants.FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING + currentLanguageString + ( currentUserNounString == null ? Constants.EMPTY_STRING : ( Constants.SLASH_STRING + currentUserNounString ) ) );
-														}
+													( currentLanguageString = currentLanguageWordItem_.anyWordTypeString() ) != null &&
+													// No file selected yet with current language
+													currentDirectoryString.indexOf( currentLanguageString ) < 0 ) 
+														// Select current language in file chooser
+														fileChooser_ = new JFileChooser( GlobalVariables.currentPathStringBuffer + Constants.FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING + currentLanguageString );
 													} 
 		
 												if( fileChooser_.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )

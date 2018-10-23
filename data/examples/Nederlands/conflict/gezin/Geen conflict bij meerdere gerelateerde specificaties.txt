@@ -1,4 +1,4 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Jan is een vader en een zoon.
-Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Jan.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

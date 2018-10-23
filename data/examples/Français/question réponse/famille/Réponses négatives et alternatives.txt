@@ -1,4 +1,4 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
 Est Olivier une mère?
 Est Olivier la mère de Pascal?
@@ -8,9 +8,9 @@ Est Olivier le père de Armand?
 Est Guillaume le père de Pascal?
 Fabrice est un père.
 Est Fabrice le père de Pascal?
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Pascal.
-Affichez le rapport de justification sur Guillaume.
-Affichez le rapport de justification sur Fabrice.
-Affichez le rapport de justification sur Armand.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Guillaume.
+#Dev#Affichez le rapport de justification sur Fabrice.
+#Dev#Affichez le rapport de justification sur Armand.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

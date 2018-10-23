@@ -1,7 +1,7 @@
 ﻿/*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -168,14 +168,18 @@ class FileList extends List
 
 	protected BufferedReader currentReadFile()
 		{
-		FileItem currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == null ? null : currentFileItem.readFile() );
+		FileItem currentFileItem;
+
+		return ( ( currentFileItem = firstActiveFileItem() ) != null ?
+				currentFileItem.readFile() : null );
 		}
 
 	protected BufferedWriter currentWriteFile()
 		{
-		FileItem currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == null ? null : currentFileItem.writeFile() );
+		FileItem currentFileItem;
+
+		return ( ( currentFileItem = firstActiveFileItem() ) != null ?
+				currentFileItem.writeFile() : null );
 		}
 
 	protected FileResultType openFile( boolean isAddingSubPath, boolean isInfoFile, boolean isTestFile, boolean isReportingErrorIfFileDoesNotExist, String defaultSubPathString, String fileNameString, String testOutputFileSubPathString, String testReferenceFileSubPathString )

@@ -1,7 +1,7 @@
 ﻿/*	Class:		FindSpecificationResultType
  *	Purpose:	To return possessive specification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -21,7 +21,7 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#include "WordItem.h"
+#include "WordItem.h"		// "WordItem.h" is required by some compilers
 
 class FindSpecificationResultType
 	{
@@ -31,19 +31,10 @@ class FindSpecificationResultType
 	protected:
 	// Protected variables
 
-	signed char result;
-	SpecificationItem *foundOppositePossessiveDefinitionSpecificationItem;
-	SpecificationItem *foundPossessiveDefinitionSpecificationItem;
+	signed char result = RESULT_OK;
 
-	protected:
-	// Constructor
-
-	FindSpecificationResultType()
-		{
-		result = RESULT_OK;
-		foundOppositePossessiveDefinitionSpecificationItem = NULL;
-		foundPossessiveDefinitionSpecificationItem = NULL;
-		}
+	SpecificationItem *foundOppositePossessiveDefinitionSpecificationItem = NULL;
+	SpecificationItem *foundPossessiveDefinitionSpecificationItem = NULL;
 	};
 
 /*************************************************************************

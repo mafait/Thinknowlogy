@@ -1,6 +1,6 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the English language
-# Version: Thinknowlogy 2018r2 (Natural Intelligence)
+# Version: Thinknowlogy 2018r3 (Deep Magic)
 #----------------------------------------------------------------------------
 # Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at http://mafait.org/contact/
@@ -21,10 +21,10 @@
 #Java#:111		"\"."
 
 # Java console (main menu)
-#Java#:200		"Read the file "English/user/programming/Connect-Four"."
-#Java#:201		"Read the file "English/user/programming/tower of Hanoi"."
-#Java#:202		"Read the file "English/user/reasoning/Scientific challenge"."
-#Java#:203		"Read the file "English/user/reasoning/family/family definition"."
+#Java#:200		"Read the file "English/programming/Connect-Four"."
+#Java#:201		"Read the file "English/programming/tower of Hanoi"."
+#Java#:202		"Read the file "English/reasoning/Scientific challenge"."
+#Java#:203		"Read the file "English/reasoning/family/family definition"."
 #Java#:204		"<programming>"
 #Java#:205		"<reasoning>"
 #Java#:206		"<definitions>"

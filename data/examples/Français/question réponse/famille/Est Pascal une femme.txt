@@ -1,4 +1,4 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Pascal est un fils de Olivier et Amélie.
 Est Pascal un homme?
 Est Pascal une femme?

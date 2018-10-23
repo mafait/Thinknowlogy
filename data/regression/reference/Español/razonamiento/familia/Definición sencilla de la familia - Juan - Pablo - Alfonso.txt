@@ -1,0 +1,33 @@
+﻿* 
+* Mis conclusiones:
+< Un padre y un hijo son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia.
+< Pablo tiene un padre, llamado Juan.
+* 
+* Mis suposiciones:
+< Juan tiene probablemente un hijo, llamado Pablo.
+< Pablo es probablemente hijo de Juan.
+< Pablo es probablemente parte de una familia.
+< 
+* 
+* Mis suposiciones que se concluyen:
+< Pablo es parte de una familia.
+* 
+* Mis conclusiones:
+< Alfonso tiene un padre, llamado Pablo.
+* 
+* Mis suposiciones:
+< Pablo tiene probablemente un hijo, llamado Alfonso.
+< Alfonso es probablemente hijo de Pablo.
+< Alfonso es probablemente parte de una familia.
+< 
+* 
+* Mis suposiciones que se confirman:
+< Alfonso es probablemente hijo de Pablo.
+* 
+* Mis suposiciones que se concluyen:
+< Alfonso es parte de una familia.
+< 

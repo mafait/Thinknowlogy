@@ -5,5 +5,5 @@ Iedere vader is een man.
 Iedere moeder is een vrouw.
 
 Jan is een vader.
-Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Jan.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

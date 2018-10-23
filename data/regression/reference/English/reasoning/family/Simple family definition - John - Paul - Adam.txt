@@ -1,0 +1,33 @@
+﻿* 
+* My conclusions:
+< A parent and a child are part of every family.
+< 
+* 
+* My conclusions:
+< John is part of a family.
+< Paul has a parent, called John.
+* 
+* My assumptions:
+< John has probably a child, called Paul.
+< Paul is probably a child of John.
+< Paul is probably part of a family.
+< 
+* 
+* My assumptions that are concluded:
+< Paul is part of a family.
+* 
+* My conclusions:
+< Adam has a parent, called Paul.
+* 
+* My assumptions:
+< Paul has probably a child, called Adam.
+< Adam is probably a child of Paul.
+< Adam is probably part of a family.
+< 
+* 
+* My assumptions that are confirmed:
+< Adam is probably a child of Paul.
+* 
+* My assumptions that are concluded:
+< Adam is part of a family.
+< 

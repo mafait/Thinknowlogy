@@ -1,4 +1,4 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Paul is een man.
 Johan is een man.
 Anna is een vrouw.

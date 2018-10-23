@@ -1,7 +1,7 @@
 ﻿Juan es el padre de Pablo.
 Juan es posiblemente el padre de Pablo.
-Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Pablo.
 Jorge era el padre de Alfonso.
 Jorge era posiblemente el padre de Alfonso.
-Mostrar el informe de justificación sobre Alfonso.
+#Dev#Mostrar el informe de justificación sobre Alfonso.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

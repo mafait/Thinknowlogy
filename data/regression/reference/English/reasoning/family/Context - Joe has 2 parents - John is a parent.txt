@@ -127,10 +127,10 @@
 * 
 * My assumptions:
 < Paul is probably a child of John. Because:
+<	- John has probably 3 children, called Joe, Paul and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- John is a parent of Joe, Paul and Laura.
-* 	and:
-<	- John has probably 3 children, called Joe, Paul and Laura.
 * 	and:
 <	- Every family has parents and children.
 <	- Paul has a parent, called John.

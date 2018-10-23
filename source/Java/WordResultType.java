@@ -1,7 +1,7 @@
 ﻿/*	Class:		WordResultType
  *	Purpose:	To return word variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,24 +25,12 @@ class WordResultType
 	{
 	// Protected variables
 
-	protected byte result;
+	protected byte result = Constants.RESULT_OK;
 
-	protected WordItem createdWordItem;
-	protected WordItem foundWordItem;
+	protected WordItem createdWordItem = null;
+	protected WordItem foundWordItem = null;
 
-	protected WordTypeItem foundWordTypeItem;
-
-	// Constructor
-
-	WordResultType()
-		{
-		result = Constants.RESULT_OK;
-
-		createdWordItem = null;
-		foundWordItem = null;
-
-		foundWordTypeItem = null;
-		}
+	protected WordTypeItem foundWordTypeItem = null;
 	};
 
 /*************************************************************************

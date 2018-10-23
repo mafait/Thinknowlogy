@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,17 +29,17 @@ class AdminQuery
 
 	// Private constructed variables
 
-	size_t queryCommandStringPosition_;
-	unsigned int queryItemNr_;
-	unsigned int querySentenceNr_;
+	size_t queryCommandStringPosition_ = 0;
+	unsigned int queryItemNr_ = NO_ITEM_NR;
+	unsigned int querySentenceNr_ = NO_SENTENCE_NR;
+
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminQuery";
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
-
-	AdminItem *adminItem_;
-	GlobalVariables *globalVariables_;
-	InputOutput *inputOutput_;
+	AdminItem *adminItem_ = NULL;
+	GlobalVariables *globalVariables_ = NULL;
+	InputOutput *inputOutput_ = NULL;
 
 
 	// Private functions
@@ -257,16 +257,6 @@ class AdminQuery
 	AdminQuery( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
-
-		// Private constructed variables
-
-		queryCommandStringPosition_ = 0;
-		queryItemNr_ = NO_ITEM_NR;
-		querySentenceNr_ = NO_SENTENCE_NR;
-
-		// Private initialized variables
-
-		strcpy( moduleNameString_, "AdminQuery" );
 
 		// Checking private initialized variables
 

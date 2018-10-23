@@ -84,9 +84,9 @@
 < José no es probablemente una hija.
 < Luisa es probablemente parte de una familia.
 < Luisa es posiblemente hija de Juan y Ana.
+< Luisa no es posiblemente un hijo.
 < Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
-< Luisa no es posiblemente un hijo.
 < Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
 < Ana tiene posiblemente una hija, llamada Luisa.
 * 

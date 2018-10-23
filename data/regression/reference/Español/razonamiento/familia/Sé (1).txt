@@ -49,6 +49,9 @@
 < Peyo tiene probablemente un hijo.
 < 
 * 
+* Mis suposiciones anteriores que tienen palabras de relación ahora:
+< Juan tiene probablemente un hijo.
+* 
 * Mis conclusiones:
 < José es parte de una familia.
 < José no es una hija.

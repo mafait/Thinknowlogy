@@ -1,8 +1,0 @@
-﻿Read the file "English/user/reasoning/family/family definition".
-Is John a father?
-Is John the father of Paul?
-Is Anna a father or a mother?
-Is Anna a mother?
-Anna is a mother.
-Is Anna the mother of Paul?
-# To continue, click button «Clear your mind.» or «Restart.».

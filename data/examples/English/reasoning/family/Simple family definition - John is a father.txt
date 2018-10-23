@@ -5,5 +5,5 @@ Every father is a man.
 Every mother is a woman.
 
 John is a father.
-Display the justification report about John.
+#Dev#Display the justification report about John.
 # To continue, click button «Clear your mind.» or «Restart.».

@@ -1,4 +1,4 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Cada hombre es un hijo.
 Cada mujer es un hijo.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

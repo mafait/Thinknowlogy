@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -38,16 +38,16 @@ class GrammarItem : private Item
 
 	// Private initialized variables
 
-	bool isDefinitionStart_;
-	bool isNewStart_;
-	bool isOptionStart_;
-	bool isChoiceStart_;
-	bool isSkipOptionForWriting_;
+	bool isDefinitionStart_ = false;
+	bool isNewStart_ = false;
+	bool isOptionStart_ = false;
+	bool isChoiceStart_ = false;
+	bool isSkipOptionForWriting_ = false;
 
-	unsigned short grammarParameter_;
-	unsigned short grammarWordTypeNr_;
+	unsigned short grammarParameter_ = NO_GRAMMAR_PARAMETER;
+	unsigned short grammarWordTypeNr_ = NO_WORD_TYPE_NR;
 
-	char *grammarString_;
+	char *grammarString_ = NULL;
 
 
 	protected:
@@ -403,9 +403,10 @@ class GrammarItem : private Item
 
 	GrammarItem *nextWordEndingGrammarItem()
 		{
-		GrammarItem *nextEndingGrammarItem = nextGrammarItem();
+		GrammarItem *nextEndingGrammarItem;
 
-		return ( nextEndingGrammarItem == NULL || nextEndingGrammarItem->grammarParameter() != grammarParameter_ ? NULL : nextEndingGrammarItem );
+		return ( ( nextEndingGrammarItem = nextGrammarItem() ) != NULL &&
+				nextEndingGrammarItem->grammarParameter() == grammarParameter_ ? nextEndingGrammarItem : NULL );
 		}
 	};
 #endif

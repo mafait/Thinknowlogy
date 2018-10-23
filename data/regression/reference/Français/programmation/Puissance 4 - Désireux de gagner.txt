@@ -177,5 +177,5 @@ mouvement->	-A-B-C-D-E-F-G-
 
 Ce jeu est le mien.
 
-Pour jouer à nouveau, cliquez sur le bouton «Videz votre esprit.», et puis «Lirez le fichier "Français/utilisateur/programmation/Puissance 4".».
+Pour jouer à nouveau, cliquez sur le bouton «Videz votre esprit.», et puis «Lirez le fichier "Français/programmation/Puissance 4".».
 

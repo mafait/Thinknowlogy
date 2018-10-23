@@ -7,8 +7,8 @@ De Verenigde Staten heeft een president, genaamd Barack Obama.
 # In 2017 werd George W. Bush opnieuw ingehuldigd als president van de Verenigde Staten.
 George Bush is de president van de Verenigde Staten.
 Toon informatie over de presidenten.
-Toon de verantwoordingsrapportage over de Verenigde Staten.
+#Dev#Toon de verantwoordingsrapportage over de Verenigde Staten.
 # In 2021 werd Barack Obama opnieuw ingehuldigd als president van de Verenigde Staten.
 Barack Obama is de president van de Verenigde Staten.
 Toon informatie over de presidenten.
-Toon de verantwoordingsrapportage over de Verenigde Staten.
+#Dev#Toon de verantwoordingsrapportage over de Verenigde Staten.

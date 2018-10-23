@@ -127,10 +127,10 @@
 * 
 * Mes hypothèses:
 < Pascal est probablement un enfant de Olivier. En raison:
+<	- Olivier a probablement 3 enfants, appelés Julien, Pascal et Lorraine.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est un parent de Julien, Pascal et Lorraine.
-* 	et:
-<	- Olivier a probablement 3 enfants, appelés Julien, Pascal et Lorraine.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal a un parent, appelé Olivier.

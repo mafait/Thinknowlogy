@@ -1,7 +1,7 @@
 ﻿/*	Class:		GrammarResultType
  *	Purpose:	To return grammar variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,22 +31,12 @@ class GrammarResultType
 	friend class GrammarList;
 	friend class Item;
 	friend class List;
-	friend class WordItem;
 
 	protected:
 	// Protected variables
 
-	signed char result;
-	GrammarItem *grammarItem;
-
-	protected:
-	// Constructor
-
-	GrammarResultType()
-		{
-		result = RESULT_OK;
-		grammarItem = NULL;
-		}
+	signed char result = RESULT_OK;
+	GrammarItem *grammarItem = NULL;
 	};
 
 /*************************************************************************

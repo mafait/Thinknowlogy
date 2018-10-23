@@ -1,4 +1,4 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 Paul is a man.
 Joe is a man.
 Anna is a woman.

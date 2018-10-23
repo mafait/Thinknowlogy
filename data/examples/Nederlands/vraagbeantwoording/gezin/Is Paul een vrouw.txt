@@ -1,4 +1,4 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Paul is een zoon van Jan en Anna.
 Is Paul een man?
 Is Paul een woman?

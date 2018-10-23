@@ -45,13 +45,13 @@
 < Olivier a possible une fille, appelée Lorraine.
 < Olivier est probablement une personne.
 < Amélie a probablement un enfant, appelée Lorraine.
-< Amélie a possible une fille, appelée Lorraine.
 < Amélie est probablement une personne.
 < Amélie est probablement une femme.
 < Amélie n'est probablement pas un homme.
 < Amélie est probablement féminine.
 < Amélie est probablement une mère de Lorraine.
 < Amélie n'est probablement pas un père.
+< Amélie a possible une fille, appelée Lorraine.
 * 
 * Mes questions:
 < Est Lorraine une jeune-fille ou une femme?

@@ -1,7 +1,7 @@
 ﻿/*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,20 +28,19 @@ class FileItem extends Item
 	{
 	// Private initialized variables
 
-	private boolean isInfoFile_;
-	private boolean isTestFile_;
+	private boolean isInfoFile_ = false;
+	private boolean isTestFile_ = false;
 
-	private String readFileNameString_;
-	private String writeFileNameString_;
+	private String readFileNameString_ = null;
+	private String writeFileNameString_ = null;
 
-	private BufferedReader readFile_;
-	private BufferedWriter writeFile_;
+	private BufferedReader readFile_ = null;
+	private BufferedWriter writeFile_ = null;
 
 	// Constructor
 
 	protected FileItem( boolean isInfoFile, boolean isTestFile, String readFileNameString, String writeFileNameString, BufferedReader readFile, BufferedWriter writeFile, List myList, WordItem myWordItem )
 		{
-
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
 		// Private initialized variables
@@ -70,7 +69,7 @@ class FileItem extends Item
 		if( readFileNameString_ != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )

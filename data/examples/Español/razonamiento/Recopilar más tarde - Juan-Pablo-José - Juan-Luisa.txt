@@ -1,6 +1,6 @@
 ﻿Juan es el padre de Pablo y José.
 Juan es el padre de Luisa.
-Mostrar el informe de justificación sobre Pablo.
-Mostrar el informe de justificación sobre José.
-Mostrar el informe de justificación sobre Luisa.
+#Dev#Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Mostrar el informe de justificación sobre Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

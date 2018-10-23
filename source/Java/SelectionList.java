@@ -1,7 +1,7 @@
 ﻿/*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -128,12 +128,10 @@ class SelectionList extends List
 
 	protected SelectionItem firstSelectionItem( WordItem solveWordItem )
 		{
-		SelectionItem firstSelectionItem = firstActiveSelectionItem();
+		SelectionItem firstSelectionItem;
 
-		if( firstSelectionItem != null )
-			return firstSelectionItem.firstSelectionItem( solveWordItem );
-
-		return null;
+		return ( ( firstSelectionItem = firstActiveSelectionItem() ) != null ?
+				firstSelectionItem.firstSelectionItem( solveWordItem ) : null );
 		}
 
 	protected SelectionItem firstConditionSelectionItem( int conditionSentenceNr )
@@ -154,23 +152,28 @@ class SelectionList extends List
 
 	protected DuplicateResultType checkForDuplicateCondition()
 		{
+		int duplicateConditionSentenceNr = GlobalVariables.currentSentenceNr;
 		DuplicateResultType duplicateResult = new DuplicateResultType();
 
-		duplicateResult.duplicateConditionSentenceNr = GlobalVariables.currentSentenceNr;
-
 		do	{
-			if( ( duplicateResult.duplicateConditionSentenceNr = getLowerSentenceNr( duplicateResult.duplicateConditionSentenceNr ) ) > Constants.NO_SENTENCE_NR &&
-			( duplicateResult = checkForDuplicateSelectionPart( duplicateResult.duplicateConditionSentenceNr ) ).result != Constants.RESULT_OK )
-				return addDuplicateResultError( 1, "I failed to check if the alternative selection part is duplicate" );
+			if( ( duplicateConditionSentenceNr = getLowerSentenceNr( duplicateConditionSentenceNr ) ) > Constants.NO_SENTENCE_NR )
+				{
+				if( ( duplicateResult = checkForDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result != Constants.RESULT_OK )
+					return addDuplicateResultError( 1, "I failed to check if the alternative selection part is duplicate" );
+
+				duplicateConditionSentenceNr = duplicateResult.duplicateConditionSentenceNr;
+				}
 			}
 		while( !duplicateResult.hasFoundDuplicateSelection &&
-		duplicateResult.duplicateConditionSentenceNr > Constants.NO_SENTENCE_NR );
+		duplicateConditionSentenceNr > Constants.NO_SENTENCE_NR );
 
+		duplicateResult.duplicateConditionSentenceNr = duplicateConditionSentenceNr;
 		return duplicateResult;
 		}
 
 	protected DuplicateResultType checkForDuplicateSelectionPart( int duplicateConditionSentenceNr )
 		{
+		boolean hasFoundDuplicateSelection = true;
 		String currentSpecificationString;
 		String searchSpecificationString;
 		SelectionItem currentSelectionItem = null;
@@ -182,8 +185,6 @@ class SelectionList extends List
 
 		if( duplicateConditionSentenceNr >= GlobalVariables.currentSentenceNr )
 			return startDuplicateResultError( 1, "The given duplicate sentence number is equal or higher than the current sentence number" );
-
-		duplicateResult.hasFoundDuplicateSelection = true;
 
 		while( searchSelectionItem != null &&
 		searchSelectionItem.activeSentenceNr() >= duplicateConditionSentenceNr )
@@ -206,15 +207,15 @@ class SelectionList extends List
 
 						if( currentSpecificationString != null &&
 						searchSpecificationString != null )
-							duplicateResult.hasFoundDuplicateSelection = ( currentSpecificationString.equals( searchSpecificationString ) );
+							hasFoundDuplicateSelection = ( currentSpecificationString.equals( searchSpecificationString ) );
 						else
 							{
 							if( currentSpecificationString != null ||
 							searchSpecificationString != null )
-								duplicateResult.hasFoundDuplicateSelection = false;
+								hasFoundDuplicateSelection = false;
 							}
 
-						if( duplicateResult.hasFoundDuplicateSelection )
+						if( hasFoundDuplicateSelection )
 							{
 							duplicateResult.duplicateConditionSentenceNr = searchSelectionItem.creationSentenceNr();
 
@@ -229,11 +230,11 @@ class SelectionList extends List
 						}
 					else
 						{
-						duplicateResult.hasFoundDuplicateSelection = false;
+						hasFoundDuplicateSelection = false;
 						searchSelectionItem = null;
 						}
 					}
-				while( duplicateResult.hasFoundDuplicateSelection &&
+				while( hasFoundDuplicateSelection &&
 				currentSelectionItem != null &&
 				searchSelectionItem != null );
 				}
@@ -241,6 +242,7 @@ class SelectionList extends List
 				searchSelectionItem = searchSelectionItem.nextSelectionItem();
 			}
 
+		duplicateResult.hasFoundDuplicateSelection = hasFoundDuplicateSelection;
 		return duplicateResult;
 		}
 	};

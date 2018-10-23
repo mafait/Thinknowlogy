@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,13 +31,13 @@ class ContextItem : private Item
 
 	// Private initialized variables
 
-	unsigned short contextWordTypeNr_;
-	unsigned short specificationWordTypeNr_;
+	unsigned short contextWordTypeNr_ = NO_WORD_TYPE_NR;
+	unsigned short specificationWordTypeNr_ = NO_WORD_TYPE_NR;
 
-	unsigned int contextNr_;
-	unsigned int spanishAmbiguousCollectionNr_;
+	unsigned int contextNr_ = NO_CONTEXT_NR;
+	unsigned int spanishAmbiguousCollectionNr_ = NO_COLLECTION_NR;
 
-	WordItem *specificationWordItem_;
+	WordItem *specificationWordItem_ = NULL;
 
 
 	protected:

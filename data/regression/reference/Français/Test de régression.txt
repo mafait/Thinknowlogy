@@ -20,7 +20,7 @@
  Affichez la garantie.
 ------------------------------------------------------------------------------
  Exemples fichiers: * Utilisez le bouton <exemples>
-                 ou voir le dossier: Thinknowlogy2018r1/data/examples/Français/utilisateur/
+                 ou voir le dossier: Thinknowlogy2018r1/data/examples/Français/
  Fondamental:        * dossier: Thinknowlogy2018r1/documents/
  Projet:	       * dossier: Thinknowlogy2018r1/documents/design/
  Captures d'écran:   * dossier: Thinknowlogy2018r1/screenshots/Français/

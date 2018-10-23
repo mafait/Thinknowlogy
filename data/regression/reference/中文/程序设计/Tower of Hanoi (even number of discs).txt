@@ -1,0 +1,80 @@
+﻿
+The number of discs is even. So, the rule order is: Move first from start to swap, then from start to goal.
+
+Moved a disc from start to swap:
+* 起始杆:	D, C, B.
+* 交换杆:	A.
+* 目标杆:	.
+
+Moved a disc from start to goal:
+* 起始杆:	D, C.
+* 交换杆:	A.
+* 目标杆:	B.
+
+Moved a disc from swap to goal:
+* 起始杆:	D, C.
+* 交换杆:	.
+* 目标杆:	B, A.
+
+Moved a disc from start to swap:
+* 起始杆:	D.
+* 交换杆:	C.
+* 目标杆:	B, A.
+
+Moved a disc from goal to start:
+* 起始杆:	D, A.
+* 交换杆:	C.
+* 目标杆:	B.
+
+Moved a disc from goal to swap:
+* 起始杆:	D, A.
+* 交换杆:	C, B.
+* 目标杆:	.
+
+Moved a disc from start to swap:
+* 起始杆:	D.
+* 交换杆:	C, B, A.
+* 目标杆:	.
+
+Moved a disc from start to goal:
+* 起始杆:	.
+* 交换杆:	C, B, A.
+* 目标杆:	D.
+
+Moved a disc from swap to goal:
+* 起始杆:	.
+* 交换杆:	C, B.
+* 目标杆:	D, A.
+
+Moved a disc from swap to start:
+* 起始杆:	B.
+* 交换杆:	C.
+* 目标杆:	D, A.
+
+Moved a disc from goal to start:
+* 起始杆:	B, A.
+* 交换杆:	C.
+* 目标杆:	D.
+
+Moved a disc from swap to goal:
+* 起始杆:	B, A.
+* 交换杆:	.
+* 目标杆:	D, C.
+
+Moved a disc from start to swap:
+* 起始杆:	B.
+* 交换杆:	A.
+* 目标杆:	D, C.
+
+Moved a disc from start to goal:
+* 起始杆:	.
+* 交换杆:	A.
+* 目标杆:	D, C, B.
+
+Moved a disc from swap to goal:
+* 起始杆:	.
+* 交换杆:	.
+* 目标杆:	D, C, B, A.
+
+Done.
+To start the puzzle again, click button «清除你的想法» and then «阅读文档"中文/程序设计/汉诺塔"。»

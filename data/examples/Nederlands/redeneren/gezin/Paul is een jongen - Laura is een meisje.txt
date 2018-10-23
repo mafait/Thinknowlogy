@@ -1,8 +1,8 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Paul is een jongen.
 Laura is een meisje.
-Toon de verantwoordingsrapportage over Paul.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Paul is een man.
 Laura is een vrouw.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

@@ -1,7 +1,7 @@
 ﻿/*	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -76,25 +76,6 @@ class WriteList : private List
 
 
 	// Protected functions
-
-	signed char checkGrammarItemForUsage( GrammarItem *unusedGrammarItem )
-		{
-		WriteItem *searchWriteItem = firstActiveWriteItem();
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkGrammarItemForUsage";
-
-		if( unusedGrammarItem == NULL )
-			return startError( functionNameString, "The given unused grammar item is undefined" );
-
-		while( searchWriteItem != NULL )
-			{
-			if( searchWriteItem->startOfChoiceOrOptionGrammarItem() == unusedGrammarItem )
-				return startError( functionNameString, "The start of choice or option grammar item is still in use" );
-
-			searchWriteItem = searchWriteItem->nextWriteItem();
-			}
-
-		return RESULT_OK;
-		}
 
 	signed char createWriteItem( bool isSkipped, unsigned short grammarLevel, GrammarItem *startOfChoiceOrOptionGrammarItem )
 		{

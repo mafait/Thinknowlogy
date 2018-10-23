@@ -1,4 +1,0 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
-Peter is een vader.
-# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».
-Peter is geen vader.

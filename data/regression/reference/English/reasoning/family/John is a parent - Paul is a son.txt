@@ -135,10 +135,10 @@
 <	- Every child is a son or a daughter.
 <	- Paul is a son.
 < Paul is probably a child of John. Because:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- John is a parent of Paul, Joe and Laura.
-* 	and:
-<	- John has probably 3 children, called Paul, Joe and Laura.
 * 	and:
 <	- Every family has parents and children.
 <	- Paul has a parent, called John.

@@ -1,4 +1,0 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
-Pascal est le fils de Olivier.
-Est Olivier un père?
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

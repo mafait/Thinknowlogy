@@ -1,6 +1,6 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Est Olivier la mère de Pascal?
-Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Olivier.
 Est Olivier le père de Pascal?
-Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Olivier.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

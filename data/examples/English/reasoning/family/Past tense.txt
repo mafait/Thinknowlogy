@@ -1,5 +1,5 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 James was the father of Peter.
-Display the justification report about James.
-Display the justification report about Peter.
+#Dev#Display the justification report about James.
+#Dev#Display the justification report about Peter.
 # To continue, click button «Clear your mind.» or «Restart.».

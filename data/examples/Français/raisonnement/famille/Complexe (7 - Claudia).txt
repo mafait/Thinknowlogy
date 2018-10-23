@@ -1,4 +1,4 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
 Pascal a un père, appelé Olivier.
 Lorraine a une mère, appelée Amélie.
@@ -7,18 +7,18 @@ Julien a un père, appelé Olivier.
 Pascal est un fils.
 Lorraine est un enfant de Olivier et Amélie.
 Pierre a un père, appelé Olivier.
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Amélie.
-Affichez le rapport de justification sur Pascal.
-Affichez le rapport de justification sur Julien.
-Affichez le rapport de justification sur Lorraine.
-Affichez le rapport de justification sur Pierre.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Julien.
+#Dev#Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Pierre.
 Claudia a une mère, appelée Amélie.
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Amélie.
-Affichez le rapport de justification sur Pascal.
-Affichez le rapport de justification sur Julien.
-Affichez le rapport de justification sur Lorraine.
-Affichez le rapport de justification sur Pierre.
-Affichez le rapport de justification sur Claudia.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Julien.
+#Dev#Affichez le rapport de justification sur Lorraine.
+#Dev#Affichez le rapport de justification sur Pierre.
+#Dev#Affichez le rapport de justification sur Claudia.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

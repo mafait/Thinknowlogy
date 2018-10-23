@@ -20,7 +20,7 @@
  呈现保证。
 ------------------------------------------------------------------------------
  Example files:	* Use button <更多的例子>
-              or see folder: Thinknowlogy2018r1/data/examples/中文/用户/
+              or see folder: Thinknowlogy2018r1/data/examples/中文/
  Fundamental:	* folder: Thinknowlogy2018r1/documents/
  Design:	* folder: Thinknowlogy2018r1/documents/design/
  Screenshots:	* folder: Thinknowlogy2018r1/screenshots/中文/

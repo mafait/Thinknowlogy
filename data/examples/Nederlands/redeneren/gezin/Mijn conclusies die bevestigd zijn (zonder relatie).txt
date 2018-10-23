@@ -1,11 +1,11 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Jan is een ouder.
 Anna is een ouder.
 Jan is een vader.
 Anna is een moeder.
 Jan is een man.
 Anna is een vrouw.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

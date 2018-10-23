@@ -54,10 +54,10 @@
 < José es posiblemente parte de una familia.
 < José es posiblemente una persona.
 < Luisa es posiblemente hija de Juan y Ana.
+< Luisa no es posiblemente un hijo.
 < Luisa es posiblemente parte de una familia.
 < Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
-< Luisa no es posiblemente un hijo.
 < Ana es probablemente una persona.
 < Ana tiene posiblemente una hija, llamada Luisa.
 * 
@@ -175,8 +175,8 @@
 * 
 * Mis suposiciones:
 < Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa. Porque:
-<	- Pablo es probablemente hijo de Juan y Ana.
 <	- José es hijo de Juan y Ana.
+<	- Pablo es probablemente hijo de Juan y Ana.
 <	- Luisa es posiblemente hija de Juan y Ana.
 * 	y:
 <	- Juan es el padre de Pablo, José y Luisa.
@@ -228,8 +228,8 @@
 * 
 * Mis suposiciones:
 < Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa. Porque:
-<	- Pablo es probablemente hijo de Juan y Ana.
 <	- José es hijo de Juan y Ana.
+<	- Pablo es probablemente hijo de Juan y Ana.
 <	- Luisa es posiblemente hija de Juan y Ana.
 * 	y:
 <	- Ana es la madre de Pablo, José y Luisa.
@@ -266,11 +266,11 @@
 * 
 * Mis suposiciones:
 < Pablo es posiblemente una persona. Porque:
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 	y:
-<	- Pablo tiene un padre, llamado Juan.
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 	y:
@@ -337,6 +337,10 @@
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 	y:
+<	- José tiene 2 padres, llamados Juan y Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Un hijo es probablemente una persona.
+* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
@@ -384,12 +388,12 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Luisa" es probablemente femenino.
-< Luisa es puede-ser una persona. Porque:
-<	- Luisa es posiblemente hija de Juan y Ana.
-<	- Una hija es probablemente una persona.
 < Luisa no es posiblemente un hijo. Porque:
 <	- Cada hijo es un hijo o una hija.
 <	- Luisa es posiblemente hija de Juan y Ana.
+< Luisa es puede-ser una persona. Porque:
+<	- Luisa es posiblemente hija de Juan y Ana.
+<	- Una hija es probablemente una persona.
 < 
 * Sé.
 * 
@@ -434,6 +438,9 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Luisa" es probablemente femenino.
+< Luisa no es posiblemente un hijo. Porque:
+<	- Cada hijo es un hijo o una hija.
+<	- Luisa es posiblemente hija de Juan y Ana.
 < Luisa es probablemente parte de una familia. Porque:
 <	- Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
 <	- Hijos son parte de cada familia.
@@ -446,9 +453,6 @@
 < Luisa es puede-ser una persona. Porque:
 <	- Luisa es posiblemente hija de Juan y Ana.
 <	- Una hija es probablemente una persona.
-< Luisa no es posiblemente un hijo. Porque:
-<	- Cada hijo es un hijo o una hija.
-<	- Luisa es posiblemente hija de Juan y Ana.
 < 
 * 
 * Mis conclusiones son confirmadas:
@@ -474,13 +478,11 @@
 * Mis suposiciones que se concluyen:
 < Juan tiene una hija, llamada Luisa.
 < Ana tiene una hija, llamada Luisa.
+< Luisa no es un hijo.
 < Luisa es parte de una familia.
 * 
 * Mis suposiciones que se ajustan:
 < Luisa es probablemente una persona.
-* 
-* Mis suposiciones que se concluyen:
-< Luisa no es un hijo.
 < 
 * 
 * Su información es más específica que mi suposición anterior:
@@ -488,10 +490,14 @@
 * 
 * Mis suposiciones que se confirman:
 < Pablo es probablemente hijo de Juan y Ana.
-< Pablo es probablemente un hijo.
 * 
 * Mis suposiciones que se concluyen:
 < Pablo es parte de una familia.
+* 
+* Mis suposiciones que se confirman:
+< Pablo es probablemente un hijo.
+* 
+* Mis suposiciones que se concluyen:
 < Pablo no es una niña, una mujer y un hombre.
 < Pablo no es una hija.
 * 
@@ -512,6 +518,8 @@
 * Mis conclusiones son confirmadas:
 < José tiene una madre, llamada Ana.
 < 
+* Sé.
+* 
 * Sé.
 * 
 * Sé.

@@ -1,9 +1,9 @@
 ﻿Affichez "------------------------------------------------------------------------------".
 #C++#Affichez " \~{languageName}\t\t\t\t\t* Changer la langue".
-#C++#Affichez " Lirez le fichier \"Français/programmation/utilisateur/Puissance 4\".".
-#C++#Affichez " Lirez le fichier \"Français/programmation/utilisateur/Tours de Hanoï\".".
-#C++#Affichez " Lirez le fichier \"Français/raisonnement/utilisateur/raisonnement/Défi scientifique\".".
-#C++#Affichez " Lirez le fichier \"Français/raisonnement/utilisateur/famille/définition de famille\".".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Puissance 4\".".
+#C++#Affichez " Lirez le fichier \"Français/programmation/Tours de Hanoï\".".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/raisonnement/Défi scientifique\".".
+#C++#Affichez " Lirez le fichier \"Français/raisonnement/famille/définition de famille\".".
 #Java#Affichez " Bouton <programmation> utiliser pour apprendre la programmation en langage naturel.".
 #Java#Affichez " Bouton <raisonnement> utiliser pour en apprendre davantage sur le raisonnement en langage naturel.".
 Affichez "------------------------------------------------------------------------------".
@@ -24,9 +24,9 @@ Affichez " Affichez le droit d'auteur.".
 Affichez " Affichez la licence-GPLv2.".
 Affichez " Affichez la garantie.".
 Affichez "------------------------------------------------------------------------------".
-#C++#Affichez " Exemples fichiers: * dossier: Thinknowlogy2018r1/data/examples/Français/utilisateur/".
+#C++#Affichez " Exemples fichiers: * dossier: Thinknowlogy2018r1/data/examples/Français/".
 #Java#Affichez " Exemples fichiers: * Utilisez le bouton <exemples>".
-#Java#Affichez "                 ou voir le dossier: Thinknowlogy2018r1/data/examples/Français/utilisateur/".
+#Java#Affichez "                 ou voir le dossier: Thinknowlogy2018r1/data/examples/Français/".
 Affichez " Fondamental:        * dossier: Thinknowlogy2018r1/documents/".
 Affichez " Projet:	       * dossier: Thinknowlogy2018r1/documents/design/".
 Affichez " Captures d'écran:   * dossier: Thinknowlogy2018r1/screenshots/Français/".

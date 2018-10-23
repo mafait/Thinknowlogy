@@ -1,4 +1,4 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Pascal a un père, appelé Olivier.
 Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
 Julien a un père, appelé Olivier.

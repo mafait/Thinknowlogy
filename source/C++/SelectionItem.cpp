@@ -1,7 +1,7 @@
 ﻿/*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -34,38 +34,38 @@ class SelectionItem : private Item
 
 	// Private initialized variables
 
-	bool isAction_;
-	bool isAssignedOrEmpty_;
-	bool isInactiveAssignment_;
-	bool isArchivedAssignment_;
-	bool isFirstComparisonPart_;
-	bool isNewStart_;
-	bool isNegative_;
-	bool isPossessive_;
-	bool isSpecificationGeneralization_;
-	bool isUniqueUserRelation_;
-	bool isValueSpecification_;
+	bool isAction_ = false;
+	bool isAssignedOrEmpty_ = false;
+	bool isInactiveAssignment_ = false;
+	bool isArchivedAssignment_ = false;
+	bool isFirstComparisonPart_ = false;
+	bool isNewStart_ = false;
+	bool isNegative_ = false;
+	bool isPossessive_ = false;
+	bool isSpecificationGeneralization_ = false;
+	bool isUniqueUserRelation_ = false;
+	bool isValueSpecification_ = false;
 
-	unsigned short assumptionLevel_;
-	unsigned short selectionLevel_;
-	unsigned short imperativeVerbParameter_;
-	unsigned short prepositionParameter_;
+	unsigned short assumptionLevel_ = NO_ASSIGNMENT_LEVEL;
+	unsigned short selectionLevel_ = NO_SELECTION_LEVEL;
+	unsigned short imperativeVerbParameter_ = NO_IMPERATIVE_PARAMETER;
+	unsigned short prepositionParameter_ = NO_PREPOSITION_PARAMETER;
 
-	unsigned short generalizationWordTypeNr_;
-	unsigned short specificationWordTypeNr_;
-	unsigned short relationWordTypeNr_;
+	unsigned short generalizationWordTypeNr_ = NO_WORD_TYPE_NR;
+	unsigned short specificationWordTypeNr_ = NO_WORD_TYPE_NR;
+	unsigned short relationWordTypeNr_ = NO_WORD_TYPE_NR;
 
-	unsigned int generalizationContextNr_;
-	unsigned int specificationContextNr_;
-	unsigned int relationContextNr_;
+	unsigned int generalizationContextNr_ = NO_CONTEXT_NR;
+	unsigned int specificationContextNr_ = NO_CONTEXT_NR;
+	unsigned int relationContextNr_ = NO_CONTEXT_NR;
 
-	unsigned int nContextRelations_;
+	unsigned int nContextRelations_ = 0;
 
-	WordItem *generalizationWordItem_;
-	WordItem *specificationWordItem_;
-	WordItem *relationWordItem_;
+	WordItem *generalizationWordItem_ = NULL;
+	WordItem *specificationWordItem_ = NULL;
+	WordItem *relationWordItem_ = NULL;
 
-	char *specificationString_;
+	char *specificationString_ = NULL;
 
 
 	// Private functions
@@ -93,7 +93,7 @@ class SelectionItem : private Item
 	protected:
 	// Protected constructed variables
 
-	bool isConditionCheckedForSolving;
+	bool isConditionCheckedForSolving = false;
 
 
 	// Constructor
@@ -141,8 +141,6 @@ class SelectionItem : private Item
 		specificationWordItem_ = specificationWordItem;
 		relationWordItem_ = relationWordItem;
 
-		specificationString_ = NULL;
-
 		if( specificationString != NULL )
 			{
 			if( ( specificationStringLength = strlen( specificationString ) ) < MAX_SENTENCE_STRING_LENGTH )
@@ -155,10 +153,6 @@ class SelectionItem : private Item
 			else
 				startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, NULL, "The given specification string is too long" );
 			}
-
-		// Protected constructed variables
-
-		isConditionCheckedForSolving = false;
 		}
 
 	~SelectionItem()
@@ -647,22 +641,20 @@ class SelectionItem : private Item
 
 	SelectionItem *nextConditionItem( unsigned short executionLevel, unsigned int conditionSentenceNr )
 		{
-		if( nextSelectionItem() != NULL &&
-		nextSelectionItem()->selectionLevel_ <= executionLevel &&
-		nextSelectionItem()->creationSentenceNr() == conditionSentenceNr )
-			return nextSelectionItem();
+		SelectionItem *_nextSelectionItem;
 
-		return NULL;
+		return ( ( _nextSelectionItem = nextSelectionItem() ) != NULL &&
+				_nextSelectionItem->selectionLevel_ <= executionLevel &&
+				_nextSelectionItem->creationSentenceNr() == conditionSentenceNr ? _nextSelectionItem : NULL );
 		}
 
 	SelectionItem *nextExecutionItem( unsigned short executionLevel, unsigned int executionSentenceNr )
 		{
-		if( nextSelectionItem() != NULL &&
-		nextSelectionItem()->selectionLevel_ == executionLevel &&
-		nextSelectionItem()->creationSentenceNr() == executionSentenceNr )
-			return nextSelectionItem();
+		SelectionItem *_nextSelectionItem;
 
-		return NULL;
+		return ( ( _nextSelectionItem = nextSelectionItem() ) != NULL &&
+				_nextSelectionItem->selectionLevel_ == executionLevel &&
+				_nextSelectionItem->creationSentenceNr() == executionSentenceNr ? _nextSelectionItem : NULL );
 		}
 
 	WordItem *generalizationWordItem()

@@ -1,4 +1,0 @@
-﻿* 
-* Mes conclusions:
-< Sien bateau est un bateau à rames.
-< 

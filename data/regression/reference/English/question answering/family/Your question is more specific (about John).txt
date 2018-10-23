@@ -82,11 +82,11 @@
 * 
 * My assumptions:
 < John is probably a parent of Paul. Because:
+<	- Paul has probably a parent, called John.
+* 	and:
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
 <	- John has a son, called Paul.
-* 	and:
-<	- Paul has probably a parent, called John.
 * 	and:
 <	- Every family has parents and children.
 <	- Paul is probably a child of John.

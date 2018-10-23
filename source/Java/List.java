@@ -1,6 +1,6 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -24,21 +24,21 @@ class List
 	{
 	// Private constructed variables
 
-	private int highestSentenceNrInList_;
+	private int highestSentenceNrInList_ = Constants.NO_SENTENCE_NR;
 
-	private Item activeList_;
-	private Item inactiveList_;
-	private Item archivedList_;
-	private Item replacedList_;
-	private Item deletedList_;
+	private Item activeList_ = null;
+	private Item inactiveList_ = null;
+	private Item archivedList_ = null;
+	private Item replacedList_ = null;
+	private Item deletedList_ = null;
 
-	private Item nextListItem_;
+	private Item nextListItem_ = null;
 
 	// Private initialized variables
 
-	private char listChar_;
+	private char listChar_ = Constants.QUERY_NO_LIST_CHAR;
 
-	private WordItem myWordItem_;
+	private WordItem myWordItem_ = null;
 
 	// Private methods
 
@@ -234,6 +234,10 @@ class List
 
 				case Constants.QUERY_REPLACED_CHAR:
 					replacedList_ = removeItem.nextItem;
+					break;
+
+				case Constants.QUERY_DELETED_CHAR:
+					deletedList_ = removeItem.nextItem;
 					break;
 
 				default:
@@ -541,23 +545,6 @@ class List
 
 	protected List()
 		{
-		// Private constructed variables
-
-		highestSentenceNrInList_ = Constants.NO_SENTENCE_NR;
-
-		activeList_ = null;
-		inactiveList_ = null;
-		archivedList_ = null;
-		replacedList_ = null;
-		deletedList_ = null;
-
-		nextListItem_ = null;
-
-		// Private initialized variables
-
-		listChar_ = Constants.QUERY_NO_LIST_CHAR;
-
-		myWordItem_ = null;
 		}
 
 
@@ -783,9 +770,9 @@ class List
 
 	protected void initializeListVariables( char listChar, String classNameString, WordItem myWordItem )
 		{
-		listChar_ = listChar;
+		// Private initialized variables
 
-		myWordItem_ = myWordItem;
+		listChar_ = listChar;
 
 		// Checking private initialized variables
 
@@ -797,36 +784,7 @@ class List
 		{
 		Item searchItem = deletedList_;
 
-		if( replacedList_ != null )
-			{
-			// Move replaced list to deleted list
-			if( searchItem == null )
-				deletedList_ = replacedList_;
-			else
-				{
-				// Get the tail of the deleted list
-				searchItem = searchItem.tailOfList();
-				searchItem.nextItem = replacedList_;
-				}
-
-			replacedList_ = null;
-			}
-
-		if( archivedList_ != null )
-			{
-			// Move archived list to deleted list
-			if( searchItem == null )
-				deletedList_ = archivedList_;
-			else
-				{
-				// Get the tail of the deleted list
-				searchItem = searchItem.tailOfList();
-				searchItem.nextItem = archivedList_;
-				}
-
-			archivedList_ = null;
-			}
-
+		// ReadList may have inactive items
 		if( inactiveList_ != null )
 			{
 			// Move inactive list to deleted list
@@ -842,6 +800,7 @@ class List
 			inactiveList_ = null;
 			}
 
+		// Temporary lists have active items
 		if( activeList_ != null )
 			{
 			// Move active list to deleted list
@@ -1338,7 +1297,7 @@ class List
 		return globalHighestItemNr;
 		}
 
-	protected int highestFoundSentenceNrInList( int globalHighestFoundSentenceNr, int maxSentenceNr )
+	protected int highestFoundSentenceNrInList( boolean isIncludingDeletedItems, int globalHighestFoundSentenceNr, int maxSentenceNr )
 		{
 		int localHighestFoundSentenceNr = Constants.NO_SENTENCE_NR;
 		int tempSentenceNr;
@@ -1356,6 +1315,11 @@ class List
 			localHighestFoundSentenceNr = tempSentenceNr;
 
 		if( ( searchItem = firstReplacedItem() ) != null &&
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
+
+		if( isIncludingDeletedItems &&
+		( searchItem = firstDeletedItem() ) != null &&
 		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
 			localHighestFoundSentenceNr = tempSentenceNr;
 

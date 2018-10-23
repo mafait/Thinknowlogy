@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		To read and analyze sentences
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,54 +25,54 @@ class AdminReadSentence
 	{
 	// Private constructed variables
 
-	private boolean hasAnyChangeBeenMadeByThisSentence_;
-	private boolean hasFemaleUserSpecificationWord_;
-	private boolean isAssignment_;
-	private boolean isInactiveAssignment_;
-	private boolean isArchivedAssignment_;
-	private boolean isCharacteristicFor_;
-	private boolean isChineseCurrentLanguage_;
-	private boolean isConditional_;
-	private boolean isEveryGeneralization_;
-	private boolean isExclusiveSpecification_;
-	private boolean isNegative_;
-	private boolean isPartOf_;
-	private boolean isPossessive_;
-	private boolean isSpecific_;
-	private boolean isSpecificationGeneralization_;
-	private boolean isUncountableGeneralizationNoun_;
-	private boolean isUniqueUserRelation_;
-	private boolean isUserImperativeSentence_;
-	private boolean wasPreviousCommandUndoOrRedo_;
+		// Private constructed variables
 
-//	short answerParameter_;
-	private short currentParseWordOrderNr_;
-	private short prepositionParameter_;
-	private short previousGeneralizationWordTypeNr_;
-	private short questionParameter_;
-	private short selectionListNr_;
-	private short userAssumptionLevel_;
+	private boolean hasAnyChangeBeenMadeByThisSentence_ = false;
+	private boolean hasFemaleUserSpecificationWord_ = false;
+	private boolean isAssignment_ = false;
+	private boolean isInactiveAssignment_ = false;
+	private boolean isArchivedAssignment_ = false;
+	private boolean isCharacteristicFor_ = false;
+	private boolean isChineseCurrentLanguage_ = false;
+	private boolean isConditional_ = false;
+	private boolean isEveryGeneralization_ = false;
+	private boolean isExclusiveSpecification_ = false;
+	private boolean isNegative_ = false;
+	private boolean isPartOf_ = false;
+	private boolean isPossessive_ = false;
+	private boolean isSpecific_ = false;
+	private boolean isSpecificationGeneralization_ = false;
+	private boolean isUncountableGeneralizationNoun_ = false;
+	private boolean isUniqueUserRelation_ = false;
+	private boolean isUserImperativeSentence_ = false;
+	private boolean wasPreviousCommandUndoOrRedo_ = false;
 
-	private int generalizationContextNr_;
-	private int specificationContextNr_;
+	private short currentParseWordOrderNr_ = Constants.NO_ORDER_NR;
+	private short prepositionParameter_ = Constants.NO_PREPOSITION_PARAMETER;
+	private short previousGeneralizationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
+	private short questionParameter_ = Constants.NO_QUESTION_PARAMETER;
+	private short selectionListNr_ = Constants.NO_LIST_NR;
+	private short userAssumptionLevel_ = Constants.NO_ASSUMPTION_LEVEL;
 
-	private ReadItem currentReadItem_;
-	private ReadItem linkedGeneralizationReadItem_;
-	private ReadItem startGeneralizationReadItem_;
-	private ReadItem endGeneralizationReadItem_;
-	private ReadItem startSpecificationReadItem_;
-	private ReadItem endSpecificationReadItem_;
-	private ReadItem startRelationReadItem_;
-	private ReadItem endRelationReadItem_;
+	private int generalizationContextNr_ = Constants.NO_CONTEXT_NR;
+	private int specificationContextNr_ = Constants.NO_CONTEXT_NR;
 
-	private WordItem previousGeneralizationWordItem_;
+	private ReadItem currentReadItem_ = null;
+	private ReadItem linkedGeneralizationReadItem_ = null;
+	private ReadItem startGeneralizationReadItem_ = null;
+	private ReadItem endGeneralizationReadItem_ = null;
+	private ReadItem startSpecificationReadItem_ = null;
+	private ReadItem endSpecificationReadItem_ = null;
+	private ReadItem startRelationReadItem_ = null;
+	private ReadItem endRelationReadItem_ = null;
 
+	private WordItem previousGeneralizationWordItem_ = null;
+
+	private String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
-	private String moduleNameString_;
-
-	private AdminItem adminItem_;
+	private AdminItem adminItem_ = null;
 
 
 	// Private methods
@@ -80,7 +80,7 @@ class AdminReadSentence
 	private void checkForChangesMadeByThisSentence()
 		{
 		int currentSentenceNr = GlobalVariables.currentSentenceNr;
-		int highestFoundSentenceNr = adminItem_.highestFoundSentenceNr( false, currentSentenceNr );
+		int highestFoundSentenceNr = adminItem_.highestFoundSentenceNr( false, false, currentSentenceNr );
 
 		hasAnyChangeBeenMadeByThisSentence_ = ( highestFoundSentenceNr >= currentSentenceNr );
 		}
@@ -406,9 +406,9 @@ class AdminReadSentence
 			{
 			if( wasPreviousCommandUndoOrRedo_ )
 				{
+				wasPreviousCommandUndoOrRedo_ = false;
 				// From this point, redo is not possible anymore
 				clearReplacingInfoInSpecificationWords();
-				wasPreviousCommandUndoOrRedo_ = false;
 				}
 
 			isConditional = ( isSelection ||
@@ -1034,9 +1034,9 @@ class AdminReadSentence
 			{
 			if( wasPreviousCommandUndoOrRedo_ )
 				{
+				wasPreviousCommandUndoOrRedo_ = false;
 				// From this point, redo is not possible anymore
 				clearReplacingInfoInSpecificationWords();
-				wasPreviousCommandUndoOrRedo_ = false;
 				}
 
 			if( GlobalVariables.currentLanguageNr != originalLanguageNr &&
@@ -1122,9 +1122,9 @@ class AdminReadSentence
 				wasPreviousCommandUndoOrRedo_ = true;
 			else
 				{
+				wasPreviousCommandUndoOrRedo_ = false;
 				// From this point, redo is not possible anymore
 				clearReplacingInfoInSpecificationWords();
-				wasPreviousCommandUndoOrRedo_ = false;
 				}
 
 			if( adminItem_.executeImperative( true, Constants.NO_LIST_NR, Constants.NO_WORD_PARAMETER, startGeneralizationReadItem_.wordParameter(), Constants.NO_WORD_TYPE_NR, Constants.MAX_PROGRESS, startGeneralizationReadItem_.readString, startGeneralizationReadItem_.readWordItem(), null, startRelationReadItem_, endRelationReadItem_, null, null ) != Constants.RESULT_OK )
@@ -1217,7 +1217,6 @@ class AdminReadSentence
 		isUncountableGeneralizationNoun_ = false;
 		isUniqueUserRelation_ = false;
 
-//		answerParameter_ = Constants.NO_ANSWER_PARAMETER;
 		currentParseWordOrderNr_ = Constants.NO_ORDER_NR;
 		prepositionParameter_ = Constants.NO_PREPOSITION_PARAMETER;
 		questionParameter_ = Constants.NO_QUESTION_PARAMETER;
@@ -1608,54 +1607,6 @@ class AdminReadSentence
 
 	protected AdminReadSentence( AdminItem adminItem )
 		{
-		// Private constructed variables
-
-		hasAnyChangeBeenMadeByThisSentence_ = false;
-		hasFemaleUserSpecificationWord_ = false;
-		isAssignment_ = false;
-		isInactiveAssignment_ = false;
-		isArchivedAssignment_ = false;
-		isCharacteristicFor_ = false;
-		isChineseCurrentLanguage_ = false;
-		isConditional_ = false;
-		isEveryGeneralization_ = false;
-		isExclusiveSpecification_ = false;
-		isNegative_ = false;
-		isPartOf_ = false;
-		isPossessive_ = false;
-		isSpecific_ = false;
-		isSpecificationGeneralization_ = false;
-		isUncountableGeneralizationNoun_ = false;
-		isUniqueUserRelation_ = false;
-		isUserImperativeSentence_ = false;
-		wasPreviousCommandUndoOrRedo_ = false;
-
-//		answerParameter_ = Constants.NO_ANSWER_PARAMETER;
-		currentParseWordOrderNr_ = Constants.NO_ORDER_NR;
-		prepositionParameter_ = Constants.NO_PREPOSITION_PARAMETER;
-		previousGeneralizationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
-		questionParameter_ = Constants.NO_QUESTION_PARAMETER;
-		selectionListNr_ = Constants.NO_LIST_NR;
-		userAssumptionLevel_ = Constants.NO_ASSUMPTION_LEVEL;
-
-		generalizationContextNr_ = Constants.NO_CONTEXT_NR;
-		specificationContextNr_ = Constants.NO_CONTEXT_NR;
-
-		currentReadItem_ = null;
-		linkedGeneralizationReadItem_ = null;
-		startGeneralizationReadItem_ = null;
-		endGeneralizationReadItem_ = null;
-		startSpecificationReadItem_ = null;
-		endSpecificationReadItem_ = null;
-		startRelationReadItem_ = null;
-		endRelationReadItem_ = null;
-
-		previousGeneralizationWordItem_ = null;
-
-		// Private initialized variables
-
-		moduleNameString_ = this.getClass().getName();
-
 		// Checking private initialized variables
 
 		if( ( adminItem_ = adminItem ) == null )

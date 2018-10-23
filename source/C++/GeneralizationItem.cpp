@@ -3,7 +3,7 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -30,6 +30,7 @@
 class GeneralizationItem : private Item
 	{
 	friend class AdminReadFile;
+	friend class AdminReasoningNew;
 	friend class AdminReasoningOld;
 	friend class AdminSpecification;
 	friend class AdminWrite;
@@ -41,12 +42,12 @@ class GeneralizationItem : private Item
 
 	// Private initialized variables
 
-	bool isLanguageWord_;
-	bool isRelation_;
+	bool isLanguageWord_ = false;
+	bool isRelation_ = false;
 
-	unsigned short languageNr_;
-	unsigned short specificationWordTypeNr_;
-	unsigned short generalizationWordTypeNr_;
+	unsigned short languageNr_ = NO_LANGUAGE_NR;
+	unsigned short specificationWordTypeNr_ = NO_WORD_TYPE_NR;
+	unsigned short generalizationWordTypeNr_ = NO_WORD_TYPE_NR;
 
 	WordItem *generalizationWordItem_;
 

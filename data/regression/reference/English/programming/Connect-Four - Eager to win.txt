@@ -177,5 +177,5 @@ set->	-A-B-C-D-E-F-G-
 
 This game is mine.
 
-To play again, click button «Clear your mind.» and then «Read the file "English/user/programming/Connect-Four".».
+To play again, click button «Clear your mind.» and then «Read the file "English/programming/Connect-Four".».
 

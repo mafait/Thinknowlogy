@@ -1,7 +1,7 @@
 ﻿/*	Class:		CreateAndAssignResultType
  *	Purpose:	To return specification variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,26 +25,13 @@ class CreateAndAssignResultType
 	{
 	// Protected variables
 
-	protected byte result;
+	protected byte result = Constants.RESULT_OK;
 
-	protected JustificationItem createdJustificationItem;
+	protected JustificationItem createdJustificationItem = null;
 
-	protected SpecificationItem createdSpecificationItem;
-	protected SpecificationItem foundSpecificationItem;
-	protected SpecificationItem replacedAssignmentItem;
-
-	// Constructor
-
-	CreateAndAssignResultType()
-		{
-		result = Constants.RESULT_OK;
-
-		createdJustificationItem = null;
-
-		createdSpecificationItem = null;
-		foundSpecificationItem = null;
-		replacedAssignmentItem = null;
-		}
+	protected SpecificationItem createdSpecificationItem = null;
+	protected SpecificationItem foundSpecificationItem = null;
+	protected SpecificationItem replacedAssignmentItem = null;
 	};
 
 /*************************************************************************

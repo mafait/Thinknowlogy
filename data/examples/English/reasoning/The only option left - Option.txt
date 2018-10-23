@@ -8,5 +8,5 @@ His option is not 5.
 His option is not 7.
 His option is not 8.
 His option is not 9.
-Display the justification report about option.
+#Dev#Display the justification report about option.
 # To continue, click button «Clear your mind.» or «Restart.».

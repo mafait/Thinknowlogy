@@ -1,7 +1,7 @@
 ﻿/*	Class:		ShortResultType
  *	Purpose:	To return specification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -30,29 +30,17 @@ class ShortResultType
 	friend class AdminImperative;
 	friend class AdminReadCreateWords;
 	friend class AdminReadSentence;
-	friend class AdminSpecification;
 	friend class Item;
 	friend class JustificationItem;
-	friend class JustificationList;
 	friend class List;
 	friend class ReadList;
 	friend class SpecificationItem;
-	friend class WordWrite;
 
 	protected:
 	// Protected variables
 
-	signed char result;
-	unsigned short shortValue;
-
-	protected:
-	// Constructor
-
-	ShortResultType()
-		{
-		result = RESULT_OK;
-		shortValue = 0;
-		}
+	signed char result = RESULT_OK;
+	unsigned short shortValue = 0;
 	};
 #endif
 

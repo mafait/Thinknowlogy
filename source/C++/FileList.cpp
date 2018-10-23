@@ -1,7 +1,7 @@
 ﻿/*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -185,6 +185,7 @@ class FileList : private List
 
 	signed char closeCurrentFile( FileItem *closeFileItem )
 		{
+		FILE *currentFile;
 		FileItem *currentFileItem = firstActiveFileItem();
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "closeCurrentFile";
 
@@ -195,15 +196,15 @@ class FileList : private List
 		if( currentFileItem != closeFileItem )
 			return startError( functionNameString, "The given file item isn't the current file" );
 
-		if( currentFileItem->readFile() != NULL )
+		if( ( currentFile = currentFileItem->readFile() ) != NULL )
 			{
-			fclose( currentFileItem->readFile() );
+			fclose( currentFile );
 			currentFileItem->clearReadFile();
 			}
 
-		if( currentFileItem->writeFile() != NULL )
+		if( ( currentFile = currentFileItem->writeFile() ) != NULL )
 			{
-			fclose( currentFileItem->writeFile() );
+			fclose( currentFile );
 			currentFileItem->clearWriteFile();
 			}
 
@@ -215,14 +216,18 @@ class FileList : private List
 
 	FILE *currentReadFile()
 		{
-		FileItem *currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == NULL ? NULL : currentFileItem->readFile() );
+		FileItem *currentFileItem;
+
+		return ( ( currentFileItem = firstActiveFileItem() ) != NULL ?
+				currentFileItem->readFile() : NULL );
 		}
 
 	FILE *currentWriteFile()
 		{
-		FileItem *currentFileItem = firstActiveFileItem();
-		return ( currentFileItem == NULL ? NULL : currentFileItem->writeFile() );
+		FileItem *currentFileItem;
+
+		return ( ( currentFileItem = firstActiveFileItem() ) != NULL ?
+				currentFileItem->writeFile() : NULL );
 		}
 
 	FileResultType openFile( bool isAddingSubPath, bool isInfoFile, bool isTestFile, bool isReportingErrorIfFileDoesNotExist, const char *defaultSubPathString, const char *fileNameString, const char *testOutputFileSubPathString, const char *testReferenceFileSubPathString )

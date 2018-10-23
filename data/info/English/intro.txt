@@ -5,7 +5,8 @@ Display " Thinknowlogy is the world's most advanced automated reasoner. Being ba
 Display " implements reasoning constructions that are not described by scientists yet:".
 Display " * Despite exhaustive research, the theory of evolution still hasn't provided a".
 Display " satisfactory explanation for the origin of intelligence, language and laws of nature.".
-Display " Let alone, how they are related;".
+Display " Let alone, how they are related. Moreover, none of the phenomena that are exclusive".
+Display " to the theory of evolution – or its derivative theories – is applicable to daily life;".
 Display " * According to the biblical world view, God has created laws of nature to make his creation".
 Display " run like clockwork. Being based on Natural Laws of Intelligence embedded in Grammar,".
 #C++#Display " only Thinknowlogy implements the intelligent function of words like definite article \"the\",".
@@ -27,10 +28,10 @@ Display " I defy anyone to beat this automated reasoner: http://mafait.org/chall
 Display "------------------------------------------------------------------------------".
 #C++#Display " Help.\t\t\t\t\t\t\t* Display help info".
 #C++#Display " \~{languageName}\t\t\t\t\t* Change language".
-#C++#Display " Read the file \"English/user/programming/Connect-Four\".\t* Game Connect-Four".
-#C++#Display " Read the file \"English/user/programming/tower of Hanoi\". * Solve a puzzle".
-#C++#Display " Read the file \"English/user/reasoning/Scientific challenge\". * Challenge".
-#C++#Display " Read the file \"English/user/reasoning/family/family definition\". * Reasoning".
+#C++#Display " Read the file \"English/programming/Connect-Four\".\t* Game Connect-Four".
+#C++#Display " Read the file \"English/programming/tower of Hanoi\". * Solve a puzzle".
+#C++#Display " Read the file \"English/reasoning/Scientific challenge\". * Challenge".
+#C++#Display " Read the file \"English/reasoning/family/family definition\". * Reasoning".
 #Java#Display " Use button <programming> to learn about programming in natural language.".
 #Java#Display " Use button <reasoning> to learn about reasoning in natural language.".
 Display "------------------------------------------------------------------------------".

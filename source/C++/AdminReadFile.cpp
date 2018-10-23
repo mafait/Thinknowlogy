@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the grammar, user-interface and example files
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -35,45 +35,43 @@ class AdminReadFile
 
 	// Private constructed variables
 
-	bool hasClosedFileDueToError_;
-	bool hasFoundDifferentTestResult_;
-	bool isPredefinedMultipleWord_;
-	bool wasLoginCommand_;
+	bool hasClosedFileDueToError_ = false;
+	bool hasFoundDifferentTestResult_ = false;
+	bool isPredefinedMultipleWord_ = false;
+	bool wasLoginCommand_ = false;
 
-	unsigned short testFileNr_;
+	unsigned short testFileNr_ = 0;
 
-	unsigned int firstSentenceNrOfCurrentUser_;
+	unsigned int firstSentenceNrOfCurrentUser_ = NO_SENTENCE_NR;
 
-	clock_t startTime_;
+	clock_t startTime_ = 0;
 
-	WordItem *currentUserWordItem_;
-	WordItem *predefinedAdjectiveBusyWordItem_;
-	WordItem *predefinedAdjectiveDoneWordItem_;
-	WordItem *predefinedAdjectiveInvertedWordItem_;
-	WordItem *predefinedNounLanguageWordItem_;
-	WordItem *predefinedNounPasswordWordItem_;
-	WordItem *predefinedNounSolveLevelWordItem_;
-	WordItem *predefinedNounSolveMethodWordItem_;
-	WordItem *predefinedNounSolveStrategyWordItem_;
-	WordItem *predefinedNounStartupLanguageWordItem_;
-	WordItem *predefinedNounUserWordItem_;
-	WordItem *predefinedVerbLoginWordItem_;
+	WordItem *currentUserWordItem_ = NULL;
+	WordItem *predefinedAdjectiveBusyWordItem_ = NULL;
+	WordItem *predefinedAdjectiveDoneWordItem_ = NULL;
+	WordItem *predefinedAdjectiveInvertedWordItem_ = NULL;
+	WordItem *predefinedNounLanguageWordItem_ = NULL;
+	WordItem *predefinedNounPasswordWordItem_ = NULL;
+	WordItem *predefinedNounSolveLevelWordItem_ = NULL;
+	WordItem *predefinedNounSolveMethodWordItem_ = NULL;
+	WordItem *predefinedNounSolveStrategyWordItem_ = NULL;
+	WordItem *predefinedNounStartupLanguageWordItem_ = NULL;
+	WordItem *predefinedNounUserWordItem_ = NULL;
+	WordItem *predefinedVerbLoginWordItem_ = NULL;
 
+	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminReadFile";
 
 	// Private initialized variables
 
-	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH];
-
-	AdminItem *adminItem_;
-	GlobalVariables *globalVariables_;
-	InputOutput *inputOutput_;
+	AdminItem *adminItem_ = NULL;
+	GlobalVariables *globalVariables_ = NULL;
+	InputOutput *inputOutput_ = NULL;
 
 
 	// Private functions
 
 	void cleanupDeletedItems()
 		{
-		unsigned int firstSentenceNr;
 		unsigned int startRemoveSentenceNr = NO_SENTENCE_NR;
 
 		if( !hasClosedFileDueToError_ &&
@@ -96,7 +94,10 @@ class AdminReadFile
 				startRemoveSentenceNr = globalVariables_->removeSentenceNr;
 				}
 			}
-		while( globalVariables_->nDeletedItems > 0 );
+		while( globalVariables_->nDeletedItems > 0 &&
+		// Avoid triggering on deleted items in temporary lists
+		// Less efficient alternative: Include deleted items in decrement sentence number and item number
+		( firstSentenceNrOfCurrentUser() + 1 ) != startRemoveSentenceNr );
 
 		if( globalVariables_->hasDisplayedWarning )
 			globalVariables_->hasDisplayedWarning = false;
@@ -106,19 +107,17 @@ class AdminReadFile
 			// Previous deleted sentence might be empty
 			startRemoveSentenceNr != globalVariables_->removeSentenceNr &&
 			// All items of this sentence are deleted
-			adminItem_->highestFoundSentenceNr( true, startRemoveSentenceNr ) < startRemoveSentenceNr )
+			adminItem_->highestFoundSentenceNr( false, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
 				{
 				// So, decrement all higher sentence numbers
 				adminItem_->decrementSentenceNrs( startRemoveSentenceNr );
 
-				firstSentenceNr = firstSentenceNrOfCurrentUser();
-
 				// First user sentence
-				if( startRemoveSentenceNr == firstSentenceNr )
+				if( firstSentenceNrOfCurrentUser() == startRemoveSentenceNr )
 					adminItem_->decrementCurrentSentenceNr();
 				else
 					{
-					globalVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, globalVariables_->currentSentenceNr );
+					globalVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, false, globalVariables_->currentSentenceNr );
 					// Necessary after changing current sentence number
 					globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr();
 					}
@@ -1204,34 +1203,6 @@ class AdminReadFile
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
-		// Private constructed variables
-
-		hasClosedFileDueToError_ = false;
-		hasFoundDifferentTestResult_ = false;
-		isPredefinedMultipleWord_ = false;
-		wasLoginCommand_ = false;
-
-		testFileNr_ = 0;
-		firstSentenceNrOfCurrentUser_ = NO_SENTENCE_NR;
-		startTime_ = 0;
-
-		currentUserWordItem_ = NULL;
-		predefinedAdjectiveBusyWordItem_ = NULL;
-		predefinedAdjectiveDoneWordItem_ = NULL;
-		predefinedAdjectiveInvertedWordItem_ = NULL;
-		predefinedNounLanguageWordItem_ = NULL;
-		predefinedNounPasswordWordItem_ = NULL;
-		predefinedNounSolveLevelWordItem_ = NULL;
-		predefinedNounSolveMethodWordItem_ = NULL;
-		predefinedNounSolveStrategyWordItem_ = NULL;
-		predefinedNounStartupLanguageWordItem_ = NULL;
-		predefinedNounUserWordItem_ = NULL;
-		predefinedVerbLoginWordItem_ = NULL;
-
-		// Private initialized variables
-
-		strcpy( moduleNameString_, "AdminReadFile" );
-
 		// Checking private initialized variables
 
 		if( ( adminItem_ = adminItem ) == NULL )
@@ -1526,7 +1497,7 @@ class AdminReadFile
 			isLineExecuted = false;
 			strcpy( readString, EMPTY_STRING );
 
-			if( readLine( false, false, ( globalVariables_->currentSentenceNr + 1 ), ( currentUserWordItem_ == NULL ? NULL : currentUserWordItem_->anyWordTypeString() ), readString ) != RESULT_OK )
+			if( readLine( false, false, ( globalVariables_->currentSentenceNr + 1 ), ( currentUserWordItem_ != NULL ? currentUserWordItem_->anyWordTypeString() : NULL ), readString ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to read a line" );
 
 			if( inputOutput_->hasReadLine() )
@@ -1616,7 +1587,12 @@ class AdminReadFile
 
 	signed char readTestFile( char *testFileNameString )
 		{
-		bool isFirstTestFile = !adminItem_->isCurrentlyTesting();
+		bool isFirstTestFile = ( !adminItem_->isCurrentlyTesting() &&
+
+								// Regression test button
+								( adminItem_->currentFileSentenceNr() == NO_SENTENCE_NR ||
+								// Regression test file is selected
+								adminItem_->currentFileSentenceNr() == globalVariables_->currentSentenceNr ) );
 		FileItem *testFileItem;
 		char testString[MAX_SENTENCE_STRING_LENGTH];
 		signed char originalResult;

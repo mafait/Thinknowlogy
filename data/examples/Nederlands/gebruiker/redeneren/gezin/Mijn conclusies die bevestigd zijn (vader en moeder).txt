@@ -1,9 +1,0 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
-Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
-Paul heeft een vader, genaamd Jan.
-Paul heeft een moeder, genaamd Anna.
-Johan heeft een vader, genaamd Jan.
-Johan heeft een moeder, genaamd Anna.
-Laura heeft een vader, genaamd Jan.
-Laura heeft een moeder, genaamd Anna.
-# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

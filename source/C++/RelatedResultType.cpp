@@ -1,7 +1,7 @@
 ﻿/*	Class:		RelatedResultType
  *	Purpose:	To return related specification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,6 +27,7 @@ class SpecificationItem;
 
 class RelatedResultType
 	{
+	friend class AdminReasoningNew;
 	friend class AdminReasoningOld;
 	friend class Item;
 	friend class JustificationList;
@@ -38,21 +39,12 @@ class RelatedResultType
 	protected:
 	// Protected variables
 
-	signed char result;
-	bool isFirstRelatedSpecification;
-	bool isLastRelatedSpecification;
-	SpecificationItem *relatedSpecificationItem;
+	signed char result = RESULT_OK;
 
-	protected:
-	// Constructor
+	bool isFirstRelatedSpecification = false;
+	bool isLastRelatedSpecification = false;
 
-	RelatedResultType()
-		{
-		result = RESULT_OK;
-		isFirstRelatedSpecification = false;
-		isLastRelatedSpecification = false;
-		relatedSpecificationItem = NULL;
-		}
+	SpecificationItem *relatedSpecificationItem = NULL;
 	};
 
 /*************************************************************************

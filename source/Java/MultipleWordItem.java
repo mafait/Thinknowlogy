@@ -1,7 +1,7 @@
 ﻿/*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,11 +25,11 @@ class MultipleWordItem extends Item
 	{
 	// Private initialized variables
 
-	private short nWordParts_;
-	private short wordTypeLanguageNr_;
-	private short wordTypeNr_;
+	private short nWordParts_ = 0;
+	private short wordTypeLanguageNr_ = Constants.NO_LANGUAGE_NR;
+	private short wordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
-	private WordItem multipleWordItem_;
+	private WordItem multipleWordItem_ = null;
 
 
 	// Constructor
@@ -64,7 +64,7 @@ class MultipleWordItem extends Item
 		( wordString = multipleWordItem_.wordTypeString( true, wordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )

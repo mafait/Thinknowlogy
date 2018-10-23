@@ -1,4 +1,4 @@
 ﻿Un bateau est un bateau à rames, un voilier ou un bateau à moteur.
 Sien bateau n'est pas un voilier et pas un bateau à moteur.
-Affichez le rapport de justification sur les bateaux.
+#Dev#Affichez le rapport de justification sur les bateaux.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

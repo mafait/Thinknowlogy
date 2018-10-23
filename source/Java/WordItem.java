@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordItem
  *	Parent class:	Item
  *	Purpose:		To store and process word information
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,31 +25,31 @@ class WordItem extends Item
 	{
 	// Private constructed variables
 
-	private boolean isChineseLanguage_;
-	private boolean isNounWordSpanishAmbiguous_;
-	private boolean isSpanishLanguage_;
+	private boolean isChineseLanguage_ = false;
+	private boolean isNounWordSpanishAmbiguous_ = false;
+	private boolean isSpanishLanguage_ = false;
 
-	private int highestSentenceNrInWord_;
+	private int highestSentenceNrInWord_ = Constants.NO_SENTENCE_NR;
 
-	private	String authorizationKey_;
+	private	String authorizationKey_ = null;
 
 	// Word item supporting modules
-	private WordQuestion wordQuestion_;
-	private WordSpecification wordSpecification_;
-	private WordWrite wordWrite_;
+	private WordQuestion wordQuestion_ = null;
+	private WordSpecification wordSpecification_ = null;
+	private WordWrite wordWrite_ = null;
 
 	// Word item lists
-	private SpecificationList assignmentList_;
-	private CollectionList collectionList_;
-	private ContextList contextList_;
-	private GeneralizationList generalizationList_;
-	private GrammarList grammarList_;
-	private InterfaceList interfaceList_;
-	private JustificationList justificationList_;
-	private MultipleWordList multipleWordList_;
-	private SpecificationList specificationList_;
-	private WordTypeList wordTypeList_;
-	private WriteList writeList_;
+	private SpecificationList assignmentList_ = null;
+	private CollectionList collectionList_ = null;
+	private ContextList contextList_ = null;
+	private GeneralizationList generalizationList_ = null;
+	private GrammarList grammarList_ = null;
+	private InterfaceList interfaceList_ = null;
+	private JustificationList justificationList_ = null;
+	private MultipleWordList multipleWordList_ = null;
+	private SpecificationList specificationList_ = null;
+	private WordTypeList wordTypeList_ = null;
+	private WriteList writeList_ = null;
 
 	// Word item lists array
 	private List[] wordListArray_ = new List[Constants.NUMBER_OF_WORD_LISTS];
@@ -57,13 +57,13 @@ class WordItem extends Item
 
 	// Private initialized variables
 
-	private boolean isFemale_;
-	private boolean isFeminineWord_;
-	private boolean isMale_;
-	private boolean isMasculineWord_;
-	private boolean isLanguageWord_;
+	private boolean isFemale_ = false;
+	private boolean isFeminineWord_ = false;
+	private boolean isMale_ = false;
+	private boolean isMasculineWord_ = false;
+	private boolean isLanguageWord_ = false;
 
-	private short wordParameter_;
+	private short wordParameter_ = Constants.NO_WORD_PARAMETER;
 
 
 	// Private common methods
@@ -129,10 +129,8 @@ class WordItem extends Item
 		{
 		WordItem foundLanguageWordItem;
 
-		if( ( foundLanguageWordItem = languageWordItem( languageNr ) ) != null )
-			return foundLanguageWordItem.anyWordTypeString();
-
-		return Constants.NO_LANGUAGE_NAME_FOUND_STRING;
+		return ( ( foundLanguageWordItem = languageWordItem( languageNr ) ) != null ?
+				foundLanguageWordItem.anyWordTypeString() : Constants.NO_LANGUAGE_NAME_FOUND_STRING );
 		}
 
 	private String selectedUserNameString( short userNr )
@@ -285,39 +283,14 @@ class WordItem extends Item
 
 	private SpecificationItem firstActiveNonQuestionAssignmentItem( int relationContextNr, WordItem specificationWordItem )
 		{
-		if( assignmentList_ != null )
-			return assignmentList_.firstActiveNonQuestionAssignmentItem( relationContextNr, specificationWordItem );
-
-		return null;
+		return ( assignmentList_ != null ?
+				assignmentList_.firstActiveNonQuestionAssignmentItem( relationContextNr, specificationWordItem ) : null );
 		}
 
 	private SpecificationItem firstAssignmentItem( boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isQuestion )
 		{
-		if( assignmentList_ != null )
-			return assignmentList_.firstAssignmentItem( false, isInactiveAssignment, isArchivedAssignment, isQuestion );
-
-		return null;
-		}
-
-	private SpecificationItem firstAssignmentItem( boolean isIncludingActiveAssignments, boolean isIncludingInactiveAssignments, boolean isIncludingArchivedAssignments, boolean isNegative, boolean isSelfGenerated, short questionParameter, int relationContextNr, WordItem specificationWordItem )
-		{
-		SpecificationItem foundSpecificationItem = null;
-
-		if( assignmentList_ != null )
-			{
-			if( isIncludingActiveAssignments )
-				foundSpecificationItem = assignmentList_.firstAssignmentItem( false, false, isNegative, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem );
-
-			if( isIncludingInactiveAssignments &&
-			foundSpecificationItem == null )
-				foundSpecificationItem = assignmentList_.firstAssignmentItem( true, false, isNegative, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem );
-
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == null )
-				return assignmentList_.firstAssignmentItem( false, true, isNegative, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem );
-			}
-
-		return foundSpecificationItem;
+		return ( assignmentList_ != null ?
+				assignmentList_.firstAssignmentItem( false, isInactiveAssignment, isArchivedAssignment, isQuestion ) : null );
 		}
 
 	private CreateAndAssignResultType assignSpecification( boolean isAmbiguousRelationContext, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isCharacteristicFor, boolean isEveryGeneralization, boolean isExclusiveGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString )
@@ -417,18 +390,14 @@ class WordItem extends Item
 
 	private short highestCollectionOrderNrInWord( int collectionNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.highestCollectionOrderNr( collectionNr );
-
-		return Constants.NO_ORDER_NR;
+		return ( collectionList_ != null ?
+				collectionList_.highestCollectionOrderNr( collectionNr ) : Constants.NO_ORDER_NR );
 		}
 
 	private int highestCollectionNrInWord()
 		{
-		if( collectionList_ != null )
-			return collectionList_.highestCollectionNr();
-
-		return Constants.NO_COLLECTION_NR;
+		return ( collectionList_ != null ?
+				collectionList_.highestCollectionNr() : Constants.NO_COLLECTION_NR );
 		}
 
 
@@ -436,18 +405,14 @@ class WordItem extends Item
 
 	private boolean hasContextInWord( int contextNr, int spanishAmbiguousCollectionNr, WordItem specificationWordItem )
 		{
-		if( contextList_ != null )
-			return contextList_.hasContext( contextNr, spanishAmbiguousCollectionNr, specificationWordItem );
-
-		return false;
+		return ( contextList_ != null ?
+				contextList_.hasContext( contextNr, spanishAmbiguousCollectionNr, specificationWordItem ) : false );
 		}
 
 	private boolean isContextSubsetInWord( int fullSetContextNr, int subsetContextNr )
 		{
-		if( contextList_ != null )
-			return contextList_.isContextSubset( fullSetContextNr, subsetContextNr );
-
-		return false;
+		return ( contextList_ != null ?
+				contextList_.isContextSubset( fullSetContextNr, subsetContextNr ) : false );
 		}
 
 
@@ -495,10 +460,8 @@ class WordItem extends Item
 
 	private byte shrinkMergedWordsInWriteSentence()
 		{
-		if( grammarList_ == null )
-			return startErrorInWord( 1, null, "The grammar list isn't created yet" );
-
-		if( grammarList_.hasMergedWords() )
+		if( grammarList_ != null &&
+		grammarList_.hasMergedWords() )
 			return grammarList_.shrinkMergedWordsInWriteSentence();
 
 		// Language has no merged words
@@ -507,26 +470,20 @@ class WordItem extends Item
 
 	private String grammarString( short wordTypeNr )
 		{
-		if( grammarList_ != null )
-			return grammarList_.grammarStringInList( wordTypeNr );
-
-		return null;
+		return ( grammarList_ != null ?
+				grammarList_.grammarStringInList( wordTypeNr ) : null );
 		}
 
 	private GrammarItem firstReadingGrammarItem()
 		{
-		if( grammarList_ != null )
-			return grammarList_.firstReadingGrammarItem();
-
-		return null;
+		return ( grammarList_ != null ?
+				grammarList_.firstReadingGrammarItem() : null );
 		}
 
 	private GrammarItem firstWritingGrammarItem( boolean isQuestion )
 		{
-		if( grammarList_ != null )
-			return grammarList_.firstWritingGrammarItem( isQuestion );
-
-		return null;
+		return ( grammarList_ != null ?
+				grammarList_.firstWritingGrammarItem( isQuestion ) : null );
 		}
 
 	private BoolResultType expandMergedWordsInReadSentence( StringBuffer readUserSentenceStringBuffer )
@@ -607,10 +564,8 @@ class WordItem extends Item
 
 	private String interfaceString_( short interfaceParameter )
 		{
-		if( interfaceList_ != null )
-			return interfaceList_.interfaceString( interfaceParameter );
-
-		return null;
+		return ( interfaceList_ != null ?
+				interfaceList_.interfaceString( interfaceParameter ) : null );
 		}
 
 
@@ -652,117 +607,40 @@ class WordItem extends Item
 
 	// Protected constructed variables
 
-	protected boolean isUserGeneralizationWord;
-	protected boolean isUserSpecificationWord;
-	protected boolean isUserRelationWord;
+	protected boolean isUserGeneralizationWord = false;
+	protected boolean isUserSpecificationWord = false;
+	protected boolean isUserRelationWord = false;
 
-	protected boolean isWordCheckedForSolving;
+	protected boolean isWordCheckedForSolving = false;
 
-	protected short predefinedMultipleWordNr;
+	protected short predefinedMultipleWordNr = 0;
 
-	protected WordItem nextAssignmentWordItem;
-	protected WordItem nextCollectionWordItem;
-	protected WordItem nextContextWordItem;
-	protected WordItem nextPossessiveNounWordItem;
-	protected WordItem nextSpecificationWordItem;
-	protected WordItem nextTouchedWordItem;
-	protected WordItem nextUserProperNounWordItem;
+	protected WordItem nextAssignmentWordItem = null;
+	protected WordItem nextCollectionWordItem = null;
+	protected WordItem nextContextWordItem = null;
+	protected WordItem nextPossessiveNounWordItem = null;
+	protected WordItem nextSpecificationWordItem = null;
+	protected WordItem nextTouchedWordItem = null;
+	protected WordItem nextUserProperNounWordItem = null;
 
 
-	// Constructor (AdminItem)
+	// Constructor of AdminItem
 
 	protected WordItem()
 		{
-		// Private constructed variables
-
-		isChineseLanguage_ = false;
-		isSpanishLanguage_ = false;
-		isNounWordSpanishAmbiguous_ = false;
-
-		highestSentenceNrInWord_ = Constants.NO_SENTENCE_NR;
-
-		authorizationKey_ = null;
-
-		wordQuestion_ = null;
-		wordSpecification_ = null;
-		wordWrite_ = null;
-
-		assignmentList_ = null;
-		collectionList_ = null;
-		contextList_ = null;
-		generalizationList_ = null;
-		grammarList_ = null;
-		interfaceList_ = null;
-		justificationList_ = null;
-		multipleWordList_ = null;
-		writeList_ = null;
-		specificationList_ = null;
-		wordTypeList_ = null;
-
+		// This array is not used by AdminItem. Nevertheless, initialize.
 		for( short wordListNr = 0; wordListNr < Constants.NUMBER_OF_WORD_LISTS; wordListNr++ )
 			wordListArray_[wordListNr] = null;
-
-		// Private initialized variables
-
-		isFemale_ = false;
-		isFeminineWord_ = false;
-		isMale_ = false;
-		isMasculineWord_ = false;
-		isLanguageWord_ = false;
-
-		wordParameter_ = Constants.NO_WORD_PARAMETER;
-
-		// Protected constructed variables
-
-		isUserGeneralizationWord = false;
-		isUserSpecificationWord = false;
-		isUserRelationWord = false;
-
-		isWordCheckedForSolving = false;
-
-		predefinedMultipleWordNr = 0;
-
-		nextAssignmentWordItem = null;
-		nextCollectionWordItem = null;
-		nextContextWordItem = null;
-		nextPossessiveNounWordItem = null;
-		nextSpecificationWordItem = null;
-		nextTouchedWordItem = null;
-		nextUserProperNounWordItem = null;
 		}
 
 
-	// Constructor
+	// Constructor of words
 
 	protected WordItem( boolean isLanguageWord, short wordParameter, List myList )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, this );
 
 		// Private constructed variables
-
-		isChineseLanguage_ = false;
-		isSpanishLanguage_ = false;
-		isNounWordSpanishAmbiguous_ = false;
-
-		highestSentenceNrInWord_ = Constants.NO_SENTENCE_NR;
-
-		authorizationKey_ = null;
-
-		wordQuestion_ = null;
-		wordSpecification_ = null;
-		wordWrite_ = null;
-
-		assignmentList_ = null;
-		collectionList_ = null;
-		contextList_ = null;
-		generalizationList_ = null;
-		grammarList_ = null;
-		interfaceList_ = null;
-		justificationList_ = null;
-		multipleWordList_ = null;
-		writeList_ = null;
-		specificationList_ = null;
-		wordTypeList_ = null;
 
 		for( short wordListNr = 0; wordListNr < Constants.NUMBER_OF_WORD_LISTS; wordListNr++ )
 			wordListArray_[wordListNr] = null;
@@ -776,24 +654,6 @@ class WordItem extends Item
 		isLanguageWord_ = isLanguageWord;
 
 		wordParameter_ = wordParameter;
-
-		// Protected constructed variables
-
-		isUserGeneralizationWord = false;
-		isUserSpecificationWord = false;
-		isUserRelationWord = false;
-
-		isWordCheckedForSolving = false;
-
-		predefinedMultipleWordNr = 0;
-
-		nextAssignmentWordItem = null;
-		nextCollectionWordItem = null;
-		nextContextWordItem = null;
-		nextPossessiveNounWordItem = null;
-		nextSpecificationWordItem = null;
-		nextTouchedWordItem = null;
-		nextUserProperNounWordItem = null;
 		}
 
 
@@ -1145,9 +1005,9 @@ class WordItem extends Item
 		short userNr = nUsers();
 		GeneralizationItem currentGeneralizationItem;
 		WordItem generalizationWordItem;
-		WordItem predefinedNounUserWordItem = GlobalVariables.predefinedNounUserWordItem;
+		WordItem predefinedNounUserWordItem;
 
-		if( predefinedNounUserWordItem != null &&
+		if( ( predefinedNounUserWordItem = GlobalVariables.predefinedNounUserWordItem ) != null &&
 		( currentGeneralizationItem = predefinedNounUserWordItem.firstSpecificationGeneralizationItem( false ) ) != null )
 			{
 			do	{
@@ -1210,7 +1070,7 @@ class WordItem extends Item
 		justificationList_ != null &&
 		justificationList_.checkForReplacedOrDeletedSpecification() == Constants.RESULT_OK &&
 		justificationList_.checkForUnreferencedReplacedJustifications() == Constants.RESULT_OK )
-			justificationList_.replaceOrDeleteUnreferencedJustifications();
+			justificationList_.cleanupUnreferencedJustifications();
 
 		// Check specifications for replaced or deleted justifications
 		if( GlobalVariables.result == Constants.RESULT_OK &&
@@ -1224,7 +1084,7 @@ class WordItem extends Item
 	protected byte markWordAsFemale()
 		{
 		if( isMale_ &&
-		!hasCorrectedAssumption() )
+		!hasCurrentlyCorrectedAssumption() )
 			return startErrorInWord( 1, null, "I am already masculine" );
 
 		if( wordTypeList_ == null ||
@@ -1240,7 +1100,7 @@ class WordItem extends Item
 	protected byte markWordAsFeminine()
 		{
 		if( isMasculineWord_ &&
-		!hasCorrectedAssumption() )
+		!hasCurrentlyCorrectedAssumption() )
 			return startErrorInWord( 1, null, "I am already masculine" );
 
 		if( wordTypeList_ == null ||
@@ -1256,7 +1116,7 @@ class WordItem extends Item
 	protected byte markWordAsMale()
 		{
 		if( isFemale_ &&
-		!hasCorrectedAssumption() )
+		!hasCurrentlyCorrectedAssumption() )
 			return startErrorInWord( 1, null, "I am already feminine" );
 
 		if( wordTypeList_ == null ||
@@ -1272,7 +1132,7 @@ class WordItem extends Item
 	protected byte markWordAsMasculine()
 		{
 		if( isFeminineWord_ &&
-		!hasCorrectedAssumption() )
+		!hasCurrentlyCorrectedAssumption() )
 			return startErrorInWord( 1, null, "I am already feminine" );
 
 		if( wordTypeList_ == null ||
@@ -1289,49 +1149,41 @@ class WordItem extends Item
 		{
 		WordItem currentLanguageWordItem;
 
-		if( ( currentLanguageWordItem = GlobalVariables.currentLanguageWordItem ) != null )
-			return currentLanguageWordItem.anyWordTypeString();
-
-		return null;
+		return ( ( currentLanguageWordItem = GlobalVariables.currentLanguageWordItem ) != null ?
+				currentLanguageWordItem.anyWordTypeString() : null );
 		}
 
 	protected String languageNameString( short languageNr )
 		{
 		WordItem predefinedNounLanguageWordItem;
 
-		if( ( predefinedNounLanguageWordItem = GlobalVariables.predefinedNounLanguageWordItem ) != null )
-			return predefinedNounLanguageWordItem.selectedLanguageNameString( languageNr );
-
-		return null;
+		return ( ( predefinedNounLanguageWordItem = GlobalVariables.predefinedNounLanguageWordItem ) != null ?
+				predefinedNounLanguageWordItem.selectedLanguageNameString( languageNr ) : null );
 		}
 
 	protected String userNameString( short userNr )
 		{
-		WordItem predefinedNounUserWordItem;
+		WordItem predefinedNounUserWordItem = GlobalVariables.predefinedNounUserWordItem;
 
-		if( ( predefinedNounUserWordItem = GlobalVariables.predefinedNounUserWordItem ) != null )
-			return predefinedNounUserWordItem.selectedUserNameString( userNr );
-
-		return null;
+		return ( predefinedNounUserWordItem != null ?
+				predefinedNounUserWordItem.selectedUserNameString( userNr ) : null );
 		}
 
 	protected String wordTypeNameString( short wordTypeNr )
 		{
 		WordItem currentLanguageWordItem;
 
-		if( ( currentLanguageWordItem = GlobalVariables.currentLanguageWordItem ) != null )
-			return currentLanguageWordItem.grammarString( wordTypeNr );
-
-		return null;
+		return ( ( currentLanguageWordItem = GlobalVariables.currentLanguageWordItem ) != null ?
+				currentLanguageWordItem.grammarString( wordTypeNr ) : null );
 		}
 
 	protected WordItem languageWordItem( short languageNr )
 		{
-		short numberOfLanguages = nLanguages();
+		short numberOfLanguages;
 		GeneralizationItem currentGeneralizationItem;
 		WordItem currentGeneralizationWordItem;
 
-		if( numberOfLanguages > 0 &&
+		if( ( numberOfLanguages = nLanguages() ) > 0 &&
 		( currentGeneralizationItem = firstSpecificationGeneralizationItem( false ) ) != null )
 			{
 			do	{
@@ -1378,10 +1230,8 @@ class WordItem extends Item
 
 	protected int nActiveAssignments()
 		{
-		if( assignmentList_ != null )
-			return assignmentList_.nActiveAssignments();
-
-		return 0;
+		return ( assignmentList_ != null ?
+				assignmentList_.nActiveAssignments() : 0 );
 		}
 
 	protected byte archiveInactiveAssignment( SpecificationItem inactiveAssignmentItem )
@@ -1442,91 +1292,71 @@ class WordItem extends Item
 
 	protected SpecificationItem firstActiveNumeralAssignmentItem()
 		{
-		if( assignmentList_ != null )
-			return assignmentList_.firstActiveNumeralAssignmentItem();
-
-		return null;
+		return ( assignmentList_ != null ?
+				assignmentList_.firstActiveNumeralAssignmentItem() : null );
 		}
 
 	protected SpecificationItem firstActiveStringAssignmentItem()
 		{
-		if( assignmentList_ != null )
-			return assignmentList_.firstActiveStringAssignmentItem();
-
-		return null;
+		return ( assignmentList_ != null ?
+				assignmentList_.firstActiveStringAssignmentItem() : null );
 		}
 
 	protected SpecificationItem firstNonQuestionActiveAssignmentItem()
 		{
-		if( assignmentList_ != null )
-			return assignmentList_.firstAssignmentItem( false, false, false, false );
-
-		return null;
+		return ( assignmentList_ != null ?
+				assignmentList_.firstAssignmentItem( false, false, false, false ) : null );
 		}
 
 	protected SpecificationItem lastActiveNonQuestionAssignmentItem()
 		{
-		if( assignmentList_ != null )
-			return assignmentList_.lastActiveNonQuestionAssignmentItem();
-
-		return null;
+		return ( assignmentList_ != null ?
+				assignmentList_.lastActiveNonQuestionAssignmentItem() : null );
 		}
 
 	protected SpecificationItem firstAssignmentItem( boolean isPossessive, boolean isQuestion, int relationContextNr, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null &&
-		// Active assignment
-		( foundSpecificationItem = assignmentList_.firstAssignmentItem( false, false, isPossessive, isQuestion, relationContextNr, specificationWordItem ) ) == null &&
-		// Inactive assignment
-		( foundSpecificationItem = assignmentList_.firstAssignmentItem( true, false, isPossessive, isQuestion, relationContextNr, specificationWordItem ) ) == null )
-			// Archived assignment
-			return assignmentList_.firstAssignmentItem( false, true, isPossessive, isQuestion, relationContextNr, specificationWordItem );
-
-		return foundSpecificationItem;
+		return ( assignmentList_ != null &&
+				// Active assignment
+				( foundAssignmentItem = assignmentList_.firstAssignmentItem( false, false, isPossessive, isQuestion, relationContextNr, specificationWordItem ) ) == null &&
+				// Inactive assignment
+				( foundAssignmentItem = assignmentList_.firstAssignmentItem( true, false, isPossessive, isQuestion, relationContextNr, specificationWordItem ) ) == null ?
+				// Archived assignment
+				assignmentList_.firstAssignmentItem( false, true, isPossessive, isQuestion, relationContextNr, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem firstNonPossessiveActiveAssignmentItem( WordItem relationWordItem )
 		{
-		if( assignmentList_ != null )
-			return assignmentList_.firstRelationSpecificationItem( false, relationWordItem );
-
-		return null;
+		return ( assignmentList_ != null ?
+				assignmentList_.firstRelationSpecificationItem( false, relationWordItem ) : null );
 		}
 
 	protected SpecificationItem firstQuestionAssignmentItem()
 		{
-		SpecificationItem firstAssignmentItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null &&
-		// Active assignment
-		( firstAssignmentItem = assignmentList_.firstAssignmentItem( false, false, false, true ) ) == null )
-			// Archived assignment
-			return assignmentList_.firstAssignmentItem( false, false, true, true );
-
-		return firstAssignmentItem;
+		return ( assignmentList_ != null &&
+				// Active assignment
+				( foundAssignmentItem = assignmentList_.firstAssignmentItem( false, false, false, true ) ) == null ?
+				// Archived assignment
+				assignmentList_.firstAssignmentItem( false, false, true, true ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem firstNonQuestionAssignmentItem( boolean isIncludingActiveAssignments, boolean isIncludingInactiveAssignments, boolean isIncludingArchivedAssignments, boolean isNegative, boolean isPossessive, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null )
-			{
-			if( isIncludingActiveAssignments )
-				foundSpecificationItem = assignmentList_.firstNonQuestionAssignmentItem( false, false, isNegative, isPossessive, specificationWordItem );
+		return ( assignmentList_ != null &&
 
-			if( isIncludingInactiveAssignments &&
-			foundSpecificationItem == null )
-				foundSpecificationItem = assignmentList_.firstNonQuestionAssignmentItem( true, false, isNegative, isPossessive, specificationWordItem );
+				( !isIncludingActiveAssignments ||
+				( foundAssignmentItem = assignmentList_.firstNonQuestionAssignmentItem( false, false, isNegative, isPossessive, specificationWordItem ) ) == null ) &&
 
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == null )
-				return assignmentList_.firstNonQuestionAssignmentItem( false, true, isNegative, isPossessive, specificationWordItem );
-			}
+				( !isIncludingInactiveAssignments ||
+				( foundAssignmentItem = assignmentList_.firstNonQuestionAssignmentItem( true, false, isNegative, isPossessive, specificationWordItem ) ) == null ) &&
 
-		return foundSpecificationItem;
+				isIncludingArchivedAssignments ? assignmentList_.firstNonQuestionAssignmentItem( false, true, isNegative, isPossessive, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected CreateAndAssignResultType assignSpecification( boolean isAmbiguousRelationContext, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, short assumptionLevel, short prepositionParameter, short questionParameter, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString, String authorizationKey )
@@ -1666,7 +1496,7 @@ class WordItem extends Item
 		return currentSentenceItemNr;
 		}
 
-	protected int highestFoundSentenceNrInWord( boolean isIncludingTemporaryLists, int highestFoundSentenceNr, int maxSentenceNr )
+	protected int highestFoundSentenceNrInWord( boolean isIncludingDeletedItems, boolean isIncludingTemporaryLists, int highestFoundSentenceNr, int maxSentenceNr )
 		{
 		List currentWordList;
 
@@ -1682,7 +1512,7 @@ class WordItem extends Item
 			// Skip temporary lists
 			( isIncludingTemporaryLists ||
 			!currentWordList.isTemporaryList() ) )
-				highestFoundSentenceNr = currentWordList.highestFoundSentenceNrInList( highestFoundSentenceNr, maxSentenceNr );
+				highestFoundSentenceNr = currentWordList.highestFoundSentenceNrInList( isIncludingDeletedItems, highestFoundSentenceNr, maxSentenceNr );
 			}
 
 		return highestFoundSentenceNr;
@@ -1802,50 +1632,44 @@ class WordItem extends Item
 
 	protected boolean hasCollectionNr( int collectionNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.hasCollectionNr( collectionNr );
-
-		return false;
+		return ( collectionList_ != null ?
+				collectionList_.hasCollectionNr( collectionNr ) : false );
 		}
 
 	protected boolean hasCollectionNr( int collectionNr, WordItem commonWordItem )
 		{
-		if( collectionList_ != null )
-			return collectionList_.hasCollectionNr( collectionNr, commonWordItem );
-
-		return false;
-		}
-
-	protected boolean hasNonExclusiveCollection( int collectionNr )
-		{
-		if( collectionList_ != null )
-			return collectionList_.hasNonExclusiveCollection( collectionNr );
-
-		return false;
+		return ( collectionList_ != null ?
+				collectionList_.hasCollectionNr( collectionNr, commonWordItem ) : false );
 		}
 
 	protected boolean isCompoundCollection( int collectionNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.isCompoundCollection( collectionNr );
-
-		return false;
+		return ( collectionList_ != null ?
+				collectionList_.isCompoundCollection( collectionNr ) : false );
 		}
 
 	protected boolean isCollectionSpanishAmbiguous( int collectionNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.isCollectionSpanishAmbiguous( collectionNr );
+		return ( collectionList_ != null ?
+				collectionList_.isCollectionSpanishAmbiguous( collectionNr ) : false );
+		}
 
-		return false;
+	protected boolean isExclusiveCollection( int collectionNr )
+		{
+		return ( collectionList_ != null ?
+				collectionList_.isExclusiveCollection( collectionNr ) : false );
 		}
 
 	protected boolean isNonCompoundCollection( int collectionNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.isNonCompoundCollection( collectionNr );
+		return ( collectionList_ != null ?
+				collectionList_.isNonCompoundCollection( collectionNr ) : false );
+		}
 
-		return false;
+	protected boolean isNonExclusiveCollection( int collectionNr )
+		{
+		return ( collectionList_ != null ?
+				collectionList_.isNonExclusiveCollection( collectionNr ) : false );
 		}
 
 	protected boolean isNounWordSpanishAmbiguous()
@@ -1875,50 +1699,38 @@ class WordItem extends Item
 
 	protected int collectionNr( short collectionWordTypeNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.collectionNr( collectionWordTypeNr );
-
-		return Constants.NO_COLLECTION_NR;
+		return ( collectionList_ != null ?
+				collectionList_.collectionNr( collectionWordTypeNr ) : Constants.NO_COLLECTION_NR );
 		}
 
 	protected int collectionNr( WordItem commonWordItem )
 		{
-		if( collectionList_ != null )
-			return collectionList_.collectionNr( commonWordItem );
-
-		return Constants.NO_COLLECTION_NR;
+		return ( collectionList_ != null ?
+				collectionList_.collectionNr( commonWordItem ) : Constants.NO_COLLECTION_NR );
 		}
 
 	protected int collectionNrByCompoundGeneralizationWordInWord( boolean isExclusiveSpecification, short collectionWordTypeNr, WordItem compoundGeneralizationWordItem )
 		{
-		if( collectionList_ != null )
-			return collectionList_.collectionNrByCompoundGeneralizationWord( isExclusiveSpecification, collectionWordTypeNr, compoundGeneralizationWordItem );
-
-		return Constants.NO_COLLECTION_NR;
+		return ( collectionList_ != null ?
+				collectionList_.collectionNrByCompoundGeneralizationWord( isExclusiveSpecification, collectionWordTypeNr, compoundGeneralizationWordItem ) : Constants.NO_COLLECTION_NR );
 		}
 
 	protected int compoundCollectionNr()
 		{
-		if( collectionList_ != null )
-			return collectionList_.compoundCollectionNr();
-
-		return Constants.NO_COLLECTION_NR;
+		return ( collectionList_ != null ?
+				collectionList_.compoundCollectionNr() : Constants.NO_COLLECTION_NR );
 		}
 
 	protected int nonCompoundCollectionNr()
 		{
-		if( collectionList_ != null )
-			return collectionList_.nonCompoundCollectionNr();
-
-		return Constants.NO_COLLECTION_NR;
+		return ( collectionList_ != null ?
+				collectionList_.nonCompoundCollectionNr() : Constants.NO_COLLECTION_NR );
 		}
 
 	protected int nonCompoundCollectionNrInWord( int compoundCollectionNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.nonCompoundCollectionNr( compoundCollectionNr );
-
-		return Constants.NO_COLLECTION_NR;
+		return ( collectionList_ != null ?
+				collectionList_.nonCompoundCollectionNr( compoundCollectionNr ) : Constants.NO_COLLECTION_NR );
 		}
 
 	protected int highestCollectionNrInCollectionWords()
@@ -1942,42 +1754,32 @@ class WordItem extends Item
 
 	protected WordItem collectionWordItem( int compoundCollectionNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.collectionWordItem( compoundCollectionNr );
-
-		return null;
+		return ( collectionList_ != null ?
+				collectionList_.collectionWordItem( compoundCollectionNr ) : null );
 		}
 
 	protected WordItem commonWordItem( int collectionNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.commonWordItem( collectionNr );
-
-		return null;
+		return ( collectionList_ != null ?
+				collectionList_.commonWordItem( collectionNr ) : null );
 		}
 
 	protected WordItem compoundGeneralizationWordItem( int compoundCollectionNr )
 		{
-		if( collectionList_ != null )
-			return collectionList_.compoundGeneralizationWordItem( compoundCollectionNr );
-
-		return null;
+		return ( collectionList_ != null ?
+				collectionList_.compoundGeneralizationWordItem( compoundCollectionNr ) : null );
 		}
 
 	protected WordItem feminineCollectionWordItem()
 		{
-		if( collectionList_ != null )
-			return collectionList_.feminineCollectionWordItem();
-
-		return null;
+		return ( collectionList_ != null ?
+				collectionList_.feminineCollectionWordItem() : null );
 		}
 
 	protected WordItem masculineCollectionWordItem()
 		{
-		if( collectionList_ != null )
-			return collectionList_.masculineCollectionWordItem();
-
-		return null;
+		return ( collectionList_ != null ?
+				collectionList_.masculineCollectionWordItem() : null );
 		}
 
 	protected BoolResultType findCollection( boolean isAllowingDifferentCommonWord, WordItem collectionWordItem, WordItem commonWordItem )
@@ -2020,18 +1822,14 @@ class WordItem extends Item
 
 	protected boolean hasContextCurrentlyBeenUpdatedInWord( int contextNr )
 		{
-		if( contextList_ != null )
-			return contextList_.hasContextCurrentlyBeenUpdated( contextNr );
-
-		return false;
+		return ( contextList_ != null ?
+				contextList_.hasContextCurrentlyBeenUpdated( contextNr ) : false );
 		}
 
 	protected boolean hasContextInWord( int contextNr, WordItem specificationWordItem )
 		{
-		if( contextList_ != null )
-			return contextList_.hasContext( contextNr, specificationWordItem );
-
-		return false;
+		return ( contextList_ != null ?
+				contextList_.hasContext( contextNr, specificationWordItem ) : false );
 		}
 
 	protected boolean hasFoundContextInAllWords( int contextNr, int spanishAmbiguousCollectionNr, WordItem specificationWordItem )
@@ -2055,10 +1853,8 @@ class WordItem extends Item
 
 	protected boolean isContextSimilarInWord( int firstContextNr, int secondContextNr )
 		{
-		if( contextList_ != null )
-			return ( contextList_.hasContext( firstContextNr ) == contextList_.hasContext( secondContextNr ) );
-
-		return true;
+		return ( contextList_ != null ?
+				( contextList_.hasContext( firstContextNr ) == contextList_.hasContext( secondContextNr ) ) : true );
 		}
 
 	protected boolean isContextSubsetInContextWords( int fullSetContextNr, int subsetContextNr )
@@ -2089,34 +1885,26 @@ class WordItem extends Item
 		{
 		ContextItem foundContextItem;
 
-		if( ( foundContextItem = contextItem( contextNr ) ) != null )
-			return foundContextItem.contextWordTypeNr();
-
-		return Constants.NO_WORD_TYPE_NR;
+		return ( ( foundContextItem = contextItem( contextNr ) ) != null ?
+				foundContextItem.contextWordTypeNr() : Constants.NO_WORD_TYPE_NR );
 		}
 
 	protected int contextNr( WordItem specificationWordItem )
 		{
-		if( contextList_ != null )
-			return contextList_.contextNr( specificationWordItem );
-
-		return Constants.NO_CONTEXT_NR;
+		return ( contextList_ != null ?
+				contextList_.contextNr( specificationWordItem ) : Constants.NO_CONTEXT_NR );
 		}
 
 	protected int contextNr( int spanishAmbiguousCollectionNr, WordItem specificationWordItem )
 		{
-		if( contextList_ != null )
-			return contextList_.contextNr( spanishAmbiguousCollectionNr, specificationWordItem );
-
-		return Constants.NO_CONTEXT_NR;
+		return ( contextList_ != null ?
+				contextList_.contextNr( spanishAmbiguousCollectionNr, specificationWordItem ) : Constants.NO_CONTEXT_NR );
 		}
 
 	protected int highestContextNrInWord()
 		{
-		if( contextList_ != null )
-			return contextList_.highestContextNr();
-
-		return Constants.NO_CONTEXT_NR;
+		return ( contextList_ != null ?
+				contextList_.highestContextNr() : Constants.NO_CONTEXT_NR );
 		}
 
 	protected int nContextWords( int contextNr, WordItem specificationWordItem )
@@ -2158,26 +1946,20 @@ class WordItem extends Item
 
 	protected ContextItem firstActiveContextItem()
 		{
-		if( contextList_ != null )
-			return contextList_.firstActiveContextItem();
-
-		return null;
+		return ( contextList_ != null ?
+				contextList_.firstActiveContextItem() : null );
 		}
 
 	protected ContextItem contextItem( int contextNr )
 		{
-		if( contextList_ != null )
-			return contextList_.contextItem( contextNr );
-
-		return null;
+		return ( contextList_ != null ?
+				contextList_.contextItem( contextNr ) : null );
 		}
 
 	protected ContextItem contextItem( boolean isCompoundCollectionSpanishAmbiguous, int nContextWords, int spanishAmbiguousCollectionNr, WordItem specificationWordItem )
 		{
-		if( contextList_ != null )
-			return contextList_.contextItem( isCompoundCollectionSpanishAmbiguous, nContextWords, spanishAmbiguousCollectionNr, specificationWordItem );
-
-		return null;
+		return ( contextList_ != null ?
+				contextList_.contextItem( isCompoundCollectionSpanishAmbiguous, nContextWords, spanishAmbiguousCollectionNr, specificationWordItem ) : null );
 		}
 
 
@@ -2221,34 +2003,26 @@ class WordItem extends Item
 
 	protected GeneralizationItem firstGeneralizationItem()
 		{
-		if( generalizationList_ != null )
-			return generalizationList_.firstActiveGeneralizationItem();
-
-		return null;
+		return ( generalizationList_ != null ?
+				generalizationList_.firstActiveGeneralizationItem() : null );
 		}
 
 	protected GeneralizationItem firstNounSpecificationGeneralizationItem()
 		{
-		if( generalizationList_ != null )
-			return generalizationList_.firstGeneralizationItem( true, true, false );
-
-		return null;
+		return ( generalizationList_ != null ?
+				generalizationList_.firstGeneralizationItem( true, true, false ) : null );
 		}
 
 	protected GeneralizationItem firstSpecificationGeneralizationItem( boolean isOnlySelectingCurrentLanguage )
 		{
-		if( generalizationList_ != null )
-			return generalizationList_.firstGeneralizationItem( false, isOnlySelectingCurrentLanguage, false );
-
-		return null;
+		return ( generalizationList_ != null ?
+				generalizationList_.firstGeneralizationItem( false, isOnlySelectingCurrentLanguage, false ) : null );
 		}
 
 	protected GeneralizationItem firstRelationGeneralizationItem()
 		{
-		if( generalizationList_ != null )
-			return generalizationList_.firstGeneralizationItem( false, false, true );
-
-		return null;
+		return ( generalizationList_ != null ?
+				generalizationList_.firstGeneralizationItem( false, false, true ) : null );
 		}
 
 	protected BoolResultType findGeneralization( boolean isRelation, WordItem generalizationWordItem )
@@ -2266,10 +2040,6 @@ class WordItem extends Item
 		{
 		if( grammarList_ != null )
 			grammarList_.checkGrammarItemForUsage( unusedGrammarItem );
-
-		if( GlobalVariables.result == Constants.RESULT_OK &&
-		writeList_ != null )
-			writeList_.checkGrammarItemForUsage( unusedGrammarItem );
 		}
 
 	protected void markGrammarOfCurrentLanguageAsChoiceEnd()
@@ -2298,9 +2068,9 @@ class WordItem extends Item
 		short nLanguages = 0;
 		GeneralizationItem currentGeneralizationItem;
 		WordItem generalizationWordItem;
-		WordItem predefinedNounLanguageWordItem = GlobalVariables.predefinedNounLanguageWordItem;
+		WordItem predefinedNounLanguageWordItem;
 
-		if( predefinedNounLanguageWordItem != null &&
+		if( ( predefinedNounLanguageWordItem = GlobalVariables.predefinedNounLanguageWordItem ) != null &&
 		( currentGeneralizationItem = predefinedNounLanguageWordItem.firstSpecificationGeneralizationItem( false ) ) != null )
 			{
 			do	{
@@ -2358,20 +2128,16 @@ class WordItem extends Item
 		{
 		WordItem currentLanguageWordItem;
 
-		if( ( currentLanguageWordItem = GlobalVariables.currentLanguageWordItem ) != null )
-			return currentLanguageWordItem.firstReadingGrammarItem();
-
-		return null;
+		return ( ( currentLanguageWordItem = GlobalVariables.currentLanguageWordItem ) != null ?
+				currentLanguageWordItem.firstReadingGrammarItem() : null );
 		}
 
 	protected GrammarItem firstCurrentLanguageWritingGrammarItem( boolean isQuestion )
 		{
 		WordItem currentLanguageWordItem;
 
-		if( ( currentLanguageWordItem = GlobalVariables.currentLanguageWordItem ) != null )
-			return currentLanguageWordItem.firstWritingGrammarItem( isQuestion );
-
-		return null;
+		return ( ( currentLanguageWordItem = GlobalVariables.currentLanguageWordItem ) != null ?
+				currentLanguageWordItem.firstWritingGrammarItem( isQuestion ) : null );
 		}
 
 	protected BoolResultType expandMergedWordsInReadSentenceOfCurrentLanguage( StringBuffer readUserSentenceStringBuffer )
@@ -2494,26 +2260,22 @@ class WordItem extends Item
 
 	protected boolean hasJustification( SpecificationItem primarySpecificationItem, SpecificationItem anotherPrimarySpecificationItem, SpecificationItem secondarySpecificationItem )
 		{
-		if( justificationList_ != null )
-			return justificationList_.hasJustification( primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem );
-
-		return false;
+		return ( justificationList_ != null ?
+				justificationList_.hasJustification( primarySpecificationItem, anotherPrimarySpecificationItem, secondarySpecificationItem ) : false );
 		}
 
 	protected boolean hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection()
 		{
-		if( justificationList_ != null )
-			return justificationList_.hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection();
-
-		return false;
+		return ( justificationList_ != null ?
+				justificationList_.hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection() : false );
 		}
 
-	protected byte attachJustificationInWord( JustificationItem attachJustificationItem, SpecificationItem involvedSpecificationItem )
+	protected byte cleanupUnreferencedJustifications()
 		{
-		if( justificationList_ == null )
-			return startErrorInWord( 1, null, "The justification list isn't created yet" );
+		if( justificationList_ != null )
+			return justificationList_.cleanupUnreferencedJustifications();
 
-		return justificationList_.attachJustification( attachJustificationItem, involvedSpecificationItem );
+		return Constants.RESULT_OK;
 		}
 
 	protected byte replaceJustification( JustificationItem obsoleteJustificationItem, JustificationItem replacingJustificationItem, SpecificationItem involvedSpecificationItem )
@@ -2530,14 +2292,6 @@ class WordItem extends Item
 			return startErrorInWord( 1, null, "The justification list isn't created yet" );
 
 		return justificationList_.replaceOrDeleteJustification( obsoleteJustificationItem );
-		}
-
-	protected byte replaceOrDeleteUnreferencedJustifications()
-		{
-		if( justificationList_ != null )
-			return justificationList_.replaceOrDeleteUnreferencedJustifications();
-
-		return Constants.RESULT_OK;
 		}
 
 	protected byte updateSpecificationsInJustificationInWord( boolean isMainWord, SpecificationItem obsoleteSpecificationItem, SpecificationItem replacingSpecificationItem )
@@ -2582,58 +2336,38 @@ class WordItem extends Item
 
 	protected JustificationItem correctedAssumptionByOppositeQuestionJustificationItem()
 		{
-		if( justificationList_ != null )
-			return justificationList_.correctedAssumptionByOppositeQuestionJustificationItem();
-
-		return null;
+		return ( justificationList_ != null ?
+				justificationList_.correctedAssumptionByOppositeQuestionJustificationItem() : null );
 		}
 
 	protected JustificationItem negativeAssumptionOrConclusionJustificationItem( SpecificationItem anotherPrimarySpecificationItem )
 		{
-		if( justificationList_ != null )
-			return justificationList_.negativeAssumptionOrConclusionJustificationItem( anotherPrimarySpecificationItem );
-
-		return null;
+		return ( justificationList_ != null ?
+				justificationList_.negativeAssumptionOrConclusionJustificationItem( anotherPrimarySpecificationItem ) : null );
 		}
 
 	protected JustificationItem olderComplexJustificationItem( boolean hasSecondarySpecificationWithoutRelationContext, boolean isPossessiveSecondarySpecification, short justificationTypeNr, int secondarySpecificationCollectionNr, SpecificationItem primarySpecificationItem )
 		{
-		if( justificationList_ != null )
-			return justificationList_.olderComplexJustificationItem( hasSecondarySpecificationWithoutRelationContext, isPossessiveSecondarySpecification, justificationTypeNr, secondarySpecificationCollectionNr, primarySpecificationItem );
-
-		return null;
-		}
-
-	protected JustificationItem possessiveReversibleAssumptionJustificationItem( WordItem generalizationWordItem, WordItem secondarySpecificationWordItem )
-		{
-		if( justificationList_ != null )
-			return justificationList_.possessiveReversibleAssumptionJustificationItem( generalizationWordItem, secondarySpecificationWordItem );
-
-		return null;
+		return ( justificationList_ != null ?
+				justificationList_.olderComplexJustificationItem( hasSecondarySpecificationWithoutRelationContext, isPossessiveSecondarySpecification, justificationTypeNr, secondarySpecificationCollectionNr, primarySpecificationItem ) : null );
 		}
 
 	protected JustificationItem primarySpecificationJustificationItem( boolean isSelectingOlderItemOnly, short justificationTypeNr, SpecificationItem primarySpecificationItem )
 		{
-		if( justificationList_ != null )
-			return justificationList_.primarySpecificationJustificationItem( isSelectingOlderItemOnly, justificationTypeNr, primarySpecificationItem );
-
-		return null;
+		return ( justificationList_ != null ?
+				justificationList_.primarySpecificationJustificationItem( isSelectingOlderItemOnly, justificationTypeNr, primarySpecificationItem ) : null );
 		}
 
 	protected JustificationItem secondarySpecificationJustificationItem( boolean isSelectingOlderItemOnly, short justificationTypeNr, SpecificationItem secondarySpecificationItem )
 		{
-		if( justificationList_ != null )
-			return justificationList_.secondarySpecificationJustificationItem( isSelectingOlderItemOnly, justificationTypeNr, secondarySpecificationItem );
-
-		return null;
+		return ( justificationList_ != null ?
+				justificationList_.secondarySpecificationJustificationItem( isSelectingOlderItemOnly, justificationTypeNr, secondarySpecificationItem ) : null );
 		}
 
 	protected SpecificationItem suggestiveQuestionAssumptionSecondarySpecificationItem()
 		{
-		if( justificationList_ != null )
-			return justificationList_.suggestiveQuestionAssumptionSecondarySpecificationItem();
-
-		return null;
+		return ( justificationList_ != null ?
+				justificationList_.suggestiveQuestionAssumptionSecondarySpecificationItem() : null );
 		}
 
 
@@ -2647,10 +2381,8 @@ class WordItem extends Item
 
 	protected short matchingMultipleWordParts( String sentenceString )
 		{
-		if( multipleWordList_ != null )
-			return multipleWordList_.matchingMultipleWordParts( sentenceString );
-
-		return 0;
+		return ( multipleWordList_ != null ?
+				multipleWordList_.matchingMultipleWordParts( sentenceString ) : 0 );
 		}
 
 	protected byte addMultipleWord( short nWordParts, short wordTypeNr, WordItem multipleWordItem )
@@ -2741,10 +2473,8 @@ class WordItem extends Item
 
 	protected boolean hasActiveQuestionWithCompoundCollection()
 		{
-		if( specificationList_ != null )
-			return specificationList_.hasActiveQuestionWithCompoundCollection();
-
-		return false;
+		return ( specificationList_ != null ?
+				specificationList_.hasActiveQuestionWithCompoundCollection() : false );
 		}
 
 	protected byte displayQueryResultInWord( boolean isOnlyDisplayingWords, boolean isOnlyDisplayingWordReferences, boolean isOnlyDisplayingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
@@ -2836,18 +2566,14 @@ class WordItem extends Item
 
 	protected boolean hasCurrentlyAnsweredSelfGeneratedQuestion()
 		{
-		if( wordQuestion_ != null )
-			return wordQuestion_.hasCurrentlyAnsweredSelfGeneratedQuestion();
-
-		return false;
+		return ( wordQuestion_ != null ?
+				wordQuestion_.hasCurrentlyAnsweredSelfGeneratedQuestion() : false );
 		}
 
 	protected boolean hasFoundAnswerToQuestion()
 		{
-		if( wordQuestion_ != null )
-			return wordQuestion_.hasFoundAnswerToQuestion();
-
-		return false;
+		return ( wordQuestion_ != null ?
+				wordQuestion_.hasFoundAnswerToQuestion() : false );
 		}
 
 	protected byte findAnswerToNewUserQuestion()
@@ -2940,176 +2666,133 @@ class WordItem extends Item
 
 	protected boolean hadOnceAnsweredSelfGeneratedQuestion()
 		{
-		if( specificationList_ != null )
-			return specificationList_.hadOnceAnsweredSelfGeneratedQuestion();
-
-		return false;
+		return ( specificationList_ != null ?
+				specificationList_.hadOnceAnsweredSelfGeneratedQuestion() : false );
 		}
 
 	protected boolean hasAnyUserSpecification()
 		{
-		if( specificationList_ != null )
-			return specificationList_.hasAnyUserSpecification();
-
-		return false;
+		return ( specificationList_ != null ?
+				specificationList_.hasAnyUserSpecification() : false );
 		}
 
 	protected boolean hasCurrentlyConfirmedSpecificationAndAtLeastOneRelation()
 		{
-		if( wordSpecification_ != null )
-			return wordSpecification_.hasCurrentlyConfirmedSpecificationAndAtLeastOneRelation();
-
-		return false;
+		return ( wordSpecification_ != null ?
+				wordSpecification_.hasCurrentlyConfirmedSpecificationAndAtLeastOneRelation() : false );
 		}
 
 	protected boolean hasCurrentlyConfirmedSpecificationButNoRelation()
 		{
-		if( wordSpecification_ != null )
-			return wordSpecification_.hasCurrentlyConfirmedSpecificationButNoRelation();
-
-		return false;
+		return ( wordSpecification_ != null ?
+				wordSpecification_.hasCurrentlyConfirmedSpecificationButNoRelation() : false );
 		}
 
 	protected boolean hasCurrentlyConfirmedSpecification()
 		{
-		if( wordSpecification_ != null )
-			return wordSpecification_.hasCurrentlyConfirmedSpecification();
-
-		return false;
+		return ( wordSpecification_ != null ?
+				wordSpecification_.hasCurrentlyConfirmedSpecification() : false );
 		}
 
-	protected boolean hasCorrectedAssumption()
+	protected boolean hasCurrentlyCorrectedAssumption()
 		{
-		if( wordSpecification_ != null )
-			return wordSpecification_.hasCorrectedAssumption();
-
-		return false;
+		return ( wordSpecification_ != null ?
+				wordSpecification_.hasCurrentlyCorrectedAssumption() : false );
 		}
 
-	protected boolean hasCorrectedAssumptionByKnowledge()
+	protected boolean hasCurrentlyCorrectedAssumptionByKnowledge()
 		{
-		if( wordSpecification_ != null )
-			return wordSpecification_.hasCorrectedAssumptionByKnowledge();
-
-		return false;
+		return ( wordSpecification_ != null ?
+				wordSpecification_.hasCurrentlyCorrectedAssumptionByKnowledge() : false );
 		}
 
-	protected boolean hasCorrectedAssumptionByOppositeQuestion()
+	protected boolean hasCurrentlyCorrectedAssumptionByOppositeQuestion()
 		{
-		if( wordSpecification_ != null )
-			return wordSpecification_.hasCorrectedAssumptionByOppositeQuestion();
-
-		return false;
+		return ( wordSpecification_ != null ?
+				wordSpecification_.hasCurrentlyCorrectedAssumptionByOppositeQuestion() : false );
 		}
 
-	protected boolean hasDisplayedMoreSpecificSpecification()
+	protected boolean hasCurrentlyMoreSpecificSpecification()
 		{
-		if( wordSpecification_ != null )
-			return wordSpecification_.hasDisplayedMoreSpecificSpecification();
-
-		return false;
+		return ( wordSpecification_ != null ?
+				wordSpecification_.hasCurrentlyMoreSpecificSpecification() : false );
 		}
 
-	protected boolean hasDisplayedMoreSpecificNonExclusiveSpecification()
+	protected boolean hasCurrentlyMoreSpecificNonExclusiveSpecification()
 		{
-		if( wordSpecification_ != null )
-			return wordSpecification_.hasDisplayedMoreSpecificNonExclusiveSpecification();
-
-		return false;
+		return ( wordSpecification_ != null ?
+				wordSpecification_.hasCurrentlyMoreSpecificNonExclusiveSpecification() : false );
 		}
 
-	protected boolean hasDisplayedMoreSpecificQuestion()
+	protected boolean hasCurrentlyMoreSpecificQuestion()
 		{
-		if( wordSpecification_ != null )
-			return wordSpecification_.hasDisplayedMoreSpecificQuestion();
-
-		return false;
+		return ( wordSpecification_ != null ?
+				wordSpecification_.hasCurrentlyMoreSpecificQuestion() : false );
 		}
 
-	protected boolean hasMultipleSpecificationWordsWithSameSentenceNr( int creationSentenceNr, int notThisItemNr, int specificationCollectionNr )
+	protected boolean hasMultipleSpecificationWordsWithSameSentenceNr( int creationSentenceNr, int skipThisItemNr, int specificationCollectionNr )
 		{
-		if( specificationList_ != null )
-			return specificationList_.hasMultipleSpecificationWordsWithSameSentenceNr( creationSentenceNr, notThisItemNr, specificationCollectionNr );
+		return ( specificationList_ != null ?
+				specificationList_.hasMultipleSpecificationWordsWithSameSentenceNr( creationSentenceNr, skipThisItemNr, specificationCollectionNr ) : false );
+		}
 
-		return false;
+	protected boolean hasNegativeSpecification()
+		{
+		return ( specificationList_ != null ?
+				specificationList_.hasNegativeSpecification() : false );
 		}
 
 	protected boolean hasPartOfSpecification()
 		{
-		if( specificationList_ != null )
-			return specificationList_.hasPartOfSpecification();
-
-		return false;
+		return ( specificationList_ != null ?
+				specificationList_.hasPartOfSpecification() : false );
 		}
 
 	protected boolean hasPossiblyGapInKnowledge( int exclusiveSecondarySpecificationCollectionNr, SpecificationItem primarySpecificationItem )
 		{
-		if( specificationList_ != null )
-			return specificationList_.hasPossiblyGapInKnowledge( exclusiveSecondarySpecificationCollectionNr, primarySpecificationItem );
-
-		return true;
+		return ( specificationList_ != null ?
+				specificationList_.hasPossiblyGapInKnowledge( exclusiveSecondarySpecificationCollectionNr, primarySpecificationItem ) : true );
 		}
 
 	protected boolean hasRelationContextInSpecificationsInWord( int relationContextNr )
 		{
-		if( assignmentList_ != null &&
+		return ( ( assignmentList_ != null &&
 
-		( assignmentList_.hasRelationContextInSpecifications( false, false, false, relationContextNr ) ||
-		assignmentList_.hasRelationContextInSpecifications( true, false, false, relationContextNr ) ||
-		assignmentList_.hasRelationContextInSpecifications( false, true, false, relationContextNr ) ||
-		assignmentList_.hasRelationContextInSpecifications( false, false, true, relationContextNr ) ) )
-			return true;
+				( assignmentList_.hasRelationContextInSpecifications( false, false, false, relationContextNr ) ||
+				assignmentList_.hasRelationContextInSpecifications( true, false, false, relationContextNr ) ||
+				assignmentList_.hasRelationContextInSpecifications( false, true, false, relationContextNr ) ||
+				assignmentList_.hasRelationContextInSpecifications( false, false, true, relationContextNr ) ) ) ||
 
-		if( specificationList_ != null &&
+				( specificationList_ != null &&
 
-		( specificationList_.hasRelationContextInSpecifications( false, false, false, relationContextNr ) ||
-		specificationList_.hasRelationContextInSpecifications( false, false, true, relationContextNr ) ) )
-			return true;
-
-		return false;
+				( specificationList_.hasRelationContextInSpecifications( false, false, false, relationContextNr ) ||
+				specificationList_.hasRelationContextInSpecifications( false, false, true, relationContextNr ) ) ) );
 		}
 
 	protected boolean isJustificationInUse( JustificationItem unusedJustificationItem )
 		{
-		if( unusedJustificationItem != null )
-			{
-			if( unusedJustificationItem.isReplacedItem() )
-				return true;
+		return ( unusedJustificationItem != null &&
 
-			if( assignmentList_ != null )
-				{
-				if( assignmentList_.isJustificationInUse( false, false, unusedJustificationItem ) )
-					return true;
+				( unusedJustificationItem.isReplacedItem() ||
 
-				if( assignmentList_.isJustificationInUse( true, false, unusedJustificationItem ) )
-					return true;
+				( assignmentList_ != null &&
 
-				if( assignmentList_.isJustificationInUse( false, true, unusedJustificationItem ) )
-					return true;
-				}
+				( assignmentList_.isJustificationInUse( false, false, unusedJustificationItem ) ||
+				assignmentList_.isJustificationInUse( true, false, unusedJustificationItem ) ||
+				assignmentList_.isJustificationInUse( false, true, unusedJustificationItem ) ) ) ||
 
-			if( specificationList_ != null &&
-			specificationList_.isJustificationInUse( false, false, unusedJustificationItem ) )
-				return true;
-			}
-
-		return false;
+				( specificationList_ != null &&
+				specificationList_.isJustificationInUse( false, false, unusedJustificationItem ) ) ) );
 		}
 
 	protected int nRemainingSpecificationWordsForWriting( boolean isAssignment, boolean isArchivedAssignment, boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isSelfGeneratedSpecification, short assumptionLevel, short questionParameter, short specificationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int relationContextNr, int creationSentenceNr )
 		{
 		if( isAssignment )
-			{
-			if( assignmentList_ != null )
-				return assignmentList_.nRemainingSpecificationWordsForWriting( isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, isSelfGeneratedSpecification, assumptionLevel, questionParameter, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr, creationSentenceNr );
-			}
-		else
-			{
-			if( specificationList_ != null )
-				return specificationList_.nRemainingSpecificationWordsForWriting( false, isExclusiveSpecification, isNegative, isPossessive, isSelfGeneratedSpecification, assumptionLevel, questionParameter, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr, creationSentenceNr );
-			}
+			return ( assignmentList_ != null ?
+					assignmentList_.nRemainingSpecificationWordsForWriting( isArchivedAssignment, isExclusiveSpecification, isNegative, isPossessive, isSelfGeneratedSpecification, assumptionLevel, questionParameter, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr, creationSentenceNr ) : 0 );
 
-		return 0;
+		return ( specificationList_ != null ?
+				specificationList_.nRemainingSpecificationWordsForWriting( false, isExclusiveSpecification, isNegative, isPossessive, isSelfGeneratedSpecification, assumptionLevel, questionParameter, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr, creationSentenceNr ) : 0 );
 		}
 
 	protected byte changeJustificationOfNegativeAssumptions( SpecificationItem secondarySpecificationItem )
@@ -3243,29 +2926,23 @@ class WordItem extends Item
 		if( assignmentList_ != null &&
 		assignmentList_.updateJustificationInSpecifications( false, false, false, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == Constants.RESULT_OK &&
 		assignmentList_.updateJustificationInSpecifications( true, false, false, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == Constants.RESULT_OK &&
-		assignmentList_.updateJustificationInSpecifications( false, true, false, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == Constants.RESULT_OK )
-			{
-			if( isIncludingReplacedItems )
-				assignmentList_.updateJustificationInSpecifications( false, false, true, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem );
-			}
+		assignmentList_.updateJustificationInSpecifications( false, true, false, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == Constants.RESULT_OK &&
+		isIncludingReplacedItems )
+			assignmentList_.updateJustificationInSpecifications( false, false, true, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem );
 
 		if( GlobalVariables.result == Constants.RESULT_OK &&
 		specificationList_ != null &&
-		specificationList_.updateJustificationInSpecifications( false, false, false, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == Constants.RESULT_OK )
-			{
-			if( isIncludingReplacedItems )
-				specificationList_.updateJustificationInSpecifications( false, false, true, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem );
-			}
+		specificationList_.updateJustificationInSpecifications( false, false, false, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem ) == Constants.RESULT_OK &&
+		isIncludingReplacedItems )
+			specificationList_.updateJustificationInSpecifications( false, false, true, isExclusiveGeneralization, obsoleteJustificationItem, replacingJustificationItem );
 
 		return GlobalVariables.result;
 		}
 
 	protected byte updateSpecificationsInJustificationsOfInvolvedWords( SpecificationItem obsoleteSpecificationItem, SpecificationItem replacingSpecificationItem )
 		{
-		if( specificationList_ != null )
-			return specificationList_.updateSpecificationsInJustificationsOfInvolvedWords( obsoleteSpecificationItem, replacingSpecificationItem );
-
-		return Constants.RESULT_OK;
+		return ( specificationList_ != null ?
+				specificationList_.updateSpecificationsInJustificationsOfInvolvedWords( obsoleteSpecificationItem, replacingSpecificationItem ) : Constants.RESULT_OK );
 		}
 
 	protected byte writeConfirmedSpecification( short interfaceParameter, SpecificationItem writeSpecificationItem )
@@ -3278,318 +2955,260 @@ class WordItem extends Item
 
 	protected SpecificationItem bestMatchingRelationContextNrSpecificationItem( boolean isIncludingArchivedAssignments, boolean isNegative, boolean isPossessive, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( isIncludingArchivedAssignments &&
-		assignmentList_ != null )
-			foundSpecificationItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( true, isNegative, isPossessive, specificationWordItem );
+		return ( ( !isIncludingArchivedAssignments ||
+				assignmentList_ == null ||
+				( foundAssignmentItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( true, isNegative, isPossessive, specificationWordItem ) ) == null ) &&
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, specificationWordItem );
-
-		return foundSpecificationItem;
+				specificationList_ != null ?
+				specificationList_.bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem bestMatchingRelationContextNrSpecificationItem( boolean isNegative, boolean isPossessive, int specificationCollectionNr, WordItem specificationWordItem )
 		{
-		if( specificationList_ != null )
-			return specificationList_.bestMatchingRelationContextNrSpecificationItem( isNegative, isPossessive, specificationCollectionNr, specificationWordItem );
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.bestMatchingRelationContextNrSpecificationItem( isNegative, isPossessive, specificationCollectionNr, specificationWordItem ) : null );
 		}
 
 	protected SpecificationItem bestMatchingRelationContextNrSpecificationItem( boolean isIncludingActiveAssignments, boolean isIncludingArchivedAssignments, boolean isNegative, boolean isPossessive, WordItem specificationWordItem, WordItem relationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null )
-			{
-			if( isIncludingActiveAssignments )
-				foundSpecificationItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, specificationWordItem, relationWordItem );
+		return ( ( assignmentList_ == null ||
 
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == null )
-				foundSpecificationItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( true, isNegative, isPossessive, specificationWordItem, relationWordItem );
-			}
+				( ( !isIncludingActiveAssignments ||
+				( foundAssignmentItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, specificationWordItem, relationWordItem ) ) == null ) &&
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, specificationWordItem, relationWordItem );
+				( !isIncludingArchivedAssignments ||
+				( foundAssignmentItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( true, isNegative, isPossessive, specificationWordItem, relationWordItem ) ) == null ) ) ) &&
 
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.bestMatchingRelationContextNrSpecificationItem( false, isNegative, isPossessive, specificationWordItem, relationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem bestMatchingRelationContextNrSpecificationItem( boolean isAllowingEmptyRelationContext, boolean isIncludingAnsweredQuestions, boolean isIncludingActiveAssignments, boolean isIncludingInactiveAssignments, boolean isIncludingArchivedAssignments, boolean isNegative, boolean isPossessive, boolean isQuestion, int specificationCollectionNr, int relationContextNr, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null )
-			{
-			if( isIncludingActiveAssignments )
-				foundSpecificationItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyRelationContext, isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, isQuestion, specificationCollectionNr, relationContextNr, specificationWordItem );
+		return ( ( assignmentList_ == null ||
 
-			if( isIncludingInactiveAssignments &&
-			foundSpecificationItem == null )
-				foundSpecificationItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyRelationContext, isIncludingAnsweredQuestions, true, false, isNegative, isPossessive, isQuestion, specificationCollectionNr, relationContextNr, specificationWordItem );
+				( ( !isIncludingActiveAssignments ||
+				( foundAssignmentItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyRelationContext, isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, isQuestion, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == null ) &&
 
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == null )
-				foundSpecificationItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyRelationContext, isIncludingAnsweredQuestions, false, true, isNegative, isPossessive, isQuestion, specificationCollectionNr, relationContextNr, specificationWordItem );
-			}
+				( !isIncludingInactiveAssignments ||
+				( foundAssignmentItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyRelationContext, isIncludingAnsweredQuestions, true, false, isNegative, isPossessive, isQuestion, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == null ) &&
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyRelationContext, isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, isQuestion, specificationCollectionNr, relationContextNr, specificationWordItem );
+				( !isIncludingArchivedAssignments ||
+				( foundAssignmentItem = assignmentList_.bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyRelationContext, isIncludingAnsweredQuestions, false, true, isNegative, isPossessive, isQuestion, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == null ) ) ) &&
 
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.bestMatchingRelationContextNrSpecificationItem( isAllowingEmptyRelationContext, isIncludingAnsweredQuestions, false, false, isNegative, isPossessive, isQuestion, specificationCollectionNr, relationContextNr, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem bestMatchingSpecificationWordSpecificationItem( boolean isIncludingArchivedAssignments, boolean isNegative, boolean isPossessive, short questionParameter, int specificationCollectionNr, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( isIncludingArchivedAssignments &&
-		assignmentList_ != null )
-			foundSpecificationItem = assignmentList_.bestMatchingSpecificationWordSpecificationItem( true, isNegative, isPossessive, questionParameter, specificationCollectionNr, specificationWordItem );
+		return ( ( !isIncludingArchivedAssignments ||
+				assignmentList_ == null ||
+				( foundAssignmentItem = assignmentList_.bestMatchingSpecificationWordSpecificationItem( true, isNegative, isPossessive, questionParameter, specificationCollectionNr, specificationWordItem ) ) == null ) &&
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.bestMatchingSpecificationWordSpecificationItem( false, isNegative, isPossessive, questionParameter, specificationCollectionNr, specificationWordItem );
-
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.bestMatchingSpecificationWordSpecificationItem( false, isNegative, isPossessive, questionParameter, specificationCollectionNr, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem bestMatchingSpecificationWordSpecificationItem( boolean isAllowingEmptyGeneralizationContext, boolean isAllowingEmptyRelationContext, boolean isIncludingActiveAssignments, boolean isIncludingArchivedAssignments, boolean isNegative, boolean isPossessive, int specificationCollectionNr, int generalizationContextNr, int relationContextNr, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null )
-			{
-			if( isIncludingActiveAssignments )
-				foundSpecificationItem = assignmentList_.bestMatchingSpecificationWordSpecificationItem( isAllowingEmptyGeneralizationContext, isAllowingEmptyRelationContext, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem );
+		return ( ( assignmentList_ == null ||
 
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == null )
-				foundSpecificationItem = assignmentList_.bestMatchingSpecificationWordSpecificationItem( isAllowingEmptyGeneralizationContext, isAllowingEmptyRelationContext, true, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem );
-			}
+				( ( !isIncludingActiveAssignments ||
+				( foundAssignmentItem = assignmentList_.bestMatchingSpecificationWordSpecificationItem( isAllowingEmptyGeneralizationContext, isAllowingEmptyRelationContext, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem ) ) == null ) &&
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.bestMatchingSpecificationWordSpecificationItem( isAllowingEmptyGeneralizationContext, isAllowingEmptyRelationContext, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem );
+				( !isIncludingArchivedAssignments ||
+				( foundAssignmentItem = assignmentList_.bestMatchingSpecificationWordSpecificationItem( isAllowingEmptyGeneralizationContext, isAllowingEmptyRelationContext, true, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem ) ) == null ) ) ) &&
 
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.bestMatchingSpecificationWordSpecificationItem( isAllowingEmptyGeneralizationContext, isAllowingEmptyRelationContext, false, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem firstActiveQuestionSpecificationItem()
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstActiveSpecificationItem( false, true );
+		return ( specificationList_ != null ?
+				specificationList_.firstActiveSpecificationItem( false, true ) : null );
+		}
 
-		return null;
+	protected SpecificationItem firstAssignmentItem( boolean isIncludingActiveAssignments, boolean isIncludingInactiveAssignments, boolean isIncludingArchivedAssignments, boolean isNegative, boolean isSelfGenerated, short questionParameter, int relationContextNr, WordItem specificationWordItem )
+		{
+		SpecificationItem foundAssignmentItem = null;
+
+		return ( assignmentList_ != null &&
+
+				( !isIncludingActiveAssignments ||
+				( foundAssignmentItem = assignmentList_.firstAssignmentItem( false, false, isNegative, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem ) ) == null ) &&
+
+				( !isIncludingInactiveAssignments ||
+				( foundAssignmentItem = assignmentList_.firstAssignmentItem( true, false, isNegative, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem ) ) == null ) &&
+
+				isIncludingArchivedAssignments ? assignmentList_.firstAssignmentItem( false, true, isNegative, isSelfGenerated, questionParameter, relationContextNr, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem firstAssignmentOrSpecificationItem( boolean isNegative, boolean isPossessive, int relationContextNr, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null )
-			foundSpecificationItem = assignmentList_.firstSpecificationItem( isNegative, isPossessive, relationContextNr, specificationWordItem );
+		return ( ( assignmentList_ == null ||
+				( foundAssignmentItem = assignmentList_.firstSpecificationItem( isNegative, isPossessive, relationContextNr, specificationWordItem ) ) == null ) &&
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.firstSpecificationItem( isNegative, isPossessive, relationContextNr, specificationWordItem );
-
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.firstSpecificationItem( isNegative, isPossessive, relationContextNr, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem firstAssignmentOrSpecificationItem( boolean isIncludingActiveAssignments, boolean isIncludingArchivedAssignments, boolean isNegative, boolean isPossessive, boolean isQuestion, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null )
-			{
-			if( isIncludingActiveAssignments )
-				foundSpecificationItem = assignmentList_.firstSpecificationItem( false, isNegative, isPossessive, isQuestion, specificationWordItem );
+		return ( ( assignmentList_ == null ||
 
-			if( isIncludingArchivedAssignments &&
-			foundSpecificationItem == null )
-				foundSpecificationItem = assignmentList_.firstSpecificationItem( true, isNegative, isPossessive, isQuestion, specificationWordItem );
-			}
+				( ( !isIncludingActiveAssignments ||
+				( foundAssignmentItem = assignmentList_.firstSpecificationItem( false, isNegative, isPossessive, isQuestion, specificationWordItem ) ) == null ) &&
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.firstSpecificationItem( false, isNegative, isPossessive, isQuestion, specificationWordItem );
+				( !isIncludingArchivedAssignments ||
+				( foundAssignmentItem = assignmentList_.firstSpecificationItem( true, isNegative, isPossessive, isQuestion, specificationWordItem ) ) == null ) ) ) &&
 
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.firstSpecificationItem( false, isNegative, isPossessive, isQuestion, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem firstExclusiveSpecificationItem()
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstExclusiveSpecificationItem();
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstExclusiveSpecificationItem() : null );
 		}
 
 	protected SpecificationItem firstExclusiveSpecificationItem( WordItem specificationWordItem )
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstExclusiveSpecificationItem( specificationWordItem );
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstExclusiveSpecificationItem( specificationWordItem ) : null );
 		}
 
 	protected SpecificationItem firstFeminineOrMasculineSpecificationItem()
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstFeminineOrMasculineSpecificationItem();
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstFeminineOrMasculineSpecificationItem() : null );
 		}
 
 	protected SpecificationItem firstNonCompoundUserSpecificationItem()
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstNonCompoundUserSpecificationItem();
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstNonCompoundUserSpecificationItem() : null );
 		}
 
 	protected SpecificationItem firstNonCompoundCollectionSpecificationItem( int compoundSpecificationCollectionNr )
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstNonCompoundCollectionSpecificationItem( compoundSpecificationCollectionNr );
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstNonCompoundCollectionSpecificationItem( compoundSpecificationCollectionNr ) : null );
 		}
 
 	protected SpecificationItem firstNonPossessiveDefinitionSpecificationItem( boolean isIncludingAdjectives )
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstNonPossessiveDefinitionSpecificationItem( isIncludingAdjectives );
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstNonPossessiveDefinitionSpecificationItem( isIncludingAdjectives ) : null );
 		}
 
 	protected SpecificationItem firstNonQuestionSpecificationItem()
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstActiveSpecificationItem( false, false );
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstActiveSpecificationItem( false, false ) : null );
 		}
 
 	protected SpecificationItem firstPossessiveSpecificationItem()
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstPossessiveSpecificationItem();
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstPossessiveSpecificationItem() : null );
 		}
 
 	protected SpecificationItem firstPrimarySpecificationCandidateOfQuestionSpecificationItem( boolean isAllowingSpanishPossessiveSpecification )
 		{
 		SpecificationItem firstSelectedSpecificationItem;
 
-		if( ( firstSelectedSpecificationItem = firstSpecificationItem( false, false, false, false ) ) != null )
-			return firstSelectedSpecificationItem.primarySpecificationCandidateOfQuestionSpecificationItem( isAllowingSpanishPossessiveSpecification, true );
-
-		return null;
+		return ( ( firstSelectedSpecificationItem = firstSpecificationItem( false, false, false, false ) ) != null ?
+				firstSelectedSpecificationItem.primarySpecificationCandidateOfQuestionSpecificationItem( isAllowingSpanishPossessiveSpecification, true ) : null );
 		}
 
 	protected SpecificationItem firstRecentlyAnsweredQuestionSpecificationItem()
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null &&
-		( foundSpecificationItem = assignmentList_.firstRecentlyAnsweredQuestionSpecificationItem( false ) ) == null )
-			foundSpecificationItem = assignmentList_.firstRecentlyAnsweredQuestionSpecificationItem( true );
+		return ( ( assignmentList_ == null ||
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return foundSpecificationItem = specificationList_.firstRecentlyAnsweredQuestionSpecificationItem( false );
+				( ( foundAssignmentItem = assignmentList_.firstRecentlyAnsweredQuestionSpecificationItem( false ) ) == null &&
+				( foundAssignmentItem = assignmentList_.firstRecentlyAnsweredQuestionSpecificationItem( true ) ) == null ) ) &&
 
-		return foundSpecificationItem;
-		}
-
-	protected SpecificationItem firstRelationSpecificationItem()
-		{
-		if( specificationList_ != null )
-			return specificationList_.firstRelationSpecificationItem();
-
-		return null;
+				specificationList_ != null ?
+					specificationList_.firstRecentlyAnsweredQuestionSpecificationItem( false ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem firstSelectedRelationSpecificationItem( boolean isAssignment, boolean isArchivedAssignment )
 		{
 		if( isAssignment )
-			{
-			if( assignmentList_ != null )
-				return assignmentList_.firstSelectedRelationSpecificationItem( isArchivedAssignment );
-			}
-		else
-			{
-			if( specificationList_ != null )
-				return specificationList_.firstSelectedRelationSpecificationItem( false );
-			}
+			return ( assignmentList_ != null ?
+					assignmentList_.firstSelectedRelationSpecificationItem( isArchivedAssignment ) : null );
 
-		return null;
-		}
-
-	protected SpecificationItem firstSelfGeneratedCheckSpecificationItem( boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isSelfGenerated, short questionParameter, int specificationCollectionNr, WordItem specificationWordItem )
-		{
-		SpecificationItem moreRecentSpecificationItem;
-		SpecificationItem foundSpecificationItem = null;
-
-		if( assignmentList_ != null &&
-		( foundSpecificationItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( true, false, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, specificationWordItem ) ) == null )
-			foundSpecificationItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( true, true, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, specificationWordItem );
-
-		if( specificationList_ != null &&
-		( moreRecentSpecificationItem = specificationList_.firstSelfGeneratedCheckSpecificationItem( true, false, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, specificationWordItem ) ) != null )
-			{
-			if( foundSpecificationItem == null ||
-
-			// Prefer more recent specification over assignment
-			( foundSpecificationItem.hasRelationContext() == moreRecentSpecificationItem.hasRelationContext() &&
-			foundSpecificationItem.originalSentenceNr() < moreRecentSpecificationItem.originalSentenceNr() ) )
-				return moreRecentSpecificationItem;
-			}
-
-		return foundSpecificationItem;
+		return ( specificationList_ != null ?
+				specificationList_.firstSelectedRelationSpecificationItem( false ) : null );
 		}
 
 	protected SpecificationItem firstSelfGeneratedCheckSpecificationItem( boolean isAllowingEmptyRelationContext, boolean isIncludingArchivedAssignments, boolean isNegative, boolean isPossessive, boolean isSelfGeneratedAssumption, WordItem specificationWordItem, WordItem relationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null &&
-		( foundSpecificationItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, false, isNegative, isPossessive, isSelfGeneratedAssumption, specificationWordItem, relationWordItem ) ) == null &&
+		return ( ( assignmentList_ == null ||
 
-		isIncludingArchivedAssignments )
-			foundSpecificationItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, true, isNegative, isPossessive, isSelfGeneratedAssumption, specificationWordItem, relationWordItem );
+				( ( foundAssignmentItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, false, isNegative, isPossessive, isSelfGeneratedAssumption, specificationWordItem, relationWordItem ) ) == null &&
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, false, isNegative, isPossessive, isSelfGeneratedAssumption, specificationWordItem, relationWordItem );
+				( !isIncludingArchivedAssignments ||
+				( foundAssignmentItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, false, isNegative, isPossessive, isSelfGeneratedAssumption, specificationWordItem, relationWordItem ) ) == null ) ) ) &&
 
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, false, isNegative, isPossessive, isSelfGeneratedAssumption, specificationWordItem, relationWordItem ) : foundAssignmentItem );
+		}
+
+	protected SpecificationItem firstSelfGeneratedCheckSpecificationItem( boolean isExclusiveSpecification, boolean isNegative, boolean isPossessive, boolean isSelfGenerated, short questionParameter, int specificationCollectionNr, WordItem specificationWordItem )
+		{
+		SpecificationItem foundAssignmentItem = null;
+		SpecificationItem moreRecentSpecificationItem;
+
+		if( specificationList_ != null &&
+		( moreRecentSpecificationItem = specificationList_.firstSelfGeneratedCheckSpecificationItem( true, false, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, specificationWordItem ) ) != null )
+			{
+			if( assignmentList_ != null &&
+			( foundAssignmentItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( true, false, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, specificationWordItem ) ) == null )
+				foundAssignmentItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( true, true, isExclusiveSpecification, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, specificationWordItem );
+
+			if( foundAssignmentItem == null ||
+
+			// Prefer more recent specification over assignment
+			( foundAssignmentItem.hasRelationContext() == moreRecentSpecificationItem.hasRelationContext() &&
+			foundAssignmentItem.originalSentenceNr() < moreRecentSpecificationItem.originalSentenceNr() ) )
+				return moreRecentSpecificationItem;
+			}
+
+		return foundAssignmentItem;
 		}
 
 	protected SpecificationItem firstSelfGeneratedCheckSpecificationItem( boolean isAllowingEmptyRelationContext, boolean isIncludingArchivedAssignments, boolean isNegative, boolean isPossessive, boolean isSelfGenerated, short questionParameter, int specificationCollectionNr, int relationContextNr, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( isIncludingArchivedAssignments &&
-		assignmentList_ != null )
-			foundSpecificationItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, true, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
+		return ( ( !isIncludingArchivedAssignments ||
+				assignmentList_ == null ||
+				( foundAssignmentItem = assignmentList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, true, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == null ) &&
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, false, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem );
-
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.firstSelfGeneratedCheckSpecificationItem( isAllowingEmptyRelationContext, false, isNegative, isPossessive, isSelfGenerated, questionParameter, specificationCollectionNr, relationContextNr, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem firstSpecificationItem( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isQuestion )
@@ -3598,138 +3217,90 @@ class WordItem extends Item
 				( isQuestion ? firstActiveQuestionSpecificationItem() : firstNonQuestionSpecificationItem() ) );
 		}
 
-	protected SpecificationItem firstSpecificationItem( boolean isIncludingAnsweredQuestions, boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, short questionParameter )
+	protected SpecificationItem firstSpecificationItem( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, short questionParameter )
 		{
-		if( isIncludingAnsweredQuestions &&
-		questionParameter > Constants.NO_QUESTION_PARAMETER )
-			{
-			if( isAssignment )
-				{
-				if( assignmentList_ != null )
-					return assignmentList_.firstAssignmentItem( true, isInactiveAssignment, isArchivedAssignment, questionParameter );
-				}
-			else
-				{
-				if( specificationList_ != null )
-					return specificationList_.firstActiveSpecificationItem( true, questionParameter );
-				}
-			}
-		else
-			{
-			if( isAssignment )
-				{
-				if( assignmentList_ != null )
-					{
-					if( isArchivedAssignment )
-						return assignmentList_.firstAssignmentItem( false, false, true, questionParameter );
+		if( isAssignment )
+			return ( assignmentList_ != null ?
+					( isArchivedAssignment ? assignmentList_.firstAssignmentItem( false, false, true, questionParameter ) :
+					( isInactiveAssignment ? assignmentList_.firstAssignmentItem( false, true, false, questionParameter ) :
+											assignmentList_.firstAssignmentItem( false, false, false, questionParameter ) ) ) : null );
 
-					if( isInactiveAssignment )
-						return assignmentList_.firstAssignmentItem( false, true, false, questionParameter );
-
-					return assignmentList_.firstAssignmentItem( false, false, false, questionParameter );
-					}
-				}
-			else
-				{
-				if( questionParameter == Constants.NO_QUESTION_PARAMETER )
-					return firstNonQuestionSpecificationItem();
-
-				if( specificationList_ != null )
-					return specificationList_.firstActiveSpecificationItem( false, questionParameter );
-				}
-			}
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstActiveSpecificationItem( false, questionParameter ) : null );
 		}
 
 	protected SpecificationItem firstSpecificationItem( boolean isNegative, boolean isPossessive, boolean isQuestion, WordItem specificationWordItem )
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstSpecificationItem( false, isNegative, isPossessive, isQuestion, specificationWordItem );
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstSpecificationItem( false, isNegative, isPossessive, isQuestion, specificationWordItem ) : null );
 		}
 
 	protected SpecificationItem firstSpecificationItem( boolean isPossessive, boolean isSpecificationGeneralization, short questionParameter, WordItem specificationWordItem )
 		{
-		if( specificationList_ != null )
-			return specificationList_.firstSpecificationItem( isPossessive, isSpecificationGeneralization, questionParameter, specificationWordItem );
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.firstSpecificationItem( isPossessive, isSpecificationGeneralization, questionParameter, specificationWordItem ) : null );
 		}
 
 	protected SpecificationItem firstUnhiddenSpanishSpecificationItem()
 		{
-		SpecificationItem foundSpecificationItem = null;
-
-		if( assignmentList_ != null )
-			foundSpecificationItem = assignmentList_.firstUnhiddenSpanishSpecificationItem( true );
-
-		if( specificationList_ != null )
-			return specificationList_.firstUnhiddenSpanishSpecificationItem( false );
-
-		return foundSpecificationItem;
+		return ( specificationList_ != null ?
+					specificationList_.firstUnhiddenSpanishSpecificationItem( false ) :
+				( assignmentList_ != null ?
+					assignmentList_.firstUnhiddenSpanishSpecificationItem( true ) : null ) );
 		}
 
 	protected SpecificationItem firstUserSpecificationItem( boolean isNegative, boolean isPossessive, int specificationCollectionNr, int relationContextNr, WordItem specificationWordItem )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null &&
-		( foundSpecificationItem = assignmentList_.firstUserSpecificationItem( false, false, isNegative, isPossessive, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == null )
-			{
-			if( ( foundSpecificationItem = assignmentList_.firstUserSpecificationItem( true, false, isNegative, isPossessive, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == null )
-				foundSpecificationItem = assignmentList_.firstUserSpecificationItem( false, true, isNegative, isPossessive, specificationCollectionNr, relationContextNr, specificationWordItem );
-			}
+		return ( ( assignmentList_ == null ||
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.firstUserSpecificationItem( false, false, isNegative, isPossessive, specificationCollectionNr, relationContextNr, specificationWordItem );
+				// Active assignment
+				( ( foundAssignmentItem = assignmentList_.firstUserSpecificationItem( false, false, isNegative, isPossessive, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == null &&
+				// Inactive assignment
+				( foundAssignmentItem = assignmentList_.firstUserSpecificationItem( true, false, isNegative, isPossessive, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == null &&
+				// Archived assignment
+				( foundAssignmentItem = assignmentList_.firstUserSpecificationItem( false, true, isNegative, isPossessive, specificationCollectionNr, relationContextNr, specificationWordItem ) ) == null ) ) &&
 
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.firstUserSpecificationItem( false, false, isNegative, isPossessive, specificationCollectionNr, relationContextNr, specificationWordItem ) : foundAssignmentItem );
 		}
 
 	protected SpecificationItem noRelationContextSpecificationItem( boolean isPossessive, boolean isSelfGenerated, WordItem specificationWordItem )
 		{
-		if( specificationList_ != null &&
+		return ( specificationList_ != null &&
 
-		( assignmentList_ == null ||
-		// Skip if archived assignment with relation context is found
-		assignmentList_.firstSpecificationItem( true, false, isPossessive, false, specificationWordItem ) == null ) )
-			return specificationList_.noRelationContextSpecificationItem( isPossessive, isSelfGenerated, specificationWordItem );
-
-		return null;
+				( assignmentList_ == null ||
+				// Skip if archived assignment with relation context is found
+				assignmentList_.firstSpecificationItem( true, false, isPossessive, false, specificationWordItem ) == null ) ?
+					specificationList_.noRelationContextSpecificationItem( isPossessive, isSelfGenerated, specificationWordItem ) : null );
 		}
 
 	protected SpecificationItem partOfSpecificationItem( WordItem specificationWordItem )
 		{
-		if( specificationList_ != null )
-			return specificationList_.partOfSpecificationItem( specificationWordItem );
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.partOfSpecificationItem( specificationWordItem ) : null );
 		}
 
 	protected SpecificationItem sameUserQuestionSpecificationItem( short questionParameter )
 		{
-		SpecificationItem foundSpecificationItem = null;
+		SpecificationItem foundAssignmentItem = null;
 
-		if( assignmentList_ != null &&
-		( foundSpecificationItem = assignmentList_.sameUserQuestionSpecificationItem( false, questionParameter ) ) == null )
-			foundSpecificationItem = assignmentList_.sameUserQuestionSpecificationItem( true, questionParameter );
+		return ( ( assignmentList_ == null ||
 
-		if( foundSpecificationItem == null &&
-		specificationList_ != null )
-			return specificationList_.sameUserQuestionSpecificationItem( false, questionParameter );
+				// Active assignment
+				( ( foundAssignmentItem = assignmentList_.sameUserQuestionSpecificationItem( false, questionParameter ) ) == null &&
+				// Archived assignment
+				( foundAssignmentItem = assignmentList_.sameUserQuestionSpecificationItem( true, questionParameter ) ) == null ) ) &&
 
-		return foundSpecificationItem;
+				specificationList_ != null ?
+					specificationList_.sameUserQuestionSpecificationItem( false, questionParameter ) : foundAssignmentItem );
 		}
 
 	protected WordItem feminineOrMasculineCommonWordItem( boolean isFeminineWord )
 		{
-		if( specificationList_ != null )
-			return specificationList_.feminineOrMasculineCommonWordItem( isFeminineWord );
-
-		return null;
+		return ( specificationList_ != null ?
+				specificationList_.feminineOrMasculineCommonWordItem( isFeminineWord ) : null );
 		}
 
 	protected BoolResultType findQuestionToBeAdjustedByCompoundCollection( int questionSpecificationCollectionNr, WordItem primarySpecificationWordItem )
@@ -3822,12 +3393,12 @@ class WordItem extends Item
 		return wordSpecification_.addSpecificationInWord( isAssignment, isInactiveAssignment, isArchivedAssignment, isCharacteristicFor, isConditional, isEveryGeneralization, isExclusiveGeneralization, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecific, isSpecificationGeneralization, isUncountableGeneralizationNoun, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, copiedRelationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString );
 		}
 
-	protected CreateAndAssignResultType copySpecificationItem( int specificationCollectionNr, JustificationItem firstJustificationItem, SpecificationItem originalSpecificationItem )
+	protected CreateAndAssignResultType copySpecificationItem( int newSpecificationCollectionNr, JustificationItem firstJustificationItem, SpecificationItem originalSpecificationItem )
 		{
 		if( originalSpecificationItem == null )
 			return startCreateAndAssignResultErrorInWord( 1, null, "The given original specification item is undefined" );
 
-		return createSpecificationItem( originalSpecificationItem.isAssignment(), originalSpecificationItem.isInactiveAssignment(), originalSpecificationItem.isArchivedAssignment(), originalSpecificationItem.isAnsweredQuestion(), originalSpecificationItem.isCharacteristicFor(), originalSpecificationItem.isConcludedAssumption(), originalSpecificationItem.isConditional(), originalSpecificationItem.isCorrectedAssumption(), originalSpecificationItem.isEveryGeneralization(), originalSpecificationItem.isExclusiveGeneralization(), originalSpecificationItem.isExclusiveSpecification(), originalSpecificationItem.isNegative(), originalSpecificationItem.isPartOf(), originalSpecificationItem.isPossessive(), originalSpecificationItem.isSpecific(), originalSpecificationItem.isSpecificationGeneralization(), originalSpecificationItem.isUncountableGeneralizationNoun(), originalSpecificationItem.isUniqueUserRelation(), originalSpecificationItem.isValueSpecification(), originalSpecificationItem.assignmentLevel(), originalSpecificationItem.assumptionLevel(), originalSpecificationItem.languageNr(), originalSpecificationItem.prepositionParameter(), originalSpecificationItem.questionParameter(), originalSpecificationItem.generalizationWordTypeNr(), originalSpecificationItem.specificationWordTypeNr(), originalSpecificationItem.relationWordTypeNr(), specificationCollectionNr, originalSpecificationItem.generalizationContextNr(), originalSpecificationItem.specificationContextNr(), originalSpecificationItem.relationContextNr(), originalSpecificationItem.originalSentenceNr(), originalSpecificationItem.activeSentenceNr(), originalSpecificationItem.inactiveSentenceNr(), originalSpecificationItem.archivedSentenceNr(), originalSpecificationItem.nContextRelations(), firstJustificationItem, originalSpecificationItem.specificationWordItem(), originalSpecificationItem.specificationString(), originalSpecificationItem.storedSentenceStringBuffer(), originalSpecificationItem.storedSentenceWithOnlyOneSpecificationStringBuffer() );
+		return createSpecificationItem( originalSpecificationItem.isAssignment(), originalSpecificationItem.isInactiveAssignment(), originalSpecificationItem.isArchivedAssignment(), originalSpecificationItem.isAnsweredQuestion(), originalSpecificationItem.isCharacteristicFor(), originalSpecificationItem.isConcludedAssumption(), originalSpecificationItem.isConditional(), originalSpecificationItem.isCorrectedAssumption(), originalSpecificationItem.isEveryGeneralization(), originalSpecificationItem.isExclusiveGeneralization(), originalSpecificationItem.isExclusiveSpecification(), originalSpecificationItem.isNegative(), originalSpecificationItem.isPartOf(), originalSpecificationItem.isPossessive(), originalSpecificationItem.isSpecific(), originalSpecificationItem.isSpecificationGeneralization(), originalSpecificationItem.isUncountableGeneralizationNoun(), originalSpecificationItem.isUniqueUserRelation(), originalSpecificationItem.isValueSpecification(), originalSpecificationItem.assignmentLevel(), originalSpecificationItem.assumptionLevel(), originalSpecificationItem.languageNr(), originalSpecificationItem.prepositionParameter(), originalSpecificationItem.questionParameter(), originalSpecificationItem.generalizationWordTypeNr(), originalSpecificationItem.specificationWordTypeNr(), originalSpecificationItem.relationWordTypeNr(), newSpecificationCollectionNr, originalSpecificationItem.generalizationContextNr(), originalSpecificationItem.specificationContextNr(), originalSpecificationItem.relationContextNr(), originalSpecificationItem.originalSentenceNr(), originalSpecificationItem.activeSentenceNr(), originalSpecificationItem.inactiveSentenceNr(), originalSpecificationItem.archivedSentenceNr(), originalSpecificationItem.nContextRelations(), firstJustificationItem, originalSpecificationItem.specificationWordItem(), originalSpecificationItem.specificationString(), originalSpecificationItem.storedSentenceStringBuffer(), originalSpecificationItem.storedSentenceWithOnlyOneSpecificationStringBuffer() );
 		}
 
 	protected CreateAndAssignResultType createSpecificationItem( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isAnsweredQuestion, boolean isCharacteristicFor, boolean isConcludedAssumption, boolean isConditional, boolean isCorrectedAssumption, boolean isEveryGeneralization, boolean isExclusiveGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSpecific, boolean isSpecificationGeneralization, boolean isUncountableGeneralizationNoun, boolean isUniqueUserRelation, boolean isValueSpecification, short assignmentLevel, short assumptionLevel, short languageNr, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString, StringBuffer storedSentenceStringBuffer, StringBuffer storedSentenceWithOnlyOneSpecificationStringBuffer )
@@ -3896,10 +3467,8 @@ class WordItem extends Item
 
 	protected boolean hasAnyWordType()
 		{
-		if( wordTypeList_ != null )
-			return wordTypeList_.hasAnyWordType();
-
-		return false;
+		return ( wordTypeList_ != null ?
+				wordTypeList_.hasAnyWordType() : false );
 		}
 
 	protected boolean hasFeminineAndMasculineArticle( short articleParameter )
@@ -3964,132 +3533,108 @@ class WordItem extends Item
 				break;
 			}
 
-		if( ( oppositeArticleWordItem = predefinedWordItem( oppositeArticleParameter ) ) != null )
-			return oppositeArticleWordItem.hasWordType( false, Constants.WORD_TYPE_ARTICLE );
-
-		return false;
+		return ( ( oppositeArticleWordItem = predefinedWordItem( oppositeArticleParameter ) ) != null ?
+				oppositeArticleWordItem.hasWordType( false, Constants.WORD_TYPE_ARTICLE ) : false );
 		}
 
 	protected boolean hasFeminineProperNounEnding()
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( wordTypeList_ != null &&
-		( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, Constants.WORD_TYPE_PROPER_NOUN ) ) != null )
-			return foundWordTypeItem.hasFeminineWordEnding();
-
-		return false;
+		return ( wordTypeList_ != null &&
+				( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, Constants.WORD_TYPE_PROPER_NOUN ) ) != null ?
+					foundWordTypeItem.hasFeminineWordEnding() : false );
 		}
 
 	protected boolean hasFeminineOrMasculineProperNounEnding()
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( wordTypeList_ != null &&
-		( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, Constants.WORD_TYPE_PROPER_NOUN ) ) != null )
-			return foundWordTypeItem.hasFeminineOrMasculineWordEnding();
-
-		return false;
+		return ( wordTypeList_ != null &&
+				( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, Constants.WORD_TYPE_PROPER_NOUN ) ) != null ?
+					foundWordTypeItem.hasFeminineOrMasculineWordEnding() : false );
 		}
 
 	protected boolean hasMasculineProperNounEnding()
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( wordTypeList_ != null &&
-		( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, Constants.WORD_TYPE_PROPER_NOUN ) ) != null )
-			return foundWordTypeItem.hasMasculineWordEnding();
-
-		return false;
+		return ( wordTypeList_ != null &&
+				( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, Constants.WORD_TYPE_PROPER_NOUN ) ) != null ?
+					foundWordTypeItem.hasMasculineWordEnding() : false );
 		}
 
 	protected boolean hasWordType( boolean isAllowingDifferentNoun, short wordTypeNr )
 		{
-		if( wordTypeList_ != null )
-			return ( wordTypeList_.activeWordTypeItem( isAllowingDifferentNoun, isLanguageWord_, wordTypeNr ) != null );
-
-		return false;
+		return ( wordTypeList_ != null ?
+				( wordTypeList_.activeWordTypeItem( isAllowingDifferentNoun, isLanguageWord_, wordTypeNr ) != null ) : false );
 		}
 
 	protected boolean isSpecificationWordTypeAlreadyWritten( short specificationWordTypeNr )
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( wordTypeList_ != null &&
-		( foundWordTypeItem = wordTypeList_.activeWordTypeItem( true, isLanguageWord_, specificationWordTypeNr ) ) != null )
-			return foundWordTypeItem.isSpecificationWordAlreadyWritten();
-
-		return false;
+		return ( wordTypeList_ != null &&
+				( foundWordTypeItem = wordTypeList_.activeWordTypeItem( true, isLanguageWord_, specificationWordTypeNr ) ) != null ?
+					foundWordTypeItem.isSpecificationWordAlreadyWritten() : false );
 		}
 
 	protected boolean isRelationWordTypeAlreadyWritten( short relationWordTypeNr )
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( wordTypeList_ != null &&
-		( foundWordTypeItem = wordTypeList_.activeWordTypeItem( true, isLanguageWord_, relationWordTypeNr ) ) != null )
-			return foundWordTypeItem.isRelationWordAlreadyWritten();
-
-		return false;
+		return ( wordTypeList_ != null &&
+				( foundWordTypeItem = wordTypeList_.activeWordTypeItem( true, isLanguageWord_, relationWordTypeNr ) ) != null ?
+					foundWordTypeItem.isRelationWordAlreadyWritten() : false );
 		}
 
 	protected boolean isCorrectAdjective( short adjectiveParameter, short wordTypeNr )
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( wordTypeList_ != null &&
-		( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, wordTypeNr ) ) != null )
-			return foundWordTypeItem.isCorrectAdjective( adjectiveParameter );
-
-		return false;
+		return ( wordTypeList_ != null &&
+				( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, wordTypeNr ) ) != null ?
+					foundWordTypeItem.isCorrectAdjective( adjectiveParameter ) : false );
 		}
 
 	protected boolean isCorrectDefiniteArticle( short definiteArticleParameter, short wordTypeNr )
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( wordTypeList_ != null &&
-		( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, wordTypeNr ) ) != null )
-			return foundWordTypeItem.isCorrectDefiniteArticle( definiteArticleParameter );
-
-		return false;
+		return ( wordTypeList_ != null &&
+				( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, wordTypeNr ) ) != null ?
+					foundWordTypeItem.isCorrectDefiniteArticle( definiteArticleParameter ) : false );
 		}
 
 	protected boolean isCorrectIndefiniteArticle( short indefiniteArticleParameter, short wordTypeNr )
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( wordTypeList_ != null &&
+		return ( wordTypeList_ != null &&
 
-		( ( !isFeminineWord_ &&
-		!isMasculineWord_ ) ||
+				( ( !isFeminineWord_ &&
+				!isMasculineWord_ ) ||
 
-		( isFeminineWord_ &&
-		isFeminineArticleParameter( indefiniteArticleParameter ) ) ||
+				( isFeminineWord_ &&
+				isFeminineArticleParameter( indefiniteArticleParameter ) ) ||
 
-		( isMasculineWord_ &&
-		isMasculineArticleParameter( indefiniteArticleParameter ) ) ) &&
+				( isMasculineWord_ &&
+				isMasculineArticleParameter( indefiniteArticleParameter ) ) ) &&
 
-		( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, wordTypeNr ) ) != null )
-			return foundWordTypeItem.isCorrectIndefiniteArticle( true, indefiniteArticleParameter );
-
-		return false;
+				( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, wordTypeNr ) ) != null ?
+					foundWordTypeItem.isCorrectIndefiniteArticle( true, indefiniteArticleParameter ) : false );
 		}
 
 	protected boolean isCorrectHiddenWordType( short wordTypeNr, String compareString, String hideKey )
 		{
-		if( wordTypeList_ != null )
-			return wordTypeList_.isCorrectHiddenWordType( wordTypeNr, compareString, hideKey );
-
-		return false;
+		return ( wordTypeList_ != null ?
+				wordTypeList_.isCorrectHiddenWordType( wordTypeNr, compareString, hideKey ) : false );
 		}
 
 	protected boolean isMatchingChineseWord( String wordString )
 		{
-		if( wordTypeList_ != null )
-			return wordTypeList_.isMatchingChineseWord( wordString );
-
-		return false;
+		return ( wordTypeList_ != null ?
+				wordTypeList_.isMatchingChineseWord( wordString ) : false );
 		}
 
 	protected boolean isNumeralWordType()
@@ -4101,11 +3646,9 @@ class WordItem extends Item
 		{
 		WordTypeItem foundWordTypeItem;
 
-		if( wordTypeList_ != null &&
-		( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, Constants.WORD_TYPE_PROPER_NOUN ) ) != null )
-			return foundWordTypeItem.isProperNounPrecededByDefiniteArticle( definiteArticleParameter );
-
-		return false;
+		return ( wordTypeList_ != null &&
+				( foundWordTypeItem = wordTypeList_.activeWordTypeItem( false, isLanguageWord_, Constants.WORD_TYPE_PROPER_NOUN ) ) != null ?
+					foundWordTypeItem.isProperNounPrecededByDefiniteArticle( definiteArticleParameter ) : false );
 		}
 
 	protected boolean isProperNounWord()
@@ -4115,10 +3658,8 @@ class WordItem extends Item
 
 	protected int bestMatchingChineseWordLength( String wordString )
 		{
-		if( wordTypeList_ != null )
-			return wordTypeList_.bestMatchingChineseWordLength( wordString );
-
-		return 0;
+		return ( wordTypeList_ != null ?
+				wordTypeList_.bestMatchingChineseWordLength( wordString ) : 0 );
 		}
 
 	protected byte deleteAllWordTypesOfCurrentSentence()
@@ -4171,26 +3712,20 @@ class WordItem extends Item
 
 	protected WordTypeItem activeWordTypeItem( short wordTypeNr )
 		{
-		if( wordTypeList_ != null )
-			return wordTypeList_.activeWordTypeItem( false, isLanguageWord_, wordTypeNr );
-
-		return null;
+		return ( wordTypeList_ != null ?
+				wordTypeList_.activeWordTypeItem( false, isLanguageWord_, wordTypeNr ) : null );
 		}
 
 	protected WordTypeItem activeWordTypeItem( boolean isCheckingAllLanguages, short wordTypeNr )
 		{
-		if( wordTypeList_ != null )
-			return wordTypeList_.activeWordTypeItem( false, isCheckingAllLanguages, wordTypeNr );
-
-		return null;
+		return ( wordTypeList_ != null ?
+				wordTypeList_.activeWordTypeItem( false, isCheckingAllLanguages, wordTypeNr ) : null );
 		}
 
 	protected String activeWordTypeString( short wordTypeNr )
 		{
-		if( wordTypeList_ != null )
-			return wordTypeList_.activeWordTypeString( isLanguageWord_, wordTypeNr );
-
-		return null;
+		return ( wordTypeList_ != null ?
+				wordTypeList_.activeWordTypeString( isLanguageWord_, wordTypeNr ) : null );
 		}
 
 	protected String anyWordTypeString()
@@ -4334,10 +3869,8 @@ class WordItem extends Item
 
 	protected WriteItem firstActiveWriteItem()
 		{
-		if( writeList_ != null )
-			return writeList_.firstActiveWriteItem();
-
-		return null;
+		return ( writeList_ != null ?
+				writeList_.firstActiveWriteItem() : null );
 		}
 	};
 

@@ -1,0 +1,160 @@
+﻿
+Het aantal schijven is oneven. Dus de uitvoeringsvolgorde is: Verplaats eerst van start naar doel, dan van start naar wissel.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	E, D, C, B.
+* wisselpaal:	.
+* doelpaal:	A.
+
+Een schijf verplaatst van start naar wissel:
+* startpaal:	E, D, C.
+* wisselpaal:	B.
+* doelpaal:	A.
+
+Een schijf verplaatst van doel naar wissel:
+* startpaal:	E, D, C.
+* wisselpaal:	B, A.
+* doelpaal:	.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	E, D.
+* wisselpaal:	B, A.
+* doelpaal:	C.
+
+Een schijf verplaatst van wissel naar start:
+* startpaal:	E, D, A.
+* wisselpaal:	B.
+* doelpaal:	C.
+
+Een schijf verplaatst van wissel naar doel:
+* startpaal:	E, D, A.
+* wisselpaal:	.
+* doelpaal:	C, B.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	E, D.
+* wisselpaal:	.
+* doelpaal:	C, B, A.
+
+Een schijf verplaatst van start naar wissel:
+* startpaal:	E.
+* wisselpaal:	D.
+* doelpaal:	C, B, A.
+
+Een schijf verplaatst van doel naar wissel:
+* startpaal:	E.
+* wisselpaal:	D, A.
+* doelpaal:	C, B.
+
+Een schijf verplaatst van doel naar start:
+* startpaal:	E, B.
+* wisselpaal:	D, A.
+* doelpaal:	C.
+
+Een schijf verplaatst van wissel naar start:
+* startpaal:	E, B, A.
+* wisselpaal:	D.
+* doelpaal:	C.
+
+Een schijf verplaatst van doel naar wissel:
+* startpaal:	E, B, A.
+* wisselpaal:	D, C.
+* doelpaal:	.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	E, B.
+* wisselpaal:	D, C.
+* doelpaal:	A.
+
+Een schijf verplaatst van start naar wissel:
+* startpaal:	E.
+* wisselpaal:	D, C, B.
+* doelpaal:	A.
+
+Een schijf verplaatst van doel naar wissel:
+* startpaal:	E.
+* wisselpaal:	D, C, B, A.
+* doelpaal:	.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	.
+* wisselpaal:	D, C, B, A.
+* doelpaal:	E.
+
+Een schijf verplaatst van wissel naar start:
+* startpaal:	A.
+* wisselpaal:	D, C, B.
+* doelpaal:	E.
+
+Een schijf verplaatst van wissel naar doel:
+* startpaal:	A.
+* wisselpaal:	D, C.
+* doelpaal:	E, B.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	.
+* wisselpaal:	D, C.
+* doelpaal:	E, B, A.
+
+Een schijf verplaatst van wissel naar start:
+* startpaal:	C.
+* wisselpaal:	D.
+* doelpaal:	E, B, A.
+
+Een schijf verplaatst van doel naar wissel:
+* startpaal:	C.
+* wisselpaal:	D, A.
+* doelpaal:	E, B.
+
+Een schijf verplaatst van doel naar start:
+* startpaal:	C, B.
+* wisselpaal:	D, A.
+* doelpaal:	E.
+
+Een schijf verplaatst van wissel naar start:
+* startpaal:	C, B, A.
+* wisselpaal:	D.
+* doelpaal:	E.
+
+Een schijf verplaatst van wissel naar doel:
+* startpaal:	C, B, A.
+* wisselpaal:	.
+* doelpaal:	E, D.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	C, B.
+* wisselpaal:	.
+* doelpaal:	E, D, A.
+
+Een schijf verplaatst van start naar wissel:
+* startpaal:	C.
+* wisselpaal:	B.
+* doelpaal:	E, D, A.
+
+Een schijf verplaatst van doel naar wissel:
+* startpaal:	C.
+* wisselpaal:	B, A.
+* doelpaal:	E, D.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	.
+* wisselpaal:	B, A.
+* doelpaal:	E, D, C.
+
+Een schijf verplaatst van wissel naar start:
+* startpaal:	A.
+* wisselpaal:	B.
+* doelpaal:	E, D, C.
+
+Een schijf verplaatst van wissel naar doel:
+* startpaal:	A.
+* wisselpaal:	.
+* doelpaal:	E, D, C, B.
+
+Een schijf verplaatst van start naar doel:
+* startpaal:	.
+* wisselpaal:	.
+* doelpaal:	E, D, C, B, A.
+
+Klaar.
+Om de puzzel nogmaals te starten, klik op knop «Wis je geheugen.» en dan op «Lees het bestand "Nederlands/programmeren/toren van Hanoi"».

@@ -1,10 +1,10 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Pascal est un fils de Olivier et Amélie.
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Pascal.
 Est Olivier le père de Pascal?
-Affichez le rapport de justification sur Olivier.
-Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Pascal.
 Est Guillaume le père de Armand?
-Affichez le rapport de justification sur Guillaume.
+#Dev#Affichez le rapport de justification sur Guillaume.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

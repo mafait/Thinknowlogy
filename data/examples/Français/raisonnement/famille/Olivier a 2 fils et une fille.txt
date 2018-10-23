@@ -1,5 +1,5 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Olivier a 2 fils et une fille.
-Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Olivier.
 Affichez information sur Olivier.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

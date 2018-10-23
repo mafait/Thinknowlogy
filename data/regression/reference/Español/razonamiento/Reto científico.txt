@@ -1,0 +1,114 @@
+﻿* 
+* Mis conclusiones:
+< Juan tiene un hijo, llamado Pablo.
+< 
+* 
+* Mis conclusiones:
+< Laura es hija de Ana.
+< 
+* 
+* Mis conclusiones:
+< Un motor es parte de cada coche.
+< 
+* 
+* Mis conclusiones:
+< Cada velero tiene una vela.
+< 
+* 
+* Mis conclusiones:
+< Un padre y un hijo son parte de cada familia.
+< 
+* 
+* Mis conclusiones:
+< Jorge es parte de una familia.
+* 
+* Mis suposiciones:
+< Jorge tiene probablemente un hijo.
+< 
+* 
+* Mis conclusiones:
+< Alfonso es parte de una familia.
+* 
+* Mis suposiciones:
+< Alfonso tiene probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Ronaldo es probablemente un hijo.
+< Ronaldo es probablemente parte de una familia.
+< 
+* 
+* Mis suposiciones:
+< Santiago es probablemente un padre.
+< Santiago es probablemente parte de una familia.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Juan tiene un hijo, llamado Pablo.
+* 
+* Mis conclusiones:
+< Pablo es parte de una familia.
+* 
+* Mis suposiciones:
+< Juan es probablemente padre de Pablo.
+< Juan es probablemente parte de una familia.
+< Pablo tiene probablemente un padre, llamado Juan.
+< 
+* 
+* Mis conclusiones:
+< Pablo es hijo de Juan y Ana.
+* 
+* Mis suposiciones:
+< Ana es probablemente padre de Pablo.
+< Ana es probablemente parte de una familia.
+< Pablo tiene probablemente 2 padre [plural de 'padre' es desconocida], llamados Juan y Ana.
+< 
+* 
+* Mis conclusiones son confirmadas:
+< Pablo es hijo de Juan y Ana.
+< 
+* 
+* Mis conclusiones:
+< Hernando era parte de una familia.
+< Rafael no tiene un padre nunca-más.
+< Rafael tenido un padre, llamado Hernando.
+* 
+* Mis suposiciones:
+< Hernando tiene probablemente un hijo, llamado Rafael.
+< Rafael es probablemente hijo de Hernando.
+< Rafael es probablemente parte de una familia.
+< 
+* 
+* Mis conclusiones:
+< Hernando era un hombre.
+< Jorge es un hombre.
+* 
+* Mis suposiciones:
+< Ana es probablemente un hombre.
+< Juan es probablemente un hombre.
+< Santiago es probablemente un hombre.
+< 
+! 
+! No se acepta esta frase, porque está en conflicto con:
+< Cada persona es un hombre o una mujer.
+< 
+* 
+* Mis preguntas:
+< ¿Es Cruz un hombre o una mujer?
+< 
+* 
+* Mis preguntas que son contestadas:
+< ¿Es Cruz un hombre o una mujer?
+* 
+* Mis conclusiones:
+< Cruz es un hombre.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un presidente, llamado Barack Obama.
+< 
+* 
+* Mis conclusiones:
+< Los Estados Unidos tiene un nuevo presidente, llamado Donald Trump.
+< Los Estados Unidos tiene un anterior presidente, llamado Barack Obama.
+< 

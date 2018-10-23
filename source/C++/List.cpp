@@ -1,6 +1,6 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -228,6 +228,10 @@
 
 				case QUERY_REPLACED_CHAR:
 					replacedList_ = removeItem->nextItem;
+					break;
+
+				case QUERY_DELETED_CHAR:
+					deletedList_ = removeItem->nextItem;
 					break;
 
 				default:
@@ -541,28 +545,6 @@
 
 	List::List()
 		{
-		// Private constructed variables
-
-		highestSentenceNrInList_ = NO_SENTENCE_NR;
-
-		activeList_ = NULL;
-		inactiveList_ = NULL;
-		archivedList_ = NULL;
-		replacedList_ = NULL;
-		deletedList_ = NULL;
-
-		nextListItem_ = NULL;
-
-		// Private initialized variables
-
-		listChar_ = QUERY_NO_LIST_CHAR;
-
-		strcpy( classNameString_, EMPTY_STRING );
-		strcpy( parentClassNameString_, "List" );
-
-		globalVariables_ = NULL;
-		inputOutput_ = NULL;
-		myWordItem_ = NULL;
 		}
 
 	List::~List(){}
@@ -835,11 +817,9 @@
 		{
 		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
 
-		listChar_ = listChar;
+		// Private initialized variables
 
-		globalVariables_ = globalVariables;
-		inputOutput_ = inputOutput;
-		myWordItem_ = myWordItem;
+		listChar_ = listChar;
 
 		// Checking private initialized variables
 
@@ -850,6 +830,9 @@
 
 		if( ( globalVariables_ = globalVariables ) == NULL )
 			strcpy( errorString, "The given global variables is undefined" );
+
+		if( ( inputOutput_ = inputOutput ) == NULL )
+			strcpy( errorString, "The given input-output is undefined" );
 
 		if( ( myWordItem_ = myWordItem ) == NULL )
 			strcpy( errorString, "The given my word item is undefined" );
@@ -862,36 +845,7 @@
 		{
 		Item *searchItem = deletedList_;
 
-		if( replacedList_ != NULL )
-			{
-			// Move replaced list to deleted list
-			if( searchItem == NULL )
-				deletedList_ = replacedList_;
-			else
-				{
-				// Get the tail of the deleted list
-				searchItem = searchItem->tailOfList();
-				searchItem->nextItem = replacedList_;
-				}
-
-			replacedList_ = NULL;
-			}
-
-		if( archivedList_ != NULL )
-			{
-			// Move archived list to deleted list
-			if( searchItem == NULL )
-				deletedList_ = archivedList_;
-			else
-				{
-				// Get the tail of the deleted list
-				searchItem = searchItem->tailOfList();
-				searchItem->nextItem = archivedList_;
-				}
-
-			archivedList_ = NULL;
-			}
-
+		// ReadList may have inactive items
 		if( inactiveList_ != NULL )
 			{
 			// Move inactive list to deleted list
@@ -907,6 +861,7 @@
 			inactiveList_ = NULL;
 			}
 
+		// Temporary lists have active items
 		if( activeList_ != NULL )
 			{
 			// Move active list to deleted list
@@ -1427,7 +1382,7 @@
 		return globalHighestItemNr;
 		}
 
-	unsigned int List::highestFoundSentenceNrInList( unsigned int globalHighestFoundSentenceNr, unsigned int maxSentenceNr )
+	unsigned int List::highestFoundSentenceNrInList( bool isIncludingDeletedItems, unsigned int globalHighestFoundSentenceNr, unsigned int maxSentenceNr )
 		{
 		unsigned int localHighestFoundSentenceNr = NO_SENTENCE_NR;
 		unsigned int tempSentenceNr;
@@ -1445,6 +1400,11 @@
 			localHighestFoundSentenceNr = tempSentenceNr;
 
 		if( ( searchItem = firstReplacedItem() ) != NULL &&
+		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
+			localHighestFoundSentenceNr = tempSentenceNr;
+
+		if( isIncludingDeletedItems &&
+		( searchItem = firstDeletedItem() ) != NULL &&
 		( tempSentenceNr = highestFoundSentenceNrInList( maxSentenceNr, searchItem ) ) > localHighestFoundSentenceNr )
 			localHighestFoundSentenceNr = tempSentenceNr;
 

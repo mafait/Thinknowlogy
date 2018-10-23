@@ -42,15 +42,15 @@
 < Ana es parte de una familia.
 * 
 * Mis suposiciones:
+< Pablo tiene probablemente una madre, llamada Ana.
 < Pablo es posiblemente una persona.
 < Pablo es posiblemente parte de una familia.
-< Pablo tiene probablemente una madre, llamada Ana.
 < Ana es probablemente una persona.
 < Ana es probablemente madre de Pablo.
+< Ana no es probablemente un padre.
 < Ana es probablemente una mujer.
 < Ana no es posiblemente un hombre.
 < Ana es probablemente femenina.
-< Ana no es probablemente un padre.
 * 
 * Mis preguntas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
@@ -60,8 +60,11 @@
 * Mis conclusiones:
 < Juan es padre de Pablo. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
+< Juan es parte de una familia. Porque:
+<	- Juan es un padre.
+<	- Padres son parte de cada familia.
 < Juan es un hombre. Porque:
-<	- Juan es padre de Pablo.
+<	- Juan es un padre.
 <	- Cada padre es un hombre.
 < Juan no es una mujer. Porque:
 <	- Juan es un padre.
@@ -70,9 +73,6 @@
 < Juan es masculino. Porque:
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.
-< Juan es parte de una familia. Porque:
-<	- Juan es un padre.
-<	- Padres son parte de cada familia.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
@@ -82,7 +82,7 @@
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Juan es padre de Pablo.
+<	- Juan es un padre.
 <	- Un padre es probablemente una persona.
 * 	y:
 <	- Cada persona es un hombre o una mujer.
@@ -111,6 +111,9 @@
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Cada padre es un padre o una madre.
 <	- Nombre propio "Ana" es probablemente femenino.
+< Ana no es probablemente un padre. Porque:
+<	- Cada padre es un padre o una madre.
+<	- Ana es probablemente madre de Pablo.
 < Ana es probablemente una mujer. Porque:
 <	- Ana es probablemente madre de Pablo.
 <	- Cada madre es una mujer.
@@ -121,12 +124,11 @@
 < Ana es probablemente femenina. Porque:
 <	- Ana es probablemente una mujer.
 <	- Cada mujer es femenina.
-< Ana no es probablemente un padre. Porque:
-<	- Cada padre es un padre o una madre.
-<	- Ana es probablemente madre de Pablo.
 < 
 * 
 * Mis suposiciones:
+< Pablo tiene probablemente una madre, llamada Ana. Porque:
+<	- Ana es probablemente madre de Pablo.
 < Pablo es posiblemente una persona. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Cada familia tiene padres y hijos.
@@ -134,8 +136,6 @@
 < Pablo es posiblemente parte de una familia. Porque:
 <	- ¿Es Pablo un hijo o una hija?
 <	- Hijos son parte de cada familia.
-< Pablo tiene probablemente una madre, llamada Ana. Porque:
-<	- Ana es probablemente madre de Pablo.
 * 
 * Mis preguntas:
 < ¿Es Pablo una niña, una mujer, un niño o un hombre? Porque:

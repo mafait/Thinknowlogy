@@ -1,4 +1,0 @@
-﻿Every kind of liquid has a specific boiling point.
-Water has a boiling point of 100 degrees centigrade.
-Display the justification report about water.
-# To continue, click button «Clear your mind.» or «Restart.».

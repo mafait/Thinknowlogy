@@ -1,7 +1,7 @@
 ﻿/*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,28 +25,26 @@ class ReadItem extends Item
 	{
 	// Private initialized variables
 
-	private boolean isUncountableGeneralizationNoun_;
+	private boolean isUncountableGeneralizationNoun_ = false;
 
-	private short wordOrderNr_;
-	private short wordParameter_;
-	private short wordTypeNr_;
+	private short wordOrderNr_ = Constants.NO_ORDER_NR;
+	private short wordParameter_ = Constants.NO_WORD_PARAMETER;
+	private short wordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
-	private WordItem readWordItem_;
-
+	private WordItem readWordItem_ = null;
 
 	// Protected constructed variables
 
-	protected boolean hasWordPassedIntegrityCheckOfStoredUserSentence;
-	protected boolean isMarkedBySetGrammarParameter;
+	protected boolean hasWordPassedIntegrityCheckOfStoredUserSentence = false;
+	protected boolean isMarkedBySetGrammarParameter = false;
 
-	protected short grammarParameter;
+	protected short grammarParameter = Constants.NO_GRAMMAR_PARAMETER;
 
-	protected GrammarItem definitionGrammarItem;
-
+	protected GrammarItem definitionGrammarItem = null;
 
 	// Protected initialized variables
 
-	protected String readString;
+	protected String readString = null;
 
 
 	// Constructor
@@ -65,18 +63,10 @@ class ReadItem extends Item
 
 		readWordItem_ = readWordItem;
 
-		// Protected constructed variables
-
-		hasWordPassedIntegrityCheckOfStoredUserSentence = false;
-		isMarkedBySetGrammarParameter = false;
-
-		grammarParameter = Constants.NO_GRAMMAR_PARAMETER;
-
-		definitionGrammarItem = null;
-
 		// Protected initialized variables
 
-		readString = ( _readString == null ? null : _readString.substring( 0, readStringLength ) );
+		readString = ( _readString != null ?
+						_readString.substring( 0, readStringLength ) : null );
 		}
 
 
@@ -90,7 +80,7 @@ class ReadItem extends Item
 		if( readString != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -112,7 +102,7 @@ class ReadItem extends Item
 		( wordString = readWordItem_.wordTypeString( true, wordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -603,10 +593,8 @@ class ReadItem extends Item
 
 	protected String readWordTypeString()
 		{
-		if( readWordItem_ != null )
-			return readWordItem_.activeWordTypeString( wordTypeNr_ );
-
-		return null;
+		return ( readWordItem_ != null ?
+				readWordItem_.activeWordTypeString( wordTypeNr_ ) : null );
 		}
 
 	protected ReadItem firstRelationWordReadItem()
@@ -651,7 +639,8 @@ class ReadItem extends Item
 
 	protected WordTypeItem activeReadWordTypeItem()
 		{
-		return ( readWordItem_ == null ? null : readWordItem_.activeWordTypeItem( true, wordTypeNr_ ) );
+		return ( readWordItem_ != null ?
+				readWordItem_.activeWordTypeItem( true, wordTypeNr_ ) : null );
 		}
 	};
 

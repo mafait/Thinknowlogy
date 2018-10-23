@@ -1,7 +1,7 @@
 ﻿# Expert est autorisé à entrer du texte libre.
 #Expert est un utilisateur et son mot de passe est expert123.
-Expert est un utilisateur et n'a aucun mot de passe.
-Expert est un expert.
+#Java#Expert est un utilisateur et n'a aucun mot de passe.
+#Java#Expert est un expert.
 
 # Développeur est autorisé à entrer du texte libre et d'exécuter des tests de régression.
 #Développeur est un utilisateur et son mot de passe est développeur123.
@@ -9,4 +9,4 @@ Développeur est un utilisateur et n'a aucun mot de passe.
 Développeur est un développeur.
 
 # Utilisateur par défaut.
-Invité est un utilisateur et n'a aucun mot de passe.
+#Java#Invité est un utilisateur et n'a aucun mot de passe.

@@ -100,11 +100,11 @@
 < Olivier est probablement un parent de Pascal, Julien et Lorraine.
 * 
 * Mes hypothèses qui sont conclus:
-< Pascal a un parent, appelé Olivier.
-< Lorraine a un parent, appelé Olivier.
 < Olivier est partie d'une famille.
 < Olivier n'est pas une femme.
 < Olivier n'est pas une mère.
+< Pascal a un parent, appelé Olivier.
+< Lorraine a un parent, appelé Olivier.
 < 
 * 
 * Mes hypothèses qui sont confirmées:
@@ -318,22 +318,22 @@
 * 
 * Mes hypothèses:
 < Julien est probablement un enfant de Olivier et Amélie. En raison:
+<	- Chaque famille a parents et enfants.
+<	- Julien a 2 parents, appelés Olivier et Amélie.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+<	- Olivier est un parent de Pascal, Julien et Lorraine.
+* 	et:
+<	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+* 	et:
 <	- Chaque enfant est un fils ou une fille.
 <	- Julien est un fils de Olivier et Amélie.
 * 	et:
 <	- Chaque famille a parents et enfants.
-<	- Olivier est un parent de Pascal, Julien et Lorraine.
-<	- Amélie est un parent de Pascal, Julien et Lorraine.
-* 	et:
-<	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 <	- Julien a un père, appelé Olivier.
-* 	et:
-<	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
-<	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
-* 	et:
-<	- Chaque famille a parents et enfants.
-<	- Julien a 2 parents, appelés Olivier et Amélie.
 < Julien est probablement partie d'une famille. En raison:
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Enfants sont partie de chaque famille.

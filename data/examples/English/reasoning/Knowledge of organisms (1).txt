@@ -49,7 +49,7 @@ Every human-being is a vertebrate.
 Every human-being is a mammal.
 John is a human-being.
 # Justification reports
-Display the justification report about vertebrates.
-Display the justification report about mammals.
-Display the justification report about crocodiles.
-Display the justification report about John.
+#Dev#Display the justification report about vertebrates.
+#Dev#Display the justification report about mammals.
+#Dev#Display the justification report about crocodiles.
+#Dev#Display the justification report about John.

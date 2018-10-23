@@ -1,4 +1,4 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
 Chaque homme est un enfant.
 Chaque femme est un enfant.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

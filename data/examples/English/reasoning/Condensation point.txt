@@ -1,0 +1,4 @@
+﻿A condensation point is characteristic for every kind of gas.
+Water vapor has a condensation point of 100 degrees centigrade.
+#Dev#Display the justification report about water vapor.
+# To continue, click button «Clear your mind.» or «Restart.».

@@ -1,7 +1,7 @@
 ﻿/*	Class:		QueryResultType
  *	Purpose:	To return query variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -34,17 +34,8 @@ class QueryResultType
 	protected:
 	// Protected variables
 
-	signed char result;
-	size_t queryCommandStringPosition;
-
-	protected:
-	// Constructor
-
-	QueryResultType()
-		{
-		result = RESULT_OK;
-		queryCommandStringPosition = 0;
-		}
+	signed char result = RESULT_OK;
+	size_t queryCommandStringPosition = 0;
 	};
 
 /*************************************************************************

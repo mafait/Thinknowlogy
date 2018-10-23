@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -41,11 +41,6 @@
 		return false;
 		}
 
-	bool JustificationItem::isExclusiveSpecificationSubstitutionAssumption()
-		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION );
-		}
-
 	bool JustificationItem::isContextSimilarInContextWords( unsigned int firstContextNr, unsigned int secondContextNr )
 		{
 		WordItem *currentContextWordItem;
@@ -75,7 +70,7 @@
 
 				( primarySpecificationItem_ == NULL &&
 				referenceJustificationItem->primarySpecificationItem_ == NULL &&
-				isPossessiveReversibleAssumptionOrConclusion() == referenceJustificationItem->isPossessiveReversibleAssumptionOrConclusion() ) ) );
+				isReversibleAssumptionOrConclusion() == referenceJustificationItem->isReversibleAssumptionOrConclusion() ) ) );
 		}
 
 
@@ -99,8 +94,6 @@
 		attachedJustificationItem_ = attachedJustificationItem;
 
 		// Protected constructed variables
-
-		hasJustificationBeenWritten = false;
 
 		orderNr = _orderNr;
 		}
@@ -202,9 +195,9 @@
 				strcat( queryString, "isOnlyOptionLeftAssumption" );
 				break;
 
-			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION:
+			case JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION:
 				strcat( queryString, QUERY_SEPARATOR_STRING );
-				strcat( queryString, "isPossessiveReversibleAssumption" );
+				strcat( queryString, "isReversibleAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
@@ -242,9 +235,9 @@
 				strcat( queryString, "isOnlyOptionLeftConclusion" );
 				break;
 
-			case JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION:
+			case JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION:
 				strcat( queryString, QUERY_SEPARATOR_STRING );
-				strcat( queryString, "isPossessiveReversibleConclusion" );
+				strcat( queryString, "isReversibleConclusion" );
 				break;
 
 			case JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION:
@@ -362,22 +355,6 @@
 				anotherSecondarySpecificationItem_ == anotherSecondarySpecificationItem );
 		}
 
-	bool JustificationItem::hasOnlyExclusiveSpecificationSubstitutionAssumptionsWithoutDefinition()
-		{
-		JustificationItem *searchJustificationItem = this;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem->primarySpecificationItem_ != NULL ||
-			!searchJustificationItem->isExclusiveSpecificationSubstitutionAssumption() )
-				return false;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem_;
-			}
-
-		return true;
-		}
-
 	bool JustificationItem::hasNonPossessivePrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != NULL &&
@@ -412,11 +389,9 @@
 		{
 		WordItem *updatedPrimarySpecificationWordItem;
 
-		if( primarySpecificationItem_ != NULL &&
-		( updatedPrimarySpecificationWordItem = primarySpecificationItem_->updatedSpecificationItem()->specificationWordItem() ) != NULL )
-			return updatedPrimarySpecificationWordItem->isNounWordSpanishAmbiguous();
-
-		return false;
+		return	( primarySpecificationItem_ != NULL &&
+				( updatedPrimarySpecificationWordItem = primarySpecificationItem_->updatedSpecificationItem()->specificationWordItem() ) != NULL &&
+				updatedPrimarySpecificationWordItem->isNounWordSpanishAmbiguous() );
 		}
 
 	bool JustificationItem::hasAnotherPrimarySpecification()
@@ -432,6 +407,11 @@
 	bool JustificationItem::isConclusionJustification()
 		{
 		return isConclusion( justificationTypeNr_ );
+		}
+
+	bool JustificationItem::isExclusiveSpecificationSubstitutionAssumption()
+		{
+		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION );
 		}
 
 	bool JustificationItem::isGeneralizationAssumption()
@@ -450,27 +430,20 @@
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION );
 		}
 
-	bool JustificationItem::isPossessiveReversibleAssumption()
+	bool JustificationItem::isReversibleAssumption()
 		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION );
+		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION );
 		}
 
-	bool JustificationItem::isPossessiveReversibleConclusion()
+	bool JustificationItem::isReversibleConclusion()
 		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION );
+		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION );
 		}
 
-	bool JustificationItem::isPossessiveReversibleConclusionWithoutRelationContext()
+	bool JustificationItem::isReversibleAssumptionOrConclusion()
 		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION &&
-				secondarySpecificationItem_ != NULL &&
-				!secondarySpecificationItem_->hasRelationContext() );
-		}
-
-	bool JustificationItem::isPossessiveReversibleAssumptionOrConclusion()
-		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION ||
-				justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION );
+		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION ||
+				justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION );
 		}
 
 	bool JustificationItem::isQuestionJustification()
@@ -513,21 +486,19 @@
 
 	unsigned short JustificationItem::updatedJustificationTypeNr( SpecificationItem *newSecondarySpecificationItem )
 		{
-		if( justificationTypeNr_ == JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION &&
+		if( justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION &&
 		newSecondarySpecificationItem != NULL &&
 		!newSecondarySpecificationItem->isPossessive() &&
 		newSecondarySpecificationItem->isUserSpecification() )
-			return JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION;
+			return ( newSecondarySpecificationItem->hasAssumptionLevel() ? JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION : JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION );
 
 		return justificationTypeNr_;
 		}
 
 	unsigned short JustificationItem::primarySpecificationAssumptionLevel()
 		{
-		if( primarySpecificationItem_ != NULL )
-			return primarySpecificationItem_->assumptionLevel();
-
-		return NO_ASSUMPTION_LEVEL;
+		return ( primarySpecificationItem_ != NULL ?
+				primarySpecificationItem_->assumptionLevel() : NO_ASSUMPTION_LEVEL );
 		}
 
 	unsigned int JustificationItem::nJustificationContextRelations( unsigned int relationContextNr, unsigned int nRelationWords )
@@ -559,18 +530,14 @@
 
 	unsigned int JustificationItem::primarySpecificationCollectionNr()
 		{
-		if( primarySpecificationItem_ != NULL )
-			return primarySpecificationItem_->specificationCollectionNr();
-
-		return NO_COLLECTION_NR;
+		return ( primarySpecificationItem_ != NULL ?
+				primarySpecificationItem_->specificationCollectionNr() : NO_COLLECTION_NR );
 		}
 
 	unsigned int JustificationItem::secondarySpecificationCollectionNr()
 		{
-		if( secondarySpecificationItem_ != NULL )
-			return secondarySpecificationItem_->specificationCollectionNr();
-
-		return NO_COLLECTION_NR;
+		return ( secondarySpecificationItem_ != NULL ?
+				secondarySpecificationItem_->specificationCollectionNr() : NO_COLLECTION_NR );
 		}
 
 	signed char JustificationItem::attachJustification( JustificationItem *attachedJustificationItem, SpecificationItem *involvedSpecificationItem )
@@ -950,18 +917,14 @@
 
 	SpecificationItem *JustificationItem::updatedPrimarySpecificationItem()
 		{
-		if( primarySpecificationItem_ != NULL )
-			return primarySpecificationItem_->updatedSpecificationItem();
-
-		return NULL;
+		return ( primarySpecificationItem_ != NULL ?
+				primarySpecificationItem_->updatedSpecificationItem() : NULL );
 		}
 
 	SpecificationItem *JustificationItem::updatedSecondarySpecificationItem()
 		{
-		if( secondarySpecificationItem_ != NULL )
-			return secondarySpecificationItem_->updatedSpecificationItem();
-
-		return NULL;
+		return ( secondarySpecificationItem_ != NULL ?
+				secondarySpecificationItem_->updatedSpecificationItem() : NULL );
 		}
 
 	WordItem *JustificationItem::generalizationWordItem()
@@ -971,26 +934,20 @@
 
 	WordItem *JustificationItem::primarySpecificationWordItem()
 		{
-		if( primarySpecificationItem_ != NULL )
-			return primarySpecificationItem_->specificationWordItem();
-
-		return NULL;
+		return ( primarySpecificationItem_ != NULL ?
+				primarySpecificationItem_->specificationWordItem() : NULL );
 		}
 
 	WordItem *JustificationItem::secondaryGeneralizationWordItem()
 		{
-		if( secondarySpecificationItem_ != NULL )
-			return secondarySpecificationItem_->generalizationWordItem();
-
-		return NULL;
+		return ( secondarySpecificationItem_ != NULL ?
+				secondarySpecificationItem_->generalizationWordItem() : NULL );
 		}
 
 	WordItem *JustificationItem::secondarySpecificationWordItem()
 		{
-		if( secondarySpecificationItem_ != NULL )
-			return secondarySpecificationItem_->specificationWordItem();
-
-		return NULL;
+		return ( secondarySpecificationItem_ != NULL ?
+				secondarySpecificationItem_->specificationWordItem() : NULL );
 		}
 
 	ShortResultType JustificationItem::getCombinedAssumptionLevel()

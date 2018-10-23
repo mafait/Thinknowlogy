@@ -1,4 +1,4 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Juan es un padre.
 Peyo es un padre.
 José es hijo de Juan.

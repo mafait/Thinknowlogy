@@ -127,10 +127,10 @@
 * 
 * Mijn veronderstellingen:
 < Anna heeft waarschijnlijk een kind, genaamd Paul. Omdat:
-<	- Paul is waarschijnlijk een kind van Jan en Anna.
-* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna is een ouder van Paul.
+* 	en:
+<	- Paul is waarschijnlijk een kind van Jan en Anna.
 < Anna is waarschijnlijk een persoon. Omdat:
 <	- Anna is een ouder van Paul.
 <	- Een ouder is waarschijnlijk een persoon.

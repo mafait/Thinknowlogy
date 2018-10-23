@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about a word
  *					during the process of writing a sentence
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,15 +31,15 @@ class WriteItem : private Item
 
 	// Private initialized variables
 
-	unsigned short grammarLevel_;
+	unsigned short grammarLevel_ = NO_GRAMMAR_LEVEL;
 
-	GrammarItem *startOfChoiceOrOptionGrammarItem_;
+	GrammarItem *startOfChoiceOrOptionGrammarItem_ = NULL;
 
 
 	protected:
 	// Protected initialized variables
 
-	bool isSkipped;
+	bool isSkipped = false;
 
 
 	// Constructor

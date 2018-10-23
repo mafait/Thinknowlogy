@@ -1,6 +1,6 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -63,29 +63,30 @@ class Item
 
 	// Private constructed variables
 
-	unsigned short userNr_;
+	unsigned short userNr_ = NO_USER_NR;
 
-	unsigned int originalSentenceNr_;
-	unsigned int creationSentenceNr_;
+	unsigned int originalSentenceNr_ = NO_SENTENCE_NR;
+	unsigned int creationSentenceNr_ = NO_SENTENCE_NR;
 
-	unsigned int activeSentenceNr_;
-	unsigned int inactiveSentenceNr_;
-	unsigned int archivedSentenceNr_;
-	unsigned int replacedSentenceNr_;
+	unsigned int activeSentenceNr_ = NO_SENTENCE_NR;
+	unsigned int inactiveSentenceNr_ = NO_SENTENCE_NR;
+	unsigned int archivedSentenceNr_ = NO_SENTENCE_NR;
+	unsigned int replacedSentenceNr_ = NO_SENTENCE_NR;
 
-	unsigned int itemNr_;
+	unsigned int itemNr_ = NO_ITEM_NR;
 
-	char statusChar_;
-	char parentClassNameString_[FUNCTION_NAME_STRING_LENGTH];
+	char statusChar_ = QUERY_ACTIVE_CHAR;
+
+	char parentClassNameString_[FUNCTION_NAME_STRING_LENGTH] = "Item";
 
 	// Private initialized variables
 
-	char classNameString_[FUNCTION_NAME_STRING_LENGTH];
+	char classNameString_[FUNCTION_NAME_STRING_LENGTH] = EMPTY_STRING;
 
-	GlobalVariables *globalVariables_;
-	InputOutput *inputOutput_;
-	List *myList_;
-	WordItem *myWordItem_;
+	GlobalVariables *globalVariables_ = NULL;
+	InputOutput *inputOutput_ = NULL;
+	List *myList_ = NULL;
+	WordItem *myWordItem_ = NULL;
 
 
 	// Private functions
@@ -96,16 +97,16 @@ class Item
 	protected:
 	// Protected constructed variables
 
-	bool isSelectedByQuery;
-	bool isSelectedByJustificationQuery;
+	bool isSelectedByQuery = false;
+	bool isSelectedByJustificationQuery = false;
 
-	char previousStatusChar;
+	char previousStatusChar = QUERY_ACTIVE_CHAR;
 
-	Item *previousItem;
-	Item *nextItem;
+	Item *previousItem = NULL;
+	Item *nextItem = NULL;
 
-	char statusString[2];
-	char tempString[ENTENDED_SENTENCE_STRING_LENGTH];
+	char statusString[2] = SPACE_STRING;
+	char tempString[ENTENDED_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
 
 	// Constructor
@@ -196,10 +197,8 @@ class Item
 
 	SelectionResultType startSelectionResultError( const char *functionNameString, const char *errorString );
 
-	ShortResultType addShortResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 	ShortResultType startShortResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	ShortResultType startShortResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number );
-	ShortResultType startShortResultSystemError( const char *functionNameString, const char *errorString );
 
 	SpecificationResultType addSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 	SpecificationResultType startSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );

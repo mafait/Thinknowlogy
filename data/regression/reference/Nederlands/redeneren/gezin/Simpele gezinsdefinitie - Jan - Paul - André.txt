@@ -1,0 +1,33 @@
+﻿* 
+* Mijn conclusies:
+< Een ouder en een kind zijn deel van ieder gezin.
+< 
+* 
+* Mijn conclusies:
+< Jan is deel van een gezin.
+< Paul heeft een ouder, genaamd Jan.
+* 
+* Mijn veronderstellingen:
+< Jan heeft waarschijnlijk een kind, genaamd Paul.
+< Paul is waarschijnlijk een kind van Jan.
+< Paul is waarschijnlijk deel van een gezin.
+< 
+* 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Paul is deel van een gezin.
+* 
+* Mijn conclusies:
+< André heeft een ouder, genaamd Paul.
+* 
+* Mijn veronderstellingen:
+< Paul heeft waarschijnlijk een kind, genaamd André.
+< André is waarschijnlijk een kind van Paul.
+< André is waarschijnlijk deel van een gezin.
+< 
+* 
+* Mijn veronderstellingen die bevestigd zijn:
+< André is waarschijnlijk een kind van Paul.
+* 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< André is deel van een gezin.
+< 

@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -26,16 +26,16 @@ class GrammarItem extends Item
 	{
 	// Private initialized variables
 
-	private boolean isDefinitionStart_;
-	private boolean isNewStart_;
-	private boolean isOptionStart_;
-	private boolean isChoiceStart_;
-	private boolean isSkipOptionForWriting_;
+	private boolean isDefinitionStart_ = false;
+	private boolean isNewStart_ = false;
+	private boolean isOptionStart_ = false;
+	private boolean isChoiceStart_ = false;
+	private boolean isSkipOptionForWriting_ = false;
 
-	private short grammarParameter_;
-	private short grammarWordTypeNr_;
+	private short grammarParameter_ = Constants.NO_GRAMMAR_PARAMETER;
+	private short grammarWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
-	private String grammarString_;
+	private String grammarString_ = null;
 
 
 	// Protected constructed variables
@@ -110,7 +110,7 @@ class GrammarItem extends Item
 		if( grammarString_ != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
+				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -331,9 +331,10 @@ class GrammarItem extends Item
 
 	protected GrammarItem nextWordEndingGrammarItem()
 		{
-		GrammarItem nextEndingGrammarItem = nextGrammarItem();
+		GrammarItem nextEndingGrammarItem;
 
-		return ( nextEndingGrammarItem == null || nextEndingGrammarItem.grammarParameter() != grammarParameter_ ? null : nextEndingGrammarItem );
+		return ( ( nextEndingGrammarItem = nextGrammarItem() ) != null &&
+				nextEndingGrammarItem.grammarParameter() == grammarParameter_ ? nextEndingGrammarItem : null );
 		}
 	};
 

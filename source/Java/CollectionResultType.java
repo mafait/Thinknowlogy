@@ -1,7 +1,7 @@
 ﻿/*	Class:		CollectionResultType
  *	Purpose:	To return collection variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,18 +25,9 @@ class CollectionResultType
 	{
 	// Protected variables
 
-	protected byte result;
-	protected int createdCollectionNr;
-	protected WordItem foundGeneralizationWordItem;
-
-	// Constructor
-
-	CollectionResultType()
-		{
-		result = Constants.RESULT_OK;
-		createdCollectionNr = Constants.NO_COLLECTION_NR;
-		foundGeneralizationWordItem = null;
-		}
+	protected byte result = Constants.RESULT_OK;
+	protected int createdCollectionNr = Constants.NO_COLLECTION_NR;
+	protected WordItem foundGeneralizationWordItem = null;
 	};
 
 /*************************************************************************

@@ -1,7 +1,7 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 José es hijo de Juan y Ana.
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-Mostrar el informe de justificación sobre Juan.
-Mostrar el informe de justificación sobre Ana.
+#Dev#Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».
 José es una madre.

@@ -1,4 +1,4 @@
-﻿Read the file "English/user/programming/Connect-Four".
+﻿Read the file "English/programming/Connect-Four".
 My set is D.
 My set is D.
 My set is D.

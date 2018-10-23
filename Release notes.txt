@@ -1,6 +1,4 @@
-﻿Changes in Thinknowlogy 2018r2 (Natural Intelligence) compared to 2018r1 (ShangDi 上帝):
+﻿Changes in Thinknowlogy 2018r3 (Deep Magic) compared to 2018r2 (Natural Intelligence):
 - Bug fixes;
-- Added check on invalid context;
-- Slightly improved conflict detection;
-- Improved performance, by removing abundant code;
+- Integrated user examples and developer examples;
 - Moved some reasoning functionality from class AdminReasoningOld to class AdminReasoningNew, as part of the redesign.

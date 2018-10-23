@@ -1,6 +1,6 @@
 ﻿/*	Class:			Constants
  *	Purpose:		Header file to define constants
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,7 +27,7 @@
 
 	// Version constants
 	#define PRODUCT_NAME												"Thinknowlogy"
-	#define VERSION_NAME												"2018r2 (Natural Intelligence)"
+	#define VERSION_NAME												"2018r3 (Deep Magic)"
 
 	// File constants
 	#define	FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING					"data/examples/"
@@ -134,8 +134,9 @@
 	#define	INPUT_OUTPUT_PROMPT_QUERY_STRING							"? "
 	#define	INPUT_OUTPUT_PROMPT_EMPTY_STRING							"  "
 
-	#define	INPUT_OUTPUT_SKIP_COMMENT_STRING							"#Java#"
-	#define	INPUT_OUTPUT_STRIP_COMMENT_STRING							"#C++#"
+	#define	INPUT_OUTPUT_CPP_ACCEPT_TAG_STRING							"#C++#"
+	#define	INPUT_OUTPUT_JAVA_SKIP_TAG_STRING							"#Java#"
+	#define	INPUT_OUTPUT_DEVELOPER_TAG_STRING							"#Dev#"
 
 	// Character constants
 	#define	SPACE_CHAR													' '
@@ -322,6 +323,8 @@
 																		'o' };
 
 	// Justification types
+	#define	NO_JUSTIFICATION_TYPE															USHRT_MAX
+
 	#define	JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION									0
 	#define	JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION		1
 	#define	JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION				2
@@ -329,7 +332,7 @@
 	#define	JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION								4
 
 	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION									5
-	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_ASSUMPTION								6
+	#define	JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION										6
 	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION								7
 	#define	JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION											8
 	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION			9
@@ -338,7 +341,7 @@
 	#define	JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION									12
 
 	#define	JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION									13
-	#define	JUSTIFICATION_TYPE_POSSESSIVE_REVERSIBLE_CONCLUSION								14
+	#define	JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION										14
 	#define	JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION								15
 	#define	JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION											16
 	#define	JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION			17

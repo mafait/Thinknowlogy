@@ -1,5 +1,0 @@
-﻿Lirez le fichier "Français/utilisateur/raisonnement/famille/définition de famille".
-Pascal a une mère, appelée Amélie.
-Pascal est un homme.
-Pascal est un fils.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

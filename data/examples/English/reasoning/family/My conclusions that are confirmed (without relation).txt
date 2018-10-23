@@ -1,11 +1,11 @@
-﻿Read the file "English/user/reasoning/family/family definition".
+﻿Read the file "English/reasoning/family/family definition".
 John is a parent.
 Anna is a parent.
 John is a father.
 Anna is a mother.
 John is a man.
 Anna is a woman.
-Display the justification report about John.
-Display the justification report about Anna.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
 John is the father and Anna is the mother of Paul, Joe and Laura.
 # To continue, click button «Clear your mind.» or «Restart.».

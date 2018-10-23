@@ -1,7 +1,7 @@
 ﻿# Experto se le permite entrar texto libre.
 #Experto es un usuario y su contraseña es experto123.
-Experto es un usuario y no tiene contraseña.
-Experto es un experto.
+#Java#Experto es un usuario y no tiene contraseña.
+#Java#Experto es un experto.
 
 # Revelador se le permite entrar texto libre y a ejecutar pruebas de regresión.
 #Revelador es un usuario y su contraseña es revelador123.
@@ -9,4 +9,4 @@ Revelador es un usuario y no tiene contraseña.
 Revelador es un revelador.
 
 # Usuario estándar.
-Invitado es un usuario y no tiene contraseña.
+#Java#Invitado es un usuario y no tiene contraseña.

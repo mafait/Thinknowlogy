@@ -2,6 +2,16 @@
 * Mes conclusions:
 < Les États-Unis a un président, appelé George Bush.
 < 
+< 
+< Spécifications:
+< George Bush est le président des États-Unis.
+< Les États-Unis a un président, appelé George Bush.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un président, appelé George Bush. En raison:
+<	- George Bush est le président des États-Unis.
+< 
 * 
 * Mes conclusions:
 < Les États-Unis a un nouveau président, appelé Bill Clinton.
@@ -13,6 +23,13 @@
 < George Bush est le précédent président des États-Unis.
 < Les États-Unis a un président, appelé Bill Clinton.
 < Les États-Unis a un précédent président, appelé George Bush.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un président, appelé Bill Clinton. En raison:
+<	- Bill Clinton est l'actuel président des États-Unis.
+< Les États-Unis a un précédent président, appelé George Bush. En raison:
+<	- George Bush est le précédent président des États-Unis.
 < 
 * Je sais que.
 * 
@@ -37,6 +54,15 @@
 < Les États-Unis a un précédent président, appelé Bill Clinton.
 < Les États-Unis avait un président, appelé George Bush.
 < 
+* 
+* Mes conclusions:
+< Les États-Unis a un président, appelé George Bush. En raison:
+<	- George Bush est l'actuel président des États-Unis.
+< Les États-Unis a un précédent président, appelé Bill Clinton. En raison:
+<	- Bill Clinton est le précédent président des États-Unis.
+< Les États-Unis avait un président, appelé George Bush. En raison:
+<	- George Bush était un président des États-Unis.
+< 
 * Je sais que.
 * 
 * 
@@ -55,6 +81,17 @@
 < Les États-Unis a un précédent président, appelé George Bush.
 < Les États-Unis avait un président, appelé George Bush.
 < Les États-Unis avait un président, appelé Bill Clinton.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un président, appelé Barack Obama. En raison:
+<	- Barack Obama est l'actuel président des États-Unis.
+< Les États-Unis a un précédent président, appelé George Bush. En raison:
+<	- George Bush est le précédent président des États-Unis.
+< Les États-Unis avait un président, appelé George Bush. En raison:
+<	- George Bush était un président des États-Unis.
+< Les États-Unis avait un président, appelé Bill Clinton. En raison:
+<	- Bill Clinton était un président des États-Unis.
 < 
 * 
 * Mes conclusions:

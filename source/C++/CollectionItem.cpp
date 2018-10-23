@@ -1,7 +1,7 @@
 ﻿/*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -29,17 +29,17 @@ class CollectionItem : private Item
 
 	// Private initialized variables
 
-	bool isExclusiveSpecification_;
+	bool isExclusiveSpecification_ = false;
 
-	unsigned short collectionOrderNr_;
-	unsigned short collectionWordTypeNr_;
-	unsigned short commonWordTypeNr_;
+	unsigned short collectionOrderNr_ = NO_ORDER_NR;
+	unsigned short collectionWordTypeNr_ = NO_WORD_TYPE_NR;
+	unsigned short commonWordTypeNr_ = NO_WORD_TYPE_NR;
 
-	unsigned int collectionNr_;
+	unsigned int collectionNr_ = NO_COLLECTION_NR;
 
-	WordItem *collectionWordItem_;
-	WordItem *commonWordItem_;
-	WordItem *compoundGeneralizationWordItem_;
+	WordItem *collectionWordItem_ = NULL;
+	WordItem *commonWordItem_ = NULL;
+	WordItem *compoundGeneralizationWordItem_ = NULL;
 
 
 	protected:

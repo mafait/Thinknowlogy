@@ -1,7 +1,7 @@
 ﻿/*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -165,12 +165,10 @@ class SelectionList : private List
 
 	SelectionItem *firstSelectionItem( WordItem *solveWordItem )
 		{
-		SelectionItem *firstSelectionItem = firstActiveSelectionItem();
+		SelectionItem *firstSelectionItem;
 
-		if( firstSelectionItem != NULL )
-			return firstSelectionItem->firstSelectionItem( solveWordItem );
-
-		return NULL;
+		return ( ( firstSelectionItem = firstActiveSelectionItem() ) != NULL ?
+				firstSelectionItem->firstSelectionItem( solveWordItem ) : NULL );
 		}
 
 	SelectionItem *firstConditionSelectionItem( unsigned int conditionSentenceNr )
@@ -191,24 +189,29 @@ class SelectionList : private List
 
 	DuplicateResultType checkForDuplicateCondition()
 		{
+		unsigned int duplicateConditionSentenceNr = globalVariables()->currentSentenceNr;
 		DuplicateResultType duplicateResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForDuplicateCondition";
 
-		duplicateResult.duplicateConditionSentenceNr = globalVariables()->currentSentenceNr;
-
 		do	{
-			if( ( duplicateResult.duplicateConditionSentenceNr = getLowerSentenceNr( duplicateResult.duplicateConditionSentenceNr ) ) > NO_SENTENCE_NR &&
-			( duplicateResult = checkForDuplicateSelectionPart( duplicateResult.duplicateConditionSentenceNr ) ).result != RESULT_OK )
-				return addDuplicateResultError( functionNameString, "I failed to check if the alternative selection part is duplicate" );
+			if( ( duplicateConditionSentenceNr = getLowerSentenceNr( duplicateConditionSentenceNr ) ) > NO_SENTENCE_NR )
+				{
+				if( ( duplicateResult = checkForDuplicateSelectionPart( duplicateConditionSentenceNr ) ).result != RESULT_OK )
+					return addDuplicateResultError( functionNameString, "I failed to check if the alternative selection part is duplicate" );
+
+				duplicateConditionSentenceNr = duplicateResult.duplicateConditionSentenceNr;
+				}
 			}
 		while( !duplicateResult.hasFoundDuplicateSelection &&
-		duplicateResult.duplicateConditionSentenceNr > NO_SENTENCE_NR );
+		duplicateConditionSentenceNr > NO_SENTENCE_NR );
 
+		duplicateResult.duplicateConditionSentenceNr = duplicateConditionSentenceNr;
 		return duplicateResult;
 		}
 
 	DuplicateResultType checkForDuplicateSelectionPart( unsigned int duplicateConditionSentenceNr )
 		{
+		bool hasFoundDuplicateSelection = true;
 		char *currentSpecificationString;
 		char *searchSpecificationString;
 		SelectionItem *currentSelectionItem = NULL;
@@ -221,8 +224,6 @@ class SelectionList : private List
 
 		if( duplicateConditionSentenceNr >= globalVariables()->currentSentenceNr )
 			return startDuplicateResultError( functionNameString, "The given duplicate sentence number is equal or higher than the current sentence number" );
-
-		duplicateResult.hasFoundDuplicateSelection = true;
 
 		while( searchSelectionItem != NULL &&
 		searchSelectionItem->activeSentenceNr() >= duplicateConditionSentenceNr )
@@ -245,15 +246,15 @@ class SelectionList : private List
 
 						if( currentSpecificationString != NULL &&
 						searchSpecificationString != NULL )
-							duplicateResult.hasFoundDuplicateSelection = ( strcmp( currentSpecificationString, searchSpecificationString ) == 0 );
+							hasFoundDuplicateSelection = ( strcmp( currentSpecificationString, searchSpecificationString ) == 0 );
 						else
 							{
 							if( currentSpecificationString != NULL ||
 							searchSpecificationString != NULL )
-								duplicateResult.hasFoundDuplicateSelection = false;
+								hasFoundDuplicateSelection = false;
 							}
 
-						if( duplicateResult.hasFoundDuplicateSelection )
+						if( hasFoundDuplicateSelection )
 							{
 							duplicateResult.duplicateConditionSentenceNr = searchSelectionItem->creationSentenceNr();
 
@@ -268,11 +269,11 @@ class SelectionList : private List
 						}
 					else
 						{
-						duplicateResult.hasFoundDuplicateSelection = false;
+						hasFoundDuplicateSelection = false;
 						searchSelectionItem = NULL;
 						}
 					}
-				while( duplicateResult.hasFoundDuplicateSelection &&
+				while( hasFoundDuplicateSelection &&
 				currentSelectionItem != NULL &&
 				searchSelectionItem != NULL );
 				}
@@ -280,6 +281,7 @@ class SelectionList : private List
 				searchSelectionItem = searchSelectionItem->nextSelectionItem();
 			}
 
+		duplicateResult.hasFoundDuplicateSelection = hasFoundDuplicateSelection;
 		return duplicateResult;
 		}
 	};

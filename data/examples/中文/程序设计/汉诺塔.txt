@@ -1,0 +1,52 @@
+﻿#----------------------------------------------------------------------------
+# Purpose: To demonstrate programming in natural language.
+# Version: Thinknowlogy 2018r3 (Deep Magic)
+#----------------------------------------------------------------------------
+# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at http://mafait.org/contact/
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+# 汉诺塔
+# 维基百科，自由的百科全书
+# 常见玩具版汉诺塔有8个圆盘
+# 3个圆盘的汉诺塔的移到
+# 4个圆盘的汉诺塔的移到
+# 
+# 汉诺塔（港台：河內塔）是根据一个传说形成的數學问题：
+# 
+# 有三根杆子A，B，C。A杆上有N个(N>1)穿孔圆盘，盘的尺寸由下到上依次变小。要求按下列规则添加到所有圆盘移至C杆：
+# 
+#     每次只能移到一个圆盘；
+#     大盘不能叠在小盘上面。
+# 
+# 提示：可添加到圆盘临时置于B杆，也可添加到从A杆移出的圆盘重新移回A杆，但都必须遵循上述两条规则。
+#----------------------------------------------------------------------------
+# 请参阅全文: https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%BA%E5%A1%94
+#----------------------------------------------------------------------------
+
+# Define the moves.
+每个动作都是起始·交换之间、起始·目标之间、交换·目标之间、起始·交换之间已经完成、起始·目标之间已经完成或交换·目标之间已经完成。
+
+# Display the moves.
+如果该动作是起始·交换之间已经完成或该动作是起始·目标之间已经完成或该动作是交换·目标之间已经完成那么呈现"* 起始杆:\t~+'起始杆'<a>`~.\n* 交换杆:\t~+'交换杆'<a>`~.\n* 目标杆:\t~+'目标杆'<a>`~.\n\n"。
+
+# The rules for moving the discs.
+如果该动作是交换·目标之间那么如果该交换杆是已分配和该目标杆不是已分配或该交换杆是已分配和该交换杆的头是小于该目标杆的头那么把交换杆的头移到目标杆、该动作是交换·目标之间已经完成和呈现"Moved a disc from swap to goal:\n"否把目标杆的头移到交换杆、该动作是交换·目标之间已经完成和呈现"Moved a disc from goal to swap:\n"。
+如果该动作是起始·目标之间那么如果该起始杆是已分配和该目标杆不是已分配或该起始杆是已分配和该起始杆的头是小于该目标杆的头那么把起始杆的头移到目标杆、该动作是起始·目标之间已经完成和呈现"Moved a disc from start to goal:\n"否把目标杆的头移到起始杆、该动作是起始·目标之间已经完成和呈现"Moved a disc from goal to start:\n"。
+如果该动作是起始·交换之间那么如果该起始杆是已分配和该交换杆不是已分配或该起始杆是已分配和该起始杆的头是小于该交换杆的头那么把起始杆的头移到交换杆、该动作是起始·交换之间已经完成和呈现"Moved a disc from start to swap:\n"否把交换杆的头移到起始杆、该动作是起始·交换之间已经完成和呈现"Moved a disc from swap to start:\n"。
+
+# Before each new move, the order is set in which the rules must be executed.
+如果该执行顺序是先做·奇数那么如果该动作不是已分配或该动作是交换·目标之间已经完成那么该动作是起始·目标之间否如果该动作是起始·目标之间已经完成那么该动作是起始·交换之间否该动作是交换·目标之间。
+如果该执行顺序是先做·偶数那么如果该动作不是已分配或该动作是交换·目标之间已经完成那么该动作是起始·交换之间否如果该动作是起始·交换之间已经完成那么该动作是起始·目标之间否该动作是交换·目标之间。
+
+# At the start, determine the order in which the rules must be executed.
+如果该起始杆是已分配、该交换杆不是已分配和该目标杆不是已分配那么如果该起始杆的数字是奇数那么该执行顺序是先做·奇数和呈现"\nThe number of discs is odd. So, the rule order is: Move first from start to goal, then from start to swap.\n\n"否该执行顺序是先做·偶数和呈现"\nThe number of discs is even. So, the rule order is: Move first from start to swap, then from start to goal.\n\n"。
+
+# Define the end.
+如果该动作是已分配、该起始杆不是已分配、该交换杆不是已分配和该目标杆是已分配那么该动作是空的、该执行顺序是空的和呈现"Done.\nTo start the puzzle again, click button «清除你的想法» and then «阅读文档\"中文/程序设计/汉诺塔\"。»"。
+
+# Now add an odd or even number of discs in reverse order,
+# the biggest first (e.g. D or E), and the smallest (A) on top, like:
+# - For an even number of discs:	把D、C、B和A添加到起始杆。
+# - For an odd number of discs:	把E、D、C、B和A添加到起始杆。

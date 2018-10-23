@@ -1,2 +1,2 @@
-﻿Lees het bestand "Nederlands/gebruiker/ambiguiteit/presidenten van de VS".
-Lees het bestand "Nederlands/gebruiker/ambiguiteit/Boston".
+﻿Lees het bestand "Nederlands/ambiguiteit/Presidenten van de VS".
+Lees het bestand "Nederlands/ambiguiteit/Boston".

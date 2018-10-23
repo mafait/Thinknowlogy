@@ -1,6 +1,6 @@
 ﻿/*	Class:			GlobalVariables
  *	Purpose:		To hold the global variables
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -76,132 +76,64 @@ class GlobalVariables
 
 	// Protected global variables
 
-	bool hasDisplayedIntegrityWarning;
-	bool hasDisplayedMessage;
-	bool hasDisplayedWarning;
-	bool hasFoundAnswerToQuestion;
-	bool hasFoundQuery;
-	bool isAssignmentChanged;
-	bool isConflictingQuestion;
-	bool isFirstAnswerToQuestion;
-	bool isQuestionAlreadyAnswered;
+	bool hasDisplayedIntegrityWarning = false;
+	bool hasDisplayedMessage = false;
+	bool hasDisplayedWarning = false;
+	bool hasFoundAnswerToQuestion = false;
+	bool hasFoundQuery = false;
+	bool isAssignmentChanged = false;
+	bool isConflictingQuestion = false;
+	bool isFirstAnswerToQuestion = false;
+	bool isQuestionAlreadyAnswered = false;
 
-	signed char result;
+	signed char result = RESULT_OK;
 
-	unsigned short currentAssignmentLevel;
-	unsigned short currentLanguageNr;
-	unsigned short currentUserNr;
-	unsigned short currentWriteLevel;
+	unsigned short currentAssignmentLevel = NO_ASSIGNMENT_LEVEL;
+	unsigned short currentLanguageNr = NO_LANGUAGE_NR;
+	unsigned short currentUserNr = NO_USER_NR;
+	unsigned short currentWriteLevel = NO_WRITE_LEVEL;
 
-	unsigned int currentSentenceNr;
-	unsigned int currentSentenceItemNr;
+	unsigned int currentSentenceNr = 1;		// First sentence
+	unsigned int currentSentenceItemNr = NO_ITEM_NR;
 
-	unsigned int nActiveQueryItems;
-	unsigned int nInactiveQueryItems;
-	unsigned int nArchivedQueryItems;
-	unsigned int nReplacedQueryItems;
+	unsigned int nActiveQueryItems = 0;
+	unsigned int nInactiveQueryItems = 0;
+	unsigned int nArchivedQueryItems = 0;
+	unsigned int nReplacedQueryItems = 0;
 
-	unsigned int nDeletedItems;
+	unsigned int nDeletedItems = 0;
 
-	unsigned int nUserGeneralizationWords;
-	unsigned int nUserSpecificationWords;
-	unsigned int nUserRelationWords;
+	unsigned int nUserGeneralizationWords = 0;
+	unsigned int nUserSpecificationWords = 0;
+	unsigned int nUserRelationWords = 0;
 
-	unsigned int removeSentenceNr;
-	unsigned int removeStartItemNr;
+	unsigned int removeSentenceNr = NO_SENTENCE_NR;
+	unsigned int removeStartItemNr = NO_ITEM_NR;
 
-	SelectionList *adminConditionList;
-	SelectionList *adminActionList;
-	SelectionList *adminAlternativeList;
+	SelectionList *adminConditionList = NULL;
+	SelectionList *adminActionList = NULL;
+	SelectionList *adminAlternativeList = NULL;
 
-	WordItem *currentLanguageWordItem;
-	WordItem *firstAssignmentWordItem;
-	WordItem *firstCollectionWordItem;
-	WordItem *firstContextWordItem;
-	WordItem *firstPossessiveNounWordItem;
-	WordItem *firstPredefinedWordItem;
-	WordItem *firstSpecificationWordItem;
-	WordItem *firstTouchedWordItem;
-	WordItem *firstUserProperNounWordItem;
-	WordItem *firstWordItem;
-	WordItem *lastCollectionWordItem;
-	WordItem *lastContextWordItem;
-	WordItem *lastPredefinedWordItem;
-	WordItem *predefinedNounLanguageWordItem;
-	WordItem *predefinedNounUserWordItem;
+	WordItem *currentLanguageWordItem = NULL;
+	WordItem *firstAssignmentWordItem = NULL;
+	WordItem *firstCollectionWordItem = NULL;
+	WordItem *firstContextWordItem = NULL;
+	WordItem *firstPossessiveNounWordItem = NULL;
+	WordItem *firstPredefinedWordItem = NULL;
+	WordItem *firstSpecificationWordItem = NULL;
+	WordItem *firstTouchedWordItem = NULL;
+	WordItem *firstUserProperNounWordItem = NULL;
+	WordItem *firstWordItem = NULL;
+	WordItem *lastCollectionWordItem = NULL;
+	WordItem *lastContextWordItem = NULL;
+	WordItem *lastPredefinedWordItem = NULL;
+	WordItem *predefinedNounLanguageWordItem = NULL;
+	WordItem *predefinedNounUserWordItem = NULL;
 
-	char learnedFromUserString[MAX_SENTENCE_STRING_LENGTH];
-	char queryString[MAX_SENTENCE_STRING_LENGTH];
-	char writtenSentenceString[MAX_SENTENCE_STRING_LENGTH];
-	char writtenUserSentenceString[MAX_SENTENCE_STRING_LENGTH];
-
-
-	protected:
-	// Constructor
-
-	GlobalVariables()
-		{
-		// Protected global variables
-
-		hasDisplayedIntegrityWarning = false;
-		hasDisplayedMessage = false;
-		hasDisplayedWarning = false;
-		hasFoundAnswerToQuestion = false;
-		hasFoundQuery = false;
-		isAssignmentChanged = false;
-		isConflictingQuestion = false;
-		isFirstAnswerToQuestion = false;
-		isQuestionAlreadyAnswered = false;
-
-		result = RESULT_OK;
-
-		currentAssignmentLevel = NO_ASSIGNMENT_LEVEL;
-		currentLanguageNr = NO_LANGUAGE_NR;
-		currentUserNr = NO_USER_NR;
-		currentWriteLevel = NO_WRITE_LEVEL;
-
-		currentSentenceNr = 1;	// First sentence
-		currentSentenceItemNr = NO_ITEM_NR;
-
-		nActiveQueryItems = 0;
-		nInactiveQueryItems = 0;
-		nArchivedQueryItems = 0;
-		nReplacedQueryItems = 0;
-
-		nDeletedItems = 0;
-
-		nUserGeneralizationWords = 0;
-		nUserSpecificationWords = 0;
-		nUserRelationWords = 0;
-
-		removeSentenceNr = NO_SENTENCE_NR;
-		removeStartItemNr = NO_ITEM_NR;
-
-		adminConditionList = NULL;
-		adminActionList = NULL;
-		adminAlternativeList = NULL;
-
-		currentLanguageWordItem = NULL;
-		firstAssignmentWordItem = NULL;
-		firstCollectionWordItem = NULL;
-		firstContextWordItem = NULL;
-		firstPossessiveNounWordItem = NULL;
-		firstPredefinedWordItem = NULL;
-		firstSpecificationWordItem = NULL;
-		firstTouchedWordItem = NULL;
-		firstUserProperNounWordItem = NULL;
-		firstWordItem = NULL;
-		lastCollectionWordItem = NULL;
-		lastContextWordItem = NULL;
-		lastPredefinedWordItem = NULL;
-		predefinedNounLanguageWordItem = NULL;
-		predefinedNounUserWordItem = NULL;
-
-		strcpy( learnedFromUserString, EMPTY_STRING );
-		strcpy( queryString, EMPTY_STRING );
-		strcpy( writtenSentenceString, EMPTY_STRING );
-		strcpy( writtenUserSentenceString, EMPTY_STRING );
-		}
+	char learnedFromUserString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char queryString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char writtenSentenceString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char writtenUserSentenceString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 	};
 
 /*************************************************************************

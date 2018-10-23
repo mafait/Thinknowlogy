@@ -1,2 +1,2 @@
-﻿Lirez le fichier "Français/utilisateur/ambiguïté/Presidents des États-Unis".
-Lirez le fichier "Français/utilisateur/ambiguïté/Boston".
+﻿Lirez le fichier "Français/ambiguïté/Presidents des États-Unis".
+Lirez le fichier "Français/ambiguïté/Boston".

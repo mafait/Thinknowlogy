@@ -20,7 +20,7 @@
  Toon de garantie.
 ------------------------------------------------------------------------------
  Voorbeeldbestanden: * Gebruik knop <meer voorbeelden>
-	    of zie map: Thinknowlogy2018r1/data/examples/Nederlands/gebruiker/
+	    of zie map: Thinknowlogy2018r1/data/examples/Nederlands/
  Fundamenteel:          * map: Thinknowlogy2018r1/documents/
  Ontwerp:	          * map: Thinknowlogy2018r1/documents/design/
  Schermafdrukken:     * map: Thinknowlogy2018r1/screenshots/Nederlands/

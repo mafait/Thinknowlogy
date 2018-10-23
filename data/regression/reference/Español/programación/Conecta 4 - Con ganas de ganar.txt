@@ -177,5 +177,5 @@ movimiento->	-A-B-C-D-E-F-G-
 
 Este juego es mío.
 
-Para volver a jugar, haga clic en el botón «Despejar la mente.» y entonces «Leer el archivo "Español/usuario/programación/Conecta 4".».
+Para volver a jugar, haga clic en el botón «Despejar la mente.» y entonces «Leer el archivo "Español/programación/Conecta 4".».
 

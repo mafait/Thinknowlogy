@@ -67,11 +67,11 @@
 <	- Paul has a mother, called Anna.
 <	- A mother is probably a person.
 * 	and:
-<	- Anna is probably a parent of Paul.
-<	- A parent is probably a person.
-* 	and:
 <	- Anna is a mother of Paul.
 <	- A mother is probably a person.
+* 	and:
+<	- Anna is probably a parent of Paul.
+<	- A parent is probably a person.
 < Anna is probably not a man. Because:
 <	- Anna is probably a person.
 <	- Every person is a man or a woman.
@@ -81,10 +81,10 @@
 <	- Every parent is a woman or a man.
 <	- Anna is a woman.
 < Anna is probably a parent of Paul. Because:
+<	- Paul has probably a parent, called Anna.
+* 	and:
 <	- Every parent is a father or a mother.
 <	- Anna is a mother of Paul.
-* 	and:
-<	- Paul has probably a parent, called Anna.
 * 	and:
 <	- Every family has parents and children.
 <	- Paul is probably a child of Anna.
@@ -104,6 +104,9 @@
 * 
 * My assumptions:
 < Paul has probably a parent, called Anna. Because:
+<	- Every parent is a father or a mother.
+<	- Paul has a mother, called Anna.
+* 	and:
 <	- Anna is probably a parent of Paul.
 < Paul is probably a child of Anna. Because:
 <	- Every family has parents and children.
@@ -186,6 +189,9 @@
 <	- Every child is a girl, a woman, a boy or a man.
 <	- Paul is a man.
 < Paul has probably a parent, called Anna. Because:
+<	- Every parent is a father or a mother.
+<	- Paul has a mother, called Anna.
+* 	and:
 <	- Anna is probably a parent of Paul.
 < Paul is probably a child of Anna. Because:
 <	- Every family has parents and children.
@@ -236,6 +242,9 @@
 <	- Every child is a girl, a woman, a boy or a man.
 <	- Paul is a man.
 < Paul has probably a parent, called Anna. Because:
+<	- Every parent is a father or a mother.
+<	- Paul has a mother, called Anna.
+* 	and:
 <	- Anna is probably a parent of Paul.
 < Paul is probably a child of Anna. Because:
 <	- Every family has parents and children.
@@ -379,12 +388,12 @@
 * 
 * My assumptions:
 < Anna is probably a parent of Paul, Joe and Laura. Because:
-<	- Every parent is a father or a mother.
-<	- Anna is the mother of Paul, Joe and Laura.
-* 	and:
 <	- Paul has probably 2 parents, called Anna and John.
 <	- Joe has probably 2 parents, called Anna and John.
 <	- Laura has probably 2 parents, called Anna and John.
+* 	and:
+<	- Every parent is a father or a mother.
+<	- Anna is the mother of Paul, Joe and Laura.
 * 	and:
 <	- Every family has parents and children.
 <	- Paul is probably a child of Anna and John.
@@ -400,11 +409,11 @@
 <	- Paul has a mother, called Anna.
 <	- A mother is probably a person.
 * 	and:
-<	- Anna is probably a parent of Paul, Joe and Laura.
-<	- A parent is probably a person.
-* 	and:
 <	- Anna is a mother.
 <	- A mother is probably a person.
+* 	and:
+<	- Anna is probably a parent of Paul, Joe and Laura.
+<	- A parent is probably a person.
 < Anna is probably not a man. Because:
 <	- Anna is probably a person.
 <	- Every person is a man or a woman.
@@ -444,10 +453,10 @@
 < Paul has probably 2 parents, called Anna and John. Because:
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Anna is probably a parent of Paul, Joe and Laura.
-< Paul is probably a child of Anna and John. Because:
-<	- John has probably 3 children, called Paul, Joe and Laura.
-<	- Anna has probably 3 children, called Paul, Joe and Laura.
 * 	and:
+<	- Every parent is a father or a mother.
+<	- Paul has a mother, called Anna.
+< Paul is probably a child of Anna and John. Because:
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.
 <	- Paul has a father, called John.
@@ -456,6 +465,9 @@
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Anna is probably a parent of Paul, Joe and Laura.
+* 	and:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
 < Paul is probably not a daughter. Because:
 <	- Paul is probably a child of Anna and John.
 <	- Every child is a son or a daughter.
@@ -508,6 +520,9 @@
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Anna is probably a parent of Paul, Joe and Laura.
 < Joe is probably a child of Anna and John. Because:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Anna is probably a parent of Paul, Joe and Laura.
@@ -516,9 +531,6 @@
 <	- Every parent is a father or a mother.
 <	- Joe has a father, called John.
 <	- Joe has a mother, called Anna.
-* 	and:
-<	- John has probably 3 children, called Paul, Joe and Laura.
-<	- Anna has probably 3 children, called Paul, Joe and Laura.
 < Joe is probably part of a family. Because:
 <	- Joe is probably a child of Anna and John.
 <	- Children are part of every family.
@@ -540,12 +552,12 @@
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Anna is probably a parent of Paul, Joe and Laura.
 < Laura is probably a child of Anna and John. Because:
+<	- John has probably 3 children, called Paul, Joe and Laura.
+<	- Anna has probably 3 children, called Paul, Joe and Laura.
+* 	and:
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Anna is probably a parent of Paul, Joe and Laura.
-* 	and:
-<	- John has probably 3 children, called Paul, Joe and Laura.
-<	- Anna has probably 3 children, called Paul, Joe and Laura.
 * 	and:
 <	- Every family has parents and children.
 <	- Every parent is a father or a mother.

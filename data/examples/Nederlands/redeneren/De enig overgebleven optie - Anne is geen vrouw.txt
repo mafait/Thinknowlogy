@@ -1,5 +1,5 @@
 ﻿Ieder persoon is een man of een vrouw.
 Anne is een persoon.
 Anne is geen vrouw.
-Toon de verantwoordingsrapportage over Anne.
+#Dev#Toon de verantwoordingsrapportage over Anne.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

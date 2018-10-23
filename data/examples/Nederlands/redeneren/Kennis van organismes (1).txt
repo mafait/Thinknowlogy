@@ -48,7 +48,7 @@ Ieder mens is een gewervelde.
 Ieder mens is een zogende.
 Jan is een mens.
 # Verantwoordingsrapportages
-Toon de verantwoordingsrapportage over gewervelden.
-Toon de verantwoordingsrapportage over zogenden.
-Toon de verantwoordingsrapportage over krokodillen.
-Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over gewervelden.
+#Dev#Toon de verantwoordingsrapportage over zogenden.
+#Dev#Toon de verantwoordingsrapportage over krokodillen.
+#Dev#Toon de verantwoordingsrapportage over Jan.

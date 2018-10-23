@@ -1,45 +1,45 @@
-﻿Lees het bestand "Nederlands/gebruiker/redeneren/gezin/gezinsdefinitie".
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 Anna is een ouder van Paul, Johan en Laura.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Paul.
-Toon de verantwoordingsrapportage over Johan.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Johan heeft een moeder, genaamd Anna.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Johan.
 Paul is een zoon van Jan en Anna.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 Paul heeft een vader, genaamd Jan.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 Johan heeft een vader, genaamd Jan.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Johan.
 Jan is een ouder.
-Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Jan.
 Laura heeft een moeder, genaamd Anna.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Laura is een vrouw.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Anna is een vrouw.
-Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Anna.
 Laura is een dochter van Jan en Anna.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Paul.
-Toon de verantwoordingsrapportage over Johan.
-Toon de verantwoordingsrapportage over Laura.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Johan is een zoon van Jan en Anna.
-Toon de verantwoordingsrapportage over Jan.
-Toon de verantwoordingsrapportage over Anna.
-Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Johan.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

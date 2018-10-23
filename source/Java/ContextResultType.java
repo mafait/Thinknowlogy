@@ -1,7 +1,7 @@
 ﻿/*	Class:		ContextResultType
  *	Purpose:	To return context variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,22 +25,12 @@ class ContextResultType
 	{
 	// Protected variables
 
-	protected byte result;
-	protected boolean isAmbiguousRelationContext;
-	protected int contextNr;
-	protected int copiedRelationContextNr;
-	protected SpecificationItem confirmedAllRelationWordsOfSpecificationItem;
+	protected byte result = Constants.RESULT_OK;
 
-	// Constructor
+	protected boolean isAmbiguousRelationContext = false;
 
-	ContextResultType()
-		{
-		result = Constants.RESULT_OK;
-		isAmbiguousRelationContext = false;
-		contextNr = Constants.NO_CONTEXT_NR;
-		copiedRelationContextNr = Constants.NO_CONTEXT_NR;
-		confirmedAllRelationWordsOfSpecificationItem = null;
-		}
+	protected int contextNr = Constants.NO_CONTEXT_NR;
+	protected int copiedRelationContextNr = Constants.NO_CONTEXT_NR;
 	};
 
 /*************************************************************************

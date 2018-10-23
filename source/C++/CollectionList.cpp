@@ -1,7 +1,7 @@
 ﻿/*	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -30,7 +30,7 @@ class CollectionList : private List
 
 	// Private constructed variables
 
-	bool isMarkedAsCollectionWord_;
+	bool isMarkedAsCollectionWord_ = false;
 
 
 	// Private functions
@@ -57,10 +57,6 @@ class CollectionList : private List
 
 	CollectionList( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		// Private constructed variables
-
-		isMarkedAsCollectionWord_ = false;
-
 		initializeListVariables( WORD_COLLECTION_LIST_SYMBOL, "CollectionList", globalVariables, inputOutput, myWordItem );
 		}
 
@@ -134,7 +130,26 @@ class CollectionList : private List
 		return false;
 		}
 
-	bool hasNonExclusiveCollection( unsigned int collectionNr )
+	bool isExclusiveCollection( unsigned int collectionNr )
+		{
+		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
+
+		if( collectionNr > NO_COLLECTION_NR )
+			{
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->isExclusiveSpecification() &&
+				searchCollectionItem->collectionNr() == collectionNr )
+					return true;
+
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
+			}
+
+		return false;
+		}
+
+	bool isNonExclusiveCollection( unsigned int collectionNr )
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
@@ -501,6 +516,7 @@ class CollectionList : private List
 	CollectionResultType createCollection( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int _collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem )
 		{
 		unsigned short collectionOrderNr;
+		WordItem *generalizationWordItem = myWordItem();
 		CollectionResultType collectionResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createCollection";
 
@@ -521,7 +537,7 @@ class CollectionList : private List
 			collectionWordTypeNr = WORD_TYPE_NOUN_SINGULAR;
 
 		// Typical for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
-		if( !myWordItem()->hasWordType( true, collectionWordTypeNr ) )
+		if( !generalizationWordItem->hasWordType( true, collectionWordTypeNr ) )
 			return startCollectionResultError( functionNameString, "I don't have the requested word type number: ", collectionWordTypeNr );
 
 		// Typical for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
@@ -530,14 +546,14 @@ class CollectionList : private List
 
 		if( _collectionNr == NO_COLLECTION_NR )
 			{
-			if( ( _collectionNr = myWordItem()->highestCollectionNrInCollectionWords() ) >= MAX_COLLECTION_NR )
+			if( ( _collectionNr = generalizationWordItem->highestCollectionNrInCollectionWords() ) >= MAX_COLLECTION_NR )
 				return startCollectionResultSystemError( functionNameString, "Collection number overflow" );
 
 			collectionResult.createdCollectionNr = ++_collectionNr;
 			}
 
 		// A collection comes in pairs
-		if( ( collectionOrderNr = myWordItem()->highestCollectionOrderNrInCollectionWords( _collectionNr ) ) >= MAX_ORDER_NR - 1 )
+		if( ( collectionOrderNr = generalizationWordItem->highestCollectionOrderNrInCollectionWords( _collectionNr ) ) >= MAX_ORDER_NR - 1 )
 			return startCollectionResultSystemError( functionNameString, "Collection order number overflow" );
 
 		if( !isMarkedAsCollectionWord_ )

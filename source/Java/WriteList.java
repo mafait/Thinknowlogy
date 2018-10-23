@@ -1,7 +1,7 @@
 ﻿/*	Class:			WriteList
  *	Parent class:	List
  *	Purpose:		To temporarily store write items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -40,24 +40,6 @@ class WriteList extends List
 
 
 	// Protected methods
-
-	protected byte checkGrammarItemForUsage( GrammarItem unusedGrammarItem )
-		{
-		WriteItem searchWriteItem = firstActiveWriteItem();
-
-		if( unusedGrammarItem == null )
-			return startError( 1, "The given unused grammar item is undefined" );
-
-		while( searchWriteItem != null )
-			{
-			if( searchWriteItem.startOfChoiceOrOptionGrammarItem() == unusedGrammarItem )
-				return startError( 1, "The start of choice or option grammar item is still in use" );
-
-			searchWriteItem = searchWriteItem.nextWriteItem();
-			}
-
-		return Constants.RESULT_OK;
-		}
 
 	protected byte createWriteItem( boolean isSkipped, short grammarLevel, GrammarItem startOfChoiceOrOptionGrammarItem )
 		{

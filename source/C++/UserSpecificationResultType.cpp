@@ -1,7 +1,7 @@
 ﻿/*	Class:		UserSpecificationResultType
  *	Purpose:	To return user specification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -31,31 +31,15 @@ class UserSpecificationResultType
 	protected:
 	// Protected variables
 
-	signed char result;
+	signed char result = RESULT_OK;
 
-	bool isConfirmedExclusive;
-	bool isConfirmedSpecificationButNotItsRelation;
-	bool isNonExclusiveSpecification;
-	bool isSameQuestionFromUser;
-	bool isSimilarOrRelatedQuestion;
+	bool isConfirmedExclusive = false;
+	bool isConfirmedSpecificationButNotItsRelation = false;
+	bool isNonExclusiveSpecification = false;
+	bool isSameQuestionFromUser = false;
+	bool isSimilarOrRelatedQuestion = false;
 
-	SpecificationItem *confirmedSpecificationItem;
-
-	protected:
-	// Constructor
-
-	UserSpecificationResultType()
-		{
-		result = RESULT_OK;
-
-		isConfirmedExclusive = false;
-		isConfirmedSpecificationButNotItsRelation = false;
-		isNonExclusiveSpecification = false;
-		isSameQuestionFromUser = false;
-		isSimilarOrRelatedQuestion = false;
-
-		confirmedSpecificationItem = NULL;
-		}
+	SpecificationItem *confirmedSpecificationItem = NULL;
 	};
 
 /*************************************************************************

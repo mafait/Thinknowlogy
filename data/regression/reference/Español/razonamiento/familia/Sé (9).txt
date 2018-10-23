@@ -35,10 +35,10 @@
 * 
 * Mis suposiciones:
 < Luisa es posiblemente hija de Juan.
+< Luisa no es posiblemente un hijo.
 < Luisa es posiblemente parte de una familia.
 < Luisa es puede-ser una persona.
 < Luisa no es posiblemente un niño y un hombre.
-< Luisa no es posiblemente un hijo.
 < Juan es probablemente una persona.
 < Juan tiene posiblemente una hija, llamada Luisa.
 * 

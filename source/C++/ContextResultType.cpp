@@ -1,7 +1,7 @@
 ﻿/*	Class:		ContextResultType
  *	Purpose:	To return context variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:	Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -26,30 +26,19 @@
 class ContextResultType
 	{
 	friend class AdminReadSentence;
-	friend class AdminReasoningOld;
+	friend class AdminReasoningNew;
 	friend class AdminSpecification;
 	friend class Item;
 
 	protected:
 	// Protected variables
 
-	signed char result;
-	bool isAmbiguousRelationContext;
-	unsigned int contextNr;
-	unsigned int copiedRelationContextNr;
-	SpecificationItem *confirmedAllRelationWordsOfSpecificationItem;
+	signed char result = RESULT_OK;
 
-	protected:
-	// Constructor
+	bool isAmbiguousRelationContext = false;
 
-	ContextResultType()
-		{
-		result = RESULT_OK;
-		isAmbiguousRelationContext = false;
-		contextNr = NO_CONTEXT_NR;
-		copiedRelationContextNr = NO_CONTEXT_NR;
-		confirmedAllRelationWordsOfSpecificationItem = NULL;
-		}
+	unsigned int contextNr = NO_CONTEXT_NR;
+	unsigned int copiedRelationContextNr = NO_CONTEXT_NR;
 	};
 
 /*************************************************************************

@@ -56,7 +56,7 @@ Chaque humain-être est un vertébré.
 Chaque humain-être est un mammifère.
 Olivier est un humain-être.
 # Le rapport de justification
-Affichez le rapport de justification sur les vertébrés.
-Affichez le rapport de justification sur les mammifères.
-Affichez le rapport de justification sur les crocodiles.
-Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur les vertébrés.
+#Dev#Affichez le rapport de justification sur les mammifères.
+#Dev#Affichez le rapport de justification sur les crocodiles.
+#Dev#Affichez le rapport de justification sur Olivier.

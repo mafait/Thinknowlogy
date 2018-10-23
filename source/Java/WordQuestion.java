@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordQuestion
  *	Supports class:	WordItem
  *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -25,19 +25,18 @@ class WordQuestion
 	{
 	// Private constructed variables
 
-	private boolean hasCurrentlyAnsweredSelfGeneratedQuestion_;
-	private boolean hasFoundAnswerToQuestion_;
-	private boolean hasFoundDeeperPositiveAnswer_;
-	private boolean hasFoundNoAnswerInThisWord_;
-	private boolean hasFoundSpecificationGeneralizationAnswer_;
-	private boolean isNegativeAnswer_;
+	private boolean hasCurrentlyAnsweredSelfGeneratedQuestion_ = false;
+	private boolean hasFoundAnswerToQuestion_ = false;
+	private boolean hasFoundDeeperPositiveAnswer_ = false;
+	private boolean hasFoundNoAnswerInThisWord_ = false;
+	private boolean hasFoundSpecificationGeneralizationAnswer_ = false;
+	private boolean isNegativeAnswer_ = false;
 
-	private SpecificationItem uncertainAboutAnswerRelationSpecificationItem_;
+	private SpecificationItem uncertainAboutAnswerRelationSpecificationItem_ = null;
 
+	private String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
-
-	private String moduleNameString_;
 
 	private WordItem myWordItem_;
 
@@ -129,8 +128,7 @@ class WordQuestion
 		if( answerSpecificationItem != null &&
 		// Ignore suggestive assumptions
 		answerSpecificationItem.isOlderItem() &&
-		!answerSpecificationItem.isHiddenSpanishSpecification() &&
-
+		// Write answer to question
 		writeAnswerToQuestion( isNegativeAnswer, isPositiveAnswer, isUncertainAboutRelation, answerSpecificationItem ) != Constants.RESULT_OK )
 			return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to write an answer to a question" );
 
@@ -447,17 +445,14 @@ class WordQuestion
 		{
 		SpecificationItem firstQuestionSpecificationItem;
 
-		// Try to find an assignment first
-		if( ( firstQuestionSpecificationItem = myWordItem_.firstQuestionAssignmentItem() ) != null &&
-		!firstQuestionSpecificationItem.isOlderItem() )
-			return firstQuestionSpecificationItem;
+				// Try to find an assignment first
+		return ( ( ( firstQuestionSpecificationItem = myWordItem_.firstQuestionAssignmentItem() ) != null &&
+				!firstQuestionSpecificationItem.isOlderItem() ) ||
 
-		// If not found, try to find a specification
-		if( ( firstQuestionSpecificationItem = myWordItem_.firstActiveQuestionSpecificationItem() ) != null &&
-		!firstQuestionSpecificationItem.isOlderItem() )
-			return firstQuestionSpecificationItem;
-
-		return null;
+				// If not found, try to find a specification
+				( ( firstQuestionSpecificationItem = myWordItem_.firstActiveQuestionSpecificationItem() ) != null &&
+				!firstQuestionSpecificationItem.isOlderItem() ) ?
+					firstQuestionSpecificationItem : null );
 		}
 
 
@@ -465,21 +460,6 @@ class WordQuestion
 
 	protected WordQuestion( WordItem myWordItem )
 		{
-		// Private constructed variables
-
-		hasCurrentlyAnsweredSelfGeneratedQuestion_ = false;
-		hasFoundAnswerToQuestion_ = false;
-		hasFoundDeeperPositiveAnswer_ = false;
-		hasFoundNoAnswerInThisWord_ = false;
-		hasFoundSpecificationGeneralizationAnswer_ = false;
-		isNegativeAnswer_ = false;
-
-		uncertainAboutAnswerRelationSpecificationItem_ = null;
-
-		// Private initialized variables
-
-		moduleNameString_ = this.getClass().getName();
-
 		// Checking private initialized variables
 
 		if( ( myWordItem_ = myWordItem ) == null )

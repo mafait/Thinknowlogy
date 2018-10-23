@@ -1,7 +1,7 @@
-﻿Lees het bestand "Nederlands/gebruiker/ambiguiteit/Boston".
-Toon de verantwoordingsrapportage over de Verenigde Staten.
-Toon de verantwoordingsrapportage over het Verenigd Koninkrijk.
-Lees het bestand "Nederlands/gebruiker/ambiguiteit/Boston".
-Toon de verantwoordingsrapportage over de Verenigde Staten.
-Toon de verantwoordingsrapportage over het Verenigd Koninkrijk.
+﻿Lees het bestand "Nederlands/ambiguiteit/Boston".
+#Dev#Toon de verantwoordingsrapportage over de Verenigde Staten.
+#Dev#Toon de verantwoordingsrapportage over het Verenigd Koninkrijk.
+Lees het bestand "Nederlands/ambiguiteit/Boston".
+#Dev#Toon de verantwoordingsrapportage over de Verenigde Staten.
+#Dev#Toon de verantwoordingsrapportage over het Verenigd Koninkrijk.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

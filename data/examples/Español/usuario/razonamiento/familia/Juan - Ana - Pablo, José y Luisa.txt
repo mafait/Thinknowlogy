@@ -1,7 +1,0 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
-Juan es el padre de Pablo, José y Luisa.
-Ana es la madre de Pablo, José y Luisa.
-Pablo es un hijo.
-José es un hijo.
-Luisa es una hija.
-# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

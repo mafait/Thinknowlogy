@@ -127,10 +127,10 @@
 * 
 * Mes hypothèses:
 < Amélie a probablement un enfant, appelé Pascal. En raison:
-<	- Pascal est probablement un enfant de Olivier et Amélie.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Amélie est un parent de Pascal.
+* 	et:
+<	- Pascal est probablement un enfant de Olivier et Amélie.
 < Amélie est probablement une personne. En raison:
 <	- Amélie est un parent de Pascal.
 <	- Un parent est probablement une personne.

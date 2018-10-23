@@ -1,7 +1,7 @@
 ﻿/*	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -72,7 +72,8 @@ class GeneralizationList extends List
 		{
 		GeneralizationItem firstGeneralizationItem = firstActiveGeneralizationItem();
 
-		return ( firstGeneralizationItem == null ? null : firstGeneralizationItem.generalizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isRelation ) );
+		return ( firstGeneralizationItem != null ?
+				firstGeneralizationItem.generalizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isRelation ) : null );
 		}
 
 	protected BoolResultType findGeneralization( boolean isRelation, WordItem generalizationWordItem )

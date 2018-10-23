@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the grammar, user-interface and example files
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -28,47 +28,45 @@ class AdminReadFile
 	{
 	// Private constructed variables
 
-	private boolean hasClosedFileDueToError_;
-	private boolean hasFoundDifferentTestResult_;
-	private boolean isDeveloperTheCurrentUser_;
-	private boolean isExpertTheCurrentUser_;
-	private boolean isPredefinedMultipleWord_;
-	private boolean wasLoginCommand_;
+	private boolean hasClosedFileDueToError_ = false;
+	private boolean hasFoundDifferentTestResult_ = false;
+	private boolean isDeveloperTheCurrentUser_ = false;
+	private boolean isExpertTheCurrentUser_ = false;
+	private boolean isPredefinedMultipleWord_ = false;
+	private boolean wasLoginCommand_ = false;
 
-	private short testFileNr_;
+	private short testFileNr_ = 0;
 
-	private int firstSentenceNrOfCurrentUser_;
+	private int firstSentenceNrOfCurrentUser_ = Constants.NO_SENTENCE_NR;
 
-	long startTime_;
+	long startTime_ = 0;
 
-	private WordItem currentUserWordItem_;
-	private WordItem predefinedAdjectiveBusyWordItem_;
-	private WordItem predefinedAdjectiveDoneWordItem_;
-	private WordItem predefinedAdjectiveInvertedWordItem_;
-	private WordItem predefinedNounDeveloperWordItem_;
-	private WordItem predefinedNounExpertWordItem_;
-	private WordItem predefinedNounLanguageWordItem_;
-	private WordItem predefinedNounPasswordWordItem_;
-	private WordItem predefinedNounSolveLevelWordItem_;
-	private WordItem predefinedNounSolveMethodWordItem_;
-	private WordItem predefinedNounSolveStrategyWordItem_;
-	private WordItem predefinedNounStartupLanguageWordItem_;
-	private WordItem predefinedNounUserWordItem_;
-	private WordItem predefinedVerbLoginWordItem_;
+	private WordItem currentUserWordItem_ = null;
+	private WordItem predefinedAdjectiveBusyWordItem_ = null;
+	private WordItem predefinedAdjectiveDoneWordItem_ = null;
+	private WordItem predefinedAdjectiveInvertedWordItem_ = null;
+	private WordItem predefinedNounDeveloperWordItem_ = null;
+	private WordItem predefinedNounExpertWordItem_ = null;
+	private WordItem predefinedNounLanguageWordItem_ = null;
+	private WordItem predefinedNounPasswordWordItem_ = null;
+	private WordItem predefinedNounSolveLevelWordItem_ = null;
+	private WordItem predefinedNounSolveMethodWordItem_ = null;
+	private WordItem predefinedNounSolveStrategyWordItem_ = null;
+	private WordItem predefinedNounStartupLanguageWordItem_ = null;
+	private WordItem predefinedNounUserWordItem_ = null;
+	private WordItem predefinedVerbLoginWordItem_ = null;
 
+	private String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
-	private String moduleNameString_;
-
-	private AdminItem adminItem_;
+	private AdminItem adminItem_ = null;
 
 
 	// Private methods
 
 	private void cleanupDeletedItems()
 		{
-		int firstSentenceNr;
 		int startRemoveSentenceNr = Constants.NO_SENTENCE_NR;
 
 		if( !hasClosedFileDueToError_ &&
@@ -91,7 +89,10 @@ class AdminReadFile
 				startRemoveSentenceNr = GlobalVariables.removeSentenceNr;
 				}
 			}
-		while( GlobalVariables.nDeletedItems > 0 );
+		while( GlobalVariables.nDeletedItems > 0 &&
+		// Avoid triggering on deleted items in temporary lists
+		// Less efficient alternative: Include deleted items in decrement sentence number and item number
+		( firstSentenceNrOfCurrentUser() + 1 ) != startRemoveSentenceNr );
 
 		if( GlobalVariables.hasDisplayedWarning )
 			GlobalVariables.hasDisplayedWarning = false;
@@ -101,19 +102,17 @@ class AdminReadFile
 			// Previous deleted sentence might be empty
 			startRemoveSentenceNr != GlobalVariables.removeSentenceNr &&
 			// All items of this sentence are deleted
-			adminItem_.highestFoundSentenceNr( true, startRemoveSentenceNr ) < startRemoveSentenceNr )
+			adminItem_.highestFoundSentenceNr( false, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
 				{
 				// So, decrement all higher sentence numbers
 				adminItem_.decrementSentenceNrs( startRemoveSentenceNr );
 
-				firstSentenceNr = firstSentenceNrOfCurrentUser();
-
 				// First user sentence
-				if( startRemoveSentenceNr == firstSentenceNr )
+				if( firstSentenceNrOfCurrentUser() == startRemoveSentenceNr )
 					adminItem_.decrementCurrentSentenceNr();
 				else
 					{
-					GlobalVariables.currentSentenceNr = adminItem_.highestFoundSentenceNr( false, GlobalVariables.currentSentenceNr );
+					GlobalVariables.currentSentenceNr = adminItem_.highestFoundSentenceNr( false, false, GlobalVariables.currentSentenceNr );
 					// Necessary after changing current sentence number
 					GlobalVariables.currentSentenceItemNr = adminItem_.highestCurrentSentenceItemNr();
 					}
@@ -898,14 +897,15 @@ class AdminReadFile
 
 	private byte readLanguageFile( boolean isGrammarFile, String languageNameString )
 		{
+		String defaultSubpathString = ( isGrammarFile ? Constants.FILE_DATA_GRAMMAR_DIRECTORY_NAME_STRING : Constants.FILE_DATA_INTERFACE_DIRECTORY_NAME_STRING );
 		FileItem openedLanguageFileItem;
-		FileResultType fileResult = new FileResultType();
+		FileResultType fileResult;
 		byte originalResult;
 
 		if( languageNameString == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given language name is undefined" );
 
-		if( ( fileResult = adminItem_.openFile( true, false, false, false, ( isGrammarFile ? Constants.FILE_DATA_GRAMMAR_DIRECTORY_NAME_STRING : Constants.FILE_DATA_INTERFACE_DIRECTORY_NAME_STRING ), languageNameString, null, null ) ).result != Constants.RESULT_OK )
+		if( ( fileResult = adminItem_.openFile( true, false, false, false, defaultSubpathString, languageNameString, null, null ) ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, ( isGrammarFile ? "I failed to open the grammar file: \"" : "I failed to open the interface file: \"" ) + languageNameString + "\"" );
 
 		if( ( openedLanguageFileItem = fileResult.createdFileItem ) != null )
@@ -987,7 +987,7 @@ class AdminReadFile
 			promptStringBuffer.append( promptUserNameString );
 			}
 
-		if( InputOutput.readLine( isClearInputField, adminItem_.isDisplayingLine(), isFirstLine, isPassword, isQuestion, promptStringBuffer.toString(), readStringBuffer, adminItem_.currentReadFile() ) != Constants.RESULT_OK )
+		if( InputOutput.readLine( isClearInputField, isDeveloperTheCurrentUser_, adminItem_.isDisplayingLine(), isFirstLine, isPassword, isQuestion, promptStringBuffer.toString(), readStringBuffer, adminItem_.currentReadFile() ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to read a line from a file or from input" );
 
 		return Constants.RESULT_OK;
@@ -1211,38 +1211,6 @@ class AdminReadFile
 
 	protected AdminReadFile( AdminItem adminItem )
 		{
-		// Private constructed variables
-
-		hasClosedFileDueToError_ = false;
-		hasFoundDifferentTestResult_ = false;
-		isDeveloperTheCurrentUser_ = false;
-		isExpertTheCurrentUser_ = false;
-		isPredefinedMultipleWord_ = false;
-		wasLoginCommand_ = false;
-
-		testFileNr_ = 0;
-		firstSentenceNrOfCurrentUser_ = Constants.NO_SENTENCE_NR;
-		startTime_ = 0;
-
-		currentUserWordItem_ = null;
-		predefinedAdjectiveBusyWordItem_ = null;
-		predefinedAdjectiveDoneWordItem_ = null;
-		predefinedAdjectiveInvertedWordItem_ = null;
-		predefinedNounDeveloperWordItem_ = null;
-		predefinedNounExpertWordItem_ = null;
-		predefinedNounLanguageWordItem_ = null;
-		predefinedNounPasswordWordItem_ = null;
-		predefinedNounSolveLevelWordItem_ = null;
-		predefinedNounSolveMethodWordItem_ = null;
-		predefinedNounSolveStrategyWordItem_ = null;
-		predefinedNounStartupLanguageWordItem_ = null;
-		predefinedNounUserWordItem_ = null;
-		predefinedVerbLoginWordItem_ = null;
-
-		// Private initialized variables
-
-		moduleNameString_ = this.getClass().getName();
-
 		// Checking private initialized variables
 
 		if( ( adminItem_ = adminItem ) == null )
@@ -1543,7 +1511,7 @@ class AdminReadFile
 			isLineExecuted = false;
 			readStringBuffer = new StringBuffer();
 
-			if( readLine( false, isFirstLine, false, false, ( GlobalVariables.currentSentenceNr + 1 ), ( currentUserWordItem_ == null ? null : currentUserWordItem_.anyWordTypeString() ), readStringBuffer ) != Constants.RESULT_OK )
+			if( readLine( false, isFirstLine, false, false, ( GlobalVariables.currentSentenceNr + 1 ), ( currentUserWordItem_ != null ? currentUserWordItem_.anyWordTypeString() : null ), readStringBuffer ) != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to read a line" );
 
 			if( InputOutput.hasReadLine() )
@@ -1634,7 +1602,12 @@ class AdminReadFile
 	protected byte readTestFile( String testFileNameString )
 		{
 		boolean isFirstTestFile = ( isDeveloperTheCurrentUser_ &&
-								!adminItem_.isCurrentlyTesting() );
+								!adminItem_.isCurrentlyTesting() &&
+
+								// Regression test button
+								( adminItem_.currentFileSentenceNr() == Constants.NO_SENTENCE_NR ||
+								// Regression test file is selected
+								adminItem_.currentFileSentenceNr() == GlobalVariables.currentSentenceNr ) );
 		long totalTime;
 		FileItem testFileItem;
 		byte originalResult;
@@ -1721,7 +1694,7 @@ class AdminReadFile
 
 	protected CreateAndAssignResultType addSpecificationWithAuthorization( boolean isAssignment, boolean isCharacteristicFor, boolean isConditional, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isEveryGeneralization, boolean isExclusiveSpecification, boolean isNegative, boolean isPartOf, boolean isPossessive, boolean isSelection, boolean isSpecific, boolean isSpecificationGeneralization, boolean isUncountableGeneralizationNoun, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short prepositionParameter, short questionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int specificationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int copiedRelationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
 		{
-		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
+		CreateAndAssignResultType createAndAssignResult;
 
 		if( generalizationWordItem == null )
 			return adminItem_.startCreateAndAssignResultError( 1, moduleNameString_, "The given generalization word item is undefined" );
@@ -1755,7 +1728,7 @@ class AdminReadFile
 	protected FileResultType readInfoFile( boolean isReportingErrorIfFileDoesNotExist, String infoFileNameString )
 		{
 		FileItem openedInfoFileItem;
-		FileResultType fileResult = new FileResultType();
+		FileResultType fileResult;
 		byte originalResult;
 		StringBuffer infoPathStringBuffer = new StringBuffer( Constants.FILE_DATA_INFO_DIRECTORY_NAME_STRING );
 

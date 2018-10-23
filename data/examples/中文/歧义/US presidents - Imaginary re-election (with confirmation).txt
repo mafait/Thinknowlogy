@@ -7,9 +7,9 @@
 # In 2017, George W. Bush was again inaugurated as president of the United States.
 乔治 布什是美国的总统。
 呈现总统的信息。
-呈现关于美国的论证报告。
+#Dev#呈现关于美国的论证报告。
 # In 2021, Barack Obama was again inaugurated as president of the United States.
 巴拉克 奥巴马是美国的总统。
 呈现总统的信息。
-呈现关于美国的论证报告。
+#Dev#呈现关于美国的论证报告。
 # To continue, click button «清除你的想法» or «重启».

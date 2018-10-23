@@ -1,6 +1,6 @@
-﻿Leer el archivo "Español/usuario/razonamiento/familia/definición de familia".
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Juan es padre de Pablo, José y Luisa.
 Pablo es un hijo.
-Mostrar el informe de justificación sobre Juan.
-Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Pablo.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

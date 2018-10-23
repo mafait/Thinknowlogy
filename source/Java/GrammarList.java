@@ -1,7 +1,7 @@
 ﻿/*	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2018r2 (Natural Intelligence)
+ *	Version:		Thinknowlogy 2018r3 (Deep Magic)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,18 +27,18 @@ class GrammarList extends List
 	{
 	// Private constructed variables
 
-	private boolean isCheckingGrammarNeeded_;
+	private boolean isCheckingGrammarNeeded_ = false;
 
-	private GrammarItem firstFeminineProperNounEndingGrammarItem_;
-	private GrammarItem firstMasculineProperNounEndingGrammarItem_;
-	private GrammarItem firstFeminineSingularNounEndingGrammarItem_;
-	private GrammarItem firstMasculineSingularNounEndingGrammarItem_;
-	private GrammarItem firstPluralNounEndingGrammarItem_;
-	private GrammarItem firstMergedWordGrammarItem_;
-	private GrammarItem firstChineseExclusiveNounGrammarItem_;
-	private GrammarItem firstSentenceGrammarItem_;
-	private GrammarItem firstStatementGrammarItem_;
-	private GrammarItem firstQuestionGrammarItem_;
+	private GrammarItem firstFeminineProperNounEndingGrammarItem_ = null;
+	private GrammarItem firstMasculineProperNounEndingGrammarItem_ = null;
+	private GrammarItem firstFeminineSingularNounEndingGrammarItem_ = null;
+	private GrammarItem firstMasculineSingularNounEndingGrammarItem_ = null;
+	private GrammarItem firstPluralNounEndingGrammarItem_ = null;
+	private GrammarItem firstMergedWordGrammarItem_ = null;
+	private GrammarItem firstChineseExclusiveNounGrammarItem_ = null;
+	private GrammarItem firstSentenceGrammarItem_ = null;
+	private GrammarItem firstStatementGrammarItem_ = null;
+	private GrammarItem firstQuestionGrammarItem_ = null;
 
 
 	// Private methods
@@ -113,21 +113,6 @@ class GrammarList extends List
 
 	protected GrammarList( WordItem myWordItem )
 		{
-		// Private constructed variables
-
-		isCheckingGrammarNeeded_ = false;
-
-		firstFeminineProperNounEndingGrammarItem_ = null;
-		firstMasculineProperNounEndingGrammarItem_ = null;
-		firstFeminineSingularNounEndingGrammarItem_ = null;
-		firstMasculineSingularNounEndingGrammarItem_ = null;
-		firstPluralNounEndingGrammarItem_ = null;
-		firstMergedWordGrammarItem_ = null;
-		firstChineseExclusiveNounGrammarItem_ = null;
-		firstSentenceGrammarItem_ = null;
-		firstStatementGrammarItem_ = null;
-		firstQuestionGrammarItem_ = null;
-
 		initializeListVariables( Constants.WORD_GRAMMAR_LIST_SYMBOL, "GrammarList", myWordItem );
 		}
 
@@ -524,7 +509,9 @@ class GrammarList extends List
 
 	protected GrammarItem firstWritingGrammarItem( boolean isQuestion )
 		{
-		return ( isQuestion && firstQuestionGrammarItem_ != null ? firstQuestionGrammarItem_ : firstStatementGrammarItem_ );
+		return ( isQuestion &&
+				firstQuestionGrammarItem_ != null ?
+				firstQuestionGrammarItem_ : firstStatementGrammarItem_ );
 		}
 
 	protected GrammarResultType createGrammarItem( boolean isDefinitionStart, boolean isNewStart, boolean isOptionStart, boolean isChoiceStart, boolean isSkipOptionForWriting, short wordTypeNr, short grammarParameter, int grammarStringLength, String grammarString, GrammarItem definitionGrammarItem )

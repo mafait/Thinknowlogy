@@ -70,11 +70,11 @@
 <	- Laura has a mother, called Anna.
 <	- A mother is probably a person.
 * 	and:
-<	- Anna is probably a parent of Laura.
-<	- A parent is probably a person.
-* 	and:
 <	- Anna is a mother of Laura.
 <	- A mother is probably a person.
+* 	and:
+<	- Anna is probably a parent of Laura.
+<	- A parent is probably a person.
 < Anna is probably not a man. Because:
 <	- Anna is probably a person.
 <	- Every person is a man or a woman.
@@ -84,10 +84,10 @@
 <	- Every parent is a woman or a man.
 <	- Anna is a woman.
 < Anna is probably a parent of Laura. Because:
+<	- Laura has probably a parent, called Anna.
+* 	and:
 <	- Every parent is a father or a mother.
 <	- Anna is a mother of Laura.
-* 	and:
-<	- Laura has probably a parent, called Anna.
 * 	and:
 <	- Every family has parents and children.
 <	- Laura is probably a child of Anna.
@@ -114,6 +114,9 @@
 * 
 * My assumptions:
 < Laura has probably a parent, called Anna. Because:
+<	- Every parent is a father or a mother.
+<	- Laura has a mother, called Anna.
+* 	and:
 <	- Anna is probably a parent of Laura.
 < Laura is probably a child of Anna. Because:
 <	- Every family has parents and children.
@@ -162,7 +165,6 @@
 < Laura is probably a child of Anna.
 * 
 * My assumptions that are concluded:
-< Anna has a child, called Laura.
 < Laura is part of a family.
 * 
 * My assumptions that are adjusted:
@@ -171,6 +173,9 @@
 < Anna has probably a daughter, called Laura.
 < Laura is probably not a boy and not a man.
 < Laura is probably not a son.
+* 
+* My assumptions that are concluded:
+< Anna has a child, called Laura.
 * 
 * My conclusions:
 < John has a child, called Laura.
@@ -192,10 +197,10 @@
 * 
 * My assumptions:
 < John is probably a parent of Laura. Because:
+<	- Laura has probably 2 parents, called Anna and John.
+* 	and:
 <	- Every family has parents and children.
 <	- Laura is a child of Anna and John.
-* 	and:
-<	- Laura has probably 2 parents, called Anna and John.
 * 	and:
 <	- Every family has parents and children.
 <	- John has a child, called Laura.
@@ -246,10 +251,10 @@
 <	- Every child is a son or a daughter.
 <	- Proper noun "Laura" is probably feminine.
 < Anna is probably a parent of Laura. Because:
+<	- Laura has probably 2 parents, called Anna and John.
+* 	and:
 <	- Every parent is a father or a mother.
 <	- Anna is a mother of Laura.
-* 	and:
-<	- Laura has probably 2 parents, called Anna and John.
 * 	and:
 <	- Every family has parents and children.
 <	- Laura is a child of Anna and John.
@@ -266,11 +271,11 @@
 <	- Laura has a mother, called Anna.
 <	- A mother is probably a person.
 * 	and:
-<	- Anna is probably a parent of Laura.
-<	- A parent is probably a person.
-* 	and:
 <	- Anna is a mother of Laura.
 <	- A mother is probably a person.
+* 	and:
+<	- Anna is probably a parent of Laura.
+<	- A parent is probably a person.
 < Anna is probably not a man. Because:
 <	- Anna is probably a person.
 <	- Every person is a man or a woman.
@@ -350,10 +355,10 @@
 * 
 * My assumptions:
 < John is probably a parent of Laura. Because:
+<	- Laura has probably 2 parents, called Anna and John.
+* 	and:
 <	- Every family has parents and children.
 <	- Laura is a child of Anna and John.
-* 	and:
-<	- Laura has probably 2 parents, called Anna and John.
 * 	and:
 <	- Every family has parents and children.
 <	- John has a child, called Laura.
@@ -393,11 +398,11 @@
 * 
 * My assumptions:
 < Anna is probably a parent of Laura and Joe. Because:
+<	- Joe has probably a parent, called Anna.
+<	- Laura has probably 2 parents, called Anna and John.
+* 	and:
 <	- Every parent is a father or a mother.
 <	- Anna is a mother of Laura and Joe.
-* 	and:
-<	- Laura has probably 2 parents, called Anna and John.
-<	- Joe has probably a parent, called Anna.
 * 	and:
 <	- Every family has parents and children.
 <	- Laura is a child of Anna and John.
@@ -415,11 +420,11 @@
 <	- Laura has a mother, called Anna.
 <	- A mother is probably a person.
 * 	and:
-<	- Anna is probably a parent of Laura and Joe.
-<	- A parent is probably a person.
-* 	and:
 <	- Anna is a mother of Laura and Joe.
 <	- A mother is probably a person.
+* 	and:
+<	- Anna is probably a parent of Laura and Joe.
+<	- A parent is probably a person.
 * 	and:
 <	- Joe has a mother, called Anna.
 <	- A mother is probably a person.

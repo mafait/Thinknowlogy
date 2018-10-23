@@ -336,11 +336,11 @@
 * 
 * Mes hypothèses:
 < Claudia est probablement un enfant de Olivier. En raison:
+<	- Olivier a probablement 4 enfants, appelés Pascal, Julien, Lorraine et Claudia.
+* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 <	- Claudia a un père, appelé Olivier.
-* 	et:
-<	- Olivier a probablement 4 enfants, appelés Pascal, Julien, Lorraine et Claudia.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal, Julien, Lorraine et Claudia.
