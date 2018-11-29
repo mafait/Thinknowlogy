@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		To read and analyze sentences
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -216,8 +216,8 @@ class AdminReadSentence
 		WordTypeItem *differentWordTypeItem;
 		WordTypeItem *firstWordTypeItem;
 		WordTypeItem *foundWordTypeItem;
-		char existingMultipleWordString[MAX_SENTENCE_STRING_LENGTH];
-		char multipleWordString[MAX_SENTENCE_STRING_LENGTH];
+		char existingMultipleWordString[SENTENCE_STRING_LENGTH];
+		char multipleWordString[SENTENCE_STRING_LENGTH];
 		WordResultType wordResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addMultipleWord";
 
@@ -803,7 +803,7 @@ class AdminReadSentence
 		unsigned short selectionLevel = NO_SELECTION_LEVEL;
 		unsigned short wordOrderNr;
 		unsigned short wordParameter;
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "parseSentence";
 
 		isChineseCurrentLanguage_ = isChineseCurrentLanguage;
@@ -960,7 +960,7 @@ class AdminReadSentence
 		unsigned short originalLanguageNr = globalVariables_->currentLanguageNr;
 		GrammarItem *readingGrammarItem;
 		BoolResultType boolResult;
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "processSentence";
 
 		if( readUserSentenceString == NULL )
@@ -1635,7 +1635,7 @@ class AdminReadSentence
 
 	AdminReadSentence( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 

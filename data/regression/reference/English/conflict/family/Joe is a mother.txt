@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -69,13 +71,11 @@
 * My assumptions that are confirmed:
 < Anna is possibly a mother of Joe.
 * 
-* My assumptions that are concluded:
-< Joe has a mother, called Anna.
-* 
 * My assumptions that are adjusted:
 < Anna is probably a person.
 * 
 * My assumptions that are concluded:
+< Joe has a mother, called Anna.
 < Anna is a woman.
 * 
 * My assumptions that are adjusted:
@@ -183,11 +183,6 @@
 <	- John is a father.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
-* 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
@@ -250,11 +245,6 @@
 <	- Anna is probably a parent of Joe, Paul and Laura.
 < Anna has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
-* 	and:
-<	- Laura has a mother, called Anna.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < 
 ! 
 ! This sentence is not accepted, because it is in conflict with:

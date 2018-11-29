@@ -1,17 +1,17 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
-Mostrar " Thinknowlogy es el sistema de razonamiento automatizado más avanzado del mundo.".
-Mostrar " Al implementar las Leyes de Inteligencia Natural, que están integradas en la gramática,".
-Mostrar " Thinknowlogy tiene resultados de razonamiento que los científicos aún no han descrito:".
-Mostrar " * A pesar de una investigación exhaustiva, la teoría de la evolución aún no ha proporcionado".
-Mostrar " una explicación satisfactoria para el origen de la inteligencia, el lenguaje y las leyes de la".
-Mostrar " naturaleza. Y mucho menos, cómo están relacionados. Además, ninguno de los fenómenos".
-Mostrar " exclusivos de la teoría de la evolución, o teorías derivadas, aplicable en la vida diaria;".
-Mostrar " * De acuerdo con la cosmovisión bíblica, Dios ha creado leyes de la naturaleza como".
-Mostrar " el fundamento de su creación. Basándose en las leyes de la inteligencia, solamente".
-#C++#Mostrar " Thinknowlogy implementa el función inteligente de palabras como artículos definidos,".
-#C++#Mostrar " conjunción \"o\", verbos posesivos \"tener\" y los verbos en pasado \"era\" y \"tenido\".".
-#Java#Mostrar " Thinknowlogy implementa el función inteligente de palabras como artículos definidos,".
-#Java#Mostrar " conjunción “o”, verbos posesivos “tener” y los verbos en pasado “era” y “tenido”.".
+Mostrar " Thinknowlogy es el sistema de razonamiento automatizado más avanzado del mundo: No hay".
+Mostrar " conocimiento preprogramado. No se escriben diálogos por delante. Y no se usan listas de palabras.".
+Mostrar " Además, implementa construcciones de razonamiento que aún no están descritas por los científicos:".
+Mostrar " * A pesar de una investigación exhaustiva, la teoría de la evolución aún no ha proporcionado una".
+Mostrar " explicación satisfactoria para el origen de la inteligencia, el lenguaje y las leyes de la naturaleza.".
+Mostrar " Y mucho menos, cómo están relacionados. Además, ninguno de los fenómenos exclusivos de la".
+Mostrar " teoría de la evolución, o teorías derivadas, aplicable en la vida diaria;".
+Mostrar " * De acuerdo con la cosmovisión bíblica, Dios ha creado leyes de la naturaleza como el fundamento".
+Mostrar " de su creación. Basándose en las leyes de la inteligencia, solamente Thinknowlogy implementa el".
+#C++#Mostrar " función inteligente de palabras como artículos definidos, conjunción \"o\", verbos posesivos \"tener\" y".
+#C++#Mostrar " los verbos en pasado \"era\" y \"tenido\".".
+#Java#Mostrar " función inteligente de palabras como artículos definidos, conjunción “o”, verbos posesivos “tener” y".
+#Java#Mostrar " los verbos en pasado “era” y “tenido”.".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " La función inteligente de estas palabras se demuestra por:".
 Mostrar " * Programación en Lengua controlada;".

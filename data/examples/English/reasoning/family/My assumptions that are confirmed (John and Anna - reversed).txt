@@ -18,6 +18,7 @@ John is the father and Anna is the mother of Paul, Joe and Laura.
 John is a person.
 John has a daughter, called Laura.
 #Dev#Display the justification report about John.
+#Dev#Display the justification report about Laura.
 Anna is a person.
 Anna has a daughter, called Laura.
 #Dev#Display the justification report about Anna.

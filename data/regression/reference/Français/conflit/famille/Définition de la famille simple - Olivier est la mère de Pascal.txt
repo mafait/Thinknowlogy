@@ -42,11 +42,11 @@
 <	- Olivier est probablement un parent.
 <	- Un parent est probablement une personne.
 * 	et:
-<	- Olivier est un père.
-<	- Un père est probablement une personne.
-* 	et:
 <	- Chaque personne est un homme ou une femme.
 <	- Olivier est un homme.
+* 	et:
+<	- Olivier est un père.
+<	- Un père est probablement une personne.
 < Olivier n'est probablement pas une mère. En raison:
 <	- Olivier est probablement un parent.
 <	- Chaque parent est un père ou une mère.

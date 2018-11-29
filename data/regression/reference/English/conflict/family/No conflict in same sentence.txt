@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -63,9 +65,6 @@
 * 	and:
 <	- John is a father.
 <	- A father is probably a person.
-* 	and:
-<	- John is probably a parent.
-<	- A parent is probably a person.
 < John is probably not a woman. Because:
 <	- John is probably a person.
 <	- Every person is a man or a woman.
@@ -75,6 +74,9 @@
 <	- Every parent is a woman or a man.
 <	- John is a man.
 < John is probably a parent. Because:
+<	- John is a father.
+<	- A father is probably a parent.
+* 	and:
 <	- Every parent is a father or a mother.
 <	- John is a father.
 < John is probably part of a family. Because:
@@ -104,9 +106,6 @@
 * 	and:
 <	- Anna is a mother.
 <	- A mother is probably a person.
-* 	and:
-<	- Anna is probably a parent.
-<	- A parent is probably a person.
 < Anna is probably not a man. Because:
 <	- Anna is probably a person.
 <	- Every person is a man or a woman.
@@ -116,6 +115,9 @@
 <	- Every parent is a woman or a man.
 <	- Anna is a woman.
 < Anna is probably a parent. Because:
+<	- Anna is a mother.
+<	- A mother is probably a parent.
+* 	and:
 <	- Every parent is a father or a mother.
 <	- Anna is a mother.
 < Anna is probably part of a family. Because:

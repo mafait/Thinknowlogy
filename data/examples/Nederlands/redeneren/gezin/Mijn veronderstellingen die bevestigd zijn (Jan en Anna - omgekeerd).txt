@@ -18,6 +18,7 @@ Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 Jan is een persoon.
 Jan heeft een dochter, genaamd Laura.
 #Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Anna is een persoon.
 Anna heeft een dochter, genaamd Laura.
 #Dev#Toon de verantwoordingsrapportage over Anna.

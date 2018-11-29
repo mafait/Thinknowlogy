@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the user-interface messages
  *					in the available languages
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -50,8 +50,8 @@ class InterfaceItem : private Item
 
 		if( interfaceString != NULL )
 			{
-			if( interfaceStringLength < MAX_SENTENCE_STRING_LENGTH &&
-			strlen( interfaceString ) < MAX_SENTENCE_STRING_LENGTH )
+			if( interfaceStringLength < SENTENCE_STRING_LENGTH &&
+			strlen( interfaceString ) < SENTENCE_STRING_LENGTH )
 				{
 				if( ( interfaceString_ = new char[interfaceStringLength + 1] ) != NULL )
 					{

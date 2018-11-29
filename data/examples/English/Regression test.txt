@@ -121,6 +121,7 @@
 #Dev#Read the test file "English/question answering/family/I had the same question before".
 #Dev#Read the test file "English/question answering/family/I only know".
 #Dev#Read the test file "English/question answering/family/Indirectly answered question, with confirmation".
+#Dev#Read the test file "English/question answering/family/Intelligent answering of questions".
 #Dev#Read the test file "English/question answering/family/Is Paul a woman".
 #Dev#Read the test file "English/question answering/family/Just a few questions (1)".
 #Dev#Read the test file "English/question answering/family/Just a few questions (2)".
@@ -136,7 +137,6 @@
 #Dev#Read the test file "English/question answering/family/Your question is more specific (about John)".
 #Dev#Read the test file "English/question answering/family/Your question is more specific (about Paul and Joe)".
 
-#Dev#Read the test file "English/reasoning/family/Acceptance of a strange family definition".
 #Dev#Read the test file "English/reasoning/family/Anna - John - Paul, Joe and Laura".
 #Dev#Read the test file "English/reasoning/family/Anna was the mother of Paul, Joe and Laura".
 #Dev#Read the test file "English/reasoning/family/Avoid duplicate context".
@@ -180,6 +180,7 @@
 #Dev#Read the test file "English/reasoning/family/I know (9)".
 #Dev#Read the test file "English/reasoning/family/I know (10)".
 #Dev#Read the test file "English/reasoning/family/I know (11)".
+#Dev#Read the test file "English/reasoning/family/I know (12)".
 #Dev#Read the test file "English/reasoning/family/James was the father of Peter (before family definition)".
 #Dev#Read the test file "English/reasoning/family/Joe has 2 parents - Joe is a child".
 #Dev#Read the test file "English/reasoning/family/Joe has 2 parents - Joe is a son".

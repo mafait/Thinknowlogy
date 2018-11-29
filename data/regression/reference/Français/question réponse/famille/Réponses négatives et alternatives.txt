@@ -5,6 +5,7 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -163,9 +165,6 @@
 * 	et:
 <	- Olivier est un père.
 <	- Un père est probablement une personne.
-* 	et:
-<	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
-<	- Un parent est probablement une personne.
 < Olivier n'est probablement pas une femme. En raison:
 <	- Olivier est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
@@ -202,11 +201,6 @@
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
 < Olivier a possible une fille, appelée Lorraine. En raison:
 <	- Lorraine est possible une fille de Olivier et Amélie.
-* 	et:
-<	- Lorraine a un père, appelé Olivier.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Lorraine» est probablement féminin.
 < 
 * 
 * Mes conclusions:
@@ -262,9 +256,6 @@
 * 	et:
 <	- Guillaume est un père.
 <	- Un père est probablement une personne.
-* 	et:
-<	- Guillaume est probablement un parent de Armand.
-<	- Un parent est probablement une personne.
 < Guillaume n'est probablement pas une femme. En raison:
 <	- Guillaume est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
@@ -310,9 +301,6 @@
 * 	et:
 <	- Fabrice est un père.
 <	- Un père est probablement une personne.
-* 	et:
-<	- Fabrice est probablement un parent.
-<	- Un parent est probablement une personne.
 < Fabrice n'est probablement pas une femme. En raison:
 <	- Fabrice est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
@@ -322,6 +310,9 @@
 <	- Chaque parent est une femme ou un homme.
 <	- Fabrice est un homme.
 < Fabrice est probablement un parent. En raison:
+<	- Fabrice est un père.
+<	- Un père est probablement un parent.
+* 	et:
 <	- Chaque parent est un père ou une mère.
 <	- Fabrice est un père.
 < Fabrice est probablement partie d'une famille. En raison:

@@ -1,6 +1,6 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the Spanish language
-# Version: Thinknowlogy 2018r3 (Deep Magic)
+# Version: Thinknowlogy 2018r4 (New Science)
 #----------------------------------------------------------------------------
 # Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at http://mafait.org/contact/
@@ -74,6 +74,10 @@
 #Java#:415		"Luisa tiene un padre, llamado Juan."
 #Java#:416		"Luisa tiene una madre, llamada Ana."
 
+##Java#:417		"John is a parent."
+##Java#:418		"Anna is a parent."
+##Java#:419		"John is a parent of Paul, Joe and Laura."
+##Java#:420		"Anna is a parent of Paul, Joe and Laura."
 #Java#:421		"Pablo tiene 2 padres, llamados Juan y Ana."
 #Java#:422		"José tiene 2 padres, llamados Juan y Ana."
 #Java#:423		"Luisa tiene 2 padres, llamados Juan y Ana."

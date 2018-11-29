@@ -100,6 +100,9 @@
 < Juan es un hombre. Porque:
 <	- Juan es padre de Luisa.
 <	- Cada padre es un hombre.
+* 	y:
+<	- Luisa tiene un padre, llamado Juan.
+<	- Cada padre es un hombre.
 < Juan no es una mujer. Porque:
 <	- Juan es probablemente una persona.
 <	- Cada persona es un hombre o una mujer.
@@ -253,6 +256,9 @@
 <	- Juan es un hombre.
 < Juan es un hombre. Porque:
 <	- Juan es un padre.
+<	- Cada padre es un hombre.
+* 	y:
+<	- Luisa tiene un padre, llamado Juan.
 <	- Cada padre es un hombre.
 < Juan es masculino. Porque:
 <	- Juan es un hombre.

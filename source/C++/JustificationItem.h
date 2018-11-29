@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -96,7 +96,6 @@ class JustificationItem : private Item
 	bool hasNonPossessivePrimarySpecification();
 	bool hasPossessivePrimarySpecification();
 	bool hasPossessiveSecondarySpecification();
-	bool hasReplacedPrimarySpecification();
 	bool isPrimarySpecificationWordSpanishAmbiguous();
 	bool isUpdatedPrimarySpecificationWordSpanishAmbiguous();
 
@@ -108,7 +107,6 @@ class JustificationItem : private Item
 	bool isExclusiveSpecificationSubstitutionAssumption();
 	bool isGeneralizationAssumption();
 	bool isNegativeAssumptionOrConclusion();
-	bool isOppositePossessiveConditionalSpecificationAssumption();
 	bool isReversibleAssumption();
 	bool isReversibleConclusion();
 	bool isReversibleAssumptionOrConclusion();
@@ -131,8 +129,7 @@ class JustificationItem : private Item
 	signed char changePrimarySpecification( SpecificationItem *replacingSpecificationItem );
 	signed char changeSecondarySpecification( SpecificationItem *replacingSpecificationItem );
 
-	signed char checkForDeletedSpecifications();
-	signed char checkForReplacedOrDeletedSpecification();
+	signed char checkSpecifications( bool isIncludingReplacedSpecifications );
 
 	JustificationItem *attachedJustificationItem();
 	JustificationItem *attachedPredecessorOfOldJustificationItem( JustificationItem *obsoleteJustificationItem );
@@ -143,7 +140,6 @@ class JustificationItem : private Item
 
 	JustificationItem *obsoleteSpanishJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
 	JustificationItem *primarySpecificationWithoutRelationContextJustificationItem( WordItem *primarySpecificationWordItem );
-	JustificationItem *secondarySpecificationQuestion();
 
 	SpecificationItem *primarySpecificationItem();
 	SpecificationItem *anotherPrimarySpecificationItem();
@@ -156,7 +152,6 @@ class JustificationItem : private Item
 	WordItem *generalizationWordItem();
 	WordItem *primarySpecificationWordItem();
 	WordItem *secondaryGeneralizationWordItem();
-	WordItem *secondarySpecificationWordItem();
 
 	ShortResultType getCombinedAssumptionLevel();
 

@@ -1,0 +1,13 @@
+﻿Read the file "English/reasoning/family/family definition".
+John is the father and Anna is the mother of Paul, Joe and Laura.
+Paul is a son of John and Anna.
+Joe is a son of John and Anna.
+Laura is a daughter of John and Anna.
+Michael is the father of Adam.
+Richard is a father.
+Is Paul a son or a daughter?
+Is Paul a son?
+Is John the mother of Paul?
+Is Michael the father of Paul?
+Is Richard the father of Paul?
+# To continue, click button «Clear your mind.» or «Restart.».

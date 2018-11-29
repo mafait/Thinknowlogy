@@ -155,6 +155,9 @@
 < Juan es un hombre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+* 	y:
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre es un hombre.
 < Juan es masculino. Porque:
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.
@@ -190,11 +193,6 @@
 * Mis conclusiones:
 < Ana tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
-* 	y:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-<	- Nombre propio "Luisa" es probablemente femenino.
 < Ana es parte de una familia. Porque:
 <	- Ana es una madre.
 <	- Padres son parte de cada familia.

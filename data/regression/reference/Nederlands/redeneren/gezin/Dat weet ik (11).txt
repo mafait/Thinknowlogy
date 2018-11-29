@@ -5,6 +5,7 @@
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een ouder.
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
+< Een moeder is waarschijnlijk een ouder.
 < 
 * 
 * Mijn veronderstellingen:
@@ -216,7 +218,7 @@
 <	- Paul is een kind van Anna en Jan.
 <	- Laura is een kind van Anna en Jan.
 < Jan heeft mogelijk een dochter, genaamd Laura. Omdat:
-<	- Laura heeft een vader, genaamd Jan.
+<	- Laura is een kind van Anna en Jan.
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
@@ -225,6 +227,9 @@
 * Mijn conclusies:
 < Anna is een vrouw. Omdat:
 <	- Anna is een moeder.
+<	- Iedere moeder is een vrouw.
+* 	en:
+<	- Paul heeft een moeder, genaamd Anna.
 <	- Iedere moeder is een vrouw.
 < Anna is vrouwelijk. Omdat:
 <	- Anna is een vrouw.
@@ -249,18 +254,6 @@
 < Anna is waarschijnlijk deel van een gezin. Omdat:
 <	- Anna is waarschijnlijk een ouder van Paul, Laura en Johan.
 <	- Ouders zijn deel van ieder gezin.
-< Anna is waarschijnlijk een persoon. Omdat:
-<	- Iedere persoon is een man of een vrouw.
-<	- Anna is een vrouw.
-* 	en:
-<	- Paul heeft een moeder, genaamd Anna.
-<	- Een moeder is waarschijnlijk een persoon.
-* 	en:
-<	- Anna is een moeder.
-<	- Een moeder is waarschijnlijk een persoon.
-* 	en:
-<	- Anna is waarschijnlijk een ouder van Paul, Laura en Johan.
-<	- Een ouder is waarschijnlijk een persoon.
 < Anna is waarschijnlijk geen man. Omdat:
 <	- Anna is waarschijnlijk een persoon.
 <	- Iedere persoon is een man of een vrouw.
@@ -273,6 +266,15 @@
 <	- Anna is waarschijnlijk een ouder van Paul, Laura en Johan.
 <	- Iedere ouder is een vader of een moeder.
 <	- Anna is een moeder.
+< Anna is waarschijnlijk een persoon. Omdat:
+<	- Iedere persoon is een man of een vrouw.
+<	- Anna is een vrouw.
+* 	en:
+<	- Paul heeft een moeder, genaamd Anna.
+<	- Een moeder is waarschijnlijk een persoon.
+* 	en:
+<	- Anna is een moeder.
+<	- Een moeder is waarschijnlijk een persoon.
 < Anna heeft waarschijnlijk 3 kinderen, genaamd Paul, Laura en Johan. Omdat:
 <	- Laura is een kind van Anna en Jan.
 <	- Johan is waarschijnlijk een kind van Anna en Jan.
@@ -281,7 +283,7 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna is waarschijnlijk een ouder van Paul, Laura en Johan.
 < Anna heeft mogelijk een dochter, genaamd Laura. Omdat:
-<	- Laura heeft een moeder, genaamd Anna.
+<	- Laura is een kind van Anna en Jan.
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Eigennaam "Laura" is waarschijnlijk vrouwelijk.
@@ -404,9 +406,6 @@
 * 	en:
 <	- Laura is een kind van Anna en Jan.
 <	- Een kind is waarschijnlijk een persoon.
-* 	en:
-<	- Laura is waarschijnlijk een dochter.
-<	- Een dochter is waarschijnlijk een persoon.
 < Laura is waarschijnlijk geen man. Omdat:
 <	- Laura is waarschijnlijk een persoon.
 <	- Iedere persoon is een man of een vrouw.

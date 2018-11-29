@@ -5,6 +5,7 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -70,9 +72,6 @@
 * 	et:
 <	- Philippe était le père de Antoine.
 <	- Un père est probablement une personne.
-* 	et:
-<	- Philippe était probablement un parent de Antoine.
-<	- Un parent est probablement une personne.
 < Philippe ne était probablement pas une femme. En raison:
 <	- Philippe était probablement une personne.
 <	- Chaque personne est un homme ou une femme.

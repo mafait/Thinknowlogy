@@ -24,10 +24,10 @@
 呈现" 呈现GNU 通用公共授权。"。
 呈现" 呈现保证。"。
 呈现"------------------------------------------------------------------------------"。
-#C++#呈现" Example files:	* folder: Thinknowlogy2018r1/data/examples/中文/"。
+#C++#呈现" Example files:	* folder: Thinknowlogy2018r4/data/examples/中文/"。
 #Java#呈现" Example files:	* Use button <更多的例子>"。
-#Java#呈现"              or see folder: Thinknowlogy2018r1/data/examples/中文/"。
-呈现" Fundamental:	* folder: Thinknowlogy2018r1/documents/"。
-呈现" Design:	* folder: Thinknowlogy2018r1/documents/design/"。
-呈现" Screenshots:	* folder: Thinknowlogy2018r1/screenshots/中文/"。
+#Java#呈现"              or see folder: Thinknowlogy2018r4/data/examples/中文/"。
+呈现" Fundamental:	* folder: Thinknowlogy2018r4/documents/"。
+呈现" Design:	* folder: Thinknowlogy2018r4/documents/design/"。
+呈现" Screenshots:	* folder: Thinknowlogy2018r4/screenshots/中文/"。
 呈现"------------------------------------------------------------------------------"。

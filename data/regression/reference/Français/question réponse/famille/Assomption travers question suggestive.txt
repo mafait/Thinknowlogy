@@ -5,6 +5,7 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -102,9 +104,6 @@
 < Pascal est probablement une personne. En raison:
 <	- Pascal est un fils de Olivier et Amélie.
 <	- Un fils est probablement une personne.
-* 	et:
-<	- Pascal est probablement un enfant de Olivier et Amélie.
-<	- Un enfant est probablement une personne.
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
 <	- Chaque enfant est un fils ou une fille.
 <	- Pascal est un fils de Olivier et Amélie.
@@ -135,11 +134,6 @@
 <	- Amélie est probablement un parent de Pascal.
 < Pascal a possible une mère, appelée Amélie. En raison:
 <	- Amélie est possible une mère de Pascal.
-* 	et:
-<	- Amélie a un fils, appelé Pascal.
-<	- Chaque famille a parents et enfants.
-<	- Chaque parent est un père ou une mère.
-<	- Nom propre «Amélie» est probablement féminin.
 * 
 * Mes questions:
 < Est Pascal un garçon ou un homme? En raison:
@@ -205,9 +199,6 @@
 < Pascal est probablement une personne. En raison:
 <	- Pascal est un fils de Olivier et Amélie.
 <	- Un fils est probablement une personne.
-* 	et:
-<	- Pascal est probablement un enfant de Olivier et Amélie.
-<	- Un enfant est probablement une personne.
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
 <	- Chaque enfant est un fils ou une fille.
 <	- Pascal est un fils de Olivier et Amélie.
@@ -238,11 +229,6 @@
 <	- Amélie est probablement un parent de Pascal.
 < Pascal a possible une mère, appelée Amélie. En raison:
 <	- Amélie est possible une mère de Pascal.
-* 	et:
-<	- Amélie a un fils, appelé Pascal.
-<	- Chaque famille a parents et enfants.
-<	- Chaque parent est un père ou une mère.
-<	- Nom propre «Amélie» est probablement féminin.
 * 
 * Mes questions:
 < Est Pascal un garçon ou un homme? En raison:
@@ -255,6 +241,9 @@
 < Guillaume est probablement un homme.
 < Guillaume est possible une personne.
 < Guillaume n'est peut-être pas une femme.
+< Guillaume est possible un parent.
+< Guillaume est possible partie d'une famille.
+< Guillaume n'est peut-être pas une mère.
 * 
 * Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
 * 
@@ -275,4 +264,18 @@
 <	- Guillaume est possible une personne.
 <	- Chaque personne est un homme ou une femme.
 <	- Guillaume est probablement un homme.
+* 	et:
+<	- Guillaume est possible un parent.
+<	- Chaque parent est une femme ou un homme.
+<	- Guillaume est probablement un homme.
+< Guillaume est possible un parent. En raison:
+<	- Guillaume est probablement un père.
+<	- Un père est probablement un parent.
+< Guillaume est possible partie d'une famille. En raison:
+<	- Guillaume est possible un parent.
+<	- Parents sont partie de chaque famille.
+< Guillaume n'est peut-être pas une mère. En raison:
+<	- Guillaume est possible un parent.
+<	- Chaque parent est un père ou une mère.
+<	- Guillaume est probablement un père.
 < 

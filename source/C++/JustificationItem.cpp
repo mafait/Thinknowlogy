@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -373,12 +373,6 @@
 				secondarySpecificationItem_->isPossessive() );
 		}
 
-	bool JustificationItem::hasReplacedPrimarySpecification()
-		{
-		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isReplacedItem() );
-		}
-
 	bool JustificationItem::isPrimarySpecificationWordSpanishAmbiguous()
 		{
 		return ( primarySpecificationItem_ != NULL &&
@@ -423,11 +417,6 @@
 		{
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION ||
 				justificationTypeNr_ == JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION );
-		}
-
-	bool JustificationItem::isOppositePossessiveConditionalSpecificationAssumption()
-		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION );
 		}
 
 	bool JustificationItem::isReversibleAssumption()
@@ -630,96 +619,43 @@
 		return RESULT_OK;
 		}
 
-	signed char JustificationItem::checkForDeletedSpecifications()
+	signed char JustificationItem::checkSpecifications( bool isIncludingReplacedSpecifications )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForDeletedSpecifications";
+		char errorString[ERROR_STRING_LENGTH];
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkSpecifications";
 
-		if( primarySpecificationItem_ != NULL &&
-		primarySpecificationItem_->isDeletedItem() )
+		if( primarySpecificationItem_ != NULL )
 			{
-			strcpy( errorString, "\nI found a deleted primary specification item:\n\tSpecificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, primarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ";\n\tJustificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ".\n" );
+			if( isIncludingReplacedSpecifications &&
+			primarySpecificationItem_->isReplacedItem() )
+				{
+				if( myWordItem()->replaceOrDeleteJustification( this ) != RESULT_OK )
+					return startError( functionNameString, NULL, "I failed to replace or delete an unreferenced justification item with a replaced primary specification" );
+				}
+			else
+				{
+				if( primarySpecificationItem_->isDeletedItem() )
+					{
+					strcpy( errorString, "\nI found a deleted primary specification item:\n\tSpecificationItem: " );
+					// The result of this call is stored in a shared string. Hence, one call at the time.
+					strcat( errorString, primarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+					strcat( errorString, ";\n\tJustificationItem: " );
+					// The result of this call is stored in a shared string. Hence, one call at the time.
+					strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+					strcat( errorString, ".\n" );
 
-			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
-				return startError( functionNameString, NULL, "I failed to write an interface warning" );
+					if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
+						return startError( functionNameString, NULL, "I failed to write an interface warning" );
+					}
+				}
 			}
 
 		if( anotherPrimarySpecificationItem_ != NULL &&
-		anotherPrimarySpecificationItem_->isDeletedItem() )
-			{
-			strcpy( errorString, "\nI found a deleted another primary specification item:\n\tSpecificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, anotherPrimarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ";\n\tJustificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ".\n" );
 
-			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
-				return startError( functionNameString, NULL, "I failed to write an interface warning" );
-			}
+		( anotherPrimarySpecificationItem_->isDeletedItem() ||
 
-		if( secondarySpecificationItem_ != NULL &&
-		secondarySpecificationItem_->isDeletedItem() )
-			{
-			strcpy( errorString, "\nI found a deleted secondary specification item:\n\tSpecificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, secondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ";\n\tJustificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ".\n" );
-
-			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
-				return startError( functionNameString, NULL, "I failed to write an interface warning" );
-			}
-
-		if( anotherSecondarySpecificationItem_ != NULL &&
-		anotherSecondarySpecificationItem_->isDeletedItem() )
-			{
-			strcpy( errorString, "\nI found a deleted another secondary specification item:\n\tSpecificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, anotherSecondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ";\n\tJustificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ".\n" );
-
-			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
-				return startError( functionNameString, NULL, "I failed to write an interface warning" );
-			}
-
-		return RESULT_OK;
-		}
-
-	signed char JustificationItem::checkForReplacedOrDeletedSpecification()
-		{
-		char errorString[MAX_ERROR_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForReplacedOrDeletedSpecification";
-
-		if( primarySpecificationItem_ != NULL &&
-		primarySpecificationItem_->isReplacedOrDeletedItem() )
-			{
-			strcpy( errorString, "\nI found a replaced or deleted primary specification item:\n\tSpecificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, primarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ";\n\tJustificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ".\n" );
-
-			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
-				return startError( functionNameString, NULL, "I failed to write an interface warning" );
-			}
-
-		if( anotherPrimarySpecificationItem_ != NULL &&
-		anotherPrimarySpecificationItem_->isReplacedOrDeletedItem() )
+		( isIncludingReplacedSpecifications &&
+		anotherPrimarySpecificationItem_->isReplacedItem() ) ) )
 			{
 			strcpy( errorString, "\nI found a replaced or deleted another primary specification item:\n\tSpecificationItem: " );
 			// The result of this call is stored in a shared string. Hence, one call at the time.
@@ -733,23 +669,38 @@
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
 			}
 
-		if( secondarySpecificationItem_ != NULL &&
-		secondarySpecificationItem_->isReplacedOrDeletedItem() )
+		if( secondarySpecificationItem_ != NULL )
 			{
-			strcpy( errorString, "\nI found a replaced or deleted secondary specification item:\n\tSpecificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, secondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ";\n\tJustificationItem: " );
-			// The result of this call is stored in a shared string. Hence, one call at the time.
-			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
-			strcat( errorString, ".\n" );
+			if( isIncludingReplacedSpecifications &&
+			secondarySpecificationItem_->isReplacedItem() )
+				{
+				if( myWordItem()->replaceOrDeleteJustification( this ) != RESULT_OK )
+					return startError( functionNameString, NULL, "I failed to replace or delete an unreferenced justification item with a replaced secondary specification" );
+				}
+			else
+				{
+				if( secondarySpecificationItem_->isDeletedItem() )
+					{
+					strcpy( errorString, "\nI found a replaced or deleted secondary specification item:\n\tSpecificationItem: " );
+					// The result of this call is stored in a shared string. Hence, one call at the time.
+					strcat( errorString, secondarySpecificationItem_->itemToString( NO_WORD_TYPE_NR ) );
+					strcat( errorString, ";\n\tJustificationItem: " );
+					// The result of this call is stored in a shared string. Hence, one call at the time.
+					strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+					strcat( errorString, ".\n" );
 
-			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
-				return startError( functionNameString, NULL, "I failed to write an interface warning" );
+					if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
+						return startError( functionNameString, NULL, "I failed to write an interface warning" );
+					}
+				}
 			}
 
 		if( anotherSecondarySpecificationItem_ != NULL &&
-		anotherSecondarySpecificationItem_->isReplacedOrDeletedItem() )
+
+		( anotherSecondarySpecificationItem_->isDeletedItem() ||
+
+		( isIncludingReplacedSpecifications &&
+		anotherSecondarySpecificationItem_->isReplacedItem() ) ) )
 			{
 			strcpy( errorString, "\nI found a replaced or deleted another secondary specification item:\n\tSpecificationItem: " );
 			// The result of this call is stored in a shared string. Hence, one call at the time.
@@ -878,23 +829,6 @@
 		return NULL;
 		}
 
-	JustificationItem *JustificationItem::secondarySpecificationQuestion()
-		{
-		JustificationItem *searchJustificationItem = this;
-		SpecificationItem *secondarySpecificationItem;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( ( secondarySpecificationItem = searchJustificationItem->secondarySpecificationItem_ ) != NULL &&
-			secondarySpecificationItem->isQuestion() )
-				return searchJustificationItem;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem_;
-			}
-
-		return NULL;
-		}
-
 	SpecificationItem *JustificationItem::primarySpecificationItem()
 		{
 		return primarySpecificationItem_;
@@ -942,12 +876,6 @@
 		{
 		return ( secondarySpecificationItem_ != NULL ?
 				secondarySpecificationItem_->generalizationWordItem() : NULL );
-		}
-
-	WordItem *JustificationItem::secondarySpecificationWordItem()
-		{
-		return ( secondarySpecificationItem_ != NULL ?
-				secondarySpecificationItem_->specificationWordItem() : NULL );
 		}
 
 	ShortResultType JustificationItem::getCombinedAssumptionLevel()

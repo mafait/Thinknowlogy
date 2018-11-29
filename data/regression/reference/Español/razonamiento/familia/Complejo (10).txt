@@ -157,11 +157,6 @@
 * Mis suposiciones:
 < Ana tiene posiblemente una hija, llamada Luisa. Porque:
 <	- Luisa es posiblemente hija de Ana.
-* 	y:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-<	- Nombre propio "Luisa" es probablemente femenino.
 < Ana es probablemente una persona. Porque:
 <	- Cada persona es un hombre o una mujer.
 <	- Ana es una mujer.

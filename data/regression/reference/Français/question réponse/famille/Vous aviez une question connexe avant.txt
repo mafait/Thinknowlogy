@@ -5,6 +5,7 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -32,6 +34,9 @@
 < Olivier est probablement un homme.
 < Olivier est possible une personne.
 < Olivier n'est peut-être pas une femme.
+< Olivier est possible un parent.
+< Olivier est possible partie d'une famille.
+< Olivier n'est peut-être pas une mère.
 * 
 * Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
 * 

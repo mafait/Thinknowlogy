@@ -1,17 +1,17 @@
 ﻿Affichez "------------------------------------------------------------------------------".
-Affichez " Thinknowlogy est le système de raisonnement automatisé le plus avancé au monde.".
-Affichez " En appliquant les lois naturelles de l'intelligence, qui sont intégrées dans la grammaire,".
-Affichez " Thinknowlogy a des résultats de raisonnement que les scientifiques n'ont pas encore décrits:".
-Affichez " * Malgré des recherches exhaustives, la théorie de l'évolution n'a toujours pas fourni une".
-Affichez " explication satisfaisante de l'origine de l'intelligence, du langage et des lois de la nature.".
-Affichez " Laissons seul, comment ils sont liés. De plus, aucun des phénomènes exclusifs à la".
-Affichez " théorie de l'évolution, ou des théories dérivées, ne s'applique dans la vie quotidienne;".
-Affichez " * Selon la vision biblique du monde, Dieu a créé les lois de la nature, comme fondement de sa".
-Affichez " création. Basé sur les lois naturelles de l'intelligence, intégrées dans la grammaire, seulement".
-#C++#Affichez " Thinknowlogy implémente la fonction intelligente des mots comme les articles définis \"le\" et \"la\",".
-#C++#Affichez " conjonction \"ou\", verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
-#Java#Affichez " Thinknowlogy implémente la fonction intelligente des mots comme les articles définis «le» et «la»,".
-#Java#Affichez " conjonction «ou», verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
+Affichez " Thinknowlogy est le système de raisonnement automatisé le plus avancé au monde: Il n'y a pas de".
+Affichez " connaissance préprogrammée. Aucun dialogue n'est écrit à l'avance. Et aucune liste de mots n'est utilisée.".
+Affichez " De plus, il implémente des constructions de raisonnement qui ne sont pas encore décrites par les scientifiques:".
+Affichez " * Malgré des recherches exhaustives, la théorie de l'évolution n'a toujours pas fourni une explication".
+Affichez " satisfaisante de l'origine de l'intelligence, du langage et des lois de la nature. Laissons seul, comment ils".
+Affichez " sont liés. De plus, aucun des phénomènes exclusifs à la théorie de l'évolution, ou des théories dérivées,".
+Affichez " ne s'applique dans la vie quotidienne;".
+Affichez " * Selon la vision biblique du monde, Dieu a créé les lois de la nature, comme fondement de sa création.".
+Affichez " Basé sur les lois naturelles de l'intelligence, intégrées dans la grammaire, seulement Thinknowlogy".
+#C++#Affichez " implémente la fonction intelligente des mots comme les articles définis \"le\" et \"la\", conjonction \"ou\",".
+#C++#Affichez " verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
+#Java#Affichez " implémente la fonction intelligente des mots comme les articles définis «le» et «la», conjonction «ou»,".
+#Java#Affichez " verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
 Affichez "------------------------------------------------------------------------------".
 Affichez " La fonction intelligente de ces mots est démontrée par:".
 Affichez " * Programmation en Langue contrôlée;".

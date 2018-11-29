@@ -110,6 +110,9 @@
 < Juan es un hombre. Porque:
 <	- Juan es padre de José, Pablo y Luisa.
 <	- Cada padre es un hombre.
+* 	y:
+<	- José tiene un padre, llamado Juan.
+<	- Cada padre es un hombre.
 < Juan es masculino. Porque:
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.

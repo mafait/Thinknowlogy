@@ -65,9 +65,6 @@
 * 	en:
 <	- Jan is een zogende.
 <	- Een zogende is waarschijnlijk een organisme.
-* 	en:
-<	- Jan is een gewervelde.
-<	- Een gewervelde is mogelijk een organisme.
 < Jan is waarschijnlijk geen dier, geen schimmel, geen micro-organisme en geen plant. Omdat:
 <	- Jan is waarschijnlijk een organisme.
 <	- Ieder organisme is een dier, een schimmel, een mens, een micro-organisme of een plant.

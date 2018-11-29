@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordQuestion
  *	Supports class:	WordItem
  *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -207,7 +207,6 @@ class WordQuestion
 	signed char findAlternativeAnswerToQuestionInOtherWords( bool hasFoundSpecificationGeneralizationAnswer, SpecificationItem *questionSpecificationItem )
 		{
 		bool isAssignment;
-		bool isArchivedAssignment;
 		bool isNegative;
 		bool isPossessive;
 		bool isSpecificationWordSpanishAmbiguous;
@@ -223,23 +222,24 @@ class WordQuestion
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given question specification item is undefined" );
 
 		isAssignment = questionSpecificationItem->isAssignment();
-		isArchivedAssignment = questionSpecificationItem->isArchivedAssignment();
 		isNegative = questionSpecificationItem->isNegative();
 		isPossessive = questionSpecificationItem->isPossessive();
 		generalizationWordTypeNr = questionSpecificationItem->generalizationWordTypeNr();
 		generalizationContextNr = questionSpecificationItem->generalizationContextNr();
 		relationContextNr = questionSpecificationItem->relationContextNr();
-		specificationWordItem = questionSpecificationItem->specificationWordItem();
+
+		if( ( specificationWordItem = questionSpecificationItem->specificationWordItem() ) == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given question specification item has no specification word" );
+
+		isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
 
 		if( ( currentSpecificationWordItem = globalVariables_->firstSpecificationWordItem ) == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The first specification word is undefined" );
 
-		isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
-
 		// Do for all specification words
 		do	{
 			if( currentSpecificationWordItem != myWordItem_ &&
-			( foundSpecificationItem = currentSpecificationWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, isArchivedAssignment, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, relationContextNr, specificationWordItem ) ) != NULL &&
+			( foundSpecificationItem = currentSpecificationWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, true, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, relationContextNr, specificationWordItem ) ) != NULL &&
 
 			( hasFoundSpecificationGeneralizationAnswer ||
 
@@ -362,9 +362,7 @@ class WordQuestion
 			answerSpecificationWordItem = answerSpecificationItem->specificationWordItem();
 
 			do	{
-				// To avoid answering questions that are created during this sentence
-				if( currentQuestionSpecificationItem->isOlderItem() &&
-				currentQuestionSpecificationItem->isRelatedSpecification( answerSpecificationCollectionNr, compoundSpecificationCollectionNr, answerSpecificationWordItem ) )
+				if( currentQuestionSpecificationItem->isRelatedOlderSpecification( answerSpecificationCollectionNr, compoundSpecificationCollectionNr, answerSpecificationWordItem ) )
 					{
 					if( markQuestionAsAnswered( true, currentQuestionSpecificationItem ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a related question as been answered" );
@@ -392,16 +390,16 @@ class WordQuestion
 
 		if( questionSpecificationItem->isAssignment() )
 			{
-			if( myWordItem_->copyAndReplaceSpecificationItem( true, questionSpecificationItem->isExclusiveGeneralization(), questionSpecificationItem->isExclusiveSpecification(), questionSpecificationItem->generalizationCollectionNr(), questionSpecificationItem->specificationCollectionNr(), questionSpecificationItem->firstJustificationItem(), questionSpecificationItem ) != RESULT_OK )
-				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to change a question assignment to an answered question assignment" );
+			if( questionSpecificationItem->markAsAnsweredQuestion() != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a question assignment as an answered question" );
 
 			questionSpecificationItem = myWordItem_->firstSpecificationItem( questionSpecificationItem->isPossessive(), questionSpecificationItem->isSpecificationGeneralization(), questionSpecificationItem->questionParameter(), questionSpecificationItem->specificationWordItem() );
 			}
 
 		if( questionSpecificationItem != NULL )
 			{
-			if( myWordItem_->copyAndReplaceSpecificationItem( true, questionSpecificationItem->isExclusiveGeneralization(), questionSpecificationItem->isExclusiveSpecification(), questionSpecificationItem->generalizationCollectionNr(), questionSpecificationItem->specificationCollectionNr(), questionSpecificationItem->firstJustificationItem(), questionSpecificationItem ) != RESULT_OK )
-				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to change a question specification to an answered question specification" );
+			if( questionSpecificationItem->markAsAnsweredQuestion() != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a question specification as an answered question" );
 
 			hasFoundAnswerToQuestion_ = true;
 			}
@@ -429,7 +427,7 @@ class WordQuestion
 			if( myWordItem_->writeUpdatedSpecification( false, false, false, false, false, questionSpecificationItem ) != RESULT_OK )
 				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the answered question" );
 
-			if( !questionSpecificationItem->isSpecificationWordSpanishAmbiguous() &&
+			if( !myWordItem_->hasCurrentlyCorrectedAssumptionByKnowledge() &&
 			myWordItem_->recalculateAssumptionsInWord() != RESULT_OK )
 				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to recalculate my assumptions" );
 			}
@@ -475,7 +473,7 @@ class WordQuestion
 
 	WordQuestion( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 

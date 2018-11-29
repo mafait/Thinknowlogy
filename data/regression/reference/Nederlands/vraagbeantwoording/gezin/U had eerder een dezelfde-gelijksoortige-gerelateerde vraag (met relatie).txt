@@ -5,6 +5,7 @@
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een ouder.
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
+< Een moeder is waarschijnlijk een ouder.
 < 
 * 
 * Mijn veronderstellingen:
@@ -32,6 +34,9 @@
 < Jan is waarschijnlijk een man.
 < Jan is mogelijk een persoon.
 < Jan is misschien geen vrouw.
+< Jan is mogelijk een ouder.
+< Jan is mogelijk deel van een gezin.
+< Jan is misschien geen moeder.
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
@@ -60,6 +65,12 @@
 * Mijn veronderstellingen die aangepast zijn:
 < Jan is waarschijnlijk een persoon.
 < Jan is waarschijnlijk geen vrouw.
+< Jan is waarschijnlijk een ouder.
+< Jan is waarschijnlijk deel van een gezin.
+< Jan is waarschijnlijk geen moeder.
+* 
+* Mijn eerdere veronderstellingen die nu relatiewoorden hebben:
+< Jan is waarschijnlijk een ouder.
 * 
 * Mijn conclusies:
 < Paul heeft een vader, genaamd Jan.
@@ -73,8 +84,6 @@
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een ouder van Paul, Johan en Laura.
-< Jan is waarschijnlijk deel van een gezin.
-< Jan is waarschijnlijk geen moeder.
 < Jan heeft waarschijnlijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Jan heeft mogelijk een dochter, genaamd Laura.
 < Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.

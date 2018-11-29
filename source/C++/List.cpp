@@ -1,6 +1,6 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:	Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -564,7 +564,7 @@
 
 	signed char List::addError( const char *functionNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		sprintf( errorString, "%s%s%s", errorString1, errorString2, errorString3 );
 		return startError( functionNameString, errorString );
 		}
@@ -580,14 +580,14 @@
 
 	signed char List::startError( const char *functionNameString, const char *_errorString, unsigned int errorSentenceNr )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		sprintf( errorString, "%s%u", _errorString, errorSentenceNr );
 		return startError( functionNameString, errorString );
 		}
 
 	signed char List::startError( const char *functionNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		sprintf( errorString, "%s%s%s", errorString1, errorString2, errorString3 );
 		return startError( functionNameString, errorString );
 		}
@@ -815,7 +815,7 @@
 
 	void List::initializeListVariables( char listChar, const char *classNameString, GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Private initialized variables
 

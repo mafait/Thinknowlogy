@@ -14,9 +14,14 @@
 < Juan era parte de una familia.
 < 
 * 
+* Mis conclusiones:
+< Juan era un hombre.
+< Juan era masculino.
+* 
 * Mis suposiciones:
 < Un padre es probablemente una persona.
 < Juan era probablemente una persona.
+< Juan no era probablemente una mujer.
 < 
 * 
 * Mis conclusiones:

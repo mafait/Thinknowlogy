@@ -5,6 +5,7 @@
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een ouder.
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
+< Een moeder is waarschijnlijk een ouder.
 < 
 * 
 * Mijn veronderstellingen:
@@ -32,6 +34,9 @@
 < Jan is waarschijnlijk een vrouw.
 < Jan is mogelijk een persoon.
 < Jan is misschien geen man.
+< Jan is mogelijk een ouder.
+< Jan is mogelijk deel van een gezin.
+< Jan is misschien geen vader.
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
@@ -52,6 +57,20 @@
 <	- Jan is mogelijk een persoon.
 <	- Iedere persoon is een man of een vrouw.
 <	- Jan is waarschijnlijk een vrouw.
+* 	en:
+<	- Jan is mogelijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+<	- Jan is waarschijnlijk een vrouw.
+< Jan is mogelijk een ouder. Omdat:
+<	- Jan is waarschijnlijk een moeder.
+<	- Een moeder is waarschijnlijk een ouder.
+< Jan is mogelijk deel van een gezin. Omdat:
+<	- Jan is mogelijk een ouder.
+<	- Ouders zijn deel van ieder gezin.
+< Jan is misschien geen vader. Omdat:
+<	- Jan is mogelijk een ouder.
+<	- Iedere ouder is een vader of een moeder.
+<	- Jan is waarschijnlijk een moeder.
 < 
 * 
 * Mijn eerdere veronderstellingen die gecorrigeerd zijn door een tegengestelde suggestieve vraag:
@@ -63,6 +82,7 @@
 * Mijn eerdere veronderstellingen die gecorrigeerd zijn door een tegengestelde suggestieve vraag:
 < Jan is waarschijnlijk een vrouw.
 < Jan is misschien geen man.
+< Jan is misschien geen vader.
 * 
 * Mijn vragen:
 < Is Jan een man of een vrouw?
@@ -74,8 +94,21 @@
 * Mijn veronderstellingen:
 < Jan is mogelijk een persoon. Omdat:
 <	- Is Jan een moeder of een vader?
-<	- Een moeder is waarschijnlijk een persoon.
 <	- Een vader is waarschijnlijk een persoon.
+<	- Een moeder is waarschijnlijk een persoon.
+* 	en:
+<	- Is Jan een man of een vrouw?
+<	- Iedere persoon is een man of een vrouw.
+< Jan is mogelijk een ouder. Omdat:
+<	- Is Jan een moeder of een vader?
+<	- Een vader is waarschijnlijk een ouder.
+<	- Een moeder is waarschijnlijk een ouder.
+* 	en:
+<	- Is Jan een man of een vrouw?
+<	- Iedere ouder is een vrouw of een man.
+< Jan is mogelijk deel van een gezin. Omdat:
+<	- Jan is mogelijk een ouder.
+<	- Ouders zijn deel van ieder gezin.
 * 
 * Mijn vragen:
 < Is Jan een man of een vrouw? Omdat:
@@ -87,6 +120,9 @@
 * 	en:
 <	- Jan is mogelijk een persoon.
 <	- Iedere persoon is een man of een vrouw.
+* 	en:
+<	- Jan is mogelijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
 < Is Jan een moeder of een vader? Omdat:
 <	- Is Jan de vader van Paul?
 * 	en:

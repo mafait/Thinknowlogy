@@ -151,6 +151,19 @@
 < 
 * 
 * Mis conclusiones:
+< Juan es un hombre. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- Cada padre es un hombre.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre es un hombre.
+< Juan no es una mujer. Porque:
+<	- Juan es un padre.
+<	- Cada padre es una mujer o un hombre.
+<	- Juan es un hombre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 < Juan tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
 * 	y:
@@ -161,16 +174,6 @@
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
-< Juan es un hombre. Porque:
-<	- Juan es un padre.
-<	- Cada padre es un hombre.
-< Juan no es una mujer. Porque:
-<	- Juan es un padre.
-<	- Cada padre es una mujer o un hombre.
-<	- Juan es un hombre.
-< Juan es masculino. Porque:
-<	- Juan es un hombre.
-<	- Cada hombre es masculino.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
@@ -210,11 +213,6 @@
 * Mis conclusiones:
 < Ana tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
-* 	y:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-<	- Nombre propio "Luisa" es probablemente femenino.
 < Ana es parte de una familia. Porque:
 <	- Luisa tiene 2 padres, llamados Juan y Ana.
 <	- Padres son parte de cada familia.
@@ -395,18 +393,8 @@
 <	- Cada hijo es un hijo o una hija.
 <	- Luisa es hija de Juan y Ana.
 < Luisa es una mujer. Porque:
-<	- Luisa tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es una mujer o un hombre.
-<	- Nombre propio "Luisa" es probablemente femenino.
-* 	y:
 <	- Luisa es hija de Juan y Ana.
 <	- Cada hija es una mujer.
-* 	y:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es una mujer o un hombre.
-<	- Nombre propio "Luisa" es probablemente femenino.
 < Luisa no es un hombre. Porque:
 <	- Luisa es probablemente una persona.
 <	- Cada persona es un hombre o una mujer.
@@ -481,6 +469,19 @@
 < 
 * 
 * Mis conclusiones:
+< Juan es un hombre. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- Cada padre es un hombre.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre es un hombre.
+< Juan no es una mujer. Porque:
+<	- Juan es un padre.
+<	- Cada padre es una mujer o un hombre.
+<	- Juan es un hombre.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
 < Juan tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
 * 	y:
@@ -491,16 +492,6 @@
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
-< Juan es un hombre. Porque:
-<	- Juan es un padre.
-<	- Cada padre es un hombre.
-< Juan no es una mujer. Porque:
-<	- Juan es un padre.
-<	- Cada padre es una mujer o un hombre.
-<	- Juan es un hombre.
-< Juan es masculino. Porque:
-<	- Juan es un hombre.
-<	- Cada hombre es masculino.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un padre o una madre.
@@ -595,13 +586,6 @@
 <	- Ana es la madre de Pablo, José y Luisa.
 <	- Cada familia tiene padres y hijos.
 < Ana tiene posiblemente 2 hija [plural de 'hija' es desconocida], llamados Luisa y Bonita. Porque:
-<	- Bonita tiene una madre, llamada Ana.
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-<	- Nombre propio "Bonita" es probablemente femenino.
-<	- Nombre propio "Luisa" es probablemente femenino.
-* 	y:
 <	- Bonita es posiblemente hija de Ana.
 <	- Luisa es hija de Juan y Ana.
 < 
@@ -739,18 +723,8 @@
 <	- Cada hijo es un hijo o una hija.
 <	- Luisa es hija de Juan y Ana.
 < Luisa es una mujer. Porque:
-<	- Luisa tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es una mujer o un hombre.
-<	- Nombre propio "Luisa" es probablemente femenino.
-* 	y:
 <	- Luisa es hija de Juan y Ana.
 <	- Cada hija es una mujer.
-* 	y:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es una mujer o un hombre.
-<	- Nombre propio "Luisa" es probablemente femenino.
 < Luisa no es un hombre. Porque:
 <	- Luisa es probablemente una persona.
 <	- Cada persona es un hombre o una mujer.

@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -48,7 +48,7 @@ class AdminImperative
 	SpecificationItem *secondComparisonAssignmentItem_ = NULL;
 	SpecificationItem *virtualListAssignmentItem_ = NULL;
 
-	char closedTestFileNameString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char closedTestFileNameString_[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
 	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminImperative";
 
@@ -563,7 +563,7 @@ class AdminImperative
 		size_t textStringLength;
 		char textChar = SYMBOL_QUESTION_MARK;
 		char charString[2] = SPACE_STRING;
-		char writeString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char writeString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		QueryResultType queryResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeInfoTextWithPossibleQueryCommands";
 
@@ -607,7 +607,7 @@ class AdminImperative
 				}
 
 			if( hasFoundNewLine ||
-			strlen( writeString ) + 1 == MAX_SENTENCE_STRING_LENGTH ||
+			strlen( writeString ) + 1 == SENTENCE_STRING_LENGTH ||
 
 			( position < textStringLength &&
 			textString[position] != SYMBOL_DOUBLE_QUOTE &&
@@ -1464,7 +1464,7 @@ class AdminImperative
 
 	AdminImperative( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *predefinedAdjectiveBusyWordItem, WordItem *predefinedAdjectiveDoneWordItem, WordItem *predefinedAdjectiveInvertedWordItem, WordItem *predefinedNounSolveLevelWordItem, WordItem *predefinedNounSolveMethodWordItem, WordItem *predefinedNounSolveStrategyWordItem )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 

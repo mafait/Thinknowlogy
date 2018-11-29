@@ -1,7 +1,7 @@
 ﻿/*	Class:			SpecificationItem
  *	Purpose:		To store info about the specification structure
  *					of a word
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -90,8 +90,8 @@ class SpecificationItem : private Item
 
 	char *specificationString_ = NULL;
 
-	char storedSentenceString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-	char storedSentenceWithOnlyOneSpecificationString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char storedSentenceString_[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char storedSentenceWithOnlyOneSpecificationString_[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
 	// Private constructed variables
 
@@ -290,7 +290,7 @@ class SpecificationItem : private Item
 
 		if( specificationString != NULL )
 			{
-			if( ( specificationStringLength = strlen( specificationString ) ) < MAX_SENTENCE_STRING_LENGTH )
+			if( ( specificationStringLength = strlen( specificationString ) ) < SENTENCE_STRING_LENGTH )
 				{
 				if( ( specificationString_ = new char[specificationStringLength + 1] ) != NULL )
 					strcpy( specificationString_, specificationString );
@@ -440,11 +440,12 @@ class SpecificationItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		char *languageNameString = myWordItem()->languageNameString( languageNr_ );
-		char *generalizationWordTypeString = myWordItem()->wordTypeNameString( generalizationWordTypeNr_ );
+		WordItem *thisWordItem = myWordItem();
+		char *languageNameString = thisWordItem->languageNameString( languageNr_ );
+		char *generalizationWordTypeString = thisWordItem->wordTypeNameString( generalizationWordTypeNr_ );
 		char *queryString;
-		char *relationWordTypeString = ( relationWordTypeNr_ == NO_WORD_TYPE_NR ? NULL : myWordItem()->wordTypeNameString( relationWordTypeNr_ ) );
-		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
+		char *relationWordTypeString = ( relationWordTypeNr_ == NO_WORD_TYPE_NR ? NULL : thisWordItem->wordTypeNameString( relationWordTypeNr_ ) );
+		char *specificationWordTypeString = thisWordItem->wordTypeNameString( specificationWordTypeNr_ );
 		char *wordString;
 
 		itemBaseToString( queryWordTypeNr );
@@ -1038,7 +1039,7 @@ class SpecificationItem : private Item
 		WordItem *currentSpecificationWordItem;
 		WordItem *foundWordItem = NULL;
 
-		if( ( searchSpecificationItem = myWordItem()->firstSpecificationItem( isAssignment(), isInactiveAssignment(), isArchivedAssignment(), questionParameter_ ) ) != NULL )
+		if( ( searchSpecificationItem = myWordItem()->firstSpecificationItem( false, isAssignment(), isInactiveAssignment(), isArchivedAssignment(), questionParameter_ ) ) != NULL )
 			{
 			isSelfGeneratedSpecification = isSelfGenerated();
 
@@ -1168,6 +1169,19 @@ class SpecificationItem : private Item
 				firstJustificationItem_->isReversibleConclusion() );
 		}
 
+	bool isRelatedOlderSpecification( unsigned int specificationCollectionNr, unsigned int compoundSpecificationCollectionNr, WordItem *specificationWordItem )
+		{
+		return ( isOlderItem() &&
+
+				( ( specificationCollectionNr_ > NO_COLLECTION_NR &&
+				specificationCollectionNr_ == specificationCollectionNr ) ||
+
+				( compoundSpecificationCollectionNr > NO_COLLECTION_NR &&
+
+				( specificationCollectionNr_ == compoundSpecificationCollectionNr ||
+				specificationWordItem_ == specificationWordItem ) ) ) );
+		}
+
 	bool isRelatedSpecification( bool isNegative, WordItem *specificationWordItem )
 		{
 		return ( isNegative_ == isNegative &&
@@ -1180,17 +1194,6 @@ class SpecificationItem : private Item
 				isPossessive_ == isPossessive &&
 				relationContextNr_ > NO_CONTEXT_NR &&
 				specificationWordItem_ == specificationWordItem );
-		}
-
-	bool isRelatedSpecification( unsigned int specificationCollectionNr, unsigned int compoundSpecificationCollectionNr, WordItem *specificationWordItem )
-		{
-		return ( ( specificationCollectionNr_ > NO_COLLECTION_NR &&
-				specificationCollectionNr_ == specificationCollectionNr ) ||
-
-				( compoundSpecificationCollectionNr > NO_COLLECTION_NR &&
-
-				( specificationCollectionNr_ == compoundSpecificationCollectionNr ||
-				specificationWordItem_ == specificationWordItem ) ) );
 		}
 
 	bool isSelfGeneratedAssumption()
@@ -1424,7 +1427,7 @@ class SpecificationItem : private Item
 		{
 		unsigned int myCreationSentenceNr = creationSentenceNr();
 		unsigned int nInvolvedSpecificationWords = 0;
-		SpecificationItem *searchSpecificationItem = myWordItem()->firstSpecificationItem( isAssignment(), isInactiveAssignment(), isArchivedAssignment(), questionParameter_ );
+		SpecificationItem *searchSpecificationItem = myWordItem()->firstSpecificationItem( false, isAssignment(), isInactiveAssignment(), isArchivedAssignment(), questionParameter_ );
 
 		while( searchSpecificationItem != NULL )
 			{
@@ -1448,7 +1451,7 @@ class SpecificationItem : private Item
 		bool hasCurrentlyCorrectedAssumptionByKnowledge;
 		JustificationItem *firstJustificationItem;
 		SpecificationItem *createdSpecificationItem;
-		WordItem *generalizationWordItem = myWordItem();
+		WordItem *thisWordItem = myWordItem();
 		CreateAndAssignResultType createAndAssignResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "attachJustificationToSpecification";
 
@@ -1466,7 +1469,7 @@ class SpecificationItem : private Item
 
 		if( hasCurrentCreationSentenceNr() )
 			{
-			hasCurrentlyCorrectedAssumptionByKnowledge = generalizationWordItem->hasCurrentlyCorrectedAssumptionByKnowledge();
+			hasCurrentlyCorrectedAssumptionByKnowledge = thisWordItem->hasCurrentlyCorrectedAssumptionByKnowledge();
 
 			if( changeFirstJustification( !hasCurrentlyCorrectedAssumptionByKnowledge, attachJustificationItem ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to change my first justification item" );
@@ -1478,7 +1481,7 @@ class SpecificationItem : private Item
 		else
 			{
 			// Copy specification
-			if( ( createAndAssignResult = generalizationWordItem->copySpecificationItem( specificationCollectionNr_, attachJustificationItem, this ) ).result != RESULT_OK )
+			if( ( createAndAssignResult = thisWordItem->copySpecificationItem( specificationCollectionNr_, attachJustificationItem, this ) ).result != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to copy myself with a different first justification item" );
 
 			if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == NULL )
@@ -1487,7 +1490,7 @@ class SpecificationItem : private Item
 			if( attachJustificationItem->attachJustification( firstJustificationItem, createdSpecificationItem ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to attach the first justification item of the created specification item, to the given attached justification item of the created specification item" );
 
-			if( generalizationWordItem->replaceOrDeleteSpecification( this, createdSpecificationItem ) != RESULT_OK )
+			if( thisWordItem->replaceOrDeleteSpecification( this, createdSpecificationItem ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to replace or delete a specification" );
 			}
 
@@ -1506,10 +1509,9 @@ class SpecificationItem : private Item
 		unsigned short previousAssumptionLevel;
 		JustificationItem *attachedJustificationItem;
 		JustificationItem *lastAttachedJustificationItem;
-		JustificationItem *obsoleteJustificationItem;
+		JustificationItem *obsoleteJustificationItem = NULL;
 		SpecificationItem *attachedPrimarySpecificationItem;
 		SpecificationItem *attachedSecondarySpecificationItem;
-		WordItem *generalizationWordItem = myWordItem();
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "attachJustificationToSpecificationAdvanced";
 
 		if( attachJustificationItem == NULL )
@@ -1542,8 +1544,10 @@ class SpecificationItem : private Item
 
 		( !isPrimarySpecificationWordSpanishAmbiguous &&
 
-		( attachedPrimarySpecificationItem->hasRelationContext() ||
-		attachedPrimarySpecificationItem->isOlderItem() ) ) ) &&
+		( attachedPrimarySpecificationItem->isOlderItem()  ||
+
+		( attachedPrimarySpecificationItem->hasRelationContext() &&
+		justificationTypeNr != JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ) ) ) ) &&
 
 		!hasJustificationOfSameType( justificationTypeNr, attachedPrimarySpecificationItem, attachedSecondarySpecificationItem ) ) ) )
 			{
@@ -1553,52 +1557,40 @@ class SpecificationItem : private Item
 			attachJustificationItem->orderNr = ( highestOrderNr + 1 );
 			}
 
-		if( ( obsoleteJustificationItem = firstJustificationItem_->secondarySpecificationQuestion() ) == NULL )
+		if( attachedPrimarySpecificationItem != NULL &&
+		!attachedPrimarySpecificationItem->isPossessive() &&
+		attachedPrimarySpecificationItem->hasRelationContext() )
+			obsoleteJustificationItem = firstJustificationItem_->primarySpecificationWithoutRelationContextJustificationItem( attachedPrimarySpecificationItem->specificationWordItem() );
+		else
 			{
-			if( attachedPrimarySpecificationItem != NULL &&
-			!attachedPrimarySpecificationItem->isPossessive() &&
-			attachedPrimarySpecificationItem->hasRelationContext() )
-				obsoleteJustificationItem = firstJustificationItem_->primarySpecificationWithoutRelationContextJustificationItem( attachedPrimarySpecificationItem->specificationWordItem() );
-			else
-				{
-				// Typical for Spanish
-				if( attachedSecondarySpecificationItem != NULL &&
-				attachedSecondarySpecificationItem->isUserSpecification() &&
+			// Typical for Spanish
+			if( attachedSecondarySpecificationItem != NULL &&
+			attachedSecondarySpecificationItem->isUserSpecification() &&
 				
-				( isQuestion() ||
-				isSpecificationWordSpanishAmbiguous() ) )
-					obsoleteJustificationItem = firstJustificationItem_->obsoleteSpanishJustificationItem( attachedPrimarySpecificationItem, attachedSecondarySpecificationItem );
-				}
+			( isQuestion() ||
+			isSpecificationWordSpanishAmbiguous() ) )
+				obsoleteJustificationItem = firstJustificationItem_->obsoleteSpanishJustificationItem( attachedPrimarySpecificationItem, attachedSecondarySpecificationItem );
+			}
 
-			if( obsoleteJustificationItem != NULL )
+		if( obsoleteJustificationItem != NULL )
+			{
+			if( obsoleteJustificationItem->isOlderItem() )
 				{
-				if( obsoleteJustificationItem->isOlderItem() )
-					{
-					if( !hasRelationContext &&
+				if( !hasRelationContext &&
 
-					( !isPrimarySpecificationWordSpanishAmbiguous ||
+				( !isPrimarySpecificationWordSpanishAmbiguous ||
 
-					( attachedPrimarySpecificationItem != NULL &&
-					attachedPrimarySpecificationItem->hasAssumptionLevel() ) ) )
-						isSkippingUpdateJustification = true;
-					else
-						{
-						if( generalizationWordItem->replaceJustification( obsoleteJustificationItem, attachJustificationItem, this ) != RESULT_OK )
-							return addError( functionNameString, NULL, "I failed to replace the obsolete justification item" );
-
-						attachJustificationItem->orderNr = obsoleteJustificationItem->orderNr;
-						}
-					}
+				( attachedPrimarySpecificationItem != NULL &&
+				attachedPrimarySpecificationItem->hasAssumptionLevel() ) ) )
+					isSkippingUpdateJustification = true;
 				else
 					{
-					obsoleteJustificationItem = NULL;
-
-					if( ( highestOrderNr = highestAttachedJustificationOrderNr( justificationTypeNr ) ) >= MAX_ORDER_NR )
-						return startSystemError( functionNameString, NULL, "Justification order number overflow" );
-
-					attachJustificationItem->orderNr = ( highestOrderNr + 1 );
+					if( myWordItem()->replaceJustification( obsoleteJustificationItem, attachJustificationItem, this ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to replace the obsolete justification item" );
 					}
 				}
+			else
+				obsoleteJustificationItem = NULL;
 			}
 
 		if( obsoleteJustificationItem == NULL )
@@ -1636,7 +1628,7 @@ class SpecificationItem : private Item
 					newAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ) ) &&
 
 					// Write adjusted specification
-					generalizationWordItem->writeUpdatedSpecification( true, false, false, false, false, this ) != RESULT_OK )
+					myWordItem()->writeUpdatedSpecification( true, false, false, false, false, this ) != RESULT_OK )
 						return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
 					}
 				}
@@ -1651,7 +1643,7 @@ class SpecificationItem : private Item
 		else
 			{
 			if( !isSkippingUpdateJustification &&
-			generalizationWordItem->updateJustificationInSpecifications( false, obsoleteJustificationItem, attachJustificationItem ) != RESULT_OK )
+			myWordItem()->updateJustificationInSpecifications( false, obsoleteJustificationItem, attachJustificationItem ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to update a question justification item by a conclusion justification item" );
 			}
 
@@ -1777,7 +1769,7 @@ class SpecificationItem : private Item
 	signed char checkForDeletedJustification()
 		{
 		JustificationItem *searchJustificationItem = firstJustificationItem_;
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForDeletedJustification";
 
 		while( searchJustificationItem != NULL &&
@@ -1806,7 +1798,7 @@ class SpecificationItem : private Item
 	signed char checkForReplacedOrDeletedJustification()
 		{
 		JustificationItem *searchJustificationItem = firstJustificationItem_;
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForReplacedOrDeletedJustification";
 
 		while( searchJustificationItem != NULL &&
@@ -1908,6 +1900,21 @@ class SpecificationItem : private Item
 		return RESULT_OK;
 		}
 
+	signed char markAsAnsweredQuestion()
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "markAsAnsweredQuestion";
+
+		if( hasCurrentCreationSentenceNr() )
+			isAnsweredQuestion_ = true;
+		else
+			{
+			if( myWordItem()->copyAndReplaceSpecificationItem( true, isExclusiveGeneralization_, isExclusiveSpecification_, generalizationCollectionNr_, specificationCollectionNr_, firstJustificationItem_, this ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to copy and replace myself as an answered question" );
+			}
+
+		return RESULT_OK;
+		}
+
 	signed char markAsConcludedAssumption()
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "markAsConcludedAssumption";
@@ -1944,80 +1951,68 @@ class SpecificationItem : private Item
 		{
 		bool hasRelationContext = ( relationContextNr_ > NO_CONTEXT_NR );
 		bool isAdjustedSpecification = false;
-		bool isOlderAssumption = isOlderItem();
 		unsigned short previousAssumptionLevel = assumptionLevel_;
-		WordItem *generalizationWordItem = myWordItem();
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "recalculateAssumption";
 
-		if( specificationCollectionNr_ == NO_COLLECTION_NR ||
+		if( calculateAssumptionLevel() != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to recalculate my assumption level" );
 
-		// Avoid corrected assumption to be concluded
-		( !isCorrectedAssumption_ &&
+		if( isOlderItem() &&
 
-		( !isOlderAssumption ||
-		// Avoid older corrected assumption to be concluded
-		!generalizationWordItem->hasCurrentlyCorrectedAssumptionByKnowledge() ) ) )
+		( assumptionLevel_ != previousAssumptionLevel ||
+		// Typical for Spanish
+		assumptionLevel_ == NO_ASSUMPTION_LEVEL ) &&
+
+		// Avoid updates of high uncertainty mapping,
+		// from 'maybe' of one level to 'maybe' of another level
+		( previousAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ||
+		assumptionLevel_ < NUMBER_OF_ASSUMPTION_LEVELS ) )
 			{
-			if( calculateAssumptionLevel() != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to recalculate my assumption level" );
-
-			if( isOlderAssumption &&
-
-			( assumptionLevel_ != previousAssumptionLevel ||
-			// Typical for Spanish
-			assumptionLevel_ == NO_ASSUMPTION_LEVEL ) &&
-
-			// Avoid updates of high uncertainty mapping,
-			// from 'maybe' of one level to 'maybe' of another level
-			( previousAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ||
-			assumptionLevel_ < NUMBER_OF_ASSUMPTION_LEVELS ) )
+			if( assumptionLevel_ == NO_ASSUMPTION_LEVEL )
 				{
-				if( assumptionLevel_ == NO_ASSUMPTION_LEVEL )
-					{
-					if( markAsConcludedAssumption() != RESULT_OK )
-						return addError( functionNameString, NULL, "After recalculation, I failed to mark myself as a concluded assumption" );
+				if( markAsConcludedAssumption() != RESULT_OK )
+					return addError( functionNameString, NULL, "After recalculation, I failed to mark myself as a concluded assumption" );
 
-					if( ( !hasRelationContext &&
-					previousAssumptionLevel > NO_ASSUMPTION_LEVEL ) ||
+				if( ( !hasRelationContext &&
+				previousAssumptionLevel > NO_ASSUMPTION_LEVEL ) ||
 
-					( isPossessive_ &&
-					assumptionLevel_ != previousAssumptionLevel ) )
-						isAdjustedSpecification = true;
-					}
-				else
-					{
-					if( ( !isPossessive_ &&
-					previousAssumptionLevel > NO_ASSUMPTION_LEVEL ) ||
-
-					( hasRelationContext &&
-					hasCompoundSpecificationCollection() &&
-					!isSpecificationWordSpanishAmbiguous() ) )
-						isAdjustedSpecification = true;
-					}
+				( isPossessive_ &&
+				assumptionLevel_ != previousAssumptionLevel ) )
+					isAdjustedSpecification = true;
 				}
-			}
-
-		if( isAdjustedSpecification )
-			{
-			if( isNegative_ &&
-			assumptionLevel_ > NO_ASSUMPTION_LEVEL )
-				hasSpecificationBeenWrittenAsAdjustedNegativeAssumption_ = true;
-
-			// Write adjusted specification
-			if( generalizationWordItem->writeUpdatedSpecification( true, false, false, false, wasHiddenSpanishSpecification(), this ) != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
-
-			if( specificationCollectionNr_ > NO_COLLECTION_NR )
+			else
 				{
-				if( hasRelationContext )
+				if( ( !isPossessive_ &&
+				previousAssumptionLevel > NO_ASSUMPTION_LEVEL ) ||
+
+				( hasRelationContext &&
+				hasCompoundSpecificationCollection() &&
+				!isSpecificationWordSpanishAmbiguous() ) )
+					isAdjustedSpecification = true;
+				}
+
+			if( isAdjustedSpecification )
+				{
+				if( isNegative_ &&
+				assumptionLevel_ > NO_ASSUMPTION_LEVEL )
+					hasSpecificationBeenWrittenAsAdjustedNegativeAssumption_ = true;
+
+				// Write adjusted specification
+				if( myWordItem()->writeUpdatedSpecification( true, false, false, false, wasHiddenSpanishSpecification(), this ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
+
+				if( specificationCollectionNr_ > NO_COLLECTION_NR )
 					{
-					if( recalculateAssumptionsInContextWords( relationContextNr_, specificationWordItem_ ) != RESULT_OK )
-						return addError( functionNameString, NULL, "I failed to recalculate the assumptions of words with my relation context" );
-					}
-				else
-					{
-					if( generalizationWordItem->recalculateAssumptionsInWord() != RESULT_OK )
-						return addError( functionNameString, NULL, "I failed to recalculate the assumptions of my word" );
+					if( hasRelationContext )
+						{
+						if( recalculateAssumptionsInContextWords( relationContextNr_, specificationWordItem_ ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to recalculate the assumptions of words with my relation context" );
+						}
+					else
+						{
+						if( myWordItem()->recalculateAssumptionsInWord() != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to recalculate the assumptions of my word" );
+						}
 					}
 				}
 			}

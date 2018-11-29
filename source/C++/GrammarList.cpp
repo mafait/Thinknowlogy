@@ -1,7 +1,7 @@
 ﻿/*	Class:			GrammarList
  *	Parent class:	List
  *	Purpose:		To store grammar items
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -286,7 +286,7 @@ class GrammarList : private List
 		unsigned short grammarWordTypeNr;
 		GrammarItem *currentGrammarItem;
 		WordItem *currentLangugeWordItem = myWordItem();
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkGrammar";
 
 		if( ( currentGrammarItem = firstActiveGrammarItem() ) == NULL )
@@ -345,28 +345,6 @@ class GrammarList : private List
 		return RESULT_OK;
 		}
 
-	signed char checkGrammarItemForUsage( GrammarItem *unusedGrammarItem )
-		{
-		GrammarItem *searchGrammarItem = firstActiveGrammarItem();
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkGrammarItemForUsage";
-
-		if( unusedGrammarItem == NULL )
-			return startError( functionNameString, "The given unused grammar item is undefined" );
-
-		while( searchGrammarItem != NULL )
-			{
-			if( searchGrammarItem->definitionGrammarItem == unusedGrammarItem )
-				return startError( functionNameString, "The definition grammar item is still in use" );
-
-			if( searchGrammarItem->nextDefinitionGrammarItem == unusedGrammarItem )
-				return startError( functionNameString, "The next definition grammar item is still in use" );
-
-			searchGrammarItem = searchGrammarItem->nextGrammarItem();
-			}
-
-		return RESULT_OK;
-		}
-
 	signed char linkLaterDefinedGrammarWords()
 		{
 		char *definitionGrammarString;
@@ -408,7 +386,7 @@ class GrammarList : private List
 		char *foundString;
 		GrammarItem *expandMergedWordGrammarItem = firstMergedWordGrammarItem_;
 		GrammarItem *searchMergedWordGrammarItem;
-		char tempString[MAX_SENTENCE_STRING_LENGTH];
+		char tempString[SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "expandMergedWordsInReadSentence";
 
 		if( readUserSentenceString == NULL )
@@ -474,7 +452,7 @@ class GrammarList : private List
 		char *foundString;
 		GrammarItem *searchMergedWordGrammarItem = firstMergedWordGrammarItem_;
 		GrammarItem *shrinkMergedWordGrammarItem;
-		char tempString[MAX_SENTENCE_STRING_LENGTH];
+		char tempString[SENTENCE_STRING_LENGTH];
 		char *writtenSentenceString;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "shrinkMergedWordsInWriteSentence";
 

@@ -85,9 +85,6 @@
 <	- Cada persona es un hombre o una mujer.
 <	- Ana es probablemente una mujer.
 * 	y:
-<	- Ana es probablemente madre de Pablo y José.
-<	- Una madre es probablemente una persona.
-* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Un padre es probablemente una persona.
 < Ana no es posiblemente un hombre. Porque:
@@ -217,9 +214,6 @@
 <	- Cada persona es un hombre o una mujer.
 <	- Ana es probablemente una mujer.
 * 	y:
-<	- Ana es probablemente madre de Pablo y José.
-<	- Una madre es probablemente una persona.
-* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Un padre es probablemente una persona.
 < Ana no es posiblemente un hombre. Porque:
@@ -329,6 +323,9 @@
 < Juan es un hombre. Porque:
 <	- Juan es padre de Pablo y Luisa.
 <	- Cada padre es un hombre.
+* 	y:
+<	- Luisa tiene un padre, llamado Juan.
+<	- Cada padre es un hombre.
 < Juan no es una mujer. Porque:
 <	- Juan es probablemente una persona.
 <	- Cada persona es un hombre o una mujer.
@@ -425,9 +422,6 @@
 <	- Cada persona es un hombre o una mujer.
 <	- Ana es probablemente una mujer.
 * 	y:
-<	- Ana es probablemente madre de Pablo y José.
-<	- Una madre es probablemente una persona.
-* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Un padre es probablemente una persona.
 < Ana no es posiblemente un hombre. Porque:
@@ -507,11 +501,6 @@
 * Mis suposiciones:
 < Luisa es posiblemente hija de Juan. Porque:
 <	- Luisa tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-<	- Nombre propio "Luisa" es probablemente femenino.
-* 	y:
-<	- Juan es padre de Pablo y Luisa.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Luisa" es probablemente femenino.

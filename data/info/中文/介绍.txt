@@ -1,11 +1,11 @@
 ﻿呈现"------------------------------------------------------------------------------"。
-呈现" Thinknowlogy is the world's most advanced automated reasoner. Being based"。
-呈现" on Natural Laws of Intelligence – that are embedded in grammar – Thinknowlogy"。
-呈现" implements reasoning constructions that are not described by scientists yet:"。
-呈现" * Despite exhaustive research, the theory of evolution still hasn't provided a"。
-呈现" satisfactory explanation for the origin of intelligence, language and laws of nature."。
-呈现" Let alone, how they are related. Moreover, none of the phenomena that are exclusive"。
-呈现" to the theory of evolution – or its derivative theories – is applicable to daily life;"。
+呈现" Thinknowlogy is the world's most advanced automated reasoner: No knowledge is"。
+呈现" programmed upfront. No dialogues are written upfront. And no words lists are used."。
+呈现" Moreover, it implements reasoning constructions that are not yet described by scientists:"。
+呈现" * Despite exhaustive research, the theory of evolution still hasn't provided a satisfactory"。
+呈现" explanation for the origin of intelligence, language and laws of nature. Let alone, how"。
+呈现" they are related. Moreover, none of the phenomena that are exclusive to the theory of"。
+呈现" evolution – or its derivative theories – is applicable to daily life;"。
 呈现" * According to the biblical world view, God has created laws of nature to make his creation"。
 呈现" run like clockwork. Being based on Natural Laws of Intelligence embedded in Grammar,"。
 呈现" only Thinknowlogy implements the intelligent function of words like definite article “the”,"。
@@ -18,7 +18,7 @@
 呈现"   - making assumptions (with self-adjusting level of uncertainty),"。
 呈现"   - asking questions (about gaps in the knowledge),"。
 呈现"   - detecting confirmations, conflicts and some cases of semantic ambiguity,"。
-呈现"   - displaying of justification reports for the self-generated knowledge;"。
+呈现"   - displaying justification reports for the self-generated knowledge;"。
 呈现" * Multilingualism, proving: Natural languages have a common and logical origin."。
 呈现"------------------------------------------------------------------------------"。
 呈现" I defy anyone to beat this automated reasoner: http://mafait.org/challenge/"。

@@ -3,7 +3,7 @@
  *	Purpose:		To store info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -123,10 +123,11 @@ class GeneralizationItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		char *generalizationWordTypeString = myWordItem()->wordTypeNameString( generalizationWordTypeNr_ );
-		char *languageNameString = myWordItem()->languageNameString( languageNr_ );
+		WordItem *thisWordItem = myWordItem();
+		char *generalizationWordTypeString = thisWordItem->wordTypeNameString( generalizationWordTypeNr_ );
+		char *languageNameString = thisWordItem->languageNameString( languageNr_ );
 		char *queryString;
-		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
+		char *specificationWordTypeString = thisWordItem->wordTypeNameString( specificationWordTypeNr_ );
 		char *wordString;
 
 		itemBaseToString( queryWordTypeNr );

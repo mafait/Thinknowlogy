@@ -5,6 +5,7 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -83,6 +85,9 @@
 < Guillaume est probablement un homme.
 < Guillaume est possible une personne.
 < Guillaume n'est peut-être pas une femme.
+< Guillaume est possible un parent.
+< Guillaume est possible partie d'une famille.
+< Guillaume n'est peut-être pas une mère.
 * 
 * Ma réponse:
 < Non, Olivier est le père de Pascal, Julien et Lorraine.

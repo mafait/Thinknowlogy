@@ -14,9 +14,12 @@
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een ouder.
 < Een ouder is waarschijnlijk een persoon.
 < Jan was waarschijnlijk een persoon.
 < Jan was waarschijnlijk geen vrouw.
+< Jan was waarschijnlijk een ouder.
+< Jan was waarschijnlijk deel van een gezin.
 < 
 * 
 * Mijn conclusies:
@@ -24,6 +27,7 @@
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
+< Een moeder is waarschijnlijk een ouder.
 < 
 * 
 * Mijn veronderstellingen:

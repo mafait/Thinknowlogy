@@ -5,6 +5,7 @@
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een ouder.
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
+< Een moeder is waarschijnlijk een ouder.
 < 
 * 
 * Mijn veronderstellingen:
@@ -63,9 +65,6 @@
 * 	en:
 <	- Jan is een vader.
 <	- Een vader is waarschijnlijk een persoon.
-* 	en:
-<	- Jan is waarschijnlijk een ouder.
-<	- Een ouder is waarschijnlijk een persoon.
 < Jan is waarschijnlijk geen vrouw. Omdat:
 <	- Jan is waarschijnlijk een persoon.
 <	- Iedere persoon is een man of een vrouw.
@@ -75,6 +74,9 @@
 <	- Iedere ouder is een vrouw of een man.
 <	- Jan is een man.
 < Jan is waarschijnlijk een ouder. Omdat:
+<	- Jan is een vader.
+<	- Een vader is waarschijnlijk een ouder.
+* 	en:
 <	- Iedere ouder is een vader of een moeder.
 <	- Jan is een vader.
 < Jan is waarschijnlijk deel van een gezin. Omdat:
@@ -104,9 +106,6 @@
 * 	en:
 <	- Anna is een moeder.
 <	- Een moeder is waarschijnlijk een persoon.
-* 	en:
-<	- Anna is waarschijnlijk een ouder.
-<	- Een ouder is waarschijnlijk een persoon.
 < Anna is waarschijnlijk geen man. Omdat:
 <	- Anna is waarschijnlijk een persoon.
 <	- Iedere persoon is een man of een vrouw.
@@ -116,6 +115,9 @@
 <	- Iedere ouder is een vrouw of een man.
 <	- Anna is een vrouw.
 < Anna is waarschijnlijk een ouder. Omdat:
+<	- Anna is een moeder.
+<	- Een moeder is waarschijnlijk een ouder.
+* 	en:
 <	- Iedere ouder is een vader of een moeder.
 <	- Anna is een moeder.
 < Anna is waarschijnlijk deel van een gezin. Omdat:

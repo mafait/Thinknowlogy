@@ -120,6 +120,7 @@
 #Dev##Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Tuve la misma pregunta antes".
 #Dev##Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Sólo sé".
 #Dev#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Pregunta indirecta respondió, con la confirmación".
+#Dev##Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Contestador inteligente de preguntas".
 #Dev##Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Es Pablo una mujer".
 #Dev##Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Sólo unas pocas preguntas (1)".
 #Dev##Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Sólo unas pocas preguntas (2)".
@@ -135,7 +136,6 @@
 #Dev##Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Juan)".
 #Dev##Java#Leer el archivo de prueba "Español/respuestas a las preguntas/familia/Su pregunta es más específica (sobre Pablo y José)".
 
-#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Aceptación de una extraña definición familiar".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Ana - Juan - Pablo, José y Luisa".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Ana era madre de Pablo, José y Luisa".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Evitar el contexto duplicado".
@@ -179,6 +179,7 @@
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Sé (9)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Sé (10)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Sé (11)".
+#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Sé (12)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Hernando era padre de Rafael (antes de la definición de la familia)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/José tiene 2 padres - José es hijo".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/José es hijo - José tiene 2 padres".

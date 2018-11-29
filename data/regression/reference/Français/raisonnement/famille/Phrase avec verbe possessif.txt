@@ -5,6 +5,7 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -102,9 +104,6 @@
 < Armand est probablement une personne. En raison:
 <	- Armand est un fils de Guillaume.
 <	- Un fils est probablement une personne.
-* 	et:
-<	- Armand est probablement un enfant de Guillaume.
-<	- Un enfant est probablement une personne.
 * 	et:
 <	- Guillaume a un fils, appelé Armand.
 <	- Un fils est probablement une personne.
@@ -206,9 +205,6 @@
 * 	et:
 <	- Olivier est un père.
 <	- Un père est probablement une personne.
-* 	et:
-<	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
-<	- Un parent est probablement une personne.
 < Olivier n'est probablement pas une femme. En raison:
 <	- Olivier est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
@@ -245,11 +241,6 @@
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
 < Olivier a possible une fille, appelée Lorraine. En raison:
 <	- Lorraine est possible une fille de Olivier et Amélie.
-* 	et:
-<	- Lorraine a un père, appelé Olivier.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Lorraine» est probablement féminin.
 < 
 * 
 * Mes conclusions:
@@ -325,18 +316,6 @@
 < Olivier est probablement partie d'une famille. En raison:
 <	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
 <	- Parents sont partie de chaque famille.
-< Olivier est probablement une personne. En raison:
-<	- Chaque personne est un homme ou une femme.
-<	- Olivier est un homme.
-* 	et:
-<	- Olivier est un père.
-<	- Un père est probablement une personne.
-* 	et:
-<	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
-<	- Un parent est probablement une personne.
-* 	et:
-<	- Pascal a un père, appelé Olivier.
-<	- Un père est probablement une personne.
 < Olivier n'est probablement pas une femme. En raison:
 <	- Olivier est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
@@ -351,11 +330,15 @@
 <	- Olivier est un père.
 < Olivier a possible une fille, appelée Lorraine. En raison:
 <	- Lorraine est possible une fille de Olivier et Amélie.
+< Olivier est probablement une personne. En raison:
+<	- Pascal a un père, appelé Olivier.
+<	- Un père est probablement une personne.
 * 	et:
-<	- Lorraine a un père, appelé Olivier.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Lorraine» est probablement féminin.
+<	- Chaque personne est un homme ou une femme.
+<	- Olivier est un homme.
+* 	et:
+<	- Olivier est un père.
+<	- Un père est probablement une personne.
 < 
 * 
 * Mes conclusions:

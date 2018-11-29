@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordItem
  *	Parent class:	Item
  *	Purpose:		To store and process word information
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -120,7 +120,7 @@ class WordItem : protected Item
 	List *wordListArray_[NUMBER_OF_WORD_LISTS];
 
 	// This string is returned by a function. So, it must be "static".
-	char wordItemNameString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char wordItemNameString_[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
 
 	// Private initialized variables
@@ -470,7 +470,6 @@ class WordItem : protected Item
 
 	// Protected grammar functions
 
-	void checkGrammarForUsageInWord( GrammarItem *unusedGrammarItem );
 	void markGrammarOfCurrentLanguageAsChoiceEnd();
 	void markGrammarOfCurrentLanguageAsOptionEnd();
 
@@ -512,13 +511,12 @@ class WordItem : protected Item
 	signed char cleanupUnreferencedJustifications();
 	signed char replaceJustification( JustificationItem *obsoleteJustificationItem, JustificationItem *replacingJustificationItem, SpecificationItem *involvedSpecificationItem );
 	signed char replaceOrDeleteJustification( JustificationItem *obsoleteJustificationItem );
-	signed char updateSpecificationsInJustificationInWord( bool isMainWord, SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem );
-	signed char writeRelatedJustificationSpecifications( unsigned short justificationTypeNr );
+	signed char updateSpecificationOfJustificationsInWord( bool isMainWord, SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem );
+	signed char writeRelatedJustificationSpecifications( unsigned short justificationTypeNr, unsigned int secondarySpecificationCollectionNr );
 
 	JustificationResultType addJustification( bool hasFeminineOrMasculineProperNounEnding, bool isForcingNewJustification, bool isIncrementingOrderNr, unsigned short justificationTypeNr, unsigned short orderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, JustificationItem *attachedJustificationItem );
 	JustificationResultType copyJustification( bool isForcingNewJustification, SpecificationItem *newPrimarySpecificationItem, SpecificationItem *newSecondarySpecificationItem, JustificationItem *newAttachedJustificationItem, JustificationItem *originalJustificationItem );
 
-	JustificationItem *correctedAssumptionByOppositeQuestionJustificationItem();
 	JustificationItem *negativeAssumptionOrConclusionJustificationItem( SpecificationItem *secondarySpecificationItem );
 	JustificationItem *olderComplexJustificationItem( bool hasSecondarySpecificationWithoutRelationContext, bool isPossessiveSecondarySpecification, unsigned short justificationTypeNr, unsigned int secondarySpecificationCollectionNr, SpecificationItem *primarySpecificationItem );
 	JustificationItem *primarySpecificationJustificationItem( bool isSelectingOlderItemOnly, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem );
@@ -576,7 +574,7 @@ class WordItem : protected Item
 	bool hasCurrentlyConfirmedSpecificationButNoRelation();
 	bool hasCurrentlyCorrectedAssumption();
 	bool hasCurrentlyCorrectedAssumptionByKnowledge();
-	bool hasCurrentlyCorrectedAssumptionByOppositeQuestion();
+	bool hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion();
 	bool hasCurrentlyMoreSpecificSpecification();
 	bool hasCurrentlyMoreSpecificNonExclusiveSpecification();
 	bool hasCurrentlyMoreSpecificQuestion();
@@ -600,7 +598,7 @@ class WordItem : protected Item
 	signed char recalculateAssumptionsInWord();
 	signed char replaceOrDeleteSpecification( SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem );
 	signed char updateJustificationInSpecifications( bool isExclusiveGeneralization, JustificationItem *obsoleteJustificationItem, JustificationItem *replacingJustificationItem );
-	signed char updateSpecificationsInJustificationsOfInvolvedWords( SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem );
+	signed char updateSpecificationOfJustificationsOfInvolvedWords( SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem );
 	signed char writeConfirmedSpecification( unsigned short interfaceParameter, SpecificationItem *writeSpecificationItem );
 
 	SpecificationItem *bestMatchingRelationContextNrSpecificationItem( bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, WordItem *specificationWordItem );
@@ -635,7 +633,7 @@ class WordItem : protected Item
 	SpecificationItem *firstSelfGeneratedCheckSpecificationItem( bool isAllowingEmptyRelationContext, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short questionParameter, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem );
 
 	SpecificationItem *firstSpecificationItem( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isQuestion );
-	SpecificationItem *firstSpecificationItem( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, unsigned short questionParameter );
+	SpecificationItem *firstSpecificationItem( bool isIncludingAnsweredQuestions, bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, unsigned short questionParameter );
 	SpecificationItem *firstSpecificationItem( bool isNegative, bool isPossessive, bool isQuestion, WordItem *specificationWordItem );
 	SpecificationItem *firstSpecificationItem( bool isPossessive, bool isSpecificationGeneralization, unsigned short questionParameter, WordItem *specificationWordItem );
 
@@ -715,7 +713,7 @@ class WordItem : protected Item
 	signed char writeSelectedSpecification( bool isAdjustedAssumption, bool isCheckingUserSentenceForIntegrity, bool isForcingResponseNotBeingAssignment, bool isForcingResponseNotBeingFirstSpecification, bool isJustification, bool isWritingCurrentSentenceOnly, bool isWritingCurrentSpecificationWordOnly, unsigned short answerParameter, SpecificationItem *writeSpecificationItem );
 	signed char writeSelectedSpecificationInfo( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, WordItem *writeWordItem );
 	signed char writeSpecificationSentence( bool isAssignment, bool isArchivedAssignment, bool isCheckingUserSentenceForIntegrity, bool isPossessive, bool isQuestion, bool isSpecificationGeneralization, bool isWritingCurrentSpecificationWordOnly, unsigned short answerParameter, unsigned short grammarLevel, GrammarItem *selectedGrammarItem, SpecificationItem *writeSpecificationItem );
-	signed char writeUpdatedSpecification( bool isAdjustedSpecification, bool isCorrectedAssumptionByKnowledge, bool isCorrectedAssumptionByOppositeQuestion, bool isReplacedBySpecificationWithRelation, bool wasHiddenSpanishSpecification, SpecificationItem *writeSpecificationItem );
+	signed char writeUpdatedSpecification( bool isAdjustedSpecification, bool isCorrectedAssumptionByKnowledge, bool isCorrectedAssumptionByOppositeSuggestiveQuestion, bool isReplacedBySpecificationWithRelation, bool wasHiddenSpanishSpecification, SpecificationItem *writeSpecificationItem );
 
 	WriteItem *firstActiveWriteItem();
 	};

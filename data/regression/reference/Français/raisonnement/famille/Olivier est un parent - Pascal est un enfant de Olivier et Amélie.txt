@@ -5,6 +5,7 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -100,11 +102,6 @@
 <	- Lorraine est probablement un enfant de Olivier.
 < Olivier a possible une fille, appelée Lorraine. En raison:
 <	- Lorraine est possible une fille de Olivier.
-* 	et:
-<	- Lorraine a un parent, appelé Olivier.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Lorraine» est probablement féminin.
 < Olivier est probablement une personne. En raison:
 <	- Olivier est un parent de Pascal, Julien et Lorraine.
 <	- Un parent est probablement une personne.
@@ -147,9 +144,6 @@
 * 	et:
 <	- Chaque personne est un homme ou une femme.
 <	- Amélie est possible une femme.
-* 	et:
-<	- Amélie est possible une mère de Pascal.
-<	- Une mère est probablement une personne.
 < Amélie est possible une mère de Pascal. En raison:
 <	- Amélie est probablement un parent de Pascal.
 <	- Chaque parent est un père ou une mère.
@@ -199,11 +193,6 @@
 <	- Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 < Pascal a possible une mère, appelée Amélie. En raison:
 <	- Amélie est possible une mère de Pascal.
-* 	et:
-<	- Amélie a un enfant, appelé Pascal.
-<	- Chaque famille a parents et enfants.
-<	- Chaque parent est un père ou une mère.
-<	- Nom propre «Amélie» est probablement féminin.
 * 
 * Mes questions:
 < Est Pascal une jeune-fille, une femme, un garçon ou un homme? En raison:
@@ -262,9 +251,6 @@
 < Lorraine est possible une personne. En raison:
 <	- Lorraine est probablement un enfant de Olivier.
 <	- Un enfant est probablement une personne.
-* 	et:
-<	- Lorraine est possible une fille de Olivier.
-<	- Une fille est probablement une personne.
 < Lorraine est possible une fille de Olivier. En raison:
 <	- Lorraine est probablement un enfant de Olivier.
 <	- Chaque enfant est un fils ou une fille.

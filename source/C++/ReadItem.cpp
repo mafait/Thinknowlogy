@@ -1,7 +1,7 @@
 ﻿/*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -79,8 +79,8 @@ class ReadItem : private Item
 
 		if( _readString != NULL )
 			{
-			if( readStringLength < MAX_SENTENCE_STRING_LENGTH &&
-			strlen( _readString ) < MAX_SENTENCE_STRING_LENGTH )
+			if( readStringLength < SENTENCE_STRING_LENGTH &&
+			strlen( _readString ) < SENTENCE_STRING_LENGTH )
 				{
 				if( ( readString = new char[readStringLength + 1] ) != NULL )
 					{

@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -160,15 +162,6 @@
 < John is probably part of a family. Because:
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Parents are part of every family.
-< John is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- John is a man.
-* 	and:
-<	- John is a father.
-<	- A father is probably a person.
-* 	and:
-<	- John is probably a parent of Paul, Joe and Laura.
-<	- A parent is probably a person.
 < John is probably not a woman. Because:
 <	- John is probably a person.
 <	- Every person is a man or a woman.
@@ -183,11 +176,12 @@
 <	- John is a father.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
+< John is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- John is a man.
 * 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
+<	- John is a father.
+<	- A father is probably a person.
 < 
 * 
 * My conclusions:
@@ -217,15 +211,6 @@
 < Anna is probably part of a family. Because:
 <	- Anna is probably a parent of Paul, Joe and Laura.
 <	- Parents are part of every family.
-< Anna is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- Anna is a woman.
-* 	and:
-<	- Anna is a mother.
-<	- A mother is probably a person.
-* 	and:
-<	- Anna is probably a parent of Paul, Joe and Laura.
-<	- A parent is probably a person.
 < Anna is probably not a man. Because:
 <	- Anna is probably a person.
 <	- Every person is a man or a woman.
@@ -247,11 +232,12 @@
 <	- Laura is probably a child of John and Anna.
 < Anna has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
+< Anna is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
 * 	and:
-<	- Laura has a mother, called Anna.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
+<	- Anna is a mother.
+<	- A mother is probably a person.
 < 
 * 
 * My conclusions:
@@ -365,15 +351,6 @@
 < John is probably part of a family. Because:
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Parents are part of every family.
-< John is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- John is a man.
-* 	and:
-<	- John is a father.
-<	- A father is probably a person.
-* 	and:
-<	- John is probably a parent of Paul, Joe and Laura.
-<	- A parent is probably a person.
 < John is probably not a woman. Because:
 <	- John is probably a person.
 <	- Every person is a man or a woman.
@@ -388,11 +365,12 @@
 <	- John is a father.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
+< John is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- John is a man.
 * 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
+<	- John is a father.
+<	- A father is probably a person.
 < 
 * 
 * My conclusions:
@@ -422,15 +400,6 @@
 < Anna is probably part of a family. Because:
 <	- Anna is probably a parent of Paul, Joe and Laura.
 <	- Parents are part of every family.
-< Anna is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- Anna is a woman.
-* 	and:
-<	- Anna is a mother.
-<	- A mother is probably a person.
-* 	and:
-<	- Anna is probably a parent of Paul, Joe and Laura.
-<	- A parent is probably a person.
 < Anna is probably not a man. Because:
 <	- Anna is probably a person.
 <	- Every person is a man or a woman.
@@ -452,11 +421,12 @@
 <	- Laura is probably a child of John and Anna.
 < Anna has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
+< Anna is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
 * 	and:
-<	- Laura has a mother, called Anna.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
+<	- Anna is a mother.
+<	- A mother is probably a person.
 < 
 * 
 * My conclusions:
@@ -513,16 +483,13 @@
 < Laura is possibly a person. Because:
 <	- Laura is probably a child of John and Anna.
 <	- A child is probably a person.
-* 	and:
-<	- Laura is possibly a daughter of John and Anna.
-<	- A daughter is probably a person.
 < Laura is possibly a daughter of John and Anna. Because:
 <	- Laura is probably a child of John and Anna.
 <	- Every child is a son or a daughter.
 <	- Proper noun "Laura" is probably feminine.
 * 	and:
-<	- John is the father of Paul, Joe and Laura.
-<	- Anna is the mother of Paul, Joe and Laura.
+<	- John is probably a parent of Paul, Joe and Laura.
+<	- Anna is probably a parent of Paul, Joe and Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
 <	- Proper noun "Laura" is probably feminine.
@@ -586,11 +553,6 @@
 * My assumptions:
 < John has probably a daughter, called Laura. Because:
 <	- Laura is probably a daughter of John and Anna.
-* 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < John is probably a parent of Paul, Joe and Laura. Because:
 <	- Every parent is a father or a mother.
 <	- John is the father of Paul, Joe and Laura.
@@ -609,15 +571,6 @@
 < John is probably part of a family. Because:
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Parents are part of every family.
-< John is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- John is a man.
-* 	and:
-<	- John is a father.
-<	- A father is probably a person.
-* 	and:
-<	- John is probably a parent of Paul, Joe and Laura.
-<	- A parent is probably a person.
 < John is probably not a woman. Because:
 <	- John is probably a person.
 <	- Every person is a man or a woman.
@@ -630,6 +583,12 @@
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Every parent is a father or a mother.
 <	- John is a father.
+< John is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- John is a man.
+* 	and:
+<	- John is a father.
+<	- A father is probably a person.
 < 
 * 
 * My conclusions:
@@ -650,11 +609,6 @@
 * My assumptions:
 < Anna has probably a daughter, called Laura. Because:
 <	- Laura is probably a daughter of John and Anna.
-* 	and:
-<	- Laura has a mother, called Anna.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < Anna is probably a parent of Paul, Joe and Laura. Because:
 <	- Every parent is a father or a mother.
 <	- Anna is the mother of Paul, Joe and Laura.
@@ -673,15 +627,6 @@
 < Anna is probably part of a family. Because:
 <	- Anna is probably a parent of Paul, Joe and Laura.
 <	- Parents are part of every family.
-< Anna is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- Anna is a woman.
-* 	and:
-<	- Anna is a mother.
-<	- A mother is probably a person.
-* 	and:
-<	- Anna is probably a parent of Paul, Joe and Laura.
-<	- A parent is probably a person.
 < Anna is probably not a man. Because:
 <	- Anna is probably a person.
 <	- Every person is a man or a woman.
@@ -694,6 +639,12 @@
 <	- Anna is probably a parent of Paul, Joe and Laura.
 <	- Every parent is a father or a mother.
 <	- Anna is a mother.
+< Anna is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Anna is a mother.
+<	- A mother is probably a person.
 < 
 * 
 * My conclusions:
@@ -767,16 +718,13 @@
 < Laura is probably a person. Because:
 <	- Laura is a child of John and Anna.
 <	- A child is probably a person.
-* 	and:
-<	- Laura is probably a daughter of John and Anna.
-<	- A daughter is probably a person.
 < Laura is probably a daughter of John and Anna. Because:
 <	- Laura is a child of John and Anna.
 <	- Every child is a son or a daughter.
 <	- Proper noun "Laura" is probably feminine.
 * 	and:
-<	- John is the father of Paul, Joe and Laura.
-<	- Anna is the mother of Paul, Joe and Laura.
+<	- John is probably a parent of Paul, Joe and Laura.
+<	- Anna is probably a parent of Paul, Joe and Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
 <	- Proper noun "Laura" is probably feminine.

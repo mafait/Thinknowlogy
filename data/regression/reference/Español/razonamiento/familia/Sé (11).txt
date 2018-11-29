@@ -242,10 +242,6 @@
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
 < Ana no es un hombre. Porque:
-<	- Ana es probablemente una persona.
-<	- Cada persona es un hombre o una mujer.
-<	- Ana es una mujer.
-* 	y:
 <	- Ana es una madre.
 <	- Cada padre es una mujer o un hombre.
 <	- Ana es una mujer.

@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordWrite
  *	Supports class:	WordItem
  *	Purpose:		To write specifications as sentences
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -57,11 +57,11 @@ class WordWrite
 
 	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "WordWrite";
 
-	char lastSpecificationString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-	char previousSpecificationString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char lastSpecificationString_[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char previousSpecificationString_[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
 	// This string is returned by a function. So, it must be "static".
-	char nContextRelationsString_[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char nContextRelationsString_[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
 	// Private initialized variables
 
@@ -110,7 +110,7 @@ class WordWrite
 	signed char checkAssumptionLevel( SpecificationItem *writeSpecificationItem )
 		{
 		unsigned short previousAssumptionLevel;
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkAssumptionLevel";
 
 		if( writeSpecificationItem == NULL )
@@ -123,7 +123,9 @@ class WordWrite
 
 		// There is a difference between recalculated assumption level and previous assumption level
 		// So, the assumption level is not recalculated after a change during the process
-		if( writeSpecificationItem->assumptionLevel() != previousAssumptionLevel )
+		if( writeSpecificationItem->assumptionLevel() != previousAssumptionLevel &&
+		// Assumption level wasn't up-to-date, which could indicate that an update announcement was never made
+		writeSpecificationItem->isOlderItem() )
 			{
 			sprintf( errorString, "\nThe assumption level of the following specification item has changed during the process, but it isn't recalculated.\nSo, this specification may have a recalculation or update issue.\n\tPrevious assumption level: %u, recalculated assumption level: %u;\n\tSpecificationItem: %s.\n\n", previousAssumptionLevel, writeSpecificationItem->assumptionLevel(), writeSpecificationItem->itemToString( NO_WORD_TYPE_NR ) );
 
@@ -136,7 +138,7 @@ class WordWrite
 
 	signed char cleanupWriteInfo( bool isWritingCurrentSpecificationWordOnly, unsigned short startWriteLevel, size_t startWordPosition, SpecificationItem *clearSpecificationItem )
 		{
-		char tempString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char tempString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char *writtenSentenceString;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "cleanupWriteInfo";
 
@@ -203,7 +205,7 @@ class WordWrite
 				{
 				if( !isWritingCurrentSpecificationWordOnly &&
 				( specificationCollectionNr = clearSpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR &&
-				( currentSpecificationItem = myWordItem_->firstSpecificationItem( clearSpecificationItem->isAssignment(), clearSpecificationItem->isInactiveAssignment(), clearSpecificationItem->isArchivedAssignment(), clearSpecificationItem->questionParameter() ) ) != NULL )
+				( currentSpecificationItem = myWordItem_->firstSpecificationItem( false, clearSpecificationItem->isAssignment(), clearSpecificationItem->isInactiveAssignment(), clearSpecificationItem->isArchivedAssignment(), clearSpecificationItem->questionParameter() ) ) != NULL )
 					{
 					// Clear specification write level of related specification words
 					isExclusiveSpecification = clearSpecificationItem->isExclusiveSpecification();
@@ -369,6 +371,7 @@ class WordWrite
 	signed char writeSpecificationWordToSentence( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGenerated, bool isSpecificationGeneralization, bool isWritingCurrentSpecificationWordOnly, unsigned short assumptionLevel, unsigned short grammarDefinitionWordTypeNr, unsigned short questionParameter, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr, SpecificationItem *writeSpecificationItem, WordItem *specificationWordItem )
 		{
 		bool hasSkippedDifferentSpecification = false;
+		bool isAnsweredQuestion;
 		unsigned short currentSpecificationWordTypeNr;
 		SpecificationItem *currentSpecificationItem;
 		WordItem *currentSpecificationWordItem;
@@ -396,7 +399,9 @@ class WordWrite
 			}
 		else
 			{
-			if( ( currentSpecificationItem = myWordItem_->firstSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, questionParameter ) ) != NULL )
+			isAnsweredQuestion = writeSpecificationItem->isAnsweredQuestion();
+
+			if( ( currentSpecificationItem = myWordItem_->firstSpecificationItem( isAnsweredQuestion, isAssignment, isInactiveAssignment, isArchivedAssignment, questionParameter ) ) != NULL )
 				{
 				do	{
 					if( ( currentSpecificationItem == writeSpecificationItem ||
@@ -408,8 +413,7 @@ class WordWrite
 
 						if( currentSpecificationWordItem->isSpecificationWordTypeAlreadyWritten( currentSpecificationWordTypeNr ) )
 							{
-							if( //!isAnsweredQuestion &&
-							currentSpecificationItem != writeSpecificationItem )
+							if( currentSpecificationItem != writeSpecificationItem )
 								hasSkippedDifferentSpecification = true;
 							}
 						else
@@ -421,7 +425,7 @@ class WordWrite
 						}
 					}
 				while( writeWordString_ == NULL &&
-				( currentSpecificationItem = currentSpecificationItem->nextSelectedQuestionParameterSpecificationItem() ) != NULL );
+				( currentSpecificationItem = currentSpecificationItem->nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion ) ) != NULL );
 				}
 			}
 
@@ -1403,7 +1407,7 @@ class WordWrite
 
 	WordWrite( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 
@@ -1523,7 +1527,7 @@ class WordWrite
 		char *storedSentenceWithOnlyOneSpecificationString = NULL;
 		char *writtenSentenceString;
 		RelatedResultType relatedResult;
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeSelectedSpecification";
 
 		strcpy( globalVariables_->learnedFromUserString, EMPTY_STRING );
@@ -1739,15 +1743,15 @@ class WordWrite
 							else
 								{
 								// Skip self-generated negative compound specifications
-								if( ( !isNegative ||
-								isUserSpecification ||
-								!hasCompoundSpecificationCollection ) &&
+								if( ( !hasCompoundSpecificationCollection ||
+								!isNegative ||
+								isUserSpecification ) &&
 
 								// Skip some exclusive generalization specifications
-								( !hasRelationContext ||
-								!isAssignment ||
-								!isExclusiveSpecification ||
+								( !isExclusiveSpecification ||
 								isOlderItem ||
+								!hasRelationContext ||
+								!isAssignment ||
 								writeSpecificationItem->isInactiveAssignment() ) )
 									writeSpecificationItem->storeWrittenSentenceString();
 								}
@@ -2019,7 +2023,7 @@ class WordWrite
 		return RESULT_OK;
 		}
 
-	signed char writeUpdatedSpecification( bool isAdjustedSpecification, bool isCorrectedAssumptionByKnowledge, bool isCorrectedAssumptionByOppositeQuestion, bool isReplacedBySpecificationWithRelation, bool wasHiddenSpanishSpecification, SpecificationItem *writeSpecificationItem )
+	signed char writeUpdatedSpecification( bool isAdjustedSpecification, bool isCorrectedAssumptionByKnowledge, bool isCorrectedAssumptionByOppositeSuggestiveQuestion, bool isReplacedBySpecificationWithRelation, bool wasHiddenSpanishSpecification, SpecificationItem *writeSpecificationItem )
 		{
 		bool isExclusiveSpecification;
 		unsigned short interfaceParameter;
@@ -2038,7 +2042,7 @@ class WordWrite
 		strlen( writtenSentenceString ) > 0 )
 			{
 			interfaceParameter = ( isCorrectedAssumptionByKnowledge ? INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_KNOWLEDGE :
-									( isCorrectedAssumptionByOppositeQuestion ? INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_QUESTION :
+									( isCorrectedAssumptionByOppositeSuggestiveQuestion ? INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_SUGGESTIVE_QUESTION :
 									( isReplacedBySpecificationWithRelation ? ( writeSpecificationItem->isSelfGeneratedAssumption() ? INTERFACE_LISTING_MY_EARLIER_ASSUMPTIONS_THAT_HAVE_RELATION_WORDS_NOW : INTERFACE_LISTING_MY_EARLIER_CONCLUSIONS_THAT_HAVE_RELATION_WORDS_NOW ) :
 									( isAdjustedSpecification ? ( writeSpecificationItem->isQuestion() ? INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS :
 									( writeSpecificationItem->isSelfGeneratedConclusion() ?

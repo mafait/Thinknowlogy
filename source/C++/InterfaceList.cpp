@@ -1,7 +1,7 @@
 ﻿/*	Class:			InterfaceList
  *	Parent class:	List
  *	Purpose:		To store interface items
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/

@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		To process queries
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -217,7 +217,7 @@ class AdminQuery
 			startSourceStringPosition = queryCommandStringPosition_;
 
 			while( queryCommandStringPosition_ + 1 < queryCommandStringLength &&
-			nameLength <= MAX_SENTENCE_STRING_LENGTH - 1 &&
+			nameLength <= SENTENCE_STRING_LENGTH - 1 &&
 			queryCommandString[queryCommandStringPosition_] != endChar )
 				{
 				nameLength++;
@@ -256,7 +256,7 @@ class AdminQuery
 
 	AdminQuery( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 
@@ -306,7 +306,7 @@ class AdminQuery
 		size_t queryCommandStringLength;
 		size_t queryWidth = NO_CENTER_WIDTH;
 		char *queryString;
-		char nameString[ENTENDED_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char nameString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char tempString[FUNCTION_NAME_STRING_LENGTH];
 		QueryResultType queryResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "executeQuery";

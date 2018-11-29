@@ -32,9 +32,11 @@
 < Juan es probablemente un hombre.
 < Juan es posiblemente una persona.
 < Juan no es puede-ser una mujer.
+< Juan es probablemente masculino.
 < Hernando era probablemente un hombre.
 < Hernando era posiblemente una persona.
 < Hernando no era puede-ser una mujer.
+< Hernando era probablemente masculino.
 < 
 * 
 * Mis conclusiones:
@@ -65,13 +67,19 @@
 < ¿Es Juan padre de Pablo?
 * 
 * Mis suposiciones que se ajustan:
-< Juan no es probablemente una mujer.
 < Juan es probablemente una persona.
+< Juan no es posiblemente una mujer.
 * 
 * Mis suposiciones que se concluyen:
 < Juan es un hombre.
-< Juan no es una mujer.
+* 
+* Mis suposiciones que se ajustan:
+< Juan no es probablemente una mujer.
+* 
+* Mis suposiciones que se concluyen:
+< Juan es masculino.
 < Juan es parte de una familia.
+< Juan no es una mujer.
 * 
 * Mis conclusiones:
 < Juan no es una madre.
@@ -135,7 +143,7 @@
 < No, Pablo tiene 2 padres, llamados Juan y Ana.
 < Jorge es un padre.
 < Juan es un padre.
-< Hernando es probablemente un padre.
+< Hernando era probablemente un padre.
 < José tiene 2 padres, llamados Juan y Ana.
 < 
 * 

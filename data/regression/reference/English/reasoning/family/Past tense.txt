@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -70,9 +72,6 @@
 * 	and:
 <	- James was the father of Peter.
 <	- A father is probably a person.
-* 	and:
-<	- James was probably a parent of Peter.
-<	- A parent is probably a person.
 < James was probably not a woman. Because:
 <	- James was probably a person.
 <	- Every person is a man or a woman.

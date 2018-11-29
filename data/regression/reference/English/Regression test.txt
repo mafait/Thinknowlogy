@@ -20,10 +20,10 @@
  Display the warranty.
 ------------------------------------------------------------------------------
  Example files:	* Use button <more examples>
-              or see folder: Thinknowlogy2018r1/data/examples/English/
- Fundamental:	* folder: Thinknowlogy2018r1/documents/
- Design:	* folder: Thinknowlogy2018r1/documents/design/
- Screenshots:	* folder: Thinknowlogy2018r1/screenshots/English/
+              or see folder: Thinknowlogy2018r4/data/examples/English/
+ Fundamental:	* folder: Thinknowlogy2018r4/documents/
+ Design:	* folder: Thinknowlogy2018r4/documents/design/
+ Screenshots:	* folder: Thinknowlogy2018r4/screenshots/English/
 ------------------------------------------------------------------------------
 < 
 < Specifications:

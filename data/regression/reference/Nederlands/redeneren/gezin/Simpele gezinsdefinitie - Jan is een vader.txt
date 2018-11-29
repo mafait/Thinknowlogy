@@ -42,11 +42,11 @@
 <	- Jan is waarschijnlijk een ouder.
 <	- Een ouder is waarschijnlijk een persoon.
 * 	en:
-<	- Jan is een vader.
-<	- Een vader is waarschijnlijk een persoon.
-* 	en:
 <	- Iedere persoon is een man of een vrouw.
 <	- Jan is een man.
+* 	en:
+<	- Jan is een vader.
+<	- Een vader is waarschijnlijk een persoon.
 < Jan is waarschijnlijk geen moeder. Omdat:
 <	- Jan is waarschijnlijk een ouder.
 <	- Iedere ouder is een vader of een moeder.

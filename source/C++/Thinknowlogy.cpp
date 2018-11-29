@@ -1,6 +1,6 @@
 ﻿/*	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:	Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -30,7 +30,7 @@ int main()
 	{
 	signed char result = RESULT_OK;
 	bool isRestart = false;
-	char startupLanguageNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char startupLanguageNameString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 	AdminItem *adminItem = NULL;
 
 	do	{

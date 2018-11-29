@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -105,17 +107,14 @@
 <	- Every family has parents and children.
 <	- John is a parent of Paul.
 < John is probably a person. Because:
+<	- Paul has 2 parents, called John and Anna.
+<	- A parent is probably a person.
+* 	and:
 <	- Every person is a man or a woman.
 <	- John is a man.
 * 	and:
 <	- John is a father.
 <	- A father is probably a person.
-* 	and:
-<	- John is a parent of Paul.
-<	- A parent is probably a person.
-* 	and:
-<	- Paul has 2 parents, called John and Anna.
-<	- A parent is probably a person.
 < 
 * 
 * My conclusions:
@@ -140,9 +139,6 @@
 * 	and:
 <	- Paul has 2 parents, called John and Anna.
 <	- A parent is probably a person.
-* 	and:
-<	- Anna is probably a mother of Paul.
-<	- A mother is probably a person.
 < Anna is probably a woman. Because:
 <	- Anna is a parent of Paul.
 <	- Every parent is a woman or a man.

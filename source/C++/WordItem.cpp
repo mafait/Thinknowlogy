@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordItem
  *	Parent class:	Item
  *	Purpose:		To store and process word information
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -1164,7 +1164,7 @@
 
 		if( globalVariables()->result == RESULT_OK &&
 		justificationList_ != NULL &&
-		justificationList_->checkForReplacedOrDeletedSpecification() == RESULT_OK &&
+		justificationList_->checkForReplacedOrDeletedSpecifications() == RESULT_OK &&
 		justificationList_->checkForUnreferencedReplacedJustifications() == RESULT_OK )
 			justificationList_->cleanupUnreferencedJustifications();
 
@@ -1780,7 +1780,8 @@
 
 	bool WordItem::isCollectionSpanishAmbiguous( unsigned int collectionNr )
 		{
-		return ( collectionList_ != NULL ?
+		return ( collectionNr > NO_COLLECTION_NR &&
+				collectionList_ != NULL ?
 				collectionList_->isCollectionSpanishAmbiguous( collectionNr ) : false );
 		}
 
@@ -1896,7 +1897,8 @@
 
 	WordItem *WordItem::compoundGeneralizationWordItem( unsigned int compoundCollectionNr )
 		{
-		return ( collectionList_ != NULL ?
+		return ( compoundCollectionNr > NO_COLLECTION_NR &&
+				collectionList_ != NULL ?
 				collectionList_->compoundGeneralizationWordItem( compoundCollectionNr ) : NULL );
 		}
 
@@ -2176,12 +2178,6 @@
 
 	// Protected grammar functions
 
-	void WordItem::checkGrammarForUsageInWord( GrammarItem *unusedGrammarItem )
-		{
-		if( grammarList_ != NULL )
-			grammarList_->checkGrammarItemForUsage( unusedGrammarItem );
-		}
-
 	void WordItem::markGrammarOfCurrentLanguageAsChoiceEnd()
 		{
 		WordItem *currentLanguageWordItem;
@@ -2448,22 +2444,22 @@
 		return justificationList_->replaceOrDeleteJustification( obsoleteJustificationItem );
 		}
 
-	signed char WordItem::updateSpecificationsInJustificationInWord( bool isMainWord, SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem )
+	signed char WordItem::updateSpecificationOfJustificationsInWord( bool isMainWord, SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem )
 		{
 		if( justificationList_ != NULL )
-			return justificationList_->updateSpecificationsInJustifications( isMainWord, obsoleteSpecificationItem, replacingSpecificationItem );
+			return justificationList_->updateSpecificationOfJustifications( isMainWord, obsoleteSpecificationItem, replacingSpecificationItem );
 
 		return RESULT_OK;
 		}
 
-	signed char WordItem::writeRelatedJustificationSpecifications( unsigned short justificationTypeNr )
+	signed char WordItem::writeRelatedJustificationSpecifications( unsigned short justificationTypeNr, unsigned int secondarySpecificationCollectionNr )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeRelatedJustificationSpecifications";
 
 		if( justificationList_ == NULL )
 			return startErrorInWord( functionNameString, NULL, "The justification list isn't created yet" );
 
-		return justificationList_->writeRelatedJustificationSpecifications( justificationTypeNr );
+		return justificationList_->writeRelatedJustificationSpecifications( justificationTypeNr, secondarySpecificationCollectionNr );
 		}
 
 	JustificationResultType WordItem::addJustification( bool hasFeminineOrMasculineProperNounEnding, bool isForcingNewJustification, bool isIncrementingOrderNr, unsigned short justificationTypeNr, unsigned short orderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, JustificationItem *attachedJustificationItem )
@@ -2492,12 +2488,6 @@
 			return startJustificationResultErrorInWord( functionNameString, NULL, "The justification list isn't created yet" );
 
 		return justificationList_->copyJustification( isForcingNewJustification, newPrimarySpecificationItem, newSecondarySpecificationItem, newAttachedJustificationItem, originalJustificationItem );
-		}
-
-	JustificationItem *WordItem::correctedAssumptionByOppositeQuestionJustificationItem()
-		{
-		return ( justificationList_ != NULL ?
-				justificationList_->correctedAssumptionByOppositeQuestionJustificationItem() : NULL );
 		}
 
 	JustificationItem *WordItem::negativeAssumptionOrConclusionJustificationItem( SpecificationItem *anotherPrimarySpecificationItem )
@@ -2823,9 +2813,6 @@
 			assignmentList_->initializeSpecificationVariables( false, true );
 			}
 
-		if( justificationList_ != NULL )
-			justificationList_->initializeJustificationVariables();
-
 		if( specificationList_ != NULL )
 			specificationList_->initializeSpecificationVariables( false, false );
 
@@ -2878,10 +2865,10 @@
 				wordSpecification_->hasCurrentlyCorrectedAssumptionByKnowledge() : false );
 		}
 
-	bool WordItem::hasCurrentlyCorrectedAssumptionByOppositeQuestion()
+	bool WordItem::hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion()
 		{
 		return ( wordSpecification_ != NULL ?
-				wordSpecification_->hasCurrentlyCorrectedAssumptionByOppositeQuestion() : false );
+				wordSpecification_->hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion() : false );
 		}
 
 	bool WordItem::hasCurrentlyMoreSpecificSpecification()
@@ -3119,10 +3106,10 @@
 		return globalVariables()->result;
 		}
 
-	signed char WordItem::updateSpecificationsInJustificationsOfInvolvedWords( SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem )
+	signed char WordItem::updateSpecificationOfJustificationsOfInvolvedWords( SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem )
 		{
 		return ( specificationList_ != NULL ?
-				specificationList_->updateSpecificationsInJustificationsOfInvolvedWords( obsoleteSpecificationItem, replacingSpecificationItem ) : RESULT_OK );
+				specificationList_->updateSpecificationOfJustificationsOfInvolvedWords( obsoleteSpecificationItem, replacingSpecificationItem ) : RESULT_OK );
 		}
 
 	signed char WordItem::writeConfirmedSpecification( unsigned short interfaceParameter, SpecificationItem *writeSpecificationItem )
@@ -3399,16 +3386,16 @@
 				( isQuestion ? firstActiveQuestionSpecificationItem() : firstNonQuestionSpecificationItem() ) );
 		}
 
-	SpecificationItem *WordItem::firstSpecificationItem( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, unsigned short questionParameter )
+	SpecificationItem *WordItem::firstSpecificationItem( bool isIncludingAnsweredQuestions, bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, unsigned short questionParameter )
 		{
 		if( isAssignment )
 			return ( assignmentList_ != NULL ?
-					( isArchivedAssignment ? assignmentList_->firstAssignmentItem( false, false, true, questionParameter ) :
-					( isInactiveAssignment ? assignmentList_->firstAssignmentItem( false, true, false, questionParameter ) :
-											assignmentList_->firstAssignmentItem( false, false, false, questionParameter ) ) ) : NULL );
+					( isArchivedAssignment ? assignmentList_->firstAssignmentItem( isIncludingAnsweredQuestions, false, true, questionParameter ) :
+					( isInactiveAssignment ? assignmentList_->firstAssignmentItem( isIncludingAnsweredQuestions, true, false, questionParameter ) :
+											assignmentList_->firstAssignmentItem( isIncludingAnsweredQuestions, false, false, questionParameter ) ) ) : NULL );
 
 		return ( specificationList_ != NULL ?
-				specificationList_->firstActiveSpecificationItem( false, questionParameter ) : NULL );
+				specificationList_->firstActiveSpecificationItem( isIncludingAnsweredQuestions, questionParameter ) : NULL );
 		}
 
 	SpecificationItem *WordItem::firstSpecificationItem( bool isNegative, bool isPossessive, bool isQuestion, WordItem *specificationWordItem )
@@ -4067,14 +4054,14 @@
 		return wordWrite_->writeSpecificationSentence( isAssignment, isArchivedAssignment, isCheckingUserSentenceForIntegrity, isPossessive, isQuestion, isSpecificationGeneralization, isWritingCurrentSpecificationWordOnly, answerParameter, grammarLevel, selectedGrammarItem, writeSpecificationItem );
 		}
 
-	signed char WordItem::writeUpdatedSpecification( bool isAdjustedSpecification, bool isCorrectedAssumptionByKnowledge, bool isCorrectedAssumptionByOppositeQuestion, bool isReplacedBySpecificationWithRelation, bool wasHiddenSpanishSpecification, SpecificationItem *writeSpecificationItem )
+	signed char WordItem::writeUpdatedSpecification( bool isAdjustedSpecification, bool isCorrectedAssumptionByKnowledge, bool isCorrectedAssumptionByOppositeSuggestiveQuestion, bool isReplacedBySpecificationWithRelation, bool wasHiddenSpanishSpecification, SpecificationItem *writeSpecificationItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeUpdatedSpecification";
 
 		if( wordWrite_ == NULL )
 			return startErrorInWord( functionNameString, NULL, "My word write module isn't created yet" );
 
-		return wordWrite_->writeUpdatedSpecification( isAdjustedSpecification, isCorrectedAssumptionByKnowledge, isCorrectedAssumptionByOppositeQuestion, isReplacedBySpecificationWithRelation, wasHiddenSpanishSpecification, writeSpecificationItem );
+		return wordWrite_->writeUpdatedSpecification( isAdjustedSpecification, isCorrectedAssumptionByKnowledge, isCorrectedAssumptionByOppositeSuggestiveQuestion, isReplacedBySpecificationWithRelation, wasHiddenSpanishSpecification, writeSpecificationItem );
 		}
 
 	WriteItem *WordItem::firstActiveWriteItem()

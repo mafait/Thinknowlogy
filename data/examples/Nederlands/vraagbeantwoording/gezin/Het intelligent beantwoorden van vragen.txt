@@ -1,0 +1,13 @@
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
+Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
+Paul is een zoon van Jan en Anna.
+Johan is een zoon van Jan en Anna.
+Laura is een dochter van Jan en Anna.
+Willem is een vader.
+Sjors is de vader van André.
+Is Paul een zoon of een dochter?
+Is Paul een zoon?
+Is Jan de moeder van Paul?
+Is Sjors de vader van Paul?
+Is Willem de vader van Paul?
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

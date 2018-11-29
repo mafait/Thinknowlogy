@@ -1,12 +1,11 @@
 ﻿Display "------------------------------------------------------------------------------".
-Display " Thinknowlogy is the world's most advanced automated reasoner. Being based".
-#C++#Display " on Natural Laws of Intelligence - embedded in grammar - Thinknowlogy".
-#Java#Display " on Natural Laws of Intelligence – embedded in grammar – Thinknowlogy".
-Display " implements reasoning constructions that are not described by scientists yet:".
-Display " * Despite exhaustive research, the theory of evolution still hasn't provided a".
-Display " satisfactory explanation for the origin of intelligence, language and laws of nature.".
-Display " Let alone, how they are related. Moreover, none of the phenomena that are exclusive".
-Display " to the theory of evolution – or its derivative theories – is applicable to daily life;".
+Display " Thinknowlogy is the world's most advanced automated reasoner: No knowledge is".
+Display " programmed upfront. No dialogues are written upfront. And no words lists are used.".
+Display " Moreover, it implements reasoning constructions that are not yet described by scientists:".
+Display " * Despite exhaustive research, the theory of evolution still hasn't provided a satisfactory".
+Display " explanation for the origin of intelligence, language and laws of nature. Let alone, how".
+Display " they are related. Moreover, none of the phenomena that are exclusive to the theory of".
+Display " evolution – or its derivative theories – is applicable to daily life;".
 Display " * According to the biblical world view, God has created laws of nature to make his creation".
 Display " run like clockwork. Being based on Natural Laws of Intelligence embedded in Grammar,".
 #C++#Display " only Thinknowlogy implements the intelligent function of words like definite article \"the\",".
@@ -21,7 +20,7 @@ Display "   - drawing conclusions (more advanced than scientific solutions),".
 Display "   - making assumptions (with self-adjusting level of uncertainty),".
 Display "   - asking questions (about gaps in the knowledge),".
 Display "   - detecting confirmations, conflicts and some cases of semantic ambiguity,".
-Display "   - displaying of justification reports for the self-generated knowledge;".
+Display "   - displaying justification reports for the self-generated knowledge;".
 Display " * Multilingualism, proving: Natural languages have a common and logical origin.".
 Display "------------------------------------------------------------------------------".
 Display " I defy anyone to beat this automated reasoner: http://mafait.org/challenge/".
@@ -29,7 +28,7 @@ Display "-----------------------------------------------------------------------
 #C++#Display " Help.\t\t\t\t\t\t\t* Display help info".
 #C++#Display " \~{languageName}\t\t\t\t\t* Change language".
 #C++#Display " Read the file \"English/programming/Connect-Four\".\t* Game Connect-Four".
-#C++#Display " Read the file \"English/programming/tower of Hanoi\". * Solve a puzzle".
+#C++#Display " Read the file \"English/programming/tower of Hanoi\".\t* Solve a puzzle".
 #C++#Display " Read the file \"English/reasoning/Scientific challenge\". * Challenge".
 #C++#Display " Read the file \"English/reasoning/family/family definition\". * Reasoning".
 #Java#Display " Use button <programming> to learn about programming in natural language.".

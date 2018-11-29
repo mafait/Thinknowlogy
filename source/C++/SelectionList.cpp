@@ -1,7 +1,7 @@
 ﻿/*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		To store selection items
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -109,18 +109,11 @@ class SelectionList : private List
 		if( unusedWordItem == NULL )
 			return startError( functionNameString, "The given unused word item is undefined" );
 
-		while( searchSelectionItem != NULL )
-			{
-			if( searchSelectionItem->generalizationWordItem() == unusedWordItem )
-				return startError( functionNameString, "The generalization word item is still in use" );
-
-			if( searchSelectionItem->specificationWordItem() == unusedWordItem )
-				return startError( functionNameString, "The specification word item is still in use" );
-
+		while( searchSelectionItem != NULL &&
+		searchSelectionItem->checkWordItemForUsage( unusedWordItem ) == RESULT_OK )
 			searchSelectionItem = searchSelectionItem->nextSelectionItem();
-			}
 
-		return RESULT_OK;
+		return globalVariables()->result;
 		}
 
 	signed char createSelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )

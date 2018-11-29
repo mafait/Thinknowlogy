@@ -1,6 +1,6 @@
 ﻿/*	Class:			GlobalVariables
  *	Purpose:		To hold the global variables
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -130,10 +130,10 @@ class GlobalVariables
 	WordItem *predefinedNounLanguageWordItem = NULL;
 	WordItem *predefinedNounUserWordItem = NULL;
 
-	char learnedFromUserString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-	char queryString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-	char writtenSentenceString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-	char writtenUserSentenceString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char learnedFromUserString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char queryString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char writtenSentenceString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char writtenUserSentenceString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 	};
 
 /*************************************************************************

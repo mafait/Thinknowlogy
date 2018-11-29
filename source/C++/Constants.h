@@ -1,6 +1,6 @@
 ﻿/*	Class:			Constants
  *	Purpose:		Header file to define constants
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -27,7 +27,7 @@
 
 	// Version constants
 	#define PRODUCT_NAME												"Thinknowlogy"
-	#define VERSION_NAME												"2018r3 (Deep Magic)"
+	#define VERSION_NAME												"2018r4 (New Science)"
 
 	// File constants
 	#define	FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING					"data/examples/"
@@ -102,8 +102,6 @@
 
 	// Input-output error constants
 	#define	INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME				"<init>"
-	#define	INPUT_OUTPUT_ERROR_CURRENT_ID_START_STRING					"\nCurrent item id: "
-	#define	INPUT_OUTPUT_ERROR_CURRENT_ID_END_STRING					".\n"
 	#define	INPUT_OUTPUT_ERROR_CLASS_STRING								"\nClass: "
 	#define	INPUT_OUTPUT_ERROR_PARENT_CLASS_STRING						" / parent class "
 	#define	INPUT_OUTPUT_ERROR_FUNCTION_STRING							".\nFunction: "
@@ -204,9 +202,10 @@
 
 	// String constants
 	#define FUNCTION_NAME_STRING_LENGTH									80
-	#define	MAX_ERROR_STRING_LENGTH										1500
-	#define	MAX_SENTENCE_STRING_LENGTH									1500
-	#define	ENTENDED_SENTENCE_STRING_LENGTH								1600
+	#define	SENTENCE_STRING_LENGTH										1500
+	#define	EXTENDED_SENTENCE_STRING_LENGTH								1700
+	#define	ERROR_STRING_LENGTH											EXTENDED_SENTENCE_STRING_LENGTH
+	#define	LONG_SENTENCE_STRING_LENGTH									SENTENCE_STRING_LENGTH + EXTENDED_SENTENCE_STRING_LENGTH
 
 	#define	ASTERISK_STRING												"*"
 	#define	BELL_STRING													"\a"
@@ -717,7 +716,7 @@
 	#define	INTERFACE_LISTING_YOUR_QUESTIONS_THAT_ARE_ANSWERED										1343
 	#define	INTERFACE_LISTING_MY_QUESTIONS_THAT_ARE_ANSWERED										1344
 	#define	INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_KNOWLEDGE									1345
-	#define	INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_QUESTION							1346
+	#define	INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_SUGGESTIVE_QUESTION				1346
 
 	// Listing (justification report)
 	#define	INTERFACE_JUSTIFICATION_BECAUSE															1350

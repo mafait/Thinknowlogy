@@ -20,10 +20,10 @@
  Affichez la garantie.
 ------------------------------------------------------------------------------
  Exemples fichiers: * Utilisez le bouton <exemples>
-                 ou voir le dossier: Thinknowlogy2018r1/data/examples/Français/
- Fondamental:        * dossier: Thinknowlogy2018r1/documents/
- Projet:	       * dossier: Thinknowlogy2018r1/documents/design/
- Captures d'écran:   * dossier: Thinknowlogy2018r1/screenshots/Français/
+                 ou voir le dossier: Thinknowlogy2018r4/data/examples/Français/
+ Fondamental:        * dossier: Thinknowlogy2018r4/documents/
+ Projet:	       * dossier: Thinknowlogy2018r4/documents/design/
+ Captures d'écran:   * dossier: Thinknowlogy2018r4/screenshots/Français/
 ------------------------------------------------------------------------------
 < 
 < Spécifications:
@@ -147,10 +147,9 @@
  Dans les fichiers '~' marquera la fin d'une requête		...~#<W>~...
 ------------------------------------------------------------------------------
  Copyright (C) 2009-2018, Menno Mafait
- Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ;
- pour plus de détails cliquez sur <Aide.> et <Affichez le droit d'auteur.>. Ceci est un
- logiciel libre et vous êtes invité à le redistribuer en respectant certaines obligations;
- pour plus de détails cliquez sur <Aide.> et <Affichez la licence-GPLv2.>.
+ Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de détails cliquez sur
+ <Aide.> et <Affichez le droit d'auteur.>. Ceci est un logiciel libre et vous êtes invité à le redistribuer en
+ respectant certaines obligations; pour plus de détails cliquez sur <Aide.> et <Affichez la licence-GPLv2.>.
 
 		    GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991

@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -32,6 +34,9 @@
 < John is probably a man.
 < John is possibly a person.
 < John is maybe not a woman.
+< John is possibly a parent.
+< John is possibly part of a family.
+< John is maybe not a mother.
 * 
 * I don't know the answer to this question, but I'll keep it in mind.
 * 

@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminWrite
  *	Supports class:	AdminItem
  *	Purpose:		To write selected specifications as sentences
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -57,7 +57,7 @@ class AdminWrite
 		{
 		ReadItem *currentReadItem = adminItem_->firstActiveReadItem();
 		char *readWordTypeString;
-		char writeString[MAX_SENTENCE_STRING_LENGTH];
+		char writeString[SENTENCE_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "displayWordsThatDidntPassIntegrityCheckOfStoredUserSentence";
 
 		do	{
@@ -200,12 +200,12 @@ class AdminWrite
 					primarySpecificationItem->isSelfGeneratedQuestion() &&
 
 					( currentJustificationItem->isQuestionJustification() ||
-					// Correct invalid assumption by opposite question
-					currentJustificationItem->isSpecificationSubstitutionAssumption() ) &&
+					// Correct invalid assumption by opposite suggestive question
+					primarySpecificationItem->isCorrectedAssumption() ) &&
 
 					( generalizationWordItem = primarySpecificationItem->generalizationWordItem() ) != NULL )
 						{
-						if( generalizationWordItem->writeRelatedJustificationSpecifications( currentJustificationItem->justificationTypeNr() ) != RESULT_OK )
+						if( generalizationWordItem->writeRelatedJustificationSpecifications( currentJustificationItem->justificationTypeNr(), secondarySpecificationItem->specificationCollectionNr() ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the related justification specifications" );
 
 						previousPrimarySpecificationItem_ = NULL;
@@ -280,7 +280,7 @@ class AdminWrite
 		( !writeJustificationItem->hasAnotherPrimarySpecification() &&
 		writeJustificationItem->isPrimarySpecificationWordSpanishAmbiguous() ) ) &&
 
-		( currentSpecificationItem = generalizationWordItem->firstSpecificationItem( selfGeneratedSpecificationItem->isAssignment(), selfGeneratedSpecificationItem->isInactiveAssignment(), selfGeneratedSpecificationItem->isArchivedAssignment(), selfGeneratedSpecificationItem->questionParameter() ) ) != NULL )
+		( currentSpecificationItem = generalizationWordItem->firstSpecificationItem( false, selfGeneratedSpecificationItem->isAssignment(), selfGeneratedSpecificationItem->isInactiveAssignment(), selfGeneratedSpecificationItem->isArchivedAssignment(), selfGeneratedSpecificationItem->questionParameter() ) ) != NULL )
 			{
 			isExclusiveSpecification = selfGeneratedSpecificationItem->isExclusiveSpecification();
 			isNegative = selfGeneratedSpecificationItem->isNegative();
@@ -303,7 +303,7 @@ class AdminWrite
 					currentSecondarySpecificationItem = currentJustificationItem->secondarySpecificationItem();
 
 					isWritingPrimarySpecificationOrSeparator = ( currentPrimarySpecificationItem == NULL ||
-																// Suggestive assumption corrected by opposite question
+																// Suggestive assumption corrected by opposite suggestive question
 																currentPrimarySpecificationItem->isUserQuestion() ||
 
 																( currentSecondarySpecificationItem != NULL &&
@@ -527,7 +527,7 @@ class AdminWrite
 		WordItem *generalizationWordItem;
 		WordItem *primaryGeneralizationWordItem = NULL;
 		WordItem *lastWrittenFeminineOrMasculineProperNounEndingWordItem = NULL;
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeSpecificationJustifications";
 
 		if( writeJustificationItem == NULL )
@@ -832,7 +832,7 @@ class AdminWrite
 
 	AdminWrite( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 

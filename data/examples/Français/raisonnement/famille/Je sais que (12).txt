@@ -1,0 +1,8 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Amélie est un parent de Pascal, Julien et Lorraine.
+Lorraine est une jeune-fille.
+Lorraine a une mère, appelée Amélie.
+Amélie est un parent de Pascal, Julien et Lorraine.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Lorraine.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

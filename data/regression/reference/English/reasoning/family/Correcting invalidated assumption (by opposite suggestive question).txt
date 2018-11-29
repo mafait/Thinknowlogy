@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -32,6 +34,9 @@
 < John is probably a woman.
 < John is possibly a person.
 < John is maybe not a man.
+< John is possibly a parent.
+< John is possibly part of a family.
+< John is maybe not a father.
 * 
 * I don't know the answer to this question, but I'll keep it in mind.
 * 
@@ -52,6 +57,20 @@
 <	- John is possibly a person.
 <	- Every person is a man or a woman.
 <	- John is probably a woman.
+* 	and:
+<	- John is possibly a parent.
+<	- Every parent is a woman or a man.
+<	- John is probably a woman.
+< John is possibly a parent. Because:
+<	- John is probably a mother.
+<	- A mother is probably a parent.
+< John is possibly part of a family. Because:
+<	- John is possibly a parent.
+<	- Parents are part of every family.
+< John is maybe not a father. Because:
+<	- John is possibly a parent.
+<	- Every parent is a father or a mother.
+<	- John is probably a mother.
 < 
 * 
 * My earlier assumptions that are corrected by an opposite suggestive question:
@@ -63,6 +82,7 @@
 * My earlier assumptions that are corrected by an opposite suggestive question:
 < John is probably a woman.
 < John is maybe not a man.
+< John is maybe not a father.
 * 
 * My questions:
 < Is John a man or a woman?
@@ -74,8 +94,21 @@
 * My assumptions:
 < John is possibly a person. Because:
 <	- Is John a mother or a father?
-<	- A mother is probably a person.
 <	- A father is probably a person.
+<	- A mother is probably a person.
+* 	and:
+<	- Is John a man or a woman?
+<	- Every person is a man or a woman.
+< John is possibly a parent. Because:
+<	- Is John a mother or a father?
+<	- A father is probably a parent.
+<	- A mother is probably a parent.
+* 	and:
+<	- Is John a man or a woman?
+<	- Every parent is a woman or a man.
+< John is possibly part of a family. Because:
+<	- John is possibly a parent.
+<	- Parents are part of every family.
 * 
 * My questions:
 < Is John a man or a woman? Because:
@@ -87,6 +120,9 @@
 * 	and:
 <	- John is possibly a person.
 <	- Every person is a man or a woman.
+* 	and:
+<	- John is possibly a parent.
+<	- Every parent is a woman or a man.
 < Is John a mother or a father? Because:
 <	- Is John the father of Paul?
 * 	and:

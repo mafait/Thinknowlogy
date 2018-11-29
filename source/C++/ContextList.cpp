@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextList
  *	Parent class:	List
  *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -54,8 +54,7 @@ class ContextList : private List
 		GeneralizationItem *currentGeneralizationItem;
 		WordItem *currentGeneralizationWordItem;
 
-		if( relationContextNr > NO_CONTEXT_NR &&
-		( currentGeneralizationItem = myWordItem()->firstGeneralizationItem() ) != NULL )
+		if( ( currentGeneralizationItem = myWordItem()->firstGeneralizationItem() ) != NULL )
 			{
 			// Do for all generalization words
 			do	{
@@ -113,15 +112,12 @@ class ContextList : private List
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 
-		if( contextNr > NO_CONTEXT_NR )
+		while( searchContextItem != NULL )
 			{
-			while( searchContextItem != NULL )
-				{
-				if( searchContextItem->contextNr() == contextNr )
-					return true;
+			if( searchContextItem->contextNr() == contextNr )
+				return true;
 
-				searchContextItem = searchContextItem->nextContextItem();
-				}
+			searchContextItem = searchContextItem->nextContextItem();
 			}
 
 		return false;
@@ -131,17 +127,13 @@ class ContextList : private List
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 
-		if( contextNr > NO_CONTEXT_NR &&
-		specificationWordItem != NULL )
+		while( searchContextItem != NULL )
 			{
-			while( searchContextItem != NULL )
-				{
-				if( searchContextItem->contextNr() == contextNr &&
-				searchContextItem->specificationWordItem() == specificationWordItem )
-					return true;
+			if( searchContextItem->contextNr() == contextNr &&
+			searchContextItem->specificationWordItem() == specificationWordItem )
+				return true;
 
-				searchContextItem = searchContextItem->nextContextItem();
-				}
+			searchContextItem = searchContextItem->nextContextItem();
 			}
 
 		return false;
@@ -151,18 +143,14 @@ class ContextList : private List
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 
-		if( contextNr > NO_CONTEXT_NR &&
-		specificationWordItem != NULL )
+		while( searchContextItem != NULL )
 			{
-			while( searchContextItem != NULL )
-				{
-				if( searchContextItem->contextNr() == contextNr &&
-				searchContextItem->spanishAmbiguousCollectionNr() == spanishAmbiguousCollectionNr &&
-				searchContextItem->specificationWordItem() == specificationWordItem )
-					return true;
+			if( searchContextItem->contextNr() == contextNr &&
+			searchContextItem->spanishAmbiguousCollectionNr() == spanishAmbiguousCollectionNr &&
+			searchContextItem->specificationWordItem() == specificationWordItem )
+				return true;
 
-				searchContextItem = searchContextItem->nextContextItem();
-				}
+			searchContextItem = searchContextItem->nextContextItem();
 			}
 
 		return false;
@@ -172,16 +160,13 @@ class ContextList : private List
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 
-		if( contextNr > NO_CONTEXT_NR )
+		while( searchContextItem != NULL )
 			{
-			while( searchContextItem != NULL )
-				{
-				if( searchContextItem->hasCurrentCreationSentenceNr() &&
-				searchContextItem->contextNr() == contextNr )
-					return true;
+			if( searchContextItem->hasCurrentCreationSentenceNr() &&
+			searchContextItem->contextNr() == contextNr )
+				return true;
 
-				searchContextItem = searchContextItem->nextContextItem();
-				}
+			searchContextItem = searchContextItem->nextContextItem();
 			}
 
 		return false;
@@ -190,18 +175,16 @@ class ContextList : private List
 	bool isContextSubset( unsigned int subsetContextNr, unsigned int fullSetContextNr )
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
+		WordItem *specificationWordItem;
 
-		if( fullSetContextNr > NO_CONTEXT_NR &&
-		subsetContextNr > NO_CONTEXT_NR )
+		while( searchContextItem != NULL )
 			{
-			while( searchContextItem != NULL )
-				{
-				if( searchContextItem->contextNr() == subsetContextNr &&
-				hasContext( fullSetContextNr, searchContextItem->specificationWordItem() ) )
-					return true;
+			if( searchContextItem->contextNr() == subsetContextNr &&
+			( specificationWordItem = searchContextItem->specificationWordItem() ) != NULL &&
+			hasContext( fullSetContextNr, specificationWordItem ) )
+				return true;
 
-				searchContextItem = searchContextItem->nextContextItem();
-				}
+			searchContextItem = searchContextItem->nextContextItem();
 			}
 
 		return false;
@@ -228,16 +211,13 @@ class ContextList : private List
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 
-		if( specificationWordItem != NULL )
+		while( searchContextItem != NULL )
 			{
-			while( searchContextItem != NULL )
-				{
-				if( searchContextItem->spanishAmbiguousCollectionNr() == spanishAmbiguousCollectionNr &&
-				searchContextItem->specificationWordItem() == specificationWordItem )
-					return searchContextItem->contextNr();
+			if( searchContextItem->spanishAmbiguousCollectionNr() == spanishAmbiguousCollectionNr &&
+			searchContextItem->specificationWordItem() == specificationWordItem )
+				return searchContextItem->contextNr();
 
-				searchContextItem = searchContextItem->nextContextItem();
-				}
+			searchContextItem = searchContextItem->nextContextItem();
 			}
 
 		return NO_CONTEXT_NR;
@@ -305,7 +285,7 @@ class ContextList : private List
 	signed char checkForUnusedRelationContext()
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForUnusedRelationContext";
 
 		while( searchContextItem != NULL &&
@@ -353,15 +333,12 @@ class ContextList : private List
 		{
 		ContextItem *searchContextItem = firstActiveContextItem();
 
-		if( contextNr > NO_CONTEXT_NR )
+		while( searchContextItem != NULL )
 			{
-			while( searchContextItem != NULL )
-				{
-				if( searchContextItem->contextNr() == contextNr )
-					return searchContextItem;
+			if( searchContextItem->contextNr() == contextNr )
+				return searchContextItem;
 
-				searchContextItem = searchContextItem->nextContextItem();
-				}
+			searchContextItem = searchContextItem->nextContextItem();
 			}
 
 		return NULL;
@@ -373,33 +350,29 @@ class ContextList : private List
 		ContextItem *searchContextItem = firstActiveContextItem();
 		WordItem *anyWordItem = myWordItem();
 
-		if( nContextWords > 0 &&
-		specificationWordItem != NULL )
+		while( searchContextItem != NULL )
 			{
-			while( searchContextItem != NULL )
+			if( searchContextItem->specificationWordItem() == specificationWordItem )
 				{
-				if( searchContextItem->specificationWordItem() == specificationWordItem )
-					{
-					searchSpanishAmbiguousCollectionNr = searchContextItem->spanishAmbiguousCollectionNr();
+				searchSpanishAmbiguousCollectionNr = searchContextItem->spanishAmbiguousCollectionNr();
 
-					// No compound collection Spanish ambiguous
-					if( ( !isCompoundCollectionSpanishAmbiguous &&
+				// No compound collection Spanish ambiguous
+				if( ( !isCompoundCollectionSpanishAmbiguous &&
 
-					( searchSpanishAmbiguousCollectionNr == NO_COLLECTION_NR ||
-					// Typical for Spanish
-					searchSpanishAmbiguousCollectionNr == spanishAmbiguousCollectionNr ) &&
+				( searchSpanishAmbiguousCollectionNr == NO_COLLECTION_NR ||
+				// Typical for Spanish
+				searchSpanishAmbiguousCollectionNr == spanishAmbiguousCollectionNr ) &&
 
-					anyWordItem->nContextWords( searchContextItem->contextNr(), specificationWordItem ) == nContextWords ) ||
+				anyWordItem->nContextWords( searchContextItem->contextNr(), specificationWordItem ) == nContextWords ) ||
 
-					// Typical for Spanish
-					// Compound collection Spanish ambiguous
-					( isCompoundCollectionSpanishAmbiguous &&
-					searchSpanishAmbiguousCollectionNr == spanishAmbiguousCollectionNr ) )
-						return searchContextItem;
-					}
-
-				searchContextItem = searchContextItem->nextContextItem();
+				// Typical for Spanish
+				// Compound collection Spanish ambiguous
+				( isCompoundCollectionSpanishAmbiguous &&
+				searchSpanishAmbiguousCollectionNr == spanishAmbiguousCollectionNr ) )
+					return searchContextItem;
 				}
+
+			searchContextItem = searchContextItem->nextContextItem();
 			}
 
 		return NULL;

@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -102,9 +104,6 @@
 < Adam is probably a person. Because:
 <	- Adam is a son of Michael.
 <	- A son is probably a person.
-* 	and:
-<	- Adam is probably a child of Michael.
-<	- A child is probably a person.
 * 	and:
 <	- Michael has a son, called Adam.
 <	- A son is probably a person.
@@ -206,9 +205,6 @@
 * 	and:
 <	- John is a father.
 <	- A father is probably a person.
-* 	and:
-<	- John is probably a parent of Paul, Joe and Laura.
-<	- A parent is probably a person.
 < John is probably not a woman. Because:
 <	- John is probably a person.
 <	- Every person is a man or a woman.
@@ -245,11 +241,6 @@
 <	- Laura is probably a child of John and Anna.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
-* 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
@@ -325,18 +316,6 @@
 < John is probably part of a family. Because:
 <	- John is probably a parent of Paul, Joe and Laura.
 <	- Parents are part of every family.
-< John is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- John is a man.
-* 	and:
-<	- John is a father.
-<	- A father is probably a person.
-* 	and:
-<	- John is probably a parent of Paul, Joe and Laura.
-<	- A parent is probably a person.
-* 	and:
-<	- Paul has a father, called John.
-<	- A father is probably a person.
 < John is probably not a woman. Because:
 <	- John is probably a person.
 <	- Every person is a man or a woman.
@@ -351,11 +330,15 @@
 <	- John is a father.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
+< John is probably a person. Because:
+<	- Paul has a father, called John.
+<	- A father is probably a person.
 * 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
+<	- Every person is a man or a woman.
+<	- John is a man.
+* 	and:
+<	- John is a father.
+<	- A father is probably a person.
 < 
 * 
 * My conclusions:

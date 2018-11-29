@@ -120,6 +120,7 @@
 #Dev#阅读测试文档"中文/问题的回答/家庭/I had the same question before"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/I only know"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/Indirectly answered question, with confirmation"。
+#Dev#阅读测试文档"中文/问题的回答/家庭/Intelligent answering of questions"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/Is Paul a woman"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/Just a few questions (1)"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/Just a few questions (2)"。
@@ -135,7 +136,6 @@
 #Dev#阅读测试文档"中文/问题的回答/家庭/Your question is more specific (about John)"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/Your question is more specific (about Paul and Joe)"。
 
-#Dev#阅读测试文档"中文/推理/家庭/Acceptance of a strange family definition"。
 #Dev#阅读测试文档"中文/推理/家庭/Anna - John - Paul, Joe and Laura"。
 #Dev#阅读测试文档"中文/推理/家庭/Anna was the mother of Paul, Joe and Laura"。
 #Dev#阅读测试文档"中文/推理/家庭/Avoid duplicate context"。
@@ -179,6 +179,7 @@
 #Dev#阅读测试文档"中文/推理/家庭/I know (9)"。
 #Dev#阅读测试文档"中文/推理/家庭/I know (10)"。
 #Dev#阅读测试文档"中文/推理/家庭/I know (11)"。
+#Dev#阅读测试文档"中文/推理/家庭/I know (12)"。
 #Dev#阅读测试文档"中文/推理/家庭/James was the father of Peter (before family definition)"。
 #Dev#阅读测试文档"中文/推理/家庭/Joe has 2 parents - Joe is a child"。
 #Dev#阅读测试文档"中文/推理/家庭/Joe has 2 parents - Joe is a son"。

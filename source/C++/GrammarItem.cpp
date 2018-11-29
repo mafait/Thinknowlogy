@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To store info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -86,8 +86,8 @@ class GrammarItem : private Item
 
 		if( grammarString != NULL )
 			{
-			if( grammarStringLength < MAX_SENTENCE_STRING_LENGTH &&
-			strlen( grammarString ) < MAX_SENTENCE_STRING_LENGTH )
+			if( grammarStringLength < SENTENCE_STRING_LENGTH &&
+			strlen( grammarString ) < SENTENCE_STRING_LENGTH )
 				{
 				if( ( grammarString_ = new char[grammarStringLength + 1] ) != NULL )
 					{
@@ -125,11 +125,6 @@ class GrammarItem : private Item
 
 
 	// Protected virtual functions
-
-	virtual void checkForUsage()
-		{
-		myWordItem()->checkGrammarForUsageInWord( this );
-		}
 
 	virtual void displayString( bool isReturnQueryToPosition )
 		{

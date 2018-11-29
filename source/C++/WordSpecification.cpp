@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordSpecification
  *	Supports class:	WordItem
  *	Purpose:		To create specification structures
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -37,7 +37,7 @@ class WordSpecification
 	bool hasCurrentlyConfirmedSpecificationAndAtLeastOneRelation_ = false;
 	bool hasCurrentlyConfirmedSpecificationButNoRelation_ = false;
 	bool hasCurrentlyCorrectedAssumptionByKnowledge_ = false;
-	bool hasCurrentlyCorrectedAssumptionByOppositeQuestion_ = false;
+	bool hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion_ = false;
 	bool hasCurrentlyMoreSpecificSpecification_ = false;
 	bool hasCurrentlyMoreSpecificNonExclusiveSpecification_ = false;
 	bool hasCurrentlyMoreSpecificQuestion_ = false;
@@ -160,7 +160,7 @@ class WordSpecification
 							if( myWordItem_->writeUpdatedSpecification( false, false, true, false, false, correctedAssumptionReplacedSpecificationItem_ ) != RESULT_OK )
 								return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a conflicting specification" );
 
-							hasCurrentlyCorrectedAssumptionByOppositeQuestion_ = true;
+							hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion_ = true;
 							}
 						}
 					}
@@ -327,7 +327,7 @@ class WordSpecification
 		if( !olderSpecificationItem->isOlderItem() )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given older specification item isn't old" );
 
-		if( myWordItem_->writeSelectedSpecification( false, !olderSpecificationItem->isExclusiveSpecification(), olderSpecificationItem ) != RESULT_OK )
+		if( myWordItem_->writeSelectedSpecification( false, false, olderSpecificationItem ) != RESULT_OK )
 			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the given older specification" );
 
 		if( ( writtenSentenceString = globalVariables_->writtenSentenceString ) == NULL ||
@@ -393,7 +393,7 @@ class WordSpecification
 		if( specificationWordItem == NULL )
 			return myWordItem_->startRelatedResultErrorInWord( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 
-		if( ( currentSpecificationItem = myWordItem_->firstSpecificationItem( isAssignment, isInactiveAssignment, isArchivedAssignment, questionParameter ) ) != NULL )
+		if( ( currentSpecificationItem = myWordItem_->firstSpecificationItem( false, isAssignment, isInactiveAssignment, isArchivedAssignment, questionParameter ) ) != NULL )
 			{
 			do	{
 				if( ( currentSpecificationWordItem = currentSpecificationItem->relatedSpecificationWordItem( isCheckingRelationContext, isIgnoringExclusive, isIgnoringNegative, isExclusiveSpecification, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr ) ) != NULL )
@@ -509,8 +509,7 @@ class WordSpecification
 							// Check for existing compound specification
 							// No self-generated question available for this specification
 							if( ( nonCompoundSpecificationCollectionNr = nonCompoundCollectionNrInCollectionWords( compoundSpecificationCollectionNr ) ) > NO_COLLECTION_NR &&
-							( tempConflictingSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, isNegative, isPossessive, NO_QUESTION_PARAMETER, nonCompoundSpecificationCollectionNr, NULL ) ) != NULL &&
-							tempConflictingSpecificationItem->specificationWordItem() != specificationWordItem )
+							( tempConflictingSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, isNegative, isPossessive, NO_QUESTION_PARAMETER, nonCompoundSpecificationCollectionNr, NULL ) ) != NULL )
 								conflictingSpecificationItem = tempConflictingSpecificationItem;
 							}
 						}
@@ -518,11 +517,9 @@ class WordSpecification
 				}
 			}
 		else
-			{
 			// Find for possible past tense assignment of relatedSpecificationItem
-			pastTenseAssignmentItem = myWordItem_->firstNonQuestionAssignmentItem( false, false, true, isNegative, isPossessive, relatedSpecificationItem->specificationWordItem() );
-			conflictingSpecificationItem = ( pastTenseAssignmentItem == NULL ? relatedSpecificationItem : pastTenseAssignmentItem );
-			}
+			conflictingSpecificationItem = ( ( pastTenseAssignmentItem = myWordItem_->firstNonQuestionAssignmentItem( false, false, true, isNegative, isPossessive, relatedSpecificationItem->specificationWordItem() ) ) == NULL ?
+												relatedSpecificationItem : pastTenseAssignmentItem );
 
 		if( !hasFoundCompoundConflict &&
 		conflictingSpecificationItem != NULL &&
@@ -543,7 +540,6 @@ class WordSpecification
 				if( globalVariables_->nUserSpecificationWords > 1 &&
 				!conflictingSpecificationItem->hasNonExclusiveSpecificationCollection() &&
 				conflictingSpecificationItem->isUserSpecification() &&
-
 				// Current sentence in conflict with definition
 				writeSpecificationInConflictWithDefinition( false, specificationWordItem ) != RESULT_OK )
 					return myWordItem_->addSpecificationResultErrorInWord( functionNameString, moduleNameString_, "I failed to write that the current sentence is in conflict with a definition" );
@@ -782,7 +778,7 @@ class WordSpecification
 		UserSpecificationResultType userSpecificationResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkUserSpecificationOrQuestion";
 
-		hasCurrentlyCorrectedAssumptionByOppositeQuestion_ = false;
+		hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion_ = false;
 
 		if( specificationWordItem == NULL )
 			return myWordItem_->startUserSpecificationResultErrorInWord( functionNameString, moduleNameString_, "The given specification word item is undefined" );
@@ -1164,7 +1160,7 @@ class WordSpecification
 
 	WordSpecification( GlobalVariables *globalVariables, InputOutput *inputOutput, WordItem *myWordItem )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 
@@ -1227,7 +1223,7 @@ class WordSpecification
 	bool hasCurrentlyCorrectedAssumption()
 		{
 		return ( hasCurrentlyCorrectedAssumptionByKnowledge_ ||
-				hasCurrentlyCorrectedAssumptionByOppositeQuestion_ );
+				hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion_ );
 		}
 
 	bool hasCurrentlyCorrectedAssumptionByKnowledge()
@@ -1235,9 +1231,9 @@ class WordSpecification
 		return hasCurrentlyCorrectedAssumptionByKnowledge_;
 		}
 
-	bool hasCurrentlyCorrectedAssumptionByOppositeQuestion()
+	bool hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion()
 		{
-		return hasCurrentlyCorrectedAssumptionByOppositeQuestion_;
+		return hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion_;
 		}
 
 	bool hasCurrentlyMoreSpecificSpecification()
@@ -1543,7 +1539,7 @@ class WordSpecification
 													if( confirmedSpecificationItem != NULL )
 														return myWordItem_->startCreateAndAssignResultErrorInWord( functionNameString, moduleNameString_, "The confirmed specification item is already defined" );
 
-													if( myWordItem_->writeUpdatedSpecification( isSpecificationWordSpanishAmbiguous, false, false, hasRelationContext, false, noRelationContextSpecificationItem ) != RESULT_OK )
+													if( myWordItem_->writeUpdatedSpecification( isSpecificationWordSpanishAmbiguous, false, false, true, false, noRelationContextSpecificationItem ) != RESULT_OK )
 														return myWordItem_->addCreateAndAssignResultErrorInWord( functionNameString, moduleNameString_, "I failed to write an assumption, which has relation words now" );
 
 													confirmedSpecificationItem = noRelationContextSpecificationItem;
@@ -1772,7 +1768,7 @@ class WordSpecification
 										foundSpecificationItem == NULL ? ( obsoleteHiddenSpanishSpecificationItem == NULL ? globalVariables_->currentSentenceNr : obsoleteHiddenSpanishSpecificationItem->creationSentenceNr() ) : foundSpecificationItem->originalSentenceNr() );
 
 				// Create the actual specification
-				if( ( createAndAssignResult = myWordItem_->createSpecificationItem( false, false, false, false, isCharacteristicFor, false, isConditional, ( hasCurrentlyCorrectedAssumptionByKnowledge_ || hasCurrentlyCorrectedAssumptionByOppositeQuestion_ ), isEveryGeneralization, isExclusiveGeneralization, isExclusiveSpecification, ( isAssignment && !isSelfGenerated ? false : isNegative ), isPartOf, isPossessive, isSpecific, isSpecificationGeneralization, isUncountableGeneralizationNoun, isUniqueUserRelation, isValueSpecification, NO_ASSIGNMENT_LEVEL, assumptionLevel, globalVariables_->currentLanguageNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, ( isAssignment ? NO_WORD_TYPE_NR : relationWordTypeNr ), specificationCollectionNr, generalizationContextNr, NO_CONTEXT_NR, ( isAssignment ? NO_CONTEXT_NR : relationContextNr ), originalSentenceNr, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, ( isAssignment ? 0 : nContextRelations ), firstJustificationItem, specificationWordItem, specificationString, NULL, NULL ) ).result != RESULT_OK )
+				if( ( createAndAssignResult = myWordItem_->createSpecificationItem( false, false, false, false, isCharacteristicFor, false, isConditional, ( hasCurrentlyCorrectedAssumptionByKnowledge_ || hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion_ ), isEveryGeneralization, isExclusiveGeneralization, isExclusiveSpecification, ( isAssignment && !isSelfGenerated ? false : isNegative ), isPartOf, isPossessive, isSpecific, isSpecificationGeneralization, isUncountableGeneralizationNoun, isUniqueUserRelation, isValueSpecification, NO_ASSIGNMENT_LEVEL, assumptionLevel, globalVariables_->currentLanguageNr, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, ( isAssignment ? NO_WORD_TYPE_NR : relationWordTypeNr ), specificationCollectionNr, generalizationContextNr, NO_CONTEXT_NR, ( isAssignment ? NO_CONTEXT_NR : relationContextNr ), originalSentenceNr, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, ( isAssignment ? 0 : nContextRelations ), firstJustificationItem, specificationWordItem, specificationString, NULL, NULL ) ).result != RESULT_OK )
 					return myWordItem_->addCreateAndAssignResultErrorInWord( functionNameString, moduleNameString_, "I failed to create a specification item" );
 
 				if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == NULL )

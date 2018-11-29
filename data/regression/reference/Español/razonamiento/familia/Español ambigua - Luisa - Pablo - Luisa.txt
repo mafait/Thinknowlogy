@@ -122,7 +122,13 @@
 <	- Cada padre es una mujer o un hombre.
 <	- Juan es un hombre.
 < Juan es un hombre. Porque:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre es un hombre.
+* 	y:
 <	- Juan es padre de Luisa y Pablo.
+<	- Cada padre es un hombre.
+* 	y:
+<	- Luisa tiene un padre, llamado Juan.
 <	- Cada padre es un hombre.
 < Juan es masculino. Porque:
 <	- Juan es un hombre.
@@ -192,9 +198,6 @@
 * 	y:
 <	- Cada persona es un hombre o una mujer.
 <	- Ana es posiblemente una mujer.
-* 	y:
-<	- Ana es posiblemente madre de Luisa y Pablo.
-<	- Una madre es probablemente una persona.
 < Ana no es puede-ser un hombre. Porque:
 <	- Ana es probablemente una persona.
 <	- Cada persona es un hombre o una mujer.
@@ -250,11 +253,6 @@
 <	- Ana es posiblemente madre de Luisa y Pablo.
 < Luisa tiene posiblemente una madre, llamada Ana. Porque:
 <	- Ana es posiblemente madre de Luisa y Pablo.
-* 	y:
-<	- Ana tiene una hija, llamada Luisa.
-<	- Cada familia tiene padres y hijos.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
 * 
 * Mis preguntas:
 < ¿Es Luisa una niña o una mujer? Porque:

@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -43,9 +45,6 @@
 <	- Addison is a father or a mother.
 <	- A father is probably a person.
 <	- A mother is probably a person.
-* 	and:
-<	- Addison is probably a parent.
-<	- A parent is probably a person.
 < Addison is probably a parent. Because:
 <	- Every parent is a father or a mother.
 <	- Addison is a father or a mother.
@@ -100,12 +99,12 @@
 <	- Addison is a father.
 <	- A father is probably a person.
 * 	and:
-<	- Addison is probably a parent.
-<	- A parent is probably a person.
-* 	and:
 <	- Every person is a man or a woman.
 <	- Addison is a man.
 < Addison is probably a parent. Because:
+<	- Addison is a father.
+<	- A father is probably a parent.
+* 	and:
 <	- Every parent is a father or a mother.
 <	- Addison is a father.
 < Addison is probably part of a family. Because:
@@ -121,5 +120,9 @@
 < Addison is probably not a woman. Because:
 <	- Addison is probably a person.
 <	- Every person is a man or a woman.
+<	- Addison is a man.
+* 	and:
+<	- Addison is probably a parent.
+<	- Every parent is a woman or a man.
 <	- Addison is a man.
 < 

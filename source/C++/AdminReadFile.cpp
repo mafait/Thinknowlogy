@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		To read the grammar, user-interface and example files
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -622,7 +622,7 @@ class AdminReadFile
 		unsigned short predefinedMultipleWordNr = 0;
 		WordItem *foundMultipleWordItem;
 		WordTypeItem *foundWordTypeItem;
-		char multipleWordString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char multipleWordString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		WordResultType wordResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addPredefinedMultipleWord";
 
@@ -989,7 +989,7 @@ class AdminReadFile
 
 	signed char readLine( bool isPassword, bool isQuestion, unsigned int promptSentenceNr, char *promptUserNameString, char *readString )
 		{
-		char promptString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char promptString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readLine";
 
 		// Don't show sentence number when asking for user name, password, and so on
@@ -1201,7 +1201,7 @@ class AdminReadFile
 
 	AdminReadFile( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 
@@ -1282,9 +1282,9 @@ class AdminReadFile
 		bool hasReadReference;
 		bool isStop = false;
 		unsigned int lineNr = 0;
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
-		char outputString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-		char referenceString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[LONG_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char outputString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char referenceString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		FileResultType fileResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "compareOutputFileAgainstReferenceFile";
 
@@ -1357,8 +1357,8 @@ class AdminReadFile
 		WordItem *currentGeneralizationWordItem;
 		WordItem *foundUserWordItem = NULL;
 		WordItem *passwordSpecificationWordItem;
-		char readPasswordString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-		char readUserNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char readPasswordString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char readUserNameString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		WordResultType wordResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "login";
 
@@ -1488,7 +1488,7 @@ class AdminReadFile
 	signed char readAndExecute()
 		{
 		bool isLineExecuted;
-		char readString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char readString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readAndExecute";
 
 		hasFoundDifferentTestResult_ = false;
@@ -1594,7 +1594,7 @@ class AdminReadFile
 								// Regression test file is selected
 								adminItem_->currentFileSentenceNr() == globalVariables_->currentSentenceNr ) );
 		FileItem *testFileItem;
-		char testString[MAX_SENTENCE_STRING_LENGTH];
+		char testString[SENTENCE_STRING_LENGTH];
 		signed char originalResult;
 		FileResultType fileResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readTestFile";
@@ -1720,7 +1720,7 @@ class AdminReadFile
 		FileItem *openedInfoFileItem;
 		FileResultType fileResult;
 		signed char originalResult;
-		char infoPathString[MAX_SENTENCE_STRING_LENGTH] = FILE_DATA_INFO_DIRECTORY_NAME_STRING;
+		char infoPathString[SENTENCE_STRING_LENGTH] = FILE_DATA_INFO_DIRECTORY_NAME_STRING;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "readInfoFile";
 
 		if( infoFileNameString == NULL )

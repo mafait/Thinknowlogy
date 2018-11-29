@@ -1,7 +1,7 @@
 ﻿/*	Class:			AdminSpecification
  *	Supports class:	AdminItem
  *	Purpose:		To create and assign specification structures
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -76,10 +76,12 @@ class AdminSpecification
 		{
 		WordItem *currentContextWordItem;
 
-		if( relationContextNr > NO_CONTEXT_NR &&
-		specificationWordItem != NULL &&
-		relationWordItem != NULL &&
-		!relationWordItem->hasContextInWord( relationContextNr, specificationWordItem ) &&
+		if( relationContextNr == NO_CONTEXT_NR ||
+		specificationWordItem == NULL ||
+		relationWordItem == NULL )
+			return false;
+
+		if( !relationWordItem->hasContextInWord( relationContextNr, specificationWordItem ) &&
 		( currentContextWordItem = globalVariables_->firstContextWordItem ) != NULL )
 			{
 			// Do for all context words
@@ -95,6 +97,24 @@ class AdminSpecification
 		return true;
 		}
 
+	unsigned int collectionNrByCompoundGeneralizationWordInCollectionWords( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, WordItem *compoundGeneralizationWordItem )
+		{
+		unsigned int collectionNr;
+		WordItem *currentCollectionWordItem;
+
+		if( ( currentCollectionWordItem = globalVariables_->firstCollectionWordItem ) != NULL )
+			{
+			// Do for all collection words
+			do	{
+				if( ( collectionNr = currentCollectionWordItem->collectionNrByCompoundGeneralizationWordInWord( isExclusiveSpecification, collectionWordTypeNr, compoundGeneralizationWordItem ) ) > NO_COLLECTION_NR )
+					return collectionNr;
+				}
+			while( ( currentCollectionWordItem = currentCollectionWordItem->nextCollectionWordItem ) != NULL );
+			}
+
+		return NO_COLLECTION_NR;
+		}
+
 	WordItem *contextUsedInUserSpecificationOfWordItem( bool isPossessive, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem )
 		{
 		GeneralizationItem *currentGeneralizationItem;
@@ -102,8 +122,7 @@ class AdminSpecification
 
 		// Specification collection number may be undefined
 
-		if( relationContextNr > NO_CONTEXT_NR &&
-		specificationWordItem != NULL &&
+		if( specificationWordItem != NULL &&
 		( currentGeneralizationItem = specificationWordItem->firstSpecificationGeneralizationItem( true ) ) != NULL )
 			{
 			// Do for all generalization specification words
@@ -116,26 +135,6 @@ class AdminSpecification
 			}
 
 		return NULL;
-		}
-
-	unsigned int collectionNrByCompoundGeneralizationWordInCollectionWords( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, WordItem *compoundGeneralizationWordItem )
-		{
-		unsigned int collectionNr;
-		WordItem *currentCollectionWordItem;
-
-		if( collectionWordTypeNr > NO_WORD_TYPE_NR &&
-		compoundGeneralizationWordItem != NULL &&
-		( currentCollectionWordItem = globalVariables_->firstCollectionWordItem ) != NULL )
-			{
-			// Do for all collection words
-			do	{
-				if( ( collectionNr = currentCollectionWordItem->collectionNrByCompoundGeneralizationWordInWord( isExclusiveSpecification, collectionWordTypeNr, compoundGeneralizationWordItem ) ) > NO_COLLECTION_NR )
-					return collectionNr;
-				}
-			while( ( currentCollectionWordItem = currentCollectionWordItem->nextCollectionWordItem ) != NULL );
-			}
-
-		return NO_COLLECTION_NR;
 		}
 
 	signed char addUserSpecificationWithRelation( bool isAction, bool isAssignedOrClear, bool isAssignment, bool isCharacteristicFor, bool isChineseReasoning, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isNewStart, bool isPartOf, bool isPossessive, bool isSpanishCurrentLanguage, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, unsigned short imperativeVerbParameter, unsigned short questionParameter, unsigned short selectionLevel, unsigned short selectionListNr, unsigned short userAssumptionLevel, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, unsigned int nUserRelationWords, ReadItem *startRelationReadItem, ReadItem *endRelationReadItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
@@ -460,8 +459,7 @@ class AdminSpecification
 		WordItem *currentContextWordItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "copyContext";
 
-		if( existingContextNr > NO_CONTEXT_NR &&
-		( currentContextWordItem = globalVariables_->firstContextWordItem ) != NULL )
+		if( ( currentContextWordItem = globalVariables_->firstContextWordItem ) != NULL )
 			{
 			// Do for all context words
 			do	{
@@ -565,7 +563,7 @@ class AdminSpecification
 		JustificationItem *existingJustificationItem;
 		JustificationItem *obsoleteJustificationItem;
 		SpecificationItem *assumptionSpecificationItem;
-		WordItem *secondarySpecificationWordItem;
+		WordItem *specificationWordItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "processJustification";
 
 		if( createdOrFoundJustificationItem == NULL )
@@ -600,10 +598,18 @@ class AdminSpecification
 					else
 						{
 						if( isUserGeneralizationWord &&
-						secondarySpecificationItem->isSelfGeneratedConclusion() &&
-						( secondarySpecificationWordItem = secondarySpecificationItem->specificationWordItem() ) != NULL &&
-						( assumptionSpecificationItem = relationWordItem->firstSelfGeneratedCheckSpecificationItem( false, secondarySpecificationItem->isArchivedAssignment(), secondarySpecificationItem->isNegative(), secondarySpecificationItem->isPossessive(), true, secondarySpecificationWordItem, generalizationWordItem ) ) != NULL &&
-						( existingJustificationItem = generalizationWordItem->secondarySpecificationJustificationItem( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, assumptionSpecificationItem ) ) != NULL )
+
+						( ( secondarySpecificationItem->isSelfGeneratedConclusion() &&
+						( specificationWordItem = secondarySpecificationItem->specificationWordItem() ) != NULL &&
+						( assumptionSpecificationItem = relationWordItem->firstSelfGeneratedCheckSpecificationItem( false, secondarySpecificationItem->isArchivedAssignment(), false, false, true, specificationWordItem, generalizationWordItem ) ) != NULL &&
+						( existingJustificationItem = generalizationWordItem->secondarySpecificationJustificationItem( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, assumptionSpecificationItem ) ) != NULL ) ||
+
+						( !isSpecificationWordSpanishAmbiguous &&
+						primarySpecificationItem != NULL &&
+						primarySpecificationItem->isSelfGeneratedConclusion() &&
+						( specificationWordItem = primarySpecificationItem->specificationWordItem() ) != NULL &&
+						( assumptionSpecificationItem = relationWordItem->firstSelfGeneratedCheckSpecificationItem( false, foundSpecificationItem->isArchivedAssignment(), false, false, true, specificationWordItem, generalizationWordItem ) ) != NULL &&
+						( existingJustificationItem = generalizationWordItem->primarySpecificationJustificationItem( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION, assumptionSpecificationItem ) ) != NULL ) ) )
 							{
 							if( generalizationWordItem->replaceJustification( existingJustificationItem, createdOrFoundJustificationItem, foundSpecificationItem ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an existing justification item in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
@@ -709,6 +715,13 @@ class AdminSpecification
 
 				break;
 
+			case JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION:
+				if( foundSpecificationItem->isConcludedAssumption() )
+					// Remove obsolete justifications from concluded assumption
+					isRemovingPreviousJustifications = true;
+
+				break;
+
 			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
 				// Adjusted question
 				if( isOlderFoundSpecification &&
@@ -723,8 +736,17 @@ class AdminSpecification
 
 		if( isRemovingPreviousJustifications )
 			{
-			if( generalizationWordItem->copyAndReplaceSpecificationItem( foundSpecificationItem->isAnsweredQuestion(), foundSpecificationItem->isEveryGeneralization(), foundSpecificationItem->isExclusiveSpecification(), foundSpecificationItem->generalizationCollectionNr(), foundSpecificationItem->specificationCollectionNr(), createdOrFoundJustificationItem, foundSpecificationItem ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to copy and replace a specification with a different first justification item" );
+			if( foundSpecificationItem->hasCurrentCreationSentenceNr() )
+				{
+				if( foundSpecificationItem->changeFirstJustification( false, createdOrFoundJustificationItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to change the first justification of the found specification" );
+				}
+			else
+				{
+				// Copy and replace
+				if( generalizationWordItem->copyAndReplaceSpecificationItem( foundSpecificationItem->isAnsweredQuestion(), foundSpecificationItem->isEveryGeneralization(), foundSpecificationItem->isExclusiveSpecification(), foundSpecificationItem->generalizationCollectionNr(), foundSpecificationItem->specificationCollectionNr(), createdOrFoundJustificationItem, foundSpecificationItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to copy and replace the found specification, with a different first justification item" );
+				}
 			}
 		else
 			{
@@ -760,8 +782,7 @@ class AdminSpecification
 		WordItem *currentContextWordItem;
 		WordItem *mostRecentWordItem = NULL;
 
-		if( contextNr > NO_CONTEXT_NR &&
-		( currentContextWordItem = globalVariables_->firstContextWordItem ) != NULL )
+		if( ( currentContextWordItem = globalVariables_->firstContextWordItem ) != NULL )
 			{
 			// Do for all context words
 			do	{
@@ -1670,7 +1691,7 @@ class AdminSpecification
 
 	AdminSpecification( AdminItem *adminItem, GlobalVariables *globalVariables, InputOutput *inputOutput )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 
@@ -2522,7 +2543,7 @@ class AdminSpecification
 		SpecificationItem *foundSpecificationItem;
 		CreateAndAssignResultType createAndAssignResult;
 		JustificationResultType justificationResult;
-		char errorString[MAX_ERROR_STRING_LENGTH];
+		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addSelfGeneratedSpecification";
 
 		if( generalizationWordItem == NULL )
@@ -2703,7 +2724,10 @@ class AdminSpecification
 					if( !isSkipDrawingSpanishAmbiguousSubstitutionConclusion )
 						{
 						// Make a specification substitution 'part of' assumption
-						if( adminItem_->makeSpecificationSubstitutionPartOfAssumption( isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, generalizationWordItem, specificationWordItem ) != RESULT_OK )
+						if( foundSpecificationItem == NULL &&
+						createdSpecificationItem != NULL &&
+						createdSpecificationItem->hasSpecificationCollection() &&
+						adminItem_->makeSpecificationSubstitutionPartOfAssumption( isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, generalizationWordItem, specificationWordItem ) != RESULT_OK )
 							return adminItem_->addCreateAndAssignResultError( functionNameString, moduleNameString_, "I failed to make a specification substitution 'part of' assumption about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
 						// Draw a specification substitution conclusion or ask a question

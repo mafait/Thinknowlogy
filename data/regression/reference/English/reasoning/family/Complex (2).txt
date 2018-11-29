@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -162,9 +164,6 @@
 * 	and:
 <	- Joe has 2 parents, called John and Anna.
 <	- A parent is probably a person.
-* 	and:
-<	- Anna is probably a mother of Joe.
-<	- A mother is probably a person.
 < Anna is probably a woman. Because:
 <	- Anna is a parent of Joe.
 <	- Every parent is a woman or a man.
@@ -334,11 +333,6 @@
 <	- John is a parent of Joe.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
-* 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
@@ -382,6 +376,9 @@
 <	- Every family has parents and children.
 <	- Anna is probably a parent of Joe, Paul and Laura.
 < Anna is probably a person. Because:
+<	- Anna is a mother.
+<	- A mother is probably a person.
+* 	and:
 <	- Anna is a parent of Joe.
 <	- A parent is probably a person.
 * 	and:
@@ -390,9 +387,6 @@
 * 	and:
 <	- Joe has 2 parents, called John and Anna.
 <	- A parent is probably a person.
-* 	and:
-<	- Anna is a mother.
-<	- A mother is probably a person.
 < Anna is probably a parent of Joe, Paul and Laura. Because:
 <	- Joe has 2 parents, called John and Anna.
 <	- Paul has probably 2 parents, called John and Anna.
@@ -407,11 +401,6 @@
 <	- Laura is probably a child of John and Anna.
 < Anna has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
-* 	and:
-<	- Laura has a mother, called Anna.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
@@ -508,11 +497,6 @@
 <	- John is a parent of Joe and Paul.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
-* 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < John is probably a parent of Joe, Paul and Laura. Because:
 <	- Every family has parents and children.
 <	- Joe is probably a child of John and Anna.
@@ -597,14 +581,12 @@
 <	- Anna is probably a parent of Joe, Paul and Laura.
 < Anna has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
-* 	and:
-<	- Laura has a mother, called Anna.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < Anna is probably a person. Because:
 <	- Paul has 2 parents, called John and Anna.
 <	- A parent is probably a person.
+* 	and:
+<	- Anna is a mother.
+<	- A mother is probably a person.
 * 	and:
 <	- Anna is a parent of Joe and Paul.
 <	- A parent is probably a person.
@@ -614,9 +596,6 @@
 * 	and:
 <	- Joe has 2 parents, called John and Anna.
 <	- A parent is probably a person.
-* 	and:
-<	- Anna is a mother.
-<	- A mother is probably a person.
 < 
 * 
 * My conclusions:
@@ -702,11 +681,6 @@
 * My assumptions:
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
-* 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < John has probably 3 children, called Joe, Paul and Laura. Because:
 <	- Laura is probably a child of John and Anna.
 <	- Paul is a child of John and Anna.
@@ -792,11 +766,6 @@
 <	- Anna is probably a parent of Joe, Paul and Laura.
 < Anna has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
-* 	and:
-<	- Laura has a mother, called Anna.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < Anna is probably a parent of Joe, Paul and Laura. Because:
 <	- Joe has 2 parents, called John and Anna.
 <	- Paul has 2 parents, called John and Anna.
@@ -816,6 +785,9 @@
 <	- Paul has 2 parents, called John and Anna.
 <	- A parent is probably a person.
 * 	and:
+<	- Anna is a mother.
+<	- A mother is probably a person.
+* 	and:
 <	- Anna is a parent of Joe and Paul.
 <	- A parent is probably a person.
 * 	and:
@@ -824,9 +796,6 @@
 * 	and:
 <	- Joe has 2 parents, called John and Anna.
 <	- A parent is probably a person.
-* 	and:
-<	- Anna is a mother.
-<	- A mother is probably a person.
 < 
 * 
 * My conclusions:

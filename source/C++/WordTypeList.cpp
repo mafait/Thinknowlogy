@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		To store word type items
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -451,7 +451,7 @@ class WordTypeList : private List
 		bool hasMasculineWordEnding = false;
 		bool isSingularNoun;
 		unsigned short grammarParameter;
-		WordItem *generalizationWordItem = myWordItem();
+		WordItem *thisWordItem = myWordItem();
 		WordEndingResultType wordEndingResult;
 		WordResultType wordResult;
 		WordTypeResultType wordTypeResult;
@@ -482,7 +482,7 @@ class WordTypeList : private List
 				grammarParameter = ( isSingularNoun ? WORD_FEMININE_SINGULAR_NOUN_ENDING : WORD_FEMININE_PROPER_NOUN_ENDING );
 
 				// Check on feminine and masculine word ending
-				if( ( wordEndingResult = generalizationWordItem->analyzeWordEndingWithCurrentLanguage( grammarParameter, 0, wordTypeString ) ).result != RESULT_OK )
+				if( ( wordEndingResult = thisWordItem->analyzeWordEndingWithCurrentLanguage( grammarParameter, 0, wordTypeString ) ).result != RESULT_OK )
 					return addWordTypeResultError( functionNameString, "I failed to check on feminine word ending" );
 
 				if( wordEndingResult.hasFoundWordEnding )
@@ -490,7 +490,7 @@ class WordTypeList : private List
 					hasFeminineWordEnding = true;
 
 					if( isSingularNoun &&
-					generalizationWordItem->markWordAsFeminine() != RESULT_OK )
+					thisWordItem->markWordAsFeminine() != RESULT_OK )
 						return addWordTypeResultError( functionNameString, "I failed to mark my word as feminine" );
 					}
 				else
@@ -498,7 +498,7 @@ class WordTypeList : private List
 					// Masculine
 					grammarParameter = ( isSingularNoun ? WORD_MASCULINE_SINGULAR_NOUN_ENDING : WORD_MASCULINE_PROPER_NOUN_ENDING );
 
-					if( ( wordEndingResult = generalizationWordItem->analyzeWordEndingWithCurrentLanguage( grammarParameter, 0, wordTypeString ) ).result != RESULT_OK )
+					if( ( wordEndingResult = thisWordItem->analyzeWordEndingWithCurrentLanguage( grammarParameter, 0, wordTypeString ) ).result != RESULT_OK )
 						return addWordTypeResultError( functionNameString, "I failed to check on masculine word ending" );
 
 					if( wordEndingResult.hasFoundWordEnding )
@@ -506,7 +506,7 @@ class WordTypeList : private List
 						hasMasculineWordEnding = true;
 
 						if( isSingularNoun &&
-						generalizationWordItem->markWordAsMasculine() != RESULT_OK )
+						thisWordItem->markWordAsMasculine() != RESULT_OK )
 							return addWordTypeResultError( functionNameString, "I failed to mark my word as masculine" );
 						}
 					}

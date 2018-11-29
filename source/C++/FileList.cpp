@@ -1,7 +1,7 @@
 ﻿/*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		To store file items
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -234,9 +234,9 @@ class FileList : private List
 		{
 		FILE *readFile;
 		FILE *writeFile = NULL;
-		char readFileNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-		char referenceFileNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
-		char writeFileNameString[MAX_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char readFileNameString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char referenceFileNameString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+		char writeFileNameString[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 		FileResultType fileResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "openFile";
 

@@ -5,6 +5,7 @@
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een ouder.
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
+< Een moeder is waarschijnlijk een ouder.
 < 
 * 
 * Mijn veronderstellingen:
@@ -105,17 +107,14 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is een ouder van Paul.
 < Jan is waarschijnlijk een persoon. Omdat:
+<	- Paul heeft 2 ouders, genaamd Jan en Anna.
+<	- Een ouder is waarschijnlijk een persoon.
+* 	en:
 <	- Iedere persoon is een man of een vrouw.
 <	- Jan is een man.
 * 	en:
 <	- Jan is een vader.
 <	- Een vader is waarschijnlijk een persoon.
-* 	en:
-<	- Jan is een ouder van Paul.
-<	- Een ouder is waarschijnlijk een persoon.
-* 	en:
-<	- Paul heeft 2 ouders, genaamd Jan en Anna.
-<	- Een ouder is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -140,9 +139,6 @@
 * 	en:
 <	- Paul heeft 2 ouders, genaamd Jan en Anna.
 <	- Een ouder is waarschijnlijk een persoon.
-* 	en:
-<	- Anna is waarschijnlijk een moeder van Paul.
-<	- Een moeder is waarschijnlijk een persoon.
 < Anna is waarschijnlijk een vrouw. Omdat:
 <	- Anna is een ouder van Paul.
 <	- Iedere ouder is een vrouw of een man.

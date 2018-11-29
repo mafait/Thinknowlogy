@@ -13,18 +13,6 @@
 < 
 * 
 * Mis conclusiones:
-< Cada mamífero es un vertebrado.
-< Cada organismo es un vertebrado.
-* 
-* Mis suposiciones:
-< Un humano es probablemente un organismo.
-< 
-* 
-* Mis conclusiones:
-< Cada organismo es un mamífero.
-< 
-* 
-* Mis conclusiones:
 < Juan es un mamífero.
 < Juan es un vertebrado.
 < Juan no es un anfibio, un pájaro, un pez y un reptil.
@@ -40,19 +28,8 @@
 <	- Un mamífero es probablemente un organismo.
 < 
 * 
-* Mis conclusiones:
-< Cada mamífero es un vertebrado. Porque:
-<	- Cada mamífero es un cetáceo, un marsupial, un roedor, un mono o un humano.
-<	- Cada humano es un vertebrado.
-* 
 * Mis suposiciones:
 < Un mamífero es probablemente un organismo. Porque:
-<	- Cada mamífero es un cetáceo, un marsupial, un roedor, un mono o un humano.
-<	- Un humano es probablemente un organismo.
-* 	y:
-<	- Cada mamífero es un vertebrado.
-<	- Un vertebrado es posiblemente un organismo.
-* 	y:
 <	- Cada organismo es un animal, un hongo, un humano, un microorganismo o una planta.
 <	- Cada mamífero es un cetáceo, un marsupial, un roedor, un mono o un humano.
 < 
@@ -86,20 +63,8 @@
 <	- Cada organismo es un animal, un hongo, un humano, un microorganismo o una planta.
 <	- Juan es un humano.
 * 	y:
-<	- Cada organismo es un mamífero.
-<	- Juan es un mamífero.
-* 	y:
 <	- Juan es un mamífero.
 <	- Un mamífero es probablemente un organismo.
-* 	y:
-<	- Juan es un humano.
-<	- Un humano es probablemente un organismo.
-* 	y:
-<	- Cada organismo es un vertebrado.
-<	- Juan es un vertebrado.
-* 	y:
-<	- Juan es un vertebrado.
-<	- Un vertebrado es posiblemente un organismo.
 < Juan no es probablemente un animal, un hongo, un microorganismo y una planta. Porque:
 <	- Juan es probablemente un organismo.
 <	- Cada organismo es un animal, un hongo, un humano, un microorganismo o una planta.

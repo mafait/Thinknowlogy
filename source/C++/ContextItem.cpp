@@ -1,7 +1,7 @@
 ﻿/*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -105,10 +105,11 @@ class ContextItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
+		WordItem *thisWordItem = myWordItem();
 		char *wordString;
 		char *queryString;
-		char *contextWordTypeString = myWordItem()->wordTypeNameString( contextWordTypeNr_ );
-		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
+		char *contextWordTypeString = thisWordItem->wordTypeNameString( contextWordTypeNr_ );
+		char *specificationWordTypeString = thisWordItem->wordTypeNameString( specificationWordTypeNr_ );
 
 		itemBaseToString( queryWordTypeNr );
 

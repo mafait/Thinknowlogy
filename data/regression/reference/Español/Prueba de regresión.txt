@@ -20,10 +20,10 @@
  Mostrar la garantía.
 ------------------------------------------------------------------------------
  Archivos de ejemplo: * Utilice botón <más ejemplos>
-	    o ver carpeta: Thinknowlogy2018r1/data/examples/Español/
- Fundamental:	          * carpeta: Thinknowlogy2018r1/documents/
- Proyecto:	          * carpeta: Thinknowlogy2018r1/documents/design/
- Imágenes:	          * carpeta: Thinknowlogy2018r1/screenshots/Español/
+	    o ver carpeta: Thinknowlogy2018r4/data/examples/Español/
+ Fundamental:	          * carpeta: Thinknowlogy2018r4/documents/
+ Proyecto:	          * carpeta: Thinknowlogy2018r4/documents/design/
+ Imágenes:	          * carpeta: Thinknowlogy2018r4/screenshots/Español/
 ------------------------------------------------------------------------------
 < 
 < Especificaciones:

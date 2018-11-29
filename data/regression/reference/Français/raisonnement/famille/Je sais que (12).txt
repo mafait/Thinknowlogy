@@ -1,0 +1,192 @@
+﻿* 
+* Mes conclusions:
+< Parents et enfants sont partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Un père est probablement une personne.
+< Un père est probablement un parent.
+< Un parent est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement une personne.
+< Une mère est probablement un parent.
+< 
+* 
+* Mes hypothèses:
+< Un fils est probablement une personne.
+< Un enfant est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Amélie est partie d'une famille.
+< Pascal a un parent, appelée Amélie.
+< Julien a un parent, appelée Amélie.
+< Lorraine a un parent, appelée Amélie.
+* 
+* Mes hypothèses:
+< Amélie est probablement une personne.
+< Amélie est probablement une femme.
+< Amélie n'est probablement pas un homme.
+< Amélie est probablement féminine.
+< Amélie est probablement une mère.
+< Amélie n'est probablement pas un père.
+< Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+< Amélie a possible une fille, appelée Lorraine.
+< Pascal est probablement un enfant de Amélie.
+< Pascal est probablement partie d'une famille.
+< Pascal est possible une personne.
+< Julien est probablement un enfant de Amélie.
+< Julien est probablement partie d'une famille.
+< Julien est possible une personne.
+< Lorraine est probablement un enfant de Amélie.
+< Lorraine est probablement partie d'une famille.
+< Lorraine est possible une personne.
+< Lorraine est possible une fille de Amélie.
+< Lorraine n'est peut-être pas un garçon et pas un homme.
+< Lorraine n'est peut-être pas un fils.
+* 
+* Mes questions:
+< Est Pascal une jeune-fille, une femme, un garçon ou un homme?
+< Est Pascal un fils ou une fille?
+< Est Julien une jeune-fille, une femme, un garçon ou un homme?
+< Est Julien un fils ou une fille?
+< Est Lorraine une jeune-fille ou une femme?
+< 
+* 
+* Mes questions qui sont répondues:
+< Est Lorraine une jeune-fille ou une femme?
+* 
+* Mes hypothèses qui sont ajustés:
+< Lorraine n'est probablement pas une femme, pas un garçon et pas un homme.
+* 
+* Mes conclusions:
+< Lorraine est féminine.
+< 
+* 
+* Mes hypothèses antérieures qui ont des mots de relation maintenant:
+< Amélie est probablement une mère.
+* 
+* Mes hypothèses qui sont conclus:
+< Amélie est une femme.
+< Amélie n'est pas un homme.
+< Amélie est féminine.
+< Amélie n'est pas un père.
+* 
+* Mes conclusions:
+< Amélie est une mère de Lorraine.
+< 
+* Je sais que.
+* 
+* 
+* Mes conclusions:
+< Amélie est une mère de Lorraine. En raison:
+<	- Lorraine a une mère, appelée Amélie.
+< Amélie est une femme. En raison:
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+<	- Chaque parent est une femme ou un homme.
+<	- Nom propre «Amélie» est probablement féminin.
+* 	et:
+<	- Amélie est une mère de Lorraine.
+<	- Chaque mère est une femme.
+< Amélie n'est pas un homme. En raison:
+<	- Amélie est probablement une personne.
+<	- Chaque personne est un homme ou une femme.
+<	- Amélie est une femme.
+* 	et:
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+<	- Chaque parent est une femme ou un homme.
+<	- Amélie est une femme.
+< Amélie est féminine. En raison:
+<	- Amélie est une femme.
+<	- Chaque femme est féminine.
+< Amélie n'est pas un père. En raison:
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+<	- Chaque parent est un père ou une mère.
+<	- Amélie est une mère de Lorraine.
+< Amélie est partie d'une famille. En raison:
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+<	- Parents sont partie de chaque famille.
+* 
+* Mes hypothèses:
+< Amélie est probablement une personne. En raison:
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+<	- Un parent est probablement une personne.
+* 	et:
+<	- Chaque personne est un homme ou une femme.
+<	- Amélie est une femme.
+* 	et:
+<	- Lorraine a une mère, appelée Amélie.
+<	- Une mère est probablement une personne.
+* 	et:
+<	- Amélie est une mère de Lorraine.
+<	- Une mère est probablement une personne.
+< Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine. En raison:
+<	- Chaque famille a parents et enfants.
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+* 	et:
+<	- Pascal est probablement un enfant de Amélie.
+<	- Julien est probablement un enfant de Amélie.
+<	- Lorraine est probablement un enfant de Amélie.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Pascal a un parent, appelée Amélie.
+<	- Julien a un parent, appelée Amélie.
+<	- Lorraine a un parent, appelée Amélie.
+< Amélie a possible une fille, appelée Lorraine. En raison:
+<	- Lorraine est possible une fille de Amélie.
+* 	et:
+<	- Lorraine a un parent, appelée Amélie.
+<	- Chaque famille a parents et enfants.
+<	- Chaque enfant est un fils ou une fille.
+<	- Nom propre «Lorraine» est probablement féminin.
+< 
+* 
+* Mes conclusions:
+< Lorraine est féminine. En raison:
+<	- Lorraine est une jeune-fille.
+<	- Chaque jeune-fille est féminine.
+< Lorraine a un parent, appelée Amélie. En raison:
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+* 
+* Mes hypothèses:
+< Lorraine n'est probablement pas une femme, pas un garçon et pas un homme. En raison:
+<	- Lorraine est probablement un enfant de Amélie.
+<	- Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
+<	- Lorraine est une jeune-fille.
+< Lorraine est probablement un enfant de Amélie. En raison:
+<	- Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+< Lorraine est probablement partie d'une famille. En raison:
+<	- Lorraine est probablement un enfant de Amélie.
+<	- Enfants sont partie de chaque famille.
+< Lorraine est possible une personne. En raison:
+<	- Lorraine est probablement un enfant de Amélie.
+<	- Un enfant est probablement une personne.
+< Lorraine est possible une fille de Amélie. En raison:
+<	- Lorraine est probablement un enfant de Amélie.
+<	- Chaque enfant est un fils ou une fille.
+<	- Nom propre «Lorraine» est probablement féminin.
+* 	et:
+<	- Amélie est un parent de Pascal, Julien et Lorraine.
+<	- Chaque famille a parents et enfants.
+<	- Chaque enfant est un fils ou une fille.
+<	- Nom propre «Lorraine» est probablement féminin.
+< Lorraine n'est peut-être pas un fils. En raison:
+<	- Lorraine est probablement un enfant de Amélie.
+<	- Chaque enfant est un fils ou une fille.
+<	- Lorraine est possible une fille de Amélie.
+< 

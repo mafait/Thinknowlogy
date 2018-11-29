@@ -1,6 +1,6 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:	Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -106,7 +106,7 @@ class Item
 	Item *nextItem = NULL;
 
 	char statusString[2] = SPACE_STRING;
-	char tempString[ENTENDED_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
+	char tempString[EXTENDED_SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
 
 	// Constructor

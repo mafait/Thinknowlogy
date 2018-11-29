@@ -18,6 +18,7 @@ Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
 Olivier est une personne.
 Olivier a une fille, appelée Lorraine.
 #Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Lorraine.
 Amélie est une personne.
 Amélie a une fille, appelée Lorraine.
 #Dev#Affichez le rapport de justification sur Amélie.

@@ -22,15 +22,20 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < Olivier est probablement un homme.
 < Olivier est possible une personne.
 < Olivier n'est peut-être pas une femme.
 < Olivier est probablement masculin.
+< Olivier est possible un parent.
+< Olivier est possible partie d'une famille.
 < Philippe était probablement un homme.
 < Philippe était possible une personne.
 < Philippe ne était peut-être pas une femme.
 < Philippe était probablement masculin.
+< Philippe était possible un parent.
+< Philippe était possible partie d'une famille.
 < 
 * 
 * Mes conclusions:
@@ -38,6 +43,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -71,6 +77,13 @@
 * Mes hypothèses qui sont conclus:
 < Olivier est masculin.
 * 
+* Mes hypothèses qui sont ajustés:
+< Olivier est probablement un parent.
+< Olivier est probablement partie d'une famille.
+* 
+* Mes hypothèses antérieures qui ont des mots de relation maintenant:
+< Olivier est probablement un parent.
+* 
 * Mes conclusions:
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
@@ -83,7 +96,6 @@
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent de Pascal, Julien et Lorraine.
-< Olivier est probablement partie d'une famille.
 < Olivier n'est probablement pas une mère.
 < Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 < Olivier a possible une fille, appelée Lorraine.
@@ -154,6 +166,7 @@
 < Guillaume est probablement un parent de Armand.
 < Amélie est probablement un parent de Pascal, Julien et Lorraine.
 < Olivier est probablement un parent de Pascal, Julien et Lorraine.
+< Philippe était possible un parent.
 < Julien est probablement un enfant de Olivier et Amélie.
 < 
 * 

@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -83,6 +85,9 @@
 < Michael is probably a man.
 < Michael is possibly a person.
 < Michael is maybe not a woman.
+< Michael is possibly a parent.
+< Michael is possibly part of a family.
+< Michael is maybe not a mother.
 * 
 * My answer:
 < No, John is the father of Paul, Joe and Laura.

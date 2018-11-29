@@ -72,8 +72,11 @@
 * Mis suposiciones:
 < Juan es posiblemente una persona. Porque:
 <	- ¿Es Juan una madre o un padre?
-<	- Una madre es probablemente una persona.
 <	- Un padre es probablemente una persona.
+<	- Una madre es probablemente una persona.
+* 	y:
+<	- ¿Es Juan un hombre o una mujer?
+<	- Cada persona es un hombre o una mujer.
 * 
 * Mis preguntas:
 < ¿Es Juan un hombre o una mujer? Porque:

@@ -1,6 +1,6 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:	Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -817,7 +817,7 @@
 	// Strictly for initialization of AdminItem
 	void Item::initializeItemVariables( const char *classNameString, GlobalVariables *globalVariables, WordItem *myWordItem )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 
 		// Checking private initialized variables
 
@@ -838,7 +838,7 @@
 
 	void Item::initializeItemVariables( unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, const char *classNameString, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
-		char errorString[MAX_ERROR_STRING_LENGTH] = EMPTY_STRING;
+		char errorString[ERROR_STRING_LENGTH] = EMPTY_STRING;
 //Java
 //Java
 

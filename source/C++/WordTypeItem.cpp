@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -133,8 +133,8 @@ class WordTypeItem : private Item
 				{
 				if( wordTypeStringLength > 0 )
 					{
-					if( wordTypeStringLength < MAX_SENTENCE_STRING_LENGTH &&
-					strlen( wordTypeString ) < MAX_SENTENCE_STRING_LENGTH )
+					if( wordTypeStringLength < SENTENCE_STRING_LENGTH &&
+					strlen( wordTypeString ) < SENTENCE_STRING_LENGTH )
 						{
 						if( ( wordTypeString_ = new char[wordTypeStringLength + 1] ) != NULL )
 							{
@@ -223,10 +223,11 @@ class WordTypeItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
+		WordItem *thisWordItem = myWordItem();
 		char *queryString;
 		char *wordString;
-		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
-		char *languageNameString = myWordItem()->languageNameString( wordTypeLanguageNr_ );
+		char *wordTypeString = thisWordItem->wordTypeNameString( wordTypeNr_ );
+		char *languageNameString = thisWordItem->languageNameString( wordTypeLanguageNr_ );
 
 		itemBaseToString( queryWordTypeNr );
 

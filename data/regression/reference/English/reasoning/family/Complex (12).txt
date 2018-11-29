@@ -5,6 +5,7 @@
 * 
 * My assumptions:
 < A father is probably a person.
+< A father is probably a parent.
 < A parent is probably a person.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * My assumptions:
 < A mother is probably a person.
+< A mother is probably a parent.
 < 
 * 
 * My assumptions:
@@ -55,6 +57,11 @@
 < Is John a man or a woman?
 < 
 * 
+* My assumptions that are concluded:
+< Anna is a woman.
+< Anna is not a man.
+< Anna is feminine.
+* 
 * My assumptions:
 < Joe has probably a parent, called Anna.
 < Joe is probably a child of Anna.
@@ -70,6 +77,27 @@
 < 
 * 
 * My conclusions:
+< Anna is a woman. Because:
+<	- Anna is a parent of Paul.
+<	- Every parent is a woman or a man.
+<	- Proper noun "Anna" is probably feminine.
+* 	and:
+<	- Anna is probably a mother of Paul and Joe.
+<	- Every mother is a woman.
+* 	and:
+<	- Joe has a mother, called Anna.
+<	- Every mother is a woman.
+< Anna is not a man. Because:
+<	- Anna is probably a person.
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Anna is a parent of Paul.
+<	- Every parent is a woman or a man.
+<	- Anna is a woman.
+< Anna is feminine. Because:
+<	- Anna is a woman.
+<	- Every woman is feminine.
 < Anna is a parent of Paul. Because:
 <	- Paul has 2 parents, called John and Anna.
 < Anna is part of a family. Because:
@@ -84,36 +112,18 @@
 <	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Joe has a mother, called Anna.
-< Anna is probably a woman. Because:
-<	- Anna is a parent of Paul.
-<	- Every parent is a woman or a man.
-<	- Proper noun "Anna" is probably feminine.
-* 	and:
-<	- Anna is probably a mother of Paul and Joe.
-<	- Every mother is a woman.
 < Anna is probably a person. Because:
+<	- Joe has a mother, called Anna.
+<	- A mother is probably a person.
+* 	and:
 <	- Anna is a parent of Paul.
 <	- A parent is probably a person.
 * 	and:
 <	- Every person is a man or a woman.
-<	- Anna is probably a woman.
+<	- Anna is a woman.
 * 	and:
 <	- Paul has 2 parents, called John and Anna.
 <	- A parent is probably a person.
-* 	and:
-<	- Joe has a mother, called Anna.
-<	- A mother is probably a person.
-< Anna is probably not a man. Because:
-<	- Anna is probably a person.
-<	- Every person is a man or a woman.
-<	- Anna is probably a woman.
-* 	and:
-<	- Anna is a parent of Paul.
-<	- Every parent is a woman or a man.
-<	- Anna is probably a woman.
-< Anna is probably feminine. Because:
-<	- Anna is probably a woman.
-<	- Every woman is feminine.
 < Anna is probably not a father. Because:
 <	- Anna is a parent of Paul.
 <	- Every parent is a father or a mother.
@@ -234,6 +244,27 @@
 < 
 * 
 * My conclusions:
+< Anna is a woman. Because:
+<	- Anna is a parent of Paul.
+<	- Every parent is a woman or a man.
+<	- Proper noun "Anna" is probably feminine.
+* 	and:
+<	- Anna is probably a mother of Paul and Joe.
+<	- Every mother is a woman.
+* 	and:
+<	- Joe has a mother, called Anna.
+<	- Every mother is a woman.
+< Anna is not a man. Because:
+<	- Anna is probably a person.
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Anna is a parent of Paul.
+<	- Every parent is a woman or a man.
+<	- Anna is a woman.
+< Anna is feminine. Because:
+<	- Anna is a woman.
+<	- Every woman is feminine.
 < Anna is a parent of Paul. Because:
 <	- Paul has 2 parents, called John and Anna.
 < Anna is part of a family. Because:
@@ -270,36 +301,18 @@
 <	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Joe has a mother, called Anna.
-< Anna is probably a woman. Because:
-<	- Anna is a parent of Paul.
-<	- Every parent is a woman or a man.
-<	- Proper noun "Anna" is probably feminine.
-* 	and:
-<	- Anna is probably a mother of Paul and Joe.
-<	- Every mother is a woman.
 < Anna is probably a person. Because:
+<	- Joe has a mother, called Anna.
+<	- A mother is probably a person.
+* 	and:
 <	- Anna is a parent of Paul.
 <	- A parent is probably a person.
 * 	and:
 <	- Every person is a man or a woman.
-<	- Anna is probably a woman.
+<	- Anna is a woman.
 * 	and:
 <	- Paul has 2 parents, called John and Anna.
 <	- A parent is probably a person.
-* 	and:
-<	- Joe has a mother, called Anna.
-<	- A mother is probably a person.
-< Anna is probably not a man. Because:
-<	- Anna is probably a person.
-<	- Every person is a man or a woman.
-<	- Anna is probably a woman.
-* 	and:
-<	- Anna is a parent of Paul.
-<	- Every parent is a woman or a man.
-<	- Anna is probably a woman.
-< Anna is probably feminine. Because:
-<	- Anna is probably a woman.
-<	- Every woman is feminine.
 < Anna is probably not a father. Because:
 <	- Anna is a parent of Paul.
 <	- Every parent is a father or a mother.
@@ -474,14 +487,30 @@
 <	- John is a parent of Paul.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John.
-* 	and:
-<	- Laura has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Laura" is probably feminine.
 < 
 * 
 * My conclusions:
+< Anna is a woman. Because:
+<	- Anna is a parent of Paul.
+<	- Every parent is a woman or a man.
+<	- Proper noun "Anna" is probably feminine.
+* 	and:
+<	- Anna is probably a mother of Paul and Joe.
+<	- Every mother is a woman.
+* 	and:
+<	- Joe has a mother, called Anna.
+<	- Every mother is a woman.
+< Anna is not a man. Because:
+<	- Anna is probably a person.
+<	- Every person is a man or a woman.
+<	- Anna is a woman.
+* 	and:
+<	- Anna is a parent of Paul.
+<	- Every parent is a woman or a man.
+<	- Anna is a woman.
+< Anna is feminine. Because:
+<	- Anna is a woman.
+<	- Every woman is feminine.
 < Anna is a parent of Paul. Because:
 <	- Paul has 2 parents, called John and Anna.
 < Anna is part of a family. Because:
@@ -518,36 +547,18 @@
 <	- Proper noun "Anna" is probably feminine.
 * 	and:
 <	- Joe has a mother, called Anna.
-< Anna is probably a woman. Because:
-<	- Anna is a parent of Paul.
-<	- Every parent is a woman or a man.
-<	- Proper noun "Anna" is probably feminine.
-* 	and:
-<	- Anna is probably a mother of Paul and Joe.
-<	- Every mother is a woman.
 < Anna is probably a person. Because:
+<	- Joe has a mother, called Anna.
+<	- A mother is probably a person.
+* 	and:
 <	- Anna is a parent of Paul.
 <	- A parent is probably a person.
 * 	and:
 <	- Every person is a man or a woman.
-<	- Anna is probably a woman.
+<	- Anna is a woman.
 * 	and:
 <	- Paul has 2 parents, called John and Anna.
 <	- A parent is probably a person.
-* 	and:
-<	- Joe has a mother, called Anna.
-<	- A mother is probably a person.
-< Anna is probably not a man. Because:
-<	- Anna is probably a person.
-<	- Every person is a man or a woman.
-<	- Anna is probably a woman.
-* 	and:
-<	- Anna is a parent of Paul.
-<	- Every parent is a woman or a man.
-<	- Anna is probably a woman.
-< Anna is probably feminine. Because:
-<	- Anna is probably a woman.
-<	- Every woman is feminine.
 < Anna is probably not a father. Because:
 <	- Anna is a parent of Paul.
 <	- Every parent is a father or a mother.
@@ -651,15 +662,12 @@
 < Laura is possibly a person. Because:
 <	- Laura is probably a child of John.
 <	- A child is probably a person.
-* 	and:
-<	- Laura is possibly a daughter of John.
-<	- A daughter is probably a person.
 < Laura is possibly a daughter of John. Because:
 <	- Laura is probably a child of John.
 <	- Every child is a son or a daughter.
 <	- Proper noun "Laura" is probably feminine.
 * 	and:
-<	- John is a father of Laura.
+<	- John is probably a parent of Paul, Joe and Laura.
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
 <	- Proper noun "Laura" is probably feminine.

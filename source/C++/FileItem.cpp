@@ -1,7 +1,7 @@
 ﻿/*	Class:			FileItem
  *	Parent class:	Item
  *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -60,7 +60,7 @@ class FileItem : private Item
 			{
 			if( readFileNameString != NULL )
 				{
-				if( ( fileNameStringLength = strlen( readFileNameString ) ) < MAX_SENTENCE_STRING_LENGTH )
+				if( ( fileNameStringLength = strlen( readFileNameString ) ) < SENTENCE_STRING_LENGTH )
 					{
 					if( ( readFileNameString_ = new char[fileNameStringLength + 1] ) != NULL )
 						strcpy( readFileNameString_, readFileNameString );
@@ -73,7 +73,7 @@ class FileItem : private Item
 
 			if( writeFileNameString != NULL )
 				{
-				if( ( fileNameStringLength = strlen( writeFileNameString ) ) < MAX_SENTENCE_STRING_LENGTH )
+				if( ( fileNameStringLength = strlen( writeFileNameString ) ) < SENTENCE_STRING_LENGTH )
 					{
 					if( ( writeFileNameString_ = new char[fileNameStringLength + 1] ) != NULL )
 						strcpy( writeFileNameString_, writeFileNameString );

@@ -5,6 +5,7 @@
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een ouder.
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
+< Een moeder is waarschijnlijk een ouder.
 < 
 * 
 * Mijn veronderstellingen:
@@ -83,6 +85,9 @@
 < Sjors is waarschijnlijk een man.
 < Sjors is mogelijk een persoon.
 < Sjors is misschien geen vrouw.
+< Sjors is mogelijk een ouder.
+< Sjors is mogelijk deel van een gezin.
+< Sjors is misschien geen moeder.
 * 
 * Mijn antwoord:
 < Nee, Jan is de vader van Paul, Johan en Laura.

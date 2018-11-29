@@ -1,7 +1,7 @@
 ﻿/*	Class:			WordList
  *	Parent class:	List
  *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -66,8 +66,15 @@ class WordList : private List
 		if( firstReplacedItem() != NULL )
 			fprintf( stderr, "\nError: Class WordList has replaced items." );
 
-		if( firstDeletedItem() != NULL )
-			fprintf( stderr, "\nError: Class WordList has deleted items." );
+		searchWordItem = (WordItem *)firstDeletedItem();
+
+		while( searchWordItem != NULL )
+			{
+			deleteWordItem = searchWordItem;
+			searchWordItem = searchWordItem->nextWordItem();
+			// Delete all active words
+			delete deleteWordItem;
+			}
 		}
 
 

@@ -5,6 +5,7 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -130,11 +132,6 @@
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
 < Amélie a possible une fille, appelée Lorraine. En raison:
 <	- Lorraine est possible une fille de Olivier et Amélie.
-* 	et:
-<	- Lorraine a une mère, appelée Amélie.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Lorraine» est probablement féminin.
 < 
 * 
 * Mes hypothèses qui sont confirmées:
@@ -166,16 +163,13 @@
 < Lorraine est possible une personne. En raison:
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
-* 	et:
-<	- Lorraine est possible une fille de Olivier et Amélie.
-<	- Une fille est probablement une personne.
 < Lorraine est possible une fille de Olivier et Amélie. En raison:
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
 <	- Chaque enfant est un fils ou une fille.
 <	- Nom propre «Lorraine» est probablement féminin.
 * 	et:
-<	- Olivier est le père de Pascal, Julien et Lorraine.
-<	- Amélie est la mère de Pascal, Julien et Lorraine.
+<	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
+<	- Amélie est probablement un parent de Pascal, Julien et Lorraine.
 <	- Chaque famille a parents et enfants.
 <	- Chaque enfant est un fils ou une fille.
 <	- Nom propre «Lorraine» est probablement féminin.

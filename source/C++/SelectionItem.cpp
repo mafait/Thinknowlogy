@@ -1,7 +1,7 @@
 ﻿/*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -143,7 +143,7 @@ class SelectionItem : private Item
 
 		if( specificationString != NULL )
 			{
-			if( ( specificationStringLength = strlen( specificationString ) ) < MAX_SENTENCE_STRING_LENGTH )
+			if( ( specificationStringLength = strlen( specificationString ) ) < SENTENCE_STRING_LENGTH )
 				{
 				if( ( specificationString_ = new char[specificationStringLength + 1] ) != NULL )
 					strcpy( specificationString_, specificationString );
@@ -286,11 +286,12 @@ class SelectionItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
+		WordItem *thisWordItem = myWordItem();
 		char *queryString;
 		char *wordString;
-		char *generalizationWordTypeString = myWordItem()->wordTypeNameString( generalizationWordTypeNr_ );
-		char *specificationWordTypeString = myWordItem()->wordTypeNameString( specificationWordTypeNr_ );
-		char *relationWordTypeString = myWordItem()->wordTypeNameString( relationWordTypeNr_ );
+		char *generalizationWordTypeString = thisWordItem->wordTypeNameString( generalizationWordTypeNr_ );
+		char *specificationWordTypeString = thisWordItem->wordTypeNameString( specificationWordTypeNr_ );
+		char *relationWordTypeString = thisWordItem->wordTypeNameString( relationWordTypeNr_ );
 
 		itemBaseToString( queryWordTypeNr );
 
@@ -617,6 +618,19 @@ class SelectionItem : private Item
 	unsigned int nContextRelations()
 		{
 		return nContextRelations_;
+		}
+
+	signed char checkWordItemForUsage( WordItem *unusedWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkWordItemForUsage";
+
+		if( generalizationWordItem_ == unusedWordItem )
+			return startError( functionNameString, NULL, "My generalization word item is still in use" );
+
+		if( specificationWordItem_ == unusedWordItem )
+			return startError( functionNameString, NULL, "My specification word item is still in use" );
+
+		return RESULT_OK;
 		}
 
 	char *specificationString()

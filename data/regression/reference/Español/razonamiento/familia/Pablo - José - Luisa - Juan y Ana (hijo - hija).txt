@@ -356,11 +356,6 @@
 <	- Una hija es probablemente una persona.
 < Luisa tiene posiblemente una madre, llamada Ana. Porque:
 <	- Ana es posiblemente madre de Pablo, José y Luisa.
-* 	y:
-<	- Ana tiene una hija, llamada Luisa.
-<	- Cada familia tiene padres y hijos.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
 * 
 * Mis preguntas:
 < ¿Es Luisa una niña o una mujer? Porque:

@@ -1,7 +1,7 @@
 ﻿/*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -93,10 +93,11 @@ class MultipleWordItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		char *languageNameString = myWordItem()->languageNameString( wordTypeLanguageNr_ );
+		WordItem *thisWordItem = myWordItem();
+		char *languageNameString = thisWordItem->languageNameString( wordTypeLanguageNr_ );
 		char *queryString;
 		char *wordString;
-		char *wordTypeString = myWordItem()->wordTypeNameString( wordTypeNr_ );
+		char *wordTypeString = thisWordItem->wordTypeNameString( wordTypeNr_ );
 
 		itemBaseToString( queryWordTypeNr );
 

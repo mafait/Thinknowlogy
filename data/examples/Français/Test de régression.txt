@@ -120,6 +120,7 @@
 #Dev#Lirez le fichier de test "Français/question réponse/famille/J'ai eu la même question avant".
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Je sais seulement".
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Indirectement répondu question, avec la confirmation".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Réponse intelligente des questions".
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Est Pascal une femme".
 #Dev##Java#Lirez le fichier de test "Français/question réponse/famille/Juste quelques questions (1)".
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Juste quelques questions (2)".
@@ -135,7 +136,6 @@
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Votre question est plus spécifique (sur Olivier)".
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Votre question est plus spécifique (sur Pascal et Julien)".
 
-#Dev#Lirez le fichier de test "Français/raisonnement/famille/Acceptation d'une définition familiale étrange".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Amélie - Olivier - Pascal, Julien et Lorraine".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Amélie était la mère de Pascal, Julien et Lorraine".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Éviter le contexte dupliqué".
@@ -179,6 +179,7 @@
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (9)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (10)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (11)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Je sais que (12)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Philippe était le père de Antoine (avant la définition de famille)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Julien a 2 parents - Julien est un enfant".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Julien a 2 parents - Julien est un fils".

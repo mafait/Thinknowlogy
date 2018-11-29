@@ -1,11 +1,11 @@
 ﻿Toon "------------------------------------------------------------------------------".
-Toon " Thinknowlogy is 's werelds meest geavanceerde redeneersysteem. Door de".
-Toon " implementatie van Natuurwetten van Intelligentie, die ingebed zijn in grammatica,".
-Toon " heeft Thinknowlogy redeneerresultaten die wetenschappers nog niet beschreven hebben:".
-Toon " * Ondanks diepgaand onderzoek, heeft de evolutietheorie nog steeds geen bevredigende".
-Toon " verklaring gegeven voor het ontstaan van intelligentie, taal en natuurwetten. Laat staan,".
-Toon " hoe ze verwant zijn. Bovendien is geen enkel fenomeen dat exclusief is voor de".
-Toon " evolutietheorie, of afgeleide theorieën, toepasbaar in het dagelijks leven;".
+Toon " Thinknowlogy is 's werelds meest geavanceerde redeneersysteem: Er zijn geen dialogen vooraf".
+Toon " geschreven. Er is geen kennis voorgeprogrammeerd. En er worden geen woordenlijsten gebruikt.".
+Toon " Bovendien implementeert het redeneerconstructies die wetenschappers nog niet hebben beschreven:".
+Toon " * Ondanks diepgaand onderzoek, heeft de evolutietheorie nog steeds geen bevredigende verklaring".
+Toon " gegeven voor het ontstaan van intelligentie, taal en natuurwetten. Laat staan, hoe ze verwant zijn.".
+Toon " Bovendien is geen enkel fenomeen dat exclusief is voor de evolutietheorie, of afgeleide theorieën,".
+Toon " toepasbaar in het dagelijks leven;".
 Toon " * Volgens het bijbelse wereldbeeld heeft God natuurwetten gecreëerd, als het fundament van zijn".
 Toon " schepping. Gebaseerd op Natuurwetten van Intelligentie, die ingebed zijn in grammatica, implementeert".
 #C++#Toon " alleen Thinknowlogy de intelligente functie van woorden als bepaald lidwoord \"de/het\", voegwoord \"of\",".

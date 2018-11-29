@@ -42,11 +42,11 @@
 <	- John is probably a parent.
 <	- A parent is probably a person.
 * 	and:
-<	- John is a father.
-<	- A father is probably a person.
-* 	and:
 <	- Every person is a man or a woman.
 <	- John is a man.
+* 	and:
+<	- John is a father.
+<	- A father is probably a person.
 < John is probably not a mother. Because:
 <	- John is probably a parent.
 <	- Every parent is a father or a mother.

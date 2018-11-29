@@ -2,7 +2,7 @@
  *	Parent class:	Item
  *	Purpose:		To temporarily store scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/

@@ -5,6 +5,7 @@
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
+< Een vader is waarschijnlijk een ouder.
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
+< Een moeder is waarschijnlijk een ouder.
 < 
 * 
 * Mijn veronderstellingen:
@@ -102,9 +104,6 @@
 < Paul is waarschijnlijk een persoon. Omdat:
 <	- Paul is een zoon van Jan en Anna.
 <	- Een zoon is waarschijnlijk een persoon.
-* 	en:
-<	- Paul is waarschijnlijk een kind van Jan en Anna.
-<	- Een kind is waarschijnlijk een persoon.
 < Paul is waarschijnlijk een kind van Jan en Anna. Omdat:
 <	- Ieder kind is een zoon of een dochter.
 <	- Paul is een zoon van Jan en Anna.
@@ -135,11 +134,6 @@
 <	- Anna is waarschijnlijk een ouder van Paul.
 < Paul heeft mogelijk een moeder, genaamd Anna. Omdat:
 <	- Anna is mogelijk een moeder van Paul.
-* 	en:
-<	- Anna heeft een zoon, genaamd Paul.
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Iedere ouder is een vader of een moeder.
-<	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
 * 
 * Mijn vragen:
 < Is Paul een jongen of een man? Omdat:
@@ -205,9 +199,6 @@
 < Paul is waarschijnlijk een persoon. Omdat:
 <	- Paul is een zoon van Jan en Anna.
 <	- Een zoon is waarschijnlijk een persoon.
-* 	en:
-<	- Paul is waarschijnlijk een kind van Jan en Anna.
-<	- Een kind is waarschijnlijk een persoon.
 < Paul is waarschijnlijk een kind van Jan en Anna. Omdat:
 <	- Ieder kind is een zoon of een dochter.
 <	- Paul is een zoon van Jan en Anna.
@@ -238,11 +229,6 @@
 <	- Anna is waarschijnlijk een ouder van Paul.
 < Paul heeft mogelijk een moeder, genaamd Anna. Omdat:
 <	- Anna is mogelijk een moeder van Paul.
-* 	en:
-<	- Anna heeft een zoon, genaamd Paul.
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Iedere ouder is een vader of een moeder.
-<	- Eigennaam "Anna" is waarschijnlijk vrouwelijk.
 * 
 * Mijn vragen:
 < Is Paul een jongen of een man? Omdat:
@@ -255,6 +241,9 @@
 < Sjors is waarschijnlijk een man.
 < Sjors is mogelijk een persoon.
 < Sjors is misschien geen vrouw.
+< Sjors is mogelijk een ouder.
+< Sjors is mogelijk deel van een gezin.
+< Sjors is misschien geen moeder.
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
@@ -275,4 +264,18 @@
 <	- Sjors is mogelijk een persoon.
 <	- Iedere persoon is een man of een vrouw.
 <	- Sjors is waarschijnlijk een man.
+* 	en:
+<	- Sjors is mogelijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
+<	- Sjors is waarschijnlijk een man.
+< Sjors is mogelijk een ouder. Omdat:
+<	- Sjors is waarschijnlijk een vader.
+<	- Een vader is waarschijnlijk een ouder.
+< Sjors is mogelijk deel van een gezin. Omdat:
+<	- Sjors is mogelijk een ouder.
+<	- Ouders zijn deel van ieder gezin.
+< Sjors is misschien geen moeder. Omdat:
+<	- Sjors is mogelijk een ouder.
+<	- Iedere ouder is een vader of een moeder.
+<	- Sjors is waarschijnlijk een vader.
 < 

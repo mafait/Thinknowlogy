@@ -1,4 +1,4 @@
-﻿Changes in Thinknowlogy 2018r3 (Deep Magic) compared to 2018r2 (Natural Intelligence):
+﻿Changes in Thinknowlogy 2018r4 (New Science) compared to 2018r3 (Deep Magic):
 - Bug fixes;
-- Integrated user examples and developer examples;
+- Improved reasoning;
 - Moved some reasoning functionality from class AdminReasoningOld to class AdminReasoningNew, as part of the redesign.

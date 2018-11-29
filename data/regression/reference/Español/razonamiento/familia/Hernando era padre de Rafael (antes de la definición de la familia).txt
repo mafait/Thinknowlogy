@@ -33,9 +33,14 @@
 < Hernando era parte de una familia.
 < 
 * 
+* Mis conclusiones:
+< Hernando era un hombre.
+< Hernando era masculino.
+* 
 * Mis suposiciones:
 < Un padre es probablemente una persona.
 < Hernando era probablemente una persona.
+< Hernando no era probablemente una mujer.
 < 
 * 
 * Mis conclusiones:
@@ -57,14 +62,27 @@
 < 
 * 
 * Mis conclusiones:
+< Hernando era un hombre. Porque:
+<	- Hernando era el padre de Rafael y Peyo.
+<	- Cada padre es un hombre.
+< Hernando era masculino. Porque:
+<	- Hernando era un hombre.
+<	- Cada hombre es masculino.
 < Hernando era parte de una familia. Porque:
 <	- Hernando era el padre de Rafael y Peyo.
 <	- Padres son parte de cada familia.
 * 
 * Mis suposiciones:
 < Hernando era probablemente una persona. Porque:
+<	- Cada persona es un hombre o una mujer.
+<	- Hernando era un hombre.
+* 	y:
 <	- Hernando era el padre de Rafael y Peyo.
 <	- Un padre es probablemente una persona.
+< Hernando no era probablemente una mujer. Porque:
+<	- Hernando era probablemente una persona.
+<	- Cada persona es un hombre o una mujer.
+<	- Hernando era un hombre.
 < 
 * 
 * Mis conclusiones:
@@ -176,11 +194,6 @@
 <	- Una madre es probablemente una persona.
 < Ana tiene posiblemente una hija, llamada Luisa. Porque:
 <	- Luisa es posiblemente hija de Juan y Ana.
-* 	y:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-<	- Nombre propio "Luisa" es probablemente femenino.
 < 
 * 
 * Mis conclusiones:

@@ -120,6 +120,7 @@
 #Dev#Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Ik heb deze vraag al eerder gesteld".
 #Dev#Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Ik weet alleen".
 #Dev#Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Indirect beantwoorde vraag, met bevestiging".
+#Dev#Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Het intelligent beantwoorden van vragen".
 #Dev#Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Is Paul een vrouw".
 #Dev#Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Zomaar een paar vragen (1)".
 #Dev#Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Zomaar een paar vragen (2)".
@@ -135,7 +136,6 @@
 #Dev#Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Uw vraag is specifieker (over Jan)".
 #Dev#Lees het testbestand "Nederlands/vraagbeantwoording/gezin/Uw vraag is specifieker (over Paul en Johan)".
 
-#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Acceptatie van een vreemde gezinsdefinitie".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Anna - Jan - Paul, Johan en Laura".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Anna was de moeder van Paul, Johan en Laura".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Vermijd dubbele context".
@@ -179,6 +179,7 @@
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Dat weet ik (9)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Dat weet ik (10)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Dat weet ik (11)".
+#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Dat weet ik (12)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Cor was de vader van Kees (voor gezinsdefinitie)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Johan heeft 2 ouders - Johan is een kind".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Johan heeft 2 ouders - Johan is een zoon".

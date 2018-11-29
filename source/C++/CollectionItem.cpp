@@ -1,7 +1,7 @@
 ﻿/*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2018r3 (Deep Magic)
+ *	Version:		Thinknowlogy 2018r4 (New Science)
  *************************************************************************/
 /*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at http://mafait.org/contact/
@@ -155,8 +155,9 @@ class CollectionItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		char *collectionWordTypeString = myWordItem()->wordTypeNameString( collectionWordTypeNr_ );
-		char *commonWordTypeString = myWordItem()->wordTypeNameString( commonWordTypeNr_ );
+		WordItem *thisWordItem = myWordItem();
+		char *collectionWordTypeString = thisWordItem->wordTypeNameString( collectionWordTypeNr_ );
+		char *commonWordTypeString = thisWordItem->wordTypeNameString( commonWordTypeNr_ );
 		char *queryString;
 		char *wordString;
 
@@ -243,21 +244,21 @@ class CollectionItem : private Item
 		if( collectionWordItem_ != NULL &&
 		// Collection word
 		( boolResult = collectionWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-			return addBoolResultError( functionNameString, NULL, NULL, "I failed to find a matching word reference string for the collected word item" );
+			return addBoolResultError( functionNameString, NULL, "I failed to find a matching word reference string for the collected word item" );
 
 		// No matching string
 		if( !boolResult.booleanValue &&
 		commonWordItem_ != NULL &&
 		// Common word
 		( boolResult = commonWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-			return addBoolResultError( functionNameString, NULL, NULL, "I failed to find a matching word reference string for the common word item" );
+			return addBoolResultError( functionNameString, NULL, "I failed to find a matching word reference string for the common word item" );
 
 		// No matching string
 		if( !boolResult.booleanValue &&
 		compoundGeneralizationWordItem_ != NULL &&
 		// Compound generalization word
 		( boolResult = compoundGeneralizationWordItem_->findMatchingWordReferenceString( queryString ) ).result != RESULT_OK )
-			return addBoolResultError( functionNameString, NULL, NULL, "I failed to find a matching word reference string for the compound word item" );
+			return addBoolResultError( functionNameString, NULL, "I failed to find a matching word reference string for the compound word item" );
 
 		return boolResult;
 		}
@@ -305,6 +306,22 @@ class CollectionItem : private Item
 	unsigned int collectionNr()
 		{
 		return collectionNr_;
+		}
+
+	signed char checkWordItemForUsage( WordItem *unusedWordItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkWordItemForUsage";
+
+		if( collectionWordItem_ == unusedWordItem )
+			return startError( functionNameString, NULL, "My collected word item is still in use" );
+
+		if( commonWordItem_ == unusedWordItem )
+			return startError( functionNameString, NULL, "My common word item is still in use" );
+
+		if( compoundGeneralizationWordItem_ == unusedWordItem )
+			return startError( functionNameString, NULL, "My compound word item is still in use" );
+
+		return RESULT_OK;
 		}
 
 	CollectionItem *nextCollectionItem()

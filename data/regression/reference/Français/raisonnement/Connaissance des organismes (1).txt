@@ -61,7 +61,4 @@
 < Olivier est probablement un organisme. En raison:
 <	- Olivier est un mammifère.
 <	- Un mammifère est probablement un organisme.
-* 	et:
-<	- Olivier est un vertébré.
-<	- Un vertébré est possible un organisme.
 < 

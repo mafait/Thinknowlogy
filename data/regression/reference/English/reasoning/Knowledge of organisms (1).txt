@@ -65,9 +65,6 @@
 * 	and:
 <	- John is a mammal.
 <	- A mammal is probably an organism.
-* 	and:
-<	- John is a vertebrate.
-<	- A vertebrate is possibly an organism.
 < John is probably not an animal, not a fungus, not a micro-organism and not a plant. Because:
 <	- John is probably an organism.
 <	- Every organism is an animal, a fungus, a human-being, a micro-organism or a plant.

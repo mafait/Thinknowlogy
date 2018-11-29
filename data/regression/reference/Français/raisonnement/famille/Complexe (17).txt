@@ -5,6 +5,7 @@
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
+< Un père est probablement un parent.
 < Un parent est probablement une personne.
 < 
 * 
@@ -13,6 +14,7 @@
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
+< Une mère est probablement un parent.
 < 
 * 
 * Mes hypothèses:
@@ -157,6 +159,10 @@
 * Mes conclusions:
 < Amélie est une mère de Lorraine. En raison:
 <	- Lorraine a une mère, appelée Amélie.
+< Amélie n'est pas un père. En raison:
+<	- Amélie est un parent.
+<	- Chaque parent est un père ou une mère.
+<	- Amélie est une mère de Lorraine.
 < Amélie n'est pas un homme. En raison:
 <	- Amélie est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
@@ -165,10 +171,6 @@
 <	- Amélie est un parent.
 <	- Chaque parent est une femme ou un homme.
 <	- Amélie est une femme.
-< Amélie n'est pas un père. En raison:
-<	- Amélie est un parent.
-<	- Chaque parent est un père ou une mère.
-<	- Amélie est une mère de Lorraine.
 < Amélie est féminine. En raison:
 <	- Amélie est une femme.
 <	- Chaque femme est féminine.
@@ -188,17 +190,17 @@
 <	- Chaque famille a parents et enfants.
 <	- Lorraine est un enfant de Olivier et Amélie.
 < Amélie est probablement une personne. En raison:
-<	- Amélie est un parent.
-<	- Un parent est probablement une personne.
-* 	et:
-<	- Chaque personne est un homme ou une femme.
-<	- Amélie est une femme.
-* 	et:
 <	- Amélie est une mère de Lorraine.
 <	- Une mère est probablement une personne.
 * 	et:
 <	- Lorraine a une mère, appelée Amélie.
 <	- Une mère est probablement une personne.
+* 	et:
+<	- Amélie est un parent.
+<	- Un parent est probablement une personne.
+* 	et:
+<	- Chaque personne est un homme ou une femme.
+<	- Amélie est une femme.
 < 
 * 
 * Mes conclusions:
@@ -220,9 +222,6 @@
 < Lorraine est probablement une personne. En raison:
 <	- Lorraine est un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
-* 	et:
-<	- Lorraine est probablement une fille.
-<	- Une fille est probablement une personne.
 < Lorraine est probablement une fille. En raison:
 <	- Lorraine est un enfant de Olivier et Amélie.
 <	- Chaque enfant est un fils ou une fille.
@@ -343,6 +342,10 @@
 < 
 * 
 * Mes conclusions:
+< Amélie n'est pas un père. En raison:
+<	- Amélie est un parent.
+<	- Chaque parent est un père ou une mère.
+<	- Amélie est une mère.
 < Amélie n'est pas un homme. En raison:
 <	- Amélie est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
@@ -351,10 +354,6 @@
 <	- Amélie est un parent.
 <	- Chaque parent est une femme ou un homme.
 <	- Amélie est une femme.
-< Amélie n'est pas un père. En raison:
-<	- Amélie est un parent.
-<	- Chaque parent est un père ou une mère.
-<	- Amélie est une mère.
 < Amélie est féminine. En raison:
 <	- Amélie est une femme.
 <	- Chaque femme est féminine.
@@ -381,17 +380,17 @@
 <	- Julien est probablement un enfant de Olivier et Amélie.
 <	- Lorraine est un enfant de Olivier et Amélie.
 < Amélie est probablement une personne. En raison:
-<	- Amélie est un parent.
-<	- Un parent est probablement une personne.
-* 	et:
-<	- Chaque personne est un homme ou une femme.
-<	- Amélie est une femme.
-* 	et:
 <	- Amélie est une mère.
 <	- Une mère est probablement une personne.
 * 	et:
 <	- Lorraine a une mère, appelée Amélie.
 <	- Une mère est probablement une personne.
+* 	et:
+<	- Amélie est un parent.
+<	- Un parent est probablement une personne.
+* 	et:
+<	- Chaque personne est un homme ou une femme.
+<	- Amélie est une femme.
 < 
 * 
 * Mes conclusions:
@@ -489,9 +488,6 @@
 < Lorraine est probablement une personne. En raison:
 <	- Lorraine est un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
-* 	et:
-<	- Lorraine est probablement une fille.
-<	- Une fille est probablement une personne.
 < Lorraine est probablement une fille. En raison:
 <	- Lorraine est un enfant de Olivier et Amélie.
 <	- Chaque enfant est un fils ou une fille.
