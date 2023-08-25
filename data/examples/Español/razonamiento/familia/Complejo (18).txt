@@ -10,7 +10,7 @@ José es hijo de Juan y Ana.
 Luisa es una hija.
 Pablo es un hijo.
 Juan es un padre.
-Juan es un padre de Pablo, José y Luisa.
+Juan es el padre de Pablo, José y Luisa.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
 #Dev#Mostrar el informe de justificación sobre Pablo.

@@ -93,3 +93,73 @@
 < Les États-Unis avait un président, appelé Bill Clinton. En raison:
 <	- Bill Clinton était un président des États-Unis.
 < 
+* Je sais que.
+* 
+* 
+* Mes conclusions:
+< Les États-Unis a un nouveau président, appelé Donald Trump.
+< Les États-Unis a un précédent président, appelé Barack Obama.
+< Les États-Unis avait un président, appelé George Bush.
+< 
+< 
+< Spécifications:
+< Donald Trump est l'actuel président des États-Unis.
+< Barack Obama est le précédent président des États-Unis.
+< Bill Clinton était un président des États-Unis.
+< George Bush était un président des États-Unis.
+< George Bush était un président des États-Unis.
+< Les États-Unis a un président, appelé Donald Trump.
+< Les États-Unis a un précédent président, appelé Barack Obama.
+< Les États-Unis avait un président, appelé George Bush.
+< Les États-Unis avait un président, appelé George Bush.
+< Les États-Unis avait un président, appelé Bill Clinton.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un président, appelé Donald Trump. En raison:
+<	- Donald Trump est l'actuel président des États-Unis.
+< Les États-Unis a un précédent président, appelé Barack Obama. En raison:
+<	- Barack Obama est le précédent président des États-Unis.
+< Les États-Unis avait un président, appelé George Bush. En raison:
+<	- George Bush était un président des États-Unis.
+< Les États-Unis avait un président, appelé George Bush. En raison:
+<	- George Bush était un président des États-Unis.
+< Les États-Unis avait un président, appelé Bill Clinton. En raison:
+<	- Bill Clinton était un président des États-Unis.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un nouveau président, appelé Joe Biden.
+< Les États-Unis a un précédent président, appelé Donald Trump.
+< Les États-Unis avait un président, appelé Barack Obama.
+< 
+< 
+< Spécifications:
+< Joe Biden est l'actuel président des États-Unis.
+< Donald Trump est le précédent président des États-Unis.
+< Barack Obama était un président des États-Unis.
+< Bill Clinton était un président des États-Unis.
+< George Bush était un président des États-Unis.
+< George Bush était un président des États-Unis.
+< Les États-Unis a un président, appelé Joe Biden.
+< Les États-Unis a un précédent président, appelé Donald Trump.
+< Les États-Unis avait un président, appelé Barack Obama.
+< Les États-Unis avait un président, appelé George Bush.
+< Les États-Unis avait un président, appelé George Bush.
+< Les États-Unis avait un président, appelé Bill Clinton.
+< 
+* 
+* Mes conclusions:
+< Les États-Unis a un président, appelé Joe Biden. En raison:
+<	- Joe Biden est l'actuel président des États-Unis.
+< Les États-Unis a un précédent président, appelé Donald Trump. En raison:
+<	- Donald Trump est le précédent président des États-Unis.
+< Les États-Unis avait un président, appelé Barack Obama. En raison:
+<	- Barack Obama était un président des États-Unis.
+< Les États-Unis avait un président, appelé George Bush. En raison:
+<	- George Bush était un président des États-Unis.
+< Les États-Unis avait un président, appelé George Bush. En raison:
+<	- George Bush était un président des États-Unis.
+< Les États-Unis avait un président, appelé Bill Clinton. En raison:
+<	- Bill Clinton était un président des États-Unis.
+< 

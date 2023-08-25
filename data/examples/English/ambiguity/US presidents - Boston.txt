@@ -1,2 +1,0 @@
-﻿Read the file "English/ambiguity/US presidents".
-Read the file "English/ambiguity/Boston".

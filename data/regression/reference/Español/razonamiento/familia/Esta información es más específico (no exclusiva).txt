@@ -1,28 +1,106 @@
 ﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis conclusiones:
+< Cada mujer no es masculino.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hombre no es una mujer.
+< Cada mujer no es un hombre.
+* 
+* Mis conclusiones:
+< Cada hombre no es femenina.
+< Cada persona es masculino o femenina.
+* 
+* Mis suposiciones:
+< Un hombre es probablemente una persona.
+< Una mujer es probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Padres y hijos son parte de cada familia.
 < 
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Un hijo no es probablemente una hija.
+< Una hija no es probablemente un hijo.
 < 
 * 
 * Mis conclusiones:
+< Cada padre es masculino.
+< Cada padre no es femenina.
+< Cada padre no es una mujer.
+< Cada mujer no es un padre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
+< Cada padre no es una madre.
+* 
+* Mis conclusiones:
+< Cada madre es femenina.
+< Cada madre no es masculino.
+< Cada madre no es un hombre.
+< Cada hombre no es una madre.
+< Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis suposiciones:
-< Un hijo es probablemente una persona.
+* Mis conclusiones:
+< Cada niña no es masculino.
+< Cada niña no es un padre.
+< Cada niña no es un hombre.
+< Cada padre no es una niña.
+< Cada hombre no es una niña.
 < 
 * 
 * Mis conclusiones:
+< Cada niño no es femenina.
+< Cada niño no es una niña.
+< Cada niño no es una madre.
+< Cada niño no es una mujer.
+< Cada niña no es un niño.
+< Cada madre no es un niño.
+< Cada mujer no es un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es masculino.
+< Cada hijo no es femenina.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Un niño no es probablemente un hombre.
+< Un niño es probablemente una persona.
+< Un hombre no es probablemente un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hija es femenina.
+< Cada hija no es masculino.
+< Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
+< Una niña no es probablemente una mujer.
+< Una niña es probablemente una persona.
+< Una mujer no es probablemente una niña.
 < 
 * 
 * Mis conclusiones:
@@ -33,8 +111,9 @@
 < Cruz tiene probablemente un hijo.
 * 
 * Mis preguntas:
-< ¿Es Cruz un hombre o una mujer?
+< ¿Es Cruz masculino o femenina?
 < ¿Es Cruz un padre o una madre?
+< ¿Es Cruz un hombre o una mujer?
 < 
 * 
 * Mis conclusiones:
@@ -48,61 +127,108 @@
 <	- Un padre es probablemente una persona.
 <	- Una madre es probablemente una persona.
 < Cruz tiene probablemente un hijo. Porque:
-<	- Cruz es un padre o una madre.
 <	- Cada familia tiene padres y hijos.
+<	- Cruz es un padre o una madre.
 * 
 * Mis preguntas:
-< ¿Es Cruz un hombre o una mujer? Porque:
+< ¿Es Cruz masculino o femenina? Porque:
 <	- Cruz es probablemente una persona.
-<	- Cada persona es un hombre o una mujer.
+<	- Cada persona es masculino o femenina.
 * 	y:
-<	- ¿Es Cruz un padre o una madre?
-<	- Cada madre es una mujer.
-<	- Cada padre es un hombre.
+<	- ¿Es Cruz un hombre o una mujer?
+<	- Cada mujer es femenina.
+<	- Cada hombre es masculino.
+* 	y:
+<	- Cruz es un padre o una madre.
+<	- Cada madre es femenina.
+<	- Cada padre es masculino.
 < ¿Es Cruz un padre o una madre? Porque:
 <	- Cruz es un padre o una madre.
+< ¿Es Cruz un hombre o una mujer? Porque:
+<	- Cruz es un padre o una madre.
+<	- Cada madre es una mujer.
+<	- Cada padre es un hombre.
+* 	y:
+<	- Cruz es probablemente una persona.
+<	- Cada persona es un hombre o una mujer.
 < 
 * 
 * Esta información es más específica que la información anterior:
 < Cruz es un padre o una madre.
 * 
-* Mis preguntas que son contestadas:
+* Mis preguntas que han sido respondidas:
 < ¿Es Cruz un padre o una madre?
 < ¿Es Cruz un hombre o una mujer?
+< ¿Es Cruz masculino o femenina?
 * 
 * Mis conclusiones:
-< Cruz no es una madre.
-< Cruz es un hombre.
+< Cruz no es una niña.
+< Cruz no es femenina.
 < Cruz no es una mujer.
+< Cruz es un hombre.
 < Cruz es masculino.
+< Cruz no es una hija.
+< Cruz no es una madre.
+* 
+* Mis suposiciones:
+< Cruz no es probablemente un niño.
 < 
 * 
 * Mis conclusiones:
 < Cruz es parte de una familia. Porque:
 <	- Cruz es un padre.
 <	- Padres son parte de cada familia.
-< Cruz no es una madre. Porque:
-<	- Cada padre es un padre o una madre.
+< Cruz no es una niña. Porque:
 <	- Cruz es un padre.
+<	- Cada padre no es una niña.
+* 	y:
+<	- Cruz es un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Cruz es masculino.
+<	- Cada niña no es masculino.
+< Cruz no es femenina. Porque:
+<	- Cruz es un padre.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Cruz es un hombre.
+<	- Cada hombre no es femenina.
+< Cruz no es una mujer. Porque:
+<	- Cruz es un padre.
+<	- Cada padre no es una mujer.
+* 	y:
+<	- Cruz es un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Cruz es masculino.
+<	- Cada mujer no es masculino.
 < Cruz es un hombre. Porque:
 <	- Cruz es un padre.
 <	- Cada padre es un hombre.
-< Cruz no es una mujer. Porque:
-<	- Cruz es un padre.
-<	- Cada padre es una mujer o un hombre.
-<	- Cruz es un hombre.
 < Cruz es masculino. Porque:
 <	- Cruz es un hombre.
 <	- Cada hombre es masculino.
+* 	y:
+<	- Cruz es un padre.
+<	- Cada padre es masculino.
+< Cruz no es una hija. Porque:
+<	- Cruz es masculino.
+<	- Cada hija no es masculino.
+< Cruz no es una madre. Porque:
+<	- Cruz es masculino.
+<	- Cada madre no es masculino.
 * 
 * Mis suposiciones:
 < Cruz es probablemente una persona. Porque:
 <	- Cruz es un padre.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
 <	- Cruz es un hombre.
+<	- Un hombre es probablemente una persona.
 < Cruz tiene probablemente un hijo. Porque:
-<	- Cruz es un padre.
 <	- Cada familia tiene padres y hijos.
+<	- Cruz es un padre.
+< Cruz no es probablemente un niño. Porque:
+<	- Cruz es un hombre.
+<	- Un hombre no es probablemente un niño.
 < 

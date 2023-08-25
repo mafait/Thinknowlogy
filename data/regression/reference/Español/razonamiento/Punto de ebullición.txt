@@ -11,5 +11,5 @@
 * Mis suposiciones:
 < El agua es probablemente un tipo de líquido. Porque:
 <	- Cada tipo de líquido tiene un punto de ebullición específico.
-<	- El agua tiene un punto de ebullición de 100 grados Celsius.
+<	- El agua tiene un punto de ebullición de 100 grados centrígrados.
 < 

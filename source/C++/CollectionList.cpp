@@ -1,10 +1,10 @@
 ﻿/*	Class:			CollectionList
  *	Parent class:	List
- *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing collection items
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -107,22 +107,6 @@ class CollectionList : private List
 		return false;
 		}
 
-	bool hasCollectionNr( unsigned int collectionNr, WordItem *commonWordItem )
-		{
-		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
-
-		while( searchCollectionItem != NULL )
-			{
-			if( searchCollectionItem->collectionNr() == collectionNr &&
-			searchCollectionItem->commonWordItem() == commonWordItem )
-				return true;
-
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
-			}
-
-		return false;
-		}
-
 	bool isExclusiveCollection( unsigned int collectionNr )
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
@@ -147,22 +131,6 @@ class CollectionList : private List
 			{
 			if( !searchCollectionItem->isExclusiveSpecification() &&
 			searchCollectionItem->collectionNr() == collectionNr )
-				return true;
-
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
-			}
-
-		return false;
-		}
-
-	bool isCollectionSpanishAmbiguous( unsigned int collectionNr )
-		{
-		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
-
-		while( searchCollectionItem != NULL )
-			{
-			if( searchCollectionItem->collectionNr() == collectionNr &&
-			searchCollectionItem->collectionWordItem() == searchCollectionItem->commonWordItem() )
 				return true;
 
 			searchCollectionItem = searchCollectionItem->nextCollectionItem();
@@ -302,6 +270,7 @@ class CollectionList : private List
 
 	unsigned int collectionNrByCompoundGeneralizationWord( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, WordItem *compoundGeneralizationWordItem )
 		{
+		unsigned int lastFoundCollectionNr = NO_COLLECTION_NR;
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
 		while( searchCollectionItem != NULL )
@@ -309,12 +278,12 @@ class CollectionList : private List
 			if( searchCollectionItem->isExclusiveSpecification() == isExclusiveSpecification &&
 			searchCollectionItem->isMatchingCollectionWordTypeNr( collectionWordTypeNr ) &&
 			searchCollectionItem->compoundGeneralizationWordItem() == compoundGeneralizationWordItem )
-				return searchCollectionItem->collectionNr();
+				lastFoundCollectionNr = searchCollectionItem->collectionNr();
 
 			searchCollectionItem = searchCollectionItem->nextCollectionItem();
 			}
 
-		return NO_COLLECTION_NR;
+		return lastFoundCollectionNr;
 		}
 
 	unsigned int highestCollectionNr()
@@ -454,12 +423,12 @@ class CollectionList : private List
 		return boolResult;
 		}
 
-	CollectionResultType createCollection( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int _collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem )
+	CollectionResultType createCollectionItem( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int _collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem )
 		{
 		unsigned short collectionOrderNr;
-		WordItem *thisWordItem = myWordItem();
+		WordItem *_myWordItem = myWordItem();
 		CollectionResultType collectionResult;
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createCollection";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createCollectionItem";
 
 		if( collectionWordTypeNr <= NO_WORD_TYPE_NR ||
 		collectionWordTypeNr >= NUMBER_OF_WORD_TYPES )
@@ -478,7 +447,7 @@ class CollectionList : private List
 			collectionWordTypeNr = WORD_TYPE_NOUN_SINGULAR;
 
 		// Typical for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
-		if( !thisWordItem->hasWordType( true, collectionWordTypeNr ) )
+		if( !_myWordItem->hasWordType( true, collectionWordTypeNr ) )
 			return startCollectionResultError( functionNameString, "I don't have the requested word type number: ", collectionWordTypeNr );
 
 		// Typical for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
@@ -487,14 +456,14 @@ class CollectionList : private List
 
 		if( _collectionNr == NO_COLLECTION_NR )
 			{
-			if( ( _collectionNr = thisWordItem->highestCollectionNrInCollectionWords() ) >= MAX_COLLECTION_NR )
+			if( ( _collectionNr = _myWordItem->highestCollectionNrInCollectionWords() ) >= MAX_COLLECTION_NR )
 				return startCollectionResultSystemError( functionNameString, "Collection number overflow" );
 
 			collectionResult.createdCollectionNr = ++_collectionNr;
 			}
 
-		// A collection comes in pairs
-		if( ( collectionOrderNr = thisWordItem->highestCollectionOrderNrInCollectionWords( _collectionNr ) ) >= MAX_ORDER_NR - 1 )
+		// Each collection comes in pairs
+		if( ( collectionOrderNr = _myWordItem->highestCollectionOrderNrInCollectionWords( _collectionNr ) ) >= MAX_ORDER_NR - 1 )
 			return startCollectionResultSystemError( functionNameString, "Collection order number overflow" );
 
 		if( !isMarkedAsCollectionWord_ )

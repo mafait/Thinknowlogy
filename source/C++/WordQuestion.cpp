@@ -1,10 +1,10 @@
 ﻿/*	Class:			WordQuestion
  *	Supports class:	WordItem
- *	Purpose:		To answer questions about this word
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Answering questions about this word
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,9 +29,8 @@ class WordQuestion
 
 	// Private constructed variables
 
-	bool hasCurrentlyAnsweredSelfGeneratedQuestion_ = false;
-	bool hasFoundAnswerToQuestion_ = false;
 	bool hasFoundDeeperPositiveAnswer_ = false;
+	bool hasFoundDifferentSpecificationCollection_ = false;
 	bool hasFoundNoAnswerInThisWord_ = false;
 	bool hasFoundSpecificationGeneralizationAnswer_ = false;
 	bool isNegativeAnswer_ = false;
@@ -81,7 +80,17 @@ class WordQuestion
 		specificationWordItem = questionSpecificationItem->specificationWordItem();
 
 		// Find answer
-		if( ( answerSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem ) ) == NULL )
+		if( ( answerSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, relationContextNr, specificationWordItem ) ) == NULL &&
+		// Try different specification collection
+		( answerSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, isAssignment, isNegative, isPossessive, NO_COLLECTION_NR, generalizationContextNr, relationContextNr, specificationWordItem ) ) != NULL )
+			{
+			if( answerSpecificationItem->isHiddenSpanishSpecification() )
+				answerSpecificationItem = NULL;
+			else
+				hasFoundDifferentSpecificationCollection_ = true;
+			}
+
+		if( answerSpecificationItem == NULL )
 			{
 			// Find answer with different relation context
 			if( ( answerSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( false, false, isAssignment, isAssignment, isNegative, isPossessive, specificationCollectionNr, generalizationContextNr, NO_CONTEXT_NR, specificationWordItem ) ) == NULL )
@@ -106,17 +115,22 @@ class WordQuestion
 			}
 		else
 			{
-			if( ( !isExclusiveSpecification &&
-			answerSpecificationItem->isExclusiveSpecification() ) ||
+			if( answerSpecificationItem->specificationWordItem() != specificationWordItem ||
 
-			answerSpecificationItem->specificationWordItem() != specificationWordItem )
+			( !isExclusiveSpecification &&
+
+			( answerSpecificationItem->isExclusiveSpecification() ||
+
+			( globalVariables_->nUserSpecificationWords > 1 &&
+			!answerSpecificationItem->isSpecificationGeneralization() ) ) ) )
 				// Has different specification word
 				isNegativeAnswer = true;
 			else
 				{
 				// Only confirm the answer with 'yes' if the answer is at least as reliable as the question
 				if( !isExclusiveSpecification &&
-				answerSpecificationItem->assumptionLevel() <= questionSpecificationItem->assumptionLevel() )
+				answerSpecificationItem->assumptionLevel() <= questionSpecificationItem->assumptionLevel() &&
+				answerSpecificationItem->specificationCollectionNr() == questionSpecificationItem->specificationCollectionNr() )
 					isPositiveAnswer = true;
 				}
 
@@ -264,6 +278,7 @@ class WordQuestion
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAnswerToNewUserQuestion";
 
 		hasFoundDeeperPositiveAnswer_ = false;
+		hasFoundDifferentSpecificationCollection_ = false;
 		isNegativeAnswer_ = false;
 		uncertainAboutAnswerRelationSpecificationItem_ = NULL;
 
@@ -321,7 +336,7 @@ class WordQuestion
 				// A specification exists, but it isn't a question
 				if( uncertainAboutAnswerRelationSpecificationItem_ != NULL )
 					{
-					if( myWordItem_->writeSelectedSpecification( false, false, true, true, false, false, false, NO_ANSWER_PARAMETER, uncertainAboutAnswerRelationSpecificationItem_ ) != RESULT_OK )
+					if( myWordItem_->writeSelectedSpecification( false, true, true, false, false, false, NO_ANSWER_PARAMETER, uncertainAboutAnswerRelationSpecificationItem_ ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a selected answer to a question" );
 
 					if( ( writtenSentenceString = globalVariables_->writtenSentenceString ) == NULL ||
@@ -340,40 +355,46 @@ class WordQuestion
 		return RESULT_OK;
 		}
 
-	signed char findAnswersToQuestions( bool isAssignment, bool isArchivedAssignment, unsigned int compoundSpecificationCollectionNr, SpecificationItem *answerSpecificationItem )
+	signed char findAnswersToQuestions( bool isAssignment, bool isArchivedAssignment, unsigned int questionSpecificationCollectionNr, SpecificationItem *answerSpecificationItem, SpecificationItem *currentQuestionSpecificationItem )
 		{
 		unsigned int answerSpecificationCollectionNr;
-		SpecificationItem *currentQuestionSpecificationItem;
+		SpecificationItem *questionAssignmentOrSpecificationItem;
 		WordItem *answerSpecificationWordItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAnswersToQuestions";
 
 		if( answerSpecificationItem == NULL )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given answer specification item is undefined" );
 
+		if( currentQuestionSpecificationItem == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given first question specification item is undefined" );
+
 		if( answerSpecificationItem->isQuestion() )
 			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given answer specification item is a question" );
 
-		if( ( !answerSpecificationItem->isExclusiveSpecification() ||
-		globalVariables_->nUserSpecificationWords == 1 ) &&
+		answerSpecificationCollectionNr = answerSpecificationItem->specificationCollectionNr();
+		answerSpecificationWordItem = answerSpecificationItem->specificationWordItem();
 
-		( currentQuestionSpecificationItem = myWordItem_->firstSpecificationItem( isAssignment, false, isArchivedAssignment, true ) ) != NULL )
-			{
-			answerSpecificationCollectionNr = answerSpecificationItem->specificationCollectionNr();
-			answerSpecificationWordItem = answerSpecificationItem->specificationWordItem();
+		do	{
+			if( currentQuestionSpecificationItem->isOlderItem() )
+				{
+				if( currentQuestionSpecificationItem->isAssignment() ||
+				( questionAssignmentOrSpecificationItem = myWordItem_->firstAssignmentItem( false, true, NO_CONTEXT_NR, currentQuestionSpecificationItem->specificationWordItem() ) ) == NULL ||
+				questionAssignmentOrSpecificationItem->creationSentenceNr() != currentQuestionSpecificationItem->creationSentenceNr() )
+					questionAssignmentOrSpecificationItem = currentQuestionSpecificationItem;
 
-			do	{
-				if( currentQuestionSpecificationItem->isRelatedOlderSpecification( answerSpecificationCollectionNr, compoundSpecificationCollectionNr, answerSpecificationWordItem ) )
-					{
-					if( markQuestionAsAnswered( true, currentQuestionSpecificationItem ) != RESULT_OK )
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a related question as been answered" );
+				if( questionAssignmentOrSpecificationItem->isRelatedSpecification( answerSpecificationCollectionNr, questionSpecificationCollectionNr, answerSpecificationWordItem ) &&
 
-					currentQuestionSpecificationItem = myWordItem_->firstSpecificationItem( isAssignment, false, isArchivedAssignment, true );
-					}
-				else
-					currentQuestionSpecificationItem = currentQuestionSpecificationItem->nextSelectedSpecificationItem();
+				( answerSpecificationItem->isMatchingRelationContextNr( false, questionAssignmentOrSpecificationItem->relationContextNr() ) ||
+				myWordItem_->hasCurrentlyCorrectedAssumptionByKnowledge() ) &&
+
+				// Mark directly related question specification part as answered
+				markQuestionAsAnswered( true, currentQuestionSpecificationItem ) != RESULT_OK )
+					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a related question as been answered" );
 				}
-			while( currentQuestionSpecificationItem != NULL );
-			}
+			}																										// First question specification
+		while( ( currentQuestionSpecificationItem = ( currentQuestionSpecificationItem->isReplacedOrDeletedItem() ? myWordItem_->firstSpecificationItem( isAssignment, false, isArchivedAssignment, true ) :
+																													// Next question specification
+																													currentQuestionSpecificationItem->nextSelectedSpecificationItem() ) ) != NULL );
 
 		return RESULT_OK;
 		}
@@ -396,13 +417,9 @@ class WordQuestion
 			questionSpecificationItem = myWordItem_->firstSpecificationItem( questionSpecificationItem->isPossessive(), questionSpecificationItem->isSpecificationGeneralization(), questionSpecificationItem->questionParameter(), questionSpecificationItem->specificationWordItem() );
 			}
 
-		if( questionSpecificationItem != NULL )
-			{
-			if( questionSpecificationItem->markAsAnsweredQuestion() != RESULT_OK )
-				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a question specification as an answered question" );
-
-			hasFoundAnswerToQuestion_ = true;
-			}
+		if( questionSpecificationItem != NULL &&
+		questionSpecificationItem->markAsAnsweredQuestion() != RESULT_OK )
+			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to mark a question specification as an answered question" );
 
 		return RESULT_OK;
 		}
@@ -421,15 +438,14 @@ class WordQuestion
 
 		if( isDisplayingAnsweredQuestion )
 			{
-			if( questionSpecificationItem->isSelfGeneratedQuestion() )
-				hasCurrentlyAnsweredSelfGeneratedQuestion_ = true;
-
-			if( myWordItem_->writeUpdatedSpecification( false, false, false, false, false, questionSpecificationItem ) != RESULT_OK )
+			if( myWordItem_->writeUpdatedSpecification( false, false, false, questionSpecificationItem->isExclusiveSpecification(), false, false, false, questionSpecificationItem ) != RESULT_OK )
 				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the answered question" );
 
-			if( !myWordItem_->hasCurrentlyCorrectedAssumptionByKnowledge() &&
-			myWordItem_->recalculateAssumptionsInWord() != RESULT_OK )
-				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to recalculate my assumptions" );
+			if( questionSpecificationItem->isUserQuestion() &&
+			!myWordItem_->hasCurrentlyCorrectedAssumptionByKnowledge() &&
+			// Recalculate assumption levels of my word
+			myWordItem_->recalculateAssumptionLevelsInWord() != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to recalculate the assumption levels in my word" );
 			}
 
 		if( questionSpecificationItem->hasSpecificationCollection() )
@@ -500,37 +516,34 @@ class WordQuestion
 
 	// Protected functions
 
-	void initializeWordQuestionVariables()
+	signed char findAnswersToQuestions( unsigned int questionSpecificationCollectionNr, SpecificationItem *answerSpecificationItem )
 		{
-		hasCurrentlyAnsweredSelfGeneratedQuestion_ = false;
-		hasFoundAnswerToQuestion_ = false;
-		}
-
-	bool hasCurrentlyAnsweredSelfGeneratedQuestion()
-		{
-		return hasCurrentlyAnsweredSelfGeneratedQuestion_;
-		}
-
-	bool hasFoundAnswerToQuestion()
-		{
-		return hasFoundAnswerToQuestion_;
-		}
-
-	signed char findAnswersToQuestions( unsigned int compoundSpecificationCollectionNr, SpecificationItem *answerSpecificationItem )
-		{
+		SpecificationItem *firstQuestionSpecificationItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "findAnswersToQuestions";
 
-		// Find answers in active assignments
-		if( findAnswersToQuestions( true, false, compoundSpecificationCollectionNr, answerSpecificationItem ) != RESULT_OK )
-			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a posssible active assignment user question and mark it as been answered" );
+		if( answerSpecificationItem == NULL )
+			return myWordItem_->startErrorInWord( functionNameString, moduleNameString_, "The given answer specification item is undefined" );
 
-		// Find answers in archived assignments
-		if( findAnswersToQuestions( true, true, compoundSpecificationCollectionNr, answerSpecificationItem ) != RESULT_OK )
-			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a posssible archived assignment user question and mark it as been answered" );
+		if( myWordItem_->isOlderItem() &&
 
-		// Find answers in specifications
-		if( findAnswersToQuestions( false, false, compoundSpecificationCollectionNr, answerSpecificationItem ) != RESULT_OK )
-			return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a posssible specification user question and mark it as been answered" );
+		( !answerSpecificationItem->isExclusiveSpecification() ||
+		globalVariables_->nUserSpecificationWords == 1 ) )
+			{
+			// Find answers in active assignments
+			if( ( firstQuestionSpecificationItem = myWordItem_->firstSpecificationItem( true, false, false, true ) ) != NULL &&
+			findAnswersToQuestions( true, false, questionSpecificationCollectionNr, answerSpecificationItem, firstQuestionSpecificationItem ) != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a posssible active assignment user question and mark it as been answered" );
+
+			// Find answers in archived assignments
+			if( ( firstQuestionSpecificationItem = myWordItem_->firstSpecificationItem( true, false, true, true ) ) != NULL &&
+			findAnswersToQuestions( true, true, questionSpecificationCollectionNr, answerSpecificationItem, firstQuestionSpecificationItem ) != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a posssible archived assignment user question and mark it as been answered" );
+
+			// Find answers in specifications
+			if( ( firstQuestionSpecificationItem = myWordItem_->firstSpecificationItem( false, false, false, true ) ) != NULL &&
+			findAnswersToQuestions( false, false, questionSpecificationCollectionNr, answerSpecificationItem, firstQuestionSpecificationItem ) != RESULT_OK )
+				return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find a posssible specification user question and mark it as been answered" );
+			}
 
 		return RESULT_OK;
 		}
@@ -547,8 +560,10 @@ class WordQuestion
 			do	{
 				if( findAnswerToNewUserQuestion( questionSpecificationItem ) != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find an answer to a question" );
-				}
-			while( ( questionSpecificationItem = ( questionSpecificationItem->isReplacedOrDeletedItem() ? firstActiveNewUserQuestion() : questionSpecificationItem->nextSelectedSpecificationItem() ) ) != NULL &&
+				}																						// First question specification
+			while( ( questionSpecificationItem = ( questionSpecificationItem->isReplacedOrDeletedItem() ? firstActiveNewUserQuestion() :
+																										// Next question specification
+																										questionSpecificationItem->nextSelectedSpecificationItem() ) ) != NULL &&
 			!questionSpecificationItem->isOlderItem() );
 			}
 
@@ -594,7 +609,7 @@ class WordQuestion
 					answerParameter = ( isNegativeAnswer &&
 										globalVariables_->isFirstAnswerToQuestion ? WORD_PARAMETER_INTERJECTION_NO : NO_ANSWER_PARAMETER );
 
-					if( myWordItem_->writeSelectedSpecification( false, false, true, true, false, false, answerSpecificationItem->isNegative(), answerParameter, answerSpecificationItem ) != RESULT_OK )
+					if( myWordItem_->writeSelectedSpecification( false, true, true, false, false, answerSpecificationItem->isNegative(), answerParameter, answerSpecificationItem ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a selected answer to a question" );
 
 					answerSpecificationItem->hasSpecificationBeenWrittenAsAnswer = true;
@@ -607,7 +622,6 @@ class WordQuestion
 				{
 				if( globalVariables_->hasDisplayedMessage &&
 				globalVariables_->isFirstAnswerToQuestion &&
-
 				// Display notification 'My answer:'
 				inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_LISTING_MY_ANSWER ) != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a listing header" );
@@ -618,7 +632,9 @@ class WordQuestion
 				if( isNegativeAnswer )
 					isNegativeAnswer_ = true;
 
-				globalVariables_->hasFoundAnswerToQuestion = true;
+				if( !hasFoundDifferentSpecificationCollection_ )
+					globalVariables_->hasFoundAnswerToQuestion = true;
+
 				globalVariables_->isFirstAnswerToQuestion = false;
 				}
 			}

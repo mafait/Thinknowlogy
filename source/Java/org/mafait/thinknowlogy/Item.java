@@ -1,9 +1,9 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -43,9 +43,43 @@ class Item
 	protected char previousStatusChar = Constants.QUERY_ACTIVE_CHAR;
 	protected Item previousItem = null;
 	protected Item nextItem = null;
-	protected StringBuffer debugStringBuffer = null;
 
 	// Private methods
+
+	private static int assumptionGrade( boolean hasFeminineOrMasculineProperNounEnding, boolean isExclusivePrimarySpecification, boolean hasNegativePrimarySpecification, boolean hasAdditionalDefinitionSpecification, boolean hasSecondarySpecification, short justificationTypeNr )
+		{
+		switch( justificationTypeNr )
+			{
+			case Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION:
+			case Constants.JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION:
+			case Constants.JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION:
+			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
+				return 1;
+
+			case Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION:
+				return ( hasAdditionalDefinitionSpecification ? ( hasFeminineOrMasculineProperNounEnding ? 3 : 2 ) : 1 );
+
+			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+				return ( hasAdditionalDefinitionSpecification &&
+						hasFeminineOrMasculineProperNounEnding ? 3 :
+							( hasFeminineOrMasculineProperNounEnding ||
+							isExclusivePrimarySpecification ? 2 : 1 ) );
+
+			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION:
+				return ( hasNegativePrimarySpecification ||
+						hasAdditionalDefinitionSpecification ||
+
+						( isExclusivePrimarySpecification &&
+						!hasSecondarySpecification ) ? 1 : 0 );
+
+			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION:
+			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION:
+				return ( hasAdditionalDefinitionSpecification ? 1 : 0 );
+
+			default:
+				return Constants.NO_ASSUMPTION_LEVEL;
+			}
+		}
 
 	private String myWordTypeString( short queryWordTypeNr )
 		{
@@ -66,6 +100,8 @@ class Item
 
 	protected Item()
 		{
+		// Used for developer statistics
+		GlobalVariables.nTotalCreatedItems++;
 		}
 
 
@@ -471,17 +507,17 @@ class Item
 		// This is a virtual method. Therefore, it has no body.
 		}
 
-	protected void displayString( boolean isReturnQueryToPosition )
+	protected void displayString( boolean _isReturnQueryToPosition )
 		{
 		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
-	protected void displayWordReferences( boolean isReturnQueryToPosition )
+	protected void displayWordReferences( boolean _isReturnQueryToPosition )
 		{
 		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
-	protected void selectingAttachedJustifications( boolean isSelectingJustificationSpecifications )
+	protected void selectingAttachedJustifications( boolean _isSelectingJustificationSpecifications )
 		{
 		// This is a virtual method. Therefore, it has no body, and the given variables are unreferenced.
 		}
@@ -491,19 +527,19 @@ class Item
 		// This is a virtual method. Therefore, it has no body.
 		}
 
-	protected boolean hasParameter( int queryParameter )
+	protected boolean hasParameter( int _queryParameter )
 		{
 		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
-	protected boolean hasWordType( short queryWordTypeNr )
+	protected boolean hasWordType( short _queryWordTypeNr )
 		{
 		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
-	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
+	protected boolean hasReferenceItemById( int _querySentenceNr, int _queryItemNr )
 		{
 		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return false;
@@ -528,7 +564,7 @@ class Item
 		return null;
 		}
 
-	protected BoolResultType findMatchingWordReferenceString( String queryString )
+	protected BoolResultType findMatchingWordReferenceString( String _queryString )
 		{
 		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return new BoolResultType();
@@ -606,7 +642,7 @@ class Item
 		if( ( myWordString = myWordTypeString( queryWordTypeNr ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -987,35 +1023,6 @@ class Item
 		return false;
 		}
 
-	protected boolean isAssumption( short justificationTypeNr )
-		{
-		return ( justificationTypeNr == Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION );
-		}
-
-	protected boolean isConclusion( short justificationTypeNr )
-		{
-		return ( justificationTypeNr == Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION ||
-				justificationTypeNr == Constants.JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION );
-		}
-
 	protected boolean isAdjectiveParameter( short checkParameter )
 		{
 		return ( checkParameter == Constants.WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL ||
@@ -1096,43 +1103,37 @@ class Item
 				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
-	protected short assumptionGrade( boolean hasAnotherPrimarySpecification, boolean hasFeminineOrMasculineProperNounEnding, boolean hasPossessivePrimarySpecification, boolean hasPrimaryQuestionSpecification, short justificationTypeNr )
+	protected boolean isSpecificationReasoningWordType( short wordTypeNr )
 		{
-		switch( justificationTypeNr )
-			{
-			case Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION:
-				return 1;
-
-			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION:
-			case Constants.JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
-			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION:
-			case Constants.JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION:
-				return 0;
-
-			case Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
-				return (short)( hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
-
-			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				return (short)( hasAnotherPrimarySpecification &&
-						hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
-
-			case Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION:
-				return (short)( hasFeminineOrMasculineProperNounEnding ? 1 : 0 );
-
-			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
-				return (short)( hasPossessivePrimarySpecification ? 1 : 0 );
-
-			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				return (short)( hasAnotherPrimarySpecification ? 1 : 0 );
-
-			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
-				return (short)( hasPrimaryQuestionSpecification ? 1 : 0 );
-
-			default:
-				return 1;
-			}
+		return ( wordTypeNr == Constants.WORD_TYPE_ADJECTIVE ||
+				wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
+				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
-	};
+
+	protected int assumptionLevel( boolean hasFeminineOrMasculineProperNounEnding, short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem additionalDefinitionSpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem additionalProperNounSpecificationItem )
+		{
+		int assumptionLevel = assumptionGrade( hasFeminineOrMasculineProperNounEnding, ( primarySpecificationItem != null && primarySpecificationItem.isExclusiveSpecification() ), ( primarySpecificationItem != null && primarySpecificationItem.isNegative() ), ( additionalDefinitionSpecificationItem != null ), ( secondarySpecificationItem != null ), justificationTypeNr );
+		int tempAssumptionLevel;
+
+		if( primarySpecificationItem != null &&
+		( tempAssumptionLevel = primarySpecificationItem.assumptionLevel() ) > Constants.NO_ASSUMPTION_LEVEL )
+			assumptionLevel += tempAssumptionLevel;
+
+		if( additionalDefinitionSpecificationItem != null &&
+		( tempAssumptionLevel = additionalDefinitionSpecificationItem.assumptionLevel() ) > Constants.NO_ASSUMPTION_LEVEL )
+			assumptionLevel += tempAssumptionLevel;
+
+		if( secondarySpecificationItem != null &&
+		( tempAssumptionLevel = secondarySpecificationItem.assumptionLevel() ) > Constants.NO_ASSUMPTION_LEVEL )
+			assumptionLevel += tempAssumptionLevel;
+
+		if( additionalProperNounSpecificationItem != null &&
+		( tempAssumptionLevel = additionalProperNounSpecificationItem.assumptionLevel() ) > Constants.NO_ASSUMPTION_LEVEL )
+			assumptionLevel += tempAssumptionLevel;
+
+		return assumptionLevel;
+		}
+	}
 
 /*************************************************************************
  *	"Give thanks to him who made the heavenly lights-

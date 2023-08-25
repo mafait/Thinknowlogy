@@ -1,0 +1,28 @@
+Leer el archivo "Español/razonamiento/familia/definición de familia".
+¿Es Juan el padre de Pablo?
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan es masculino.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan es un hombre.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan es un padre.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan tiene hijos.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan es una persona.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan no es una mujer.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan no es una madre.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan es parte de una familia.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan no es un niño.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan no tiene probablemente un padre.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan no es un niña.
+#Dev#Mostrar el informe de justificación sobre Juan.
+Juan no es femenina.
+#Dev#Mostrar el informe de justificación sobre Juan.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

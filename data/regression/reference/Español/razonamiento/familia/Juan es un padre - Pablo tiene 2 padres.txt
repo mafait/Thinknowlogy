@@ -1,58 +1,145 @@
 ﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis conclusiones:
+< Cada mujer no es masculino.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hombre no es una mujer.
+< Cada mujer no es un hombre.
+* 
+* Mis conclusiones:
+< Cada hombre no es femenina.
+< Cada persona es masculino o femenina.
+* 
+* Mis suposiciones:
+< Un hombre es probablemente una persona.
+< Una mujer es probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Padres y hijos son parte de cada familia.
 < 
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Un hijo no es probablemente una hija.
+< Una hija no es probablemente un hijo.
 < 
 * 
 * Mis conclusiones:
+< Cada padre es masculino.
+< Cada padre no es femenina.
+< Cada padre no es una mujer.
+< Cada mujer no es un padre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
+< Cada padre no es una madre.
+* 
+* Mis conclusiones:
+< Cada madre es femenina.
+< Cada madre no es masculino.
+< Cada madre no es un hombre.
+< Cada hombre no es una madre.
+< Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis suposiciones:
-< Un hijo es probablemente una persona.
+* Mis conclusiones:
+< Cada niña no es masculino.
+< Cada niña no es un padre.
+< Cada niña no es un hombre.
+< Cada padre no es una niña.
+< Cada hombre no es una niña.
 < 
 * 
 * Mis conclusiones:
+< Cada niño no es femenina.
+< Cada niño no es una niña.
+< Cada niño no es una madre.
+< Cada niño no es una mujer.
+< Cada niña no es un niño.
+< Cada madre no es un niño.
+< Cada mujer no es un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es masculino.
+< Cada hijo no es femenina.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Un niño no es probablemente un hombre.
+< Un niño es probablemente una persona.
+< Un hombre no es probablemente un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hija es femenina.
+< Cada hija no es masculino.
+< Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
+< Una niña no es probablemente una mujer.
+< Una niña es probablemente una persona.
+< Una mujer no es probablemente una niña.
 < 
 * 
 * Mis conclusiones:
+< Juan no es femenina.
 < Juan es parte de una familia.
 < Juan es un hombre.
+< Juan no es una madre.
+< Juan no es una niña.
 < Juan no es una mujer.
 < Juan es masculino.
-< Juan no es una madre.
+< Juan no es una hija.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
+< Juan no es probablemente un niño.
 < Juan tiene probablemente un hijo.
 < 
 * 
 * Mis conclusiones:
 < Juan es padre de Pablo.
 < Ana es parte de una familia.
+< Ana no es una niña.
 * 
 * Mis suposiciones:
-< Pablo tiene probablemente una madre, llamada Ana.
+< Pablo es probablemente parte de una familia.
+< Pablo tiene posiblemente una madre, llamada Ana.
 < Pablo es posiblemente una persona.
-< Pablo es posiblemente parte de una familia.
 < Ana es probablemente una persona.
-< Ana es probablemente madre de Pablo.
-< Ana no es probablemente un padre.
-< Ana es probablemente una mujer.
+< Ana es posiblemente madre de Pablo.
+< Ana es posiblemente una mujer.
+< Ana no es posiblemente un niño.
+< Ana no es posiblemente un padre.
+< Ana no es posiblemente masculino.
 < Ana no es posiblemente un hombre.
-< Ana es probablemente femenina.
+< Ana es posiblemente femenina.
+< Ana no es posiblemente un hijo.
 * 
 * Mis preguntas:
+< ¿Es Pablo femenina o masculino?
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
 < ¿Es Pablo un hijo o una hija?
 < 
@@ -60,25 +147,72 @@
 * Mis conclusiones:
 < Juan es padre de Pablo. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
+< Juan es parte de una familia. Porque:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Padres son parte de cada familia.
+* 	y:
+<	- Juan es un padre.
+<	- Padres son parte de cada familia.
 < Juan es un hombre. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Cada padre es un hombre.
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
-< Juan no es una mujer. Porque:
-<	- Juan es un padre.
-<	- Cada padre es una mujer o un hombre.
+< Juan no es una niña. Porque:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre no es una niña.
+* 	y:
 <	- Juan es un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Juan es masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una niña.
+< Juan no es una madre. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Juan es masculino.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre no es una madre.
+< Juan no es femenina. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es femenina.
+* 	y:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre no es femenina.
+< Juan no es una mujer. Porque:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre no es una mujer.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Juan es masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una mujer.
 < Juan es masculino. Porque:
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.
-< Juan es parte de una familia. Porque:
+* 	y:
 <	- Juan es un padre.
-<	- Padres son parte de cada familia.
-< Juan no es una madre. Porque:
-<	- Juan es un padre.
-<	- Cada padre es un padre o una madre.
+<	- Cada padre es masculino.
+< Juan no es una hija. Porque:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
@@ -88,56 +222,102 @@
 <	- Juan es un padre.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
 <	- Juan es un hombre.
+<	- Un hombre es probablemente una persona.
+< Juan no es probablemente un niño. Porque:
+<	- Juan es un hombre.
+<	- Un hombre no es probablemente un niño.
 < Juan tiene probablemente un hijo. Porque:
-<	- Juan es un padre.
 <	- Cada familia tiene padres y hijos.
+<	- Juan es un padre.
 < 
 * 
 * Mis conclusiones:
 < Ana es parte de una familia. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Padres son parte de cada familia.
+< Ana no es una niña. Porque:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre no es una niña.
 * 
 * Mis suposiciones:
 < Ana es probablemente una persona. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Un padre es probablemente una persona.
-* 	y:
-<	- Cada persona es un hombre o una mujer.
-<	- Ana es probablemente una mujer.
-< Ana es probablemente madre de Pablo. Porque:
+< Ana es posiblemente madre de Pablo. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Cada padre es un padre o una madre.
 <	- Nombre propio "Ana" es probablemente femenino.
-< Ana no es probablemente un padre. Porque:
-<	- Cada padre es un padre o una madre.
-<	- Ana es probablemente madre de Pablo.
-< Ana es probablemente una mujer. Porque:
-<	- Ana es probablemente madre de Pablo.
+< Ana es posiblemente una mujer. Porque:
+<	- Ana es posiblemente madre de Pablo.
 <	- Cada madre es una mujer.
+< Ana no es posiblemente un niño. Porque:
+<	- Ana es posiblemente una mujer.
+<	- Cada mujer no es un niño.
+* 	y:
+<	- Ana es posiblemente femenina.
+<	- Cada niño no es femenina.
+* 	y:
+<	- Ana es posiblemente madre de Pablo.
+<	- Cada madre no es un niño.
+< Ana no es posiblemente un padre. Porque:
+<	- Ana es posiblemente una mujer.
+<	- Cada mujer no es un padre.
+* 	y:
+<	- Ana es posiblemente femenina.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Ana es posiblemente madre de Pablo.
+<	- Cada madre no es un padre.
+< Ana no es posiblemente masculino. Porque:
+<	- Ana es posiblemente una mujer.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Ana es posiblemente madre de Pablo.
+<	- Cada madre no es masculino.
 < Ana no es posiblemente un hombre. Porque:
-<	- Ana es probablemente una persona.
-<	- Cada persona es un hombre o una mujer.
-<	- Ana es probablemente una mujer.
-< Ana es probablemente femenina. Porque:
-<	- Ana es probablemente una mujer.
+<	- Ana es posiblemente una mujer.
+<	- Cada mujer no es un hombre.
+* 	y:
+<	- Ana es posiblemente femenina.
+<	- Cada hombre no es femenina.
+* 	y:
+<	- Ana es posiblemente madre de Pablo.
+<	- Cada madre no es un hombre.
+< Ana es posiblemente femenina. Porque:
+<	- Ana es posiblemente una mujer.
 <	- Cada mujer es femenina.
+* 	y:
+<	- Ana es posiblemente madre de Pablo.
+<	- Cada madre es femenina.
+< Ana no es posiblemente un hijo. Porque:
+<	- Ana es posiblemente femenina.
+<	- Cada hijo no es femenina.
 < 
 * 
 * Mis suposiciones:
-< Pablo tiene probablemente una madre, llamada Ana. Porque:
-<	- Ana es probablemente madre de Pablo.
+< Pablo es probablemente parte de una familia. Porque:
+<	- ¿Es Pablo un hijo o una hija?
+<	- Hijos son parte de cada familia.
+< Pablo tiene posiblemente una madre, llamada Ana. Porque:
+<	- Ana es posiblemente madre de Pablo.
+* 	y:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre es un padre o una madre.
+<	- Nombre propio "Ana" es probablemente femenino.
 < Pablo es posiblemente una persona. Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< Pablo es posiblemente parte de una familia. Porque:
-<	- ¿Es Pablo un hijo o una hija?
-<	- Hijos son parte de cada familia.
 * 
 * Mis preguntas:
+< ¿Es Pablo femenina o masculino? Porque:
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es femenina o masculino.
+* 	y:
+<	- Pablo es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
 < ¿Es Pablo una niña, una mujer, un niño o un hombre? Porque:
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
 <	- Cada familia tiene padres y hijos.

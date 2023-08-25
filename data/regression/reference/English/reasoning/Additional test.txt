@@ -3,6 +3,11 @@
 < Every family has parents and children.
 < 
 * 
+* My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
+< 
+* 
 * My questions:
 < Is Anna a man or a woman?
 < 

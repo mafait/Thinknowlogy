@@ -1,37 +1,29 @@
 ﻿Affichez "------------------------------------------------------------------------------".
-Affichez " Thinknowlogy est le système de raisonnement automatisé le plus avancé au monde: Il n'y a pas de".
-Affichez " connaissance préprogrammée. Aucun dialogue n'est écrit à l'avance. Et aucune liste de mots n'est utilisée.".
-Affichez " De plus, il implémente des constructions de raisonnement qui ne sont pas encore décrites par les scientifiques:".
-Affichez " * Malgré des recherches exhaustives, la théorie de l'évolution n'a toujours pas fourni une explication".
-Affichez " satisfaisante de l'origine de l'intelligence, du langage et des lois de la nature. Laissons seul, comment ils".
-Affichez " sont liés. De plus, aucun des phénomènes exclusifs à la théorie de l'évolution, ou des théories dérivées,".
-Affichez " ne s'applique dans la vie quotidienne;".
-Affichez " * Selon la vision biblique du monde, Dieu a créé les lois de la nature, comme fondement de sa création.".
-Affichez " Basé sur les lois naturelles de l'intelligence, intégrées dans la grammaire, seulement Thinknowlogy".
-#C++#Affichez " implémente la fonction intelligente des mots comme les articles définis \"le\" et \"la\", conjonction \"ou\",".
-#C++#Affichez " verbe possessif \"avoir\", et verbes au passé \"étaient\" et \"avaient\".".
-#Java#Affichez " implémente la fonction intelligente des mots comme les articles définis «le» et «la», conjonction «ou»,".
-#Java#Affichez " verbe possessif «avoir», et verbes au passé «étaient» et «avaient».".
+Affichez " Thinknowlogy est la seule technologie de connaissance auto-organisée au monde.".
 Affichez "------------------------------------------------------------------------------".
-Affichez " La fonction intelligente de ces mots est démontrée par:".
-Affichez " * Programmation en Langue contrôlée;".
+Affichez " Je crois que la vie et l'univers sont intelligemment conçus. Et je crois que toute conception".
+Affichez " intelligente peut être démêlée grâce à la rétro-ingénierie. J'ai identifié le langage humain".
+Affichez " comme une source d'intelligence naturelle. J'utilise la conception intelligente du langage".
+Affichez " humain afin de reproduire l'intelligence humaine dans un logiciel.".
+Affichez "------------------------------------------------------------------------------".
+Affichez " La logique naturelle du langage est démontrée par:".
 Affichez " * Raisonnement en Langue contrôlée:".
 Affichez "   - tirer des conclusions (plus avancés que les solutions scientifiques),".
 Affichez "   - faire des hypothèses (avec niveau d'incertitude auto-réglage),".
 Affichez "   - poser des questions (environ lacunes dans les connaissances),".
-Affichez "   - la détection de confirmations, conflits et quelques cas d'ambiguïté sémantique,".
-Affichez "   - l'affichage de rapports de justification pour la connaissance autoproduite;".
+Affichez "   - l'affichage de rapports de justification pour la connaissance autoproduite,".
+Affichez "   - détection des confirmations et des conflits, et capacités d'auto-organisation;".
 Affichez " * Multilinguisme, prouver: Langues naturelles ont une origine commune et logique.".
 Affichez "------------------------------------------------------------------------------".
-Affichez " Je défie tout le monde de dépasser ce système de raisonnement: http://mafait.org/challenge/".
+Affichez " Je défie quiconque de battre les résultats les plus simples de ce système de raisonnement d'une".
+Affichez " manière générique: à partir de phrases à grammaire restreinte, par des algorithmes, retour à cette".
+Affichez " grammaire restreinte, en plusieurs langues, sans connaissance préprogrammée, sans résultat des".
+Affichez " phrases écrites par des humains, et sans listes de mots étendues. Voir: https://mafait.org/challenge".
 Affichez "------------------------------------------------------------------------------".
 #C++#Affichez " Aide.\t\t\t\t\t\t* Afficher plus d'aide d'info".
 #C++#Affichez " \~{languageName}\t\t\t\t* Changer la langue".
-#C++#Affichez " Lirez le fichier \"Français/programmation/Puissance 4\".".
-#C++#Affichez " Lirez le fichier \"Français/programmation/Tours de Hanoï\".".
 #C++#Affichez " Lirez le fichier \"Français/raisonnement/raisonnement/Défi scientifique\".".
 #C++#Affichez " Lirez le fichier \"Français/raisonnement/famille/définition de famille\".".
-#Java#Affichez " Bouton <programmation> utiliser pour apprendre la programmation en langage naturel.".
 #Java#Affichez " Bouton <raisonnement> utiliser pour en apprendre davantage sur le raisonnement en langage naturel.".
 Affichez "------------------------------------------------------------------------------".
 Affichez " Langues disponibles: ~+`langue`<s>'~.".

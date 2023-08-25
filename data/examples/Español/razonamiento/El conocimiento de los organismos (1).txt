@@ -56,3 +56,4 @@ Juan es un humano.
 #Dev#Mostrar el informe de justificación sobre los mamíferos.
 #Dev#Mostrar el informe de justificación sobre los cocodrilos.
 #Dev#Mostrar el informe de justificación sobre Juan.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

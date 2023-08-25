@@ -24,7 +24,7 @@
 <	- Anna is the mother of Paul, Joe and Laura.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < Paul has a father, called John.
 < 
 * 

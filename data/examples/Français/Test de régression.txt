@@ -1,4 +1,12 @@
-﻿#-----------
+﻿#----------------------------------------------------------------------------
+# Purpose: To define the regression test for the French language
+# Version: Thinknowlogy 2023 (Shaking tree)
+#----------------------------------------------------------------------------
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
+#----------------------------------------------------------------------------
+
+#-----------
 # Général
 #-----------
 #Dev##Java#Lirez le fichier de test "Français/ambiguïté/Acceptation - Boston - États-Unis - Royaume-Uni".
@@ -10,15 +18,11 @@
 #Dev#Lirez le fichier de test "Français/ambiguïté/Spécifications multiples ainsi que de multiples relations".
 #Dev##Java#Lirez le fichier de test "Français/ambiguïté/Nero".
 #Dev##Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis".
-#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis - Boston".
-#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis - Imaginaire réélection (avec confirmation)".
-#Dev##Java#Lirez le fichier de test "Français/ambiguïté/Presidents des États-Unis - Imaginaire réélection".
 
 #Dev#Lirez le fichier de test "Français/conflit/Assignation en conflit avec la spécification de définition".
 #Dev#Lirez le fichier de test "Français/conflit/Spécification de définition est déjà assignée".
 #Dev##Java#Lirez le fichier de test "Français/conflit/Le mot de généralisation et le mot de relation sont les mêmes".
-#Dev#Lirez le fichier de test "Français/conflit/En boucle - Chaqué père est un parent".
-#Dev#Lirez le fichier de test "Français/conflit/En boucle - Chaque mère est un parent".
+#Dev#Lirez le fichier de test "Français/conflit/Pas de conflit - parent - père - mère".
 #Dev#Lirez le fichier de test "Français/conflit/Aucun conflit sur la collecte non-exclusive".
 
 #Dev#Lirez le fichier de test "Français/programmation/Puissance 4 - La colonne est pleine".
@@ -81,7 +85,6 @@
 #Dev#Lirez le fichier de test "Français/raisonnement/Tom est un chat".
 #Dev##Java#Lirez le fichier de test "Français/raisonnement/L'incertitude et passé".
 #Dev#Lirez le fichier de test "Français/raisonnement/Relation unique".
-#Dev##Java#Lirez le fichier de test "Français/raisonnement/Presidents des États-Unis - Confirmation".
 
 #-----------
 # Famille
@@ -119,7 +122,10 @@
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Je ne suis pas sûr".
 #Dev#Lirez le fichier de test "Français/question réponse/famille/J'ai eu la même question avant".
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Je sais seulement".
-#Dev#Lirez le fichier de test "Français/question réponse/famille/Indirectement répondu question, avec la confirmation".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Indirectement répondu questions - Olivier est un père".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Indirectement répondu questions - Olivier est un homme".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Indirectement répondu questions - Olivier est masculin".
+#Dev#Lirez le fichier de test "Français/question réponse/famille/Indirectement répondu questions (avec la confirmation)".
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Réponse intelligente des questions".
 #Dev#Lirez le fichier de test "Français/question réponse/famille/Est Pascal une femme".
 #Dev##Java#Lirez le fichier de test "Français/question réponse/famille/Juste quelques questions (1)".
@@ -210,6 +216,7 @@
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Lorraine est un enfant - Olivier et Amélie".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (enfant)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (parents)".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Amélie)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Amélie - inversé)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes hypothèses qui sont confirmées (Olivier et Pascal)".
@@ -220,7 +227,7 @@
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (Julien a 2 parents)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (avec relation)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Mes conclusions qui sont confirmées (sans relation)".
-#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Amélie - Julien - Lorraine - Julien - Olivier".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Amélie - Julien - Lorraine - Julien - Olivier - Pascal".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Amélie - Julien - Lorraine - Olivier".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Julien - Lorraine - Olivier et Amélie (parents)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal - Julien - Lorraine - Olivier et Amélie (fils - fille)".
@@ -228,6 +235,7 @@
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal a un père - Pascal a 2 parents".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal est un garçon - Lorraine est una jeune-fille".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal est un enfant - Olivier et Amélie".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal est un homme - Pascal est un fils".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Pascal est le fils de Olivier et Amélie".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Verbe passé".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Person".

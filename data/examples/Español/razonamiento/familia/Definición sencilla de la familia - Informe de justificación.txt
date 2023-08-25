@@ -1,9 +1,12 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia (simple)".
 Mostrar el informe de justificación sobre la familia.
 Mostrar el informe de justificación sobre los padres.
-Mostrar el informe de justificación sobre la madre.
-Mostrar el informe de justificación sobre hijos.
-Mostrar el informe de justificación sobre la hija.
+Mostrar el informe de justificación sobre las madres.
+Mostrar el informe de justificación sobre los hijos.
+Mostrar el informe de justificación sobre las hijas.
+Mostrar el informe de justificación sobre los hombres.
+Mostrar el informe de justificación sobre las mujeres.
+Mostrar el informe de justificación sobre personas.
 Juan es el padre y Ana es la madre de Pablo, José y Luisa.
 Mostrar el informe de justificación sobre Juan.
 Mostrar el informe de justificación sobre Ana.

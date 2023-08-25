@@ -1,0 +1,5 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Pascal est un homme.
+Pascal est un fils.
+#Dev#Affichez le rapport de justification sur Pascal.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

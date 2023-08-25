@@ -44,6 +44,11 @@
 < Peter had een vader, genaamd Johan.
 < 
 * 
+* Mijn veronderstellingen:
+< Een man is waarschijnlijk geen vrouw.
+< Een vrouw is waarschijnlijk geen man.
+< 
+* 
 * Mijn vragen:
 < Is Anne een man of een vrouw?
 < 

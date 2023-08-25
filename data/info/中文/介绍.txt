@@ -1,29 +1,25 @@
 ﻿呈现"------------------------------------------------------------------------------"。
-呈现" Thinknowlogy is the world's most advanced automated reasoner: No knowledge is"。
-呈现" programmed upfront. No dialogues are written upfront. And no words lists are used."。
-呈现" Moreover, it implements reasoning constructions that are not yet described by scientists:"。
-呈现" * Despite exhaustive research, the theory of evolution still hasn't provided a satisfactory"。
-呈现" explanation for the origin of intelligence, language and laws of nature. Let alone, how"。
-呈现" they are related. Moreover, none of the phenomena that are exclusive to the theory of"。
-呈现" evolution – or its derivative theories – is applicable to daily life;"。
-呈现" * According to the biblical world view, God has created laws of nature to make his creation"。
-呈现" run like clockwork. Being based on Natural Laws of Intelligence embedded in Grammar,"。
-呈现" only Thinknowlogy implements the intelligent function of words like definite article “the”,"。
-呈现" conjunction “or”, possessive verb “have”, and past tense verbs “were” and “had”."。
+呈现" Thinknowlogy is the world's only self-organizing knowledge technology."。
 呈现"------------------------------------------------------------------------------"。
-呈现" The intelligent function of these words is demonstrated by:"。
-呈现" * Programming in Controlled Natural Language;"。
-呈现" * Reasoning in Controlled Natural Language:"。
+呈现" I believe that life and the universe are intelligently designed. And I believe that any"。
+呈现" intelligent design can be unraveled through reverse engineering. I have identified"。
+呈现" the human language as a source of natural intelligence. I am utilizing the intelligent"。
+呈现" design of the human language to replicate human intelligence in software."。
+呈现"------------------------------------------------------------------------------"。
+呈现" The natural logic of language is demonstrated by:"。
+呈现" * Reasoning (in sentences with restricted grammar):"。
 呈现"   - drawing conclusions (more advanced than scientific solutions),"。
 呈现"   - making assumptions (with self-adjusting level of uncertainty),"。
 呈现"   - asking questions (about gaps in the knowledge),"。
-呈现"   - detecting confirmations, conflicts and some cases of semantic ambiguity,"。
-呈现"   - displaying justification reports for the self-generated knowledge;"。
-呈现" * Multilingualism, proving: Natural languages have a common and logical origin."。
+呈现"   - detecting conflicts and confirmations,"。
+呈现"   - detecting confirmations and conflicts, and self-organizing capabilities;"。
+呈现" * Multilingualism, assuming that languages have a common and logical origin."。
 呈现"------------------------------------------------------------------------------"。
-呈现" I defy anyone to beat this automated reasoner: http://mafait.org/challenge/"。
+呈现" I defy anyone to beat the simplest results of this reasoner in a generic way: from"。
+呈现" sentences with restricted grammar, through algorithms, back to that restricted grammar,"。
+呈现" in multiple languages, without programmed knowledge, without human-written output"。
+呈现" sentences, and without extensive words lists. See: https://mafait.org/challenge"。
 呈现"------------------------------------------------------------------------------"。
-呈现" Use button <程序设计> to learn about programming in natural language"。
 呈现" Use button <推理> to learn about reasoning in natural language"。
 呈现"------------------------------------------------------------------------------"。
 呈现" Available languages: ~+`language`<s>'~."。

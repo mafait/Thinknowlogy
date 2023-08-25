@@ -1,10 +1,10 @@
 ﻿/*	Class:			SelectionItem
  *	Parent class:	Item
- *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing the selection structure
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -286,12 +286,12 @@ class SelectionItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		WordItem *thisWordItem = myWordItem();
+		WordItem *_myWordItem = myWordItem();
 		char *queryString;
 		char *wordString;
-		char *generalizationWordTypeString = thisWordItem->wordTypeNameString( generalizationWordTypeNr_ );
-		char *specificationWordTypeString = thisWordItem->wordTypeNameString( specificationWordTypeNr_ );
-		char *relationWordTypeString = thisWordItem->wordTypeNameString( relationWordTypeNr_ );
+		char *generalizationWordTypeString = _myWordItem->wordTypeNameString( generalizationWordTypeNr_ );
+		char *specificationWordTypeString = _myWordItem->wordTypeNameString( specificationWordTypeNr_ );
+		char *relationWordTypeString = _myWordItem->wordTypeNameString( relationWordTypeNr_ );
 
 		itemBaseToString( queryWordTypeNr );
 

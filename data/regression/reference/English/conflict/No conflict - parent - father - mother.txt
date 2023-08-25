@@ -1,0 +1,5 @@
+﻿* 
+* My assumptions:
+< A father is probably not a mother.
+< A mother is probably not a father.
+< 

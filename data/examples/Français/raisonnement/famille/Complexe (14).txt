@@ -13,5 +13,7 @@ Lorraine est un enfant de Olivier et Amélie.
 #Dev#Affichez le rapport de justification sur Lorraine.
 Julien est un garçon.
 Julien est un fils de Olivier et Amélie.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
 #Dev#Affichez le rapport de justification sur Julien.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

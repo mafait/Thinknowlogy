@@ -1,10 +1,10 @@
 ﻿/*	Class:		UserSpecificationResultType
  *	Purpose:	To return user specification variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,14 +29,12 @@ class UserSpecificationResultType
 
 	protected byte result = Constants.RESULT_OK;
 
-	protected boolean isConfirmedExclusive = false;
-	protected boolean isConfirmedSpecificationButNotItsRelation = false;
+	protected boolean isConfirmedSpecificationButNoneOfItsRelations = false;
 	protected boolean isNonExclusiveSpecification = false;
 	protected boolean isSameQuestionFromUser = false;
-	protected boolean isSimilarOrRelatedQuestion = false;
 
 	protected SpecificationItem confirmedSpecificationItem = null;
-	};
+	}
 
 /*************************************************************************
  *	"The winds blows, and we are gone -

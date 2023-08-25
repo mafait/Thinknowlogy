@@ -1,4 +1,5 @@
 ﻿Cada padre es un padre o una madre.
 Cada padre es un hombre.
+Cada madre es una mujer.
 Juan es un padre.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

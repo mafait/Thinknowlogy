@@ -1,3 +1,2 @@
-﻿#C++#John is a parent.
-#Java#军是父母。
+﻿John is a parent.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

@@ -29,5 +29,6 @@
 < André is waarschijnlijk een kind van Paul.
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
+< Paul heeft een kind, genaamd André.
 < André is deel van een gezin.
 < 

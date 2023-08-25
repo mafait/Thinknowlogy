@@ -1,7 +1,7 @@
 ﻿#-----------------------------------------------------------------
 # Ce test exécute les exemples de mon Défi Scientifique. Pour
 # plus d'informations, voir le document Défi Scientifique inclus,
-# ou: http://mafait.org/challenge/
+# ou: https://mafait.org/challenge
 #-----------------------------------------------------------------
 # Bloque 1: Conversions directes
 #-----------------------------------------------------------------

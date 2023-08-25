@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the grammar for the Dutch language
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 #----------- Woord definities -----------
@@ -327,6 +327,7 @@
 @0		:3004	$men			m
 @0		:3004	$mes			me
 @0		:3004	$nen			n
+@0		:3004	$ngens			ngen
 @0		:3004	$nsen			ns
 @0		:3004	$nzen			nz
 @0		:3004	$o's			o
@@ -344,6 +345,7 @@
 @0		:3004	$tten			t
 @0		:3004	$uizen			uis
 @0		:3004	$ums			um
+@0		:3004	$wen			w
 #-----------------------------------------------------
 # Probeer de volgende uitgangen eerst
 #-----------------------------------------------------
@@ -534,6 +536,7 @@
 
 :5030	$preposition_noun_relation														{ preposition | preposition_Of } specification_assignment_relation_noun
 :5030	$preposition_relation															{ preposition | preposition_Of } { relation_proper_noun | specification_assignment_relation_noun }
+#:5030	$preposition_relations															{ preposition_Of | preposition } [ conjunction_Dutch_Zowel ] relation_proper_nouns
 :5030	$preposition_relations															{ preposition | preposition_Of } [ conjunction_Dutch_Zowel ] relation_proper_nouns
 :5030	$possessive_relations															[ symbol_comma ] adjective_Called relation_proper_nouns
 
@@ -587,9 +590,6 @@
 
 :5000	$assignment_generalization_specification										generalization_noun_singular_assignment { singular_verb singular_noun_assignment_specification | singular_possessive_verb noun_assignment_specification }
 :5000	$assignment_generalization_specification										singular_proper_noun_generalization_assignment [ more_singular_proper_noun_generalization_assignments | preposition_relations ]
-		$assignment_question_specification												generalization_noun_singular_assignment { singular_structure_specification | singular_noun_assignment_specification }
-		$assignment_question_specification												generalization_proper_noun [ adverb_uncertainty ] proper_noun_assignment_specification [ preposition_relations ]
-:5000	$assignment_generalization_specification_question								singular_question_verb assignment_question_specification
 
 		$structure_plural_specification													plural_possessive_verb structure_specification_nouns [ possessive_relations ]
 		$structure_plural_specification													{ plural_verb | plural_conditional_verb } plural_structure_specification
@@ -598,16 +598,18 @@
 :5000	$structure_generalization_specification											singular_proper_noun_generalization_structure [ more_singular_proper_noun_generalization_structures ]
 :5000	$structure_generalization_specification											singular_structure_noun_generalization { singular_verb | singular_conditional_verb } singular_structure_specification
 
-		$structure_question_specification												generalization_proper_noun [ adverb_uncertainty ] structure_specification_nouns [ preposition_relations ]
+		$structure_question_specification												generalization_proper_noun [ adverb_uncertainty ] { structure_specification_nouns | exclusive_specification_adjectives } [ preposition_relations ]
 		$structure_question_specification												singular_structure_noun_generalization singular_structure_specification
-:5000	$structure_generalization_specification_question								plural_question_verb collective_generalization_proper_nouns plural_specification_noun [ preposition_relations ]
-:5000	$structure_generalization_specification_question								singular_question_verb structure_question_specification
+		$assignment_question_specification												generalization_noun_singular_assignment { singular_structure_specification | singular_noun_assignment_specification }
+		$assignment_question_specification												generalization_proper_noun [ adverb_uncertainty ] proper_noun_assignment_specification [ preposition_relations ]
+:5000	$generalization_specification_question											plural_question_verb collective_generalization_proper_nouns plural_specification_noun [ preposition_relations ]
+:5000	$generalization_specification_question											singular_question_verb { assignment_question_specification | structure_question_specification }
 
 :5000	$structure_specification_generalization											plural_structure_specification plural_specification_generalization_verb { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
 :5000	$structure_specification_generalization											singular_structure_specification singular_specification_generalization_verb [ Part_Of | adjective_Characteristic preposition_For ] singular_structure_noun_generalization
 
-:5000	$structure_specification_generalization_question								plural_specification_generalization_question_verb plural_structure_specification [ adverb_uncertainty ] { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
-:5000	$structure_specification_generalization_question								singular_specification_generalization_question_verb singular_structure_specification [ adverb_uncertainty ] [ Part_Of ] singular_structure_noun_generalization
+:5000	$specification_generalization_question											plural_specification_generalization_question_verb plural_structure_specification [ adverb_uncertainty ] { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
+:5000	$specification_generalization_question											singular_specification_generalization_question_verb singular_structure_specification [ adverb_uncertainty ] [ Part_Of ] singular_structure_noun_generalization
 
 
 #-----------
@@ -650,9 +652,8 @@
 
 #-----------
 
-:4022	$question																		structure_specification_generalization_question
-:4021	$question																		structure_generalization_specification_question
-		$question																		assignment_generalization_specification_question
+:4022	$question																		specification_generalization_question
+:4021	$question																		generalization_specification_question
 		$comma_separated_questions														comma_conjunction question [ comma_separated_questions ]
 		$more_questions																	[ comma_separated_questions ] { collective_sentence_conjunction | exclusive_sentence_conjunction } question
 :4020	$question_sentence																question [ more_questions ] symbol_question_mark
@@ -667,11 +668,3 @@
 :4010	$statement_sentence																[ answer_Yes_or_No symbol_comma ] statement [ more_statements ] [ symbol_colon | symbol_exclamation_mark ]
 
 :4000	$sentence																		{ statement_sentence | question_sentence | selection_sentence }
-
-
-#----------- Toewijzingen en specificaties -----------
-
-Iedere oplossingsmethode kan-zijn omgekeerd.
-Iedere oplossingsmethode kan-zijn bezig of gereed.
-
-Iedere oplossingsstrategie is defensief of exclusief.

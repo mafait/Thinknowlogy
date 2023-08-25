@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the grammar for the Spanish language
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 #----------- Definiciones de la palabra -----------
@@ -301,18 +301,22 @@
 
 #--- Terminaciones sustantivo plural ---
 @0		:3004	$és				é
-@0		:3004	$es				e
 @0		:3004	$bas			ba
 @0		:3004	$bos			bo
+@0		:3004	$bres			bre
 @0		:3004	$cas			ca
+@0		:3004	$ches			che
 @0		:3004	$cos			co
 @0		:3004	$das			da
 @0		:3004	$dos			do
+@0		:3004	$dres			dre
 @0		:3004	$eos			eo
 @0		:3004	$hos			ho
 @0		:3004	$ias			ia
+@0		:3004	$ines			ín
 @0		:3004	$ios			io
 @0		:3004	$jas			ja
+@0		:3004	$jeres			jer
 @0		:3004	$jos			jo
 @0		:3004	$las			la
 @0		:3004	$los			lo
@@ -322,25 +326,31 @@
 @0		:3004	$ñas			ña
 @0		:3004	$ños			ño
 @0		:3004	$oos			oo
+@0		:3004	$ores			or
 @0		:3004	$pas			pa
 @0		:3004	$pos			po
 @0		:3004	$ras			ra
 @0		:3004	$ros			ro
-@0		:3004	$rs				r
 @0		:3004	$sas			sa
 @0		:3004	$tas			ta
+@0		:3004	$tes			te
 @0		:3004	$tos			to
 @0		:3004	$rmos			rmo
+@0		:3004	$ters			ter
 @0		:3004	$yas			ya
 #-----------------------------------------------------
 # Procese primero las siguientes terminaciones nominales plurales
 #-----------------------------------------------------
 @0		:3004	$ces			z
+@0		:3004	$ales			al
+@0		:3004	$anes			an
+@0		:3004	$ares			ar
+@0		:3004	$ceos			ceo
+@0		:3004	$ebes			ebe
 @0		:3004	$ilas			il
-@0		:3004	$les			l
-@0		:3004	$nes			n
+@0		:3004	$iles			il
+@0		:3004	$oles			ol
 @0		:3004	$ones			ón
-@0		:3004	$ores			or
 @0		:3004	$pia			pia
 
 
@@ -488,7 +498,7 @@
 :5021	$singular_noun_assignment_specification											{ singular_noun_assignment_specification_nouns | collective_specification_proper_nouns | specification_proper_noun | collective_specification_numerals | specification_numeral | collective_specification_small_letters | specification_small_letter | collective_specification_capital_letters | specification_capital_letter | collective_specification_adjectives | specification_adjective | collective_specification_pronouns | specification_pronoun | specification_text }
 :5021	$singular_proper_noun_assignment_specification									{ singular_proper_noun_assignment_specification_nouns | collective_specification_numerals | specification_numeral | collective_specification_small_letters | specification_small_letter | collective_specification_capital_letters | specification_capital_letter | collective_specification_adjectives | specification_adjective | collective_specification_pronouns | specification_pronoun | specification_text }
 :5021	$plural_assignment_specification												{ plural_assignment_specification_nouns | collective_specification_numerals | collective_specification_small_letters | collective_specification_capital_letters | collective_specification_adjectives | collective_specification_pronouns }
-:5021	$noun_assignment_specification													{ singular_noun_assignment_specification_nouns | plural_assignment_specification_nouns | collective_specification_adjectives  }
+:5021	$noun_assignment_specification													{ singular_noun_assignment_specification_nouns | plural_assignment_specification_nouns | collective_specification_adjectives }
 :5021	$proper_noun_assignment_specification											{ singular_proper_noun_assignment_specification_nouns | plural_assignment_specification_nouns | collective_specification_adjectives }
 
 :5020	$singular_structure_specification												{ singular_exclusive_structure_specification_nouns | exclusive_specification_proper_nouns | exclusive_specification_numerals | exclusive_specification_small_letters | exclusive_specification_capital_letters | exclusive_specification_adjectives | exclusive_specification_pronouns | exclusive_specification_texts }
@@ -566,9 +576,6 @@
 :5000	$assignment_generalization_specification										generalization_assignment_article plural_generalization_noun { plural_verb plural_assignment_specification | plural_possessive_verb noun_assignment_specification }
 :5000	$assignment_generalization_specification										generalization_noun_singular_assignment { singular_verb singular_noun_assignment_specification | singular_possessive_verb noun_assignment_specification }
 :5000	$assignment_generalization_specification										singular_proper_noun_generalization_assignment [ more_singular_proper_noun_generalization_assignments | preposition_relations ]
-		$assignment_question_specification												generalization_noun_singular_assignment { singular_structure_specification | singular_noun_assignment_specification }
-		$assignment_question_specification												generalization_proper_noun [ adverb_uncertainty ] proper_noun_assignment_specification [ preposition_relations ]
-:5000	$assignment_generalization_specification_question								singular_question_verb assignment_question_specification
 
 		$structure_plural_specification													plural_possessive_verb structure_specification_nouns [ possessive_relations ]
 		$structure_plural_specification													{ plural_verb | plural_conditional_verb } plural_structure_specification
@@ -577,18 +584,20 @@
 :5000	$structure_generalization_specification											singular_proper_noun_generalization_structure [ more_singular_proper_noun_generalization_structures ]
 :5000	$structure_generalization_specification											singular_structure_noun_generalization { singular_verb | singular_conditional_verb } singular_structure_specification
 
-		$proper_noun_question_specification												structure_specification_nouns [ preposition_relations ]
+		$proper_noun_question_specification												{ structure_specification_nouns | exclusive_specification_adjectives } [ preposition_relations ]
 		$proper_noun_question_specification												single_singular_specification_noun preposition_relations
 		$structure_question_specification												generalization_proper_noun [ adverb_uncertainty ] proper_noun_question_specification
 		$structure_question_specification												singular_structure_noun_generalization singular_structure_specification
-:5000	$structure_generalization_specification_question								plural_question_verb collective_generalization_proper_nouns plural_specification_noun [ preposition_relations ]
-:5000	$structure_generalization_specification_question								singular_question_verb structure_question_specification
+		$assignment_question_specification												generalization_noun_singular_assignment { singular_structure_specification | singular_noun_assignment_specification }
+		$assignment_question_specification												generalization_proper_noun [ adverb_uncertainty ] proper_noun_assignment_specification [ preposition_relations ]
+:5000	$generalization_specification_question											plural_question_verb collective_generalization_proper_nouns plural_specification_noun [ preposition_relations ]
+:5000	$generalization_specification_question											singular_question_verb { assignment_question_specification | structure_question_specification }
 
 :5000	$structure_specification_generalization											plural_structure_specification plural_specification_generalization_verb { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
 :5000	$structure_specification_generalization											singular_structure_specification singular_specification_generalization_verb [ Part_Of | adjective_Characteristic preposition_For ] singular_structure_noun_generalization
 
-:5000	$structure_specification_generalization_question								plural_specification_generalization_question_verb plural_structure_specification [ adverb_uncertainty ] { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
-:5000	$structure_specification_generalization_question								singular_specification_generalization_question_verb singular_structure_specification [ adverb_uncertainty ] [ Part_Of ] singular_structure_noun_generalization
+:5000	$specification_generalization_question											plural_specification_generalization_question_verb plural_structure_specification [ adverb_uncertainty ] { plural_generalization_noun | Part_Of singular_structure_noun_generalization }
+:5000	$specification_generalization_question											singular_specification_generalization_question_verb singular_structure_specification [ adverb_uncertainty ] [ Part_Of ] singular_structure_noun_generalization
 
 
 #-----------
@@ -631,9 +640,8 @@
 
 #-----------
 
-:4022	$question																		structure_specification_generalization_question
-:4021	$question																		structure_generalization_specification_question
-		$question																		assignment_generalization_specification_question
+:4022	$question																		specification_generalization_question
+:4021	$question																		generalization_specification_question
 		$comma_separated_questions														comma_conjunction question [ comma_separated_questions ]
 		$more_questions																	[ comma_separated_questions ] { collective_sentence_conjunction | exclusive_sentence_conjunction } question
 :4020	$question_sentence																[ symbol_Spanish_inverted_question_mark ] question [ more_questions ] symbol_question_mark
@@ -648,11 +656,3 @@
 :4010	$statement_sentence																[ answer_Yes_or_No symbol_comma | symbol_Spanish_inverted_exclamation_mark ] statement [ more_statements ] [ symbol_colon | symbol_exclamation_mark ]
 
 :4000	$sentence																		{ statement_sentence | question_sentence | selection_sentence }
-
-
-#----------- Asignaciones y especificaciones -----------
-
-Un método de resolver puede-estar invertida.
-Un método de resolver puede-estar ocupado o hecho.
-
-Un estrategia de resolver es defensiva o exclusivo.

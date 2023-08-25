@@ -20,10 +20,10 @@
  Toon de garantie.
 ------------------------------------------------------------------------------
  Voorbeeldbestanden: * Gebruik knop <meer voorbeelden>
-	    of zie map: Thinknowlogy2018r4/data/examples/Nederlands/
- Fundamenteel:          * map: Thinknowlogy2018r4/documents/
- Ontwerp:	          * map: Thinknowlogy2018r4/documents/design/
- Schermafdrukken:     * map: Thinknowlogy2018r4/screenshots/Nederlands/
+	    of zie map: Thinknowlogy2023/data/examples/Nederlands/
+ Fundamenteel:          * map: Thinknowlogy2023/documents/
+ Ontwerp:	          * map: Thinknowlogy2023/documents/design/
+ Schermafdrukken:     * map: Thinknowlogy2023/screenshots/Nederlands/
 ------------------------------------------------------------------------------
 < 
 < Specificaties:
@@ -34,36 +34,36 @@
 < English is een taal. {geleerd van gebruiker Admin}
 < 
 ------------------------------------------------------------------------------
- Totaal aantal items: 8606.
+ Totaal aantal items: 8685.
 ------------------------------------------------------------------------------
- Items in administrator:	420.
+ Items in administrator:	422.
 ------------------------------------------------------------------------------
- * Actieve items:	       420.
+ * Actieve items:	       422.
     <F> Bestanden:		2.
     <R> Leeswoorden (tijdelijk):	3.
     <S> Oplospunten (tijdelijk):		0.
-    <W> Woorden:		389, (voorgedefinieerd: 189).
+    <W> Woorden:		391, (voorgedefinieerd: 191).
     <X> Condities:		11.
     <Y> Acties:			15.
     <Z> Alternatieven:		0.
 ------------------------------------------------------------------------------
- Items in woorden:	8186.
+ Items in woorden:	8263.
 ------------------------------------------------------------------------------
- * Actieve items:	       8143.
+ * Actieve items:	       8210.
     <a> toewijzingen:		7.
-    <c> collecties:		276.
-    <g> generalisaties:		345.
-    <i> interface:		1242.
-    <j> verantwoordingen:		0.
-    <l> grammatica:		4802.
+    <c> collecties:		272.
+    <g> generalisaties:		348.
+    <i> interface:		1301.
+    <j> verantwoordingen:		8.
+    <l> grammatica:		4818.
     <m> multiple woord:		69.
-    <s> specificaties:		401.
+    <s> specificaties:		384.
     <r> schrijfwoorden (tijdelijk):	0.
-    <w> woordtypes:		1001.
+    <w> woordtypes:		1003.
     <x> context:		0.
  * Inactieve items:	       3.
  * Gearchiveerde items:	       33.
- * Vervangen items:	       7.
+ * Vervangen items:	       17.
 ------------------------------------------------------------------------------
 < 
 < Specificaties:
@@ -72,15 +72,15 @@
 < Expert is de vorige gebruiker. {geleerd van gebruiker Gast}
 < 
 ------------------------------------------------------------------------------
- Totaal aantal woordtype items:	1004, (alle talen inbegrepen).
+ Totaal aantal woordtype items:	1006, (alle talen inbegrepen).
 ------------------------------------------------------------------------------
- * Actieve woordtype items:			1004.
+ * Actieve woordtype items:			1006.
    (@1)  Symbolen:				24.
    (@2)  Cijfers/telwoorden:				54.
    (@3)  Kleine letters:				104.
    (@4)  Hoofdletters:				104.
    (@5)  Eigennamen:				20.
-   (@6)  Bijvoeglijk naamwoorden:			200.
+   (@6)  Bijvoeglijk naamwoorden:			202.
    (@7)  Bijwoorden:				32.
    (@8)  Antwoorden:				10.
    (@9)  Lidwoorden:				20.
@@ -146,10 +146,10 @@
 ------------------------------------------------------------------------------
  In bestanden markeert '~' het einde van de opvraag-opdracht		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2018, Menno Mafait
- Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details klik <Help.> en
- <Toon de garantie.>. Dit is vrije software en het is u toegestaan deze te verspreiden
- onder bepaalde voorwaarden; klik <Help.> en <Toon de GPLv2-licentie.> voor meer details.
+ Copyright (C) 2023, Menno Mafait
+ Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details klik "Help." en
+ "Toon de garantie.". Dit is vrije software en het is u toegestaan deze te verspreiden
+ onder bepaalde voorwaarden; klik "Help." en "Toon de GPLv2-licentie." voor meer details.
 English disclaimer
 This is an unofficial translation of the GNU General
 Public License into Dutch. It was not published by the Free Software

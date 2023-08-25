@@ -21,4 +21,7 @@ Claudia heeft een moeder, genaamd Anna.
 #Dev#Toon de verantwoordingsrapportage over Laura.
 #Dev#Toon de verantwoordingsrapportage over Peter.
 #Dev#Toon de verantwoordingsrapportage over Claudia.
+Claudia is een dochter van Anna.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Claudia.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

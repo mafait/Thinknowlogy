@@ -1,2 +1,2 @@
-﻿Juan era padre de Pablo, José y Luisa.
+﻿Juan era el padre de Pablo, José y Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

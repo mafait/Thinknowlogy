@@ -1,0 +1,30 @@
+Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Est Olivier le père de Pascal?
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier est masculin.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier est un homme.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier est un parent.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier est un père.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier a une enfant.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier est une personne.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier n'est pas une femme.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier n'est pas une mère.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier est partie d'une famille.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier n'est pas un garçon.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier n'est pas une jeune-fille.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier n'est pas féminin.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier n'est pas une fille.
+#Dev#Affichez le rapport de justification sur Olivier.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

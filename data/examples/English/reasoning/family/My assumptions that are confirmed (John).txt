@@ -1,0 +1,30 @@
+Read the file "English/reasoning/family/family definition".
+Is John the father of Paul?
+#Dev#Display the justification report about John.
+John is masculine.
+#Dev#Display the justification report about John.
+John is a man.
+#Dev#Display the justification report about John.
+John is a parent.
+#Dev#Display the justification report about John.
+John is a father.
+#Dev#Display the justification report about John.
+John has a child.
+#Dev#Display the justification report about John.
+John is a person.
+#Dev#Display the justification report about John.
+John is not a woman.
+#Dev#Display the justification report about John.
+John is not a mother.
+#Dev#Display the justification report about John.
+John is part of a family.
+#Dev#Display the justification report about John.
+John is not a boy.
+#Dev#Display the justification report about John.
+John is not a girl.
+#Dev#Display the justification report about John.
+John is not feminine.
+#Dev#Display the justification report about John.
+John is not a daughter.
+#Dev#Display the justification report about John.
+# To continue, click button «Clear your mind.» or «Restart.».

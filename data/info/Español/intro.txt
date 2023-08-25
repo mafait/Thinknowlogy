@@ -1,37 +1,29 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
-Mostrar " Thinknowlogy es el sistema de razonamiento automatizado más avanzado del mundo: No hay".
-Mostrar " conocimiento preprogramado. No se escriben diálogos por delante. Y no se usan listas de palabras.".
-Mostrar " Además, implementa construcciones de razonamiento que aún no están descritas por los científicos:".
-Mostrar " * A pesar de una investigación exhaustiva, la teoría de la evolución aún no ha proporcionado una".
-Mostrar " explicación satisfactoria para el origen de la inteligencia, el lenguaje y las leyes de la naturaleza.".
-Mostrar " Y mucho menos, cómo están relacionados. Además, ninguno de los fenómenos exclusivos de la".
-Mostrar " teoría de la evolución, o teorías derivadas, aplicable en la vida diaria;".
-Mostrar " * De acuerdo con la cosmovisión bíblica, Dios ha creado leyes de la naturaleza como el fundamento".
-Mostrar " de su creación. Basándose en las leyes de la inteligencia, solamente Thinknowlogy implementa el".
-#C++#Mostrar " función inteligente de palabras como artículos definidos, conjunción \"o\", verbos posesivos \"tener\" y".
-#C++#Mostrar " los verbos en pasado \"era\" y \"tenido\".".
-#Java#Mostrar " función inteligente de palabras como artículos definidos, conjunción “o”, verbos posesivos “tener” y".
-#Java#Mostrar " los verbos en pasado “era” y “tenido”.".
+Mostrar " Thinknowlogy es la única tecnología de conocimiento autoorganizada del mundo.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " La función inteligente de estas palabras se demuestra por:".
-Mostrar " * Programación en Lengua controlada;".
+Mostrar " Creo que la vida y el universo están diseñados de forma inteligente. Y creo que cualquier".
+Mostrar " diseño inteligente puede desentrañarse mediante ingeniería inversa. He identificado el".
+Mostrar " lenguaje humano como fuente de inteligencia natural. Estoy utilizando el diseño inteligente".
+Mostrar " del lenguaje humano para replicar la inteligencia humana en software.".
+Mostrar "------------------------------------------------------------------------------".
+Mostrar " La lógica natural del lenguaje se demuestra por:".
 Mostrar " * Razonamiento en Lengua controlada:".
 Mostrar "   - sacar conclusiones (más avanzada que las soluciones científicas),".
 Mostrar "   - hacer suposiciones (con el nivel de ajuste automático de la incertidumbre),".
-Mostrar "   - haciendo preguntas (acerca de las brechas en el conocimiento),".
-Mostrar "   - la detección de confirmaciones, conflictos y algunos casos de ambigüedad semántica,".
-Mostrar "   - mostrar los informes de justificación para el conocimiento autogenerado;".
+Mostrar "   - haciendo preguntas acerca de las brechas en el conocimiento,".
+Mostrar "   - mostrar los informes de justificación para el conocimiento autogenerado,".
+Mostrar "   - detección de confirmaciones y conflictos, y capacidades de autoorganización;".
 Mostrar " * El multilingüismo, probando: Los lenguajes naturales tienen un origen común y lógico.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Desafío a todos a superar este sistema de razonamiento: http://mafait.org/challenge/".
+Mostrar " Desafío a cualquiera a superar los resultados más simples de este sistema de razonamiento de".
+Mostrar " una manera genérica: de oraciones con gramática restringida, a través de algoritmos, de regreso,".
+Mostrar " a esa gramática restringida en varios idiomas, sin conocimientos preprogramados, sin resultados".
+Mostrar " frases escritas por personas y sin listas extensas de palabras. Ver: https://mafait.org/challenge".
 Mostrar "------------------------------------------------------------------------------".
 #C++#Mostrar " Ayudar.\t\t\t\t\t       * Mostrar más info ayuda".
 #C++#Mostrar " \~{nombre del idioma}\t\t\t\t\t* Cambiar la idioma".
-#C++#Mostrar " Leer el archivo \"Español/programación/Conecta 4\".".
-#C++#Mostrar " Leer el archivo \"Español/programación/Torres de Hanói\".".
 #C++#Mostrar " Leer el archivo \"Español/razonamiento/Reto científico\".".
 #C++#Mostrar " Leer el archivo \"Español/razonamiento/familia/definición de familia\".".
-#Java#Mostrar " Utilice el botón <programación> para aprender acerca de la programación en lenguaje natural.".
 #Java#Mostrar " Utilice el botón <razonamiento> para aprender acerca de razonamiento en lenguaje natural.".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Idiomas disponibles: ~+`idioma`<s>'~.".

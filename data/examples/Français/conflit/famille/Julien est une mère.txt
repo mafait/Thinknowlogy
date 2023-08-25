@@ -3,5 +3,8 @@ Julien est un fils de Olivier et Amélie.
 #Dev#Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
 #Dev#Affichez le rapport de justification sur Olivier.
 #Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Julien.
+#Dev#Affichez le rapport de justification sur Lorraine.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».
 Julien est une mère.

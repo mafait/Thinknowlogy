@@ -1,10 +1,10 @@
 ﻿/*	Class:			WordTypeItem
  *	Parent class:	Item
- *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing the word types of a word
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -122,9 +122,11 @@ class WordTypeItem extends Item
 			if( wordTypeString.length() > 0 )
 				{
 				if( wordTypeStringLength > 0 )
+					{
 					wordTypeString_ = ( Character.isUpperCase( wordTypeString.charAt( 0 ) ) &&
 										wordTypeNr != Constants.WORD_TYPE_LETTER_CAPITAL &&
 										wordTypeNr != Constants.WORD_TYPE_PROPER_NOUN ? Character.toLowerCase( wordTypeString.charAt( 0 ) ) + wordTypeString.substring( 1, wordTypeStringLength ) : wordTypeString.substring( 0, wordTypeStringLength ) );
+					}
 				else
 					startSystemError( 1, null, null, "The given word type string length is undefined" );
 				}
@@ -138,6 +140,7 @@ class WordTypeItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( GlobalVariables.queryStringBuffer == null )
@@ -146,7 +149,7 @@ class WordTypeItem extends Item
 		if( itemString() != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -157,6 +160,7 @@ class WordTypeItem extends Item
 			}
 		}
 
+	@Override
 	protected boolean hasParameter( int queryParameter )
 		{
 		return ( adjectiveParameter_ == queryParameter ||
@@ -172,11 +176,13 @@ class WordTypeItem extends Item
 				wordTypeLanguageNr_ > Constants.NO_LANGUAGE_NR ) ) );
 		}
 
+	@Override
 	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( wordTypeNr_ == queryWordTypeNr );
 		}
 
+	@Override
 	protected boolean isSorted( Item nextSortItem )
 		{
 		return ( nextSortItem != null &&
@@ -184,18 +190,20 @@ class WordTypeItem extends Item
 				wordTypeLanguageNr_ < ( (WordTypeItem)nextSortItem ).wordTypeLanguageNr_ );
 		}
 
+	@Override
 	protected String itemString()
 		{
 		return ( hideKey_ == null ? wordTypeString_ : null );
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem thisWordItem = myWordItem();
+		WordItem _myWordItem = myWordItem();
 		StringBuffer queryStringBuffer;
 		String wordString;
-		String wordTypeString = thisWordItem.wordTypeNameString( wordTypeNr_ );
-		String languageNameString = thisWordItem.languageNameString( wordTypeLanguageNr_ );
+		String wordTypeString = _myWordItem.wordTypeNameString( wordTypeNr_ );
+		String languageNameString = _myWordItem.languageNameString( wordTypeLanguageNr_ );
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
@@ -569,7 +577,7 @@ class WordTypeItem extends Item
 		return ( nextCurrentLanguageWordTypeItem != null &&
 				nextCurrentLanguageWordTypeItem.wordTypeLanguageNr() == GlobalVariables.currentLanguageNr ? nextCurrentLanguageWordTypeItem : null );
 		}
-	};
+	}
 
 /*************************************************************************
  *	"The Lord gives his people strength.

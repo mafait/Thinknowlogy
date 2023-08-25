@@ -1,53 +1,140 @@
 ﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis conclusiones:
+< Cada mujer no es masculino.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hombre no es una mujer.
+< Cada mujer no es un hombre.
+* 
+* Mis conclusiones:
+< Cada hombre no es femenina.
+< Cada persona es masculino o femenina.
+* 
+* Mis suposiciones:
+< Un hombre es probablemente una persona.
+< Una mujer es probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Padres y hijos son parte de cada familia.
 < 
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Un hijo no es probablemente una hija.
+< Una hija no es probablemente un hijo.
 < 
 * 
 * Mis conclusiones:
+< Cada padre es masculino.
+< Cada padre no es femenina.
+< Cada padre no es una mujer.
+< Cada mujer no es un padre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
+< Cada padre no es una madre.
+* 
+* Mis conclusiones:
+< Cada madre es femenina.
+< Cada madre no es masculino.
+< Cada madre no es un hombre.
+< Cada hombre no es una madre.
+< Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis suposiciones:
-< Un hijo es probablemente una persona.
+* Mis conclusiones:
+< Cada niña no es masculino.
+< Cada niña no es un padre.
+< Cada niña no es un hombre.
+< Cada padre no es una niña.
+< Cada hombre no es una niña.
 < 
 * 
 * Mis conclusiones:
+< Cada niño no es femenina.
+< Cada niño no es una niña.
+< Cada niño no es una madre.
+< Cada niño no es una mujer.
+< Cada niña no es un niño.
+< Cada madre no es un niño.
+< Cada mujer no es un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es masculino.
+< Cada hijo no es femenina.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Un niño no es probablemente un hombre.
+< Un niño es probablemente una persona.
+< Un hombre no es probablemente un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hija es femenina.
+< Cada hija no es masculino.
+< Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
+< Una niña no es probablemente una mujer.
+< Una niña es probablemente una persona.
+< Una mujer no es probablemente una niña.
 < 
 * 
 * Mis conclusiones:
 < Pablo es parte de una familia.
+< Pablo es masculino.
 < Pablo no es una hija.
-< Pablo no es una niña y una mujer.
+< Pablo no es una niña.
+< Pablo no es una madre.
+< Pablo no es una mujer.
+< Pablo no es femenina.
 < Juan tiene un hijo, llamado Pablo.
 < Ana tiene un hijo, llamado Pablo.
 * 
 * Mis suposiciones:
 < Pablo es probablemente una persona.
-< Pablo tiene posiblemente una madre, llamada Ana.
+< Pablo tiene puede-ser una madre, llamada Ana.
 < Juan es posiblemente una persona.
-< Juan es posiblemente parte de una familia.
-< Ana es posiblemente madre de Pablo.
-< Ana no es posiblemente un padre.
-< Ana es posiblemente parte de una familia.
-< Ana es posiblemente una mujer.
-< Ana es puede-ser una persona.
+< Juan es probablemente parte de una familia.
+< Ana es puede-ser madre de Pablo.
+< Ana es puede-ser parte de una familia.
+< Ana es puede-ser una mujer.
+< Ana no es puede-ser una niña.
+< Ana no es puede-ser un niño.
+< Ana no es puede-ser un padre.
+< Ana no es puede-ser masculino.
 < Ana no es puede-ser un hombre.
-< Ana es posiblemente femenina.
+< Ana es puede-ser femenina.
+< Ana no es puede-ser un hijo.
+< Ana es puede-ser una persona.
 * 
 * Mis preguntas:
 < ¿Es Pablo un niño o un hombre?
 < ¿Es Juan una mujer o un hombre?
+< ¿Es Juan femenina o masculino?
 < ¿Es Juan un padre o una madre?
 < 
 * 
@@ -60,7 +147,7 @@
 <	- Juan tiene un hijo, llamado Pablo.
 <	- Cada familia tiene padres y hijos.
 <	- Un padre es probablemente una persona.
-< Juan es posiblemente parte de una familia. Porque:
+< Juan es probablemente parte de una familia. Porque:
 <	- ¿Es Juan un padre o una madre?
 <	- Padres son parte de cada familia.
 * 
@@ -76,6 +163,17 @@
 <	- ¿Es Juan un padre o una madre?
 <	- Cada padre es un hombre.
 <	- Cada madre es una mujer.
+< ¿Es Juan femenina o masculino? Porque:
+<	- Juan tiene un hijo, llamado Pablo.
+<	- Cada familia tiene padres y hijos.
+<	- Cada padre es femenina o masculino.
+* 	y:
+<	- Juan es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
+* 	y:
+<	- ¿Es Juan una mujer o un hombre?
+<	- Cada hombre es masculino.
+<	- Cada mujer es femenina.
 < ¿Es Juan un padre o una madre? Porque:
 <	- Juan tiene un hijo, llamado Pablo.
 <	- Cada familia tiene padres y hijos.
@@ -86,25 +184,31 @@
 < Pablo es parte de una familia. Porque:
 <	- Pablo es hijo de Juan y Ana.
 <	- Hijos son parte de cada familia.
+< Pablo es masculino. Porque:
+<	- Pablo es hijo de Juan y Ana.
+<	- Cada hijo es masculino.
 < Pablo no es una hija. Porque:
+<	- Pablo es masculino.
+<	- Cada hija no es masculino.
+< Pablo no es una niña. Porque:
+<	- Pablo es masculino.
+<	- Cada niña no es masculino.
+< Pablo no es una madre. Porque:
+<	- Pablo es masculino.
+<	- Cada madre no es masculino.
+< Pablo no es una mujer. Porque:
+<	- Pablo es masculino.
+<	- Cada mujer no es masculino.
+< Pablo no es femenina. Porque:
 <	- Pablo es hijo de Juan y Ana.
-<	- Cada hijo es un hijo o una hija.
-< Pablo no es una niña y una mujer. Porque:
-<	- Pablo es hijo de Juan y Ana.
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
-<	- Cada hijo es un niño o un hombre.
+<	- Cada hijo no es femenina.
 * 
 * Mis suposiciones:
 < Pablo es probablemente una persona. Porque:
 <	- Pablo es hijo de Juan y Ana.
 <	- Un hijo es probablemente una persona.
-< Pablo tiene posiblemente una madre, llamada Ana. Porque:
-<	- Ana es posiblemente madre de Pablo.
-* 	y:
-<	- Ana tiene un hijo, llamado Pablo.
-<	- Cada familia tiene padres y hijos.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
+< Pablo tiene puede-ser una madre, llamada Ana. Porque:
+<	- Ana es puede-ser madre de Pablo.
 * 
 * Mis preguntas:
 < ¿Es Pablo un niño o un hombre? Porque:
@@ -115,18 +219,21 @@
 * Su pregunta es más específica que mi pregunta anterior:
 < ¿Es Juan un padre o una madre?
 * 
-* Mis preguntas que son contestadas:
+* Mis preguntas que han sido respondidas:
 < ¿Es Juan un padre o una madre?
 < ¿Es Juan una mujer o un hombre?
-* 
-* Mis suposiciones que se ajustan:
-< Juan es probablemente parte de una familia.
+< ¿Es Juan femenina o masculino?
 * 
 * Mis suposiciones:
 < Juan es probablemente un padre.
-< Juan es probablemente un hombre.
-< Juan no es posiblemente una mujer.
+< Juan no es probablemente una niña.
 < Juan no es probablemente una madre.
+< Juan no es probablemente femenina.
+< Juan no es probablemente una mujer.
+< Juan es probablemente un hombre.
+< Juan no es posiblemente un niño.
+< Juan es probablemente masculino.
+< Juan no es probablemente una hija.
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
@@ -141,52 +248,95 @@
 < Juan es probablemente parte de una familia. Porque:
 <	- Juan es probablemente un padre.
 <	- Padres son parte de cada familia.
-< Juan es probablemente un hombre. Porque:
+< Juan no es probablemente una niña. Porque:
 <	- Juan es probablemente un padre.
-<	- Cada padre es un hombre.
-< Juan es posiblemente una persona. Porque:
-<	- Cada persona es un hombre o una mujer.
+<	- Cada padre no es una niña.
+* 	y:
 <	- Juan es probablemente un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Juan es probablemente masculino.
+<	- Cada niña no es masculino.
+< Juan no es probablemente una madre. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Juan es probablemente masculino.
+<	- Cada madre no es masculino.
+< Juan no es probablemente femenina. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre no es femenina.
+< Juan no es probablemente una mujer. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre no es una mujer.
+* 	y:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Juan es probablemente masculino.
+<	- Cada mujer no es masculino.
+< Juan es posiblemente una persona. Porque:
+<	- Juan es probablemente un hombre.
+<	- Un hombre es probablemente una persona.
+* 	y:
+<	- Juan es probablemente un padre.
+<	- Un padre es probablemente una persona.
 * 	y:
 <	- Juan tiene un hijo, llamado Pablo.
 <	- Cada familia tiene padres y hijos.
 <	- Un padre es probablemente una persona.
-< Juan no es posiblemente una mujer. Porque:
+< Juan es probablemente un hombre. Porque:
 <	- Juan es probablemente un padre.
-<	- Cada padre es una mujer o un hombre.
+<	- Cada padre es un hombre.
+< Juan no es posiblemente un niño. Porque:
 <	- Juan es probablemente un hombre.
+<	- Un hombre no es probablemente un niño.
+< Juan es probablemente masculino. Porque:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre es masculino.
 * 	y:
-<	- Juan es posiblemente una persona.
-<	- Cada persona es un hombre o una mujer.
-<	- Juan es probablemente un hombre.
-< Juan no es probablemente una madre. Porque:
 <	- Juan es probablemente un padre.
-<	- Cada padre es un padre o una madre.
+<	- Cada padre es masculino.
+< Juan no es probablemente una hija. Porque:
+<	- Juan es probablemente masculino.
+<	- Cada hija no es masculino.
 < 
 * 
 * Mis conclusiones:
 < Pablo es parte de una familia. Porque:
 <	- Pablo es hijo de Juan y Ana.
 <	- Hijos son parte de cada familia.
+< Pablo es masculino. Porque:
+<	- Pablo es hijo de Juan y Ana.
+<	- Cada hijo es masculino.
 < Pablo no es una hija. Porque:
+<	- Pablo es masculino.
+<	- Cada hija no es masculino.
+< Pablo no es una niña. Porque:
+<	- Pablo es masculino.
+<	- Cada niña no es masculino.
+< Pablo no es una madre. Porque:
+<	- Pablo es masculino.
+<	- Cada madre no es masculino.
+< Pablo no es una mujer. Porque:
+<	- Pablo es masculino.
+<	- Cada mujer no es masculino.
+< Pablo no es femenina. Porque:
 <	- Pablo es hijo de Juan y Ana.
-<	- Cada hijo es un hijo o una hija.
-< Pablo no es una niña y una mujer. Porque:
-<	- Pablo es hijo de Juan y Ana.
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
-<	- Cada hijo es un niño o un hombre.
+<	- Cada hijo no es femenina.
 * 
 * Mis suposiciones:
 < Pablo es probablemente una persona. Porque:
 <	- Pablo es hijo de Juan y Ana.
 <	- Un hijo es probablemente una persona.
-< Pablo tiene posiblemente una madre, llamada Ana. Porque:
-<	- Ana es posiblemente madre de Pablo.
-* 	y:
-<	- Ana tiene un hijo, llamado Pablo.
-<	- Cada familia tiene padres y hijos.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Ana" es probablemente femenino.
+< Pablo tiene puede-ser una madre, llamada Ana. Porque:
+<	- Ana es puede-ser madre de Pablo.
 * 
 * Mis preguntas:
 < ¿Es Pablo un niño o un hombre? Porque:
@@ -196,11 +346,16 @@
 * 
 * Mis suposiciones:
 < Jorge es probablemente un padre.
+< Jorge no es probablemente una niña.
+< Jorge no es probablemente una madre.
+< Jorge no es probablemente femenina.
+< Jorge no es probablemente una mujer.
 < Jorge es probablemente parte de una familia.
 < Jorge es posiblemente una persona.
 < Jorge es probablemente un hombre.
-< Jorge no es posiblemente una mujer.
-< Jorge no es probablemente una madre.
+< Jorge no es posiblemente un niño.
+< Jorge es probablemente masculino.
+< Jorge no es probablemente una hija.
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
@@ -208,6 +363,39 @@
 * Mis suposiciones:
 < Jorge es probablemente un padre. Porque:
 <	- ¿Es Jorge el padre de Pablo?
+< Jorge no es probablemente una niña. Porque:
+<	- Jorge es probablemente un padre.
+<	- Cada padre no es una niña.
+* 	y:
+<	- Jorge es probablemente un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Jorge es probablemente masculino.
+<	- Cada niña no es masculino.
+< Jorge no es probablemente una madre. Porque:
+<	- Jorge es probablemente un padre.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Jorge es probablemente un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Jorge es probablemente masculino.
+<	- Cada madre no es masculino.
+< Jorge no es probablemente femenina. Porque:
+<	- Jorge es probablemente un padre.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Jorge es probablemente un hombre.
+<	- Cada hombre no es femenina.
+< Jorge no es probablemente una mujer. Porque:
+<	- Jorge es probablemente un padre.
+<	- Cada padre no es una mujer.
+* 	y:
+<	- Jorge es probablemente un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Jorge es probablemente masculino.
+<	- Cada mujer no es masculino.
 < Jorge es probablemente parte de una familia. Porque:
 <	- Jorge es probablemente un padre.
 <	- Padres son parte de cada familia.
@@ -215,20 +403,21 @@
 <	- Jorge es probablemente un padre.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
 <	- Jorge es probablemente un hombre.
+<	- Un hombre es probablemente una persona.
 < Jorge es probablemente un hombre. Porque:
 <	- Jorge es probablemente un padre.
 <	- Cada padre es un hombre.
-< Jorge no es posiblemente una mujer. Porque:
-<	- Jorge es probablemente un padre.
-<	- Cada padre es una mujer o un hombre.
+< Jorge no es posiblemente un niño. Porque:
 <	- Jorge es probablemente un hombre.
+<	- Un hombre no es probablemente un niño.
+< Jorge es probablemente masculino. Porque:
+<	- Jorge es probablemente un hombre.
+<	- Cada hombre es masculino.
 * 	y:
-<	- Jorge es posiblemente una persona.
-<	- Cada persona es un hombre o una mujer.
-<	- Jorge es probablemente un hombre.
-< Jorge no es probablemente una madre. Porque:
 <	- Jorge es probablemente un padre.
-<	- Cada padre es un padre o una madre.
+<	- Cada padre es masculino.
+< Jorge no es probablemente una hija. Porque:
+<	- Jorge es probablemente masculino.
+<	- Cada hija no es masculino.
 < 

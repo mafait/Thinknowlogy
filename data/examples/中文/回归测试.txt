@@ -1,4 +1,12 @@
-﻿#-----------
+﻿#----------------------------------------------------------------------------
+# Purpose: To define the regression test for the Chinese language
+# Version: Thinknowlogy 2023 (Shaking tree)
+#----------------------------------------------------------------------------
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
+#----------------------------------------------------------------------------
+
+#-----------
 # General
 #-----------
 #Dev#阅读测试文档"中文/歧义/Acceptance - Boston - United States - United Kingdom"。
@@ -10,15 +18,11 @@
 #Dev#阅读测试文档"中文/歧义/Multiple specifications as well as multiple relations"。
 #Dev#阅读测试文档"中文/歧义/Nero"。
 #Dev#阅读测试文档"中文/歧义/US presidents"。
-#Dev#阅读测试文档"中文/歧义/US presidents - Boston"。
-#Dev#阅读测试文档"中文/歧义/US presidents - Imaginary re-election (with confirmation)"。
-#Dev#阅读测试文档"中文/歧义/US presidents - Imaginary re-election"。
 
 #Dev#阅读测试文档"中文/冲突/Assignment in conflict with definition specification"。
 #Dev#阅读测试文档"中文/冲突/Definition specification is already assigned"。
 #Dev#阅读测试文档"中文/冲突/Generalization word and relation word are the same"。
-#Dev#阅读测试文档"中文/冲突/Looping - Every father is a parent"。
-#Dev#阅读测试文档"中文/冲突/Looping - Every mother is a parent"。
+#Dev#阅读测试文档"中文/冲突/No conflict - parent - father - mother"。
 #Dev#阅读测试文档"中文/冲突/No conflict on non-exclusive collection"。
 
 #Dev#阅读测试文档"中文/程序设计/Connect-Four - Column is full"。
@@ -81,7 +85,6 @@
 #Dev#阅读测试文档"中文/推理/Tom is a cat"。
 #Dev#阅读测试文档"中文/推理/Uncertainty and past tense"。
 #Dev#阅读测试文档"中文/推理/Unique relation"。
-#Dev#阅读测试文档"中文/推理/US presidents - Confirmation"。
 
 #-----------
 # Family
@@ -119,7 +122,10 @@
 #Dev#阅读测试文档"中文/问题的回答/家庭/I am not sure"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/I had the same question before"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/I only know"。
-#Dev#阅读测试文档"中文/问题的回答/家庭/Indirectly answered question, with confirmation"。
+#Dev#阅读测试文档"中文/问题的回答/家庭/Indirectly answered questions - John is a father"。
+#Dev#阅读测试文档"中文/问题的回答/家庭/Indirectly answered questions - John is a man"。
+#Dev#阅读测试文档"中文/问题的回答/家庭/Indirectly answered questions - John is masculine"。
+#Dev#阅读测试文档"中文/问题的回答/家庭/Indirectly answered questions (with confirmation)"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/Intelligent answering of questions"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/Is Paul a woman"。
 #Dev#阅读测试文档"中文/问题的回答/家庭/Just a few questions (1)"。
@@ -210,6 +216,7 @@
 #Dev#阅读测试文档"中文/推理/家庭/Laura is a child - John and Anna"。
 #Dev#阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (child)"。
 #Dev#阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (parents)"。
+#Dev#阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (John)"。
 #Dev#阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (John and Anna)"。
 #Dev#阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (John and Anna - reversed)"。
 #Dev#阅读测试文档"中文/推理/家庭/My assumptions that are confirmed (John and Paul)"。
@@ -220,7 +227,7 @@
 #Dev#阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (Joe has 2 parents)"。
 #Dev#阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (with relation)"。
 #Dev#阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (without relation)"。
-#Dev#阅读测试文档"中文/推理/家庭/Paul - Anna - Joe - Laura - Joe - John"。
+#Dev#阅读测试文档"中文/推理/家庭/Paul - Anna - Joe - Laura - Joe - John - Paul"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul - Anna - Joe - Laura - John"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul - Joe - Laura - John and Anna (parents)"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul - Joe - Laura - John and Anna (son - daughter)"。
@@ -228,6 +235,7 @@
 #Dev#阅读测试文档"中文/推理/家庭/Paul has a father - Paul has 2 parents"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul is a boy - Laura is a girl"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul is a child - John and Anna"。
+#Dev#阅读测试文档"中文/推理/家庭/Paul is a man - Paul is a son"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul is the son of John and Anna"。
 #Dev#阅读测试文档"中文/推理/家庭/Past tense"。
 #Dev#阅读测试文档"中文/推理/家庭/Person"。

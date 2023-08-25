@@ -1,10 +1,10 @@
 ﻿/*	Class:		ReadWordResultType
  *	Purpose:	To return read word variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ class ReadWordResultType
 
 	signed char result = RESULT_OK;
 
-	bool hasFoundGrammarDefinition;
+	bool hasFoundGrammarDefinition = false;
 
 	size_t offset = 0;
 	size_t startWordPosition = 0;

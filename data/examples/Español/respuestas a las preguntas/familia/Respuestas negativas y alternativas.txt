@@ -3,7 +3,7 @@ Juan es el padre y Ana es la madre de Pablo, José y Luisa.
 ¿Es Juan una madre?
 ¿Es Juan la madre de Pablo?
 ¿Es Juan el padre de Alfonso?
-Jorge es padre de Alfonso.
+Jorge es el padre de Alfonso.
 ¿Es Juan el padre de Alfonso?
 ¿Es Jorge el padre de Pablo?
 Santiago es un padre.

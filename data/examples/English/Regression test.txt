@@ -1,4 +1,12 @@
-﻿#-----------
+﻿#----------------------------------------------------------------------------
+# Purpose: To define the regression test for the English language
+# Version: Thinknowlogy 2023 (Shaking tree)
+#----------------------------------------------------------------------------
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
+#----------------------------------------------------------------------------
+
+#-----------
 # General
 #-----------
 #Dev#Read the test file "English/ambiguity/Acceptance - Boston - United States - United Kingdom".
@@ -10,15 +18,11 @@
 #Dev#Read the test file "English/ambiguity/Multiple specifications as well as multiple relations".
 #Dev#Read the test file "English/ambiguity/Nero".
 #Dev#Read the test file "English/ambiguity/US presidents".
-#Dev#Read the test file "English/ambiguity/US presidents - Boston".
-#Dev#Read the test file "English/ambiguity/US presidents - Imaginary re-election (with confirmation)".
-#Dev#Read the test file "English/ambiguity/US presidents - Imaginary re-election".
 
 #Dev#Read the test file "English/conflict/Assignment in conflict with definition specification".
 #Dev#Read the test file "English/conflict/Definition specification is already assigned".
 #Dev#Read the test file "English/conflict/Generalization word and relation word are the same".
-#Dev#Read the test file "English/conflict/Looping - Every father is a parent".
-#Dev#Read the test file "English/conflict/Looping - Every mother is a parent".
+#Dev#Read the test file "English/conflict/No conflict - parent - father - mother".
 #Dev#Read the test file "English/conflict/No conflict on non-exclusive collection".
 
 #Dev#Read the test file "English/programming/Connect-Four - Column is full".
@@ -46,6 +50,7 @@
 #Dev#Read the test file "English/reasoning/Acceptance of sentence ending without colon".
 #Dev#Read the test file "English/reasoning/Additional test".
 #Dev#Read the test file "English/reasoning/Adjective".
+#Dev#Read the test file "English/reasoning/Basic reasoning".
 #Dev#Read the test file "English/reasoning/Boiling point".
 #Dev#Read the test file "English/reasoning/Changed assumption level (1)".
 #Dev#Read the test file "English/reasoning/Changed assumption level (2)".
@@ -82,7 +87,6 @@
 #Dev#Read the test file "English/reasoning/Tom is a cat".
 #Dev#Read the test file "English/reasoning/Uncertainty and past tense".
 #Dev#Read the test file "English/reasoning/Unique relation".
-#Dev#Read the test file "English/reasoning/US presidents - Confirmation".
 
 #-----------
 # Family
@@ -120,7 +124,10 @@
 #Dev#Read the test file "English/question answering/family/I am not sure".
 #Dev#Read the test file "English/question answering/family/I had the same question before".
 #Dev#Read the test file "English/question answering/family/I only know".
-#Dev#Read the test file "English/question answering/family/Indirectly answered question, with confirmation".
+#Dev#Read the test file "English/question answering/family/Indirectly answered questions - John is a father".
+#Dev#Read the test file "English/question answering/family/Indirectly answered questions - John is a man".
+#Dev#Read the test file "English/question answering/family/Indirectly answered questions - John is masculine".
+#Dev#Read the test file "English/question answering/family/Indirectly answered questions (with confirmation)".
 #Dev#Read the test file "English/question answering/family/Intelligent answering of questions".
 #Dev#Read the test file "English/question answering/family/Is Paul a woman".
 #Dev#Read the test file "English/question answering/family/Just a few questions (1)".
@@ -211,6 +218,7 @@
 #Dev#Read the test file "English/reasoning/family/Laura is a child - John and Anna".
 #Dev#Read the test file "English/reasoning/family/My assumptions that are confirmed (child)".
 #Dev#Read the test file "English/reasoning/family/My assumptions that are confirmed (parents)".
+#Dev#Read the test file "English/reasoning/family/My assumptions that are confirmed (John)".
 #Dev#Read the test file "English/reasoning/family/My assumptions that are confirmed (John and Anna)".
 #Dev#Read the test file "English/reasoning/family/My assumptions that are confirmed (John and Anna - reversed)".
 #Dev#Read the test file "English/reasoning/family/My assumptions that are confirmed (John and Paul)".
@@ -221,7 +229,7 @@
 #Dev#Read the test file "English/reasoning/family/My conclusions that are confirmed (Joe has 2 parents)".
 #Dev#Read the test file "English/reasoning/family/My conclusions that are confirmed (with relation)".
 #Dev#Read the test file "English/reasoning/family/My conclusions that are confirmed (without relation)".
-#Dev#Read the test file "English/reasoning/family/Paul - Anna - Joe - Laura - Joe - John".
+#Dev#Read the test file "English/reasoning/family/Paul - Anna - Joe - Laura - Joe - John - Paul".
 #Dev#Read the test file "English/reasoning/family/Paul - Anna - Joe - Laura - John".
 #Dev#Read the test file "English/reasoning/family/Paul - Joe - Laura - John and Anna (parents)".
 #Dev#Read the test file "English/reasoning/family/Paul - Joe - Laura - John and Anna (son - daughter)".
@@ -229,6 +237,7 @@
 #Dev#Read the test file "English/reasoning/family/Paul has a father - Paul has 2 parents".
 #Dev#Read the test file "English/reasoning/family/Paul is a boy - Laura is a girl".
 #Dev#Read the test file "English/reasoning/family/Paul is a child - John and Anna".
+#Dev#Read the test file "English/reasoning/family/Paul is a man - Paul is a son".
 #Dev#Read the test file "English/reasoning/family/Paul is the son of John and Anna".
 #Dev#Read the test file "English/reasoning/family/Past tense".
 #Dev#Read the test file "English/reasoning/family/Person".

@@ -1,0 +1,5 @@
+﻿* 
+* Mes hypothèses:
+< Un père n'est probablement pas une mère.
+< Une mère n'est probablement pas un père.
+< 

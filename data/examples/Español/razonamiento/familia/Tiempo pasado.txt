@@ -1,5 +1,5 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Hernando era padre de Rafael.
+Hernando era el padre de Rafael.
 #Dev#Mostrar el informe de justificación sobre Hernando.
 #Dev#Mostrar el informe de justificación sobre Rafael.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

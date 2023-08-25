@@ -1,0 +1,5 @@
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
+Paul is een man.
+Paul is een zoon.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

@@ -1,7 +1,7 @@
 ﻿#-----------------------------------------------------------------
 # This test executes the examples of my Scientific Challenge.
 # For more info, see the included Scientific Challenge document,
-# or: http://mafait.org/challenge/
+# or: https://mafait.org/challenge
 #-----------------------------------------------------------------
 # Block 1: Direct conversions
 #-----------------------------------------------------------------
@@ -38,6 +38,37 @@ Addison is not a woman.
 #-----------------------------------------------------------------
 # Block 6: Archiving of knowledge
 #-----------------------------------------------------------------
-Barack Obama is the president of the United States.
 Donald Trump is the president of the United States.
+Joe Biden is the president of the United States.
+#-----------------------------------------------------------------
+# Block 7: Advanced reasoning
+#-----------------------------------------------------------------
+Every woman is feminine.
+Every man is masculine.
+Every parent is a man or a woman.
+Every father is a man.
+Every mother is a woman.
+Every parent is a father or a mother.
+Every girl is feminine.
+Every boy is masculine.
+Every son is a boy or a man.
+Every daughter is a girl or a woman.
+#-----------------------------------------------------------------
+# Block 8: Justification reports
+#-----------------------------------------------------------------
+Display the justification report about men.
+Display the justification report about women.
+Display the justification report about persons.
+Display the justification report about fathers.
+Display the justification report about mothers.
+Display the justification report about parents.
+Display information about Addison.
+Display the justification report about Addison.
+Display the justification report about Anna.
+Display the justification report about John.
+Display the justification report about Ronald.
+Display the justification report about Michael.
+Display the justification report about James.
+Display the justification report about Paul.
+Display the justification report about Laura.
 # To continue, click button «Clear your mind.» or «Restart.».

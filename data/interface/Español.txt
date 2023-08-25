@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the Spanish language
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 # Consola de Java (menú superior)
@@ -110,11 +110,16 @@
 #Java#:454		"Mostrar el informe de justificación sobre las madres."
 #Java#:455		"Mostrar el informe de justificación sobre los hijos."
 #Java#:456		"Mostrar el informe de justificación sobre las hijas."
-#Java#:457		"Mostrar el informe de justificación sobre Juan."
-#Java#:458		"Mostrar el informe de justificación sobre Ana."
-#Java#:459		"Mostrar el informe de justificación sobre Pablo."
-#Java#:460		"Mostrar el informe de justificación sobre José."
-#Java#:461		"Mostrar el informe de justificación sobre Luisa."
+#Java#:457		"Mostrar el informe de justificación sobre los hombres."
+#Java#:458		"Mostrar el informe de justificación sobre las mujeres."
+#Java#:459		"Mostrar el informe de justificación sobre los niños."
+#Java#:460		"Mostrar el informe de justificación sobre las niñas."
+#Java#:461		"Mostrar el informe de justificación sobre personas."
+#Java#:462		"Mostrar el informe de justificación sobre Juan."
+#Java#:463		"Mostrar el informe de justificación sobre Ana."
+#Java#:464		"Mostrar el informe de justificación sobre Pablo."
+#Java#:465		"Mostrar el informe de justificación sobre José."
+#Java#:466		"Mostrar el informe de justificación sobre Luisa."
 
 # Consola de Java (razonamiento/submenú de preguntas de la familia)
 #Java#:470		"¿Es Juan un padre?"
@@ -134,11 +139,16 @@
 #Java#:484		"Mostrar información sobre las madres."
 #Java#:485		"Mostrar información sobre los hijos."
 #Java#:486		"Mostrar información sobre las hijas."
-#Java#:487		"Mostrar información sobre Juan."
-#Java#:488		"Mostrar información sobre Ana."
-#Java#:489		"Mostrar información sobre Pablo."
-#Java#:490		"Mostrar información sobre José."
-#Java#:491		"Mostrar información sobre Luisa."
+#Java#:487		"Mostrar información sobre los hombres."
+#Java#:488		"Mostrar información sobre las mujeres."
+#Java#:489		"Mostrar información sobre los niños."
+#Java#:490		"Mostrar información sobre las niñas."
+#Java#:491		"Mostrar información sobre personas."
+#Java#:492		"Mostrar información sobre Juan."
+#Java#:493		"Mostrar información sobre Ana."
+#Java#:494		"Mostrar información sobre Pablo."
+#Java#:495		"Mostrar información sobre José."
+#Java#:496		"Mostrar información sobre Luisa."
 
 # Java console (submenú tamaño de fuente)
 #Java#:500		"<reducir tamaño fuente>"
@@ -220,26 +230,25 @@
 :1312			"\nMi información:"
 :1313			"\nMis conclusiones:"
 :1314			"\nMis suposiciones:"
-:1315			"\nMis suposiciones que se ajustan:"
-:1316			"\nMis suposiciones que se concluyen:"
-:1317			"\nMis conclusiones que se actualizan:"
-:1318			"\nMis conclusiones que no son ocultos más:"
-:1319			"\nMis suposiciones que no son ocultos más:"
-:1320			"\nMis preguntas:"
-:1321			"\nMis preguntas ajustadas:"
-:1322			"\nMi respuesta:"
-:1323			"\nSólo sé:"
-:1324			"\nEspecificaciones:"
-:1325			"\nInformación relacionada:"
-:1326			"\nPreguntas relacionadas:"
+:1315			"\nMis suposiciones que se han ajustado:"
+:1316			"\nMis suposiciones que se han concluido:"
+:1317			"\nMis conclusiones que ya no se han ocultado:"
+:1318			"\nMis suposiciones que ya no se han ocultado:"
+:1319			"\nMis preguntas:"
+:1320			"\nMis preguntas que se han ajustado:"
+:1321			"\nMi respuesta:"
+:1322			"\nSólo sé:"
+:1323			"\nEspecificaciones:"
+:1324			"\nInformación relacionada:"
+:1325			"\nPreguntas relacionadas:"
 
 # Listado (información antigua)
 :1330			"\nUsted ha confirmado la especificación - pero ninguno de sus relaciones - de mis supuestos anteriores:"
 :1331			"\nUsted ha confirmado la especificación - pero ninguno de sus relaciones - de mis conclusiones anteriores:"
 :1332			"\nUsted ha confirmado la especificación y al menos una relación de mis supuestos anteriores:"
 :1333			"\nUsted ha confirmado la especificación y al menos una relación de mis conclusiones anteriores:"
-:1334			"\nMis suposiciones que se confirman:"
-:1335			"\nMis conclusiones son confirmadas:"
+:1334			"\nMis suposiciones que han sido confirmadas:"
+:1335			"\nMis conclusiones que han sido confirmadas:"
 :1336			"\nMis suposiciones anteriores que tienen palabras de relación ahora:"
 :1337			"\nMis conclusiones anteriores que tienen palabras de relación ahora:"
 :1338			"\nSu información es más específica que mi suposición anterior:"
@@ -247,10 +256,10 @@
 :1340			"\nSu pregunta es más específica que mi pregunta anterior:"
 :1341			"\nEsta información es más específica que la información anterior:"
 :1342			"\nEsta pregunta es más específica que la anterior pregunta:"
-:1343			"\nSus preguntas son contestadas:"
-:1344			"\nMis preguntas que son contestadas:"
-:1345			"\nMis suposiciones anteriores de que son corregidos por el conocimiento:"
-:1346			"\nMis suposiciones anteriores de que sean corregidos por una pregunta sugerente frente:"
+:1343			"\nSus preguntas que han sido respondidas:"
+:1344			"\nMis preguntas que han sido respondidas:"
+:1345			"\nMis suposiciones anteriores que han sido corregidas por el conocimiento:"
+:1346			"\nMis suposiciones anteriores que han sido corregidas por una sugerente pregunta opuesta:"
 
 # Listado (el informe de justificación)
 :1350			" Porque:"

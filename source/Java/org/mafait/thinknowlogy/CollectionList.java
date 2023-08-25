@@ -1,10 +1,10 @@
 ﻿/*	Class:			CollectionList
  *	Parent class:	List
- *	Purpose:		To store collection items
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing collection items
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -75,22 +75,6 @@ class CollectionList extends List
 		return false;
 		}
 
-	protected boolean hasCollectionNr( int collectionNr, WordItem commonWordItem )
-		{
-		CollectionItem searchCollectionItem = firstActiveCollectionItem();
-
-		while( searchCollectionItem != null )
-			{
-			if( searchCollectionItem.collectionNr() == collectionNr &&
-			searchCollectionItem.commonWordItem() == commonWordItem )
-				return true;
-
-			searchCollectionItem = searchCollectionItem.nextCollectionItem();
-			}
-
-		return false;
-		}
-
 	protected boolean isExclusiveCollection( int collectionNr )
 		{
 		CollectionItem searchCollectionItem = firstActiveCollectionItem();
@@ -115,22 +99,6 @@ class CollectionList extends List
 			{
 			if( !searchCollectionItem.isExclusiveSpecification() &&
 			searchCollectionItem.collectionNr() == collectionNr )
-				return true;
-
-			searchCollectionItem = searchCollectionItem.nextCollectionItem();
-			}
-
-		return false;
-		}
-
-	protected boolean isCollectionSpanishAmbiguous( int collectionNr )
-		{
-		CollectionItem searchCollectionItem = firstActiveCollectionItem();
-
-		while( searchCollectionItem != null )
-			{
-			if( searchCollectionItem.collectionNr() == collectionNr &&
-			searchCollectionItem.collectionWordItem() == searchCollectionItem.commonWordItem() )
 				return true;
 
 			searchCollectionItem = searchCollectionItem.nextCollectionItem();
@@ -270,6 +238,7 @@ class CollectionList extends List
 
 	protected int collectionNrByCompoundGeneralizationWord( boolean isExclusiveSpecification, short collectionWordTypeNr, WordItem compoundGeneralizationWordItem )
 		{
+		int lastFoundCollectionNr = Constants.NO_COLLECTION_NR;
 		CollectionItem searchCollectionItem = firstActiveCollectionItem();
 
 		while( searchCollectionItem != null )
@@ -277,12 +246,12 @@ class CollectionList extends List
 			if( searchCollectionItem.isExclusiveSpecification() == isExclusiveSpecification &&
 			searchCollectionItem.isMatchingCollectionWordTypeNr( collectionWordTypeNr ) &&
 			searchCollectionItem.compoundGeneralizationWordItem() == compoundGeneralizationWordItem )
-				return searchCollectionItem.collectionNr();
+				lastFoundCollectionNr = searchCollectionItem.collectionNr();
 
 			searchCollectionItem = searchCollectionItem.nextCollectionItem();
 			}
 
-		return Constants.NO_COLLECTION_NR;
+		return lastFoundCollectionNr;
 		}
 
 	protected int highestCollectionNr()
@@ -420,10 +389,10 @@ class CollectionList extends List
 		return boolResult;
 		}
 
-	protected CollectionResultType createCollection( boolean isExclusiveSpecification, short collectionWordTypeNr, short commonWordTypeNr, int _collectionNr, WordItem collectionWordItem, WordItem commonWordItem, WordItem compoundGeneralizationWordItem )
+	protected CollectionResultType createCollectionItem( boolean isExclusiveSpecification, short collectionWordTypeNr, short commonWordTypeNr, int _collectionNr, WordItem collectionWordItem, WordItem commonWordItem, WordItem compoundGeneralizationWordItem )
 		{
 		short collectionOrderNr;
-		WordItem thisWordItem = myWordItem();
+		WordItem _myWordItem = myWordItem();
 		CollectionResultType collectionResult = new CollectionResultType();
 
 		if( collectionWordTypeNr <= Constants.NO_WORD_TYPE_NR ||
@@ -443,7 +412,7 @@ class CollectionList extends List
 			collectionWordTypeNr = Constants.WORD_TYPE_NOUN_SINGULAR;
 
 		// Typical for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
-		if( !thisWordItem.hasWordType( true, collectionWordTypeNr ) )
+		if( !_myWordItem.hasWordType( true, collectionWordTypeNr ) )
 			return startCollectionResultError( 1, "I don't have the requested word type number: " + collectionWordTypeNr );
 
 		// Typical for French: To accept noun 'fils', variable 'isAllowingDifferentNoun' is set to true
@@ -452,14 +421,14 @@ class CollectionList extends List
 
 		if( _collectionNr == Constants.NO_COLLECTION_NR )
 			{
-			if( ( _collectionNr = thisWordItem.highestCollectionNrInCollectionWords() ) >= Constants.MAX_COLLECTION_NR )
+			if( ( _collectionNr = _myWordItem.highestCollectionNrInCollectionWords() ) >= Constants.MAX_COLLECTION_NR )
 				return startCollectionResultSystemError( 1, "Collection number overflow" );
 
 			collectionResult.createdCollectionNr = ++_collectionNr;
 			}
 
-		// A collection comes in pairs
-		if( ( collectionOrderNr = thisWordItem.highestCollectionOrderNrInCollectionWords( _collectionNr ) ) >= Constants.MAX_ORDER_NR - 1 )
+		// Each collection comes in pairs
+		if( ( collectionOrderNr = _myWordItem.highestCollectionOrderNrInCollectionWords( _collectionNr ) ) >= Constants.MAX_ORDER_NR - 1 )
 			return startCollectionResultSystemError( 1, "Collection order number overflow" );
 
 		if( !isMarkedAsCollectionWord_ )
@@ -473,7 +442,7 @@ class CollectionList extends List
 
 		return collectionResult;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"Give thanks to the Lords of lords.

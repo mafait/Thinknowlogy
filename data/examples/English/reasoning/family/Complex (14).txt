@@ -13,5 +13,7 @@ Laura is a child of John and Anna.
 #Dev#Display the justification report about Laura.
 Joe is a boy.
 Joe is a son of John and Anna.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
 #Dev#Display the justification report about Joe.
 # To continue, click button «Clear your mind.» or «Restart.».

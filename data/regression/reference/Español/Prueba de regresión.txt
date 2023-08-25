@@ -20,10 +20,10 @@
  Mostrar la garantía.
 ------------------------------------------------------------------------------
  Archivos de ejemplo: * Utilice botón <más ejemplos>
-	    o ver carpeta: Thinknowlogy2018r4/data/examples/Español/
- Fundamental:	          * carpeta: Thinknowlogy2018r4/documents/
- Proyecto:	          * carpeta: Thinknowlogy2018r4/documents/design/
- Imágenes:	          * carpeta: Thinknowlogy2018r4/screenshots/Español/
+	    o ver carpeta: Thinknowlogy2023/data/examples/Español/
+ Fundamental:	          * carpeta: Thinknowlogy2023/documents/
+ Proyecto:	          * carpeta: Thinknowlogy2023/documents/design/
+ Imágenes:	          * carpeta: Thinknowlogy2023/screenshots/Español/
 ------------------------------------------------------------------------------
 < 
 < Especificaciones:
@@ -34,36 +34,36 @@
 < English es una idioma. {aprendido de usuario Admin}
 < 
 ------------------------------------------------------------------------------
- Número total de elementos:	8606.
+ Número total de elementos:	8685.
 ------------------------------------------------------------------------------
- Elementos de administrador:	        420.
+ Elementos de administrador:	        422.
 ------------------------------------------------------------------------------
- * Elementos activos:		420.
+ * Elementos activos:		422.
     <F> Archivos:			2.
     <R> Leer palabras (temporal):		3.
     <S> Resolver las puntuaciones (temporal):		0.
-    <W> Palabras:			389, (predefinido: 189).
+    <W> Palabras:			391, (predefinido: 191).
     <X> Condiciones:			11.
     <Y> Acciones:			15.
     <Z> Alternativas:			0.
 ------------------------------------------------------------------------------
- Elementos de las palabras:	        8186.
+ Elementos de las palabras:	        8263.
 ------------------------------------------------------------------------------
- * Elementos activos:		8143.
+ * Elementos activos:		8210.
     <a> asignaciones:			7.
-    <c> colecciones:			276.
-    <g> generalizaciones:			345.
-    <i> interfaz:				1242.
-    <j> justificación:			0.
-    <l> gramática:			4802.
+    <c> colecciones:			272.
+    <g> generalizaciones:			348.
+    <i> interfaz:				1301.
+    <j> justificación:			8.
+    <l> gramática:			4818.
     <m> varias palabras:			69.
-    <s> especificaciones:			401.
+    <s> especificaciones:			384.
     <r> escribir palabras (temporal):		0.
-    <w> tipos de palabra:			1001.
+    <w> tipos de palabra:			1003.
     <x> contexto:			0.
  * Elementos inactivos:		3.
  * Elementos archivados:		33.
- * Elementos sustituidos:		7.
+ * Elementos sustituidos:		17.
 ------------------------------------------------------------------------------
 < 
 < Especificaciones:
@@ -72,15 +72,15 @@
 < Experto es el anterior usuario. {aprendido de usuario Invitado}
 < 
 ------------------------------------------------------------------------------
- Número total de elementos de tipo de palabra: 1006, (todos idiomas incluidos).
+ Número total de elementos de tipo de palabra: 1008, (todos idiomas incluidos).
 ------------------------------------------------------------------------------
- * Elementos de tipo de palabra activa:	        1006.
+ * Elementos de tipo de palabra activa:	        1008.
    (@1)  Símbolos:			24.
    (@2)  Números:			54.
    (@3)  Letras minúsculas:			104.
    (@4)  Letras mayúsculas:			104.
    (@5)  Nombres propios:			20.
-   (@6)  Adjetivos:			200.
+   (@6)  Adjetivos:			202.
    (@7)  Adverbios:			32.
    (@8)  Respuesta palabras:			10.
    (@9)  Artículos:			20.
@@ -146,10 +146,10 @@
 ------------------------------------------------------------------------------
  En los archivos de '~' marcará el fin de una consulta		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2018, Menno Mafait
+ Copyright (C) 2023, Menno Mafait
  Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles haga clic
- en <Ayudar.> y <Mostrar la garantía.>. Este software es libre, y se le permite redistribuirlo bajo
- ciertas condiciones; Haga clic en <Ayudar.> y <Mostrar la licencia-GPLv2.> para más detalles.
+ en "Ayudar." y "Mostrar la garantía.". Este software es libre, y se le permite redistribuirlo bajo
+ ciertas condiciones; Haga clic en "Ayudar." y "Mostrar la licencia-GPLv2." para más detalles.
 Licencia Pública GNU
 Esta es la conocida GNU Public License (GPL), versión 2 (de junio de 1.991), que cubre la mayor parte del software de la Free Software Foundation, y muchos más programas.
 

@@ -1,10 +1,10 @@
 ﻿/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
- *	Purpose:		To read the grammar, user-interface and example files
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Reading the grammar, user-interface and example files
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -72,6 +72,8 @@ class AdminReadFile
 
 	void cleanupDeletedItems()
 		{
+		unsigned int currentSentenceNr;
+		unsigned int firstSentenceNrOfCurrentUser = adminItem_->firstSentenceNrOfCurrentUser();
 		unsigned int startRemoveSentenceNr = NO_SENTENCE_NR;
 
 		if( !hasClosedFileDueToError_ &&
@@ -97,7 +99,7 @@ class AdminReadFile
 		while( globalVariables_->nDeletedItems > 0 &&
 		// Avoid triggering on deleted items in temporary lists
 		// Less efficient alternative: Include deleted items in decrement sentence number and item number
-		( firstSentenceNrOfCurrentUser() + 1 ) != startRemoveSentenceNr );
+		( firstSentenceNrOfCurrentUser + 1 ) != startRemoveSentenceNr );
 
 		if( globalVariables_->hasDisplayedWarning )
 			globalVariables_->hasDisplayedWarning = false;
@@ -111,13 +113,11 @@ class AdminReadFile
 				{
 				// So, decrement all higher sentence numbers
 				adminItem_->decrementSentenceNrs( startRemoveSentenceNr );
+				currentSentenceNr = globalVariables_->currentSentenceNr;
 
-				// First user sentence
-				if( firstSentenceNrOfCurrentUser() == startRemoveSentenceNr )
-					adminItem_->decrementCurrentSentenceNr();
-				else
+				if( startRemoveSentenceNr >= currentSentenceNr )
 					{
-					globalVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, false, globalVariables_->currentSentenceNr );
+					globalVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, false, currentSentenceNr );
 					// Necessary after changing current sentence number
 					globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr();
 					}
@@ -446,10 +446,10 @@ class AdminReadFile
 							return adminItem_->startError( functionNameString, moduleNameString_, "I found a corrupted interface definition" );
 
 						if( adminItem_->checkInterfaceOfCurrentLanguage( grammarParameter, &grammarString[grammarPosition] ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an interface definition word item" );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add the first part of an interface definition word item" );
 
 						if( adminItem_->createInterfaceForCurrentLanguage( grammarParameter, ( grammarStringLength - grammarPosition - 1 ), &grammarString[grammarPosition] ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an interface definition word item" );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add the second part of an interface definition word item" );
 
 						hasCreatedInterface = true;
 						grammarPosition = ( grammarStringLength - 1 );
@@ -780,6 +780,7 @@ class AdminReadFile
 		// and comment line
 		readString[0] != COMMENT_CHAR )
 			{
+			globalVariables_->hasConfirmedAnySpecification = false;
 			globalVariables_->hasDisplayedIntegrityWarning = false;
 			globalVariables_->hasDisplayedMessage = false;
 			globalVariables_->hasDisplayedWarning = false;
@@ -879,14 +880,17 @@ class AdminReadFile
 				adminItem_->clearTemporaryAdminLists();
 
 				if( !wasQueryCommand &&
-				!wasUndoOrRedoCommand )
+				!wasUndoOrRedoCommand &&
+				// Skip for example login as a new user
+				adminItem_->firstSentenceNrOfCurrentUser() < globalVariables_->currentSentenceNr )
 					{
 					cleanupDeletedItems();
 
 					if( !adminItem_->isSystemStartingUp() )
 						{
 						// Check for empty sentence
-						if( ( globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr() ) == NO_ITEM_NR )
+						while( globalVariables_->currentSentenceNr > NO_SENTENCE_NR &&
+						( globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr() ) == NO_ITEM_NR )
 							adminItem_->decrementCurrentSentenceNr();
 						}
 					}
@@ -923,29 +927,32 @@ class AdminReadFile
 		if( ( fileResult = adminItem_->openFile( true, false, false, false, ( isGrammarFile ? FILE_DATA_GRAMMAR_DIRECTORY_NAME_STRING : FILE_DATA_INTERFACE_DIRECTORY_NAME_STRING ), languageNameString, NULL, NULL ) ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, ( isGrammarFile ? "I failed to open the grammar file: \"" : "I failed to open the interface file: \"" ), languageNameString, "\"" );
 
-		if( ( openedLanguageFileItem = fileResult.createdFileItem ) != NULL )
+		if( ( openedLanguageFileItem = fileResult.createdFileItem ) == NULL )
 			{
-			if( createLanguageWord( languageNameString ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create language word: \"", languageNameString, "\"" );
+			if( isGrammarFile )
+				return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't open grammar file: \"", languageNameString, "\"" );
 
-			// This isn't the first language
-			if( predefinedNounLanguageWordItem_ != NULL &&
-			createLanguageSpecification( predefinedNounLanguageWordItem_ ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a language specification" );
-
-			if( readAndExecute() != RESULT_OK )
-				adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened language file" );
-
-			originalResult = globalVariables_->result;
-
-			if( closeCurrentFileItem( openedLanguageFileItem ) != RESULT_OK )
-				adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the language file item" );
-
-			if( originalResult != RESULT_OK )
-				globalVariables_->result = originalResult;
+			return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't open interface file: \"", languageNameString, "\".\n\n**************************************************************\nIf you have downloaded the zip version of Thinknowlogy,\nplease download and install the 7-Zip software (https://7-zip.org).\nThen download the 7-Zip version of Thinknowlogy, and unpack it using the 7-Zip software.\n**************************************************************" );
 			}
-		else
-			return adminItem_->startError( functionNameString, moduleNameString_, ( isGrammarFile ? "I couldn't open the grammar file: \"" : "I couldn't open the interface file: \"" ), languageNameString, "\"" );
+
+		if( createLanguageWord( languageNameString ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create language word: \"", languageNameString, "\"" );
+
+		// This isn't the first language
+		if( predefinedNounLanguageWordItem_ != NULL &&
+		createLanguageSpecification( predefinedNounLanguageWordItem_ ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create a language specification" );
+
+		if( readAndExecute() != RESULT_OK )
+			adminItem_->addError( functionNameString, moduleNameString_, "I failed to read and execute the opened language file" );
+
+		originalResult = globalVariables_->result;
+
+		if( closeCurrentFileItem( openedLanguageFileItem ) != RESULT_OK )
+			adminItem_->addError( functionNameString, moduleNameString_, "I failed to close the language file item" );
+
+		if( originalResult != RESULT_OK )
+			globalVariables_->result = originalResult;
 
 		return RESULT_OK;
 		}
@@ -1607,7 +1614,7 @@ class AdminReadFile
 			{
 			testFileNr_ = 0;
 			startTime_ = clock();
-			}
+		}
 		else
 			testFileNr_++;
 
@@ -1639,10 +1646,11 @@ class AdminReadFile
 			{
 			if( isFirstTestFile )
 				{
-				sprintf( testString, "Done in: %.1f sec.\n", ( ( clock() - startTime_ ) / (double)CLOCKS_PER_SEC ) );
+				sprintf( testString, "Done in: %.1f sec..\n", ( ( (double)clock() - (double)startTime_ ) / (double)CLOCKS_PER_SEC ) );
 
 				if( inputOutput_->writeText( true, true, INPUT_OUTPUT_PROMPT_NOTIFICATION, NO_CENTER_WIDTH, testString ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the test statistics text" );
+
+				cleanupDeletedItems();
 				}
 			}
 

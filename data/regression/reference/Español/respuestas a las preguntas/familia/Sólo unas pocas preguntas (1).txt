@@ -16,6 +16,28 @@
 * No sé nada acerca de José, pero yo seguiré esta pregunta en la mente.
 * 
 * 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis conclusiones:
+< Cada mujer no es masculino.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hombre no es una mujer.
+< Cada mujer no es un hombre.
+* 
+* Mis conclusiones:
+< Cada hombre no es femenina.
+< Cada persona es masculino o femenina.
+* 
+* Mis suposiciones:
+< Un hombre es probablemente una persona.
+< Una mujer es probablemente una persona.
+< 
+* 
 * Ha introducido un nombre plural "padres", que era desconocido para mí.
 * 
 * Mis conclusiones:
@@ -23,69 +45,129 @@
 < 
 * 
 * Mis suposiciones:
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
 < Juan es probablemente parte de una familia.
 < Hernando era probablemente parte de una familia.
 < 
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
-< Juan es probablemente un hombre.
-< Juan es posiblemente una persona.
-< Juan no es puede-ser una mujer.
-< Juan es probablemente masculino.
-< Hernando era probablemente un hombre.
-< Hernando era posiblemente una persona.
-< Hernando no era puede-ser una mujer.
-< Hernando era probablemente masculino.
+< Un hijo no es probablemente una hija.
+< Una hija no es probablemente un hijo.
 < 
 * 
 * Mis conclusiones:
+< Cada padre es masculino.
+< Cada padre no es femenina.
+< Cada padre no es una mujer.
+< Cada mujer no es un padre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< Juan es probablemente un hombre.
+< Juan no es probablemente femenina.
+< Juan no es probablemente una mujer.
+< Juan es probablemente masculino.
+< Juan es posiblemente una persona.
+< Juan no es posiblemente una madre.
+< Hernando era probablemente un hombre.
+< Hernando no era probablemente femenina.
+< Hernando no era probablemente una mujer.
+< Hernando era probablemente masculino.
+< Hernando era posiblemente una persona.
+< Hernando no era posiblemente una madre.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
+< Cada padre no es una madre.
+* 
+* Mis suposiciones que se han ajustado:
+< Juan no es probablemente una madre.
+< Hernando no era probablemente una madre.
+* 
+* Mis conclusiones:
+< Cada madre es femenina.
+< Cada madre no es masculino.
+< Cada madre no es un hombre.
+< Cada hombre no es una madre.
+< Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis suposiciones:
-< Un hijo es probablemente una persona.
+* Mis conclusiones:
+< Cada niña no es masculino.
+< Cada niña no es un padre.
+< Cada niña no es un hombre.
+< Cada padre no es una niña.
+< Cada hombre no es una niña.
 < 
 * 
 * Mis conclusiones:
+< Cada niño no es femenina.
+< Cada niño no es una niña.
+< Cada niño no es una madre.
+< Cada niño no es una mujer.
+< Cada niña no es un niño.
+< Cada madre no es un niño.
+< Cada mujer no es un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es masculino.
+< Cada hijo no es femenina.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Un niño no es probablemente un hombre.
+< Un niño es probablemente una persona.
+< Un hombre no es probablemente un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hija es femenina.
+< Cada hija no es masculino.
+< Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
+< Una niña no es probablemente una mujer.
+< Una niña es probablemente una persona.
+< Una mujer no es probablemente una niña.
 < 
 * 
 * Su información es más específica que mi suposición anterior:
 < Juan es probablemente un padre.
 * 
-* Mis suposiciones que se confirman:
+* Mis suposiciones que han sido confirmadas:
 < Juan es probablemente un padre.
 * 
-* Sus preguntas son contestadas:
-< ¿Es Juan padre de Pablo?
+* Sus preguntas que han sido respondidas:
+< ¿Es Juan el padre de Pablo?
 * 
-* Mis suposiciones que se ajustan:
+* Mis suposiciones que se han concluido:
+< Juan no es una madre.
+* 
+* Mis suposiciones que se han ajustado:
 < Juan es probablemente una persona.
-< Juan no es posiblemente una mujer.
 * 
-* Mis suposiciones que se concluyen:
+* Mis suposiciones que se han concluido:
 < Juan es un hombre.
-* 
-* Mis suposiciones que se ajustan:
-< Juan no es probablemente una mujer.
-* 
-* Mis suposiciones que se concluyen:
+< Juan no es femenina.
+< Juan no es una mujer.
 < Juan es masculino.
 < Juan es parte de una familia.
-< Juan no es una mujer.
 * 
 * Mis conclusiones:
-< Juan no es una madre.
 < Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene un padre, llamado Juan.
 < Pablo tiene una madre, llamada Ana.
+< Juan no es una hija.
+< Juan no es una niña.
 < José tiene 2 padres, llamados Juan y Ana.
 < José tiene un padre, llamado Juan.
 < José tiene una madre, llamada Ana.
@@ -94,27 +176,38 @@
 < Luisa tiene una madre, llamada Ana.
 < Ana es parte de una familia.
 < Ana es una mujer.
+< Ana no es un padre.
+< Ana no es un niño.
+< Ana no es masculino.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana no es un padre.
+< Ana no es un hijo.
 * 
 * Mis suposiciones:
-< Juan tiene posiblemente una hija, llamada Luisa.
+< Pablo es probablemente parte de una familia.
 < Pablo es posiblemente una persona.
-< Pablo es posiblemente parte de una familia.
+< Juan no es probablemente un niño.
+< Juan tiene puede-ser una hija, llamada Luisa.
+< José es probablemente parte de una familia.
 < José es posiblemente una persona.
-< José es posiblemente parte de una familia.
-< Luisa es posiblemente hija de Juan y Ana.
-< Luisa no es posiblemente un hijo.
-< Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser hija de Juan y Ana.
+< Luisa es puede-ser parte de una familia.
+< Luisa es puede-ser femenina.
+< Luisa no es puede-ser un hijo.
+< Luisa no es puede-ser un niño.
+< Luisa no es puede-ser un padre.
+< Luisa no es puede-ser un hombre.
+< Luisa no es puede-ser masculino.
 < Luisa es puede-ser una persona.
-< Luisa no es posiblemente un niño y un hombre.
+< Ana no es probablemente una niña.
 < Ana es probablemente una persona.
-< Ana tiene posiblemente una hija, llamada Luisa.
+< Ana tiene puede-ser una hija, llamada Luisa.
 * 
 * Mis preguntas:
+< ¿Es Pablo femenina o masculino?
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
 < ¿Es Pablo un hijo o una hija?
+< ¿Es José femenina o masculino?
 < ¿Es José una niña, una mujer, un niño o un hombre?
 < ¿Es José un hijo o una hija?
 < ¿Es Luisa una niña o una mujer?
@@ -123,17 +216,22 @@
 * Mis conclusiones:
 < Jorge es parte de una familia.
 < Jorge es un hombre.
+< Jorge no es una madre.
+< Jorge no es una niña.
+< Jorge no es femenina.
 < Jorge no es una mujer.
 < Jorge es masculino.
-< Jorge no es una madre.
+< Jorge no es una hija.
 < Alfonso tiene un padre, llamado Jorge.
 * 
 * Mis suposiciones:
 < Jorge es probablemente una persona.
+< Jorge no es probablemente un niño.
+< Alfonso es probablemente parte de una familia.
 < Alfonso es posiblemente una persona.
-< Alfonso es posiblemente parte de una familia.
 * 
 * Mis preguntas:
+< ¿Es Alfonso femenina o masculino?
 < ¿Es Alfonso una niña, una mujer, un niño o un hombre?
 < ¿Es Alfonso un hijo o una hija?
 < 

@@ -10,6 +10,9 @@
 < Amélie est un parent de Julien.
 < 
 * 
+* Vos informations:
+< Olivier est un parent de Pascal.
+* 
 * Mes conclusions:
 < Olivier est un parent de Pascal et Julien.
 * 
@@ -30,6 +33,7 @@
 * 
 * Informations connexes:
 < Olivier est un parent de Pascal et Julien.
+< Olivier est un parent de Pascal.
 < 
 * 
 * Vos informations:
@@ -43,6 +47,8 @@
 * Mes conclusions:
 < Olivier est un parent de Pascal et Julien. En raison:
 <	- Julien a 2 parents, appelés Olivier et Amélie.
+* 	et:
+<	- Olivier est un parent de Pascal.
 < 
 * 
 * Mes conclusions:
@@ -52,5 +58,5 @@
 * 
 * Mes conclusions:
 < Pascal a un parent, appelé Olivier. En raison:
-<	- Olivier est un parent de Pascal et Julien.
+<	- Olivier est un parent de Pascal.
 < 

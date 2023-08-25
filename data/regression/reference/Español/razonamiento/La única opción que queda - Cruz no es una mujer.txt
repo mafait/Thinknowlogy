@@ -1,17 +1,22 @@
 ﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
 * Mis preguntas:
 < ¿Es Cruz un hombre o una mujer?
 < 
 * 
-* Mis preguntas que son contestadas:
+* Mis preguntas que han sido respondidas:
 < ¿Es Cruz un hombre o una mujer?
 * 
-* Mis conclusiones:
-< Cruz es un hombre.
+* Mis suposiciones:
+< Cruz es probablemente un hombre.
 < 
 * 
-* Mis conclusiones:
-< Cruz es un hombre. Porque:
+* Mis suposiciones:
+< Cruz es probablemente un hombre. Porque:
 <	- Cruz es una persona.
 <	- Cada persona es un hombre o una mujer.
 <	- Cruz no es una mujer.

@@ -1,0 +1,13 @@
+﻿Hernando era el padre de Rafael.
+Hernando era el padre de Rafael y Peyo.
+#Dev#Mostrar el informe de justificación sobre Rafael.
+#Dev#Mostrar el informe de justificación sobre Peyo.
+Leer el archivo "Español/razonamiento/familia/definición de familia".
+#Dev#Mostrar el informe de justificación sobre Hernando.
+Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Mostrar el informe de justificación sobre Luisa.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

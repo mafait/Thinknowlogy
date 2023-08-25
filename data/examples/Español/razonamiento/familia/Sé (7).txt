@@ -2,6 +2,6 @@
 Pablo tiene un padre, llamado Juan.
 Juan es el padre y Ana es la madre de Pablo, José y Luisa.
 José tiene un padre, llamado Juan.
-Juan es padre de Pablo, José y Luisa.
-Ana es madre de Pablo, José y Luisa.
+Juan es el padre de Pablo, José y Luisa.
+Ana es la madre de Pablo, José y Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

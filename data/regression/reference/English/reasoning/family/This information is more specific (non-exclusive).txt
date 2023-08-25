@@ -1,7 +1,45 @@
 ﻿* 
+* My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
+< 
+* 
+* My conclusions:
+< Every woman is not masculine.
+< 
+* 
+* My assumptions that have been concluded:
+< Every man is not a woman.
+< Every woman is not a man.
+* 
+* My conclusions:
+< Every man is not feminine.
+< Every person is masculine or feminine.
+* 
+* My assumptions:
+< A man is probably a person.
+< A woman is probably a person.
+< 
+* 
 * My conclusions:
 < Parents and children are part of every family.
 < 
+* 
+* My assumptions:
+< A father is probably not a mother.
+< A mother is probably not a father.
+< 
+* 
+* My assumptions:
+< A son is probably not a daughter.
+< A daughter is probably not a son.
+< 
+* 
+* My conclusions:
+< Every father is masculine.
+< Every father is not feminine.
+< Every father is not a woman.
+< Every woman is not a father.
 * 
 * My assumptions:
 < A father is probably a person.
@@ -9,24 +47,66 @@
 < A parent is probably a person.
 < 
 * 
+* My assumptions that have been concluded:
+< Every mother is not a father.
+< Every father is not a mother.
+* 
 * My conclusions:
+< Every mother is feminine.
+< Every mother is not masculine.
+< Every mother is not a man.
+< Every man is not a mother.
 < Every parent is a woman or a man.
+< Every parent is feminine or masculine.
 * 
 * My assumptions:
 < A mother is probably a person.
 < A mother is probably a parent.
 < 
 * 
-* My assumptions:
-< A son is probably a person.
-< A child is probably a person.
+* My conclusions:
+< Every girl is not masculine.
+< Every girl is not a father.
+< Every girl is not a man.
+< Every father is not a girl.
+< Every man is not a girl.
 < 
 * 
 * My conclusions:
+< Every boy is not feminine.
+< Every boy is not a girl.
+< Every boy is not a mother.
+< Every boy is not a woman.
+< Every girl is not a boy.
+< Every mother is not a boy.
+< Every woman is not a boy.
+< 
+* 
+* My conclusions:
+< Every son is masculine.
+< Every son is not feminine.
+* 
+* My assumptions:
+< A son is probably a child.
+< A son is probably a person.
+< A child is probably a person.
+< A boy is probably not a man.
+< A boy is probably a person.
+< A man is probably not a boy.
+< 
+* 
+* My conclusions:
+< Every daughter is feminine.
+< Every daughter is not masculine.
+< Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
 * My assumptions:
+< A daughter is probably a child.
 < A daughter is probably a person.
+< A girl is probably not a woman.
+< A girl is probably a person.
+< A woman is probably not a girl.
 < 
 * 
 * My assumptions:
@@ -36,6 +116,7 @@
 < Addison has possibly a child.
 * 
 * My questions:
+< Is Addison masculine or feminine?
 < Is Addison a man or a woman?
 < Is Addison a father or a mother?
 < 
@@ -46,8 +127,8 @@
 <	- A father is probably a person.
 <	- A mother is probably a person.
 < Addison is probably a parent. Because:
-<	- Every parent is a father or a mother.
 <	- Addison is a father or a mother.
+<	- A father is probably a parent.
 < Addison is probably part of a family. Because:
 <	- Addison is probably a parent.
 <	- Parents are part of every family.
@@ -56,12 +137,26 @@
 <	- Addison is probably a parent.
 * 
 * My questions:
-< Is Addison a man or a woman? Because:
+< Is Addison masculine or feminine? Because:
 <	- Addison is probably a person.
-<	- Every person is a man or a woman.
+<	- Every person is masculine or feminine.
+* 	and:
+<	- Is Addison a man or a woman?
+<	- Every woman is feminine.
+<	- Every man is masculine.
 * 	and:
 <	- Addison is probably a parent.
+<	- Every parent is feminine or masculine.
+* 	and:
+<	- Addison is a father or a mother.
+<	- Every mother is feminine.
+<	- Every father is masculine.
+< Is Addison a man or a woman? Because:
+<	- Addison is probably a parent.
 <	- Every parent is a woman or a man.
+* 	and:
+<	- Addison is probably a person.
+<	- Every person is a man or a woman.
 * 	and:
 <	- Addison is a father or a mother.
 <	- Every mother is a woman.
@@ -73,56 +168,82 @@
 * This information is more specific than your earlier information:
 < Addison is a father or a mother.
 * 
-* My questions that are answered:
+* My questions that have been answered:
 < Is Addison a father or a mother?
 < Is Addison a man or a woman?
+< Is Addison masculine or feminine?
 * 
 * My conclusions:
+< Addison is not a girl.
+< Addison is not feminine.
+< Addison is not a woman.
 < Addison is a man.
 < Addison is masculine.
+< Addison is not a daughter.
+< Addison is not a mother.
 * 
 * My assumptions:
-< Addison is probably not a mother.
-< Addison is probably not a woman.
+< Addison is probably not a boy.
 < 
 * 
 * My conclusions:
+< Addison is not a girl. Because:
+<	- Addison is a father.
+<	- Every father is not a girl.
+* 	and:
+<	- Addison is a man.
+<	- Every man is not a girl.
+* 	and:
+<	- Addison is masculine.
+<	- Every girl is not masculine.
+< Addison is not feminine. Because:
+<	- Addison is a father.
+<	- Every father is not feminine.
+* 	and:
+<	- Addison is a man.
+<	- Every man is not feminine.
+< Addison is not a woman. Because:
+<	- Addison is a father.
+<	- Every father is not a woman.
+* 	and:
+<	- Addison is a man.
+<	- Every man is not a woman.
+* 	and:
+<	- Addison is masculine.
+<	- Every woman is not masculine.
 < Addison is a man. Because:
 <	- Addison is a father.
 <	- Every father is a man.
 < Addison is masculine. Because:
 <	- Addison is a man.
 <	- Every man is masculine.
+* 	and:
+<	- Addison is a father.
+<	- Every father is masculine.
+< Addison is not a daughter. Because:
+<	- Addison is masculine.
+<	- Every daughter is not masculine.
+< Addison is not a mother. Because:
+<	- Addison is masculine.
+<	- Every mother is not masculine.
 * 
 * My assumptions:
 < Addison is probably a person. Because:
 <	- Addison is a father.
 <	- A father is probably a person.
 * 	and:
-<	- Every person is a man or a woman.
 <	- Addison is a man.
+<	- A man is probably a person.
 < Addison is probably a parent. Because:
 <	- Addison is a father.
 <	- A father is probably a parent.
-* 	and:
-<	- Every parent is a father or a mother.
-<	- Addison is a father.
 < Addison is probably part of a family. Because:
 <	- Addison is probably a parent.
 <	- Parents are part of every family.
 < Addison has possibly a child. Because:
 <	- Every family has parents and children.
 <	- Addison is probably a parent.
-< Addison is probably not a mother. Because:
-<	- Addison is probably a parent.
-<	- Every parent is a father or a mother.
-<	- Addison is a father.
-< Addison is probably not a woman. Because:
-<	- Addison is probably a person.
-<	- Every person is a man or a woman.
+< Addison is probably not a boy. Because:
 <	- Addison is a man.
-* 	and:
-<	- Addison is probably a parent.
-<	- Every parent is a woman or a man.
-<	- Addison is a man.
+<	- A man is probably not a boy.
 < 

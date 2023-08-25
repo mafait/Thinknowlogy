@@ -1,9 +1,9 @@
 ﻿Juan es posiblemente un padre.
 Santiago era posiblemente un padre.
-Jorge era posiblemente padre de Alfonso.
+Jorge era posiblemente el padre de Alfonso.
 #Dev#Mostrar el informe de justificación sobre Alfonso.
 ¿Era Santiago un padre?
-¿Era Ronaldo padre de Pablo?
+¿Era Ronaldo el padre de Pablo?
 #Dev## Extraño pasado la prueba tensa
 #Dev#Cada padre era un parent.
 #Dev#Mostrar el informe de justificación sobre Juan.

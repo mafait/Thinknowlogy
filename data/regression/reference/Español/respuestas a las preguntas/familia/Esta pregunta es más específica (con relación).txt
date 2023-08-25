@@ -1,28 +1,106 @@
 ﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis conclusiones:
+< Cada mujer no es masculino.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hombre no es una mujer.
+< Cada mujer no es un hombre.
+* 
+* Mis conclusiones:
+< Cada hombre no es femenina.
+< Cada persona es masculino o femenina.
+* 
+* Mis suposiciones:
+< Un hombre es probablemente una persona.
+< Una mujer es probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Padres y hijos son parte de cada familia.
 < 
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Un hijo no es probablemente una hija.
+< Una hija no es probablemente un hijo.
 < 
 * 
 * Mis conclusiones:
+< Cada padre es masculino.
+< Cada padre no es femenina.
+< Cada padre no es una mujer.
+< Cada mujer no es un padre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
+< Cada padre no es una madre.
+* 
+* Mis conclusiones:
+< Cada madre es femenina.
+< Cada madre no es masculino.
+< Cada madre no es un hombre.
+< Cada hombre no es una madre.
+< Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis suposiciones:
-< Un hijo es probablemente una persona.
+* Mis conclusiones:
+< Cada niña no es masculino.
+< Cada niña no es un padre.
+< Cada niña no es un hombre.
+< Cada padre no es una niña.
+< Cada hombre no es una niña.
 < 
 * 
 * Mis conclusiones:
+< Cada niño no es femenina.
+< Cada niño no es una niña.
+< Cada niño no es una madre.
+< Cada niño no es una mujer.
+< Cada niña no es un niño.
+< Cada madre no es un niño.
+< Cada mujer no es un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es masculino.
+< Cada hijo no es femenina.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Un niño no es probablemente un hombre.
+< Un niño es probablemente una persona.
+< Un hombre no es probablemente un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hija es femenina.
+< Cada hija no es masculino.
+< Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
+< Una niña no es probablemente una mujer.
+< Una niña es probablemente una persona.
+< Una mujer no es probablemente una niña.
 < 
 * No sé nada acerca de Juan, pero yo seguiré esta pregunta en la mente.
 * 
@@ -30,16 +108,21 @@
 * Esta pregunta es más específica que la anterior pregunta:
 < ¿Es Juan un padre?
 * 
-* Sus preguntas son contestadas:
+* Sus preguntas que han sido respondidas:
 < ¿Es Juan un padre?
 * 
 * Mis suposiciones:
 < Juan es probablemente un padre.
+< Juan no es probablemente una niña.
+< Juan no es probablemente una madre.
+< Juan no es probablemente femenina.
+< Juan no es probablemente una mujer.
 < Juan es probablemente parte de una familia.
 < Juan es posiblemente una persona.
 < Juan es probablemente un hombre.
-< Juan no es posiblemente una mujer.
-< Juan no es probablemente una madre.
+< Juan no es posiblemente un niño.
+< Juan es probablemente masculino.
+< Juan no es probablemente una hija.
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
@@ -51,18 +134,22 @@
 * No sé nada acerca de Ana, pero yo seguiré esta pregunta en la mente.
 * 
 * 
-* Sus preguntas son contestadas:
+* Sus preguntas que han sido respondidas:
 < ¿Es Ana una madre?
 < ¿Es Ana un padre o una madre?
 * 
 * Mis conclusiones:
+< Ana no es masculino.
 < Ana es parte de una familia.
 < Ana es una mujer.
+< Ana no es un padre.
+< Ana no es un niño.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana no es un padre.
+< Ana no es un hijo.
 * 
 * Mis suposiciones:
+< Ana no es probablemente una niña.
 < Ana es probablemente una persona.
 < Ana tiene probablemente un hijo.
 < 
@@ -79,6 +166,39 @@
 * Mis suposiciones:
 < Juan es probablemente un padre. Porque:
 <	- ¿Es Juan el padre de Pablo?
+< Juan no es probablemente una niña. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre no es una niña.
+* 	y:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Juan es probablemente masculino.
+<	- Cada niña no es masculino.
+< Juan no es probablemente una madre. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Juan es probablemente masculino.
+<	- Cada madre no es masculino.
+< Juan no es probablemente femenina. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre no es femenina.
+< Juan no es probablemente una mujer. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre no es una mujer.
+* 	y:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Juan es probablemente masculino.
+<	- Cada mujer no es masculino.
 < Juan es probablemente parte de una familia. Porque:
 <	- Juan es probablemente un padre.
 <	- Padres son parte de cada familia.
@@ -86,54 +206,86 @@
 <	- Juan es probablemente un padre.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
 <	- Juan es probablemente un hombre.
+<	- Un hombre es probablemente una persona.
 < Juan es probablemente un hombre. Porque:
 <	- Juan es probablemente un padre.
 <	- Cada padre es un hombre.
-< Juan no es posiblemente una mujer. Porque:
-<	- Juan es probablemente un padre.
-<	- Cada padre es una mujer o un hombre.
+< Juan no es posiblemente un niño. Porque:
 <	- Juan es probablemente un hombre.
+<	- Un hombre no es probablemente un niño.
+< Juan es probablemente masculino. Porque:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre es masculino.
 * 	y:
-<	- Juan es posiblemente una persona.
-<	- Cada persona es un hombre o una mujer.
-<	- Juan es probablemente un hombre.
-< Juan no es probablemente una madre. Porque:
 <	- Juan es probablemente un padre.
-<	- Cada padre es un padre o una madre.
+<	- Cada padre es masculino.
+< Juan no es probablemente una hija. Porque:
+<	- Juan es probablemente masculino.
+<	- Cada hija no es masculino.
 < 
 * 
 * Mis conclusiones:
+< Ana no es masculino. Porque:
+<	- Ana es una madre.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es masculino.
 < Ana es parte de una familia. Porque:
 <	- Ana es una madre.
 <	- Padres son parte de cada familia.
 < Ana es una mujer. Porque:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
-< Ana no es un hombre. Porque:
-<	- Ana es probablemente una persona.
-<	- Cada persona es un hombre o una mujer.
+< Ana no es un padre. Porque:
+<	- Ana es una madre.
+<	- Cada madre no es un padre.
+* 	y:
 <	- Ana es una mujer.
+<	- Cada mujer no es un padre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada padre no es femenina.
+< Ana no es un niño. Porque:
+<	- Ana es una mujer.
+<	- Cada mujer no es un niño.
+* 	y:
+<	- Ana es femenina.
+<	- Cada niño no es femenina.
 * 	y:
 <	- Ana es una madre.
-<	- Cada padre es una mujer o un hombre.
+<	- Cada madre no es un niño.
+< Ana no es un hombre. Porque:
 <	- Ana es una mujer.
+<	- Cada mujer no es un hombre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hombre no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hombre.
 < Ana es femenina. Porque:
 <	- Ana es una mujer.
 <	- Cada mujer es femenina.
-< Ana no es un padre. Porque:
-<	- Cada padre es un padre o una madre.
+* 	y:
 <	- Ana es una madre.
+<	- Cada madre es femenina.
+< Ana no es un hijo. Porque:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
 * 
 * Mis suposiciones:
-< Ana es probablemente una persona. Porque:
-<	- Cada persona es un hombre o una mujer.
+< Ana no es probablemente una niña. Porque:
 <	- Ana es una mujer.
+<	- Una mujer no es probablemente una niña.
+< Ana es probablemente una persona. Porque:
+<	- Ana es una mujer.
+<	- Una mujer es probablemente una persona.
 * 	y:
 <	- Ana es una madre.
 <	- Una madre es probablemente una persona.
 < Ana tiene probablemente un hijo. Porque:
-<	- Ana es una madre.
 <	- Cada familia tiene padres y hijos.
+<	- Ana es una madre.
 < 

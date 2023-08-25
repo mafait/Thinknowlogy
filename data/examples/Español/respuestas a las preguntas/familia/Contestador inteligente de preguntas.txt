@@ -3,7 +3,7 @@ Juan es el padre y Ana es la madre de Pablo, José y Luisa.
 Pablo es hijo de Juan y Ana.
 José es hijo de Juan y Ana.
 Luisa es hija de Juan y Ana.
-Jorge es padre de Alfonso.
+Jorge es el padre de Alfonso.
 Santiago es un padre.
 ¿Es Pablo un hijo o una hija?
 ¿Es Pablo un hijo?

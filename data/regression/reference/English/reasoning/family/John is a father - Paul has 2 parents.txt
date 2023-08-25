@@ -1,7 +1,45 @@
 ﻿* 
+* My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
+< 
+* 
+* My conclusions:
+< Every woman is not masculine.
+< 
+* 
+* My assumptions that have been concluded:
+< Every man is not a woman.
+< Every woman is not a man.
+* 
+* My conclusions:
+< Every man is not feminine.
+< Every person is masculine or feminine.
+* 
+* My assumptions:
+< A man is probably a person.
+< A woman is probably a person.
+< 
+* 
 * My conclusions:
 < Parents and children are part of every family.
 < 
+* 
+* My assumptions:
+< A father is probably not a mother.
+< A mother is probably not a father.
+< 
+* 
+* My assumptions:
+< A son is probably not a daughter.
+< A daughter is probably not a son.
+< 
+* 
+* My conclusions:
+< Every father is masculine.
+< Every father is not feminine.
+< Every father is not a woman.
+< Every woman is not a father.
 * 
 * My assumptions:
 < A father is probably a person.
@@ -9,36 +47,82 @@
 < A parent is probably a person.
 < 
 * 
+* My assumptions that have been concluded:
+< Every mother is not a father.
+< Every father is not a mother.
+* 
 * My conclusions:
+< Every mother is feminine.
+< Every mother is not masculine.
+< Every mother is not a man.
+< Every man is not a mother.
 < Every parent is a woman or a man.
+< Every parent is feminine or masculine.
 * 
 * My assumptions:
 < A mother is probably a person.
 < A mother is probably a parent.
 < 
 * 
-* My assumptions:
-< A son is probably a person.
-< A child is probably a person.
+* My conclusions:
+< Every girl is not masculine.
+< Every girl is not a father.
+< Every girl is not a man.
+< Every father is not a girl.
+< Every man is not a girl.
 < 
 * 
 * My conclusions:
+< Every boy is not feminine.
+< Every boy is not a girl.
+< Every boy is not a mother.
+< Every boy is not a woman.
+< Every girl is not a boy.
+< Every mother is not a boy.
+< Every woman is not a boy.
+< 
+* 
+* My conclusions:
+< Every son is masculine.
+< Every son is not feminine.
+* 
+* My assumptions:
+< A son is probably a child.
+< A son is probably a person.
+< A child is probably a person.
+< A boy is probably not a man.
+< A boy is probably a person.
+< A man is probably not a boy.
+< 
+* 
+* My conclusions:
+< Every daughter is feminine.
+< Every daughter is not masculine.
+< Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
 * My assumptions:
+< A daughter is probably a child.
 < A daughter is probably a person.
+< A girl is probably not a woman.
+< A girl is probably a person.
+< A woman is probably not a girl.
 < 
 * 
 * My conclusions:
-< John is a man.
+< John is not feminine.
 < John is masculine.
+< John is a man.
+< John is not a mother.
+< John is not a girl.
+< John is not a woman.
+< John is not a daughter.
 * 
 * My assumptions:
+< John is probably not a boy.
 < John is probably a person.
-< John is probably not a woman.
 < John is probably a parent.
 < John is probably part of a family.
-< John is probably not a mother.
 < John has possibly a child.
 < 
 * 
@@ -46,10 +130,8 @@
 < John has possibly a child.
 < John is probably a parent.
 * 
-* My assumptions that are concluded:
+* My assumptions that have been concluded:
 < John is part of a family.
-< John is not a woman.
-< John is not a mother.
 * 
 * My conclusions:
 < John is a parent of Paul.
@@ -57,20 +139,25 @@
 < Anna is part of a family.
 * 
 * My assumptions:
+< John has probably a child, called Paul.
 < Paul is probably a child of John and Anna.
 < Paul is probably part of a family.
 < Paul is possibly a person.
-< Paul has probably a mother, called Anna.
-< John has probably a child, called Paul.
-< Anna has probably a child, called Paul.
+< Paul has possibly a mother, called Anna.
 < Anna is probably a person.
-< Anna is probably a woman.
-< Anna is probably not a man.
-< Anna is probably feminine.
-< Anna is probably a mother of Paul.
-< Anna is probably not a father.
+< Anna is possibly a mother of Paul.
+< Anna has probably a child, called Paul.
+< Anna is possibly a woman.
+< Anna is maybe not a girl.
+< Anna is possibly not a boy.
+< Anna is possibly not a father.
+< Anna is possibly not masculine.
+< Anna is possibly not a man.
+< Anna is possibly feminine.
+< Anna is possibly not a son.
 * 
 * My questions:
+< Is Paul feminine or masculine?
 < Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
 < 
@@ -81,24 +168,51 @@
 < John is part of a family. Because:
 <	- John is a parent of Paul.
 <	- Parents are part of every family.
-< John is not a woman. Because:
-<	- John is probably a person.
-<	- Every person is a man or a woman.
-<	- John is a man.
-* 	and:
-<	- John is a parent of Paul.
-<	- Every parent is a woman or a man.
-<	- John is a man.
-< John is not a mother. Because:
-<	- John is a parent of Paul.
-<	- Every parent is a father or a mother.
+< John is not feminine. Because:
 <	- John is a father.
+<	- Every father is not feminine.
+* 	and:
+<	- John is a man.
+<	- Every man is not feminine.
+< John is masculine. Because:
+<	- John is a father.
+<	- Every father is masculine.
+* 	and:
+<	- John is a man.
+<	- Every man is masculine.
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
-< John is masculine. Because:
+< John is not a mother. Because:
+<	- John is a father.
+<	- Every father is not a mother.
+* 	and:
 <	- John is a man.
-<	- Every man is masculine.
+<	- Every man is not a mother.
+* 	and:
+<	- John is masculine.
+<	- Every mother is not masculine.
+< John is not a girl. Because:
+<	- John is a man.
+<	- Every man is not a girl.
+* 	and:
+<	- John is masculine.
+<	- Every girl is not masculine.
+* 	and:
+<	- John is a father.
+<	- Every father is not a girl.
+< John is not a woman. Because:
+<	- John is a man.
+<	- Every man is not a woman.
+* 	and:
+<	- John is masculine.
+<	- Every woman is not masculine.
+* 	and:
+<	- John is a father.
+<	- Every father is not a woman.
+< John is not a daughter. Because:
+<	- John is masculine.
+<	- Every daughter is not masculine.
 * 
 * My assumptions:
 < John has probably a child, called Paul. Because:
@@ -107,14 +221,20 @@
 <	- Every family has parents and children.
 <	- John is a parent of Paul.
 < John is probably a person. Because:
+<	- John is a parent of Paul.
+<	- A parent is probably a person.
+* 	and:
 <	- Paul has 2 parents, called John and Anna.
 <	- A parent is probably a person.
 * 	and:
-<	- Every person is a man or a woman.
 <	- John is a man.
+<	- A man is probably a person.
 * 	and:
 <	- John is a father.
 <	- A father is probably a person.
+< John is probably not a boy. Because:
+<	- John is a man.
+<	- A man is probably not a boy.
 < 
 * 
 * My conclusions:
@@ -123,48 +243,78 @@
 < Anna is part of a family. Because:
 <	- Anna is a parent of Paul.
 <	- Parents are part of every family.
+* 	and:
+<	- Paul has 2 parents, called John and Anna.
+<	- Parents are part of every family.
 * 
 * My assumptions:
+< Anna is probably a person. Because:
+<	- Anna is a parent of Paul.
+<	- A parent is probably a person.
+* 	and:
+<	- Paul has 2 parents, called John and Anna.
+<	- A parent is probably a person.
+< Anna is possibly a mother of Paul. Because:
+<	- Anna is a parent of Paul.
+<	- Every parent is a father or a mother.
+<	- Proper noun "Anna" is probably feminine.
 < Anna has probably a child, called Paul. Because:
 <	- Every family has parents and children.
 <	- Anna is a parent of Paul.
 * 	and:
 <	- Paul is probably a child of John and Anna.
-< Anna is probably a person. Because:
-<	- Anna is a parent of Paul.
-<	- A parent is probably a person.
-* 	and:
-<	- Every person is a man or a woman.
-<	- Anna is probably a woman.
-* 	and:
-<	- Paul has 2 parents, called John and Anna.
-<	- A parent is probably a person.
-< Anna is probably a woman. Because:
-<	- Anna is a parent of Paul.
-<	- Every parent is a woman or a man.
-<	- Proper noun "Anna" is probably feminine.
-* 	and:
-<	- Anna is probably a mother of Paul.
+< Anna is possibly a woman. Because:
+<	- Anna is possibly a mother of Paul.
 <	- Every mother is a woman.
-< Anna is probably not a man. Because:
-<	- Anna is probably a person.
-<	- Every person is a man or a woman.
-<	- Anna is probably a woman.
 * 	and:
 <	- Anna is a parent of Paul.
 <	- Every parent is a woman or a man.
-<	- Anna is probably a woman.
-< Anna is probably feminine. Because:
-<	- Anna is probably a woman.
-<	- Every woman is feminine.
-< Anna is probably a mother of Paul. Because:
-<	- Anna is a parent of Paul.
-<	- Every parent is a father or a mother.
 <	- Proper noun "Anna" is probably feminine.
-< Anna is probably not a father. Because:
-<	- Anna is a parent of Paul.
-<	- Every parent is a father or a mother.
-<	- Anna is probably a mother of Paul.
+< Anna is maybe not a girl. Because:
+<	- Anna is possibly a woman.
+<	- A woman is probably not a girl.
+< Anna is possibly not a boy. Because:
+<	- Anna is possibly a woman.
+<	- Every woman is not a boy.
+* 	and:
+<	- Anna is possibly a mother of Paul.
+<	- Every mother is not a boy.
+* 	and:
+<	- Anna is possibly feminine.
+<	- Every boy is not feminine.
+< Anna is possibly not a father. Because:
+<	- Anna is possibly a woman.
+<	- Every woman is not a father.
+* 	and:
+<	- Anna is possibly a mother of Paul.
+<	- Every mother is not a father.
+* 	and:
+<	- Anna is possibly feminine.
+<	- Every father is not feminine.
+< Anna is possibly not masculine. Because:
+<	- Anna is possibly a woman.
+<	- Every woman is not masculine.
+* 	and:
+<	- Anna is possibly a mother of Paul.
+<	- Every mother is not masculine.
+< Anna is possibly not a man. Because:
+<	- Anna is possibly a woman.
+<	- Every woman is not a man.
+* 	and:
+<	- Anna is possibly a mother of Paul.
+<	- Every mother is not a man.
+* 	and:
+<	- Anna is possibly feminine.
+<	- Every man is not feminine.
+< Anna is possibly feminine. Because:
+<	- Anna is possibly a mother of Paul.
+<	- Every mother is feminine.
+* 	and:
+<	- Anna is possibly a woman.
+<	- Every woman is feminine.
+< Anna is possibly not a son. Because:
+<	- Anna is possibly feminine.
+<	- Every son is not feminine.
 < 
 * 
 * My assumptions:
@@ -184,22 +334,20 @@
 < Paul is possibly a person. Because:
 <	- Paul is probably a child of John and Anna.
 <	- A child is probably a person.
-< Paul has probably a mother, called Anna. Because:
-<	- Anna is probably a mother of Paul.
+< Paul has possibly a mother, called Anna. Because:
+<	- Anna is possibly a mother of Paul.
 * 
 * My questions:
-< Is Paul a girl, a woman, a boy or a man? Because:
-<	- Paul has 2 parents, called John and Anna.
-<	- Every family has parents and children.
-<	- Every child is a girl, a woman, a boy or a man.
+< Is Paul feminine or masculine? Because:
+<	- Paul is probably a child of John and Anna.
+<	- Every child is feminine or masculine.
 * 	and:
+<	- Paul is possibly a person.
+<	- Every person is masculine or feminine.
+< Is Paul a girl, a woman, a boy or a man? Because:
 <	- Paul is probably a child of John and Anna.
 <	- Every child is a girl, a woman, a boy or a man.
 < Is Paul a son or a daughter? Because:
-<	- Paul has 2 parents, called John and Anna.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-* 	and:
 <	- Paul is probably a child of John and Anna.
 <	- Every child is a son or a daughter.
 < 

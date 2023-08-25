@@ -1,6 +1,0 @@
-﻿Hernando era un padre.
-Cada padre es un hombre.
-Hernando era padre de Rafael.
-#Dev#Mostrar el informe de justificación sobre Hernando.
-#Dev#Mostrar el informe de justificación sobre Rafael.
-# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

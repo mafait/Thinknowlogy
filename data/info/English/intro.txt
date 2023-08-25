@@ -1,37 +1,29 @@
 ﻿Display "------------------------------------------------------------------------------".
-Display " Thinknowlogy is the world's most advanced automated reasoner: No knowledge is".
-Display " programmed upfront. No dialogues are written upfront. And no words lists are used.".
-Display " Moreover, it implements reasoning constructions that are not yet described by scientists:".
-Display " * Despite exhaustive research, the theory of evolution still hasn't provided a satisfactory".
-Display " explanation for the origin of intelligence, language and laws of nature. Let alone, how".
-Display " they are related. Moreover, none of the phenomena that are exclusive to the theory of".
-Display " evolution – or its derivative theories – is applicable to daily life;".
-Display " * According to the biblical world view, God has created laws of nature to make his creation".
-Display " run like clockwork. Being based on Natural Laws of Intelligence embedded in Grammar,".
-#C++#Display " only Thinknowlogy implements the intelligent function of words like definite article \"the\",".
-#C++#Display " conjunction \"or\", possessive verb \"have\", and past tense verbs \"were\" and \"had\".".
-#Java#Display " only Thinknowlogy implements the intelligent function of words like definite article “the”,".
-#Java#Display " conjunction “or”, possessive verb “have”, and past tense verbs “were” and “had”.".
+Display " Thinknowlogy is the world's only self-organizing knowledge technology.".
 Display "------------------------------------------------------------------------------".
-Display " The intelligent function of these words is demonstrated by:".
-Display " * Programming in Controlled Natural Language;".
-Display " * Reasoning in Controlled Natural Language:".
+Display " I believe that life and the universe are intelligently designed. And I believe that any".
+Display " intelligent design can be unraveled through reverse engineering. I have identified".
+Display " the human language as a source of natural intelligence. I am utilizing the intelligent".
+Display " design of the human language to replicate human intelligence in software.".
+Display "------------------------------------------------------------------------------".
+Display " The natural logic of language is demonstrated by:".
+Display " * Reasoning (in sentences with restricted grammar):".
 Display "   - drawing conclusions (more advanced than scientific solutions),".
 Display "   - making assumptions (with self-adjusting level of uncertainty),".
 Display "   - asking questions (about gaps in the knowledge),".
-Display "   - detecting confirmations, conflicts and some cases of semantic ambiguity,".
-Display "   - displaying justification reports for the self-generated knowledge;".
-Display " * Multilingualism, proving: Natural languages have a common and logical origin.".
+Display "   - displaying justification reports for the self-generated knowledge,".
+Display "   - detecting confirmations and conflicts, and self-organizing capabilities;".
+Display " * Multilingualism, assuming that languages have a common and logical origin.".
 Display "------------------------------------------------------------------------------".
-Display " I defy anyone to beat this automated reasoner: http://mafait.org/challenge/".
+Display " I defy anyone to beat the simplest results of this reasoning system in a generic way:".
+Display " from sentences with restricted grammar, through algorithms, back to that restricted grammar,".
+Display " in multiple languages, without programmed knowledge, without human-written output".
+Display " sentences, and without extensive words lists. See: https://mafait.org/challenge".
 Display "------------------------------------------------------------------------------".
 #C++#Display " Help.\t\t\t\t\t\t\t* Display help info".
 #C++#Display " \~{languageName}\t\t\t\t\t* Change language".
-#C++#Display " Read the file \"English/programming/Connect-Four\".\t* Game Connect-Four".
-#C++#Display " Read the file \"English/programming/tower of Hanoi\".\t* Solve a puzzle".
 #C++#Display " Read the file \"English/reasoning/Scientific challenge\". * Challenge".
 #C++#Display " Read the file \"English/reasoning/family/family definition\". * Reasoning".
-#Java#Display " Use button <programming> to learn about programming in natural language.".
 #Java#Display " Use button <reasoning> to learn about reasoning in natural language.".
 Display "------------------------------------------------------------------------------".
 Display " Available languages: ~+`language`<s>'~.".

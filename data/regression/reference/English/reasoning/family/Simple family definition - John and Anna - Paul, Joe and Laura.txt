@@ -1,4 +1,9 @@
 ﻿* 
+* My assumptions:
+< A father is probably not a mother.
+< A mother is probably not a father.
+< 
+* 
 * My conclusions:
 < Every parent is a woman or a man.
 * 
@@ -19,11 +24,11 @@
 * 
 * My assumptions:
 < John is probably a parent.
+< John is possibly not a woman.
 < John is probably not a mother.
-< John is probably not a woman.
 < Anna is probably a parent.
+< Anna is possibly not a man.
 < Anna is probably not a father.
-< Anna is probably not a man.
 < 
 * 
 * My conclusions:
@@ -33,22 +38,15 @@
 * 
 * My assumptions:
 < John is probably a parent. Because:
-<	- Every parent is a father or a mother.
-<	- John is a father.
-* 	and:
-<	- Every parent is a woman or a man.
-<	- John is a man.
-* 	and:
 <	- John is a father.
 <	- A father is probably a parent.
-< John is probably not a mother. Because:
-<	- John is probably a parent.
-<	- Every parent is a father or a mother.
-<	- John is a father.
-< John is probably not a woman. Because:
+< John is possibly not a woman. Because:
 <	- John is probably a parent.
 <	- Every parent is a woman or a man.
 <	- John is a man.
+< John is probably not a mother. Because:
+<	- John is a father.
+<	- A father is probably not a mother.
 < 
 * 
 * My conclusions:
@@ -58,22 +56,15 @@
 * 
 * My assumptions:
 < Anna is probably a parent. Because:
-<	- Every parent is a father or a mother.
-<	- Anna is a mother.
-* 	and:
-<	- Every parent is a woman or a man.
-<	- Anna is a woman.
-* 	and:
 <	- Anna is a mother.
 <	- A mother is probably a parent.
-< Anna is probably not a father. Because:
-<	- Anna is probably a parent.
-<	- Every parent is a father or a mother.
-<	- Anna is a mother.
-< Anna is probably not a man. Because:
+< Anna is possibly not a man. Because:
 <	- Anna is probably a parent.
 <	- Every parent is a woman or a man.
 <	- Anna is a woman.
+< Anna is probably not a father. Because:
+<	- Anna is a mother.
+<	- A mother is probably not a father.
 < 
 * 
 * My conclusions:

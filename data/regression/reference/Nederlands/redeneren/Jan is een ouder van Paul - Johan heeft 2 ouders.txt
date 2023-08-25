@@ -10,6 +10,9 @@
 < Anna is een ouder van Johan.
 < 
 * 
+* Uw informatie:
+< Jan is een ouder van Paul.
+* 
 * Mijn conclusies:
 < Jan is een ouder van Paul en Johan.
 * 
@@ -30,6 +33,7 @@
 * 
 * Gerelateerde informatie:
 < Jan is een ouder van Paul en Johan.
+< Jan is een ouder van Paul.
 < 
 * 
 * Uw informatie:
@@ -43,6 +47,8 @@
 * Mijn conclusies:
 < Jan is een ouder van Paul en Johan. Omdat:
 <	- Johan heeft 2 ouders, genaamd Jan en Anna.
+* 	en:
+<	- Jan is een ouder van Paul.
 < 
 * 
 * Mijn conclusies:
@@ -52,5 +58,5 @@
 * 
 * Mijn conclusies:
 < Paul heeft een ouder, genaamd Jan. Omdat:
-<	- Jan is een ouder van Paul en Johan.
+<	- Jan is een ouder van Paul.
 < 

@@ -15,7 +15,7 @@
 <	- Anna is the mother of Paul, Joe and Laura.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < Paul has a father, called John.
 < 
 * 
@@ -24,7 +24,7 @@
 <	- Anna is the mother of Paul, Joe and Laura.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < Joe has a father, called John.
 < 
 * 
@@ -33,7 +33,7 @@
 <	- Anna is the mother of Paul, Joe and Laura.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < Laura has a father, called John.
 < 
 * 

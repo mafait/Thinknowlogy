@@ -1,8 +1,8 @@
-﻿Affichez " Copyright (C) 2009-2018, Menno Mafait".
+﻿Affichez " Copyright (C) 2023, Menno Mafait".
 #C++#Affichez " Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ;".
 #C++#Affichez " pour plus de détails tapez \"Affichez le droit d'auteur.\". Ceci est un logiciel".
 #C++#Affichez " libre et vous êtes invité à le redistribuer en respectant certaines obligations;".
 #C++#Affichez " pour plus de détails tapez \"Affichez la licence-GPLv2.\".".
 #Java#Affichez " Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de détails cliquez sur".
-#Java#Affichez " <Aide.> et <Affichez le droit d'auteur.>. Ceci est un logiciel libre et vous êtes invité à le redistribuer en".
-#Java#Affichez " respectant certaines obligations; pour plus de détails cliquez sur <Aide.> et <Affichez la licence-GPLv2.>.".
+#Java#Affichez " \"Aide.\" et \"Affichez le droit d'auteur.\". Ceci est un logiciel libre et vous êtes invité à le redistribuer en".
+#Java#Affichez " respectant certaines obligations; pour plus de détails cliquez sur \"Aide.\" et \"Affichez la licence-GPLv2.\".".

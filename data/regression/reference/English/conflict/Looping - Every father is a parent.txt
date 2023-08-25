@@ -1,4 +1,0 @@
-﻿! 
-! This sentence is not accepted, because it is in conflict with:
-< Every parent is a father or a mother.
-< 

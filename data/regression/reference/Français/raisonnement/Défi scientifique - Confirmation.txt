@@ -44,6 +44,11 @@
 < Antoine avait un père, appelé Philippe.
 < 
 * 
+* Mes hypothèses:
+< Un homme n'est probablement pas une femme.
+< Une femme n'est probablement pas un homme.
+< 
+* 
 * Mes questions:
 < Est Dominique un homme ou une femme?
 < 

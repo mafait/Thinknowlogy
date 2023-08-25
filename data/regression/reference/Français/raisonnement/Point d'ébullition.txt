@@ -4,10 +4,14 @@
 < 
 * 
 * Mes hypothèses:
+< Un eau est probablement un type de liquide.
 < L'eau est probablement un type de liquide.
 < 
 * 
 * Mes hypothèses:
+< Un eau est probablement un type de liquide. En raison:
+<	- Chaque type de liquide a un point d'ébullition spécifique.
+<	- L'eau a un point d'ébullition de 100 degrés Celsius.
 < L'eau est probablement un type de liquide. En raison:
 <	- Chaque type de liquide a un point d'ébullition spécifique.
 <	- L'eau a un point d'ébullition de 100 degrés Celsius.

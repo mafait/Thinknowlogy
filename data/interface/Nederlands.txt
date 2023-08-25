@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the Dutch language
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 # Java console (bovenste menu)
@@ -110,13 +110,18 @@
 #Java#:452		"Toon de verantwoordingsrapportage over kinderen."
 #Java#:453		"Toon de verantwoordingsrapportage over vaders."
 #Java#:454		"Toon de verantwoordingsrapportage over moeders."
-#Java#:455		"Toon de verantwoordingsrapportage over zonen."
-#Java#:456		"Toon de verantwoordingsrapportage over dochters."
-#Java#:457		"Toon de verantwoordingsrapportage over Jan."
-#Java#:458		"Toon de verantwoordingsrapportage over Anna."
-#Java#:459		"Toon de verantwoordingsrapportage over Paul."
-#Java#:460		"Toon de verantwoordingsrapportage over Johan."
-#Java#:461		"Toon de verantwoordingsrapportage over Laura."
+#Java#:455		"Toon de verantwoordingsrapportage over mannen."
+#Java#:456		"Toon de verantwoordingsrapportage over vrouwen."
+#Java#:457		"Toon de verantwoordingsrapportage over zonen."
+#Java#:458		"Toon de verantwoordingsrapportage over dochters."
+#Java#:459		"Toon de verantwoordingsrapportage over jongens."
+#Java#:460		"Toon de verantwoordingsrapportage over meisjes."
+#Java#:461		"Toon de verantwoordingsrapportage over personen."
+#Java#:462		"Toon de verantwoordingsrapportage over Jan."
+#Java#:463		"Toon de verantwoordingsrapportage over Anna."
+#Java#:464		"Toon de verantwoordingsrapportage over Paul."
+#Java#:465		"Toon de verantwoordingsrapportage over Johan."
+#Java#:466		"Toon de verantwoordingsrapportage over Laura."
 
 # Java console (redeneren/gezin vraag submenu)
 #Java#:470		"Is Jan een vader?"
@@ -136,13 +141,18 @@
 #Java#:482		"Toon informatie over kinderen."
 #Java#:483		"Toon informatie over vaders."
 #Java#:484		"Toon informatie over moeders."
-#Java#:485		"Toon informatie over zonen."
-#Java#:486		"Toon informatie over dochters."
-#Java#:487		"Toon informatie over Jan."
-#Java#:488		"Toon informatie over Anna."
-#Java#:489		"Toon informatie over Paul."
-#Java#:490		"Toon informatie over Johan."
-#Java#:491		"Toon informatie over Laura."
+#Java#:485		"Toon informatie over mannen."
+#Java#:486		"Toon informatie over vrouwen."
+#Java#:487		"Toon informatie over zonen."
+#Java#:488		"Toon informatie over dochters."
+#Java#:489		"Toon informatie over jongens."
+#Java#:490		"Toon informatie over meisjes."
+#Java#:491		"Toon informatie over personen."
+#Java#:492		"Toon informatie over Jan."
+#Java#:493		"Toon informatie over Anna."
+#Java#:494		"Toon informatie over Paul."
+#Java#:495		"Toon informatie over Johan."
+#Java#:496		"Toon informatie over Laura."
 
 # Java console (tekengrootte submenu)
 #Java#:500		"<verklein tekengrootte>"
@@ -226,16 +236,15 @@
 :1314			"\nMijn veronderstellingen:"
 :1315			"\nMijn veronderstellingen die aangepast zijn:"
 :1316			"\nMijn veronderstellingen die geconcludeerd zijn:"
-:1317			"\nMijn conclusies die bijgewerkt zijn:"
-#:1318			"\nMijn conclusies die niet meer verborgen zijn:"
-#:1319			"\nMijn veronderstellingen die niet meer verborgen zijn:"
-:1320			"\nMijn vragen:"
-:1321			"\nMijn aangepaste vragen:"
-:1322			"\nMijn antwoord:"
-:1323			"\nIk weet alleen:"
-:1324			"\nSpecificaties:"
-:1325			"\nGerelateerde informatie:"
-:1326			"\nGerelateerde vragen:"
+#:1317			"\nMijn conclusies die niet meer verborgen zijn:"
+#:1318			"\nMijn veronderstellingen die niet meer verborgen zijn:"
+:1319			"\nMijn vragen:"
+:1320			"\nMijn vragen die aangepast zijn:"
+:1321			"\nMijn antwoord:"
+:1322			"\nIk weet alleen:"
+:1323			"\nSpecificaties:"
+:1324			"\nGerelateerde informatie:"
+:1325			"\nGerelateerde vragen:"
 
 # Opsomming (oude informatie)
 :1330			"\nU hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere veronderstellingen:"

@@ -20,10 +20,10 @@
  Affichez la garantie.
 ------------------------------------------------------------------------------
  Exemples fichiers: * Utilisez le bouton <exemples>
-                 ou voir le dossier: Thinknowlogy2018r4/data/examples/Français/
- Fondamental:        * dossier: Thinknowlogy2018r4/documents/
- Projet:	       * dossier: Thinknowlogy2018r4/documents/design/
- Captures d'écran:   * dossier: Thinknowlogy2018r4/screenshots/Français/
+                 ou voir le dossier: Thinknowlogy2023/data/examples/Français/
+ Fondamental:        * dossier: Thinknowlogy2023/documents/
+ Projet:	       * dossier: Thinknowlogy2023/documents/design/
+ Captures d'écran:   * dossier: Thinknowlogy2023/screenshots/Français/
 ------------------------------------------------------------------------------
 < 
 < Spécifications:
@@ -34,36 +34,36 @@
 < English est une langue. {appris de l'utilisateur Admin}
 < 
 ------------------------------------------------------------------------------
- Nombre total d'éléments: 8606.
+ Nombre total d'éléments: 8685.
 ------------------------------------------------------------------------------
- Éléments dans l'administrateur: 420.
+ Éléments dans l'administrateur: 422.
 ------------------------------------------------------------------------------
- * Éléments actifs:		420.
+ * Éléments actifs:		422.
     <F> Fichers:			2.
     <R> Lire mots (temporaire):		3.
     <S> Résolvez scores (temporaire):		0.
-    <W> Mots:				389, (prédéfini: 189).
+    <W> Mots:				391, (prédéfini: 191).
     <X> Conditions:			11.
     <Y> Actes:				15.
     <Z> Alternatives:			0.
 ------------------------------------------------------------------------------
- Éléments dans mots:	    8186.
+ Éléments dans mots:	    8263.
 ------------------------------------------------------------------------------
- * Éléments actifs:		8143.
+ * Éléments actifs:		8210.
     <a> assignations:			7.
-    <c> collections:			276.
-    <g> généralisations:			345.
-    <i> interface:			1242.
-    <j> justification:			0.
-    <l> grammaire:			4802.
+    <c> collections:			272.
+    <g> généralisations:			348.
+    <i> interface:			1301.
+    <j> justification:			8.
+    <l> grammaire:			4818.
     <m> mot multiples:			69.
-    <s> specifications:			401.
+    <s> specifications:			384.
     <r> Écrire des mots (temporaire):		0.
-    <w> types de mots:			1001.
+    <w> types de mots:			1003.
     <x> contexte:			0.
  * Éléments inactifs:		3.
  * Éléments archivés:		33.
- * Éléments remplacées:		7.
+ * Éléments remplacées:		17.
 ------------------------------------------------------------------------------
 < 
 < Spécifications:
@@ -72,15 +72,15 @@
 < Expert est le précédent utilisateur. {appris de l'utilisateur Invité}
 < 
 ------------------------------------------------------------------------------
- Nombre total éléments de type mots: 1007, (toutes langues confondues).
+ Nombre total éléments de type mots: 1009, (toutes langues confondues).
 ------------------------------------------------------------------------------
- * Éléments de type mot actifs:	1007.
+ * Éléments de type mot actifs:	1009.
    (@1)  Symboles:			24.
    (@2)  Chiffres:			54.
    (@3)  Minuscules:			104.
    (@4)  Majuscules:			104.
    (@5)  Noms propres:			20.
-   (@6)  Adjectifs:			200.
+   (@6)  Adjectifs:			202.
    (@7)  Adverbes:			32.
    (@8)  Mots de réponses:			10.
    (@9)  Articles:			20.
@@ -146,10 +146,10 @@
 ------------------------------------------------------------------------------
  Dans les fichiers '~' marquera la fin d'une requête		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2018, Menno Mafait
+ Copyright (C) 2023, Menno Mafait
  Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de détails cliquez sur
- <Aide.> et <Affichez le droit d'auteur.>. Ceci est un logiciel libre et vous êtes invité à le redistribuer en
- respectant certaines obligations; pour plus de détails cliquez sur <Aide.> et <Affichez la licence-GPLv2.>.
+ "Aide." et "Affichez le droit d'auteur.". Ceci est un logiciel libre et vous êtes invité à le redistribuer en
+ respectant certaines obligations; pour plus de détails cliquez sur "Aide." et "Affichez la licence-GPLv2.".
 
 		    GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991

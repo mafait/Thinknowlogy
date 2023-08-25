@@ -2,6 +2,7 @@
 Juan es el padre de Pablo, José y Luisa.
 José es hijo de Juan y Ana.
 Ana es la madre de Pablo, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Pablo.
 Pablo es hijo de Juan y Ana.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.

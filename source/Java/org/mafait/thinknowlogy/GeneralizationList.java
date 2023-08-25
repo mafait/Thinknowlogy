@@ -1,10 +1,10 @@
 ﻿/*	Class:			GeneralizationList
  *	Parent class:	List
- *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing generalization items
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -70,12 +70,12 @@ class GeneralizationList extends List
 		return (GeneralizationItem)firstActiveItem();
 		}
 
-	protected GeneralizationItem firstGeneralizationItem( boolean isOnlySelectingNoun, boolean isOnlySelectingCurrentLanguage, boolean isRelation )
+	protected GeneralizationItem firstGeneralizationItem( boolean isOnlySelectingCurrentLanguage, boolean isOnlySelectingNoun, boolean isOnlySelectingProperNoun, boolean isRelation )
 		{
 		GeneralizationItem firstGeneralizationItem = firstActiveGeneralizationItem();
 
 		return ( firstGeneralizationItem != null ?
-				firstGeneralizationItem.generalizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isRelation ) : null );
+				firstGeneralizationItem.generalizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isOnlySelectingProperNoun, isRelation ) : null );
 		}
 
 	protected BoolResultType findGeneralization( boolean isRelation, WordItem generalizationWordItem )
@@ -100,7 +100,7 @@ class GeneralizationList extends List
 		boolResult.booleanValue = hasFoundGeneralization;
 		return boolResult;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"Praise the Lord, for the Lord is good;

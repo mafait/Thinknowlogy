@@ -1,7 +1,7 @@
 ﻿#-----------------------------------------------------------------
 # Esta prueba ejecuta los ejemplos de mi Reto Científico. Para
 # obtener más información, consulte el documento Reto Científico
-# incluido, o: http://mafait.org/challenge/
+# incluido, o: https://mafait.org/challenge
 #-----------------------------------------------------------------
 # Bloque 1: Conversiones directas
 #-----------------------------------------------------------------
@@ -26,7 +26,7 @@ Pablo es hijo de Juan y Ana.
 #-----------------------------------------------------------------
 # Bloque 4: Pasado el razonamiento tensa
 #-----------------------------------------------------------------
-Hernando era padre de Rafael.
+Hernando era el padre de Rafael.
 Cada padre es un hombre.
 #-----------------------------------------------------------------
 # Bloque 5: La detección de un conflicto y la generación de una pregunta

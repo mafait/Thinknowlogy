@@ -1,36 +1,117 @@
 ﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis conclusiones:
+< Cada mujer no es masculino.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hombre no es una mujer.
+< Cada mujer no es un hombre.
+* 
+* Mis conclusiones:
+< Cada hombre no es femenina.
+< Cada persona es masculino o femenina.
+* 
+* Mis suposiciones:
+< Un hombre es probablemente una persona.
+< Una mujer es probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Padres y hijos son parte de cada familia.
 < 
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Un hijo no es probablemente una hija.
+< Una hija no es probablemente un hijo.
 < 
 * 
 * Mis conclusiones:
+< Cada padre es masculino.
+< Cada padre no es femenina.
+< Cada padre no es una mujer.
+< Cada mujer no es un padre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
+< Cada padre no es una madre.
+* 
+* Mis conclusiones:
+< Cada madre es femenina.
+< Cada madre no es masculino.
+< Cada madre no es un hombre.
+< Cada hombre no es una madre.
+< Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis suposiciones:
-< Un hijo es probablemente una persona.
+* Mis conclusiones:
+< Cada niña no es masculino.
+< Cada niña no es un padre.
+< Cada niña no es un hombre.
+< Cada padre no es una niña.
+< Cada hombre no es una niña.
 < 
 * 
 * Mis conclusiones:
+< Cada niño no es femenina.
+< Cada niño no es una niña.
+< Cada niño no es una madre.
+< Cada niño no es una mujer.
+< Cada niña no es un niño.
+< Cada madre no es un niño.
+< Cada mujer no es un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es masculino.
+< Cada hijo no es femenina.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Un niño no es probablemente un hombre.
+< Un niño es probablemente una persona.
+< Un hombre no es probablemente un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hija es femenina.
+< Cada hija no es masculino.
+< Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
+< Una niña no es probablemente una mujer.
+< Una niña es probablemente una persona.
+< Una mujer no es probablemente una niña.
 < 
 * 
 * Mis conclusiones:
 < Juan es parte de una familia.
 < Juan es un hombre.
+< Juan no es una madre.
+< Juan no es una niña.
+< Juan no es femenina.
 < Juan no es una mujer.
 < Juan es masculino.
-< Juan no es una madre.
+< Juan no es una hija.
 < Pablo tiene un padre, llamado Juan.
 < Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene una madre, llamada Ana.
@@ -42,56 +123,77 @@
 < Luisa tiene una madre, llamada Ana.
 < Ana es parte de una familia.
 < Ana es una mujer.
+< Ana no es un padre.
+< Ana no es un niño.
+< Ana no es masculino.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana no es un padre.
+< Ana no es un hijo.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
-< Juan tiene posiblemente una hija, llamada Luisa.
+< Juan no es probablemente un niño.
+< Juan tiene puede-ser una hija, llamada Luisa.
+< Pablo es probablemente parte de una familia.
 < Pablo es posiblemente una persona.
-< Pablo es posiblemente parte de una familia.
-< José es posiblemente parte de una familia.
+< José es probablemente parte de una familia.
 < José es posiblemente una persona.
-< Luisa es posiblemente hija de Juan y Ana.
-< Luisa no es posiblemente un hijo.
-< Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser hija de Juan y Ana.
+< Luisa es puede-ser parte de una familia.
+< Luisa es puede-ser femenina.
+< Luisa no es puede-ser un hijo.
+< Luisa no es puede-ser un niño.
+< Luisa no es puede-ser un padre.
+< Luisa no es puede-ser un hombre.
+< Luisa no es puede-ser masculino.
 < Luisa es puede-ser una persona.
-< Luisa no es posiblemente un niño y un hombre.
+< Ana no es probablemente una niña.
 < Ana es probablemente una persona.
-< Ana tiene posiblemente una hija, llamada Luisa.
+< Ana tiene puede-ser una hija, llamada Luisa.
 * 
 * Mis preguntas:
+< ¿Es Pablo femenina o masculino?
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
 < ¿Es Pablo un hijo o una hija?
+< ¿Es José femenina o masculino?
 < ¿Es José una niña, una mujer, un niño o un hombre?
 < ¿Es José un hijo o una hija?
 < ¿Es Luisa una niña o una mujer?
 < 
 * 
-* Mis preguntas que son contestadas:
+* Mis preguntas que han sido respondidas:
 < ¿Es José un hijo o una hija?
 * 
-* Mis suposiciones que se concluyen:
+* Mis suposiciones que ya no se han ocultado:
+< Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
+* 
+* Mis suposiciones que se han ajustado:
+< Luisa es probablemente parte de una familia.
+* 
+* Mis suposiciones que se han concluido:
 < José es parte de una familia.
 * 
-* Mis suposiciones que no son ocultos más:
-< Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
+* Mis suposiciones que ya no se han ocultado:
 < Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
 * 
-* Mis preguntas ajustadas:
-< ¿Es José un niño o un hombre?
-* 
-* Mis suposiciones que se ajustan:
+* Mis suposiciones que se han ajustado:
 < José es probablemente una persona.
-< Luisa es probablemente parte de una familia.
-< Pablo es probablemente parte de una familia.
+* 
+* Mis preguntas que se han ajustado:
+< ¿Es José un hombre o un niño?
+* 
+* Mis preguntas que han sido respondidas:
+< ¿Es José femenina o masculino?
 * 
 * Mis conclusiones:
+< José es masculino.
 < José no es una hija.
-< José no es una niña y una mujer.
+< José no es una niña.
+< José no es una madre.
+< José no es una mujer.
+< José no es femenina.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < José tiene 2 padres, llamados Juan y Ana.
 < 

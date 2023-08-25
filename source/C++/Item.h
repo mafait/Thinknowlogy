@@ -1,9 +1,9 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -50,6 +50,7 @@ class ReadWordResultType;
 class RelatedResultType;
 class SelectionResultType;
 class ShortResultType;
+class SpecificationItem;
 class SpecificationResultType;
 class UserSpecificationResultType;
 class WordEndingResultType;
@@ -90,6 +91,8 @@ class Item
 
 
 	// Private functions
+
+	unsigned int assumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool isExclusivePrimarySpecification, bool hasNegativePrimarySpecification, bool hasAdditionalDefinitionSpecification, bool hasSecondarySpecification, unsigned short justificationTypeNr );
 
 	char *myWordTypeString( unsigned short queryWordTypeNr );
 
@@ -140,6 +143,7 @@ class Item
 	BoolResultType addBoolResultError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString );
 	BoolResultType addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number );
 	BoolResultType addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	BoolResultType addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
 	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString, unsigned int number );
 	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, unsigned int number1, const char *errorString2, unsigned int number2 );
@@ -328,9 +332,6 @@ class Item
 
 	bool doesStringStartWithPhoneticVowel( char *textString );
 
-	bool isAssumption( unsigned short justificationTypeNr );
-	bool isConclusion( unsigned short justificationTypeNr );
-
 	bool isAdjectiveParameter( unsigned short checkParameter );
 	bool isDefiniteArticleParameter( unsigned short checkParameter );
 	bool isIndefiniteArticleParameter( unsigned short checkParameter );
@@ -339,10 +340,12 @@ class Item
 	bool isMasculineArticleParameter( unsigned short articleParameter );
 
 	bool isGeneralizationReasoningWordType( unsigned short wordTypeNr );
+	bool isSpecificationReasoningWordType( unsigned short wordTypeNr );
+
 	bool isMatchingWordType( unsigned short firstWordTypeNr, unsigned short secondWordTypeNr );
 	bool isNounWordType( unsigned short wordTypeNr );
 
-	unsigned short assumptionGrade( bool hasAnotherPrimarySpecification, bool hasFeminineOrMasculineProperNounEnding, bool hasPossessivePrimarySpecification, bool hasPrimaryQuestionSpecification, unsigned short justificationTypeNr );
+	unsigned int assumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem );
 	};
 #endif
 

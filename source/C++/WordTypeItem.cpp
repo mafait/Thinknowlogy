@@ -1,10 +1,10 @@
 ﻿/*	Class:			WordTypeItem
  *	Parent class:	Item
- *	Purpose:		To store the word types of a word
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing the word types of a word
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -223,11 +223,11 @@ class WordTypeItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		WordItem *thisWordItem = myWordItem();
+		WordItem *_myWordItem = myWordItem();
 		char *queryString;
 		char *wordString;
-		char *wordTypeString = thisWordItem->wordTypeNameString( wordTypeNr_ );
-		char *languageNameString = thisWordItem->languageNameString( wordTypeLanguageNr_ );
+		char *wordTypeString = _myWordItem->wordTypeNameString( wordTypeNr_ );
+		char *languageNameString = _myWordItem->languageNameString( wordTypeLanguageNr_ );
 
 		itemBaseToString( queryWordTypeNr );
 

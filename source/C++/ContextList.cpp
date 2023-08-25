@@ -1,10 +1,10 @@
 ﻿/*	Class:			ContextList
  *	Parent class:	List
- *	Purpose:		To store context items
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing context items
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -130,23 +130,6 @@ class ContextList : private List
 		while( searchContextItem != NULL )
 			{
 			if( searchContextItem->contextNr() == contextNr &&
-			searchContextItem->specificationWordItem() == specificationWordItem )
-				return true;
-
-			searchContextItem = searchContextItem->nextContextItem();
-			}
-
-		return false;
-		}
-
-	bool hasContext( unsigned int contextNr, unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem )
-		{
-		ContextItem *searchContextItem = firstActiveContextItem();
-
-		while( searchContextItem != NULL )
-			{
-			if( searchContextItem->contextNr() == contextNr &&
-			searchContextItem->spanishAmbiguousCollectionNr() == spanishAmbiguousCollectionNr &&
 			searchContextItem->specificationWordItem() == specificationWordItem )
 				return true;
 
@@ -363,7 +346,7 @@ class ContextList : private List
 				// Typical for Spanish
 				searchSpanishAmbiguousCollectionNr == spanishAmbiguousCollectionNr ) &&
 
-				anyWordItem->nContextWords( searchContextItem->contextNr(), specificationWordItem ) == nContextWords ) ||
+				anyWordItem->nContextWords( searchContextItem->contextNr() ) == nContextWords ) ||
 
 				// Typical for Spanish
 				// Compound collection Spanish ambiguous

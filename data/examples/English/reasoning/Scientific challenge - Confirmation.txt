@@ -16,10 +16,10 @@ Every person is a man or a woman.
 Addison is a person.
 Addison is a man or a woman.
 
-Barack Obama is the president of the United States.
-The United States has a president, called Barack Obama.
 Donald Trump is the president of the United States.
-The United States has a new president, called Donald Trump.
+The United States has a president, called Donald Trump.
+Joe Biden is the president of the United States.
+The United States has a new president, called Joe Biden.
 # The next sentence is already confirmed
-The United States has a previous president, called Barack Obama.
+The United States has a previous president, called Donald Trump.
 # To continue, click button «Clear your mind.» or «Restart.».

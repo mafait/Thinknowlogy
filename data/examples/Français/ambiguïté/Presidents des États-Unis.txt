@@ -22,5 +22,16 @@ Barack Obama est le président des États-Unis.
 Affichez information sur les présidents.
 ##Dev#Affichez le rapport de justification sur des États-Unis.
 #Dev#Affichez le rapport de justification sur les États-Unis.
-# In 2013, ...
+# In 2013, Barack Obama a été ré-inauguré en tant que président des États-Unis.
+Barack Obama est le président des États-Unis.
+# En 2017, Donald Trump a été inauguré en tant que président en tant que président des États-Unis.
+Donald Trump est le président des États-Unis.
+Affichez information sur les présidents.
+##Dev#Affichez le rapport de justification sur des États-Unis.
+#Dev#Affichez le rapport de justification sur les États-Unis.
+# En 2021, Joe Biden a été inauguré en tant que président en tant que président des États-Unis.
+Joe Biden est le président des États-Unis.
+Affichez information sur les présidents.
+##Dev#Affichez le rapport de justification sur des États-Unis.
+#Dev#Affichez le rapport de justification sur les États-Unis.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

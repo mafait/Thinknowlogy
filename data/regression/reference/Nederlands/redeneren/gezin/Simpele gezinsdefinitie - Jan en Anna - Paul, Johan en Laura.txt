@@ -1,4 +1,9 @@
 ﻿* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk geen moeder.
+< Een moeder is waarschijnlijk geen vader.
+< 
+* 
 * Mijn conclusies:
 < Iedere ouder is een vrouw of een man.
 * 
@@ -19,11 +24,11 @@
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een ouder.
+< Jan is mogelijk geen vrouw.
 < Jan is waarschijnlijk geen moeder.
-< Jan is waarschijnlijk geen vrouw.
 < Anna is waarschijnlijk een ouder.
+< Anna is mogelijk geen man.
 < Anna is waarschijnlijk geen vader.
-< Anna is waarschijnlijk geen man.
 < 
 * 
 * Mijn conclusies:
@@ -33,22 +38,15 @@
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een ouder. Omdat:
-<	- Iedere ouder is een vader of een moeder.
-<	- Jan is een vader.
-* 	en:
-<	- Iedere ouder is een vrouw of een man.
-<	- Jan is een man.
-* 	en:
 <	- Jan is een vader.
 <	- Een vader is waarschijnlijk een ouder.
-< Jan is waarschijnlijk geen moeder. Omdat:
-<	- Jan is waarschijnlijk een ouder.
-<	- Iedere ouder is een vader of een moeder.
-<	- Jan is een vader.
-< Jan is waarschijnlijk geen vrouw. Omdat:
+< Jan is mogelijk geen vrouw. Omdat:
 <	- Jan is waarschijnlijk een ouder.
 <	- Iedere ouder is een vrouw of een man.
 <	- Jan is een man.
+< Jan is waarschijnlijk geen moeder. Omdat:
+<	- Jan is een vader.
+<	- Een vader is waarschijnlijk geen moeder.
 < 
 * 
 * Mijn conclusies:
@@ -58,22 +56,15 @@
 * 
 * Mijn veronderstellingen:
 < Anna is waarschijnlijk een ouder. Omdat:
-<	- Iedere ouder is een vader of een moeder.
-<	- Anna is een moeder.
-* 	en:
-<	- Iedere ouder is een vrouw of een man.
-<	- Anna is een vrouw.
-* 	en:
 <	- Anna is een moeder.
 <	- Een moeder is waarschijnlijk een ouder.
-< Anna is waarschijnlijk geen vader. Omdat:
-<	- Anna is waarschijnlijk een ouder.
-<	- Iedere ouder is een vader of een moeder.
-<	- Anna is een moeder.
-< Anna is waarschijnlijk geen man. Omdat:
+< Anna is mogelijk geen man. Omdat:
 <	- Anna is waarschijnlijk een ouder.
 <	- Iedere ouder is een vrouw of een man.
 <	- Anna is een vrouw.
+< Anna is waarschijnlijk geen vader. Omdat:
+<	- Anna is een moeder.
+<	- Een moeder is waarschijnlijk geen vader.
 < 
 * 
 * Mijn conclusies:

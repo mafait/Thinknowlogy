@@ -1,9 +1,9 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -164,14 +164,13 @@ class List
 
 	char listChar();
 
-	signed char addItemToList( char statusChar, Item *newItem );
 	signed char activateItem( Item *activateItem );
-	signed char inactivateItem( Item *inactivateItem );
+	signed char addItemToList( char statusChar, Item *newItem );
 	signed char archiveItem( Item *archiveItem );
-	signed char replaceItem( Item *replaceItem );
 	signed char deleteItem( Item *deleteItem );
-	signed char deleteActiveItemsWithCurrentSentenceNr();
+	signed char inactivateItem( Item *inactivateItem );
 	signed char removeFirstRangeOfDeletedItemsInList();
+	signed char replaceItem( Item *replaceItem );
 
 	BoolResultType compareStrings( char *searchString, char *sourceString );
 
@@ -204,7 +203,7 @@ class List
 
 	// Protected database connection functions
 
-//	signed char storeChangesInFutureDatabaseInList();
+//	signed char storeChangesInListInFutureDatabase();
 
 
 	// Protected query functions

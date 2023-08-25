@@ -1,5 +1,15 @@
 ﻿* 
 * Mes hypothèses:
+< Un homme n'est probablement pas une femme.
+< Une femme n'est probablement pas un homme.
+< 
+* 
+* Mes hypothèses:
+< Un père n'est probablement pas une mère.
+< Une mère n'est probablement pas un père.
+< 
+* 
+* Mes hypothèses:
 < Un père est probablement une personne.
 < Un père est probablement un parent.
 < Un parent est probablement une personne.
@@ -17,10 +27,10 @@
 < Olivier est un homme.
 * 
 * Mes hypothèses:
-< Olivier est probablement un parent.
-< Olivier est probablement une personne.
 < Olivier n'est probablement pas une mère.
 < Olivier n'est probablement pas une femme.
+< Olivier est probablement une personne.
+< Olivier est probablement un parent.
 < 
 * 
 * Mes conclusions:
@@ -29,34 +39,16 @@
 <	- Chaque père est un homme.
 * 
 * Mes hypothèses:
-< Olivier est probablement un parent. En raison:
-<	- Chaque parent est un père ou une mère.
+< Olivier n'est probablement pas une mère. En raison:
 <	- Olivier est un père.
-* 	et:
-<	- Chaque parent est une femme ou un homme.
+<	- Un père n'est probablement pas une mère.
+< Olivier n'est probablement pas une femme. En raison:
 <	- Olivier est un homme.
-* 	et:
-<	- Olivier est un père.
-<	- Un père est probablement un parent.
+<	- Un homme n'est probablement pas une femme.
 < Olivier est probablement une personne. En raison:
-<	- Olivier est probablement un parent.
-<	- Un parent est probablement une personne.
-* 	et:
-<	- Chaque personne est un homme ou une femme.
-<	- Olivier est un homme.
-* 	et:
 <	- Olivier est un père.
 <	- Un père est probablement une personne.
-< Olivier n'est probablement pas une mère. En raison:
-<	- Olivier est probablement un parent.
-<	- Chaque parent est un père ou une mère.
+< Olivier est probablement un parent. En raison:
 <	- Olivier est un père.
-< Olivier n'est probablement pas une femme. En raison:
-<	- Olivier est probablement un parent.
-<	- Chaque parent est une femme ou un homme.
-<	- Olivier est un homme.
-* 	et:
-<	- Olivier est probablement une personne.
-<	- Chaque personne est un homme ou une femme.
-<	- Olivier est un homme.
+<	- Un père est probablement un parent.
 < 

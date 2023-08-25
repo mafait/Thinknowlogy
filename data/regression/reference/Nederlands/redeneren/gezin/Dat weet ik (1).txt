@@ -1,7 +1,45 @@
 ﻿* 
+* Mijn veronderstellingen:
+< Een man is waarschijnlijk geen vrouw.
+< Een vrouw is waarschijnlijk geen man.
+< 
+* 
+* Mijn conclusies:
+< Iedere vrouw is niet mannelijk.
+< 
+* 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Iedere man is geen vrouw.
+< Iedere vrouw is geen man.
+* 
+* Mijn conclusies:
+< Iedere man is niet vrouwelijk.
+< Iedere persoon is mannelijk of vrouwelijk.
+* 
+* Mijn veronderstellingen:
+< Een man is waarschijnlijk een persoon.
+< Een vrouw is waarschijnlijk een persoon.
+< 
+* 
 * Mijn conclusies:
 < Ouders en kinderen zijn deel van ieder gezin.
 < 
+* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk geen moeder.
+< Een moeder is waarschijnlijk geen vader.
+< 
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk geen dochter.
+< Een dochter is waarschijnlijk geen zoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere vader is mannelijk.
+< Iedere vader is niet vrouwelijk.
+< Iedere vader is geen vrouw.
+< Iedere vrouw is geen vader.
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
@@ -9,24 +47,66 @@
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
+* 
 * Mijn conclusies:
+< Iedere moeder is vrouwelijk.
+< Iedere moeder is niet mannelijk.
+< Iedere moeder is geen man.
+< Iedere man is geen moeder.
 < Iedere ouder is een vrouw of een man.
+< Iedere ouder is vrouwelijk of mannelijk.
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
 < Een moeder is waarschijnlijk een ouder.
 < 
 * 
-* Mijn veronderstellingen:
-< Een zoon is waarschijnlijk een persoon.
-< Een kind is waarschijnlijk een persoon.
+* Mijn conclusies:
+< Ieder meisje is niet mannelijk.
+< Ieder meisje is geen vader.
+< Ieder meisje is geen man.
+< Iedere vader is geen meisje.
+< Iedere man is geen meisje.
 < 
 * 
 * Mijn conclusies:
+< Iedere jongen is niet vrouwelijk.
+< Iedere jongen is geen meisje.
+< Iedere jongen is geen moeder.
+< Iedere jongen is geen vrouw.
+< Ieder meisje is geen jongen.
+< Iedere moeder is geen jongen.
+< Iedere vrouw is geen jongen.
+< 
+* 
+* Mijn conclusies:
+< Iedere zoon is mannelijk.
+< Iedere zoon is niet vrouwelijk.
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk een kind.
+< Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
+< Een jongen is waarschijnlijk geen man.
+< Een jongen is waarschijnlijk een persoon.
+< Een man is waarschijnlijk geen jongen.
+< 
+* 
+* Mijn conclusies:
+< Iedere dochter is vrouwelijk.
+< Iedere dochter is niet mannelijk.
+< Ieder kind is vrouwelijk of mannelijk.
 < Ieder kind is een meisje, een vrouw, een jongen of een man.
 * 
 * Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een kind.
 < Een dochter is waarschijnlijk een persoon.
+< Een meisje is waarschijnlijk geen vrouw.
+< Een meisje is waarschijnlijk een persoon.
+< Een vrouw is waarschijnlijk geen meisje.
 < 
 * 
 * Mijn conclusies:
@@ -37,6 +117,7 @@
 < Jan heeft waarschijnlijk een kind.
 * 
 * Mijn vragen:
+< Is Jan vrouwelijk of mannelijk?
 < Is Jan een vrouw of een man?
 < Is Jan een vader of een moeder?
 < 
@@ -49,6 +130,7 @@
 < Peter heeft waarschijnlijk een kind.
 * 
 * Mijn vragen:
+< Is Peter vrouwelijk of mannelijk?
 < Is Peter een vrouw of een man?
 < Is Peter een vader of een moeder?
 < 
@@ -57,64 +139,75 @@
 < Jan heeft waarschijnlijk een kind.
 * 
 * Mijn conclusies:
-< Johan is deel van een gezin.
 < Jan heeft een kind, genaamd Johan.
+< Johan is deel van een gezin.
 * 
 * Mijn veronderstellingen:
+< Jan is waarschijnlijk een ouder van Johan.
 < Johan is waarschijnlijk een persoon.
 < Johan heeft waarschijnlijk een ouder, genaamd Jan.
-< Jan is waarschijnlijk een ouder van Johan.
 * 
 * Mijn vragen:
+< Is Johan vrouwelijk of mannelijk?
 < Is Johan een meisje, een vrouw, een jongen of een man?
 < Is Johan een zoon of een dochter?
 < 
 * 
 * Mijn conclusies:
 < Anna is een vrouw.
+< Anna is geen vader.
+< Anna is geen jongen.
+< Anna is niet mannelijk.
+< Anna is geen man.
 < Anna is vrouwelijk.
+< Anna is geen zoon.
 < Paul heeft een moeder, genaamd Anna.
 * 
 * Mijn veronderstellingen:
+< Anna is waarschijnlijk geen meisje.
 < Anna is waarschijnlijk een persoon.
-< Anna is waarschijnlijk geen man.
-< Anna heeft waarschijnlijk een kind, genaamd Paul.
+< Anna heeft mogelijk een kind, genaamd Paul.
 < Anna is waarschijnlijk een ouder van Paul.
 < Anna is waarschijnlijk deel van een gezin.
-< Anna is waarschijnlijk geen vader.
-< Paul is waarschijnlijk een kind van Anna.
-< Paul is waarschijnlijk deel van een gezin.
-< Paul is mogelijk een persoon.
+< Paul is mogelijk een kind van Anna.
+< Paul is mogelijk deel van een gezin.
+< Paul is misschien een persoon.
 < Paul heeft waarschijnlijk een ouder, genaamd Anna.
 * 
 * Mijn vragen:
 < Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
+< Is Paul vrouwelijk of mannelijk?
 < 
 * Dat weet ik.
 * 
 * 
 * Mijn conclusies:
 < Sjors was een man.
+< Sjors was geen moeder.
+< Sjors was geen meisje.
+< Sjors was niet vrouwelijk.
+< Sjors was geen vrouw.
 < Sjors was mannelijk.
+< Sjors was geen dochter.
 < André heeft geen vader meer.
 < André had een vader, genaamd Sjors.
 * 
 * Mijn veronderstellingen:
-< Sjors heeft waarschijnlijk een kind, genaamd André.
+< Sjors heeft mogelijk een kind, genaamd André.
+< Sjors was waarschijnlijk geen jongen.
 < Sjors was waarschijnlijk een persoon.
-< Sjors was waarschijnlijk geen vrouw.
 < Sjors was waarschijnlijk een ouder van André.
 < Sjors was waarschijnlijk deel van een gezin.
-< Sjors was waarschijnlijk geen moeder.
-< André is waarschijnlijk een kind van Sjors.
-< André is waarschijnlijk deel van een gezin.
-< André is mogelijk een persoon.
+< André is mogelijk een kind van Sjors.
+< André is mogelijk deel van een gezin.
+< André is misschien een persoon.
 < André had waarschijnlijk een ouder, genaamd Sjors.
 * 
 * Mijn vragen:
 < Is André een meisje, een vrouw, een jongen of een man?
 < Is André een zoon of een dochter?
+< Is André vrouwelijk of mannelijk?
 < 
 * Dat weet ik.
 * 

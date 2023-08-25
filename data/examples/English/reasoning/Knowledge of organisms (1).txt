@@ -53,3 +53,4 @@ John is a human-being.
 #Dev#Display the justification report about mammals.
 #Dev#Display the justification report about crocodiles.
 #Dev#Display the justification report about John.
+# To continue, click button «Clear your mind.» or «Restart.».

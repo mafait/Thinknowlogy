@@ -1,1 +1,5 @@
-﻿
+﻿* 
+* My assumptions:
+< A vertebrate is probably not an invertebrate.
+< An invertebrate is probably not a vertebrate.
+< 

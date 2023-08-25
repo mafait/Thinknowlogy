@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the grammar for the Chinese language
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 #----------- Word definitions -----------
@@ -45,20 +45,20 @@
 @6		:603	$adjective										完成了
 @6		:604	$adjective										空的
 @6		:605	$adjective										独家
-@6		:606	$adjective										女孩的名字
+@6		:606	$adjective										女性化
 @6		:607	$adjective										倒
-@6		:608	$adjective										男孩的名字
-@6		:609	$adjective_comparison							大
-@6		:610	$adjective_comparison							早
-#@6		:611	$adjective_comparison							等
-@6		:612	$adjective_comparison							高
+@6		:608	$adjective										男性化
+@6		:609	$adjective_comparison							较大
+@6		:610	$adjective_comparison							较早
+#@6		:611	$adjective_comparison							较等
+@6		:612	$adjective_comparison							较高
 #@6		:613	$adjective_comparison
-@6		:614	$adjective_comparison							晚
-@6		:615	$adjective_comparison							少
-#@6		:616	$adjective_comparison							低
+@6		:614	$adjective_comparison							较晚
+@6		:615	$adjective_comparison							较少
+#@6		:616	$adjective_comparison							较低
 #@6		:617	$adjective_comparison
-@6		:618	$adjective_comparison							样
-@6		:619	$adjective_comparison							小
+@6		:618	$adjective_comparison							较样
+@6		:619	$adjective_comparison							较小
 @6		:620	$adjective_Called								叫
 #@6		:621	$adjective_Called
 #@6		:622	$adjective_Called
@@ -78,6 +78,8 @@
 #@6		:636	$adjective_Previous
 @6		:637	$adjective_Specific								具体
 @6		:638	$adjective										平局的
+@6		:639	$adjective										高
+@6		:640	$adjective										低
 
 
 #--- Adverbs ---
@@ -506,10 +508,10 @@
 #-----------
 
 # Condition examples:
-# - (如果) 该年龄是少于13 (那么)
-# - (如果) 该时间是早于"12:00" (那么)
+# - (如果) 该年龄是较少于13 (那么)
+# - (如果) 该时间是较早于"12:00" (那么)
 # - (如果) 该起始杆的数字是奇数 (那么)
-# - (如果) 该起始杆的头是小于该交换杆的头 (那么)
+# - (如果) 该起始杆的头是较小于该交换杆的头 (那么)
 		$condition_specification														generalization_singular_verb_comparison { relation_numeral | execution_text }
 		$condition_specification														{ preposition | preposition_Of } relation_singular_noun { generalization_singular_verb_Odd_or_Even | generalization_singular_verb_comparison text }
 :5000	$condition_generalization_specification											singular_condition_noun_specification condition_specification
@@ -588,11 +590,3 @@
 :4010	$statement_sentence																[ answer_Yes_or_No symbol_comma ] statement [ more_statements ] [ statement_sentence_ending ]
 
 :4000	$sentence																		{ statement_sentence | selection_sentence }
-
-
-#----------- Assignments and specifications -----------
-
-每个解决方案的方法都可以成为倒。
-每个解决方案的方法都可以成为忙或完成了。
-
-每个解决方案战略是防御性或独家。

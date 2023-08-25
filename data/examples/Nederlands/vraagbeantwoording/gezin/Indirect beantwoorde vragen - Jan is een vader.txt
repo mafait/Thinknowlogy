@@ -1,0 +1,6 @@
+﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
+Jan is een ouder van Paul, Johan en Laura.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is een vader.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

@@ -24,10 +24,10 @@ Mostrar " Mostrar los derechos de autor.".
 Mostrar " Mostrar la licencia-GPLv2.".
 Mostrar " Mostrar la garantía.".
 Mostrar "------------------------------------------------------------------------------".
-#C++#Mostrar " Archivos de ejemplo: * carpeta: Thinknowlogy2018r4/data/examples/Español/".
+#C++#Mostrar " Archivos de ejemplo: * carpeta: Thinknowlogy2023/data/examples/Español/".
 #Java#Mostrar " Archivos de ejemplo: * Utilice botón <más ejemplos>".
-#Java#Mostrar "	    o ver carpeta: Thinknowlogy2018r4/data/examples/Español/".
-Mostrar " Fundamental:	          * carpeta: Thinknowlogy2018r4/documents/".
-Mostrar " Proyecto:	          * carpeta: Thinknowlogy2018r4/documents/design/".
-Mostrar " Imágenes:	          * carpeta: Thinknowlogy2018r4/screenshots/Español/".
+#Java#Mostrar "	    o ver carpeta: Thinknowlogy2023/data/examples/Español/".
+Mostrar " Fundamental:	          * carpeta: Thinknowlogy2023/documents/".
+Mostrar " Proyecto:	          * carpeta: Thinknowlogy2023/documents/design/".
+Mostrar " Imágenes:	          * carpeta: Thinknowlogy2023/screenshots/Español/".
 Mostrar "------------------------------------------------------------------------------".

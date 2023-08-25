@@ -3,6 +3,11 @@
 < Ieder gezin heeft ouders en kinderen.
 < 
 * 
+* Mijn veronderstellingen:
+< Een man is waarschijnlijk geen vrouw.
+< Een vrouw is waarschijnlijk geen man.
+< 
+* 
 * Mijn vragen:
 < Is Anna een man of een vrouw?
 < 

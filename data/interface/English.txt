@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the English language
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 # Java console (upper menu)
@@ -110,13 +110,18 @@
 #Java#:452		"Display the justification report about children."
 #Java#:453		"Display the justification report about fathers."
 #Java#:454		"Display the justification report about mothers."
-#Java#:455		"Display the justification report about sons."
-#Java#:456		"Display the justification report about daughters."
-#Java#:457		"Display the justification report about John."
-#Java#:458		"Display the justification report about Anna."
-#Java#:459		"Display the justification report about Paul."
-#Java#:460		"Display the justification report about Joe."
-#Java#:461		"Display the justification report about Laura."
+#Java#:455		"Display the justification report about men."
+#Java#:456		"Display the justification report about women."
+#Java#:457		"Display the justification report about sons."
+#Java#:458		"Display the justification report about daughters."
+#Java#:459		"Display the justification report about boys."
+#Java#:460		"Display the justification report about girls."
+#Java#:461		"Display the justification report about persons."
+#Java#:462		"Display the justification report about John."
+#Java#:463		"Display the justification report about Anna."
+#Java#:464		"Display the justification report about Paul."
+#Java#:465		"Display the justification report about Joe."
+#Java#:466		"Display the justification report about Laura."
 
 # Java console (reasoning/family question submenu)
 #Java#:470		"Is John a father?"
@@ -136,13 +141,18 @@
 #Java#:482		"Display information about children."
 #Java#:483		"Display information about fathers."
 #Java#:484		"Display information about mothers."
-#Java#:485		"Display information about sons."
-#Java#:486		"Display information about daughters."
-#Java#:487		"Display information about John."
-#Java#:488		"Display information about Anna."
-#Java#:489		"Display information about Paul."
-#Java#:490		"Display information about Joe."
-#Java#:491		"Display information about Laura."
+#Java#:485		"Display information about men."
+#Java#:486		"Display information about women."
+#Java#:487		"Display information about sons."
+#Java#:488		"Display information about daughters."
+#Java#:489		"Display information about boys."
+#Java#:490		"Display information about girls."
+#Java#:491		"Display information about persons."
+#Java#:492		"Display information about John."
+#Java#:493		"Display information about Anna."
+#Java#:494		"Display information about Paul."
+#Java#:495		"Display information about Joe."
+#Java#:496		"Display information about Laura."
 
 # Java console (font size submenu)
 #Java#:500		"<decrease font size>"
@@ -159,7 +169,7 @@
 #Java#:517		"Display the warranty."
 
 # Console (common)
-#C++#:1000		"Enter a sentence conform the implemented grammar:"
+#C++#:1000		"Enter a sentence that complies with the implemented grammar rules:"
 #Java#:1000		"Allow me to guide you by menu buttons, and by buttons with a predefined sentence."
 #Java#:1001		"And you're invited to enter a sentence conform the implemented grammar rules."
 #Java#:1002		"Waiting for input"
@@ -224,26 +234,25 @@
 :1312			"\nMy information:"
 :1313			"\nMy conclusions:"
 :1314			"\nMy assumptions:"
-:1315			"\nMy assumptions that are adjusted:"
-:1316			"\nMy assumptions that are concluded:"
-:1317			"\nMy conclusions that are updated:"
-#:1318			"\nMy conclusions that are not hidden anymore:"
-#:1319			"\nMy assumptions that are not hidden anymore:"
-:1320			"\nMy questions:"
-:1321			"\nMy adjusted questions:"
-:1322			"\nMy answer:"
-:1323			"\nI only know:"
-:1324			"\nSpecifications:"
-:1325			"\nRelated information:"
-:1326			"\nRelated questions:"
+:1315			"\nMy assumptions that have been adjusted:"
+:1316			"\nMy assumptions that have been concluded:"
+#:1317			"\nMy conclusions that are not hidden anymore:"
+#:1318			"\nMy assumptions that are not hidden anymore:"
+:1319			"\nMy questions:"
+:1320			"\nMy questions that have been adjusted:"
+:1321			"\nMy answer:"
+:1322			"\nI only know:"
+:1323			"\nSpecifications:"
+:1324			"\nRelated information:"
+:1325			"\nRelated questions:"
 
 # Listing (old information)
 :1330			"\nYou have confirmed the specification - but none of its relations - of my earlier assumptions:"
 :1331			"\nYou have confirmed the specification - but none of its relations - of my earlier conclusions:"
 :1332			"\nYou have confirmed the specification and at least one relation of my earlier assumptions:"
 :1333			"\nYou have confirmed the specification and at least one relation of my earlier conclusions:"
-:1334			"\nMy assumptions that are confirmed:"
-:1335			"\nMy conclusions that are confirmed:"
+:1334			"\nMy assumptions that have been confirmed:"
+:1335			"\nMy conclusions that have been confirmed:"
 :1336			"\nMy earlier assumptions that have relation words now:"
 :1337			"\nMy earlier conclusions that have relation words now:"
 :1338			"\nYour information is more specific than my earlier assumption:"
@@ -251,10 +260,10 @@
 :1340			"\nYour question is more specific than my earlier question:"
 :1341			"\nThis information is more specific than your earlier information:"
 :1342			"\nThis question is more specific than your earlier question:"
-:1343			"\nYour questions that are answered:"
-:1344			"\nMy questions that are answered:"
-:1345			"\nMy earlier assumptions that are corrected by knowledge:"
-:1346			"\nMy earlier assumptions that are corrected by an opposite suggestive question:"
+:1343			"\nYour questions that have been answered:"
+:1344			"\nMy questions that have been answered:"
+:1345			"\nMy earlier assumptions that have been corrected by knowledge:"
+:1346			"\nMy earlier assumptions that have been corrected by an opposite suggestive question:"
 
 # Listing (justification report)
 :1350			" Because:"

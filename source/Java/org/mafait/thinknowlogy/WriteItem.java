@@ -1,11 +1,11 @@
 ﻿/*	Class:			WriteItem
  *	Parent class:	Item
- *	Purpose:		To temporarily store info about a word
+ *	Purpose:		Temporarily storing info about a word
  *					during the process of writing a sentence
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -61,6 +61,7 @@ class WriteItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( startOfChoiceOrOptionGrammarItem_ == null ? false :
@@ -68,6 +69,7 @@ class WriteItem extends Item
 				( queryItemNr == Constants.NO_ITEM_NR ? true : startOfChoiceOrOptionGrammarItem_.itemNr() == queryItemNr ) );
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
@@ -107,7 +109,7 @@ class WriteItem extends Item
 		{
 		return (WriteItem)nextItem;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"Those who are wise will take all this to heart;

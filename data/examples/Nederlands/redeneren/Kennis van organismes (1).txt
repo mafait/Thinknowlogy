@@ -52,3 +52,4 @@ Jan is een mens.
 #Dev#Toon de verantwoordingsrapportage over zogenden.
 #Dev#Toon de verantwoordingsrapportage over krokodillen.
 #Dev#Toon de verantwoordingsrapportage over Jan.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

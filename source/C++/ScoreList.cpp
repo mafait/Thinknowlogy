@@ -1,10 +1,10 @@
 ﻿/*	Class:			ScoreList
  *	Parent class:	List
- *	Purpose:		To temporarily store score items
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Temporarily storing score items
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -125,15 +125,15 @@ class ScoreList : private List
 		bool isEqualBlockingScore = ( oldBlockingScore == bestOldBlockingScore &&
 										newBlockingScore == bestNewBlockingScore );
 
-		double satisfiedScore = (double)oldSatisfiedScore + (double)newSatisfiedScore;
-		double dissatisfiedScore = (double)oldDissatisfiedScore + (double)newDissatisfiedScore;
-		double notBlockingScore = (double)oldNotBlockingScore + (double)newNotBlockingScore;
-		double blockingScore = (double)oldBlockingScore + (double)newBlockingScore;
+		double satisfiedScore = ( (double)oldSatisfiedScore + (double)newSatisfiedScore );
+		double dissatisfiedScore = ( (double)oldDissatisfiedScore + (double)newDissatisfiedScore );
+		double notBlockingScore = ( (double)oldNotBlockingScore + (double)newNotBlockingScore );
+		double blockingScore = ( (double)oldBlockingScore + (double)newBlockingScore );
 
-		double bestSatisfiedScore = (double)bestOldSatisfiedScore + (double)bestNewSatisfiedScore;
-		double bestDissatisfiedScore = (double)bestOldDissatisfiedScore + (double)bestNewDissatisfiedScore;
-		double bestNotBlockingScore = (double)bestOldNotBlockingScore + (double)bestNewNotBlockingScore;
-		double bestBlockingScore = (double)bestOldBlockingScore + (double)bestNewBlockingScore;
+		double bestSatisfiedScore = ( (double)bestOldSatisfiedScore + (double)bestNewSatisfiedScore );
+		double bestDissatisfiedScore = ( (double)bestOldDissatisfiedScore + (double)bestNewDissatisfiedScore );
+		double bestNotBlockingScore = ( (double)bestOldNotBlockingScore + (double)bestNewNotBlockingScore );
+		double bestBlockingScore = ( (double)bestOldBlockingScore + (double)bestNewBlockingScore );
 
 		bool isHigherSatisfiedScore = ( satisfiedScore > bestSatisfiedScore );
 		bool isSuperiorSatisfiedScore = ( isHigherSatisfiedScore &&
@@ -152,24 +152,30 @@ class ScoreList : private List
 
 		// Has better score
 		if( ( solveStrategyParameter == NO_SOLVE_STRATEGY_PARAMETER &&
+
 		( isHigherSatisfiedScore ||
+
 		( isEqualSatisfiedScore &&
 		isLowerDissatisfiedScore ) ) ) ||
 
 		( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_DEFENSIVE &&
 			( isLowerDissatisfiedScore ||
+
 			( isEqualDissatisfiedScore &&
 			isHigherSatisfiedScore ) ) ) ||
 
 		( solveStrategyParameter == WORD_PARAMETER_ADJECTIVE_EXCLUSIVE &&
 			// Has no dissatisfied score and superior satisfied score
 			( ( isSuperiorSatisfiedScore &&
+
 			( isCummulative ||
 			dissatisfiedScore == NO_SCORE ) ) ||
 
 			// Has no old satisfied score and has new satisfied score and higher dissatisfied score
 			( isHigherDissatisfiedScore &&
+
 			( isCummulative ||
+
 			( oldSatisfiedScore == NO_SCORE &&
 			newSatisfiedScore > NO_SCORE ) ) ) ) ) ||
 
@@ -179,6 +185,7 @@ class ScoreList : private List
 
 		// Get lowest blocking score, else if equal blocking score, Get lowest not blocking score
 		( isLowerBlockingScore ||
+
 		( isEqualBlockingScore &&
 		isLowerNotBlockingScore ) ) ) )
 			boolResult.booleanValue = true;

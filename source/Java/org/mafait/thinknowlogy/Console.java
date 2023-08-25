@@ -1,9 +1,9 @@
 /*	Class:		Console
  *	Purpose:	To create the GUI and to process the events
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -33,7 +33,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 
-import javax.swing.border.Border;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -46,6 +45,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.Border;
 import javax.swing.text.Document;
 
 class Console extends JPanel implements ActionListener, ComponentListener
@@ -60,15 +60,16 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static boolean hasSelectedReasoningScientificChallenge_;
 	private static boolean hasSelectedReasoningFamilyDefinition_;
 
+	private static boolean isConsoleReady_ = false;
 	private static boolean isStopResizing_;
 	private static boolean isSubMenuChanged_;
-	private static boolean isSystemStartingUp_ = true;
 	private static boolean isTesting_;
 	private static boolean isTestingCanceled_;
 
 	private static short currentFontSize_;
 	private static short currentSubMenu_;
 	private static short nSubMenuButtons_;
+	private static short sleepTime_ = Constants.CONSOLE_SLEEP_TIME_RESIZE_FRAME_DURING_STARTUP;
 
 	private static int buttonPaneAdjustment_ = Constants.CONSOLE_BUTTON_PANE_ADJUSTMENT;
 	private static int currentFrameHeight_;
@@ -190,7 +191,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				if( currentLanguageWordItem_ != null )
 					{
 					interfaceString = currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_FONT_SIZE_DECREASE );
-	
+
 					if( interfaceString != null &&
 					interfaceString.equals( fontString ) )
 						{
@@ -200,7 +201,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 					else
 						{
 						interfaceString = currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_FONT_SIZE_INCREASE );
-						
+
 						if( interfaceString != null &&
 						interfaceString.equals( fontString ) )
 							{
@@ -260,7 +261,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		mainMenuReasoningSubMenuButton_.setEnabled( isEnablingNormalButtons );
 		setButtonText( isInvisible, Constants.INTERFACE_CONSOLE_MAIN_MENU_REASONING_SUBMENU, mainMenuReasoningSubMenuButton_ );
-		
+
 		mainMenuHelpButton_.setEnabled( isEnablingNormalButtons );
 
 		if( currentSubMenu_ == Constants.CONSOLE_SUBMENU_PROGRAMMING ||
@@ -360,14 +361,15 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		int buttonPaneSize = ( mainMenuPanel_.getHeight() + subMenuPanel_.getHeight() + inputPanel_.getHeight() + buttonPaneAdjustment_ );
 		int currentOutputPaneSize = ( currentFrameHeight_ - buttonPaneSize );
 		int halfFrameHeight = ( currentFrameHeight_ / 2 );
-		// The output pane size must be at least half the frame size 
-		int preferredOutputScrollPaneSize = ( currentOutputPaneSize < halfFrameHeight ? halfFrameHeight : currentOutputPaneSize );
-		
+		// The output pane size must be at least half the frame size
+		int preferredOutputScrollPaneSize = ( currentOutputPaneSize < halfFrameHeight ? halfFrameHeight :
+																						currentOutputPaneSize );
+
 		if( !isStopResizing_ &&
 		nSubMenuButtons_ > 0 &&
 		nSubMenuButtons_ < Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS &&
 		subMenuButtonArray_[nSubMenuButtons_].isVisible() )
-			// Increasing the number of visible sub-menu buttons of the pane  
+			// Increasing the number of visible sub-menu buttons of the pane
 			nSubMenuButtons_++;
 
 		if( preferredOutputScrollPaneSize == previousPreferredOutputScrollPaneSize_ )
@@ -376,23 +378,29 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			outputScrollPane_.getHeight() < buttonPaneSize )
 				{
 				isStopResizing_ = true;
-				// Decrease the number of visible sub-menu buttons of the pane  
+				// Decrease the number of visible sub-menu buttons of the pane
 				nSubMenuButtons_--;
 				}
 
-			if( isSystemStartingUp_ )
+			if( !isConsoleReady_ )
 				{
 				if( upperMenuPanel_.getHeight() > Constants.CONSOLE_BUTTON_PANEL_HEIGHT )
 					buttonPaneAdjustment_--;
 				else
-					isSystemStartingUp_ = false;
+					{
+					isConsoleReady_ = true;
+					sleepTime_ = Constants.CONSOLE_SLEEP_TIME_RESIZE_FRAME_AFTER_STARTUP;
+
+					// Enable menus again
+					enableMenus( true, true, false );
+					}
 				}
 			}
 		else
 			{
 			if( preferredOutputScrollPaneSize < previousPreferredOutputScrollPaneSize_ )
 				{
-				if( isSystemStartingUp_ )
+				if( !isConsoleReady_ )
 					buttonPaneAdjustment_++;
 
 				goToEndOfOutputDocument( true );
@@ -439,7 +447,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		GlobalVariables.currentLanguageWordItem != currentLanguageWordItem_ )
 			{
 			currentLanguageWordItem_ = GlobalVariables.currentLanguageWordItem;
-			
+
 			// Upper panel buttons
 			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_CLEAR_YOUR_MIND, upperMenuClearYourMindButton_ );
 			setButtonText( true, Constants.INTERFACE_CONSOLE_UPPER_MENU_RESTART, upperMenuRestartButton_ );
@@ -571,18 +579,23 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				break;
 
 			case Constants.CONSOLE_SUBMENU_REASONING_FAMILY_JUSTIFICATION_REPORT:
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_FAMILY );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_PARENT );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_CHILD );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_FATHER );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_MOTHER );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_SON );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_DAUGHTER );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_JOHN );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_ANN );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_PAUL );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_JOE );
-				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_LAURA );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_FAMILY );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_PARENTS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_CHILDREN );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_FATHERS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_MOTHERS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_SONS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_DAUGHTERS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_MEN );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_WOMEN );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_BOYS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_GIRLS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_PERSONS );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_JOHN );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_ANN );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_PAUL );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_JOE );
+				addSubMenuButton( Constants.INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_LAURA );
 				break;
 
 			case Constants.CONSOLE_SUBMENU_REASONING_FAMILY_QUESTIONS:
@@ -629,14 +642,14 @@ class Console extends JPanel implements ActionListener, ComponentListener
 								endPosition = grammarLanguageStringBufferLength;
 							else
 								endPosition += startPosition;
-	
+
 							if( ( languageString = GlobalVariables.interfaceLanguageStringBuffer.substring( startPosition, endPosition ) ) != null )
 								{
 								// Disable current language
 								subMenuButtonArray_[nSubMenuButtons_].setEnabled( !languageString.equals( currentLanguageString ) );
 								subMenuButtonArray_[nSubMenuButtons_++].setText( Constants.CHANGE_LANGUAGE_STRING + languageString );
 								}
-	
+
 							// Prepare start position for next word
 							startPosition = endPosition + Constants.QUERY_SEPARATOR_SPACE_STRING.length();
 							}
@@ -683,7 +696,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		boolean hasNoSubMenuButtons;
 
 		// Reset font after Connect-Four, which forced mono-spaced font
-		if( currentSubMenu_ == Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 ) 
+		if( currentSubMenu_ == Constants.CONSOLE_SUBMENU_PROGRAMMING_CONNECT4 )
 			outputArea_.setFont( new Font( currentFontString_, Font.PLAIN, currentFontSize_ ) );
 
 		if( !isClearYourMind )
@@ -710,7 +723,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 											adminItem_.isDeveloperTheCurrentUser() );
 		boolean isExpertTheCurrentUser = ( adminItem_ != null &&
 											adminItem_.isExpertTheCurrentUser() );
-
+//Rel
 		upperMenuClearYourMindButton_.setVisible( isVisible );
 		upperMenuRestartButton_.setVisible( isVisible );
 		upperMenuUndoButton_.setVisible( isVisible );
@@ -770,7 +783,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				resizeFrame();
 
 			try {
-				Thread.sleep( Constants.CONSOLE_SLEEP_TIME );
+				Thread.sleep( sleepTime_ );
 				}
 			catch( InterruptedException exception )
 				{
@@ -949,13 +962,13 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		if( errorStringBuffer_ == null )
 			errorStringBuffer_ = new StringBuffer( newErrorString );
 		else
-			errorStringBuffer_.append( newErrorString ); 
+			errorStringBuffer_.append( newErrorString );
 		}
 
 	protected static void addError( String newHeaderString, String newErrorString )
 		{
 		errorHeaderString_ = newHeaderString;
-		addError( newErrorString ); 
+		addError( newErrorString );
 		}
 
 	protected static void clearProgress()
@@ -973,7 +986,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			errorTextArea.setEditable( false );
 			JScrollPane errorScrollPane = new JScrollPane( errorTextArea );
 			errorScrollPane.setPreferredSize( new Dimension( Constants.CONSOLE_ERROR_PANE_WIDTH, Constants.CONSOLE_ERROR_PANE_HEIGHT ) );
-			JOptionPane.showMessageDialog( null, errorScrollPane, ( errorHeaderString_ == null ? Constants.INPUT_OUTPUT_ERROR_INTERNAL_TITLE_STRING : Constants.INPUT_OUTPUT_ERROR_INTERNAL_TITLE_STRING + errorHeaderString_ ), JOptionPane.ERROR_MESSAGE );			
+			JOptionPane.showMessageDialog( null, errorScrollPane, ( errorHeaderString_ == null ? Constants.INPUT_OUTPUT_ERROR_INTERNAL_TITLE_STRING : Constants.INPUT_OUTPUT_ERROR_INTERNAL_TITLE_STRING + errorHeaderString_ ), JOptionPane.ERROR_MESSAGE );
 			errorHeaderString_ = null;
 			errorStringBuffer_ = null;
 			}
@@ -1101,7 +1114,8 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	protected static String readLine( boolean isClearInputField, boolean isQuestion )
 		{
-		boolean isSystemStartingUp = ( adminItem_ == null );
+		boolean isSystemStartingUp = ( !isConsoleReady_ ||
+										adminItem_ == null );
 
 		isTesting_ = false;
 		isTestingCanceled_ = false;
@@ -1140,6 +1154,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 	// Public methods
 
+	@Override
 	public void actionPerformed( ActionEvent actionEvent )
 		{
 		File currentDirectory;
@@ -1216,11 +1231,11 @@ class Console extends JPanel implements ActionListener, ComponentListener
 													( currentDirectoryString = currentDirectory.toString() ) != null &&
 													( currentLanguageString = currentLanguageWordItem_.anyWordTypeString() ) != null &&
 													// No file selected yet with current language
-													currentDirectoryString.indexOf( currentLanguageString ) < 0 ) 
+													currentDirectoryString.indexOf( currentLanguageString ) < 0 )
 														// Select current language in file chooser
 														fileChooser_ = new JFileChooser( GlobalVariables.currentPathStringBuffer + Constants.FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING + currentLanguageString );
-													} 
-		
+													}
+
 												if( fileChooser_.showOpenDialog( this ) == JFileChooser.APPROVE_OPTION )
 													{
 													if( ( selectedFile = fileChooser_.getSelectedFile() ) != null &&
@@ -1372,7 +1387,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 								{
 								if( actionSource != inputField_ )
 									inputField_.setText( inputString_ );
-	
+
 								if( actionSource != upperMenuRestartButton_ )
 									writeText( inputString_ + Constants.NEW_LINE_STRING );
 								}
@@ -1398,16 +1413,19 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			}
 		}
 
+	@Override
 	public void componentHidden( ComponentEvent componentEvent )
 		{
 		/* This method needs to exist for ComponentListener */
 		}
 
+	@Override
 	public void componentMoved( ComponentEvent componentEvent )
 		{
 		/* This method needs to exist for ComponentListener */
 		}
 
+	@Override
 	public void componentResized( ComponentEvent componentEvent )
 		{
 		int newHeight;
@@ -1431,11 +1449,12 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			}
 		}
 
+	@Override
 	public void componentShown( ComponentEvent componentEvent )
 		{
 		/* This method needs to exist for ComponentListener */
 		}
-	};
+	}
 
 /*************************************************************************
  *	"I will love the Lord because he hears my voice

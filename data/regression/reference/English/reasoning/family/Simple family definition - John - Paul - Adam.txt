@@ -13,7 +13,7 @@
 < Paul is probably part of a family.
 < 
 * 
-* My assumptions that are concluded:
+* My assumptions that have been concluded:
 < Paul is part of a family.
 * 
 * My conclusions:
@@ -25,9 +25,10 @@
 < Adam is probably part of a family.
 < 
 * 
-* My assumptions that are confirmed:
+* My assumptions that have been confirmed:
 < Adam is probably a child of Paul.
 * 
-* My assumptions that are concluded:
+* My assumptions that have been concluded:
+< Paul has a child, called Adam.
 < Adam is part of a family.
 < 

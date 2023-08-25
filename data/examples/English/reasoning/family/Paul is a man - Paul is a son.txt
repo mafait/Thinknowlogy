@@ -1,0 +1,5 @@
+﻿Read the file "English/reasoning/family/family definition".
+Paul is a man.
+Paul is a son.
+#Dev#Display the justification report about Paul.
+# To continue, click button «Clear your mind.» or «Restart.».

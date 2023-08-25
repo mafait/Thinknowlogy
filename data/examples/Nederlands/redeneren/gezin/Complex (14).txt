@@ -13,5 +13,7 @@ Laura is een kind van Jan en Anna.
 #Dev#Toon de verantwoordingsrapportage over Laura.
 Johan is een jongen.
 Johan is een zoon van Jan en Anna.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 #Dev#Toon de verantwoordingsrapportage over Johan.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

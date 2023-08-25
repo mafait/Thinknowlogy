@@ -1,0 +1,192 @@
+﻿* 
+* My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
+< 
+* 
+* My conclusions:
+< Every man is not feminine.
+< 
+* 
+* My assumptions that have been concluded:
+< Every woman is not a man.
+< Every man is not a woman.
+* 
+* My conclusions:
+< Every woman is not masculine.
+< Every person is feminine or masculine.
+* 
+* My assumptions:
+< A woman is probably a person.
+< A man is probably a person.
+< 
+* 
+* My assumptions:
+< A father is probably not a mother.
+< A mother is probably not a father.
+< 
+* 
+* My conclusions:
+< Every mother is feminine.
+< Every mother is not masculine.
+< Every mother is not a man.
+< Every man is not a mother.
+* 
+* My assumptions:
+< A mother is probably a person.
+< A mother is probably a parent.
+< A parent is probably a person.
+< 
+* 
+* My assumptions that have been concluded:
+< Every father is not a mother.
+< Every mother is not a father.
+* 
+* My conclusions:
+< Every father is masculine.
+< Every father is not feminine.
+< Every father is not a woman.
+< Every woman is not a father.
+< Every parent is a man or a woman.
+< Every parent is masculine or feminine.
+* 
+* My assumptions:
+< A father is probably a person.
+< A father is probably a parent.
+< 
+* 
+* My conclusions:
+< Every person is feminine or masculine. Because:
+<	- Every person is a man or a woman.
+<	- Every man is masculine.
+<	- Every woman is feminine.
+< 
+* 
+* My conclusions:
+< Every man is not a mother. Because:
+<	- Every mother is feminine.
+<	- Every man is masculine.
+< Every man is not feminine. Because:
+<	- Every man is masculine.
+< Every man is not a woman. Because:
+<	- Every man is masculine.
+<	- Every woman is not masculine.
+* 	and:
+<	- Every woman is feminine.
+<	- Every man is not feminine.
+* 
+* My assumptions:
+< A man is probably a person. Because:
+<	- Every person is feminine or masculine.
+<	- Every man is masculine.
+< 
+* 
+* My conclusions:
+< Every woman is not a father. Because:
+<	- Every father is masculine.
+<	- Every woman is feminine.
+< Every woman is not masculine. Because:
+<	- Every woman is feminine.
+< Every woman is not a man. Because:
+<	- Every man is masculine.
+<	- Every woman is not masculine.
+* 	and:
+<	- Every woman is feminine.
+<	- Every man is not feminine.
+* 
+* My assumptions:
+< A woman is probably a person. Because:
+<	- Every person is feminine or masculine.
+<	- Every woman is feminine.
+< 
+* 
+* My conclusions:
+< Every parent is a man or a woman. Because:
+<	- Every parent is a father or a mother.
+<	- Every mother is a woman.
+<	- Every father is a man.
+< Every parent is masculine or feminine. Because:
+<	- Every parent is a man or a woman.
+<	- Every woman is feminine.
+<	- Every man is masculine.
+* 	and:
+<	- Every parent is a father or a mother.
+<	- Every mother is feminine.
+<	- Every father is masculine.
+* 
+* My assumptions:
+< A parent is probably a person. Because:
+<	- Every parent is a father or a mother.
+<	- A father is probably a person.
+<	- A mother is probably a person.
+< 
+* 
+* My conclusions:
+< Every father is masculine. Because:
+<	- Every father is a man.
+<	- Every man is masculine.
+< Every father is not a mother. Because:
+<	- Every father is masculine.
+<	- Every mother is not masculine.
+* 	and:
+<	- Every father is a man.
+<	- Every man is not a mother.
+< Every father is not feminine. Because:
+<	- Every father is a man.
+<	- Every man is not feminine.
+< Every father is not a woman. Because:
+<	- Every father is a man.
+<	- Every man is not a woman.
+* 	and:
+<	- Every father is masculine.
+<	- Every woman is not masculine.
+* 
+* My assumptions:
+< A father is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- Every father is a man.
+* 	and:
+<	- Every father is a man.
+<	- A man is probably a person.
+< A father is probably a parent. Because:
+<	- Every parent is a man or a woman.
+<	- Every father is a man.
+* 	and:
+<	- Every parent is masculine or feminine.
+<	- Every father is masculine.
+< 
+* 
+* My conclusions:
+< Every mother is not a father. Because:
+<	- Every mother is feminine.
+<	- Every father is not feminine.
+* 	and:
+<	- Every mother is a woman.
+<	- Every woman is not a father.
+< Every mother is feminine. Because:
+<	- Every mother is a woman.
+<	- Every woman is feminine.
+< Every mother is not masculine. Because:
+<	- Every mother is a woman.
+<	- Every woman is not masculine.
+< Every mother is not a man. Because:
+<	- Every mother is a woman.
+<	- Every woman is not a man.
+* 	and:
+<	- Every mother is feminine.
+<	- Every man is not feminine.
+* 
+* My assumptions:
+< A mother is probably a person. Because:
+<	- Every person is a man or a woman.
+<	- Every mother is a woman.
+* 	and:
+<	- Every mother is a woman.
+<	- A woman is probably a person.
+< A mother is probably a parent. Because:
+<	- Every parent is a man or a woman.
+<	- Every mother is a woman.
+* 	and:
+<	- Every parent is masculine or feminine.
+<	- Every mother is feminine.
+< 

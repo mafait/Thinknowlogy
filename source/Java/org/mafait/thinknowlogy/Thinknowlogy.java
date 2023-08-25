@@ -1,9 +1,9 @@
 /*	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ package org.mafait.thinknowlogy;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 
 class Thinknowlogy
@@ -33,7 +34,7 @@ class Thinknowlogy
 
 	private static int titleBarHeight_ = 0;
 	private static int windowBottomHeight_ = 0;
-	
+
 
 	// Private static methods
 
@@ -67,7 +68,7 @@ class Thinknowlogy
 
 		// Create and set up the window.
 		JFrame frame = new JFrame( Constants.PRODUCT_NAME + Constants.SPACE_STRING + Constants.VERSION_NAME );
-		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+//		frame.setDefaultCloseOperation( JFrame.Constants.EXIT_ON_CLOSE );
 
 		// Set the initial position of the frame on the screen
 		frame.setBounds( ( ( screenSize.width - frameSize.width ) / 2 ),
@@ -108,6 +109,9 @@ class Thinknowlogy
 			while( result == Constants.RESULT_OK &&
 			!hasRequestedRestart );
 
+			// Garbage collector
+			System.gc();
+
 			if( result == Constants.RESULT_OK )
 				startupLanguageNameString = new String( adminItem.currentLanguageNameString() );
 			}
@@ -130,7 +134,7 @@ class Thinknowlogy
 		createAndShowGUI();
 		runAdmin();
 		}
-	};
+	}
 
 /*************************************************************************
  *	"Because the Sovereign Lord helps me,

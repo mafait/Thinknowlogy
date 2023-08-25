@@ -1,4 +1,5 @@
 ﻿Chaque parent est un père ou une mère.
 Chaque père est un homme.
+Chaque mère est une femme.
 Olivier est un père.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

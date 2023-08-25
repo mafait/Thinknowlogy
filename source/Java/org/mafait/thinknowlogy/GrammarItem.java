@@ -1,11 +1,11 @@
 ﻿/*	Class:			GrammarItem
  *	Parent class:	Item
- *	Purpose:		To store info about the grammar of a language, which
+ *	Purpose:		Storing info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -95,6 +95,7 @@ class GrammarItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		StringBuffer queryStringBuffer;
@@ -107,7 +108,7 @@ class GrammarItem extends Item
 		if( grammarString_ != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -118,6 +119,7 @@ class GrammarItem extends Item
 			}
 		}
 
+	@Override
 	protected boolean hasParameter( int queryParameter )
 		{
 		return ( grammarParameter_ == queryParameter ||
@@ -126,6 +128,7 @@ class GrammarItem extends Item
 				grammarParameter_ > Constants.NO_GRAMMAR_PARAMETER ) );
 		}
 
+	@Override
 	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( ( definitionGrammarItem == null ? false :
@@ -137,16 +140,19 @@ class GrammarItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : nextDefinitionGrammarItem.itemNr() == queryItemNr ) ) );
 		}
 
+	@Override
 	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( grammarWordTypeNr_ == queryWordTypeNr );
 		}
 
+	@Override
 	protected String itemString()
 		{
 		return grammarString_;
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
@@ -277,9 +283,7 @@ class GrammarItem extends Item
 				grammarParameter_ < Constants.GRAMMAR_STATEMENT_ASSIGNMENT ||
 				grammarParameter_ > Constants.GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ||
 
-				( isSpecificationGeneralization &&
-				grammarParameter_ == Constants.GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ||
-
+				// Generalization-specification
 				( !isSpecificationGeneralization &&
 
 				( ( !isAssignment &&
@@ -289,7 +293,11 @@ class GrammarItem extends Item
 
 				( isPossessive ||
 				isChineseCurrentLanguage ||
-				grammarParameter_ == Constants.GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ) ) ||
+				grammarParameter_ == Constants.GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ||
+
+				// Specification-generalization
+				( isSpecificationGeneralization &&
+				grammarParameter_ == Constants.GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ) ) ||
 
 				// Question
 				( isQuestion &&
@@ -298,9 +306,7 @@ class GrammarItem extends Item
 				grammarParameter_ > Constants.GRAMMAR_QUESTION_SPECIFICATION_GENERALIZATION ||
 
 				( !isSpecificationGeneralization &&
-
-				( isAssignment ||
-				grammarParameter_ == Constants.GRAMMAR_QUESTION_SPECIFICATION ) ) ||
+				grammarParameter_ == Constants.GRAMMAR_QUESTION_SPECIFICATION ) ||
 
 				( isSpecificationGeneralization &&
 				grammarParameter_ == Constants.GRAMMAR_QUESTION_SPECIFICATION_GENERALIZATION ) ) ) );
@@ -333,7 +339,7 @@ class GrammarItem extends Item
 		return ( ( nextEndingGrammarItem = nextGrammarItem() ) != null &&
 				nextEndingGrammarItem.grammarParameter() == grammarParameter_ ? nextEndingGrammarItem : null );
 		}
-	};
+	}
 
 /*************************************************************************
  *	"For the Lord is good.

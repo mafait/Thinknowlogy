@@ -1,0 +1,4 @@
+﻿Cada persona es un hombre o una mujer.
+Cada hombre es una persona.
+Cada mujer es una persona.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

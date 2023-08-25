@@ -1,0 +1,13 @@
+Every person is a man or a woman.
+Every man is masculine.
+Every woman is feminine.
+Every parent is a father or a mother.
+Every mother is a woman.
+Every father is a man.
+Display the justification report about person.
+Display the justification report about man.
+Display the justification report about woman.
+Display the justification report about parents.
+Display the justification report about father.
+Display the justification report about mother.
+# To continue, click button «Clear your mind.» or «Restart.».

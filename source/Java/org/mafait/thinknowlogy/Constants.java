@@ -1,9 +1,9 @@
 ﻿/*	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -26,10 +26,11 @@ class Constants
 	{
 	// Version constants
 	protected static final String PRODUCT_NAME =												"Thinknowlogy";
-	protected static final String VERSION_NAME =												"2018r4 (New Science)";
+	protected static final String VERSION_NAME =												"2023 (Shaking tree)";
 
 	// Console constants
-	protected static final short CONSOLE_SLEEP_TIME =											10;		// milliseconds
+	protected static final short CONSOLE_SLEEP_TIME_RESIZE_FRAME_DURING_STARTUP =				250;	// milliseconds
+	protected static final short CONSOLE_SLEEP_TIME_RESIZE_FRAME_AFTER_STARTUP =				20;		// milliseconds
 
 	protected static final short CONSOLE_BORDER_SIZE =											2;		// pixels
 	protected static final short CONSOLE_BUTTON_PANEL_HEIGHT =									30;		// pixels
@@ -70,6 +71,7 @@ class Constants
 
 	protected static final String FILE_STARTUP_NAME_STRING =									"startup";
 	protected static final String FILE_EXTENSION_STRING =										".txt";
+
 	protected static final String FILE_UTF_8_ENCODING_STRING =									"UTF-8";
 	protected static final String FILE_UTF_8_BOM_STRING =										"\uFEFF";
 	protected static final char FILE_UTF_8_BOM_CHAR =											0x3F;
@@ -77,9 +79,11 @@ class Constants
 	// Initialization constants
 	protected static final short NO_ASSIGNMENT_LEVEL =											0;
 	protected static final short NO_ASSUMPTION_LEVEL =											0;
+	protected static final short ASSUMPTION_LEVEL_PROBABLY =									1;
+	protected static final short ASSUMPTION_LEVEL_POSSIBLY =									2;
+	protected static final short ASSUMPTION_LEVEL_MAYBE =										3;
 	protected static final short NO_GRAMMAR_LEVEL =												0;
 	protected static final short NO_SELECTION_LEVEL =											0;
-	protected static final short NO_SOLVE_LEVEL =												0;
 	protected static final short NO_WRITE_LEVEL =												0;
 	protected static final short NO_LANGUAGE_NR =												0;
 	protected static final short NO_ORDER_NR =													0;
@@ -87,7 +91,6 @@ class Constants
 
 	protected static final short NO_ADJECTIVE_PARAMETER =										0;
 	protected static final short NO_ANSWER_PARAMETER =											0;
-	protected static final short NO_ASSIGNMENT_PARAMETER =										0;
 	protected static final short NO_DEFINITE_ARTICLE_PARAMETER =								0;
 	protected static final short NO_GRAMMAR_PARAMETER =											0;
 	protected static final short NO_IMPERATIVE_PARAMETER =										0;
@@ -101,7 +104,6 @@ class Constants
 	protected static final short NO_LIST_NR =													Short.MAX_VALUE;
 	protected static final short MAX_LEVEL =													Short.MAX_VALUE;
 	protected static final short MAX_ORDER_NR =													Short.MAX_VALUE;
-	protected static final short MAX_POSITION =													Short.MAX_VALUE;
 
 	protected static final int NO_CENTER_WIDTH =												0;
 	protected static final int NO_COLLECTION_NR =												0;
@@ -188,28 +190,28 @@ class Constants
 	protected static final char SYMBOL_SPANISH_INVERTED_EXCLAMATION_MARK =						'¡';
 	protected static final char SYMBOL_QUESTION_MARK =											'?';
 	protected static final char SYMBOL_SPANISH_INVERTED_QUESTION_MARK =							'¿';
-	protected static final char SYMBOL_PLUS =													'+';
+	private	  static final char SYMBOL_PLUS =													'+';
 	protected static final char SYMBOL_MINUS =													'-';
 	protected static final char SYMBOL_UNDERSCORE =												'_';
 	protected static final char SYMBOL_APOSTROPHE =												'\'';
-	protected static final char SYMBOL_EQUALITY =												'=';
+	private	  static final char SYMBOL_EQUALITY =												'=';
 	protected static final char SYMBOL_PIPE =													'|';
-	protected static final char SYMBOL_AMPERSAND =												'&';
-	protected static final char SYMBOL_AT_SIGN =												'@';
+	private	  static final char SYMBOL_AMPERSAND =												'&';
+	private	  static final char SYMBOL_AT_SIGN =												'@';
 	protected static final char SYMBOL_ASTERISK =												'*';
-	protected static final char SYMBOL_PERCENT =												'%';
-	protected static final char SYMBOL_DOLLAR =													'$';
+	private	  static final char SYMBOL_PERCENT =												'%';
+	private	  static final char SYMBOL_DOLLAR =													'$';
 	protected static final char SYMBOL_SLASH =													'/';
 	protected static final char SYMBOL_BACK_SLASH =												'\\';
 	protected static final char SYMBOL_DOUBLE_QUOTE =											'"';
 	protected static final char SYMBOL_OPEN_ROUNDED_BRACKET =									'(';
 	protected static final char SYMBOL_CLOSE_ROUNDED_BRACKET =									')';
-	protected static final char SYMBOL_OPEN_CURVED_BRACKET =									'{';
-	protected static final char SYMBOL_CLOSE_CURVED_BRACKET =									'}';
-	protected static final char SYMBOL_OPEN_HOOKED_BRACKET =									'<';
-	protected static final char SYMBOL_CLOSE_HOOKED_BRACKET =									'>';
-	protected static final char SYMBOL_OPEN_SQUARE_BRACKET =									'[';
-	protected static final char SYMBOL_CLOSE_SQUARE_BRACKET =									']';
+	private	  static final char SYMBOL_OPEN_CURVED_BRACKET =									'{';
+	private	  static final char SYMBOL_CLOSE_CURVED_BRACKET =									'}';
+	private	  static final char SYMBOL_OPEN_HOOKED_BRACKET =									'<';
+	private	  static final char SYMBOL_CLOSE_HOOKED_BRACKET =									'>';
+	private	  static final char SYMBOL_OPEN_SQUARE_BRACKET =									'[';
+	private	  static final char SYMBOL_CLOSE_SQUARE_BRACKET =									']';
 
 	// Grammar constants
 	protected static final char GRAMMAR_CHOICE_START =											SYMBOL_OPEN_CURVED_BRACKET;
@@ -329,7 +331,6 @@ class Constants
 
 	// Other initialization constants
 	protected static final short MAX_GRAMMAR_LEVEL =											50;		// Maximum depth of parsing grammar calls
-	protected static final short MAX_REASONING_ITERATIONS =										50;		// Maximum number of reasoning iterations
 	protected static final short MAX_SELECTION_ITERATIONS =										250;	// Maximum number of selection iterations
 
 	protected static final short NUMBER_OF_ASSUMPTION_LEVELS =									3;		// Probably, possibly and maybe
@@ -341,33 +342,22 @@ class Constants
 													'o' };
 
 	// Justification types
-	protected static final short NO_JUSTIFICATION_TYPE =														Short.MAX_VALUE;
+	protected static final short JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION =												0;
+	protected static final short JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION =							1;
+	protected static final short JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =						2;
+	protected static final short JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION =								3;
+	protected static final short JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =										4;
 
-	protected static final short JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION =									0;
-	protected static final short JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION =	1;
-	protected static final short JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =			2;
-	protected static final short JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION =					3;
-	protected static final short JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =							4;
+	protected static final short JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION =								5;
+	protected static final short JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION =									6;
+	protected static final short JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION_OR_CONCLUSION =							7;
+	protected static final short JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION =										8;
+	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION =	9;
+	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION =					10;
+	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION =			11;
+	protected static final short JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION_OR_CONCLUSION =								12;
 
-	protected static final short JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION =								5;
-	protected static final short JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION =										6;
-	protected static final short JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION =								7;
-	protected static final short JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION =										8;
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION =		9;
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =						10;
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION =				11;
-	protected static final short JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION =								12;
-
-	protected static final short JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION =								13;
-	protected static final short JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION =										14;
-	protected static final short JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION =								15;
-	protected static final short JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION =										16;
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION =		17;
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION =						18;
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION =				19;
-	protected static final short JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION =								20;
-
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =						21;
+	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =									13;
 
 
 	//	Word types
@@ -462,13 +452,15 @@ class Constants
 	protected static final short WORD_PARAMETER_ADJECTIVE_PREVIOUS_FEMININE_MASCULINE =						636;
 	protected static final short WORD_PARAMETER_ADJECTIVE_SPECIFIC =										637;
 	protected static final short WORD_PARAMETER_ADJECTIVE_CHINESE_DRAW =									638;
+	protected static final short WORD_PARAMETER_ADJECTIVE_CHINESE_HIGH =									639;
+	protected static final short WORD_PARAMETER_ADJECTIVE_CHINESE_LOW =										640;
 
 	//	Adverbs
 	protected static final short WORD_PARAMETER_ADVERB_ASSUMPTION_MAYBE =									700;
 	protected static final short WORD_PARAMETER_ADVERB_ASSUMPTION_POSSIBLY =								701;
 	protected static final short WORD_PARAMETER_ADVERB_ASSUMPTION_PROBABLY =								702;
 	protected static final short WORD_PARAMETER_ADVERB_ANYMORE =											703;
-	protected static final short WORD_PARAMETER_ADVERB_AS =													704;
+//	protected static final short WORD_PARAMETER_ADVERB_AS =													704;
 	protected static final short WORD_PARAMETER_ADVERB_NOT =												705;
 	protected static final short WORD_PARAMETER_ADVERB_CHINESE_NEVER_AGAIN =								706;
 	protected static final short WORD_PARAMETER_ADVERB_FRENCH_PAS =											707;
@@ -742,18 +734,23 @@ class Constants
 	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_CONFLICT_JOE_IS_A_MOTHER =								444;
 
 	// Console (reasoning/family justification sub-menu)
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_FAMILY =				450;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_PARENT =				451;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_CHILD =				452;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_FATHER =				453;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_MOTHER =				454;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_SON =					455;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_DAUGHTER =				456;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_JOHN =					457;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_ANN =					458;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_PAUL =					459;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_JOE =					460;
-	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_FOR_LAURA =				461;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_FAMILY =				450;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_PARENTS =			451;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_CHILDREN =			452;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_FATHERS =			453;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_MOTHERS =			454;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_SONS =				455;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_DAUGHTERS =			456;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_MEN =				457;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_WOMEN =				458;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_BOYS =				459;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_GIRLS =				460;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_PERSONS =			461;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_JOHN =				462;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_ANN =				463;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_PAUL =				464;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_JOE =				465;
+	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_DISPLAY_JUSTIFICATION_REPORT_ABOUT_LAURA =				466;
 
 	// Console (reasoning/family question sub-menu)
 	protected static final short INTERFACE_CONSOLE_REASONING_FAMILY_QUESTION_IS_JOHN_A_FATHER =								470;
@@ -860,26 +857,25 @@ class Constants
 	protected static final short INTERFACE_LISTING_MY_INFORMATION =															1312;
 	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS =															1313;
 	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS =															1314;
-	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_ADJUSTED =										1315;
-	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONCLUDED =										1316;
-	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_UPDATED =										1317;
-	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1318;
-	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1319;
-	protected static final short INTERFACE_LISTING_MY_QUESTIONS =															1320;
-	protected static final short INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS =													1321;
-	protected static final short INTERFACE_LISTING_MY_ANSWER =																1322;
-	protected static final short INTERFACE_LISTING_I_ONLY_KNOW =															1323;
-	protected static final short INTERFACE_LISTING_SPECIFICATIONS =															1324;
-	protected static final short INTERFACE_LISTING_RELATED_INFORMATION =													1325;
-	protected static final short INTERFACE_LISTING_RELATED_QUESTIONS =														1326;
+	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_HAVE_BEEN_ADJUSTED =									1315;
+	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_HAVE_BEEN_CONCLUDED =								1316;
+	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1317;
+	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_NOT_HIDDEN_ANYMORE =								1318;
+	protected static final short INTERFACE_LISTING_MY_QUESTIONS =															1319;
+	protected static final short INTERFACE_LISTING_MY_ADJUSTED_QUESTIONS =													1320;
+	protected static final short INTERFACE_LISTING_MY_ANSWER =																1321;
+	protected static final short INTERFACE_LISTING_I_ONLY_KNOW =															1322;
+	protected static final short INTERFACE_LISTING_SPECIFICATIONS =															1323;
+	protected static final short INTERFACE_LISTING_RELATED_INFORMATION =													1324;
+	protected static final short INTERFACE_LISTING_RELATED_QUESTIONS =														1325;
 
 	// Listing (old information)
-	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION_BUT_NOT_ITS_RELATION =			1330;
-	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION_BUT_NOT_ITS_RELATION =			1331;
+	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_ASSUMPTION_BUT_NONE_OF_ITS_RELATIONS =		1330;
+	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_OF_MY_CONCLUSION_BUT_NONE_OF_ITS_RELATIONS =		1331;
 	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_ASSUMPTION =		1332;
 	protected static final short INTERFACE_LISTING_CONFIRMED_SPECIFICATION_AND_AT_LEAST_ONE_RELATION_OF_MY_CONCLUSION =		1333;
-	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_ARE_CONFIRMED =										1334;
-	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS_THAT_ARE_CONFIRMED =										1335;
+	protected static final short INTERFACE_LISTING_MY_ASSUMPTIONS_THAT_HAVE_BEEN_CONFIRMED =								1334;
+	protected static final short INTERFACE_LISTING_MY_CONCLUSIONS_THAT_HAVE_BEEN_CONFIRMED =								1335;
 	protected static final short INTERFACE_LISTING_MY_EARLIER_ASSUMPTIONS_THAT_HAVE_RELATION_WORDS_NOW =					1336;
 	protected static final short INTERFACE_LISTING_MY_EARLIER_CONCLUSIONS_THAT_HAVE_RELATION_WORDS_NOW =					1337;
 	protected static final short INTERFACE_LISTING_YOUR_INFO_IS_MORE_SPECIFIC_THAN_MY_ASSUMPTION =							1338;
@@ -887,8 +883,8 @@ class Constants
 	protected static final short INTERFACE_LISTING_YOUR_QUESTION_IS_MORE_SPECIFIC_THAN_MY_QUESTION =						1340;
 	protected static final short INTERFACE_LISTING_THIS_INFO_IS_MORE_SPECIFIC_THAN_YOUR_EARLIER_INFO =						1341;
 	protected static final short INTERFACE_LISTING_THIS_QUESTION_IS_MORE_SPECIFIC_THAN_YOUR_QUESTION =						1342;
-	protected static final short INTERFACE_LISTING_YOUR_QUESTIONS_THAT_ARE_ANSWERED =										1343;
-	protected static final short INTERFACE_LISTING_MY_QUESTIONS_THAT_ARE_ANSWERED =											1344;
+	protected static final short INTERFACE_LISTING_YOUR_QUESTIONS_THAT_HAVE_BEEN_ANSWERED =									1343;
+	protected static final short INTERFACE_LISTING_MY_QUESTIONS_THAT_HAVE_BEEN_ANSWERED =									1344;
 	protected static final short INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_KNOWLEDGE =									1345;
 	protected static final short INTERFACE_LISTING_MY_CORRECTED_ASSUMPTIONS_BY_OPPOSITE_SUGGESTIVE_QUESTION =				1346;
 
@@ -1001,7 +997,7 @@ class Constants
 	protected static final char SYMBOL_CHINESE_PREPOSITION_OF =									'的';
 	protected static final char SYMBOL_CHINESE_QUESTION_MARK =									'？';
 	protected static final char SYMBOL_CHINESE_VERB_HAS =										'有';
-	};
+	}
 
 /*************************************************************************
  *	"He will bless those who fear the Lord,

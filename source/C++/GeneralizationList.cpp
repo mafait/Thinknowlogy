@@ -1,10 +1,10 @@
 ﻿/*	Class:			GeneralizationList
  *	Parent class:	List
- *	Purpose:		To store generalization items
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing generalization items
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -107,12 +107,12 @@ class GeneralizationList : private List
 		return (GeneralizationItem *)firstActiveItem();
 		}
 
-	GeneralizationItem *firstGeneralizationItem( bool isOnlySelectingNoun, bool isOnlySelectingCurrentLanguage, bool isRelation )
+	GeneralizationItem *firstGeneralizationItem( bool isOnlySelectingCurrentLanguage, bool isOnlySelectingNoun, bool isOnlySelectingProperNoun, bool isRelation )
 		{
 		GeneralizationItem *firstGeneralizationItem = firstActiveGeneralizationItem();
 
 		return ( firstGeneralizationItem != NULL ?
-				firstGeneralizationItem->generalizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isRelation ) : NULL );
+				firstGeneralizationItem->generalizationItem( true, isOnlySelectingCurrentLanguage, isOnlySelectingNoun, isOnlySelectingProperNoun, isRelation ) : NULL );
 		}
 
 	BoolResultType findGeneralization( bool isRelation, WordItem *generalizationWordItem )

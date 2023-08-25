@@ -1,8 +1,22 @@
 ﻿* 
+* Mes hypothèses:
+< Un père n'est probablement pas une mère.
+< Une mère n'est probablement pas un père.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est une femme ou un homme.
+* 
+* Mes hypothèses:
+< Une mère est probablement un parent.
+< Un père est probablement un parent.
+< 
+* 
 * Mes conclusions:
 < Olivier est un homme.
 * 
 * Mes hypothèses:
-< Olivier est probablement un parent.
 < Olivier n'est probablement pas une mère.
+< Olivier est probablement un parent.
+< Olivier n'est possible pas une femme.
 < 

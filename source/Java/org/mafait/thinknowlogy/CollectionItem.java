@@ -1,10 +1,10 @@
 ﻿/*	Class:			CollectionItem
  *	Parent class:	List
- *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing collections of a word
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -64,6 +64,7 @@ class CollectionItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		StringBuffer queryStringBuffer;
@@ -78,7 +79,7 @@ class CollectionItem extends Item
 		( wordString = collectionWordItem_.wordTypeString( true, collectionWordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -93,7 +94,7 @@ class CollectionItem extends Item
 			{
 			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
-				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -108,7 +109,7 @@ class CollectionItem extends Item
 			{
 			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
-				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -119,6 +120,7 @@ class CollectionItem extends Item
 			}
 		}
 
+	@Override
 	protected boolean hasParameter( int queryParameter )
 		{
 		return ( collectionOrderNr_ == queryParameter ||
@@ -130,6 +132,7 @@ class CollectionItem extends Item
 				collectionNr_ > Constants.NO_COLLECTION_NR ) ) );
 		}
 
+	@Override
 	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( collectionWordItem_ == null ? false :
@@ -145,17 +148,19 @@ class CollectionItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : compoundGeneralizationWordItem_.itemNr() == queryItemNr ) );
 		}
 
+	@Override
 	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( collectionWordTypeNr_ == queryWordTypeNr ||
 				commonWordTypeNr_ == queryWordTypeNr );
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem thisWordItem = myWordItem();
-		String collectionWordTypeString = thisWordItem.wordTypeNameString( collectionWordTypeNr_ );
-		String commonWordTypeString = thisWordItem.wordTypeNameString( commonWordTypeNr_ );
+		WordItem _myWordItem = myWordItem();
+		String collectionWordTypeString = _myWordItem.wordTypeNameString( collectionWordTypeNr_ );
+		String commonWordTypeString = _myWordItem.wordTypeNameString( commonWordTypeNr_ );
 		StringBuffer queryStringBuffer;
 		String wordString;
 
@@ -206,6 +211,7 @@ class CollectionItem extends Item
 		return queryStringBuffer;
 		}
 
+	@Override
 	protected BoolResultType findMatchingWordReferenceString( String queryString )
 		{
 		BoolResultType boolResult = new BoolResultType();
@@ -238,13 +244,13 @@ class CollectionItem extends Item
 	protected boolean hasFemaleCollectionWord()
 		{
 		return ( collectionWordItem_ != null &&
-				collectionWordItem_.isFemale() );
+				collectionWordItem_.isFeminineWord() );
 		}
 
 	protected boolean hasMaleCollectionWord()
 		{
 		return ( collectionWordItem_ != null &&
-				collectionWordItem_.isMale() );
+				collectionWordItem_.isMasculineWord() );
 		}
 
 	protected boolean isCompoundGeneralization()
@@ -310,7 +316,7 @@ class CollectionItem extends Item
 		{
 		return compoundGeneralizationWordItem_;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"Let them praise to Lord for his great love

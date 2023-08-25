@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To demonstrate programming in natural language.
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -25,7 +25,7 @@
 #   already be present on that rod.
 # - No disk may be placed on top of a smaller disk.
 #----------------------------------------------------------------------------
-# See for the full text: http://en.wikipedia.org/wiki/Tower_of_Hanoi
+# See for the full text: https://en.wikipedia.org/wiki/Tower_of_Hanoi
 #----------------------------------------------------------------------------
 
 # Define the moves.

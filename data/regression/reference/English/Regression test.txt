@@ -20,10 +20,10 @@
  Display the warranty.
 ------------------------------------------------------------------------------
  Example files:	* Use button <more examples>
-              or see folder: Thinknowlogy2018r4/data/examples/English/
- Fundamental:	* folder: Thinknowlogy2018r4/documents/
- Design:	* folder: Thinknowlogy2018r4/documents/design/
- Screenshots:	* folder: Thinknowlogy2018r4/screenshots/English/
+              or see folder: Thinknowlogy2023/data/examples/English/
+ Fundamental:	* folder: Thinknowlogy2023/documents/
+ Design:	* folder: Thinknowlogy2023/documents/design/
+ Screenshots:	* folder: Thinknowlogy2023/screenshots/English/
 ------------------------------------------------------------------------------
 < 
 < Specifications:
@@ -34,36 +34,36 @@
 < English is the current language. {learned from user Admin}
 < 
 ------------------------------------------------------------------------------
- Total number of items: 8604.
+ Total number of items: 8683.
 ------------------------------------------------------------------------------
- Items in administrator:	420.
+ Items in administrator:	422.
 ------------------------------------------------------------------------------
- * Active items:	        420.
+ * Active items:	        422.
     <F> Files:			2.
     <R> Read words (temporary):	3.
     <S> Solve scores (temporary):	0.
-    <W> Words:		389, (predefined: 189).
+    <W> Words:		391, (predefined: 191).
     <X> Conditions:		11.
     <Y> Actions:		15.
     <Z> Alternatives:		0.
 ------------------------------------------------------------------------------
- Items in words:	8184.
+ Items in words:	8261.
 ------------------------------------------------------------------------------
- * Active items:	        8142.
+ * Active items:	        8209.
     <a> assignments:		6.
-    <c> collections:		276.
-    <g> generalizations:		345.
-    <i> interface:		1242.
-    <j> justification:		0.
-    <l> grammar:		4802.
+    <c> collections:		272.
+    <g> generalizations:		348.
+    <i> interface:		1301.
+    <j> justification:		8.
+    <l> grammar:		4818.
     <m> multiple word:		69.
-    <s> specifications:		401.
+    <s> specifications:		384.
     <r> write words (temporary):	0.
-    <w> word types:		1001.
+    <w> word types:		1003.
     <x> context:		0.
  * Inactive items:	        3.
  * Archived items:	        33.
- * Replaced items:	        6.
+ * Replaced items:	        16.
 ------------------------------------------------------------------------------
 < 
 < Specifications:
@@ -72,15 +72,15 @@
 < Expert is the previous user. {learned from user Guest}
 < 
 ------------------------------------------------------------------------------
- Total number of word type items: 1006, (all languages included).
+ Total number of word type items: 1008, (all languages included).
 ------------------------------------------------------------------------------
- * Active word type items:		1006.
+ * Active word type items:		1008.
    (@1)  Symbols:			24.
    (@2)  Numerals:			54.
    (@3)  Small letters:			104.
    (@4)  Capital letters:			104.
    (@5)  Proper names:			20.
-   (@6)  Adjectives:			200.
+   (@6)  Adjectives:			202.
    (@7)  Adverbs:			32.
    (@8)  Answer words:			10.
    (@9)  Articles:			20.
@@ -146,10 +146,10 @@
 ------------------------------------------------------------------------------
  In files '~' will mark the end of a query		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2009-2018, Menno Mafait
- Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details click <Help.>
- and <Display the warranty.>. This is free software, and you are welcome to redistribute
- it under certain conditions; click <Help.> and <Display the GPLv2-license.> for details.
+ Copyright (C) 2023, Menno Mafait
+ Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details click "Help."
+ and "Display the warranty.". This is free software, and you are welcome to redistribute
+ it under certain conditions; click "Help." and "Display the GPLv2-license." for details.
 
 		    GNU GENERAL PUBLIC LICENSE
 		       Version 2, June 1991

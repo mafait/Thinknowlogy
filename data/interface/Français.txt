@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the French language
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 # Console de Java (menu supérieur)
@@ -110,13 +110,18 @@
 #Java#:452		"Affichez le rapport de justification sur les enfants."
 #Java#:453		"Affichez le rapport de justification sur les pères."
 #Java#:454		"Affichez le rapport de justification sur les mères."
-#Java#:455		"Affichez le rapport de justification sur les fils."
-#Java#:456		"Affichez le rapport de justification sur les filles."
-#Java#:457		"Affichez le rapport de justification sur Olivier."
-#Java#:458		"Affichez le rapport de justification sur Amélie."
-#Java#:459		"Affichez le rapport de justification sur Pascal."
-#Java#:460		"Affichez le rapport de justification sur Julien."
-#Java#:461		"Affichez le rapport de justification sur Lorraine."
+#Java#:455		"Affichez le rapport de justification sur les hommes."
+#Java#:456		"Affichez le rapport de justification sur les femmes."
+#Java#:457		"Affichez le rapport de justification sur les fils."
+#Java#:458		"Affichez le rapport de justification sur les filles."
+#Java#:459		"Affichez le rapport de justification sur les garçons."
+#Java#:460		"Affichez le rapport de justification sur les jeune-filles."
+#Java#:461		"Affichez le rapport de justification sur les personnes."
+#Java#:462		"Affichez le rapport de justification sur Olivier."
+#Java#:463		"Affichez le rapport de justification sur Amélie."
+#Java#:464		"Affichez le rapport de justification sur Pascal."
+#Java#:465		"Affichez le rapport de justification sur Julien."
+#Java#:466		"Affichez le rapport de justification sur Lorraine."
 
 # Console de Java (raisonnement/sous-menu de la question de la famille)
 #Java#:470		"Est Olivier un père?"
@@ -136,13 +141,18 @@
 #Java#:482		"Affichez information sur les enfants."
 #Java#:483		"Affichez information sur les pères."
 #Java#:484		"Affichez information sur les mères."
-#Java#:485		"Affichez information sur les fils."
-#Java#:486		"Affichez information sur les filles."
-#Java#:487		"Affichez information sur Olivier."
-#Java#:488		"Affichez information sur Amélie."
-#Java#:489		"Affichez information sur Pascal."
-#Java#:490		"Affichez information sur Julien."
-#Java#:491		"Affichez information sur Lorraine."
+#Java#:485		"Affichez information sur les hommes."
+#Java#:486		"Affichez information sur les femmes."
+#Java#:487		"Affichez information sur les fils."
+#Java#:488		"Affichez information sur les filles."
+#Java#:489		"Affichez information sur les garçons."
+#Java#:490		"Affichez information sur les jeune-filles."
+#Java#:491		"Affichez information sur les personnes."
+#Java#:492		"Affichez information sur Olivier."
+#Java#:493		"Affichez information sur Amélie."
+#Java#:494		"Affichez information sur Pascal."
+#Java#:495		"Affichez information sur Julien."
+#Java#:496		"Affichez information sur Lorraine."
 
 # Java console (sous-menu la taille de police)
 #Java#:500		"<diminuer la taille de police>"
@@ -228,18 +238,17 @@
 :1312			"\nMes informations:"
 :1313			"\nMes conclusions:"
 :1314			"\nMes hypothèses:"
-:1315			"\nMes hypothèses qui sont ajustés:"
-:1316			"\nMes hypothèses qui sont conclus:"
-:1317			"\nMes conclusions qui sont mises à jour:"
-#:1318			"\nMes conclusions qui ne sont plus cachés:"
-#:1319			"\nMes hypothèses qui ne sont plus cachés:"
-:1320			"\nMes questions:"
-:1321			"\nMes questions ajustés:"
-:1322			"\nMa réponse:"
-:1323			"\nJe sais seulement:"
-:1324			"\nSpécifications:"
-:1325			"\nInformations connexes:"
-:1326			"\nQuestions connexes:"
+:1315			"\nMes hypothèses qui ont été ajustées:"
+:1316			"\nMes hypothèses qui ont été conclues:"
+#:1317			"\nMes conclusions qui ne sont plus cachés:"
+#:1318			"\nMes hypothèses qui ne sont plus cachés:"
+:1319			"\nMes questions:"
+:1320			"\nMes questions qui ont été ajustées:"
+:1321			"\nMa réponse:"
+:1322			"\nJe sais seulement:"
+:1323			"\nSpécifications:"
+:1324			"\nInformations connexes:"
+:1325			"\nQuestions connexes:"
 
 # Liste (anciennes informations)
 :1330			"\nVous avez confirmé la spécification - mais aucun de ses relations - de mes hypothèses antérieures:"
@@ -306,7 +315,7 @@
 # Phrase (notifications)
 :1600			"Je m'attendais que le nom propre «"
 :1601			"Je m'attendais que le nom au singulier «"
-:1602			"» serait féminine."
+:1602			"» serait féminin."
 :1603			"» serait masculin."
 :1604			"Je sais que."
 :1605			"\nLe mot «"

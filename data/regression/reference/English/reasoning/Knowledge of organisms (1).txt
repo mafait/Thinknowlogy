@@ -1,4 +1,9 @@
 ﻿* 
+* My assumptions:
+< A vertebrate is probably not an invertebrate.
+< An invertebrate is probably not a vertebrate.
+< 
+* 
 * You have entered plural noun "reptiles", which was unknown to me.
 * 
 * My assumptions:
@@ -9,27 +14,38 @@
 * 
 * My assumptions:
 < A mammal is probably an organism.
-< A vertebrate is possibly an organism.
+< A vertebrate is probably an organism.
+< 
+* 
+* My assumptions:
+< A human-being is probably an organism.
 < 
 * 
 * My conclusions:
 < John is a mammal.
 < John is a vertebrate.
-< John is not an amphibian, not a bird, not a fish and not a reptile.
 * 
 * My assumptions:
 < John is probably an organism.
-< John is probably not an animal, not a fungus, not a micro-organism and not a plant.
+< John is possibly not an animal, not a fungus, not a micro-organism and not a plant.
+< John is probably not an invertebrate.
+< John is possibly not an annelid, not an arthropod, not an echinoderm, not a mollusk and not a protozoan.
+< John is probably not an amphibian, not a bird, not a fish and not a reptile.
 < 
 * 
 * My assumptions:
-< A vertebrate is possibly an organism. Because:
+< A vertebrate is probably an organism. Because:
 <	- Every vertebrate is an amphibian, a bird, a fish, a mammal or a reptile.
 <	- A mammal is probably an organism.
+< A vertebrate is probably not an invertebrate. Because:
+<	- Every animal is a vertebrate or an invertebrate.
 < 
 * 
 * My assumptions:
 < A mammal is probably an organism. Because:
+<	- Every mammal is a cetacean, a marsupial, a rodent, a monkey or a human-being.
+<	- A human-being is probably an organism.
+* 	and:
 <	- Every organism is an animal, a fungus, a human-being, a micro-organism or a plant.
 <	- Every mammal is a cetacean, a marsupial, a rodent, a monkey or a human-being.
 < 
@@ -53,20 +69,29 @@
 < John is a vertebrate. Because:
 <	- John is a human-being.
 <	- Every human-being is a vertebrate.
-< John is not an amphibian, not a bird, not a fish and not a reptile. Because:
-<	- John is a vertebrate.
-<	- Every vertebrate is an amphibian, a bird, a fish, a mammal or a reptile.
-<	- John is a mammal.
 * 
 * My assumptions:
 < John is probably an organism. Because:
-<	- Every organism is an animal, a fungus, a human-being, a micro-organism or a plant.
-<	- John is a human-being.
-* 	and:
 <	- John is a mammal.
 <	- A mammal is probably an organism.
-< John is probably not an animal, not a fungus, not a micro-organism and not a plant. Because:
+* 	and:
+<	- John is a human-being.
+<	- A human-being is probably an organism.
+* 	and:
+<	- John is a vertebrate.
+<	- A vertebrate is probably an organism.
+< John is possibly not an animal, not a fungus, not a micro-organism and not a plant. Because:
 <	- John is probably an organism.
 <	- Every organism is an animal, a fungus, a human-being, a micro-organism or a plant.
 <	- John is a human-being.
+< John is probably not an invertebrate. Because:
+<	- John is a vertebrate.
+<	- A vertebrate is probably not an invertebrate.
+< John is possibly not an annelid, not an arthropod, not an echinoderm, not a mollusk and not a protozoan. Because:
+<	- John is probably not an invertebrate.
+<	- Every invertebrate is an annelid, an arthropod, an echinoderm, a mollusk or a protozoan.
+< John is probably not an amphibian, not a bird, not a fish and not a reptile. Because:
+<	- John is a vertebrate.
+<	- Every vertebrate is an amphibian, a bird, a fish, a mammal or a reptile.
+<	- John is a mammal.
 < 

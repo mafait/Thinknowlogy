@@ -1,10 +1,10 @@
 ﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
- *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Executing imperative words
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -408,7 +408,8 @@ class AdminImperative
 					if( ( nPossibilities = adminItem_.nPossibilities() ) <= 0 )
 						return adminItem_.startError( 1, moduleNameString_, "There are no possibilities at assignment level " + currentAssignmentLevel );
 
-					solveProgressStep = ( nPossibilities == 0 ? Constants.MAX_PROGRESS : ( ( endSolveProgressLevel - currentSolveProgressLevel ) / nPossibilities ) );
+					solveProgressStep = ( nPossibilities == 0 ? Constants.MAX_PROGRESS :
+																( ( endSolveProgressLevel - currentSolveProgressLevel ) / nPossibilities ) );
 
 					if( solveLevel > 1 )
 						InputOutput.startProgress( Constants.INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START, solveLevel, Constants.INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END, currentSolveProgressLevel, Constants.MAX_PROGRESS );
@@ -875,8 +876,12 @@ class AdminImperative
 
 				firstString = ( comparisonAssignmentItem == null ? null :
 								( isNumeralRelation ?
-								( comparisonAssignmentSpecificationWordItem == null ? null : comparisonAssignmentSpecificationWordItem.anyWordTypeString() ) : comparisonAssignmentItem.specificationString() ) );
-				secondString = ( isNumeralRelation ? ( relationWordItem == null ? null : relationWordItem.anyWordTypeString() ) : specificationString );
+								( comparisonAssignmentSpecificationWordItem == null ? null :
+																						comparisonAssignmentSpecificationWordItem.anyWordTypeString() ) :
+																						comparisonAssignmentItem.specificationString() ) );
+				secondString = ( isNumeralRelation ? ( relationWordItem == null ? null :
+																					relationWordItem.anyWordTypeString() ) :
+																					specificationString );
 				}
 
 			if( firstString == null ||
@@ -1225,8 +1230,9 @@ class AdminImperative
 		if( specificationWordItem == null )
 			return adminItem_.startConditionResultError( 1, moduleNameString_, "The given specification word item is undefined" );
 
-		if( ( currentSpecificationItem = specificationWordItem.firstExclusiveSpecificationItem() ) != null )
+		if( ( currentSpecificationItem = specificationWordItem.firstExclusiveSpecificationItem( true ) ) != null )
 			{
+			// Do for all exclusive specifications of this word (including adjectives)
 			do	{
 				foundAssignmentItem = specificationWordItem.firstNonQuestionAssignmentItem( true, false, false, false, isPossessive, currentSpecificationItem.specificationWordItem() );
 				isSatisfiedScore = ( isNegative == ( foundAssignmentItem == null || foundAssignmentItem.isNegative() ) );
@@ -1243,7 +1249,7 @@ class AdminImperative
 				conditionReturnResult.oldDissatisfiedScore += conditionPartResult.oldDissatisfiedScore;
 				conditionReturnResult.newDissatisfiedScore += conditionPartResult.newDissatisfiedScore;
 				}
-			while( ( currentSpecificationItem = currentSpecificationItem.nextExclusiveSpecificationItem() ) != null );
+			while( ( currentSpecificationItem = currentSpecificationItem.nextExclusiveSpecificationItem( true ) ) != null );
 			}
 
 		return conditionReturnResult;
@@ -1304,7 +1310,8 @@ class AdminImperative
 		if( ( currentAssignmentItem = generalizationWordItem.firstNonQuestionActiveAssignmentItem() ) != null )
 			{
 			do	{
-				if( currentAssignmentItem.isRelatedSpecification( false, specificationWordItem ) )
+				if( !currentAssignmentItem.isNegative() &&
+				currentAssignmentItem.specificationWordItem() == specificationWordItem )
 					{
 					if( currentAssignmentItem.isOlderItem() )
 						{
@@ -1351,8 +1358,9 @@ class AdminImperative
 
 		if( orderAssignmentItem != null &&
 		( assignmentWordItem = orderAssignmentItem.specificationWordItem() ) != null &&
-		( currentSpecificationItem = generalizationWordItem.firstExclusiveSpecificationItem() ) != null )
+		( currentSpecificationItem = generalizationWordItem.firstExclusiveSpecificationItem( true ) ) != null )
 			{
+			// Do for all exclusive specifications of this word (including adjectives)
 			do	{
 				specificationNr++;
 
@@ -1360,7 +1368,7 @@ class AdminImperative
 					assignmentOrderNr = specificationNr;
 				}
 			while( assignmentOrderNr == Constants.NO_ORDER_NR &&
-			( currentSpecificationItem = currentSpecificationItem.nextExclusiveSpecificationItem() ) != null );
+			( currentSpecificationItem = currentSpecificationItem.nextExclusiveSpecificationItem( true ) ) != null );
 			}
 
 		shortResult.shortValue = assignmentOrderNr;
@@ -1796,7 +1804,7 @@ class AdminImperative
 
 		return Constants.RESULT_OK;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"He has given me a new song to sing,

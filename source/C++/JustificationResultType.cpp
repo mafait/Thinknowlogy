@@ -1,10 +1,10 @@
 ﻿/*	Class:		JustificationResultType
  *	Purpose:	To return justification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -27,12 +27,13 @@ class JustificationItem;
 
 class JustificationResultType
 	{
-	friend class AdminReasoningNew;
+	friend class AdminReasoning;
 	friend class AdminSpecification;
 	friend class Item;
 	friend class JustificationList;
 	friend class List;
-	friend class SpecificationList;
+		friend class SpecificationItem;
+		friend class SpecificationList;
 	friend class WordSpecification;
 
 	protected:
@@ -41,7 +42,6 @@ class JustificationResultType
 	signed char result = RESULT_OK;
 
 	JustificationItem *createdJustificationItem = NULL;
-	JustificationItem *foundJustificationItem = NULL;
 	};
 
 /*************************************************************************

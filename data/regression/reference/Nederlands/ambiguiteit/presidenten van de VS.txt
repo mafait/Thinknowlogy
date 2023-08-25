@@ -93,3 +93,73 @@
 < De Verenigde Staten had een president, genaamd Bill Clinton. Omdat:
 <	- Bill Clinton was een president van de Verenigde Staten.
 < 
+* Dat weet ik.
+* 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een nieuwe president, genaamd Donald Trump.
+< De Verenigde Staten heeft een vorige president, genaamd Barack Obama.
+< De Verenigde Staten had een president, genaamd George Bush.
+< 
+< 
+< Specificaties:
+< Donald Trump is de huidige president van de Verenigde Staten.
+< Barack Obama is de vorige president van de Verenigde Staten.
+< Bill Clinton was een president van de Verenigde Staten.
+< George Bush was een president van de Verenigde Staten.
+< George Bush was een president van de Verenigde Staten.
+< De Verenigde Staten heeft een president, genaamd Donald Trump.
+< De Verenigde Staten heeft een vorige president, genaamd Barack Obama.
+< De Verenigde Staten had een president, genaamd George Bush.
+< De Verenigde Staten had een president, genaamd George Bush.
+< De Verenigde Staten had een president, genaamd Bill Clinton.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd Donald Trump. Omdat:
+<	- Donald Trump is de huidige president van de Verenigde Staten.
+< De Verenigde Staten heeft een vorige president, genaamd Barack Obama. Omdat:
+<	- Barack Obama is de vorige president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd George Bush. Omdat:
+<	- George Bush was een president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd George Bush. Omdat:
+<	- George Bush was een president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd Bill Clinton. Omdat:
+<	- Bill Clinton was een president van de Verenigde Staten.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een nieuwe president, genaamd Joe Biden.
+< De Verenigde Staten heeft een vorige president, genaamd Donald Trump.
+< De Verenigde Staten had een president, genaamd Barack Obama.
+< 
+< 
+< Specificaties:
+< Joe Biden is de huidige president van de Verenigde Staten.
+< Donald Trump is de vorige president van de Verenigde Staten.
+< Barack Obama was een president van de Verenigde Staten.
+< Bill Clinton was een president van de Verenigde Staten.
+< George Bush was een president van de Verenigde Staten.
+< George Bush was een president van de Verenigde Staten.
+< De Verenigde Staten heeft een president, genaamd Joe Biden.
+< De Verenigde Staten heeft een vorige president, genaamd Donald Trump.
+< De Verenigde Staten had een president, genaamd Barack Obama.
+< De Verenigde Staten had een president, genaamd George Bush.
+< De Verenigde Staten had een president, genaamd George Bush.
+< De Verenigde Staten had een president, genaamd Bill Clinton.
+< 
+* 
+* Mijn conclusies:
+< De Verenigde Staten heeft een president, genaamd Joe Biden. Omdat:
+<	- Joe Biden is de huidige president van de Verenigde Staten.
+< De Verenigde Staten heeft een vorige president, genaamd Donald Trump. Omdat:
+<	- Donald Trump is de vorige president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd Barack Obama. Omdat:
+<	- Barack Obama was een president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd George Bush. Omdat:
+<	- George Bush was een president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd George Bush. Omdat:
+<	- George Bush was een president van de Verenigde Staten.
+< De Verenigde Staten had een president, genaamd Bill Clinton. Omdat:
+<	- Bill Clinton was een president van de Verenigde Staten.
+< 

@@ -1,14 +1,11 @@
-﻿# Read the grammar and the user-interface files
+﻿# Read grammar and user-interface files
 ~English
 ~Español
 ~Français
 ~Nederlands
 #Java#~中文
 
-# The grammar rules have been read. Now it is possible
-# to use these rules, expressed as readable sentences
-
-# Read the user file in the available languages
+# Read user file in the available languages
 Read the file "data/startup/English/users".
 Leer el archivo "data/startup/Español/usuarios".
 Lirez le fichier "data/startup/Français/utilisateurs".

@@ -1,9 +1,9 @@
 /*	Class:		InputOutput
  *	Purpose:	To read and write user information
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ class InputOutput
 		{
 		String newStatusString;
 		WordItem currentLanguageWordItem = GlobalVariables.currentLanguageWordItem;
-		
+
 		if( ( newStatusString = ( currentLanguageWordItem == null ? Constants.NO_LANGUAGE_WORD_FOUND_STRING : currentLanguageWordItem.interfaceString( interfaceParameter ) ) ) == null )
 			clearStatus();
 		else
@@ -139,9 +139,9 @@ class InputOutput
 					{
 					position++;
 					textStringBuffer.append( Constants.EMPTY_STRING + textChar );
-	
+
 					if( hasFoundNewLine ||
-	
+
 					( textStringBuffer.length() > 0 &&
 					position < diacriticalTextString.length() &&
 					diacriticalTextString.charAt( position ) == Constants.QUERY_CHAR ) )
@@ -173,7 +173,7 @@ class InputOutput
 
 	private static byte writeText( boolean isSkippingInTestFile, boolean isFirstCharacterToUpperCase, boolean isReturningToPosition, short promptTypeNr, int leftWidth, int rightWidth, int printStringLength, String promptString, String writeString )
 		{
-		boolean startNewLine = false;
+		boolean isStartingNewLine = false;
 		int firstLetterPosition = 0;
 		int i = 0;
 		int length = 0;
@@ -226,7 +226,7 @@ class InputOutput
 							currentPosition_ = ( promptStringLength - 1 );
 							writeStringBuffer.append( promptString );
 							}
-	
+
 						if( i < printStringLength )
 							{
 							if( textString.charAt( i ) == Constants.TAB_CHAR )
@@ -235,37 +235,37 @@ class InputOutput
 								{
 								length = 0;
 								wordPosition = i;
-	
+
 								do	{
 									i++;
 									length++;
 									}
 								while( i < printStringLength &&
 								!Character.isWhitespace( textString.charAt( i ) ) );
-	
+
 								if( i < printStringLength &&
 
 								( textString.charAt( i ) == Constants.NEW_LINE_CHAR ||
 								textString.charAt( i ) == Constants.CARRIAGE_RETURN_CHAR ) )
 									length--;
-	
+
 								i = wordPosition;
 								}
-	
+
 							if( i < printStringLength &&
 
 							( textString.charAt( i ) == Constants.NEW_LINE_CHAR ||
 							textString.charAt( i ) == Constants.CARRIAGE_RETURN_CHAR ) )
 								{
-								startNewLine = true;
+								isStartingNewLine = true;
 								i++;
 								currentPosition_ = 0;
 								writeStringBuffer.append( Constants.CARRIAGE_RETURN_NEW_LINE_STRING );
 								}
 							}
-	
-						if( startNewLine )
-							startNewLine = false;
+
+						if( isStartingNewLine )
+							isStartingNewLine = false;
 						else
 							{
 							while( leftWidth > Constants.NO_CENTER_WIDTH )
@@ -274,7 +274,7 @@ class InputOutput
 								currentPosition_++;
 								writeStringBuffer.append( Constants.SPACE_STRING );
 								}
-	
+
 							if( i < printStringLength )
 								{
 								if( textString.charAt( i ) == Constants.TAB_CHAR )
@@ -287,13 +287,13 @@ class InputOutput
 									{
 									do	{
 										writeStringBuffer.append( textString.charAt( i ) );
-	
+
 										if( textString.charAt( i ) == Constants.NEW_LINE_CHAR ||
 										textString.charAt( i ) == Constants.CARRIAGE_RETURN_CHAR )
 											currentPosition_ = 0;
 										else
 											currentPosition_++;
-	
+
 										i++;
 										}
 									while( length-- > 1 );
@@ -842,7 +842,7 @@ class InputOutput
 		{
 		return writeText( isSkippingInTestFile, true, isReturningToPosition, promptTypeNr, queryWidth, null, textString );
 		}
-	};
+	}
 
 /*************************************************************************
  *	"The voice of the Lord twists mighty oaks

@@ -2,10 +2,13 @@
 Toon de verantwoordingsrapportage over gezin.
 Toon de verantwoordingsrapportage over ouders.
 Toon de verantwoordingsrapportage over kinderen.
-Toon de verantwoordingsrapportage over vader.
-Toon de verantwoordingsrapportage over moeder.
-Toon de verantwoordingsrapportage over zoon.
-Toon de verantwoordingsrapportage over dochter.
+Toon de verantwoordingsrapportage over vaders.
+Toon de verantwoordingsrapportage over moeders.
+Toon de verantwoordingsrapportage over mannen.
+Toon de verantwoordingsrapportage over vrouwen.
+Toon de verantwoordingsrapportage over zonen.
+Toon de verantwoordingsrapportage over dochters.
+Toon de verantwoordingsrapportage over personen.
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 Toon de verantwoordingsrapportage over Jan.
 Toon de verantwoordingsrapportage over Anna.

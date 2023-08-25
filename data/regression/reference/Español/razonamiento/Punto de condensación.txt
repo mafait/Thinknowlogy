@@ -11,5 +11,5 @@
 * Mis suposiciones:
 < El vapor de agua es probablemente un tipo de gas. Porque:
 <	- Cada tipo de gas tiene un punto de condensación específico.
-<	- El vapor de agua tiene un punto de condensación de 100 grados Celsius.
+<	- El vapor de agua tiene un punto de condensación de 100 grados centrígrados.
 < 

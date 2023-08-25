@@ -1,4 +1,9 @@
 ﻿* 
+* Mijn veronderstellingen:
+< Een man is waarschijnlijk geen vrouw.
+< Een vrouw is waarschijnlijk geen man.
+< 
+* 
 * Mijn vragen:
 < Is Anne een man of een vrouw?
 < 
@@ -6,12 +11,12 @@
 * Mijn vragen die beantwoord zijn:
 < Is Anne een man of een vrouw?
 * 
-* Mijn conclusies:
-< Anne is een man.
+* Mijn veronderstellingen:
+< Anne is waarschijnlijk een man.
 < 
 * 
-* Mijn conclusies:
-< Anne is een man. Omdat:
+* Mijn veronderstellingen:
+< Anne is waarschijnlijk een man. Omdat:
 <	- Anne is een persoon.
 <	- Ieder persoon is een man of een vrouw.
 <	- Anne is geen vrouw.

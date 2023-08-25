@@ -1,11 +1,11 @@
 ﻿/*	Class:			ScoreItem
  *	Parent class:	Item
- *	Purpose:		To temporarily store scoring info during
+ *	Purpose:		Temporarily storing scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -95,6 +95,7 @@ class ScoreItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected boolean hasParameter( int queryParameter )
 		{
 		return ( assignmentLevel_ == queryParameter ||
@@ -120,6 +121,7 @@ class ScoreItem extends Item
 				newBlockingScore > Constants.NO_SCORE ) ) );
 		}
 
+	@Override
 	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( referenceSelectionItem == null ? false :
@@ -127,6 +129,7 @@ class ScoreItem extends Item
 				( queryItemNr == Constants.NO_ITEM_NR ? true : referenceSelectionItem.itemNr() == queryItemNr ) );
 		}
 
+	@Override
 	protected boolean isSorted( Item nextSortItem )
 		{
 		return ( nextSortItem != null &&
@@ -134,6 +137,7 @@ class ScoreItem extends Item
 				assignmentLevel_ > ( (ScoreItem)nextSortItem ).assignmentLevel_ );
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
@@ -243,7 +247,7 @@ class ScoreItem extends Item
 		{
 		return (ScoreItem)nextItem;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"The Lord rules over the floodwaters.

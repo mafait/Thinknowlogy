@@ -1,10 +1,10 @@
 ﻿/*	Class:			WordList
  *	Parent class:	List
- *	Purpose:		To store word items
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing word items
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -143,14 +143,14 @@ class WordList extends List
 
 	// Protected database connection methods
 /*
-	protected byte storeChangesInFutureDatabaseInWordList()
+	protected byte storeChangesInWordListInFutureDatabase()
 		{
 		WordItem searchWordItem = firstActiveWordItem();
 
 		while( searchWordItem != null )
 			{
 			// Do for all words
-			if( searchWordItem.storeChangesInFutureDatabaseInWord() != Constants.RESULT_OK )
+			if( searchWordItem.storeChangesInWordInFutureDatabase() != Constants.RESULT_OK )
 				return addError( 1, "I failed to store changes of a word item in the database" );
 
 			searchWordItem = searchWordItem.nextWordItem();
@@ -341,7 +341,7 @@ class WordList extends List
 
 		return wordResult;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"They share freely and give generously to those in need.

@@ -28,6 +28,7 @@
 * 
 * Mis conclusiones:
 < Alfonso es parte de una familia.
+< Pablo es parte de una familia.
 * 
 * Mis suposiciones:
 < Alfonso tiene probablemente un padre.
@@ -43,28 +44,25 @@
 < Santiago es probablemente parte de una familia.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Juan tiene un hijo, llamado Pablo.
 * 
-* Mis conclusiones:
-< Pablo es parte de una familia.
-* 
 * Mis suposiciones:
+< Pablo tiene probablemente un padre, llamado Juan.
 < Juan es probablemente padre de Pablo.
 < Juan es probablemente parte de una familia.
-< Pablo tiene probablemente un padre, llamado Juan.
 < 
 * 
 * Mis conclusiones:
 < Pablo es hijo de Juan y Ana.
 * 
 * Mis suposiciones:
+< Pablo tiene probablemente 2 padre [plural de 'padre' es desconocida], llamados Juan y Ana.
 < Ana es probablemente padre de Pablo.
 < Ana es probablemente parte de una familia.
-< Pablo tiene probablemente 2 padre [plural de 'padre' es desconocida], llamados Juan y Ana.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Pablo es hijo de Juan y Ana.
 < 
 * 
@@ -88,6 +86,11 @@
 < Juan es probablemente un hombre.
 < Santiago es probablemente un hombre.
 < 
+* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
 ! 
 ! No se acepta esta frase, porque está en conflicto con:
 < Cada persona es un hombre o una mujer.
@@ -97,11 +100,11 @@
 < ¿Es Cruz un hombre o una mujer?
 < 
 * 
-* Mis preguntas que son contestadas:
+* Mis preguntas que han sido respondidas:
 < ¿Es Cruz un hombre o una mujer?
 * 
-* Mis conclusiones:
-< Cruz es un hombre.
+* Mis suposiciones:
+< Cruz es probablemente un hombre.
 < 
 * 
 * Mis conclusiones:

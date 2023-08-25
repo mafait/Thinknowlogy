@@ -3,6 +3,11 @@
 < Chaque famille a parents et enfants.
 < 
 * 
+* Mes hypothèses:
+< Un homme n'est probablement pas une femme.
+< Une femme n'est probablement pas un homme.
+< 
+* 
 * Mes questions:
 < Est Amélie un homme ou une femme?
 < 

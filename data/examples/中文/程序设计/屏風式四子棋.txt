@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To demonstrate programming in natural language.
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -27,9 +27,12 @@
 # 请参阅全文: https://zh.wikipedia.org/wiki/%E5%B1%8F%E9%A2%A8%E5%BC%8F%E5%9B%9B%E5%AD%90%E6%A3%8B
 #----------------------------------------------------------------------------
 
-# Initial definitions.
-每个轮到都是你的或我的。
+# Initial definitions: Collect specification words.
 每个选择都是A、B、C、D、E、F或G。
+每个解决方案的方法都可以成为倒。
+每个解决方案的方法都可以成为忙或完成了。
+每个解决方案战略是防御性或独家。
+每个轮到都是你的或我的。
 每个解决方案水平都是低或高。
 
 # Solve the problem.

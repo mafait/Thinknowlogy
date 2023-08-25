@@ -1,7 +1,45 @@
 ﻿* 
+* Mes hypothèses:
+< Un homme n'est probablement pas une femme.
+< Une femme n'est probablement pas un homme.
+< 
+* 
+* Mes conclusions:
+< Chaque femme n'est pas masculin.
+< 
+* 
+* Mes hypothèses qui ont été conclues:
+< Chaque homme n'est pas une femme.
+< Chaque femme n'est pas un homme.
+* 
+* Mes conclusions:
+< Chaque homme n'est pas féminin.
+< Chaque personne est masculin ou féminin.
+* 
+* Mes hypothèses:
+< Un homme est probablement une personne.
+< Une femme est probablement une personne.
+< 
+* 
 * Mes conclusions:
 < Parents et enfants sont partie de chaque famille.
 < 
+* 
+* Mes hypothèses:
+< Un père n'est probablement pas une mère.
+< Une mère n'est probablement pas un père.
+< 
+* 
+* Mes hypothèses:
+< Un fils n'est probablement pas une fille.
+< Une fille n'est probablement pas un fils.
+< 
+* 
+* Mes conclusions:
+< Chaque père est masculin.
+< Chaque père n'est pas féminin.
+< Chaque père n'est pas une femme.
+< Chaque femme n'est pas un père.
 * 
 * Mes hypothèses:
 < Un père est probablement une personne.
@@ -9,24 +47,66 @@
 < Un parent est probablement une personne.
 < 
 * 
+* Mes hypothèses qui ont été conclues:
+< Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
+* 
 * Mes conclusions:
+< Chaque mère est féminin.
+< Chaque mère n'est pas masculin.
+< Chaque mère n'est pas un homme.
+< Chaque homme n'est pas une mère.
 < Chaque parent est une femme ou un homme.
+< Chaque parent est féminin ou masculin.
 * 
 * Mes hypothèses:
 < Une mère est probablement une personne.
 < Une mère est probablement un parent.
 < 
 * 
-* Mes hypothèses:
-< Un fils est probablement une personne.
-< Un enfant est probablement une personne.
+* Mes conclusions:
+< Chaque jeune-fille n'est pas masculin.
+< Chaque jeune-fille n'est pas un père.
+< Chaque jeune-fille n'est pas un homme.
+< Chaque père n'est pas une jeune-fille.
+< Chaque homme n'est pas une jeune-fille.
 < 
 * 
 * Mes conclusions:
+< Chaque garçon n'est pas féminin.
+< Chaque garçon n'est pas une jeune-fille.
+< Chaque garçon n'est pas une mère.
+< Chaque garçon n'est pas une femme.
+< Chaque jeune-fille n'est pas un garçon.
+< Chaque mère n'est pas un garçon.
+< Chaque femme n'est pas un garçon.
+< 
+* 
+* Mes conclusions:
+< Chaque fils est masculin.
+< Chaque fils n'est pas féminin.
+* 
+* Mes hypothèses:
+< Un fils est probablement un enfant.
+< Un fils est probablement une personne.
+< Un enfant est probablement une personne.
+< Un garçon n'est probablement pas un homme.
+< Un garçon est probablement une personne.
+< Un homme n'est probablement pas un garçon.
+< 
+* 
+* Mes conclusions:
+< Chaque fille est féminin.
+< Chaque fille n'est pas masculin.
+< Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
 * Mes hypothèses:
+< Une fille est probablement un enfant.
 < Une fille est probablement une personne.
+< Une jeune-fille n'est probablement pas une femme.
+< Une jeune-fille est probablement une personne.
+< Une femme n'est probablement pas une jeune-fille.
 < 
 * 
 * Mes conclusions:
@@ -37,6 +117,7 @@
 < Olivier a probablement un enfant.
 * 
 * Mes questions:
+< Est Olivier féminin ou masculin?
 < Est Olivier une femme ou un homme?
 < Est Olivier un père ou une mère?
 < 
@@ -49,6 +130,7 @@
 < Patrique a probablement un enfant.
 * 
 * Mes questions:
+< Est Patrique féminin ou masculin?
 < Est Patrique une femme ou un homme?
 < Est Patrique un père ou une mère?
 < 
@@ -57,64 +139,75 @@
 < Olivier a probablement un enfant.
 * 
 * Mes conclusions:
-< Julien est partie d'une famille.
 < Olivier a un enfant, appelé Julien.
+< Julien est partie d'une famille.
 * 
 * Mes hypothèses:
+< Olivier est probablement un parent de Julien.
 < Julien est probablement une personne.
 < Julien a probablement un parent, appelé Olivier.
-< Olivier est probablement un parent de Julien.
 * 
 * Mes questions:
+< Est Julien féminin ou masculin?
 < Est Julien une jeune-fille, une femme, un garçon ou un homme?
 < Est Julien un fils ou une fille?
 < 
 * 
 * Mes conclusions:
 < Amélie est une femme.
-< Amélie est féminine.
+< Amélie n'est pas un père.
+< Amélie n'est pas un garçon.
+< Amélie n'est pas masculin.
+< Amélie n'est pas un homme.
+< Amélie est féminin.
+< Amélie n'est pas un fils.
 < Pascal a une mère, appelée Amélie.
 * 
 * Mes hypothèses:
+< Amélie n'est probablement pas une jeune-fille.
 < Amélie est probablement une personne.
-< Amélie n'est probablement pas un homme.
-< Amélie a probablement un enfant, appelé Pascal.
+< Amélie a possible un enfant, appelé Pascal.
 < Amélie est probablement un parent de Pascal.
 < Amélie est probablement partie d'une famille.
-< Amélie n'est probablement pas un père.
-< Pascal est probablement un enfant de Amélie.
-< Pascal est probablement partie d'une famille.
-< Pascal est possible une personne.
+< Pascal est possible un enfant de Amélie.
+< Pascal est possible partie d'une famille.
+< Pascal est peut-être une personne.
 < Pascal a probablement un parent, appelée Amélie.
 * 
 * Mes questions:
 < Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 < Est Pascal un fils ou une fille?
+< Est Pascal féminin ou masculin?
 < 
 * Je sais que.
 * 
 * 
 * Mes conclusions:
 < Guillaume était un homme.
+< Guillaume ne était pas une mère.
+< Guillaume ne était pas une jeune-fille.
+< Guillaume ne était pas féminin.
+< Guillaume ne était pas une femme.
 < Guillaume était masculin.
+< Guillaume ne était pas une fille.
 < Armand n'a aucun père plus.
 < Armand avait un père, appelé Guillaume.
 * 
 * Mes hypothèses:
-< Guillaume a probablement un enfant, appelé Armand.
+< Guillaume a possible un enfant, appelé Armand.
+< Guillaume ne était probablement pas un garçon.
 < Guillaume était probablement une personne.
-< Guillaume ne était probablement pas une femme.
 < Guillaume était probablement un parent de Armand.
 < Guillaume était probablement partie d'une famille.
-< Guillaume ne était probablement pas une mère.
-< Armand est probablement un enfant de Guillaume.
-< Armand est probablement partie d'une famille.
-< Armand est possible une personne.
+< Armand est possible un enfant de Guillaume.
+< Armand est possible partie d'une famille.
+< Armand est peut-être une personne.
 < Armand avait probablement un parent, appelé Guillaume.
 * 
 * Mes questions:
 < Est Armand une jeune-fille, une femme, un garçon ou un homme?
 < Est Armand un fils ou une fille?
+< Est Armand féminin ou masculin?
 < 
 * Je sais que.
 * 

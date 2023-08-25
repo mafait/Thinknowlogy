@@ -1,9 +1,9 @@
 ﻿/*	Class:			GlobalVariables
- *	Purpose:		To hold the global variables
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Holding global variables
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -35,8 +35,7 @@ class GlobalVariables
 	friend class AdminReadCreateWords;
 	friend class AdminReadFile;
 	friend class AdminReadSentence;
-	friend class AdminReasoningNew;
-	friend class AdminReasoningOld;
+	friend class AdminReasoning;
 	friend class AdminSpecification;
 	friend class AdminWrite;
 	friend class CollectionItem;
@@ -76,6 +75,7 @@ class GlobalVariables
 
 	// Protected global variables
 
+	bool hasConfirmedAnySpecification = false;
 	bool hasDisplayedIntegrityWarning = false;
 	bool hasDisplayedMessage = false;
 	bool hasDisplayedWarning = false;
@@ -122,7 +122,7 @@ class GlobalVariables
 	WordItem *firstPredefinedWordItem = NULL;
 	WordItem *firstSpecificationWordItem = NULL;
 	WordItem *firstTouchedWordItem = NULL;
-	WordItem *firstUserProperNounWordItem = NULL;
+	WordItem *firstUserDefinedProperNounWordItem = NULL;
 	WordItem *firstWordItem = NULL;
 	WordItem *lastCollectionWordItem = NULL;
 	WordItem *lastContextWordItem = NULL;

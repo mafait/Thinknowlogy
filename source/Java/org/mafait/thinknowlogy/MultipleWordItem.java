@@ -1,10 +1,10 @@
 ﻿/*	Class:			MultipleWordItem
  *	Parent class:	Item
- *	Purpose:		To store info about multiple words
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing info about multiple words
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -55,6 +55,7 @@ class MultipleWordItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		String wordString;
@@ -66,7 +67,7 @@ class MultipleWordItem extends Item
 		( wordString = multipleWordItem_.wordTypeString( true, wordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -77,6 +78,7 @@ class MultipleWordItem extends Item
 			}
 		}
 
+	@Override
 	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( multipleWordItem_ == null ? false :
@@ -84,18 +86,20 @@ class MultipleWordItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : multipleWordItem_.itemNr() == queryItemNr ) );
 		}
 
+	@Override
 	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( wordTypeNr_ == queryWordTypeNr );
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem thisWordItem = myWordItem();
-		String languageNameString = thisWordItem.languageNameString( wordTypeLanguageNr_ );
+		WordItem _myWordItem = myWordItem();
+		String languageNameString = _myWordItem.languageNameString( wordTypeLanguageNr_ );
 		StringBuffer queryStringBuffer;
 		String wordString;
-		String wordTypeString = thisWordItem.wordTypeNameString( wordTypeNr_ );
+		String wordTypeString = _myWordItem.wordTypeNameString( wordTypeNr_ );
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
@@ -122,6 +126,7 @@ class MultipleWordItem extends Item
 		return queryStringBuffer;
 		}
 
+	@Override
 	protected BoolResultType findMatchingWordReferenceString( String queryString )
 		{
 		if( multipleWordItem_ != null )
@@ -157,7 +162,7 @@ class MultipleWordItem extends Item
 		{
 		return multipleWordItem_;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"The Lord is my light and my salvation -

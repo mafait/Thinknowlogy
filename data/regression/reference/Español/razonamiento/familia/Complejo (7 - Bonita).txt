@@ -1,36 +1,117 @@
 ﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis conclusiones:
+< Cada mujer no es masculino.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hombre no es una mujer.
+< Cada mujer no es un hombre.
+* 
+* Mis conclusiones:
+< Cada hombre no es femenina.
+< Cada persona es masculino o femenina.
+* 
+* Mis suposiciones:
+< Un hombre es probablemente una persona.
+< Una mujer es probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Padres y hijos son parte de cada familia.
 < 
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Un hijo no es probablemente una hija.
+< Una hija no es probablemente un hijo.
 < 
 * 
 * Mis conclusiones:
+< Cada padre es masculino.
+< Cada padre no es femenina.
+< Cada padre no es una mujer.
+< Cada mujer no es un padre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
+< Cada padre no es una madre.
+* 
+* Mis conclusiones:
+< Cada madre es femenina.
+< Cada madre no es masculino.
+< Cada madre no es un hombre.
+< Cada hombre no es una madre.
+< Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis suposiciones:
-< Un hijo es probablemente una persona.
+* Mis conclusiones:
+< Cada niña no es masculino.
+< Cada niña no es un padre.
+< Cada niña no es un hombre.
+< Cada padre no es una niña.
+< Cada hombre no es una niña.
 < 
 * 
 * Mis conclusiones:
+< Cada niño no es femenina.
+< Cada niño no es una niña.
+< Cada niño no es una madre.
+< Cada niño no es una mujer.
+< Cada niña no es un niño.
+< Cada madre no es un niño.
+< Cada mujer no es un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es masculino.
+< Cada hijo no es femenina.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Un niño no es probablemente un hombre.
+< Un niño es probablemente una persona.
+< Un hombre no es probablemente un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hija es femenina.
+< Cada hija no es masculino.
+< Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
+< Una niña no es probablemente una mujer.
+< Una niña es probablemente una persona.
+< Una mujer no es probablemente una niña.
 < 
 * 
 * Mis conclusiones:
 < Juan es parte de una familia.
 < Juan es un hombre.
+< Juan no es una madre.
+< Juan no es una niña.
+< Juan no es femenina.
 < Juan no es una mujer.
 < Juan es masculino.
-< Juan no es una madre.
+< Juan no es una hija.
 < Pablo tiene un padre, llamado Juan.
 < Pablo tiene 2 padres, llamados Juan y Ana.
 < Pablo tiene una madre, llamada Ana.
@@ -42,102 +123,124 @@
 < Luisa tiene una madre, llamada Ana.
 < Ana es parte de una familia.
 < Ana es una mujer.
+< Ana no es un padre.
+< Ana no es un niño.
+< Ana no es masculino.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana no es un padre.
+< Ana no es un hijo.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
-< Juan tiene posiblemente una hija, llamada Luisa.
+< Juan no es probablemente un niño.
+< Juan tiene puede-ser una hija, llamada Luisa.
+< Pablo es probablemente parte de una familia.
 < Pablo es posiblemente una persona.
-< Pablo es posiblemente parte de una familia.
-< José es posiblemente parte de una familia.
+< José es probablemente parte de una familia.
 < José es posiblemente una persona.
-< Luisa es posiblemente hija de Juan y Ana.
-< Luisa no es posiblemente un hijo.
-< Luisa es posiblemente parte de una familia.
+< Luisa es puede-ser hija de Juan y Ana.
+< Luisa es puede-ser parte de una familia.
+< Luisa es puede-ser femenina.
+< Luisa no es puede-ser un hijo.
+< Luisa no es puede-ser un niño.
+< Luisa no es puede-ser un padre.
+< Luisa no es puede-ser un hombre.
+< Luisa no es puede-ser masculino.
 < Luisa es puede-ser una persona.
-< Luisa no es posiblemente un niño y un hombre.
+< Ana no es probablemente una niña.
 < Ana es probablemente una persona.
-< Ana tiene posiblemente una hija, llamada Luisa.
+< Ana tiene puede-ser una hija, llamada Luisa.
 * 
 * Mis preguntas:
+< ¿Es Pablo femenina o masculino?
 < ¿Es Pablo una niña, una mujer, un niño o un hombre?
 < ¿Es Pablo un hijo o una hija?
+< ¿Es José femenina o masculino?
 < ¿Es José una niña, una mujer, un niño o un hombre?
 < ¿Es José un hijo o una hija?
 < ¿Es Luisa una niña o una mujer?
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Pablo tiene un padre, llamado Juan.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Luisa tiene una madre, llamada Ana.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Luisa tiene 2 padres, llamados Juan y Ana.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < José tiene un padre, llamado Juan.
 < 
 * 
-* Mis preguntas que son contestadas:
+* Mis preguntas que han sido respondidas:
 < ¿Es Pablo un hijo o una hija?
 * 
-* Mis suposiciones que no son ocultos más:
+* Mis suposiciones que ya no se han ocultado:
 < Pablo es probablemente hijo de Juan y Ana.
 < Juan tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
 * 
-* Mis suposiciones que se ajustan:
+* Mis suposiciones que se han ajustado:
 < Luisa es probablemente parte de una familia.
-< José es probablemente parte de una familia.
 * 
-* Mis suposiciones que se concluyen:
+* Mis suposiciones que se han concluido:
 < Pablo es parte de una familia.
 * 
-* Mis suposiciones que no son ocultos más:
+* Mis suposiciones que ya no se han ocultado:
 < Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
 * 
-* Mis preguntas ajustadas:
-< ¿Es Pablo un niño o un hombre?
-* 
-* Mis suposiciones que se ajustan:
+* Mis suposiciones que se han ajustado:
 < Pablo es probablemente una persona.
 * 
+* Mis preguntas que se han ajustado:
+< ¿Es Pablo un hombre o un niño?
+* 
+* Mis preguntas que han sido respondidas:
+< ¿Es Pablo femenina o masculino?
+* 
 * Mis conclusiones:
+< Pablo no es femenina.
+< Pablo es masculino.
 < Pablo no es una hija.
-< Pablo no es una niña y una mujer.
+< Pablo no es una niña.
+< Pablo no es una madre.
+< Pablo no es una mujer.
 < 
 * 
-* Mis suposiciones que se confirman:
-< Luisa es posiblemente hija de Juan y Ana.
+* Mis suposiciones que han sido confirmadas:
+< Luisa es puede-ser hija de Juan y Ana.
 * 
-* Mis suposiciones que se concluyen:
-< Juan tiene una hija, llamada Luisa.
-< Ana tiene una hija, llamada Luisa.
-< Luisa no es un hijo.
+* Mis suposiciones que se han concluido:
 < Luisa es parte de una familia.
+< Juan tiene una hija, llamada Luisa.
+< Luisa es femenina.
+< Luisa no es un hijo.
+< Luisa no es un niño.
+< Luisa no es un padre.
+< Luisa no es un hombre.
+< Luisa no es masculino.
 * 
-* Mis suposiciones que se ajustan:
+* Mis suposiciones que se han ajustado:
 < Luisa es probablemente una persona.
 * 
-* Mis suposiciones que se concluyen:
-< Luisa no es un niño y un hombre.
+* Mis suposiciones que se han concluido:
+< Ana tiene una hija, llamada Luisa.
 < 
 * 
 * Mis conclusiones:
 < Juan es el padre de Peyo.
 * 
 * Mis suposiciones:
-< Peyo es posiblemente una persona.
-< Peyo es posiblemente parte de una familia.
 < Juan tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Peyo.
+< Peyo es probablemente parte de una familia.
+< Peyo es posiblemente una persona.
 * 
 * Mis preguntas:
+< ¿Es Peyo femenina o masculino?
 < ¿Es Peyo una niña, una mujer, un niño o un hombre?
 < ¿Es Peyo un hijo o una hija?
 < 
@@ -145,124 +248,250 @@
 * Mis conclusiones:
 < Juan es un hombre. Porque:
 <	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
 <	- Cada padre es un hombre.
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
-< Juan no es una mujer. Porque:
-<	- Juan es un padre.
-<	- Cada padre es una mujer o un hombre.
+< Juan no es una niña. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre no es una niña.
+* 	y:
 <	- Juan es un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Juan es masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una niña.
+< Juan no es una madre. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Juan es masculino.
+<	- Cada madre no es masculino.
+< Juan no es femenina. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es femenina.
+< Juan no es una mujer. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre no es una mujer.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Juan es masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una mujer.
 < Juan es masculino. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre es masculino.
+* 	y:
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre es masculino.
+< Juan no es una hija. Porque:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
-* 	y:
-<	- Luisa tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-<	- Nombre propio "Luisa" es probablemente femenino.
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
-< Juan no es una madre. Porque:
-<	- Juan es un padre.
-<	- Cada padre es un padre o una madre.
 < Juan es el padre de Peyo. Porque:
 <	- Peyo tiene un padre, llamado Juan.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
 <	- Peyo tiene un padre, llamado Juan.
-<	- Un padre es probablemente una persona.
-* 	y:
 <	- José tiene un padre, llamado Juan.
-<	- Un padre es probablemente una persona.
-* 	y:
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
 <	- Pablo tiene un padre, llamado Juan.
 <	- Un padre es probablemente una persona.
 * 	y:
 <	- Juan es un padre.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
 <	- Juan es un hombre.
+<	- Un hombre es probablemente una persona.
+< Juan no es probablemente un niño. Porque:
+<	- Juan es un hombre.
+<	- Un hombre no es probablemente un niño.
 < Juan tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Peyo. Porque:
+<	- Cada familia tiene padres y hijos.
 <	- Peyo tiene un padre, llamado Juan.
 <	- Pablo tiene un padre, llamado Juan.
 <	- José tiene un padre, llamado Juan.
 <	- Luisa tiene un padre, llamado Juan.
+* 	y:
 <	- Cada familia tiene padres y hijos.
-* 	y:
-<	- Pablo es probablemente hijo de Juan y Ana.
-<	- Luisa es hija de Juan y Ana.
-* 	y:
+<	- Juan es el padre de Peyo.
 <	- Juan es el padre de Pablo, José y Luisa.
-<	- Cada familia tiene padres y hijos.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Pablo es probablemente hijo de Juan y Ana.
 < 
 * 
 * Mis conclusiones:
 < Ana tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
 < Ana es parte de una familia. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- José tiene 2 padres, llamados Juan y Ana.
 <	- Luisa tiene 2 padres, llamados Juan y Ana.
 <	- Padres son parte de cada familia.
 * 	y:
 <	- Ana es una madre.
 <	- Padres son parte de cada familia.
-< Ana no es un hombre. Porque:
-<	- Ana es probablemente una persona.
-<	- Cada persona es un hombre o una mujer.
-<	- Ana es una mujer.
+< Ana es una mujer. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre es una mujer.
 * 	y:
 <	- Ana es una madre.
-<	- Cada padre es una mujer o un hombre.
-<	- Ana es una mujer.
-< Ana es una mujer. Porque:
-<	- Ana es una madre.
 <	- Cada madre es una mujer.
+< Ana no es un niño. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un niño.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un niño.
+* 	y:
+<	- Ana es femenina.
+<	- Cada niño no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un niño.
+< Ana no es un padre. Porque:
+<	- Ana es una madre.
+<	- Cada madre no es un padre.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un padre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un padre.
+< Ana no es masculino. Porque:
+<	- Ana es una madre.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es masculino.
+< Ana no es un hombre. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un hombre.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hombre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hombre no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hombre.
 < Ana es femenina. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre es femenina.
+* 	y:
 <	- Ana es una mujer.
 <	- Cada mujer es femenina.
-< Ana no es un padre. Porque:
-<	- Cada padre es un padre o una madre.
+* 	y:
 <	- Ana es una madre.
+<	- Cada madre es femenina.
+< Ana no es un hijo. Porque:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
 * 
 * Mis suposiciones:
 < Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa. Porque:
-<	- Pablo es probablemente hijo de Juan y Ana.
 <	- Luisa es hija de Juan y Ana.
+<	- Pablo es probablemente hijo de Juan y Ana.
 * 	y:
-<	- Ana es la madre de Pablo, José y Luisa.
 <	- Cada familia tiene padres y hijos.
+<	- Ana es la madre de Pablo, José y Luisa.
 * 	y:
+<	- Cada familia tiene padres y hijos.
 <	- Pablo tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
 <	- Luisa tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
 < Ana es probablemente una persona. Porque:
 <	- Luisa tiene 2 padres, llamados Juan y Ana.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Una madre es probablemente una persona.
+* 	y:
 <	- Ana es una mujer.
+<	- Una mujer es probablemente una persona.
 * 	y:
 <	- Ana es una madre.
 <	- Una madre es probablemente una persona.
+< Ana no es probablemente una niña. Porque:
+<	- Ana es una mujer.
+<	- Una mujer no es probablemente una niña.
 < 
 * 
 * Mis conclusiones:
 < Pablo es parte de una familia. Porque:
 <	- Pablo es un hijo.
 <	- Hijos son parte de cada familia.
+< Pablo no es femenina. Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo no es femenina.
+< Pablo es masculino. Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo es masculino.
 < Pablo no es una hija. Porque:
-<	- Pablo es un hijo.
-<	- Cada hijo es un hijo o una hija.
-< Pablo no es una niña y una mujer. Porque:
-<	- Pablo es un hijo.
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
-<	- Cada hijo es un niño o un hombre.
+<	- Pablo es masculino.
+<	- Cada hija no es masculino.
+< Pablo no es una niña. Porque:
+<	- Pablo es masculino.
+<	- Cada niña no es masculino.
+< Pablo no es una madre. Porque:
+<	- Pablo es masculino.
+<	- Cada madre no es masculino.
+< Pablo no es una mujer. Porque:
+<	- Pablo es masculino.
+<	- Cada mujer no es masculino.
 < Pablo tiene 2 padres, llamados Juan y Ana. Porque:
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Ana es la madre de Pablo, José y Luisa.
@@ -273,32 +502,18 @@
 < Pablo es probablemente una persona. Porque:
 <	- Pablo es un hijo.
 <	- Un hijo es probablemente una persona.
-* 	y:
-<	- Pablo tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
-* 	y:
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
-* 	y:
-<	- Pablo tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
 < Pablo es probablemente hijo de Juan y Ana. Porque:
+<	- Cada familia tiene padres y hijos.
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Ana es la madre de Pablo, José y Luisa.
-<	- Cada familia tiene padres y hijos.
 * 	y:
+<	- Cada familia tiene padres y hijos.
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-* 	y:
 <	- Pablo tiene un padre, llamado Juan.
 <	- Pablo tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
 * 
 * Mis preguntas:
-< ¿Es Pablo un niño o un hombre? Porque:
+< ¿Es Pablo un hombre o un niño? Porque:
 <	- Pablo es un hijo.
 <	- Cada hijo es un niño o un hombre.
 < 
@@ -312,71 +527,71 @@
 * 
 * Mis suposiciones:
 < José es probablemente parte de una familia. Porque:
-<	- Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
+<	- ¿Es José un hijo o una hija?
 <	- Hijos son parte de cada familia.
 * 	y:
 <	- Juan tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Peyo.
-<	- Hijos son parte de cada familia.
-* 	y:
-<	- ¿Es José un hijo o una hija?
+<	- Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
 <	- Hijos son parte de cada familia.
 < José es posiblemente una persona. Porque:
 <	- José tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
-* 	y:
 <	- José tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
-* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 
 * Mis preguntas:
+< ¿Es José femenina o masculino? Porque:
+<	- José tiene un padre, llamado Juan.
+<	- José tiene 2 padres, llamados Juan y Ana.
+<	- José tiene una madre, llamada Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es femenina o masculino.
+* 	y:
+<	- ¿Es José una niña, una mujer, un niño o un hombre?
+<	- Cada niño es masculino.
+<	- Cada niña es femenina.
+<	- Cada mujer es femenina.
+<	- Cada hombre es masculino.
+* 	y:
+<	- José es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
 < ¿Es José una niña, una mujer, un niño o un hombre? Porque:
 <	- José tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
-* 	y:
 <	- José tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
-* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 < ¿Es José un hijo o una hija? Porque:
 <	- José tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-* 	y:
 <	- José tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 < 
 * 
 * Mis conclusiones:
-< Luisa es parte de una familia. Porque:
-<	- Ana tiene probablemente 3 hijos, llamados Pablo, José y Luisa.
-<	- Hijos son parte de cada familia.
-* 	y:
-<	- Juan tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Peyo.
-<	- Hijos son parte de cada familia.
-* 	y:
+< Luisa es femenina. Porque:
 <	- Luisa es hija de Juan y Ana.
-<	- Hijos son parte de cada familia.
+<	- Cada hija es femenina.
 < Luisa no es un hijo. Porque:
-<	- Cada hijo es un hijo o una hija.
+<	- Luisa es femenina.
+<	- Cada hijo no es femenina.
+< Luisa no es un niño. Porque:
+<	- Luisa es femenina.
+<	- Cada niño no es femenina.
+< Luisa no es un padre. Porque:
+<	- Luisa es femenina.
+<	- Cada padre no es femenina.
+< Luisa no es un hombre. Porque:
+<	- Luisa es femenina.
+<	- Cada hombre no es femenina.
+< Luisa no es masculino. Porque:
 <	- Luisa es hija de Juan y Ana.
-< Luisa no es un niño y un hombre. Porque:
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+<	- Cada hija no es masculino.
+< Luisa es parte de una familia. Porque:
 <	- Luisa es hija de Juan y Ana.
-<	- Cada hija es una niña o una mujer.
+<	- Hijos son parte de cada familia.
 < Luisa tiene un padre, llamado Juan. Porque:
 <	- Juan es el padre de Pablo, José y Luisa.
 * 
@@ -392,15 +607,25 @@
 < 
 * 
 * Mis suposiciones:
+< Peyo es probablemente parte de una familia. Porque:
+<	- ¿Es Peyo un hijo o una hija?
+<	- Hijos son parte de cada familia.
+* 	y:
+<	- Juan tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Peyo.
+<	- Hijos son parte de cada familia.
 < Peyo es posiblemente una persona. Porque:
 <	- Peyo tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< Peyo es posiblemente parte de una familia. Porque:
-<	- ¿Es Peyo un hijo o una hija?
-<	- Hijos son parte de cada familia.
 * 
 * Mis preguntas:
+< ¿Es Peyo femenina o masculino? Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es femenina o masculino.
+* 	y:
+<	- Peyo es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
 < ¿Es Peyo una niña, una mujer, un niño o un hombre? Porque:
 <	- Peyo tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
@@ -415,13 +640,17 @@
 < Ana es la madre de Bonita.
 * 
 * Mis suposiciones:
-< Bonita es posiblemente hija de Ana.
-< Bonita no es posiblemente un hijo.
-< Bonita es posiblemente parte de una familia.
-< Bonita es puede-ser una persona.
-< Bonita no es posiblemente un niño y un hombre.
 < Ana tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Bonita.
-< Ana tiene posiblemente 2 hija [plural de 'hija' es desconocida], llamados Luisa y Bonita.
+< Ana tiene puede-ser 2 hija [plural de 'hija' es desconocida], llamados Luisa y Bonita.
+< Bonita es probablemente parte de una familia.
+< Bonita es puede-ser hija de Ana.
+< Bonita es puede-ser femenina.
+< Bonita no es puede-ser un hijo.
+< Bonita no es puede-ser un niño.
+< Bonita no es puede-ser un padre.
+< Bonita no es puede-ser un hombre.
+< Bonita no es puede-ser masculino.
+< Bonita es puede-ser una persona.
 * 
 * Mis preguntas:
 < ¿Es Bonita una niña o una mujer?
@@ -430,122 +659,238 @@
 * Mis conclusiones:
 < Juan es un hombre. Porque:
 <	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
 <	- Cada padre es un hombre.
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
-< Juan no es una mujer. Porque:
-<	- Juan es un padre.
-<	- Cada padre es una mujer o un hombre.
+< Juan no es una niña. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre no es una niña.
+* 	y:
 <	- Juan es un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Juan es masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una niña.
+< Juan no es una madre. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Juan es masculino.
+<	- Cada madre no es masculino.
+< Juan no es femenina. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es femenina.
+< Juan no es una mujer. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre no es una mujer.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Juan es masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una mujer.
 < Juan es masculino. Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Pablo tiene un padre, llamado Juan.
+<	- Cada padre es masculino.
+* 	y:
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre es masculino.
+< Juan no es una hija. Porque:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
-* 	y:
-<	- Luisa tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-<	- Nombre propio "Luisa" es probablemente femenino.
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
-< Juan no es una madre. Porque:
-<	- Juan es un padre.
-<	- Cada padre es un padre o una madre.
 < Juan es el padre de Peyo. Porque:
 <	- Peyo tiene un padre, llamado Juan.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
 <	- Peyo tiene un padre, llamado Juan.
-<	- Un padre es probablemente una persona.
-* 	y:
 <	- José tiene un padre, llamado Juan.
-<	- Un padre es probablemente una persona.
-* 	y:
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
 <	- Pablo tiene un padre, llamado Juan.
 <	- Un padre es probablemente una persona.
 * 	y:
 <	- Juan es un padre.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
 <	- Juan es un hombre.
+<	- Un hombre es probablemente una persona.
+< Juan no es probablemente un niño. Porque:
+<	- Juan es un hombre.
+<	- Un hombre no es probablemente un niño.
 < Juan tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Peyo. Porque:
+<	- Cada familia tiene padres y hijos.
 <	- Peyo tiene un padre, llamado Juan.
 <	- Pablo tiene un padre, llamado Juan.
 <	- José tiene un padre, llamado Juan.
 <	- Luisa tiene un padre, llamado Juan.
+* 	y:
 <	- Cada familia tiene padres y hijos.
-* 	y:
-<	- Pablo es probablemente hijo de Juan y Ana.
-<	- Luisa es hija de Juan y Ana.
-* 	y:
+<	- Juan es el padre de Peyo.
 <	- Juan es el padre de Pablo, José y Luisa.
-<	- Cada familia tiene padres y hijos.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Pablo es probablemente hijo de Juan y Ana.
 < 
 * 
 * Mis conclusiones:
+< Ana es una mujer. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre es una mujer.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre es una mujer.
+< Ana no es un niño. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un niño.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un niño.
+* 	y:
+<	- Ana es femenina.
+<	- Cada niño no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un niño.
+< Ana no es un padre. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un padre.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un padre.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un padre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada padre no es femenina.
+< Ana no es masculino. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es masculino.
+< Ana no es un hombre. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un hombre.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hombre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hombre no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hombre.
+< Ana es femenina. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre es femenina.
+< Ana no es un hijo. Porque:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
 < Ana es parte de una familia. Porque:
 <	- Bonita tiene una madre, llamada Ana.
-<	- Padres son parte de cada familia.
-* 	y:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- José tiene 2 padres, llamados Juan y Ana.
 <	- Luisa tiene 2 padres, llamados Juan y Ana.
 <	- Padres son parte de cada familia.
 * 	y:
 <	- Ana es una madre.
 <	- Padres son parte de cada familia.
-< Ana no es un hombre. Porque:
-<	- Ana es probablemente una persona.
-<	- Cada persona es un hombre o una mujer.
-<	- Ana es una mujer.
-* 	y:
-<	- Ana es una madre.
-<	- Cada padre es una mujer o un hombre.
-<	- Ana es una mujer.
-< Ana es una mujer. Porque:
-<	- Ana es una madre.
-<	- Cada madre es una mujer.
-< Ana es femenina. Porque:
-<	- Ana es una mujer.
-<	- Cada mujer es femenina.
-< Ana no es un padre. Porque:
-<	- Cada padre es un padre o una madre.
-<	- Ana es una madre.
 < Ana es la madre de Bonita. Porque:
 <	- Bonita tiene una madre, llamada Ana.
 * 
 * Mis suposiciones:
+< Ana no es probablemente una niña. Porque:
+<	- Ana es una mujer.
+<	- Una mujer no es probablemente una niña.
 < Ana es probablemente una persona. Porque:
 <	- Bonita tiene una madre, llamada Ana.
-<	- Un padre es probablemente una persona.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Una madre es probablemente una persona.
 * 	y:
 <	- Luisa tiene 2 padres, llamados Juan y Ana.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
 <	- Ana es una mujer.
+<	- Una mujer es probablemente una persona.
 * 	y:
 <	- Ana es una madre.
 <	- Una madre es probablemente una persona.
 < Ana tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Bonita. Porque:
+<	- Cada familia tiene padres y hijos.
 <	- Bonita tiene una madre, llamada Ana.
 <	- Pablo tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
 <	- Luisa tiene una madre, llamada Ana.
+* 	y:
 <	- Cada familia tiene padres y hijos.
-* 	y:
-<	- Bonita es posiblemente hija de Ana.
-<	- Pablo es probablemente hijo de Juan y Ana.
-<	- Luisa es hija de Juan y Ana.
-* 	y:
 <	- Ana es la madre de Bonita.
 <	- Ana es la madre de Pablo, José y Luisa.
-<	- Cada familia tiene padres y hijos.
-< Ana tiene posiblemente 2 hija [plural de 'hija' es desconocida], llamados Luisa y Bonita. Porque:
-<	- Bonita es posiblemente hija de Ana.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Pablo es probablemente hijo de Juan y Ana.
+< Ana tiene puede-ser 2 hija [plural de 'hija' es desconocida], llamados Luisa y Bonita. Porque:
+<	- Bonita es puede-ser hija de Ana.
 <	- Luisa es hija de Juan y Ana.
 < 
 * 
@@ -553,13 +898,24 @@
 < Pablo es parte de una familia. Porque:
 <	- Pablo es un hijo.
 <	- Hijos son parte de cada familia.
+< Pablo no es femenina. Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo no es femenina.
+< Pablo es masculino. Porque:
+<	- Pablo es un hijo.
+<	- Cada hijo es masculino.
 < Pablo no es una hija. Porque:
-<	- Pablo es un hijo.
-<	- Cada hijo es un hijo o una hija.
-< Pablo no es una niña y una mujer. Porque:
-<	- Pablo es un hijo.
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
-<	- Cada hijo es un niño o un hombre.
+<	- Pablo es masculino.
+<	- Cada hija no es masculino.
+< Pablo no es una niña. Porque:
+<	- Pablo es masculino.
+<	- Cada niña no es masculino.
+< Pablo no es una madre. Porque:
+<	- Pablo es masculino.
+<	- Cada madre no es masculino.
+< Pablo no es una mujer. Porque:
+<	- Pablo es masculino.
+<	- Cada mujer no es masculino.
 < Pablo tiene 2 padres, llamados Juan y Ana. Porque:
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Ana es la madre de Pablo, José y Luisa.
@@ -570,32 +926,18 @@
 < Pablo es probablemente una persona. Porque:
 <	- Pablo es un hijo.
 <	- Un hijo es probablemente una persona.
-* 	y:
-<	- Pablo tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
-* 	y:
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
-* 	y:
-<	- Pablo tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
 < Pablo es probablemente hijo de Juan y Ana. Porque:
+<	- Cada familia tiene padres y hijos.
 <	- Juan es el padre de Pablo, José y Luisa.
 <	- Ana es la madre de Pablo, José y Luisa.
-<	- Cada familia tiene padres y hijos.
 * 	y:
+<	- Cada familia tiene padres y hijos.
 <	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-* 	y:
 <	- Pablo tiene un padre, llamado Juan.
 <	- Pablo tiene una madre, llamada Ana.
-<	- Cada familia tiene padres y hijos.
 * 
 * Mis preguntas:
-< ¿Es Pablo un niño o un hombre? Porque:
+< ¿Es Pablo un hombre o un niño? Porque:
 <	- Pablo es un hijo.
 <	- Cada hijo es un niño o un hombre.
 < 
@@ -609,71 +951,71 @@
 * 
 * Mis suposiciones:
 < José es probablemente parte de una familia. Porque:
-<	- Ana tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Bonita.
+<	- ¿Es José un hijo o una hija?
 <	- Hijos son parte de cada familia.
 * 	y:
 <	- Juan tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Peyo.
-<	- Hijos son parte de cada familia.
-* 	y:
-<	- ¿Es José un hijo o una hija?
+<	- Ana tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Bonita.
 <	- Hijos son parte de cada familia.
 < José es posiblemente una persona. Porque:
 <	- José tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
-* 	y:
 <	- José tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Un hijo es probablemente una persona.
-* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 
 * Mis preguntas:
+< ¿Es José femenina o masculino? Porque:
+<	- José tiene un padre, llamado Juan.
+<	- José tiene 2 padres, llamados Juan y Ana.
+<	- José tiene una madre, llamada Ana.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es femenina o masculino.
+* 	y:
+<	- ¿Es José una niña, una mujer, un niño o un hombre?
+<	- Cada niño es masculino.
+<	- Cada niña es femenina.
+<	- Cada mujer es femenina.
+<	- Cada hombre es masculino.
+* 	y:
+<	- José es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
 < ¿Es José una niña, una mujer, un niño o un hombre? Porque:
 <	- José tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
-* 	y:
 <	- José tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
-* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
 < ¿Es José un hijo o una hija? Porque:
 <	- José tiene un padre, llamado Juan.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-* 	y:
 <	- José tiene 2 padres, llamados Juan y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada hijo es un hijo o una hija.
-* 	y:
 <	- José tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 < 
 * 
 * Mis conclusiones:
-< Luisa es parte de una familia. Porque:
-<	- Ana tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Bonita.
-<	- Hijos son parte de cada familia.
-* 	y:
-<	- Juan tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Peyo.
-<	- Hijos son parte de cada familia.
-* 	y:
+< Luisa es femenina. Porque:
 <	- Luisa es hija de Juan y Ana.
-<	- Hijos son parte de cada familia.
+<	- Cada hija es femenina.
 < Luisa no es un hijo. Porque:
-<	- Cada hijo es un hijo o una hija.
+<	- Luisa es femenina.
+<	- Cada hijo no es femenina.
+< Luisa no es un niño. Porque:
+<	- Luisa es femenina.
+<	- Cada niño no es femenina.
+< Luisa no es un padre. Porque:
+<	- Luisa es femenina.
+<	- Cada padre no es femenina.
+< Luisa no es un hombre. Porque:
+<	- Luisa es femenina.
+<	- Cada hombre no es femenina.
+< Luisa no es masculino. Porque:
 <	- Luisa es hija de Juan y Ana.
-< Luisa no es un niño y un hombre. Porque:
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
+<	- Cada hija no es masculino.
+< Luisa es parte de una familia. Porque:
 <	- Luisa es hija de Juan y Ana.
-<	- Cada hija es una niña o una mujer.
+<	- Hijos son parte de cada familia.
 < Luisa tiene un padre, llamado Juan. Porque:
 <	- Juan es el padre de Pablo, José y Luisa.
 * 
@@ -689,15 +1031,25 @@
 < 
 * 
 * Mis suposiciones:
+< Peyo es probablemente parte de una familia. Porque:
+<	- ¿Es Peyo un hijo o una hija?
+<	- Hijos son parte de cada familia.
+* 	y:
+<	- Juan tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Peyo.
+<	- Hijos son parte de cada familia.
 < Peyo es posiblemente una persona. Porque:
 <	- Peyo tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< Peyo es posiblemente parte de una familia. Porque:
-<	- ¿Es Peyo un hijo o una hija?
-<	- Hijos son parte de cada familia.
 * 
 * Mis preguntas:
+< ¿Es Peyo femenina o masculino? Porque:
+<	- Peyo tiene un padre, llamado Juan.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es femenina o masculino.
+* 	y:
+<	- Peyo es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
 < ¿Es Peyo una niña, una mujer, un niño o un hombre? Porque:
 <	- Peyo tiene un padre, llamado Juan.
 <	- Cada familia tiene padres y hijos.
@@ -709,7 +1061,10 @@
 < 
 * 
 * Mis suposiciones:
-< Bonita es posiblemente hija de Ana. Porque:
+< Bonita es probablemente parte de una familia. Porque:
+<	- Ana tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Bonita.
+<	- Hijos son parte de cada familia.
+< Bonita es puede-ser hija de Ana. Porque:
 <	- Bonita tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
@@ -719,22 +1074,200 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Bonita" es probablemente femenino.
-< Bonita no es posiblemente un hijo. Porque:
-<	- Cada hijo es un hijo o una hija.
-<	- Bonita es posiblemente hija de Ana.
-< Bonita es posiblemente parte de una familia. Porque:
-<	- Bonita es posiblemente hija de Ana.
-<	- Hijos son parte de cada familia.
+< Bonita es puede-ser femenina. Porque:
+<	- Bonita es puede-ser hija de Ana.
+<	- Cada hija es femenina.
+< Bonita no es puede-ser un hijo. Porque:
+<	- Bonita es puede-ser femenina.
+<	- Cada hijo no es femenina.
+< Bonita no es puede-ser un niño. Porque:
+<	- Bonita es puede-ser femenina.
+<	- Cada niño no es femenina.
+< Bonita no es puede-ser un padre. Porque:
+<	- Bonita es puede-ser femenina.
+<	- Cada padre no es femenina.
+< Bonita no es puede-ser un hombre. Porque:
+<	- Bonita es puede-ser femenina.
+<	- Cada hombre no es femenina.
+< Bonita no es puede-ser masculino. Porque:
+<	- Bonita es puede-ser hija de Ana.
+<	- Cada hija no es masculino.
 < Bonita es puede-ser una persona. Porque:
-<	- Bonita es posiblemente hija de Ana.
+<	- Bonita es puede-ser hija de Ana.
 <	- Una hija es probablemente una persona.
-< Bonita no es posiblemente un niño y un hombre. Porque:
-<	- Cada hijo es una niña, una mujer, un niño o un hombre.
-<	- Bonita es posiblemente hija de Ana.
-<	- Cada hija es una niña o una mujer.
 * 
 * Mis preguntas:
 < ¿Es Bonita una niña o una mujer? Porque:
-<	- Bonita es posiblemente hija de Ana.
+<	- Bonita es puede-ser hija de Ana.
+<	- Cada hija es una niña o una mujer.
+< 
+* 
+* Mis suposiciones que han sido confirmadas:
+< Bonita es puede-ser hija de Ana.
+* 
+* Mis suposiciones que se han concluido:
+< Bonita es parte de una familia.
+< Ana tiene 2 hija [plural de 'hija' es desconocida], llamados Luisa y Bonita.
+< Bonita es femenina.
+< Bonita no es un hijo.
+< Bonita no es un niño.
+< Bonita no es un padre.
+< Bonita no es un hombre.
+< Bonita no es masculino.
+* 
+* Mis suposiciones que se han ajustado:
+< Bonita es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Ana tiene 2 hija [plural de 'hija' es desconocida], llamados Luisa y Bonita. Porque:
+<	- Bonita es hija de Ana.
+<	- Luisa es hija de Juan y Ana.
+< Ana es una mujer. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre es una mujer.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre es una mujer.
+< Ana no es un niño. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un niño.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un niño.
+* 	y:
+<	- Ana es femenina.
+<	- Cada niño no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un niño.
+< Ana no es un padre. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un padre.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un padre.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un padre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada padre no es femenina.
+< Ana no es masculino. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es masculino.
+< Ana no es un hombre. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un hombre.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hombre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hombre no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hombre.
+< Ana es femenina. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre es femenina.
+< Ana no es un hijo. Porque:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+< Ana es parte de una familia. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Pablo tiene 2 padres, llamados Juan y Ana.
+<	- José tiene 2 padres, llamados Juan y Ana.
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Padres son parte de cada familia.
+* 	y:
+<	- Ana es una madre.
+<	- Padres son parte de cada familia.
+< Ana es la madre de Bonita. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+* 
+* Mis suposiciones:
+< Ana tiene probablemente 4 hijos, llamados Pablo, José, Luisa y Bonita. Porque:
+<	- Bonita es hija de Ana.
+<	- Luisa es hija de Juan y Ana.
+<	- Pablo es probablemente hijo de Juan y Ana.
+* 	y:
+<	- Cada familia tiene padres y hijos.
+<	- Bonita tiene una madre, llamada Ana.
+<	- Pablo tiene una madre, llamada Ana.
+<	- José tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+* 	y:
+<	- Cada familia tiene padres y hijos.
+<	- Ana es la madre de Bonita.
+<	- Ana es la madre de Pablo, José y Luisa.
+< Ana no es probablemente una niña. Porque:
+<	- Ana es una mujer.
+<	- Una mujer no es probablemente una niña.
+< Ana es probablemente una persona. Porque:
+<	- Bonita tiene una madre, llamada Ana.
+<	- Luisa tiene una madre, llamada Ana.
+<	- Una madre es probablemente una persona.
+* 	y:
+<	- Luisa tiene 2 padres, llamados Juan y Ana.
+<	- Un padre es probablemente una persona.
+* 	y:
+<	- Ana es una mujer.
+<	- Una mujer es probablemente una persona.
+* 	y:
+<	- Ana es una madre.
+<	- Una madre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Bonita es femenina. Porque:
+<	- Bonita es hija de Ana.
+<	- Cada hija es femenina.
+< Bonita no es un hijo. Porque:
+<	- Bonita es femenina.
+<	- Cada hijo no es femenina.
+< Bonita no es un niño. Porque:
+<	- Bonita es femenina.
+<	- Cada niño no es femenina.
+< Bonita no es un padre. Porque:
+<	- Bonita es femenina.
+<	- Cada padre no es femenina.
+< Bonita no es un hombre. Porque:
+<	- Bonita es femenina.
+<	- Cada hombre no es femenina.
+< Bonita no es masculino. Porque:
+<	- Bonita es hija de Ana.
+<	- Cada hija no es masculino.
+< Bonita es parte de una familia. Porque:
+<	- Bonita es hija de Ana.
+<	- Hijos son parte de cada familia.
+* 
+* Mis suposiciones:
+< Bonita es probablemente una persona. Porque:
+<	- Bonita es hija de Ana.
+<	- Una hija es probablemente una persona.
+* 
+* Mis preguntas:
+< ¿Es Bonita una niña o una mujer? Porque:
+<	- Bonita es hija de Ana.
 <	- Cada hija es una niña o una mujer.
 < 

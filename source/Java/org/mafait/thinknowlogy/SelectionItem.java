@@ -1,10 +1,10 @@
 ﻿/*	Class:			SelectionItem
  *	Parent class:	Item
- *	Purpose:		To store the selection structure
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing the selection structure
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -137,6 +137,7 @@ class SelectionItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( GlobalVariables.queryStringBuffer == null )
@@ -145,7 +146,7 @@ class SelectionItem extends Item
 		if( specificationString_ != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -156,6 +157,7 @@ class SelectionItem extends Item
 			}
 		}
 
+	@Override
 	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		StringBuffer queryStringBuffer;
@@ -170,7 +172,7 @@ class SelectionItem extends Item
 		( wordString = generalizationWordItem_.wordTypeString( true, generalizationWordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -185,7 +187,7 @@ class SelectionItem extends Item
 			{
 			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
-				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -200,7 +202,7 @@ class SelectionItem extends Item
 			{
 			if( GlobalVariables.hasFoundQuery ||
 			queryStringBuffer.length() > 0 )
-				queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -211,6 +213,7 @@ class SelectionItem extends Item
 			}
 		}
 
+	@Override
 	protected boolean hasParameter( int queryParameter )
 		{
 		return ( selectionLevel_ == queryParameter ||
@@ -232,6 +235,7 @@ class SelectionItem extends Item
 				nContextRelations_ > 0 ) ) );
 		}
 
+	@Override
 	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( ( generalizationWordItem_ == null ? false :
@@ -247,6 +251,7 @@ class SelectionItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : relationWordItem_.itemNr() == queryItemNr ) ) );
 		}
 
+	@Override
 	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( generalizationWordTypeNr_ == queryWordTypeNr ||
@@ -254,19 +259,21 @@ class SelectionItem extends Item
 				relationWordTypeNr_ == queryWordTypeNr );
 		}
 
+	@Override
 	protected String itemString()
 		{
 		return specificationString_;
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem thisWordItem = myWordItem();
+		WordItem _myWordItem = myWordItem();
 		StringBuffer queryStringBuffer;
 		String wordString;
-		String generalizationWordTypeString = thisWordItem.wordTypeNameString( generalizationWordTypeNr_ );
-		String specificationWordTypeString = thisWordItem.wordTypeNameString( specificationWordTypeNr_ );
-		String relationWordTypeString = thisWordItem.wordTypeNameString( relationWordTypeNr_ );
+		String generalizationWordTypeString = _myWordItem.wordTypeNameString( generalizationWordTypeNr_ );
+		String specificationWordTypeString = _myWordItem.wordTypeNameString( specificationWordTypeNr_ );
+		String relationWordTypeString = _myWordItem.wordTypeNameString( relationWordTypeNr_ );
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
@@ -371,6 +378,7 @@ class SelectionItem extends Item
 		return queryStringBuffer;
 		}
 
+	@Override
 	protected BoolResultType findMatchingWordReferenceString( String queryString )
 		{
 		BoolResultType boolResult = new BoolResultType();
@@ -570,7 +578,7 @@ class SelectionItem extends Item
 		{
 		return relationWordItem_;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"Light shines in the darkness for the godly.

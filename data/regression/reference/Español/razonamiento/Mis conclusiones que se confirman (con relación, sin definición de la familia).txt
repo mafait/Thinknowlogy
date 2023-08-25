@@ -15,7 +15,7 @@
 <	- Ana es la madre de Pablo, José y Luisa.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Pablo tiene un padre, llamado Juan.
 < 
 * 
@@ -24,7 +24,7 @@
 <	- Ana es la madre de Pablo, José y Luisa.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < José tiene un padre, llamado Juan.
 < 
 * 
@@ -33,7 +33,7 @@
 <	- Ana es la madre de Pablo, José y Luisa.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Luisa tiene un padre, llamado Juan.
 < 
 * 

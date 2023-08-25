@@ -1,45 +1,128 @@
 ﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis conclusiones:
+< Cada mujer no es masculino.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hombre no es una mujer.
+< Cada mujer no es un hombre.
+* 
+* Mis conclusiones:
+< Cada hombre no es femenina.
+< Cada persona es masculino o femenina.
+* 
+* Mis suposiciones:
+< Un hombre es probablemente una persona.
+< Una mujer es probablemente una persona.
+< 
+* 
 * Mis conclusiones:
 < Padres y hijos son parte de cada familia.
 < 
 * 
 * Mis suposiciones:
-< Un padre es probablemente una persona.
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Un hijo no es probablemente una hija.
+< Una hija no es probablemente un hijo.
 < 
 * 
 * Mis conclusiones:
+< Cada padre es masculino.
+< Cada padre no es femenina.
+< Cada padre no es una mujer.
+< Cada mujer no es un padre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
+< Cada padre no es una madre.
+* 
+* Mis conclusiones:
+< Cada madre es femenina.
+< Cada madre no es masculino.
+< Cada madre no es un hombre.
+< Cada hombre no es una madre.
+< Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
 < 
 * 
-* Mis suposiciones:
-< Un hijo es probablemente una persona.
+* Mis conclusiones:
+< Cada niña no es masculino.
+< Cada niña no es un padre.
+< Cada niña no es un hombre.
+< Cada padre no es una niña.
+< Cada hombre no es una niña.
 < 
 * 
 * Mis conclusiones:
+< Cada niño no es femenina.
+< Cada niño no es una niña.
+< Cada niño no es una madre.
+< Cada niño no es una mujer.
+< Cada niña no es un niño.
+< Cada madre no es un niño.
+< Cada mujer no es un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es masculino.
+< Cada hijo no es femenina.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Un niño no es probablemente un hombre.
+< Un niño es probablemente una persona.
+< Un hombre no es probablemente un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hija es femenina.
+< Cada hija no es masculino.
+< Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
+< Una niña no es probablemente una mujer.
+< Una niña es probablemente una persona.
+< Una mujer no es probablemente una niña.
 < 
 * 
 * Mis conclusiones:
 < Hernando era parte de una familia.
 < Hernando era un hombre.
+< Hernando no era una madre.
+< Hernando no era una niña.
+< Hernando no era femenina.
 < Hernando no era una mujer.
 < Hernando era masculino.
-< Hernando no era una madre.
+< Hernando no era una hija.
 < Rafael no tiene un padre nunca-más.
 < Rafael tenido un padre, llamado Hernando.
 * 
 * Mis suposiciones:
 < Hernando era probablemente una persona.
+< Hernando no era probablemente un niño.
+< Rafael es probablemente parte de una familia.
 < Rafael es posiblemente una persona.
-< Rafael es posiblemente parte de una familia.
 * 
 * Mis preguntas:
+< ¿Es Rafael femenina o masculino?
 < ¿Es Rafael una niña, una mujer, un niño o un hombre?
 < ¿Es Rafael un hijo o una hija?
 < 
@@ -51,24 +134,59 @@
 < Hernando era un hombre. Porque:
 <	- Hernando era el padre de Rafael.
 <	- Cada padre es un hombre.
-< Hernando no era una mujer. Porque:
+< Hernando no era una madre. Porque:
 <	- Hernando era el padre de Rafael.
-<	- Cada padre es una mujer o un hombre.
+<	- Cada padre no es una madre.
+* 	y:
 <	- Hernando era un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Hernando era masculino.
+<	- Cada madre no es masculino.
+< Hernando no era una niña. Porque:
+<	- Hernando era un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Hernando era masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre no es una niña.
+< Hernando no era femenina. Porque:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Hernando era un hombre.
+<	- Cada hombre no es femenina.
+< Hernando no era una mujer. Porque:
+<	- Hernando era un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Hernando era masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre no es una mujer.
 < Hernando era masculino. Porque:
 <	- Hernando era un hombre.
 <	- Cada hombre es masculino.
-< Hernando no era una madre. Porque:
+* 	y:
 <	- Hernando era el padre de Rafael.
-<	- Cada padre es un padre o una madre.
+<	- Cada padre es masculino.
+< Hernando no era una hija. Porque:
+<	- Hernando era masculino.
+<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Hernando era probablemente una persona. Porque:
 <	- Hernando era el padre de Rafael.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
 <	- Hernando era un hombre.
+<	- Un hombre es probablemente una persona.
+< Hernando no era probablemente un niño. Porque:
+<	- Hernando era un hombre.
+<	- Un hombre no es probablemente un niño.
 < 
 * 
 * Mis conclusiones:
@@ -78,15 +196,28 @@
 <	- Hernando era el padre de Rafael.
 * 
 * Mis suposiciones:
+< Rafael es probablemente parte de una familia. Porque:
+<	- ¿Es Rafael un hijo o una hija?
+<	- Hijos son parte de cada familia.
 < Rafael es posiblemente una persona. Porque:
 <	- Rafael tenido un padre, llamado Hernando.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
-< Rafael es posiblemente parte de una familia. Porque:
-<	- ¿Es Rafael un hijo o una hija?
-<	- Hijos son parte de cada familia.
 * 
 * Mis preguntas:
+< ¿Es Rafael femenina o masculino? Porque:
+<	- Rafael tenido un padre, llamado Hernando.
+<	- Cada familia tiene padres y hijos.
+<	- Cada hijo es femenina o masculino.
+* 	y:
+<	- ¿Es Rafael una niña, una mujer, un niño o un hombre?
+<	- Cada niño es masculino.
+<	- Cada niña es femenina.
+<	- Cada mujer es femenina.
+<	- Cada hombre es masculino.
+* 	y:
+<	- Rafael es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
 < ¿Es Rafael una niña, una mujer, un niño o un hombre? Porque:
 <	- Rafael tenido un padre, llamado Hernando.
 <	- Cada familia tiene padres y hijos.

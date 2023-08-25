@@ -24,10 +24,10 @@ Affichez " Affichez le droit d'auteur.".
 Affichez " Affichez la licence-GPLv2.".
 Affichez " Affichez la garantie.".
 Affichez "------------------------------------------------------------------------------".
-#C++#Affichez " Exemples fichiers: * dossier: Thinknowlogy2018r4/data/examples/Français/".
+#C++#Affichez " Exemples fichiers: * dossier: Thinknowlogy2023/data/examples/Français/".
 #Java#Affichez " Exemples fichiers: * Utilisez le bouton <exemples>".
-#Java#Affichez "                 ou voir le dossier: Thinknowlogy2018r4/data/examples/Français/".
-Affichez " Fondamental:        * dossier: Thinknowlogy2018r4/documents/".
-Affichez " Projet:	       * dossier: Thinknowlogy2018r4/documents/design/".
-Affichez " Captures d'écran:   * dossier: Thinknowlogy2018r4/screenshots/Français/".
+#Java#Affichez "                 ou voir le dossier: Thinknowlogy2023/data/examples/Français/".
+Affichez " Fondamental:        * dossier: Thinknowlogy2023/documents/".
+Affichez " Projet:	       * dossier: Thinknowlogy2023/documents/design/".
+Affichez " Captures d'écran:   * dossier: Thinknowlogy2023/screenshots/Français/".
 Affichez "------------------------------------------------------------------------------".

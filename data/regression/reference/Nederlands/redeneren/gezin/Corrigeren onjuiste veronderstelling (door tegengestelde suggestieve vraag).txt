@@ -1,7 +1,45 @@
 ﻿* 
+* Mijn veronderstellingen:
+< Een man is waarschijnlijk geen vrouw.
+< Een vrouw is waarschijnlijk geen man.
+< 
+* 
+* Mijn conclusies:
+< Iedere vrouw is niet mannelijk.
+< 
+* 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Iedere man is geen vrouw.
+< Iedere vrouw is geen man.
+* 
+* Mijn conclusies:
+< Iedere man is niet vrouwelijk.
+< Iedere persoon is mannelijk of vrouwelijk.
+* 
+* Mijn veronderstellingen:
+< Een man is waarschijnlijk een persoon.
+< Een vrouw is waarschijnlijk een persoon.
+< 
+* 
 * Mijn conclusies:
 < Ouders en kinderen zijn deel van ieder gezin.
 < 
+* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk geen moeder.
+< Een moeder is waarschijnlijk geen vader.
+< 
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk geen dochter.
+< Een dochter is waarschijnlijk geen zoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere vader is mannelijk.
+< Iedere vader is niet vrouwelijk.
+< Iedere vader is geen vrouw.
+< Iedere vrouw is geen vader.
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
@@ -9,34 +47,81 @@
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
+* 
 * Mijn conclusies:
+< Iedere moeder is vrouwelijk.
+< Iedere moeder is niet mannelijk.
+< Iedere moeder is geen man.
+< Iedere man is geen moeder.
 < Iedere ouder is een vrouw of een man.
+< Iedere ouder is vrouwelijk of mannelijk.
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
 < Een moeder is waarschijnlijk een ouder.
 < 
 * 
-* Mijn veronderstellingen:
-< Een zoon is waarschijnlijk een persoon.
-< Een kind is waarschijnlijk een persoon.
+* Mijn conclusies:
+< Ieder meisje is niet mannelijk.
+< Ieder meisje is geen vader.
+< Ieder meisje is geen man.
+< Iedere vader is geen meisje.
+< Iedere man is geen meisje.
 < 
 * 
 * Mijn conclusies:
+< Iedere jongen is niet vrouwelijk.
+< Iedere jongen is geen meisje.
+< Iedere jongen is geen moeder.
+< Iedere jongen is geen vrouw.
+< Ieder meisje is geen jongen.
+< Iedere moeder is geen jongen.
+< Iedere vrouw is geen jongen.
+< 
+* 
+* Mijn conclusies:
+< Iedere zoon is mannelijk.
+< Iedere zoon is niet vrouwelijk.
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk een kind.
+< Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
+< Een jongen is waarschijnlijk geen man.
+< Een jongen is waarschijnlijk een persoon.
+< Een man is waarschijnlijk geen jongen.
+< 
+* 
+* Mijn conclusies:
+< Iedere dochter is vrouwelijk.
+< Iedere dochter is niet mannelijk.
+< Ieder kind is vrouwelijk of mannelijk.
 < Ieder kind is een meisje, een vrouw, een jongen of een man.
 * 
 * Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een kind.
 < Een dochter is waarschijnlijk een persoon.
+< Een meisje is waarschijnlijk geen vrouw.
+< Een meisje is waarschijnlijk een persoon.
+< Een vrouw is waarschijnlijk geen meisje.
 < 
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een moeder.
+< Jan is waarschijnlijk geen jongen.
+< Jan is waarschijnlijk geen vader.
+< Jan is waarschijnlijk niet mannelijk.
+< Jan is waarschijnlijk geen man.
 < Jan is waarschijnlijk een vrouw.
+< Jan is mogelijk geen meisje.
+< Jan is waarschijnlijk vrouwelijk.
+< Jan is waarschijnlijk geen zoon.
 < Jan is mogelijk een persoon.
-< Jan is misschien geen man.
 < Jan is mogelijk een ouder.
 < Jan is mogelijk deel van een gezin.
-< Jan is misschien geen vader.
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
 * 
@@ -44,33 +129,66 @@
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een moeder. Omdat:
 <	- Is Jan de moeder van Paul?
+< Jan is waarschijnlijk geen jongen. Omdat:
+<	- Jan is waarschijnlijk een moeder.
+<	- Iedere moeder is geen jongen.
+* 	en:
+<	- Jan is waarschijnlijk een vrouw.
+<	- Iedere vrouw is geen jongen.
+* 	en:
+<	- Jan is waarschijnlijk vrouwelijk.
+<	- Iedere jongen is niet vrouwelijk.
+< Jan is waarschijnlijk geen vader. Omdat:
+<	- Jan is waarschijnlijk een moeder.
+<	- Iedere moeder is geen vader.
+* 	en:
+<	- Jan is waarschijnlijk een vrouw.
+<	- Iedere vrouw is geen vader.
+* 	en:
+<	- Jan is waarschijnlijk vrouwelijk.
+<	- Iedere vader is niet vrouwelijk.
+< Jan is waarschijnlijk niet mannelijk. Omdat:
+<	- Jan is waarschijnlijk een moeder.
+<	- Iedere moeder is niet mannelijk.
+* 	en:
+<	- Jan is waarschijnlijk een vrouw.
+<	- Iedere vrouw is niet mannelijk.
+< Jan is waarschijnlijk geen man. Omdat:
+<	- Jan is waarschijnlijk een moeder.
+<	- Iedere moeder is geen man.
+* 	en:
+<	- Jan is waarschijnlijk een vrouw.
+<	- Iedere vrouw is geen man.
+* 	en:
+<	- Jan is waarschijnlijk vrouwelijk.
+<	- Iedere man is niet vrouwelijk.
 < Jan is waarschijnlijk een vrouw. Omdat:
 <	- Jan is waarschijnlijk een moeder.
 <	- Iedere moeder is een vrouw.
-< Jan is mogelijk een persoon. Omdat:
-<	- Iedere persoon is een man of een vrouw.
+< Jan is mogelijk geen meisje. Omdat:
 <	- Jan is waarschijnlijk een vrouw.
+<	- Een vrouw is waarschijnlijk geen meisje.
+< Jan is waarschijnlijk vrouwelijk. Omdat:
+<	- Jan is waarschijnlijk een vrouw.
+<	- Iedere vrouw is vrouwelijk.
+* 	en:
+<	- Jan is waarschijnlijk een moeder.
+<	- Iedere moeder is vrouwelijk.
+< Jan is waarschijnlijk geen zoon. Omdat:
+<	- Jan is waarschijnlijk vrouwelijk.
+<	- Iedere zoon is niet vrouwelijk.
+< Jan is mogelijk een persoon. Omdat:
+<	- Jan is waarschijnlijk een vrouw.
+<	- Een vrouw is waarschijnlijk een persoon.
 * 	en:
 <	- Jan is waarschijnlijk een moeder.
 <	- Een moeder is waarschijnlijk een persoon.
-< Jan is misschien geen man. Omdat:
-<	- Jan is mogelijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
-<	- Jan is waarschijnlijk een vrouw.
-* 	en:
-<	- Jan is mogelijk een ouder.
-<	- Iedere ouder is een vrouw of een man.
-<	- Jan is waarschijnlijk een vrouw.
 < Jan is mogelijk een ouder. Omdat:
 <	- Jan is waarschijnlijk een moeder.
 <	- Een moeder is waarschijnlijk een ouder.
 < Jan is mogelijk deel van een gezin. Omdat:
 <	- Jan is mogelijk een ouder.
 <	- Ouders zijn deel van ieder gezin.
-< Jan is misschien geen vader. Omdat:
-<	- Jan is mogelijk een ouder.
-<	- Iedere ouder is een vader of een moeder.
-<	- Jan is waarschijnlijk een moeder.
 < 
 * 
 * Mijn eerdere veronderstellingen die gecorrigeerd zijn door een tegengestelde suggestieve vraag:
@@ -80,11 +198,17 @@
 < Is Jan de moeder van Paul?
 * 
 * Mijn eerdere veronderstellingen die gecorrigeerd zijn door een tegengestelde suggestieve vraag:
+< Jan is waarschijnlijk vrouwelijk.
+< Jan is waarschijnlijk geen jongen.
+< Jan is waarschijnlijk geen zoon.
+< Jan is waarschijnlijk geen vader.
+< Jan is waarschijnlijk niet mannelijk.
+< Jan is waarschijnlijk geen man.
 < Jan is waarschijnlijk een vrouw.
-< Jan is misschien geen man.
-< Jan is misschien geen vader.
+< Jan is mogelijk geen meisje.
 * 
 * Mijn vragen:
+< Is Jan vrouwelijk of mannelijk?
 < Is Jan een man of een vrouw?
 < Is Jan een moeder of een vader?
 * 
@@ -94,35 +218,41 @@
 * Mijn veronderstellingen:
 < Jan is mogelijk een persoon. Omdat:
 <	- Is Jan een moeder of een vader?
-<	- Een vader is waarschijnlijk een persoon.
 <	- Een moeder is waarschijnlijk een persoon.
-* 	en:
-<	- Is Jan een man of een vrouw?
-<	- Iedere persoon is een man of een vrouw.
+<	- Een vader is waarschijnlijk een persoon.
 < Jan is mogelijk een ouder. Omdat:
 <	- Is Jan een moeder of een vader?
-<	- Een vader is waarschijnlijk een ouder.
 <	- Een moeder is waarschijnlijk een ouder.
-* 	en:
-<	- Is Jan een man of een vrouw?
-<	- Iedere ouder is een vrouw of een man.
+<	- Een vader is waarschijnlijk een ouder.
 < Jan is mogelijk deel van een gezin. Omdat:
 <	- Jan is mogelijk een ouder.
 <	- Ouders zijn deel van ieder gezin.
 * 
 * Mijn vragen:
+< Is Jan vrouwelijk of mannelijk? Omdat:
+<	- Jan is mogelijk een persoon.
+<	- Iedere persoon is mannelijk of vrouwelijk.
+* 	en:
+<	- Is Jan een man of een vrouw?
+<	- Iedere man is mannelijk.
+<	- Iedere vrouw is vrouwelijk.
+* 	en:
+<	- Jan is mogelijk een ouder.
+<	- Iedere ouder is vrouwelijk of mannelijk.
+* 	en:
+<	- Is Jan een moeder of een vader?
+<	- Iedere vader is mannelijk.
+<	- Iedere moeder is vrouwelijk.
 < Is Jan een man of een vrouw? Omdat:
-<	- Is Jan de moeder van Paul?
-<	- Iedere moeder is een vrouw.
-* 	en:
-<	- Is Jan de vader van Paul?
-<	- Iedere vader is een man.
-* 	en:
 <	- Jan is mogelijk een persoon.
 <	- Iedere persoon is een man of een vrouw.
 * 	en:
 <	- Jan is mogelijk een ouder.
 <	- Iedere ouder is een vrouw of een man.
+* 	en:
+<	- Is Jan een moeder of een vader?
+<	- Iedere moeder is een vrouw.
+<	- Iedere vader is een man.
 < Is Jan een moeder of een vader? Omdat:
 <	- Is Jan de vader van Paul?
 * 	en:

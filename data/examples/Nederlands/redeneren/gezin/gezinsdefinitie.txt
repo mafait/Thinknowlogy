@@ -1,12 +1,17 @@
 ﻿#----------------------------------------------------------------------------
-# Purpose: To demonstrate automated reasoning in natural language:
-# - Drawing conclusions, making assumptions, asking questions,
-# - detecting conflicts and some cases of semantic ambiguity, and
-# - displaying of justification reports for the self-generated knowledge
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# The natural logic of language is demonstrated by:".
+# * Reasoning (in sentences with restricted grammar):".
+#   - drawing conclusions (more advanced than scientific solutions),".
+#   - making assumptions (with self-adjusting level of uncertainty),".
+#   - asking questions (about gaps in the knowledge),".
+#   - displaying justification reports for the self-generated knowledge,".
+#   - detecting confirmations and conflicts, and self-organizing capabilities;".
+# * Multilingualism, assuming that languages have a common and logical origin.".
+#----------------------------------------------------------------------------
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 # De definitie van een gezin.
@@ -20,8 +25,8 @@ Iedere vader is een man.
 Iedere moeder is een vrouw.
 Ieder meisje is vrouwelijk.
 Iedere jongen is mannelijk.
-Een zoon is een jongen of een man.
-Een dochter is een meisje of een vrouw.
+Iedere zoon is een jongen of een man.
+Iedere dochter is een meisje of een vrouw.
 #C++## Type nu zinnen zoals:
 #C++##
 #C++## Jan is de vader en Anna is de moeder van Paul, Johan en Laura.

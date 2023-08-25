@@ -1,10 +1,10 @@
 ﻿/*	Class:			ReadItem
  *	Parent class:	Item
- *	Purpose:		To temporarily store info about the read words of a sentence
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Temporarily storing info about read words of a sentence
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -74,6 +74,7 @@ class ReadItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( GlobalVariables.queryStringBuffer == null )
@@ -82,7 +83,7 @@ class ReadItem extends Item
 		if( readString != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -93,6 +94,7 @@ class ReadItem extends Item
 			}
 		}
 
+	@Override
 	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		String wordString;
@@ -104,7 +106,7 @@ class ReadItem extends Item
 		( wordString = readWordItem_.wordTypeString( true, wordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -115,6 +117,7 @@ class ReadItem extends Item
 			}
 		}
 
+	@Override
 	protected boolean hasParameter( int queryParameter )
 		{
 		return ( grammarParameter == queryParameter ||
@@ -128,6 +131,7 @@ class ReadItem extends Item
 				wordParameter_ > Constants.NO_WORD_PARAMETER ) ) );
 		}
 
+	@Override
 	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( ( readWordItem_ == null ? false :
@@ -139,11 +143,13 @@ class ReadItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : definitionGrammarItem.itemNr() == queryItemNr ) ) );
 		}
 
+	@Override
 	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( wordTypeNr_ == queryWordTypeNr );
 		}
 
+	@Override
 	protected boolean isSorted( Item nextSortItem )
 		{
 		ReadItem nextSortReadItem = (ReadItem)nextSortItem;
@@ -159,11 +165,13 @@ class ReadItem extends Item
 				wordTypeNr_ > nextSortReadItem.wordTypeNr_ ) ) );
 		}
 
+	@Override
 	protected String itemString()
 		{
 		return readString;
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
@@ -211,6 +219,7 @@ class ReadItem extends Item
 		return queryStringBuffer;
 		}
 
+	@Override
 	protected BoolResultType findMatchingWordReferenceString( String queryString )
 		{
 		if( readWordItem_ != null )
@@ -316,11 +325,6 @@ class ReadItem extends Item
 				wordParameter_ == Constants.WORD_PARAMETER_NOUN_NUMBER ||
 				wordParameter_ == Constants.WORD_PARAMETER_NOUN_TAIL ||
 				wordParameter_ == Constants.WORD_PARAMETER_NOUN_USER );
-		}
-
-	protected boolean isMatchingReadWordTypeNr( short wordTypeNr )
-		{
-		return isMatchingWordType( wordTypeNr_, wordTypeNr );
 		}
 
 	protected boolean isNoun()
@@ -644,7 +648,7 @@ class ReadItem extends Item
 		return ( readWordItem_ != null ?
 				readWordItem_.activeWordTypeItem( true, wordTypeNr_ ) : null );
 		}
-	};
+	}
 
 /*************************************************************************
  *	"The godly will see these things and be glad,

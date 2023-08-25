@@ -1,9 +1,9 @@
 /*	Class:		GlobalVariables
  *	Purpose:	To hold the global variables
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ package org.mafait.thinknowlogy;
 
 class GlobalVariables
 	{
+	protected static boolean hasConfirmedAnySpecification;
 	protected static boolean hasDisplayedIntegrityWarning;
 	protected static boolean hasDisplayedMessage;
 	protected static boolean hasDisplayedWarning;
@@ -58,6 +59,20 @@ class GlobalVariables
 	protected static int removeSentenceNr;
 	protected static int removeStartItemNr;
 
+	protected static int nConstructedSentences;
+
+	protected static int nCreatedJustificationItems;
+	protected static int nCreatedSpecificationItems;
+	protected static int nTotalCreatedItems;
+
+	protected static int nReplacedJustificationItems;
+	protected static int nReplacedSpecificationItems;
+	protected static int nTotalReplacedItems;
+
+	protected static int nDeletedJustificationItems;
+	protected static int nDeletedSpecificationItems;
+	protected static int nTotalDeletedItems;
+
 	protected static SelectionList adminConditionList;
 	protected static SelectionList adminActionList;
 	protected static SelectionList adminAlternativeList;
@@ -70,7 +85,7 @@ class GlobalVariables
 	protected static WordItem firstPredefinedWordItem;
 	protected static WordItem firstSpecificationWordItem;
 	protected static WordItem firstTouchedWordItem;
-	protected static WordItem firstUserProperNounWordItem;
+	protected static WordItem firstUserDefinedProperNounWordItem;
 	protected static WordItem firstWordItem;
 	protected static WordItem lastCollectionWordItem;
 	protected static WordItem lastContextWordItem;
@@ -91,6 +106,7 @@ class GlobalVariables
 
 	protected static void initialize()
 		{
+		hasConfirmedAnySpecification = false;
 		hasDisplayedIntegrityWarning = false;
 		hasDisplayedMessage = false;
 		hasDisplayedWarning = false;
@@ -125,6 +141,20 @@ class GlobalVariables
 		removeSentenceNr = Constants.NO_SENTENCE_NR;
 		removeStartItemNr = Constants.NO_ITEM_NR;
 
+		nConstructedSentences = 0;
+
+		nCreatedJustificationItems = 0;
+		nCreatedSpecificationItems = 0;
+		nTotalCreatedItems = 0;
+
+		nReplacedJustificationItems = 0;
+		nReplacedSpecificationItems = 0;
+		nTotalReplacedItems = 0;
+
+		nDeletedJustificationItems = 0;
+		nDeletedSpecificationItems = 0;
+		nTotalDeletedItems = 0;
+
 		adminConditionList = null;
 		adminActionList = null;
 		adminAlternativeList = null;
@@ -137,7 +167,7 @@ class GlobalVariables
 		firstPredefinedWordItem = null;
 		firstSpecificationWordItem = null;
 		firstTouchedWordItem = null;
-		firstUserProperNounWordItem = null;
+		firstUserDefinedProperNounWordItem = null;
 		firstWordItem = null;
 		lastCollectionWordItem = null;
 		lastContextWordItem = null;
@@ -157,7 +187,7 @@ class GlobalVariables
 		writtenSentenceStringBuffer = null;
 		writtenUserSentenceStringBuffer = null;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"Honor the Lord for the glory of his name.

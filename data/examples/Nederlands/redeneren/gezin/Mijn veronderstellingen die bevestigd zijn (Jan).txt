@@ -1,0 +1,30 @@
+Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
+Is Jan de vader van Paul?
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is mannelijk.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is een man.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is een ouder.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is een vader.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan heeft een kind.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is een persoon.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is geen vrouw.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is geen moeder.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is deel van een gezin.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is geen jongen.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is geen meisje.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is niet vrouwelijk.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+Jan is geen dochter.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+# Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

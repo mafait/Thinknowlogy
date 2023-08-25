@@ -1,9 +1,9 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -133,7 +133,7 @@ class List
 			searchItem.itemNr() >= startDecrementItemNr )
 				{
 				if( searchItem.itemNr() <= startDecrementItemNr )
-					return startError( 1, "I found an item number equal to the given start item number" );
+					return startError( 1, "I found an item number equal to - or lower than - the given start item number" );
 
 				if( searchItem.decrementItemNr( decrementOffset ) != Constants.RESULT_OK )
 					return addError( 1, "I failed to decrement the item number of an item with a certain offset" );
@@ -844,6 +844,27 @@ class List
 		return listChar_;
 		}
 
+	protected byte activateItem( Item activateItem )
+		{
+		if( activateItem == null )
+			return startError( 1, "The given activate item is undefined" );
+
+		if( activateItem.statusChar() == Constants.QUERY_ACTIVE_CHAR )
+			return startError( 1, "The given activate item is already an active item" );
+
+		if( removeItemFromList( activateItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to remove an item from the archive list" );
+
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, activateItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to add an item to the active list" );
+
+		if( isAssignmentList() &&
+		GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+			GlobalVariables.isAssignmentChanged = true;
+
+		return Constants.RESULT_OK;
+		}
+
 	protected byte addItemToList( char statusChar, Item newItem )
 		{
 		int creationSentenceNr;
@@ -1000,23 +1021,47 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte activateItem( Item activateItem )
+	protected byte archiveItem( Item archiveItem )
 		{
-		if( activateItem == null )
-			return startError( 1, "The given activate item is undefined" );
+		if( archiveItem == null )
+			return startError( 1, "The given archive item is undefined" );
 
-		if( activateItem.statusChar() == Constants.QUERY_ACTIVE_CHAR )
-			return startError( 1, "The given activate item is already an active item" );
+		if( archiveItem.statusChar() == Constants.QUERY_ARCHIVED_CHAR )
+			return startError( 1, "The given archive item is already an archived item" );
 
-		if( removeItemFromList( activateItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to remove an item from the archive list" );
+		if( !isAssignmentList() )
+			return startError( 1, "Only assignments can be archived" );
 
-		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, activateItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to add an item to the active list" );
+		if( removeItemFromList( archiveItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to remove an item from a list" );
 
-		if( isAssignmentList() &&
-		GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
+		archiveItem.previousStatusChar = archiveItem.statusChar();
+
+		if( addItemToList( Constants.QUERY_ARCHIVED_CHAR, archiveItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to add an item to the archived list" );
+
+		if( GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
 			GlobalVariables.isAssignmentChanged = true;
+
+		return Constants.RESULT_OK;
+		}
+
+	protected byte deleteItem( Item deleteItem )
+		{
+
+		// Used for developer statistics
+		GlobalVariables.nTotalDeletedItems++;
+
+		if( removeItemFromList( deleteItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to remove an item from a list" );
+
+		deleteItem.previousStatusChar = deleteItem.statusChar();
+
+		if( deleteItem.statusChar() == Constants.QUERY_DELETED_CHAR )
+			return startError( 1, "The given delete item is already a deleted item" );
+
+		if( addItemToList( Constants.QUERY_DELETED_CHAR, deleteItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to add an item to the deleted list" );
 
 		return Constants.RESULT_OK;
 		}
@@ -1046,66 +1091,6 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte archiveItem( Item archiveItem )
-		{
-		if( archiveItem == null )
-			return startError( 1, "The given archive item is undefined" );
-
-		if( archiveItem.statusChar() == Constants.QUERY_ARCHIVED_CHAR )
-			return startError( 1, "The given archive item is already an archived item" );
-
-		if( !isAssignmentList() )
-			return startError( 1, "Only assignments can be archived" );
-
-		if( removeItemFromList( archiveItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to remove an item from a list" );
-
-		archiveItem.previousStatusChar = archiveItem.statusChar();
-
-		if( addItemToList( Constants.QUERY_ARCHIVED_CHAR, archiveItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to add an item to the archived list" );
-
-		if( GlobalVariables.currentAssignmentLevel == Constants.NO_ASSIGNMENT_LEVEL )
-			GlobalVariables.isAssignmentChanged = true;
-
-		return Constants.RESULT_OK;
-		}
-
-	protected byte replaceItem( Item replaceItem )
-		{
-		if( replaceItem == null )
-			return startError( 1, "The given replace item is undefined" );
-
-		if( replaceItem.statusChar() == Constants.QUERY_REPLACED_CHAR )
-			return startError( 1, "The given replace item is already a replaced item" );
-
-		if( removeItemFromList( replaceItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to remove an item from a list" );
-
-		replaceItem.previousStatusChar = replaceItem.statusChar();
-
-		if( addItemToList( Constants.QUERY_REPLACED_CHAR, replaceItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to add an item to the replaced list" );
-
-		return Constants.RESULT_OK;
-		}
-
-	protected byte deleteItem( Item deleteItem )
-		{
-		if( removeItemFromList( deleteItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to remove an item from a list" );
-
-		deleteItem.previousStatusChar = deleteItem.statusChar();
-
-		if( deleteItem.statusChar() == Constants.QUERY_DELETED_CHAR )
-			return startError( 1, "The given delete item is already a deleted item" );
-
-		if( addItemToList( Constants.QUERY_DELETED_CHAR, deleteItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to add an item to the deleted list" );
-
-		return Constants.RESULT_OK;
-		}
-
 	protected byte removeFirstRangeOfDeletedItemsInList()
 		{
 		int nDeletedItems = 0;
@@ -1131,6 +1116,7 @@ class List
 
 				// Disconnect item from the deleted list
 				removeItem.nextItem = null;
+
 				removeItem = deletedList_;
 				nDeletedItems++;
 				}
@@ -1144,6 +1130,29 @@ class List
 			GlobalVariables.removeSentenceNr = removeSentenceNr;
 			GlobalVariables.removeStartItemNr = removeStartItemNr;
 			}
+
+		return Constants.RESULT_OK;
+		}
+
+	protected byte replaceItem( Item replaceItem )
+		{
+
+		// Used for developer statistics
+		GlobalVariables.nTotalReplacedItems++;
+
+		if( replaceItem == null )
+			return startError( 1, "The given replace item is undefined" );
+
+		if( replaceItem.statusChar() == Constants.QUERY_REPLACED_CHAR )
+			return startError( 1, "The given replace item is already a replaced item" );
+
+		if( removeItemFromList( replaceItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to remove an item from a list" );
+
+		replaceItem.previousStatusChar = replaceItem.statusChar();
+
+		if( addItemToList( Constants.QUERY_REPLACED_CHAR, replaceItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to add an item to the replaced list" );
 
 		return Constants.RESULT_OK;
 		}
@@ -1829,7 +1838,7 @@ class List
 
 	// Protected database connection methods
 /*
-	protected byte storeChangesInFutureDatabaseInList()
+	protected byte storeChangesInListInFutureDatabase()
 		{
 		Item searchItem;
 
@@ -2101,7 +2110,7 @@ class List
 
 		return GlobalVariables.result;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"But he rescues the poor from trouble

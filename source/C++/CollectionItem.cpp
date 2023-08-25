@@ -1,10 +1,10 @@
 ﻿/*	Class:			CollectionItem
  *	Parent class:	List
- *	Purpose:		To store collections of a word
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing collections of a word
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -155,9 +155,9 @@ class CollectionItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		WordItem *thisWordItem = myWordItem();
-		char *collectionWordTypeString = thisWordItem->wordTypeNameString( collectionWordTypeNr_ );
-		char *commonWordTypeString = thisWordItem->wordTypeNameString( commonWordTypeNr_ );
+		WordItem *_myWordItem = myWordItem();
+		char *collectionWordTypeString = _myWordItem->wordTypeNameString( collectionWordTypeNr_ );
+		char *commonWordTypeString = _myWordItem->wordTypeNameString( commonWordTypeNr_ );
 		char *queryString;
 		char *wordString;
 
@@ -269,13 +269,13 @@ class CollectionItem : private Item
 	bool hasFemaleCollectionWord()
 		{
 		return ( collectionWordItem_ != NULL &&
-				collectionWordItem_->isFemale() );
+				collectionWordItem_->isFeminineWord() );
 		}
 
 	bool hasMaleCollectionWord()
 		{
 		return ( collectionWordItem_ != NULL &&
-				collectionWordItem_->isMale() );
+				collectionWordItem_->isMasculineWord() );
 		}
 
 	bool isCompoundGeneralization()

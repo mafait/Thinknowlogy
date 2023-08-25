@@ -18,5 +18,14 @@ George Bush is de president van de Verenigde Staten.
 Barack Obama is de president van de Verenigde Staten.
 Toon informatie over de presidenten.
 #Dev#Toon de verantwoordingsrapportage over de Verenigde Staten.
-# In 2013 ...
+# In 2013 werd Barack Obama opnieuw ingehuldigd als president van de Verenigde Staten.
+Barack Obama is de president van de Verenigde Staten.
+# In 2017 werd Donald Trump ingehuldigd als president van de Verenigde Staten.
+Donald Trump is de president van de Verenigde Staten.
+Toon informatie over de presidenten.
+#Dev#Toon de verantwoordingsrapportage over de Verenigde Staten.
+# In 2021 werd Joe Biden ingehuldigd als president van de Verenigde Staten.
+Joe Biden is de president van de Verenigde Staten.
+Toon informatie over de presidenten.
+#Dev#Toon de verantwoordingsrapportage over de Verenigde Staten.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

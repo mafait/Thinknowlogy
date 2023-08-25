@@ -1,7 +1,7 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Luisa tiene un padre, llamado Juan.
 José es hijo de Juan y Ana.
-Ana es madre de Pablo, José y Luisa.
+Ana es la madre de Pablo, José y Luisa.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
 #Dev#Mostrar el informe de justificación sobre Pablo.

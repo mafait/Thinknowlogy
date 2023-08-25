@@ -1,5 +1,15 @@
 ﻿* 
 * My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
+< 
+* 
+* My assumptions:
+< A father is probably not a mother.
+< A mother is probably not a father.
+< 
+* 
+* My assumptions:
 < A father is probably a person.
 < A father is probably a parent.
 < A parent is probably a person.
@@ -17,10 +27,10 @@
 < John is a man.
 * 
 * My assumptions:
-< John is probably a parent.
-< John is probably a person.
 < John is probably not a mother.
 < John is probably not a woman.
+< John is probably a person.
+< John is probably a parent.
 < 
 * 
 * My conclusions:
@@ -29,41 +39,23 @@
 <	- Every father is a man.
 * 
 * My assumptions:
-< John is probably a parent. Because:
-<	- Every parent is a father or a mother.
+< John is probably not a mother. Because:
 <	- John is a father.
-* 	and:
-<	- Every parent is a woman or a man.
+<	- A father is probably not a mother.
+< John is probably not a woman. Because:
 <	- John is a man.
-* 	and:
-<	- John is a father.
-<	- A father is probably a parent.
+<	- A man is probably not a woman.
 < John is probably a person. Because:
-<	- John is probably a parent.
-<	- A parent is probably a person.
-* 	and:
-<	- Every person is a man or a woman.
-<	- John is a man.
-* 	and:
 <	- John is a father.
 <	- A father is probably a person.
-< John is probably not a mother. Because:
-<	- John is probably a parent.
-<	- Every parent is a father or a mother.
+< John is probably a parent. Because:
 <	- John is a father.
-< John is probably not a woman. Because:
-<	- John is probably a parent.
-<	- Every parent is a woman or a man.
-<	- John is a man.
-* 	and:
-<	- John is probably a person.
-<	- Every person is a man or a woman.
-<	- John is a man.
+<	- A father is probably a parent.
 < 
 ! 
 ! This sentence is not accepted, because it is in conflict with:
-< John is a father.
 < John is probably not a mother.
-< John is a man.
+< John is a father.
 < John is probably not a woman.
+< John is a man.
 < 

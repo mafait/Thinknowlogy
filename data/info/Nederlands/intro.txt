@@ -1,37 +1,29 @@
 ﻿Toon "------------------------------------------------------------------------------".
-Toon " Thinknowlogy is 's werelds meest geavanceerde redeneersysteem: Er zijn geen dialogen vooraf".
-Toon " geschreven. Er is geen kennis voorgeprogrammeerd. En er worden geen woordenlijsten gebruikt.".
-Toon " Bovendien implementeert het redeneerconstructies die wetenschappers nog niet hebben beschreven:".
-Toon " * Ondanks diepgaand onderzoek, heeft de evolutietheorie nog steeds geen bevredigende verklaring".
-Toon " gegeven voor het ontstaan van intelligentie, taal en natuurwetten. Laat staan, hoe ze verwant zijn.".
-Toon " Bovendien is geen enkel fenomeen dat exclusief is voor de evolutietheorie, of afgeleide theorieën,".
-Toon " toepasbaar in het dagelijks leven;".
-Toon " * Volgens het bijbelse wereldbeeld heeft God natuurwetten gecreëerd, als het fundament van zijn".
-Toon " schepping. Gebaseerd op Natuurwetten van Intelligentie, die ingebed zijn in grammatica, implementeert".
-#C++#Toon " alleen Thinknowlogy de intelligente functie van woorden als bepaald lidwoord \"de/het\", voegwoord \"of\",".
-#C++#Toon " bezittelijk werkwoord \"hebben\", de verleden tijd \"waren\" en \"hadden\".".
-#Java#Toon " alleen Thinknowlogy de intelligente functie van woorden als bepaald lidwoord “de/het”, voegwoord “of”,".
-#Java#Toon " bezittelijk werkwoord “hebben”, en werkwoorden in de verleden tijd “waren” en “hadden”.".
+Toon " Thinknowlogy is 's werelds enige zelforganiserende kennistechnologie.".
 Toon "------------------------------------------------------------------------------".
-Toon " De intelligente functie van deze woorden wordt aangetoond door:".
-Toon " * Programmeren in Gecontroleerde natuurlijke taal;".
-Toon " * Redeneren in Gecontroleerde natuurlijke taal:".
+Toon " Ik geloof dat het leven en het universum intelligent ontworpen zijn. En ik geloof dat elk".
+Toon " intelligent ontwerp ontrafeld kan worden via reverse-engineering. Ik heb de menselijke taal".
+Toon " geïdentificeerd als één van de bronnen van natuurlijke intelligentie. Ik benut het intelligente".
+Toon " ontwerp van de menselijke taal om menselijke intelligentie te repliceren in software.".
+Toon "------------------------------------------------------------------------------".
+Toon " De natuurlijke logica van taal wordt aangetoond door:".
+Toon " * Redeneren (in zinnen met beperkte grammatica):".
 Toon "   - het trekken van conclusies (geavanceerder dan wetenschappelijke oplossingen),".
 Toon "   - het doen van aannames (met zelfregulerend onzekerheidsniveau),".
-Toon "   - het stellen van vragen (over hiaten in de kennis),".
-Toon "   - het detecteren van bevestigingen, conflicten en enkele gevallen van semantische ambiguïteit,".
-Toon "   - het tonen van verantwoordingsrapportages voor de zelf-gegenereerde kennis;".
-Toon " * Meertaligheid, wat bewijst: Talen hebben een gemeenschappelijke en logische oorsprong.".
+Toon "   - het stellen van vragen over hiaten in de kennis,".
+Toon "   - het tonen van verantwoordingsrapportages voor de zelf-gegenereerde kennis,".
+Toon "   - het detecteren van bevestigingen en conflicten, en een zelforganiserend vermogen;".
+Toon " * Meertaligheid, wat aangeeft dat talen een gemeenschappelijke en logische oorsprong hebben.".
 Toon "------------------------------------------------------------------------------".
-Toon " Ik daag iedereen uit om dit redeneersysteem te overtreffen: http://mafait.org/challenge/".
+Toon " Ik daag iedereen uit om de eenvoudigste resultaten van dit redeneersysteem op een generieke".
+Toon " manier te verslaan: van zinnen met beperkte grammatica, via algoritmes, terug naar die beperkte".
+Toon " grammatica, in meerdere talen, zonder voorgeprogrammeerde kennis, zonder door mensen".
+Toon " geschreven uitvoerzinnen en zonder uitgebreide woordenlijsten. Zie: https://mafait.org/challenge".
 Toon "------------------------------------------------------------------------------".
 #C++#Toon " Help.\t\t\t\t\t\t\t* Toon help info".
 #C++#Toon " \~{taalnaam}\t\t\t\t\t\t* Wijzig taal".
-#C++#Toon " Lees het bestand \"Nederlands/programmeren/Vier op 'n rij\". * Spel".
-#C++#Toon " Lees het bestand \"Nederlands/programmeren/toren van Hanoi\". * Puzzel".
 #C++#Toon " Lees het bestand \"Nederlands/redeneren/Wetenschappelijke uitdaging\".".
 #C++#Toon " Lees het bestand \"Nederlands/redeneren/gezin/gezinsdefinitie\".".
-#Java#Toon " Gebruik knop <programmeren> voor het programmeren in natuurlijke taal.".
 #Java#Toon " Gebruik knop <redeneren> voor het redeneren in natuurlijke taal.".
 Toon "------------------------------------------------------------------------------".
 Toon " Beschikbare talen: ~+`taal`<s>'~.".

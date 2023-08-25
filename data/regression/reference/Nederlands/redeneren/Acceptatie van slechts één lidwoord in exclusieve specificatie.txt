@@ -1,1 +1,5 @@
-﻿
+﻿* 
+* Mijn veronderstellingen:
+< Een gewervelde is waarschijnlijk geen ongewervelde.
+< Een ongewervelde is waarschijnlijk geen gewervelde.
+< 

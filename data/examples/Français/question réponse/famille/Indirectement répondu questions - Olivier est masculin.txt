@@ -1,0 +1,6 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Olivier est un parent de Pascal, Julien et Lorraine.
+#Dev#Affichez le rapport de justification sur Olivier.
+Olivier est masculin.
+#Dev#Affichez le rapport de justification sur Olivier.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

@@ -1,0 +1,4 @@
+﻿Chaque parent est un père ou une mère.
+Chaque père est un parent.
+Chaque mère est un parent.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

@@ -21,4 +21,7 @@ Becky tiene una madre, llamada Ana.
 #Dev#Mostrar el informe de justificación sobre Luisa.
 #Dev#Mostrar el informe de justificación sobre Peyo.
 #Dev#Mostrar el informe de justificación sobre Becky.
+Becky es hija de Ana.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Becky.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -13,7 +13,7 @@
 < Pascal est probablement partie d'une famille.
 < 
 * 
-* Mes hypothèses qui sont conclus:
+* Mes hypothèses qui ont été conclues:
 < Pascal est partie d'une famille.
 * 
 * Mes conclusions:
@@ -28,6 +28,7 @@
 * Mes hypothèses qui sont confirmées:
 < Armand est probablement un enfant de Pascal.
 * 
-* Mes hypothèses qui sont conclus:
+* Mes hypothèses qui ont été conclues:
+< Pascal a un enfant, appelé Armand.
 < Armand est partie d'une famille.
 < 

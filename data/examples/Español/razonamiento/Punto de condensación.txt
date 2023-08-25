@@ -1,4 +1,4 @@
 ﻿Un punto de condensación es característico de cada tipo de gas.
-El vapor de agua tiene un punto de condensación de 100 grados Celsius.
+El vapor de agua tiene un punto de condensación de 100 grados centrígrados.
 #Dev#Mostrar el informe de justificación sobre el vapor de agua.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

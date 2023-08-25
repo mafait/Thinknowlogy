@@ -14,5 +14,7 @@ José tiene 2 padres, llamados Juan y Ana.
 #Dev#Mostrar el informe de justificación sobre Ana.
 #Dev#Mostrar el informe de justificación sobre José.
 José es un padre.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
 #Dev#Mostrar el informe de justificación sobre José.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

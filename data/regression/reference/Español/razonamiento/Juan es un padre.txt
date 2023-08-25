@@ -1,5 +1,17 @@
 ﻿* 
+* Mis suposiciones:
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+< 
+* 
 * Mis conclusiones:
 < Juan es un hombre.
-< Juan no es una madre.
+* 
+* Mis suposiciones:
+< Juan no es probablemente una madre.
+< Juan no es probablemente una mujer.
 < 

@@ -1,4 +1,9 @@
 ﻿* 
+* Mes hypothèses:
+< Un homme n'est probablement pas une femme.
+< Une femme n'est probablement pas un homme.
+< 
+* 
 * Mes questions:
 < Est Dominique un homme ou une femme?
 < 
@@ -6,12 +11,12 @@
 * Mes questions qui sont répondues:
 < Est Dominique un homme ou une femme?
 * 
-* Mes conclusions:
-< Dominique est un homme.
+* Mes hypothèses:
+< Dominique est probablement un homme.
 < 
 * 
-* Mes conclusions:
-< Dominique est un homme. En raison:
+* Mes hypothèses:
+< Dominique est probablement un homme. En raison:
 <	- Dominique est une personne.
 <	- Chaque personne est un homme ou une femme.
 <	- Dominique n'est pas une femme.

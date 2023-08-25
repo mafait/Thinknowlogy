@@ -1,11 +1,16 @@
 ﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
-Affichez le rapport de justification sur famille.
-Affichez le rapport de justification sur parents.
-Affichez le rapport de justification sur enfants.
-Affichez le rapport de justification sur père.
-Affichez le rapport de justification sur mère.
-Affichez le rapport de justification sur fils.
-Affichez le rapport de justification sur fille.
+Affichez le rapport de justification sur la famille.
+Affichez le rapport de justification sur les parents.
+Affichez le rapport de justification sur les enfants.
+Affichez le rapport de justification sur les pères.
+Affichez le rapport de justification sur les mères.
+Affichez le rapport de justification sur les hommes.
+Affichez le rapport de justification sur les femmes.
+Affichez le rapport de justification sur les fils.
+Affichez le rapport de justification sur les filles.
+Affichez le rapport de justification sur les garçons.
+Affichez le rapport de justification sur les jeune-filles.
+Affichez le rapport de justification sur les personnes.
 Olivier est le père et Amélie est la mère de Pascal, Julien et Lorraine.
 Affichez le rapport de justification sur Olivier.
 Affichez le rapport de justification sur Amélie.

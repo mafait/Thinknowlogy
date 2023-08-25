@@ -1,5 +1,5 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-¿Es Juan madre de Pablo?
+¿Es Juan la madre de Pablo?
 #Dev#Mostrar el informe de justificación sobre Juan.
 Juan es el padre de Pablo, José y Luisa.
 #Dev#Mostrar el informe de justificación sobre Juan.

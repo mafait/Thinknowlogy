@@ -4,7 +4,7 @@
 ¿Es Ana un padre o una madre?
 ¿Es Ana una madre?
 Ana es una madre.
-¿Es Ana madre de Pablo?
+¿Es Ana la madre de Pablo?
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

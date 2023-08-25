@@ -1,4 +1,9 @@
 ﻿* 
+* Mijn veronderstellingen:
+< Een gewervelde is waarschijnlijk geen ongewervelde.
+< Een ongewervelde is waarschijnlijk geen gewervelde.
+< 
+* 
 * U hebt meervoudige zelfstandige naamwoord "reptielen" ingevoerd, dat onbekend was voor mij.
 * 
 * Mijn veronderstellingen:
@@ -9,27 +14,38 @@
 * 
 * Mijn veronderstellingen:
 < Een zogende is waarschijnlijk een organisme.
-< Een gewervelde is mogelijk een organisme.
+< Een gewervelde is waarschijnlijk een organisme.
+< 
+* 
+* Mijn veronderstellingen:
+< Een mens is waarschijnlijk een organisme.
 < 
 * 
 * Mijn conclusies:
 < Jan is een zogende.
 < Jan is een gewervelde.
-< Jan is geen amfibie, geen vogel, geen vis en geen reptiel.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een organisme.
-< Jan is waarschijnlijk geen dier, geen schimmel, geen micro-organisme en geen plant.
+< Jan is mogelijk geen dier, geen schimmel, geen micro-organisme en geen plant.
+< Jan is waarschijnlijk geen ongewervelde.
+< Jan is mogelijk geen annelid, geen geleedpotige, geen stekelhuidige, geen weekdier en geen oerdier.
+< Jan is waarschijnlijk geen amfibie, geen vogel, geen vis en geen reptiel.
 < 
 * 
 * Mijn veronderstellingen:
-< Een gewervelde is mogelijk een organisme. Omdat:
+< Een gewervelde is waarschijnlijk een organisme. Omdat:
 <	- Iedere gewervelde is een amfibie, een vogel, een vis, een zogende of een reptiel.
 <	- Een zogende is waarschijnlijk een organisme.
+< Een gewervelde is waarschijnlijk geen ongewervelde. Omdat:
+<	- Ieder dier is een gewervelde of een ongewervelde.
 < 
 * 
 * Mijn veronderstellingen:
 < Een zogende is waarschijnlijk een organisme. Omdat:
+<	- Iedere zogende is een walvisachtige, een buideldier, een knaagdier, een aap of een mens.
+<	- Een mens is waarschijnlijk een organisme.
+* 	en:
 <	- Ieder organisme is een dier, een schimmel, een mens, een micro-organisme of een plant.
 <	- Iedere zogende is een walvisachtige, een buideldier, een knaagdier, een aap of een mens.
 < 
@@ -53,20 +69,29 @@
 < Jan is een gewervelde. Omdat:
 <	- Jan is een mens.
 <	- Ieder mens is een gewervelde.
-< Jan is geen amfibie, geen vogel, geen vis en geen reptiel. Omdat:
-<	- Jan is een gewervelde.
-<	- Iedere gewervelde is een amfibie, een vogel, een vis, een zogende of een reptiel.
-<	- Jan is een zogende.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk een organisme. Omdat:
-<	- Ieder organisme is een dier, een schimmel, een mens, een micro-organisme of een plant.
-<	- Jan is een mens.
-* 	en:
 <	- Jan is een zogende.
 <	- Een zogende is waarschijnlijk een organisme.
-< Jan is waarschijnlijk geen dier, geen schimmel, geen micro-organisme en geen plant. Omdat:
+* 	en:
+<	- Jan is een mens.
+<	- Een mens is waarschijnlijk een organisme.
+* 	en:
+<	- Jan is een gewervelde.
+<	- Een gewervelde is waarschijnlijk een organisme.
+< Jan is mogelijk geen dier, geen schimmel, geen micro-organisme en geen plant. Omdat:
 <	- Jan is waarschijnlijk een organisme.
 <	- Ieder organisme is een dier, een schimmel, een mens, een micro-organisme of een plant.
 <	- Jan is een mens.
+< Jan is waarschijnlijk geen ongewervelde. Omdat:
+<	- Jan is een gewervelde.
+<	- Een gewervelde is waarschijnlijk geen ongewervelde.
+< Jan is mogelijk geen annelid, geen geleedpotige, geen stekelhuidige, geen weekdier en geen oerdier. Omdat:
+<	- Jan is waarschijnlijk geen ongewervelde.
+<	- Iedere ongewervelde is een annelid, een geleedpotige, een stekelhuidige, een weekdier of een oerdier.
+< Jan is waarschijnlijk geen amfibie, geen vogel, geen vis en geen reptiel. Omdat:
+<	- Jan is een gewervelde.
+<	- Iedere gewervelde is een amfibie, een vogel, een vis, een zogende of een reptiel.
+<	- Jan is een zogende.
 < 

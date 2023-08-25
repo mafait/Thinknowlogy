@@ -21,4 +21,7 @@ Claudia has a mother, called Anna.
 #Dev#Display the justification report about Laura.
 #Dev#Display the justification report about Peter.
 #Dev#Display the justification report about Claudia.
+Claudia is a child of Anna.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Claudia.
 # To continue, click button «Clear your mind.» or «Restart.».

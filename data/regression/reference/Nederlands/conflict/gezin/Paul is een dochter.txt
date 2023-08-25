@@ -1,7 +1,45 @@
 ﻿* 
+* Mijn veronderstellingen:
+< Een man is waarschijnlijk geen vrouw.
+< Een vrouw is waarschijnlijk geen man.
+< 
+* 
+* Mijn conclusies:
+< Iedere vrouw is niet mannelijk.
+< 
+* 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Iedere man is geen vrouw.
+< Iedere vrouw is geen man.
+* 
+* Mijn conclusies:
+< Iedere man is niet vrouwelijk.
+< Iedere persoon is mannelijk of vrouwelijk.
+* 
+* Mijn veronderstellingen:
+< Een man is waarschijnlijk een persoon.
+< Een vrouw is waarschijnlijk een persoon.
+< 
+* 
 * Mijn conclusies:
 < Ouders en kinderen zijn deel van ieder gezin.
 < 
+* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk geen moeder.
+< Een moeder is waarschijnlijk geen vader.
+< 
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk geen dochter.
+< Een dochter is waarschijnlijk geen zoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere vader is mannelijk.
+< Iedere vader is niet vrouwelijk.
+< Iedere vader is geen vrouw.
+< Iedere vrouw is geen vader.
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
@@ -9,27 +47,75 @@
 < Een ouder is waarschijnlijk een persoon.
 < 
 * 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
+* 
 * Mijn conclusies:
+< Iedere moeder is vrouwelijk.
+< Iedere moeder is niet mannelijk.
+< Iedere moeder is geen man.
+< Iedere man is geen moeder.
 < Iedere ouder is een vrouw of een man.
+< Iedere ouder is vrouwelijk of mannelijk.
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon.
 < Een moeder is waarschijnlijk een ouder.
 < 
 * 
-* Mijn veronderstellingen:
-< Een zoon is waarschijnlijk een persoon.
-< Een kind is waarschijnlijk een persoon.
+* Mijn conclusies:
+< Ieder meisje is niet mannelijk.
+< Ieder meisje is geen vader.
+< Ieder meisje is geen man.
+< Iedere vader is geen meisje.
+< Iedere man is geen meisje.
 < 
 * 
 * Mijn conclusies:
+< Iedere jongen is niet vrouwelijk.
+< Iedere jongen is geen meisje.
+< Iedere jongen is geen moeder.
+< Iedere jongen is geen vrouw.
+< Ieder meisje is geen jongen.
+< Iedere moeder is geen jongen.
+< Iedere vrouw is geen jongen.
+< 
+* 
+* Mijn conclusies:
+< Iedere zoon is mannelijk.
+< Iedere zoon is niet vrouwelijk.
+* 
+* Mijn veronderstellingen:
+< Een zoon is waarschijnlijk een kind.
+< Een zoon is waarschijnlijk een persoon.
+< Een kind is waarschijnlijk een persoon.
+< Een jongen is waarschijnlijk geen man.
+< Een jongen is waarschijnlijk een persoon.
+< Een man is waarschijnlijk geen jongen.
+< 
+* 
+* Mijn conclusies:
+< Iedere dochter is vrouwelijk.
+< Iedere dochter is niet mannelijk.
+< Ieder kind is vrouwelijk of mannelijk.
 < Ieder kind is een meisje, een vrouw, een jongen of een man.
 * 
 * Mijn veronderstellingen:
+< Een dochter is waarschijnlijk een kind.
 < Een dochter is waarschijnlijk een persoon.
+< Een meisje is waarschijnlijk geen vrouw.
+< Een meisje is waarschijnlijk een persoon.
+< Een vrouw is waarschijnlijk geen meisje.
 < 
 * 
 * Mijn conclusies:
+< Paul is mannelijk.
+< Paul is geen dochter.
+< Paul is geen meisje.
+< Paul is geen moeder.
+< Paul is geen vrouw.
+< Paul is niet vrouwelijk.
 < Jan heeft een zoon, genaamd Paul.
 < Anna heeft een zoon, genaamd Paul.
 * 
@@ -37,32 +123,36 @@
 < Paul is waarschijnlijk een persoon.
 < Paul is waarschijnlijk een kind van Jan en Anna.
 < Paul is waarschijnlijk deel van een gezin.
-< Paul is waarschijnlijk geen meisje en geen vrouw.
-< Paul is waarschijnlijk geen dochter.
-< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
-< Paul heeft mogelijk een moeder, genaamd Anna.
+< Paul heeft mogelijk 2 ouders, genaamd Jan en Anna.
+< Paul heeft misschien een moeder, genaamd Anna.
 < Jan heeft waarschijnlijk een kind, genaamd Paul.
-< Jan is waarschijnlijk een ouder van Paul.
-< Jan is waarschijnlijk deel van een gezin.
-< Jan is mogelijk een persoon.
+< Jan is mogelijk een ouder van Paul.
+< Jan is mogelijk deel van een gezin.
+< Jan is misschien een persoon.
 < Anna heeft waarschijnlijk een kind, genaamd Paul.
-< Anna is waarschijnlijk een ouder van Paul.
-< Anna is waarschijnlijk deel van een gezin.
-< Anna is mogelijk een persoon.
-< Anna is mogelijk een moeder van Paul.
-< Anna is mogelijk een vrouw.
-< Anna is misschien geen man.
-< Anna is mogelijk vrouwelijk.
+< Anna is mogelijk een ouder van Paul.
+< Anna is mogelijk deel van een gezin.
+< Anna is misschien een persoon.
+< Anna is misschien een vrouw.
+< Anna is misschien geen meisje.
+< Anna is misschien geen jongen.
 < Anna is misschien geen vader.
+< Anna is misschien niet mannelijk.
+< Anna is misschien geen man.
+< Anna is misschien vrouwelijk.
+< Anna is misschien geen zoon.
+< Anna is misschien een moeder van Paul.
 * 
 * Mijn vragen:
 < Is Paul een jongen of een man?
 < Is Jan een vader of een moeder?
 < Is Jan een man of een vrouw?
+< Is Jan mannelijk of vrouwelijk?
 < 
 ! 
 ! Deze zin is niet geaccepteerd, omdat het in conflict is met:
+< Paul is geen dochter.
 < Paul is een zoon van Jan en Anna.
-< Paul is waarschijnlijk geen dochter.
-< Paul is waarschijnlijk geen meisje en geen vrouw.
+< Paul is geen meisje.
+< Paul is geen vrouw.
 < 

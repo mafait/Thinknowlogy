@@ -1,11 +1,11 @@
 ﻿/*	Class:			InterfaceItem
  *	Parent class:	Item
- *	Purpose:		To store info about the user-interface messages
+ *	Purpose:		Storing info about the user-interface messages
  *					in the available languages
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -54,6 +54,7 @@ class InterfaceItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( GlobalVariables.queryStringBuffer == null )
@@ -62,7 +63,7 @@ class InterfaceItem extends Item
 		if( interfaceString_ != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -73,6 +74,7 @@ class InterfaceItem extends Item
 			}
 		}
 
+	@Override
 	protected boolean hasParameter( int queryParameter )
 		{
 		return ( interfaceParameter_ == queryParameter ||
@@ -81,11 +83,13 @@ class InterfaceItem extends Item
 				interfaceParameter_ > Constants.NO_INTERFACE_PARAMETER ) );
 		}
 
+	@Override
 	protected String itemString()
 		{
 		return interfaceString_;
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
@@ -123,7 +127,7 @@ class InterfaceItem extends Item
 		{
 		return (InterfaceItem)nextItem;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"O Lord, what are human beings that you should notice them,

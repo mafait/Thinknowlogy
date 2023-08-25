@@ -1,10 +1,10 @@
 ﻿/*	Class:			FileItem
  *	Parent class:	Item
- *	Purpose:		To store info about the opened files
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing info about the opened files
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@ class FileItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayString( boolean isReturnQueryToPosition )
 		{
 		if( GlobalVariables.queryStringBuffer == null )
@@ -71,7 +72,7 @@ class FileItem extends Item
 		if( readFileNameString_ != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -82,7 +83,8 @@ class FileItem extends Item
 			}
 		}
 
-	protected boolean isSorted( Item nextSortItem )
+	@Override
+	protected boolean isSorted( Item _nextSortItem )
 		{
 		// This is a virtual method. Therefore, the given variables are unreferenced.
 
@@ -90,6 +92,7 @@ class FileItem extends Item
 		return true;
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
@@ -163,7 +166,7 @@ class FileItem extends Item
 		{
 		return (FileItem)nextItem;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"He spoke, and the winds rose,

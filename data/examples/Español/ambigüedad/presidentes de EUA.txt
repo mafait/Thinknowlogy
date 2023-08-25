@@ -18,5 +18,14 @@ George Bush es el presidente de los Estados Unidos.
 Barack Obama es el presidente de los Estados Unidos.
 Mostrar información sobre los presidentes.
 #Dev#Mostrar el informe de justificación sobre los Estados Unidos.
-# En 2013, ...
+# En 2013, Barack Obama fue re-inaugurado como presidente de los Estados Unidos.
+Barack Obama es el presidente de los Estados Unidos.
+# En 2017, Donald Trump fue investido como presidente de los Estados Unidos.
+Donald Trump es el presidente de los Estados Unidos.
+Mostrar información sobre los presidentes.
+#Dev#Mostrar el informe de justificación sobre los Estados Unidos.
+# En 2021, Joe Biden fue investido como presidente de los Estados Unidos.
+Joe Biden es el presidente de los Estados Unidos.
+Mostrar información sobre los presidentes.
+#Dev#Mostrar el informe de justificación sobre los Estados Unidos.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

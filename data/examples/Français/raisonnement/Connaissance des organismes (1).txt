@@ -1,5 +1,5 @@
 ﻿# Les organismes
-Chaque organisme est un animal, un champignon, un être humain-être, un micro-organisme ou une plante.
+Chaque organisme est un animal, un champignon, un humain, un micro-organisme ou une plante.
 # Les animaux
 Chaque animal est un vertébré ou un invertébré.
 # Les vertébrés
@@ -31,7 +31,7 @@ Palourdes, seiches, moules, nautiles, poulpes, huîtres, escargots et calmars so
 #Les amibes et les flagellés sont des protozoaires.
 Amibes et flagellés sont protozoaires.
 # Les mammifères
-Chaque mammifère est un cétacé, un marsupial, un rongeur, un singe ou un être humain-être.
+Chaque mammifère est un cétacé, un marsupial, un rongeur, un singe ou un humain.
 # Les cétacés
 #Les baleines et les dauphins sont des cétacés.
 Baleines et dauphins sont cétacés.
@@ -52,11 +52,12 @@ Crabes, homards et bernaches sont crustacés.
 # Les insectes
 Coléoptères, mouches, beurre mouches, papillons, libellules, beilles, guêpes et priaient mantes sont insectes.
 # Humain-êtres
-Chaque humain-être est un vertébré.
-Chaque humain-être est un mammifère.
-Olivier est un humain-être.
+Chaque humain est un vertébré.
+Chaque humain est un mammifère.
+Olivier est un humain.
 # Le rapport de justification
 #Dev#Affichez le rapport de justification sur les vertébrés.
 #Dev#Affichez le rapport de justification sur les mammifères.
 #Dev#Affichez le rapport de justification sur les crocodiles.
 #Dev#Affichez le rapport de justification sur Olivier.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

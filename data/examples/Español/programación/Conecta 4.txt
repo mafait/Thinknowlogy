@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To demonstrate programming in natural language.
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -19,12 +19,15 @@
 # Si todas las columnas están llenas pero nadie ha hecho una fila válida,
 # hay empate.
 #----------------------------------------------------------------------------
-# Vea el texto completo: http://es.wikipedia.org/wiki/Conecta_4
+# Vea el texto completo: https://es.wikipedia.org/wiki/Conecta_4
 #----------------------------------------------------------------------------
 
-# Definiciones iniciales.
-Cada turno es tuyo o mío.
+# Definiciones iniciales: Recoger palabras de especificación.
 Cada movimiento es A, B, C, D, E, F o G.
+Cada método de resolver puede-estar invertida.
+Cada método de resolver puede-estar ocupado o hecho.
+Cada estrategia de resolver es defensiva o exclusivo.
+Cada turno es tuyo o mío.
 Un nivel de resolver es baja o alta.
 
 # Resuelve el problema.

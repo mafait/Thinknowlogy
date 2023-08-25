@@ -1,7 +1,45 @@
 ﻿* 
+* My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
+< 
+* 
+* My conclusions:
+< Every woman is not masculine.
+< 
+* 
+* My assumptions that have been concluded:
+< Every man is not a woman.
+< Every woman is not a man.
+* 
+* My conclusions:
+< Every man is not feminine.
+< Every person is masculine or feminine.
+* 
+* My assumptions:
+< A man is probably a person.
+< A woman is probably a person.
+< 
+* 
 * My conclusions:
 < Parents and children are part of every family.
 < 
+* 
+* My assumptions:
+< A father is probably not a mother.
+< A mother is probably not a father.
+< 
+* 
+* My assumptions:
+< A son is probably not a daughter.
+< A daughter is probably not a son.
+< 
+* 
+* My conclusions:
+< Every father is masculine.
+< Every father is not feminine.
+< Every father is not a woman.
+< Every woman is not a father.
 * 
 * My assumptions:
 < A father is probably a person.
@@ -9,107 +47,173 @@
 < A parent is probably a person.
 < 
 * 
+* My assumptions that have been concluded:
+< Every mother is not a father.
+< Every father is not a mother.
+* 
 * My conclusions:
+< Every mother is feminine.
+< Every mother is not masculine.
+< Every mother is not a man.
+< Every man is not a mother.
 < Every parent is a woman or a man.
+< Every parent is feminine or masculine.
 * 
 * My assumptions:
 < A mother is probably a person.
 < A mother is probably a parent.
 < 
 * 
-* My assumptions:
-< A son is probably a person.
-< A child is probably a person.
+* My conclusions:
+< Every girl is not masculine.
+< Every girl is not a father.
+< Every girl is not a man.
+< Every father is not a girl.
+< Every man is not a girl.
 < 
 * 
 * My conclusions:
+< Every boy is not feminine.
+< Every boy is not a girl.
+< Every boy is not a mother.
+< Every boy is not a woman.
+< Every girl is not a boy.
+< Every mother is not a boy.
+< Every woman is not a boy.
+< 
+* 
+* My conclusions:
+< Every son is masculine.
+< Every son is not feminine.
+* 
+* My assumptions:
+< A son is probably a child.
+< A son is probably a person.
+< A child is probably a person.
+< A boy is probably not a man.
+< A boy is probably a person.
+< A man is probably not a boy.
+< 
+* 
+* My conclusions:
+< Every daughter is feminine.
+< Every daughter is not masculine.
+< Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
 * My assumptions:
+< A daughter is probably a child.
 < A daughter is probably a person.
+< A girl is probably not a woman.
+< A girl is probably a person.
+< A woman is probably not a girl.
 < 
 * 
 * My conclusions:
 < John is a father of Laura.
 < John is a man.
+< John is not a mother.
+< John is not a girl.
+< John is not feminine.
+< John is not a woman.
 < John is masculine.
+< John is not a daughter.
 * 
 * My assumptions:
 < Laura has probably a parent, called John.
-< Laura is probably a child of John.
-< Laura is probably part of a family.
-< Laura is possibly a person.
-< Laura is possibly a daughter of John.
-< Laura is maybe not a boy and not a man.
+< Laura is possibly a child of John.
+< Laura is possibly part of a family.
+< Laura is maybe a person.
+< Laura is maybe a daughter of John.
+< Laura is maybe feminine.
 < Laura is maybe not a son.
+< Laura is maybe not a boy.
+< Laura is maybe not a father.
+< Laura is maybe not a man.
+< Laura is maybe not masculine.
+< John is probably not a boy.
 < John is probably a person.
-< John is probably not a woman.
 < John is probably a parent of Laura.
 < John is probably part of a family.
-< John is probably not a mother.
-< John has probably a child, called Laura.
-< John has possibly a daughter, called Laura.
+< John has possibly a child, called Laura.
+< John has maybe a daughter, called Laura.
 * 
 * My questions:
 < Is Laura a girl or a woman?
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < John is a father of Laura.
 * 
 * My conclusions:
+< Laura has a mother, called Anna.
 < Paul has a father, called John.
 < Paul has a mother, called Anna.
 < Joe has a father, called John.
 < Joe has a mother, called Anna.
-< Laura has a mother, called Anna.
 < Anna is a woman.
+< Anna is not a father.
+< Anna is not a boy.
+< Anna is not masculine.
+< Anna is not a man.
 < Anna is feminine.
+< Anna is not a son.
 * 
 * My assumptions:
 < John is probably a parent of Laura, Paul and Joe.
-< John has probably 3 children, called Laura, Paul and Joe.
-< Paul has probably 2 parents, called John and Anna.
-< Paul is probably a child of John and Anna.
-< Paul is probably part of a family.
-< Paul is possibly a person.
-< Joe has probably 2 parents, called John and Anna.
-< Joe is probably a child of John and Anna.
-< Joe is probably part of a family.
-< Joe is possibly a person.
-< Laura is probably a child of John and Anna.
-< Laura is possibly a daughter of John and Anna.
+< John has possibly 3 children, called Laura, Paul and Joe.
+< Laura is possibly a child of John and Anna.
+< Laura is maybe a daughter of John and Anna.
 < Laura has probably 2 parents, called John and Anna.
+< Paul has probably 2 parents, called John and Anna.
+< Paul is possibly a child of John and Anna.
+< Paul is possibly part of a family.
+< Paul is maybe a person.
+< Joe has probably 2 parents, called John and Anna.
+< Joe is possibly a child of John and Anna.
+< Joe is possibly part of a family.
+< Joe is maybe a person.
+< Anna is probably not a girl.
 < Anna is probably a person.
-< Anna is probably not a man.
 < Anna is probably a parent of Laura, Paul and Joe.
 < Anna is probably part of a family.
-< Anna is probably not a father.
-< Anna has probably 3 children, called Laura, Paul and Joe.
-< Anna has possibly a daughter, called Laura.
+< Anna has possibly 3 children, called Laura, Paul and Joe.
+< Anna has maybe a daughter, called Laura.
 * 
 * My questions:
 < Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
+< Is Paul feminine or masculine?
 < Is Joe a girl, a woman, a boy or a man?
 < Is Joe a son or a daughter?
+< Is Joe feminine or masculine?
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < Laura has a mother, called Anna.
 < 
 * 
-* My questions that are answered:
+* My questions that have been answered:
 < Is Paul a girl, a woman, a boy or a man?
+* 
+* My assumptions that have been adjusted:
+< Paul is probably a person.
+* 
+* My questions that have been answered:
+< Is Paul feminine or masculine?
 < Is Paul a son or a daughter?
 * 
 * My conclusions:
+< Paul is not feminine.
 < Paul is masculine.
+< Paul is not a daughter.
+< Paul is not a girl.
+< Paul is not a mother.
+< Paul is not a woman.
 * 
 * My assumptions:
-< Paul is probably a son.
-< Paul is possibly not a daughter.
-< Paul is probably not a man, not a girl and not a woman.
+< Paul is maybe a son.
+< Paul is probably not a man.
 < 
 * I know.
 * 

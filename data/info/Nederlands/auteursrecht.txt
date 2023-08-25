@@ -1,7 +1,7 @@
-﻿Toon " Copyright (C) 2009-2018, Menno Mafait".
+﻿Toon " Copyright (C) 2023, Menno Mafait".
 #C++#Toon " Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details type \"Toon".
 #C++#Toon " de garantie.\". Dit is vrije software en het is u toegestaan deze te verspreiden".
 #C++#Toon " onder bepaalde voorwaarden; type \"Toon de GPLv2-licentie.\" voor meer details.".
-#Java#Toon " Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details klik <Help.> en".
-#Java#Toon " <Toon de garantie.>. Dit is vrije software en het is u toegestaan deze te verspreiden".
-#Java#Toon " onder bepaalde voorwaarden; klik <Help.> en <Toon de GPLv2-licentie.> voor meer details.".
+#Java#Toon " Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details klik \"Help.\" en".
+#Java#Toon " \"Toon de garantie.\". Dit is vrije software en het is u toegestaan deze te verspreiden".
+#Java#Toon " onder bepaalde voorwaarden; klik \"Help.\" en \"Toon de GPLv2-licentie.\" voor meer details.".

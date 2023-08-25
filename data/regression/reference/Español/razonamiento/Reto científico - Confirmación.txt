@@ -3,7 +3,7 @@
 < Juan tiene un hijo, llamado Pablo.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Juan tiene un hijo, llamado Pablo.
 < 
 * 
@@ -11,7 +11,7 @@
 < Laura es hija de Ana.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Laura es hija de Ana.
 < 
 * 
@@ -19,7 +19,7 @@
 < Un motor es parte de cada coche.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Un motor es parte de cada coche.
 < 
 * 
@@ -27,7 +27,7 @@
 < Cada velero tiene una vela.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Cada velero tiene una vela.
 < 
 * 
@@ -36,12 +36,17 @@
 < Rafael tenido un padre, llamado Hernando.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Rafael no tiene un padre nunca-más.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Rafael tenido un padre, llamado Hernando.
+< 
+* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
 < 
 * 
 * Mis preguntas:
@@ -52,7 +57,7 @@
 < Los Estados Unidos tiene un presidente, llamado Barack Obama.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Los Estados Unidos tiene un presidente, llamado Barack Obama.
 < 
 * 
@@ -60,6 +65,6 @@
 < Los Estados Unidos tiene un presidente, llamado Donald Trump.
 < 
 * 
-* Mis conclusiones son confirmadas:
+* Mis conclusiones que han sido confirmadas:
 < Los Estados Unidos tiene un presidente, llamado Donald Trump.
 < 

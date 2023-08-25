@@ -1,12 +1,12 @@
 ﻿/*	Class:			GeneralizationItem
  *	Parent class:	Item
- *	Purpose:		To store info about generalizations of a word,
+ *	Purpose:		Storing info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ package org.mafait.thinknowlogy;
 
 class GeneralizationItem extends Item
 	{
-	// Private initialized variables
+			// Private initialized variables
 
 	private boolean isLanguageWord_ = false;
 	private boolean isRelation_ = false;
@@ -45,6 +45,11 @@ class GeneralizationItem extends Item
 		{
 		return ( generalizationWordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR ||
 				generalizationWordTypeNr_ == Constants.WORD_TYPE_NOUN_PLURAL );
+		}
+
+	private boolean isProperNoun()
+		{
+		return ( generalizationWordTypeNr_ == Constants.WORD_TYPE_PROPER_NOUN );
 		}
 
 
@@ -73,6 +78,7 @@ class GeneralizationItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		String wordString;
@@ -84,7 +90,7 @@ class GeneralizationItem extends Item
 		( wordString = generalizationWordItem_.wordTypeString( true, generalizationWordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -95,6 +101,7 @@ class GeneralizationItem extends Item
 			}
 		}
 
+	@Override
 	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( generalizationWordItem_ == null ? false :
@@ -102,19 +109,21 @@ class GeneralizationItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : generalizationWordItem_.itemNr() == queryItemNr ) );
 		}
 
+	@Override
 	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( specificationWordTypeNr_ == queryWordTypeNr ||
 				generalizationWordTypeNr_ == queryWordTypeNr );
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem thisWordItem = myWordItem();
-		String generalizationWordTypeString = thisWordItem.wordTypeNameString( generalizationWordTypeNr_ );
-		String languageNameString = thisWordItem.languageNameString( languageNr_ );
+		WordItem _myWordItem = myWordItem();
+		String generalizationWordTypeString = _myWordItem.wordTypeNameString( generalizationWordTypeNr_ );
+		String languageNameString = _myWordItem.languageNameString( languageNr_ );
 		StringBuffer queryStringBuffer;
-		String specificationWordTypeString = thisWordItem.wordTypeNameString( specificationWordTypeNr_ );
+		String specificationWordTypeString = _myWordItem.wordTypeNameString( specificationWordTypeNr_ );
 		String wordString;
 
 		itemBaseToStringBuffer( queryWordTypeNr );
@@ -148,6 +157,7 @@ class GeneralizationItem extends Item
 		return queryStringBuffer;
 		}
 
+	@Override
 	protected BoolResultType findMatchingWordReferenceString( String queryString )
 		{
 		if( generalizationWordItem_ != null )
@@ -164,7 +174,7 @@ class GeneralizationItem extends Item
 		return isRelation_;
 		}
 
-	protected GeneralizationItem generalizationItem( boolean isIncludingThisItem, boolean isOnlySelectingCurrentLanguage, boolean isOnlySelectingNoun, boolean isRelation )
+	protected GeneralizationItem generalizationItem( boolean isIncludingThisItem, boolean isOnlySelectingCurrentLanguage, boolean isOnlySelectingNoun, boolean isOnlySelectingProperNoun, boolean isRelation )
 		{
 		short currentLanguageNr = GlobalVariables.currentLanguageNr;
 		GeneralizationItem searchGeneralizationItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
@@ -177,7 +187,10 @@ class GeneralizationItem extends Item
 			searchGeneralizationItem.languageNr_ == currentLanguageNr ) &&
 
 			( !isOnlySelectingNoun ||
-			searchGeneralizationItem.isNoun() ) )
+			searchGeneralizationItem.isNoun() ) &&
+
+			( !isOnlySelectingProperNoun ||
+			searchGeneralizationItem.isProperNoun() ) )
 				return searchGeneralizationItem;
 
 			searchGeneralizationItem = searchGeneralizationItem.nextGeneralizationItem();
@@ -193,24 +206,29 @@ class GeneralizationItem extends Item
 
 	protected GeneralizationItem nextNounSpecificationGeneralizationItem()
 		{
-		return generalizationItem( false, false, true, false );
+		return generalizationItem( false, true, true, false, false );
+		}
+
+	protected GeneralizationItem nextProperNounSpecificationGeneralizationItem()
+		{
+		return generalizationItem( false, false, false, true, false );
 		}
 
 	protected GeneralizationItem nextSpecificationGeneralizationItem()
 		{
-		return generalizationItem( false, false, false, false );
+		return generalizationItem( false, false, false, false, false );
 		}
 
 	protected GeneralizationItem nextRelationGeneralizationItem()
 		{
-		return generalizationItem( false, false, false, true );
+		return generalizationItem( false, false, false, false, true );
 		}
 
 	protected WordItem generalizationWordItem()
 		{
 		return generalizationWordItem_;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"Give thanks to him who made the heavens so skillfully.

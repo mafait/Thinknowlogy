@@ -1,1 +1,5 @@
-﻿
+﻿* 
+* Mis suposiciones:
+< Un vertebrado no es probablemente un invertebrado.
+< Un invertebrado no es probablemente un vertebrado.
+< 

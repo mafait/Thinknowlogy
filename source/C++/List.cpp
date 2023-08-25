@@ -1,9 +1,9 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@
 			searchItem->itemNr() >= startDecrementItemNr )
 				{
 				if( searchItem->itemNr() <= startDecrementItemNr )
-					return startError( functionNameString, "I found an item number equal to the given start item number" );
+					return startError( functionNameString, "I found an item number equal to - or lower than - the given start item number" );
 
 				if( searchItem->decrementItemNr( decrementOffset ) != RESULT_OK )
 					return addError( functionNameString, "I failed to decrement the item number of an item with a certain offset" );
@@ -903,6 +903,29 @@
 		return listChar_;
 		}
 
+	signed char List::activateItem( Item *activateItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "activateItem";
+
+		if( activateItem == NULL )
+			return startError( functionNameString, "The given activate item is undefined" );
+
+		if( activateItem->statusChar() == QUERY_ACTIVE_CHAR )
+			return startError( functionNameString, "The given activate item is already an active item" );
+
+		if( removeItemFromList( activateItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to remove an item from the archive list" );
+
+		if( addItemToList( QUERY_ACTIVE_CHAR, activateItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add an item to the active list" );
+
+		if( isAssignmentList() &&
+		globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+			globalVariables_->isAssignmentChanged = true;
+
+		return RESULT_OK;
+		}
+
 	signed char List::addItemToList( char statusChar, Item *newItem )
 		{
 		unsigned int creationSentenceNr;
@@ -1060,25 +1083,47 @@
 		return RESULT_OK;
 		}
 
-	signed char List::activateItem( Item *activateItem )
+	signed char List::archiveItem( Item *archiveItem )
 		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "activateItem";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "archiveItem";
 
-		if( activateItem == NULL )
-			return startError( functionNameString, "The given activate item is undefined" );
+		if( archiveItem == NULL )
+			return startError( functionNameString, "The given archive item is undefined" );
 
-		if( activateItem->statusChar() == QUERY_ACTIVE_CHAR )
-			return startError( functionNameString, "The given activate item is already an active item" );
+		if( archiveItem->statusChar() == QUERY_ARCHIVED_CHAR )
+			return startError( functionNameString, "The given archive item is already an archived item" );
 
-		if( removeItemFromList( activateItem ) != RESULT_OK )
-			return addError( functionNameString, "I failed to remove an item from the archive list" );
+		if( !isAssignmentList() )
+			return startError( functionNameString, "Only assignments can be archived" );
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, activateItem ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an item to the active list" );
+		if( removeItemFromList( archiveItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to remove an item from a list" );
 
-		if( isAssignmentList() &&
-		globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
+		archiveItem->previousStatusChar = archiveItem->statusChar();
+
+		if( addItemToList( QUERY_ARCHIVED_CHAR, archiveItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add an item to the archived list" );
+
+		if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
 			globalVariables_->isAssignmentChanged = true;
+
+		return RESULT_OK;
+		}
+
+	signed char List::deleteItem( Item *deleteItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "deleteItem";
+
+		if( removeItemFromList( deleteItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to remove an item from a list" );
+
+		deleteItem->previousStatusChar = deleteItem->statusChar();
+
+		if( deleteItem->statusChar() == QUERY_DELETED_CHAR )
+			return startError( functionNameString, "The given delete item is already a deleted item" );
+
+		if( addItemToList( QUERY_DELETED_CHAR, deleteItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add an item to the deleted list" );
 
 		return RESULT_OK;
 		}
@@ -1110,72 +1155,6 @@
 		return RESULT_OK;
 		}
 
-	signed char List::archiveItem( Item *archiveItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "archiveItem";
-
-		if( archiveItem == NULL )
-			return startError( functionNameString, "The given archive item is undefined" );
-
-		if( archiveItem->statusChar() == QUERY_ARCHIVED_CHAR )
-			return startError( functionNameString, "The given archive item is already an archived item" );
-
-		if( !isAssignmentList() )
-			return startError( functionNameString, "Only assignments can be archived" );
-
-		if( removeItemFromList( archiveItem ) != RESULT_OK )
-			return addError( functionNameString, "I failed to remove an item from a list" );
-
-		archiveItem->previousStatusChar = archiveItem->statusChar();
-
-		if( addItemToList( QUERY_ARCHIVED_CHAR, archiveItem ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an item to the archived list" );
-
-		if( globalVariables_->currentAssignmentLevel == NO_ASSIGNMENT_LEVEL )
-			globalVariables_->isAssignmentChanged = true;
-
-		return RESULT_OK;
-		}
-
-	signed char List::replaceItem( Item *replaceItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "replaceItem";
-
-		if( replaceItem == NULL )
-			return startError( functionNameString, "The given replace item is undefined" );
-
-		if( replaceItem->statusChar() == QUERY_REPLACED_CHAR )
-			return startError( functionNameString, "The given replace item is already a replaced item" );
-
-		if( removeItemFromList( replaceItem ) != RESULT_OK )
-			return addError( functionNameString, "I failed to remove an item from a list" );
-
-		replaceItem->previousStatusChar = replaceItem->statusChar();
-
-		if( addItemToList( QUERY_REPLACED_CHAR, replaceItem ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an item to the replaced list" );
-
-		return RESULT_OK;
-		}
-
-	signed char List::deleteItem( Item *deleteItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "deleteItem";
-
-		if( removeItemFromList( deleteItem ) != RESULT_OK )
-			return addError( functionNameString, "I failed to remove an item from a list" );
-
-		deleteItem->previousStatusChar = deleteItem->statusChar();
-
-		if( deleteItem->statusChar() == QUERY_DELETED_CHAR )
-			return startError( functionNameString, "The given delete item is already a deleted item" );
-
-		if( addItemToList( QUERY_DELETED_CHAR, deleteItem ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an item to the deleted list" );
-
-		return RESULT_OK;
-		}
-
 	signed char List::removeFirstRangeOfDeletedItemsInList()
 		{
 		unsigned int nDeletedItems = 0;
@@ -1203,6 +1182,7 @@
 				// Disconnect item from the deleted list
 				removeItem->nextItem = NULL;
 				delete removeItem;
+
 				removeItem = deletedList_;
 				nDeletedItems++;
 				}
@@ -1216,6 +1196,27 @@
 			globalVariables_->removeSentenceNr = removeSentenceNr;
 			globalVariables_->removeStartItemNr = removeStartItemNr;
 			}
+
+		return RESULT_OK;
+		}
+
+	signed char List::replaceItem( Item *replaceItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "replaceItem";
+
+		if( replaceItem == NULL )
+			return startError( functionNameString, "The given replace item is undefined" );
+
+		if( replaceItem->statusChar() == QUERY_REPLACED_CHAR )
+			return startError( functionNameString, "The given replace item is already a replaced item" );
+
+		if( removeItemFromList( replaceItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to remove an item from a list" );
+
+		replaceItem->previousStatusChar = replaceItem->statusChar();
+
+		if( addItemToList( QUERY_REPLACED_CHAR, replaceItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add an item to the replaced list" );
 
 		return RESULT_OK;
 		}
@@ -1917,7 +1918,7 @@
 
 	// Protected database connection functions
 /*
-	signed char List::storeChangesInFutureDatabaseInList()
+	signed char List::storeChangesInListInFutureDatabase()
 		{
 		Item *searchItem;
 

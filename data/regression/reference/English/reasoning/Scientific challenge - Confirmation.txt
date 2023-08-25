@@ -3,7 +3,7 @@
 < John has a son, called Paul.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < John has a son, called Paul.
 < 
 * 
@@ -11,7 +11,7 @@
 < Laura is a daughter of Anna.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < Laura is a daughter of Anna.
 < 
 * 
@@ -19,7 +19,7 @@
 < An engine is part of every car.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < An engine is part of every car.
 < 
 * 
@@ -27,7 +27,7 @@
 < Every sailboat has a sail.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < Every sailboat has a sail.
 < 
 * 
@@ -36,12 +36,17 @@
 < Peter had a father, called James.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < Peter has no father anymore.
 < 
 * 
-* My conclusions that are confirmed:
+* My conclusions that have been confirmed:
 < Peter had a father, called James.
+< 
+* 
+* My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
 < 
 * 
 * My questions:
@@ -49,17 +54,17 @@
 < 
 * 
 * My conclusions:
-< The United States has a president, called Barack Obama.
+< The United States has a president, called Donald Trump.
 < 
 * 
-* My conclusions that are confirmed:
-< The United States has a president, called Barack Obama.
+* My conclusions that have been confirmed:
+< The United States has a president, called Donald Trump.
 < 
 * 
 * My conclusions:
-< The United States has a president, called Donald Trump.
+< The United States has a president, called Joe Biden.
 < 
 * 
-* My conclusions that are confirmed:
-< The United States has a president, called Donald Trump.
+* My conclusions that have been confirmed:
+< The United States has a president, called Joe Biden.
 < 

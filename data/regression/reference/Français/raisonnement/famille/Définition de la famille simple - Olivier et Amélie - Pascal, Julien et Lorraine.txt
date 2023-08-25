@@ -1,4 +1,9 @@
 ﻿* 
+* Mes hypothèses:
+< Un père n'est probablement pas une mère.
+< Une mère n'est probablement pas un père.
+< 
+* 
 * Mes conclusions:
 < Chaque parent est une femme ou un homme.
 * 
@@ -19,11 +24,11 @@
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent.
+< Olivier n'est possible pas une femme.
 < Olivier n'est probablement pas une mère.
-< Olivier n'est probablement pas une femme.
 < Amélie est probablement un parent.
+< Amélie n'est possible pas un homme.
 < Amélie n'est probablement pas un père.
-< Amélie n'est probablement pas un homme.
 < 
 * 
 * Mes conclusions:
@@ -33,22 +38,15 @@
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent. En raison:
-<	- Chaque parent est un père ou une mère.
-<	- Olivier est un père.
-* 	et:
-<	- Chaque parent est une femme ou un homme.
-<	- Olivier est un homme.
-* 	et:
 <	- Olivier est un père.
 <	- Un père est probablement un parent.
-< Olivier n'est probablement pas une mère. En raison:
-<	- Olivier est probablement un parent.
-<	- Chaque parent est un père ou une mère.
-<	- Olivier est un père.
-< Olivier n'est probablement pas une femme. En raison:
+< Olivier n'est possible pas une femme. En raison:
 <	- Olivier est probablement un parent.
 <	- Chaque parent est une femme ou un homme.
 <	- Olivier est un homme.
+< Olivier n'est probablement pas une mère. En raison:
+<	- Olivier est un père.
+<	- Un père n'est probablement pas une mère.
 < 
 * 
 * Mes conclusions:
@@ -58,22 +56,15 @@
 * 
 * Mes hypothèses:
 < Amélie est probablement un parent. En raison:
-<	- Chaque parent est un père ou une mère.
-<	- Amélie est une mère.
-* 	et:
-<	- Chaque parent est une femme ou un homme.
-<	- Amélie est une femme.
-* 	et:
 <	- Amélie est une mère.
 <	- Une mère est probablement un parent.
-< Amélie n'est probablement pas un père. En raison:
-<	- Amélie est probablement un parent.
-<	- Chaque parent est un père ou une mère.
-<	- Amélie est une mère.
-< Amélie n'est probablement pas un homme. En raison:
+< Amélie n'est possible pas un homme. En raison:
 <	- Amélie est probablement un parent.
 <	- Chaque parent est une femme ou un homme.
 <	- Amélie est une femme.
+< Amélie n'est probablement pas un père. En raison:
+<	- Amélie est une mère.
+<	- Une mère n'est probablement pas un père.
 < 
 * 
 * Mes conclusions:

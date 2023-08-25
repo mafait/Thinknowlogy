@@ -1,8 +1,22 @@
 ﻿* 
+* Mijn veronderstellingen:
+< Een vader is waarschijnlijk geen moeder.
+< Een moeder is waarschijnlijk geen vader.
+< 
+* 
+* Mijn conclusies:
+< Iedere ouder is een vrouw of een man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een ouder.
+< Een vader is waarschijnlijk een ouder.
+< 
+* 
 * Mijn conclusies:
 < Jan is een man.
 * 
 * Mijn veronderstellingen:
-< Jan is waarschijnlijk een ouder.
 < Jan is waarschijnlijk geen moeder.
+< Jan is waarschijnlijk een ouder.
+< Jan is mogelijk geen vrouw.
 < 

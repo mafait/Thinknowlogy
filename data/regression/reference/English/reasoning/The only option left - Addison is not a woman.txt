@@ -1,17 +1,22 @@
 ﻿* 
+* My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
+< 
+* 
 * My questions:
 < Is Addison a man or a woman?
 < 
 * 
-* My questions that are answered:
+* My questions that have been answered:
 < Is Addison a man or a woman?
 * 
-* My conclusions:
-< Addison is a man.
+* My assumptions:
+< Addison is probably a man.
 < 
 * 
-* My conclusions:
-< Addison is a man. Because:
+* My assumptions:
+< Addison is probably a man. Because:
 <	- Addison is a person.
 <	- Every person is a man or a woman.
 <	- Addison is not a woman.

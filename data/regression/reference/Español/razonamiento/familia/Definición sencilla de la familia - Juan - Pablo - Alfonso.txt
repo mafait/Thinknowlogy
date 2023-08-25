@@ -13,7 +13,7 @@
 < Pablo es probablemente parte de una familia.
 < 
 * 
-* Mis suposiciones que se concluyen:
+* Mis suposiciones que se han concluido:
 < Pablo es parte de una familia.
 * 
 * Mis conclusiones:
@@ -25,9 +25,10 @@
 < Alfonso es probablemente parte de una familia.
 < 
 * 
-* Mis suposiciones que se confirman:
+* Mis suposiciones que han sido confirmadas:
 < Alfonso es probablemente hijo de Pablo.
 * 
-* Mis suposiciones que se concluyen:
+* Mis suposiciones que se han concluido:
+< Pablo tiene un hijo, llamado Alfonso.
 < Alfonso es parte de una familia.
 < 

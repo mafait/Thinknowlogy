@@ -1,4 +1,6 @@
-﻿Changes in Thinknowlogy 2018r4 (New Science) compared to 2018r3 (Deep Magic):
+﻿Changes in Thinknowlogy 2023 (Shaking tree) compared to Thinknowlogy 2018r4 (New Science):
 - Bug fixes;
-- Improved reasoning;
-- Moved some reasoning functionality from class AdminReasoningOld to class AdminReasoningNew, as part of the redesign.
+- Reduced internal complexity;
+- Improved justification;
+- Added negative reasoning;
+- Added adjective reasoning.

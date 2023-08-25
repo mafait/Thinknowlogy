@@ -1,11 +1,11 @@
 ﻿/*	Class:			JustificationItem
  *	Parent class:	Item
- *	Purpose:		To store info need to write the justification reports
+ *	Purpose:		Storing info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -29,8 +29,7 @@ class SpecificationItem;
 
 class JustificationItem : private Item
 	{
-	friend class AdminReasoningNew;
-	friend class AdminReasoningOld;
+	friend class AdminReasoning;
 	friend class AdminSpecification;
 	friend class AdminWrite;
 	friend class JustificationList;
@@ -46,9 +45,9 @@ class JustificationItem : private Item
 	unsigned short justificationTypeNr_ = NO_JUSTIFICATION_TYPE;
 
 	SpecificationItem *primarySpecificationItem_ = NULL;
-	SpecificationItem *anotherPrimarySpecificationItem_ = NULL;
+	SpecificationItem *additionalDefinitionSpecificationItem_ = NULL;
 	SpecificationItem *secondarySpecificationItem_ = NULL;
-	SpecificationItem *anotherSecondarySpecificationItem_ = NULL;
+	SpecificationItem *additionalProperNounSpecificationItem_ = NULL;
 
 	JustificationItem *attachedJustificationItem_ = NULL;
 
@@ -65,12 +64,12 @@ class JustificationItem : private Item
 
 	bool hasJustificationBeenWritten = false;
 
-	unsigned short orderNr = NO_ORDER_NR;
+	unsigned short justificationOrderNr = NO_ORDER_NR;
 
 
 	// Constructor
 
-	JustificationItem( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, unsigned short orderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem, JustificationItem *attachedJustificationItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem );
+	JustificationItem( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, unsigned short justificationOrderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem, JustificationItem *attachedJustificationItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem );
 
 
 	// Protected virtual functions
@@ -88,51 +87,51 @@ class JustificationItem : private Item
 
 	void clearReplacingInfo();
 
-	bool hasAttachedJustification();
+	bool hasAdditionalDefinitionSpecification();
+	bool hasAssumptionLevel();
 	bool hasFeminineOrMasculineProperNounEnding();
-	bool hasJustification( SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
-	bool hasJustification( bool hasFeminineOrMasculineProperNounEnding, SpecificationItem *primarySpecificationItem, SpecificationItem *anotherPrimarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *anotherSecondarySpecificationItem );
+	bool hasJustification( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem );
 
-	bool hasNonPossessivePrimarySpecification();
-	bool hasPossessivePrimarySpecification();
-	bool hasPossessiveSecondarySpecification();
+	bool hasPrimarySpecificationRelationContext();
+	bool isExclusivePrimarySpecification();
+	bool isNegativePrimarySpecification();
+	bool isPossessivePrimarySpecification();
+	bool isPrimaryAssignmentSpecification();
+	bool isPrimaryNounSpecification();
+	bool isPrimaryQuestionSpecification();
 	bool isPrimarySpecificationWordSpanishAmbiguous();
-	bool isUpdatedPrimarySpecificationWordSpanishAmbiguous();
+	bool isReplacedPrimarySpecification();
+	bool isReplacedSecondarySpecification();
 
-	bool hasAnotherPrimarySpecification();
-
-	bool isAssumptionJustification();
-	bool isConclusionJustification();
+	bool hasCompoundCollectionSecondarySpecification();
+	bool isPossessiveSecondarySpecification();
 
 	bool isExclusiveSpecificationSubstitutionAssumption();
-	bool isGeneralizationAssumption();
 	bool isNegativeAssumptionOrConclusion();
-	bool isReversibleAssumption();
-	bool isReversibleConclusion();
-	bool isReversibleAssumptionOrConclusion();
+	bool isObsoleteAssumptionJustification( bool isIncludingNegativeAssumptionOrConclusion, bool isIncludingReversibleAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionAssumptionOrConclusion, bool isOnlySelectingOlderJustifications, unsigned short assumptionLevel );
+	bool isOppositePossessiveSpecificationAssumption();
 	bool isQuestionJustification();
-	bool isSpecificationSubstitutionAssumption();
+	bool isReversibleAssumptionOrConclusion();
+	bool isReversibleConclusion();
+	bool isSpecificationSubstitutionAssumptionOrConclusion();
+	bool isSpecificationSubstitutionPartOfAssumptionOrConclusion();
 	bool isSuggestiveQuestionAssumption();
 
-	unsigned short justificationAssumptionGrade();
 	unsigned short justificationTypeNr();
-	unsigned short updatedJustificationTypeNr( SpecificationItem *secondarySpecificationItem );
-	unsigned short primarySpecificationAssumptionLevel();
+	unsigned short primarySpecificationWordTypeNr();
 
+	unsigned int justificationAssumptionLevel();
 	unsigned int nJustificationContextRelations( unsigned int relationContextNr, unsigned int nRelationWords );
 	unsigned int primarySpecificationCollectionNr();
 	unsigned int secondarySpecificationCollectionNr();
 
 	signed char attachJustification( JustificationItem *attachedJustificationItem, SpecificationItem *mySpecificationItem );
-
 	signed char changeAttachedJustification( JustificationItem *newAttachedJustificationItem );
-	signed char changePrimarySpecification( SpecificationItem *replacingSpecificationItem );
-	signed char changeSecondarySpecification( SpecificationItem *replacingSpecificationItem );
-
 	signed char checkSpecifications( bool isIncludingReplacedSpecifications );
+	signed char replaceSpecification( bool isReplacingPrimarySpecification, bool isReplacingSecondarySpecification, SpecificationItem *replacingSpecificationItem );
 
 	JustificationItem *attachedJustificationItem();
-	JustificationItem *attachedPredecessorOfOldJustificationItem( JustificationItem *obsoleteJustificationItem );
+	JustificationItem *attachedPredecessorOfObsoleteJustificationItem( JustificationItem *obsoleteJustificationItem );
 
 	JustificationItem *nextJustificationItem();
 	JustificationItem *nextJustificationItemWithSameTypeAndOrderNr();
@@ -141,21 +140,18 @@ class JustificationItem : private Item
 	JustificationItem *obsoleteSpanishJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
 	JustificationItem *primarySpecificationWithoutRelationContextJustificationItem( WordItem *primarySpecificationWordItem );
 
+	SpecificationItem *additionalDefinitionSpecificationItem();
+	SpecificationItem *additionalProperNounSpecificationItem();
+	SpecificationItem *primarySelfGeneratedSpecification();
 	SpecificationItem *primarySpecificationItem();
-	SpecificationItem *anotherPrimarySpecificationItem();
 	SpecificationItem *secondarySpecificationItem();
-	SpecificationItem *anotherSecondarySpecificationItem();
-
 	SpecificationItem *updatedPrimarySpecificationItem();
 	SpecificationItem *updatedSecondarySpecificationItem();
 
 	WordItem *generalizationWordItem();
+	WordItem *primaryGeneralizationWordItem();
 	WordItem *primarySpecificationWordItem();
 	WordItem *secondaryGeneralizationWordItem();
-
-	ShortResultType getCombinedAssumptionLevel();
-
-	char *debugString();
 	};
 
 /*************************************************************************

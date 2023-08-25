@@ -1,4 +1,5 @@
 ﻿Iedere ouder is een vader of een moeder.
 Iedere vader is een man.
+Iedere moeder is een vrouw.
 Jan is een vader.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

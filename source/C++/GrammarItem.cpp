@@ -1,11 +1,11 @@
 ﻿/*	Class:			GrammarItem
  *	Parent class:	Item
- *	Purpose:		To store info about the grammar of a language, which
+ *	Purpose:		Storing info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -347,9 +347,7 @@ class GrammarItem : private Item
 				grammarParameter_ < GRAMMAR_STATEMENT_ASSIGNMENT ||
 				grammarParameter_ > GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ||
 
-				( isSpecificationGeneralization &&
-				grammarParameter_ == GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ||
-
+				// Generalization-specification
 				( !isSpecificationGeneralization &&
 
 				( ( !isAssignment &&
@@ -359,7 +357,11 @@ class GrammarItem : private Item
 
 				( isPossessive ||
 				isChineseCurrentLanguage ||
-				grammarParameter_ == GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ) ) ||
+				grammarParameter_ == GRAMMAR_STATEMENT_ASSIGNMENT ) ) ) ) ||
+
+				// Specification-generalization
+				( isSpecificationGeneralization &&
+				grammarParameter_ == GRAMMAR_STATEMENT_SPECIFICATION_GENERALIZATION ) ) ) ||
 
 				// Question
 				( isQuestion &&
@@ -368,9 +370,7 @@ class GrammarItem : private Item
 				grammarParameter_ > GRAMMAR_QUESTION_SPECIFICATION_GENERALIZATION ||
 
 				( !isSpecificationGeneralization &&
-
-				( isAssignment ||
-				grammarParameter_ == GRAMMAR_QUESTION_SPECIFICATION ) ) ||
+				grammarParameter_ == GRAMMAR_QUESTION_SPECIFICATION ) ||
 
 				( isSpecificationGeneralization &&
 				grammarParameter_ == GRAMMAR_QUESTION_SPECIFICATION_GENERALIZATION ) ) ) );

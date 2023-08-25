@@ -2,10 +2,15 @@
 Display the justification report about family.
 Display the justification report about parents.
 Display the justification report about children.
-Display the justification report about father.
-Display the justification report about mother.
-Display the justification report about son.
-Display the justification report about daughter.
+Display the justification report about fathers.
+Display the justification report about mothers.
+Display the justification report about men.
+Display the justification report about women.
+Display the justification report about sons.
+Display the justification report about daughters.
+Display the justification report about boys.
+Display the justification report about girls.
+Display the justification report about persons.
 John is the father and Anna is the mother of Paul, Joe and Laura.
 Display the justification report about John.
 Display the justification report about Anna.

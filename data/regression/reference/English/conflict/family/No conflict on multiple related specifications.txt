@@ -1,7 +1,45 @@
 ﻿* 
+* My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
+< 
+* 
+* My conclusions:
+< Every woman is not masculine.
+< 
+* 
+* My assumptions that have been concluded:
+< Every man is not a woman.
+< Every woman is not a man.
+* 
+* My conclusions:
+< Every man is not feminine.
+< Every person is masculine or feminine.
+* 
+* My assumptions:
+< A man is probably a person.
+< A woman is probably a person.
+< 
+* 
 * My conclusions:
 < Parents and children are part of every family.
 < 
+* 
+* My assumptions:
+< A father is probably not a mother.
+< A mother is probably not a father.
+< 
+* 
+* My assumptions:
+< A son is probably not a daughter.
+< A daughter is probably not a son.
+< 
+* 
+* My conclusions:
+< Every father is masculine.
+< Every father is not feminine.
+< Every father is not a woman.
+< Every woman is not a father.
 * 
 * My assumptions:
 < A father is probably a person.
@@ -9,66 +47,151 @@
 < A parent is probably a person.
 < 
 * 
+* My assumptions that have been concluded:
+< Every mother is not a father.
+< Every father is not a mother.
+* 
 * My conclusions:
+< Every mother is feminine.
+< Every mother is not masculine.
+< Every mother is not a man.
+< Every man is not a mother.
 < Every parent is a woman or a man.
+< Every parent is feminine or masculine.
 * 
 * My assumptions:
 < A mother is probably a person.
 < A mother is probably a parent.
 < 
 * 
-* My assumptions:
-< A son is probably a person.
-< A child is probably a person.
+* My conclusions:
+< Every girl is not masculine.
+< Every girl is not a father.
+< Every girl is not a man.
+< Every father is not a girl.
+< Every man is not a girl.
 < 
 * 
 * My conclusions:
+< Every boy is not feminine.
+< Every boy is not a girl.
+< Every boy is not a mother.
+< Every boy is not a woman.
+< Every girl is not a boy.
+< Every mother is not a boy.
+< Every woman is not a boy.
+< 
+* 
+* My conclusions:
+< Every son is masculine.
+< Every son is not feminine.
+* 
+* My assumptions:
+< A son is probably a child.
+< A son is probably a person.
+< A child is probably a person.
+< A boy is probably not a man.
+< A boy is probably a person.
+< A man is probably not a boy.
+< 
+* 
+* My conclusions:
+< Every daughter is feminine.
+< Every daughter is not masculine.
+< Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
 * My assumptions:
+< A daughter is probably a child.
 < A daughter is probably a person.
+< A girl is probably not a woman.
+< A girl is probably a person.
+< A woman is probably not a girl.
 < 
 * 
 * My conclusions:
-< John is a man.
+< John is not feminine.
 < John is masculine.
+< John is a man.
+< John is not a mother.
+< John is not a girl.
+< John is not a woman.
+< John is not a daughter.
 * 
 * My assumptions:
+< John is probably not a boy.
 < John is probably a person.
-< John is probably not a woman.
 < John is probably part of a family.
 < John is probably a parent and a child.
-< John is probably not a girl, not a woman and not a boy.
-< John is probably not a mother and not a daughter.
 < John has possibly a child and a parent.
 < 
 * 
 * My conclusions:
+< John is not feminine. Because:
+<	- John is a father.
+<	- Every father is not feminine.
+* 	and:
+<	- John is a man.
+<	- Every man is not feminine.
+* 	and:
+<	- John is a son.
+<	- Every son is not feminine.
+< John is masculine. Because:
+<	- John is a father.
+<	- Every father is masculine.
+* 	and:
+<	- John is a man.
+<	- Every man is masculine.
+* 	and:
+<	- John is a son.
+<	- Every son is masculine.
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
-< John is masculine. Because:
+< John is not a mother. Because:
+<	- John is a father.
+<	- Every father is not a mother.
+* 	and:
 <	- John is a man.
-<	- Every man is masculine.
+<	- Every man is not a mother.
+* 	and:
+<	- John is masculine.
+<	- Every mother is not masculine.
+< John is not a girl. Because:
+<	- John is a man.
+<	- Every man is not a girl.
+* 	and:
+<	- John is masculine.
+<	- Every girl is not masculine.
+* 	and:
+<	- John is a father.
+<	- Every father is not a girl.
+< John is not a woman. Because:
+<	- John is a man.
+<	- Every man is not a woman.
+* 	and:
+<	- John is masculine.
+<	- Every woman is not masculine.
+* 	and:
+<	- John is a father.
+<	- Every father is not a woman.
+< John is not a daughter. Because:
+<	- John is masculine.
+<	- Every daughter is not masculine.
 * 
 * My assumptions:
-< John is probably a person. Because:
-<	- Every person is a man or a woman.
+< John is probably not a boy. Because:
 <	- John is a man.
+<	- A man is probably not a boy.
+< John is probably a person. Because:
+<	- John is a man.
+<	- A man is probably a person.
 * 	and:
 <	- John is a father.
 <	- A father is probably a person.
 * 	and:
 <	- John is a son.
 <	- A son is probably a person.
-< John is probably not a woman. Because:
-<	- John is probably a person.
-<	- Every person is a man or a woman.
-<	- John is a man.
-* 	and:
-<	- John is probably a parent.
-<	- Every parent is a woman or a man.
-<	- John is a man.
 < John is probably part of a family. Because:
 <	- John is probably a parent.
 <	- Parents are part of every family.
@@ -76,23 +199,11 @@
 <	- John is probably a child.
 <	- Children are part of every family.
 < John is probably a parent and a child. Because:
-<	- Every child is a son or a daughter.
 <	- John is a son.
+<	- A son is probably a child.
 * 	and:
 <	- John is a father.
 <	- A father is probably a parent.
-< John is probably not a girl, not a woman and not a boy. Because:
-<	- John is probably a child.
-<	- Every child is a girl, a woman, a boy or a man.
-<	- John is a man.
-< John is probably not a mother and not a daughter. Because:
-<	- John is probably a child.
-<	- Every child is a son or a daughter.
-<	- John is a son.
-* 	and:
-<	- John is probably a parent.
-<	- Every parent is a father or a mother.
-<	- John is a father.
 < John has possibly a child and a parent. Because:
 <	- Every family has parents and children.
 <	- John is probably a child.

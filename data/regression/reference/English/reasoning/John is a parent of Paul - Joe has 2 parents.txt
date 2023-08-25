@@ -10,6 +10,9 @@
 < Anna is a parent of Joe.
 < 
 * 
+* Your information:
+< John is a parent of Paul.
+* 
 * My conclusions:
 < John is a parent of Paul and Joe.
 * 
@@ -30,6 +33,7 @@
 * 
 * Related information:
 < John is a parent of Paul and Joe.
+< John is a parent of Paul.
 < 
 * 
 * Your information:
@@ -43,6 +47,8 @@
 * My conclusions:
 < John is a parent of Paul and Joe. Because:
 <	- Joe has 2 parents, called John and Anna.
+* 	and:
+<	- John is a parent of Paul.
 < 
 * 
 * My conclusions:
@@ -52,5 +58,5 @@
 * 
 * My conclusions:
 < Paul has a parent, called John. Because:
-<	- John is a parent of Paul and Joe.
+<	- John is a parent of Paul.
 < 

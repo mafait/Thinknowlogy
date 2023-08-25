@@ -1,12 +1,12 @@
 ﻿/*	Class:			GeneralizationItem
  *	Parent class:	Item
- *	Purpose:		To store info about generalizations of a word,
+ *	Purpose:		Storing info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -30,13 +30,13 @@
 class GeneralizationItem : private Item
 	{
 	friend class AdminReadFile;
-	friend class AdminReasoningNew;
-	friend class AdminReasoningOld;
+	friend class AdminReasoning;
 	friend class AdminSpecification;
 	friend class AdminWrite;
 	friend class ContextList;
 	friend class GeneralizationList;
-	friend class SpecificationList;
+		friend class SpecificationItem;
+		friend class SpecificationList;
 	friend class WordItem;
 	friend class WordSpecification;
 
@@ -58,6 +58,11 @@ class GeneralizationItem : private Item
 		{
 		return ( generalizationWordTypeNr_ == WORD_TYPE_NOUN_SINGULAR ||
 				generalizationWordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
+		}
+
+	bool isProperNoun()
+		{
+		return ( generalizationWordTypeNr_ == WORD_TYPE_PROPER_NOUN );
 		}
 
 
@@ -123,11 +128,11 @@ class GeneralizationItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		WordItem *thisWordItem = myWordItem();
-		char *generalizationWordTypeString = thisWordItem->wordTypeNameString( generalizationWordTypeNr_ );
-		char *languageNameString = thisWordItem->languageNameString( languageNr_ );
+		WordItem *_myWordItem = myWordItem();
+		char *generalizationWordTypeString = _myWordItem->wordTypeNameString( generalizationWordTypeNr_ );
+		char *languageNameString = _myWordItem->languageNameString( languageNr_ );
 		char *queryString;
-		char *specificationWordTypeString = thisWordItem->wordTypeNameString( specificationWordTypeNr_ );
+		char *specificationWordTypeString = _myWordItem->wordTypeNameString( specificationWordTypeNr_ );
 		char *wordString;
 
 		itemBaseToString( queryWordTypeNr );
@@ -203,7 +208,7 @@ class GeneralizationItem : private Item
 		return isRelation_;
 		}
 
-	GeneralizationItem *generalizationItem( bool isIncludingThisItem, bool isOnlySelectingCurrentLanguage, bool isOnlySelectingNoun, bool isRelation )
+	GeneralizationItem *generalizationItem( bool isIncludingThisItem, bool isOnlySelectingCurrentLanguage, bool isOnlySelectingNoun, bool isOnlySelectingProperNoun, bool isRelation )
 		{
 		unsigned short currentLanguageNr = globalVariables()->currentLanguageNr;
 		GeneralizationItem *searchGeneralizationItem = ( isIncludingThisItem ? this : nextGeneralizationItem() );
@@ -216,7 +221,10 @@ class GeneralizationItem : private Item
 			searchGeneralizationItem->languageNr_ == currentLanguageNr ) &&
 
 			( !isOnlySelectingNoun ||
-			searchGeneralizationItem->isNoun() ) )
+			searchGeneralizationItem->isNoun() ) &&
+
+			( !isOnlySelectingProperNoun ||
+			searchGeneralizationItem->isProperNoun() ) )
 				return searchGeneralizationItem;
 
 			searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();
@@ -232,17 +240,22 @@ class GeneralizationItem : private Item
 
 	GeneralizationItem *nextNounSpecificationGeneralizationItem()
 		{
-		return generalizationItem( false, false, true, false );
+		return generalizationItem( false, true, true, false, false );
+		}
+
+	GeneralizationItem *nextProperNounSpecificationGeneralizationItem()
+		{
+		return generalizationItem( false, false, false, true, false );
 		}
 
 	GeneralizationItem *nextSpecificationGeneralizationItem()
 		{
-		return generalizationItem( false, false, false, false );
+		return generalizationItem( false, false, false, false, false );
 		}
 
 	GeneralizationItem *nextRelationGeneralizationItem()
 		{
-		return generalizationItem( false, false, false, true );
+		return generalizationItem( false, false, false, false, true );
 		}
 
 	WordItem *generalizationWordItem()

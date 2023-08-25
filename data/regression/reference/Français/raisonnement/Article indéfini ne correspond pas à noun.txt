@@ -2,7 +2,7 @@
 * 
 * Je m'attendais que le nom au singulier «article» serait masculin.
 * 
-* Je m'attendais que le nom au singulier «baleine» serait féminine.
+* Je m'attendais que le nom au singulier «baleine» serait féminin.
 * 
 * L'article indéfini que vous avez utilisé, ne correspond pas avec le nom «maison».
 * 

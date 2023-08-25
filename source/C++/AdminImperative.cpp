@@ -1,10 +1,10 @@
 ﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
- *	Purpose:		To execute imperative words
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Executing imperative words
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -424,7 +424,8 @@ class AdminImperative
 					if( ( nPossibilities = adminItem_->nPossibilities() ) <= 0 )
 						return adminItem_->startError( functionNameString, moduleNameString_, "There are no possibilities at assignment level ", currentAssignmentLevel );
 
-					solveProgressStep = ( nPossibilities == 0 ? MAX_PROGRESS : ( ( endSolveProgressLevel - currentSolveProgressLevel ) / nPossibilities ) );
+					solveProgressStep = ( nPossibilities == 0 ? MAX_PROGRESS :
+																( ( endSolveProgressLevel - currentSolveProgressLevel ) / nPossibilities ) );
 
 					if( solveLevel > 1 )
 						inputOutput_->startProgress( INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_START, solveLevel, INTERFACE_CONSOLE_I_AM_EXECUTING_SELECTIONS_END, currentSolveProgressLevel, MAX_PROGRESS );
@@ -839,6 +840,9 @@ class AdminImperative
 		int comparisonResult = 0;
 		int firstNumeral = 0;
 		int secondNumeral = 0;
+#ifdef _MSC_VER
+		int intValue;		// Required by Visual Studio
+#endif
 		char *firstString = NULL;
 		char *secondString = NULL;
 		SpecificationItem *comparisonAssignmentItem;
@@ -899,8 +903,12 @@ class AdminImperative
 
 				firstString = ( comparisonAssignmentItem == NULL ? NULL :
 								( isNumeralRelation ?
-								( comparisonAssignmentSpecificationWordItem == NULL ? NULL : comparisonAssignmentSpecificationWordItem->anyWordTypeString() ) : comparisonAssignmentItem->specificationString() ) );
-				secondString = ( isNumeralRelation ? ( relationWordItem == NULL ? NULL : relationWordItem->anyWordTypeString() ) : specificationString );
+								( comparisonAssignmentSpecificationWordItem == NULL ? NULL :
+																						comparisonAssignmentSpecificationWordItem->anyWordTypeString() ) :
+																						comparisonAssignmentItem->specificationString() ) );
+				secondString = ( isNumeralRelation ? ( relationWordItem == NULL ? NULL :
+																					relationWordItem->anyWordTypeString() ) :
+																					specificationString );
 				}
 
 			if( firstString == NULL ||
@@ -911,8 +919,14 @@ class AdminImperative
 				if( isNumeralString( firstString ) &&
 				isNumeralString( secondString ) )
 					{
+#ifdef _MSC_VER
+					intValue = sscanf( firstString, "%d", &firstNumeral );
+					intValue = sscanf( secondString, "%d", &secondNumeral );
+#endif
+#ifndef _MSC_VER
 					sscanf( firstString, "%d", &firstNumeral );
 					sscanf( secondString, "%d", &secondNumeral );
+#endif
 
 					comparisonResult = ( firstNumeral == secondNumeral ? 0 : ( firstNumeral < secondNumeral ? -1 : 1 ) );
 					}
@@ -1255,8 +1269,9 @@ class AdminImperative
 		if( specificationWordItem == NULL )
 			return adminItem_->startConditionResultError( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 
-		if( ( currentSpecificationItem = specificationWordItem->firstExclusiveSpecificationItem() ) != NULL )
+		if( ( currentSpecificationItem = specificationWordItem->firstExclusiveSpecificationItem( true ) ) != NULL )
 			{
+			// Do for all exclusive specifications of this word (including adjectives)
 			do	{
 				foundAssignmentItem = specificationWordItem->firstNonQuestionAssignmentItem( true, false, false, false, isPossessive, currentSpecificationItem->specificationWordItem() );
 				isSatisfiedScore = ( isNegative == ( foundAssignmentItem == NULL || foundAssignmentItem->isNegative() ) );
@@ -1273,7 +1288,7 @@ class AdminImperative
 				conditionReturnResult.oldDissatisfiedScore += conditionPartResult.oldDissatisfiedScore;
 				conditionReturnResult.newDissatisfiedScore += conditionPartResult.newDissatisfiedScore;
 				}
-			while( ( currentSpecificationItem = currentSpecificationItem->nextExclusiveSpecificationItem() ) != NULL );
+			while( ( currentSpecificationItem = currentSpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
 			}
 
 		return conditionReturnResult;
@@ -1336,7 +1351,8 @@ class AdminImperative
 		if( ( currentAssignmentItem = generalizationWordItem->firstNonQuestionActiveAssignmentItem() ) != NULL )
 			{
 			do	{
-				if( currentAssignmentItem->isRelatedSpecification( false, specificationWordItem ) )
+				if( !currentAssignmentItem->isNegative() &&
+				currentAssignmentItem->specificationWordItem() == specificationWordItem )
 					{
 					if( currentAssignmentItem->isOlderItem() )
 						{
@@ -1384,8 +1400,9 @@ class AdminImperative
 
 		if( orderAssignmentItem != NULL &&
 		( assignmentWordItem = orderAssignmentItem->specificationWordItem() ) != NULL &&
-		( currentSpecificationItem = generalizationWordItem->firstExclusiveSpecificationItem() ) != NULL )
+		( currentSpecificationItem = generalizationWordItem->firstExclusiveSpecificationItem( true ) ) != NULL )
 			{
+			// Do for all exclusive specifications of this word (including adjectives)
 			do	{
 				specificationNr++;
 
@@ -1393,7 +1410,7 @@ class AdminImperative
 					assignmentOrderNr = specificationNr;
 				}
 			while( assignmentOrderNr == NO_ORDER_NR &&
-			( currentSpecificationItem = currentSpecificationItem->nextExclusiveSpecificationItem() ) != NULL );
+			( currentSpecificationItem = currentSpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
 			}
 
 		shortResult.shortValue = assignmentOrderNr;

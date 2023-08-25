@@ -1,7 +1,7 @@
 ﻿#-----------------------------------------------------------------------------
 # Deze test voert de voorbeelden van mijn Wetenschappelijke Uitdaging uit.
 # Voor meer info, zie het bijgevoegde Wetenschappelijke Uitdaging document,
-# of: http://mafait.org/challenge/
+# of: https://mafait.org/challenge
 #-----------------------------------------------------------------------------
 # Blok 1: Directe conversies
 #-----------------------------------------------------------------------------

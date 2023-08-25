@@ -3,6 +3,11 @@
 < Cada familia tiene padres y hijos.
 < 
 * 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
 * Mis preguntas:
 < ¿Es Ana un hombre o una mujer?
 < 

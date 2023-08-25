@@ -1,10 +1,9 @@
 ﻿/*	Class:			SpecificationItem
- *	Purpose:		To store info about the specification structure
- *					of a word
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing info about the specification structure of a word
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -24,6 +23,7 @@
 #ifndef SPECIFICATIONITEM
 #define SPECIFICATIONITEM 1
 #include "CreateAndAssignResultType.cpp"
+#include "GeneralizationItem.cpp"
 #include "InputOutput.cpp"
 #include "List.h"
 #include "ShortResultType.cpp"
@@ -33,10 +33,10 @@ class SpecificationItem : private Item
 	{
 	friend class AdminImperative;
 	friend class AdminReadFile;
-	friend class AdminReasoningNew;
-	friend class AdminReasoningOld;
+	friend class AdminReasoning;
 	friend class AdminSpecification;
 	friend class AdminWrite;
+	friend class Item;
 	friend class JustificationItem;
 	friend class JustificationList;
 	friend class SpecificationList;
@@ -49,9 +49,8 @@ class SpecificationItem : private Item
 
 	bool isAnsweredQuestion_ = false;
 	bool isCharacteristicFor_ = false;
-	bool isConcludedAssumption_ = false;
 	bool isConditional_ = false;
-	bool isCorrectedAssumption_ = false;
+	bool isCorrectedSpecification_ = false;
 	bool isEveryGeneralization_ = false;
 	bool isExclusiveGeneralization_ = false;
 	bool isExclusiveSpecification_ = false;
@@ -95,9 +94,6 @@ class SpecificationItem : private Item
 
 	// Private constructed variables
 
-	bool hasSpecificationBeenWrittenAsAdjustedNegativeAssumption_ = false;
-	bool hasSpecificationBeenWrittenAsConflict_ = false;
-
 	unsigned short specificationStringWriteLevel_ = NO_WRITE_LEVEL;
 
 
@@ -112,12 +108,319 @@ class SpecificationItem : private Item
 		}
 
 
+	// Private justification functions
+
+	bool hasAtLeastOneAssumptionJustification()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->hasAssumptionLevel() )
+				return true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return false;
+		}
+
+	bool hasFoundCircularReasoning()
+		{
+		bool hasFoundOnlyUserSpecifications = true;
+		bool hasFoundOtherJustificationTypes = false;
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( !hasFoundOtherJustificationTypes &&
+		searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->isReversibleAssumptionOrConclusion() )
+				{
+				if( searchJustificationItem->primarySelfGeneratedSpecification() != NULL )
+					hasFoundOnlyUserSpecifications = false;
+				}
+			else
+				hasFoundOtherJustificationTypes = true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		if( !hasFoundOtherJustificationTypes &&
+		!hasFoundOnlyUserSpecifications )
+			return true;
+
+		return false;
+		}
+
+	bool hasPrimaryAssignmentJustification()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->isPrimaryAssignmentSpecification() )
+				return true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return false;
+		}
+
+	signed char addNegativeJustificationsToSimpleSpecificationsFromPositiveConclusion()
+		{
+		SpecificationItem *existingSpecificationItem;
+		SpecificationItem *negativeDefinitionSpecificationItem;
+		WordItem *definitionSpecificationWordItem;
+		WordItem *_myWordItem = myWordItem();
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addNegativeJustificationsToSimpleSpecificationsFromPositiveConclusion";
+
+		if( isNegative_ )
+			return startError( functionNameString, NULL, "I am a negative specification" );
+
+		if( specificationWordItem_ == NULL )
+			return startError( functionNameString, NULL, "I have no specification word item" );
+
+		if( !hasCurrentCreationSentenceNr() )
+			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
+
+		if( isReplacedOrDeletedItem() )
+			return startError( functionNameString, NULL, "I am a replaced or deleted specification" );
+
+		if( ( negativeDefinitionSpecificationItem = specificationWordItem_->firstNegativeSpecificationItem() ) != NULL )
+			{
+			// Do for all context words with my relation context number
+			do	{
+				if( ( definitionSpecificationWordItem = negativeDefinitionSpecificationItem->specificationWordItem() ) != NULL &&
+				( existingSpecificationItem = _myWordItem->firstSpecificationItem( true, false, false, definitionSpecificationWordItem ) ) != NULL &&
+				// Justification doesn't exist yet in existing specification
+				!existingSpecificationItem->hasSecondarySpecificationJustification( negativeDefinitionSpecificationItem ) &&
+				// Justification has at least the same assumption level
+				existingSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, NULL, negativeDefinitionSpecificationItem, NULL ) &&
+				// Add negative justification to existing specification
+				existingSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, NULL, negativeDefinitionSpecificationItem ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to add a negative justification to the existing specification" );
+				}
+			while( ( negativeDefinitionSpecificationItem = negativeDefinitionSpecificationItem->nextNegativeSpecificationItem() ) != NULL );
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char addJustificationsToContextSpecifications()
+		{
+		SpecificationItem *definitionSpecificationItem;
+		SpecificationItem *partOfSpecificationItem;
+		SpecificationItem *oppositeSpecificationItem;
+		SpecificationItem *reversibleSpecificationItem;
+		WordItem *currentContextWordItem;
+		WordItem *partOfSpecificationWordItem;
+		WordItem *oppositeSpecificationWordItem;
+		WordItem *_myWordItem = myWordItem();
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addJustificationsToContextSpecifications";
+
+		if( specificationWordItem_ == NULL )
+			return startError( functionNameString, NULL, "I have no specification word" );
+
+		if( ( currentContextWordItem = _myWordItem->firstContextWordItem( relationContextNr_ ) ) != NULL )
+			{
+			partOfSpecificationWordItem = specificationWordItem_->commonWordItem( specificationCollectionNr_ );
+
+			// Do for all context words with my relation context number
+			do	{
+				if( ( reversibleSpecificationItem = currentContextWordItem->bestMatchingRelationContextNrSpecificationItem( true, true, false, !isPossessive_, specificationWordItem_, _myWordItem ) ) != NULL &&
+				!reversibleSpecificationItem->isHiddenSpanishSpecification() )
+					{
+					if( !hasOnlyOneRelationWord() &&
+					reversibleSpecificationItem->isSelfGeneratedSpecification() )
+						{
+						// Justification doesn't exist yet in reversible specification
+						if( !reversibleSpecificationItem->hasPrimarySpecificationJustification( this ) &&
+						// Justification has at least the same assumption level
+						reversibleSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, this, NULL, NULL, NULL ) &&
+						// Add non-possessive reversible justification to myself
+						reversibleSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, this, NULL, NULL ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to add a non-possessive reversible justification to myself" );
+
+						reversibleSpecificationItem = reversibleSpecificationItem->updatedSpecificationItem();
+
+						if( partOfSpecificationWordItem != NULL )
+							{
+							if( isPossessive_ )
+								{
+								if( ( partOfSpecificationItem = currentContextWordItem->partOfSpecificationItem( partOfSpecificationWordItem ) ) != NULL &&
+								// Justification doesn't exist yet in part-of specification
+								!partOfSpecificationItem->hasPrimarySpecificationJustification( reversibleSpecificationItem ) &&
+								( definitionSpecificationItem = partOfSpecificationWordItem->partOfSpecificationItem( specificationWordItem_ ) ) != NULL &&
+								// Justification has at least the same assumption level
+								partOfSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, definitionSpecificationItem, NULL ) &&
+								// Add non-possessive part-of justification to part-of specification
+								partOfSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, definitionSpecificationItem ) != RESULT_OK )
+									return addError( functionNameString, NULL, "I failed to add a non-possessive part-of justification to a part-of specification" );
+								}
+							else
+								{
+								if( ( partOfSpecificationItem = _myWordItem->partOfSpecificationItem( partOfSpecificationWordItem ) ) != NULL &&
+								// Justification doesn't exist yet in part-of specification
+								!partOfSpecificationItem->hasPrimarySpecificationJustification( this ) &&
+								( definitionSpecificationItem = partOfSpecificationWordItem->partOfSpecificationItem( specificationWordItem_ ) ) != NULL &&
+								// Justification has at least the same assumption level
+								partOfSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem, NULL ) &&
+								// Add non-possessive part-of justification to part-of specification
+								partOfSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem ) != RESULT_OK )
+									return addError( functionNameString, NULL, "I failed to add a non-possessive part-of justification to a part-of specification" );
+								}
+							}
+						}
+
+					if( !isPossessive_ &&
+					!reversibleSpecificationItem->hasOnlyOneRelationWord() &&
+					// I don't have this reversible justification
+					!hasPrimarySpecificationJustification( reversibleSpecificationItem ) &&
+					// I have no better assumption level
+					assumptionLevel_ >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, NULL, NULL ) &&
+					// Add possessive reversible justification to myself
+					addJustificationToSpecification( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, NULL ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to add a possessive reversible justification to myself" );
+
+					if( currentContextWordItem->hasContextInWord( relationContextNr_ ) &&
+					// Recalculate assumption levels of specifications in context word
+					currentContextWordItem->recalculateAssumptionLevelsInWord() != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to recalculate the assumption levels of specifications in word \"", currentContextWordItem->anyWordTypeString(), "\"" );
+					}
+
+				if( isPossessive_ &&
+				partOfSpecificationWordItem != NULL )
+					{
+					if( ( partOfSpecificationItem = currentContextWordItem->partOfSpecificationItem( partOfSpecificationWordItem ) ) != NULL &&
+					// Part-of specification has no similar justification
+					partOfSpecificationItem->firstJustificationItem( JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, _myWordItem ) == NULL &&
+					// Justification doesn't exist yet in part-of specification
+					!partOfSpecificationItem->hasPrimarySpecificationJustification( this ) &&
+					( definitionSpecificationItem = partOfSpecificationWordItem->partOfSpecificationItem( specificationWordItem_ ) ) != NULL &&
+					// Justification has at least the same assumption level
+					partOfSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem, NULL ) &&
+					// Add possessive part-of justification to part-of specification
+					partOfSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to add a possessive part-of justification to a part-of specification" );
+
+					if( !specificationWordItem_->isNounWordSpanishAmbiguous() &&
+					( oppositeSpecificationWordItem = specificationWordItem_->collectionWordItem( specificationCollectionNr_ ) ) != NULL &&
+					( oppositeSpecificationItem = _myWordItem->firstSpecificationItem( false, false, false, oppositeSpecificationWordItem ) ) != NULL &&
+					( definitionSpecificationItem = partOfSpecificationWordItem->firstSpecificationItem( false, true, false, specificationWordItem_ ) ) != NULL &&
+					// Justification doesn't exist yet in part-of specification
+					!oppositeSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( definitionSpecificationItem, this ) &&
+					// Justification has at least the same assumption level
+					oppositeSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, definitionSpecificationItem, NULL, this, NULL ) &&
+					// Add opposite possessive assumption justification to opposite specification
+					oppositeSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, definitionSpecificationItem, NULL, this ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to add an opposite possessive assumption justification to the opposite specification" );
+					}
+				}
+			while( ( currentContextWordItem = currentContextWordItem->_nextContextWordItem( relationContextNr_ ) ) != NULL );
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char processChangedAssumption( unsigned short previousAssumptionLevel )
+		{
+		bool _hasRelationContext = ( relationContextNr_ > NO_CONTEXT_NR );
+		GeneralizationItem *currentGeneralizationItem;
+		WordItem *currentGeneralizationWordItem;
+		WordItem *_myWordItem = myWordItem();
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "processChangedAssumption";
+
+		if( firstJustificationItem_ == NULL )
+			return startError( functionNameString, NULL, "I am a user specification" );
+
+		if( specificationWordItem_ == NULL )
+			return startError( functionNameString, NULL, "I have no specification word" );
+
+		if( !hasCurrentCreationSentenceNr() )
+			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
+
+		if( isReplacedOrDeletedItem() )
+			return startError( functionNameString, NULL, "I am a replaced or deleted specification" );
+
+		if( ( !_hasRelationContext ||
+		assumptionLevel_ <= previousAssumptionLevel ||
+		assumptionLevel_ >= NUMBER_OF_ASSUMPTION_LEVELS ) &&
+
+		( previousAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ||
+		assumptionLevel_ < NUMBER_OF_ASSUMPTION_LEVELS ) &&
+
+		( assumptionLevel_ == NO_ASSUMPTION_LEVEL ||
+		!hasNewInformation() ) &&
+
+		( isPossessive_ ||
+		assumptionLevel_ == NO_ASSUMPTION_LEVEL ||
+
+		( !_hasRelationContext &&
+		!isSpecificationWordSpanishAmbiguous() ) ||
+
+		!_myWordItem->isUserGeneralizationWord ||
+		// Relation won't be expanded
+		// Test file: "Complex (7 - Claudia)"
+		globalVariables()->nUserRelationWords == 1 ||
+
+		( ( !hasPrimaryAssignmentJustification() ||
+		firstJustificationItem( JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION ) == NULL ) &&
+
+		!hasOnlyOneRelationWord() ) ) &&
+
+		( isAssignment() ||
+		// Skip writing update of specification part of assignment
+		_myWordItem->firstAssignmentItem( isPossessive_, false, NO_CONTEXT_NR, specificationWordItem_ ) == NULL ) &&
+
+		// Write adjusted specification
+		_myWordItem->writeUpdatedSpecification( true, false, false, false, false, false, false, this ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
+
+		if( _hasRelationContext )
+			{
+			// Add justifications to context specifications
+			if( addJustificationsToContextSpecifications() != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to add justifications to context specifications" );
+			}
+		else
+			{
+			if( generalizationWordTypeNr_ == WORD_TYPE_PROPER_NOUN )
+				{
+				if( !isNegative_ &&
+				// Add negative justifications to simple specifications, from positive conclusion
+				addNegativeJustificationsToSimpleSpecificationsFromPositiveConclusion() != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to add negative justifications to simple specifications, from a positive conclusion" );
+				}
+			else	// Definition specification
+				{
+				// Get first generalization specification proper noun word
+				if( ( currentGeneralizationItem = specificationWordItem_->firstProperNounSpecificationGeneralizationItem() ) != NULL )
+					{
+					// Do for all generalization specification proper noun words
+					do	{
+						if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
+							return addError( functionNameString, NULL, "I found an undefined generalization word" );
+
+						// Recalculate assumption levels of specifications in proper noun word
+						if( currentGeneralizationWordItem->recalculateAssumptionLevelsInWord() != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to recalculate the assumption levels of specifications in proper noun word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
+						}
+					while( ( currentGeneralizationItem = currentGeneralizationItem->nextProperNounSpecificationGeneralizationItem() ) != NULL );
+					}
+				}
+			}
+
+		return RESULT_OK;
+		}
+
+
 	// Private specification functions
 
 	bool hasContextMaleWordInContextWords()
 		{
 		WordItem *currentContextWordItem;
-		WordItem *thisWordItem = myWordItem();
+		WordItem *_myWordItem = myWordItem();
 
 		if( relationContextNr_ > NO_CONTEXT_NR &&
 		specificationWordItem_ != NULL &&
@@ -125,31 +428,12 @@ class SpecificationItem : private Item
 			{
 			// Do for all context words
 			do	{
-				if( currentContextWordItem != thisWordItem &&
-				currentContextWordItem->isMale() &&
-				currentContextWordItem->hasContextInWord( relationContextNr_, specificationWordItem_ ) )
+				if( currentContextWordItem != _myWordItem &&
+				currentContextWordItem->isMasculineWord() &&
+				currentContextWordItem->hasContextInWord( relationContextNr_ ) )
 					return true;
 				}
 			while( ( currentContextWordItem = currentContextWordItem->nextContextWordItem ) != NULL );
-			}
-
-		return false;
-		}
-
-	bool hasJustificationOfSameType( unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem )
-		{
-		unsigned int primarySpecificationCollectionNr = ( primarySpecificationItem == NULL ? NO_COLLECTION_NR : primarySpecificationItem->specificationCollectionNr() );
-		unsigned int secondarySpecificationCollectionNr = ( secondarySpecificationItem == NULL ? NO_COLLECTION_NR : secondarySpecificationItem->specificationCollectionNr() );
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
-			searchJustificationItem->primarySpecificationCollectionNr() == primarySpecificationCollectionNr &&
-			searchJustificationItem->secondarySpecificationCollectionNr() == secondarySpecificationCollectionNr )
-				return true;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
 			}
 
 		return false;
@@ -161,7 +445,7 @@ class SpecificationItem : private Item
 				specificationWordItem_->isUserSpecificationWord );
 		}
 
-	bool isPrimarySpecificationCandidateOfQuestion( bool isAllowingSpanishPossessiveSpecification )
+	bool isCandidateForQuestion( bool isAllowingSpanishPossessiveSpecification )
 		{
 		return ( !isExclusiveSpecification_ &&
 				!isNegative_ &&
@@ -174,42 +458,6 @@ class SpecificationItem : private Item
 				!isHiddenSpanishSpecification() );
 		}
 
-	unsigned short highestAttachedJustificationOrderNr( unsigned short justificationTypeNr )
-		{
-		unsigned short highestOrderNr = NO_ORDER_NR;
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem->orderNr > highestOrderNr &&
-			searchJustificationItem->justificationTypeNr() == justificationTypeNr )
-				highestOrderNr = searchJustificationItem->orderNr;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-			}
-
-		return highestOrderNr;
-		}
-
-	signed char recalculateAssumptionsInContextWords( unsigned int contextNr, WordItem *specificationWordItem )
-		{
-		WordItem *currentContextWordItem;
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "recalculateAssumptionsInContextWords";
-
-		if( contextNr > NO_CONTEXT_NR &&
-		( currentContextWordItem = globalVariables()->firstContextWordItem ) != NULL )
-			{
-			do	{
-				if( currentContextWordItem->hasContextInWord( contextNr, specificationWordItem ) &&
-				currentContextWordItem->recalculateAssumptionsInWord() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to recalculate the assumptions of word \"", currentContextWordItem->anyWordTypeString(), "\"" );
-				}
-			while( ( currentContextWordItem = currentContextWordItem->nextContextWordItem ) != NULL );
-			}
-
-		return RESULT_OK;
-		}
-
 	WordItem *relationContextWordItemInContextWords( WordItem *previousContextWordItem )
 		{
 		WordItem *currentContextWordItem;
@@ -219,7 +467,7 @@ class SpecificationItem : private Item
 		( currentContextWordItem = ( previousContextWordItem == NULL ? globalVariables()->firstContextWordItem : previousContextWordItem->nextContextWordItem ) ) != NULL )
 			{
 			do	{
-				if( currentContextWordItem->hasContextInWord( relationContextNr_, specificationWordItem_ ) )
+				if( currentContextWordItem->hasContextInWord( relationContextNr_ ) )
 					return currentContextWordItem;
 				}
 			while( ( currentContextWordItem = currentContextWordItem->nextContextWordItem ) != NULL );
@@ -228,10 +476,62 @@ class SpecificationItem : private Item
 		return NULL;
 		}
 
+	WordItem *relationContextWordNotCoveredByJustifications()
+		{
+		bool hasFoundContextInJustification = false;
+		JustificationItem *searchJustificationItem;
+		SpecificationItem *primarySpecificationItem;
+		SpecificationItem *secondarySpecificationItem;
+		WordItem *currentContextWordItem;
+
+		if( relationContextNr_ > NO_CONTEXT_NR &&
+		firstJustificationItem_ != NULL &&
+		( currentContextWordItem = globalVariables()->firstContextWordItem ) != NULL )
+			{
+			// Do for all context words
+			do	{
+				if( currentContextWordItem->hasContextInWord( relationContextNr_ ) )
+					{
+					hasFoundContextInJustification = false;
+					searchJustificationItem = firstJustificationItem_;
+
+					while( !hasFoundContextInJustification &&
+					searchJustificationItem != NULL )
+						{
+						// Check primary specification
+						if( ( ( primarySpecificationItem = searchJustificationItem->primarySpecificationItem() ) != NULL &&
+						primarySpecificationItem->hasRelationContext() &&
+
+						( primarySpecificationItem->generalizationWordItem() == currentContextWordItem ||
+						currentContextWordItem->hasContextInWord( primarySpecificationItem->relationContextNr() ) ) ) ||
+
+						// Check secondary specification
+						( ( secondarySpecificationItem = searchJustificationItem->secondarySpecificationItem() ) != NULL &&
+						secondarySpecificationItem->hasRelationContext() &&
+
+						( secondarySpecificationItem->generalizationWordItem() == currentContextWordItem ||
+						currentContextWordItem->hasContextInWord( secondarySpecificationItem->relationContextNr() ) ) ) )
+							hasFoundContextInJustification = true;
+
+						searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+						}
+
+					if( !hasFoundContextInJustification )
+						// This relation context word is not covered by justifications
+						return currentContextWordItem;
+					}
+				}
+			while( ( currentContextWordItem = currentContextWordItem->nextContextWordItem ) != NULL );
+			}
+
+		// Justifications are covering given relation context
+		return NULL;
+		}
 
 	protected:
 	// Protected constructed variables
 
+	bool hasAdjustedSpecificationBeenWritten = false;
 	bool hasSpecificationBeenWrittenAsAnswer = false;
 
 	SpecificationItem *replacingSpecificationItem = NULL;
@@ -239,7 +539,7 @@ class SpecificationItem : private Item
 
 	// Constructor
 
-	SpecificationItem( bool isAnsweredQuestion, bool isCharacteristicFor, bool isConcludedAssumption, bool isConditional, bool isCorrectedAssumption, bool isEveryGeneralization, bool isExclusiveGeneralization, bool isExclusiveSpecification, bool isLanguageWord, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assignmentLevel, unsigned short assumptionLevel, unsigned short languageNr, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationCollectionNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, char *specificationString, char *storedSentenceString, char *storedSentenceWithOnlyOneSpecificationString, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	SpecificationItem( bool isAnsweredQuestion, bool isCharacteristicFor, bool isConditional, bool isCorrectedSpecification, bool isEveryGeneralization, bool isExclusiveGeneralization, bool isExclusiveSpecification, bool isLanguageWord, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assignmentLevel, unsigned short assumptionLevel, unsigned short languageNr, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationCollectionNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, char *specificationString, char *storedSentenceString, char *storedSentenceWithOnlyOneSpecificationString, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
 		size_t specificationStringLength;
 
@@ -249,9 +549,8 @@ class SpecificationItem : private Item
 
 		isAnsweredQuestion_ = isAnsweredQuestion;
 		isCharacteristicFor_ = isCharacteristicFor;
-		isConcludedAssumption_ = isConcludedAssumption;
 		isConditional_ = isConditional;
-		isCorrectedAssumption_ = isCorrectedAssumption;
+		isCorrectedSpecification_ = isCorrectedSpecification;
 		isEveryGeneralization_ = isEveryGeneralization;
 		isExclusiveGeneralization_ = isExclusiveGeneralization;
 		isExclusiveSpecification_ = isExclusiveSpecification;
@@ -440,12 +739,12 @@ class SpecificationItem : private Item
 
 	virtual char *itemToString( unsigned short queryWordTypeNr )
 		{
-		WordItem *thisWordItem = myWordItem();
-		char *languageNameString = thisWordItem->languageNameString( languageNr_ );
-		char *generalizationWordTypeString = thisWordItem->wordTypeNameString( generalizationWordTypeNr_ );
+		WordItem *_myWordItem = myWordItem();
+		char *languageNameString = _myWordItem->languageNameString( languageNr_ );
+		char *generalizationWordTypeString = _myWordItem->wordTypeNameString( generalizationWordTypeNr_ );
 		char *queryString;
-		char *relationWordTypeString = ( relationWordTypeNr_ == NO_WORD_TYPE_NR ? NULL : thisWordItem->wordTypeNameString( relationWordTypeNr_ ) );
-		char *specificationWordTypeString = thisWordItem->wordTypeNameString( specificationWordTypeNr_ );
+		char *relationWordTypeString = ( relationWordTypeNr_ == NO_WORD_TYPE_NR ? NULL : _myWordItem->wordTypeNameString( relationWordTypeNr_ ) );
+		char *specificationWordTypeString = _myWordItem->wordTypeNameString( specificationWordTypeNr_ );
 		char *wordString;
 
 		itemBaseToString( queryWordTypeNr );
@@ -474,22 +773,16 @@ class SpecificationItem : private Item
 			strcat( queryString, "isCharacteristicFor" );
 			}
 
-		if( isConcludedAssumption_ )
-			{
-			strcat( queryString, QUERY_SEPARATOR_STRING );
-			strcat( queryString, "isConcludedAssumption" );
-			}
-
 		if( isConditional_ )
 			{
 			strcat( queryString, QUERY_SEPARATOR_STRING );
 			strcat( queryString, "isConditional" );
 			}
 
-		if( isCorrectedAssumption_ )
+		if( isCorrectedSpecification_ )
 			{
 			strcat( queryString, QUERY_SEPARATOR_STRING );
-			strcat( queryString, "isCorrectedAssumption" );
+			strcat( queryString, "isCorrectedSpecification" );
 			}
 
 		if( isEveryGeneralization_ )
@@ -706,6 +999,29 @@ class SpecificationItem : private Item
 		}
 
 
+	// Protected common functions
+
+	bool hasAssumptionLevel()
+		{
+		return ( assumptionLevel_ > NO_ASSUMPTION_LEVEL );
+		}
+
+	unsigned short assumptionLevel()
+		{
+		return assumptionLevel_;
+		}
+
+	unsigned short languageNr()
+		{
+		return languageNr_;
+		}
+
+	unsigned int nRelationContextWords()
+		{
+		return myWordItem()->nContextWords( relationContextNr_ );
+		}
+
+
 	// Protected assignment functions
 
 	bool isAssignment()
@@ -742,25 +1058,11 @@ class SpecificationItem : private Item
 		return assignmentLevel_;
 		}
 
-	unsigned short assumptionLevel()
-		{
-		return assumptionLevel_;
-		}
-
-	unsigned short languageNr()
-		{
-		return languageNr_;
-		}
-
-	unsigned int nRelationContextWords()
-		{
-		return myWordItem()->nContextWords( relationContextNr_, specificationWordItem_ );
-		}
-
 	SpecificationItem *assignmentItem( bool isIncludingAnsweredQuestions, bool isIncludingThisItem, bool isQuestion )
 		{
 		unsigned short currentAssignmentLevel = globalVariables()->currentAssignmentLevel;
-		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? ( assignmentLevel_ == currentAssignmentLevel ? this : NULL ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
+		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ?
+														( assignmentLevel_ == currentAssignmentLevel ? this : NULL ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
 
 		while( searchSpecificationItem != NULL )
 			{
@@ -780,7 +1082,8 @@ class SpecificationItem : private Item
 	SpecificationItem *assignmentItem( bool isIncludingAnsweredQuestions, bool isIncludingThisItem, unsigned short questionParameter )
 		{
 		unsigned short currentAssignmentLevel = globalVariables()->currentAssignmentLevel;
-		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? ( assignmentLevel_ == currentAssignmentLevel ? this : NULL ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
+		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ?
+														( assignmentLevel_ == currentAssignmentLevel ? this : NULL ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
 
 		while( searchSpecificationItem != NULL )
 			{
@@ -792,6 +1095,489 @@ class SpecificationItem : private Item
 				return searchSpecificationItem;
 
 			searchSpecificationItem = searchSpecificationItem->nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel );
+			}
+
+		return NULL;
+		}
+
+
+	// Protected justification functions
+
+	bool hasAdditionalDefinitionSpecificationJustification()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->hasAdditionalDefinitionSpecification() )
+				return true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return false;
+		}
+
+	bool hasJustification( JustificationItem *referenceJustificationItem )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		if( referenceJustificationItem != NULL )
+			{
+			while( searchJustificationItem != NULL )
+				{
+				if( searchJustificationItem == referenceJustificationItem )
+					return true;
+
+				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+				}
+			}
+
+		return false;
+		}
+
+	bool hasJustificationWithAdditionalDefinitionSpecification()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->hasAdditionalDefinitionSpecification() )
+				return true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return false;
+		}
+
+	bool hasPrimaryNounSpecificationJustification()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->isPrimaryNounSpecification() )
+				return true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return false;
+		}
+
+	bool hasPrimarySpecificationJustification( SpecificationItem *primarySpecificationItem )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		if( primarySpecificationItem != NULL )
+			{
+			while( searchJustificationItem != NULL )
+				{
+				if( searchJustificationItem->primarySpecificationItem() == primarySpecificationItem )
+					return true;
+
+				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+				}
+			}
+
+		return false;
+		}
+
+	bool hasPrimaryAndSecondarySpecificationJustification( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->primarySpecificationItem() == primarySpecificationItem &&
+			searchJustificationItem->secondarySpecificationItem() == secondarySpecificationItem )
+				return true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return false;
+		}
+
+	bool hasSecondarySpecificationJustification( SpecificationItem *secondarySpecificationItem )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->secondarySpecificationItem() == secondarySpecificationItem )
+				return true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return false;
+		}
+
+	bool hasSecondarySpecificationCompoundCollectionJustification()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->hasCompoundCollectionSecondarySpecification() )
+				return true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return false;
+		}
+
+	bool isFirstJustificationReversibleAssumptionOrConclusion()
+		{
+		return ( firstJustificationItem_ != NULL &&
+				firstJustificationItem_->isReversibleAssumptionOrConclusion() );
+		}
+
+	bool isFirstJustificationReversibleAssumption()
+		{
+		return ( firstJustificationItem_ != NULL &&
+				firstJustificationItem_->isReversibleAssumptionOrConclusion() &&
+				firstJustificationItem_->hasAssumptionLevel() );
+		}
+
+	unsigned int highestReversibleJustificationAssumptionLevel()
+		{
+		unsigned int currentAssumptionLevel;
+		unsigned int highestAssumptionLevel = NO_ASSUMPTION_LEVEL;
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->isReversibleAssumptionOrConclusion() &&
+			( currentAssumptionLevel = searchJustificationItem->justificationAssumptionLevel() ) > highestAssumptionLevel )
+				highestAssumptionLevel = currentAssumptionLevel;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return highestAssumptionLevel;
+		}
+
+	signed char changeFirstJustification( bool isCheckingForDuplicates, JustificationItem *replacingJustificationItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeFirstJustification";
+
+		if( replacingJustificationItem == NULL )
+			return startError( functionNameString, NULL, "The given replacing justification item is undefined" );
+
+		if( !replacingJustificationItem->isActiveItem() )
+			return startError( functionNameString, NULL, "The given replacing justification item isn't active" );
+
+		if( !hasCurrentCreationSentenceNr() )
+			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
+
+		if( isCheckingForDuplicates &&
+		checkJustification( replacingJustificationItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to check the given replacing justification item" );
+
+		firstJustificationItem_ = replacingJustificationItem;
+
+		return RESULT_OK;
+		}
+
+	signed char checkForCircularReasoning()
+		{
+		bool hasFoundCircularReasoning = false;
+		bool hasFoundOnlyUserSpecifications = true;
+		bool hasFoundOtherJustificationTypes = false;
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+		SpecificationItem *primarySelfGeneratedSpecification;
+		char errorString[ERROR_STRING_LENGTH];
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForCircularReasoning";
+
+		while( !hasFoundOtherJustificationTypes &&
+		searchJustificationItem != NULL &&
+		!globalVariables()->hasDisplayedIntegrityWarning )
+			{
+			if( searchJustificationItem->isReversibleAssumptionOrConclusion() )
+				{
+				if( ( primarySelfGeneratedSpecification = searchJustificationItem->primarySelfGeneratedSpecification() ) != NULL )
+					{
+					hasFoundOnlyUserSpecifications = false;
+
+					if( primarySelfGeneratedSpecification->hasFoundCircularReasoning() )
+						hasFoundCircularReasoning = true;
+					}
+				}
+			else
+				hasFoundOtherJustificationTypes = true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		if( hasFoundCircularReasoning &&
+		!hasFoundOtherJustificationTypes &&
+		!hasFoundOnlyUserSpecifications )
+			{
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcpy( errorString, "\nI found a case of circular reasoning:\n\tSpecificationItem: " );
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
+
+			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
+				return startError( functionNameString, NULL, "I failed to write an interface warning" );
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char checkForDeletedJustification()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+		char errorString[ERROR_STRING_LENGTH];
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForDeletedJustification";
+
+		while( searchJustificationItem != NULL &&
+		!globalVariables()->hasDisplayedIntegrityWarning )
+			{
+			if( searchJustificationItem->isDeletedItem() )
+				{
+				// The result of this call is stored in a shared string. Hence, one call at the time.
+				strcpy( errorString, "\nI found a deleted justification item in a replaced specification item:\n\tSpecificationItem: " );
+				strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+				strcat( errorString, ";\n\tJustificationItem: " );
+				strcat( errorString, searchJustificationItem->itemToString( NO_WORD_TYPE_NR ) );
+				strcat( errorString, ".\n" );
+
+				if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
+					return startError( functionNameString, NULL, "I failed to write an interface warning" );
+				}
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char checkForReplacedOrDeletedJustification()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+		char errorString[ERROR_STRING_LENGTH];
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForReplacedOrDeletedJustification";
+
+		while( searchJustificationItem != NULL &&
+		!globalVariables()->hasDisplayedIntegrityWarning )
+			{
+			if( searchJustificationItem->isReplacedOrDeletedItem() )
+				{
+				// The result of this call is stored in a shared string. Hence, one call at the time.
+				strcpy( errorString, "\nI found a replaced or deleted justification item:\n\tSpecificationItem: " );
+				strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+				strcat( errorString, ";\n\tJustificationItem: " );
+				strcat( errorString, searchJustificationItem->itemToString( NO_WORD_TYPE_NR ) );
+				strcat( errorString, ".\n" );
+
+				if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
+					return startError( functionNameString, NULL, "I failed to write an interface warning" );
+				}
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char checkForJustificationsCoveringRelationContext()
+		{
+		WordItem *currentContextWordItem;
+		char errorString[ERROR_STRING_LENGTH];
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForJustificationsCoveringRelationContext";
+
+		if( relationContextNr_ == NO_CONTEXT_NR )
+			return startError( functionNameString, NULL, "I have no relation context" );
+
+		if( firstJustificationItem_ == NULL )
+			return startError( functionNameString, NULL, "I am a user specification. So, I have no justifications" );
+
+		if( globalVariables()->firstContextWordItem == NULL )
+			return startError( functionNameString, NULL, "I could not find any context word, while checking myself for justifications covering a relation context" );
+
+		if( ( currentContextWordItem = relationContextWordNotCoveredByJustifications() ) != NULL )
+			{
+			// The result of this call is stored in a shared string. Hence, one call at the time.
+			strcpy( errorString, "\nI found a specification missing justifications covering context word: \"" );
+			strcat( errorString, currentContextWordItem->anyWordTypeString() );
+			strcat( errorString, "\";\n\tRelation context number: " );
+			sprintf( tempString, "%d", relationContextNr_ );
+			strcat( errorString, tempString );
+			strcat( errorString, ";\n\tSpecificationItem: " );
+			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
+			strcat( errorString, ".\n" );
+
+			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
+				return startError( functionNameString, NULL, "I failed to write an interface warning" );
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char checkJustification( JustificationItem *referenceJustificationItem )
+		{
+		bool hasFeminineOrMasculineProperNounEnding;
+		unsigned short justificationTypeNr;
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+		SpecificationItem *referencePrimarySpecificationItem;
+		SpecificationItem *referenceAdditionalDefinitionSpecificationItem;
+		SpecificationItem *referenceSecondarySpecificationItem;
+//		SpecificationItem *referenceAdditionalProperNounSpecificationItem;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkJustification";
+
+		if( referenceJustificationItem == NULL )
+			return startError( functionNameString, NULL, "The given reference justification item is undefined" );
+
+		if( searchJustificationItem == NULL )
+			return startError( functionNameString, NULL, "I have no justification items" );
+
+		hasFeminineOrMasculineProperNounEnding = referenceJustificationItem->hasFeminineOrMasculineProperNounEnding();
+		justificationTypeNr = referenceJustificationItem->justificationTypeNr();
+		referencePrimarySpecificationItem = referenceJustificationItem->primarySpecificationItem();
+		referenceAdditionalDefinitionSpecificationItem = referenceJustificationItem->additionalDefinitionSpecificationItem();
+		referenceSecondarySpecificationItem = referenceJustificationItem->secondarySpecificationItem();
+//		referenceAdditionalProperNounSpecificationItem = referenceJustificationItem->additionalProperNounSpecificationItem();
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem == referenceJustificationItem )
+				return startError( functionNameString, NULL, "The given reference justification item is already one of my attached justification items" );
+
+			if( searchJustificationItem->hasJustification( hasFeminineOrMasculineProperNounEnding, justificationTypeNr, referencePrimarySpecificationItem, referenceAdditionalDefinitionSpecificationItem, referenceSecondarySpecificationItem ) )
+				return startError( functionNameString, NULL, "I already have a justification item like the given attached justification item" );
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return RESULT_OK;
+		}
+
+	JustificationItem *firstJustificationItem( unsigned short justificationTypeNr )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->justificationTypeNr() == justificationTypeNr )
+				return searchJustificationItem;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return NULL;
+		}
+
+	JustificationItem *firstJustificationItem( unsigned short justificationTypeNr, unsigned short justificationOrderNr )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
+			searchJustificationItem->justificationOrderNr == justificationOrderNr )
+				return searchJustificationItem;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return NULL;
+		}
+
+	JustificationItem *firstJustificationItem( unsigned short justificationTypeNr, WordItem *primaryGeneralizationWordItem )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
+			searchJustificationItem->primaryGeneralizationWordItem() == primaryGeneralizationWordItem )
+				return searchJustificationItem;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return NULL;
+		}
+
+	JustificationItem *firstOlderJustificationItem( unsigned short justificationTypeNr )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->isOlderItem() &&
+			searchJustificationItem->justificationTypeNr() == justificationTypeNr )
+				return searchJustificationItem;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return NULL;
+		}
+
+	JustificationItem *firstReplacedPrimarySpecificationJustificationItem()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->isReplacedPrimarySpecification() )
+				return searchJustificationItem;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return NULL;
+		}
+
+	JustificationItem *firstReplacedSecondarySpecificationJustificationItem()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->isReplacedSecondarySpecification() )
+				return searchJustificationItem;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return NULL;
+		}
+
+	JustificationItem *firstSecondaryJustificationItem( bool isPossessiveSecondarySpecification )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->isPossessiveSecondarySpecification() == isPossessiveSecondarySpecification )
+				return searchJustificationItem;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return NULL;
+		}
+
+	JustificationItem *primarySpecificationJustificationItem( SpecificationItem *primarySpecificationItem )
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		if( primarySpecificationItem != NULL )
+			{
+			while( searchJustificationItem != NULL )
+				{
+				if( searchJustificationItem->primarySpecificationItem() == primarySpecificationItem )
+					return searchJustificationItem;
+
+				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+				}
 			}
 
 		return NULL;
@@ -843,13 +1629,9 @@ class SpecificationItem : private Item
 
 	void initializeSpecificationVariables()
 		{
-		// Private constructed variables
-
-		hasSpecificationBeenWrittenAsAdjustedNegativeAssumption_ = false;
-		hasSpecificationBeenWrittenAsConflict_ = false;
-
 		// Protected constructed variables
 
+		hasAdjustedSpecificationBeenWritten = false;
 		hasSpecificationBeenWrittenAsAnswer = false;
 		}
 
@@ -863,34 +1645,11 @@ class SpecificationItem : private Item
 		strcpy( storedSentenceWithOnlyOneSpecificationString_, globalVariables()->writtenSentenceString );
 		}
 
-	bool hasAssumptionLevel()
-		{
-		return ( assumptionLevel_ > NO_ASSUMPTION_LEVEL );
-		}
-
 	bool hasCompoundSpecificationCollection()
 		{
 		return ( specificationCollectionNr_ > NO_COLLECTION_NR &&
 				specificationWordItem_ != NULL &&
 				specificationWordItem_->isCompoundCollection( specificationCollectionNr_ ) );
-		}
-
-	bool hasJustification( JustificationItem *referenceJustificationItem )
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		if( referenceJustificationItem != NULL )
-			{
-			while( searchJustificationItem != NULL )
-				{
-				if( searchJustificationItem == referenceJustificationItem )
-					return true;
-
-				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-				}
-			}
-
-		return false;
 		}
 
 	bool hasGeneralizationCollection()
@@ -925,40 +1684,7 @@ class SpecificationItem : private Item
 
 	bool hasOnlyOneRelationWord()
 		{
-		return ( myWordItem()->nContextWords( relationContextNr_, specificationWordItem_ ) == 1 );
-		}
-
-	bool hasPossessivePrimarySpecificationJustification()
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( !searchJustificationItem->hasPossessivePrimarySpecification() )
-				return true;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-			}
-
-		return false;
-		}
-
-	bool hasPrimarySpecificationJustification( SpecificationItem *primarySpecificationItem )
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		if( primarySpecificationItem != NULL )
-			{
-			while( searchJustificationItem != NULL )
-				{
-				if( searchJustificationItem->primarySpecificationItem() == primarySpecificationItem )
-					return true;
-
-				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-				}
-			}
-
-		return false;
+		return ( myWordItem()->nContextWords( relationContextNr_ ) == 1 );
 		}
 
 	bool hasSpecificationContext()
@@ -974,14 +1700,14 @@ class SpecificationItem : private Item
 	bool hasRelationContextCurrentlyBeenUpdated()
 		{
 		WordItem *currentContextWordItem;
-		WordItem *thisWordItem = myWordItem();
+		WordItem *_myWordItem = myWordItem();
 
 		if( relationContextNr_ > NO_CONTEXT_NR &&
 		( currentContextWordItem = globalVariables()->firstContextWordItem ) != NULL )
 			{
 			// Do for all context words
 			do	{
-				if( currentContextWordItem != thisWordItem &&
+				if( currentContextWordItem != _myWordItem &&
 				currentContextWordItem->hasContextCurrentlyBeenUpdatedInWord( relationContextNr_ ) )
 					return true;
 				}
@@ -989,16 +1715,6 @@ class SpecificationItem : private Item
 			}
 
 		return false;
-		}
-
-	bool hasSpecificationBeenWrittenAsAdjustedNegativeAssumption()
-		{
-		return hasSpecificationBeenWrittenAsAdjustedNegativeAssumption_;
-		}
-
-	bool hasSpecificationBeenWrittenAsConflict()
-		{
-		return hasSpecificationBeenWrittenAsConflict_;
 		}
 
 	bool hasSpecificationCollection()
@@ -1017,44 +1733,42 @@ class SpecificationItem : private Item
 		return isCharacteristicFor_;
 		}
 
-	bool isConcludedAssumption()
-		{
-		return isConcludedAssumption_;
-		}
-
 	bool isConditional()
 		{
 		return isConditional_;
 		}
 
-	bool isCorrectedAssumption()
+	bool isCorrectedSpecification()
 		{
-		return isCorrectedAssumption_;
+		return isCorrectedSpecification_;
 		}
 
-	bool isCorrectSpecificationArticle( bool isDefiniteArticle, unsigned short articleParameter )
+	bool isCorrectSpecificationArticle( bool isDefiniteArticle, bool isWritingCurrentSpecificationWordOnly, unsigned short articleParameter )
 		{
-		bool isSelfGeneratedSpecification;
+		bool isSelfGenerated;
 		SpecificationItem *searchSpecificationItem;
 		WordItem *currentSpecificationWordItem;
 		WordItem *foundWordItem = NULL;
 
-		if( ( searchSpecificationItem = myWordItem()->firstSpecificationItem( false, isAssignment(), isInactiveAssignment(), isArchivedAssignment(), questionParameter_ ) ) != NULL )
+		if( isWritingCurrentSpecificationWordOnly )
+			foundWordItem = specificationWordItem_;
+		else
 			{
-			isSelfGeneratedSpecification = isSelfGenerated();
+			if( ( searchSpecificationItem = myWordItem()->firstSpecificationItem( false, isAssignment(), isInactiveAssignment(), isArchivedAssignment(), questionParameter_ ) ) != NULL )
+				{
+				isSelfGenerated = isSelfGeneratedSpecification();
 
-			do	{
-				if( ( currentSpecificationWordItem = ( searchSpecificationItem == this ? specificationWordItem_ : searchSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification_, isNegative_, isPossessive_, isSelfGeneratedSpecification, assumptionLevel_, specificationWordTypeNr_, specificationCollectionNr_, generalizationContextNr_, relationContextNr_ ) ) ) != NULL &&
-				!currentSpecificationWordItem->isSpecificationWordTypeAlreadyWritten( specificationWordTypeNr_ ) )
-					foundWordItem = currentSpecificationWordItem;
+				do	{
+					if( ( currentSpecificationWordItem = ( searchSpecificationItem == this ? specificationWordItem_ : searchSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification_, isNegative_, isPossessive_, isSelfGenerated, assumptionLevel_, specificationWordTypeNr_, specificationCollectionNr_, generalizationContextNr_, relationContextNr_ ) ) ) != NULL &&
+					!currentSpecificationWordItem->isSpecificationWordTypeAlreadyWritten( specificationWordTypeNr_ ) )
+						foundWordItem = currentSpecificationWordItem;
+					}
+				while( foundWordItem == NULL &&
+				( searchSpecificationItem = searchSpecificationItem->nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion_ ) ) != NULL );
 				}
-			while( foundWordItem == NULL &&
-			( searchSpecificationItem = searchSpecificationItem->nextSelectedQuestionParameterSpecificationItem( isAnsweredQuestion_ ) ) != NULL );
-
-			return ( foundWordItem == NULL ? true : ( isDefiniteArticle ? foundWordItem->isCorrectDefiniteArticle( articleParameter, specificationWordTypeNr_ ) : foundWordItem->isCorrectIndefiniteArticle( articleParameter, specificationWordTypeNr_ ) ) );
 			}
 
-		return false;
+		return ( foundWordItem == NULL ? true : ( isDefiniteArticle ? foundWordItem->isCorrectDefiniteArticle( articleParameter, specificationWordTypeNr_ ) : foundWordItem->isCorrectIndefiniteArticle( articleParameter, specificationWordTypeNr_ ) ) );
 		}
 
 	bool isCorrectArticleOfFirstUnwrittenProperNounRelationWord( unsigned short definiteArticleParameter )
@@ -1108,12 +1822,12 @@ class SpecificationItem : private Item
 		return ( isSpecificationWordSpanishAmbiguous() &&
 				hasNonCompoundSpecificationCollection() &&
 				!isNegative_ &&
-				isSelfGenerated() &&
 				isGeneralizationProperNoun() &&
+				isSelfGeneratedSpecification() &&
 
-				// Not possessive specification not in a male word
+				// Non-possessive specification not in a male word
 				( ( !isPossessive_ &&
-				!myWordItem()->isMale() ) ||
+				!myWordItem()->isMasculineWord() ) ||
 
 				// Possessive specification without male relation context
 				( isPossessive_ &&
@@ -1157,64 +1871,30 @@ class SpecificationItem : private Item
 		return isPossessive_;
 		}
 
-	bool isFirstJustificiationReversibleAssumption()
+	bool isRelatedSpecification( unsigned int answerSpecificationCollectionNr, unsigned int questionSpecificationCollectionNr, WordItem *specificationWordItem )
 		{
-		return ( firstJustificationItem_ != NULL &&
-				firstJustificationItem_->isReversibleAssumption() );
-		}
+		return ( ( specificationCollectionNr_ > NO_COLLECTION_NR &&
+				specificationCollectionNr_ == answerSpecificationCollectionNr ) ||
 
-	bool isFirstJustificiationReversibleConclusion()
-		{
-		return ( firstJustificationItem_ != NULL &&
-				firstJustificationItem_->isReversibleConclusion() );
-		}
+				( questionSpecificationCollectionNr > NO_COLLECTION_NR &&
 
-	bool isRelatedOlderSpecification( unsigned int specificationCollectionNr, unsigned int compoundSpecificationCollectionNr, WordItem *specificationWordItem )
-		{
-		return ( isOlderItem() &&
-
-				( ( specificationCollectionNr_ > NO_COLLECTION_NR &&
-				specificationCollectionNr_ == specificationCollectionNr ) ||
-
-				( compoundSpecificationCollectionNr > NO_COLLECTION_NR &&
-
-				( specificationCollectionNr_ == compoundSpecificationCollectionNr ||
-				specificationWordItem_ == specificationWordItem ) ) ) );
-		}
-
-	bool isRelatedSpecification( bool isNegative, WordItem *specificationWordItem )
-		{
-		return ( isNegative_ == isNegative &&
-				specificationWordItem_ == specificationWordItem );
-		}
-
-	bool isRelatedSpecification( bool isExclusiveSpecification, bool isPossessive, WordItem *specificationWordItem )
-		{
-		return ( isExclusiveSpecification_ == isExclusiveSpecification &&
-				isPossessive_ == isPossessive &&
-				relationContextNr_ > NO_CONTEXT_NR &&
-				specificationWordItem_ == specificationWordItem );
+				( specificationCollectionNr_ == questionSpecificationCollectionNr ||
+				specificationWordItem_ == specificationWordItem ) ) );
 		}
 
 	bool isSelfGeneratedAssumption()
 		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		if( !isConcludedAssumption_ &&
+		if( !isSpecificationGeneralization_ &&
+		// Not a question
 		questionParameter_ == NO_QUESTION_PARAMETER &&
+		// Self-generated
 		firstJustificationItem_ != NULL )
 			{
-			if( assumptionLevel_ > NO_ASSUMPTION_LEVEL )
-				return true;
+			if( assumptionLevel_ == NO_ASSUMPTION_LEVEL )
+				// Calculate assumption level
+				calculateAssumptionLevel();
 
-			while( searchJustificationItem != NULL )
-				{
-				// At least one justification is an assumption
-				if( searchJustificationItem->isAssumptionJustification() )
-					return true;
-
-				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-				}
+			return ( assumptionLevel_ > NO_ASSUMPTION_LEVEL );
 			}
 
 		return false;
@@ -1222,27 +1902,22 @@ class SpecificationItem : private Item
 
 	bool isSelfGeneratedConclusion()
 		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
+		return ( !isSpecificationGeneralization_ &&
+				// No assumption level
+				assumptionLevel_ == NO_ASSUMPTION_LEVEL &&
+				// Not a question
+				questionParameter_ == NO_QUESTION_PARAMETER &&
+				// Self-generated
+				firstJustificationItem_ != NULL );
+		}
 
-		if( questionParameter_ == NO_QUESTION_PARAMETER &&
-		firstJustificationItem_ != NULL )
-			{
-			if( isConcludedAssumption_ )
-				return true;
-
-			while( searchJustificationItem != NULL )
-				{
-				// At least one justification is an assumption. So, it is no conclusion
-				if( searchJustificationItem->isAssumptionJustification() )
-					return false;
-
-				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-				}
-
-			return true;
-			}
-
-		return false;
+	bool isSelfGeneratedConclusionOrAssumption()
+		{
+		return ( !isSpecificationGeneralization_ &&
+				// Not a question
+				questionParameter_ == NO_QUESTION_PARAMETER &&
+				// Self-generated
+				firstJustificationItem_ != NULL );
 		}
 
 	bool isSelfGeneratedQuestion()
@@ -1251,7 +1926,7 @@ class SpecificationItem : private Item
 				firstJustificationItem_ != NULL );
 		}
 
-	bool isSelfGenerated()
+	bool isSelfGeneratedSpecification()
 		{
 		return ( firstJustificationItem_ != NULL );
 		}
@@ -1264,6 +1939,11 @@ class SpecificationItem : private Item
 	bool isSpecificationGeneralization()
 		{
 		return isSpecificationGeneralization_;
+		}
+
+	bool isSpecificationAdjective()
+		{
+		return ( specificationWordTypeNr_ == WORD_TYPE_ADJECTIVE );
 		}
 
 	bool isSpecificationNoun()
@@ -1295,7 +1975,7 @@ class SpecificationItem : private Item
 	bool isSpecificationWithStaticAmiguity()
 		{
 		return ( isExclusiveSpecification_ &&
-				myWordItem()->nContextWords( relationContextNr_, specificationWordItem_ ) > 1 );
+				myWordItem()->nContextWords( relationContextNr_ ) > 1 );
 		}
 
 	bool isSpecificationWordSpanishAmbiguous()
@@ -1333,28 +2013,16 @@ class SpecificationItem : private Item
 
 	bool wasHiddenSpanishSpecification()
 		{
-		JustificationItem *attachedJustificationItem;
-
 		return ( relationContextNr_ > NO_CONTEXT_NR &&
-				// Self-generated
+				// Self-generated specification
 				firstJustificationItem_ != NULL &&
-				isOlderItem() &&
-				strlen( storedSentenceString_ ) == 0 &&
 				isSpecificationWordSpanishAmbiguous() &&
+				isOlderItem() &&
 				!isHiddenSpanishSpecification() &&
+				strlen( storedSentenceString_ ) == 0 &&
 
 				( isSelfGeneratedAssumption() ||
-
-				( !isConcludedAssumption_ &&
-				firstJustificationItem_->hasPossessiveSecondarySpecification() ) ||
-
-				( isConcludedAssumption_ &&
-
-				( firstJustificationItem_->hasNonPossessivePrimarySpecification() ||
-
-				( firstJustificationItem_->isReversibleConclusion() &&
-				( attachedJustificationItem = firstJustificationItem_->attachedJustificationItem() ) != NULL &&
-				attachedJustificationItem->hasNonPossessivePrimarySpecification() ) ) ) ) );
+				firstJustificationItem_->isPossessivePrimarySpecification() ) );
 		}
 
 	unsigned short generalizationWordTypeNr()
@@ -1407,22 +2075,6 @@ class SpecificationItem : private Item
 		return nContextRelations_;
 		}
 
-	unsigned int nReversibleConclusionJustifications()
-		{
-		unsigned int nReversibleConclusions = 0;
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem->isReversibleConclusion() )
-				nReversibleConclusions++;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-			}
-
-		return nReversibleConclusions;
-		}
-
 	unsigned int nInvolvedSpecificationWords()
 		{
 		unsigned int myCreationSentenceNr = creationSentenceNr();
@@ -1446,73 +2098,86 @@ class SpecificationItem : private Item
 		return nInvolvedSpecificationWords;
 		}
 
-	signed char attachJustificationToSpecification( JustificationItem *attachJustificationItem )
+	signed char addJustificationToSpecification( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem )
 		{
-		bool hasCurrentlyCorrectedAssumptionByKnowledge;
-		JustificationItem *firstJustificationItem;
-		SpecificationItem *createdSpecificationItem;
-		WordItem *thisWordItem = myWordItem();
-		CreateAndAssignResultType createAndAssignResult;
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "attachJustificationToSpecification";
-
-		if( attachJustificationItem == NULL )
-			return startError( functionNameString, NULL, "The given attached justification item is undefined" );
-
-		if( !attachJustificationItem->isActiveItem() )
-			return startError( functionNameString, NULL, "The given attached justification item isn't active" );
+		JustificationItem *createdJustificationItem;
+		JustificationResultType justificationResult;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addJustificationToSpecification";
 
 		if( isReplacedOrDeletedItem() )
 			return startError( functionNameString, NULL, "I am replaced or deleted" );
 
-		if( ( firstJustificationItem = firstJustificationItem_ ) == NULL )
-			return startError( functionNameString, NULL, "I have no justification items" );
+		if( isUserSpecification() )
+			return startError( functionNameString, NULL, "I am a user specification" );
 
-		if( hasCurrentCreationSentenceNr() )
-			{
-			hasCurrentlyCorrectedAssumptionByKnowledge = thisWordItem->hasCurrentlyCorrectedAssumptionByKnowledge();
+		if( primarySpecificationItem == NULL )
+			return startError( functionNameString, NULL, "The given primary specification item is undefined" );
 
-			if( changeFirstJustification( !hasCurrentlyCorrectedAssumptionByKnowledge, attachJustificationItem ) != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to change my first justification item" );
+		if( primarySpecificationItem == this )
+			return startError( functionNameString, NULL, "The given primary specification item is the same as me" );
 
-			if( !hasCurrentlyCorrectedAssumptionByKnowledge &&
-			attachJustificationItem->attachJustification( firstJustificationItem, this ) != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to attach the first justification item of myself to the given attached justification item" );
-			}
-		else
-			{
-			// Copy specification
-			if( ( createAndAssignResult = thisWordItem->copySpecificationItem( specificationCollectionNr_, attachJustificationItem, this ) ).result != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to copy myself with a different first justification item" );
+		if( additionalDefinitionSpecificationItem == this )
+			return startError( functionNameString, NULL, "The given additional definition specification item is the same as me" );
 
-			if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == NULL )
-				return startError( functionNameString, NULL, "I couldn't create a specification" );
+		if( secondarySpecificationItem == this )
+			return startError( functionNameString, NULL, "The given secondary specification item is the same as me" );
 
-			if( attachJustificationItem->attachJustification( firstJustificationItem, createdSpecificationItem ) != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to attach the first justification item of the created specification item, to the given attached justification item of the created specification item" );
+		// Create justification
+		if( ( justificationResult = myWordItem()->createJustificationItem( hasFeminineOrMasculineProperNounEnding, justificationTypeNr, NO_ORDER_NR, globalVariables()->currentSentenceNr, primarySpecificationItem, additionalDefinitionSpecificationItem, secondarySpecificationItem, NULL, NULL ) ).result != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to create a justification item to my word" );
 
-			if( thisWordItem->replaceOrDeleteSpecification( this, createdSpecificationItem ) != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to replace or delete a specification" );
-			}
+		if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == NULL )
+			return startError( functionNameString, NULL, "I couldn't create an additional justification" );
+
+		if( attachJustificationToSpecification( createdJustificationItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to attach the created justification to myself" );
 
 		return RESULT_OK;
 		}
 
-	signed char attachJustificationToSpecificationAdvanced( JustificationItem *attachJustificationItem )
+	signed char addUserSpecificationToSpanishJustifications( SpecificationItem *userSpecificationItem )
 		{
-		bool hasRelationContext = ( relationContextNr_ > NO_CONTEXT_NR );
-		bool isOlderSpecification = isOlderItem();
-		bool isPrimarySpecificationWordSpanishAmbiguous;
-		bool isSkippingUpdateJustification = false;
-		unsigned short highestOrderNr;
-		unsigned short justificationTypeNr;
-		unsigned short newAssumptionLevel;
-		unsigned short previousAssumptionLevel;
-		JustificationItem *attachedJustificationItem;
+		JustificationItem *currentJustificationItem = firstJustificationItem_;
+		SpecificationItem *selfGeneratedSpecificationItem;
+		WordItem *secondaryGeneralizationWordItem;
+		WordItem *_myWordItem = myWordItem();
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addUserSpecificationToSpanishJustifications";
+
+		if( userSpecificationItem == NULL )
+			return startError( functionNameString, NULL, "The given user specification item is undefined" );
+
+		if( specificationWordItem_ == NULL )
+			return startError( functionNameString, NULL, "I have no specification word item" );
+
+		do	{
+			if( ( secondaryGeneralizationWordItem = currentJustificationItem->secondaryGeneralizationWordItem() ) != NULL &&
+			( selfGeneratedSpecificationItem = secondaryGeneralizationWordItem->firstSelfGeneratedCheckSpecificationItem( false, true, false, !isPossessive_, true, specificationWordItem_, _myWordItem ) ) != NULL &&
+			!selfGeneratedSpecificationItem->hasPrimarySpecificationJustification( userSpecificationItem ) &&
+			// Add user specification reversible justification to Spanish primary specification
+			selfGeneratedSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, userSpecificationItem, NULL, NULL ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to add a user specification reversible justification to the primary specification" );
+
+			currentJustificationItem = currentJustificationItem->attachedJustificationItem();
+			}
+		while( currentJustificationItem != NULL );
+
+		return RESULT_OK;
+		}
+
+	signed char attachJustificationToSpecification( JustificationItem *attachJustificationItem )
+		{
+		bool _hasRelationContext = ( relationContextNr_ > NO_CONTEXT_NR );
+		bool _isQuestion = isQuestion();
 		JustificationItem *lastAttachedJustificationItem;
 		JustificationItem *obsoleteJustificationItem = NULL;
+		JustificationItem *originalFirstJustificationItem;
+		JustificationItem *tempJustificationItem;
 		SpecificationItem *attachedPrimarySpecificationItem;
 		SpecificationItem *attachedSecondarySpecificationItem;
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "attachJustificationToSpecificationAdvanced";
+		SpecificationItem *createdSpecificationItem;
+		WordItem *_myWordItem = myWordItem();
+		CreateAndAssignResultType createAndAssignResult;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "attachJustificationToSpecification";
 
 		if( attachJustificationItem == NULL )
 			return startError( functionNameString, NULL, "The given attached justification item is undefined" );
@@ -1526,125 +2191,82 @@ class SpecificationItem : private Item
 		if( firstJustificationItem_ == NULL )
 			return startError( functionNameString, NULL, "I have no justification items" );
 
-		isPrimarySpecificationWordSpanishAmbiguous = attachJustificationItem->isPrimarySpecificationWordSpanishAmbiguous();
-		justificationTypeNr = attachJustificationItem->justificationTypeNr();
-		attachedSecondarySpecificationItem = attachJustificationItem->secondarySpecificationItem();
-
 		if( ( attachedPrimarySpecificationItem = attachJustificationItem->primarySpecificationItem() ) != NULL &&
-
-		( ( !hasRelationContext &&
-		!isExclusiveSpecification_ &&
-		!attachedPrimarySpecificationItem->isExclusiveSpecification() &&
-
-		( attachedPrimarySpecificationItem->hasRelationContext() ||
-		!attachedPrimarySpecificationItem->isPossessive() ) ) ||
-
-		( ( ( isQuestion() &&
-		attachedPrimarySpecificationItem->isPossessive() ) ||
-
-		( !isPrimarySpecificationWordSpanishAmbiguous &&
-
-		( attachedPrimarySpecificationItem->isOlderItem()  ||
-
-		( attachedPrimarySpecificationItem->hasRelationContext() &&
-		justificationTypeNr != JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ) ) ) ) &&
-
-		!hasJustificationOfSameType( justificationTypeNr, attachedPrimarySpecificationItem, attachedSecondarySpecificationItem ) ) ) )
-			{
-			if( ( highestOrderNr = highestAttachedJustificationOrderNr( justificationTypeNr ) ) >= MAX_ORDER_NR )
-				return startSystemError( functionNameString, NULL, "Justification order number overflow" );
-
-			attachJustificationItem->orderNr = ( highestOrderNr + 1 );
-			}
-
-		if( attachedPrimarySpecificationItem != NULL &&
 		!attachedPrimarySpecificationItem->isPossessive() &&
 		attachedPrimarySpecificationItem->hasRelationContext() )
 			obsoleteJustificationItem = firstJustificationItem_->primarySpecificationWithoutRelationContextJustificationItem( attachedPrimarySpecificationItem->specificationWordItem() );
 		else
 			{
 			// Typical for Spanish
-			if( attachedSecondarySpecificationItem != NULL &&
-			attachedSecondarySpecificationItem->isUserSpecification() &&
-				
-			( isQuestion() ||
-			isSpecificationWordSpanishAmbiguous() ) )
+			if( ( _isQuestion ||
+			isSpecificationWordSpanishAmbiguous() ) &&
+
+			( attachedSecondarySpecificationItem = attachJustificationItem->secondarySpecificationItem() ) != NULL &&
+			attachedSecondarySpecificationItem->hasCompoundSpecificationCollection() &&
+			!attachedSecondarySpecificationItem->isPossessive() &&
+			attachedSecondarySpecificationItem->isUserSpecification() )
 				obsoleteJustificationItem = firstJustificationItem_->obsoleteSpanishJustificationItem( attachedPrimarySpecificationItem, attachedSecondarySpecificationItem );
 			}
 
-		if( obsoleteJustificationItem != NULL )
-			{
-			if( obsoleteJustificationItem->isOlderItem() )
-				{
-				if( !hasRelationContext &&
-
-				( !isPrimarySpecificationWordSpanishAmbiguous ||
-
-				( attachedPrimarySpecificationItem != NULL &&
-				attachedPrimarySpecificationItem->hasAssumptionLevel() ) ) )
-					isSkippingUpdateJustification = true;
-				else
-					{
-					if( myWordItem()->replaceJustification( obsoleteJustificationItem, attachJustificationItem, this ) != RESULT_OK )
-						return addError( functionNameString, NULL, "I failed to replace the obsolete justification item" );
-					}
-				}
-			else
-				obsoleteJustificationItem = NULL;
-			}
+		if( _hasRelationContext &&
+		obsoleteJustificationItem != NULL &&
+		// Replace obsolete justification item
+		_myWordItem->replaceJustification( obsoleteJustificationItem, attachJustificationItem ) != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to replace the obsolete justification item" );
 
 		if( obsoleteJustificationItem == NULL )
 			{
 			// Find a justification item with current sentence number, but without attached justification item
 			lastAttachedJustificationItem = firstJustificationItem_;
 
-			while( ( attachedJustificationItem = lastAttachedJustificationItem->attachedJustificationItem() ) != NULL )
-				lastAttachedJustificationItem = attachedJustificationItem;
+			while( ( tempJustificationItem = lastAttachedJustificationItem->attachedJustificationItem() ) != NULL )
+				lastAttachedJustificationItem = tempJustificationItem;
 
 			if( lastAttachedJustificationItem->hasCurrentCreationSentenceNr() )
 				{
 				if( lastAttachedJustificationItem->attachJustification( attachJustificationItem, this ) != RESULT_OK )
 					return addError( functionNameString, NULL, "I failed to attach a justification item" );
 
-				if( ( !hasRelationContext ||
-				!isOlderSpecification ) &&
-
-				!isHiddenSpanishSpecification() )
-					{
-					previousAssumptionLevel = assumptionLevel();
-
-					if( calculateAssumptionLevel() != RESULT_OK )
-						return addError( functionNameString, NULL, "I failed to calculate the assumption level of the involved specification" );
-
-					if( ( !hasRelationContext &&
-					isOlderSpecification &&
-					!isPartOf_ &&
-					// Difference between recalculated assumption level and previous assumption level
-					( newAssumptionLevel = assumptionLevel() ) != previousAssumptionLevel &&
-
-					( previousAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ||
-					// Recalculated assumption level is higher than 'maybe'
-					// Skip writing meaningless adjustment (from 'maybe' to 'maybe')
-					newAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ) ) &&
-
-					// Write adjusted specification
-					myWordItem()->writeUpdatedSpecification( true, false, false, false, false, this ) != RESULT_OK )
-						return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
-					}
+				if( !_hasRelationContext &&
+				!isNegative_ &&
+				!_isQuestion &&
+				assumptionLevel_ > NO_ASSUMPTION_LEVEL &&
+				// Recalculate my assumption level
+				recalculateAssumptionLevel( false ) != RESULT_OK )
+					return addError( functionNameString, NULL, "I failed to recalculate my assumption level" );
 				}
 			else
 				{
-				if( !attachJustificationItem->hasAttachedJustification() &&
-				// Attach justification to specification
-				attachJustificationToSpecification( attachJustificationItem ) != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to attach the justification item" );
+				if( attachJustificationItem->attachedJustificationItem() != NULL )
+					return startError( functionNameString, NULL, "The given attached justification has a justification attached" );
+
+				if( hasCurrentCreationSentenceNr() )
+					{
+					originalFirstJustificationItem = firstJustificationItem_;
+
+					if( changeFirstJustification( true, attachJustificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to change my first justification item" );
+
+					if( !_myWordItem->hasCurrentlyCorrectedAssumptionByKnowledge() &&
+					attachJustificationItem->attachJustification( originalFirstJustificationItem, this ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to attach the first justification item of myself to the given attached justification item" );
+					}
+				else
+					{
+					// Create copy of myself with different first justification item
+					if( ( createAndAssignResult = _myWordItem->createSpecificationItem( isAssignment(), isInactiveAssignment(), isArchivedAssignment(), isAnsweredQuestion_, isCharacteristicFor_, isConditional(), isCorrectedSpecification_, isEveryGeneralization_, isExclusiveGeneralization_, isExclusiveSpecification_, isNegative_, isPartOf_, isPossessive_, isSpecific_, isSpecificationGeneralization_, isUncountableGeneralizationNoun_, isUniqueUserRelation_, isValueSpecification_, assignmentLevel_, assumptionLevel_, languageNr(), prepositionParameter(), questionParameter(), generalizationWordTypeNr(), specificationWordTypeNr(), relationWordTypeNr(), specificationCollectionNr_, generalizationContextNr_, specificationContextNr_, relationContextNr_, originalSentenceNr(), activeSentenceNr(), inactiveSentenceNr(), archivedSentenceNr(), nContextRelations_, attachJustificationItem, specificationWordItem_, specificationString_, storedSentenceString_, storedSentenceWithOnlyOneSpecificationString_ ) ).result != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to create a copy of myself with a different first justification item" );
+
+					if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == NULL )
+						return startError( functionNameString, NULL, "I couldn't create a specification" );
+
+					if( attachJustificationItem->attachJustification( firstJustificationItem_, createdSpecificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to attach the first justification item of the created specification item, to the given attached justification item of the created specification item" );
+
+					if( _myWordItem->replaceOrDeleteSpecification( this, createdSpecificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to replace or delete a specification" );
+					}
 				}
-			}
-		else
-			{
-			if( !isSkippingUpdateJustification &&
-			myWordItem()->updateJustificationInSpecifications( false, obsoleteJustificationItem, attachJustificationItem ) != RESULT_OK )
-				return addError( functionNameString, NULL, "I failed to update a question justification item by a conclusion justification item" );
 			}
 
 		return RESULT_OK;
@@ -1652,207 +2274,154 @@ class SpecificationItem : private Item
 
 	signed char calculateAssumptionLevel()
 		{
-		bool isSpanishCurrentLanguage;
+		bool hasFoundReversibleAssumptionOrConclusion;
+		bool _hasRelationContext = ( relationContextNr_ > NO_CONTEXT_NR );
+		bool isCheckingRelationWords;
+		bool isBlockingHighestAssumptionLevel;
+		bool isForcingHighestAssumptionLevel;
+		bool isOlderSpecification = isOlderItem();
+		bool isReversibleAssumptionOrConclusion;
 		bool _isSpecificationWordSpanishAmbiguous = false;
 		unsigned short highestAssumptionLevel;
 		unsigned short lowestAssumptionLevel = MAX_LEVEL;
 		unsigned int nJustificationRelationWords;
 		unsigned int nRelationWords;
-		unsigned int tempAssumptionLevel;
-		JustificationItem *currentJustificationItem;
-		JustificationItem *nextJustificationItem = firstJustificationItem_;
-		ShortResultType shortResult;
+		unsigned int justificationAssumptionLevel;
+		JustificationItem *currentJustificationItem = firstJustificationItem_;
+		JustificationItem *searchJustificationItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "calculateAssumptionLevel";
 
-		if( !isSpecificationGeneralization_ &&
-		isSelfGeneratedAssumption() )
+		if( isSpecificationGeneralization_ )
+			return startError( functionNameString, NULL, "I am a specification-generalization" );
+
+		if( questionParameter_ > NO_QUESTION_PARAMETER )
+			return startError( functionNameString, NULL, "I am a question" );
+
+		if( firstJustificationItem_ == NULL )
+			return startError( functionNameString, NULL, "I am a user specification" );
+
+		if( assumptionLevel_ > NO_ASSUMPTION_LEVEL ||
+
+		( ( _hasRelationContext ||
+		!isOlderSpecification ||
+		!hasCurrentCreationSentenceNr() ) &&
+
+		hasAtLeastOneAssumptionJustification() ) )
 			{
-			isSpanishCurrentLanguage = myWordItem()->isSpanishCurrentLanguage();
-
-			if( isSpanishCurrentLanguage )
-				_isSpecificationWordSpanishAmbiguous = isSpecificationWordSpanishAmbiguous();
-
+			hasFoundReversibleAssumptionOrConclusion = ( firstJustificationItem( JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) != NULL );
+			_isSpecificationWordSpanishAmbiguous = isSpecificationWordSpanishAmbiguous();
 			nRelationWords = nRelationContextWords();
 
 			do	{
+				isCheckingRelationWords = true;
+				isBlockingHighestAssumptionLevel = false;
+				isForcingHighestAssumptionLevel = false;
 				highestAssumptionLevel = NO_ASSUMPTION_LEVEL;
 				nJustificationRelationWords = 0;
+				searchJustificationItem = currentJustificationItem;
 
-				if( ( currentJustificationItem = nextJustificationItem ) != NULL )
-					{
-					do	{
-						nJustificationRelationWords += currentJustificationItem->nJustificationContextRelations( relationContextNr_, nRelationWords );
+				do	{
+					if( _hasRelationContext )
+						nJustificationRelationWords += searchJustificationItem->nJustificationContextRelations( relationContextNr_, nRelationWords );
 
-						if( currentJustificationItem->isAssumptionJustification() )
+					// Calculate assumption level
+					if( ( justificationAssumptionLevel = searchJustificationItem->justificationAssumptionLevel() ) > MAX_LEVEL )
+						return startSystemError( functionNameString, NULL, "Assumption level overflow" );
+
+					if( isCheckingRelationWords )
+						{
+						if( justificationAssumptionLevel > highestAssumptionLevel )
 							{
-							if( ( shortResult = currentJustificationItem->getCombinedAssumptionLevel() ).result != RESULT_OK )
-								return addError( functionNameString, NULL, "I failed to get the combined assumption level" );
-
-							// Add combined assumption level and justification grade
-							if( ( tempAssumptionLevel = ( shortResult.shortValue + currentJustificationItem->justificationAssumptionGrade() ) ) > highestAssumptionLevel )
+							if( hasFoundReversibleAssumptionOrConclusion &&
+							justificationAssumptionLevel > assumptionLevel_ )
 								{
-								if( tempAssumptionLevel >= MAX_LEVEL )
-									return startSystemError( functionNameString, NULL, "Assumption level overflow" );
+								isReversibleAssumptionOrConclusion = searchJustificationItem->isReversibleAssumptionOrConclusion();
 
-								highestAssumptionLevel = (unsigned short)tempAssumptionLevel;
+								// Opposite possessive specification assumption, or Exclusive specification substitution assumption
+								if( ( !isReversibleAssumptionOrConclusion &&
+								isOlderSpecification &&
+
+								( assumptionLevel_ == NO_ASSUMPTION_LEVEL ||
+								highestAssumptionLevel > NO_ASSUMPTION_LEVEL ||
+								searchJustificationItem->isExclusiveSpecificationSubstitutionAssumption() ) ) ||
+
+								// Reversible assumption
+								( isReversibleAssumptionOrConclusion &&
+								highestAssumptionLevel == NO_ASSUMPTION_LEVEL &&
+								// Typical for Spanish
+								!_isSpecificationWordSpanishAmbiguous &&
+								hasCompoundSpecificationCollection() ) )
+									isForcingHighestAssumptionLevel = true;
+								else
+									{
+									if( searchJustificationItem->isExclusiveSpecificationSubstitutionAssumption() )
+										isBlockingHighestAssumptionLevel = true;
+									}
 								}
+							else
+								{
+								// Typical for Spanish
+								// Spanish test file: "Complejo (19 - extraño)"
+								if( isOlderSpecification &&
+								justificationAssumptionLevel < assumptionLevel_ &&
+								searchJustificationItem->hasCurrentCreationSentenceNr() &&
+								searchJustificationItem->isExclusiveSpecificationSubstitutionAssumption() &&
+								searchJustificationItem->isPossessivePrimarySpecification() &&
+								searchJustificationItem->isOlderItem() )
+									isBlockingHighestAssumptionLevel = true;
+								}
+
+							highestAssumptionLevel = (unsigned short)justificationAssumptionLevel;
 							}
 						}
-					while( ( currentJustificationItem = currentJustificationItem->nextJustificationItemWithSameTypeAndOrderNr() ) != NULL );
+					else
+						{
+						if( justificationAssumptionLevel < highestAssumptionLevel )
+							highestAssumptionLevel = (unsigned short)justificationAssumptionLevel;
+						}
+
+					if( !_hasRelationContext )
+						isCheckingRelationWords = false;
 					}
+				while( ( searchJustificationItem = searchJustificationItem->nextJustificationItemWithSameTypeAndOrderNr() ) != NULL );
 
 				if( highestAssumptionLevel < lowestAssumptionLevel &&
 
-				( nJustificationRelationWords == nRelationWords ||
+				( isForcingHighestAssumptionLevel ||
 
-				( highestAssumptionLevel <= assumptionLevel_ &&
-				nJustificationRelationWords > nRelationWords ) ) &&
+				( nJustificationRelationWords > nRelationWords &&
 
-				( !isSpanishCurrentLanguage ||
-				// Typical for Spanish
-				isNegative_ ||
+				// Test files: "Complex (18)", "Complex (19 - mixed)" and "Complex (19 - strange)"
+				( !hasFoundReversibleAssumptionOrConclusion ||
+				highestAssumptionLevel <= assumptionLevel_ ) ) ||
+
+				( !isBlockingHighestAssumptionLevel &&
+				nJustificationRelationWords == nRelationWords &&
+
+				( isNegative_ ||
 				// No assumption level
 				assumptionLevel_ == NO_ASSUMPTION_LEVEL ||
 
 				// First set of justifications
-				( lowestAssumptionLevel == MAX_LEVEL &&
-				highestAssumptionLevel == NO_ASSUMPTION_LEVEL ) ||
+				( ( lowestAssumptionLevel == MAX_LEVEL &&
+				highestAssumptionLevel < assumptionLevel_ ) ||
 
 				// Assumption level
 				( !_isSpecificationWordSpanishAmbiguous &&
-				assumptionLevel_ + 2 > highestAssumptionLevel ) ) )
+				assumptionLevel_ + 2 > highestAssumptionLevel ) ) ) ) ) )
 					lowestAssumptionLevel = highestAssumptionLevel;
 				}
-			while( ( nextJustificationItem = nextJustificationItem->nextJustificationItemWithDifferentTypeOrOrderNr( firstJustificationItem_ ) ) != NULL );
+			while( ( currentJustificationItem = currentJustificationItem->nextJustificationItemWithDifferentTypeOrOrderNr( firstJustificationItem_ ) ) != NULL );
 
 			if( lowestAssumptionLevel < MAX_LEVEL &&
 			// Assumption level has changed
-			lowestAssumptionLevel != assumptionLevel_ &&
-
-			( lowestAssumptionLevel > NO_ASSUMPTION_LEVEL ||
-			isOlderItem() ) )
+			lowestAssumptionLevel != assumptionLevel_ )
 				{
 				assumptionLevel_ = lowestAssumptionLevel;
 
-				if( assumptionLevel_ > NO_ASSUMPTION_LEVEL &&
-				isOlderItem() )
-					// Clear stored sentence buffer to lose the previous assumption level word
-					clearStoredSentenceString();
+				// Clear stored sentence buffer to lose the previous assumption level word
+				clearStoredSentenceString();
 				}
-			}
-
-		return RESULT_OK;
-		}
-
-	signed char changeFirstJustification( bool isCheckingForDuplicates, JustificationItem *replacingJustificationItem )
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeFirstJustification";
-
-		if( replacingJustificationItem == NULL )
-			return startError( functionNameString, NULL, "The given replacing justification item is undefined" );
-
-		if( !replacingJustificationItem->isActiveItem() )
-			return startError( functionNameString, NULL, "The given replacing justification item isn't active" );
-
-		if( !hasCurrentCreationSentenceNr() )
-			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
-
-		if( isCheckingForDuplicates &&
-		checkJustification( replacingJustificationItem ) != RESULT_OK )
-			return addError( functionNameString, NULL, "I failed to check the given replacing justification item" );
-
-		firstJustificationItem_ = replacingJustificationItem;
-
-		return RESULT_OK;
-		}
-
-	signed char checkForDeletedJustification()
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-		char errorString[ERROR_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForDeletedJustification";
-
-		while( searchJustificationItem != NULL &&
-		!globalVariables()->hasDisplayedIntegrityWarning )
-			{
-			if( searchJustificationItem->isDeletedItem() )
-				{
-				strcpy( errorString, "\nI found a deleted justification item in a replaced specification item:\n\tSpecificationItem: " );
-				// The result of this call is stored in a shared string. Hence, one call at the time.
-				strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
-				strcat( errorString, ";\n\tJustificationItem: " );
-				// The result of this call is stored in a shared string. Hence, one call at the time.
-				strcat( errorString, searchJustificationItem->itemToString( NO_WORD_TYPE_NR ) );
-				strcat( errorString, ".\n" );
-
-				if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
-					return startError( functionNameString, NULL, "I failed to write an interface warning" );
-				}
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-			}
-
-		return RESULT_OK;
-		}
-
-	signed char checkForReplacedOrDeletedJustification()
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-		char errorString[ERROR_STRING_LENGTH];
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkForReplacedOrDeletedJustification";
-
-		while( searchJustificationItem != NULL &&
-		!globalVariables()->hasDisplayedIntegrityWarning )
-			{
-			if( searchJustificationItem->isReplacedOrDeletedItem() )
-				{
-				strcpy( errorString, "\nI found a replaced or deleted justification item:\n\tSpecificationItem: " );
-				// The result of this call is stored in a shared string. Hence, one call at the time.
-				strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
-				strcat( errorString, ";\n\tJustificationItem: " );
-				// The result of this call is stored in a shared string. Hence, one call at the time.
-				strcat( errorString, searchJustificationItem->itemToString( NO_WORD_TYPE_NR ) );
-				strcat( errorString, ".\n" );
-
-				if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
-					return startError( functionNameString, NULL, "I failed to write an interface warning" );
-				}
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-			}
-
-		return RESULT_OK;
-		}
-
-	signed char checkJustification( JustificationItem *referenceJustificationItem )
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-		SpecificationItem *referencePrimarySpecificationItem;
-		SpecificationItem *referenceAnotherPrimarySpecificationItem;
-		SpecificationItem *referenceSecondarySpecificationItem;
-		SpecificationItem *referenceAnotherSecondarySpecificationItem;
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkJustification";
-
-		if( referenceJustificationItem == NULL )
-			return startError( functionNameString, NULL, "The given reference justification item is undefined" );
-
-		if( searchJustificationItem == NULL )
-			return startError( functionNameString, NULL, "I have no justification items" );
-
-		referencePrimarySpecificationItem = referenceJustificationItem->primarySpecificationItem();
-		referenceAnotherPrimarySpecificationItem = referenceJustificationItem->anotherPrimarySpecificationItem();
-		referenceSecondarySpecificationItem = referenceJustificationItem->secondarySpecificationItem();
-		referenceAnotherSecondarySpecificationItem = referenceJustificationItem->anotherSecondarySpecificationItem();
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem == referenceJustificationItem )
-				return startError( functionNameString, NULL, "The given reference justification item is already one of my attached justification items" );
-
-			if( searchJustificationItem->hasJustification( referencePrimarySpecificationItem, referenceAnotherPrimarySpecificationItem, referenceSecondarySpecificationItem, referenceAnotherSecondarySpecificationItem ) )
-				return startError( functionNameString, NULL, "I already have a justificiation item like the given attached justification item" );
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
 			}
 
 		return RESULT_OK;
@@ -1908,26 +2477,9 @@ class SpecificationItem : private Item
 			isAnsweredQuestion_ = true;
 		else
 			{
-			if( myWordItem()->copyAndReplaceSpecificationItem( true, isExclusiveGeneralization_, isExclusiveSpecification_, generalizationCollectionNr_, specificationCollectionNr_, firstJustificationItem_, this ) != RESULT_OK )
+			if( myWordItem()->copyAndReplaceSpecification( true, isExclusiveGeneralization_, generalizationCollectionNr_, specificationCollectionNr_, firstJustificationItem_, this ).result != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to copy and replace myself as an answered question" );
 			}
-
-		return RESULT_OK;
-		}
-
-	signed char markAsConcludedAssumption()
-		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "markAsConcludedAssumption";
-
-		if( !isSelfGeneratedAssumption() &&
-		!myWordItem()->isUserRelationWord )
-			return startError( functionNameString, NULL, "I am not a self-generated assumption" );
-
-		isConcludedAssumption_ = true;
-		assumptionLevel_ = NO_ASSUMPTION_LEVEL;
-
-		// Clear stored sentence buffer to lose the uncertainty word written in the sentence
-		clearStoredSentenceString();
 
 		return RESULT_OK;
 		}
@@ -1947,85 +2499,234 @@ class SpecificationItem : private Item
 		return RESULT_OK;
 		}
 
-	signed char recalculateAssumption()
+	signed char recalculateAssumptionLevel( bool isSituationStable )
 		{
-		bool hasRelationContext = ( relationContextNr_ > NO_CONTEXT_NR );
-		bool isAdjustedSpecification = false;
+		bool isOlderSpecification = isOlderItem();
 		unsigned short previousAssumptionLevel = assumptionLevel_;
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "recalculateAssumption";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "recalculateAssumptionLevel";
 
+		// Calculate assumption level
 		if( calculateAssumptionLevel() != RESULT_OK )
-			return addError( functionNameString, NULL, "I failed to recalculate my assumption level" );
+			return addError( functionNameString, NULL, "I failed to calculate my assumption level" );
 
-		if( isOlderItem() &&
-
-		( assumptionLevel_ != previousAssumptionLevel ||
-		// Typical for Spanish
-		assumptionLevel_ == NO_ASSUMPTION_LEVEL ) &&
-
-		// Avoid updates of high uncertainty mapping,
-		// from 'maybe' of one level to 'maybe' of another level
-		( previousAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ||
-		assumptionLevel_ < NUMBER_OF_ASSUMPTION_LEVELS ) )
+		if( hasCurrentCreationSentenceNr() )
 			{
-			if( assumptionLevel_ == NO_ASSUMPTION_LEVEL )
-				{
-				if( markAsConcludedAssumption() != RESULT_OK )
-					return addError( functionNameString, NULL, "After recalculation, I failed to mark myself as a concluded assumption" );
+			// Older specification
+			if( ( isOlderSpecification ||
 
-				if( ( !hasRelationContext &&
-				previousAssumptionLevel > NO_ASSUMPTION_LEVEL ) ||
+			// Not older specification
+			( isSituationStable &&
 
-				( isPossessive_ &&
-				assumptionLevel_ != previousAssumptionLevel ) )
-					isAdjustedSpecification = true;
-				}
-			else
-				{
-				if( ( !isPossessive_ &&
-				previousAssumptionLevel > NO_ASSUMPTION_LEVEL ) ||
+			( ( isPartOf_ &&
+			previousAssumptionLevel == assumptionLevel_ ) ||
 
-				( hasRelationContext &&
-				hasCompoundSpecificationCollection() &&
-				!isSpecificationWordSpanishAmbiguous() ) )
-					isAdjustedSpecification = true;
-				}
+			( relationContextNr_ > NO_CONTEXT_NR &&
+			hasNonCompoundSpecificationCollection() ) ) &&
 
-			if( isAdjustedSpecification )
-				{
-				if( isNegative_ &&
-				assumptionLevel_ > NO_ASSUMPTION_LEVEL )
-					hasSpecificationBeenWrittenAsAdjustedNegativeAssumption_ = true;
+			( myWordItem()->isUserRelationWord ||
+			firstJustificationItem( JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) == NULL ) ) ) &&
 
-				// Write adjusted specification
-				if( myWordItem()->writeUpdatedSpecification( true, false, false, false, wasHiddenSpanishSpecification(), this ) != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to write an adjusted specification" );
+			// Remove obsolete assumption justifications
+			removeObsoleteAssumptionJustifications( isOlderSpecification, isSituationStable ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to remove obsolete assumption justifications from this assumption" );
 
-				if( specificationCollectionNr_ > NO_COLLECTION_NR )
-					{
-					if( hasRelationContext )
-						{
-						if( recalculateAssumptionsInContextWords( relationContextNr_, specificationWordItem_ ) != RESULT_OK )
-							return addError( functionNameString, NULL, "I failed to recalculate the assumptions of words with my relation context" );
-						}
-					else
-						{
-						if( myWordItem()->recalculateAssumptionsInWord() != RESULT_OK )
-							return addError( functionNameString, NULL, "I failed to recalculate the assumptions of my word" );
-						}
-					}
-				}
+			if( isOlderSpecification &&
+			assumptionLevel_ != previousAssumptionLevel &&
+			// Process changed assumption level
+			processChangedAssumption( previousAssumptionLevel ) != RESULT_OK )
+				return addError( functionNameString, NULL, "I failed to process the changed assumption level" );
 			}
 
 		return RESULT_OK;
 		}
 
-	signed char writeSpecificationConflict( bool isQuestion )
+	signed char removeObsoleteAssumptionJustifications( bool isOnlySelectingOlderJustifications, bool isSituationStable )
+		{
+		bool hasChanged = false;
+		bool hasConfirmedAnySpecification = globalVariables()->hasConfirmedAnySpecification;
+		bool _hasRelationContext = ( relationContextNr_ > NO_CONTEXT_NR );
+		bool isIncludingNegativeAssumptionOrConclusion;
+		bool isIncludingReversibleAssumptionOrConclusion;
+		bool isIncludingSpecificationSubstitutionAssumptionOrConclusion;
+		JustificationItem *attachedJustificationItem;
+		JustificationItem *createdJustificationItem;
+		JustificationItem *currentJustificationItem = firstJustificationItem_;
+		JustificationItem *previousJustificationItem = NULL;
+		JustificationItem *previousPreviousJustificationItem = NULL;
+		SpecificationItem *userAssignmentItem;
+		WordItem *_myWordItem = myWordItem();
+		JustificationResultType justificationResult;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "removeObsoleteAssumptionJustifications";
+
+		if( questionParameter_ > NO_QUESTION_PARAMETER )
+			return startError( functionNameString, NULL, "I am a question" );
+
+		if( firstJustificationItem_ == NULL )
+			return startError( functionNameString, NULL, "I am a user specification" );
+
+		if( !hasCurrentCreationSentenceNr() )
+			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
+
+		isIncludingNegativeAssumptionOrConclusion = ( assumptionLevel_ == NO_ASSUMPTION_LEVEL ||
+
+													// Test file: "Complex (13)"
+													( !hasConfirmedAnySpecification &&
+													// Typical for Spanish
+													// Spanish test file: "Complejo (13)"
+													firstJustificationItem_->justificationAssumptionLevel() == assumptionLevel_ ) );
+
+		isIncludingReversibleAssumptionOrConclusion = ( isSituationStable ||
+														!hasNewInformation() ||
+														// Typical for Spanish
+														isHiddenSpanishSpecification() );
+
+		isIncludingSpecificationSubstitutionAssumptionOrConclusion = ( !hasConfirmedAnySpecification ||
+																		assumptionLevel_ == NO_ASSUMPTION_LEVEL ||
+
+																		( isSituationStable &&
+																		specificationCollectionNr_ == NO_COLLECTION_NR ) );
+
+		do	{
+			if( currentJustificationItem->isObsoleteAssumptionJustification( isIncludingNegativeAssumptionOrConclusion, isIncludingReversibleAssumptionOrConclusion, isIncludingSpecificationSubstitutionAssumptionOrConclusion, isOnlySelectingOlderJustifications, assumptionLevel_ ) )
+				{
+				attachedJustificationItem = currentJustificationItem->attachedJustificationItem();
+
+				if( previousJustificationItem == NULL ||
+				previousJustificationItem->hasCurrentCreationSentenceNr() )
+					{
+					if( currentJustificationItem->hasCurrentCreationSentenceNr() )
+						{
+						// Disconnect current justification item
+						if( currentJustificationItem->changeAttachedJustification( NULL ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to change the attached justification item of the current justification item" );
+						}
+					else
+						{
+						// Replace current justification
+						if( _myWordItem->replaceOrDeleteJustification( currentJustificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to replace the current justification item" );
+						}
+
+					if( previousJustificationItem == NULL )
+						{
+						if( attachedJustificationItem != NULL &&
+						// Change first justification item
+						changeFirstJustification( !currentJustificationItem->isReplacedItem(), attachedJustificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to change my first justification item" );
+						}
+					else
+						{
+						// Remove current justification item
+						if( previousJustificationItem->changeAttachedJustification( attachedJustificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to change the attached justification item of the previous justification item" );
+						}
+
+					hasChanged = true;
+					currentJustificationItem = attachedJustificationItem;
+					}
+				else
+					{
+					if( previousPreviousJustificationItem == NULL ||
+					previousPreviousJustificationItem->hasCurrentCreationSentenceNr() )
+						{
+						// Copy previous justification
+						if( ( justificationResult = _myWordItem->copyJustificationItem( previousJustificationItem->primarySpecificationItem(), previousJustificationItem->secondarySpecificationItem(), attachedJustificationItem, previousJustificationItem ) ).result != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to copy the previous justification item" );
+
+						if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == NULL )
+							return startError( functionNameString, NULL, "The created justification item is undefined" );
+
+						if( previousPreviousJustificationItem == NULL )
+							{
+							// Change first justification item to created justification
+							if( changeFirstJustification( true, createdJustificationItem ) != RESULT_OK )
+								return addError( functionNameString, NULL, "I failed to change my first justification item to the created justification" );
+							}
+						else
+							{
+							// Change attached justification item of previous previous justification to created justification
+							if( previousPreviousJustificationItem->changeAttachedJustification( createdJustificationItem ) != RESULT_OK )
+								return addError( functionNameString, NULL, "I failed to change the attached justification item of the previous previous justification item to the created justification" );
+							}
+
+						// Replace previous justification
+						if( _myWordItem->replaceOrDeleteJustification( previousJustificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to replace the previous justification item" );
+
+						// Replace current justification
+						if( _myWordItem->replaceOrDeleteJustification( currentJustificationItem ) != RESULT_OK )
+							return addError( functionNameString, NULL, "I failed to replace the current justification item" );
+
+						hasChanged = true;
+						// Reset variables
+						previousPreviousJustificationItem = NULL;
+						previousJustificationItem = NULL;
+						currentJustificationItem = firstJustificationItem_;
+						}
+					else
+						{
+						previousPreviousJustificationItem = previousJustificationItem;
+						previousJustificationItem = currentJustificationItem;
+						currentJustificationItem = currentJustificationItem->attachedJustificationItem();
+						}
+					}
+				}
+			else
+				{
+				if( _hasRelationContext &&
+				!hasAdjustedSpecificationBeenWritten &&
+				!isIncludingNegativeAssumptionOrConclusion &&
+				!isIncludingReversibleAssumptionOrConclusion &&
+				currentJustificationItem->isSpecificationSubstitutionAssumptionOrConclusion() &&
+				!currentJustificationItem->hasPrimarySpecificationRelationContext() &&
+				( userAssignmentItem = _myWordItem->firstAssignmentItem( false, false, NO_CONTEXT_NR, currentJustificationItem->primarySpecificationWordItem() ) ) != NULL )
+					{
+					// Copy current justification
+					if( ( justificationResult = _myWordItem->copyJustificationItem( userAssignmentItem, currentJustificationItem->secondarySpecificationItem(), currentJustificationItem->attachedJustificationItem(), currentJustificationItem ) ).result != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to copy the previous justification item" );
+
+					if( ( createdJustificationItem = justificationResult.createdJustificationItem ) == NULL )
+						return startError( functionNameString, NULL, "The created justification item is undefined" );
+
+					// Replace specification without relation context, by assignment specification
+					if( _myWordItem->replaceJustification( currentJustificationItem, createdJustificationItem ) != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to replace a specification without relation context, by an assignment specification" );
+
+					// Start from scratch
+					previousPreviousJustificationItem = NULL;
+					previousJustificationItem = NULL;
+					currentJustificationItem = firstJustificationItem_;
+					}
+				else
+					{
+					previousPreviousJustificationItem = previousJustificationItem;
+					previousJustificationItem = currentJustificationItem;
+					currentJustificationItem = currentJustificationItem->attachedJustificationItem();
+					}
+				}
+			}
+		while( currentJustificationItem != NULL );
+
+		if( ( hasChanged ||
+
+		// Typical for Spanish
+		// Spanish test file: "Complejo (12)"
+		( isOnlySelectingOlderJustifications &&
+		isPossessive_ ) ) &&
+
+		// (Re)calculate assumption level
+		calculateAssumptionLevel() != RESULT_OK )
+			return addError( functionNameString, NULL, "I failed to (re)calculate my assumption level" );
+
+		return RESULT_OK;
+		}
+
+	signed char writeSpecificationConflict( bool isQuestion, bool isWritingCurrentSpecificationWordOnly )
 		{
 		char *writtenSentenceString;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeSpecificationConflict";
 
-		if( myWordItem()->writeSelectedSpecification( false, false, this ) != RESULT_OK )
+		if( myWordItem()->writeSelectedSpecification( false, isWritingCurrentSpecificationWordOnly, this ) != RESULT_OK )
 			return addError( functionNameString, NULL, "I failed to write the conflicting specification" );
 
 		if( ( writtenSentenceString = globalVariables()->writtenSentenceString ) == NULL ||
@@ -2037,8 +2738,6 @@ class SpecificationItem : private Item
 
 		if( inputOutput()->writeText( INPUT_OUTPUT_PROMPT_WRITE, writtenSentenceString, globalVariables()->learnedFromUserString ) != RESULT_OK )
 			return addError( functionNameString, NULL, "I failed to write the conflict sentence" );
-
-		hasSpecificationBeenWrittenAsConflict_ = true;
 
 		return RESULT_OK;
 		}
@@ -2069,132 +2768,18 @@ class SpecificationItem : private Item
 		return storedSentenceWithOnlyOneSpecificationString_;
 		}
 
-	JustificationItem *differentAssumptionLevelSpecificationSubstitutionJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem )
-		{
-		unsigned short primaryAssumptionLevel;
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		if( primarySpecificationItem != NULL &&
-		secondarySpecificationItem != NULL )
-			{
-			primaryAssumptionLevel = primarySpecificationItem->assumptionLevel();
-
-			while( searchJustificationItem != NULL )
-				{
-				if( searchJustificationItem->isSpecificationSubstitutionAssumption() &&
-				searchJustificationItem->isOlderItem() &&
-				searchJustificationItem->primarySpecificationAssumptionLevel() != primaryAssumptionLevel &&
-				searchJustificationItem->secondarySpecificationItem() == secondarySpecificationItem )
-					return searchJustificationItem;
-
-				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-				}
-			}
-
-		return NULL;
-		}
-
 	JustificationItem *firstJustificationItem()
 		{
 		return firstJustificationItem_;
 		}
 
-	JustificationItem *firstJustificationItem( unsigned short justificationTypeNr )
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem->justificationTypeNr() == justificationTypeNr )
-				return searchJustificationItem;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-			}
-
-		return NULL;
-		}
-
-	JustificationItem *firstOlderJustificationItem( unsigned short justificationTypeNr )
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem->isOlderItem() &&
-			searchJustificationItem->justificationTypeNr() == justificationTypeNr )
-				return searchJustificationItem;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-			}
-
-		return NULL;
-		}
-
-	JustificationItem *firstOlderJustificationItem( unsigned short justificationTypeNr, WordItem *secondaryGeneralizationWordItem )
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		if( secondaryGeneralizationWordItem != NULL )
-			{
-			while( searchJustificationItem != NULL )
-				{
-				if( searchJustificationItem->isOlderItem() &&
-				searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
-				searchJustificationItem->secondaryGeneralizationWordItem() == secondaryGeneralizationWordItem )
-					return searchJustificationItem;
-
-				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-				}
-			}
-
-		return NULL;
-		}
-
-	JustificationItem *primaryOrSecondarySpecificationJustificationItem( SpecificationItem *primaryOrSecondarySpecificationItem )
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		if( primaryOrSecondarySpecificationItem != NULL )
-			{
-			while( searchJustificationItem != NULL )
-				{
-				if( searchJustificationItem->primarySpecificationItem() == primaryOrSecondarySpecificationItem ||
-				searchJustificationItem->secondarySpecificationItem() == primaryOrSecondarySpecificationItem )
-					return searchJustificationItem;
-
-				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-				}
-			}
-
-		return NULL;
-		}
-
-	JustificationItem *secondarySpecificationJustificationItem( SpecificationItem *secondarySpecificationItem )
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		if( secondarySpecificationItem != NULL )
-			{
-			while( searchJustificationItem != NULL )
-				{
-				if( searchJustificationItem->secondarySpecificationItem() == secondarySpecificationItem )
-					return searchJustificationItem;
-
-				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-				}
-			}
-
-		return NULL;
-		}
-
-	SpecificationItem *exclusiveSpecificationItem( bool isIncludingThisItem )
+	SpecificationItem *candidateForQuestionSpecificationItem( bool isAllowingSpanishPossessiveSpecification, bool isIncludingThisItem )
 		{
 		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
 
 		while( searchSpecificationItem != NULL )
 			{
-			if( searchSpecificationItem->isExclusiveSpecification() &&
-			!searchSpecificationItem->isNegative() )
+			if( searchSpecificationItem->isCandidateForQuestion( isAllowingSpanishPossessiveSpecification ) )
 				return searchSpecificationItem;
 
 			searchSpecificationItem = searchSpecificationItem->nextSpecificationItem();
@@ -2203,18 +2788,71 @@ class SpecificationItem : private Item
 		return NULL;
 		}
 
-	SpecificationItem *nonPossessiveDefinitionSpecificationItem( bool isIncludingAdjectives, bool isIncludingThisItem )
+	SpecificationItem *exclusiveSpecificationItem( bool isIncludingAdjectives, bool isIncludingThisItem )
 		{
 		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
 
 		while( searchSpecificationItem != NULL )
 			{
-			if( !searchSpecificationItem->isPossessive() &&
+			if( searchSpecificationItem->isExclusiveSpecification() &&
+			!searchSpecificationItem->isAnsweredQuestion() &&
 
 			( isIncludingAdjectives ||
-			searchSpecificationItem->isSpecificationNoun() ) &&
+			!searchSpecificationItem->isSpecificationAdjective() ) )
+				return searchSpecificationItem;
 
+			searchSpecificationItem = searchSpecificationItem->nextSpecificationItem();
+			}
+
+		return NULL;
+		}
+
+	SpecificationItem *olderNonPossessiveNonQuestionSpecificationItem( bool isIncludingThisItem )
+		{
+		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
+
+		while( searchSpecificationItem != NULL )
+			{
+			if( searchSpecificationItem->isOlderItem() &&
+			!searchSpecificationItem->isPossessive() &&
+			!searchSpecificationItem->isQuestion() &&
+			searchSpecificationItem->hasSpecificationCollection() )
+				return searchSpecificationItem;
+
+			searchSpecificationItem = searchSpecificationItem->nextSpecificationItem();
+			}
+
+		return NULL;
+		}
+
+	SpecificationItem *nonNegativeNonPossessiveDefinitionSpecificationItem( bool isIncludingThisItem )
+		{
+		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
+
+		while( searchSpecificationItem != NULL )
+			{
+			if( !searchSpecificationItem->isNegative() &&
+			!searchSpecificationItem->isPossessive() &&
 			!searchSpecificationItem->isSpecificationGeneralization() )
+				return searchSpecificationItem;
+
+			searchSpecificationItem = searchSpecificationItem->nextSpecificationItem();
+			}
+
+		return NULL;
+		}
+
+	SpecificationItem *nonQuestionSpecificationItem( bool isAllowingEmptyRelationContext, bool isIncludingThisItem )
+		{
+		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
+
+		while( searchSpecificationItem != NULL )
+			{
+			if( ( isAllowingEmptyRelationContext ||
+			searchSpecificationItem->hasRelationContext() ) &&
+
+			!searchSpecificationItem->isQuestion() &&
+			!searchSpecificationItem->isHiddenSpanishSpecification() )
 				return searchSpecificationItem;
 
 			searchSpecificationItem = searchSpecificationItem->nextSpecificationItem();
@@ -2231,38 +2869,6 @@ class SpecificationItem : private Item
 			{
 			if( searchSpecificationItem->isPossessive() &&
 			searchSpecificationItem->hasSpecificationCollection() )
-				return searchSpecificationItem;
-
-			searchSpecificationItem = searchSpecificationItem->nextSpecificationItem();
-			}
-
-		return NULL;
-		}
-
-	SpecificationItem *primarySpecificationCandidateOfQuestionSpecificationItem( bool isAllowingSpanishPossessiveSpecification, bool isIncludingThisItem )
-		{
-		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
-
-		while( searchSpecificationItem != NULL )
-			{
-			if( searchSpecificationItem->isPrimarySpecificationCandidateOfQuestion( isAllowingSpanishPossessiveSpecification ) )
-				return searchSpecificationItem;
-
-			searchSpecificationItem = searchSpecificationItem->nextSpecificationItem();
-			}
-
-		return NULL;
-		}
-
-	SpecificationItem *selectedRelationSpecificationItem( bool isIncludingThisItem )
-		{
-		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
-
-		while( searchSpecificationItem != NULL )
-			{
-			if( searchSpecificationItem->hasRelationContext() &&
-			!searchSpecificationItem->isQuestion() &&
-			!searchSpecificationItem->isHiddenSpanishSpecification() )
 				return searchSpecificationItem;
 
 			searchSpecificationItem = searchSpecificationItem->nextSpecificationItem();
@@ -2319,19 +2925,39 @@ class SpecificationItem : private Item
 		return NULL;
 		}
 
-	SpecificationItem *nextExclusiveNounSpecificationItem()
+	SpecificationItem *negativeSpecificationItem( bool isIncludingThisItem )
 		{
-		return exclusiveSpecificationItem( false );
+		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ? this : nextSpecificationItem() );
+
+		while( searchSpecificationItem != NULL )
+			{
+			if( searchSpecificationItem->isNegative() )
+				return searchSpecificationItem;
+
+			searchSpecificationItem = searchSpecificationItem->nextSpecificationItem();
+			}
+
+		return NULL;
 		}
 
-	SpecificationItem *nextExclusiveSpecificationItem()
+	SpecificationItem *nextExclusiveSpecificationItem( bool isIncludingAdjectives )
 		{
-		return exclusiveSpecificationItem( false );
+		return exclusiveSpecificationItem( isIncludingAdjectives, false );
 		}
 
-	SpecificationItem *nextNonPossessiveDefinitionSpecificationItem( bool isIncludingAdjectives )
+	SpecificationItem *nextOlderNonPossessiveNonQuestionSpecificationItem()
 		{
-		return nonPossessiveDefinitionSpecificationItem( isIncludingAdjectives, false );
+		return olderNonPossessiveNonQuestionSpecificationItem( false );
+		}
+
+	SpecificationItem *nextNegativeSpecificationItem()
+		{
+		return negativeSpecificationItem( false );
+		}
+
+	SpecificationItem *nextNonNegativeNonPossessiveDefinitionSpecificationItem()
+		{
+		return nonNegativeNonPossessiveDefinitionSpecificationItem( false );
 		}
 
 	SpecificationItem *nextPossessiveSpecificationItem()
@@ -2339,50 +2965,37 @@ class SpecificationItem : private Item
 		return possessiveSpecificationItem( false );
 		}
 
-	SpecificationItem *nextPrimarySpecificationCandidateOfQuestionSpecificationItem( bool isAllowingSpanishPossessiveSpecification )
+	SpecificationItem *nextCandidateForQuestionSpecificationItem( bool isAllowingSpanishPossessiveSpecification )
 		{
-		return primarySpecificationCandidateOfQuestionSpecificationItem( isAllowingSpanishPossessiveSpecification, false );
+		return candidateForQuestionSpecificationItem( isAllowingSpanishPossessiveSpecification, false );
 		}
 
-	SpecificationItem *nextSelectedRelationSpecificationItem()
+	SpecificationItem *nextNonQuestionNonRelationSpecificationItem()
 		{
-		return selectedRelationSpecificationItem( false );
+		return nonQuestionSpecificationItem( false, false );
 		}
 
 	SpecificationItem *nextSelectedSpecificationItem()
 		{
-		return ( isAssignment() ? assignmentItem( false, false, isQuestion() ) : specificationItem( false, false, isQuestion() ) );
+		return ( isAssignment() ? assignmentItem( false, false, isQuestion() ) :
+									specificationItem( false, false, isQuestion() ) );
 		}
 
 	SpecificationItem *nextSelectedQuestionParameterSpecificationItem()
 		{
-		return ( isAssignment() ? assignmentItem( false, false, questionParameter_ ) : specificationItem( false, false, questionParameter_ ) );
+		return ( isAssignment() ? assignmentItem( false, false, questionParameter_ ) :
+									specificationItem( false, false, questionParameter_ ) );
 		}
 
 	SpecificationItem *nextSelectedQuestionParameterSpecificationItem( bool isIncludingAnsweredQuestions )
 		{
-		return ( isAssignment() ? assignmentItem( isIncludingAnsweredQuestions, false, questionParameter_ ) : specificationItem( isIncludingAnsweredQuestions, false, questionParameter_ ) );
+		return ( isAssignment() ? assignmentItem( isIncludingAnsweredQuestions, false, questionParameter_ ) :
+									specificationItem( isIncludingAnsweredQuestions, false, questionParameter_ ) );
 		}
 
 	SpecificationItem *nextSpecificationItem()
 		{
 		return (SpecificationItem *)nextItem;
-		}
-
-	SpecificationItem *recentlyAnsweredQuestionSpecificationItem( bool isIncludingThisItem )
-		{
-		SpecificationItem *searchSpecificationItem = specificationItem( true, isIncludingThisItem, questionParameter_ );
-
-		while( searchSpecificationItem != NULL )
-			{
-			if( searchSpecificationItem->hasCurrentCreationSentenceNr() &&
-			searchSpecificationItem->isAnsweredQuestion_ )
-				return searchSpecificationItem;
-
-			searchSpecificationItem = searchSpecificationItem->nextSelectedQuestionParameterSpecificationItem( true );
-			}
-
-		return NULL;
 		}
 
 	SpecificationItem *updatedSpecificationItem()
@@ -2416,6 +3029,44 @@ class SpecificationItem : private Item
 		return myWordItem();
 		}
 
+	WordItem *relatedSpecificationWordItem( bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool _isSelfGeneratedSpecification, unsigned short assumptionLevel, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr )
+		{
+		return ( isExclusiveSpecification_ == isExclusiveSpecification &&
+				isNegative_ == isNegative &&
+				isPossessive_ == isPossessive &&
+				isSelfGeneratedSpecification() == _isSelfGeneratedSpecification &&
+				specificationCollectionNr > NO_COLLECTION_NR &&
+				specificationCollectionNr_ == specificationCollectionNr &&
+				generalizationContextNr_ == generalizationContextNr &&
+				relationContextNr_ == relationContextNr &&
+
+				( assumptionLevel_ == assumptionLevel ||
+				questionParameter_ > NO_QUESTION_PARAMETER ) &&
+
+				( specificationWordTypeNr == NO_WORD_TYPE_NR ||
+				specificationWordTypeNr_ == specificationWordTypeNr ) ? specificationWordItem_ : NULL );
+		}
+
+	WordItem *relatedSpecificationWordItem( bool isCheckingRelationContext, bool isIgnoringExclusive, bool isIgnoringNegative, bool isExclusiveSpecification, bool isNegative, bool isPossessive, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr )
+		{
+		return ( isPossessive_ == isPossessive &&
+
+				( isIgnoringExclusive ||
+				isExclusiveSpecification_ == isExclusiveSpecification ) &&
+
+				( isIgnoringNegative ||
+				isNegative_ == isNegative ) &&
+
+				specificationCollectionNr_ == specificationCollectionNr &&
+				generalizationContextNr_ == generalizationContextNr &&
+				isMatchingWordType( specificationWordTypeNr_, specificationWordTypeNr ) &&
+
+				( relationContextNr_ == relationContextNr ||
+
+				( !isCheckingRelationContext &&
+				!isHiddenSpanishSpecification() ) ) ? specificationWordItem_ : NULL );
+		}
+
 	WordItem *singleRelationWordItem()
 		{
 		WordItem *firstRelationWordItem;
@@ -2424,42 +3075,6 @@ class SpecificationItem : private Item
 		return ( ( firstRelationWordItem = relationContextWordItemInContextWords( NULL ) ) != NULL &&
 				// No another relation word
 				relationContextWordItemInContextWords( firstRelationWordItem ) == NULL ? firstRelationWordItem : NULL );
-		}
-
-	WordItem *relatedSpecificationWordItem( bool isCheckingRelationContext, bool isIgnoringExclusive, bool isIgnoringNegative, bool isExclusiveSpecification, bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr )
-		{
-		return ( isPossessive_ == isPossessive &&
-				specificationCollectionNr_ == specificationCollectionNr &&
-				generalizationContextNr_ == generalizationContextNr &&
-
-				( isIgnoringExclusive ||
-				isExclusiveSpecification_ == isExclusiveSpecification ) &&
-
-				( isIgnoringNegative ||
-				isNegative_ == isNegative ) &&
-
-				( relationContextNr_ == relationContextNr ||
-
-				( !isCheckingRelationContext &&
-				!isHiddenSpanishSpecification() ) ) ? specificationWordItem_ : NULL );
-		}
-
-	WordItem *relatedSpecificationWordItem( bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGeneratedSpecification, unsigned short assumptionLevel, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr )
-		{
-		return ( isExclusiveSpecification_ == isExclusiveSpecification &&
-				isNegative_ == isNegative &&
-				isPossessive_ == isPossessive &&
-				isSelfGenerated() == isSelfGeneratedSpecification &&
-				specificationCollectionNr > NO_COLLECTION_NR &&
-				specificationCollectionNr_ == specificationCollectionNr &&
-				generalizationContextNr_ == generalizationContextNr &&
-				relationContextNr_ == relationContextNr &&
-
-				( assumptionLevel_ == assumptionLevel ||
-				isQuestion() ) &&
-
-				( specificationWordTypeNr == NO_WORD_TYPE_NR ||
-				specificationWordTypeNr_ == specificationWordTypeNr ) ? specificationWordItem_ : NULL );
 		}
 
 	WordItem *specificationWordItem()

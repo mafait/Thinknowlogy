@@ -1,10 +1,10 @@
 ﻿/*	Class:			ContextItem
  *	Parent class:	Item
- *	Purpose:		To store the context info of a word
- *	Version:		Thinknowlogy 2018r4 (New Science)
+ *	Purpose:		Storing the context info of a word
+ *	Version:		Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@ class ContextItem extends Item
 
 	// Protected virtual methods
 
+	@Override
 	protected void displayWordReferences( boolean isReturnQueryToPosition )
 		{
 		String wordString;
@@ -67,7 +68,7 @@ class ContextItem extends Item
 		( wordString = specificationWordItem_.wordTypeString( true, specificationWordTypeNr_ ) ) != null )
 			{
 			if( GlobalVariables.hasFoundQuery )
-				GlobalVariables.queryStringBuffer.append( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING );
+				GlobalVariables.queryStringBuffer.append( ( isReturnQueryToPosition ? Constants.NEW_LINE_STRING : Constants.QUERY_SEPARATOR_SPACE_STRING ) );
 
 			// Display status if not active
 			if( !isActiveItem() )
@@ -78,6 +79,7 @@ class ContextItem extends Item
 			}
 		}
 
+	@Override
 	protected boolean hasParameter( int queryParameter )
 		{
 		return ( contextNr_ == queryParameter ||
@@ -86,6 +88,7 @@ class ContextItem extends Item
 				contextNr_ > Constants.NO_CONTEXT_NR ) );
 		}
 
+	@Override
 	protected boolean hasReferenceItemById( int querySentenceNr, int queryItemNr )
 		{
 		return ( ( specificationWordItem_ == null ? false :
@@ -93,19 +96,21 @@ class ContextItem extends Item
 					( queryItemNr == Constants.NO_ITEM_NR ? true : specificationWordItem_.itemNr() == queryItemNr ) ) );
 		}
 
+	@Override
 	protected boolean hasWordType( short queryWordTypeNr )
 		{
 		return ( contextWordTypeNr_ == queryWordTypeNr ||
 				specificationWordTypeNr_ == queryWordTypeNr );
 		}
 
+	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem thisWordItem = myWordItem();
+		WordItem _myWordItem = myWordItem();
 		String wordString;
 		StringBuffer queryStringBuffer;
-		String contextWordTypeString = thisWordItem.wordTypeNameString( contextWordTypeNr_ );
-		String specificationWordTypeString = thisWordItem.wordTypeNameString( specificationWordTypeNr_ );
+		String contextWordTypeString = _myWordItem.wordTypeNameString( contextWordTypeNr_ );
+		String specificationWordTypeString = _myWordItem.wordTypeNameString( specificationWordTypeNr_ );
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
@@ -136,6 +141,7 @@ class ContextItem extends Item
 		return queryStringBuffer;
 		}
 
+	@Override
 	protected BoolResultType findMatchingWordReferenceString( String queryString )
 		{
 		if( specificationWordItem_ != null )
@@ -176,7 +182,7 @@ class ContextItem extends Item
 		{
 		return specificationWordItem_;
 		}
-	};
+	}
 
 /*************************************************************************
  *	"Enter his gates with thanksgiving;

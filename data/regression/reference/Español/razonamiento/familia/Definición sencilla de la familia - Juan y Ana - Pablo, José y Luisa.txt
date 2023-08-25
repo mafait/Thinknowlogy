@@ -1,12 +1,15 @@
 ﻿* 
+* Mis suposiciones:
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
 * Mis conclusiones:
 < Cada padre es una mujer o un hombre.
 < 
 * 
 * Mis conclusiones:
 < Juan es un hombre.
-< Juan no es una mujer.
-< Juan no es una madre.
 < Pablo tiene un padre, llamado Juan.
 < Pablo tiene una madre, llamada Ana.
 < José tiene un padre, llamado Juan.
@@ -14,33 +17,42 @@
 < Luisa tiene un padre, llamado Juan.
 < Luisa tiene una madre, llamada Ana.
 < Ana es una mujer.
-< Ana no es un hombre.
-< Ana no es un padre.
+* 
+* Mis suposiciones:
+< Juan no es probablemente una mujer.
+< Juan no es probablemente una madre.
+< Ana no es probablemente un hombre.
+< Ana no es probablemente un padre.
 < 
 * 
 * Mis conclusiones:
 < Juan es un hombre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
-< Juan no es una mujer. Porque:
+* 
+* Mis suposiciones:
+< Juan no es probablemente una mujer. Porque:
 <	- Juan es un padre.
 <	- Cada padre es una mujer o un hombre.
-< Juan no es una madre. Porque:
+<	- Juan es un hombre.
+< Juan no es probablemente una madre. Porque:
 <	- Juan es un padre.
-<	- Cada padre es un padre o una madre.
+<	- Un padre no es probablemente una madre.
 < 
 * 
 * Mis conclusiones:
 < Ana es una mujer. Porque:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
-< Ana no es un hombre. Porque:
+* 
+* Mis suposiciones:
+< Ana no es probablemente un hombre. Porque:
 <	- Ana es una madre.
 <	- Cada padre es una mujer o un hombre.
 <	- Ana es una mujer.
-< Ana no es un padre. Porque:
+< Ana no es probablemente un padre. Porque:
 <	- Ana es una madre.
-<	- Cada padre es un padre o una madre.
+<	- Una madre no es probablemente un padre.
 < 
 * 
 * Mis conclusiones:

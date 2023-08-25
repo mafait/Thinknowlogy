@@ -1,9 +1,9 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -42,6 +42,41 @@
 //Java
 
 	// Private functions
+
+	unsigned int Item::assumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool isExclusivePrimarySpecification, bool hasNegativePrimarySpecification, bool hasAdditionalDefinitionSpecification, bool hasSecondarySpecification, unsigned short justificationTypeNr )
+		{
+		switch( justificationTypeNr )
+			{
+			case JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION:
+			case JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION:
+			case JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION:
+			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
+				return 1;
+
+			case JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION:
+				return ( hasAdditionalDefinitionSpecification ? ( hasFeminineOrMasculineProperNounEnding ? 3 : 2 ) : 1 );
+
+			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
+				return ( hasAdditionalDefinitionSpecification &&
+						hasFeminineOrMasculineProperNounEnding ? 3 :
+							( hasFeminineOrMasculineProperNounEnding ||
+							isExclusivePrimarySpecification ? 2 : 1 ) );
+
+			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION:
+				return ( hasNegativePrimarySpecification ||
+						hasAdditionalDefinitionSpecification ||
+
+						( isExclusivePrimarySpecification &&
+						!hasSecondarySpecification ) ? 1 : 0 );
+
+			case JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION:
+			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION:
+				return ( hasAdditionalDefinitionSpecification ? 1 : 0 );
+
+			default:
+				return NO_ASSUMPTION_LEVEL;
+			}
+		}
 
 	char *Item::myWordTypeString( unsigned short queryWordTypeNr )
 		{
@@ -247,6 +282,14 @@
 		BoolResultType boolResult;
 
 		boolResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
+		return boolResult;
+		}
+
+	BoolResultType Item::addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+		{
+		BoolResultType boolResult;
+
+		boolResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3, errorString4, errorString5 );
 		return boolResult;
 		}
 
@@ -668,17 +711,17 @@
 		// This is a virtual function. Therefore, it has no body.
 		}
 
-	void Item::displayString( bool isReturnQueryToPosition )
+	void Item::displayString( bool _isReturnQueryToPosition )
 		{
 		// This is a virtual function. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
-	void Item::displayWordReferences( bool isReturnQueryToPosition )
+	void Item::displayWordReferences( bool _isReturnQueryToPosition )
 		{
 		// This is a virtual function. Therefore, it has no body, and the given variables are unreferenced.
 		}
 
-	void Item::selectingAttachedJustifications( bool isSelectingJustificationSpecifications )
+	void Item::selectingAttachedJustifications( bool _isSelectingJustificationSpecifications )
 		{
 		// This is a virtual function. Therefore, it has no body, and the given variables are unreferenced.
 		}
@@ -688,19 +731,19 @@
 		// This is a virtual function. Therefore, it has no body.
 		}
 
-	bool Item::hasParameter( unsigned int queryParameter )
+	bool Item::hasParameter( unsigned int _queryParameter )
 		{
 		// This is a virtual function. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
-	bool Item::hasWordType( unsigned short queryWordTypeNr )
+	bool Item::hasWordType( unsigned short _queryWordTypeNr )
 		{
 		// This is a virtual function. Therefore, the given variables are unreferenced.
 		return false;
 		}
 
-	bool Item::hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
+	bool Item::hasReferenceItemById( unsigned int _querySentenceNr, unsigned int _queryItemNr )
 		{
 		// This is a virtual function. Therefore, the given variables are unreferenced.
 		return false;
@@ -719,13 +762,13 @@
 		return NULL;
 		}
 
-	char *Item::itemToString( unsigned short queryWordTypeNr )
+	char *Item::itemToString( unsigned short _queryWordTypeNr )
 		{
 		// This is a virtual function. Therefore, the given variables are unreferenced.
 		return NULL;
 		}
 
-	BoolResultType Item::findMatchingWordReferenceString( char *queryString )
+	BoolResultType Item::findMatchingWordReferenceString( char *_queryString )
 		{
 		// This is a virtual function. Therefore, the given variables are unreferenced.
 		BoolResultType boolResult;
@@ -1282,35 +1325,6 @@
 		return false;
 		}
 
-	bool Item::isAssumption( unsigned short justificationTypeNr )
-		{
-		return ( justificationTypeNr == JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION );
-		}
-
-	bool Item::isConclusion( unsigned short justificationTypeNr )
-		{
-		return ( justificationTypeNr == JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_CONCLUSION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_REVERSIBLE_CONCLUSION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_DEFINITION_PART_OF_CONCLUSION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_NEGATIVE_CONCLUSION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_CONCLUSION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_CONCLUSION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_CONCLUSION ||
-				justificationTypeNr == JUSTIFICATION_TYPE_UNIQUE_RELATION_CONCLUSION );
-		}
-
 	bool Item::isAdjectiveParameter( unsigned short checkParameter )
 		{
 		return ( checkParameter == WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL ||
@@ -1391,41 +1405,35 @@
 				wordTypeNr == WORD_TYPE_NOUN_PLURAL );
 		}
 
-	unsigned short Item::assumptionGrade( bool hasAnotherPrimarySpecification, bool hasFeminineOrMasculineProperNounEnding, bool hasPossessivePrimarySpecification, bool hasPrimaryQuestionSpecification, unsigned short justificationTypeNr )
+	bool Item::isSpecificationReasoningWordType( unsigned short wordTypeNr )
 		{
-		switch( justificationTypeNr )
-			{
-			case JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION:
-				return 1;
+		return ( wordTypeNr == WORD_TYPE_ADJECTIVE ||
+				wordTypeNr == WORD_TYPE_NOUN_SINGULAR ||
+				wordTypeNr == WORD_TYPE_NOUN_PLURAL );
+		}
 
-			case JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION:
-			case JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION:
-			case JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION:
-			case JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION:
-				return 0;
+	unsigned int Item::assumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem )
+		{
+		unsigned int assumptionLevel = assumptionGrade( hasFeminineOrMasculineProperNounEnding, ( primarySpecificationItem != NULL && primarySpecificationItem->isExclusiveSpecification() ), ( primarySpecificationItem != NULL && primarySpecificationItem->isNegative() ), ( additionalDefinitionSpecificationItem != NULL ), ( secondarySpecificationItem != NULL ), justificationTypeNr );
+		unsigned int tempAssumptionLevel;
 
-			case JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_CONDITIONAL_SPECIFICATION_ASSUMPTION:
-				return ( hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
+		if( primarySpecificationItem != NULL &&
+		( tempAssumptionLevel = primarySpecificationItem->assumptionLevel() ) > NO_ASSUMPTION_LEVEL )
+			assumptionLevel += tempAssumptionLevel;
 
-			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				return ( hasAnotherPrimarySpecification &&
-						hasFeminineOrMasculineProperNounEnding ? 2 : 1 );
+		if( additionalDefinitionSpecificationItem != NULL &&
+		( tempAssumptionLevel = additionalDefinitionSpecificationItem->assumptionLevel() ) > NO_ASSUMPTION_LEVEL )
+			assumptionLevel += tempAssumptionLevel;
 
-			case JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION:
-				return ( hasFeminineOrMasculineProperNounEnding ? 1 : 0 );
+		if( secondarySpecificationItem != NULL &&
+		( tempAssumptionLevel = secondarySpecificationItem->assumptionLevel() ) > NO_ASSUMPTION_LEVEL )
+			assumptionLevel += tempAssumptionLevel;
 
-			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION:
-				return ( hasPossessivePrimarySpecification ? 1 : 0 );
+		if( additionalProperNounSpecificationItem != NULL &&
+		( tempAssumptionLevel = additionalProperNounSpecificationItem->assumptionLevel() ) > NO_ASSUMPTION_LEVEL )
+			assumptionLevel += tempAssumptionLevel;
 
-			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
-				return ( hasAnotherPrimarySpecification ? 1 : 0 );
-
-			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION:
-				return ( hasPrimaryQuestionSpecification ? 1 : 0 );
-
-			default:
-				return 1;
-			}
+		return assumptionLevel;
 		}
 
 /*************************************************************************

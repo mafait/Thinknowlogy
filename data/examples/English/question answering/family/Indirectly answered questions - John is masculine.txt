@@ -1,0 +1,6 @@
+﻿Read the file "English/reasoning/family/family definition".
+John is a parent of Paul, Joe and Laura.
+#Dev#Display the justification report about John.
+John is masculine.
+#Dev#Display the justification report about John.
+# To continue, click button «Clear your mind.» or «Restart.».

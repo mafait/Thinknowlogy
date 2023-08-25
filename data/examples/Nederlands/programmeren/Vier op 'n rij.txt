@@ -1,9 +1,9 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To demonstrate programming in natural language.
-# Version: Thinknowlogy 2018r4 (New Science)
+# Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
-# corrections and bug reports are welcome at http://mafait.org/contact/
+# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
@@ -21,12 +21,15 @@
 # slaagt een aaneengesloten rij te vormen voordat het bord volledig door
 # schijven is gevuld.
 #----------------------------------------------------------------------------
-# Bron: http://nl.wikipedia.org/wiki/Vier_op_%27n_rij
+# Bron: https://nl.wikipedia.org/wiki/Vier_op_%27n_rij
 #----------------------------------------------------------------------------
 
-# Initial definitions.
-Iedere beurt is van jou of van mij.
+# Initiële definities: Verzamel specificatiewoorden.
 Iedere zet is A, B, C, D, E, F of G.
+Iedere oplossingsmethode kan-zijn omgekeerd.
+Iedere oplossingsmethode kan-zijn bezig of gereed.
+Iedere oplossingsstrategie is defensief of exclusief.
+Iedere beurt is van jou of van mij.
 Een oplossingsniveau is laag of hoog.
 
 # Los het probleem op.

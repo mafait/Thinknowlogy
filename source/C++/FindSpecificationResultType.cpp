@@ -1,10 +1,10 @@
 ﻿/*	Class:		FindSpecificationResultType
  *	Purpose:	To return possessive specification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2018r4 (New Science)
+ *	Version:	Thinknowlogy 2023 (Shaking tree)
  *************************************************************************/
-/*	Copyright (C) 2009-2018, Menno Mafait. Your suggestions, modifications,
- *	corrections and bug reports are welcome at http://mafait.org/contact/
+/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+ *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
  *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  *************************************************************************/
 
-#include "WordItem.h"		// "WordItem.h" is required by some compilers
+#include "WordItem.h"		// Required by some compilers
 
 class FindSpecificationResultType
 	{
-	friend class AdminReasoningOld;
+	friend class AdminReasoning;
 	friend class Item;
 
 	protected:
